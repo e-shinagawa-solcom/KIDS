@@ -1,12 +1,12 @@
 /*
-	���ס�������ݡ���塢��Ϣ�����å�
-	�оݡ�����
-	��������ƣ�»�
-	���͡��������ٹԤ��Ф������˰������ƺѤߤ����������å�����
+	概要：受注＜−＞売上、関連チェック
+	対象：受注
+	作成：斎藤和志
+	備考：受注明細行に対し、既に引き当て済みの売上数チェックする
 */
 
 select tsd.lngproductquantity ,
-		CASE WHEN _%strFormValue4%_ <=  tsd.lngproductquantity THEN '���򤵤줿�����Σ�.��'|| '_%strFormValue2%_' ||'�פ����١�'|| '_%strFormValue3%_' ||'�פϴ��������Ͽ����Ƥ��ޤ������ˤ���������'|| tsd.lngproductquantity ||'�װʲ��ˤ��ѹ����Ԥ��ޤ���' || '(_%strFormValue0%_/_%strFormValue1%_)'
+		CASE WHEN _%strFormValue4%_ <=  tsd.lngproductquantity THEN '選択された受注ＮＯ.「'|| '_%strFormValue2%_' ||'」の明細「'|| '_%strFormValue3%_' ||'」は既に売上登録されています。既にある売上数「'|| tsd.lngproductquantity ||'」以下には変更が行えません。' || '(_%strFormValue0%_/_%strFormValue1%_)'
 		|| '('|| tsd.lngsalesno ||'/'|| tsd.lngsalesdetailno ||')'
 			ELSE ''
 		END  as alert

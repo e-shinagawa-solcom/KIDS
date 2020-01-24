@@ -2,96 +2,96 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       LC´ÉÍý  LC¾ðÊó²èÌÌ
+*       LCç®¡ç†  LCæƒ…å ±ç”»é¢
 */
 // ----------------------------------------------------------------------------
 
 	//-------------------------------------------------------------------------
-	// ¢£ ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ëÆÉ¹þ
+	// â–  ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼
 	//-------------------------------------------------------------------------
-	// ÆÉ¤ß¹þ¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
-	//¶¦ÄÌ¥Õ¥¡¥¤¥ëÆÉ¤ß¹þ¤ß
+	//å…±é€šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	require_once '../lcModel/lcModelCommon.php';
 	require_once '../lcModel/db_common.php';
 	require_once '../lcModel/kidscore_common.php';
 	require_once '../lcModel/lcinfo.php';
 	require (LIB_FILE);
 	
-	//PHPÉ¸½à¤ÎJSONÊÑ´¹¥á¥½¥Ã¥É¤Ï¥¨¥é¡¼¤Ë¤Ê¤ë¤Î¤Ç³°Éô¤Î¥é¥¤¥Ö¥é¥ê(¶²¤é¤¯¥¨¥ó¥³¡¼¥É¤ÎÌäÂê)
+	//PHPæ¨™æº–ã®JSONå¤‰æ›ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§å¤–éƒ¨ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒª(æã‚‰ãã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®å•é¡Œ)
 	require_once '../lcModel/JSON.php';
 
 	//-------------------------------------------------------------------------
-	// ¢£ ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+	// â–  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	//-------------------------------------------------------------------------
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
-	//LCÍÑDBÀÜÂ³¥¤¥ó¥¹¥¿¥ó¥¹À¸À®
+	//LCç”¨DBæŽ¥ç¶šã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
     $db			= new lcConnect();
 
 	//-------------------------------------------------------------------------
-	// ¢£ DB¥ª¡¼¥×¥ó
+	// â–  DBã‚ªãƒ¼ãƒ—ãƒ³
 	//-------------------------------------------------------------------------
 	$objDB->open("", "", "", "");
 
 	//-------------------------------------------------------------------------
-	// ¢£ ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+	// â–  ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 	//-------------------------------------------------------------------------
 	$aryData = $_POST;
 
-	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];   // ¥»¥Ã¥·¥ç¥óID
-	$aryData["reSearchFlg"]    = $_REQUEST["reSearchFlg"];   // ºÆ¸¡º÷¥Õ¥é¥°
+	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];   // ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+	$aryData["reSearchFlg"]    = $_REQUEST["reSearchFlg"];   // å†æ¤œç´¢ãƒ•ãƒ©ã‚°
 
 	setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-	//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+	//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 	$usrId = trim($objAuth->UserID);
 
-	// // 2100 LC´ÉÍý
+	// // 2100 LCç®¡ç†
 	// if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
 	// {
-	//         fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	//         fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	// }
 	
-	// // 2101 LC¾ðÊó
+	// // 2101 LCæƒ…å ±
 	// if ( !fncCheckAuthority( DEF_FUNCTION_LC1, $objAuth ) )
 	// {
-	//         fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	//         fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	// }
 
 
-	//·ÐÍý¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+	//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæŽ¥ç¶š
 	$lcModel		= new lcModel();
 
-	//¥æ¡¼¥¶¡¼¸¢¸Â¤Î¼èÆÀ
+	//ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™ã®å–å¾—
 	$loginUserAuth = $lcModel->getUserAuth($usrId);
 
 	$userAuth = substr($loginUserAuth, 1, 1);
 
-	//¥í¥°¥¤¥ó¾õ¶·¤ÎºÇÂç´ÉÍýÈÖ¹æ¤Î¼èÆÀ
+	//ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®æœ€å¤§ç®¡ç†ç•ªå·ã®å–å¾—
 	$maxLgno = $lcModel->getMaxLoginStateNum();
 
-	//ÇÓÂ¾À©¸æ
+	//æŽ’ä»–åˆ¶å¾¡
 	$chkEpRes = $lcModel->chkEp($maxLgno, $userAuth, $usrId);
 
-	//¥í¥°¥¤¥ó¼Ô¤ÎÍ­Ìµ
+	//ãƒ­ã‚°ã‚¤ãƒ³è€…ã®æœ‰ç„¡
 	$loginCount = $lcModel->getUserCount();
 
 
-	//·ë²ÌÇÛÎó
+	//çµæžœé…åˆ—
 	$result = array();
 	$result["strSessionID"] = $aryData["strSessionID"];
 	$lcGetDate = "";
 	$result["userAuth"] = $userAuth;
 	$result["loginCount"] = $loginCount;
 	$result["maxLgno"] = $maxLgno;
-	//t_aclcinfo¥Ç¡¼¥¿¤ÎÅÐÏ¿¡¦¹¹¿·½èÍý
-	// ¥æ¡¼¥¶¾ðÊó¤ÎusrAuth¤Î£²·åÌÜ¤ÎÊ¸»ú¤¬"1" ¤¢¤ë¤¤¤Ï¡Ê¥æ¡¼¥¶¾ðÊó¤ÎusrAuth¤Î£²·åÌÜ¤ÎÊ¸»ú¤¬"1"¤Ç¤Ï¤Ê¤¤¡¡¤«¤Ä¡¡¥í¥°¥¤¥ó¾õ¶··ï¿ô =1¤Î¾ì¹ç¡Ë
+	//t_aclcinfoãƒ‡ãƒ¼ã‚¿ã®ç™»éŒ²ãƒ»æ›´æ–°å‡¦ç†
+	// ãƒ¦ãƒ¼ã‚¶æƒ…å ±ã®usrAuthã®ï¼’æ¡ç›®ã®æ–‡å­—ãŒ"1" ã‚ã‚‹ã„ã¯ï¼ˆãƒ¦ãƒ¼ã‚¶æƒ…å ±ã®usrAuthã®ï¼’æ¡ç›®ã®æ–‡å­—ãŒ"1"ã§ã¯ãªã„ã€€ã‹ã¤ã€€ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ä»¶æ•° =1ã®å ´åˆï¼‰
 	if ($userAuth == "1" || ($userAuth != "1" && $loginCount == 1)) {
-		// lcgetdate¤ò¼èÆÀ¤¹¤ë
+		// lcgetdateã‚’å–å¾—ã™ã‚‹
 		$acloginstate = $lcModel->getAcLoginstateBylgno($maxLgno);
 
 		$result["lcgetdate"] = $acloginstate->lcgetdate;
@@ -99,9 +99,9 @@
 
 	$objDB->close();
 
-	//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
+	//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 	$s = new Services_JSON();
-	//·ë²Ì½ÐÎÏ
+	//çµæžœå‡ºåŠ›
 	mb_convert_variables('UTF-8' , 'EUC-JP' , $result );
 	echo $s->encodeUnsafe($result);
 ?>

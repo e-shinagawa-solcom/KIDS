@@ -6,7 +6,7 @@ require_once ( LIB_FILE );
 require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
 require_once ( SRC_ROOT . "estimate/cmn/estimateInsertData.php");
 
-// ÅÐÏ¿ÍÑ¥Ç¡¼¥¿ºîÀ®¥¯¥é¥¹
+// ç™»éŒ²ç”¨ãƒ‡ãƒ¼ã‚¿ä½œæˆã‚¯ãƒ©ã‚¹
 class registInsertData extends estimateInsertData {
     
     public function __construct() {
@@ -14,26 +14,26 @@ class registInsertData extends estimateInsertData {
     }
     
 
-    // É¬Í×¤Ê¥Ñ¥é¥á¡¼¥¿¤ò¥¯¥é¥¹¤Ë¥»¥Ã¥È¤¹¤ë
+    // å¿…è¦ãªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ã‚¯ãƒ©ã‚¹ã«ã‚»ãƒƒãƒˆã™ã‚‹
     public function setRegistParam($regist, $inputUserCode, $objDB) {
         if (is_array($regist)) {
 
-            // ÆþÎÏÃÍ¡¢¥æ¡¼¥¶¡¼¥³¡¼¥É¡¢DB¥¯¥é¥¹¤Î¥»¥Ã¥È
+            // å…¥åŠ›å€¤ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã€DBã‚¯ãƒ©ã‚¹ã®ã‚»ãƒƒãƒˆ
             $this->setParam($regist, $inputUserCode, $objDB);
 
-            // ¥°¥ë¡¼¥×¥³¡¼¥É¤Î¼èÆÀ
+            // ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã®å–å¾—
             $groupRecord = $this->objDB->getGroupRecordForDisplay($this->headerData[workSheetConst::INCHARGE_GROUP_CODE]);
             $this->groupCode = $groupRecord->lnggroupcode;
 
-            // ¥æ¡¼¥¶¡¼¥³¡¼¥É¤Î¼èÆÀ
+            // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å–å¾—
             $inchargeUserRecord = $this->objDB->getUserRecordForDisplay($this->headerData[workSheetConst::INCHARGE_USER_CODE]);
             $this->inchargeUserCode = $inchargeUserRecord->lngusercode;
 
-            // ³«È¯Ã´Åö¼Ô¥³¡¼¥É¤Î¼èÆÀ
+            // é–‹ç™ºæ‹…å½“è€…ã‚³ãƒ¼ãƒ‰ã®å–å¾—
             $developUserRecord = $this->objDB->getUserRecordForDisplay($this->headerData[workSheetConst::DEVELOP_USER_CODE]);
             $this->developUserCode = $developUserRecord->lngusercode;
 
-            // É½¼¨²ñ¼Ò¥³¡¼¥É¤ò¥­¡¼¤Ë¤â¤Ä²ñ¼Ò¥³¡¼¥É¤ÎÇÛÎó¼èÆÀ
+            // è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã«ã‚‚ã¤ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã®é…åˆ—å–å¾—
             $this->companyCodeList = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcompanycode", "Array", "", $this->objDB );
             
         } else {
@@ -43,57 +43,57 @@ class registInsertData extends estimateInsertData {
         return true;
     }
 
-    // ¸«ÀÑ¸¶²ÁÅÐÏ¿»þ¤ËÉ¬Í×¤Ê¥Ç¡¼¥¿¤òºîÀ®¤·¡¢¥»¥Ã¥È¤¹¤ë
+    // è¦‹ç©åŽŸä¾¡ç™»éŒ²æ™‚ã«å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã—ã€ã‚»ãƒƒãƒˆã™ã‚‹
     protected function setEstimateRegistParam() {
-        // ¥ï¡¼¥¯¥·¡¼¥È¾å¤ÎÀ½ÉÊ¥³¡¼¥É¤Î¼èÆÀ
+        // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆä¸Šã®è£½å“ã‚³ãƒ¼ãƒ‰ã®å–å¾—
         $productCode = $this->headerData[workSheetConst::PRODUCT_CODE];
 
-		// À½ÉÊ¥³¡¼¥É¤¬Â¸ºß¤¹¤ë¾ì¹ç¤ÏºÆÈÎ
+		// è£½å“ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯å†è²©
 		if ($productCode) {
 
-			// »ØÄêÀ½ÉÊ¤Î¥³¡¼¥É¤¬À½ÉÊ¥Þ¥¹¥¿¤ËÂ¸ºß¤¹¤ë¤«³ÎÇ§¤·¡¢¥ê¥Ð¥¤¥¹¥³¡¼¥É¤ÎºÇÂçÃÍ¤ò¼èÆÀ¤¹¤ë
+			// æŒ‡å®šè£½å“ã®ã‚³ãƒ¼ãƒ‰ãŒè£½å“ãƒžã‚¹ã‚¿ã«å­˜åœ¨ã™ã‚‹ã‹ç¢ºèªã—ã€ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ã®æœ€å¤§å€¤ã‚’å–å¾—ã™ã‚‹
             $currentRecord = $this->objDB->getCurrentRecordForProductCode($productCode);
 
 			if ($currentRecord !== false) {
-                // À½ÉÊÈÖ¹æ¤ò¼èÆÀ
+                // è£½å“ç•ªå·ã‚’å–å¾—
                 $productNo = $currentRecord->lngproductno;
                 
-                // ºÇÂç¤Î¥ê¥Ð¥¤¥¹¥³¡¼¥É¤ò¼èÆÀ
+                // æœ€å¤§ã®ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
                 $maxReviceCode = (int)$currentRecord->strrevisecode;
                 
-				// ¥ê¥Ð¥¤¥¹¥³¡¼¥É¤ÎÀßÄê
+				// ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ã®è¨­å®š
 				$reviseCode =  $maxReviceCode + 1;
 				$reviseCode =  str_pad($reviseCode, 2, 0, STR_PAD_LEFT);
 	
 			} else {
-				// ¥¨¥é¡¼½èÍý
+				// ã‚¨ãƒ©ãƒ¼å‡¦ç†
 			}
-        // À½ÉÊ¥³¡¼¥É¤¬Â¸ºß¤·¤Ê¤¤¤Ê¤é¿·µ¬
+        // è£½å“ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ãªã„ãªã‚‰æ–°è¦
 		} else {
-            // À½ÉÊÈÖ¹æ¤ò¼èÆÀ
+            // è£½å“ç•ªå·ã‚’å–å¾—
             $productNo = fncGetSequence("m_product.lngproductno", $this->objDB);
 
-            // À½ÉÊ¥³¡¼¥É¤òÈ¯¹Ô
+            // è£½å“ã‚³ãƒ¼ãƒ‰ã‚’ç™ºè¡Œ
             $productCode = str_pad($productNo, 5, 0, STR_PAD_LEFT);
 			
-			// ¥ê¥Ð¥¤¥¹¥³¡¼¥É¤ÎÀßÄê
+			// ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ã®è¨­å®š
 			$reviseCode = '00';
         }
         
-        // ¥Ñ¥é¥á¡¼¥¿¤Î¥»¥Ã¥È
+        // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
         $this->productNo = $productNo;
         $this->productCode = $productCode;
         $this->reviseCode = $reviseCode;
 
-		// ¸«ÀÑ¸¶²ÁÈÖ¹æ¤ò¼èÆÀ
+		// è¦‹ç©åŽŸä¾¡ç•ªå·ã‚’å–å¾—
 		$estimateNo = fncGetSequence("m_Estimate.lngEstimateNo", $this->objDB);
         $this->estimateNo = $estimateNo;
 
-		// ¾¦ÉÊ²½´ë²è¥³¡¼¥É¤ò¼èÆÀ
+		// å•†å“åŒ–ä¼ç”»ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 		$goodsPlanCode = fncGetSequence("t_goodsplan.lnggoodsplancode", $this->objDB);
 		$this->goodsPlanCode = $goodsPlanCode;
 
-		// ¥ê¥Ó¥¸¥ç¥óNo¤ÎÀßÄê
+		// ãƒªãƒ“ã‚¸ãƒ§ãƒ³Noã®è¨­å®š
         $this->revisionNo = 0;
         $this->productRevisionNo = 0;
         
@@ -101,81 +101,81 @@ class registInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¸«ÀÑ¸¶²ÁÅÐÏ¿¤ò¹Ô¤¦
+    *	è¦‹ç©åŽŸä¾¡ç™»éŒ²ã‚’è¡Œã†
     *   
     *	@return true
     */
     public function regist() {
-        // ÅÐÏ¿»þ¤ËÉ¬Í×¤Ê¥Ç¡¼¥¿¤òºîÀ®¤·¡¢¥»¥Ã¥È¤¹¤ë
+        // ç™»éŒ²æ™‚ã«å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã—ã€ã‚»ãƒƒãƒˆã™ã‚‹
         $this->setEstimateRegistParam();
 
-        // À½ÉÊ¥Þ¥¹¥¿¤ÎÅÐÏ¿½èÍý
+        // è£½å“ãƒžã‚¹ã‚¿ã®ç™»éŒ²å‡¦ç†
         $this->registMasterProduct();
 
-        // ¸«ÀÑ¸¶²Á¥Þ¥¹¥¿¤ÎÅÐÏ¿½èÍý
+        // è¦‹ç©åŽŸä¾¡ãƒžã‚¹ã‚¿ã®ç™»éŒ²å‡¦ç†
         $this->registMasterEstimate();
 
-        // ¾¦ÉÊ²½´ë²è¥Æ¡¼¥Ö¥ë¤ÎÅÐÏ¿½èÍý
+        // å•†å“åŒ–ä¼ç”»ãƒ†ãƒ¼ãƒ–ãƒ«ã®ç™»éŒ²å‡¦ç†
         $this->registTableGoodsPlan();
 
-        $estimateDetailNo = 0; // ¸«ÀÑ¸¶²ÁÌÀºÙÈÖ¹æ
-        $receiveDetailNo = 0;  // ¼õÃíÌÀºÙÈÖ¹æ
-        $orderDetailNo = 0;    // È¯ÃíÌÀºÙÈÖ¹æ
+        $estimateDetailNo = 0; // è¦‹ç©åŽŸä¾¡æ˜Žç´°ç•ªå·
+        $receiveDetailNo = 0;  // å—æ³¨æ˜Žç´°ç•ªå·
+        $orderDetailNo = 0;    // ç™ºæ³¨æ˜Žç´°ç•ªå·
 
         $rowDataList = $this->rowDataList;
 
         $year = date('Y');
         $month = date('m');
         
-        // ÌÀºÙ¹Ô¤ÎÅÐÏ¿
+        // æ˜Žç´°è¡Œã®ç™»éŒ²
         foreach ($rowDataList as $rowData) {
-            // ¸«ÀÑ¸¶²ÁÌÀºÙÈÖ¹æ¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È
+            // è¦‹ç©åŽŸä¾¡æ˜Žç´°ç•ªå·ã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
             ++$estimateDetailNo;
 
-            // ¸«ÀÑ¸¶²ÁÌÀºÙ¥Æ¡¼¥Ö¥ë¤ÎÅÐÏ¿½èÍý
+            // è¦‹ç©åŽŸä¾¡æ˜Žç´°ãƒ†ãƒ¼ãƒ–ãƒ«ã®ç™»éŒ²å‡¦ç†
             $this->registTableEstimateDetail($rowData, $estimateDetailNo);
             $this->registTableEstimateHistory($estimateDetailNo);
             $salesOrder = $rowData['salesOrder'];
 
-            // ¼õÃí¤Î¾ì¹ç
+            // å—æ³¨ã®å ´åˆ
             if ($salesOrder === DEF_ATTRIBUTE_CLIENT) {
-                // ¼õÃíÌÀºÙÈÖ¹æ¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È
+                // å—æ³¨æ˜Žç´°ç•ªå·ã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
                 ++$receiveDetailNo;
 
-                // ¼õÃíÈÖ¹æ¤ò¼èÆÀ
+                // å—æ³¨ç•ªå·ã‚’å–å¾—
                 $receiveNo = fncGetSequence("m_receive.lngReceiveNo", $this->objDB);
 
-                // ¼õÃí¥³¡¼¥É¤Î¼èÆÀ
+                // å—æ³¨ã‚³ãƒ¼ãƒ‰ã®å–å¾—
                 if (!isset($receiveCode)) {
                     $receiveCode = 'd'. fncGetDateSequence($year, $month, 'm_receive.strreceivecode', $this->objDB);
                 }
 
-                // ¼õÃí¥Þ¥¹¥¿ÅÐÏ¿½èÍý
+                // å—æ³¨ãƒžã‚¹ã‚¿ç™»éŒ²å‡¦ç†
                 $this->registMasterReceive($rowData, $receiveNo, $receiveCode);
 
-                // ¼õÃíÌÀºÙ¥Æ¡¼¥Ö¥ëÅÐÏ¿½èÍý
+                // å—æ³¨æ˜Žç´°ãƒ†ãƒ¼ãƒ–ãƒ«ç™»éŒ²å‡¦ç†
                 $this->registTableReceiveDetail($rowData, $receiveNo, $receiveDetailNo, $estimateDetailNo);
 
-            // È¯Ãí¤Î¾ì¹ç
+            // ç™ºæ³¨ã®å ´åˆ
             } else if ($salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
                 if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
-                    // È¯ÃíÌÀºÙÈÖ¹æ¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È
+                    // ç™ºæ³¨æ˜Žç´°ç•ªå·ã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
                     ++$orderDetailNo;
 
-                    // È¯ÃíÈÖ¹æ¤ò¼èÆÀ
+                    // ç™ºæ³¨ç•ªå·ã‚’å–å¾—
                     $orderNo = fncGetSequence("m_Order.lngOrderNo", $this->objDB);
 
-                    // È¯Ãí¥³¡¼¥É¤Î¼èÆÀ
+                    // ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã®å–å¾—
                     if (!isset($orderCode)) {
                         $orderCode = fncGetDateSequence($year, $month, 'm_order.strordercode', $this->objDB);
                     }
 
-                    // È¯Ãí¥Þ¥¹¥¿ÅÐÏ¿½èÍý
+                    // ç™ºæ³¨ãƒžã‚¹ã‚¿ç™»éŒ²å‡¦ç†
                     $this->registMasterOrder($rowData, $orderNo, $orderCode);
 
-                    // È¯ÃíÌÀºÙ¥Æ¡¼¥Ö¥ëÅÐÏ¿½èÍý
+                    // ç™ºæ³¨æ˜Žç´°ãƒ†ãƒ¼ãƒ–ãƒ«ç™»éŒ²å‡¦ç†
                     $this->registTableOrderDetail($rowData, $orderNo, $orderDetailNo, $estimateDetailNo);
                 }
             }
@@ -186,9 +186,9 @@ class registInsertData extends estimateInsertData {
 
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	À½ÉÊ¥Þ¥¹¥¿¤Ø¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	è£½å“ãƒžã‚¹ã‚¿ã¸ã®ç™»éŒ²ã‚’è¡Œã†
     *
     *	@return true
     */
@@ -215,9 +215,9 @@ class registInsertData extends estimateInsertData {
             'lngrevisionno' => $this->productRevisionNo,
             'strrevisecode' => "'". $this->reviseCode. "'"
         );
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -226,18 +226,18 @@ class registInsertData extends estimateInsertData {
     }
     
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¸«ÀÑ¸¶²Á¥Þ¥¹¥¿¤Ø¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	è¦‹ç©åŽŸä¾¡ãƒžã‚¹ã‚¿ã¸ã®ç™»éŒ²ã‚’è¡Œã†
     *   
     *	@return true
     */
     protected function registMasterEstimate() {
         $table = 'm_estimate';
 
-        // ¾åÂå
+        // ä¸Šä»£
         $retailPrice = $this->headerData[workSheetConst::RETAIL_PRICE];
-        // ½þµÑ¿ô
+        // å„Ÿå´æ•°
         $productionQuantity = $this->headerData[workSheetConst::PRODUCTION_QUANTITY];
 
         $data = array(
@@ -262,10 +262,10 @@ class registInsertData extends estimateInsertData {
             'lngproductrevisionno' => $this->productRevisionNo,
         );
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -274,26 +274,26 @@ class registInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¸«ÀÑ¸¶²ÁÌÀºÙ¥Æ¡¼¥Ö¥ë¤Ø¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	è¦‹ç©åŽŸä¾¡æ˜Žç´°ãƒ†ãƒ¼ãƒ–ãƒ«ã¸ã®ç™»éŒ²ã‚’è¡Œã†
     *
-    *   @param array $rowData ¹Ô¤Î¥Ç¡¼¥¿
-    *   @param integer $estimateDetailNo ¸«ÀÑ¸¶²ÁÌÀºÙÈÖ¹æ
+    *   @param array $rowData è¡Œã®ãƒ‡ãƒ¼ã‚¿
+    *   @param integer $estimateDetailNo è¦‹ç©åŽŸä¾¡æ˜Žç´°ç•ªå·
     *
     *	@return true
     */
     protected function registTableEstimateDetail($rowData, $estimateDetailNo) {
-        // ¥Æ¡¼¥Ö¥ëÌ¾¤ÎÀßÄê
+        // ãƒ†ãƒ¼ãƒ–ãƒ«åã®è¨­å®š
         $table = 't_estimatedetail';
 
-        // ¼õÃí¤Î¾ì¹ç
+        // å—æ³¨ã®å ´åˆ
         if ($rowData['salesOrder'] === DEF_ATTRIBUTE_CLIENT) {
             $stockSubjectCode = 0;
             $stockItemCode = 0;
             $salesDivisionCode = $rowData['divisionSubject'];
             $salesClassCode = $rowData['classItem'];
-        // È¯Ãí¤Î¾ì¹ç
+        // ç™ºæ³¨ã®å ´åˆ
         } else if ($rowData['salesOrder'] === DEF_ATTRIBUTE_SUPPLIER) {
             $stockSubjectCode = $rowData['divisionSubject'];
             $stockItemCode = $rowData['classItem'];
@@ -303,7 +303,7 @@ class registInsertData extends estimateInsertData {
             return false;
         }
 
-        // ÅÐÏ¿¥Ç¡¼¥¿¤ÎºîÀ®
+        // ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
         $data = array(
             'lngestimateno' => $this->estimateNo,
             'lngestimatedetailno' => $estimateDetailNo,
@@ -312,7 +312,7 @@ class registInsertData extends estimateInsertData {
             'lngstockitemcode' => $stockItemCode,
             'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
             'dtmdelivery' => $rowData['delivery'] ? "TO_TIMESTAMP('". $rowData['delivery']. "', 'YYYY/MM/DD')" : 'null',
-            'bytpayofftargetflag' => $rowData['payoff'] == '¡û' ? 'true' : 'false',
+            'bytpayofftargetflag' => $rowData['payoff'] == 'â—‹' ? 'true' : 'false',
             'bytpercentinputflag'=> $rowData['percentInputFlag'],
             'curproductrate' => $rowData['percentInputFlag'] === true ? $rowData['percent'] : 'null',
             'lngmonetaryunitcode' => $rowData['monetary'],
@@ -327,9 +327,9 @@ class registInsertData extends estimateInsertData {
             'lngsalesclasscode' => $salesClassCode
         );
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -338,12 +338,12 @@ class registInsertData extends estimateInsertData {
     }
 
     protected function registTableEstimateHistory($estimateDetailNo) {
-        // ¥Æ¡¼¥Ö¥ëÌ¾¤ÎÀßÄê
+        // ãƒ†ãƒ¼ãƒ–ãƒ«åã®è¨­å®š
         $table = 'm_estimatehistory';
 
-        // ¼õÃí¤Î¾ì¹ç
+        // å—æ³¨ã®å ´åˆ
 
-        // ÅÐÏ¿¥Ç¡¼¥¿¤ÎºîÀ®
+        // ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
         $data = array(
             'lngestimateno' => $this->estimateNo,
             'lngrevisionno' => $this->revisionNo,
@@ -352,9 +352,9 @@ class registInsertData extends estimateInsertData {
             'lngestimatedetailrevisionno' => $this->revisionNo,
         );
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -363,20 +363,20 @@ class registInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¼õÃí¥Þ¥¹¥¿¤Ø¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	å—æ³¨ãƒžã‚¹ã‚¿ã¸ã®ç™»éŒ²ã‚’è¡Œã†
     *
-    *   @param array $rowData ¹Ô¤Î¥Ç¡¼¥¿
-    *   @param string $receiveCode ¼õÃí¥³¡¼¥É
+    *   @param array $rowData è¡Œã®ãƒ‡ãƒ¼ã‚¿
+    *   @param string $receiveCode å—æ³¨ã‚³ãƒ¼ãƒ‰
     *   
     *	@return true
     */
     protected function registMasterReceive($rowData, $receiveNo, $receiveCode) {
-        // ¥Æ¡¼¥Ö¥ë¤ÎÀßÄê 
+        // ãƒ†ãƒ¼ãƒ–ãƒ«ã®è¨­å®š 
         $table = 'm_receive';
 
-        // ÅÐÏ¿¥Ç¡¼¥¿¤ÎºîÀ®
+        // ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
         $data = array(
             'lngreceiveno' => $receiveNo,
             'lngrevisionno' => $this->revisionNo,
@@ -396,9 +396,9 @@ class registInsertData extends estimateInsertData {
             'strcustomerreceivecode' => 'NULL'
         );
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -408,18 +408,18 @@ class registInsertData extends estimateInsertData {
 
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¼õÃíÌÀºÙ¥Æ¡¼¥Ö¥ë¤Ø¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	å—æ³¨æ˜Žç´°ãƒ†ãƒ¼ãƒ–ãƒ«ã¸ã®ç™»éŒ²ã‚’è¡Œã†
     *
-    *   @param array $rowData ¹Ô¤Î¥Ç¡¼¥¿
-    *   @param integer $receiveDetailNo ¼õÃíÌÀºÙÈÖ¹æ
-    *   @param integer $estimateDetailNo ¸«ÀÑ¸¶²ÁÌÀºÙÈÖ¹æ    
+    *   @param array $rowData è¡Œã®ãƒ‡ãƒ¼ã‚¿
+    *   @param integer $receiveDetailNo å—æ³¨æ˜Žç´°ç•ªå·
+    *   @param integer $estimateDetailNo è¦‹ç©åŽŸä¾¡æ˜Žç´°ç•ªå·    
     *   
     *	@return true
     */
     protected function registTableReceiveDetail($rowData, $receiveNo, $receiveDetailNo, $estimateDetailNo) {
-        // ¥Æ¡¼¥Ö¥ë¤ÎÀßÄê 
+        // ãƒ†ãƒ¼ãƒ–ãƒ«ã®è¨­å®š 
         $table = 't_receivedetail';
 
         $data = array(
@@ -443,27 +443,27 @@ class registInsertData extends estimateInsertData {
             'lngestimaterevisionno' => $this->revisionNo
         );
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	È¯Ãí¥Þ¥¹¥¿¤Ø¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	ç™ºæ³¨ãƒžã‚¹ã‚¿ã¸ã®ç™»éŒ²ã‚’è¡Œã†
     *
-    *   @param array $rowData ¹Ô¤Î¥Ç¡¼¥¿
-    *   @param string $orderCode È¯Ãí¥³¡¼¥É
+    *   @param array $rowData è¡Œã®ãƒ‡ãƒ¼ã‚¿
+    *   @param string $orderCode ç™ºæ³¨ã‚³ãƒ¼ãƒ‰
     *   
     *	@return true
     */
     protected function registMasterOrder($rowData, $orderNo, $orderCode) {
-        // ¥Æ¡¼¥Ö¥ë¤ÎÀßÄê
+        // ãƒ†ãƒ¼ãƒ–ãƒ«ã®è¨­å®š
         $table = 'm_order';
 
         $data = array(
@@ -485,9 +485,9 @@ class registInsertData extends estimateInsertData {
             'dtminsertdate' => 'NOW()'
         );
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -496,18 +496,18 @@ class registInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	È¯ÃíÌÀºÙ¥Æ¡¼¥Ö¥ë¤Ø¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	ç™ºæ³¨æ˜Žç´°ãƒ†ãƒ¼ãƒ–ãƒ«ã¸ã®ç™»éŒ²ã‚’è¡Œã†
     *
-    *   @param array $rowData ¹Ô¤Î¥Ç¡¼¥¿
-    *   @param integer $orderDetailNo È¯ÃíÌÀºÙÈÖ¹æ
-    *   @param integer $estimateDetailNo ¸«ÀÑ¸¶²ÁÌÀºÙÈÖ¹æ    
+    *   @param array $rowData è¡Œã®ãƒ‡ãƒ¼ã‚¿
+    *   @param integer $orderDetailNo ç™ºæ³¨æ˜Žç´°ç•ªå·
+    *   @param integer $estimateDetailNo è¦‹ç©åŽŸä¾¡æ˜Žç´°ç•ªå·    
     *   
     *	@return true
     */
     protected function registTableOrderDetail($rowData, $orderNo, $orderDetailNo, $estimateDetailNo) {
-        // ¥Æ¡¼¥Ö¥ë¤ÎÀßÄê
+        // ãƒ†ãƒ¼ãƒ–ãƒ«ã®è¨­å®š
         $table = 't_orderdetail';
 
         $data = array(
@@ -532,10 +532,10 @@ class registInsertData extends estimateInsertData {
             'lngestimatedetailno' => $estimateDetailNo,
             'lngestimaterevisionno' => $this->revisionNo
         );
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -543,9 +543,9 @@ class registInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¾¦ÉÊ²½´ë²è¥Æ¡¼¥Ö¥ë¤Ø¤ÎÅÐÏ¿¤ò¹Ô¤¦ 
+    *	å•†å“åŒ–ä¼ç”»ãƒ†ãƒ¼ãƒ–ãƒ«ã¸ã®ç™»éŒ²ã‚’è¡Œã† 
     *   
     *	@return true
     */
@@ -564,10 +564,10 @@ class registInsertData extends estimateInsertData {
             'lnginputusercode' => $this->inputUserCode
         );
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertQuery($table, $data);
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);

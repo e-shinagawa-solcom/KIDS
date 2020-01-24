@@ -1,6 +1,6 @@
 <?
 /**
- *    ¥Ş¥¹¥¿´ÉÍı ¶¦ÄÌ¥Ş¥¹¥¿ ¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë·ë²Ì°ìÍ÷²èÌÌ
+ *    ãƒã‚¹ã‚¿ç®¡ç† å…±é€šãƒã‚¹ã‚¿ ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«çµæœä¸€è¦§ç”»é¢
  *
  *    @package   KIDS
  *    @license   http://www.wiseknot.co.jp/
@@ -12,13 +12,13 @@
  */
 // index.php -> strSessionID    -> index.php
 //
-// ÅĞÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 // index.php -> strMasterTableName    -> edit.php
 // index.php -> strKeyName            -> edit.php
 //
-// ½¤Àµ²èÌÌ
+// ä¿®æ­£ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 // index.php -> strMasterTableName    -> edit.php
@@ -26,7 +26,7 @@
 // index.php -> lngKeyCode            -> edit.php
 // index.php -> (lngStockSubjectCode) -> edit.php
 //
-// ºï½ü²èÌÌ
+// å‰Šé™¤ç”»é¢
 // index.php -> strSessionID          -> confirm.php
 // index.php -> lngActionCode         -> confirm.php
 // index.php -> strMasterTableName    -> confirm.php
@@ -34,10 +34,10 @@
 // index.php -> lngKeyCode            -> confirm.php
 // index.php -> (lngStockSubjectCode) -> confirm.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require SRC_ROOT . "m/cmn/lib_m.php";
 
@@ -47,30 +47,30 @@ $objDB->open("", "", "", "");
 
 $aryData = $_POST;
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["strMasterTableName"] = "null:ascii(1,32)";
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if (!fncCheckAuthority(DEF_FUNCTION_M0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->setMasterTable($aryData["strMasterTableName"], "", "", $aryData, $objDB);
 
 ///////////////////////////////////////////////////////////////////
-// »ÅÆş´ØÏ¢¥Ş¥¹¥¿ÆÃ¼ì½èÍı
+// ä»•å…¥é–¢é€£ãƒã‚¹ã‚¿ç‰¹æ®Šå‡¦ç†
 ///////////////////////////////////////////////////////////////////
-// »ÅÆş²ÊÌÜ¥Ş¥¹¥¿¤Î¾ì¹ç¡¢¥³¡¼¥É¡ÜÌ¾¾Î¤Î¥«¥é¥à¤òÉ½¼¨¤¹¤ëÆÃ¼ì½èÍı
+// ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ã®å ´åˆã€ã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã®ã‚«ãƒ©ãƒ ã‚’è¡¨ç¤ºã™ã‚‹ç‰¹æ®Šå‡¦ç†
 if ($objMaster->strTableName == "m_StockSubject") {
-    // »ÅÆş¶èÊ¬¥Ş¥¹¥¿¤«¤é¥Ş¥¹¥¿¥Ç¡¼¥¿¤ò¼èÆÀ¤·¡¢code ¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤ËÂåÆş
+    // ä»•å…¥åŒºåˆ†ãƒã‚¹ã‚¿ã‹ã‚‰ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã€code ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã«ä»£å…¥
     $aryMaster = fncGetMasterValue("m_StockClass", "lngStockClassCode", "strStockClassName", "Array", "", $objDB);
 
     $count = count($objMaster->aryData);
@@ -80,15 +80,15 @@ if ($objMaster->strTableName == "m_StockSubject") {
     }
 }
 
-// »ÅÆşÉôÉÊ¥Ş¥¹¥¿¤Î¾ì¹ç¡¢¥³¡¼¥É¡ÜÌ¾¾Î¤Î¥«¥é¥à¤òÉ½¼¨¤¹¤ëÆÃ¼ì½èÍı
+// ä»•å…¥éƒ¨å“ãƒã‚¹ã‚¿ã®å ´åˆã€ã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã®ã‚«ãƒ©ãƒ ã‚’è¡¨ç¤ºã™ã‚‹ç‰¹æ®Šå‡¦ç†
 elseif ($objMaster->strTableName == "m_StockItem") {
-    // »ÅÆş²ÊÌÜ¥Ş¥¹¥¿¤«¤é¥Ş¥¹¥¿¥Ç¡¼¥¿¤ò¼èÆÀ¤·¡¢code ¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤ËÂåÆş
+    // ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ã‹ã‚‰ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã€code ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã«ä»£å…¥
     $aryMaster = fncGetMasterValue("m_StockSubject", "lngStockSubjectCode", "strStockSubjectName", "Array", "", $objDB);
-    // »ÅÆş²ÊÌÜ¥Ş¥¹¥¿¤«¤é¥Ş¥¹¥¿¥Ç¡¼¥¿¤ò¼èÆÀ¤·¡¢code ¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤ËÂåÆş
+    // ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ã‹ã‚‰ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã€code ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã«ä»£å…¥
     $arySubjectClassMaster = fncGetMasterValue("m_StockSubject", "lngStockSubjectCode", "lngStockClassCode", "Array", "", $objDB);
-    // »ÅÆş¶èÊ¬¥Ş¥¹¥¿¤«¤é¥Ş¥¹¥¿¥Ç¡¼¥¿¤ò¼èÆÀ¤·¡¢code ¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤ËÂåÆş
+    // ä»•å…¥åŒºåˆ†ãƒã‚¹ã‚¿ã‹ã‚‰ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã€code ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã«ä»£å…¥
     $aryClassMaster = fncGetMasterValue("m_StockClass", "lngStockClassCode", "strStockClassName", "Array", "", $objDB);
-    // ¸«ÀÑ¸¶²Á·×»»½ñ¥¨¥ê¥¢¶èÊ¬¥Ş¥¹¥¿¤«¤é¥Ş¥¹¥¿¥Ç¡¼¥¿¤ò¼èÆÀ¤·¡¢code ¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤ËÂåÆş
+    // è¦‹ç©åŸä¾¡è¨ˆç®—æ›¸ã‚¨ãƒªã‚¢åŒºåˆ†ãƒã‚¹ã‚¿ã‹ã‚‰ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã€code ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã«ä»£å…¥
     $aryAreaMaster = fncGetMasterValue("m_estimateareaclass", "lngestimateareaclassno", "strestimateareaclassname", "Array", "", $objDB);
     $count = count($objMaster->aryData);
     for ($i = 0; $i < $count; $i++) {
@@ -104,9 +104,9 @@ elseif ($objMaster->strTableName == "m_StockItem") {
 }
 
 ///////////////////////////////////////////////////////////////////
-// ¥Æ¡¼¥Ö¥ëÀ¸À®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 ///////////////////////////////////////////////////////////////////
-// ¥Õ¥£¡¼¥ë¥ÉÌ¾É½¼¨
+// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åè¡¨ç¤º
 $aryData["lngColumnNum"] = 0;
 foreach ($objMaster->aryColumnName as $strColumnName) {
     $aryData["strColumnHtml"] .= "		<td id=\"Column$aryData[lngColumnNum]\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='#';\">$strColumnName</td>\n";
@@ -114,15 +114,15 @@ foreach ($objMaster->aryColumnName as $strColumnName) {
 }
 $aryData["lngColumnNum"] = $aryData["lngColumnNum"] + 2;
 
-// ·ë²Ì¹ÔÉ½¼¨
+// çµæœè¡Œè¡¨ç¤º
 $count = 0;
 foreach ($objMaster->aryData as $record) {
-    // ºÇ½é¤Î¥«¥é¥à¤ò¥­¡¼¤È¤¹¤ë
+    // æœ€åˆã®ã‚«ãƒ©ãƒ ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹
     $lngKeyCode = $record[$objMaster->aryColumnName[0]];
 
     $aryData["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:#ffffff;\">\n";
 
-    // ¥«¥é¥àÀ¸À®
+    // ã‚«ãƒ©ãƒ ç”Ÿæˆ
     // foreach ($record as $colmun) {
     //     $aryData["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars($colmun) . "</td>\n";
     // }
@@ -131,10 +131,10 @@ foreach ($objMaster->aryData as $record) {
         $aryData["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars($record[$strColumnName]) . "</td>\n";
     }
 
-    // GET¤ÇÅÏ¤¹Ê¸»úÎóÀ¸À®
+    // GETã§æ¸¡ã™æ–‡å­—åˆ—ç”Ÿæˆ
     $getUrl = "strSessionID=" . $aryData["strSessionID"] . "&strMasterTableName=" . $aryData["strMasterTableName"] . "&strKeyName=" . $objMaster->aryColumnName[0] . "&" . $objMaster->aryColumnName[0] . "=" . $lngKeyCode;
 
-    // »ÅÆşÉôÉÊ¥Ş¥¹¥¿¤Î¾ì¹ç¡¢2¤ÄÌÜ¤Î¥«¥é¥à¤â¥­¡¼¤È¤¹¤ë
+    // ä»•å…¥éƒ¨å“ãƒã‚¹ã‚¿ã®å ´åˆã€2ã¤ç›®ã®ã‚«ãƒ©ãƒ ã‚‚ã‚­ãƒ¼ã¨ã™ã‚‹
     if ($objMaster->strTableName == "m_StockItem") {
         $getUrl .= "&" . $objMaster->aryColumnName[2] . "=" . $record["lngstocksubjectcode_comm"];
     } else if ($objMaster->strTableName == "m_StockSubject") {
@@ -142,10 +142,10 @@ foreach ($objMaster->aryData as $record) {
 
     }
 
-    // ½¤Àµ¥Ü¥¿¥óÀ¸À®
+    // ä¿®æ­£ãƒœã‚¿ãƒ³ç”Ÿæˆ
     $aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"/m/regist/c/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&" . $getUrl . "\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
-    // ºï½ü¥Ü¥¿¥óÀ¸À®
+    // å‰Šé™¤ãƒœã‚¿ãƒ³ç”Ÿæˆ
     $aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"/m/regist/c/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . "&" . $getUrl . "\" name=\"delete\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"REMOVE\"></a></td>\n";
 
     $aryData["strResultHtml"] .= "	</tr>\n";
@@ -154,12 +154,12 @@ foreach ($objMaster->aryData as $record) {
 
 $objDB->close();
 
-// ÅĞÏ¿¥Ü¥¿¥ó¤ÎGETÊ¸»úÎóÀ¸À®
+// ç™»éŒ²ãƒœã‚¿ãƒ³ã®GETæ–‡å­—åˆ—ç”Ÿæˆ
 $aryData["strEditURL"] = "/m/regist/c/edit.php?strSessionID=" . $aryData["strSessionID"] . "&lngActionCode=" . DEF_ACTION_INSERT . "&strMasterTableName=" . $aryData["strMasterTableName"] . "&strKeyName=" . $objMaster->aryColumnName[0];
 
 $aryData["strTableName"] = $objMaster->strTableName;
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("m/list/c/parts.tmpl");
 $objTemplate->replace($aryData);

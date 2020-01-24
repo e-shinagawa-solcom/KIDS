@@ -4,16 +4,16 @@
 /* ************************************************************************* */
 
 /**
-*	¥Õ¥¡¥¤¥ë¥¢¥Ã¥×¥í¡¼¥É²èÌÌ
+*	ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ç”»é¢
 *
 *	@charset	: euc-jp
 */
 
 
-	include ( 'conf.inc' );		// ÀßÄêÆÉ¤ß¹ş¤ß
-	require ( LIB_DEBUGFILE );	// Debug¥â¥¸¥å¡¼¥ë
+	include ( 'conf.inc' );		// è¨­å®šèª­ã¿è¾¼ã¿
+	require ( LIB_DEBUGFILE );	// Debugãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 
-	require ( LIB_FILE );		// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+	require ( LIB_FILE );		// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 
 
 
@@ -21,43 +21,43 @@
 	$objAuth	= new clsAuth();
 
 	//-------------------------------------------------------------------------
-	// DB¥ª¡¼¥×¥ó
+	// DBã‚ªãƒ¼ãƒ—ãƒ³
 	//-------------------------------------------------------------------------
 	$objDB->open( "", "", "", "" );
 
 
 	//-------------------------------------------------------------------------
-	// ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+	// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 	//-------------------------------------------------------------------------
 	$aryData	= $_REQUEST;
 
-	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// ¸À¸ì¥³¡¼¥É
+	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// è¨€èªã‚³ãƒ¼ãƒ‰
 	$aryData["style"]				= 'segment';					// or "old"
-	$aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// ´ÉÍı¥³¡¼¥É¡Ê¸«ÀÑ¸¶²Á¡Ë
-	$aryData["lngRegistConfirm"]	= 0;							// ³ÎÇ§²èÌÌÉ½¼¨¥Õ¥é¥°
+	$aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// ç®¡ç†ã‚³ãƒ¼ãƒ‰ï¼ˆè¦‹ç©åŸä¾¡ï¼‰
+	$aryData["lngRegistConfirm"]	= 0;							// ç¢ºèªç”»é¢è¡¨ç¤ºãƒ•ãƒ©ã‚°
 
     setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 	//-------------------------------------------------------------------------
-	// ÆşÎÏÊ¸»úÎóÃÍ¡¦¥»¥Ã¥·¥ç¥ó¡¦¸¢¸Â¥Á¥§¥Ã¥¯
+	// å…¥åŠ›æ–‡å­—åˆ—å€¤ãƒ»ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ»æ¨©é™ãƒã‚§ãƒƒã‚¯
 	//-------------------------------------------------------------------------
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]	= "null:numenglish(32,32)";
 	$aryResult	= fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É¼èÆÀ
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—
 	$lngUserCode = $objAuth->UserCode;
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	if( !fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-	// ¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¤Î¼èÆÀ
+	// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã®å–å¾—
 	$lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
 
 
@@ -71,9 +71,9 @@
 // fncDebug( 'parse.txt', fncGetReplacedHtmlWithBase("search/base_search.html", "upload2/parts.tmpl", $aryData ,$objAuth ), __FILE__, __LINE__);
 
 	/*-------------------------------------------------------------------------
-		½ĞÎÏ
+		å‡ºåŠ›
 	-------------------------------------------------------------------------*/
-	// HTML½ĞÎÏ
+	// HTMLå‡ºåŠ›
 	echo fncGetReplacedHtmlWithBase("search/base_search.html", "upload2/parts.tmpl", $aryData ,$objAuth );
 
 

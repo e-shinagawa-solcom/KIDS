@@ -1,7 +1,7 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
- *       ÀÁµá´ÉÍý  ÀÁµá½¸·×²èÌÌ
+ *       è«‹æ±‚ç®¡ç†  è«‹æ±‚é›†è¨ˆç”»é¢
  *
  *
  *       @package    K.I.D.S.
@@ -12,35 +12,35 @@
  *       @version    2.00
  *
  *
- *       ½èÍý³µÍ×
- *         ¡¦»ØÄê¤µ¤ì¤¿·î¤ÎÀÁµá½ñ¤ò¥¨¥¯¥»¥ë¤Ë¤Æ½ÐÎÏ¤¹¤ë
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æŒ‡å®šã•ã‚ŒãŸæœˆã®è«‹æ±‚æ›¸ã‚’ã‚¨ã‚¯ã‚»ãƒ«ã«ã¦å‡ºåŠ›ã™ã‚‹
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
 
-    // ÀßÄêÆÉ¤ß¹þ¤ß
+    // è¨­å®šèª­ã¿è¾¼ã¿
     include_once('conf.inc');
 
-    // ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+    // ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
     require (LIB_FILE);
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
     require (SRC_ROOT . "inv/cmn/column.php");
 
-    // PhpSpreadshee¤ò»È¤¦¤¿¤á
+    // PhpSpreadsheeã‚’ä½¿ã†ãŸã‚
     require_once (VENDOR_AUTOLOAD_FILE);
 
-    // ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
     $objDB   = new clsDB();
     $objAuth = new clsAuth();
 
-    // DB¥ª¡¼¥×¥ó
+    // DBã‚ªãƒ¼ãƒ—ãƒ³
     $objDB->open("", "", "", "");
 
-    // ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
     if ( $_POST )
     {
         $aryData = $_POST;
@@ -50,60 +50,60 @@
         $aryData = $_GET;
     }
 
-    // cookie¤ËSET
+    // cookieã«SET
     if( !empty($aryData["strSessionID"]) )
         setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-    // Ê¸»úÎó¥Á¥§¥Ã¥¯
+    // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
     $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 
-    // ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+    // ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
     $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-    // 2200 ÀÁµá´ÉÍý
+    // 2200 è«‹æ±‚ç®¡ç†
     if ( !fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
     }
 
-    // 2202 ÀÁµá½ñ¸¡º÷
+    // 2202 è«‹æ±‚æ›¸æ¤œç´¢
     if ( !fncCheckAuthority( DEF_FUNCTION_INV2, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
     }
 
-    // 2203 ÀÁµá½¸·×
+    // 2203 è«‹æ±‚é›†è¨ˆ
     if ( !fncCheckAuthority( DEF_FUNCTION_INV4, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
     }
 
-    // ¥Ø¥ë¥×ÂÐ±þ
+    // ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
     $aryData["lngFunctionCode"] = DEF_FUNCTION_INV0;
 
     if(isset($aryData["strMode"]) && $aryData["strMode"] == 'export')
     {
 
-        //¾ÜºÙ²èÌÌ¤ÎÉ½¼¨
+        //è©³ç´°ç”»é¢ã®è¡¨ç¤º
         $invoiceMonth = $aryData["invoiceMonth"].'-01';
 
-        // »ØÄê·î¤ÎÀÁµá½ñ¥Þ¥¹¥¿¼èÆÀ
+        // æŒ‡å®šæœˆã®è«‹æ±‚æ›¸ãƒžã‚¹ã‚¿å–å¾—
         $strQuery = fncGetInvoiceAggregateSQL ( $invoiceMonth );
 
-        // ¾ÜºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+        // è©³ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
         if ( !$lngResultNum )
         {
             $objDB->freeResult( $lngResultID );
             $objDB->close();
-            // HTML½ÐÎÏ
-            $aryData['noDataMsg'] = str_replace('-', 'Ç¯' ,$aryData["invoiceMonth"]) .'·î¤ÎÀÁµá½ñ¤Ï¸«¤Ä¤«¤ê¤Þ¤»¤ó¤Ç¤·¤¿¡£';
+            // HTMLå‡ºåŠ›
+            $aryData['noDataMsg'] = str_replace('-', 'å¹´' ,$aryData["invoiceMonth"]) .'æœˆã®è«‹æ±‚æ›¸ã¯è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚';
             echo fncGetReplacedHtmlWithBase("inv/base_aggregate.html", "inv/aggregate/index.tmpl", $aryData ,$objAuth );
             return;
         }
 
-        // ¥¨¥¯¥»¥ë½ÐÎÏÍÑ¤Ë¥Ç¡¼¥¿¤ò²Ã¹©
+        // ã‚¨ã‚¯ã‚»ãƒ«å‡ºåŠ›ç”¨ã«ãƒ‡ãƒ¼ã‚¿ã‚’åŠ å·¥
         // array[lngmonetaryunitcode][strcustomercode][]
         $aggregateData = [];
         if ( $lngResultNum )
@@ -112,20 +112,20 @@
             {
                 $exportAry = [];
                 $aryDetailResult = $objDB->fetchArray( $lngResultID, $i );
-                // lngmonetaryunitcodeÊÌ¤ÎÇÛÎó¤Ë³ÊÇ¼
+                // lngmonetaryunitcodeåˆ¥ã®é…åˆ—ã«æ ¼ç´
                 $monetaryunitcode = (int)$aryDetailResult['lngmonetaryunitcode'];
-                // lngmonetaryunitcodeÊÌ¤ÎÇÛÎó¤Ë³ÊÇ¼
+                // lngmonetaryunitcodeåˆ¥ã®é…åˆ—ã«æ ¼ç´
                 $strcustomercode  = $aryDetailResult['strcustomercode'];
 
-                // ¸ÜµÒ¥³¡¼¥É¡¦¸ÜµÒÌ¾¡¦¸ÜµÒ¼ÒÌ¾
+                // é¡§å®¢ã‚³ãƒ¼ãƒ‰ãƒ»é¡§å®¢åãƒ»é¡§å®¢ç¤¾å
                 list ($printCustomerName, $printCompanyName, $customerCode, $strcompanydisplayname ) = fncGetCompanyPrintName($aryDetailResult['strcustomercode'], $objDB);
 
                 $exportAry['lnginvoiceno']              = $aryDetailResult['lnginvoiceno'];
                 $exportAry['lngrevisionno']             = $aryDetailResult['lngrevisionno'];
-                // ¸ÜµÒ¥³¡¼¥É(É½¼¨ÍÑ)
+                // é¡§å®¢ã‚³ãƒ¼ãƒ‰(è¡¨ç¤ºç”¨)
                 $strcustomercode                        = $aryDetailResult['strcustomercode'];
                 $exportAry['strcustomercode']           = $strcustomercode;
-                // É½¼¨ÍÑ¸ÜµÒÌ¾¡¦²ñ¼ÒÌ¾¤òÆþ¤ì¤ë
+                // è¡¨ç¤ºç”¨é¡§å®¢åãƒ»ä¼šç¤¾åã‚’å…¥ã‚Œã‚‹
                 $exportAry['strcustomername']           = $printCustomerName;
                 $exportAry['strcustomercompanyname']    = $printCompanyName;
                 $exportAry['strinvoicecode']            = $aryDetailResult['strinvoicecode'];
@@ -135,19 +135,19 @@
                 $exportAry['lngmonetaryunitcode']       = $aryDetailResult['lngmonetaryunitcode'];
                 $exportAry['lngtaxclasscode']           = $aryDetailResult['lngtaxclasscode'];
                 $exportAry['strtaxclassname']           = $aryDetailResult['strtaxclassname'];
-                // ÀÇÈ´¶â³Û1
+                // ç¨ŽæŠœé‡‘é¡1
                 $cursubtotal1                           = (int)$aryDetailResult['cursubtotal1'];
                 $exportAry['cursubtotal1']              = $cursubtotal1;
-                // ¾ÃÈñÀÇÎ¨1
+                // æ¶ˆè²»ç¨ŽçŽ‡1
                 $curtax1                                = (int)$aryDetailResult['curtax1'];
                 $exportAry['curtax1']                   = $curtax1;
-                // ¾ÃÈñÀÇ³Û1
+                // æ¶ˆè²»ç¨Žé¡1
                 $curtaxprice1                           = (int)$aryDetailResult['curtaxprice1'];
                 $exportAry['curtaxprice1']              = $curtaxprice1;
 
-                // ¸ÜµÒ¤´¤È¤Î¥Ç¡¼¥¿¤ò¤Þ¤È¤á¤ë
+                // é¡§å®¢ã”ã¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’ã¾ã¨ã‚ã‚‹
                 $aggregateData[$monetaryunitcode][$strcustomercode][] = $exportAry;
-                // ¸ÜµÒËè¤Î¹ç·×ÃÍ
+                // é¡§å®¢æ¯Žã®åˆè¨ˆå€¤
                 $aggregateData[$monetaryunitcode][$strcustomercode]['cursubtotal'] += $cursubtotal1;
                 $aggregateData[$monetaryunitcode][$strcustomercode]['curtaxprice'] += $curtaxprice1;
             }
@@ -157,9 +157,9 @@
 
         ini_set('default_charset','UTF-8');
 
-        // 1.ÆüËÜ±ß ¸ÜµÒËè¤Î½¸·×
+        // 1.æ—¥æœ¬å†† é¡§å®¢æ¯Žã®é›†è¨ˆ
         $row = [];
-        // ½ñ¤­¹þ¤ß¹Ô¿ô
+        // æ›¸ãè¾¼ã¿è¡Œæ•°
         $writeRow = 0;
         foreach((array)$aggregateData[1] as $code => $val) {
             for($i=0; $i+2 < COUNT($val); $i++){
@@ -171,44 +171,44 @@
                     $val[$i]['cursubtotal1'] ,
                     $val[$i]['curtaxprice1']
                     ];
-                // ¹Ô¿ô¥«¥¦¥ó¥È
+                // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
                 $writeRow++;
             }
-            // ¹ç·×ÃÍ
+            // åˆè¨ˆå€¤
             $row[] = [
                 '' ,
                 '' ,
                 '' ,
-                '¾®·×' ,
+                'å°è¨ˆ' ,
                 $val['cursubtotal'] ,
                 $val['curtaxprice'],
             ];
-            // ¹Ô¿ô¥«¥¦¥ó¥È
+            // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
             $writeRow++;
-            // ¹Ô´Ö
+            // è¡Œé–“
             $row[] = [];
-            // ¹Ô¿ô¥«¥¦¥ó¥È
+            // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
             $writeRow++;
         }
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $writeData1_1 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (D7)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (D7)
         $writeCell1_1 = 'D'.'7';
-        // ÁÞÆþ¹Ô(157¹Ô)
+        // æŒ¿å…¥è¡Œ(157è¡Œ)
         $addCell1_1 = 0;
         if($writeRow > 157) {
             $addCell1_1 = $writeRow-157;
         }
-        // ÁÞÆþ¹ÔTotal
+        // æŒ¿å…¥è¡ŒTotal
         $addCellTotal += $addCell1_1;
 
-        // 2.ÆüËÜ±ß ¸ÜµÒÌ¾¤¬Null°Ê³°¤Î½¸·×
-        // 3.ÆüËÜ±ß 6102¤Î½¸·×
-        // 4.ÆüËÜ±ß 4410¤Î½¸·×
+        // 2.æ—¥æœ¬å†† é¡§å®¢åãŒNullä»¥å¤–ã®é›†è¨ˆ
+        // 3.æ—¥æœ¬å†† 6102ã®é›†è¨ˆ
+        // 4.æ—¥æœ¬å†† 4410ã®é›†è¨ˆ
         $row = [];
         $row6102 = [];
         $row4410 = [];
-        // ½ñ¤­¹þ¤ß¹Ô¿ô
+        // æ›¸ãè¾¼ã¿è¡Œæ•°
         $writeRow = 0;
         foreach((array)$aggregateData[1] as $code => $val) {
             for($i=0; $i+2 < COUNT($val); $i++){
@@ -220,7 +220,7 @@
                         $val[$i]['cursubtotal1'] ,
                         $val[$i]['curtaxprice1']
                     ];
-                    // ¹Ô¿ô¥«¥¦¥ó¥È
+                    // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
                     $writeRow++;
                 }
                 if($val[$i]['strcustomercode'] == '6102') {
@@ -243,31 +243,31 @@
                 }
             }
         }
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $writeData1_2 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E209)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E209)
         $writeCell1_2 = 'E' .(209+$addCellTotal);
-        // ÁÞÆþ¹Ô(6¹Ô)
+        // æŒ¿å…¥è¡Œ(6è¡Œ)
         $addCell1_2 = 0;
         if($writeRow > 6) {
             $addCell1_2 = $writeRow-6;
         }
-        // ÁÞÆþ¹ÔTotal
+        // æŒ¿å…¥è¡ŒTotal
         $addCellTotal += $addCell1_2;
 
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $writeData1_3 = mb_convert_encoding($row6102, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E216)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E216)
         $writeCell1_3 = 'E' .(216+$addCellTotal);
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $writeData1_4 = mb_convert_encoding($row4410, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E217)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E217)
         $writeCell1_4 = 'E' .(217+$addCellTotal);
 
 
-        // 1.¥É¥ë ¸ÜµÒËè¤Î½¸·×
+        // 1.ãƒ‰ãƒ« é¡§å®¢æ¯Žã®é›†è¨ˆ
         $row = [];
-        // ½ñ¤­¹þ¤ß¹Ô¿ô
+        // æ›¸ãè¾¼ã¿è¡Œæ•°
         $writeRow = 0;
         foreach((array)$aggregateData[2] as $code => $val) {
             for($i=0; $i+2 < COUNT($val); $i++){
@@ -279,45 +279,45 @@
                     $val[$i]['cursubtotal1'] ,
                     $val[$i]['curtaxprice1']
                 ];
-                // ¹Ô¿ô¥«¥¦¥ó¥È
+                // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
                 $writeRow++;
             }
-            // ¹ç·×ÃÍ
+            // åˆè¨ˆå€¤
             $row[] = [
                 '' ,
                 '' ,
                 '' ,
-                '¾®·×' ,
+                'å°è¨ˆ' ,
                 $val['cursubtotal'] ,
                 $val['curtaxprice'],
             ];
-            // ¹Ô¿ô¥«¥¦¥ó¥È
+            // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
             $writeRow++;
-            // ¹Ô´Ö
+            // è¡Œé–“
             $row[] = [];
-            // ¹Ô¿ô¥«¥¦¥ó¥È
+            // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
             $writeRow++;
         }
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $row = [];
         $writeData2_1 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (D242)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (D242)
         $writeCell2_1 = 'D'.(242+$addCellTotal);
-        // ÁÞÆþ¹Ô(31¹Ô)
+        // æŒ¿å…¥è¡Œ(31è¡Œ)
         $addCell2_1 = 0;
         if($writeRow > 31) {
             $addCell2_1 = $writeRow-31;
         }
-        // ÁÞÆþ¹ÔTotal
+        // æŒ¿å…¥è¡ŒTotal
         $addCellTotal += $addCell2_1;
 
-        // 2.¥É¥ë ¸ÜµÒÌ¾¤¬Null°Ê³°¤Î½¸·×
-        // 3.¥É¥ë 6102¤Î½¸·×
-        // 4.¥É¥ë 4410¤Î½¸·×
+        // 2.ãƒ‰ãƒ« é¡§å®¢åãŒNullä»¥å¤–ã®é›†è¨ˆ
+        // 3.ãƒ‰ãƒ« 6102ã®é›†è¨ˆ
+        // 4.ãƒ‰ãƒ« 4410ã®é›†è¨ˆ
         $row = [];
         $row6102 = [];
         $row4410 = [];
-        // ½ñ¤­¹þ¤ß¹Ô¿ô
+        // æ›¸ãè¾¼ã¿è¡Œæ•°
         $writeRow = 0;
         foreach((array)$aggregateData[2] as $code => $val) {
             for($i=0; $i+2 < COUNT($val); $i++){
@@ -329,7 +329,7 @@
                         $val[$i]['cursubtotal1'] ,
                         $val[$i]['curtaxprice1']
                     ];
-                    // ¹Ô¿ô¥«¥¦¥ó¥È
+                    // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
                     $writeRow++;
                 }
                 if($val[$i]['strcustomercode'] == '6102') {
@@ -352,32 +352,32 @@
                 }
             }
         }
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $row = [];
         $writeData2_2 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E298)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E298)
         $writeCell2_2 = 'E' .(298+$addCellTotal);
-        // ÁÞÆþ¹Ô(6¹Ô)
+        // æŒ¿å…¥è¡Œ(6è¡Œ)
         $addCell2_2 = 0;
         if($writeRow > 6) {
             $addCell2_2 = $writeRow-6;
         }
-        // ÁÞÆþ¹ÔTotal
+        // æŒ¿å…¥è¡ŒTotal
         $addCellTotal += $addCell2_2;
 
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $writeData2_3 = mb_convert_encoding($row6102, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E305)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E305)
         $writeCell2_3 = 'E' .(305+$addCellTotal);
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $writeData2_4 = mb_convert_encoding($row4410, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E306)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E306)
         $writeCell2_4 = 'E' .(306+$addCellTotal);
 
 
-        // 1.HK¥É¥ë ¸ÜµÒËè¤Î½¸·×
+        // 1.HKãƒ‰ãƒ« é¡§å®¢æ¯Žã®é›†è¨ˆ
         $row = [];
-        // ½ñ¤­¹þ¤ß¹Ô¿ô
+        // æ›¸ãè¾¼ã¿è¡Œæ•°
         $writeRow = 0;
         foreach((array)$aggregateData[3] as $code => $val) {
             for($i=0; $i+2 < COUNT($val); $i++){
@@ -389,45 +389,45 @@
                     $val[$i]['cursubtotal1'] ,
                     $val[$i]['curtaxprice1']
                 ];
-                // ¹Ô¿ô¥«¥¦¥ó¥È
+                // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
                 $writeRow++;
             }
-            // ¹ç·×ÃÍ
+            // åˆè¨ˆå€¤
             $row[] = [
                 '' ,
                 '' ,
                 '' ,
-                '¾®·×' ,
+                'å°è¨ˆ' ,
                 $val['cursubtotal'] ,
                 $val['curtaxprice'],
             ];
-            // ¹Ô¿ô¥«¥¦¥ó¥È
+            // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
             $writeRow++;
-            // ¹Ô´Ö
+            // è¡Œé–“
             $row[] = [];
-            // ¹Ô¿ô¥«¥¦¥ó¥È
+            // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
             $writeRow++;
         }
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
-        $row = ['3-1¥É¥ë³«»Ï'];
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
+        $row = ['3-1ãƒ‰ãƒ«é–‹å§‹'];
         $writeData3_1 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (D316)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (D316)
         $writeCell3_1 = 'D'.(316+$addCellTotal);
-        // ÁÞÆþ¹Ô(31¹Ô)
+        // æŒ¿å…¥è¡Œ(31è¡Œ)
         $addCell3_1 = 0;
         if($writeRow > 31) {
             $addCell3_1 = $writeRow-31;
         }
-        // ÁÞÆþ¹ÔTotal
+        // æŒ¿å…¥è¡ŒTotal
         $addCellTotal += $addCell3_1;
 
-        // 2.¥É¥ë ¸ÜµÒÌ¾¤¬Null°Ê³°¤Î½¸·×
-        // 3.¥É¥ë 6102¤Î½¸·×
-        // 4.¥É¥ë 4410¤Î½¸·×
+        // 2.ãƒ‰ãƒ« é¡§å®¢åãŒNullä»¥å¤–ã®é›†è¨ˆ
+        // 3.ãƒ‰ãƒ« 6102ã®é›†è¨ˆ
+        // 4.ãƒ‰ãƒ« 4410ã®é›†è¨ˆ
         $row = [];
         $row6102 = [];
         $row4410 = [];
-        // ½ñ¤­¹þ¤ß¹Ô¿ô
+        // æ›¸ãè¾¼ã¿è¡Œæ•°
         $writeRow = 0;
         foreach((array)$aggregateData[3] as $code => $val) {
             for($i=0; $i+2 < COUNT($val); $i++){
@@ -439,7 +439,7 @@
                         $val[$i]['cursubtotal1'] ,
                         $val[$i]['curtaxprice1']
                     ];
-                    // ¹Ô¿ô¥«¥¦¥ó¥È
+                    // è¡Œæ•°ã‚«ã‚¦ãƒ³ãƒˆ
                     $writeRow++;
                 }
                 if($val[$i]['strcustomercode'] == '6102') {
@@ -462,61 +462,61 @@
                 }
             }
         }
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $row = [];
         $writeData3_2 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E372)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E372)
         $writeCell3_2 = 'E' .(372+$addCellTotal);
-        // ÁÞÆþ¹Ô(6¹Ô)
+        // æŒ¿å…¥è¡Œ(6è¡Œ)
         $addCell3_2 = 0;
         if($writeRow > 6) {
             $addCell3_2 = $writeRow-6;
         }
-        // ÁÞÆþ¹ÔTotal
+        // æŒ¿å…¥è¡ŒTotal
         $addCellTotal += $addCell3_2;
 
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $writeData3_3 = mb_convert_encoding($row6102, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E379)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E379)
         $writeCell3_3 = 'E' .(379+$addCellTotal);
-        // ½ñ¤­¹þ¤ß¥Ç¡¼¥¿¤Îmb_convert_encoding
+        // æ›¸ãè¾¼ã¿ãƒ‡ãƒ¼ã‚¿ã®mb_convert_encoding
         $writeData3_4 = mb_convert_encoding($row4410, 'UTF-8','EUC-JP' );
-        // ½ñ¤­¹þ¤ß³«»Ï¹Ô (E380)
+        // æ›¸ãè¾¼ã¿é–‹å§‹è¡Œ (E380)
         $writeCell3_4 = 'E' .(380+$addCellTotal);
 
-        // ÆÉ¤ß¹þ¤ßÀßÄê
+        // èª­ã¿è¾¼ã¿è¨­å®š
         $reader = new PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
-        // ¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ëÌ¾
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å
         $baseFile = TMP_ROOT.'inv/aggregate.xlsx';
         $reader->setReadDataOnly(false);
         $baseSheet = $reader->load($baseFile);
 
-        //¥Æ¥ó¥×¥ì¡¼¥È¤ÎÊ£¼Ì
+        //ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®è¤‡å†™
         $clonedSheet = clone $baseSheet;
         $sheet = $clonedSheet->getActiveSheet();
-        // ½ñ¤­¹þ¤ßÀèÆ¬¹Ô
+        // æ›¸ãè¾¼ã¿å…ˆé ­è¡Œ
         $topRow = 8;
 
-        // ¥Ö¥Ã¥¯¤ËÃÍ¤òÀßÄê¤¹¤ë
-        // ÆüÉÕ(D1)
+        // ãƒ–ãƒƒã‚¯ã«å€¤ã‚’è¨­å®šã™ã‚‹
+        // æ—¥ä»˜(D1)
         $time = new DateTime($invoiceMonth);
 //         $timeStamp = $time->getTimestamp();
 //         $excelDateValue = new PhpOffice\PhpSpreadsheet\Date::PHPToExcel( $timeStamp );
         $title = mb_convert_encoding($time->format('Y/m/d'), 'UTF-8','EUC-JP' );
         $sheet->GetCell('D1')->SetValue($title);
-//         $sheet->getStyle('D1')->getNumberFormat()->setFormatCode('gggeÇ¯m·îÀÁµáÌÀºÙ¡¡¡ÊÄÌ²ß¡á¡ï¡Ë');
+//         $sheet->getStyle('D1')->getNumberFormat()->setFormatCode('gggeå¹´mæœˆè«‹æ±‚æ˜Žç´°ã€€ï¼ˆé€šè²¨ï¼ï¿¥ï¼‰');
 
-        // ¥·¡¼¥È¤Î¹Ô¿ôÄ´À°
+        // ã‚·ãƒ¼ãƒˆã®è¡Œæ•°èª¿æ•´
         if($addCell1_1 > 0) {
-            $sheet->insertNewRowBefore(8, $addCell1_1);         // 8¹ÔÌÜ¤Î¾å¤Ë$addCell1_1¹ÔÊ¬ÁÞÆþ
+            $sheet->insertNewRowBefore(8, $addCell1_1);         // 8è¡Œç›®ã®ä¸Šã«$addCell1_1è¡Œåˆ†æŒ¿å…¥
         }
         if($addCell1_2 > 0) {
             $addRow = 209+$addCell1_1;
-            $sheet->insertNewRowBefore($addRow, $addCell1_2);   // 209+¦Á¹ÔÌÜ¤Î¾å¤Ë$addCell1_2¹ÔÊ¬ÁÞÆþ
+            $sheet->insertNewRowBefore($addRow, $addCell1_2);   // 209+Î±è¡Œç›®ã®ä¸Šã«$addCell1_2è¡Œåˆ†æŒ¿å…¥
         }
 
-        // ¥Ç¡¼¥¿Å¾¼Ì
+        // ãƒ‡ãƒ¼ã‚¿è»¢å†™
         $sheet->fromArray($writeData1_1,NULL,$writeCell1_1);
         $sheet->fromArray($writeData1_2,NULL,$writeCell1_2);
         $sheet->fromArray($writeData1_3,NULL,$writeCell1_3);
@@ -532,15 +532,15 @@
         $sheet->fromArray($writeData3_3,NULL,$writeCell3_3);
         $sheet->fromArray($writeData3_4,NULL,$writeCell3_4);
 
-        $fileName = 'ÀÁµá½¸·×_' .$time->format('Ym') .'_ÄÌ²ßÌ¾.xlsx';
+        $fileName = 'è«‹æ±‚é›†è¨ˆ_' .$time->format('Ym') .'_é€šè²¨å.xlsx';
         $outFile  = mb_convert_encoding(FILE_UPLOAD_TMPDIR.$fileName, 'UTF-8','EUC-JP' );
 
-        //¥Ç¡¼¥¿¤ò½ñ¤­¹þ¤à
+        //ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€
         $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($clonedSheet);
 
 //         $writer->save($outFile);
 
-        // ¥À¥¦¥ó¥í¡¼¥É³«»Ï
+        // ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰é–‹å§‹
         header('Content-Description: File Transfer');
         header('Content-Disposition: attachment; filename="'.mb_convert_encoding($fileName, 'UTF-8','EUC-JP').'"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -554,7 +554,7 @@
     }
     else
    {
-       // HTML½ÐÎÏ
+       // HTMLå‡ºåŠ›
         $aryData['noDataMsg'] = '';
         echo fncGetReplacedHtmlWithBase("inv/base_aggregate.html", "inv/aggregate/index.tmpl", $aryData ,$objAuth );
    }

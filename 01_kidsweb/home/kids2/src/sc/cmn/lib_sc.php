@@ -1,36 +1,36 @@
 <?
 // ----------------------------------------------------------------------------
 /**
- *       Çä¾å´ÉÍı  ¸¡º÷´ØÏ¢´Ø¿ô·²
+ *       å£²ä¸Šç®¡ç†  æ¤œç´¢é–¢é€£é–¢æ•°ç¾¤
  *
  *
- *       ½èÍı³µÍ×
- *         ¡¦¸¡º÷·ë²Ì´ØÏ¢¤Î´Ø¿ô
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æ¤œç´¢çµæœé–¢é€£ã®é–¢æ•°
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
 /**
- * ¸¡º÷¹àÌÜ¤«¤é°ìÃ×¤¹¤ëºÇ¿·¤ÎÇä¾å¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®´Ø¿ô
+ * æ¤œç´¢é …ç›®ã‹ã‚‰ä¸€è‡´ã™ã‚‹æœ€æ–°ã®å£²ä¸Šãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆé–¢æ•°
  *
- *    ¸¡º÷¹àÌÜ¤«¤é SQLÊ¸¤òºîÀ®¤¹¤ë
+ *    æ¤œç´¢é …ç›®ã‹ã‚‰ SQLæ–‡ã‚’ä½œæˆã™ã‚‹
  *
- *    @param  Array     $displayColumns             É½¼¨ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
- *    @param  Array     $searchColumns         ¸¡º÷ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
- *    @param  Array     $from     ¸¡º÷ÆâÍÆ(from)¤ÎÇÛÎó
- *    @param  Array     $to       ¸¡º÷ÆâÍÆ(to)¤ÎÇÛÎó
- *    @param  Array     $searchValue  ¸¡º÷ÆâÍÆ¤ÎÇÛÎó
- *    @return Array     $strSQL ¸¡º÷ÍÑSQLÊ¸
+ *    @param  Array     $displayColumns             è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+ *    @param  Array     $searchColumns         æ¤œç´¢å¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+ *    @param  Array     $from     æ¤œç´¢å†…å®¹(from)ã®é…åˆ—
+ *    @param  Array     $to       æ¤œç´¢å†…å®¹(to)ã®é…åˆ—
+ *    @param  Array     $searchValue  æ¤œç´¢å†…å®¹ã®é…åˆ—
+ *    @return Array     $strSQL æ¤œç´¢ç”¨SQLæ–‡
  *    @access public
  */
 function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns)
 {
-    // ÌÀºÙ¸¡º÷¾ò·ï¿ô
+    // æ˜ç´°æ¤œç´¢æ¡ä»¶æ•°
     $detailConditionCount = 0;
 
-    // ¥¯¥¨¥ê¤ÎÁÈÎ©¤Æ
+    // ã‚¯ã‚¨ãƒªã®çµ„ç«‹ã¦
     $aryQuery = array();
     $aryQuery[] = "SELECT distinct";
     $aryQuery[] = "  s.lngSalesNo as lngSalesNo";
@@ -125,7 +125,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "          on sd1.lngreceiveno = r.lngreceiveno ";
     $aryQuery[] = "          and sd1.lngreceiverevisionno = r.lngrevisionno ";
 
-    // À½ÉÊ¥³¡¼¥É
+    // è£½å“ã‚³ãƒ¼ãƒ‰
     if (array_key_exists("strProductCode", $searchColumns) &&
         array_key_exists("strProductCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -154,7 +154,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = ")";
     }
 
-    // À½ÉÊÌ¾¾Î
+    // è£½å“åç§°
     if (array_key_exists("strProductName", $searchColumns) &&
         array_key_exists("strProductName", $searchValue)) {
         $detailConditionCount += 1;
@@ -165,7 +165,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
 
     }
 
-    // ¸ÜµÒÉÊÈÖ
+    // é¡§å®¢å“ç•ª
     if (array_key_exists("strGoodsCode", $searchColumns) &&
         array_key_exists("strGoodsCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -173,7 +173,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "p.strgoodscode = '" . pg_escape_string($searchValue["strGoodsCode"]) . "'";
     }
 
-    // ±Ä¶ÈÉô½ğ
+    // å–¶æ¥­éƒ¨ç½²
     if (array_key_exists("lngInChargeGroupCode", $searchColumns) &&
         array_key_exists("lngInChargeGroupCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -181,7 +181,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "mg.strGroupDisplayCode = '" . pg_escape_string($searchValue["lngInChargeGroupCode"]) . "'";
     }
 
-    // ³«È¯Ã´Åö¼Ô
+    // é–‹ç™ºæ‹…å½“è€…
     if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
         array_key_exists("lngInChargeUserCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -189,7 +189,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "mu.strUserDisplayCode = '" . pg_escape_string($searchValue["lngInChargeUserCode"]) . "'";
     }
 
-    // Çä¾å¶èÊ¬
+    // å£²ä¸ŠåŒºåˆ†
     if (array_key_exists("lngSalesClassCode", $searchColumns) &&
         array_key_exists("lngSalesClassCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -201,7 +201,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "WHERE";
     $aryQuery[] = " sd.lngSalesNo = s.lngSalesNo ";
 
-    // ÅĞÏ¿Æü
+    // ç™»éŒ²æ—¥
     if (array_key_exists("dtmInsertDate", $searchColumns) &&
         array_key_exists("dtmInsertDate", $from) &&
         array_key_exists("dtmInsertDate", $to)) {
@@ -216,7 +216,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         }
     }
 
-    // ÀÁµáÆü
+    // è«‹æ±‚æ—¥
     if (array_key_exists("dtmAppropriationDate", $searchColumns) &&
         array_key_exists("dtmAppropriationDate", $from) &&
         array_key_exists("dtmAppropriationDate", $to)) {
@@ -229,7 +229,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
                 " <= " . "'" . $to["dtmAppropriationDate"] . " 23:59:59.99999'";
         }
     }
-    // Çä¾åNo.
+    // å£²ä¸ŠNo.
     if (array_key_exists("strSalesCode", $searchColumns) &&
         array_key_exists("strSalesCode", $searchValue)) {
 
@@ -253,7 +253,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         }
         $aryQuery[] = ")";
     }
-    // ¸ÜµÒ¼õÃíÈÖ¹æ
+    // é¡§å®¢å—æ³¨ç•ªå·
     if (array_key_exists("strCustomerReceiveCode", $searchColumns) &&
         array_key_exists("strCustomerReceiveCode", $searchValue)) {
 
@@ -278,7 +278,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = ")";
     }
 
-    // Ç¼ÉÊ½ñNO.
+    // ç´å“æ›¸NO.
     if (array_key_exists("strSlipCode", $searchColumns) &&
         array_key_exists("strSlipCode", $searchValue)) {
 
@@ -302,19 +302,19 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = ")";
     }
 
-    // ÆşÎÏ¼Ô
+    // å…¥åŠ›è€…
     if (array_key_exists("lngInputUserCode", $searchColumns) &&
         array_key_exists("lngInputUserCode", $searchValue)) {
         $aryQuery[] = " AND input_u.strUserDisplayCode = '" . $searchValue["lngInputUserCode"] . "'";
     }
 
-    // ¸ÜµÒ
+    // é¡§å®¢
     if (array_key_exists("lngCustomerCompanyCode", $searchColumns) &&
         array_key_exists("lngCustomerCompanyCode", $searchValue)) {
         $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCompanyCode"] . "'";
     }
 
-    // ¾õÂÖ
+    // çŠ¶æ…‹
     if (array_key_exists("lngSalesStatusCode", $searchColumns) &&
         array_key_exists("lngSalesStatusCode", $searchValue)) {
         if (is_array($searchValue["lngSalesStatusCode"])) {
@@ -346,7 +346,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "  AND s.lngRevisionNo >= 0 ";
     }
 
-    // ¥¯¥¨¥ê¤òÊ¿°×¤ÊÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚¯ã‚¨ãƒªã‚’å¹³æ˜“ãªæ–‡å­—åˆ—ã«å¤‰æ›
     $strQuery = implode("\n", $aryQuery);
 
     return $strQuery;

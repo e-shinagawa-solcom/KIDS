@@ -1,17 +1,17 @@
 <?
 /**
- *    Ä¢É¼½ĞÎÏ ÀÁµá½ñ °õºş´°Î»²èÌÌ
+ *    å¸³ç¥¨å‡ºåŠ› è«‹æ±‚æ›¸ å°åˆ·å®Œäº†ç”»é¢
  *
  */
-// °õºş¥×¥ì¥Ó¥å¡¼²èÌÌ( * ¤Ï»ØÄêÄ¢É¼¤Î¥Õ¥¡¥¤¥ëÌ¾ )
+// å°åˆ·ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢( * ã¯æŒ‡å®šå¸³ç¥¨ã®ãƒ•ã‚¡ã‚¤ãƒ«å )
 // listoutput.php -> strSessionID       -> action.php
 // listoutput.php -> strReportKeyCode   -> action.php
 // listoutput.php -> lngReportCode      -> action.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require SRC_ROOT . "/list/cmn/lib_lo.php";
 require SRC_ROOT . "m/cmn/lib_m.php";
@@ -22,7 +22,7 @@ $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ($_POST) {
     $aryData = $_POST;
@@ -30,22 +30,22 @@ if ($_POST) {
     $aryData = $_GET;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["strReportKeyCode"] = "null:number(0,99999999)";
 
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
-// »ØÄê¥­¡¼¥³¡¼¥É¤ÎÄ¢É¼¥Ç¡¼¥¿¤ò¼èÆÀ
+// æŒ‡å®šã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å¸³ç¥¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 $strQuery = fncGetCopyFilePathQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -57,7 +57,7 @@ if ($lngResultNum === 1) {
     $objDB->freeResult($lngResultID);
 }
 
-// ¥Ç¡¼¥¿¼èÆÀ¥¯¥¨¥ê
+// ãƒ‡ãƒ¼ã‚¿å–å¾—ã‚¯ã‚¨ãƒª
 $strQuery = fncGetListOutputQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $objDB);
 
 $objMaster = new clsMaster();
@@ -68,23 +68,23 @@ $aryParts = &$objMaster->aryData[0];
 unset($aryQuery);
 
 if ($lngResultNum === 1) {
-    // °õºş²ó¿ô¤ò¹¹¿·¤¹¤ë
+    // å°åˆ·å›æ•°ã‚’æ›´æ–°ã™ã‚‹
     fncUpdatePrintCount(DEF_REPORT_INV, $aryParts, $objDB);
-// Ä¢É¼¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢¥³¥Ô¡¼Ä¢É¼¥Õ¥¡¥¤¥ë¤òÀ¸À®¡¢ÊİÂ¸
+// å¸³ç¥¨ãŒå­˜åœ¨ã—ãªã„å ´åˆã€ã‚³ãƒ”ãƒ¼å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã€ä¿å­˜
 } else if ($lngResultNum === 0) {
-    // ¾ÜºÙ¼èÆÀ
+    // è©³ç´°å–å¾—
     $strQuery = fncGetInvDetailQuery($aryData["strReportKeyCode"], $aryParts["lngrevisionno"]);
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum < 1) {
-        fncOutputError(9051, DEF_FATAL, "Ä¢É¼¾ÜºÙ¥Ç¡¼¥¿¤¬Â¸ºß¤·¤Ş¤»¤ó¤Ç¤·¤¿¡£", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "å¸³ç¥¨è©³ç´°ãƒ‡ãƒ¼ã‚¿ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã§ã—ãŸã€‚", true, "", $objDB);
     }
 
-    // ¥Õ¥£¡¼¥ë¥ÉÌ¾¼èÆÀ
+    // ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åå–å¾—
     for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
         $aryKeys[] = pg_field_name($lngResultID, $i);
     }
 
-    // ¹Ô¿ô¤À¤±¥Ç¡¼¥¿¼èÆÀ¡¢ÇÛÎó¤ËÂåÆş
+    // è¡Œæ•°ã ã‘ãƒ‡ãƒ¼ã‚¿å–å¾—ã€é…åˆ—ã«ä»£å…¥
     for ($i = 0; $i < $lngResultNum; $i++) {
         $aryResult = $objDB->fetchArray($lngResultID, $i);
         for ($j = 0; $j < count($aryKeys); $j++) {
@@ -93,18 +93,18 @@ if ($lngResultNum === 1) {
     }
     $objDB->freeResult($lngResultID);
 
-    // HTML½ĞÎÏ
+    // HTMLå‡ºåŠ›
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("list/result/inv.html");
     $aryParts["totalprice_unitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["totalprice"];
-    $aryParts["dtminvoicedate"] = convert_jpdt($aryParts["dtminvoicedate"], 'Ç¯m·î');
+    $aryParts["dtminvoicedate"] = convert_jpdt($aryParts["dtminvoicedate"], 'å¹´mæœˆ');
     $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"], '.m.d', false);
     if ($aryData["reprintFlag"]) {
-        $aryParts["reprintMsg"] = "ºÆ°õºş";
+        $aryParts["reprintMsg"] = "å†å°åˆ·";
     } else {
         $aryParts["reprintMsg"] = "";
     }
-    // ÃÖ¤­´¹¤¨
+    // ç½®ãæ›ãˆ
     $objTemplate->replace($aryParts);
     $objTemplate->complete();
 
@@ -112,29 +112,29 @@ if ($lngResultNum === 1) {
 
     $objDB->transactionBegin();
 
-    // ¥·¡¼¥±¥ó¥¹È¯¹Ô
+    // ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç™ºè¡Œ
     $lngSequence = fncGetSequence("t_Report.lngReportCode", $objDB);
 
-    // Ä¢É¼¥Æ¡¼¥Ö¥ë¤ËINSERT
+    // å¸³ç¥¨ãƒ†ãƒ¼ãƒ–ãƒ«ã«INSERT
     $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_INV . ", " . $aryParts["lnginvoiceno"] . ", '', '$lngSequence' )";
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     $objDB->freeResult($lngResultID);
 
-    // °õºş²ó¿ô¤ò¹¹¿·¤¹¤ë
+    // å°åˆ·å›æ•°ã‚’æ›´æ–°ã™ã‚‹
     fncUpdatePrintCount(DEF_REPORT_INV, $aryParts, $objDB);
 
-    // Ä¢É¼¥Õ¥¡¥¤¥ë¥ª¡¼¥×¥ó
+    // å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
     if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {
         list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
-        fncOutputError(9059, DEF_FATAL, "Ä¢É¼¥Õ¥¡¥¤¥ë¤Î¥ª¡¼¥×¥ó¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", true, "", $objDB);
+        fncOutputError(9059, DEF_FATAL, "å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, "", $objDB);
     }
 
-    // Ä¢É¼¥Õ¥¡¥¤¥ë¤Ø¤Î½ñ¤­¹ş¤ß
+    // å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®æ›¸ãè¾¼ã¿
     if (!fwrite($fp, $strHtml)) {
         list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
-        fncOutputError(9059, DEF_FATAL, "Ä¢É¼¥Õ¥¡¥¤¥ë¤Î½ñ¤­¹ş¤ß¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", true, "", $objDB);
+        fncOutputError(9059, DEF_FATAL, "å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, "", $objDB);
     }
 
     $objDB->transactionCommit();

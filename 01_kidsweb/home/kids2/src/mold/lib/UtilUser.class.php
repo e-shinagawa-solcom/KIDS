@@ -4,46 +4,46 @@ require_once (SRC_ROOT.'/mold/lib/WithQuery.class.php');
 require_once (SRC_ROOT.'/mold/lib/exception/SQLException.class.php');
 
 /**
- * �桼���ޥ����˴�Ϣ����������󶡤���
- * clsDB����Ѥ��Ƥ��뤬�������Դ����ʰ����դ��뤳��
+ * ユーザマスタに関連する処理を提供する
+ * clsDBを使用しているが処理が不完全な為注意すること
  *
  * @see clsDB
  */
 class UtilUser extends WithQuery
 {
 	/**
-	 * �桼�������ɤ��˥桼����ɽ��̾���������
+	 * ユーザコードを基にユーザの表示名を取得する
 	 *
-	 * @param string $userCode �桼��������
-	 * @return ɽ���桼��̾
+	 * @param string $userCode ユーザコード
+	 * @return 表示ユーザ名
 	 */
 	public function selectDisplayNameByUserCode($userCode)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"userCode" => pg_escape_string($userCode)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ɽ��̾�μ���
+				// 表示名の取得
 				$result = $record["struserdisplayname"];
 			}
 			else
 			{
 				throw new SQLException(
-						"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+						"検索条件に一致するレコードが存在しませんでした。",
 						$query,
 						$param
 				);
@@ -52,7 +52,7 @@ class UtilUser extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -62,38 +62,38 @@ class UtilUser extends WithQuery
 	}
 
 	/**
-	 * �桼�������ɤ��˥桼����ɽ�������ɤ��������
+	 * ユーザコードを基にユーザの表示コードを取得する
 	 *
-	 * @param string $userCode �桼��������
-	 * @return ɽ���桼��̾
+	 * @param string $userCode ユーザコード
+	 * @return 表示ユーザ名
 	 */
 	public function selectDisplayCodeByUserCode($userCode)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"userCode" => pg_escape_string($userCode)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ɽ��̾�μ���
+				// 表示名の取得
 				$result = $record["struserdisplaycode"];
 			}
 			else
 			{
 				throw new SQLException(
-						"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+						"検索条件に一致するレコードが存在しませんでした。",
 						$query,
 						$param
 						);
@@ -102,7 +102,7 @@ class UtilUser extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -112,42 +112,42 @@ class UtilUser extends WithQuery
 	}
 
 	/**
-	 * ɽ���桼�������ɤ��˥桼�������ɤ��������
+	 * 表示ユーザコードを基にユーザコードを取得する
 	 *
-	 * @param string $displayUserCode ɽ���桼��������
-	 * @param boolean $required �������ɬ�ܥե饰
-	 * @return �桼��������
+	 * @param string $displayUserCode 表示ユーザコード
+	 * @param boolean $required 索引結果必須フラグ
+	 * @return ユーザコード
 	 */
 	public function selectUserCodeByDisplayUserCode($displayUserCode, $required = true)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"struserdisplaycode" => pg_escape_string($displayUserCode)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ɽ��̾�μ���
+				// 表示名の取得
 				$result = $record["lngusercode"];
 			}
 			else
 			{
-				// ��̤�ɬ�ܤξ��
+				// 結果が必須の場合
 				if ($required)
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 					);
@@ -157,7 +157,7 @@ class UtilUser extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -168,7 +168,7 @@ class UtilUser extends WithQuery
 
 	/**
 	 * <pre>
-	 * ɽ���桼�������ɤ��桼���ޥ������¸�ߤ����Τ������å���Ԥ�
+	 * 表示ユーザコードがユーザマスタ上に存在するものかチェックを行う
 	 * </pre>
 	 *
 	 * @param string $userDisplayCode
@@ -181,18 +181,18 @@ class UtilUser extends WithQuery
 		if(is_string($userDisplayCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"strgroupdisplaycode" => pg_escape_string($userDisplayCode)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -201,7 +201,7 @@ class UtilUser extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -210,8 +210,8 @@ class UtilUser extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($userDisplayCode)
+					"引数の型が不正です。".
+					"引数1:".gettype($userDisplayCode)
 					);
 		}
 
@@ -220,11 +220,11 @@ class UtilUser extends WithQuery
 
 	/**
 	 * <pre>
-	 * ɽ���桼�������ɤ����ꤵ�줿ɽ�����롼�ץ����ɤ�ɳ�դ���Τ������å���Ԥ�
+	 * 表示ユーザコードが指定された表示グループコードと紐付くものかチェックを行う
 	 * </pre>
 	 *
-	 * @param string $userDisplayCode ɽ���桼��������
-	 * @param string $groupDisplayCode ɽ�����롼�ץ�����
+	 * @param string $userDisplayCode 表示ユーザコード
+	 * @param string $groupDisplayCode 表示グループコード
 	 * @return boolean
 	 */
 	public function existsUserCodeWithGroupCode($userDisplayCode, $groupDisplayCode)
@@ -234,19 +234,19 @@ class UtilUser extends WithQuery
 		if(is_string($userDisplayCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"struserdisplaycode" => pg_escape_string($userDisplayCode),
 					"strgroupdisplaycode" => pg_escape_string($groupDisplayCode)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -255,7 +255,7 @@ class UtilUser extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -264,9 +264,9 @@ class UtilUser extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($userDisplayCode).
-					"����2:".gettype($groupDisplayCode)
+					"引数の型が不正です。".
+					"引数1:".gettype($userDisplayCode).
+					"引数2:".gettype($groupDisplayCode)
 					);
 		}
 

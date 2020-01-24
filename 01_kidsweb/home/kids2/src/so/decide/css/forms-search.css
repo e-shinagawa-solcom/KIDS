@@ -1,4 +1,4 @@
-/* ¥ª¥×¥·¥ç¥ó¥Ü¥Ã¥¯¥¹ */
+/* ã‚ªãƒ—ã‚·ãƒ§ãƒ³ãƒœãƒƒã‚¯ã‚¹ */
 .option-box
 {
     position: absolute;
@@ -11,36 +11,36 @@
     width: 30px;
 }
 
-/* ¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹ ¥×¥ì¡¼¥¹¥Û¥ë¥À */
+/* ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ ãƒ—ãƒ¬ãƒ¼ã‚¹ãƒ›ãƒ«ãƒ€ */
 input:-ms-input-placeholder {
     color: #cccccc;
     text-align: center;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¤½¤ÎÂ¾ */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãã®ä»– */
 input.note
 {
     width: 38em;
 }
 
-/* ¥µ¥Ö¥ß¥Ã¥È¥Ü¥¿¥ó ÈóÉ½¼¨¡¡*/
+/* ã‚µãƒ–ãƒŸãƒƒãƒˆãƒœã‚¿ãƒ³ éè¡¨ç¤ºã€€*/
 input[type="submit"]{
     display: none;
 }
 
-/* ¥Æ¥­¥¹¥ÈÆşÎÏ ¶¦ÄÌ */
+/* ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ› å…±é€š */
 input:focus, textarea:focus
 {
     background-color: #c7d0cb;
 }
 
-/* ¥Æ¥­¥¹¥ÈÆşÎÏ ¶¦ÄÌ readonly¤Î¾ì¹ç¤ÏÇØ·Ê¿§¤òÊÑ¤¨¤Ê¤¤ */
+/* ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ› å…±é€š readonlyã®å ´åˆã¯èƒŒæ™¯è‰²ã‚’å¤‰ãˆãªã„ */
 input[readonly]:focus
 {
     background-color: #ffffff;
 }
 
-/* ¸¡º÷/É½¼¨ Á´ÀÚ¤êÂØ¤¨¥Ü¥¿¥ó */
+/* æ¤œç´¢/è¡¨ç¤º å…¨åˆ‡ã‚Šæ›¿ãˆãƒœã‚¿ãƒ³ */
 img.toggle-search
 {
     margin: 0px 17px 0px 17px;
@@ -51,7 +51,7 @@ img.toggle-display
     margin: 0px 17px 0px 8px;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à¶¦ÄÌÇØ·ÊÏÈ ±¦¥µ¥¤¥É¥Ğ¡¼¥¿¥ÖÍ­¤ê */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ å…±é€šèƒŒæ™¯æ  å³ã‚µã‚¤ãƒ‰ãƒãƒ¼ã‚¿ãƒ–æœ‰ã‚Š */
 .form-box
 {
     position: relative;
@@ -68,7 +68,7 @@ img.toggle-display
 
     background-color: #d6d0b1;
 }
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥Ø¥Ã¥À */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ˜ãƒƒãƒ€ */
 .form-box__header
 {
     position: absolute;
@@ -84,7 +84,7 @@ img.toggle-display
     border-top-right-radius: 15px;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥Ø¥Ã¥À¥¿¥¤¥È¥ë */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ˜ãƒƒãƒ€ã‚¿ã‚¤ãƒˆãƒ« */
 .form-box__header__title
 {
     margin: 8px 12px;
@@ -95,7 +95,7 @@ img.toggle-display
     line-height: 12px;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥³¥ó¥Æ¥ó¥Ä */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ */
 .form-box__contents
 {
     margin: 40px 10px 20px;
@@ -103,12 +103,12 @@ img.toggle-display
     height: auto;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¹Ô */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  è¡Œ */
 .regist-line
 {
     margin: 1px 3px 4px 0px;
 }
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥é¥Ù¥ë */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ©ãƒ™ãƒ« */
 .regist-label
 {
     display: inline-block;
@@ -123,14 +123,14 @@ img.toggle-display
     background-color: #e8f0f1;
 }
 
-/* ¥é¥Ù¥ë¤Î»ÒÍ×ÁÇ¤ò½ÄÃæ±û¤ËÂ·¤¨¤ë */
+/* ãƒ©ãƒ™ãƒ«ã®å­è¦ç´ ã‚’ç¸¦ä¸­å¤®ã«æƒãˆã‚‹ */
 .regist-label *,
 .search-label--textonly *
 {
     vertical-align: middle;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥é¥Ù¥ë¥Æ¥­¥¹¥È */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ©ãƒ™ãƒ«ãƒ†ã‚­ã‚¹ãƒˆ */
 .regist-label__text
 {
     display: inline-block;
@@ -139,7 +139,7 @@ img.toggle-display
     background-color: #e8f0f1;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥é¥Ù¥ë¥Æ¥­¥¹¥È¤Î¤ß */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ©ãƒ™ãƒ«ãƒ†ã‚­ã‚¹ãƒˆã®ã¿ */
 .regist-label--text-only
 {
     display: inline-block;
@@ -149,7 +149,7 @@ img.toggle-display
     background-color: #e8f0f1;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  */
 .msw-button
 {
     display: inline;
@@ -158,7 +158,7 @@ img.toggle-display
     width: 18px;
     height: 18px;
 }
-/* ¥Õ¥©¡¼¥à ¥Ü¥¿¥ó */
+/* ãƒ•ã‚©ãƒ¼ãƒ  ãƒœã‚¿ãƒ³ */
 .form-buttons
 {
     position: absolute; 
@@ -169,13 +169,13 @@ img.toggle-display
     text-align: right;
 }
 
-/* ¥¯¥ê¥¢¥Ü¥¿¥ó */
+/* ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³ */
 .form-buttons__clear
 {
     float: right;
 }
 
-/* ÅĞÏ¿¥Ü¥¿¥ó */
+/* ç™»éŒ²ãƒœã‚¿ãƒ³ */
 .form-buttons__search
 {
     float: left;

@@ -2,19 +2,19 @@
 
 
 //------------------------------------------------------------
-// ²òÀâ : ÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ´Ø¿ô
+// è§£èª¬ : æ—¥æœ¬èªžãƒ»è‹±èªžåˆ‡æ›¿é–¢æ•°
 //------------------------------------------------------------
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ±Ñ¸ì
+	// è‹±èªž
 	if( lngSelfCode == 0 )
 	{
 		RestartBt.innerHTML = restartBtE1;
 		StopBt.innerHTML    = stopBtE1;
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èªž
 	else if( lngSelfCode == 1 )
 	{
 		RestartBt.innerHTML = restartBtJ1;

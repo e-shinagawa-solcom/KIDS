@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       È¯Ãí´ÉÍı  È¯Ãí½ñºï½ü
+*       ç™ºæ³¨ç®¡ç†  ç™ºæ³¨æ›¸å‰Šé™¤
 *
 *
 *       @package    K.I.D.S.
@@ -13,20 +13,20 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦»ØÄêÈ¯Ãí½ñ¥Ç¡¼¥¿¤Îºï½ü½èÍı
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»æŒ‡å®šç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤å‡¦ç†
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "po/cmn/lib_pos1.php");
 require (SRC_ROOT . "list/cmn/lib_lo.php");
@@ -35,13 +35,13 @@ require (SRC_ROOT . "po/cmn/column.php");
 require_once (LIB_DEBUGFILE);
 require (LIB_EXCLUSIVEFILE);
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_GET )
 {
@@ -53,32 +53,32 @@ else if ( $_POST )
 }
 if ( !isset($aryData["lngPurchaseOrderNo"]) )
 {
-	fncOutputError ( 9061, DEF_ERROR, "¥Ç¡¼¥¿°Û¾ï¤Ç¤¹¡£", TRUE, "", $objDB );
+	fncOutputError ( 9061, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ç•°å¸¸ã§ã™ã€‚", TRUE, "", $objDB );
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["lngPurchaseOrderNo"]	  = "null:number(0,10)";
 // $aryResult = fncAllCheck( $aryData, $aryCheck );
 // fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¥³¡¼¥É¤Î¼èÆÀ
+// ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å–å¾—
 $lngInputUserCode = $objAuth->UserCode;
 
 
-// ¸¢¸Â³ÎÇ§
-// 510 È¯Ãí´ÉÍı¡ÊÈ¯Ãí½ñ¸¡º÷¡Ë
+// æ¨©é™ç¢ºèª
+// 510 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨æ›¸æ¤œç´¢ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_PO10, $objAuth ) )
 {
-	fncOutputError ( 9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
-// 513 È¯Ãí´ÉÍı¡ÊÈ¯Ãí½ñºï½ü¡Ë
+// 513 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨æ›¸å‰Šé™¤ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_PO13, $objAuth ) )
 {
-	fncOutputError ( 9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 //$aryPurchaseOrderNo = explode(",", $aryData["lngPurchaseOrderNo"]);
@@ -90,37 +90,37 @@ $lngrevisionno = $aryData["lngRevisionNo"];
 if($_POST){
 //echo "delete key:" . $lngpurchaseorderno . "-" . $lngrevisionno . "<br>";
 	
-	// È¯Ãí½ñ¤Ë´ğ¤Å¤¯È¯Ãí½ñ¥Ş¥¹¥¿¤ÎÃæ¤Ë¡ÖÇ¼ÉÊºÑ¡×¤¬Â¸ºß¤·¤¿¾ì¹ç¤Ï¥¨¥é¡¼
+	// ç™ºæ³¨æ›¸ã«åŸºã¥ãç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ã®ä¸­ã«ã€Œç´å“æ¸ˆã€ãŒå­˜åœ¨ã—ãŸå ´åˆã¯ã‚¨ãƒ©ãƒ¼
 	//if(
 	$objDB->transactionBegin();
 
-	// È¯Ãí½ñ¥Ş¥¹¥¿¥í¥Ã¥¯
+	// ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ãƒ­ãƒƒã‚¯
     if( !lockOrder($lngpurchaseorderno, $objDB) )
     {
-        fncOutputError(9051, DEF_ERROR, "È¯Ãí½ñ¤Î¥í¥Ã¥¯¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", true, "", $objDB);
+        fncOutputError(9051, DEF_ERROR, "ç™ºæ³¨æ›¸ã®ãƒ­ãƒƒã‚¯å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, "", $objDB);
         return false;
     }
     
-    // È¯Ãí½ñ¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+    // ç™ºæ³¨æ›¸æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
     if( isPurchaseOrderModified($lngpurchaseorderno, $lngrevisionno, $objDB) )
     {
-        fncOutputError(9051, DEF_ERROR, "Â¾¥æ¡¼¥¶¡¼¤¬È¯Ãí½ñ¤ò¹¹¿·¤Ş¤¿¤Ïºï½ü¤·¤Æ¤¤¤Ş¤¹¡£", true, "", $objDB);
+        fncOutputError(9051, DEF_ERROR, "ä»–ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒç™ºæ³¨æ›¸ã‚’æ›´æ–°ã¾ãŸã¯å‰Šé™¤ã—ã¦ã„ã¾ã™ã€‚", true, "", $objDB);
         return false;
     }
 	
-    // È¯Ãí¥Ç¡¼¥¿¥í¥Ã¥¯&¥¹¥Æ¡¼¥¿¥¹¥Á¥§¥Ã¥¯
+    // ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒƒã‚¯&ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒã‚§ãƒƒã‚¯
     if( !fncCanDeletePO($lngpurchaseorderno, $lngrevisionno, $objDB))
     {
-        fncOutputError(9051, DEF_ERROR, "Ç¼ÉÊºÑ¤Ş¤¿¤ÏÄù¤áºÑ¤ÎÌÀºÙ¤¬¤¢¤ë¤¿¤áºï½ü¤Ç¤­¤Ş¤»¤ó¡£", true, "", $objDB);
+        fncOutputError(9051, DEF_ERROR, "ç´å“æ¸ˆã¾ãŸã¯ç· ã‚æ¸ˆã®æ˜ç´°ãŒã‚ã‚‹ãŸã‚å‰Šé™¤ã§ãã¾ã›ã‚“ã€‚", true, "", $objDB);
     }
     
 	$aryCancelOrderDetail = fncGetDeletePurchaseOrderDetailByPo($lngpurchaseorderno, $lngrevisionno, $objDB);
 	$aryPurchaseOrder = fncGetPurchaseOrder2($lngpurchaseorderno, $lngrevisionno, $objDB);
 	$aryOrder = $aryPurchaseOrder;
-    // ºï½üÂĞ¾İ¤È¤Ê¤Ã¤¿È¯Ãí½ñ¤Ë´ğ¤Å¤¯È¯Ãí½ñ¥Ş¥¹¥¿¤Î¥¹¥Æ¡¼¥¿¥¹¤ò¡Ö²¾¼õÃí¡×¤ËÊÑ¹¹
+    // å‰Šé™¤å¯¾è±¡ã¨ãªã£ãŸç™ºæ³¨æ›¸ã«åŸºã¥ãç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’ã€Œä»®å—æ³¨ã€ã«å¤‰æ›´
 	if(!fncCancelOrderByPo($lngpurchaseorderno, $lngrevisionno, $objDB)){ return false; }
     
-	// ºï½üÂĞ¾İ¤ÎÈ¯Ãí½ñ¥Ş¥¹¥¿¤Ë¥ê¥Ó¥¸¥ç¥ó-1¤Î¥Ç¡¼¥¿¤òÄÉ²Ã
+	// å‰Šé™¤å¯¾è±¡ã®ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ã«ãƒªãƒ“ã‚¸ãƒ§ãƒ³-1ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
 	//$aryOrder = fncGetPurchaseOrder2($lngpurchaseorderno, $alngrevisionno, $objDB);
 	//$orgRevision = $aryOrder["lngrevisionno"];
 	//$aryOrder["lngpurchaseorderno"] = $lngpurchaseorderno;
@@ -158,7 +158,7 @@ if($_POST){
 	//$objDB->transactionRollback();
 	$objDB->transactionCommit();
 
-	$aryHtml[] = "<p class=\"caption\">³ºÅö¤ÎÈ¯Ãí½ñ¤òºï½ü¤·¤Ş¤·¤¿</p>";
+	$aryHtml[] = "<p class=\"caption\">è©²å½“ã®ç™ºæ³¨æ›¸ã‚’å‰Šé™¤ã—ã¾ã—ãŸ</p>";
 	$aryHtml[] = fncDeletePurchaseOrderHtml($aryPurchaseOrder, $aryCancelOrderDetail, $aryData["strSessionID"]);
 
 	if($aryHtml){
@@ -169,7 +169,7 @@ if($_POST){
 		$objTemplate->complete();
 		echo $objTemplate->strTemplate;
 	} else {
-		fncOutputError ( 9051, DEF_ERROR, "¹¹¿·ÂĞ¾İ¤ÎÈ¯Ãí½ñ¥Ş¥¹¥¿¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "æ›´æ–°å¯¾è±¡ã®ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 		return FALSE;
 	}
 	
@@ -179,15 +179,15 @@ if($_POST){
 
 //echo "start key:" . $lngpurchaseorderno . "-" . $lngrevisionno . "<br>";
 
-// È¯Ãí½ñºï½ü³ÎÇ§²èÌÌ
-// È¯Ãí½ñ¥Ş¥¹¥¿¤ò¼èÆÀ
+// ç™ºæ³¨æ›¸å‰Šé™¤ç¢ºèªç”»é¢
+// ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ã‚’å–å¾—
 $aryResult = fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB);
 
-// ¼èÆÀ¥Ç¡¼¥¿¤ÎÄ´À°
+// å–å¾—ãƒ‡ãƒ¼ã‚¿ã®èª¿æ•´
 $aryNewResult = fncSetPurchaseHeadTabelData($aryResult[0]);
 
-////////// ÌÀºÙ¹Ô¤Î¼èÆÀ ////////////////////
-// È¯Ãí½ñÌÀºÙ¤ò¼èÆÀ
+////////// æ˜ç´°è¡Œã®å–å¾— ////////////////////
+// ç™ºæ³¨æ›¸æ˜ç´°ã‚’å–å¾—
 
 $strQuery = fncGetPurchaseOrderDetailSQL($lngpurchaseorderno, $lngrevisionno);
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -206,15 +206,15 @@ for ( $i = 0; $i < count($aryDetailResult); $i++)
 {
 	$aryNewDetailResult[$i] = fncSetPurchaseDetailTabelData ( $aryDetailResult[$i], $aryNewResult );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "po/result2/parts_detail.tmpl" );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryNewDetailResult[$i] );
 	$objTemplate->complete();
 
-	// HTML½ĞÎÏ
+	// HTMLå‡ºåŠ›
 	$aryDetailTable[] = $objTemplate->strTemplate;
 }
 
@@ -224,20 +224,20 @@ $aryNewResult["strResult"] = implode ("\n", $aryDetailTable );
 $aryNewResult["strAction"] = "index3.php";
 $aryNewResult["strMode"] = "detail";
 $aryNewResult["strSessionID"] = $aryData["strSessionID"];
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "po/result2/parts3.tmpl" );
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $aryNewResult );
 $objTemplate->complete();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 
 $objDB->close();
-return true;// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+return true;// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 
 
 ?>

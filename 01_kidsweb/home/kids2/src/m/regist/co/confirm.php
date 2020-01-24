@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ²ñ¼Ò¥Ş¥¹¥¿ ³ÎÇ§²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† ä¼šç¤¾ãƒã‚¹ã‚¿ ç¢ºèªç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,7 +10,7 @@
 *	@version   1.00
 *
 */
-// ÅĞÏ¿¡¢½¤Àµ
+// ç™»éŒ²ã€ä¿®æ­£
 // edit.php -> strSessionID           -> confirm.php
 // edit.php -> lngActionCode          -> confirm.php
 // edit.php -> lngcompanycode         -> confirm.php
@@ -34,12 +34,12 @@
 // edit.php -> lngcloseddaycode       -> confirm.php
 // edit.php -> aryattributecode       -> confirm.php
 //
-// ºï½ü
+// å‰Šé™¤
 // index.php -> strSessionID          -> confirm.php
 // index.php -> lngActionCode         -> confirm.php
 // index.php -> lngcompanycode        -> confirm.php
 //
-// ÅĞÏ¿¡¢½¤Àµ¼Â¹Ô¤Ø
+// ç™»éŒ²ã€ä¿®æ­£å®Ÿè¡Œã¸
 // confirm.php -> strSessionID           -> action.php
 // confirm.php -> lngActionCode          -> action.php
 // confirm.php -> lngcompanycode         -> action.php
@@ -63,41 +63,41 @@
 // confirm.php -> lngcloseddaycode       -> action.php
 // confirm.php -> strattributecode       -> action.php
 //
-// ºï½ü¼Â¹Ô¤Ø
+// å‰Šé™¤å®Ÿè¡Œã¸
 // confirm.php -> strSessionID          -> action.php
 // confirm.php -> lngActionCode         -> action.php
 // confirm.php -> lngcompanycode        -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 {
-	// Ê£¿ôÁªÂò¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤«¤éÂ°À­¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë
+	// è¤‡æ•°é¸æŠã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã‹ã‚‰å±æ€§ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 preg_match_all ( "/(aryattributecode)=(\d+)/", $_SERVER["QUERY_STRING"], $aryAttribute );
 	$lngLength = count ( $aryAttribute[2] );
 
 	for ( $i = 0; $i < $lngLength; $i++ )
 	{
-		// Â°À­¿ôÃÍ¥Á¥§¥Ã¥¯
+		// å±æ€§æ•°å€¤ãƒã‚§ãƒƒã‚¯
 		if ( fncCheckString( $aryAttribute[2][$i], "number(0,2147483647)" ) == "" )
 		{
 			$aryAttributeCode[] = $aryAttribute[2][$i];
 
-			// ËÜ¼Ò¤Ş¤¿¤Ï¸ÜµÒÂ°À­¤À¤Ã¤¿¾ì¹ç¡¢¤½¤ì¤¾¤ì¤Î¥Õ¥é¥°¿¿
+			// æœ¬ç¤¾ã¾ãŸã¯é¡§å®¢å±æ€§ã ã£ãŸå ´åˆã€ãã‚Œãã‚Œã®ãƒ•ãƒ©ã‚°çœŸ
 			if ( $aryAttribute[2][$i] == DEF_ATTRIBUTE_HEADOFFICE )
 			{
 				$bytHeadOfficeFlag = TRUE;
@@ -111,14 +111,14 @@ preg_match_all ( "/(aryattributecode)=(\d+)/", $_SERVER["QUERY_STRING"], $aryAtt
 }
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -150,26 +150,26 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 	$aryCheck["aryattributecode"]      = "null";
 	$aryCheck["strdistinctcode"]       = "numenglish(0,100)";
 
-	// ¸ÜµÒÂ°À­¤¬¤Ä¤¤¤Æ¤¤¤ë¾ì¹ç¡¢¼±ÊÌ¥³¡¼¥ÉÉ¬¿Ü¤ËÊÑ¹¹
+	// é¡§å®¢å±æ€§ãŒã¤ã„ã¦ã„ã‚‹å ´åˆã€è­˜åˆ¥ã‚³ãƒ¼ãƒ‰å¿…é ˆã«å¤‰æ›´
 	//if ( $bytClientFlag )
 	//{
 	//	$aryCheck["strdistinctcode"] = "null:numenglish(0,100)";
 	//}
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 //echo getArrayTable( $aryCheckResult, "TABLE" );
 //exit;
 //fncPutStringCheckError( $aryCheckResult, $objDB );
 
-// ËÜ¼Ò¤È¸ÜµÒÁĞÊı¤ÎÂ°À­¤ò»ØÄê¤µ¤ì¤Æ¤¤¤¿¾ì¹ç¡¢Ê¸»úÎó¥Á¥§¥Ã¥¯¥¨¥é¡¼¿¿
+// æœ¬ç¤¾ã¨é¡§å®¢åŒæ–¹ã®å±æ€§ã‚’æŒ‡å®šã•ã‚Œã¦ã„ãŸå ´åˆã€æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼çœŸ
 if ( $bytHeadOfficeFlag && $bytClientFlag )
 {
 	$aryCheckResult["aryAttributeCode_Error"] = TRUE;
 }
 
-// Â°À­¤¬¤Ê¤¤¾ì¹ç¡¢¥¨¥é¡¼
+// å±æ€§ãŒãªã„å ´åˆã€ã‚¨ãƒ©ãƒ¼
 if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE && $lngLength < 1 )
 {
 	$aryCheckResult["aryattributecode"] = TRUE;
@@ -177,28 +177,28 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE && $lngLength < 1 )
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½èÍı¤ÎÍ­¸úÀ­¤ò¥Á¥§¥Ã¥¯
+// å‡¦ç†ã®æœ‰åŠ¹æ€§ã‚’ãƒã‚§ãƒƒã‚¯
 //////////////////////////////////////////////////////////////////////////
-// ( ÅĞÏ¿ ¤Ş¤¿¤Ï ½¤Àµ ) ¥¨¥é¡¼¤¬¤Ê¤¤ ¾ì¹ç¡¢
-// ¿·µ¬ÅĞÏ¿¡¢½¤Àµ¥Á¥§¥Ã¥¯¼Â¹Ô
+// ( ç™»éŒ² ã¾ãŸã¯ ä¿®æ­£ ) ã‚¨ãƒ©ãƒ¼ãŒãªã„ å ´åˆã€
+// æ–°è¦ç™»éŒ²ã€ä¿®æ­£ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode"] == DEF_ACTION_UPDATE ) && !join ( "", $aryCheckResult ) )
 {
-	// ²ñ¼Ò¥³¡¼¥É½ÅÊ£¥Á¥§¥Ã¥¯
+	// ä¼šç¤¾ã‚³ãƒ¼ãƒ‰é‡è¤‡ãƒã‚§ãƒƒã‚¯
 	$strQuery = "SELECT * FROM m_Company " .
                 "WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¿·µ¬ÅĞÏ¿ ¤«¤Ä ·ë²Ì·ï¿ô¤¬0°Ê¾å
-	// ¤Ş¤¿¤Ï
-	// ½¤Àµ ¤«¤Ä ·ë²Ì·ï¿ô¤¬1°Ê³° ¤Î¾ì¹ç¡¢¥¨¥é¡¼
+	// æ–°è¦ç™»éŒ² ã‹ã¤ çµæœä»¶æ•°ãŒ0ä»¥ä¸Š
+	// ã¾ãŸã¯
+	// ä¿®æ­£ ã‹ã¤ çµæœä»¶æ•°ãŒ1ä»¥å¤– ã®å ´åˆã€ã‚¨ãƒ©ãƒ¼
 	if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && $lngResultNum > 0 ) || ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $lngResultNum != 1 ) )
 	{
 		$aryCheckResult["lngcompanycode_Error"] = 1;
 		$objDB->freeResult( $lngResultID );
 	}
 
-	// Â°À­½ÅÊ£¥Á¥§¥Ã¥¯
+	// å±æ€§é‡è¤‡ãƒã‚§ãƒƒã‚¯
 	$count = count ( $aryAttributeCode );
 	for ( $i = 0; $i < $count; $i++ )
 	{
@@ -206,52 +206,52 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 		{
 			if ( $aryAttributeCode[$i] == $aryAttributeCode[$j] )
 			{
-				fncOutputError ( 9056, DEF_WARNING, "Â°À­¥³¡¼¥É¤¬½ÅÊ£¤·¤Æ¤¤¤Ş¤¹¡£", TRUE, "", $objDB );
+				fncOutputError ( 9056, DEF_WARNING, "å±æ€§ã‚³ãƒ¼ãƒ‰ãŒé‡è¤‡ã—ã¦ã„ã¾ã™ã€‚", TRUE, "", $objDB );
 			}
 		}
 	}
 }
 
-// ºï½ü ¤«¤Ä ¥¨¥é¡¼¤¬¤Ê¤¤ ¾ì¹ç¡¢
-// ºï½ü¥Á¥§¥Ã¥¯¼Â¹Ô
+// å‰Šé™¤ ã‹ã¤ ã‚¨ãƒ©ãƒ¼ãŒãªã„ å ´åˆã€
+// å‰Šé™¤ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( "", $aryCheckResult ) )
 {
-// ¥Á¥§¥Ã¥¯ÂĞ¾İ¥Æ¡¼¥Ö¥ëÌ¾ÇÛÎó¤òÄêµÁ
-	// ¥°¥ë¡¼¥×¥Ş¥¹¥¿¡¢¥æ¡¼¥¶¡¼¥Ş¥¹¥¿ ¥Á¥§¥Ã¥¯¥¯¥¨¥ê
+// ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒ†ãƒ¼ãƒ–ãƒ«åé…åˆ—ã‚’å®šç¾©
+	// ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒã‚¹ã‚¿ ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒª
 	$aryTableName = Array ( "m_Group", "m_User" );
 
-	// ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀ¸À®
+	// ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªç”Ÿæˆ
 	for ( $i = 0; $i < count ( $aryTableName ); $i++ )
 	{
 		$aryQuery[] = "SELECT lngCompanyCode FROM " . $aryTableName[$i] . " WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 	}
-	// È¯Ãí¥Ş¥¹¥¿ ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀ¸À®
+	// ç™ºæ³¨ãƒã‚¹ã‚¿ ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªç”Ÿæˆ
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Order WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"] . " OR lngDeliveryPlaceCode = " . $aryData["lngcompanycode"];
 
-	// À½ÉÊ¥Ş¥¹¥¿ ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀ¸À®
+	// è£½å“ãƒã‚¹ã‚¿ ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªç”Ÿæˆ
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Product WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"] . " OR lngFactoryCode = " . $aryData["lngcompanycode"] . " OR lngAssemblyFactoryCode = " . $aryData["lngcompanycode"] . " OR lngAssemblyFactoryCode = " . $aryData["lngcompanycode"] . " OR lngDeliveryPlaceCode = " . $aryData["lngcompanycode"];
 
-	// ¼õÃí¥Ş¥¹¥¿ ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀ¸À®
+	// å—æ³¨ãƒã‚¹ã‚¿ ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªç”Ÿæˆ
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Receive WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"];
 
-	// Çä¾å¥Ş¥¹¥¿ ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀ¸À®
+	// å£²ä¸Šãƒã‚¹ã‚¿ ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªç”Ÿæˆ
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Sales WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"];
 
-	// »ÅÆş¥Ş¥¹¥¿ ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀ¸À®
+	// ä»•å…¥ãƒã‚¹ã‚¿ ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªç”Ÿæˆ
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Stock WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"] . " OR lngDeliveryPlaceCode = " . $aryData["lngcompanycode"];
 
 	$strQuery = join ( " UNION ", $aryQuery );
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ·ë²Ì¤¬1·ï¤Ç¤â¤¢¤Ã¤¿¾ì¹ç¡¢ºï½üÉÔ²ÄÇ½¤È¤·¡¢¥¨¥é¡¼½ĞÎÏ
+	// çµæœãŒ1ä»¶ã§ã‚‚ã‚ã£ãŸå ´åˆã€å‰Šé™¤ä¸å¯èƒ½ã¨ã—ã€ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 	if ( $lngResultNum > 0 )
 	{
 		$objDB->freeResult( $lngResultID );
-		fncOutputError ( 1201, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+		fncOutputError ( 1201, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 	}
 
-	// ºï½üÂĞ¾İÉ½¼¨¤Î¤¿¤á¤Î¥Ç¡¼¥¿¤ò¼èÆÀ
+	// å‰Šé™¤å¯¾è±¡è¡¨ç¤ºã®ãŸã‚ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 	$strQuery = "SELECT * FROM m_Company WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 
 	$objMaster = new clsMaster();
@@ -279,11 +279,11 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( "", $aryCheck
 
 
 
-// ¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍı
+// ã‚¨ãƒ©ãƒ¼é …ç›®è¡¨ç¤ºå‡¦ç†
 list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB );
 
 
-// ²ñ¼ÒÉ½¼¨¥Õ¥é¥°ÀßÄê
+// ä¼šç¤¾è¡¨ç¤ºãƒ•ãƒ©ã‚°è¨­å®š
 if ( $aryData["bytcompanydisplayflag"] == "t" )
 {
 	$aryData["bytcompanydisplayflag"] = "TRUE";
@@ -293,7 +293,7 @@ else
 	$aryData["bytcompanydisplayflag"] = "FALSE";
 }
 
-// ÁÈ¿¥É½µ­¥Õ¥é¥°ÀßÄê
+// çµ„ç¹”è¡¨è¨˜ãƒ•ãƒ©ã‚°è¨­å®š
 if ( $aryData["bytorganizationfront"] == "t" )
 {
 	$aryData["bytorganizationfront"] = "TRUE";
@@ -303,23 +303,23 @@ else
 	$aryData["bytorganizationfront"] = "FALSE";
 }
 
-$aryCompanyDisplayFlag = Array ( "TRUE" => "É½¼¨", "FALSE" => "ÈóÉ½¼¨" );
-$aryOrganizationFront  = Array ( "TRUE" => "Á°", "FALSE" => "¸å" );
+$aryCompanyDisplayFlag = Array ( "TRUE" => "è¡¨ç¤º", "FALSE" => "éè¡¨ç¤º" );
+$aryOrganizationFront  = Array ( "TRUE" => "å‰", "FALSE" => "å¾Œ" );
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½ĞÎÏ
+// å‡ºåŠ›
 //////////////////////////////////////////////////////////////////////////
 $aryParts["lngActionCode"]   = $aryData["lngActionCode"];
 $aryParts["strSessionID"]    = $aryData["strSessionID"];
 
 
-// lngCompanyCode ¤Î(CODE+NAME)¼èÆÀ
+// lngCompanyCode ã®(CODE+NAME)å–å¾—
 $aryCompanyCode = fncGetMasterValue( "m_Company", "lngCompanyCode", "strCompanyName", "Array", "", $objDB );
-// bytGroupDisplayFlag ¤Î(CODE+NAME)¼èÆÀ
-$aryGroupDisplayFlag = Array ( "TRUE" => "É½¼¨", "FALSE" => "ÈóÉ½¼¨" );
+// bytGroupDisplayFlag ã®(CODE+NAME)å–å¾—
+$aryGroupDisplayFlag = Array ( "TRUE" => "è¡¨ç¤º", "FALSE" => "éè¡¨ç¤º" );
 
-// ²ñ¼Ò¥³¡¼¥É
+// ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 if ( $aryData["lngActionCode"] != DEF_ACTION_INSERT )
 {
 	$strOutputCompanyCode =& $aryData["lngcompanycode"];
@@ -327,90 +327,90 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_INSERT )
 $aryParts["MASTER"] .= "				<tr><td id=\"Column0\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . $strOutputCompanyCode . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"lngcompanycode\" value=\"" . $aryData["lngcompanycode"] . "\">\n";
 
-// ¹ñ¥³¡¼¥É
+// å›½ã‚³ãƒ¼ãƒ‰
 $aryParts["MASTER"] .= "				<tr><td id=\"Column1\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncGetMasterValue( "m_Country", "lngCountryCode", "strCountryName", $aryData["lngcountrycode"], "", $objDB ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"lngcountrycode\" value=\"" . $aryData["lngcountrycode"] . "\">\n";
 
-// ÁÈ¿¥¥³¡¼¥É
+// çµ„ç¹”ã‚³ãƒ¼ãƒ‰
 $aryParts["MASTER"] .= "				<tr><td id=\"Column2\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncGetMasterValue( "m_Organization", "lngOrganizationCode", "strOrganizationName", $aryData["lngorganizationcode"], "", $objDB ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"lngorganizationcode\" value=\"" . $aryData["lngorganizationcode"] . "\">\n";
 
-// ÁÈ¿¥É½µ­
+// çµ„ç¹”è¡¨è¨˜
 $aryParts["MASTER"] .= "				<tr><td id=\"Column3\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . $aryOrganizationFront[$aryData["bytorganizationfront"]] . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"bytorganizationfront\" value=\"" . $aryData["bytorganizationfront"] . "\">\n";
 
-// ²ñ¼ÒÌ¾¾Î
+// ä¼šç¤¾åç§°
 $aryParts["MASTER"] .= "				<tr><td id=\"Column4\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars( $aryData["strcompanyname"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strcompanyname\" value=\"" . fncHTMLSpecialChars ( $aryData["strcompanyname"] ) . "\">\n";
 
-// É½¼¨²ñ¼Ò¥Õ¥é¥°
+// è¡¨ç¤ºä¼šç¤¾ãƒ•ãƒ©ã‚°
 $aryParts["MASTER"] .= "				<tr><td id=\"Column5\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . $aryCompanyDisplayFlag[$aryData["bytcompanydisplayflag"]] . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"bytcompanydisplayflag\" value=\"" . $aryData["bytcompanydisplayflag"] . "\">\n";
 
-// É½¼¨²ñ¼Ò¥³¡¼¥É
+// è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 $aryParts["MASTER"] .= "				<tr><td id=\"Column6\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strcompanydisplaycode"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strcompanydisplaycode\" value=\"" . fncHTMLSpecialChars ( $aryData["strcompanydisplaycode"] ) . "\">\n";
 
-// É½¼¨²ñ¼ÒÌ¾¾Î
+// è¡¨ç¤ºä¼šç¤¾åç§°
 $aryParts["MASTER"] .= "				<tr><td id=\"Column7\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strcompanydisplayname"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strcompanydisplayname\" value=\"" . fncHTMLSpecialChars ( $aryData["strcompanydisplayname"] ) . "\">\n";
 
-// ¾ÊÎ¬Ì¾¾Î
+// çœç•¥åç§°
 $aryParts["MASTER"] .= "				<tr><td id=\"Column8\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strshortname"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strshortname\" value=\"" . fncHTMLSpecialChars ( $aryData["strshortname"] ) . "\">\n";
 
-// Í¹ÊØÈÖ¹æ
+// éƒµä¾¿ç•ªå·
 $aryParts["MASTER"] .= "				<tr><td id=\"Column9\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . $aryData["strpostalcode"] . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strpostalcode\" value=\"" . $aryData["strpostalcode"] . "\">\n";
 
-// ½»½ê1 / ÅÔÆ»ÉÜ¸©
+// ä½æ‰€1 / éƒ½é“åºœçœŒ
 $aryParts["MASTER"] .= "				<tr><td id=\"Column10\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress1"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"straddress1\" value=\"" . fncHTMLSpecialChars ( $aryData["straddress1"] ) . "\">\n";
 
-// ½»½ê2 / »Ô¡¢¶è¡¢·´
+// ä½æ‰€2 / å¸‚ã€åŒºã€éƒ¡
 $aryParts["MASTER"] .= "				<tr><td id=\"Column11\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress2"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"straddress2\" value=\"" . fncHTMLSpecialChars ( $aryData["straddress2"] ) . "\">\n";
 
-// ½»½ê3 / Ä®¡¢ÈÖÃÏ
+// ä½æ‰€3 / ç”ºã€ç•ªåœ°
 $aryParts["MASTER"] .= "				<tr><td id=\"Column12\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress3"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"straddress3\" value=\"" . fncHTMLSpecialChars ( $aryData["straddress3"] ) . "\">\n";
 
-// ½»½ê4 / ¥Ó¥ëÅù¡¢·úÊªÌ¾
+// ä½æ‰€4 / ãƒ“ãƒ«ç­‰ã€å»ºç‰©å
 $aryParts["MASTER"] .= "				<tr><td id=\"Column13\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["straddress4"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"straddress4\" value=\"" . fncHTMLSpecialChars ( $aryData["straddress4"] ) . "\">\n";
 
-// ÅÅÏÃÈÖ¹æ1
+// é›»è©±ç•ªå·1
 $aryParts["MASTER"] .= "				<tr><td id=\"Column14\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strtel1"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strtel1\" value=\"" . fncHTMLSpecialChars ( $aryData["strtel1"] ) . "\">\n";
 
-// ÅÅÏÃÈÖ¹æ2
+// é›»è©±ç•ªå·2
 $aryParts["MASTER"] .= "				<tr><td id=\"Column15\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strtel2"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strtel2\" value=\"" . fncHTMLSpecialChars ( $aryData["strtel2"] ) . "\">\n";
 
-// ¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ1
+// ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·1
 $aryParts["MASTER"] .= "				<tr><td id=\"Column16\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strfax1"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strfax1\" value=\"" . fncHTMLSpecialChars ( $aryData["strfax1"] ) . "\">\n";
 
-// ¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ2
+// ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·2
 $aryParts["MASTER"] .= "				<tr><td id=\"Column17\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strfax2"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strfax2\" value=\"" . fncHTMLSpecialChars ( $aryData["strfax2"] ) . "\">\n";
 
-// ¼±ÊÌ¥³¡¼¥É
+// è­˜åˆ¥ã‚³ãƒ¼ãƒ‰
 $aryParts["MASTER"] .= "				<tr><td id=\"Column18\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncHTMLSpecialChars ( $aryData["strdistinctcode"] ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strdistinctcode\" value=\"" . fncHTMLSpecialChars ( $aryData["strdistinctcode"] ) . "\">\n";
 
-// Äù¤áÆü¥³¡¼¥É
+// ç· ã‚æ—¥ã‚³ãƒ¼ãƒ‰
 $aryParts["MASTER"] .= "				<tr><td id=\"Column19\" class=\"SegColumn\" width=\"25%\">Column0</td><td class=\"Segs\">" . fncGetMasterValue( "m_ClosedDay", "lngClosedDayCode", "strClosedDayCode || ':' || lngClosedDay", $aryData["lngcloseddaycode"], "", $objDB ) . "</td></tr>\n";
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"lngcloseddaycode\" value=\"" . $aryData["lngcloseddaycode"] . "\">\n";
 
-// Â°À­
-// Â°À­ÀßÄê¤¬¤¢¤ë¾ì¹ç¡¢Â°À­¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼¤ÎÀßÄê¤ÈÂ°À­¥Ç¡¼¥¿À¸À®¤ò¹Ô¤¦
+// å±æ€§
+// å±æ€§è¨­å®šãŒã‚ã‚‹å ´åˆã€å±æ€§ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¨­å®šã¨å±æ€§ãƒ‡ãƒ¼ã‚¿ç”Ÿæˆã‚’è¡Œã†
 if ( $lngLength > 0 )
 {
-	// Â°À­¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼¤ÎÀßÄê(¤ä¤êÄ¾¤·½èÍı»ş¤ËÉ¬Í×)
+	// å±æ€§ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®è¨­å®š(ã‚„ã‚Šç›´ã—å‡¦ç†æ™‚ã«å¿…è¦)
 	$strQueryWhere = "WHERE lngAttributeCode = " . join ( " OR lngAttributeCode = ", $aryAttributeCode );
 
-	// Â°À­¥Ç¡¼¥¿À¸À®(ÅĞÏ¿½èÍı»ş¤ËÉ¬Í×)
+	// å±æ€§ãƒ‡ãƒ¼ã‚¿ç”Ÿæˆ(ç™»éŒ²å‡¦ç†æ™‚ã«å¿…è¦)
 	$aryData["strattributecode"] = join ( ":", $aryAttributeCode );
 }
 list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT strAttributeName FROM m_Attribute " . $strQueryWhere, $objDB );

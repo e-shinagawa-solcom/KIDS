@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /** 
-*	¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È ¥á¥Ë¥å¡¼²èÌÌ
+*	ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 *
 *	@package    K.I.D.S.
 *	@license    http://www.kuwagata.co.jp/
@@ -11,45 +11,45 @@
 *	@access     public
 *	@version 	2.00
 *
-*	¹¹¿·ÍúÎò
-*	2014.11.08	¾¦ÉÊ·×²è½ñ¡¡µ¡Ç½ÄÉ²Ã k.saito
+*	æ›´æ–°å±¥æ­´
+*	2014.11.08	å•†å“è¨ˆç”»æ›¸ã€€æ©Ÿèƒ½è¿½åŠ  k.saito
 */
 // ----------------------------------------------------------------------------
 
-	// ¥á¥Ë¥å¡¼É½¼¨
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤º
 	// index.php -> strSessionID -> index.php
 
-	// ÀßÄêÆÉ¤ß¹þ¤ß
+	// è¨­å®šèª­ã¿è¾¼ã¿
 	include_once('conf.inc');
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require (LIB_FILE);
 	require (SRC_ROOT . "dataex/cmn/lib_dataex.php");
 
-	// DBÀÜÂ³
+	// DBæŽ¥ç¶š
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
 	$objDB->open( "", "", "", "" );
 
-	// POST¥Ç¡¼¥¿¼èÆÀ
+	// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryData = $_GET;
 
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	if ( !fncCheckAuthority( DEF_FUNCTION_DE0, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
 
 	$aryCheck["strSessionID"]   = "null:numenglish(32,32)";
 
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 	//echo getArrayTable( $aryCheckResult, "TABLE" );
 	//echo getArrayTable( $aryData, "TABLE" );
@@ -57,7 +57,7 @@
 	fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
-	// lngExportData ¤ÎÀßÄê
+	// lngExportData ã®è¨­å®š
 	if ( fncCheckAuthority( DEF_FUNCTION_DE1, $objAuth ) )
 	{
 		//echo "OK!";
@@ -89,7 +89,7 @@
 	{
 		$aryData["strStat02URL"] = DEF_EXPORT_STAT02;
 	}
-	// ¾¦ÉÊ·×²è½ñ
+	// å•†å“è¨ˆç”»æ›¸
 //	if ( fncCheckAuthority( DEF_FUNCTION_DE8, $objAuth ) )
 //	{
 		$aryData["strPplanURL"] = DEF_EXPORT_PPLAN;
@@ -101,7 +101,7 @@
 	//echo getArrayTable( $objAuth->FunctionCode, "TABLE" );
 
 
-	// HTML½ÐÎÏ
+	// HTMLå‡ºåŠ›
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "dataex/select.tmpl" );
 	$objTemplate->replace( $aryData );

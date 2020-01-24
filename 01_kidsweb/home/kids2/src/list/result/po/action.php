@@ -1,6 +1,6 @@
 <?
 /** 
-*	Ä¢É¼½ĞÎÏ PO °õºş´°Î»²èÌÌ
+*	å¸³ç¥¨å‡ºåŠ› PO å°åˆ·å®Œäº†ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -9,20 +9,20 @@
 *	@access    public
 *	@version   1.00
 *
-*	¹¹¿·ÍúÎò
-*	2004.03.05	³¤³°¤Î²ñ¼Ò¤Î°¸Àè¤ËÉÕ¤±¤ë TO ¤Î²£¤Ë : ¤òÄÉ²Ã¤¹¤ë¤è¤¦¤Ë½¤Àµ¤¹¤ë
-*	2004.04.19	¤³¤Î¥½¡¼¥¹¤Ë¤Æ¾¦ÉÊ²½´ë²è½ñÂĞ±ş¤µ¤ì¤Æ¤¤¤ë²Õ½ê¤òÈ¯Ãí½ñ¤ËÊÑ¹¹
+*	æ›´æ–°å±¥æ­´
+*	2004.03.05	æµ·å¤–ã®ä¼šç¤¾ã®å®›å…ˆã«ä»˜ã‘ã‚‹ TO ã®æ¨ªã« : ã‚’è¿½åŠ ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£ã™ã‚‹
+*	2004.04.19	ã“ã®ã‚½ãƒ¼ã‚¹ã«ã¦å•†å“åŒ–ä¼ç”»æ›¸å¯¾å¿œã•ã‚Œã¦ã„ã‚‹ç®‡æ‰€ã‚’ç™ºæ³¨æ›¸ã«å¤‰æ›´
 *
 */
-// °õºş¥×¥ì¥Ó¥å¡¼²èÌÌ( * ¤Ï»ØÄêÄ¢É¼¤Î¥Õ¥¡¥¤¥ëÌ¾ )
+// å°åˆ·ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢( * ã¯æŒ‡å®šå¸³ç¥¨ã®ãƒ•ã‚¡ã‚¤ãƒ«å )
 // listoutput.php -> strSessionID       -> action.php
 // listoutput.php -> strReportKeyCode   -> action.php
 // listoutput.php -> lngReportCode      -> action.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "/list/cmn/lib_lo.php");
 require (SRC_ROOT . "m/cmn/lib_m.php");
@@ -33,7 +33,7 @@ $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_POST )
 {
@@ -44,7 +44,7 @@ elseif ( $_GET )
 	$aryData = $_GET;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]       = "null:numenglish(32,32)";
 $aryCheck["strReportKeyCode"]   = "null:number(0,99999999)";
 $strTemplateFile = "p";
@@ -52,17 +52,17 @@ $strTemplateFile = "p";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
-// »ØÄê¥­¡¼¥³¡¼¥É¤ÎÄ¢É¼¥Ç¡¼¥¿¤ò¼èÆÀ
+// æŒ‡å®šã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å¸³ç¥¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 $strQuery = fncGetCopyFilePathQuery( DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $aryData["lngReportCode"] );
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -73,9 +73,9 @@ if ( $lngResultNum === 1 )
 	$strListOutputPath = $objResult->strreportpathname;
 	unset ( $objResult );
 	$objDB->freeResult( $lngResultID );
-	//echo "¥³¥Ô¡¼¥Õ¥¡¥¤¥ëÍ­¤ê¡£";
+	//echo "ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«æœ‰ã‚Šã€‚";
 }
-// ¥Ç¡¼¥¿¼èÆÀ¥¯¥¨¥ê
+// ãƒ‡ãƒ¼ã‚¿å–å¾—ã‚¯ã‚¨ãƒª
 $strQuery = fncGetListOutputQuery( DEF_REPORT_ORDER, $aryData["strReportKeyCode"], $objDB );
 
 
@@ -86,14 +86,14 @@ $aryParts =& $objMaster->aryData[0];
 
 if ( $lngResultNum === 1 )
 {
-    // °õºş²ó¿ô¤ò¹¹¿·¤¹¤ë
+    // å°åˆ·å›æ•°ã‚’æ›´æ–°ã™ã‚‹
 	fncUpdatePrintCount(DEF_REPORT_ORDER, $aryParts, $objDB);
 }
 
-// Ä¢É¼¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢¥³¥Ô¡¼Ä¢É¼¥Õ¥¡¥¤¥ë¤òÀ¸À®¡¢ÊİÂ¸
+// å¸³ç¥¨ãŒå­˜åœ¨ã—ãªã„å ´åˆã€ã‚³ãƒ”ãƒ¼å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã€ä¿å­˜
 elseif ( $lngResultNum === 0 )
 {
-	// ¾ÜºÙ¼èÆÀ
+	// è©³ç´°å–å¾—
     $aryQuery[] = "select";
     $aryQuery[] = "  pod.lngpurchaseorderno";
     $aryQuery[] = "  , pod.lngpurchaseorderdetailno";
@@ -130,22 +130,22 @@ elseif ( $lngResultNum === 0 )
 
 	if ( $lngResultNum < 1 )
 	{
-		fncOutputError ( 9051, DEF_FATAL, "Ä¢É¼¾ÜºÙ¥Ç¡¼¥¿¤¬Â¸ºß¤·¤Ş¤»¤ó¤Ç¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "å¸³ç¥¨è©³ç´°ãƒ‡ãƒ¼ã‚¿ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã§ã—ãŸã€‚", TRUE, "", $objDB );
 	}
 
-	// ¥Õ¥£¡¼¥ë¥ÉÌ¾¼èÆÀ
+	// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åå–å¾—
 	for ( $i = 0; $i < pg_num_fields ( $lngResultID ); $i++ )
 	{
 		$aryKeys[] = pg_field_name ( $lngResultID, $i );
 	}
 
-	// À½ÉÊ¥³¡¼¥É¡¢À½ÉÊÌ¾¡¢±Ñ¸ìÀ½ÉÊÌ¾¼èÆÀ
+	// è£½å“ã‚³ãƒ¼ãƒ‰ã€è£½å“åã€è‹±èªè£½å“åå–å¾—
 	$aryResult = $objDB->fetchArray( $lngResultID, 0 );
 	$aryParts[$aryKeys[2]] = $aryResult[2];
 	$aryParts[$aryKeys[0]] = $aryResult[0];
 	$aryParts[$aryKeys[1]] = $aryResult[1];
 
-	// ¹Ô¿ô¤À¤±¥Ç¡¼¥¿¼èÆÀ¡¢ÇÛÎó¤ËÂåÆş
+	// è¡Œæ•°ã ã‘ãƒ‡ãƒ¼ã‚¿å–å¾—ã€é…åˆ—ã«ä»£å…¥
 	for ( $i = 0; $i < $lngResultNum; $i++ )
 	{
 		$aryResult = $objDB->fetchArray( $lngResultID, $i );
@@ -156,19 +156,19 @@ elseif ( $lngResultNum === 0 )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹ç·×¶â³Û½èÍı(ºÇ¸å¤Î¥Ú¡¼¥¸¤À¤±¤ËÉ½¼¨)ÊÌÊÑ¿ô¤ËÊİÂ¸
+	// åˆè¨ˆé‡‘é¡å‡¦ç†(æœ€å¾Œã®ãƒšãƒ¼ã‚¸ã ã‘ã«è¡¨ç¤º)åˆ¥å¤‰æ•°ã«ä¿å­˜
 	$curTotalPrice = $aryParts["strmonetaryunitsign"] . " " . $aryParts["curtotalprice"];
 	//$aryParts["curtotalprice"] = NULL;
 	unset ( $aryParts["curtotalprice"] );
 
-	// ¥Ú¡¼¥¸½èÍı
+	// ãƒšãƒ¼ã‚¸å‡¦ç†
 	$aryParts["lngNowPage"] = 1;
 	$aryParts["lngAllPage"] = ceil ( $lngResultNum / 5 );
 	//$aryParts["lngAllPage"] = 2;
 
 
-	// HTML½ĞÎÏ
-	// ---------------------------------------- added by Kazushi Saito 2004/04/22 ¢­
+	// HTMLå‡ºåŠ›
+	// ---------------------------------------- added by Kazushi Saito 2004/04/22 â†“
 	$objTemplateHeader = new clsTemplate();
 	$objTemplateHeader->getTemplate( "list/result/po_header.tmpl" );
 	$strTemplateHeader = $objTemplateHeader->strTemplate;
@@ -176,54 +176,54 @@ elseif ( $lngResultNum === 0 )
 	$objTemplateFooter = new clsTemplate();
 	$objTemplateFooter->getTemplate( "list/result/po_footer.tmpl" );
 	$strTemplateFooter = $objTemplateFooter->strTemplate;
-	// ---------------------------------------- added by Kazushi Saito 2004/04/22 ¢¬
+	// ---------------------------------------- added by Kazushi Saito 2004/04/22 â†‘
 	
 	//echo getArrayTable( $aryDetail[1], "TABLE" );exit;
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "list/result/po.tmpl" );
 	$strTemplate = $objTemplate->strTemplate;
 
-	// ¥Ú¡¼¥¸¿ôÊ¬¥Æ¥ó¥×¥ì¡¼¥È¤ò·«¤êÊÖ¤·ÆÉ¤ß¹ş¤ß
+	// ãƒšãƒ¼ã‚¸æ•°åˆ†ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ç¹°ã‚Šè¿”ã—èª­ã¿è¾¼ã¿
 	for ( ; $aryParts["lngNowPage"] < ( $aryParts["lngAllPage"] + 1 ); $aryParts["lngNowPage"]++ )
 	{
 		$objTemplate->strTemplate = $strTemplate;
 
-		// É½¼¨¤·¤è¤¦¤È¤·¤Æ¤¤¤ë¥Ú¡¼¥¸¤¬ºÇ¸å¤Î¥Ú¡¼¥¸¤Î¾ì¹ç¡¢
-		// ¹ç·×¶â³Û¤òÂåÆş(È¯Ãí½ñ½ĞÎÏÆÃÊÌ½èÍı)
+		// è¡¨ç¤ºã—ã‚ˆã†ã¨ã—ã¦ã„ã‚‹ãƒšãƒ¼ã‚¸ãŒæœ€å¾Œã®ãƒšãƒ¼ã‚¸ã®å ´åˆã€
+		// åˆè¨ˆé‡‘é¡ã‚’ä»£å…¥(ç™ºæ³¨æ›¸å‡ºåŠ›ç‰¹åˆ¥å‡¦ç†)
 		if ( $aryParts["lngNowPage"] == $aryParts["lngAllPage"]  )
 		{
 			$aryParts["curTotalPrice"] = $curTotalPrice;
 			$aryParts["strTotalAmount"] = "Total Amount";
 		}
 
-		// ÃÖ¤­´¹¤¨
+		// ç½®ãæ›ãˆ
 		$objTemplate->replace( $aryParts );
 
-		// ¾ÜºÙ¹Ô¤ò£µ¹ÔÉ½¼¨(È¯Ãí½ñ½ĞÎÏÆÃÊÌ½èÍı)
+		// è©³ç´°è¡Œã‚’ï¼•è¡Œè¡¨ç¤º(ç™ºæ³¨æ›¸å‡ºåŠ›ç‰¹åˆ¥å‡¦ç†)
 		$lngRecordCount = 0;
 		for ( $j = ( $aryParts["lngNowPage"] - 1 ) * 5; $j < ( $aryParts["lngNowPage"] * 5 ); $j++ )
 		{
 			$aryDetail[$j]["record" . $lngRecordCount] = $j + 1;
 
-			// Ã±²Á¤¬Â¸ºß¤¹¤ì¤Ğ¡¢¤½¤ì¤ËÄÌ²ßÃ±°Ì¤ò¤Ä¤±¤ë
+			// å˜ä¾¡ãŒå­˜åœ¨ã™ã‚Œã°ã€ãã‚Œã«é€šè²¨å˜ä½ã‚’ã¤ã‘ã‚‹
 			if ( $aryDetail[$j]["curproductprice" . ( ( $j + 5 ) % 5 )] > 0 )
 			{
 				$aryDetail[$j]["curproductprice" . ( ( $j + 5 ) % 5 )] = $aryParts["strmonetaryunitsign"] . " " . $aryDetail[$j]["curproductprice" . ( ( $j + 5 ) % 5 )];
 			}
 
-			// ¾®·×¤¬Â¸ºß¤¹¤ì¤Ğ¡¢¤½¤ì¤ËÄÌ²ßÃ±°Ì¤ò¤Ä¤±¤ë
+			// å°è¨ˆãŒå­˜åœ¨ã™ã‚Œã°ã€ãã‚Œã«é€šè²¨å˜ä½ã‚’ã¤ã‘ã‚‹
 			if ( $aryDetail[$j]["cursubtotalprice" . ( ( $j + 5 ) % 5 )] > 0 )
 			{
 				$aryDetail[$j]["cursubtotalprice" . ( ( $j + 5 ) % 5 )] = $aryParts["strmonetaryunitsign"] . " " . $aryDetail[$j]["cursubtotalprice" . ( ( $j + 5 ) % 5 )];
 			}
 
-			// À½ÉÊ¿ôÎÌ¤¬Â¸ºß¤¹¤ì¤Ğ¡¢¤½¤ì¤ËÀ½ÉÊÃ±°Ì¤ò¤Ä¤±¤ë
+			// è£½å“æ•°é‡ãŒå­˜åœ¨ã™ã‚Œã°ã€ãã‚Œã«è£½å“å˜ä½ã‚’ã¤ã‘ã‚‹
 			if ( $aryDetail[$j]["lngproductquantity" . ( ( $j + 5 ) % 5 )] > 0 )
 			{
 				$aryDetail[$j]["lngproductquantity" . ( ( $j + 5 ) % 5 )] .= "(" . $aryDetail[$j]["strproductunitname" . ( ( $j + 5 ) % 5 )] . ")";
 			}
 
-			// ¥«¡¼¥È¥óÆş¿ô¤¬Â¸ºß¤¹¤ì¤Ğ¡¢¤½¤ì¤ËÀ½ÉÊÃ±°Ì¤ò¤Ä¤±¤ë
+			// ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ãŒå­˜åœ¨ã™ã‚Œã°ã€ãã‚Œã«è£½å“å˜ä½ã‚’ã¤ã‘ã‚‹
 			if ( $aryDetail[$j]["lngconversionclasscode" . ( ( $j + 5 ) % 5 )] == 2 )
 			{
 				$aryDetail[$j]["lngcartonquantity" . ( ( $j + 5 ) % 5 )] = "1(c/t) = " . $aryDetail[$j]["lngcartonquantity" . ( ( $j + 5 ) % 5 )] . "(pcs)";
@@ -233,7 +233,7 @@ elseif ( $lngResultNum === 0 )
 				unset ( $aryDetail[$j]["lngcartonquantity" . ( ( $j + 5 ) % 5 )] );
 			}
 
-			// ¶â·¿ÈÖ¹æ¤¬Â¸ºß¤¹¤ì¤Ğ¡¢¤½¤ì¤Ë()¤ò¤Ä¤±¤ë
+			// é‡‘å‹ç•ªå·ãŒå­˜åœ¨ã™ã‚Œã°ã€ãã‚Œã«()ã‚’ã¤ã‘ã‚‹
 			if ( $aryDetail[$j]["strmoldno" . ( ( $j + 5 ) % 5 )] != "" )
 			{
 				$aryDetail[$j]["strmoldno" . ( ( $j + 5 ) % 5 )] = "(" . $aryDetail[$j]["strmoldno" . ( ( $j + 5 ) % 5 )] . ")";
@@ -252,19 +252,19 @@ elseif ( $lngResultNum === 0 )
 
 	}
 
-	// ---------------------------------------- modifyed by Kazushi Saito 2004/04/22 ¢­
+	// ---------------------------------------- modifyed by Kazushi Saito 2004/04/22 â†“
 	$strBodyHtml = join ( "<br style=\"page-break-after:always;\">\n", $aryHtml );
 	
 	$strHtml = $strTemplateHeader . $strBodyHtml . $strTemplateFooter;
-	// ---------------------------------------- modifyed by Kazushi Saito 2004/04/22 ¢¬
+	// ---------------------------------------- modifyed by Kazushi Saito 2004/04/22 â†‘
 
 	$objDB->transactionBegin();
 
-	// ¥·¡¼¥±¥ó¥¹È¯¹Ô
+	// ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç™ºè¡Œ
 	$lngSequence = fncGetSequence( "t_Report.lngReportCode", $objDB );
 
 
-	// Ä¢É¼¥Æ¡¼¥Ö¥ë¤ËINSERT
+	// å¸³ç¥¨ãƒ†ãƒ¼ãƒ–ãƒ«ã«INSERT
 	$strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_ORDER . ", " . $aryParts["lngpurchaseorderno"] . ", '', '$lngSequence' )";
 
 //fncDebug("list_action.txt", SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", __FILE__ , __LINE__, "w" );
@@ -274,25 +274,25 @@ elseif ( $lngResultNum === 0 )
     
     $objDB->freeResult($lngResultID);    
 
-    // °õºş²ó¿ô¤ò¹¹¿·¤¹¤ë
+    // å°åˆ·å›æ•°ã‚’æ›´æ–°ã™ã‚‹
     fncUpdatePrintCount(DEF_REPORT_ORDER, $aryParts, $objDB);
 
-	// Ä¢É¼¥Õ¥¡¥¤¥ë¥ª¡¼¥×¥ó
+	// å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
 	if ( !$fp = fopen ( SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w" ) )
 	{
 		list ( $lngResultID, $lngResultNum ) = fncQuery( "ROLLBACK", $objDB );
-		fncOutputError ( 9059, DEF_FATAL, "Ä¢É¼¥Õ¥¡¥¤¥ë¤Î¥ª¡¼¥×¥ó¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9059, DEF_FATAL, "å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 	}
 
-	// Ä¢É¼¥Õ¥¡¥¤¥ë¤Ø¤Î½ñ¤­¹ş¤ß
+	// å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®æ›¸ãè¾¼ã¿
 	if ( !fwrite ( $fp, $strHtml ) )
 	{
 		list ( $lngResultID, $lngResultNum ) = fncQuery( "ROLLBACK", $objDB );
-		fncOutputError ( 9059, DEF_FATAL, "Ä¢É¼¥Õ¥¡¥¤¥ë¤Î½ñ¤­¹ş¤ß¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9059, DEF_FATAL, "å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 	}
 
 	$objDB->transactionCommit();
-	//echo "¥³¥Ô¡¼¥Õ¥¡¥¤¥ëºîÀ®";
+	//echo "ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ä½œæˆ";
 }
 //echo "<script language=javascript>window.form1.submit();window.returnValue=true;window.close();</script>";
 echo "<script language=javascript>parent.window.close();</script>";

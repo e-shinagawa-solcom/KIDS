@@ -1,78 +1,78 @@
 <?
 /**
-* Ç¼ÉÊ½ñ°ìÍ÷¡¡¸¡º÷·ë²ÌÉ½¼¨ÍÑ¤Î¹àÌÜÌ¾ÄêµÁ
+* ç´å“æ›¸ä¸€è¦§ã€€æ¤œç´¢çµæžœè¡¨ç¤ºç”¨ã®é …ç›®åå®šç¾©
 *
 *	@access public
 *
-*	¹¹¿·ÍúÎò
-*	2019.08.19	¿·µ¬ºîÀ®
+*	æ›´æ–°å±¥æ­´
+*	2019.08.19	æ–°è¦ä½œæˆ
 */
 
 // ------------------------------
-//   Ç¼ÉÊ½ñ°ìÍ÷²èÌÌ¡Ê¸¡º÷·ë²Ì¡Ë
+//   ç´å“æ›¸ä¸€è¦§ç”»é¢ï¼ˆæ¤œç´¢çµæžœï¼‰
 // ------------------------------
-// ÆüËÜ¸ì¥³¡¼¥É
-$arySearchTableTytle["btnDetail"]				= "¾ÜºÙ";
-$arySearchTableTytle["btnFix"]					= "½¤Àµ";
-$arySearchTableTytle["lngCustomerCode"]			= "¸ÜµÒ";
-$arySearchTableTytle["lngTaxClassCode"]			= "²ÝÀÇ¶èÊ¬";
-$arySearchTableTytle["strSlipCode"]				= "Ç¼ÉÊ½ñ£Î£Ï.";
-$arySearchTableTytle["dtmDeliveryDate"]			= "Ç¼ÉÊÆü";
-$arySearchTableTytle["lngDeliveryPlaceCode"]	= "Ç¼ÉÊÀè";
-$arySearchTableTytle["lngInsertUserCode"]		= "µ¯É¼¼Ô";
-$arySearchTableTytle["strNote"]					= "È÷¹Í";
-$arySearchTableTytle["curTotalPrice"]			= "¹ç·×¶â³Û";
-$arySearchTableTytle["lngRecordNo"]			    = "ÌÀºÙ¹Ô£Î£Ï.";
-$arySearchTableTytle["strCustomerSalesCode"]	= "ÃíÊ¸½ñ£Î£Ï.";
-$arySearchTableTytle["strGoodsCode"]			= "¸ÜµÒÉÊÈÖ";
-$arySearchTableTytle["strProductName"]			= "ÉÊÌ¾";
-$arySearchTableTytle["strSalesClassName"]		= "Çä¾å¶èÊ¬";
-$arySearchTableTytle["curProductPrice"]			= "Ã±²Á";
-$arySearchTableTytle["lngQuantity"]		        = "Æþ¿ô";
-$arySearchTableTytle["lngProductQuantity"]		= "¿ôÎÌ";
-$arySearchTableTytle["strProductUnitName"]		= "Ã±°Ì";
-$arySearchTableTytle["curSubTotalPrice"]		= "ÀÇÈ´¶â³Û";
-$arySearchTableTytle["strDetailNote"]			= "ÌÀºÙÈ÷¹Í";
-$arySearchTableTytle["btnDelete"]				= "ºï½ü";
+// æ—¥æœ¬èªžã‚³ãƒ¼ãƒ‰
+$arySearchTableTytle["btnDetail"]				= "è©³ç´°";
+$arySearchTableTytle["btnFix"]					= "ä¿®æ­£";
+$arySearchTableTytle["lngCustomerCode"]			= "é¡§å®¢";
+$arySearchTableTytle["lngTaxClassCode"]			= "èª²ç¨ŽåŒºåˆ†";
+$arySearchTableTytle["strSlipCode"]				= "ç´å“æ›¸ï¼®ï¼¯.";
+$arySearchTableTytle["dtmDeliveryDate"]			= "ç´å“æ—¥";
+$arySearchTableTytle["lngDeliveryPlaceCode"]	= "ç´å“å…ˆ";
+$arySearchTableTytle["lngInsertUserCode"]		= "èµ·ç¥¨è€…";
+$arySearchTableTytle["strNote"]					= "å‚™è€ƒ";
+$arySearchTableTytle["curTotalPrice"]			= "åˆè¨ˆé‡‘é¡";
+$arySearchTableTytle["lngRecordNo"]			    = "æ˜Žç´°è¡Œï¼®ï¼¯.";
+$arySearchTableTytle["strCustomerSalesCode"]	= "æ³¨æ–‡æ›¸ï¼®ï¼¯.";
+$arySearchTableTytle["strGoodsCode"]			= "é¡§å®¢å“ç•ª";
+$arySearchTableTytle["strProductName"]			= "å“å";
+$arySearchTableTytle["strSalesClassName"]		= "å£²ä¸ŠåŒºåˆ†";
+$arySearchTableTytle["curProductPrice"]			= "å˜ä¾¡";
+$arySearchTableTytle["lngQuantity"]		        = "å…¥æ•°";
+$arySearchTableTytle["lngProductQuantity"]		= "æ•°é‡";
+$arySearchTableTytle["strProductUnitName"]		= "å˜ä½";
+$arySearchTableTytle["curSubTotalPrice"]		= "ç¨ŽæŠœé‡‘é¡";
+$arySearchTableTytle["strDetailNote"]			= "æ˜Žç´°å‚™è€ƒ";
+$arySearchTableTytle["btnDelete"]				= "å‰Šé™¤";
 
-// ±Ñ¸ì¥³¡¼¥É¤ÏÂÐ±þÉÔÍ×¤Î¤¿¤áºï½ü
+// è‹±èªžã‚³ãƒ¼ãƒ‰ã¯å¯¾å¿œä¸è¦ã®ãŸã‚å‰Šé™¤
 //$arySearchTableTytleEng["btnDetail"]                = "Detail";
 
 // ------------------------------
-//   Ç¼ÉÊ½ñ¾ÜºÙ²èÌÌ¡Ê¾ÜºÙÉ½¼¨¡Ë
+//   ç´å“æ›¸è©³ç´°ç”»é¢ï¼ˆè©³ç´°è¡¨ç¤ºï¼‰
 // ------------------------------
-// ¥Ø¥Ã¥ÀÉô
-$aryHeadColumnNames["lngSlipNo"]			    = "Ç¼ÉÊÅÁÉ¼ÈÖ¹æ";
-$aryHeadColumnNames["lngRevisionNo"]			= "¥ê¥Ó¥¸¥ç¥óÈÖ¹æ";
-$aryHeadColumnNames["strSlipCode"]		    	= "Ç¼ÉÊ½ñ£Î£Ï.";
-$aryHeadColumnNames["strCustomer"]	        	= "¸ÜµÒ";
-$aryHeadColumnNames["dtmDeliveryDate"]	    	= "Ç¼ÉÊÆü";
-$aryHeadColumnNames["strDeliveryPlaceName"] 	= "Ç¼ÉÊ¾ì½êÌ¾";
-$aryHeadColumnNames["strDeliveryPlaceUserName"]	= "Ç¼ÉÊ¾ì½êÃ´Åö¼ÔÌ¾";
-$aryHeadColumnNames["strTaxClassName"]	    	= "²ÝÀÇ¶èÊ¬";
-$aryHeadColumnNames["strDrafter"]   	    	= "µ¯É¼¼Ô";
-$aryHeadColumnNames["curTotalPrice"]			= "ÀÇÈ´¶â³Û";   // ËÜÅö¤Ï¡Ö¹ç·×¶â³Û¡×¤¬Àµ¤·¤¤¤¬¤¢¤¨¤Æ¡ÖÀÇÈ´¶â³Û¡×¤Ë¤·¤Æ¤¤¤ë
-$aryHeadColumnNames["strMonetaryUnitName"]	    = "ÄÌ²ß";
-$aryHeadColumnNames["strNote"]				    = "È÷¹Í";
-$aryHeadColumnNames["dtmInsertDate"]		    = "ÆþÎÏÆü";
-$aryHeadColumnNames["strInsertUser"] 		    = "ÆþÎÏ¼Ô";
-$aryHeadColumnNames["lngPrintCount"]	        = "°õºþ²ó¿ô";
+// ãƒ˜ãƒƒãƒ€éƒ¨
+$aryHeadColumnNames["lngSlipNo"]			    = "ç´å“ä¼ç¥¨ç•ªå·";
+$aryHeadColumnNames["lngRevisionNo"]			= "ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·";
+$aryHeadColumnNames["strSlipCode"]		    	= "ç´å“æ›¸ï¼®ï¼¯.";
+$aryHeadColumnNames["strCustomer"]	        	= "é¡§å®¢";
+$aryHeadColumnNames["dtmDeliveryDate"]	    	= "ç´å“æ—¥";
+$aryHeadColumnNames["strDeliveryPlaceName"] 	= "ç´å“å ´æ‰€å";
+$aryHeadColumnNames["strDeliveryPlaceUserName"]	= "ç´å“å ´æ‰€æ‹…å½“è€…å";
+$aryHeadColumnNames["strTaxClassName"]	    	= "èª²ç¨ŽåŒºåˆ†";
+$aryHeadColumnNames["strDrafter"]   	    	= "èµ·ç¥¨è€…";
+$aryHeadColumnNames["curTotalPrice"]			= "ç¨ŽæŠœé‡‘é¡";   // æœ¬å½“ã¯ã€Œåˆè¨ˆé‡‘é¡ã€ãŒæ­£ã—ã„ãŒã‚ãˆã¦ã€Œç¨ŽæŠœé‡‘é¡ã€ã«ã—ã¦ã„ã‚‹
+$aryHeadColumnNames["strMonetaryUnitName"]	    = "é€šè²¨";
+$aryHeadColumnNames["strNote"]				    = "å‚™è€ƒ";
+$aryHeadColumnNames["dtmInsertDate"]		    = "å…¥åŠ›æ—¥";
+$aryHeadColumnNames["strInsertUser"] 		    = "å…¥åŠ›è€…";
+$aryHeadColumnNames["lngPrintCount"]	        = "å°åˆ·å›žæ•°";
 
-// ÌÀºÙÉô
-$aryDetailColumnNames["lngRecordNo"]			= "ÌÀºÙ¹ÔÈÖ¹æ";
-$aryDetailColumnNames["strCustomerSalesCode"]   = "¸ÜµÒ¼õÃíÈÖ¹æ";
-$aryDetailColumnNames["lngSalesClassCode"]		= "Çä¾å¶èÊ¬";
-$aryDetailColumnNames["strGoodsCode"]		    = "¸ÜµÒÉÊÈÖ";
-$aryDetailColumnNames["strProductCode"]		    = "À½ÉÊ¥³¡¼¥É¡¦Ì¾¾Î";
-$aryDetailColumnNames["strProductEnglishName"]	= "Ì¾¾Î¡Ê±Ñ¸ì¡Ë";
-$aryDetailColumnNames["curProductPrice"]		= "Ã±²Á";
-$aryDetailColumnNames["lngProductQuantity"]	    = "¿ôÎÌ";
-$aryDetailColumnNames["strProductUnitName"]	    = "Ã±°Ì";
-$aryDetailColumnNames["curSubTotalPrice"]		= "ÀÇÈ´¶â³Û";
-$aryDetailColumnNames["strDetailNote"]			= "ÌÀºÙÈ÷¹Í";
+// æ˜Žç´°éƒ¨
+$aryDetailColumnNames["lngRecordNo"]			= "æ˜Žç´°è¡Œç•ªå·";
+$aryDetailColumnNames["strCustomerSalesCode"]   = "é¡§å®¢å—æ³¨ç•ªå·";
+$aryDetailColumnNames["lngSalesClassCode"]		= "å£²ä¸ŠåŒºåˆ†";
+$aryDetailColumnNames["strGoodsCode"]		    = "é¡§å®¢å“ç•ª";
+$aryDetailColumnNames["strProductCode"]		    = "è£½å“ã‚³ãƒ¼ãƒ‰ãƒ»åç§°";
+$aryDetailColumnNames["strProductEnglishName"]	= "åç§°ï¼ˆè‹±èªžï¼‰";
+$aryDetailColumnNames["curProductPrice"]		= "å˜ä¾¡";
+$aryDetailColumnNames["lngProductQuantity"]	    = "æ•°é‡";
+$aryDetailColumnNames["strProductUnitName"]	    = "å˜ä½";
+$aryDetailColumnNames["curSubTotalPrice"]		= "ç¨ŽæŠœé‡‘é¡";
+$aryDetailColumnNames["strDetailNote"]			= "æ˜Žç´°å‚™è€ƒ";
 
-// ±Ñ¸ì¥³¡¼¥É¤ÏÂÐ±þÉÔÍ×¤Î¤¿¤áºï½ü
-// ±Ñ¸ì¥³¡¼¥É
+// è‹±èªžã‚³ãƒ¼ãƒ‰ã¯å¯¾å¿œä¸è¦ã®ãŸã‚å‰Šé™¤
+// è‹±èªžã‚³ãƒ¼ãƒ‰
 //$aryTableTytleEng["btnDetail"]				= "Detail";
 
 ?>

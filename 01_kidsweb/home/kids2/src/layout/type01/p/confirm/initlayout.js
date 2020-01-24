@@ -14,7 +14,7 @@ var NumTabG1 = '';
 var NumTabH1 = '';
 var NumTabI1 = '';
 
-// ÅĞÏ¿¥Ü¥¿¥ó
+// ç™»éŒ²ãƒœã‚¿ãƒ³
 var RegistNum = '';
 
 //// [WF] DATE BUTTON TAB INDEX NUM /////
@@ -24,31 +24,31 @@ var NumDateTabB = '';
 
 
 ///// MAIN MTITLE IMAGE /////
-var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="¾¦ÉÊ´ÉÍı">';
+var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="å•†å“ç®¡ç†">';
 var maintitleE = '<img src="' + titleE + '" width="314" height="22" border="0" alt="PRODUCTS">';
 
 
 ///// INPUT A,B,C HEADER IMAGE /////
-var headerAJ = '<img src="' + confirmHeadJ + '" width="949" height="30" border="0" alt="ÅĞÏ¿³ÎÇ§">';
+var headerAJ = '<img src="' + confirmHeadJ + '" width="949" height="30" border="0" alt="ç™»éŒ²ç¢ºèª">';
 var headerAE = '<img src="' + confirmHeadE + '" width="949" height="30" border="0" alt="REGISTRAITION CONFIRM">';
 
 
 
 ///// [SEARCH]REGIST BLUE BT IMAGE /////
-var schSchBtJ1 = '<a href="#" onclick=""><img onmouseover="BlueRegistJOn(this)" onmouseout="BlueRegistJOff(this)" src="' + blueregistJ1 + '" width="72" height="20" border="0" alt="ÅĞÏ¿"></a>';
+var schSchBtJ1 = '<a href="#" onclick=""><img onmouseover="BlueRegistJOn(this)" onmouseout="BlueRegistJOff(this)" src="' + blueregistJ1 + '" width="72" height="20" border="0" alt="ç™»éŒ²"></a>';
 var schSchBtE1 = '<a href="#" onclick=""><img onmouseover="BlueRegistEOn(this)" onmouseout="BlueRegistEOff(this)" src="' + blueregistE1 + '" width="72" height="20" border="0" alt="REGIST"></a>';
 
 ///// [SEARCH]BACK BLUE BT IMAGE /////
-var schClrBtJ1 = '<a href="#"><img onmouseover="BlueBackJOn(this);" onmouseout="BlueBackJOff(this);" src="' + bluebackJ1 + '" width="72" height="20" border="0" alt="Ìá¤ë"></a>';
+var schClrBtJ1 = '<a href="#"><img onmouseover="BlueBackJOn(this);" onmouseout="BlueBackJOff(this);" src="' + bluebackJ1 + '" width="72" height="20" border="0" alt="æˆ»ã‚‹"></a>';
 var schClrBtE1 = '<a href="#"><img onmouseover="BlueBackEOn(this);" onmouseout="BlueBackEOff(this);" src="' + bluebackE1 + '" width="72" height="20" border="0" alt="BACK"></a>';
 
 
 ///// CSS VALUE /////
-var fcolor = '#666666'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
-var segcolor = '#e8f0f1'; //¹àÌÜÇØ·Ê¿§
-var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
-var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //¹àÌÜ±¦¶õ¤­BORDER
-var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //¹àÌÜº¸¶õ¤­BORDER
+var fcolor = '#666666'; //é …ç›®ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼
+var segcolor = '#e8f0f1'; //é …ç›®èƒŒæ™¯è‰²
+var segbody = '#d6d0b1'; //INPUT A BODY èƒŒæ™¯è‰²
+var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //é …ç›®å³ç©ºãBORDER
+var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //é …ç›®å·¦ç©ºãBORDER
 
 
 function initLayoutP()

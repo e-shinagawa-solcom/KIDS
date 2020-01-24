@@ -1,6 +1,6 @@
 <?
 /** 
- *	È¯Ãí¡¡¾ÜºÙ¡¢ºï½ü¡¢Ìµ¸ú²½´Ø¿ô·²
+ *	ç™ºæ³¨ã€€è©³ç´°ã€å‰Šé™¤ã€ç„¡åŠ¹åŒ–é–¢æ•°ç¾¤
  *
  *	@package   kuwagata
  *	@license   http://www.wiseknot.co.jp/ 
@@ -9,81 +9,81 @@
  *	@access    public
  *	@version   1.01
  *
- *	½èÍı³µÍ×
- *	¸¡º÷·ë²Ì´ØÏ¢¤Î´Ø¿ô
+ *	å‡¦ç†æ¦‚è¦
+ *	æ¤œç´¢çµæœé–¢é€£ã®é–¢æ•°
  *
- *	½¤ÀµÍúÎò
+ *	ä¿®æ­£å±¥æ­´
  *
- *	2004.03.17	¾ÜºÙÉ½¼¨»ş¤ÎÃ±²ÁÉôÊ¬¤ÎÉ½¼¨Êı¼°¤ò¾®¿ôÅÀ°Ê²¼£´·å¤ËÊÑ¹¹
- *	2004.03.29	¾ÜºÙÉ½¼¨»ş¤ÎÌÀºÙ¹ÔÈÖ¹æ¤ÎÉ½¼¨ÉôÊ¬¤òÉ½¼¨ÍÑ¥½¡¼¥È¥­¡¼¤òÉ½¼¨¤¹¤ë¤è¤¦¤ËÊÑ¹¹
- *	2004.05.31	¶â·¿ÈÖ¹æ¤Î»ØÄê²Õ½ê¤ÎÄÉ²Ã
+ *	2004.03.17	è©³ç´°è¡¨ç¤ºæ™‚ã®å˜ä¾¡éƒ¨åˆ†ã®è¡¨ç¤ºæ–¹å¼ã‚’å°æ•°ç‚¹ä»¥ä¸‹ï¼”æ¡ã«å¤‰æ›´
+ *	2004.03.29	è©³ç´°è¡¨ç¤ºæ™‚ã®æ˜ç´°è¡Œç•ªå·ã®è¡¨ç¤ºéƒ¨åˆ†ã‚’è¡¨ç¤ºç”¨ã‚½ãƒ¼ãƒˆã‚­ãƒ¼ã‚’è¡¨ç¤ºã™ã‚‹ã‚ˆã†ã«å¤‰æ›´
+ *	2004.05.31	é‡‘å‹ç•ªå·ã®æŒ‡å®šç®‡æ‰€ã®è¿½åŠ 
  *
  */
 
 /**
- * »ØÄê¤µ¤ì¤¿È¯ÃíÈÖ¹æ¤«¤éÈ¯Ãí¥Ø¥Ã¥À¾ğÊó¤ò¼èÆÀ¤¹¤ë£Ó£Ñ£ÌÊ¸¤òºîÀ®
+ * æŒ‡å®šã•ã‚ŒãŸç™ºæ³¨ç•ªå·ã‹ã‚‰ç™ºæ³¨ãƒ˜ãƒƒãƒ€æƒ…å ±ã‚’å–å¾—ã™ã‚‹ï¼³ï¼±ï¼¬æ–‡ã‚’ä½œæˆ
  *
- *	»ØÄêÈ¯ÃíÈÖ¹æ¤Î¥Ø¥Ã¥À¾ğÊó¤Î¼èÆÀÍÑ£Ó£Ñ£ÌÊ¸ºîÀ®´Ø¿ô
+ *	æŒ‡å®šç™ºæ³¨ç•ªå·ã®ãƒ˜ãƒƒãƒ€æƒ…å ±ã®å–å¾—ç”¨ï¼³ï¼±ï¼¬æ–‡ä½œæˆé–¢æ•°
  *
- *	@param  Integer 	$lngOrderNo 			¼èÆÀ¤¹¤ëÈ¯ÃíÈÖ¹æ
- *	@return strQuery 	$strQuery ¸¡º÷ÍÑSQLÊ¸
+ *	@param  Integer 	$lngOrderNo 			å–å¾—ã™ã‚‹ç™ºæ³¨ç•ªå·
+ *	@return strQuery 	$strQuery æ¤œç´¢ç”¨SQLæ–‡
  *	@access public
  */
 function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 {
-	// SQLÊ¸¤ÎºîÀ®
+	// SQLæ–‡ã®ä½œæˆ
 	$aryQuery[] = "SELECT o.lngOrderNo as lngOrderNo, o.lngRevisionNo as lngRevisionNo";
 
-	// ÅĞÏ¿Æü
+	// ç™»éŒ²æ—¥
 	$aryQuery[] = ", to_char( o.dtmInsertDate, 'YYYY/MM/DD' ) as dtmInsertDate";
-	// ·×¾åÆü
+	// è¨ˆä¸Šæ—¥
 	$aryQuery[] = ", to_char( o.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmOrderAppDate";
-	// È¯ÃíNo
+	// ç™ºæ³¨No
 	$aryQuery[] = ", o.strOrderCode || '_' || to_char(o.lngRevisionNo, 'FM00') as strOrderCode";
-	// È¯Ãí¥³¡¼¥É
+	// ç™ºæ³¨ã‚³ãƒ¼ãƒ‰
 	$aryQuery[] = ", o.strOrderCode as strRealOrderCode";
-	// ÆşÎÏ¼Ô
+	// å…¥åŠ›è€…
 	$aryQuery[] = ", o.lngInputUserCode as lngInputUserCode";
 	$aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
 	$aryQuery[] = ", input_u.strUserDisplayName as strInputUserDisplayName";
-	// »ÅÆşÀè
+	// ä»•å…¥å…ˆ
 	$aryQuery[] = ", o.lngCustomerCompanyCode as lngCustomerCode";
 	$aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
 	$aryQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
-	// ÉôÌç
+	// éƒ¨é–€
 	$aryQuery[] = ", o.lngGroupCode as lngInChargeGroupCode";
 	$aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
 	$aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
-	// Ã´Åö¼Ô
+	// æ‹…å½“è€…
 	$aryQuery[] = ", o.lngUserCode as lngInChargeUserCode";
 	$aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
 	$aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
-	// Ç¼ÉÊ¾ì½ê
+	// ç´å“å ´æ‰€
 	$aryQuery[] = ", o.lngDeliveryPlaceCode as lngDeliveryPlaceCode";
 	$aryQuery[] = ", delv_c.strCompanyDisplayCode as strDeliveryDisplayCode";
 	$aryQuery[] = ", delv_c.strCompanyDisplayName as strDeliveryDisplayName";
-	// ÄÌ²ß
+	// é€šè²¨
 	$aryQuery[] = ", o.lngMonetaryUnitCode as lngMonetaryUnitCode";
 	$aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
 	$aryQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
-	// ¥ì¡¼¥È¥¿¥¤¥×
+	// ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—
 	$aryQuery[] = ", o.lngMonetaryRateCode as lngMonetaryRateCode";
 	$aryQuery[] = ", mr.strMonetaryRateName as strMonetaryRateName";
-	// ´¹»»¥ì¡¼¥È
+	// æ›ç®—ãƒ¬ãƒ¼ãƒˆ
 	$aryQuery[] = ", o.curConversionRate as curConversionRate";
-	// ¾õÂÖ
+	// çŠ¶æ…‹
 	$aryQuery[] = ", o.lngOrderStatusCode as lngOrderStatusCode";
 	$aryQuery[] = ", os.strOrderStatusName as strOrderStatusName";
-	// »ÙÊ§¾ò·ï
+	// æ”¯æ‰•æ¡ä»¶
 	$aryQuery[] = ", o.lngPayConditionCode as lngPayConditionCode";
 	$aryQuery[] = ", pc.strPayConditionName as strPayConditionName";
-	// È¯ÃíÍ­¸ú´ü¸ÂÆü
+	// ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥
 	$aryQuery[] = ", to_char( tp.dtmExpirationDate, 'YYYY/MM/DD' ) as dtmExpirationDate";
-	// // È÷¹Í
+	// // å‚™è€ƒ
 	// $aryQuery[] = ", o.strNote as strNote";
-	// ¹ç·×¶â³Û
+	// åˆè¨ˆé‡‘é¡
 	$aryQuery[] = ", To_char( ot.curSubTotalPrice, '9,999,999,990.99' ) as curSubTotalPrice";
-	// À½ÉÊ¥³¡¼¥É¡¦À½ÉÊÌ¾
+	// è£½å“ã‚³ãƒ¼ãƒ‰ãƒ»è£½å“å
 	$aryQuery[] = ", ot.strProductCode as strProductCode";
 	$aryQuery[] = ", p.strProductName as strProductName";
 
@@ -148,7 +148,7 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	}
 	else
 	{
-		fncOutputError( 503, DEF_ERROR, "¥Ç¡¼¥¿¤¬°Û¾ï¤Ç¤¹", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError( 503, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãŒç•°å¸¸ã§ã™", TRUE, "../po/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
@@ -156,58 +156,58 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 }
 
 /**
- * »ØÄê¤µ¤ì¤¿È¯ÃíÈÖ¹æ¤«¤éÈ¯ÃíÌÀºÙ¾ğÊó¤ò¼èÆÀ¤¹¤ë£Ó£Ñ£ÌÊ¸¤òºîÀ®
+ * æŒ‡å®šã•ã‚ŒãŸç™ºæ³¨ç•ªå·ã‹ã‚‰ç™ºæ³¨æ˜ç´°æƒ…å ±ã‚’å–å¾—ã™ã‚‹ï¼³ï¼±ï¼¬æ–‡ã‚’ä½œæˆ
  *
- *	»ØÄêÈ¯ÃíÈÖ¹æ¤ÎÌÀºÙ¾ğÊó¤Î¼èÆÀÍÑ£Ó£Ñ£ÌÊ¸ºîÀ®´Ø¿ô
+ *	æŒ‡å®šç™ºæ³¨ç•ªå·ã®æ˜ç´°æƒ…å ±ã®å–å¾—ç”¨ï¼³ï¼±ï¼¬æ–‡ä½œæˆé–¢æ•°
  *
- *	@param  Integer 	$lngOrderNo 			¼èÆÀ¤¹¤ëÈ¯ÃíÈÖ¹æ
- *	@return strQuery 	$strQuery ¸¡º÷ÍÑSQLÊ¸
+ *	@param  Integer 	$lngOrderNo 			å–å¾—ã™ã‚‹ç™ºæ³¨ç•ªå·
+ *	@return strQuery 	$strQuery æ¤œç´¢ç”¨SQLæ–‡
  *	@access public
  */
 function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 {
 	// 2004.03.29 suzukaze update start
-	// SQLÊ¸¤ÎºîÀ®
+	// SQLæ–‡ã®ä½œæˆ
 	//	$aryQuery[] = "SELECT distinct on (od.lngOrderDetailNo) od.lngOrderDetailNo as lngRecordNo, ";
 	$aryQuery[] = "SELECT od.lngOrderDetailNo as lngRecordNo, ";
 	// 2004.03.29 suzukaze update end
 	$aryQuery[] = "od.lngOrderNo as lngOrderNo, od.lngRevisionNo as lngRevisionNo";
 
-	// À½ÉÊ¥³¡¼¥É¡¦Ì¾¾Î
+	// è£½å“ã‚³ãƒ¼ãƒ‰ãƒ»åç§°
 	$aryQuery[] = ", od.strProductCode as strProductCode";
 	$aryQuery[] = ", p.strProductName as strProductName";
-	// »ÅÆş²ÊÌÜ
+	// ä»•å…¥ç§‘ç›®
 	$aryQuery[] = ", od.lngStockSubjectCode as lngStockSubjectCode";
 	$aryQuery[] = ", ss.strStockSubjectName as strStockSubjectName";
-	// »ÅÆşÉôÉÊ
+	// ä»•å…¥éƒ¨å“
 	$aryQuery[] = ", od.lngStockItemCode as lngStockItemCode";
 	$aryQuery[] = ", si.strStockItemName as strStockItemName";
-	// ¶â·¿ÈÖ¹æ
+	// é‡‘å‹ç•ªå·
 	$aryQuery[] = ", od.strMoldNo as strMoldNo";
-	// ¸ÜµÒÉÊÈÖ
+	// é¡§å®¢å“ç•ª
 	$aryQuery[] = ", p.strGoodsCode as strGoodsCode";
-	// ±¿ÈÂÊıË¡
+	// é‹æ¬æ–¹æ³•
 	$aryQuery[] = ", od.lngDeliveryMethodCode as lngDeliveryMethodCode";
 	$aryQuery[] = ", dm.strDeliveryMethodName as strDeliveryMethodName";
-	// Ç¼´ü
+	// ç´æœŸ
 	$aryQuery[] = ", to_char(od.dtmDeliveryDate, 'YYYY/MM/DD' ) as dtmDeliveryDate";
 	// 2004.03.17 suzukaze update start
-	// Ã±²Á
+	// å˜ä¾¡
 	$aryQuery[] = ", To_char( od.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
 	//	$aryQuery[] = ", To_char( od.curProductPrice, '9,999,999,990.99' )  as curProductPrice";
 	// 2004.03.17 suzukaze update start
-	// Ã±°Ì
+	// å˜ä½
 	$aryQuery[] = ", od.lngProductUnitCode as lngProductUnitCode";
 	$aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
-	// ¿ôÎÌ
+	// æ•°é‡
 	$aryQuery[] = ", To_char( od.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
-	// ÀÇÈ´¶â³Û
+	// ç¨æŠœé‡‘é¡
 	$aryQuery[] = ", To_char( od.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
-	// ÌÀºÙÈ÷¹Í
+	// æ˜ç´°å‚™è€ƒ
 	$aryQuery[] = ", od.strNote as strDetailNote";
 	$aryQuery[] = ", od.lngOrderDetailNo as lngOrderDetailNo";
 
-	// ÌÀºÙ¹Ô¤òÉ½¼¨¤¹¤ë¾ì¹ç
+	// æ˜ç´°è¡Œã‚’è¡¨ç¤ºã™ã‚‹å ´åˆ
 	$aryQuery[] = " FROM t_OrderDetail od ";
 	$aryQuery[] = " INNER JOIN ( ";
     $aryQuery[] = "     SELECT m_product.* FROM m_product ";
@@ -234,7 +234,7 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	// 2004.03.29 suzukaze update end
 
 	$strQuery = implode( "\n", $aryQuery );
-	// ÌÀºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+	// æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -248,36 +248,36 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 }
 
 /**
- * ¾ÜºÙÉ½¼¨´Ø¿ô¡Ê¥Ø¥Ã¥ÀÍÑ¡Ë
+ * è©³ç´°è¡¨ç¤ºé–¢æ•°ï¼ˆãƒ˜ãƒƒãƒ€ç”¨ï¼‰
  *
- *	¥Æ¡¼¥Ö¥ë¹½À®¤ÇÈ¯Ãí¥Ç¡¼¥¿¾ÜºÙ¤ò½ĞÎÏ¤¹¤ë´Ø¿ô
- *	¥Ø¥Ã¥À¹Ô¤òÉ½¼¨¤¹¤ë
+ *	ãƒ†ãƒ¼ãƒ–ãƒ«æ§‹æˆã§ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿è©³ç´°ã‚’å‡ºåŠ›ã™ã‚‹é–¢æ•°
+ *	ãƒ˜ãƒƒãƒ€è¡Œã‚’è¡¨ç¤ºã™ã‚‹
  *
- *	@param  Array 	$aryResult 	¥Ø¥Ã¥À¹Ô¤Î¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
+ *	@param  Array 	$aryResult 	ãƒ˜ãƒƒãƒ€è¡Œã®æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
  *	@access public
  */
 function fncSetPurchaseHeadTabelData ( $aryResult )
 {
 	$aryColumnNames = array_keys($aryResult);
 
-	// É½¼¨ÂĞ¾İ¥«¥é¥à¤ÎÇÛÎó¤è¤ê·ë²Ì¤Î½ĞÎÏ
+	// è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ ã®é…åˆ—ã‚ˆã‚Šçµæœã®å‡ºåŠ›
 	for ( $i = 0; $i < count($aryColumnNames); $i++ )
 	{
 		$strColumnName = $aryColumnNames[$i];
 
-		// ÅĞÏ¿Æü
+		// ç™»éŒ²æ—¥
 		if ( $strColumnName == "dtminsertdate" )
 		{
 			$aryNewResult[$strColumnName] = str_replace( "-", "/", substr( $aryResult["dtminsertdate"], 0, 19 ) );
 		}
 
-		// ·×¾åÆü
+		// è¨ˆä¸Šæ—¥
 		else if ( $strColumnName == "dtmorderappdate" )
 		{
 			$aryNewResult[$strColumnName] = str_replace( "-", "/", $aryResult["dtmorderappdate"] );
 		}
 
-		// ÆşÎÏ¼Ô
+		// å…¥åŠ›è€…
 		else if ( $strColumnName == "lnginputusercode" )
 		{
 			if ( $aryResult["strinputuserdisplaycode"] )
@@ -291,7 +291,7 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			$aryNewResult[$strColumnName] .= " " . $aryResult["strinputuserdisplayname"];
 		}
 
-		// »ÅÆşÀè
+		// ä»•å…¥å…ˆ
 		else if ( $strColumnName == "lngcustomercode" )
 		{
 			if ( $aryResult["strcustomerdisplaycode"] )
@@ -305,7 +305,7 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			$aryNewResult[$strColumnName] .= " " . $aryResult["strcustomerdisplayname"];
 		}
 
-		// ÉôÌç
+		// éƒ¨é–€
 		else if ( $strColumnName == "lnginchargegroupcode" )
 		{
 			if ( $aryResult["strinchargegroupdisplaycode"] )
@@ -318,7 +318,7 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			}
 			$aryNewResult[$strColumnName] .= " " . $aryResult["strinchargegroupdisplayname"];
 		}
-		// Ã´Åö¼Ô
+		// æ‹…å½“è€…
 		else if ( $strColumnName == "lnginchargeusercode" )
 		{
 			if ( $aryResult["strinchargeuserdisplaycode"] )
@@ -332,7 +332,7 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			$aryNewResult[$strColumnName] .= " " . $aryResult["strinchargeuserdisplayname"];
 		}
 
-		// Ç¼ÉÊ¾ì½ê
+		// ç´å“å ´æ‰€
 		else if ( $strColumnName == "lngdeliveryplacecode" )
 		{
 			if ( $aryResult["strdeliverydisplaycode"] )
@@ -346,7 +346,7 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			$aryNewResult[$strColumnName] .= " " . $aryResult["strdeliverydisplayname"];
 		}
 
-		// ¹ç·×¶â³Û
+		// åˆè¨ˆé‡‘é¡
 		else if ( $strColumnName == "curtotalprice" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strmonetaryunitsign"] . " ";
@@ -360,7 +360,7 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			}
 		}
 
-		// °õºş²ó¿ô
+		// å°åˆ·å›æ•°
 		else if ( $strColumnName == "lngprintcount" )
 		{
 			if ($aryResult["lngprintcount"] == '' )
@@ -373,55 +373,55 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			}
 		}
 
-		// À½ÉÊ¥³¡¼¥É
+		// è£½å“ã‚³ãƒ¼ãƒ‰
 		else if ( $strColumnName == "strproductcode" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strproductcode"];
 		}
 
-		// ºÆÈÎ¥³¡¼¥É
+		// å†è²©ã‚³ãƒ¼ãƒ‰
 		else if ( $strColumnName == "strrevisecode" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strrevisecode"];
 		}
 
-		// À½ÉÊÌ¾
+		// è£½å“å
 		else if ( $strColumnName == "strproductname" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strproductname"];
 		}
 
-		// À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
+		// è£½å“åï¼ˆè‹±èªï¼‰
 		else if ( $strColumnName == "strproductenglishname" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strproductenglishname"];
 		}
 
-		// ¾õÂÖ
+		// çŠ¶æ…‹
 		else if ( $strColumnName == "lngorderstatuscode" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strorderstatusname"];
 		}
 
-		// ¾õÂÖ
+		// çŠ¶æ…‹
 		else if ( $strColumnName == "lngorderstatuscode" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strorderstatusname"];
 		}
 
-		// »ÙÊ§¾ò·ï
+		// æ”¯æ‰•æ¡ä»¶
 		else if ( $strColumnName == "lngpayconditioncode" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strpayconditionname"];
 		}
 
-		// ÄÌ²ß
+		// é€šè²¨
 		else if ( $strColumnName == "lngmonetaryunitcode" )
 		{
 			$aryNewResult[$strColumnName] = $aryResult["strmonetaryunitname"];
 		}
 
-		// ¥ì¡¼¥È¥¿¥¤¥×
+		// ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—
 		else if ( $strColumnName == "lngmonetaryratecode" )
 		{
 			if ( $aryResult["lngmonetaryratecode"] and $aryResult["lngmonetaryunitcode"] != DEF_MONETARY_YEN )
@@ -434,22 +434,22 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 			}
 		}
 
-		// È¯ÃíÍ­¸ú´ü¸ÂÆü
+		// ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥
 		else if ( $strColumnName == "dtmexpirationdate" )
 		{
 			$aryNewResult[$strColumnName] = str_replace( "-", "/", $aryResult["dtmexpirationdate"] );
 		}
 
-		// È÷¹Í
+		// å‚™è€ƒ
 		else if ( $strColumnName == "strnote" )
 		{
-			// È÷¹Í¤ÎÆÃ¼ìÊ¸»úÊÑ´¹
+			// å‚™è€ƒã®ç‰¹æ®Šæ–‡å­—å¤‰æ›
 			$aryResult["strNote"] = fncHTMLSpecialChars( $aryResult["strNote"] );
 
 			$aryNewResult[$strColumnName] = nl2br($aryResult["strnote"]);
 		}
 
-		// ¤½¤ÎÂ¾¤Î¹àÌÜ¤Ï¤½¤Î¤Ş¤Ş½ĞÎÏ
+		// ãã®ä»–ã®é …ç›®ã¯ãã®ã¾ã¾å‡ºåŠ›
 		else
 		{
 			$aryNewResult[$strColumnName] = $aryResult[$strColumnName];
@@ -460,25 +460,25 @@ function fncSetPurchaseHeadTabelData ( $aryResult )
 }
 
 /**
- * ¾ÜºÙÉ½¼¨´Ø¿ô¡ÊÌÀºÙÍÑ¡Ë
+ * è©³ç´°è¡¨ç¤ºé–¢æ•°ï¼ˆæ˜ç´°ç”¨ï¼‰
  *
- *	¥Æ¡¼¥Ö¥ë¹½À®¤ÇÈ¯Ãí¥Ç¡¼¥¿¾ÜºÙ¤ò½ĞÎÏ¤¹¤ë´Ø¿ô
- *	ÌÀºÙ¹Ô¤òÉ½¼¨¤¹¤ë
+ *	ãƒ†ãƒ¼ãƒ–ãƒ«æ§‹æˆã§ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿è©³ç´°ã‚’å‡ºåŠ›ã™ã‚‹é–¢æ•°
+ *	æ˜ç´°è¡Œã‚’è¡¨ç¤ºã™ã‚‹
  *
- *	@param  Array 	$aryDetailResult 	ÌÀºÙ¹Ô¤Î¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó¡Ê£±¥Ç¡¼¥¿Ê¬¡Ë
- *	@param  Array 	$aryHeadResult 		¥Ø¥Ã¥À¹Ô¤Î¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó¡Ê»²¾ÈÍÑ¡Ë
+ *	@param  Array 	$aryDetailResult 	æ˜ç´°è¡Œã®æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—ï¼ˆï¼‘ãƒ‡ãƒ¼ã‚¿åˆ†ï¼‰
+ *	@param  Array 	$aryHeadResult 		ãƒ˜ãƒƒãƒ€è¡Œã®æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—ï¼ˆå‚ç…§ç”¨ï¼‰
  *	@access public
  */
 function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 {
 	$aryColumnNames = array_keys($aryDetailResult);
 
-	// É½¼¨ÂĞ¾İ¥«¥é¥à¤ÎÇÛÎó¤è¤ê·ë²Ì¤Î½ĞÎÏ
+	// è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ ã®é…åˆ—ã‚ˆã‚Šçµæœã®å‡ºåŠ›
 	for ( $i = 0; $i < count($aryColumnNames); $i++ )
 	{
 		$strColumnName = $aryColumnNames[$i];
 
-		// À½ÉÊ¥³¡¼¥ÉÌ¾¾Î
+		// è£½å“ã‚³ãƒ¼ãƒ‰åç§°
 		if ( $strColumnName == "strproductcode" )
 		{
 			if ( $aryDetailResult["strproductcode"] )
@@ -492,7 +492,7 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 			$aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strproductname"];
 		}
 
-		// »ÅÆş²ÊÌÜ
+		// ä»•å…¥ç§‘ç›®
 		else if ( $strColumnName == "lngstocksubjectcode" )
 		{
 			if ( $aryDetailResult["lngstocksubjectcode"] )
@@ -506,7 +506,7 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 			$aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strstocksubjectname"];
 		}
 
-		// »ÅÆşÉôÉÊ
+		// ä»•å…¥éƒ¨å“
 		else if ( $strColumnName == "lngstockitemcode" )
 		{
 			if ( $aryDetailResult["lngstockitemcode"] )
@@ -520,12 +520,12 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 			$aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strstockitemname"];
 		}
 
-		// ¶â·¿ÈÖ¹æ
+		// é‡‘å‹ç•ªå·
 		else if ( $strColumnName == "strmoldno" )
 		{
 	// 2004.05.31 suzukaze update start
-			// »ÅÆş²ÊÌÜ¤¬£´£³£³¡¡¶â·¿³¤³°½şµÑ¡¡»ÅÆşÉôÉÊ¤¬£± Injection Mold¤Î¾ì¹ç
-			// »ÅÆş²ÊÌÜ¤¬£´£³£±¡¡¶â·¿½şµÑ¹â¡¡¡¡»ÅÆşÉôÉÊ¤¬£¸ ¶â·¿¤Î¾ì¹ç
+			// ä»•å…¥ç§‘ç›®ãŒï¼”ï¼“ï¼“ã€€é‡‘å‹æµ·å¤–å„Ÿå´ã€€ä»•å…¥éƒ¨å“ãŒï¼‘ Injection Moldã®å ´åˆ
+			// ä»•å…¥ç§‘ç›®ãŒï¼”ï¼“ï¼‘ã€€é‡‘å‹å„Ÿå´é«˜ã€€ã€€ä»•å…¥éƒ¨å“ãŒï¼˜ é‡‘å‹ã®å ´åˆ
 			if ( $aryDetailResult["strmoldno"] 
 				and ( $aryDetailResult["lngstocksubjectcode"] = 433 and $aryDetailResult["lngstockitemcode"] = 1 ) 
 				or  ( $aryDetailResult["lngstocksubjectcode"] = 431 and $aryDetailResult["lngstockitemcode"] = 8 ) )
@@ -535,29 +535,29 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 	// 2004.05.31 suzukaze update end
 		}
 
-		// ¸ÜµÒÉÊÈÖ
+		// é¡§å®¢å“ç•ª
 		else if ( $strColumnName == "strgoodscode" )
 		{
 			$aryNewDetailResult[$strColumnName] = $aryDetailResult[$strColumnName];
 		}
 
-		// ±¿ÈÂÊıË¡
+		// é‹æ¬æ–¹æ³•
 		else if ( $strColumnName == "lngdeliverymethodcode" )
 		{
 			if ( $aryDetailResult["strdeliverymethodname"] == "" )
 			{
-				$aryDetailResult["strdeliverymethodname"] = "Ì¤Äê";
+				$aryDetailResult["strdeliverymethodname"] = "æœªå®š";
 			}
 			$aryNewDetailResult[$strColumnName] .= $aryDetailResult["strdeliverymethodname"];
 		}
 
-		// Ç¼´ü
+		// ç´æœŸ
 		else if ( $strColumnName == "dtmdeliverydate" )
 		{
 			$aryNewDetailResult[$strColumnName] = str_replace( "-", "/", $aryDetailResult["dtmdeliverydate"] );
 		}
 
-		// Ã±²Á
+		// å˜ä¾¡
 		else if ( $strColumnName == "curproductprice" )
 		{
 			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
@@ -571,13 +571,13 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 			}
 		}
 
-		// Ã±°Ì
+		// å˜ä½
 		else if ( $strColumnName == "lngproductunitcode" )
 		{
 			$aryNewDetailResult[$strColumnName] = $aryDetailResult["strproductunitname"];
 		}
 
-		// ÀÇÈ´¶â³Û
+		// ç¨æŠœé‡‘é¡
 		else if ( $strColumnName == "cursubtotalprice" )
 		{
 			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
@@ -591,16 +591,16 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 			}
 		}
 
-		// ÌÀºÙÈ÷¹Í
+		// æ˜ç´°å‚™è€ƒ
 		else if ( $strColumnName == "strdetailnote" )
 		{
-			// È÷¹Í¤ÎÆÃ¼ìÊ¸»úÊÑ´¹
+			// å‚™è€ƒã®ç‰¹æ®Šæ–‡å­—å¤‰æ›
 			$aryDetailResult[$strColumnName] = fncHTMLSpecialChars( $aryDetailResult[$strColumnName] );
 
 			$aryNewDetailResult[$strColumnName] = nl2br($aryDetailResult[$strColumnName]);
 		}
 
-		// ¤½¤ÎÂ¾¤Î¹àÌÜ¤Ï¤½¤Î¤Ş¤Ş½ĞÎÏ
+		// ãã®ä»–ã®é …ç›®ã¯ãã®ã¾ã¾å‡ºåŠ›
 		else
 		{
 			$aryNewDetailResult[$strColumnName] = $aryDetailResult[$strColumnName];
@@ -611,19 +611,19 @@ function fncSetPurchaseDetailTabelData ( $aryDetailResult, $aryHeadResult )
 }
 
 /**
- * ¾ÜºÙÉ½¼¨ÍÑ¥«¥é¥àÌ¾¥»¥Ã¥È´Ø¿ô
+ * è©³ç´°è¡¨ç¤ºç”¨ã‚«ãƒ©ãƒ åã‚»ãƒƒãƒˆé–¢æ•°
  *
- *	¾ÜºÙÉ½¼¨»ş¤Î¥«¥é¥àÌ¾¡ÊÆüËÜ¸ì¡¢±Ñ¸ì¡Ë¤Ç¤ÎÀßÄê´Ø¿ô
+ *	è©³ç´°è¡¨ç¤ºæ™‚ã®ã‚«ãƒ©ãƒ åï¼ˆæ—¥æœ¬èªã€è‹±èªï¼‰ã§ã®è¨­å®šé–¢æ•°
  *
- *	@param  Array 	$aryResult 		¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
- *	@param  Array 	$aryTytle 		¥«¥é¥àÌ¾¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
+ *	@param  Array 	$aryResult 		æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
+ *	@param  Array 	$aryTytle 		ã‚«ãƒ©ãƒ åãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
  *	@access public
  */
 function fncSetPurchaseTabelName ( $aryResult, $aryTytle )
 {
 	$aryColumnNames = array_values($aryResult);
 
-	// É½¼¨ÂĞ¾İ¥«¥é¥à¤ÎÇÛÎó¤è¤ê·ë²Ì¤Î½ĞÎÏ
+	// è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ ã®é…åˆ—ã‚ˆã‚Šçµæœã®å‡ºåŠ›
 	for ( $i = 0; $i < count($aryColumnNames); $i++ )
 	{
 		$strColumnName = $aryColumnNames[$i];
@@ -639,30 +639,30 @@ function fncSetPurchaseTabelName ( $aryResult, $aryTytle )
 }
 
 /**
- * »ØÄê¤Î¥³¡¼¥É¤Î¥Ç¡¼¥¿¤òÂ¾¤Î¥Ş¥¹¥¿¤Ç»ÈÍÑ¤·¤Æ¤¤¤ë¥³¡¼¥É¼èÆÀ
+ * æŒ‡å®šã®ã‚³ãƒ¼ãƒ‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’ä»–ã®ãƒã‚¹ã‚¿ã§ä½¿ç”¨ã—ã¦ã„ã‚‹ã‚³ãƒ¼ãƒ‰å–å¾—
  *
- *	»ØÄê¥³¡¼¥É¤ËÂĞ¤·¤Æ¡¢»ØÄê¤µ¤ì¤¿¥Ş¥¹¥¿¤Î¸¡º÷´Ø¿ô
+ *	æŒ‡å®šã‚³ãƒ¼ãƒ‰ã«å¯¾ã—ã¦ã€æŒ‡å®šã•ã‚ŒãŸãƒã‚¹ã‚¿ã®æ¤œç´¢é–¢æ•°
  *
- *	@param  String 		$strCode 		¸¡º÷ÂĞ¾İ¥³¡¼¥É
- *	@param	Integer		$lngMode		¸¡º÷¥â¡¼¥É	1:È¯Ãí¥³¡¼¥É¤«¤é»ÅÆş¥Ş¥¹¥¿	¡Ê½ç¼¡ÄÉ²Ã¡Ë
- *	@param  Object		$objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
- *	@return Array 		$aryCode		¸¡º÷ÂĞ¾İ¥³¡¼¥É¤¬»ÈÍÑ¤µ¤ì¤Æ¤¤¤ë¥Ş¥¹¥¿Æâ¤Î¥³¡¼¥É¤ÎÇÛÎó
+ *	@param  String 		$strCode 		æ¤œç´¢å¯¾è±¡ã‚³ãƒ¼ãƒ‰
+ *	@param	Integer		$lngMode		æ¤œç´¢ãƒ¢ãƒ¼ãƒ‰	1:ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ä»•å…¥ãƒã‚¹ã‚¿	ï¼ˆé †æ¬¡è¿½åŠ ï¼‰
+ *	@param  Object		$objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *	@return Array 		$aryCode		æ¤œç´¢å¯¾è±¡ã‚³ãƒ¼ãƒ‰ãŒä½¿ç”¨ã•ã‚Œã¦ã„ã‚‹ãƒã‚¹ã‚¿å†…ã®ã‚³ãƒ¼ãƒ‰ã®é…åˆ—
  *	@access public
  */
 function fncGetDeleteCodeToMaster ( $strCode, $lngMode, $objDB )
 {
-	// SQLÊ¸¤ÎºîÀ®
+	// SQLæ–‡ã®ä½œæˆ
 	$strQuery = "SELECT distinct on (";
 	switch ( $lngMode )
 	{
-		case 1:		// È¯Ãí¥³¡¼¥É¤«¤é»ÅÆş¥Ş¥¹¥¿¤Î¸¡º÷»ş
+		case 1:		// ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ä»•å…¥ãƒã‚¹ã‚¿ã®æ¤œç´¢æ™‚
 			$strQuery .= "s.strStockCode) s.strStockCode as lngSearchNo FROM m_Stock s, m_Order o ";
 			$strQuery .= "WHERE s.lngStockNo = o.lngOrderNo AND s.bytInvalidFlag = FALSE AND o.strOrderCode = '";
 			break;
 	}
 	$strQuery .= $strCode . "'";
 
-	// ¸¡º÷¥¯¥¨¥ê¡¼¤Î¼Â¹Ô
+	// æ¤œç´¢ã‚¯ã‚¨ãƒªãƒ¼ã®å®Ÿè¡Œ
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -682,34 +682,34 @@ function fncGetDeleteCodeToMaster ( $strCode, $lngMode, $objDB )
 }
 
 /**
- * »ØÄê¤ÎNO¤Î¥Ç¡¼¥¿¤òÂ¾¤Î¥Ş¥¹¥¿¤Ç»ÈÍÑ¤·¤Æ¤¤¤ë¥³¡¼¥É¼èÆÀ
+ * æŒ‡å®šã®NOã®ãƒ‡ãƒ¼ã‚¿ã‚’ä»–ã®ãƒã‚¹ã‚¿ã§ä½¿ç”¨ã—ã¦ã„ã‚‹ã‚³ãƒ¼ãƒ‰å–å¾—
  *
- *	»ØÄêNO¤ËÂĞ¤·¤Æ¡¢»ØÄê¤µ¤ì¤¿¥Ş¥¹¥¿¤Î¸¡º÷´Ø¿ô
+ *	æŒ‡å®šNOã«å¯¾ã—ã¦ã€æŒ‡å®šã•ã‚ŒãŸãƒã‚¹ã‚¿ã®æ¤œç´¢é–¢æ•°
  *
- *	@param  Integer 	$lngNo 			¸¡º÷ÂĞ¾İNo
- *	@param	Integer		$lngMode		¸¡º÷¥â¡¼¥É	1:È¯Ãí¥³¡¼¥É¤«¤é»ÅÆş¥Ş¥¹¥¿	¡Ê½ç¼¡ÄÉ²Ã¡Ë
- *	@param  Object		$objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
- *	@return Array 		$aryCode		¸¡º÷ÂĞ¾İ¥³¡¼¥É¤¬»ÈÍÑ¤µ¤ì¤Æ¤¤¤ë¥Ş¥¹¥¿Æâ¤Î¥³¡¼¥É¤ÎÇÛÎó
+ *	@param  Integer 	$lngNo 			æ¤œç´¢å¯¾è±¡No
+ *	@param	Integer		$lngMode		æ¤œç´¢ãƒ¢ãƒ¼ãƒ‰	1:ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ä»•å…¥ãƒã‚¹ã‚¿	ï¼ˆé †æ¬¡è¿½åŠ ï¼‰
+ *	@param  Object		$objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *	@return Array 		$aryCode		æ¤œç´¢å¯¾è±¡ã‚³ãƒ¼ãƒ‰ãŒä½¿ç”¨ã•ã‚Œã¦ã„ã‚‹ãƒã‚¹ã‚¿å†…ã®ã‚³ãƒ¼ãƒ‰ã®é…åˆ—
  *	@access public
  */
 function fncGetDeleteNoToMaster ( $lngNo, $lngMode, $objDB )
 {
-	// SQLÊ¸¤ÎºîÀ®
+	// SQLæ–‡ã®ä½œæˆ
 	$strQuery = "SELECT distinct on (";
 	switch ( $lngMode )
 	{
-		case 1:		// È¯ÃíNo¤«¤é»ÅÆş¥Ş¥¹¥¿¤Î¸¡º÷»ş
+		case 1:		// ç™ºæ³¨Noã‹ã‚‰ä»•å…¥ãƒã‚¹ã‚¿ã®æ¤œç´¢æ™‚
 			$strQuery .= "s.lngOrderNo) s.lngOrderNo as lngSearchNo FROM m_Stock s ";
 			$strQuery .= "WHERE s.bytInvalidFlag = FALSE AND s.lngOrderNo = ";
 			break;
-		case 2:		// ¼õÃíNo¤«¤éÇä¾å¥Ş¥¹¥¿¤Î¸¡º÷»ş
+		case 2:		// å—æ³¨Noã‹ã‚‰å£²ä¸Šãƒã‚¹ã‚¿ã®æ¤œç´¢æ™‚
 			$strQuery .= "s.lngReceiveNo) s.lngReceiveNo as lngSearchNo FROM m_Sales s ";
 			$strQuery .= "WHERE s.bytInvalidFlag = FALSE AND s.lngReceiveNo = ";
 			break;
 	}
 	$strQuery .= $lngNo;
 
-	// ¸¡º÷¥¯¥¨¥ê¡¼¤Î¼Â¹Ô
+	// æ¤œç´¢ã‚¯ã‚¨ãƒªãƒ¼ã®å®Ÿè¡Œ
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -729,25 +729,25 @@ function fncGetDeleteNoToMaster ( $lngNo, $lngMode, $objDB )
 }
 
 /**
- * »ØÄê¤ÎÈ¯Ãí¥Ç¡¼¥¿¤Ë¤Ä¤¤¤ÆÌµ¸ú²½¤¹¤ë¤³¤È¤Ç¤É¤¦¤Ê¤ë¤«¥±¡¼¥¹¤ï¤±¤¹¤ë
+ * æŒ‡å®šã®ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦ç„¡åŠ¹åŒ–ã™ã‚‹ã“ã¨ã§ã©ã†ãªã‚‹ã‹ã‚±ãƒ¼ã‚¹ã‚ã‘ã™ã‚‹
  *
- *	»ØÄê¤ÎÈ¯Ãí¥Ç¡¼¥¿¤Î¾õÂÖ¤òÄ´ºº¤·¡¢¥±¡¼¥¹¤ï¤±¤¹¤ë´Ø¿ô
+ *	æŒ‡å®šã®ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®çŠ¶æ…‹ã‚’èª¿æŸ»ã—ã€ã‚±ãƒ¼ã‚¹ã‚ã‘ã™ã‚‹é–¢æ•°
  *
- *	@param  Array 		$aryOrderData 	È¯Ãí¥Ç¡¼¥¿
- *	@param  Object		$objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
- *	@return Integer 	$lngCase		¾õÂÖ¤Î¥±¡¼¥¹
- *										1: ÂĞ¾İÈ¯Ãí¥Ç¡¼¥¿¤òÌµ¸ú²½¤·¤Æ¤â¡¢ºÇ¿·¤ÎÈ¯Ãí¥Ç¡¼¥¿¤¬±Æ¶Á¼õ¤±¤Ê¤¤
- *										2: ÂĞ¾İÈ¯Ãí¥Ç¡¼¥¿¤òÌµ¸ú²½¤¹¤ë¤³¤È¤Ç¡¢ºÇ¿·¤ÎÈ¯Ãí¥Ç¡¼¥¿¤¬Æş¤ìÂØ¤ï¤ë
- *										3: ÂĞ¾İÈ¯Ãí¥Ç¡¼¥¿¤¬ºï½ü¥Ç¡¼¥¿¤Ç¡¢È¯Ãí¤¬Éü³è¤¹¤ë
- *										4: ÂĞ¾İÈ¯Ãí¥Ç¡¼¥¿¤òÌµ¸ú²½¤¹¤ë¤³¤È¤Ç¡¢ºÇ¿·¤ÎÈ¯Ãí¥Ç¡¼¥¿¤Ë¤Ê¤ê¤¦¤ëÈ¯Ãí¥Ç¡¼¥¿¤¬¤Ê¤¤
+ *	@param  Array 		$aryOrderData 	ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿
+ *	@param  Object		$objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *	@return Integer 	$lngCase		çŠ¶æ…‹ã®ã‚±ãƒ¼ã‚¹
+ *										1: å¯¾è±¡ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã‚’ç„¡åŠ¹åŒ–ã—ã¦ã‚‚ã€æœ€æ–°ã®ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãŒå½±éŸ¿å—ã‘ãªã„
+ *										2: å¯¾è±¡ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ã“ã¨ã§ã€æœ€æ–°ã®ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãŒå…¥ã‚Œæ›¿ã‚ã‚‹
+ *										3: å¯¾è±¡ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãŒå‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã§ã€ç™ºæ³¨ãŒå¾©æ´»ã™ã‚‹
+ *										4: å¯¾è±¡ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ã“ã¨ã§ã€æœ€æ–°ã®ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã«ãªã‚Šã†ã‚‹ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãŒãªã„
  *	@access public
  */
 function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 {
-	// È¯Ãí¥³¡¼¥É¤Î¼èÆÀ
+	// ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã®å–å¾—
 	$strOrderCode = substr( $aryOrderData["strordercode"], 0, 8);
 
-	// ºï½üÂĞ¾İÈ¯Ãí¤ÈÆ±¤¸È¯Ãí¥³¡¼¥É¤ÎºÇ¿·¤ÎÈ¯ÃíNo¤òÄ´¤Ù¤ë
+	// å‰Šé™¤å¯¾è±¡ç™ºæ³¨ã¨åŒã˜ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã®æœ€æ–°ã®ç™ºæ³¨Noã‚’èª¿ã¹ã‚‹
 	$strQuery = "SELECT lngOrderNo FROM m_Order o WHERE o.strOrderCode = '" . $strOrderCode . "' AND o.bytInvalidFlag = FALSE ";
 	$strQuery .= " AND o.lngRevisionNo >= 0";
 	$strQuery .= " AND o.lngRevisionNo = ( "
@@ -755,7 +755,7 @@ function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 	$strQuery .= " AND o.strReviseCode = ( "
 		. "SELECT MAX( o2.strReviseCode ) FROM m_Order o2 WHERE o2.strOrderCode = o.strOrderCode )";
 
-	// ¸¡º÷¥¯¥¨¥ê¡¼¤Î¼Â¹Ô
+	// æ¤œç´¢ã‚¯ã‚¨ãƒªãƒ¼ã®å®Ÿè¡Œ
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum == 1 )
@@ -769,17 +769,17 @@ function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ºï½üÂĞ¾İ¤¬ºÇ¿·¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
+	// å‰Šé™¤å¯¾è±¡ãŒæœ€æ–°ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
 	if ( $lngCase != 4 )
 	{
 		if ( $lngNewOrderNo == $aryOrderData["lngorderno"] )
 		{
-			// ºÇ¿·¤Î¾ì¹ç
-			// ºï½üÂĞ¾İÈ¯Ãí°Ê³°¤Ç¤ÈÆ±¤¸È¯Ãí¥³¡¼¥É¤ÎºÇ¿·¤ÎÈ¯ÃíNo¤òÄ´¤Ù¤ë
+			// æœ€æ–°ã®å ´åˆ
+			// å‰Šé™¤å¯¾è±¡ç™ºæ³¨ä»¥å¤–ã§ã¨åŒã˜ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã®æœ€æ–°ã®ç™ºæ³¨Noã‚’èª¿ã¹ã‚‹
 			$strQuery = "SELECT lngOrderNo FROM m_Order o WHERE o.strOrderCode = '" . $strOrderCode . "' AND o.bytInvalidFlag = FALSE ";
 			$strQuery .= " AND o.lngOrderNo <> " . $aryOrderData["lngorderno"] . " AND o.lngRevisionNo >= 0";
 
-			// ¸¡º÷¥¯¥¨¥ê¡¼¤Î¼Â¹Ô
+			// æ¤œç´¢ã‚¯ã‚¨ãƒªãƒ¼ã®å®Ÿè¡Œ
 			list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 			if ( $lngResultNum >= 1 )
@@ -792,7 +792,7 @@ function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 			}
 			$objDB->freeResult( $lngResultID );
 		}
-		// ÂĞ¾İÈ¯Ãí¤¬ºï½ü¥Ç¡¼¥¿¤«¤É¤¦¤«¤Î³ÎÇ§
+		// å¯¾è±¡ç™ºæ³¨ãŒå‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã‹ã©ã†ã‹ã®ç¢ºèª
 		else if ( $aryOrderData["lngrevisionno"] < 0 )
 		{
 			$lngCase = 3;
@@ -807,11 +807,11 @@ function fncGetInvalidCodeToMaster ( $aryOrderData, $objDB )
 }
 
 /**
- * È¯Ãí¥­¥ã¥ó¥»¥ë
+ * ç™ºæ³¨ã‚­ãƒ£ãƒ³ã‚»ãƒ«
  * 
- * @param	Integer		$lngOrderNo		È¯ÃíNO
- * @param	Integer		$lngRevisionNo	¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
- * @param	Object		$objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Integer		$lngOrderNo		ç™ºæ³¨NO
+ * @param	Integer		$lngRevisionNo	ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+ * @param	Object		$objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  * 
  */
@@ -823,7 +823,7 @@ function fncGetCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$strQuery = implode("\n", $arySql);
 	if ( !$lngResultID = $objDB->execute( $strSql ) )
 	{
-		//fncOutputError ( 9051, DEF_ERROR, "¥Ç¡¼¥¿¥Ù¡¼¥¹¤Î¹¹¿·¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		//fncOutputError ( 9051, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 		return FALSE;
 	}
 	$objDB->freeResult( $lngResultID );
@@ -831,11 +831,11 @@ function fncGetCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 }
 
 /**
- * È¯Ãí½ñ¥Ş¥¹¥¿¸¡º÷(È¯Ãí½ñÈÖ¹æ¤Ç¸¡º÷)
+ * ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿æ¤œç´¢(ç™ºæ³¨æ›¸ç•ªå·ã§æ¤œç´¢)
  * 
- * @param	Integer		$lngPurchaseOrderCode	È¯Ãí½ñÈÖ¹æ
- * @param	Integer		$lngRevisionNo			¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
- * @param	Object		$objDB					DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Integer		$lngPurchaseOrderCode	ç™ºæ³¨æ›¸ç•ªå·
+ * @param	Integer		$lngRevisionNo			ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+ * @param	Object		$objDB					DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  * 
  */
@@ -896,10 +896,10 @@ function fncGetPurchaseOrder2($lngPurchaseOrderCode, $lngRevisionNo, $objDB){
 }
 
 /**
- * È¯Ãí½ñ¥Ş¥¹¥¿¸¡º÷ÍÑSQLºîÀ®
+ * ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿æ¤œç´¢ç”¨SQLä½œæˆ
  * 
- * @param	Integer		$lngOrderNo			È¯ÃíÈÖ¹æ
- * @param	Integer		$lngRevisionNo		¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+ * @param	Integer		$lngOrderNo			ç™ºæ³¨ç•ªå·
+ * @param	Integer		$lngRevisionNo		ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
  * @access	public
  * 
  */
@@ -935,9 +935,9 @@ function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo){
 }
 
 /**
- * È¯Ãí½ñÌÀºÙ¼èÆÀÍÑSQLºîÀ®
+ * ç™ºæ³¨æ›¸æ˜ç´°å–å¾—ç”¨SQLä½œæˆ
  * 
- * @param	Array		$aryPurchaseOrderDetail		È¯Ãí½ñÌÀºÙ
+ * @param	Array		$aryPurchaseOrderDetail		ç™ºæ³¨æ›¸æ˜ç´°
  * @access	public
  * 
  */
@@ -986,11 +986,11 @@ function fncInsertPurchaseOrderDetailSQL($aryPurchaseOrderDetail){
 }
 
 /**
- * ¼è¾ÃÂĞ¾İ¤ÎÈ¯Ãí½ñ¥Ç¡¼¥¿¼èÆÀ
+ * å–æ¶ˆå¯¾è±¡ã®ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿å–å¾—
  * 
- * @param	Integer		$lngOrderNo		È¯ÃíÈÖ¹æ
- * @param	Integer		$lngRevisionNo	¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
- * @param	Object		$objDB					DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Integer		$lngOrderNo		ç™ºæ³¨ç•ªå·
+ * @param	Integer		$lngRevisionNo	ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+ * @param	Object		$objDB					DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  *	
  */
@@ -1052,11 +1052,11 @@ function fncGetDeletePurchaseOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 }
 
 /**
- * ¼è¾ÃÂĞ¾İ¤ÎÈ¯Ãí½ñ¥Ç¡¼¥¿¼èÆÀ
+ * å–æ¶ˆå¯¾è±¡ã®ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿å–å¾—
  * 
- * @param	Integer		$lngOrderNo		È¯ÃíÈÖ¹æ
- * @param	Integer		$lngRevisionNo	¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
- * @param	Object		$objDB					DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Integer		$lngOrderNo		ç™ºæ³¨ç•ªå·
+ * @param	Integer		$lngRevisionNo	ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+ * @param	Object		$objDB					DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  *	
  */
@@ -1110,11 +1110,11 @@ function fncGetDeletePurchaseOrderDetailByPo($lngpurchaseorderno, $lngRevisionNo
 }
 
 /**
- * È¯Ãí¼è¾Ã
+ * ç™ºæ³¨å–æ¶ˆ
  * 
- * @param	Integer		$lngOrderNo		È¯ÃíÈÖ¹æ
- * @param	Integer		$lngRevisionNo	¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
- * @param	Object		$objDB					DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Integer		$lngOrderNo		ç™ºæ³¨ç•ªå·
+ * @param	Integer		$lngRevisionNo	ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+ * @param	Object		$objDB					DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  * 
  */
@@ -1130,7 +1130,7 @@ function fncCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "È¯Ãí¥Ş¥¹¥¿¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "ç™ºæ³¨ãƒã‚¹ã‚¿ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 		return FALSE;
 	}
 	$objDB->freeResult( $lngResultID );
@@ -1139,11 +1139,11 @@ function fncCancelOrder($lngOrderNo, $lngRevisionNo, $objDB){
 }
 
 /**
- * È¯Ãí¼è¾Ã
+ * ç™ºæ³¨å–æ¶ˆ
  * 
- * @param	Integer		$lngOrderNo		È¯ÃíÈÖ¹æ
- * @param	Integer		$lngRevisionNo	¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
- * @param	Object		$objDB					DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Integer		$lngOrderNo		ç™ºæ³¨ç•ªå·
+ * @param	Integer		$lngRevisionNo	ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+ * @param	Object		$objDB					DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  * 
  */
@@ -1167,7 +1167,7 @@ function fncCancelOrderByPo($lngPurchaseOrderNo, $lngRevisionNo, $objDB){
 
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "È¯Ãí¥Ş¥¹¥¿¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "ç™ºæ³¨ãƒã‚¹ã‚¿ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 		return FALSE;
 	}
 	$objDB->freeResult( $lngResultID );
@@ -1176,11 +1176,11 @@ function fncCancelOrderByPo($lngPurchaseOrderNo, $lngRevisionNo, $objDB){
 }
 
 /**
- * È¯ÃíÌÀºÙ¼è¾Ã
+ * ç™ºæ³¨æ˜ç´°å–æ¶ˆ
  * 
- * @param	Integer		$lngOrderNo		È¯ÃíÈÖ¹æ
- * @param	Integer		$lngRevisionNo	¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
- * @param	Object		$objDB					DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Integer		$lngOrderNo		ç™ºæ³¨ç•ªå·
+ * @param	Integer		$lngRevisionNo	ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+ * @param	Object		$objDB					DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  * 
  */
@@ -1216,10 +1216,10 @@ function fncGetDeleteOrderDetail($lngOrderNo, $lngRevisionNo, $objDB){
 }
 
 /**
- * È¯Ãí½ñÌÀºÙÅĞÏ¿
+ * ç™ºæ³¨æ›¸æ˜ç´°ç™»éŒ²
  * 
- * @param	Array		$aryDetail		È¯Ãí½ñÌÀºÙ¥Ç¡¼¥¿
- * @param	Object		$objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Array		$aryDetail		ç™ºæ³¨æ›¸æ˜ç´°ãƒ‡ãƒ¼ã‚¿
+ * @param	Object		$objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  * 
  */
@@ -1270,7 +1270,7 @@ function fncInsertPurchaseOrderDetail($aryDetail, $objDB){
 	$strQuery = implode("\n", $aryQuery );
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "È¯Ãí½ñÌÀºÙ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "ç™ºæ³¨æ›¸æ˜ç´°ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 		return FALSE;
 	}
 	$objDB->freeResult( $lngResultID );
@@ -1279,10 +1279,10 @@ function fncInsertPurchaseOrderDetail($aryDetail, $objDB){
 }
 
 /**
- * È¯Ãí½ñÅĞÏ¿
+ * ç™ºæ³¨æ›¸ç™»éŒ²
  * 
- * @param	Array		$aryOrder		È¯Ãí½ñ¥Ç¡¼¥¿
- * @param	Object		$objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Array		$aryOrder		ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿
+ * @param	Object		$objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  * 
  */
@@ -1362,7 +1362,7 @@ function fncInsertPurchaseOrder($aryOrder, $objDB){
 
 	if ( !$lngResultID = $objDB->execute( $strQuery ) )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "È¯Ãí½ñ¥Ş¥¹¥¿¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 		return FALSE;
 	}
 	$objDB->freeResult( $lngResultID );
@@ -1371,11 +1371,11 @@ function fncInsertPurchaseOrder($aryOrder, $objDB){
 }
 
 /**
- * È¯Ãí¥Ş¥¹¥¿¸¡º÷
+ * ç™ºæ³¨ãƒã‚¹ã‚¿æ¤œç´¢
  * 
- * @param	Integer		$lngOrderNo		È¯ÃíÈÖ¹æ
- * @param	Integer		$lngRevisionNo	¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
- * @param	Object		$objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
+ * @param	Integer		$lngOrderNo		ç™ºæ³¨ç•ªå·
+ * @param	Integer		$lngRevisionNo	ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+ * @param	Object		$objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  * @access	public
  * 
  */
@@ -1444,9 +1444,9 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 }
 
 /**
- * È¯Ãí¥­¥ã¥ó¥»¥ë¥Ç¡¼¥¿HTMLºîÀ®
+ * ç™ºæ³¨ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿HTMLä½œæˆ
  * 
- * @param	Array		$aryOrder		È¯Ãí¥Ç¡¼¥¿
+ * @param	Array		$aryOrder		ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿
  * @access	public
  * 
  */
@@ -1454,59 +1454,59 @@ function fncCancelOrderHtml($aryOrder){
 	foreach($aryOrder as $row){
 		$aryHtml[] = "<table cellpadding=\"5\" cellspacing=\"1\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">ÅĞÏ¿Æü</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">ç™»éŒ²æ—¥</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["dtminsertdate"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">È¯ÃíÍ­¸ú´ü¸ÂÆü</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["dtmexpirationdate"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">È¯ÃíNO.</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">ç™ºæ³¨NO.</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["strordercode"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">À½ÉÊ¥³¡¼¥É</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">è£½å“ã‚³ãƒ¼ãƒ‰</td>";
 		$aryHtml[] = "    <td class=\"Segs\">[" . $row["strproductcode"] . "]</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">À½ÉÊÌ¾</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">è£½å“å</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["strproductname"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">±Ä¶ÈÉôÌç</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">å–¶æ¥­éƒ¨é–€</td>";
 		$aryHtml[] = "    <td class=\"Segs\">[" . $row["strgroupdisplaycode"] . "] " . $row["strgroupdisplayname"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">³«È¯Ã´Åö¼Ô</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">é–‹ç™ºæ‹…å½“è€…</td>";
 		$aryHtml[] = "    <td class=\"Segs\">[" . $row["struserdisplaycode"] . "] " . $row["struserdisplayname"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">»ÅÆşÉôÉÊ</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">ä»•å…¥éƒ¨å“</td>";
 		$aryHtml[] = "    <td class=\"Segs\">[" . $row["lngstockitemcode"] . "] " . $row["strstockitemname"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">»ÅÆşÀè</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">ä»•å…¥å…ˆ</td>";
 		$aryHtml[] = "    <td class=\"Segs\">[" . $row["strcompanydisplaycode"] . "] " . $row["strcompanydisplayname"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">Ç¼´ü</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">ç´æœŸ</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["dtmdeliverydate"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">Ã±²Á</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">å˜ä¾¡</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["strmonetaryunitsign"] . " " . $row["curproductprice"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">¿ôÎÌ</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">æ•°é‡</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["lngproductquantity"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">ÀÇÈ´¶â³Û</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">ç¨æŠœé‡‘é¡</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["strmonetaryunitsign"] . " " . $row["cursubtotalprice"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <td class=\"SegColumn\">ÌÀºÙÈ÷¹Í</td>";
+		$aryHtml[] = "    <td class=\"SegColumn\">æ˜ç´°å‚™è€ƒ</td>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $row["strdetailnote"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "</table>";
@@ -1518,10 +1518,10 @@ function fncCancelOrderHtml($aryOrder){
 }
 
 /**
- * È¯Ãí½ñ¥­¥ã¥ó¥»¥ë¥Ç¡¼¥¿HTMLºîÀ®
+ * ç™ºæ³¨æ›¸ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿HTMLä½œæˆ
  * 
- * @param	Array		$aryOrder		È¯Ãí½ñ¥Ç¡¼¥¿
- * @param	Array		$aryDetail		È¯Ãí½ñÌÀºÙ¥Ç¡¼¥¿
+ * @param	Array		$aryOrder		ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿
+ * @param	Array		$aryDetail		ç™ºæ³¨æ›¸æ˜ç´°ãƒ‡ãƒ¼ã‚¿
  * @access	public
  * 
  */
@@ -1537,64 +1537,64 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
 		$aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.opener.location.reload();window.close();return false;\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"close\"></a></td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "</table>";
-		$aryHtml[] = "<p class=\"caption\">¼è¾ÃÂĞ¾İ</p>";
+		$aryHtml[] = "<p class=\"caption\">å–æ¶ˆå¯¾è±¡</p>";
 		$aryHtml[] = "<table class=\"orderdetail\">";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">ÅĞÏ¿Æü</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ç™»éŒ²æ—¥</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtminsertdate"] . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">È¯ÃíÍ­¸ú´ü¸ÂÆü</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtmexpirationdate"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">È¯ÃíNO.</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ç™ºæ³¨NO.</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">»ÙÊ§ÊıË¡</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">æ”¯æ‰•æ–¹æ³•</th>";
 		$aryHtml[] = "    <td class=\"Segs\">". sprintf("%s", $aryOrder["strpayconditionname"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">»ÅÆşÀè</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ä»•å…¥å…ˆ</th>";
 		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strcompanydisplaycode"], $aryOrder["strcustomername"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "  </th>";
-		$aryHtml[] = "    <th class=\"SegColumn\">Ç¼ÉÊÀè</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ç´å“å…ˆ</th>";
 		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strdisplaydeliveryplacecode"], $aryOrder["strdeliveryplacename"]) . "</td>";
 		$aryHtml[] = "  </th>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">À½ÉÊÌ¾</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">è£½å“å</th>";
 		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strproductcode"], $aryOrder["strproductname"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">±Ä¶ÈÉôÌç</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">å–¶æ¥­éƒ¨é–€</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lnggroupcode"], $aryOrder["strgroupname"]) . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">³«È¯Ã´Åö¼Ô</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">é–‹ç™ºæ‹…å½“è€…</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lngusercode"], $aryOrder["strusername"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">È÷¹Í</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">å‚™è€ƒ</th>";
 		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryOrder["strnote"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">»ÅÆşÉôÉÊ</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ä»•å…¥éƒ¨å“</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryDetail["lngstockitemcode"], $aryDetail["strstockitemname"]) . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">±¿ÈÂÊıË¡</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">é‹æ¬æ–¹æ³•</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s", $aryDetail["strdeliverymethodname"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">Ç¼´ü</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ç´æœŸ</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail["dtmdeliverydate"] . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">Ã±²Á</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">å˜ä¾¡</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.4f", $aryOrder["strmonetaryunitsign"], $aryDetail["curproductprice"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">¿ôÎÌ</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">æ•°é‡</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail["lngproductquantity"] . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">ÀÇÈ´²Á³Ê</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ç¨æŠœä¾¡æ ¼</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.2f", $aryOrder["strmonetaryunitsign"], $aryDetail["cursubtotalprice"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">ÌÀºÙÈ÷¹Í</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">æ˜ç´°å‚™è€ƒ</th>";
 		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryDetail["strnote"] . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "</table>";
@@ -1608,10 +1608,10 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
 }
 
 /**
- * È¯Ãí½ñ¥­¥ã¥ó¥»¥ë¥Ç¡¼¥¿HTMLºîÀ®
+ * ç™ºæ³¨æ›¸ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿HTMLä½œæˆ
  * 
- * @param	Array		$aryOrder		È¯Ãí½ñ¥Ç¡¼¥¿
- * @param	Array		$aryDetail		È¯Ãí½ñÌÀºÙ¥Ç¡¼¥¿
+ * @param	Array		$aryOrder		ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿
+ * @param	Array		$aryDetail		ç™ºæ³¨æ›¸æ˜ç´°ãƒ‡ãƒ¼ã‚¿
  * @access	public
  * 
  */
@@ -1623,40 +1623,40 @@ function fncDeletePurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID){
 	$aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.opener.location.reload();window.close();return false;\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"close\"></a></td>";
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "</table>";
-	$aryHtml[] = "<p class=\"caption\">¼è¾ÃÂĞ¾İ</p>";
+	$aryHtml[] = "<p class=\"caption\">å–æ¶ˆå¯¾è±¡</p>";
 	$aryHtml[] = "<table class=\"orderdetail\">";
 	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <th class=\"SegColumn\">ÅĞÏ¿Æü</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">ç™»éŒ²æ—¥</th>";
 	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtminsertdate"] . "</td>";
-	$aryHtml[] = "    <th class=\"SegColumn\">È¯ÃíÍ­¸ú´ü¸ÂÆü</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥</th>";
 	$aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtmexpirationdate"] . "</td>";
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <th class=\"SegColumn\">È¯ÃíNO.</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">ç™ºæ³¨NO.</th>";
 	$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
-	$aryHtml[] = "    <th class=\"SegColumn\">»ÙÊ§ÊıË¡</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">æ”¯æ‰•æ–¹æ³•</th>";
 	$aryHtml[] = "    <td class=\"Segs\">". sprintf("%s", $aryOrder["strpayconditionname"]) . "</td>";
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <th class=\"SegColumn\">»ÅÆşÀè</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">ä»•å…¥å…ˆ</th>";
 	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strcompanydisplaycode"], $aryOrder["strcustomername"]) . "</td>";
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <th class=\"SegColumn\">Ç¼ÉÊÀè</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">ç´å“å…ˆ</th>";
 	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">". sprintf("[%s] %s", $aryOrder["strdisplaydeliveryplacecode"], $aryOrder["strdeliveryplacename"]) . "</td>";
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <th class=\"SegColumn\">À½ÉÊÌ¾</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">è£½å“å</th>";
 	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strproductcode"], $aryOrder["strproductname"]) . "</td>";
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <th class=\"SegColumn\">±Ä¶ÈÉôÌç</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">å–¶æ¥­éƒ¨é–€</th>";
 	$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lnggroupcode"], $aryOrder["strgroupname"]) . "</td>";
-	$aryHtml[] = "    <th class=\"SegColumn\">³«È¯Ã´Åö¼Ô</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">é–‹ç™ºæ‹…å½“è€…</th>";
 	$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strusercode"], $aryOrder["strusername"]) . "</td>";
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "  <tr>";
-	$aryHtml[] = "    <th class=\"SegColumn\">È÷¹Í</th>";
+	$aryHtml[] = "    <th class=\"SegColumn\">å‚™è€ƒ</th>";
 	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("%s", $aryOrder["strnote"]) . "</td>";
 	$aryHtml[] = "  </tr>";
 	if( !is_array($aryDetail) )
@@ -1665,25 +1665,25 @@ function fncDeletePurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID){
 	}
 	for($i = 0; $i < count($aryDetail); $i++) {
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">»ÅÆşÉôÉÊ</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ä»•å…¥éƒ¨å“</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryDetail[$i]["lngstockitemcode"], $aryDetail[$i]["strstockitemname"]) . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">±¿ÈÂÊıË¡</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">é‹æ¬æ–¹æ³•</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s", $aryDetail[$i]["strdeliverymethodname"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">Ç¼´ü</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ç´æœŸ</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail[$i]["dtmdeliverydate"] . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">Ã±²Á</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">å˜ä¾¡</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.4f", $aryOrder["strmonetaryunitsign"], $aryDetail[$i]["curproductprice"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">¿ôÎÌ</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">æ•°é‡</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . $aryDetail[$i]["lngproductquantity"] . "</td>";
-		$aryHtml[] = "    <th class=\"SegColumn\">ÀÇÈ´²Á³Ê</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">ç¨æŠœä¾¡æ ¼</th>";
 		$aryHtml[] = "    <td class=\"Segs\">" . sprintf("%s %.2f", $aryOrder["strmonetaryunitsign"], $aryDetail[$i]["cursubtotalprice"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
-		$aryHtml[] = "    <th class=\"SegColumn\">ÌÀºÙÈ÷¹Í</th>";
+		$aryHtml[] = "    <th class=\"SegColumn\">æ˜ç´°å‚™è€ƒ</th>";
 		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryDetail[$i]["strnote"] . "</td>";
 		$aryHtml[] = "  </tr>";
 	}
@@ -1700,7 +1700,7 @@ function fncDeletePurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID){
 function fncGetLatestRevisionNo($lngOrderNo, $objDB)
 {
 	$revision = -1;
-	// SQLºîÀ®
+	// SQLä½œæˆ
 	$aryOutQuery[] = "SELECT";
 	$aryOutQuery[] = "   max(lngrevisionno) as maxrevisionno";
 	$aryOutQuery[] = "  ,min(lngrevisionno) as minrevisionno";
@@ -1725,7 +1725,7 @@ function fncGetLatestRevisionNo($lngOrderNo, $objDB)
 
 }
 
-// È¯Ãí½ñ¥Ş¥¹¥¿¤ËÉ³¤Å¤¯È¯Ãí¥Ç¡¼¥¿¤ò¼èÆÀ¡ÊÈÆÍÑÅª¤Ë»ÈÍÑ¤µ¤»¤ë¤¿¤áÁ´Îó¼èÆÀ¡Ë
+// ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ã«ç´ã¥ãç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ï¼ˆæ±ç”¨çš„ã«ä½¿ç”¨ã•ã›ã‚‹ãŸã‚å…¨åˆ—å–å¾—ï¼‰
 function fncGetOrderByPO($lngPurchaseOrderno, $lngRevisionNo, $objDB, $getLock=false)
 {
 	$aryOutQuery[] = "SELECT";

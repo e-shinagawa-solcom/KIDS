@@ -1,6 +1,6 @@
 <?
 	/** 
-	*	¥ï¡¼¥¯¥Õ¥í¡¼ ¸¡º÷²èÌÌ
+	*	ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ æ¤œç´¢ç”»é¢
 	*
 	*	@package   KIDS
 	*	@license   http://www.wiseknot.co.jp/ 
@@ -13,14 +13,14 @@
 	// index.php -> strSessionID    -> index.php
 	//
 
-	// ÀßÄêÆÉ¤ß¹ş¤ß
+	// è¨­å®šèª­ã¿è¾¼ã¿
 	include_once('conf.inc');
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require (LIB_FILE);
 	require (SRC_ROOT . "wf/cmn/lib_wf.php");
 
-	// DBÀÜÂ³
+	// DBæ¥ç¶š
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
 	$objDB->open( "", "", "", "" );
@@ -31,18 +31,18 @@
 
 	//$aryParts = array_merge ( $_GET, $_COOKIE );
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	if ( !fncCheckAuthority( DEF_FUNCTION_WF2, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", FALSE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", FALSE, "", $objDB );
 	}
 	if ( fncCheckAuthority( DEF_FUNCTION_WF3, $objAuth ) )
 	{
@@ -51,13 +51,13 @@
 
 
 
-	// HIDDEN¥¿¥°À¸À®
+	// HIDDENã‚¿ã‚°ç”Ÿæˆ
 	$aryParts["strHiddenForm"] = "
 	<input type=\"hidden\" name=\"strSessionID\" value=\"" . $aryData["strSessionID"] . "\">
 	<input type=\"hidden\" name=\"lngFunctionCode\" value=\"" . DEF_FUNCTION_WF2 . "\">
 	";
 
-	// ¾µÇ§¼Ô¼èÆÀ
+	// æ‰¿èªè€…å–å¾—
 	$strQuery = "SELECT" .
 	            " DISTINCT ON ( u.lngUserCode )" .
 	            " u.lngUserCode, u.strUserFullName " .
@@ -91,12 +91,12 @@
 	$objDB->freeResult( $lngResultID );
 
 	/*
-	// lngWorkflowStatusCode SELECT¥¿¥°À¸À®
+	// lngWorkflowStatusCode SELECTã‚¿ã‚°ç”Ÿæˆ
 	$aryParts["workflowStatusCodeMenu"] = "
 	<option value=\"\"></option>
-	<option value=\"" . DEF_STATUS_ORDER . "\">¿½ÀÁÃæ</option>
-	<option value=\"" . DEF_STATUS_APPROVE . "\">¾µÇ§</option>
-	<option value=\"" . DEF_STATUS_DENIAL . "\">ÈİÇ§</option>
+	<option value=\"" . DEF_STATUS_ORDER . "\">ç”³è«‹ä¸­</option>
+	<option value=\"" . DEF_STATUS_APPROVE . "\">æ‰¿èª</option>
+	<option value=\"" . DEF_STATUS_DENIAL . "\">å¦èª</option>
 	";
 	*/
 
@@ -107,28 +107,28 @@
 	}
 	$aryParts["selectFunctionCodeMenu"] = $strFCBuff;
 /*
-	// lngSelectFunctionCode SELECT¥¿¥°À¸À®
+	// lngSelectFunctionCode SELECTã‚¿ã‚°ç”Ÿæˆ
 	$aryParts["selectFunctionCodeMenu"] = "
 	<option value=\"\"></option>
-	<option value=\"" . DEF_FUNCTION_PO0 . "\">È¯Ãí</option>
-	<option value=\"" . DEF_FUNCTION_E0 . "\">¸«ÀÑ¸¶²Á</option>
+	<option value=\"" . DEF_FUNCTION_PO0 . "\">ç™ºæ³¨</option>
+	<option value=\"" . DEF_FUNCTION_E0 . "\">è¦‹ç©åŸä¾¡</option>
 	";
 */
-	// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹
 	if ( $bytCancellFlag )
 	{
 		$aryParts["workflowStatusCodeMenu"] = fncGetCheckBoxObject( "m_workflowstatus", "lngworkflowstatuscode", "strworkflowstatusname", "lngWorkflowStatusCode[]", 'where lngworkflowstatuscode in (1,4,10,99)', $objDB );
-	//	$aryParts["workflowStatusCodeMenu"] .= "<option value=\"" . DEF_STATUS_CANCELL . "\">¿½ÀÁ¼è¾Ã</option>\n";
+	//	$aryParts["workflowStatusCodeMenu"] .= "<option value=\"" . DEF_STATUS_CANCELL . "\">ç”³è«‹å–æ¶ˆ</option>\n";
 	}
 	else
 	{
 		$aryParts["workflowStatusCodeMenu"] = fncGetCheckBoxObject( "m_workflowstatus", "lngworkflowstatuscode", "strworkflowstatusname", "lngWorkflowStatusCode[]", 'where lngworkflowstatuscode in (1,4,10)', $objDB );
 	}
 
-	// ¥Ø¥ë¥×¥ê¥ó¥¯ÍÑµ¡Ç½¥³¡¼¥É¤ò¥»¥Ã¥È
+	// ãƒ˜ãƒ«ãƒ—ãƒªãƒ³ã‚¯ç”¨æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
 	$aryParts["lngFunctionCode"] = DEF_FUNCTION_WF2;
 
-	// HTML½ĞÎÏ
+	// HTMLå‡ºåŠ›
 
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "wf/search/search.tmpl" );

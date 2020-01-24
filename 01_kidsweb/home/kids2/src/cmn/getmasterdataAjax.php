@@ -1,36 +1,36 @@
 <?
 	// ---------------------------------------------------------------
-	// �ץ������̾: getMasterData
+	// プログラム名: getMasterData
 	//
-	// ����:   �ޥ������ǡ��������
+	// 概要:   マスターデータを取得
 	//
-	// ����:
-	//         $strFormValue1 : �ե��������1
-	//         $strFormValue2 : �ե��������2
-	//			�������ե������ͤ�¸�ߤ���������Ƽ���
+	// 引数:
+	//         $strFormValue1 : フォームの値1
+	//         $strFormValue2 : フォームの値2
+	//			・・・フォーム値が存在するだけ全て取得
 	//
-	//         $lngProcessID  : �¹Ԥ���SQL��ID
+	//         $lngProcessID  : 実行するSQLのID
 	//
-	// �����:
-	//         $strMasterData : �ޥ������ǡ���(***,***\n)
+	// 戻り値:
+	//         $strMasterData : マスターデータ(***,***\n)
 	// ---------------------------------------------------------------
 
-	// �����ɤ߹���
+	// 設定読み込み
 	include ( "conf.inc" );
 	require (LIB_FILE);
 	
-	//PHPɸ���JSON�Ѵ��᥽�åɤϥ��顼�ˤʤ�Τǳ����Υ饤�֥��(���餯���󥳡��ɤ�����)
+	//PHP標準のJSON変換メソッドはエラーになるので外部のライブラリ(恐らくエンコードの問題)
 	require_once 'JSON.php';
 
-	// GET����μ���
-	$lngProcessID  = $_GET["lngProcessID"];  // �¹Ԥ���SQL��ID
-	$strFormValue  = $_GET["strFormValue"];   // �ե������
+	// GET情報の取得
+	$lngProcessID  = $_GET["lngProcessID"];  // 実行するSQLのID
+	$strFormValue  = $_GET["strFormValue"];   // フィールド
 
-	//JSON���饹���󥹥��󥹲�
+	//JSONクラスインスタンス化
 	$s = new Services_JSON();
 
 	//////////////////////////////////////////////////////////////
-	// �ᥤ��롼����
+	// メインルーチン
 	//////////////////////////////////////////////////////////////
 	for ( $i = 0; $i < count ( $strFormValue ); $i++ )
 	{
@@ -38,36 +38,36 @@
 	}
 
 	//{
-	//	echo ",����̵��";
+	//	echo ",引数無し";
 	//	exit;
 	//}
-	// �����ե������ꥯ�������������
+	// 外部ファイルよりクエリ取得、生成
 	if ( !$strQuery = file_get_contents ( LIB_ROOT . "sql/$lngProcessID.sql" ) )
 	{
-		echo ",�ե����륪���ץ�˼��Ԥ��ޤ�����";
+		echo ",ファイルオープンに失敗しました。";
 		exit;
 	}
-	// ������(//������)�κ��
+	// コメント(//タイプ)の削除
 	$strQuery = preg_replace ( "/\/\/.+?\n/", "", $strQuery );
-	// 2�ĤΥ��ڡ��������ԡ����֤򥹥ڡ���1�Ĥ��Ѵ�
+	// 2つのスペース、改行、タブをスペース1つに変換
 	$strQuery = preg_replace ( "/(\s{2}|\n|\t)/", " ", $strQuery );
-	// ������(/**/������)�κ��
+	// コメント(/**/タイプ)の削除
 	$strQuery = preg_replace ( "/\/\*.+?\*\//m", "", $strQuery );
 
-	// �����ѿ����֤�����
+	// 取得変数の置き換え
 	for ( $i = 0; $i < count ( $strFormValue ); $i++ )
 	{
 		$strQuery = preg_replace ( "/_%strFormValue$i%_/", $strFormValue[$i], $strQuery );
 	}
 
-	// �֤��������ʤ��ä��ѿ��� WHERE �硢����
+	// 置き換えられなかった変数の WHERE 句、修正
 	//$strQuery = preg_replace ( "/(AND|WHERE) [\w\._\(\)]+? (=||LIKE) [\w\(\)]*('%??%??'| )\)?/", "", $strQuery );
 	$strQuery = preg_replace ( "/(AND|WHERE) [\w\._]+? ([<>]?=||LIKE) ('%??%??'| )/", "", $strQuery );
 
-	// \ �ν���(DB �䤤��碌�Τ��� \ �� \\ �ˤ���)
+	// \ の処理(DB 問い合わせのため \ を \\ にする)
 	$strQuery = preg_replace ( "/\\\\/", "\\\\\\\\", $strQuery );
 
-	// �ǡ�������
+	// データ取得
 	$masterData = fncGetMasterData( $strQuery );
 	mb_convert_variables('UTF-8' , 'EUC-JP' , $masterData );
 	echo $s->encodeUnsafe($masterData);
@@ -75,39 +75,39 @@
 
 
 // ---------------------------------------------------------------
-// �ؿ�̾: fncGetMasterData
+// 関数名: fncGetMasterData
 //
-// ����:   �ޥ������ǡ��������������¹ԡ��ǡ���������CSV����������
+// 概要:   マスターデータ取得クエリを実行、データ取得しCSV形式で生成
 //
-// ����:
-//         $strQuery      : ������
+// 引数:
+//         $strQuery      : クエリ
 //
-// �����:
-//         $strMasterData : �ޥ������ǡ���(***,***\n)
+// 戻り値:
+//         $strMasterData : マスターデータ(***,***\n)
 // ---------------------------------------------------------------
 function fncGetMasterData( $strQuery )
 {
-	// �ե������̾����
+	// フィールド名設定
 	$strMasterHeader = "id";
 
-	// DB��³
+	// DB接続
 	$objDB = new clsDB();
 	if ( !$objDB->open( "", "", "", "" ) ) {
-	    echo ",DB��³�˼��Ԥ��ޤ�����\n";
+	    echo ",DB接続に失敗しました。\n";
 	    exit;
 	}
 
-	// �ޥ�������������¹�
+	// マスタ取得クエリ実行
 	if ( !$result = $objDB->execute( $strQuery ) )
 	{
-		echo "id\tname1\n�ޥ������ǡ����η�̼����˼��Ԥ��ޤ�����\n";
+		echo "id\tname1\nマスターデータの結果取得に失敗しました。\n";
 	    exit;
 	}
 	
 	$result = pg_fetch_all($result);
 
-	//��¸�ν����ؤν����̤��θ���ơ����������ǡ����Υ������¸�ν����˹�碌��
-	//���ե�����ɤ�ID������ʹߤ�NAME
+	//既存の処理への修正量を考慮して、取得したデータのキーを既存の処理に合わせる
+	//第一フィールドはID、それ以降はNAME
 	for($i=0;$i<count($result);$i++){
 		$key = array_keys($result[$i]);
 		for($i2=0;$i2<count($key);$i2++){

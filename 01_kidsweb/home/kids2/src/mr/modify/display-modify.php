@@ -2,11 +2,11 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       �ⷿ�������  ��������
+*       金型履歴管理  修正画面
 */
 // ----------------------------------------------------------------------------
 
-// ������ɤ߹���
+// 設定の読み込み
 include_once ( "conf.inc" );
 require ( LIB_FILE );
 require_once(SRC_ROOT.'/mold/validation/UtilValidation.class.php');
@@ -24,33 +24,33 @@ $objDB->open( "", "", "", "" );
 
 setcookie("strSessionID", $_REQUEST["strSessionID"]);
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB );
 
-// 1900 �ⷿ����
+// 1900 金型管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MR0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 1904 �ⷿĢɼ�����ʽ�����
+// 1904 金型帳票管理（修正）
 if ( !fncCheckAuthority( DEF_FUNCTION_MR4, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// �ѥ�᡼������
+// パラメータ取得
 $moldReportId = $_REQUEST["MoldReportId"];
 $revision = $_REQUEST["Revision"];
 $version = $_REQUEST["Version"];
 
 if (!$moldReportId || !(0 <= $revision) || !(0 <= $version))
 {
-	// ����μ����˼��Ԥ��ޤ���
+	// 情報の取得に失敗しました
 	fncOutputError(9061, DEF_ERROR, "", TRUE, "", $objDB);
 }
 
-// �桼�ƥ���ƥ����饹�Υ��󥹥��󥹼���
+// ユーティリティクラスのインスタンス取得
 $utilMold = UtilMold::getInstance();
 $utilValidation = UtilValidation::getInstance();
 $utilBussinesscode = UtilBussinesscode::getInstance();
@@ -61,39 +61,39 @@ $utilProduct = UtilProduct::getInstance();
 
 try
 {
-	// �ⷿĢɼ�κ���
+	// 金型帳票の索引
 	$report = $utilMold->selectMoldReport($moldReportId, $revision, $version);
 
-	// Ģɼ���ơ���������λ�ξ��
+	// 帳票ステータスが完了の場合
 	if ($report[TableMoldReport::Status] == '50')
 	{
 		fncOutputError(9069, DEF_ERROR, "", TRUE, "", $objDB);
 	}
 
-	// �ⷿĢɼ�ܺ٤κ���
+	// 金型帳票詳細の索引
 	$details = $utilMold->selectMoldReportDetail($moldReportId, $revision);
 
-	// ������(�ܵ�) -> ɽ����ҥ����ɤκ���
+	// 事業部(顧客) -> 表示会社コードの索引
 	$customerCode = $report[TableMoldReport::CustomerCode];
 	$displayCustomerCode = $utilCompany->selectDisplayCodeByCompanyCode($customerCode);
 
-	// ô������ -> ɽ�����롼�ץ����ɤκ���
+	// 担当部署 -> 表示グループコードの索引
 	$groupCode = $report[TableMoldReport::KuwagataGroupCode];
 	$displayGroupCode = $utilGroup->selectDisplayCodeByGroupCode($groupCode);
 
-	// ô���� -> ɽ���桼�������ɤκ���
+	// 担当者 -> 表示ユーザコードの索引
 	$userCode = $report[TableMoldReport::KuwagataUserCode];
 	$displayUserCode = $utilUser->selectDisplayCodeByUserCode($userCode);
 
 	switch ($report[TableMoldReport::ReportCategory])
 	{
-		// ��ư��/�ֵ��Ǥξ��
+		// 移動版/返却版の場合
 		case "10":
 		case "20":
-			// �ݴɹ���
+			// 保管工場
 			$srcFactoryCode = $report[TableMoldReport::SourceFactory];
 			$displaySrcFactoryCode = $utilCompany->selectDisplayCodeByCompanyCode($srcFactoryCode);
-			// ��ư�蹩��
+			// 移動先工場
 			$dstFactoryCode = $report[TableMoldReport::DestinationFactory];
 			$displayDstFactoryCode = $utilCompany->selectDisplayCodeByCompanyCode($dstFactoryCode);
 			break;
@@ -101,91 +101,91 @@ try
 }
 catch (SQLException $e)
 {
-	// ���顼��������
+	// エラーログ出力
 	error_log($e->getMessage(), 0);
-	// ����μ����˼��Ԥ��ޤ���
-	fncOutputError(9061, DEF_ERROR, "�����ʥǡ������оݤΥǡ������ѹ����줿��ǽ��������ޤ���", TRUE, "", $objDB);
+	// 情報の取得に失敗しました
+	fncOutputError(9061, DEF_ERROR, "不正なデータか対象のデータが変更された可能性があります。", TRUE, "", $objDB);
 }
 
-// �ִ�ʸ���󷲤κ���
+// 置換文字列群の作成
 $replacement = array();
 
-// �ⷿĢɼID
+// 金型帳票ID
 $replacement["MoldReportId"] = $moldReportId;
-// ��ӥ����
+// リビジョン
 $replacement["Revision"] = sprintf("00", $revision);
 
-// ���ʥ�����
+// 製品コード
 $replacement["Header_ProductCode"] =$report[TableMoldReport::ProductCode];
 $replacement["Detail_ProductCode"] =$report[TableMoldReport::ProductCode];
 $replacement["Header_ReviseCode"] =$report[TableMoldReport::ReviseCode];
 $replacement["Detail_ReviseCode"] =$report[TableMoldReport::ReviseCode];
 
-// ������
+// 依頼日
 $replacement[FormMoldReport::RequestDate] = str_replace ( "-", "/", $report[TableMoldReport::RequestDate]);
-// ��˾��
+// 希望日
 $replacement[FormMoldReport::ActionRequestDate] = str_replace ( "-", "/", $report[TableMoldReport::ActionRequestDate]);
-// �ֵ�ͽ����
+// 返却予定日
 $replacement[FormMoldReport::ReturnSchedule] = str_replace ( "-", "/", $report[TableMoldReport::ReturnSchedule]);
 
-// Ģɼ��ʬ
+// 帳票区分
 $replacement[FormMoldReport::ReportCategory] = $report[TableMoldReport::ReportCategory];
-// �����ʬ
+// 依頼区分
 $replacement[FormMoldReport::RequestCategory] = $report[TableMoldReport::RequestCategory];
-// ��ư��ˡ
+// 移動方法
 $replacement[FormMoldReport::TransferMethod] = $report[TableMoldReport::TransferMethod];
-// �ؼ���ʬ
+// 指示区分
 $replacement[FormMoldReport::InstructionCategory] = $report[TableMoldReport::InstructionCategory];
-// ������ν���
+// 生産後の処理
 $replacement[FormMoldReport::FinalKeep] = $report[TableMoldReport::FinalKeep];
 
-// ������(�ܵ�)
+// 事業部(顧客)
 $replacement[FormMoldReport::CustomerCode] = $displayCustomerCode;
-// ô������
+// 担当部署
 $replacement[FormMoldReport::KuwagataGroupCode] = $displayGroupCode;
-// ô����
+// 担当者
 $replacement[FormMoldReport::KuwagataUserCode] = $displayUserCode;
 
-// �ݴɹ���
+// 保管工場
 $replacement[FormMoldReport::SourceFactory] = $displaySrcFactoryCode ;
-// ��ư�蹩��
+// 移動先工場
 $replacement[FormMoldReport::DestinationFactory] = $displayDstFactoryCode;
 
-// ����¾
+// その他
 $replacement[FormMoldReport::Note] = $report[TableMoldReport::Note];
-// ������
+// 欄外備考
 $replacement[FormMoldReport::MarginalNote] = $report[TableMoldReport::MarginalNote];
 
 // var_dump($replacement);
-// �ƥ�ץ졼���ɤ߹���
+// テンプレート読み込み
 $template = fncGetReplacedHtmlWithBase("base_mold_noframes.html", "mr/modify/mr_modify.tmpl", $replacement ,$objAuth );
 
 // DOMDocument
 $doc = new DOMDocument();
 
-// �ѡ������顼����
+// パースエラー抑制
 libxml_use_internal_errors(true);
-// DOM�ѡ���
+// DOMパース
 $doc->loadHTML($template);
-// �ѡ������顼���ꥢ
+// パースエラークリア
 libxml_clear_errors();
-// �ѡ������顼�������
+// パースエラー抑制解除
 libxml_use_internal_errors(false);
 
-// ����Ѥߤζⷿ�ꥹ��div�μ���
+// 選択済みの金型リストdivの取得
 $initMoldInfo = $doc->getElementById("init-mold-info");
 
-// �ⷿĢɼ�ܺ٤η��ʬ����
+// 金型帳票詳細の件数分走査
 foreach ($details as $num => $row)
 {
 	$index = $num + 1;
 
-	// �ⷿNO
+	// 金型NO
 	$moldNo = $row[TableMoldReportDetail::MoldNo];
-	// �ⷿ����
+	// 金型説明
 	$desc = $row[TableMoldReportDetail::MoldDescription];
 
-	// �ⷿ������������input���Ǻ���
+	// 金型情報埋め込み用input要素作成
 	$inputMoldNo = $doc->createElement("input");
 	$inputMoldNo->setAttribute("class", "init-mold-info__record");
 	$inputMoldNo->setAttribute("index", $index);
@@ -197,11 +197,11 @@ foreach ($details as $num => $row)
 	$initMoldInfo->appendChild($inputMoldNo);
 }
 
-// COOKIE����
+// COOKIE設定
 setcookie("MoldReportId", $moldReportId);
 setcookie("Revision", $revision);
 setcookie("Version", $version);
 
-// HTML����
+// HTML出力
 echo $doc->saveHTML();
 

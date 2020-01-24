@@ -1,9 +1,9 @@
 /*
-	���ס��֥��롼�ץ����ɡפ���ִ�Ϣ���륫�ƥ���פ����
-	�оݡ����ʸ���
-	������
-	��������ƣ�»�
-	���͡��֥����ɡפ�����פ�����͡פ����
+	概要：「グループコード」から「関連するカテゴリ」を取得
+	対象：商品検索
+	作成：
+	更新：斎藤和志
+	備考：「コード」から一致する「値」を取得
 */
 SELECT mc.lngcategorycode, mc.strcategoryname, mc.lngsortkey
 FROM m_Category mc

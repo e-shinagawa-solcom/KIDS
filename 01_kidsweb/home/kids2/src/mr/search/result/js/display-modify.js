@@ -7,7 +7,7 @@
         revision = 'Revision=' + $(this).attr('revision');
         version = 'Version=' + $(this).attr('version');
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version, 'display-detail', 'width=1000, height=570,resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

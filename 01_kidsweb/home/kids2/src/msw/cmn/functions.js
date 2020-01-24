@@ -3,12 +3,12 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// subMasterWindowType	: ¥µ¥Ö¥¦¥¤¥ó¥É¥¦¥¿¥¤¥×Ì¾
-// strIfrmName			: ¥µ¥Ö¥¦¥¤¥ó¥É¥¦IFRAMÌ¾(¿Æ)
-// objA					: [InputAÍÑ]ºÇ½é¤ÎTabindexÅ¬ÍÑ¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾
-// objB					: [InputBÍÑ]ºÇ½é¤ÎTabindexÅ¬ÍÑ¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾
+// subMasterWindowType	: ã‚µãƒ–ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒ—å
+// strIfrmName			: ã‚µãƒ–ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦IFRAMå(è¦ª)
+// objA					: [InputAç”¨]æœ€åˆã®Tabindexé©ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
+// objB					: [InputBç”¨]æœ€åˆã®Tabindexé©ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
 
-////////// [TABINDEX]À©¸æ([ApplyButton]¤Ş¤Ç¤¤¤Ã¤¿¤éºÇ½é¤ËÌá¤¹) //////////
+////////// [TABINDEX]åˆ¶å¾¡([ApplyButton]ã¾ã§ã„ã£ãŸã‚‰æœ€åˆã«æˆ»ã™) //////////
 
 function fncSubmasterTabindex( subMasterWindowType , strIfrmName , objA , objB )
 {
@@ -160,49 +160,49 @@ function fncSubmasterTabindex( subMasterWindowType , strIfrmName , objA , objB )
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-////////// ¥­¡¼¥¤¥Ù¥ó¥È¼èÆÀ //////////
+////////// ã‚­ãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆå–å¾— //////////
 window.document.onkeydown=onKeyDown;
 
 function onKeyDown( e )
 {
-	// Í×ÁÇ¤¬Ì¤ÄêµÁ¤Î¾ì¹ç
+	// è¦ç´ ãŒæœªå®šç¾©ã®å ´åˆ
 	if (typeof(window.event.srcElement.name) == "undefined")
 	{
-		//BackSpace¥­¡¼²¡²¼ËÉ»ß
+		//BackSpaceã‚­ãƒ¼æŠ¼ä¸‹é˜²æ­¢
 		if( window.event.keyCode == 8	) return false ;
 	}
 
-	// Í×ÁÇ¤ÎÂ°À­¤¬ [disabled] ¤ËÂĞ¤¹¤ë½èÍı
+	// è¦ç´ ã®å±æ€§ãŒ [disabled] ã«å¯¾ã™ã‚‹å‡¦ç†
 	if (window.event.srcElement.disabled == true)
 	{
-		//BackSpace¥­¡¼²¡²¼ËÉ»ß
+		//BackSpaceã‚­ãƒ¼æŠ¼ä¸‹é˜²æ­¢
 		if( window.event.keyCode == 8	) return false ;
 	}
 
-	// Í×ÁÇ¤¬ [focus] ¤Î¾ì¹ç
+	// è¦ç´ ãŒ [focus] ã®å ´åˆ
 	if(window.event.srcElement.type != 'text' && window.event.srcElement.focus)
 	{
-		//BackSpace¥­¡¼²¡²¼ËÉ»ß
+		//BackSpaceã‚­ãƒ¼æŠ¼ä¸‹é˜²æ­¢
 		if( window.event.keyCode == 8	) return false ;
 	}
 
-	// [alt] + [¢«]¥­¡¼²¡²¼ËÉ»ß
+	// [alt] + [â†]ã‚­ãƒ¼æŠ¼ä¸‹é˜²æ­¢
 	if( window.event.altKey == true && window.event.keyCode == 37 ) return false ;
 
-	// [alt] + [¢ª]¥­¡¼²¡²¼ËÉ»ß
+	// [alt] + [â†’]ã‚­ãƒ¼æŠ¼ä¸‹é˜²æ­¢
 	if( window.event.altKey == true && window.event.keyCode == 39 ) return false ;
 
-	// [alt] + [c]¥­¡¼ ²¡²¼¥µ¥Ö¥Ş¥¹¥¿¡¼¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º
+	// [alt] + [c]ã‚­ãƒ¼ æŠ¼ä¸‹ã‚µãƒ–ãƒã‚¹ã‚¿ãƒ¼ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚º
 	//if( window.event.altKey == true && window.event.keyCode == 67 )
 	//{
-		// ¥¿¥¤¥×ÊÌ¥Ş¥¹¥¿¡¼¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º¥â¥¸¥å¡¼¥ë¸Æ½Ğ¤·
+		// ã‚¿ã‚¤ãƒ—åˆ¥ãƒã‚¹ã‚¿ãƒ¼ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚ºãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å‘¼å‡ºã—
 		//fncSubMasterWinClose( document.all.strSubMasterWindowType.value );
 	//}
 
-	// [ENTER]¥­¡¼²¡²¼»ş
+	// [ENTER]ã‚­ãƒ¼æŠ¼ä¸‹æ™‚
 	if( window.event.keyCode == 13 )
 	{
-		// ¸¡º÷¡¦Å¬ÍÑ¥Ü¥¿¥óÍÑ¥¤¥Ù¥ó¥È¥â¥¸¥å¡¼¥ë¸Æ½Ğ¤·
+		// æ¤œç´¢ãƒ»é©ç”¨ãƒœã‚¿ãƒ³ç”¨ã‚¤ãƒ™ãƒ³ãƒˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å‘¼å‡ºã—
 		fncSubmasterQueryforEnterKey( document.all.strSubMasterWindowType.value );
 		return true;
 	}
@@ -215,7 +215,7 @@ function onKeyDown( e )
 
 
 
-////////// ¥É¥é¥Ã¥¯¥¢¥ó¥É¥É¥í¥Ã¥×¤Î¶Ø»ß //////////
+////////// ãƒ‰ãƒ©ãƒƒã‚¯ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—ã®ç¦æ­¢ //////////
 window.document.ondragstart=onDragStart;
 
 function onDragStart(e)
@@ -228,7 +228,7 @@ function onDragStart(e)
 
 
 
-////////// [shift] + [tab]¥­¡¼²¡²¼ËÉ»ß //////////
+////////// [shift] + [tab]ã‚­ãƒ¼æŠ¼ä¸‹é˜²æ­¢ //////////
 function fncInvalidKey()
 {
 	window.document.onkeydown = onKeyDownForfncInvalidKey;
@@ -239,10 +239,10 @@ function onKeyDownForfncInvalidKey()
 {
 	if(window.event.keyCode == 9 && event.shiftKey == true) return false;
 
-	// [ENTER]¥­¡¼²¡²¼»ş
+	// [ENTER]ã‚­ãƒ¼æŠ¼ä¸‹æ™‚
 	if( window.event.keyCode == 13 )
 	{
-		// ¸¡º÷¡¦Å¬ÍÑ¥Ü¥¿¥óÍÑ¥¤¥Ù¥ó¥È¥â¥¸¥å¡¼¥ë¸Æ½Ğ¤·
+		// æ¤œç´¢ãƒ»é©ç”¨ãƒœã‚¿ãƒ³ç”¨ã‚¤ãƒ™ãƒ³ãƒˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«å‘¼å‡ºã—
 		fncSubmasterQueryforEnterKey( document.all.strSubMasterWindowType.value );
 		return true;
 	}
@@ -262,7 +262,7 @@ function fncEffectiveKey()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-////////// [ENTER]¥­¡¼²¡²¼»ş¡¢¸¡º÷¡¦Å¬ÍÑ¥Ü¥¿¥óÍÑ¥¤¥Ù¥ó¥È¥â¥¸¥å¡¼¥ë //////////
+////////// [ENTER]ã‚­ãƒ¼æŠ¼ä¸‹æ™‚ã€æ¤œç´¢ãƒ»é©ç”¨ãƒœã‚¿ãƒ³ç”¨ã‚¤ãƒ™ãƒ³ãƒˆãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« //////////
 function fncSubmasterQueryforEnterKey( queryType )
 {
 	switch( queryType )
@@ -272,7 +272,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [VENDOR] //////////
 		case 'vendor':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'lngCustomerCode' ||
 				window.event.srcElement.name == 'strCustomerName' )
 			{
@@ -285,7 +285,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( 'swCustomer',
@@ -297,13 +297,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objCustomerName' )
 			{
 				fncSetMasterDataParent( 'vendor' , document.all.objCustomerName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterData( 'vendor' ,
@@ -321,7 +321,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [CREATION FACTORY] //////////
 		case 'creation':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'strCreationFactoryCode' ||
 				window.event.srcElement.name == 'strCreationFactoryName' )
 			{
@@ -334,7 +334,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( 'swFactory',
@@ -346,13 +346,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objCreationFactoryName' )
 			{
 				fncSetMasterDataParent( 'creation' , document.all.objCreationFactoryName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterDataforEnterKey( 'creation' ,
@@ -370,7 +370,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [ASSEMBLY FACTORY] //////////
 		case 'assembly':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'strFactoryCode' ||
 				window.event.srcElement.name == 'strFactoryName' )
 			{
@@ -383,7 +383,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( 'swFactory',
@@ -395,13 +395,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objFactoryName' )
 			{
 				fncSetMasterDataParent( 'assembly' , document.all.objFactoryName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterDataforEnterKey( 'assembly' ,
@@ -419,11 +419,11 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [DEPT & IN CHARGE NAME] //////////
 		case 'dept':
 
-			///// [ÉôÌç]¥Õ¥£¡¼¥ë¥É /////
+			///// [éƒ¨é–€]ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ /////
 			if( DeptValueFlg == 0 )
 			{
 
-				// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.name == 'strGroupCode' ||
 					window.event.srcElement.name == 'strGroupName' )
 				{
@@ -436,7 +436,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											0 );
 				}
 
-				// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'SearchButton01' )
 				{
 					subLoadMasterOption( 'swGroup',
@@ -448,7 +448,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											0 );
 				}
 
-				// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.name == 'objGroupName' )
 				{
 					fncSetMasterDataParent( 'dept' ,
@@ -458,7 +458,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 												document.all.strUserName );
 				}
 
-				// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'ApplyButton' )
 				{
 					fncSetMasterDataforEnterKey( 'dept' ,
@@ -469,7 +469,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 													document.all.strUserName );
 				}
 
-				// [¥¿¥Ö][IN CHARGE NAME]¥¿¥Ö¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [ã‚¿ãƒ–][IN CHARGE NAME]ã‚¿ãƒ–ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'TabI' )
 				{
 					DeptShowI( document.all.strUserCode );
@@ -478,11 +478,11 @@ function fncSubmasterQueryforEnterKey( queryType )
 			}
 
 
-			///// [Ã´Åö¼Ô]¥Õ¥£¡¼¥ë¥É /////
+			///// [æ‹…å½“è€…]ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ /////
 			else if( DeptValueFlg == 1 )
 			{
 
-				// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.name == 'strUserCode' ||
 					window.event.srcElement.name == 'strUserName' )
 				{
@@ -496,7 +496,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											1 );
 				}
 
-				// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'SearchButton02' )
 				{
 					subLoadMasterOption( 'swUser',
@@ -509,7 +509,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											1 );
 				}
 
-				// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.name == 'objUserName' )
 				{
 					fncSetMasterDataChild( 'dept' ,
@@ -519,7 +519,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											document.all.strGroupName );
 				}
 
-				// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'ApplyButton' )
 				{
 					fncSetMasterDataforEnterKey( 'dept' ,
@@ -530,7 +530,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 													document.all.strUserName );
 				}
 
-				// [¥¿¥Ö][DEPT]¥¿¥Ö¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [ã‚¿ãƒ–][DEPT]ã‚¿ãƒ–ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'TabD' )
 				{
 					DeptShowD( document.all.strGroupCode );
@@ -547,7 +547,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [PRODUCTS] //////////
 		case 'products':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'strProductCode' ||
 				window.event.srcElement.name == 'strProductName' )
 			{
@@ -561,7 +561,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( document.all.strSqlFileName.value,
@@ -574,13 +574,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objProductName' )
 			{
 				fncSetMasterDataParent( 'products' , document.all.objProductName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterDataforEnterKey( 'products' ,
@@ -598,7 +598,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [LOCATION] //////////
 		case 'location':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'strLocationCode' ||
 				window.event.srcElement.name == 'strLocationName' )
 			{
@@ -610,7 +610,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										objDataSourceSetting );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( 'swLocation',
@@ -621,13 +621,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										objDataSourceSetting );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objLocationName' )
 			{
 				fncSetMasterDataParent( 'location' , document.all.objLocationName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterDataforEnterKey( 'location' ,
@@ -645,7 +645,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [APPLICANT] //////////
 		case 'applicant':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'strUserCode' ||
 				window.event.srcElement.name == 'strUserName' )
 			{
@@ -658,7 +658,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( 'swUser',
@@ -670,13 +670,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objUserName' )
 			{
 				fncSetMasterDataParent( 'applicant' , document.all.objUserName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterData( 'applicant' ,
@@ -694,7 +694,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [WF INPUT PERSON] //////////
 		case 'wfinput':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'strUserCode' ||
 				window.event.srcElement.name == 'strUserName' )
 			{
@@ -707,7 +707,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( 'swUser',
@@ -719,13 +719,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										0 );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objUserName' )
 			{
 				fncSetMasterDataParent( 'wfinput' , document.all.objUserName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterData( 'wfinput' ,
@@ -743,11 +743,11 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [VENDOR & IN CHARGE NAME] //////////
 		case 'vi':
 
-			///// [¸ÜµÒ]¥Õ¥£¡¼¥ë¥É /////
+			///// [é¡§å®¢]ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ /////
 			if( ViValueFlg == 0 )
 			{
 
-				// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.name == 'strCustomerCode' ||
 					window.event.srcElement.name == 'strCustomerName' )
 				{
@@ -760,7 +760,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											0 );
 				}
 
-				// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'SearchButton01' )
 				{
 					subLoadMasterOption( 'swCustomer',
@@ -772,7 +772,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											0 );
 				}
 
-				// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.name == 'objCustomerName' )
 				{
 					fncSetMasterDataParent( 'vi' ,
@@ -782,7 +782,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											document.all.strInChargeName );
 				}
 
-				// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'ApplyButton' )
 				{
 					fncSetMasterDataforEnterKey( 'vi' ,
@@ -793,7 +793,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 													document.all.strInChargeName );
 				}
 
-				// [¥¿¥Ö][IN CHARGE NAME]¥¿¥Ö¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [ã‚¿ãƒ–][IN CHARGE NAME]ã‚¿ãƒ–ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'viTabI' )
 				{
 					ViShowI( document.all.strInChargeCode );
@@ -802,11 +802,11 @@ function fncSubmasterQueryforEnterKey( queryType )
 			}
 
 
-			///// [¸ÜµÒÃ´Åö¼Ô]¥Õ¥£¡¼¥ë¥É /////
+			///// [é¡§å®¢æ‹…å½“è€…]ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ /////
 			else if( ViValueFlg == 1 )
 			{
 
-				// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.name == 'strInChargeCode' ||
 					window.event.srcElement.name == 'strInChargeName' )
 				{
@@ -820,7 +820,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											1 );
 				}
 
-				// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'SearchButton02' )
 				{
 					subLoadMasterOption( 'swInCharge',
@@ -833,7 +833,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											1 );
 				}
 
-				// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.name == 'objInChargeName' )
 				{
 					fncSetMasterDataChild( 'vi' ,
@@ -843,7 +843,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 											document.all.strCustomerName );
 				}
 
-				// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'ApplyButton' )
 				{
 					fncSetMasterDataforEnterKey( 'vi' ,
@@ -854,7 +854,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 													document.all.strInChargeName );
 				}
 
-				// [¥¿¥Ö][VENDOR]¥¿¥Ö¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+				// [ã‚¿ãƒ–][VENDOR]ã‚¿ãƒ–ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 				if( window.event.srcElement.id == 'viTabD' )
 				{
 					ViShowD( document.all.strCustomerCode );
@@ -871,7 +871,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [SUPPLIER] //////////
 		case 'supplier':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'strCustomerCode' ||
 				window.event.srcElement.name == 'strCustomerName' )
 			{
@@ -883,7 +883,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										objDataSourceSetting );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( 'swSupplier',
@@ -894,13 +894,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										objDataSourceSetting );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objCustomerName' )
 			{
 				fncSetMasterDataParent( 'supplier' , document.all.objCustomerName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterDataforEnterKey( 'supplier' ,
@@ -918,7 +918,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 		////////// [INPUT PERSON] //////////
 		case 'input':
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'strInputUserCode' ||
 				window.event.srcElement.name == 'strInputUserName' )
 			{
@@ -930,7 +930,7 @@ function fncSubmasterQueryforEnterKey( queryType )
 										objDataSourceSetting );
 			}
 
-			// [¸¡º÷]¸¡º÷¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [æ¤œç´¢]æ¤œç´¢ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'SearchButton01' )
 			{
 				subLoadMasterOption( 'swInputUser',
@@ -941,13 +941,13 @@ function fncSubmasterQueryforEnterKey( queryType )
 										objDataSourceSetting );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤Ê¤¯¡¢¥»¥ì¥¯¥È¥Õ¥£¡¼¥ë¥É¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒãªãã€ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.name == 'objInputUserName' )
 			{
 				fncSetMasterDataParent( 'input' , document.all.objInputUserName.value );
 			}
 
-			// [Å¬ÍÑ]Å¬ÍÑ¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤¬¤¢¤ë¾ì¹ç
+			// [é©ç”¨]é©ç”¨ãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ãŒã‚ã‚‹å ´åˆ
 			if( window.event.srcElement.id == 'ApplyButton' )
 			{
 				fncSetMasterData( 'input' ,
@@ -975,28 +975,28 @@ function fncSubmasterQueryforEnterKey( queryType )
 
 
 
-// ÂåÆşÀè¥á¥¤¥ó¥¦¥£¥ó¥É¥¦¥ª¥Ö¥¸¥§¥¯¥È³ÊÇ¼ÍÑ¥°¥í¡¼¥Ğ¥ëÊÑ¿ô
+// ä»£å…¥å…ˆãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ ¼ç´ç”¨ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 var g_aryElementName = new Array();
 
-// [¿Æ]¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¼èÆÀÍÑ¥°¥í¡¼¥Ğ¥ëÊÑ¿ô
+// [è¦ª]ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 var g_aryMasterParent = new Array();
 
-// ¥µ¥Ö¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º»ş¤Ë¥Õ¥©¡¼¥«¥¹¤µ¤»¤ë¥ª¥Ö¥¸¥§¥¯¥È¥¿¥¤¥×¤ò¼èÆÀ¤¹¤ë¥°¥í¡¼¥Ğ¥ëÊÑ¿ô
+// ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚ºæ™‚ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã•ã›ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚¿ã‚¤ãƒ—ã‚’å–å¾—ã™ã‚‹ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 var g_FocusObject = new Array();
 
-// [»Ò]¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¼èÆÀÍÑ¥°¥í¡¼¥Ğ¥ëÊÑ¿ô
+// [å­]ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 var g_aryMasterChild = new Array();
 
 
 
-////////// [Å¬ÍÑ¥Ü¥¿¥ó][¿Æ][»Ò]¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¥á¥¤¥ó¥¦¥£¥ó¥É¥¦¤ËÂåÆş //////////
+////////// [é©ç”¨ãƒœã‚¿ãƒ³][è¦ª][å­]ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ä»£å…¥ //////////
 
-// strWindowType	: ¥µ¥Ö¥¦¥£¥ó¥É¥¦¥¿¥¤¥×Ì¾
-// m_objValue		: [¿Æ]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME
-// lngObjThis		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThis		: [¿Æ]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// lngObjThisChild	: [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThisChild	: [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
+// strWindowType	: ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒ—å
+// m_objValue		: [è¦ª]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME
+// lngObjThis		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThis		: [è¦ª]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// lngObjThisChild	: [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThisChild	: [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
 
 function fncSetMasterData( strWindowType , m_objValue , lngObjThis , strObjThis , lngObjThisChild , strObjThisChild )
 {
@@ -1004,14 +1004,14 @@ function fncSetMasterData( strWindowType , m_objValue , lngObjThis , strObjThis 
 	if( m_objValue.value != '' )
 	{
 
-		// ¥á¥¤¥ó¥¦¥¤¥ó¥É¥¦¤Î¥°¥í¡¼¥Ğ¥ëÊÑ¿ô [g_aryElementName] ¤è¤êÂåÆşÀè¥ª¥Ö¥¸¥§¥¯¥È¼èÆÀ
-		// ¼èÆÀ¸å¡¢³ÆValueÃÍ¤òÂåÆş
+		// ãƒ¡ã‚¤ãƒ³ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•° [g_aryElementName] ã‚ˆã‚Šä»£å…¥å…ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå–å¾—
+		// å–å¾—å¾Œã€å„Valueå€¤ã‚’ä»£å…¥
 		g_aryElementName[0].value = document.all.lngCodeParentHidden.value;
 		g_aryElementName[0].onchange();
 		g_aryElementName[1].value = document.all.strNameParentHidden.value;
 
 
-		////////// °Ê²¼¡¢[»Ò]½èÍı //////////
+		////////// ä»¥ä¸‹ã€[å­]å‡¦ç† //////////
 		if( lngObjThisChild &&
 			document.all.lngCodeChildHidden.value != 'undefined' )
 		{
@@ -1026,22 +1026,22 @@ function fncSetMasterData( strWindowType , m_objValue , lngObjThis , strObjThis 
 		}
 
 
-		// ¥¿¥¤¥×ÊÌ¡¢¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º
+		// ã‚¿ã‚¤ãƒ—åˆ¥ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚º
 		fncSubMasterWinClose( strWindowType );
 
-		//À½ÉÊ¥³¡¼¥É¤À¤Ã¤¿¾ì¹ç¤Î½èÍı
+		//è£½å“ã‚³ãƒ¼ãƒ‰ã ã£ãŸå ´åˆã®å‡¦ç†
 		if( m_objValue.name == "objProductName" )
 		{
-			//HSO¤Î¥ª¥Ö¥¸¥§¥¯¥È¤¬¤Ê¤«¤Ã¤¿¤é½èÍı½ªÎ»
+			//HSOã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãªã‹ã£ãŸã‚‰å‡¦ç†çµ‚äº†
 			if( typeof(window.parent.HSO) != "object" ) return false ;
 
-			//³Æ¼ï¤ÎÅĞÏ¿¡¢½¤Àµ²èÌÌ¤«¤é¸Æ¤Ó½Ğ¤µ¤ì¤¿¾ì¹ç
+			//å„ç¨®ã®ç™»éŒ²ã€ä¿®æ­£ç”»é¢ã‹ã‚‰å‘¼ã³å‡ºã•ã‚ŒãŸå ´åˆ
 			if( typeof(window.parent.HSO.POFlg) == "object" ||
 				typeof(window.parent.HSO.PCFlg) == "object" ||
 				typeof(window.parent.HSO.SOFlg) == "object" ||
 				typeof(window.parent.HSO.SCFlg) == "object" )
 			{
-				//À½ÉÊ¥³¡¼¥É¤ò¥ê¥í¡¼¥É
+				//è£½å“ã‚³ãƒ¼ãƒ‰ã‚’ãƒªãƒ­ãƒ¼ãƒ‰
 				window.parent.DLwin.fncDtProductCodeForMSW( m_objValue.value );
 			}
 		}
@@ -1051,28 +1051,28 @@ function fncSetMasterData( strWindowType , m_objValue , lngObjThis , strObjThis 
 }
 
 
-////////// [ENTER KEY][Å¬ÍÑ¥Ü¥¿¥ó][¿Æ][»Ò]¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¥á¥¤¥ó¥¦¥£¥ó¥É¥¦¤ËÂåÆş //////////
+////////// [ENTER KEY][é©ç”¨ãƒœã‚¿ãƒ³][è¦ª][å­]ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ä»£å…¥ //////////
 
-// strWindowType	: ¥µ¥Ö¥¦¥£¥ó¥É¥¦¥¿¥¤¥×Ì¾
-// m_objValue		: [¿Æ]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME
-// lngObjThis		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThis		: [¿Æ]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// lngObjThisChild	: [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThisChild	: [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
+// strWindowType	: ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒ—å
+// m_objValue		: [è¦ª]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME
+// lngObjThis		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThis		: [è¦ª]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// lngObjThisChild	: [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThisChild	: [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
 
 function fncSetMasterDataforEnterKey( strWindowType , m_objValue , lngObjThis , strObjThis , lngObjThisChild , strObjThisChild )
 {
 	if( m_objValue.value != '' )
 	{
 
-		// ¥á¥¤¥ó¥¦¥¤¥ó¥É¥¦¤Î¥°¥í¡¼¥Ğ¥ëÊÑ¿ô [g_aryElementName] ¤è¤êÂåÆşÀè¥ª¥Ö¥¸¥§¥¯¥È¼èÆÀ
-		// ¼èÆÀ¸å¡¢³ÆValueÃÍ¤òÂåÆş
+		// ãƒ¡ã‚¤ãƒ³ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•° [g_aryElementName] ã‚ˆã‚Šä»£å…¥å…ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå–å¾—
+		// å–å¾—å¾Œã€å„Valueå€¤ã‚’ä»£å…¥
 		g_aryElementName[0].value = document.all.lngCodeParentHidden.value;
 		g_aryElementName[0].onchange();
 		g_aryElementName[1].value = document.all.strNameParentHidden.value;
 
 
-		////////// °Ê²¼¡¢[»Ò]½èÍı //////////
+		////////// ä»¥ä¸‹ã€[å­]å‡¦ç† //////////
 		if( lngObjThisChild &&
 			document.all.lngCodeChildHidden.value != 'undefined' )
 		{
@@ -1087,22 +1087,22 @@ function fncSetMasterDataforEnterKey( strWindowType , m_objValue , lngObjThis , 
 		}
 
 
-		// ¥¿¥¤¥×ÊÌ¡¢¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º
+		// ã‚¿ã‚¤ãƒ—åˆ¥ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚º
 		fncSubMasterWinCloseforEnterKey( strWindowType );
 
-		//À½ÉÊ¥³¡¼¥É¤À¤Ã¤¿¾ì¹ç¤Î½èÍı
+		//è£½å“ã‚³ãƒ¼ãƒ‰ã ã£ãŸå ´åˆã®å‡¦ç†
 		if( m_objValue.name == "objProductName" )
 		{
-			//HSO¤Î¥ª¥Ö¥¸¥§¥¯¥È¤¬¤Ê¤«¤Ã¤¿¤é½èÍı½ªÎ»
+			//HSOã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒãªã‹ã£ãŸã‚‰å‡¦ç†çµ‚äº†
 			if( typeof(window.parent.HSO) != "object" ) return false ;
 
-			//³Æ¼ï¤ÎÅĞÏ¿¡¢½¤Àµ²èÌÌ¤«¤é¸Æ¤Ó½Ğ¤µ¤ì¤¿¾ì¹ç
+			//å„ç¨®ã®ç™»éŒ²ã€ä¿®æ­£ç”»é¢ã‹ã‚‰å‘¼ã³å‡ºã•ã‚ŒãŸå ´åˆ
 			if( typeof(window.parent.HSO.POFlg) == "object" ||
 				typeof(window.parent.HSO.PCFlg) == "object" ||
 				typeof(window.parent.HSO.SOFlg) == "object" ||
 				typeof(window.parent.HSO.SCFlg) == "object" )
 			{
-				//À½ÉÊ¥³¡¼¥É¤ò¥ê¥í¡¼¥É
+				//è£½å“ã‚³ãƒ¼ãƒ‰ã‚’ãƒªãƒ­ãƒ¼ãƒ‰
 				window.parent.DLwin.fncDtProductCodeForMSW( m_objValue.value );
 			}
 		}
@@ -1113,13 +1113,13 @@ function fncSetMasterDataforEnterKey( strWindowType , m_objValue , lngObjThis , 
 
 
 
-////////// [¥À¥Ö¥ë¥¯¥ê¥Ã¥¯][¿Æ]¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¥á¥¤¥ó¥¦¥£¥ó¥É¥¦¤ËÂåÆş //////////
+////////// [ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯][è¦ª]ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ä»£å…¥ //////////
 
-// strWindowType	: ¥µ¥Ö¥¦¥£¥ó¥É¥¦¥¿¥¤¥×Ì¾
-// m_objValue		: [¿Æ]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME ( obj.value )
-// m_objChild		: [»Ò]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME
-// lngObjThisChild	: [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThisChild	: [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
+// strWindowType	: ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒ—å
+// m_objValue		: [è¦ª]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME ( obj.value )
+// m_objChild		: [å­]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME
+// lngObjThisChild	: [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThisChild	: [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
 
 function fncSetMasterDataParent( strWindowType , m_objValue , m_objChild , lngObjThisChild , strObjThisChild )
 {
@@ -1127,35 +1127,35 @@ function fncSetMasterDataParent( strWindowType , m_objValue , m_objChild , lngOb
 	if( m_objValue != '' )
 	{
 
-		// ¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¼èÆÀ
+		// ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 		g_aryMasterParent = subLoadMasterGetIdName( objDataSourceSetting.recordset , m_objValue );
 
-		// ¥á¥¤¥ó¥¦¥¤¥ó¥É¥¦¤Î¥°¥í¡¼¥Ğ¥ëÊÑ¿ô [g_aryElementName] ¤è¤êÂåÆşÀè¥ª¥Ö¥¸¥§¥¯¥È¼èÆÀ
-		// ¼èÆÀ¸å¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤òÂåÆş
+		// ãƒ¡ã‚¤ãƒ³ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•° [g_aryElementName] ã‚ˆã‚Šä»£å…¥å…ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå–å¾—
+		// å–å¾—å¾Œãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ä»£å…¥
 		g_aryElementName[0].value = g_aryMasterParent['id'];
 		g_aryElementName[0].onchange();
 		g_aryElementName[1].value = g_aryMasterParent['name'];
 
 
 
-			////////// °Ê²¼¡¢[»Ò]½èÍı //////////
+			////////// ä»¥ä¸‹ã€[å­]å‡¦ç† //////////
 			if( m_objChild )
 			{
-				// [»Ò]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹ÃÍ ¥¯¥ê¥¢
+				// [å­]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹å€¤ ã‚¯ãƒªã‚¢
 				subLoadMasterOptionClear( m_objChild , true );
 
-				// [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É & [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É ¥¯¥ê¥¢
+				// [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ & [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ ã‚¯ãƒªã‚¢
 				lngObjThisChild.value = '';
 				strObjThisChild.value = '';
 
-				//¥á¥¤¥ó¥¦¥¤¥ó¥É¥¦¤ÎÂåÆşºÑ¤ß[»Ò]¥Ç¡¼¥¿¤Î½é´ü²½
+				//ãƒ¡ã‚¤ãƒ³ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ä»£å…¥æ¸ˆã¿[å­]ãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
 				g_aryElementName[2].value = '';
 				g_aryElementName[2].onchange();
 				g_aryElementName[3].value = '';
 			}
 
 
-		// ¥¿¥¤¥×ÊÌ¡¢¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º
+		// ã‚¿ã‚¤ãƒ—åˆ¥ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚º
 		fncSubMasterWinClose( strWindowType );
 
 	}
@@ -1165,13 +1165,13 @@ function fncSetMasterDataParent( strWindowType , m_objValue , m_objChild , lngOb
 
 
 
-////////// [¥À¥Ö¥ë¥¯¥ê¥Ã¥¯][»Ò]¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¥á¥¤¥ó¥¦¥£¥ó¥É¥¦¤ËÂåÆş //////////
+////////// [ãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯][å­]ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«ä»£å…¥ //////////
 
-// strWindowType	: ¥µ¥Ö¥¦¥£¥ó¥É¥¦¥¿¥¤¥×Ì¾
-// m_objChildValue	: [»Ò]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME ( obj.value )
-// lngObjThisH		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É(disabled)NAME
-// lngObjThis		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThis		: [¿Æ]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
+// strWindowType	: ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒ—å
+// m_objChildValue	: [å­]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME ( obj.value )
+// lngObjThisH		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(disabled)NAME
+// lngObjThis		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThis		: [è¦ª]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
 
 function fncSetMasterDataChild( strWindowType , m_objChildValue , lngObjThisH , lngObjThisParent , strObjThisParent )
 {
@@ -1179,12 +1179,12 @@ function fncSetMasterDataChild( strWindowType , m_objChildValue , lngObjThisH , 
 	if( lngObjThisH.value != '' )
 	{
 
-		// ¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¼èÆÀ
+		// ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 		g_aryMasterChild = subLoadMasterGetIdName( objDataSourceSetting1.recordset , m_objChildValue );
 
 
-		// ¥á¥¤¥ó¥¦¥¤¥ó¥É¥¦¤Î¥°¥í¡¼¥Ğ¥ëÊÑ¿ô [g_aryElementName] ¤è¤êÂåÆşÀè¥ª¥Ö¥¸¥§¥¯¥È¼èÆÀ
-		// ¼èÆÀ¸å¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤òÂåÆş
+		// ãƒ¡ã‚¤ãƒ³ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•° [g_aryElementName] ã‚ˆã‚Šä»£å…¥å…ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå–å¾—
+		// å–å¾—å¾Œãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ä»£å…¥
 		if( document.all.lngCodeChildHidden.value != 'undefined' &&
 			document.all.strNameChildHidden.value != 'undefined' )
 		{
@@ -1196,14 +1196,14 @@ function fncSetMasterDataChild( strWindowType , m_objChildValue , lngObjThisH , 
 		//g_aryElementName[2].value = g_aryMasterChild['id'];
 		//g_aryElementName[3].value = g_aryMasterChild['name'];
 
-		// ¥á¥¤¥ó¥¦¥¤¥ó¥É¥¦¤Î¥°¥í¡¼¥Ğ¥ëÊÑ¿ô [g_aryElementName] ¤è¤êÂåÆşÀè¥ª¥Ö¥¸¥§¥¯¥È¼èÆÀ
-		// ¼èÆÀ¸å[¿Æ]¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤ÎÃÍ¤òÂåÆş
+		// ãƒ¡ã‚¤ãƒ³ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•° [g_aryElementName] ã‚ˆã‚Šä»£å…¥å…ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå–å¾—
+		// å–å¾—å¾Œ[è¦ª]ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å€¤ã‚’ä»£å…¥
 		g_aryElementName[0].value = lngObjThisParent.value;
 		g_aryElementName[0].onchange();
 		g_aryElementName[1].value = strObjThisParent.value;
 
 
-		// ¥¿¥¤¥×ÊÌ¡¢¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º
+		// ã‚¿ã‚¤ãƒ—åˆ¥ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚º
 		fncSubMasterWinClose( strWindowType );
 
 	}
@@ -1213,15 +1213,15 @@ function fncSetMasterDataChild( strWindowType , m_objChildValue , lngObjThisH , 
 
 
 
-////////// [¥·¥ó¥°¥ë¥¯¥ê¥Ã¥¯][¿Æ]¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¥µ¥Ö¥¦¥£¥ó¥É¥¦¾å(¼«¿È)¤Î¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É¤ËÂåÆş //////////
+////////// [ã‚·ãƒ³ã‚°ãƒ«ã‚¯ãƒªãƒƒã‚¯][è¦ª]ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä¸Š(è‡ªèº«)ã®ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ä»£å…¥ //////////
 
-// m_objValue		: [¿Æ]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME ( obj.value )
-// lngObjThis		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThis		: [¿Æ]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// lngObjThisH		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É(disabled)NAME
-// m_objChild		: [»Ò]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME
-// lngObjThisChild	: [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThisChild	: [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
+// m_objValue		: [è¦ª]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME ( obj.value )
+// lngObjThis		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThis		: [è¦ª]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// lngObjThisH		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(disabled)NAME
+// m_objChild		: [å­]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME
+// lngObjThisChild	: [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThisChild	: [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
 
 function fncViewMasterDataParent( m_objValue , lngObjThis , strObjThis , lngObjThisH , m_objChild , lngObjThisChild , strObjThisChild )
 {
@@ -1229,36 +1229,36 @@ function fncViewMasterDataParent( m_objValue , lngObjThis , strObjThis , lngObjT
 	if( m_objValue != '' )
 	{
 
-		// ¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¼èÆÀ
+		// ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 		g_aryMasterParent = subLoadMasterGetIdName( objDataSourceSetting.recordset , m_objValue );
 
-		// [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É & [¿Æ]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É ¤ËÂåÆş
+		// [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ & [è¦ª]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ ã«ä»£å…¥
 		lngObjThis.value = g_aryMasterParent['id'];
 		strObjThis.value = g_aryMasterParent['name'];
 
-		// [HIDDEN][¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É & [HIDDEN][¿Æ]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É ¤ËÂåÆş
+		// [HIDDEN][è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ & [HIDDEN][è¦ª]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ ã«ä»£å…¥
 		document.all.lngCodeParentHidden.value = g_aryMasterParent['id'];
 		document.all.strNameParentHidden.value = g_aryMasterParent['name'];
 
 
-		////////// °Ê²¼¡¢[»Ò]½èÍı //////////
+		////////// ä»¥ä¸‹ã€[å­]å‡¦ç† //////////
 		if( lngObjThisH )
 		{
-			// [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É(disabled) ¤ËÂåÆş
+			// [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(disabled) ã«ä»£å…¥
 			lngObjThisH.value = lngObjThis.value;
 
-			// [»Ò]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹ÃÍ ¥¯¥ê¥¢
+			// [å­]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹å€¤ ã‚¯ãƒªã‚¢
 			subLoadMasterOptionClear( m_objChild , true );
 
-			// [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É & [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É ¥¯¥ê¥¢
+			// [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ & [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ ã‚¯ãƒªã‚¢
 			lngObjThisChild.value = '';
 			strObjThisChild.value = '';
 
-			// [HIDDEN][»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É & [HIDDEN][»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É ¥¯¥ê¥¢
+			// [HIDDEN][å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ & [HIDDEN][å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ ã‚¯ãƒªã‚¢
 			document.all.lngCodeChildHidden.value = '';
 			document.all.strNameChildHidden.value = '';
 
-			// [HIDDEN][»Ò]¥«¥¦¥ó¥¿¡¼¤ÎÃÍ ¥¯¥ê¥¢
+			// [HIDDEN][å­]ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ ã‚¯ãƒªã‚¢
 			document.all.lngCounterChildHidden.value = '';
 		}
 
@@ -1270,11 +1270,11 @@ function fncViewMasterDataParent( m_objValue , lngObjThis , strObjThis , lngObjT
 
 
 
-////////// [¥·¥ó¥°¥ë¥¯¥ê¥Ã¥¯][»Ò]¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¥µ¥Ö¥¦¥£¥ó¥É¥¦¾å(¼«¿È)¤Î¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É ¤ËÂåÆş //////////
+////////// [ã‚·ãƒ³ã‚°ãƒ«ã‚¯ãƒªãƒƒã‚¯][å­]ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ä¸Š(è‡ªèº«)ã®ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ ã«ä»£å…¥ //////////
 
-// m_objValue		: [»Ò]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME ( obj.value )
-// lngObjThis		: [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThis		: [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
+// m_objValue		: [å­]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME ( obj.value )
+// lngObjThis		: [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThis		: [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
 
 function fncViewMasterDataChild( m_objValue , lngObjThis , strObjThis )
 {
@@ -1282,14 +1282,14 @@ function fncViewMasterDataChild( m_objValue , lngObjThis , strObjThis )
 	if( m_objValue != '' )
 	{
 
-		// ¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤ò¼èÆÀ
+		// ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 		g_aryMasterChild = subLoadMasterGetIdName( objDataSourceSetting1.recordset , m_objValue );
 
-		// [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É & [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É ¤ËÂåÆş
+		// [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ & [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ ã«ä»£å…¥
 		lngObjThis.value = g_aryMasterChild['id'];
 		strObjThis.value = g_aryMasterChild['name'];
 
-		// [HIDDEN][»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É & [HIDDEN][»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É ¤ËÂåÆş
+		// [HIDDEN][å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ & [HIDDEN][å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ ã«ä»£å…¥
 		document.all.lngCodeChildHidden.value = g_aryMasterChild['id'];
 		document.all.strNameChildHidden.value = g_aryMasterChild['name'];
 
@@ -1300,19 +1300,19 @@ function fncViewMasterDataChild( m_objValue , lngObjThis , strObjThis )
 
 
 
-////////// [¿Æ]¥³¡¼¥ÉÃÍ ¤È [»Ò]¿Æ¥³¡¼¥ÉÃÍ ¤Î°ìÃ×½èÍı //////////
+////////// [è¦ª]ã‚³ãƒ¼ãƒ‰å€¤ ã¨ [å­]è¦ªã‚³ãƒ¼ãƒ‰å€¤ ã®ä¸€è‡´å‡¦ç† //////////
 
-// lngObjThis		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// lngObjThisH		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É(disabled)NAME
+// lngObjThis		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// lngObjThisH		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(disabled)NAME
 
 function fncBothCodeCheck( lngObjThis , lngObjThisH )
 {
-	// [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉÃÍ ¤È [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É(disabled)ÃÍ ¤Î°ìÃ×½èÍı
-	// [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉÃÍ ¤¬ ÊÑ¹¹¤µ¤ì¡¢
-	// [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É(disabled)ÃÍ¤È°Û¤Ê¤ë¾ì¹ç
+	// [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å€¤ ã¨ [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(disabled)å€¤ ã®ä¸€è‡´å‡¦ç†
+	// [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å€¤ ãŒ å¤‰æ›´ã•ã‚Œã€
+	// [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(disabled)å€¤ã¨ç•°ãªã‚‹å ´åˆ
 	if( lngObjThis.value != document.all.lngCodeParentHidden.value )
 	{
-		// [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É(disabled)ÃÍ ¥¯¥ê¥¢
+		// [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(disabled)å€¤ ã‚¯ãƒªã‚¢
 		lngObjThisH.value = '';
 	}
 
@@ -1321,56 +1321,56 @@ function fncBothCodeCheck( lngObjThis , lngObjThisH )
 
 
 
-////////// ¥¯¥ê¥¢½èÍı //////////
+////////// ã‚¯ãƒªã‚¢å‡¦ç† //////////
 
-// m_obj			: [¿Æ]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME
-// lngObjThis		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThis		: [¿Æ]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// lngObjThisH		: [¿Æ]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥É(disabled)NAME
-// m_objChild		: [»Ò]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹NAME
-// lngObjThisChild	: [»Ò]¥³¡¼¥ÉÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
-// strObjThisChild	: [»Ò]Ì¾¾ÎÍÑ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉNAME
+// m_obj			: [è¦ª]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME
+// lngObjThis		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThis		: [è¦ª]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// lngObjThisH		: [è¦ª]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰(disabled)NAME
+// m_objChild		: [å­]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹NAME
+// lngObjThisChild	: [å­]ã‚³ãƒ¼ãƒ‰ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
+// strObjThisChild	: [å­]åç§°ç”¨ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰NAME
 
 function fncClearValue( m_obj , lngObjThis , strObjThis , lngObjThisH , m_objChild , lngObjThisChild , strObjThisChild )
 {
 
-	// [¿Æ]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹ÃÍ ¥¯¥ê¥¢
+	// [è¦ª]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹å€¤ ã‚¯ãƒªã‚¢
 	subLoadMasterOptionClear( m_obj , true );
 
-	// [»Ò]¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹ÃÍ ¥¯¥ê¥¢
+	// [å­]ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹å€¤ ã‚¯ãƒªã‚¢
 	if( m_objChild )
 	{
 		subLoadMasterOptionClear( m_objChild , true );
 	}
 
-	// ³Æ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉÃÍ ¥¯¥ê¥¢
+	// å„ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å€¤ ã‚¯ãƒªã‚¢
 	lngObjThis.value = '';
 	strObjThis.value = '';
 
-	// [HIDDEN]³Æ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉÃÍ ¥¯¥ê¥¢
+	// [HIDDEN]å„ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å€¤ ã‚¯ãƒªã‚¢
 	document.all.lngCodeParentHidden.value = '';
 	document.all.strNameParentHidden.value = '';
 
 
-	// ¥«¥¦¥ó¥¿¡¼¤ÎÃÍ ¥¯¥ê¥¢
+	// ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ ã‚¯ãƒªã‚¢
 	document.all.lngSearchResultCount.value = '';
-	// [HIDDEN][¿Æ]¥«¥¦¥ó¥¿¡¼¤ÎÃÍ ¥¯¥ê¥¢
+	// [HIDDEN][è¦ª]ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ ã‚¯ãƒªã‚¢
 	document.all.lngCounterParentHidden.value = '';
 
 
-	////////// °Ê²¼¡¢[»Ò]½èÍı //////////
+	////////// ä»¥ä¸‹ã€[å­]å‡¦ç† //////////
 	if( lngObjThisH )
 	{
-		// ³Æ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉÃÍ ¥¯¥ê¥¢
+		// å„ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å€¤ ã‚¯ãƒªã‚¢
 		lngObjThisH.value = '';
 		lngObjThisChild.value = '';
 		strObjThisChild.value = '';
 
-		// [HIDDEN]³Æ¥Æ¥­¥¹¥È¥Õ¥£¡¼¥ë¥ÉÃÍ ¥¯¥ê¥¢
+		// [HIDDEN]å„ãƒ†ã‚­ã‚¹ãƒˆãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å€¤ ã‚¯ãƒªã‚¢
 		document.all.lngCodeChildHidden.value = '';
 		document.all.strNameChildHidden.value = '';
 
-		// [HIDDEN][»Ò]¥«¥¦¥ó¥¿¡¼¤ÎÃÍ ¥¯¥ê¥¢
+		// [HIDDEN][å­]ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ ã‚¯ãƒªã‚¢
 		document.all.lngCounterChildHidden.value = '';
 	}
 
@@ -1383,12 +1383,12 @@ function fncClearValue( m_obj , lngObjThis , strObjThis , lngObjThisH , m_objChi
 
 
 
-////////// ¥¿¥¤¥×ÊÌ¥Ş¥¹¥¿¡¼¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º¥â¥¸¥å¡¼¥ë //////////
+////////// ã‚¿ã‚¤ãƒ—åˆ¥ãƒã‚¹ã‚¿ãƒ¼ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚ºãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« //////////
 
 function fncSubMasterWinClose( strWindowType )
 {
 
-	// ¥¿¥¤¥×ÊÌ¡¢¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º
+	// ã‚¿ã‚¤ãƒ—åˆ¥ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚º
 	switch( strWindowType )
 	{
 		case 'vendor': // [VENDOR]
@@ -1396,7 +1396,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM01( '' );
 			parent.ExchangeM01( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1406,7 +1406,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM01_2( '' );
 			parent.ExchangeM01_2( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1416,7 +1416,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM01_3( '' );
 			parent.ExchangeM01_3( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1426,7 +1426,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM02( '' );
 			parent.ExchangeM02( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1436,7 +1436,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM03( '' );
 			parent.ExchangeM03( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1446,7 +1446,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM04( '' );
 			parent.ExchangeM04( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1456,7 +1456,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM05( '' );
 			parent.ExchangeM05( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1466,7 +1466,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM06( '' );
 			parent.ExchangeM06( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1476,7 +1476,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM07( '' );
 			parent.ExchangeM07( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1486,7 +1486,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM08( '' );
 			parent.ExchangeM08( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1495,7 +1495,7 @@ function fncSubMasterWinClose( strWindowType )
 			parent.DisplayerM09( '' );
 			parent.ExchangeM09( 0 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1513,12 +1513,12 @@ function fncSubMasterWinClose( strWindowType )
 
 
 
-////////// [ENTER KEY]¥¿¥¤¥×ÊÌ¥Ş¥¹¥¿¡¼¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º¥â¥¸¥å¡¼¥ë //////////
+////////// [ENTER KEY]ã‚¿ã‚¤ãƒ—åˆ¥ãƒã‚¹ã‚¿ãƒ¼ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚ºãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« //////////
 
 function fncSubMasterWinCloseforEnterKey( strWindowType )
 {
 
-	// ¥¿¥¤¥×ÊÌ¡¢¥¦¥£¥ó¥É¥¦¥¯¥í¡¼¥º
+	// ã‚¿ã‚¤ãƒ—åˆ¥ã€ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ­ãƒ¼ã‚º
 	switch( strWindowType )
 	{
 		case 'vendor': // [VENDOR]
@@ -1526,7 +1526,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM01( 1 );
 			parent.ExchangeM01( 1, parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1536,7 +1536,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM01_2( 1 );
 			parent.ExchangeM01_2( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1546,7 +1546,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM01_3( 1 );
 			parent.ExchangeM01_3( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1556,7 +1556,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM02( 1 );
 			parent.ExchangeM02( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1566,7 +1566,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM03( 1 );
 			parent.ExchangeM03( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1576,7 +1576,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM04( 1 );
 			parent.ExchangeM04( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1586,7 +1586,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM05( 1 );
 			parent.ExchangeM05( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1596,7 +1596,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM06( 1 );
 			parent.ExchangeM06( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1606,7 +1606,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM07( 1 );
 			parent.ExchangeM07( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1616,7 +1616,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM08( 1 );
 			parent.ExchangeM08( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1625,7 +1625,7 @@ function fncSubMasterWinCloseforEnterKey( strWindowType )
 			parent.DisplayerM09( 1 );
 			parent.ExchangeM09( 1 , parent.window.Pwin );
 
-			// ¥Õ¥©¡¼¥«¥¹Àè¤ÎÀßÄê
+			// ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å…ˆã®è¨­å®š
 			parent.fncFocusObject( g_FocusObject[0] );
 			break;
 
@@ -1872,10 +1872,10 @@ function DeptShowD( objA ) //PUSH DEPT TAB
 
 	DeptValueFlg = 0;
 
-	// ¥«¥¦¥ó¥¿¡¼¤ÎÃÍ ¥¯¥ê¥¢
+	// ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ ã‚¯ãƒªã‚¢
 	document.all.lngSearchResultCount.value = '';
 
-	// [¿Æ]¼èÆÀºÑ¤ß¥«¥¦¥ó¥¿¡¼¤ÎÃÍ¤ÎºÆÂåÆş
+	// [è¦ª]å–å¾—æ¸ˆã¿ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ã®å†ä»£å…¥
 	document.all.lngSearchResultCount.value = document.all.lngCounterParentHidden.value;
 
 	return false;
@@ -1897,10 +1897,10 @@ function DeptShowI( objB ) //PUSH IN CHARGE NAME TAB
 
 	DeptValueFlg = 1;
 
-	// ¥«¥¦¥ó¥¿¡¼¤ÎÃÍ ¥¯¥ê¥¢
+	// ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ ã‚¯ãƒªã‚¢
 	document.all.lngSearchResultCount.value = '';
 
-	// [»Ò]¼èÆÀºÑ¤ß¥«¥¦¥ó¥¿¡¼¤ÎÃÍ¤ÎºÆÂåÆş
+	// [å­]å–å¾—æ¸ˆã¿ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ã®å†ä»£å…¥
 	document.all.lngSearchResultCount.value = document.all.lngCounterChildHidden.value;
 
 	return false;
@@ -1926,10 +1926,10 @@ function ViShowD( objA ) //PUSH VENDOR TAB
 
 	ViValueFlg = 0;
 
-	// ¥«¥¦¥ó¥¿¡¼¤ÎÃÍ ¥¯¥ê¥¢
+	// ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ ã‚¯ãƒªã‚¢
 	document.all.lngSearchResultCount.value = '';
 
-	// [¿Æ]¼èÆÀºÑ¤ß¥«¥¦¥ó¥¿¡¼¤ÎÃÍ¤ÎºÆÂåÆş
+	// [è¦ª]å–å¾—æ¸ˆã¿ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ã®å†ä»£å…¥
 	document.all.lngSearchResultCount.value = document.all.lngCounterParentHidden.value;
 
 	return false;
@@ -1951,10 +1951,10 @@ function ViShowI( objB ) //PUSH IN CHARGE NAME TAB
 
 	ViValueFlg = 1;
 
-	// ¥«¥¦¥ó¥¿¡¼¤ÎÃÍ ¥¯¥ê¥¢
+	// ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ ã‚¯ãƒªã‚¢
 	document.all.lngSearchResultCount.value = '';
 
-	// [»Ò]¼èÆÀºÑ¤ß¥«¥¦¥ó¥¿¡¼¤ÎÃÍ¤ÎºÆÂåÆş
+	// [å­]å–å¾—æ¸ˆã¿ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã®å€¤ã®å†ä»£å…¥
 	document.all.lngSearchResultCount.value = document.all.lngCounterChildHidden.value;
 
 	return false;

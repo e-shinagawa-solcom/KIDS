@@ -63,52 +63,52 @@ function ChgEtoJ( lngSelfCode )
 
 		if ( typeof(WF01) != 'undefined' )
 		{
-			WF01.innerHTML='¾ÜºÙ';
+			WF01.innerHTML='è©³ç´°';
 		}
 
 		if ( typeof(WF02) != 'undefined' )
 		{
-			WF02.innerHTML='<a href="#">¿½ÀÁÆü</a>';
+			WF02.innerHTML='<a href="#">ç”³è«‹æ—¥</a>';
 		}
 
 		if ( typeof(WF03) != 'undefined' )
 		{
-			WF03.innerHTML='<a href="#">°Æ·ï¾ğÊó</a>';
+			WF03.innerHTML='<a href="#">æ¡ˆä»¶æƒ…å ±</a>';
 		}
 
 		if ( typeof(WF04) != 'undefined' )
 		{
-			WF04.innerHTML='<a href="#">¿½ÀÁ¼Ô</a>';
+			WF04.innerHTML='<a href="#">ç”³è«‹è€…</a>';
 		}
 
 		if ( typeof(WF05) != 'undefined' )
 		{
-			WF05.innerHTML='<a href="#">ÆşÎÏ¼Ô</a>';
+			WF05.innerHTML='<a href="#">å…¥åŠ›è€…</a>';
 		}
 
 		if ( typeof(WF06) != 'undefined' )
 		{
-			WF06.innerHTML='<a href="#">¾µÇ§¼Ô</a>';
+			WF06.innerHTML='<a href="#">æ‰¿èªè€…</a>';
 		}
 
 		if ( typeof(WF07) != 'undefined' )
 		{
-			WF07.innerHTML='<a href="#">´ü¸ÂÆü</a>';
+			WF07.innerHTML='<a href="#">æœŸé™æ—¥</a>';
 		}
 
 		if ( typeof(WF08) != 'undefined' )
 		{
-			WF08.innerHTML='<a href="#">¾õÂÖ</a>';
+			WF08.innerHTML='<a href="#">çŠ¶æ…‹</a>';
 		}
 
 		if ( typeof(WF09) != 'undefined' )
 		{
-			WF09.innerHTML='½èÍı';
+			WF09.innerHTML='å‡¦ç†';
 		}
 
 		if ( typeof(WF10) != 'undefined' )
 		{
-			WF10.innerHTML='´°Î»Æü';
+			WF10.innerHTML='å®Œäº†æ—¥';
 		}
 
 	}

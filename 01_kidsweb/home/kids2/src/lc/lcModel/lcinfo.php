@@ -1,7 +1,7 @@
 <?php
 
 /**
- * L/C¥Ç¡¼¥¿¼èÆÀ½èÍı
+ * L/Cãƒ‡ãƒ¼ã‚¿å–å¾—å‡¦ç†
  *
  * @param [object] $objDB
  * @param [object] $lcModel
@@ -12,28 +12,28 @@
  */
 function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
 {
-    // ¼èÆÀÆü¤Î¼èÆÀ
+    // å–å¾—æ—¥ã®å–å¾—
     $lcGetDate = $lcModel->getMaxLcGetDate();
     $lcGetDateArry = explode(" ", $lcGetDate);
     $lcGetDate_date = $lcGetDateArry[0];
     $lcGetDate_time = $lcGetDateArry[1];
-    // È¯Ãí·ï¿ô¤Î¼èÆÀ
+    // ç™ºæ³¨ä»¶æ•°ã®å–å¾—
     $orderCount = fncGetPurchaseOrderCount($objDB, $lcGetDate);
     $date = str_replace("-", "", explode(" ", $datetime)[0]);
     $time = str_replace(":", "", explode(".",explode(" ", $datetime)[1])[0]);
-    // ¥ê¥Ğ¥¤¥º¾ğÊó¤Î½é´ü²½
+    // ãƒªãƒã‚¤ã‚ºæƒ…å ±ã®åˆæœŸåŒ–
     $reviseDataArry = array();
     $reviseNum = 0;
 //echo "lcGetDate:" . $lcGetDate . "<br>";
 //echo "orderCount:" . $orderCount . "<br>";
-    // È¯Ãí·ï¿ô > 0 ¤Î¾ì¹ç¡¢t_aclcinfo¤Ø¥Ç¡¼¥¿¤ÎÅĞÏ¿¡¦¹¹¿·½èÍı
+    // ç™ºæ³¨ä»¶æ•° > 0 ã®å ´åˆã€t_aclcinfoã¸ãƒ‡ãƒ¼ã‚¿ã®ç™»éŒ²ãƒ»æ›´æ–°å‡¦ç†
     if ($orderCount > 0) {
-        // t_aclcinfo¥Ç¡¼¥¿¤Îºï½ü
+        // t_aclcinfoãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤
         $lcModel->deleteAcLcInfo($lcGetDate_date, $lcGetDate_time);
 
-        // È¯Ãí½ñ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+        // ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
         $orderArry = fncGetPurchaseOrderData($objDB, $lcGetDate);
-        // ¼ãÇ¼ÉÊÆü¤Î½é´ü²½
+        // è‹¥ç´å“æ—¥ã®åˆæœŸåŒ–
         $strWorkDate = "9999/99/99";
 
         foreach ($orderArry as $orderData) {
@@ -43,28 +43,28 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
             $payconditioncode = $orderData["lngpayconditioncode"];
             $loadFlg = 0;
 
-            // È¯Ãí½ñÌÀºÙ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+            // ç™ºæ³¨æ›¸æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
             $orderDetailArry = fncGetPurchaseOrderDetail($objDB, $orderData["lngpurchaseorderno"], $poreviseno);
-            // // ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ¤ò¼èÆÀ¤¹¤ë
+            // // ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
             // $strDataState = fncWorkFlowStatus($orderData);
-            // È¯Ãí¥Ç¡¼¥¿¤Î¥ê¥Ó¥¸¥ç¥óÈÖ¹æ < 0¤Î¾ì¹ç
+            // ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå· < 0ã®å ´åˆ
             if ($poreviseno < 0) {
-                // t_aclcinfo¤Î¾õÂÖ¤òºï½ü¤Ë¹¹¿·¤¹¤ë
+                // t_aclcinfoã®çŠ¶æ…‹ã‚’å‰Šé™¤ã«æ›´æ–°ã™ã‚‹
                 $lcModel->updateAcLcStateToDelete($pono, $strDataState);
             } 
             else {
-                // È¯Ãí¥Ç¡¼¥¿¤Î»ÙÊ§¾ò·ï¥³¡¼¥É = 2 ¤«¤Ä È¯Ãí¥Ç¡¼¥¿¤Î¥ê¥Ó¥¸¥ç¥óÈÖ¹æ <> 0¤Î¾ì¹ç
+                // ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®æ”¯æ‰•æ¡ä»¶ã‚³ãƒ¼ãƒ‰ = 2 ã‹ã¤ ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå· <> 0ã®å ´åˆ
                 if ($payconditioncode == DEF_PAYCONDITION_TT && $poreviseno != 0) {
-                    // t_aclcinfo¤ËÆ±°ìPono¤¬Â¸ºß¤·¤Æ¤¤¤ë¤«¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+                    // t_aclcinfoã«åŒä¸€PonoãŒå­˜åœ¨ã—ã¦ã„ã‚‹ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
                     $acLcCount = $lcModel->getAcLcCount($pono);
                     if ($acLcCount > 0) {
                         $intPayFlg = true;
                     }
                 }
 
-                // È¯Ãí¥Ç¡¼¥¿¤Î¥ê¥Ó¥¸¥ç¥óÈÖ¹æ <> 0¤Î¾ì¹ç
+                // ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå· <> 0ã®å ´åˆ
                 if ($poreviseno != 0) {
-                    // t_aclcinfo¤è¤êºÇ¿·¥ê¥Ğ¥¤¥º¥Ç¡¼¥¿¤Î¥ª¡¼¥×¥ó·î¤È¶ä¹Ô°ÍÍêÆü¤ò¼èÆÀ¤¹¤ë
+                    // t_aclcinfoã‚ˆã‚Šæœ€æ–°ãƒªãƒã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ¼ãƒ—ãƒ³æœˆã¨éŠ€è¡Œä¾é ¼æ—¥ã‚’å–å¾—ã™ã‚‹
                     $acLcInfoArry = $lcModel->getAcLcInfoByPono($pono);
                 }
             }
@@ -76,9 +76,9 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
             if (count($orderDetailArry) > 0) {
                 foreach ($orderDetailArry as $orderDetailData) {
                     $dtmdeliverydate = $orderDetailData["dtmdeliverydate"];
-                    // È¯Ãí¥Ç¡¼¥¿¤Î»ÙÊ§¾ò·ï¥³¡¼¥É = 1 ¤¢¤ë¤¤¤Ï ( È¯Ãí¥Ç¡¼¥¿¤Î»ÙÊ§¾ò·ï¥³¡¼¥É = 2 ¤«¤ÄÆ±°ìPono´û¤Ë¤¢¤ê¤Î¾ì¹ç¡Ë
+                    // ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®æ”¯æ‰•æ¡ä»¶ã‚³ãƒ¼ãƒ‰ = 1 ã‚ã‚‹ã„ã¯ ( ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®æ”¯æ‰•æ¡ä»¶ã‚³ãƒ¼ãƒ‰ = 2 ã‹ã¤åŒä¸€Ponoæ—¢ã«ã‚ã‚Šã®å ´åˆï¼‰
                     if ($payconditioncode == DEF_PAYCONDITION_LC || ($payconditioncode == DEF_PAYCONDITION_TT && $intPayFlg)) {
-                        // po¹ÔÈÖ¹æ¤ÎÀßÄê
+                        // poè¡Œç•ªå·ã®è¨­å®š
                         $lngsortkey = $orderDetailData["lngpurchaseorderdetailno"];
                         $polineno = sprintf("%02s", $lngsortkey % 100);
                         /*
@@ -97,46 +97,46 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             }
                         }
                         */
-                        // Ç¼ÉÊ¾ì½êÌ¾¾Î¤È²ÙÍÈÃÏ¤Î¼èÆÀ
+                        // ç´å“å ´æ‰€åç§°ã¨è·æšåœ°ã®å–å¾—
                         $companyNameAndCountryName = fncGetCompanyNameAndCountryName($objDB, $orderData["lngdeliveryplacecode"]);
 
-                        // ¾õÂÖ¤ÎÀßÄê
-                        // È¯ÃíÌÀºÙ¥Ç¡¼¥¿¤ÎÇ¼ÉÊÆü < È¯Ãí¥Ç¡¼¥¿.ÅĞÏ¿Æü
+                        // çŠ¶æ…‹ã®è¨­å®š
+                        // ç™ºæ³¨æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã®ç´å“æ—¥ < ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿.ç™»éŒ²æ—¥
                         if ($dtmdeliverydate < $orderData["dtminsertdate"]) {
                             $lcstate = 3;
                         } else {
                             $lcstate = 0;
                         }
-                        // È¯Ãí¥Ç¡¼¥¿¤Î»ÙÊ§¾ò·ï¥³¡¼¥É = 2 ¤«¤ÄÆ±°ìPono´û¤Ë¤¢¤ê¤Î¾ì¹ç
+                        // ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®æ”¯æ‰•æ¡ä»¶ã‚³ãƒ¼ãƒ‰ = 2 ã‹ã¤åŒä¸€Ponoæ—¢ã«ã‚ã‚Šã®å ´åˆ
                         if ($payconditioncode == DEF_PAYCONDITION_TT && $intPayFlg) {
                             $lcstate = 9;
                         }
 
-                        // ¼ãÇ¼ÉÊÆü¤Î¼èÆÀ
+                        // è‹¥ç´å“æ—¥ã®å–å¾—
                         if ($dtmdeliverydate != null && $dtmdeliverydate < $strWorkDate) {
                             $strWorkDate = $dtmdeliverydate;
                         }
 
-                        // L/C¥Ç¡¼¥¿¤Î½ÅÊ£¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+                        // L/Cãƒ‡ãƒ¼ã‚¿ã®é‡è¤‡ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
                         $poupdatedate = $lcModel->getPoUpdateDate($pono, $polineno, $poreviseno);
                         if ($poupdatedate != null) {
-                            // ¹¹¿·Æü <  È¯Ãí¥Ç¡¼¥¿¤ÎÅĞÏ¿Æü¤Î¾ì¹ç
+                            // æ›´æ–°æ—¥ <  ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ç™»éŒ²æ—¥ã®å ´åˆ
                             if ($poupdatedate < $orderData["dtminsertdate"]) {
 
                                 if ($lcstate == 0) {
                                     $bankReqDate = $lcModel->getAcLcBankReqDate($pono);
                                     if ($bankReqDate != "") {
-                                        // Í­¸ú¥Ç¡¼¥¿¤Ç¶ä¹Ô°ÍÍêÆü¤¬¤¢¤ë¾ì¹ç¡¢¥¢¥á¥ó¥ÉÍ×(Í­¸ú)¤È¤Ê¤ë
+                                        // æœ‰åŠ¹ãƒ‡ãƒ¼ã‚¿ã§éŠ€è¡Œä¾é ¼æ—¥ãŒã‚ã‚‹å ´åˆã€ã‚¢ãƒ¡ãƒ³ãƒ‰è¦(æœ‰åŠ¹)ã¨ãªã‚‹
                                         $lcstate = 7;
                                     }
                                 }
 
-                                // t_aclcinfo¤Î¹¹¿·Æü¤ò¹¹¿·¤¹¤ë
+                                // t_aclcinfoã®æ›´æ–°æ—¥ã‚’æ›´æ–°ã™ã‚‹
                                 $lcModel->updateAcLcUpdatedate($pono, $polineno, $poreviseno, $lcstate);
                             }
                         } else {
                             if ($orderData["lngrevisionno"] != 0) {
-                            // ¥ê¥Ğ¥¤¥ºÂĞ¾İ¥Ç¡¼¥¿¤È¤·¤Æµ­Ï¿¡Ê¤Î¤Á¤Ë½èÍı¡Ë
+                            // ãƒªãƒã‚¤ã‚ºå¯¾è±¡ãƒ‡ãƒ¼ã‚¿ã¨ã—ã¦è¨˜éŒ²ï¼ˆã®ã¡ã«å‡¦ç†ï¼‰
                                 $reviseDataArry[$reviseNum]["pono"] = $pono;
                                 $reviseDataArry[$reviseNum]["polineno"] = $polineno;
                                 $reviseDataArry[$reviseNum]["poreviseno"] = sprintf("%02s", $poreviseno % 100);
@@ -145,12 +145,12 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                                 $reviseNum += 1;
                             }
 
-                            // t_aclcinfo¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
+                            // t_aclcinfoã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
                             $data = array();
                             $data["pono"] = $pono;
                             $data["polineno"] = $polineno;
                             $data["poreviseno"] = sprintf("%02s", $poreviseno % 100);
-                            $data["postate"] = "¾µÇ§ºÑ";
+                            $data["postate"] = "æ‰¿èªæ¸ˆ";
                             $data["opendate"] = date("Ym");
                             $data["unloadingareas"] = $companyNameAndCountryName->strcountryenglishname;
                             $payfcd = fncGetMasterValue("m_company", "lngcompanycode", "strcompanyDisplaycode", $orderData["lngcustomercode"], '', $objDB);
@@ -168,7 +168,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             $data["moneyprice"] = $orderDetailData["cursubtotalprice"];
                             $data["shipstartdate"] = $orderDetailData["dtmdeliverydate"];
                             $data["shipenddate"] =   $orderDetailData["dtmdeliverydate"];
-                            $data["sumdate"] = $orderDetailData["dtmappropriationdate"];  // ·×¾åÆü¤É¤¦¤¹¤ë¡©
+                            $data["sumdate"] = $orderDetailData["dtmappropriationdate"];  // è¨ˆä¸Šæ—¥ã©ã†ã™ã‚‹ï¼Ÿ
                             $data["poupdatedate"] = $orderData["dtminsertdate"];
                             $data["deliveryplace"] = $companyNameAndCountryName->strcompanydisplayname;
                             $data["currencyclass"] = $orderData["strmonetaryunitname"];
@@ -204,9 +204,9 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                         $lcModel->updateAcLcStateByLcState($pono);
                     }
                 }
-                // ¢¬ÌÀºÙÃ±°Ì¤Î¥ë¡¼¥×¤³¤³¤Ş¤Ç
+                // â†‘æ˜ç´°å˜ä½ã®ãƒ«ãƒ¼ãƒ—ã“ã“ã¾ã§
                 
-                // ¥ª¡¼¥×¥óÇ¯·î¤Î¹¹¿·¡ÊÌÀºÙ¹ÔÃ±°Ì¤ÎÇ¼ÉÊÆü¤¬°ìÈÖ¼ã¤¤·î¤Î¤â¤Î¤òÀßÄê¡Ë
+                // ã‚ªãƒ¼ãƒ—ãƒ³å¹´æœˆã®æ›´æ–°ï¼ˆæ˜ç´°è¡Œå˜ä½ã®ç´å“æ—¥ãŒä¸€ç•ªè‹¥ã„æœˆã®ã‚‚ã®ã‚’è¨­å®šï¼‰
                 if( $loadFlg == 1 )
                 {
                     if( !is_array($acLcInfoArry))
@@ -218,11 +218,11 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                     }
                 }
             }
-            // ¢¬È¯Ãí½ñÃ±°Ì¤Î¥ë¡¼¥×¤³¤³¤Ş¤Ç
+            // â†‘ç™ºæ³¨æ›¸å˜ä½ã®ãƒ«ãƒ¼ãƒ—ã“ã“ã¾ã§
         }
 
-        // È¯ÃíÌÀºÙ¤Î¥ª¡¼¥×¥ó·îÀßÄê
-        // ´ğ½àÆü¤Î¼èÆÀ
+        // ç™ºæ³¨æ˜ç´°ã®ã‚ªãƒ¼ãƒ—ãƒ³æœˆè¨­å®š
+        // åŸºæº–æ—¥ã®å–å¾—
         $baseDate = $lcModel->getBaseDate();
         if ($baseDate < substr($strWorkDate, 8, 2)) {
             $opendate = date("Ym", strtotime($strWorkDate . "+0 day"));
@@ -231,7 +231,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
         }
         $lcModel->updateAcLcOpendate($pono, $opendate);
     }
-    // ¥ê¥Ğ¥¤¥º¾ğÊó¤¬¤¢¤Ã¤¿¾ì¹ç¡¢¥ê¥Ğ¥¤¥º¾ğÊó·Ñ¾µ½èÍı¤ò¹Ô¤¦
+    // ãƒªãƒã‚¤ã‚ºæƒ…å ±ãŒã‚ã£ãŸå ´åˆã€ãƒªãƒã‚¤ã‚ºæƒ…å ±ç¶™æ‰¿å‡¦ç†ã‚’è¡Œã†
 
     if (count($reviseDataArry) > 0) {
         foreach ($reviseDataArry as $reviseData) {
@@ -239,26 +239,26 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
         }
     }
 
-    // ¥ê¥Ğ¥¤¥º¾ğÊó¤Î¾õÂÖÊÑ¹¹½èÍı
+    // ãƒªãƒã‚¤ã‚ºæƒ…å ±ã®çŠ¶æ…‹å¤‰æ›´å‡¦ç†
     fncUpdRevState($lcModel, $reviseDataArry);
 
-    // Ì¤¾µÇ§L/C¾ğÊó¤Î¾õÂÖ¹¹¿·½èÍı
-    fncUpdUnapprovedLcInfo($lcModel); ////////////////////////»ş´Ö¤«¤«¤ê
+    // æœªæ‰¿èªL/Cæƒ…å ±ã®çŠ¶æ…‹æ›´æ–°å‡¦ç†
+    fncUpdUnapprovedLcInfo($lcModel); ////////////////////////æ™‚é–“ã‹ã‹ã‚Š
 
-    // ºï½ü¥Ç¡¼¥¿Éü³èÈ½Äê½èÍı
+    // å‰Šé™¤ãƒ‡ãƒ¼ã‚¿å¾©æ´»åˆ¤å®šå‡¦ç†
     fncRevivalDeletedLcInfo($objDB, $lcModel);
 
 }
 
 /**
- * ¥ê¥Ğ¥¤¥º¥Ç¡¼¥¿¤Î·ÑÂ³½èÍı
+ * ãƒªãƒã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã®ç¶™ç¶šå‡¦ç†
  *
  * @param [object] $reviseData
  * @return void
  */
 function fncSetRevData($lcModel, $reviseData)
 {
-    // t_aclcinfo¤è¤ê¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // t_aclcinfoã‚ˆã‚Šãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     $reviseLcInfoArry = $lcModel->getReviseAcLcInfo($reviseData["pono"], $reviseData["polineno"]);
     $argIntAmdFlg = 0;
     $revDataArry = array();
@@ -266,13 +266,13 @@ function fncSetRevData($lcModel, $reviseData)
         $reviseLcInfoArry[] = $reviseLcInfoArry;
     }
     foreach ($reviseLcInfoArry as $reviseLcInfo) {
-        // ¾åµ­¤Ç¼èÆÀ¤·¤¿¶ä¹Ô°ÍÍêÆü¤¬¶õ¤Ç¤Ï¤Ê¤¤¾ì¹ç
+        // ä¸Šè¨˜ã§å–å¾—ã—ãŸéŠ€è¡Œä¾é ¼æ—¥ãŒç©ºã§ã¯ãªã„å ´åˆ
         if ($reviseLcInfo["bankreqdate"] != null) {
             if (count($revDataArry) == 0) {
                 $revDataArry[0] = $reviseLcInfo;
             }
         }
-        // ¾åµ­¤Ç¼èÆÀ¤·¤¿¶ä¹Ô°ÍÍêÆü¤¬¶õ¤Ç¤Ï¤Ê¤¤¡¢¤«¤Ä¡¡¥ê¥Ğ¥¤¥º¾ğÊó¤Îporeviseno <> "00"¤Î¾ì¹ç
+        // ä¸Šè¨˜ã§å–å¾—ã—ãŸéŠ€è¡Œä¾é ¼æ—¥ãŒç©ºã§ã¯ãªã„ã€ã‹ã¤ã€€ãƒªãƒã‚¤ã‚ºæƒ…å ±ã®poreviseno <> "00"ã®å ´åˆ
         if ($reviseLcInfo["bankreqdate"] != null && $reviseData["poreviseno"] != "00") {
             $argIntAmdFlg = 1;
             break;
@@ -280,20 +280,20 @@ function fncSetRevData($lcModel, $reviseData)
     }
 
     if (count($revDataArry) == 0) {
-        // ¥ê¥Ğ¥¤¥º¾ğÊó¤Îpolineno > 1¤Î¾ì¹ç
+        // ãƒªãƒã‚¤ã‚ºæƒ…å ±ã®polineno > 1ã®å ´åˆ
         if ($reviseData["polineno"] > 1) {
             reset($reviseLcInfoArry);
-            // ¸«¤Ä¤«¤é¤Ê¤«¤Ã¤¿¤Î¤ÇÁ´¥ê¥Ó¥¸¥ç¥ó¤ÎÃÍ¤ò¼èÆÀ
+            // è¦‹ã¤ã‹ã‚‰ãªã‹ã£ãŸã®ã§å…¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã®å€¤ã‚’å–å¾—
             $reviseLcInfoArry = $lcModel->getReviseAcLcInfo($reviseData["pono"], $reviseData["polineno"] );
 
             foreach ($reviseLcInfoArry as $reviseLcInfo) {
-                // ¾åµ­¤Ç¼èÆÀ¤·¤¿¶ä¹Ô°ÍÍêÆü¤¬¶õ¤Ç¤Ï¤Ê¤¤¾ì¹ç
+                // ä¸Šè¨˜ã§å–å¾—ã—ãŸéŠ€è¡Œä¾é ¼æ—¥ãŒç©ºã§ã¯ãªã„å ´åˆ
                 if ($reviseLcInfo["bankreqdate"] != null) {
                     if (count($revDataArry) == 0) {
                         $revDataArry[0] = $reviseLcInfo;
                     }
                 }
-                // ¾åµ­¤Ç¼èÆÀ¤·¤¿¶ä¹Ô°ÍÍêÆü¤¬¶õ¤Ç¤Ï¤Ê¤¤¡¢¤«¤Ä¥ê¥Ğ¥¤¥º¾ğÊó¤Îporeviseno <> "00"¤Î¾ì¹ç
+                // ä¸Šè¨˜ã§å–å¾—ã—ãŸéŠ€è¡Œä¾é ¼æ—¥ãŒç©ºã§ã¯ãªã„ã€ã‹ã¤ãƒªãƒã‚¤ã‚ºæƒ…å ±ã®poreviseno <> "00"ã®å ´åˆ
                 if ($reviseLcInfo["bankreqdate"] != null && $reviseData["poreviseno"] != "00") {
                     $argIntAmdFlg = 1;
                     break;
@@ -301,10 +301,10 @@ function fncSetRevData($lcModel, $reviseData)
             }
         }
     }
-    // ¥ê¥Ğ¥¤¥º¾ğÊó¤Ë¥Ç¡¼¥¿¤¬¤¢¤Ã¤¿¾ì¹ç
+    // ãƒªãƒã‚¤ã‚ºæƒ…å ±ã«ãƒ‡ãƒ¼ã‚¿ãŒã‚ã£ãŸå ´åˆ
     if (count($revDataArry) != 0) {
         foreach ($revDataArry as $revData) {
-            // t_aclcinfo¤Ë¥Ç¡¼¥¿¤ò¹¹¿·¤¹¤ë
+            // t_aclcinfoã«ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
             $data = array();
             $data["pono"] = $reviseData["pono"];
             $data["polineno"] = $reviseData["polineno"];
@@ -335,7 +335,7 @@ function fncSetRevData($lcModel, $reviseData)
 }
 
 /**
- * ¥ê¥Ğ¥¤¥º¾õÂÖÊÑ¹¹½èÍı
+ * ãƒªãƒã‚¤ã‚ºçŠ¶æ…‹å¤‰æ›´å‡¦ç†
  *
  * @param [array] $reviseDataArry
  * @return void
@@ -344,9 +344,9 @@ function fncUpdRevState($lcModel, $reviseDataArry)
 {
     $orderno = "";
     foreach ($reviseDataArry as $reviseData) {
-        // È¯ÃíÈÖ¹æ <> ¥ê¥Ğ¥¤¥º¾ğÊó¤Îpono¤Î¾ì¹ç
+        // ç™ºæ³¨ç•ªå· <> ãƒªãƒã‚¤ã‚ºæƒ…å ±ã®ponoã®å ´åˆ
         if ($orderno != $reviseData["pono"]) {
-            // t_aclcinfo¤Ë¥Ç¡¼¥¿¤ò¹¹¿·¤¹¤ë
+            // t_aclcinfoã«ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
             $lcModel->updateAcLcStateToRevise($reviseData["pono"], $reviseData["poreviseno"]);
 
             $orderno = $reviseData["pono"];
@@ -356,19 +356,19 @@ function fncUpdRevState($lcModel, $reviseDataArry)
 }
 
 /**
- * Ì¤¾µÇ§L/C¾ğÊó¥¹¥Æ¡¼¥¿¥¹¤ò¹¹¿·¤¹¤ë
+ * æœªæ‰¿èªL/Cæƒ…å ±ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’æ›´æ–°ã™ã‚‹
  *
  * @param [object] $lcModel
  * @return void
  */
 function fncUpdUnapprovedLcInfo($lcModel)
 {
-    // Ì¤¾µÇ§¤Îaclcinfo¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // æœªæ‰¿èªã®aclcinfoãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     $unapprovedLcArry = $lcModel->getUnapprovedAcLcInfo();
 
     foreach ($unapprovedLcArry as $unapprovedLc) {
-        $postate = "¾µÇ§ºÑ";
-        // ¾õÂÖ¤ÎÀßÄê
+        $postate = "æ‰¿èªæ¸ˆ";
+        // çŠ¶æ…‹ã®è¨­å®š
         if ($unapprovedLc["shipstartdate"] < $unapprovedLc["poupdatedate"]) {
             $lcstate = 3;
         } else {
@@ -381,7 +381,7 @@ function fncUpdUnapprovedLcInfo($lcModel)
                 $lcstate = 7;
             }
         }
-        // L/C¾õÂÖ¤ò¹¹¿·¤¹¤ë
+        // L/CçŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
         // $lcModel->updateUnapprovedAcLcState($unapprovedLc["pono"], $unapprovedLc["polineno"],
         //     $unapprovedLc["poreviseno"], $lcstate, $postate);
 
@@ -390,7 +390,7 @@ function fncUpdUnapprovedLcInfo($lcModel)
 }
 
 /**
- * ºï½ü¥Ç¡¼¥¿Éü³èÈ½Äê½èÍı
+ * å‰Šé™¤ãƒ‡ãƒ¼ã‚¿å¾©æ´»åˆ¤å®šå‡¦ç†
  *
  * @param [object] $objDB
  * @param [object] $lcModel
@@ -398,7 +398,7 @@ function fncUpdUnapprovedLcInfo($lcModel)
  */
 function fncRevivalDeletedLcInfo($objDB, $lcModel)
 {
-    // ºï½üÉü³è¥Ç¡¼¥¿¤ÎPOÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
+    // å‰Šé™¤å¾©æ´»ãƒ‡ãƒ¼ã‚¿ã®POç•ªå·ã‚’å–å¾—ã™ã‚‹
     $orderDataArry = fncGetDeletedPurchaseOrderData($objDB);
     if (!$orderDataArry) {
         return;
@@ -411,9 +411,9 @@ function fncRevivalDeletedLcInfo($objDB, $lcModel)
             $poreviseno = "";
             if (count($lcinfoArry) > 0) {
                 foreach ($lcinfoArry as $lcinfo) {
-                    // Á°¥ê¥Ğ¥¤¥ºÈÖ¹æ <> aclcinfo¤ÎPo¥ê¥Ğ¥¤¥ºÈÖ¹æ¤Î¾ì¹ç
+                    // å‰ãƒªãƒã‚¤ã‚ºç•ªå· <> aclcinfoã®Poãƒªãƒã‚¤ã‚ºç•ªå·ã®å ´åˆ
                     if ($preporeviseno != $lcinfo["poreviseno"]) {
-                        // Åö¥ê¥Ğ¥¤¥ºÈÖ¹æ¤¬¶õ¤Î¾ì¹ç¡¢¤¢¤ë¤¤¤Ï¡¡Åö¥ê¥Ğ¥¤¥ºÈÖ¹æ = aclcinfo¤Îpo¥ê¥Ğ¥¤¥ºÈÖ¹æ¤Î¾ì¹ç
+                        // å½“ãƒªãƒã‚¤ã‚ºç•ªå·ãŒç©ºã®å ´åˆã€ã‚ã‚‹ã„ã¯ã€€å½“ãƒªãƒã‚¤ã‚ºç•ªå· = aclcinfoã®poãƒªãƒã‚¤ã‚ºç•ªå·ã®å ´åˆ
                         if ($poreviseno == "" || $poreviseno == $lcinfo["poreviseno"]) {
                             $lcstate = 0;
                         } else {
@@ -421,7 +421,7 @@ function fncRevivalDeletedLcInfo($objDB, $lcModel)
                         }
                         $poreviseno = $lcinfo["poreviseno"];
 
-                        // L/C¾õÂÖ¤ò¹¹¿·¤¹¤ë
+                        // L/CçŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
                         $lcModel->updateAcLcState($lcinfo["pono"], $lcinfo["poreviseno"], $lcstate);
 
                     }
@@ -432,7 +432,7 @@ function fncRevivalDeletedLcInfo($objDB, $lcModel)
     }
 }
 /**
- * ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ¤ò¼èÆÀ¤¹¤ë
+ * ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
  *
  * @param [type] $orderData
  * @return void
@@ -441,19 +441,19 @@ function fncWorkFlowStatus($orderData)
 {
     if ($orderData["lngrevisionno"] < 0) {
         if ($orderData["bytinvalidflag"] == false) {
-            $strDataState = "ºï½ü";
+            $strDataState = "å‰Šé™¤";
         } else {
-            $strDataState = "ºï½ü¸åÌµ¸ú²½";
+            $strDataState = "å‰Šé™¤å¾Œç„¡åŠ¹åŒ–";
         }
     } else {
         if ($orderData["lngorderstatuscode"] == DEF_ORDER_APPLICATE) {
-            $strDataState = "Ì¤¾µÇ§";
+            $strDataState = "æœªæ‰¿èª";
         } else if ($orderData["lngorderstatuscode"] == DEF_ORDER_DELIVER
             || $orderData["lngorderstatuscode"] == DEF_ORDER_END
             || $orderData["lngorderstatuscode"] == DEF_ORDER_CLOSED) {
-            $strDataState = "Ç¼ÉÊ";
+            $strDataState = "ç´å“";
         } else {
-            $strDataState = "¾µÇ§ºÑ";
+            $strDataState = "æ‰¿èªæ¸ˆ";
         }
     }
     return $strDataState;

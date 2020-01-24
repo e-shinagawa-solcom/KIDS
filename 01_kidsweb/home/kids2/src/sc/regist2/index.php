@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿
+ *       å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²
  *
  *
  *       @package    K.I.D.S.
@@ -13,31 +13,31 @@
  *       @version    2.00
  *
  *
- *       ½èÍı³µÍ×
+ *       å‡¦ç†æ¦‚è¦
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-// ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ëÆÉ¹ş
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼
 //-------------------------------------------------------------------------
 include 'conf.inc';
 require LIB_FILE;
 require SRC_ROOT . "sc/cmn/lib_scr.php";
-//PHPÉ¸½à¤ÎJSONÊÑ´¹¥á¥½¥Ã¥É¤Ï¥¨¥é¡¼¤Ë¤Ê¤ë¤Î¤Ç³°Éô¤Î¥é¥¤¥Ö¥é¥ê(¶²¤é¤¯¥¨¥ó¥³¡¼¥É¤ÎÌäÂê)
+//PHPæ¨™æº–ã®JSONå¤‰æ›ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§å¤–éƒ¨ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒª(æã‚‰ãã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®å•é¡Œ)
 include 'JSON.php';
 
-//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
+//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 $s = new Services_JSON();
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 
 //-------------------------------------------------------------------------
-// ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 //-------------------------------------------------------------------------
-// ¥»¥Ã¥·¥ç¥óID
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
 if ($_POST["strSessionID"]) {
     $aryData["strSessionID"] = $_POST["strSessionID"];
 } else {
@@ -45,160 +45,160 @@ if ($_POST["strSessionID"]) {
 }
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// ½èÍı¥â¡¼¥É
+// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰
 $strMode = $_POST["strMode"];
 
 //-------------------------------------------------------------------------
-// DB¥ª¡¼¥×¥ó
+// DBã‚ªãƒ¼ãƒ—ãƒ³
 //-------------------------------------------------------------------------
 $objDB->open("", "", "", "");
 
 //-------------------------------------------------------------------------
-// ÆşÎÏÊ¸»úÎóÃÍ¡¦¥»¥Ã¥·¥ç¥ó¡¦¸¢¸Â¥Á¥§¥Ã¥¯
+// å…¥åŠ›æ–‡å­—åˆ—å€¤ãƒ»ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ»æ¨©é™ãƒã‚§ãƒƒã‚¯
 //-------------------------------------------------------------------------
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 $lngUserCode = $objAuth->UserCode;
 $lngUserGroup = $objAuth->AuthorityGroupCode;
 
-// 600 Çä¾å´ÉÍı
+// 600 å£²ä¸Šç®¡ç†
 if (!fncCheckAuthority(DEF_FUNCTION_SC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "sc/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "sc/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
-// 601 Çä¾å´ÉÍı¡ÊÇä¾åÅĞÏ¿¡Ë
+// 601 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šç™»éŒ²ï¼‰
 if (fncCheckAuthority(DEF_FUNCTION_SC1, $objAuth)) {
     $aryData["strRegistURL"] = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
 }
 
-// 610 Çä¾å´ÉÍı¡Ê¹ÔÄÉ²Ã¡¦¹Ôºï½ü¡Ë
+// 610 å£²ä¸Šç®¡ç†ï¼ˆè¡Œè¿½åŠ ãƒ»è¡Œå‰Šé™¤ï¼‰
 if (!fncCheckAuthority(DEF_FUNCTION_SC10, $objAuth)) {
     $aryData["adddelrowview"] = 'hidden';
 }
 
 //-------------------------------------------------------------------------
-// ¡Úajax¡Û¸ÜµÒ¤ËÉ³¤Å¤¯¹ñ¥³¡¼¥É¤ò¼èÆÀ
+// ã€ajaxã€‘é¡§å®¢ã«ç´ã¥ãå›½ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 //-------------------------------------------------------------------------
 if ($strMode == "get-lngcountrycode") {
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
-    // ¹ñ¥³¡¼¥É¼èÆÀ
+    // å›½ã‚³ãƒ¼ãƒ‰å–å¾—
     $lngCountryCode = fncGetCountryCode($strCompanyDisplayCode, $objDB);
-    // ¥Ç¡¼¥¿ÊÖµÑ
+    // ãƒ‡ãƒ¼ã‚¿è¿”å´
     echo $lngCountryCode;
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
-    // ½èÍı½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 
 //-------------------------------------------------------------------------
-// ¡Úajax¡Û¸ÜµÒ¤ËÉ³¤Å¤¯Äù¤áÆü¤ò¼èÆÀ
+// ã€ajaxã€‘é¡§å®¢ã«ç´ã¥ãç· ã‚æ—¥ã‚’å–å¾—
 //-------------------------------------------------------------------------
 if ($strMode == "get-closedday") {
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
-    // Äù¤áÆü¼èÆÀ
+    // ç· ã‚æ—¥å–å¾—
     $lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
-    // ¥Ç¡¼¥¿ÊÖµÑ
+    // ãƒ‡ãƒ¼ã‚¿è¿”å´
     echo $lngClosedDay;
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
-    // ½èÍı½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 
 //-------------------------------------------------------------------------
-// ¡Úajax¡ÛÌÀºÙ¸¡º÷
+// ã€ajaxã€‘æ˜ç´°æ¤œç´¢
 //-------------------------------------------------------------------------
 if ($strMode == "search-detail") {
-    // ¸¡º÷¾ò·ï¤Î¼èÆÀ
+    // æ¤œç´¢æ¡ä»¶ã®å–å¾—
     $aryCondition = $_POST["condition"];
-    // ¸ÇÄê¸¡º÷¾ò·ï¤ÎÄÉ²Ã
-    $aryCondition["lngreceivestatuscode"] = 2; //¼õÃí¾õÂÖ¥³¡¼¥É=2:¼õÃí
-    // DB¤«¤éÌÀºÙ¤ò¸¡º÷
+    // å›ºå®šæ¤œç´¢æ¡ä»¶ã®è¿½åŠ 
+    $aryCondition["lngreceivestatuscode"] = 2; //å—æ³¨çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰=2:å—æ³¨
+    // DBã‹ã‚‰æ˜ç´°ã‚’æ¤œç´¢
     $aryReceiveDetail = fncGetReceiveDetail($aryCondition, $objDB);
-    // ÌÀºÙÁªÂò¥¨¥ê¥¢¤Ë½ĞÎÏ¤¹¤ëHTML¤ÎºîÀ®
+    // æ˜ç´°é¸æŠã‚¨ãƒªã‚¢ã«å‡ºåŠ›ã™ã‚‹HTMLã®ä½œæˆ
     $isCreateNew = true;
     $aryResult = fncGetReceiveDetailHtml($aryReceiveDetail, $isCreateNew);
-    // ¥Ç¡¼¥¿ÊÖµÑ
+    // ãƒ‡ãƒ¼ã‚¿è¿”å´
 	// echo $strHtml;
-	//·ë²Ì½ĞÎÏ
+	//çµæœå‡ºåŠ›
 	mb_convert_variables('UTF-8', 'EUC-JP', $aryResult);
 	echo $s->encodeUnsafe($aryResult);
 
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
-    // ½èÍı½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 
 //-------------------------------------------------------------------------
-// ¡Úajax¡ÛÇ¼ÉÊÆüÊÑ¹¹»ş¤Î¾ÃÈñÀÇÎ¨ÁªÂò¹àÌÜºÆÀßÄê
+// ã€ajaxã€‘ç´å“æ—¥å¤‰æ›´æ™‚ã®æ¶ˆè²»ç¨ç‡é¸æŠé …ç›®å†è¨­å®š
 //-------------------------------------------------------------------------
 if ($strMode == "change-deliverydate") {
-    // ÊÑ¹¹¸å¤ÎÇ¼ÉÊÆü¤ËÂĞ±ş¤¹¤ë¾ÃÈñÀÇÎ¨¤ÎÁªÂò¹àÌÜ¤ò¼èÆÀ
+    // å¤‰æ›´å¾Œã®ç´å“æ—¥ã«å¯¾å¿œã™ã‚‹æ¶ˆè²»ç¨ç‡ã®é¸æŠé …ç›®ã‚’å–å¾—
     $optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
-    // ¥Ç¡¼¥¿ÊÖµÑ
+    // ãƒ‡ãƒ¼ã‚¿è¿”å´
     echo $optTaxRate;
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
-    // ½èÍı½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 
 //-------------------------------------------------------------------------
-// ¥Õ¥©¡¼¥à½é´üÃÍÀßÄê
+// ãƒ•ã‚©ãƒ¼ãƒ åˆæœŸå€¤è¨­å®š
 //-------------------------------------------------------------------------
-// ¥Ø¥Ã¥À¡¦¥Õ¥Ã¥ÀÉô
+// ãƒ˜ãƒƒãƒ€ãƒ»ãƒ•ãƒƒãƒ€éƒ¨
 
-// Ç¼ÉÊÆü
+// ç´å“æ—¥
 $nowDate = new DateTime();
 $aryData["dtmDeliveryDate"] = $nowDate->format('Y/m/d');
 
-// »ÙÊ§´ü¸Â
+// æ”¯æ‰•æœŸé™
 $oneMonthLater = $nowDate->modify('+1 month');
 $aryData["dtmPaymentDueDate"] = $oneMonthLater->format('Y/m/d');
 
-// »ÙÊ§ÊıË¡¥×¥ë¥À¥¦¥ó
+// æ”¯æ‰•æ–¹æ³•ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³
 $optPaymentMethod .= fncGetPulldown("m_paymentmethod", "lngpaymentmethodcode", "strpaymentmethodname", "", "", $objDB);
 $aryData["optPaymentMethod"] = $optPaymentMethod;
 
-// ¾ÃÈñÀÇ¶èÊ¬¥×¥ë¥À¥¦¥ó
+// æ¶ˆè²»ç¨åŒºåˆ†ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³
 $optTaxClass .= fncGetPulldown("m_taxclass", "lngtaxclasscode", "strtaxclassname", "", "", $objDB);
 $aryData["optTaxClass"] = $optTaxClass;
 
-// ¾ÃÈñÀÇÎ¨¥×¥ë¥À¥¦¥ó
+// æ¶ˆè²»ç¨ç‡ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³
 $optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], "", $objDB);
 $aryData["optTaxRate"] = $optTaxRate;
 
-// ¥ì¡¼¥È¥¿¥¤¥×¥×¥ë¥À¥¦¥ó
+// ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³
 $optMonetaryRate .= fncGetPulldown("m_monetaryrateclass", "lngmonetaryratecode", "strmonetaryratename", "", "", $objDB);
 $aryData["optMonetaryRate"] = $optMonetaryRate;
 
-// ¾ÃÈñÀÇ³Û
+// æ¶ˆè²»ç¨é¡
 $aryData["strTaxAmount"] = "0";
 
-// ¹ç·×¶â³Û
+// åˆè¨ˆé‡‘é¡
 $aryData["strTotalAmount"] = "0";
 
 //-------------------------------------------------------------------------
-// ²èÌÌÉ½¼¨
+// ç”»é¢è¡¨ç¤º
 //-------------------------------------------------------------------------
-// ajax POSTÀè¤ò¤³¤Î¥Õ¥¡¥¤¥ë¤Ë¤¹¤ë
+// ajax POSTå…ˆã‚’ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã«ã™ã‚‹
 $aryData["ajaxPostTarget"] = "index.php";
 
-// Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿²èÌÌÉ½¼¨¡Ê¥Æ¥ó¥×¥ì¡¼¥È¤ÏÇ¼ÉÊ½ñ½¤Àµ²èÌÌ¤È¶¦ÄÌ¡Ë
+// å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²ç”»é¢è¡¨ç¤ºï¼ˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¯ç´å“æ›¸ä¿®æ­£ç”»é¢ã¨å…±é€šï¼‰
 // echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
 
 echo fncGetReplacedHtmlWithBase("base_mold.html", "sc/regist2/regist.html", $aryData, $objAuth);
-// DBÀÚÃÇ
+// DBåˆ‡æ–­
 $objDB->close();
 
-// ½èÍı½ªÎ»
+// å‡¦ç†çµ‚äº†
 return true;

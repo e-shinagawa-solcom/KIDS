@@ -1,12 +1,12 @@
 /*
-	³µÍ×¡§À½ÉÊ¸¡º÷
-	ÂĞ¾İ¡§¶¦ÄÌ¥µ¥Ö¥¦¥£¥ó¥É¥¦
-	ºîÀ®¡§ºØÆ£ÏÂ»Ö
-	È÷¹Í¡§À½ÉÊ¥³¡¼¥É¡ÜÌ¾¾Î¤«¤é°ìÃ×¤¹¤ë¡Ö¥³¡¼¥É¡ÜÌ¾¾Î¡×°ìÍ÷¤òÀ¸À®
+	æ¦‚è¦ï¼šè£½å“æ¤œç´¢
+	å¯¾è±¡ï¼šå…±é€šã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+	ä½œæˆï¼šæ–è—¤å’Œå¿—
+	å‚™è€ƒï¼šè£½å“ã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã‹ã‚‰ä¸€è‡´ã™ã‚‹ã€Œã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã€ä¸€è¦§ã‚’ç”Ÿæˆ
 	
-		_%strFormValue0%_¡§À½ÉÊ¥³¡¼¥É
-		_%strFormValue1%_¡§À½ÉÊÌ¾¾Î
-		_%strFormValue2%_¡§ÆşÎÏ¼Ô¥³¡¼¥É¡Ê¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¡Ë
+		_%strFormValue0%_ï¼šè£½å“ã‚³ãƒ¼ãƒ‰
+		_%strFormValue1%_ï¼šè£½å“åç§°
+		_%strFormValue2%_ï¼šå…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰ï¼ˆãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ï¼‰
 
 */
 SELECT   a.strproductcode, 
@@ -26,12 +26,12 @@ FROM
 	WHERE mp.bytinvalidflag = false
 		AND (mp.strproductcode LIKE '%_%strFormValue0%_%')
 		AND (mp.strproductname LIKE '%_%strFormValue1%_%')
-		and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WF¿½ÀÁÃæ */
+		and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WFç”³è«‹ä¸­ */
 	GROUP BY mp.strproductcode, mp.strproductname, mp.lnginchargeusercode
 	UNION
 	SELECT	mp.strproductcode			AS strproductcode
 			,NULL						AS strproductname
-			,'¡ÊÀ½ÉÊÌ¾¾Î¤¬¶õ¤Ç¤¹¡Ë'		AS strproductnamenull
+			,'ï¼ˆè£½å“åç§°ãŒç©ºã§ã™ï¼‰'		AS strproductnamenull
 			,mp.lnginchargeusercode		as lnginchargeusercode
 	FROM m_product mp
 	WHERE mp.bytinvalidflag = false
@@ -48,7 +48,7 @@ WHERE
 		THEN (a.strproductname IS NOT NULL OR a.strproductnamenull IS NOT NULL)
 		ELSE (a.strproductname IS NOT NULL)
 	END
-	/* À½ÉÊÃ´Åö¼Ô¤ËÂĞ¤·¡¢ÆşÎÏ¼Ô ¤È ¤½¤ÎÆşÎÏ¼Ô¤¬Â°¤¹¤ë¥°¥ë¡¼¥×¤Î¥Ş¥Í¡¼¥¸¥ã¡¼°Ê¾å¤¬°ìÃ× */
+	/* è£½å“æ‹…å½“è€…ã«å¯¾ã—ã€å…¥åŠ›è€… ã¨ ãã®å…¥åŠ›è€…ãŒå±ã™ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—ã®ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ä»¥ä¸ŠãŒä¸€è‡´ */
 	and _%strFormValue2%_ in
 	(
 		select
@@ -69,7 +69,7 @@ WHERE
 					left join m_group mg
 						on mg.lnggroupcode = mgr.lnggroupcode
 			where
-			mu.lngusercode = a.lnginchargeusercode /* À½ÉÊÃ´Åö¼Ô */
+			mu.lngusercode = a.lnginchargeusercode /* è£½å“æ‹…å½“è€… */
 		) as mst1
 		where
 			mgr1.lnggroupcode = mst1.lnggroupcode
@@ -79,7 +79,7 @@ WHERE
 /*			and (mu1.lngauthoritygroupcode <= 4 or mu1.lngusercode = mst1.lngUserCode )
 */
 /*
-39´ü»öÌ³3¿ÍÂĞ±ş¤Î¤¿¤á
+39æœŸäº‹å‹™3äººå¯¾å¿œã®ãŸã‚
 */			
 			and (mu1.lngauthoritygroupcode <= 4 or mu1.lngusercode = mst1.lngUserCode or mu1.lngusercode in ('15','29','242','343'))
 	)

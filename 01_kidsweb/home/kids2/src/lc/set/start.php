@@ -2,14 +2,14 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       LC´ÉÍý  LC¾ðÊó³«»Ï
-*       initLcInfo¤ò¼Â¹Ô¤µ¤»¤ë¤À¤±¤Î¶õ¤Î²èÌÌ¤Ç¤¹¡£
+*       LCç®¡ç†  LCæƒ…å ±é–‹å§‹
+*       initLcInfoã‚’å®Ÿè¡Œã•ã›ã‚‹ã ã‘ã®ç©ºã®ç”»é¢ã§ã™ã€‚
 */
 // ----------------------------------------------------------------------------
 
-	// ÆÉ¤ß¹þ¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
-	//¶¦ÄÌ¥Õ¥¡¥¤¥ëÆÉ¤ß¹þ¤ß
+	//å…±é€šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	require SRC_ROOT . "lc/lcModel/lcModelCommon.php";
 	require (LIB_FILE);
 
@@ -21,74 +21,74 @@
 
 
 	//-------------------------------------------------------------------------
-	// ¢£ ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+	// â–  ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 	//-------------------------------------------------------------------------
 	$aryData = $_REQUEST;
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
-	// ¥¯¥Ã¥­¡¼¤Ë¥»¥Ã¥·¥ç¥óID¤ò¥»¥Ã¥È
+	// ã‚¯ãƒƒã‚­ãƒ¼ã«ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã‚’ã‚»ãƒƒãƒˆ
 	setcookie("strSessionID",$aryData["strSessionID"]);
 
-	//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+	//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 	$user_id = trim($objAuth->UserID);
 	
 	$objDB->close();
 
-// select-function/index.php¤Î¥í¥°¥¤¥ó¾õ¶·Áàºî¤ÈÆ±Åù¤Î½èÍý
-	//·ÐÍý¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+// select-function/index.phpã®ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³æ“ä½œã¨åŒç­‰ã®å‡¦ç†
+	//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæŽ¥ç¶š
 	$lcModel		= new lcModel();
 
-	//LC¾ðÊó¼èÆÀÆü¤Î¼èÆÀ
+	//LCæƒ…å ±å–å¾—æ—¥ã®å–å¾—
 	$lcgetdate = $lcModel->getLcInfoDate();
 
-	//¥í¥°¥¤¥ó¾õ¶·È½Äê½èÍý
+	//ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³åˆ¤å®šå‡¦ç†
 	$logined_flg = false;
 	$login_state = $lcModel->getLoginState($user_id);
 	if($login_state["login_state"] == "1"){
-		//¥í¥°¥¢¥¦¥È½èÍý¤ò¹Ô¤¦
+		//ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†ã‚’è¡Œã†
 		$lcModel->loginStateLogout($login_state["login_obj"]);
 	} else if($login_state["login_state"] == "2"){
-		//Æ±°ì¸¢¸Â¼Ô¤¬¥í¥°¥¤¥ó¤·¤Æ¤¤¤ë
-		//lginymd < ¸½ºßÆüÉÕ¤Î¾ì¹ç
+		//åŒä¸€æ¨©é™è€…ãŒãƒ­ã‚°ã‚¤ãƒ³ã—ã¦ã„ã‚‹
+		//lginymd < ç¾åœ¨æ—¥ä»˜ã®å ´åˆ
 		$ymd = date('Ymd',  strtotime($lcgetdate->lcgetdate));
 		if($ymd < time()){
-			//¥í¥°¥¤¥óÃæ¥¢¥é¡¼¥ÈÉ½¼¨¥Õ¥é¥°
+			//ãƒ­ã‚°ã‚¤ãƒ³ä¸­ã‚¢ãƒ©ãƒ¼ãƒˆè¡¨ç¤ºãƒ•ãƒ©ã‚°
 			$logined_flg = true;
 		}
 	}
 
-	//¥í¥°¥¤¥ó¾õ¶·¤ÎºÇÂç´ÉÍýÈÖ¹æ¤Î¼èÆÀ
+	//ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®æœ€å¤§ç®¡ç†ç•ªå·ã®å–å¾—
 	$login_max_num = $lcModel->getMaxLoginStateNum();
 
-	//¥í¥°¥¤¥ó¾õ¶·¤ÎÅÐÏ¿
+	//ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®ç™»éŒ²
 	$lcModel->setLcLoginState($login_max_num, $objAuth->UserFullName);
 
 
-	//¥æ¡¼¥¶¡¼¸¢¸Â¤Î¼èÆÀ
+	//ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™ã®å–å¾—
 	$login_user_auth = $lcModel->getUserAuth($user_id);
 
 	
 	$lcModel->close();
 
-	//HTML¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+	//HTMLã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 	$aryData["lc_info_date"] = date('Ymd',  strtotime($lcgetdate->lcgetdate));
 	$aryData["lc_info_time"] = date('h:m:s',  strtotime($lcgetdate->lcgetdate));
 	$aryData["user_nm"] = $login_state["lgusrname"];
 	$aryData["session_id"] = $aryData["strSessionID"];
 
 
-// ¤³¤³¤Þ¤Çselect-function/index.php¤Î¥í¥°¥¤¥ó¾õ¶·Áàºî¤ÈÆ±Åù¤Î½èÍý
+// ã“ã“ã¾ã§select-function/index.phpã®ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³æ“ä½œã¨åŒç­‰ã®å‡¦ç†
 	
-	//HTML¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+	//HTMLã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 	$aryData["session_id"] = $aryData["strSessionID"];
 
 	echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/set/start.tmpl", $aryData ,$objAuth );
-	//js¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+	//jsã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 	$lcInfoDate = array(
 	    "lcgetdate" => $lcgetdate->lcgetdate, 
 	    "lgusrname" => $lcgetdate->lgusrname

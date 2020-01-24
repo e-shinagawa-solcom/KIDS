@@ -1,12 +1,12 @@
 function fncDownload(url) {
-    // ºÆ°õºş¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¾õÂÖ¤ò¼èÆÀ
+    // å†å°åˆ·ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®çŠ¶æ…‹ã‚’å–å¾—
     var reprintFlag = parent.button.document.getElementById('rePrintChk').checked;
-    // URLÀßÄê
+    // URLè¨­å®š
     url = url + '&reprintFlag=' + reprintFlag;
-    // ¥Ú¡¼¥¸Á«°Ü
+    // ãƒšãƒ¼ã‚¸é·ç§»
     location.href = url;
-    // £³£°ÉÃ·Ğ²á¸å¡¢¿Æ²èÌÌ¥¯¥í¡¼¥º
-//    setTimeout("alert('30ÉÃ·Ğ²á');parent.window.close();", 30000);
+    // ï¼“ï¼ç§’çµŒéå¾Œã€è¦ªç”»é¢ã‚¯ãƒ­ãƒ¼ã‚º
+//    setTimeout("alert('30ç§’çµŒé');parent.window.close();", 30000);
 
     return false;
 

@@ -2,16 +2,16 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       LC´ÉÍý  LC¾ðÊó²èÌÌ
+ *       LCç®¡ç†  LCæƒ…å ±ç”»é¢
  */
 // ----------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-// ¢£ ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ëÆÉ¹þ
+// â–  ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼
 //-------------------------------------------------------------------------
-// ÆÉ¤ß¹þ¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
-//¶¦ÄÌ¥Õ¥¡¥¤¥ëÆÉ¤ß¹þ¤ß
+//å…±é€šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 require_once '../lcModel/lcModelCommon.php';
 require_once '../lcModel/db_common.php';
 require_once '../lcModel/kidscore_common.php';
@@ -19,72 +19,72 @@ require_once '../lcModel/lcinfo.php';
 require LIB_FILE;
 
 //-------------------------------------------------------------------------
-// ¢£ ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// â–  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 //-------------------------------------------------------------------------
 $objDB = new clsDB();
 $objAuth = new clsAuth();
-//LCÍÑDBÀÜÂ³¥¤¥ó¥¹¥¿¥ó¥¹À¸À®
+//LCç”¨DBæŽ¥ç¶šã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 $db = new lcConnect();
 
 //-------------------------------------------------------------------------
-// ¢£ DB¥ª¡¼¥×¥ó
+// â–  DBã‚ªãƒ¼ãƒ—ãƒ³
 //-------------------------------------------------------------------------
 $objDB->open("", "", "", "");
 
 //-------------------------------------------------------------------------
-// ¢£ ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+// â–  ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 //-------------------------------------------------------------------------
 $aryData = $_GET;
 
-$aryData["strSessionID"] = $_REQUEST["strSessionID"]; // ¥»¥Ã¥·¥ç¥óID
-$aryData["aclcinitFlg"] = $_REQUEST["aclcinitFlg"]; // T_Aclcinfo½é´ü²½¥Õ¥é¥°
+$aryData["strSessionID"] = $_REQUEST["strSessionID"]; // ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+$aryData["aclcinitFlg"] = $_REQUEST["aclcinitFlg"]; // T_AclcinfoåˆæœŸåŒ–ãƒ•ãƒ©ã‚°
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 $usrId = trim($objAuth->UserID);
 $usrName = trim($objAuth->UserDisplayName);
 
-// // 2100 LC´ÉÍý
+// // 2100 LCç®¡ç†
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+//         fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 // }
 
-// // 2101 LC¾ðÊó
+// // 2101 LCæƒ…å ±
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC1, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+//         fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 // }
 
-//·ÐÍý¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæŽ¥ç¶š
 $lcModel = new lcModel();
 
-//¥æ¡¼¥¶¡¼¸¢¸Â¤Î¼èÆÀ
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™ã®å–å¾—
 $loginUserAuth = $lcModel->getUserAuth($usrId);
 
 $userAuth = substr($loginUserAuth, 1, 1);
 
-//LC¾ðÊó¼èÆÀÆü¤Î¼èÆÀ
+//LCæƒ…å ±å–å¾—æ—¥ã®å–å¾—
 $lcgetdate = $lcModel->getLcInfoDate();
 
-//¥í¥°¥¤¥ó¾õ¶·¤ÎºÇÂç´ÉÍýÈÖ¹æ¤Î¼èÆÀ
+//ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®æœ€å¤§ç®¡ç†ç•ªå·ã®å–å¾—
 $maxLgno = $lcModel->getMaxLoginStateNum();
 
-// T_Aclcinfo½é´ü²½¥Õ¥é¥°¤¬true¤Î¾ì¹ç
+// T_AclcinfoåˆæœŸåŒ–ãƒ•ãƒ©ã‚°ãŒtrueã®å ´åˆ
 if ($aryData["aclcinitFlg"] == "true") {
-    // t_aclcinfo¥Ç¡¼¥¿¤ÎÅÐÏ¿¡¦¹¹¿·½èÍý
-    // kidscore2¤«¤é»þ´Ö¤ÈÆüÉÕ¤ò¼èÆÀ¤¹¤ë
+    // t_aclcinfoãƒ‡ãƒ¼ã‚¿ã®ç™»éŒ²ãƒ»æ›´æ–°å‡¦ç†
+    // kidscore2ã‹ã‚‰æ™‚é–“ã¨æ—¥ä»˜ã‚’å–å¾—ã™ã‚‹
     $curDate = fncGetCurDate($objDB);
 //    $date = explode(" ", $curDate)[0];
 //    $time = explode(" ", $curDate)[1];
 
-    // L/C¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // L/Cãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     fncGetLcData($objDB, $lcModel, $usrName, $curDate);
-    // lcgetdate¤ò¹¹¿·¤¹¤ë
+    // lcgetdateã‚’æ›´æ–°ã™ã‚‹
     $updCount = $lcModel->updateLcGetDate($maxLgno, date('Ymd h:m:s', strtotime($curDate)));
 
     if ($updCount < 0) {
@@ -95,13 +95,13 @@ if ($aryData["aclcinitFlg"] == "true") {
 
 if( $aryData["reSearchFlg"] != true )
 {
-    // ¿·µ¬µ¯Æ°»þ
-    // ackids¤Î¥Ç¡¼¥¿¤òkidscore2¤ËÅÐÏ¿
-    // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¤ò³«»Ï¤¹¤ë
+    // æ–°è¦èµ·å‹•æ™‚
+    // ackidsã®ãƒ‡ãƒ¼ã‚¿ã‚’kidscore2ã«ç™»éŒ²
+    // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’é–‹å§‹ã™ã‚‹
     $objDB->transactionBegin();
-    // L/C¾ðÊó¥Ç¡¼¥¿¤Îºï½ü¤ò¹Ô¤¦
+    // L/Cæƒ…å ±ãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤ã‚’è¡Œã†
     fncDeleteLcInfo($objDB);
-    //ACL/C¾ðÊó¥Ç¡¼¥¿¤Î¼èÆÀ
+    //ACL/Cæƒ…å ±ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     $acLcInfoArry = $lcModel->getAcLcInfo();
     foreach ($acLcInfoArry as $acLcInfo) {
         $data = array();
@@ -156,20 +156,20 @@ if( $aryData["reSearchFlg"] != true )
     // var_dump($result);
 }
 
-//¹ÔÇØ·ÊÀßÄê¼èÆÀ
+//è¡ŒèƒŒæ™¯è¨­å®šå–å¾—
 $background_color = $lcModel->getBackColor();
 
 
 $objDB->close();
 $lcModel->close();
 
-//HTML¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+//HTMLã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 //$aryData["chkEpRes"] = $chkEpRes;
 $aryData["lc_info_date"] = date('Y/m/d H:i:s',  strtotime($lcgetdate->lcgetdate));
 echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/info/parts.tmpl", $aryData, $objAuth);
 
-//½é´ü½èÍý¼Â¹Ô
-//js¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+//åˆæœŸå‡¦ç†å®Ÿè¡Œ
+//jsã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 $arr = array(
     "chkEpRes" => $chkEpRes,
     "background_color" => $background_color,

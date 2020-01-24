@@ -8,7 +8,7 @@ function initLayoutError1( obj1 )
 {
 	var lay1 = obj1.children;
 
-	///// ¹àÌÜÅ¸³« /////
+	///// é …ç›®å±•é–‹ /////
 	if (typeof(obj1)!='undefined')
 	{
 		for (i = 0; i < lay1.length; i++)
@@ -32,7 +32,7 @@ function initLayoutError2( obj1 )
 
 	var lay1 = obj1.children;
 
-	///// ¹àÌÜÅ¸³« /////
+	///// é …ç›®å±•é–‹ /////
 	if (typeof(obj1)!='undefined')
 	{
 		for (i = 0; i < lay1.length; i++)

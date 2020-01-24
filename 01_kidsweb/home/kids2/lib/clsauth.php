@@ -1,7 +1,7 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
-*       «ßæ⁄ΩËÕ˝•Ø•È•π
+*       Ë™çË®ºÂá¶ÁêÜ„ÇØ„É©„Çπ
 *
 *
 *       @package    K.I.D.S.
@@ -12,38 +12,38 @@
 *       @version    2.00
 *
 *
-*       ΩËÕ˝≥µÕ◊
-*		isLogin                 •Ì•∞•§•Ûæı¬÷≥Œ«ß(•ª•√•∑•Á•Û§Œ≥Œ«ß°¶ππø∑)
-*		login                   •Ì•∞•§•ÛΩËÕ˝
-*		logout                  •Ì•∞•¢•¶•»ΩËÕ˝
-*		checkAccessIP           IP•¢•…•Ï•π•¡•ß•√•Ø
+*       Âá¶ÁêÜÊ¶ÇË¶Å
+*		isLogin                 „É≠„Ç∞„Ç§„É≥Áä∂ÊÖãÁ¢∫Ë™ç(„Çª„ÉÉ„Ç∑„Éß„É≥„ÅÆÁ¢∫Ë™ç„ÉªÊõ¥Êñ∞)
+*		login                   „É≠„Ç∞„Ç§„É≥Âá¶ÁêÜ
+*		logout                  „É≠„Ç∞„Ç¢„Ç¶„ÉàÂá¶ÁêÜ
+*		checkAccessIP           IP„Ç¢„Éâ„É¨„Çπ„ÉÅ„Çß„ÉÉ„ÇØ
 *
-*       ππø∑Õ˙ŒÚ
+*       Êõ¥Êñ∞Â±•Ê≠¥
 *
 */
 // ----------------------------------------------------------------------------
 
 class clsAuth
 {
-	var $SessionID;          // •ª•√•∑•Á•ÛID
-	var $AccessIP;           // •¢•Ø•ª•πIP•¢•…•Ï•π
-	var $UserCode;           // •Ê°º•∂°º•≥°º•…
-	var $UserDisplayName;    // …Ωº®•Ê°º•∂°ºÃæ
-	var $UserID;             // •Ê°º•∂°ºID
-	var $UserFullName;       // •’•Î•Õ°º•‡
-//	var $UserDisplayName;    // …Ωº®•Ê°º•∂°ºÃæ
-	var $GroupDisplayCode;   // …Ωº®•∞•Î°º•◊•≥°º•…
-	var $GroupDisplayName;   // …Ωº®•∞•Î°º•◊Ãæ
-	var $AuthorityGroupCode; // ∏¢∏¬•∞•Î°º•◊•≥°º•…
-	var $AuthorityGroupName; // ∏¢∏¬•∞•Î°º•◊Ãæ
-	var $FunctionCode ;      // ª»Õ—≤ƒ«Ω§ µ°«Ω•≥°º•…§¨•≠°º§Œœ¢¡€«€ŒÛ(Boolean)
+	var $SessionID;          // „Çª„ÉÉ„Ç∑„Éß„É≥ID
+	var $AccessIP;           // „Ç¢„ÇØ„Çª„ÇπIP„Ç¢„Éâ„É¨„Çπ
+	var $UserCode;           // „É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ
+	var $UserDisplayName;    // Ë°®Á§∫„É¶„Éº„Ç∂„ÉºÂêç
+	var $UserID;             // „É¶„Éº„Ç∂„ÉºID
+	var $UserFullName;       // „Éï„É´„Éç„Éº„É†
+//	var $UserDisplayName;    // Ë°®Á§∫„É¶„Éº„Ç∂„ÉºÂêç
+	var $GroupDisplayCode;   // Ë°®Á§∫„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ
+	var $GroupDisplayName;   // Ë°®Á§∫„Ç∞„É´„Éº„ÉóÂêç
+	var $AuthorityGroupCode; // Ê®©Èôê„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ
+	var $AuthorityGroupName; // Ê®©Èôê„Ç∞„É´„Éº„ÉóÂêç
+	var $FunctionCode ;      // ‰ΩøÁî®ÂèØËÉΩ„Å™Ê©üËÉΩ„Ç≥„Éº„Éâ„Åå„Ç≠„Éº„ÅÆÈÄ£ÊÉ≥ÈÖçÂàó(Boolean)
 
-	var $TimeLimtDate;       // •ø•§•‡•¢•¶•»∆¸…’
+	var $TimeLimtDate;       // „Çø„Ç§„É†„Ç¢„Ç¶„ÉàÊó•‰ªò
 
 	// ---------------------------------------------------------------
 	/**
-	*	•≥•Û•π•»•È•Ø•ø
-	*	•Ø•È•π∆‚§ŒΩÈ¥¸≤Ω§Úπ‘§¶
+	*	„Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø
+	*	„ÇØ„É©„ÇπÂÜÖ„ÅÆÂàùÊúüÂåñ„ÇíË°å„ÅÜ
 	*	
 	*	@return void
 	*	@access public
@@ -51,48 +51,48 @@ class clsAuth
 	// ---------------------------------------------------------------
 	function __construct()
 	{
-		// •ª•√•∑•Á•ÛID
+		// „Çª„ÉÉ„Ç∑„Éß„É≥ID
 		$this->SessionID = "";
 
-		// •¢•Ø•ª•πIP•¢•…•Ï•π
+		// „Ç¢„ÇØ„Çª„ÇπIP„Ç¢„Éâ„É¨„Çπ
 		$this->AccessIP = $_SERVER["REMOTE_ADDR"];
 
-		// •Ê°º•∂°º•≥°º•…
+		// „É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ
 		$this->UserCode = 0;
 
-		// …Ωº®•Ê°º•∂°ºÃæ
+		// Ë°®Á§∫„É¶„Éº„Ç∂„ÉºÂêç
 		$this->UserDisplayName = "";
 
-		// •Ê°º•∂°ºID
+		// „É¶„Éº„Ç∂„ÉºID
 		$this->UserID = "";
 
-		// •’•Î•Õ°º•‡
+		// „Éï„É´„Éç„Éº„É†
 		$this->UserFullName = "";
 
-		// …Ωº®•∞•Î°º•◊•≥°º•…
+		// Ë°®Á§∫„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ
 		$this->GroupDisplayCode = "";
 
-		// …Ωº®•∞•Î°º•◊Ãæ
+		// Ë°®Á§∫„Ç∞„É´„Éº„ÉóÂêç
 		$this->GroupDisplayName = "";
 
-		// •Ê°º•∂°º≤Ë¡¸•’•°•§•Î
+		// „É¶„Éº„Ç∂„ÉºÁîªÂÉè„Éï„Ç°„Ç§„É´
 		$this->UserImageFileName = "";
 
-		// ∏¢∏¬•∞•Î°º•◊•≥°º•…
+		// Ê®©Èôê„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ
 		$this->AuthorityGroupCode = 0;
 
-		// ∏¢∏¬•∞•Î°º•◊Ãæ
+		// Ê®©Èôê„Ç∞„É´„Éº„ÉóÂêç
 		$this->AuthorityGroupName = "";
 
-		// ∏¢∏¬•’•È•∞
+		// Ê®©Èôê„Éï„É©„Ç∞
 		$this->AuthorityFlag = FALSE;
 	}
 
 	// ---------------------------------------------------------------
 	/**
-	*	•Ì•∞•§•Ûæı¬÷§À§¢§Î§´§…§¶§´§Ú≥Œ«ß
-	*	@param  string  $strSessionID •ª•√•∑•Á•ÛID
-	*	@param  object  $objDB        DB•™•÷•∏•ß•Ø•»
+	*	„É≠„Ç∞„Ç§„É≥Áä∂ÊÖã„Å´„ÅÇ„Çã„Åã„Å©„ÅÜ„Åã„ÇíÁ¢∫Ë™ç
+	*	@param  string  $strSessionID „Çª„ÉÉ„Ç∑„Éß„É≥ID
+	*	@param  object  $objDB        DB„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
@@ -104,8 +104,8 @@ class clsAuth
 			return FALSE;
 		}
 
-		// •Ì•∞•§•Û•ª•√•∑•Á•Û¥…Õ˝•∆°º•÷•Î§ÀÃ‰§§πÁ§Ô§ª
-		// •ª•√•∑•Á•Û ›ª˝§Œ≥Œ«ß§»ID§ŒºË∆¿
+		// „É≠„Ç∞„Ç§„É≥„Çª„ÉÉ„Ç∑„Éß„É≥ÁÆ°ÁêÜ„ÉÜ„Éº„Éñ„É´„Å´Âïè„ÅÑÂêà„Çè„Åõ
+		// „Çª„ÉÉ„Ç∑„Éß„É≥‰øùÊåÅ„ÅÆÁ¢∫Ë™ç„Å®ID„ÅÆÂèñÂæó
 		$strQuery = "SELECT l.lngUserCode," .
 		            " date_trunc('second', l.dtmLoginTime ) AS remaining," .
 		            " c.strValue AS timeout," .
@@ -134,17 +134,17 @@ class clsAuth
 			return FALSE;
 		}
 
-		// •ª•√•∑•Á•Û§Ú ›ª˝§π§Î•Ê°º•∂°º§ŒID§ÚºË∆¿
+		// „Çª„ÉÉ„Ç∑„Éß„É≥„Çí‰øùÊåÅ„Åô„Çã„É¶„Éº„Ç∂„Éº„ÅÆID„ÇíÂèñÂæó
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
 
-		// •ø•§•‡•¢•¶•»∆¸ª˛§ŒºË∆¿
+		// „Çø„Ç§„É†„Ç¢„Ç¶„ÉàÊó•ÊôÇ„ÅÆÂèñÂæó
 		$this->TimeLimtDate = date( "Y/m/d/H/i/s", strtotime( "1 hour" ) );
 
 
 		if ( time() - strtotime ( $objResult->remaining ) > $objResult->timeout * 60 )
 		{
-			// •ø•§•‡•¢•¶•»ΩËÕ˝
+			// „Çø„Ç§„É†„Ç¢„Ç¶„ÉàÂá¶ÁêÜ
 			$strQuery = "UPDATE t_LoginSession " .
 			            "SET bytSuccessfulFlag = false " .
 			            "WHERE strSessionID = '$strSessionID'";
@@ -159,7 +159,7 @@ class clsAuth
 		}
 
 
-		// ºË∆¿√Õ§Ú≥∆•◊•Ì•—•∆•£°º§À•ª•√•»
+		// ÂèñÂæóÂÄ§„ÇíÂêÑ„Éó„É≠„Éë„ÉÜ„Ç£„Éº„Å´„Çª„ÉÉ„Éà
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
 		$this->SessionID          = $strSessionID;
 		$this->AuthorityGroupCode = $objResult->lngauthoritygroupcode;
@@ -177,13 +177,13 @@ class clsAuth
 			return FALSE;
 		}
 
-		// •¢•Ø•ª•πIP•¢•…•Ï•π•¡•ß•√•Ø
+		// „Ç¢„ÇØ„Çª„ÇπIP„Ç¢„Éâ„É¨„Çπ„ÉÅ„Çß„ÉÉ„ÇØ
 //		if ( !$this->checkAccessIP( $objDB ) )
 //		{
 //			return FALSE;
 //		}
 
-		// •¢•Ø•ª•π∆¸ª˛§Œππø∑
+		// „Ç¢„ÇØ„Çª„ÇπÊó•ÊôÇ„ÅÆÊõ¥Êñ∞
 		$strQuery = "UPDATE t_LoginSession " .
 		            "SET dtmLoginTime = now() " .
 		            "WHERE trim(from strSessionID) = '$strSessionID'";
@@ -194,7 +194,7 @@ class clsAuth
 			return FALSE;
 		}
 
-		// ª≈ÕÕ≤ƒ«Ωµ°«Ω•≥°º•…ºË∆¿
+		// ‰ªïÊßòÂèØËÉΩÊ©üËÉΩ„Ç≥„Éº„ÉâÂèñÂæó
 		$this->getFunctionAuthority( $objDB );
 
 		return TRUE;
@@ -202,10 +202,10 @@ class clsAuth
 
 	// ---------------------------------------------------------------
 	/**
-	*	•Ì•∞•§•ÛΩËÕ˝
-	*	@param  string  $strUserID       •Ê°º•∂°ºID
-	*	@param  string  $strPasswordHash •—•π•Ô°º•…
-	*	@param  object  $objDB           DB•™•÷•∏•ß•Ø•»
+	*	„É≠„Ç∞„Ç§„É≥Âá¶ÁêÜ
+	*	@param  string  $strUserID       „É¶„Éº„Ç∂„ÉºID
+	*	@param  string  $strPasswordHash „Éë„Çπ„ÉØ„Éº„Éâ
+	*	@param  object  $objDB           DB„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
@@ -217,7 +217,7 @@ class clsAuth
 			return FALSE;
 		}
 
-		// •ﬁ•√•¡§π§ÎID°¢•—•π•Ô°º•…§Ú§‚§ƒ•Ê°º•∂°º§Ú∏°∫˜
+		// „Éû„ÉÉ„ÉÅ„Åô„ÇãID„ÄÅ„Éë„Çπ„ÉØ„Éº„Éâ„Çí„ÇÇ„Å§„É¶„Éº„Ç∂„Éº„ÇíÊ§úÁ¥¢
 		$strQuery = "SELECT u.lngUserCode," .
 		            " ag.lngAuthorityGroupCode, ag.strAuthorityGroupName," .
 		            " u.strUserDisplayName, u.strUserID, u.strUserFullName, " .
@@ -238,20 +238,20 @@ class clsAuth
 
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-		// •ª•√•∑•Á•ÛID∫Ó¿Æ
+		// „Çª„ÉÉ„Ç∑„Éß„É≥ID‰ΩúÊàê
 		//$browser = get_browser();
 		//echo $browser["authenticodeupdate"];
 		//exit;
 		$strSessionID = md5 ( uniqid ( rand(), 1 ) );
 
-		// «ßæ⁄•¡•ß•√•Ø
+		// Ë™çË®º„ÉÅ„Çß„ÉÉ„ÇØ
 		if ( pg_Num_Rows ( $lngResultID ) )
 		{
 			$strPasswordHash = md5 ( $strPasswordHash );
 
 			$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
-			// •Ì•∞•§•Û•Ê°º•∂°ºæ Û§Œ¿∏¿Æ°¢•◊•Ì•—•∆•£°º§À•ª•√•»
+			// „É≠„Ç∞„Ç§„É≥„É¶„Éº„Ç∂„ÉºÊÉÖÂ†±„ÅÆÁîüÊàê„ÄÅ„Éó„É≠„Éë„ÉÜ„Ç£„Éº„Å´„Çª„ÉÉ„Éà
 			$this->SessionID = $strSessionID;
 			$this->AuthorityGroupCode = $objResult->lngauthoritygroupcode;
 			$this->AuthorityGroupName = $objResult->strauthoritygroupname;
@@ -263,7 +263,7 @@ class clsAuth
 			$this->GroupDisplayCode   = $objResult->strgroupdisplaycode;
 			$this->GroupDisplayName   = $objResult->strgroupdisplayname;
 
-			// •¢•Ø•ª•πIP•¢•…•Ï•π•¡•ß•√•Ø
+			// „Ç¢„ÇØ„Çª„ÇπIP„Ç¢„Éâ„É¨„Çπ„ÉÅ„Çß„ÉÉ„ÇØ
 			if ( $this->checkAccessIP( $objResult->straccessipaddress ) )
 			{
 				$bytSuccessFlag = "TRUE";
@@ -283,7 +283,7 @@ class clsAuth
 			return FALSE;
 		}
 
-		// •Ì•∞•§•Û•ª•√•∑•Á•Û¥…Õ˝•∆°º•÷•Î§ÀΩÒ§≠π˛§ﬂ
+		// „É≠„Ç∞„Ç§„É≥„Çª„ÉÉ„Ç∑„Éß„É≥ÁÆ°ÁêÜ„ÉÜ„Éº„Éñ„É´„Å´Êõ∏„ÅçËæº„Åø
 		$strQuery = "INSERT INTO t_LoginSession VALUES (" .
 		            " '$strSessionID', " . $this->UserCode . ", '$strUserID', '$strPasswordHash', now(), '" . $this->AccessIP . "', $bytSuccessFlag )";
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -298,7 +298,7 @@ class clsAuth
 			return FALSE;
 		}
 
-		// ª≈ÕÕ≤ƒ«Ωµ°«Ω•≥°º•…ºË∆¿
+		// ‰ªïÊßòÂèØËÉΩÊ©üËÉΩ„Ç≥„Éº„ÉâÂèñÂæó
 		$this->getFunctionAuthority( $objDB );
 
 		return TRUE;
@@ -306,9 +306,9 @@ class clsAuth
 
 	// ---------------------------------------------------------------
 	/**
-	*	•Ì•∞•¢•¶•»ΩËÕ˝
-	*	@param  string  $strSessionID •ª•√•∑•Á•ÛID
-	*	@param  object  $objDB        DB•™•÷•∏•ß•Ø•»
+	*	„É≠„Ç∞„Ç¢„Ç¶„ÉàÂá¶ÁêÜ
+	*	@param  string  $strSessionID „Çª„ÉÉ„Ç∑„Éß„É≥ID
+	*	@param  object  $objDB        DB„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
@@ -320,7 +320,7 @@ class clsAuth
 			return FALSE;
 		}
 
-		// •Ì•∞•§•Û•ª•√•∑•Á•Û¥…Õ˝•∆°º•÷•Î§ÀÃ‰§§πÁ§Ô§ª
+		// „É≠„Ç∞„Ç§„É≥„Çª„ÉÉ„Ç∑„Éß„É≥ÁÆ°ÁêÜ„ÉÜ„Éº„Éñ„É´„Å´Âïè„ÅÑÂêà„Çè„Åõ
 		$strQuery = "UPDATE t_LoginSession " .
 		            "SET bytSuccessfulFlag = false " .
 		            "WHERE strSessionID = '$strSessionID'";
@@ -336,18 +336,18 @@ class clsAuth
 
 	// ---------------------------------------------------------------
 	/**
-	*	IP•¢•…•Ï•π•¡•ß•√•Ø
-	*	@param  String  $strAccessIPAddress •¢•Ø•ª•πIP•¢•…•Ï•π(,∂Ë¿⁄§Í)
+	*	IP„Ç¢„Éâ„É¨„Çπ„ÉÅ„Çß„ÉÉ„ÇØ
+	*	@param  String  $strAccessIPAddress „Ç¢„ÇØ„Çª„ÇπIP„Ç¢„Éâ„É¨„Çπ(,Âå∫Âàá„Çä)
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function checkAccessIP( $strAccessIPAddress )
 	{
-		// µˆ≤ƒIPºË∆¿
+		// Ë®±ÂèØIPÂèñÂæó
 		$aryAccessIP = mb_split ( ",", $strAccessIPAddress );
 
-		// IP§Œæ»πÁ
+		// IP„ÅÆÁÖßÂêà
 		foreach ( $aryAccessIP as $strAccessIP )
 		{
 			$strAccessIP = mb_ereg_replace ( "\.", "\.", $strAccessIP );
@@ -362,21 +362,21 @@ class clsAuth
 
 	// ---------------------------------------------------------------
 	/**
-	*	ª≈ÕÕ≤ƒ«Ωµ°«Ω•≥°º•…ºË∆¿
-	*	@param  object  $objDB           DB•™•÷•∏•ß•Ø•»
+	*	‰ªïÊßòÂèØËÉΩÊ©üËÉΩ„Ç≥„Éº„ÉâÂèñÂæó
+	*	@param  object  $objDB           DB„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function getFunctionAuthority( $objDB )
 	{
-		// ∏¢∏¬•∞•Î°º•◊•≥°º•…§À§∆∏°∫˜
+		// Ê®©Èôê„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ„Å´„Å¶Ê§úÁ¥¢
 		$aryQuery = Array (
 		            "SELECT lngFunctionCode, bytAuthorityFlag " .
 		            "FROM m_FunctionAuthority " .
 		            "WHERE lngFunctionGroupcode = " . $this->AuthorityGroupCode
 		,
 
-		// •Ê°º•∂°º•≥°º•…§À§∆∏°∫˜
+		// „É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ„Å´„Å¶Ê§úÁ¥¢
 		            "SELECT lngFunctionCode, bytAuthorityFlag " .
 		            "FROM m_FunctionAuthority " .
 		            "WHERE lngUserCode = " . $this->UserCode
@@ -396,7 +396,7 @@ class clsAuth
 			}
 			if ( !$objDB->freeResult( $lngResultID ) )
 			{
-				fncOutputError ( 9017, DEF_WARNING, "•¢•Ø•ª•π∏¢∏¬§¨§¢§Í§ﬁ§ª§Û°£", TRUE, "", $objDB );
+				fncOutputError ( 9017, DEF_WARNING, "„Ç¢„ÇØ„Çª„ÇπÊ®©Èôê„Åå„ÅÇ„Çä„Åæ„Åõ„Çì„ÄÇ", TRUE, "", $objDB );
 			}
 		}
 	}

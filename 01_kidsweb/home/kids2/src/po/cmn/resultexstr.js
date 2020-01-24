@@ -1,7 +1,7 @@
 <!--
 
 
-// ¥×¥ì¥Ó¥å¡¼¥Ü¥¿¥ó½ñ½Ğ¤·
+// ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³æ›¸å‡ºã—
 function fncPreview( strURL )
 {
 	if( strURL != '' )
@@ -21,16 +21,16 @@ function fncPreview( strURL )
 
 
 
-// ÆüËÜ¸ì±Ñ¸ìÀÚÂØ
+// æ—¥æœ¬èªè‹±èªåˆ‡æ›¿
 function fncChgEtoJ( strMode )
 {
 	
 	
-	// ±Ñ¸ìÀÚÂØ
+	// è‹±èªåˆ‡æ›¿
 	if( g_lngCode == 0 )
 	{
 
-		// ½èÍıÍÑ¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// å‡¦ç†ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		fncProcessingOutputModule( strMode , 0 );
 
 		if( typeof(WFMessage) != 'undefined' )
@@ -58,34 +58,34 @@ function fncChgEtoJ( strMode )
 
 	}
 
-	// ÆüËÜ¸ìÀÚÂØ
+	// æ—¥æœ¬èªåˆ‡æ›¿
 	else if( g_lngCode == 1 )
 	{
 
-		// ½èÍıÍÑ¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// å‡¦ç†ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		fncProcessingOutputModule( strMode , 1 );
 
 		if( typeof(WFMessage) != 'undefined' )
 		{
-			WFMessage.innerText = '¥á¥Ã¥»¡¼¥¸';
+			WFMessage.innerText = 'ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸';
 		}
 
-		CreationDate.innerText		=	'ÅĞÏ¿Æü';
-		OrderAppDate.innerText		=	'·×¾åÆü';
-		POrderCode.innerText		=	'È¯ÃíNO.';
-		InputUser.innerText			=	'ÆşÎÏ¼Ô';
-		Customer.innerText			=	'»ÅÆşÀè';
-		InChargeGroup.innerText		=	'ÉôÌç';
-		InChargeUser.innerText		=	'Ã´Åö¼Ô';
-		DeliveryPlace.innerText		=	'Ç¼ÉÊ¾ì½ê';
-		MonetaryUnit.innerText		=	'ÄÌ²ß';
-		MonetaryRate.innerText		=	'¥ì¡¼¥È¥¿¥¤¥×';
-		ConversionRate.innerText	=	'´¹»»¥ì¡¼¥È';
-		OrderStatus.innerText		=	'¾õÂÖ';
-		PayCondition.innerText		=	'»ÙÊ§¾ò·ï';
-		ExpirationDate.innerText	=	'È¯ÃíÍ­¸ú´ü¸ÂÆü';
-		Remark.innerText			=	'È÷¹Í';
-		TotalPrice.innerText		=	'¹ç·×¶â³Û';
+		CreationDate.innerText		=	'ç™»éŒ²æ—¥';
+		OrderAppDate.innerText		=	'è¨ˆä¸Šæ—¥';
+		POrderCode.innerText		=	'ç™ºæ³¨NO.';
+		InputUser.innerText			=	'å…¥åŠ›è€…';
+		Customer.innerText			=	'ä»•å…¥å…ˆ';
+		InChargeGroup.innerText		=	'éƒ¨é–€';
+		InChargeUser.innerText		=	'æ‹…å½“è€…';
+		DeliveryPlace.innerText		=	'ç´å“å ´æ‰€';
+		MonetaryUnit.innerText		=	'é€šè²¨';
+		MonetaryRate.innerText		=	'ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—';
+		ConversionRate.innerText	=	'æ›ç®—ãƒ¬ãƒ¼ãƒˆ';
+		OrderStatus.innerText		=	'çŠ¶æ…‹';
+		PayCondition.innerText		=	'æ”¯æ‰•æ¡ä»¶';
+		ExpirationDate.innerText	=	'ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥';
+		Remark.innerText			=	'å‚™è€ƒ';
+		TotalPrice.innerText		=	'åˆè¨ˆé‡‘é¡';
 
 
 	}
@@ -100,7 +100,7 @@ function fncSetWFMessage( obj , objHdn )
 {
 	objHdn.value = obj.value;
 
-	// ¥Ç¥Ğ¥Ã¥°
+	// ãƒ‡ãƒãƒƒã‚°
 	// alert( objHdn.value );
 }
 
@@ -113,10 +113,10 @@ function fncPayConditionConfirm( strPayMode , lngPayConditionCode , lngPayCondit
 //alert("strPayMode=" + strPayMode +"\nlngPayConditionCode=" + lngPayConditionCode + "\nlngPayConditionCodeCrt=" + lngPayConditionCodeCrt + "\n");
 	var strMessage;
 	var strMessageArray_J = new Array(
-									"ÀßÄê¤µ¤ì¤Æ¤¤¤ë»ÙÊ§¾ò·ï¤ÏÈ¯ÃíÆâÍÆ¤«¤é¿ä¾©¤µ¤ì¤ë»ÙÊ§¾ò·ï¤È°ìÃ×¤·¤Æ¤¤¤Ş¤»¤ó¡£\n¿ä¾©¤µ¤ì¤ë»ÙÊ§¤¤¾ò·ï¤ËÊÑ¹¹¤·¤Ş¤¹¤«¡©",
-									"Ê£¿ôÂ¸ºß¤¹¤ëÌÀºÙ¤ËÂĞ¤·¤Æ¡¢»ÙÊ§¾ò·ï¤Ï°ì³ç¤ÇÀßÄê¤µ¤ì¤Ş¤¹¡£\n»ÙÊ§¾ò·ï¤ò³ÎÇ§¤·¤Æ²¼¤µ¤¤¡£",
-									"Ê£¿ôÂ¸ºß¤¹¤ëÌÀºÙ¤ËÂĞ¤·¤Æ¡¢»ÙÊ§¾ò·ï¤Ï°ì³ç¤ÇÀßÄê¤µ¤ì¤Ş¤¹¡£\n¿ä¾©¤µ¤ì¤ë»ÙÊ§¤¤¾ò·ï¤ËÊÑ¹¹¤·¤Ş¤¹¤«¡©",
-									"»ÙÊ§¾ò·ï¤ò³ÎÇ§¤·¤Æ²¼¤µ¤¤¡£");
+									"è¨­å®šã•ã‚Œã¦ã„ã‚‹æ”¯æ‰•æ¡ä»¶ã¯ç™ºæ³¨å†…å®¹ã‹ã‚‰æ¨å¥¨ã•ã‚Œã‚‹æ”¯æ‰•æ¡ä»¶ã¨ä¸€è‡´ã—ã¦ã„ã¾ã›ã‚“ã€‚\næ¨å¥¨ã•ã‚Œã‚‹æ”¯æ‰•ã„æ¡ä»¶ã«å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ",
+									"è¤‡æ•°å­˜åœ¨ã™ã‚‹æ˜ç´°ã«å¯¾ã—ã¦ã€æ”¯æ‰•æ¡ä»¶ã¯ä¸€æ‹¬ã§è¨­å®šã•ã‚Œã¾ã™ã€‚\næ”¯æ‰•æ¡ä»¶ã‚’ç¢ºèªã—ã¦ä¸‹ã•ã„ã€‚",
+									"è¤‡æ•°å­˜åœ¨ã™ã‚‹æ˜ç´°ã«å¯¾ã—ã¦ã€æ”¯æ‰•æ¡ä»¶ã¯ä¸€æ‹¬ã§è¨­å®šã•ã‚Œã¾ã™ã€‚\næ¨å¥¨ã•ã‚Œã‚‹æ”¯æ‰•ã„æ¡ä»¶ã«å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ",
+									"æ”¯æ‰•æ¡ä»¶ã‚’ç¢ºèªã—ã¦ä¸‹ã•ã„ã€‚");
 	
 	var strMessageArray_E = new Array(
 									"'Pay Condition' you selected doesn't correspond with that recommend.\nChange 'Pay Condition' to recommend?",
@@ -125,13 +125,13 @@ function fncPayConditionConfirm( strPayMode , lngPayConditionCode , lngPayCondit
 									"Confirm 'Pay Condition'.");
 	
 	var lngPayMode = eval(strPayMode);
-//	window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCode);//¥æ¡¼¥¶¡¼¤¬ÀßÄê¤·¤¿ÃÍ¤ò¥»¥Ã¥È
+//	window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCode);//ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒè¨­å®šã—ãŸå€¤ã‚’ã‚»ãƒƒãƒˆ
 var list = document.getElementById("lngPayConditionCodeList");
 //    console.log(document);
-    list.selectedIndex = eval(lngPayConditionCode);//¥æ¡¼¥¶¡¼¤¬ÀßÄê¤·¤¿ÃÍ¤ò¥»¥Ã¥È
+    list.selectedIndex = eval(lngPayConditionCode);//ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒè¨­å®šã—ãŸå€¤ã‚’ã‚»ãƒƒãƒˆ
 	//objHdn.value = obj.value;
 
-	// ±Ñ¸ìÀÚÂØ
+	// è‹±èªåˆ‡æ›¿
 /*
 	if( g_lngCode == 0 ){
 		strConfirm = strMessageArray_E[lngPayMode];
@@ -147,22 +147,22 @@ var list = document.getElementById("lngPayConditionCodeList");
 /*
 	}
 */	
-	if( lngPayMode != 1 ){//1¤Î¾ì¹ç¤Î¤ßconfirm¤Ç¤Ï¤Ê¤¯alert¤Ë¤¹¤ë
+	if( lngPayMode != 1 ){//1ã®å ´åˆã®ã¿confirmã§ã¯ãªãalertã«ã™ã‚‹
 		
 		result = confirm(strConfirm);
 		if (result == true ){
-//			window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCodeCrt);//Àµ¤·¤¤ÃÍ¤òselect
+//			window.lngPayConditionCode.selectedIndex = eval(lngPayConditionCodeCrt);//æ­£ã—ã„å€¤ã‚’select
 			window.form1.lngPayConditionCode.value = lngPayConditionCodeCrt;
-//			document.lngPayConditionCode.selectedIndex = eval(lngPayConditionCodeCrt);//Àµ¤·¤¤ÃÍ¤òselect
+//			document.lngPayConditionCode.selectedIndex = eval(lngPayConditionCodeCrt);//æ­£ã—ã„å€¤ã‚’select
 			document.getElementById("lngPayConditionCodeList").value = lngPayConditionCodeCrt;
-			//Á÷¿®¤¹¤ëÃÍ¤Ë¤âÀµ¤·¤¤ÃÍ¤ò¥»¥Ã¥È
+			//é€ä¿¡ã™ã‚‹å€¤ã«ã‚‚æ­£ã—ã„å€¤ã‚’ã‚»ãƒƒãƒˆ
 		}
 		
 		else{
 		 alert(strAlert);
 		 //window.frmPayConditionCode.lngPayConditionCode.disabled = true;
-//		 window.strRecommendPayCondition.innerHTML = '<marquee behavior="scroll" scrolldelay="150">¿ä¾©¤µ¤ì¤ë»ÙÊ§¾ò·ï¡§' + window.lngPayConditionCode.options[lngPayConditionCodeCrt].text + '</marquee>';
-		 document.getElementById("strRecommendPayCondition").innerHTML = '<marquee behavior="scroll" scrolldelay="150">¿ä¾©¤µ¤ì¤ë»ÙÊ§¾ò·ï¡§' + document.getElementById("lngPayConditionCodeList").options[lngPayConditionCodeCrt].text + '</marquee>';
+//		 window.strRecommendPayCondition.innerHTML = '<marquee behavior="scroll" scrolldelay="150">æ¨å¥¨ã•ã‚Œã‚‹æ”¯æ‰•æ¡ä»¶ï¼š' + window.lngPayConditionCode.options[lngPayConditionCodeCrt].text + '</marquee>';
+		 document.getElementById("strRecommendPayCondition").innerHTML = '<marquee behavior="scroll" scrolldelay="150">æ¨å¥¨ã•ã‚Œã‚‹æ”¯æ‰•æ¡ä»¶ï¼š' + document.getElementById("lngPayConditionCodeList").options[lngPayConditionCodeCrt].text + '</marquee>';
 		}
 	}
 	
@@ -175,7 +175,7 @@ var list = document.getElementById("lngPayConditionCodeList");
 
 
 function fncPayConditionFrmChanged(){
-	//ÁªÂò¤µ¤ì¤¿ÃÍ¤òÁ÷¿®¥Õ¥©¡¼¥à¤Ë¤âÈ¿±Ç
+	//é¸æŠã•ã‚ŒãŸå€¤ã‚’é€ä¿¡ãƒ•ã‚©ãƒ¼ãƒ ã«ã‚‚åæ˜ 
 	window.form1.lngPayConditionCode.value = window.lngPayConditionCodeList.value;
 }
 

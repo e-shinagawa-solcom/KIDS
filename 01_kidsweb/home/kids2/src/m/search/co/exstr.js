@@ -3,7 +3,7 @@
 
 
 //////////////////////////////////////////////////////////////////
-////////// ¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncMasterSearchOnload()
 {
 	ChgEtoJ( window.top.lngLanguageCode );
@@ -14,7 +14,7 @@ function fncMasterSearchOnload()
 
 
 ///// HEADER IMAGE /////
-var headerAJ = '<img src="' + mcompanyJ + '" width="949" height="30" border="0" alt="²ñ¼Ò¥Ş¥¹¥¿¸¡º÷">';
+var headerAJ = '<img src="' + mcompanyJ + '" width="949" height="30" border="0" alt="ä¼šç¤¾ãƒã‚¹ã‚¿æ¤œç´¢">';
 var headerAE = '<img src="' + mcompanyE + '" width="949" height="30" border="0" alt="COMPANY MASTER SEARCH">';
 
 

@@ -1,8 +1,8 @@
 
 //-------------------------------------------------------
-// ²òÀâ : ¥¨¥Ç¥£¥Ã¥È¥Ç¡¼¥¿Å¬ÍÑ¥Ü¥¿¥óÄêµÁ
+// è§£èª¬ : ã‚¨ãƒ‡ã‚£ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿é©ç”¨ãƒœã‚¿ãƒ³å®šç¾©
 //-------------------------------------------------------
-var EditCloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="ÊÄ¤¸¤ë"></a>';
+var EditCloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="é–‰ã˜ã‚‹"></a>';
 
 var EditCloseBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>';
 
@@ -11,9 +11,9 @@ var EditCloseBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseu
 
 
 //-------------------------------------------------------
-// ²òÀâ : ²èÁüÁŞÆş¥Ü¥¿¥óÄêµÁ
+// è§£èª¬ : ç”»åƒæŒ¿å…¥ãƒœã‚¿ãƒ³å®šç¾©
 //-------------------------------------------------------
-var EditInsertBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncInsertButton( \'onJ\' , this );" onmouseout="fncInsertButton( \'offJ\' , this );fncAlphaOff( this );" src="' + insertbtJ1 + '" width="72" height="20" border="0" alt="ÁŞÆş"></a>';
+var EditInsertBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncInsertButton( \'onJ\' , this );" onmouseout="fncInsertButton( \'offJ\' , this );fncAlphaOff( this );" src="' + insertbtJ1 + '" width="72" height="20" border="0" alt="æŒ¿å…¥"></a>';
 
 var EditInsertBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncInsertButton( \'onE\' , this );" onmouseout="fncInsertButton( \'offE\' , this );fncAlphaOff( this );" src="' + insertbtE1 + '" width="72" height="20" border="0" alt="INSERT"></a>';
 
@@ -22,7 +22,7 @@ var EditInsertBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouse
 
 
 //-------------------------------------------------------
-// ²òÀâ : ¥¨¥Ç¥£¥Ã¥È¥Ç¡¼¥¿Å¬ÍÑ¥Ü¥¿¥ó¡¦²èÁüÁŞÆş¥Ü¥¿¥ó¡¢ÆüËÜ¸ì±Ñ¸ìÀÚÂØ´Ø¿ô
+// è§£èª¬ : ã‚¨ãƒ‡ã‚£ãƒƒãƒˆãƒ‡ãƒ¼ã‚¿é©ç”¨ãƒœã‚¿ãƒ³ãƒ»ç”»åƒæŒ¿å…¥ãƒœã‚¿ãƒ³ã€æ—¥æœ¬èªè‹±èªåˆ‡æ›¿é–¢æ•°
 //-------------------------------------------------------
 function fncEditDataSet( lngLanguageCode )
 {
@@ -35,7 +35,7 @@ function fncEditDataSet( lngLanguageCode )
 	}
 	else if( lngLanguageCode == 1 )
 	{
-		strImages.innerText    = '²èÁü';
+		strImages.innerText    = 'ç”»åƒ';
 		EditCloseBt.innerHTML  = EditCloseBtJ1;
 		EditInsertBt.innerHTML = EditInsertBtJ1;
 	}

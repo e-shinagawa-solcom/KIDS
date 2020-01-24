@@ -7,7 +7,7 @@
     var resultCount = mswBox.find('.counter');
     var btnClear = mswBox.find('.clear');
 
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó²¡²¼½èÍı
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³æŠ¼ä¸‹å‡¦ç†
     btnClose.on({
         'click': function() {
             clear();
@@ -15,19 +15,19 @@
         }
     });
 
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó²¡²¼½èÍı
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹å‡¦ç†
     btnClear.on({
-        // ¥¯¥ê¥Ã¥¯
+        // ã‚¯ãƒªãƒƒã‚¯
         'click': function(){
             clear();
-            // mswÆâ¤ÎºÇ½é¤Îinput¤Ë¥Õ¥©¡¼¥«¥¹
+            // mswå†…ã®æœ€åˆã®inputã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹
             mswBox.find('input').eq(0).focus();
         },
         // EnterKey
         'keypress': function(e) {
             if(e.which == 13){
                 clear();
-                // mswÆâ¤ÎºÇ½é¤Îinput¤Ë¥Õ¥©¡¼¥«¥¹
+                // mswå†…ã®æœ€åˆã®inputã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹
                 mswBox.find('input').eq(0).focus();
             }
         }
@@ -44,7 +44,7 @@
 
 })();
 
-// iframeÍ×ÁÇ¤Îdraggable¼ÂÁõ
+// iframeè¦ç´ ã®draggableå®Ÿè£…
 (function(){
     var dragging = null;
     var start = null;

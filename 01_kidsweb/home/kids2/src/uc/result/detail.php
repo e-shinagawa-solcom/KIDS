@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥æ¡¼¥¶¡¼´ÉÍı ¾ÜºÙ¾ğÊóÉ½¼¨²èÌÌ
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç† è©³ç´°æƒ…å ±è¡¨ç¤ºç”»é¢
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -26,19 +26,19 @@
 // index.php -> lngAccessIPAddressCode -> ditail.php
 // index.php -> strNote                -> ditail.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "uc/cmn/lib_uc.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
@@ -57,40 +57,40 @@ $aryCheck["lngAuthorityGroupCode"]  = "number(0,32767)";
 $aryCheck["lngAccessIPAddressCode"] = "number(0,32767)";
 $aryCheck["strNote"]                = "length(0,1000)";
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_UC4, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
-// ¶¦ÄÌ¼õ¤±ÅÏ¤·URLÀ¸À®(¥»¥Ã¥·¥ç¥óID¡¢¥Ú¡¼¥¸¡¢³Æ¸¡º÷¾ò·ï)
+// å…±é€šå—ã‘æ¸¡ã—URLç”Ÿæˆ(ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã€ãƒšãƒ¼ã‚¸ã€å„æ¤œç´¢æ¡ä»¶)
 $strURL = fncGetURL( $aryData );
 
-// ¥æ¡¼¥¶¡¼¥³¡¼¥É¤Ë¤è¤ë¾ò·ï¸¡º÷¤òÍ­¸ú²½
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹æ¡ä»¶æ¤œç´¢ã‚’æœ‰åŠ¹åŒ–
 $aryData["lngUserCodeConditions"] = 1;
-// ¥°¥ë¡¼¥×¾ò·ïÌµ¸ú²½
+// ã‚°ãƒ«ãƒ¼ãƒ—æ¡ä»¶ç„¡åŠ¹åŒ–
 $aryData["lngGroupCodeConditions"] = 0;
 
 
-$aryInvalidFlag      = Array ("t" => "ÉÔµö²Ä", "f" => "µö²Ä" );
-$aryMailTransmitFlag = Array ("t" => "µö²Ä",   "f" => "ÉÔµö²Ä" );
-$aryUserDisplayFlag  = Array ("t" => "É½¼¨",   "f" => "ÈóÉ½¼¨" );
+$aryInvalidFlag      = Array ("t" => "ä¸è¨±å¯", "f" => "è¨±å¯" );
+$aryMailTransmitFlag = Array ("t" => "è¨±å¯",   "f" => "ä¸è¨±å¯" );
+$aryUserDisplayFlag  = Array ("t" => "è¡¨ç¤º",   "f" => "éè¡¨ç¤º" );
 
 
-// ¥æ¡¼¥¶¡¼´ÉÍı
-// °Æ·ïÆÉ¤ß¹ş¤ß¡¢¸¡º÷¡¢¾ÜºÙ¾ğÊó¼èÆÀ¥¯¥¨¥ê´Ø¿ô
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†
+// æ¡ˆä»¶èª­ã¿è¾¼ã¿ã€æ¤œç´¢ã€è©³ç´°æƒ…å ±å–å¾—ã‚¯ã‚¨ãƒªé–¢æ•°
 list ( $lngResultID, $lngResultNum, $strErrorMessage ) = getUserQuery( $objAuth->UserCode, $aryData, $objDB );
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 $objResult = $objDB->fetchObject( $lngResultID, 0 );
 
@@ -110,20 +110,20 @@ $partsData["strAccessIPAddress"]    = $objResult->straccessipaddress;
 $partsData["strUserImageFileName"]  = $objResult->struserimagefilename;
 $partsData["strNote"]               = $objResult->strnote;
 
-// ½êÂ°¥°¥ë¡¼¥×É½¼¨Ê¸»úÎóÀ¸À®
+// æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—è¡¨ç¤ºæ–‡å­—åˆ—ç”Ÿæˆ
 $partsData["aryGroup"] = "[" . $objResult->strgroupdisplaycode . "] " . $objResult->strgroupname . "<br>\n";
 
 
-// ¥í¥°¥¤¥óµö²Ä¥Õ¥é¥°¡¢É½¼¨ÊÑ´¹
+// ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯ãƒ•ãƒ©ã‚°ã€è¡¨ç¤ºå¤‰æ›
 $partsData["bytInvalidFlag"] = $aryInvalidFlag[$partsData["bytInvalidFlag"]];
 
-// ¥á¡¼¥ëÇÛ¿®µö²Ä¥Õ¥é¥°¡¢É½¼¨ÊÑ´¹
+// ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯ãƒ•ãƒ©ã‚°ã€è¡¨ç¤ºå¤‰æ›
 $partsData["bytMailTransmitFlag"] = $aryMailTransmitFlag[$partsData["bytMailTransmitFlag"]];
 
-// ¥æ¡¼¥¶¡¼É½¼¨¥Õ¥é¥°¡¢É½¼¨ÊÑ´¹
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤ºãƒ•ãƒ©ã‚°ã€è¡¨ç¤ºå¤‰æ›
 $partsData["bytUserDisplayFlag"] = $aryUserDisplayFlag[$partsData["bytUserDisplayFlag"]];
 
-// ¥æ¡¼¥¶¡¼É½¼¨²èÁü¡¢É½¼¨ÊÑ´¹
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤ºç”»åƒã€è¡¨ç¤ºå¤‰æ›
 if ( $partsData["strUserImageFileName"] )
 {
 	$partsData["strUserImageFileName"] = USER_IMAGE_URL . $partsData["strUserImageFileName"];
@@ -133,12 +133,12 @@ else
 	$partsData["strUserImageFileName"] = USER_IMAGE_DEFAULT_URL;
 }
 
-// ½êÂ°¥°¥ë¡¼¥×Ê£¿ôÉ½¼¨½èÍı
+// æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—è¤‡æ•°è¡¨ç¤ºå‡¦ç†
 for ( $i = 1; $i < $lngResultNum; $i++ )
 {
 	$objResult = $objDB->fetchObject( $lngResultID, $i );
 
-	// ½êÂ°¥°¥ë¡¼¥×É½¼¨Ê¸»úÎóÀ¸À®
+	// æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—è¡¨ç¤ºæ–‡å­—åˆ—ç”Ÿæˆ
 	$partsData["aryGroup"] .= "[" . $objResult->strgroupdisplaycode . "] " . $objResult->strgroupname . "<br>\n";
 }
 
@@ -146,14 +146,14 @@ $partsData["strMode"] = "detail";
 
 $objDB->freeResult( $lngResultID );
 
-// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 //$objTemplate->getTemplate( "uc/result/detail.tmpl" );
 $objTemplate->getTemplate( "uc/regist/confirm.tmpl" );
 $objTemplate->replace( $partsData );
 $objTemplate->complete();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 

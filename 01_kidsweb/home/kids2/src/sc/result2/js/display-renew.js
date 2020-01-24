@@ -1,6 +1,6 @@
 (function () {
     $('img.renew.button').on('click', function () {
-        // Ç¼ÉÊ½ñ½¤Àµ²èÌÌ
+        // ç´å“æ›¸ä¿®æ­£ç”»é¢
         var url = '/sc/regist2/renew.php';
 
         var lngslipno = 'lngSlipNo=' + $(this).attr('lngslipno');
@@ -20,11 +20,11 @@
             + '&' + strsalescode
             + '&' + strcustomercode
             + '&' + sessionID;
-        // Ç¼ÉÊ½ñ½¤Àµ²èÌÌ¤òÊÌ¥¦¥£¥ó¥É¥¦¤ÇÉ½¼¨
+        // ç´å“æ›¸ä¿®æ­£ç”»é¢ã‚’åˆ¥ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã§è¡¨ç¤º
         var w = open(url,
             'display-renew',
             'width=1011, height=650, resizable=yes, scrollbars=yes, menubar=no');
-        // ¥µ¥Ö¥¦¥¤¥ó¥É¥¦¥º¤òÊÄ¤¸¤ëÁ°¤Î¥¤¥Ù¥ó¥È
+        // ã‚µãƒ–ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚ºã‚’é–‰ã˜ã‚‹å‰ã®ã‚¤ãƒ™ãƒ³ãƒˆ
         w.addEventListener("beforeunload", function (event) {
             var locked = $('input[name="locked"]').val();
             if (locked == "1") {

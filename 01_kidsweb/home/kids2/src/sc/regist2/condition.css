@@ -1,4 +1,4 @@
-/* ÆþÎÏ¥Õ¥©¡¼¥à¶¦ÄÌÇØ·ÊÏÈ ±¦¥µ¥¤¥É¥Ð¡¼¥¿¥ÖÌµ¤· ¸¡º÷¾ò·ïÆþÎÏ */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ å…±é€šèƒŒæ™¯æž  å³ã‚µã‚¤ãƒ‰ãƒãƒ¼ã‚¿ãƒ–ç„¡ã— æ¤œç´¢æ¡ä»¶å…¥åŠ› */
 .form-box--notabs-for-condition
 {
     position: absolute;
@@ -16,14 +16,14 @@
     background-color: #d6d0b1;
 }
 
-/* OK¥Ü¥¿¥ó */
+/* OKãƒœã‚¿ãƒ³ */
 #OkBt{
 	position: absolute;
 	top: 405px;
 	left: 230px;
 }
 
-/* ¥­¥ã¥ó¥»¥ë¥Ü¥¿¥ó */
+/* ã‚­ãƒ£ãƒ³ã‚»ãƒ«ãƒœã‚¿ãƒ³ */
 #CancelBt{
 	position: absolute;
 	top: 405px;

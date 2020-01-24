@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ¥°¥ë¡¼¥×¥Ş¥¹¥¿ ³ÎÇ§²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿ ç¢ºèªç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,7 +10,7 @@
 *	@version   1.00
 *
 */
-// ÅĞÏ¿¡¢½¤Àµ¼Â¹Ô
+// ç™»éŒ²ã€ä¿®æ­£å®Ÿè¡Œ
 // confirm.php -> strSessionID         -> action.php
 // confirm.php -> lngActionCode        -> action.php
 // confirm.php -> lnggroupcode         -> action.php
@@ -21,36 +21,36 @@
 // confirm.php -> strgroupdisplayname  -> action.php
 // confirm.php -> strgroupdisplaycolor -> action.php
 //
-// ºï½ü¼Â¹Ô
+// å‰Šé™¤å®Ÿè¡Œ
 // confirm.php -> strSessionID  -> action.php
 // confirm.php -> lngActionCode -> action.php
 // confirm.php -> lnggroupcode  -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -59,7 +59,7 @@ $aryCheck["lngActionCode"]       = "null:number(" . DEF_ACTION_INSERT . "," . DE
 
 if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 {
-	// ¿§»ØÄê¤¬¤Ê¤«¤Ã¤¿¾ì¹ç¡¢¥Ç¥Õ¥©¥ë¥È¤ÇÇò¤òÀßÄê
+	// è‰²æŒ‡å®šãŒãªã‹ã£ãŸå ´åˆã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§ç™½ã‚’è¨­å®š
 	if ( $aryData["strgroupdisplaycolor"] == "" )
 	{
 		$aryData["strgroupdisplaycolor"] = "#FFFFFF";
@@ -75,56 +75,56 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 }
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½èÍı¤ÎÍ­¸úÀ­¤ò¥Á¥§¥Ã¥¯
+// å‡¦ç†ã®æœ‰åŠ¹æ€§ã‚’ãƒã‚§ãƒƒã‚¯
 //////////////////////////////////////////////////////////////////////////
-// ( ÅĞÏ¿ ¤Ş¤¿¤Ï ½¤Àµ ) ¤«¤Ä ¥­¡¼¤Ë¥¨¥é¡¼¤¬¤Ê¤¤ ¾ì¹ç¡¢
-// ¿·µ¬ÅĞÏ¿¡¢½¤Àµ¥Á¥§¥Ã¥¯¼Â¹Ô
+// ( ç™»éŒ² ã¾ãŸã¯ ä¿®æ­£ ) ã‹ã¤ ã‚­ãƒ¼ã«ã‚¨ãƒ©ãƒ¼ãŒãªã„ å ´åˆã€
+// æ–°è¦ç™»éŒ²ã€ä¿®æ­£ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode"] == DEF_ACTION_UPDATE ) && !join ( $aryCheckResult ) )
 {
-	// ¥°¥ë¡¼¥×¥³¡¼¥É½ÅÊ£¥Á¥§¥Ã¥¯
+	// ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰é‡è¤‡ãƒã‚§ãƒƒã‚¯
 	$strQuery = "SELECT * FROM m_Group " .
                 "WHERE lngGroupCode = " . $aryData["lnggroupcode"];
     
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¿·µ¬ÅĞÏ¿ ¤«¤Ä ·ë²Ì·ï¿ô¤¬0°Ê¾å
-	// ¤Ş¤¿¤Ï
-	// ½¤Àµ ¤«¤Ä ·ë²Ì·ï¿ô¤¬1°Ê³° ¤Î¾ì¹ç¡¢¥¨¥é¡¼
+	// æ–°è¦ç™»éŒ² ã‹ã¤ çµæœä»¶æ•°ãŒ0ä»¥ä¸Š
+	// ã¾ãŸã¯
+	// ä¿®æ­£ ã‹ã¤ çµæœä»¶æ•°ãŒ1ä»¥å¤– ã®å ´åˆã€ã‚¨ãƒ©ãƒ¼
 	if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && $lngResultNum > 0 ) || ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $lngResultNum != 1 ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 	}
 
 
-	// Æ±¤¸´ë¶ÈÆâ¤Ë¤ª¤±¤ëÉ½¼¨¥°¥ë¡¼¥×¥³¡¼¥É½ÅÊ£¥Á¥§¥Ã¥¯
+	// åŒã˜ä¼æ¥­å†…ã«ãŠã‘ã‚‹è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰é‡è¤‡ãƒã‚§ãƒƒã‚¯
 	$strQuery = "SELECT * FROM m_Group " .
                 "WHERE lngCompanyCode = " . $aryData["lngcompanycode"] .
                 " AND strGroupDisplayCode = '" . $aryData["strgroupdisplaycode"] . "'";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ·ë²Ì·ï¿ô¤¬0°Ê¾å¤Î¾ì¹ç¡¢¥¨¥é¡¼È½Äê½èÍı¤Ø
+	// çµæœä»¶æ•°ãŒ0ä»¥ä¸Šã®å ´åˆã€ã‚¨ãƒ©ãƒ¼åˆ¤å®šå‡¦ç†ã¸
 	if ( $lngResultNum > 0 )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
-		// ( ¹¹¿· ¤«¤Ä ¥°¥ë¡¼¥×¥³¡¼¥É¤¬Æ±¤¸ ) °Ê³° ¤Î¾ì¹ç¡¢¥¨¥é¡¼
+		// ( æ›´æ–° ã‹ã¤ ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ãŒåŒã˜ ) ä»¥å¤– ã®å ´åˆã€ã‚¨ãƒ©ãƒ¼
 		if ( !( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $objResult->lnggroupcode == $aryData["lnggroupcode"] ) )
 		{
-			fncOutputError ( 9052, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+			fncOutputError ( 9052, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 		}
 
 		$objDB->freeResult( $lngResultID );
 	}
 
-	// ½¤Àµ¤«¤ÄÉ½¼¨¥Õ¥é¥°¤¬"FALSE"¤Î¾ì¹ç¡¢¥æ¡¼¥¶¡¼½êÂ°¥Á¥§¥Ã¥¯¼Â¹Ô
+	// ä¿®æ­£ã‹ã¤è¡¨ç¤ºãƒ•ãƒ©ã‚°ãŒ"FALSE"ã®å ´åˆã€ãƒ¦ãƒ¼ã‚¶ãƒ¼æ‰€å±ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 	if ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $aryData["bytgroupdisplayflag"] == "FALSE" )
 	{
 		$strQuery = "SELECT * FROM m_GroupRelation " .
@@ -132,15 +132,15 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-		// ·ë²Ì·ï¿ô¤¬1°Ê¾å¤Î¾ì¹ç¡¢¥¨¥é¡¼
+		// çµæœä»¶æ•°ãŒ1ä»¥ä¸Šã®å ´åˆã€ã‚¨ãƒ©ãƒ¼
 		if ( $lngResultNum > 0 )
 		{
 			$objDB->freeResult( $lngResultID );
-			fncOutputError ( 9052, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+			fncOutputError ( 9052, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 		}
 	}
 
-	// ÅĞÏ¿½èÍı(INSERT)
+	// ç™»éŒ²å‡¦ç†(INSERT)
 	if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 	{
 
@@ -156,13 +156,13 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
                       " )";
 	}
 
-	// ½¤Àµ½èÍı(UPDATE)
+	// ä¿®æ­£å‡¦ç†(UPDATE)
 	elseif ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE )
 	{
-		// ¥í¥Ã¥¯
+		// ãƒ­ãƒƒã‚¯
 		$aryQuery[] = "SELECT * FROM m_Group WHERE lngGroupCode = " . $aryData["lnggroupcode"] . " FOR UPDATE";
 
-		// UPDATE ¥¯¥¨¥ê
+		// UPDATE ã‚¯ã‚¨ãƒª
 		$aryQuery[] = "UPDATE m_Group SET" .
                       " lngCompanyCode = " . $aryData["lngcompanycode"] . "," .
                       " strGroupName = '" . $aryData["strgroupname"] . "'," .
@@ -174,14 +174,14 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 	}
 }
 
-// ºï½ü ¤«¤Ä ¥¨¥é¡¼¤¬¤Ê¤¤ ¾ì¹ç¡¢
-// ºï½ü¥Á¥§¥Ã¥¯¼Â¹Ô
+// å‰Šé™¤ ã‹ã¤ ã‚¨ãƒ©ãƒ¼ãŒãªã„ å ´åˆã€
+// å‰Šé™¤ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResult ) )
 {
-	// ¥Á¥§¥Ã¥¯ÂĞ¾İ¥Æ¡¼¥Ö¥ëÌ¾ÇÛÎó¤òÄêµÁ
+	// ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒ†ãƒ¼ãƒ–ãƒ«åé…åˆ—ã‚’å®šç¾©
 	$aryTableName = Array ( "m_GroupRelation", "m_Order", "m_Receive", "m_Sales", "m_Stock" );
 
-	// ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀ¸À®
+	// ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªç”Ÿæˆ
 	for ( $i = 0; $i < count ( $aryTableName ); $i++ )
 	{
 		$aryQuery[] = "SELECT lngGroupCode FROM " . $aryTableName[$i] . " WHERE lngGroupCode = " . $aryData["lnggroupcode"];
@@ -193,20 +193,20 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ·ë²Ì¤¬1·ï¤Ç¤â¤¢¤Ã¤¿¾ì¹ç¡¢ºï½üÉÔ²ÄÇ½¤È¤·¡¢¥¨¥é¡¼½ĞÎÏ
+	// çµæœãŒ1ä»¶ã§ã‚‚ã‚ã£ãŸå ´åˆã€å‰Šé™¤ä¸å¯èƒ½ã¨ã—ã€ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 	if ( $lngResultNum > 0 )
 	{
-		fncOutputError ( 1201, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+		fncOutputError ( 1201, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 	}
 
-	// ºï½ü½èÍı(DELETE)
+	// å‰Šé™¤å‡¦ç†(DELETE)
 	$aryQuery[] = "DELETE FROM m_Group WHERE lngGroupCode = " . $aryData["lnggroupcode"];
 }
 
 
 
 ////////////////////////////////////////////////////////////////////////////
-// ¥¯¥¨¥ê¼Â¹Ô
+// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 // ////////////////////////////////////////////////////////////////////////////
 $objDB->transactionBegin();
 
@@ -224,7 +224,7 @@ $objDB->transactionCommit();
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½ĞÎÏ
+// å‡ºåŠ›
 //////////////////////////////////////////////////////////////////////////
 echo "<script language=javascript>window.returnValue=true;window.open('about:blank','_parent').close();</script>";
 

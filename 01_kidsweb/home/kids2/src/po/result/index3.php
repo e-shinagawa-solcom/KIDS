@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ȯ������  ���
+*       発注管理  削除
 *
 *
 *       @package    K.I.D.S.
@@ -13,33 +13,33 @@
 *       @version    2.00
 *
 *
-*       ��������
-*         ������ȯ���ֹ�ǡ����κ������
+*       処理概要
+*         ・指定発注番号データの削除処理
 *
-*       ��������
+*       更新履歴
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// �����ɤ߹���
+// 設定読み込み
 include_once('conf.inc');
 
-// �饤�֥���ɤ߹���
+// ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "po/cmn/lib_pos.php");
 require (SRC_ROOT . "po/cmn/lib_pos1.php");
 require (SRC_ROOT . "po/cmn/column.php");
 require_once (LIB_DEBUGFILE);
 require_once (LIB_EXCLUSIVEFILE);
-// DB��³
+// DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// GET�ǡ�������
+// GETデータ取得
 //////////////////////////////////////////////////////////////////////////
 if ( $_GET )
 {
@@ -51,76 +51,76 @@ else if ( $_POST )
 }
 if ( !isset($aryData["lngOrderNo"]) )
 {
-	fncOutputError ( 9061, DEF_ERROR, "�ǡ����۾�Ǥ���", TRUE, "", $objDB );
+	fncOutputError ( 9061, DEF_ERROR, "データ異常です。", TRUE, "", $objDB );
 }
 
-// ʸ��������å�
+// 文字列チェック
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["lngOrderNo"]	  = "null:number(0,10)";
 // $aryResult = fncAllCheck( $aryData, $aryCheck );
 // fncPutStringCheckError( $aryResult, $objDB );
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ��������桼���������ɤμ���
+// ログインユーザーコードの取得
 $lngInputUserCode = $objAuth->UserCode;
 
 
-// ���³�ǧ
-// 502 ȯ��������ȯ��������
+// 権限確認
+// 502 発注管理（発注検索）
 if ( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
 {
-	fncOutputError ( 9060, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
-// 506 ȯ��������ȯ�������
+// 506 発注管理（発注削除）
 if ( !fncCheckAuthority( DEF_FUNCTION_PO6, $objAuth ) )
 {
-	fncOutputError ( 9060, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 $aryOrderNo = explode(",", $aryData["lngOrderNo"]);
 
 if($_POST){
     $objDB->transactionBegin();
-	for($i = 0; $i < count($aryOrderNo); $i++){  // �ºݤ�1��Τߡ�
+	for($i = 0; $i < count($aryOrderNo); $i++){  // 実際は1件のみ。
 		$lngorderno = intval(explode("_", $aryOrderNo[$i])[0]);
 		$lngrevisionno = fncGetLatestRevisionNo($lngorderno, $objDB);
 	    
-	    // �������оݤȤʤä�ȯ�����٤˴�Ť�ȯ����������������
+	    // 確定取消対象となった発注明細に基づく発注書明細全件を取得
 		$aryPurchaseOrderDetail = fncGetDeletePurchaseOrderDetail($lngorderno, $lngrevisionno, $objDB);
 		if( is_null($aryPurchaseOrderDetail) )
 		{
-			fncOutputError ( 501, DEF_ERROR, "����оݤ�ȯ���ϴ��˼�ä���Ƥ��ޤ���", TRUE, "", $objDB );
+			fncOutputError ( 501, DEF_ERROR, "取消対象の発注は既に取消されています。", TRUE, "", $objDB );
 		}
 	
-		// ������ä��Ȥʤä�ȯ�����٤����
+		// 確定取り消しとなった発注明細を取得
 		$aryOrderDetail = fncGetDeleteOrderDetail($lngorderno, $lngrevisionno, $objDB);
 
-        // ȯ�������٤���ȯ����No�����
+        // 発注書明細から発注書Noを取得
         $lngpurchaseorderno = $aryPurchaseOrderDetail[0]["lngpurchaseorderno"];
         
-        // ȯ������å�
+        // 発注書ロック
         if(!lockOrder($lngpurchaseorderno, $objDB)){
-			fncOutputError ( 501, DEF_ERROR, "����оݤ�ȯ����ȯ���񤬽�����Ǥ���", TRUE, "", $objDB );
+			fncOutputError ( 501, DEF_ERROR, "取消対象の発注の発注書が修正中です。", TRUE, "", $objDB );
         }
 
-        // ȯ���񹹿�̵ͭ�����å�
+        // 発注書更新有無チェック
         if( isPurchaseOrderModified($lngpurchaseorderno, $lngrevisionno, $objDB) )
         {
-            fncOutputError(9051, DEF_ERROR, "¾�桼������ȯ����򹹿��ޤ��Ϻ�����Ƥ��ޤ���", true, "", $objDB);
+            fncOutputError(9051, DEF_ERROR, "他ユーザーが発注書を更新または削除しています。", true, "", $objDB);
             return false;
         }
         
-        // �о�ȯ���Υ��ơ����������å�
+        // 対象発注のステータスチェック
 		if(isOrderModified($lngorderno, DEF_ORDER_ORDER, $objDB)){
 			fncOutputError ( 505, DEF_ERROR, "", TRUE, "", $objDB );
 		}
-		// ������ä��Ȥʤä�ȯ�����٤˴�Ť�ȯ���ޥ�����ȯ�����ơ�������ֲ�ȯ���פ��᤹
+		// 確定取り消しとなった発注明細に基づく発注マスタの発注ステータスを「仮発注」へ戻す
 		if(!fncCancelOrder($lngorderno, $lngrevisionno, $objDB)){ return false; }
 
-		// ��������ȯ�����ֹ桢��ӥ�����ֹ�˳����������ĳ����äȤʤä�ȯ�����٤˳������ʤ�ȯ�������٤�
-		// ɽ���ѥ����ȥ����ξ���˼���������̤��ˡ��ʲ��λ��ͤǿ�����ȯ�������٤򿷵�����Ͽ����
+		// 取得した発注書番号、リビジョン番号に該当し、かつ確定取消となった発注明細に該当しない発注書明細を
+		// 表示用ソートキーの昇順に取得した結果を基に、以下の仕様で新規の発注書明細を新規に登録する
 		$aryInsertPurchaseOrderDetail = [];
 		$aryDetailNo = array_column($aryOrderDetail, "lngorderdetailno");
 		if( is_array($aryPurchaseOrderDetail) )
@@ -196,12 +196,12 @@ if($_POST){
 			$aryCancelOrderDetail["lngsortkey"] = $aryPurchaseOrderDetail[$j]["lngsortkey"];
 		}
 		if(count($aryInsertPurchaseOrderDetail) > 0){
-			// �����٤�������ϡ�ȯ�������٤򿷵�����Ͽ����
+			// 残明細がある場合は、発注書明細を新規に登録する
 			foreach($aryInsertPurchaseOrderDetail as $row){
 				if(!fncInsertPurchaseOrderDetail($row, $objDB)) { return false; }
 			}
 	
-			// ȯ����ޥ����򹹿�����
+			// 発注書マスタを更新する
 			$aryOrder_org = fncGetPurchaseOrder2($aryPurchaseOrderDetail[0]["lngpurchaseorderno"], $aryPurchaseOrderDetail[0]["lngrevisionno"], $objDB);
 			$aryOrder = $aryOrder_org;
 			$aryOrder["lngrevisionno"] = intval($aryOrder["lngrevisionno"]) + 1;
@@ -210,7 +210,7 @@ if($_POST){
 		}
 		else
 		{
-			// �����٤��ʤ�����ȯ����ޥ����������롣
+			// 残明細がない場合は発注書マスタも削除する。
 			$aryOrder_org = fncGetPurchaseOrder2($aryCancelOrderDetail["lngpurchaseorderno"], $aryCancelOrderDetail["lngrevisionno"], $objDB);
 			$aryOrder = $aryOrder_org;
 			$orgRevision = $aryOrder["lngrevisionno"];
@@ -244,20 +244,20 @@ if($_POST){
 			$aryOrder["lngprintcount"] = null;
 
 			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
-			// �����ô�λ����ɽ���Τ���˥�ӥ�����ֹ������
+			// 確定取消完了画面表示のためにリビジョン番号を復元
 			$aryOrder["lngrevisionno"] = $orgRevision;
 			
 		}
 	
 
 		if(count($aryInsertPurchaseOrderDetail) > 0){
-			$aryHtml[] = "<p class=\"caption\">�ʲ���ȯ���γ����ä�ȼ����������ȯ����������ޤ�����</p>";
+			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を修正しました。</p>";
 			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail, $aryData["strSessionID"]);
 		}
 		else
 		{
-			// �����٤��ʤ����
-			$aryHtml[] = "<p class=\"caption\">�ʲ���ȯ���γ����ä�ȼ����������ȯ����������ޤ���</p>";
+			// 残明細がない場合
+			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を削除しました</p>";
 			$aryHtml[] = fncDeletePurchaseOrderHtml($aryOrder_org, $aryPurchaseOrderDetail, $aryData["strSessionID"]);
 			
 		}
@@ -273,7 +273,7 @@ if($_POST){
 		$objTemplate->complete();
 		echo $objTemplate->strTemplate;
 	} else {
-		fncOutputError ( 9051, DEF_ERROR, "�����оݤ�ȯ����ޥ���������ޤ���", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "更新対象の発注書マスタがありません。", TRUE, "", $objDB );
 		return FALSE;
 	}
 	
@@ -296,18 +296,18 @@ $aryResult["strSessionID"] = $aryData["strSessionID"];
 //$aryResult["lngRevisionNo"] = implode(",", $aryRevisionNo);
 
 
-// �ƥ�ץ졼���ɤ߹���
+// テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "po/result/parts3.tmpl" );
 
-// �ƥ�ץ졼������
+// テンプレート生成
 $objTemplate->replace( $aryResult );
 // $objTemplate->replace( $aryOrderResult );
 // $objTemplate->replace( $aryDetailResult );
 //$objTemplate->replace( $aryData );
 $objTemplate->complete();
 
-// HTML����
+// HTML出力
 echo $objTemplate->strTemplate;
 
 

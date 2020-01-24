@@ -1,8 +1,8 @@
 <?
 /** 
-*	¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥ÈÍÑ¥é¥¤¥Ö¥é¥ê
+*	ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
-*	¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥ÈÍÑ´Ø¿ô¥é¥¤¥Ö¥é¥ê
+*	ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆç”¨é–¢æ•°ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -11,25 +11,25 @@
 *	@access    public
 *	@version   1.00
 *
-*	¹¹¿·ÍúÎò
-*	2004.04.07	LCÍ½ÄêÉ½¤ÎÉ½¼¨¹àÌÜ¤òÄÉ²Ã
-*	2004.05.13	LCÍ½ÄêÉ½¤ÎÉ½¼¨¹àÌÜ¤òÄÉ²Ã Ç¼ÉÊ¾ì½ê¤ÎÄÉ²Ã
-*	2004.05.13	¥¿¥¤¥È¥ë¤ÎÄÉ²Ã
+*	æ›´æ–°å±¥æ­´
+*	2004.04.07	LCäºˆå®šè¡¨ã®è¡¨ç¤ºé …ç›®ã‚’è¿½åŠ 
+*	2004.05.13	LCäºˆå®šè¡¨ã®è¡¨ç¤ºé …ç›®ã‚’è¿½åŠ  ç´å“å ´æ‰€ã®è¿½åŠ 
+*	2004.05.13	ã‚¿ã‚¤ãƒˆãƒ«ã®è¿½åŠ 
 */
 
 //////////////////////////////////////////////////////////////////////////////
-// ÀßÄê
+// è¨­å®š
 //////////////////////////////////////////////////////////////////////////////
-// ½èÍýIDÄêµÁ
-define ( "DEF_QUERY_ROOT", SRC_ROOT . "dataex/cmn/" ); // ¥¯¥¨¥ê¥Ñ¥¹
+// å‡¦ç†IDå®šç¾©
+define ( "DEF_QUERY_ROOT", SRC_ROOT . "dataex/cmn/" ); // ã‚¯ã‚¨ãƒªãƒ‘ã‚¹
 
-define ( "DEF_EXPORT_SALES",    1 ); // Çä¾å¥ì¥·¥Ô
+define ( "DEF_EXPORT_SALES",    1 ); // å£²ä¸Šãƒ¬ã‚·ãƒ”
 define ( "DEF_EXPORT_PURCHASE", 2 ); // Purchase Recipe
-define ( "DEF_EXPORT_LC",       3 ); // L/CÍ½ÄêÉ½¾ðÊó
-define ( "DEF_EXPORT_STOCK",    4 ); // »ÅÆþ°ìÍ÷É½
-define ( "DEF_EXPORT_ESTIMATE", 5 ); // ¸«ÀÑ¸¶²Á½ñ
+define ( "DEF_EXPORT_LC",       3 ); // L/Cäºˆå®šè¡¨æƒ…å ±
+define ( "DEF_EXPORT_STOCK",    4 ); // ä»•å…¥ä¸€è¦§è¡¨
+define ( "DEF_EXPORT_ESTIMATE", 5 ); // è¦‹ç©åŽŸä¾¡æ›¸
 
-// lngExportData ¤òÅº»ú¤È¤¹¤ë¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¥Ç¥£¥ì¥¯¥È¥ê¤ÎÀßÄê
+// lngExportData ã‚’æ·»å­—ã¨ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®è¨­å®š
 $aryDirName = array (
 	DEF_EXPORT_SALES    => "sales",
 	DEF_EXPORT_PURCHASE => "purchase",
@@ -39,33 +39,33 @@ $aryDirName = array (
 );
 
 // 2004.05.13 suzukaze update start
-// Çä¾å¥ì¥·¥Ô
-$aryTitleName[1][1] = "Çä¾å¥ì¥·¥Ô¡¡ÉôÌç¡¦¸ÜµÒÊÌ";
-$aryTitleName[1][2] = "Çä¾å¥ì¥·¥Ô¡¡ÉôÌç¡¦À½ÉÊÊÌ";
+// å£²ä¸Šãƒ¬ã‚·ãƒ”
+$aryTitleName[1][1] = "å£²ä¸Šãƒ¬ã‚·ãƒ”ã€€éƒ¨é–€ãƒ»é¡§å®¢åˆ¥";
+$aryTitleName[1][2] = "å£²ä¸Šãƒ¬ã‚·ãƒ”ã€€éƒ¨é–€ãƒ»è£½å“åˆ¥";
 // Purchase Recipe
-$aryTitleName[2][1] = "£Ð£õ£ò£ã£è£á£ó£å¡¡£Ò£å£ã£é£ð£å¡¡¡Ê£Ì£Ã¡Ë";
-$aryTitleName[2][2] = "£Ð£õ£ò£ã£è£á£ó£å¡¡£Ò£å£ã£é£ð£å¡¡¡Ê£Ô£Ô¡Ë";
-$aryTitleName[2][3] = "£Ð£õ£ò£ã£è£á£ó£å¡¡£Ò£å£ã£é£ð£å¡¡¡Ê£Ï£î£Â£ï£á£ò£ä¡Ë";
-// LCÍ½ÄêÉ½
-$aryTitleName[3][1] = "£Ì¡¿£ÃÍ½ÄêÉ½¡Ê¿·µ¬¡Ë";
-$aryTitleName[3][2] = "£Ì¡¿£ÃÍ½ÄêÉ½¡Ê¥ê¥Ð¥¤¥º¡Ë";
-// »ÅÆþ°ìÍ÷É½
-$aryTitleName[4][1] = "»ÅÆþ°ìÍ÷É½¡¡»ÅÆþ²ÊÌÜ¡¦»ÅÆþÀèÊÌ";
-$aryTitleName[4][2] = "»ÅÆþ°ìÍ÷É½¡¡»ÅÆþ²ÊÌÜ¡¦ÉôÌç¡¦À½ÉÊÊÌ";
+$aryTitleName[2][1] = "ï¼°ï½•ï½’ï½ƒï½ˆï½ï½“ï½…ã€€ï¼²ï½…ï½ƒï½‰ï½ï½…ã€€ï¼ˆï¼¬ï¼£ï¼‰";
+$aryTitleName[2][2] = "ï¼°ï½•ï½’ï½ƒï½ˆï½ï½“ï½…ã€€ï¼²ï½…ï½ƒï½‰ï½ï½…ã€€ï¼ˆï¼´ï¼´ï¼‰";
+$aryTitleName[2][3] = "ï¼°ï½•ï½’ï½ƒï½ˆï½ï½“ï½…ã€€ï¼²ï½…ï½ƒï½‰ï½ï½…ã€€ï¼ˆï¼¯ï½Žï¼¢ï½ï½ï½’ï½„ï¼‰";
+// LCäºˆå®šè¡¨
+$aryTitleName[3][1] = "ï¼¬ï¼ï¼£äºˆå®šè¡¨ï¼ˆæ–°è¦ï¼‰";
+$aryTitleName[3][2] = "ï¼¬ï¼ï¼£äºˆå®šè¡¨ï¼ˆãƒªãƒã‚¤ã‚ºï¼‰";
+// ä»•å…¥ä¸€è¦§è¡¨
+$aryTitleName[4][1] = "ä»•å…¥ä¸€è¦§è¡¨ã€€ä»•å…¥ç§‘ç›®ãƒ»ä»•å…¥å…ˆåˆ¥";
+$aryTitleName[4][2] = "ä»•å…¥ä¸€è¦§è¡¨ã€€ä»•å…¥ç§‘ç›®ãƒ»éƒ¨é–€ãƒ»è£½å“åˆ¥";
 
-// ¸«ÀÑ¸¶²Á½ñ
-$aryTitleName[5][1] = "¸«ÀÑ¸¶²Á½ñ";
+// è¦‹ç©åŽŸä¾¡æ›¸
+$aryTitleName[5][1] = "è¦‹ç©åŽŸä¾¡æ›¸";
 // 2004.05.13 suzukaze update end
 
 
-// ¥«¥é¥àÌ¾ÄêµÁ
-$aryColumnName[1] = Array ( "Çä¾å·×¾åÆü", "Çä¾åNo", "¼õÃíNo", "¸ÜµÒ¥³¡¼¥É", "¸ÜµÒÌ¾¾Î", "ÉôÌç¥³¡¼¥É", "ÉôÌçÌ¾¾Î", "ÅÁÉ¼No", "Çä¾å¶èÊ¬¥³¡¼¥É", "À½ÉÊ¥³¡¼¥É", "À½ÉÊÌ¾¾Î", "¸ÜµÒÉÊÈÖ","ÄÌ²ßÌ¾¾Î", "Ã±²Á", "Ã±°Ì", "¿ôÎÌ", "ÀÇÈ´¶â³Û", "ÀÇ³Û", "¹ç·×¶â³Û", "ÌÀºÙÈ÷¹Í" );
+// ã‚«ãƒ©ãƒ åå®šç¾©
+$aryColumnName[1] = Array ( "å£²ä¸Šè¨ˆä¸Šæ—¥", "å£²ä¸ŠNo", "å—æ³¨No", "é¡§å®¢ã‚³ãƒ¼ãƒ‰", "é¡§å®¢åç§°", "éƒ¨é–€ã‚³ãƒ¼ãƒ‰", "éƒ¨é–€åç§°", "ä¼ç¥¨No", "å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰", "è£½å“ã‚³ãƒ¼ãƒ‰", "è£½å“åç§°", "é¡§å®¢å“ç•ª","é€šè²¨åç§°", "å˜ä¾¡", "å˜ä½", "æ•°é‡", "ç¨ŽæŠœé‡‘é¡", "ç¨Žé¡", "åˆè¨ˆé‡‘é¡", "æ˜Žç´°å‚™è€ƒ" );
 
-$aryColumnName[2] = Array ( "»ÅÆþ·×¾åÆü", "»ÅÆþNo", "È¯ÃíNo", "»ÅÆþÀè¥³¡¼¥É", "»ÅÆþÀèÌ¾¾Î", "ÉôÌç¥³¡¼¥É", "ÉôÌçÌ¾¾Î", "Ã´Åö¼Ô¥³¡¼¥É", "Ã´Åö¼ÔÌ¾¾Î", "ÅÁÉ¼¥³¡¼¥É", "ÄÌ²ßÌ¾¾Î", "¥ì¡¼¥È¥¿¥¤¥×", "ÄÌ²ß¥ì¡¼¥È", "»ÙÊ§¾ò·ï", "À½ÉÊÅþÃåÆü", "»ÅÆþ²ÊÌÜ¥³¡¼¥É", "»ÅÆþ²ÊÌÜÌ¾¾Î", "»ÅÆþÉôÉÊ¥³¡¼¥É", "»ÅÆþÉôÉÊÌ¾¾Î", "À½ÉÊ¥³¡¼¥É", "À½ÉÊÌ¾¾Î", "Ã±²Á", "Ã±°Ì", "¿ôÎÌ", "ÀÇÈ´¶â³Û", "ÌÀºÙÈ÷¹Í" );
+$aryColumnName[2] = Array ( "ä»•å…¥è¨ˆä¸Šæ—¥", "ä»•å…¥No", "ç™ºæ³¨No", "ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰", "ä»•å…¥å…ˆåç§°", "éƒ¨é–€ã‚³ãƒ¼ãƒ‰", "éƒ¨é–€åç§°", "æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰", "æ‹…å½“è€…åç§°", "ä¼ç¥¨ã‚³ãƒ¼ãƒ‰", "é€šè²¨åç§°", "ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—", "é€šè²¨ãƒ¬ãƒ¼ãƒˆ", "æ”¯æ‰•æ¡ä»¶", "è£½å“åˆ°ç€æ—¥", "ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰", "ä»•å…¥ç§‘ç›®åç§°", "ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰", "ä»•å…¥éƒ¨å“åç§°", "è£½å“ã‚³ãƒ¼ãƒ‰", "è£½å“åç§°", "å˜ä¾¡", "å˜ä½", "æ•°é‡", "ç¨ŽæŠœé‡‘é¡", "æ˜Žç´°å‚™è€ƒ" );
 
-$aryColumnName[3] = Array ( "P.O.No", "¹ÔÈÖ¹æ", "¥ê¥Ð¥¤¥º", "¾õÂÖ", "»ÙÊ§¾ò·ï", "PO¥Á¥§¥Ã¥¯", "Beneeficiary", "LC·î", "¾¦ÉÊCD", "¾¦ÉÊÌ¾", "¿ôÎÌ", "Ã±°Ì", "Ã±²Á", "¶â³Û", "Á¥ÀÑ³«»Ï Í½ÄêÆü", "Á¥ÀÑ½ªÎ» Í½ÄêÆü", "·×¾åÆü", "¹¹¿·Æü", "Ç¼ÉÊ¾ì½ê", "Á¥ÀÑ´ü¸Â", "Í­¸ú´ü¸Â", "È¯¹Ô¶ä¹Ô", "¶ä¹Ô°ÍÍêÆü", "L/C No", "LC¡¦AM Opening date", "ÄÌ²ß", "È÷¹Í" );
+$aryColumnName[3] = Array ( "P.O.No", "è¡Œç•ªå·", "ãƒªãƒã‚¤ã‚º", "çŠ¶æ…‹", "æ”¯æ‰•æ¡ä»¶", "POãƒã‚§ãƒƒã‚¯", "Beneeficiary", "LCæœˆ", "å•†å“CD", "å•†å“å", "æ•°é‡", "å˜ä½", "å˜ä¾¡", "é‡‘é¡", "èˆ¹ç©é–‹å§‹ äºˆå®šæ—¥", "èˆ¹ç©çµ‚äº† äºˆå®šæ—¥", "è¨ˆä¸Šæ—¥", "æ›´æ–°æ—¥", "ç´å“å ´æ‰€", "èˆ¹ç©æœŸé™", "æœ‰åŠ¹æœŸé™", "ç™ºè¡ŒéŠ€è¡Œ", "éŠ€è¡Œä¾é ¼æ—¥", "L/C No", "LCãƒ»AM Opening date", "é€šè²¨", "å‚™è€ƒ" );
 
-$aryColumnName[4] = Array ( "»ÅÆþ·×¾åÆü", "»ÅÆþNo", "È¯ÃíNo", "»ÅÆþÀè¥³¡¼¥É", "»ÅÆþÀèÌ¾¾Î", "ÉôÌç¥³¡¼¥É", "ÉôÌçÌ¾¾Î", "ÅÁÉ¼¥³¡¼¥É", "»ÅÆþ²ÊÌÜ¥³¡¼¥É", "»ÅÆþ²ÊÌÜÌ¾¾Î", "»ÅÆþÉôÉÊ¥³¡¼¥É", "»ÅÆþÉôÉÊÌ¾¾Î", "À½ÉÊ¥³¡¼¥É", "À½ÉÊÌ¾¾Î", "¸ÜµÒÉÊÈÖ", "Ã±²Á", "Ã±°Ì", "¿ôÎÌ", "ÀÇ¶èÊ¬", "ÄÌ²ßÌ¾¾Î" , "ÀÇÈ´¶â³Û", "ÀÇ³Û", "¹ç·×¶â³Û", "¹ç·×¶â³ÛTTM" );
+$aryColumnName[4] = Array ( "ä»•å…¥è¨ˆä¸Šæ—¥", "ä»•å…¥No", "ç™ºæ³¨No", "ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰", "ä»•å…¥å…ˆåç§°", "éƒ¨é–€ã‚³ãƒ¼ãƒ‰", "éƒ¨é–€åç§°", "ä¼ç¥¨ã‚³ãƒ¼ãƒ‰", "ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰", "ä»•å…¥ç§‘ç›®åç§°", "ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰", "ä»•å…¥éƒ¨å“åç§°", "è£½å“ã‚³ãƒ¼ãƒ‰", "è£½å“åç§°", "é¡§å®¢å“ç•ª", "å˜ä¾¡", "å˜ä½", "æ•°é‡", "ç¨ŽåŒºåˆ†", "é€šè²¨åç§°" , "ç¨ŽæŠœé‡‘é¡", "ç¨Žé¡", "åˆè¨ˆé‡‘é¡", "åˆè¨ˆé‡‘é¡TTM" );
 
 $aryColumnName[5] = Array ( "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N");
 

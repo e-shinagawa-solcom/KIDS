@@ -2,20 +2,20 @@
 
 
 //------------------------------------------------------------
-// ▓Є└т : е╪е├е└б╝едесб╝е╕д╬─ъ╡┴
+// шзгшкм : уГШуГГуГАуГ╝уВдуГбуГ╝уВ╕уБохоЪч╛й
 //------------------------------------------------------------
-var headerAJ = '<img src="' + headtitleAJ + '" width="949" height="30" border="0" alt="L/C ═╜─ъ╔╜">';
+var headerAJ = '<img src="' + headtitleAJ + '" width="949" height="30" border="0" alt="L/C ф║ИхоЪшби">';
 var headerAE = '<img src="' + headtitleAE + '" width="949" height="30" border="0" alt="L/C SCHEDULE FILE">';
 
 
 //------------------------------------------------------------
-// ▓Є└т : е╫еье╙ехб╝е▄е┐еєедесб╝е╕д╬─ъ╡┴
+// шзгшкм : уГЧуГмуГУуГеуГ╝уГЬуВ┐уГ│уВдуГбуГ╝уВ╕уБохоЪч╛й
 //------------------------------------------------------------
 var blownpreviewBt = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncBlownPreviewButton( \'on\' , this );" onmouseout="fncBlownPreviewButton( \'off\' , this );fncAlphaOff( this );" src="' + blownpreviewbt1 + '" width="72" height="20" border="0" alt="PREVIEW"></a>';
 
 
 //------------------------------------------------------------
-// ▓Є└т : еиепе╣е▌б╝е╚е▄е┐еєедесб╝е╕д╬─ъ╡┴
+// шзгшкм : уВиуВпуВ╣уГЭуГ╝уГИуГЬуВ┐уГ│уВдуГбуГ╝уВ╕уБохоЪч╛й
 //------------------------------------------------------------
 var blownexportBt = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncBlownExportButton( \'on\' , this );" onmouseout="fncBlownExportButton( \'off\' , this );fncAlphaOff( this );" src="' + blownexportbt1 + '" width="72" height="20" border="0" alt="PREVIEW"></a>';
 
@@ -24,14 +24,14 @@ var blownexportBt = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseu
 
 
 //------------------------------------------------------------
-// ▓Є└т : ╞№╦▄╕ьбж▒╤╕ь└┌┬╪┤╪┐Ї
+// шзгшкм : цЧецЬмшкЮуГ╗шЛ▒шкЮхИЗцЫ┐щЦвцХ░
 //------------------------------------------------------------
 function ChgEtoJ( lngCount )
 {
 
-	// е╫еье╙ехб╝е▄е┐еєд╬╜ё╜╨д╖
+	// уГЧуГмуГУуГеуГ╝уГЬуВ┐уГ│уБоцЫ╕хЗ║уБЧ
 	PreviewBt.innerHTML = blownpreviewBt;
-	// еиепе╣е▌б╝е╚е▄е┐еєд╬╜ё╜╨д╖
+	// уВиуВпуВ╣уГЭуГ╝уГИуГЬуВ┐уГ│уБоцЫ╕хЗ║уБЧ
 	ExportBt.innerHTML  = blownexportBt;
 
 	return false;

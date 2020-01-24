@@ -2,20 +2,20 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       Çä¾å´ÉÍý  ¸¡º÷²èÌÌ
+ *       å£²ä¸Šç®¡ç†  æ¤œç´¢ç”»é¢
  *
- *       ½èÍý³µÍ×
- *         ¡¦¸¡º÷²èÌÌÉ½¼¨½èÍý
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æ¤œç´¢ç”»é¢è¡¨ç¤ºå‡¦ç†
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÀßÄê¤ÎÆÉ¤ß¹þ¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once "conf.inc";
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require( "libsql.php" );
 
@@ -24,7 +24,7 @@ $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ($_POST) {
     $aryData = $_POST;
@@ -34,25 +34,25 @@ if ($_POST) {
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
-// 602 Çä¾å´ÉÍý¡ÊÇä¾å¸¡º÷¡Ë
+// æ¨©é™ç¢ºèª
+// 602 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šæ¤œç´¢ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 {
-    fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+    fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
-// 603 Çä¾å´ÉÍý¡ÊÇä¾å¸¡º÷¡¡´ÉÍý¥â¡¼¥É¡Ë
+// 603 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šæ¤œç´¢ã€€ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ï¼‰
 if ( fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
 {
     $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
-    // 607 Çä¾å´ÉÍý¡ÊÌµ¸ú²½¡Ë
+    // 607 å£²ä¸Šç®¡ç†ï¼ˆç„¡åŠ¹åŒ–ï¼‰
     if ( fncCheckAuthority( DEF_FUNCTION_SC7, $objAuth ) )
     {
         $aryData["btnInvalid_visibility"] = 'style="visibility: visible"';
@@ -70,7 +70,7 @@ else
     $aryData["btnInvalid_visibility"] = 'style="visibility: hidden"';
     $aryData["btnInvalidVisible"] = "";
 }
-// 604 Çä¾å´ÉÍý¡Ê¾ÜºÙÉ½¼¨¡Ë
+// 604 å£²ä¸Šç®¡ç†ï¼ˆè©³ç´°è¡¨ç¤ºï¼‰
 if ( fncCheckAuthority( DEF_FUNCTION_SC4, $objAuth ) )
 {
     $aryData["btnDetail_visibility"] = 'style="visibility: visible"';
@@ -83,24 +83,24 @@ else
 }
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// Çä¾å¥¹¥Æ¡¼¥¿¥¹
+// å£²ä¸Šã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 $aryData["lngSalesStatusCode"] 		= fncGetCheckBoxObject( "m_salesstatus", "lngsalesstatuscode", "strsalesstatusname", "lngSalesStatusCode[]", 'where lngSalesStatusCode not in (1,2,3)', $objDB );
 
-// Çä¾å¶èÊ¬
+// å£²ä¸ŠåŒºåˆ†
 $aryData["lngSalesClassCode"]		= fncGetPulldown( "m_salesclass", "lngsalesclasscode", "lngsalesclasscode, strsalesclassname", 1, '', $objDB );
 
-//¡¡¥×¥ë¥À¥¦¥ó¥ê¥¹¥È¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤¿¾ì¹ç¥¨¥é¡¼É½¼¨
+//ã€€ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®å–å¾—ã«å¤±æ•—ã—ãŸå ´åˆã‚¨ãƒ©ãƒ¼è¡¨ç¤º
 if ( !$aryData["lngSalesStatusCode"] or !$aryData["lngSalesClassCode"] )
 {
-    fncOutputError ( 9055, DEF_WARNING, "¥·¥¹¥Æ¥à´ÉÍý¼Ô¤Ë¤ªÌä¤¤¹ç¤ï¤»²¼¤µ¤¤¡£", TRUE, "", $objDB );
+    fncOutputError ( 9055, DEF_WARNING, "ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…ã«ãŠå•ã„åˆã‚ã›ä¸‹ã•ã„ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 echo fncGetReplacedHtmlWithBase("search/base_search.html", "sc/search/sc_search.html", $aryData, $objAuth);
 
 $objDB->close();

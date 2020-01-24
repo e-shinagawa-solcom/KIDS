@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       »ÅÆş´ÉÍı  ¥á¥Ë¥å¡¼²èÌÌ
+*       ä»•å…¥ç®¡ç†  ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 *
 *
 *       @package    K.I.D.S.
@@ -13,17 +13,17 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦¥á¥Ë¥å¡¼²èÌÌ¤òÉ½¼¨
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã‚’è¡¨ç¤º
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-	// ÆÉ¤ß¹ş¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
 	require (LIB_FILE);
 	
@@ -35,27 +35,27 @@
 	$aryData["strSessionID"] = $_POST["strSessionID"];
 
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 	
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $_POST["strSessionID"], $objAuth, $objDB );
 
-	// 700 »ÅÆş´ÉÍı
+	// 700 ä»•å…¥ç®¡ç†
 	if ( !fncCheckAuthority( DEF_FUNCTION_PC0, $objAuth ) )
 	{
-	        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-	// 701 »ÅÆş´ÉÍı¡Ê »ÅÆşÅĞÏ¿¡Ë
+	// 701 ä»•å…¥ç®¡ç†ï¼ˆ ä»•å…¥ç™»éŒ²ï¼‰
 	if ( fncCheckAuthority( DEF_FUNCTION_PC1, $objAuth ) )
 	{
 		$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 	
-	// 702 »ÅÆş´ÉÍı¡Ê »ÅÆş¸¡º÷¡Ë
+	// 702 ä»•å…¥ç®¡ç†ï¼ˆ ä»•å…¥æ¤œç´¢ï¼‰
 	if ( fncCheckAuthority( DEF_FUNCTION_PC2, $objAuth ) )
 	{
 		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
@@ -63,24 +63,24 @@
 
 	//echo "button : ".$aryData["strRegist"]."<br>";
 	//echo "button : ".$aryData["strSearch"]."<br>";
-	// ¥Ø¥ë¥×ÂĞ±ş
+	// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_PC0;
 
 
 
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É¼èÆÀ
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—
 	$lngUserCode = $objAuth->UserCode;
 
-	// ¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É(¥æ¡¼¥¶¡¼°Ê²¼)¥Á¥§¥Ã¥¯
+	// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰(ãƒ¦ãƒ¼ã‚¶ãƒ¼ä»¥ä¸‹)ãƒã‚§ãƒƒã‚¯
 	$blnAG = fncCheckUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
 
-	// ¡Ö¥æ¡¼¥¶¡¼¡×°Ê²¼¤Î¾ì¹ç
+	// ã€Œãƒ¦ãƒ¼ã‚¶ãƒ¼ã€ä»¥ä¸‹ã®å ´åˆ
 	if( $blnAG )
 	{
-		// ¾µÇ§¥ë¡¼¥ÈÂ¸ºß¥Á¥§¥Ã¥¯
+		// æ‰¿èªãƒ«ãƒ¼ãƒˆå­˜åœ¨ãƒã‚§ãƒƒã‚¯
 		$blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
 
-		// ¾µÇ§¥ë¡¼¥È¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+		// æ‰¿èªãƒ«ãƒ¼ãƒˆãŒå­˜åœ¨ã—ãªã„å ´åˆ
 		if( !$blnWF )
 		{
 			$aryData["registview"] = 'hidden';
@@ -89,7 +89,7 @@
 		{
 			$aryData["registview"] = 'visible';
 		}
-		// 701 »ÅÆşÅĞÏ¿
+		// 701 ä»•å…¥ç™»éŒ²
 		if( !fncCheckAuthority( DEF_FUNCTION_PC1, $objAuth ) )
 		{
 			$aryData["registview"] = 'hidden';

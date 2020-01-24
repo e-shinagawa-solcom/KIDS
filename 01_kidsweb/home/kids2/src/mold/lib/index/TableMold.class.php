@@ -3,23 +3,23 @@
 require_once(SRC_ROOT.'/mold/lib/index/TableMetaData.class.php');
 
 /**
- * ¶â·¿¥Ş¥¹¥¿¤Î¥Æ¡¼¥Ö¥ëÌ¾¤ä¥«¥é¥àÌ¾¤òÄó¶¡¤¹¤ë
+ * é‡‘å‹ãƒã‚¹ã‚¿ã®ãƒ†ãƒ¼ãƒ–ãƒ«åã‚„ã‚«ãƒ©ãƒ åã‚’æä¾›ã™ã‚‹
  */
 class TableMold extends TableMetaData
 {
 	/**
-	 * ¥Æ¡¼¥Ö¥ëÌ¾: ¶â·¿¥Ş¥¹¥¿
+	 * ãƒ†ãƒ¼ãƒ–ãƒ«å: é‡‘å‹ãƒã‚¹ã‚¿
 	 * @var string
 	 */
 	const TABLE_NAME = "M_Mold";
 
 	/**
 	 * <pre>
-	 * ¶â·¿NO
+	 * é‡‘å‹NO
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 *
-	 * ´ØÏ¢: »ÅÆş¾ÜºÙ.¶â·¿NO
+	 * é–¢é€£: ä»•å…¥è©³ç´°.é‡‘å‹NO
 	 * </pre>
 	 *
 	 * @var string
@@ -28,11 +28,11 @@ class TableMold extends TableMetaData
 
 	/**
 	 * <pre>
-	 * »ÅÆş¤ì¸µ
+	 * ä»•å…¥ã‚Œå…ƒ
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -41,24 +41,24 @@ class TableMold extends TableMetaData
 
 	/**
 	 * <pre>
-	 * À½ÉÊ¥³¡¼¥É
+	 * è£½å“ã‚³ãƒ¼ãƒ‰
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
-	 * ´ØÏ¢: »ÅÆş¾ÜºÙ.À½ÉÊ¥³¡¼¥É
+	 * é–¢é€£: ä»•å…¥è©³ç´°.è£½å“ã‚³ãƒ¼ãƒ‰
 	 * @var string
 	 */
 	const ProductCode = "productcode";
 
 	/**
 	 * <pre>
-	 * ºÆÈÎ¥³¡¼¥É
+	 * å†è²©ã‚³ãƒ¼ãƒ‰
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
-	 * ´ØÏ¢: »ÅÆş¾ÜºÙ.ºÆÈÎ¥³¡¼¥É
+	 * é–¢é€£: ä»•å…¥è©³ç´°.å†è²©ã‚³ãƒ¼ãƒ‰
 	 * @var string
 	 */
 	const ReviseCode = "strrevisecode";

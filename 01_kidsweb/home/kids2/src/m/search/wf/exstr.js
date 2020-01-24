@@ -3,7 +3,7 @@
 
 
 //////////////////////////////////////////////////////////////////
-////////// ¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncMasterSearchOnload()
 {
 	ChgEtoJ( window.top.lngLanguageCode );
@@ -15,7 +15,7 @@ function fncMasterSearchOnload()
 
 
 ///// HEADER IMAGE /////
-var headerAJ = '<img src="' + mwforderJ + '" width="949" height="30" border="0" alt="¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿¸¡º÷">';
+var headerAJ = '<img src="' + mwforderJ + '" width="949" height="30" border="0" alt="ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿æ¤œç´¢">';
 var headerAE = '<img src="' + mwforderE + '" width="949" height="30" border="0" alt="WORK FLOW ORDER MASTER SEARCH">';
 
 

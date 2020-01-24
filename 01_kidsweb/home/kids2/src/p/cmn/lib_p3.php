@@ -1,14 +1,14 @@
 <?php
 	
-	// À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë¤ÎÎà»÷¸¡º÷
+	// è£½å“åï¼ˆè‹±èªï¼‰ã®é¡ä¼¼æ¤œç´¢
 	function fncNearName ( $strPostData,$lngInChargeGroupCode, $strProductCode, $objDB )
 	{
 
-		// ¥¹¥Ú¡¼¥¹¤«¤éÁ°Ê¸»ú¤ò¼è¤ë
-		$aryNearName = explode(" |¡¡", $strPostData );
+		// ã‚¹ãƒšãƒ¼ã‚¹ã‹ã‚‰å‰æ–‡å­—ã‚’å–ã‚‹
+		$aryNearName = explode(" |ã€€", $strPostData );
 		
 		
-		// ¡ÖÌ¤Äê¡×¤ò°ú¤¯DEFAIN¤Ç¤Ï¤Ê¤¯DB¤ËÆş¤Ã¤Æ¤¤¤ë
+		// ã€Œæœªå®šã€ã‚’å¼•ãDEFAINã§ã¯ãªãDBã«å…¥ã£ã¦ã„ã‚‹
 		$aryQueryNull[] = "SELECT ";
 		$aryQueryNull[] = "strvalue ";
 		$aryQueryNull[] = "FROM m_commonfunction ";
@@ -24,7 +24,7 @@
 		}
 		$objDB->freeResult( $lngResultID );
 		
-		// À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë¤ÎÎà»÷¸¡º÷³«»Ï
+		// è£½å“åï¼ˆè‹±èªï¼‰ã®é¡ä¼¼æ¤œç´¢é–‹å§‹
 		$aryQueryNearName[] = "SELECT " ;
 		$aryQueryNearName[] = "lngproductno, ";
 		$aryQueryNearName[] = "strproductcode, ";
@@ -62,7 +62,7 @@
 			}
 		
 			$aryOptionValue[] = "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"1\" border=\"0\" bgcolor=\"#6f8180\" align=\"center\">";
-			$aryOptionValue[] = "<tr><td id=\"SimilarProducts\" class=\"SegColumn2\" width=\"25%\">Îà»÷À½ÉÊ</td>";
+			$aryOptionValue[] = "<tr><td id=\"SimilarProducts\" class=\"SegColumn2\" width=\"25%\">é¡ä¼¼è£½å“</td>";
 			$aryOptionValue[] = "<td class=\"Segs\"><select class=\"Slt100P\" name=\"NearName\" size=\"7\">";
 			
 			for( $i=0; $i<count($aryResutNearName); $i++ )

@@ -12,7 +12,7 @@ $(function(){
             target: '_self',
 		})
 
-		// ¥Õ¥©¡¼¥à¤Ë½èÍı¥â¡¼¥É¤òÄÉ²Ã
+		// ãƒ•ã‚©ãƒ¼ãƒ ã«å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã‚’è¿½åŠ 
 		form.append($("<input>", {
 			type: 'hidden',
 			name: 'revisionNo',
@@ -27,7 +27,7 @@ $(function(){
 	});
 });
 
-// ¥í¡¼¥É»ş¤ÎÇÛÃÖÄ´À°
+// ãƒ­ãƒ¼ãƒ‰æ™‚ã®é…ç½®èª¿æ•´
 $(window).on('load',function(){
 	var height = $('#header').height();
 	var width = $('#sideMenu').width();
@@ -35,13 +35,13 @@ $(window).on('load',function(){
 	$('.grid').css({'margin-left': width + 'px'});
 });
 
-// URL¥³¥Ô¡¼
+// URLã‚³ãƒ”ãƒ¼
 function urlCopy() {
 	$('body').append('<textarea id="currentURL" style="position:fixed;left:-100%;">' + location.href + '</textarea>');
 	$('#currentURL').select();
 	document.execCommand('copy');
 	$('#currentURL').remove();
-	alert("URL¤ò¥³¥Ô¡¼¤·¤Ş¤·¤¿¡£");
+	alert("URLã‚’ã‚³ãƒ”ãƒ¼ã—ã¾ã—ãŸã€‚");
 }
 
 function makePostData() {
@@ -54,7 +54,7 @@ function makePostData() {
 	return value;
 }
 
-// url¤«¤éget¥Ñ¥é¥á¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+// urlã‹ã‚‰getãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 function getParam(name, url) {
     if (!url) {
 		url = window.location.href;
@@ -72,7 +72,7 @@ function getParam(name, url) {
 }
 
 function postChild(data) {
-	// ¥Õ¥©¡¼¥àÀ¸À®
+	// ãƒ•ã‚©ãƒ¼ãƒ ç”Ÿæˆ
 	var html = '<form name="temp_form" style="display:none;">';
 	for(var num in data) {
 	  if(data[num] == undefined || data[num] == null) {
@@ -93,13 +93,13 @@ function postChild(data) {
 	document.temp_form.method = 'POST';
 	document.temp_form.submit();
    
-	// ¥Õ¥©¡¼¥à¤òºï½ü
+	// ãƒ•ã‚©ãƒ¼ãƒ ã‚’å‰Šé™¤
 	document.temp_form.remove();
 }
 
-// ÊÔ½¸¥â¡¼¥É¤Ø¤Î°Ü¹Ô
+// ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã¸ã®ç§»è¡Œ
 function editModeTransition() {
-	// ¥Õ¥©¡¼¥à¤Ë½èÍı¥â¡¼¥É¤òÄÉ²Ã
+	// ãƒ•ã‚©ãƒ¼ãƒ ã«å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã‚’è¿½åŠ 
 	$("<input>", {
 		type: 'hidden',
 		class: 'addElements',
@@ -136,28 +136,28 @@ function editModeTransition() {
 					windowName,
 					'scrollbars=yes, width=' + winWidth + ', height=' + winHeight +', top=' + y + ', left=' + x + 'resizable=0 location=no'
 				);
-				// ¥Õ¥©¡¼¥àÀßÄê
+				// ãƒ•ã‚©ãƒ¼ãƒ è¨­å®š
 				formData.append('<input type="hidden" class="addMessage" name="message" value="' + response.message + '">');
 				formData.attr('action', response.action);
 				formData.attr('target', windowName);		
 
-				// ¥µ¥Ö¥ß¥Ã¥È
+				// ã‚µãƒ–ãƒŸãƒƒãƒˆ
 				formData.submit();
 			}
 			else {
-				alert('URL¤¬ÉÔÀµ¤Ç¤¹');
+				alert('URLãŒä¸æ­£ã§ã™');
 				return false;
 			}
 		}	
 	}).fail(function (xhr,textStatus,errorThrown) {
-		alert('ÄÌ¿®¥¨¥é¡¼');
+		alert('é€šä¿¡ã‚¨ãƒ©ãƒ¼');
 		return false;
 	}).always(function () {
 		$('.addElements').remove();
 	});
 }
 
-// ¥À¥¦¥ó¥í¡¼¥É½èÍı
+// ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†
 function fileDownload() {
 	var sessionID = $('input[name="strSessionID"]').val();
 	var estimateNo = $('input[name="estimateNo"]').val();
@@ -165,14 +165,14 @@ function fileDownload() {
 
 	var actionUrl = "/estimate/preview/download.php?strSessionID=" + sessionID + "&estimateNo=" + estimateNo;
 	
-	// °ì»ş¥Õ¥©¡¼¥à¤ÎÀ¸À®
+	// ä¸€æ™‚ãƒ•ã‚©ãƒ¼ãƒ ã®ç”Ÿæˆ
 	var form = $("<form>", {
 		method: 'post',
 		action: actionUrl,
 		target: '_self',
 	})
 
-	// ¥Õ¥©¡¼¥à¤Ë½èÍı¥â¡¼¥É¤òÄÉ²Ã
+	// ãƒ•ã‚©ãƒ¼ãƒ ã«å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã‚’è¿½åŠ 
 	form.append($("<input>", {
 		type: 'hidden',
 		name: 'revisionNo',
@@ -201,12 +201,12 @@ function sheetPrint() {
 
 function addPostData(name, value, formElement) {
 	var element = document.createElement('input');
-	// ¥Ç¡¼¥¿¤òÀßÄê
+	// ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
 	element.setAttribute('type', 'hidden');
 	element.setAttribute('name', name);
 	element.setAttribute('value', value);
 	
-	// Í×ÁÇ¤òÄÉ²Ã
+	// è¦ç´ ã‚’è¿½åŠ 
 	formElement.appendChild(element);
 
 	return;

@@ -1,8 +1,8 @@
 /*
-	³µÍ×¡§¸«ÀÑ¸¶²Á½ñ¡Ê¥¨¥¯¥»¥ë¥·¡¼¥È·Á¼°¥Õ¥©¡¼¥Ş¥Ã¥È¡Ë
-	ÂĞ¾İ¡§¥Ç¡¼¥¿¥¨¥¯¥¹¥İ¡¼¥È
-	ºîÀ®¡§ºØÆ£
-	È÷¹Í¡§
+	æ¦‚è¦ï¼šè¦‹ç©åŸä¾¡æ›¸ï¼ˆã‚¨ã‚¯ã‚»ãƒ«ã‚·ãƒ¼ãƒˆå½¢å¼ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼‰
+	å¯¾è±¡ï¼šãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
+	ä½œæˆï¼šæ–è—¤
+	å‚™è€ƒï¼š
 
 */
 select '01' as NO
@@ -17,7 +17,7 @@ select '01' as NO
 	,''		as I
 union
 select '02'
-	,'ºîÀ®Æü'
+	,'ä½œæˆæ—¥'
 	,to_char(now(), 'yyyy/mm/dd')
 	,''
 	,''
@@ -29,9 +29,9 @@ select '02'
 
 union
 select '03'
-	,'À½ÉÊ¥³¡¼¥É'
+	,'è£½å“ã‚³ãƒ¼ãƒ‰'
 	,'_%strProductCode%_'
-	,'À½ÉÊÌ¾'
+	,'è£½å“å'
 	,(select mp.strproductname from m_product mp where mp.strproductcode = '_%strProductCode%_')
 	,''
 	,''
@@ -40,7 +40,7 @@ select '03'
 	,''
 union
 select '04'
-	,'ÉôÌç¥³¡¼¥É'
+	,'éƒ¨é–€ã‚³ãƒ¼ãƒ‰'
 	,'20'
 	,''
 	,''
@@ -51,7 +51,7 @@ select '04'
 	,''
 union
 select '05'
-	,'¥«¡¼¥È¥óÆş¤ê¿ô'
+	,'ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°'
 	,'11,000'
 	,''
 	,''
@@ -73,14 +73,14 @@ select '06'
 	,''
 union
 select '07'
-	,'»ÅÆş²ÊÌÜ'
-	,'»ÅÆşÉôÉÊ'
-	,'»ÅÆşÀè'
-	,'½şµÑ'
-	,'·×²è¸Ä¿ô'
-	,'¸¶²Á'
-	,'·×²è¸¶²Á'
-	,'È÷¹Í'
+	,'ä»•å…¥ç§‘ç›®'
+	,'ä»•å…¥éƒ¨å“'
+	,'ä»•å…¥å…ˆ'
+	,'å„Ÿå´'
+	,'è¨ˆç”»å€‹æ•°'
+	,'åŸä¾¡'
+	,'è¨ˆç”»åŸä¾¡'
+	,'å‚™è€ƒ'
 	,''
 union
 select
@@ -89,7 +89,7 @@ select
 	,ms.strstockitemname
 	,mc.strcompanyname
 	,case
-		when bytPayOffTargetFlag then '¡û'
+		when bytPayOffTargetFlag then 'â—‹'
 		else ''
 	end as bytPayOffTargetFlag
 	,trim(to_char(tet.lngProductQuantity, '9999,999,999'))

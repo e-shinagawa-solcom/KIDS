@@ -1,58 +1,58 @@
 <?php
 
-// ÆÉ¤ß¹ş¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
-//¥¯¥é¥¹¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+//ã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once 'db_common.php';
-//¶¦ÄÌ¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+//å…±é€šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 require_once './lcModelCommon.php';
-//DBÀÜÂ³¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+//DBæ¥ç¶šãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once './db_common.php';
 require_once './kidscore_common.php';
 require LIB_FILE;
-//PHPÉ¸½à¤ÎJSONÊÑ´¹¥á¥½¥Ã¥É¤Ï¥¨¥é¡¼¤Ë¤Ê¤ë¤Î¤Ç³°Éô¤Î¥é¥¤¥Ö¥é¥ê(¶²¤é¤¯¥¨¥ó¥³¡¼¥É¤ÎÌäÂê)
+//PHPæ¨™æº–ã®JSONå¤‰æ›ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§å¤–éƒ¨ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒª(æã‚‰ãã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®å•é¡Œ)
 require_once 'JSON.php';
 
-//ÃÍ¤Î¼èÆÀ
+//å€¤ã®å–å¾—
 $postdata = file_get_contents("php://input");
 $data = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//·ĞÍı¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæ¥ç¶š
 $lcModel = new lcModel();
 
-//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
+//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 $s = new Services_JSON();
 
-//ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤ÏÄÌ¾ï¤Î POST ¤Ç¼õ¤±¤ë
+//å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯é€šå¸¸ã® POST ã§å—ã‘ã‚‹
 if ($data == null) {
     $data = $_POST;
 }
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($data["sessionid"], $objAuth, $objDB);
 
-//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 $usrId = trim($objAuth->UserID);
 
-//·ë²ÌÇÛÎó
+//çµæœé…åˆ—
 $result = array();
 
-//½èÍı¿¶¤êÊ¬¤±
+//å‡¦ç†æŒ¯ã‚Šåˆ†ã‘
 switch ($data['method']) {
-    // L/CÊÔ½¸¤Î½é´üÉ½¼¨¥¤¥Ù¥ó¥È
+    // L/Cç·¨é›†ã®åˆæœŸè¡¨ç¤ºã‚¤ãƒ™ãƒ³ãƒˆ
     case 'getLcEdit':
-        // L/C¾ğÊó¼èÆÀ
+        // L/Cæƒ…å ±å–å¾—
         $result = getLcEdit($objDB, $lcModel, $data);
         break;
-    // L/CÊÔ½¸¤Î¹¹¿·¥¤¥Ù¥ó¥È
+    // L/Cç·¨é›†ã®æ›´æ–°ã‚¤ãƒ™ãƒ³ãƒˆ
     case 'updateLcEdit':
-        //L/C¾ğÊó¤Î¹¹¿·
+        //L/Cæƒ…å ±ã®æ›´æ–°
         $result = updateLcEdit($objDB, $lcModel, $data);
         break;
-    // L/CÊÔ½¸¤Î²ò½ü¥¤¥Ù¥ó¥È
+    // L/Cç·¨é›†ã®è§£é™¤ã‚¤ãƒ™ãƒ³ãƒˆ
     case 'releaseLcEdit':
-        //½èÍı¸Æ¤Ó½Ğ¤·
+        //å‡¦ç†å‘¼ã³å‡ºã—
         $result = releaseLcEdit($objDB, $data);
         break;
 }
@@ -60,13 +60,13 @@ switch ($data['method']) {
 $objDB->close();
 $lcModel->close();
 
-//·ë²Ì½ĞÎÏ
+//çµæœå‡ºåŠ›
 mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);
 
 
 /**
- * LC¾ğÊó¼èÊÑ¹¹²èÌÌ-¾ğÊó¼èÆÀ
+ * LCæƒ…å ±å–å¤‰æ›´ç”»é¢-æƒ…å ±å–å¾—
  *
  * @param [object] $objDB
  * @param [object] $lcModel
@@ -75,21 +75,21 @@ echo $s->encodeUnsafe($result);
  */
 function getLcEdit($objDB, $lcModel, $data)
 {
-    //Ã±ÂÎ¤ÎL/C¾ğÊó¼èÆÀ
+    //å˜ä½“ã®L/Cæƒ…å ±å–å¾—
     $result["lc_data"] = fncGetLcInfoSingle($objDB, $data);
-    //²ÙÍÈÃÏ¼èÆÀ
+    //è·æšåœ°å–å¾—
     $result["portplace_list"] = fncGetPortplace($objDB);
-    //¶ä¹Ô¥ê¥¹¥È¼èÆÀ
+    //éŠ€è¡Œãƒªã‚¹ãƒˆå–å¾—
     $result["bank_list"] = $lcModel->getBankList();
     return $result;
 }
 
 /**
- * LC¾ğÊó¼èÊÑ¹¹²èÌÌ-¹¹¿·½èÍı
+ * LCæƒ…å ±å–å¤‰æ›´ç”»é¢-æ›´æ–°å‡¦ç†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return ¹¹¿··ï¿ô
+ * @return æ›´æ–°ä»¶æ•°
  */
 function updateLcEdit($objDB, $lcModel, $data)
 {
@@ -100,9 +100,9 @@ function updateLcEdit($objDB, $lcModel, $data)
             do {
                 $param = $data;
                 $param["poreviseno"] = sprintf("%02d", $poreviseno + 1);
-                // Æ±°ìPO¤ÎÄ¾¶á¥ê¥Ğ¥¤¥º¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+                // åŒä¸€POã®ç›´è¿‘ãƒªãƒã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
                 $lcinfo = fncGetLcInfoSingle($objDB, $param);
-                // ¼èÆÀ¤·¤¿¥Ç¡¼¥¿¤Î¶ä¹Ô°ÍÍêÆü¤¬¶õ¤Î¾ì¹ç¡¢
+                // å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã®éŠ€è¡Œä¾é ¼æ—¥ãŒç©ºã®å ´åˆã€
                 if (!$lcinfo) {
                     if ($lcinfo->bankreqdate != "") {
                         $data["bankreqdate"] = $lcinfo->bankreqdate;
@@ -116,17 +116,17 @@ function updateLcEdit($objDB, $lcModel, $data)
         }
     }
 
-    // ¥Ñ¥é¥á¡¼¥¿¤Î¾õÂÖ <> 7¤Î¾ì¹ç
+    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®çŠ¶æ…‹ <> 7ã®å ´åˆ
     if ($data["lcstate"] != 7) {
         if ($data["lcstate"] == 9) {
             $data["lcstate"] = 10;
         }
         $bankinfo = $lcModel->getAcBankInfo($data["bankcd"]);
         $data["bankname"] = $bankinfo->bankomitname;
-        // L/C¾ğÊó¤Î¹¹¿·
+        // L/Cæƒ…å ±ã®æ›´æ–°
         $result = fncUpdateLcinfo($objDB, $data);
     } else {
-        // L/C¾ğÊó¤Î¹¹¿·
+        // L/Cæƒ…å ±ã®æ›´æ–°
         $result = fncUpdateLcinfoToAmandCancel($objDB, $data);
     }
 
@@ -134,27 +134,27 @@ function updateLcEdit($objDB, $lcModel, $data)
 }
 
 /**
- * LC¾ğÊóÊÑ¹¹²èÌÌ-²ò½ü½èÍı
+ * LCæƒ…å ±å¤‰æ›´ç”»é¢-è§£é™¤å‡¦ç†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return ²ò½ü·ï¿ô
+ * @return è§£é™¤ä»¶æ•°
  */
 function releaseLcEdit($objDB, $data)
 {
 
     $data = $data["lc_data"];
 
-    // ¥Ñ¥é¥á¡¼¥¿¤Î¾õÂÖ = 3¤Î¾ì¹ç
+    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®çŠ¶æ…‹ = 3ã®å ´åˆ
     if ($data["lcstate"] == 3) {
         if (intval($data["poreviseno"]) > 0) {
             $poreviseno = intval($data["poreviseno"]);
             do {
                 $param = $data;
                 $param["poreviseno"] = sprintf("%02d", $poreviseno + 1);
-                // Æ±°ìPO¤ÎÄ¾¶á¥ê¥Ğ¥¤¥º¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+                // åŒä¸€POã®ç›´è¿‘ãƒªãƒã‚¤ã‚ºãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
                 $lcinfo = fncGetLcInfoSingle($objDB, $param);
-                // ¼èÆÀ¤·¤¿¥Ç¡¼¥¿¤Î¶ä¹Ô°ÍÍêÆü¤¬¶õ¤Î¾ì¹ç¡¢
+                // å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã®éŠ€è¡Œä¾é ¼æ—¥ãŒç©ºã®å ´åˆã€
                 if ($lcinfo->bankreqdate != "") {
                     $data["bankreqdate"] = $lcinfo->bankreqdate;
                     $data["lcamopen"] = $lcinfo->lcamopen;
@@ -175,7 +175,7 @@ function releaseLcEdit($objDB, $data)
     } else {
         $data["lcstate"] = 10;
     }
-    // L/C¾ğÊó¤Î¾õÂÖ¹¹¿·
+    // L/Cæƒ…å ±ã®çŠ¶æ…‹æ›´æ–°
     $result = fncUpdateLcState($objDB, $data);
 
     return $result;

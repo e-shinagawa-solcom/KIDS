@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ²ñ¼Ò¥Ş¥¹¥¿ ¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë·ë²Ì°ìÍ÷²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† ä¼šç¤¾ãƒã‚¹ã‚¿ ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«çµæœä¸€è¦§ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -14,23 +14,23 @@
 // index.php -> lngAttributeCode      -> index.php
 // index.php -> strCompanyDisplayName -> index.php
 //
-// ÅĞÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 // index.php -> lngAttributeCode      -> edit.php
 // index.php -> strCompanyDisplayName -> edit.php
 //
-// ½¤Àµ²èÌÌ
+// ä¿®æ­£ç”»é¢
 // index.php -> strSessionID          -> confirm.php
 // index.php -> lngActionCode         -> confirm.php
 // index.php -> lngAttributeCode      -> confirm.php
 // index.php -> strCompanyDisplayName -> confirm.php
 // index.php -> lngcompanycode        -> confirm.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
@@ -44,7 +44,7 @@ $aryData = $_POST;
 $aryData["lngLanguageCode"] = 1;
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 $aryCheck["lngAttributeCode"]      = "number(0,2147483647)";
 $aryCheck["strCompanyDisplayName"] = "length(1,100)";
@@ -52,63 +52,63 @@ $aryCheck["strCompanyDisplayName"] = "length(1,100)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->strTableName = "m_Company";
 
-// ¸¡º÷¥¯¥¨¥êÀ¸À®
+// æ¤œç´¢ã‚¯ã‚¨ãƒªç”Ÿæˆ
 $strQuery = "SELECT DISTINCT ON ( com.lngCompanyCode ) * FROM m_Company com, m_AttributeRelation ar, m_Country con, m_Organization o, m_ClosedDay clo";
 
-// Â°À­¥³¡¼¥É¾ò·ïÀ¸À®
+// å±æ€§ã‚³ãƒ¼ãƒ‰æ¡ä»¶ç”Ÿæˆ
 if ( $aryData["lngAttributeCode"] != "" )
 {
 	$aryWhereString[] = " ar.lngAttributeCode = " . $aryData["lngAttributeCode"];
 }
 
-// É½¼¨²ñ¼ÒÌ¾¾ò·ïÀ¸À®
+// è¡¨ç¤ºä¼šç¤¾åæ¡ä»¶ç”Ÿæˆ
 if ( $aryData["strCompanyDisplayName"] )
 {
 	$aryWhereString[] = " com.strCompanyDisplayName LIKE '%" . $aryData["strCompanyDisplayName"] . "%'";
 }
 
-// Â°À­¥Æ¡¼¥Ö¥ë¤È¤Î·ë¹ç
+// å±æ€§ãƒ†ãƒ¼ãƒ–ãƒ«ã¨ã®çµåˆ
 $aryWhereString[] = " com.lngCompanyCode = ar.lngCompanyCode";
 $aryWhereString[] = " com.lngCountryCode = con.lngCountryCode";
 $aryWhereString[] = " com.lngOrganizationCode = o.lngOrganizationCode";
 $aryWhereString[] = " com.lngClosedDayCode = clo.lngClosedDayCode";
 
-// ¾ò·ïÊ¬¤òÀ¸À®¡¢¥¯¥¨¥ê¤ËÄÉ²Ã
+// æ¡ä»¶åˆ†ã‚’ç”Ÿæˆã€ã‚¯ã‚¨ãƒªã«è¿½åŠ 
 $strWhereString = join ( " AND", $aryWhereString );
 $strQuery .= " WHERE " . $strWhereString;
 
-// ¥Ç¡¼¥¿¤Î¼èÆÀ¤È¥ª¥Ö¥¸¥§¥¯¥È¤Ø¤Î¥»¥Ã¥È
+// ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ã‚»ãƒƒãƒˆ
 $lngResultNum = $objMaster->setMasterTableData( $strQuery, $objDB );
 
 
 if ( $lngResultNum )
 {
 	///////////////////////////////////////////////////////////////////
-	// ¥Æ¡¼¥Ö¥ëÀ¸À®
+	// ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 	///////////////////////////////////////////////////////////////////
-	// ·ë²Ì¹ÔÉ½¼¨
+	// çµæœè¡Œè¡¨ç¤º
 	$count = 0;
 
-	// aryOrganizationFront ¼èÆÀ
-	$aryOrganizationFront = Array ( "t" => "Á°", "f" => "¸å" );
+	// aryOrganizationFront å–å¾—
+	$aryOrganizationFront = Array ( "t" => "å‰", "f" => "å¾Œ" );
 
-	// bytCompanyDisplayFlag ¼èÆÀ
-	$aryCompanyDisplayFlag = Array ( "t" => "É½¼¨", "f" => "ÈóÉ½¼¨" );
+	// bytCompanyDisplayFlag å–å¾—
+	$aryCompanyDisplayFlag = Array ( "t" => "è¡¨ç¤º", "f" => "éè¡¨ç¤º" );
 
-	// lngAttributeCode (CODE+NAME)¼èÆÀ
+	// lngAttributeCode (CODE+NAME)å–å¾—
 	$strQuery = "SELECT * FROM m_Attribute a, m_AttributeRelation ar WHERE a.lngAttributeCode = ar.lngAttributeCode";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -122,13 +122,13 @@ if ( $lngResultNum )
 	}
 
 
-	// ¥ì¥³¡¼¥ÉÉ½¼¨½èÍı
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰è¡¨ç¤ºå‡¦ç†
 	foreach ( $objMaster->aryData as $record )
 	{
 		$count++;
 		$aryParts["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:#ffffff;\">\n";
 
-		// ¥«¥é¥àÀ¸À®
+		// ã‚«ãƒ©ãƒ ç”Ÿæˆ
 		$aryParts["strResultHtml"] .= "		<th>$count</th>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[0]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["strcountryname"] . "</td>\n";
@@ -153,10 +153,10 @@ if ( $lngResultNum )
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $aryAttributeCode[$record[$objMaster->aryColumnName[0]]] . "</td>\n";
 
 
-		// ½¤Àµ¥Ü¥¿¥óÀ¸À®
+		// ä¿®æ­£ãƒœã‚¿ãƒ³ç”Ÿæˆ
 		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/co/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . fncGetUrl( $aryData ) . "&lngcompanycode=" . $record[$objMaster->aryColumnName[0]] . "\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
-		// ºï½ü¥Ü¥¿¥óÀ¸À®
+		// å‰Šé™¤ãƒœã‚¿ãƒ³ç”Ÿæˆ
 		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/co/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . fncGetUrl( $aryData ) . "&lngcompanycode=" . $record[$objMaster->aryColumnName[0]] . "\" name=\"delete\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></td>\n";
 
 
@@ -166,34 +166,34 @@ if ( $lngResultNum )
 }
 else
 {
-	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . ( count ( $objMaster->aryColumnName ) + 1 ) . ">·ë²ÌÌµ¤·¡£</th></tr>";
+	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . ( count ( $objMaster->aryColumnName ) + 1 ) . ">çµæœç„¡ã—ã€‚</th></tr>";
 }
 
-// ¥«¥é¥à¹ÔHTML¼èÆÀ
+// ã‚«ãƒ©ãƒ è¡ŒHTMLå–å¾—
 // $aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 21 );
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>²ñ¼Ò¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>¹ñ¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ÁÈ¿¥¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ÁÈ¿¥É½µ­</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>²ñ¼ÒÌ¾¾Î</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>É½¼¨²ñ¼Òµö²Ä</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>É½¼¨²ñ¼Ò¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>É½¼¨²ñ¼ÒÌ¾¾Î</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>¾ÊÎ¬Ì¾¾Î</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>Í¹ÊØÈÖ¹æ </td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>½»½ê1 / ÅÔÆ»ÉÜ¸© </td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>½»½ê2 / »Ô¡¢¶è¡¢·´ </td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>½»½ê3 / Ä®¡¢ÈÖÃÏ </td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>½»½ê4 / ¥Ó¥ëÅù¡¢·úÊªÌ¾</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ÅÅÏÃÈÖ¹æ1</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ÅÅÏÃÈÖ¹æ2</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ1</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ2</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>¼±ÊÌ¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>Äù¤áÆü¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>²ñ¼ÒÂ°À­</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"FixColumn\" nowrap>½¤Àµ</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"DeleteColumn\" nowrap>ºï½ü</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ä¼šç¤¾ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>å›½ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>çµ„ç¹”ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>çµ„ç¹”è¡¨è¨˜</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ä¼šç¤¾åç§°</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>è¡¨ç¤ºä¼šç¤¾è¨±å¯</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>è¡¨ç¤ºä¼šç¤¾åç§°</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>çœç•¥åç§°</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>éƒµä¾¿ç•ªå· </td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ä½æ‰€1 / éƒ½é“åºœçœŒ </td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ä½æ‰€2 / å¸‚ã€åŒºã€éƒ¡ </td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ä½æ‰€3 / ç”ºã€ç•ªåœ° </td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ä½æ‰€4 / ãƒ“ãƒ«ç­‰ã€å»ºç‰©å</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>é›»è©±ç•ªå·1</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>é›»è©±ç•ªå·2</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·1</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·2</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>è­˜åˆ¥ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ç· ã‚æ—¥ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ä¼šç¤¾å±æ€§</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"FixColumn\" nowrap>ä¿®æ­£</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"DeleteColumn\" nowrap>å‰Šé™¤</td>\n";
 $objDB->close();
 
 
@@ -210,7 +210,7 @@ $aryParts["strEditURL"]       = "/m/regist/co/edit.php?lngActionCode=" . DEF_ACT
 //$aryParts["strEditURL"]       = "/m/regist/co/edit.php?lngActionCode=" . DEF_ACTION_INSERT . fncGetUrl( $aryData );
 
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 //echo getArrayTable( $aryData, "TABLE" );exit;
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/result/parts.tmpl" );

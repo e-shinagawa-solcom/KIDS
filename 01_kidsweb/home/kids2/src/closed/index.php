@@ -1,8 +1,8 @@
 <?php
 /** 
-*	Äù¤á½èÍı¡¡ÁªÂòÉ½¼¨²èÌÌ
+*	ç· ã‚å‡¦ç†ã€€é¸æŠè¡¨ç¤ºç”»é¢
 *
-*	Äù¤á½èÍı¤ÎÁªÂòÉ½¼¨½èÍı
+*	ç· ã‚å‡¦ç†ã®é¸æŠè¡¨ç¤ºå‡¦ç†
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -11,25 +11,25 @@
 *	@access    public
 *	@version   1.00
 *
-*	½èÍı³µÍ×
-*	Äù¤á½èÍı¤ò¹Ô¤¦´ü´Ö¡¢½èÍıÆâÍÆ¤òÁªÂò¤µ¤»¤ë²èÌÌ¤ÎÉ½¼¨½èÍı
+*	å‡¦ç†æ¦‚è¦
+*	ç· ã‚å‡¦ç†ã‚’è¡Œã†æœŸé–“ã€å‡¦ç†å†…å®¹ã‚’é¸æŠã•ã›ã‚‹ç”»é¢ã®è¡¨ç¤ºå‡¦ç†
 *
 */
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 // require (SRC_ROOT . "closed/cmn/lib_cld.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_GET )
 {
@@ -40,25 +40,25 @@ else if ( $_POST )
 	$aryData = $_POST;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 // $aryResult = fncAllCheck( $aryData, $aryCheck );
 // fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
-// 1400 Äù¤á½èÍı
+// æ¨©é™ç¢ºèª
+// 1400 ç· ã‚å‡¦ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_CLD0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
-// ¥Ø¥ë¥×ÂĞ±ş
+// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 $aryData["lngFunctionCode"] = DEF_FUNCTION_CLD0;
 
 echo fncGetReplacedHtml( "closed/parts.tmpl", $aryData, $objAuth );

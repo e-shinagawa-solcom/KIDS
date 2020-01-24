@@ -3,7 +3,7 @@
 <head>
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=euc-jp">
-<!-- È¯Ãí¡¦»ÅÆş ÌÀºÙ¹Ô¥¨¥ê¥¢ÍÑ¥Æ¥ó¥×¥ì¡¼¥È -->
+<!-- ç™ºæ³¨ãƒ»ä»•å…¥ æ˜ç´°è¡Œã‚¨ãƒªã‚¢ç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ -->
 
 
 <!-- START COMMON FILES -->
@@ -46,52 +46,52 @@
 <Script for="objDataSourceSetting3" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,3);
 </Script>
 
-<!--ÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¤È¤­¤Î»ÅÆşÉôÉÊ-->
+<!--æ˜ç´°è¡Œã‚’é¸æŠã—ãŸã¨ãã®ä»•å…¥éƒ¨å“-->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting10" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting10" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,10);
 
-	<!--»ÅÆşÉôÉÊ¤ÎÃÍ¤òÀßÄê-->
+	<!--ä»•å…¥éƒ¨å“ã®å€¤ã‚’è¨­å®š-->
 	window.parent.DSO.strStockItemCode.value       = saveRecord[g_lngSelIndex][4];
 
-	//ÌÀºÙ¹Ô¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+	//æ˜ç´°è¡Œã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	g_lngSentakufunouFlg = 0;
 
 </Script>
 
 
-<!--input »ÅÆşÉôÉÊ output Ã±²Á¥ê¥¹¥È-->
+<!--input ä»•å…¥éƒ¨å“ output å˜ä¾¡ãƒªã‚¹ãƒˆ-->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting11" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting11" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,11);
 
-	<!--²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­Ã±²Á¥ê¥¹¥È¤òÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë-->
+	<!--è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ãå˜ä¾¡ãƒªã‚¹ãƒˆã‚’é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹-->
 	if( window.parent.DSO.lngConversionClassCode[1].checked )
 	{
 		window.parent.DSO.lngGoodsPriceCode.disabled = true;
 	}
 
-	<!--Ã±²Á¥ê¥¹¥È¤Îselected¤ò¡¢À½ÉÊÃ±²Á¤ËÈ¿±Ç-->
+	<!--å˜ä¾¡ãƒªã‚¹ãƒˆã®selectedã‚’ã€è£½å“å˜ä¾¡ã«åæ˜ -->
 	fncDtGoodsPriceToProductPrice();
 </Script>
 
-<!--ÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¤È¤­¤ÎÃ±²Á¥ê¥¹¥È-->
+<!--æ˜ç´°è¡Œã‚’é¸æŠã—ãŸã¨ãã®å˜ä¾¡ãƒªã‚¹ãƒˆ-->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting12" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting12" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,12);
 
-	<!--Ã±²Á¥ê¥¹¥È¤Îselected¤òÀßÄê-->
+	<!--å˜ä¾¡ãƒªã‚¹ãƒˆã®selectedã‚’è¨­å®š-->
 	window.parent.DSO.lngGoodsPriceCode.value = saveRecord[g_lngSelIndex][1];
 
-	<!--²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­Ã±²Á¥ê¥¹¥È¤òÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë-->
+	<!--è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ãå˜ä¾¡ãƒªã‚¹ãƒˆã‚’é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹-->
 	if( saveRecord[g_lngSelIndex][6] == "ps" )
 	{
 		window.parent.DSO.lngGoodsPriceCode.disabled = true;
 	}
 </Script>
 
-<!--ÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¤È¤­¡¢¥«¡¼¥È¥óÆş¿ô¤ò·èÄê¤·¡¢²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­[À½ÉÊ¿ôÎÌ]¤Ë[¥«¡¼¥È¥ó¿ô]¡ß[²Ù»Ñ¿ôÎÌ]¤òÈ¿±Ç-->
-<!-- objDataSourceSettingProductInfo ¤Ë½¸Ìó¤·¤¿°Ù¡¢¥³¥á¥ó¥È¥¢¥¦¥È
+<!--æ˜ç´°è¡Œã‚’é¸æŠã—ãŸã¨ãã€ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’æ±ºå®šã—ã€è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ã[è£½å“æ•°é‡]ã«[ã‚«ãƒ¼ãƒˆãƒ³æ•°]Ã—[è·å§¿æ•°é‡]ã‚’åæ˜ -->
+<!-- objDataSourceSettingProductInfo ã«é›†ç´„ã—ãŸç‚ºã€ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting13" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting13" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,13);
@@ -102,13 +102,13 @@
 		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 		var GoodsQuantity_gs = window.parent.fncCheckNumberValue( CartonQuantity * GoodsQuantity , 0 , false );
 		window.parent.DSO.lngGoodsQuantity_gs.value = GoodsQuantity_gs;
-		//[À½ÉÊÃ±²Á]¤Ë[²Ù»ÑÃ±²Á]¡à[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È
+		//[è£½å“å˜ä¾¡]ã«[è·å§¿å˜ä¾¡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆ
 		fncDtPSProductPrice();
 	}
 </Script>
 -->
 
-<!--¥«¡¼¥È¥óÆş¿ô¤ò·èÄê¤·¡¢²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­[À½ÉÊ¿ôÎÌ]¤Ë[¥«¡¼¥È¥ó¿ô]¡ß[²Ù»Ñ¿ôÎÌ]¤òÈ¿±Ç-->
+<!--ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’æ±ºå®šã—ã€è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ã[è£½å“æ•°é‡]ã«[ã‚«ãƒ¼ãƒˆãƒ³æ•°]Ã—[è·å§¿æ•°é‡]ã‚’åæ˜ -->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting15" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting15" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,15);
@@ -119,33 +119,33 @@
 		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 		var GoodsQuantity_gs = window.parent.fncCheckNumberValue( CartonQuantity * GoodsQuantity , 0 , false );
 		window.parent.DSO.lngGoodsQuantity_gs.value = GoodsQuantity_gs;
-		// [À½ÉÊÃ±²Á]¤Ë[²Ù»ÑÃ±²Á]¡à[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È
+		// [è£½å“å˜ä¾¡]ã«[è·å§¿å˜ä¾¡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆ
 		fncDtPSProductPrice();
 	}
 </Script>
 
-<!--detail¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Î½èÍı(»ÅÆş´ÉÍı,Çä¾å´ÉÍı¤Î¤ß)-->
+<!--detailã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã®å‡¦ç†(ä»•å…¥ç®¡ç†,å£²ä¸Šç®¡ç†ã®ã¿)-->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting14" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting14" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,14);
 
-	// <!--»ÅÆş´ÉÍı,Çä¾å´ÉÍı¤Î¾ì¹ç¤Î½èÍı-->
+	// <!--ä»•å…¥ç®¡ç†,å£²ä¸Šç®¡ç†ã®å ´åˆã®å‡¦ç†-->
 	fncDtHtmlForPC();
 </Script>
 
-<!-- ¾¦ÉÊ¾ğÊó¼èÆÀÍÑ -->
+<!-- å•†å“æƒ…å ±å–å¾—ç”¨ -->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingProductInfo" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSettingProductInfo" event="ondatasetcomplete">
 	subLoadMasterSettings(this.recordset,1, window.parent.DSO);
 	
-	// <!--ÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¤È¤­¡¢¥«¡¼¥È¥óÆş¿ô¤ò·èÄê¤·¡¢²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­[À½ÉÊ¿ôÎÌ]¤Ë[¥«¡¼¥È¥ó¿ô]¡ß[²Ù»Ñ¿ôÎÌ]¤òÈ¿±Ç-->
+	// <!--æ˜ç´°è¡Œã‚’é¸æŠã—ãŸã¨ãã€ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’æ±ºå®šã—ã€è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ã[è£½å“æ•°é‡]ã«[ã‚«ãƒ¼ãƒˆãƒ³æ•°]Ã—[è·å§¿æ•°é‡]ã‚’åæ˜ -->
 	if( saveRecord[g_lngSelIndex][6] == "ps" )
 	{
 		GoodsQuantity        = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
 		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 		var GoodsQuantity_gs = window.parent.fncCheckNumberValue( CartonQuantity * GoodsQuantity , 0 , false );
 		window.parent.DSO.lngGoodsQuantity_gs.value = GoodsQuantity_gs;
-		// [À½ÉÊÃ±²Á]¤Ë[²Ù»ÑÃ±²Á]¡à[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È
+		// [è£½å“å˜ä¾¡]ã«[è·å§¿å˜ä¾¡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆ
 		fncDtPSProductPrice();
 	}
 </Script>
@@ -155,15 +155,15 @@
 <table width="910" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180">
 	<tr class="TrSegs">
 		<td>&nbsp;</td>
-		<td id="ExStrDL01">À½ÉÊ</td>
-		<td id="ExStrDL02">»ÅÆş²ÊÌÜ</td>
-		<td id="ExStrDL03">»ÅÆşÉôÉÊ</td>
-		<td id="ExStrDL04">Ã±²Á</td>
-		<td id="ExStrDL05">Ã±°Ì</td>
-		<td id="ExStrDL06">¿ôÎÌ</td>
-		<td id="ExStrDL07">ÀÇÈ´¶â³Û</td>
-		<td id="ExStrDL08">Ç¼´ü</td>
-		<td id="ExStrDL09">È÷¹Í</td>
+		<td id="ExStrDL01">è£½å“</td>
+		<td id="ExStrDL02">ä»•å…¥ç§‘ç›®</td>
+		<td id="ExStrDL03">ä»•å…¥éƒ¨å“</td>
+		<td id="ExStrDL04">å˜ä¾¡</td>
+		<td id="ExStrDL05">å˜ä½</td>
+		<td id="ExStrDL06">æ•°é‡</td>
+		<td id="ExStrDL07">ç¨æŠœé‡‘é¡</td>
+		<td id="ExStrDL08">ç´æœŸ</td>
+		<td id="ExStrDL09">å‚™è€ƒ</td>
 	</tr>
 </table>
 </span>

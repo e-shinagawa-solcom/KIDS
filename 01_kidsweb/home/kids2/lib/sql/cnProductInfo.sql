@@ -1,12 +1,12 @@
 /*
-	³µÍ×¡§¡ÖÀ½ÉÊ¥³¡¼¥É¡×¤«¤é¡ÖÀ½ÉÊ¾ðÊó¡×¤ò¼èÆÀ
-	ÂÐ¾Ý¡§È¯Ãí´ÉÍý¡¢»ÅÆþ´ÉÍý¡¢¼õÃí´ÉÍý¡¢Çä¾å´ÉÍý
-	ºîÀ®¡§ºØÆ£ÏÂ»Ö
-	¹¹¿·¡§
-	È÷¹Í¡§
+	æ¦‚è¦ï¼šã€Œè£½å“ã‚³ãƒ¼ãƒ‰ã€ã‹ã‚‰ã€Œè£½å“æƒ…å ±ã€ã‚’å–å¾—
+	å¯¾è±¡ï¼šç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã€å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†
+	ä½œæˆï¼šæ–Žè—¤å’Œå¿—
+	æ›´æ–°ï¼š
+	å‚™è€ƒï¼š
 
-		_%strFormValue0%_¡§À½ÉÊ¥³¡¼¥É
-		_%strFormValue1%_¡§ÆþÎÏ¼Ô¥³¡¼¥É¡Ê¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¡Ë
+		_%strFormValue0%_ï¼šè£½å“ã‚³ãƒ¼ãƒ‰
+		_%strFormValue1%_ï¼šå…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰ï¼ˆãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ï¼‰
 
 */
 SELECT distinct
@@ -32,4 +32,4 @@ FROM
 WHERE
 	mp.bytinvalidflag = false
 	AND mp.strproductcode = '_%strFormValue0%_'
-	and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WF¿½ÀÁÃæ */
+	and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WFç”³è«‹ä¸­ */

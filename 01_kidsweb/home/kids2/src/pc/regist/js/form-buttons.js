@@ -1,32 +1,32 @@
 var taxList;
 (function () {
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var workForm = $('form');
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥¯¥é¥¹Ì¾
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚¯ãƒ©ã‚¹å
     var classNameErrorIcon = 'error-icon';
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥ê¥½¡¼¥¹URL
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãƒªã‚½ãƒ¼ã‚¹URL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     var btnClear = $('img.clear');
-    // ÅĞÏ¿¥Ü¥¿¥ó
+    // ç™»éŒ²ãƒœã‚¿ãƒ³
     var btnRegist = $('img.regist');
-    // È¯Ãí¾ğÊó¼èÆÀ¥Ü¥¿¥ó
+    // ç™ºæ³¨æƒ…å ±å–å¾—ãƒœã‚¿ãƒ³
     var btnGetPoInfo = $('img.getpoinfo');
 
 
-    // ¥Õ¥©¡¼¥à¥µ¥Ö¥ß¥Ã¥ÈÍŞ»ß
+    // ãƒ•ã‚©ãƒ¼ãƒ ã‚µãƒ–ãƒŸãƒƒãƒˆæŠ‘æ­¢
     $('document').on('submit', 'form', function (e) {
         e.preventDefault();
         return false;
     });
 
     btnGetPoInfo.on('click', function () {
-        // È¯ÃíNO.¤Î¼èÆÀ
+        // ç™ºæ³¨NO.ã®å–å¾—
         var strOrderCode = $('input[name="strOrderCode"]').val();
         var strReviseCode = $('input[name="strReviseCode"]').val();
         var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
         if (strOrderCode != "" && /^[a-zA-Z0-9]+$/.test(strOrderCode)) {
-            // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+            // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
             $.ajax({
                 url: '/pc/regist/getPoInfo.php',
                 type: 'post',
@@ -41,16 +41,16 @@ var taxList;
                     console.log(response);
                     var data = JSON.parse(response);
                     if (data.orderdetail.length == 0) {
-                        alert("³ºÅö¤¹¤ëÈ¯Ãí¥Ç¡¼¥¿¤¬¤¢¤ê¤Ş¤»¤ó¡£");
+                        alert("è©²å½“ã™ã‚‹ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“ã€‚");
                         exit;
                     }
 
                     $("#tbl_order_detail").empty();
                     for (var i = 0; i < data.orderdetail.length; i++) {
                         var row = data.orderdetail[i];
-                        // È¯Ãí¥¹¥Æ¡¼¥¿¥¹¤¬Ç¼ÉÊºÑ¤Î¾ì¹ç¡¢¥¨¥é¡¼¤ò½Ğ¤¹
+                        // ç™ºæ³¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãŒç´å“æ¸ˆã®å ´åˆã€ã‚¨ãƒ©ãƒ¼ã‚’å‡ºã™
                         if (row.lngorderstatuscode == 4) {
-                            alert("»ØÄê¤µ¤ì¤¿È¯ÃíÈÖ¹æ¤Ï¡ÖÇ¼ÉÊºÑ¤ß¡×¤Ç¤¹¡£");
+                            alert("æŒ‡å®šã•ã‚ŒãŸç™ºæ³¨ç•ªå·ã¯ã€Œç´å“æ¸ˆã¿ã€ã§ã™ã€‚");
                             exit;
                         }
                     }
@@ -58,9 +58,9 @@ var taxList;
                     for (var i = 0; i < data.orderdetail.length; i++) {
                         var rowNum = i + 1;
                         var row = data.orderdetail[i];
-                        // ÄÌ²ßÃ±°Ì¥³¡¼¥É
+                        // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
                         var lngmonetaryunitcode = row.lngmonetaryunitcode;
-                        // ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É
+                        // é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰
                         var lngmonetaryratecode = row.lngmonetaryratecode;
                         $('input[name="lngMonetaryUnitCode"]').val(lngmonetaryunitcode);
                         $('input[name="strMonetaryUnitName"]').val(row.strmonetaryunitname);
@@ -76,13 +76,13 @@ var taxList;
                         $('input[name="strLocationName"]').val(row.strlocationname);
                         $('input[name="dtmExpirationDate"]').val(row.dtmexpirationdate);
                         $('input[name="lngOrderNo"]').val(row.lngorderno);
-                        // ¹ñ¥³¡¼¥É¤Î¼èÆÀ
+                        // å›½ã‚³ãƒ¼ãƒ‰ã®å–å¾—
                         var lngcountrycode = row.lngcountrycode;
                         var curtax = 0;
                         var lngtaxclasscode = 0;
                         var lngtaxcode = row.lngtaxcode;
                         if (data.tax == null) {
-                            alert("¾ÃÈñÀÇ¾ğÊó¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£");
+                            alert("æ¶ˆè²»ç¨æƒ…å ±ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
                             exit;
                         } else {
                             taxList = '<select style="width:90px;" onchange="resetTaxPrice(this, 2)">';
@@ -99,7 +99,7 @@ var taxList;
                         }
 
                         console.log(taxList);
-                        // ¹ñ¥³¡¼¥É¡§81ÆüËÜ¤Î¾ì¹ç¡¢¡Ö³°ÀÇ¡×¤È¤Ê¤ë¡¢¤½¤ì°Ê³°¤Î¾ì¹ç¡¢Èó²İÀÇ
+                        // å›½ã‚³ãƒ¼ãƒ‰ï¼š81æ—¥æœ¬ã®å ´åˆã€ã€Œå¤–ç¨ã€ã¨ãªã‚‹ã€ãã‚Œä»¥å¤–ã®å ´åˆã€éèª²ç¨
                         if (lngcountrycode == 81) {
                             for (var j = 0; j < data.tax.length; j++) {
                                 var taxRow = data.tax[j];
@@ -116,18 +116,18 @@ var taxList;
                         }
 
                         var curtaxprice = 0;
-                        // £±¡§Èó²İÀÇ
+                        // ï¼‘ï¼šéèª²ç¨
                         if (lngtaxclasscode == 1) {
                             curtaxprice = 0;
-                            //¡¡2:³°ÀÇ
+                            //ã€€2:å¤–ç¨
                         } else if (lngtaxclasscode == 2) {
                             curtaxprice = Math.floor(row.cursubtotalprice * (curtax / 100));
-                            // 3:ÆâÀÇ
+                            // 3:å†…ç¨
                         } else {
                             curtaxprice = Math.floor((row.cursubtotalprice / (1 + (curtax / 100))) * (curtax / 100));
                         }
-                        console.log("¾ÃÈñÀÇ¶èÊ¬¡§" + lngtaxclasscode);
-                        console.log("¾ÃÈñÀÇ³Û¡§" + curtaxprice);
+                        console.log("æ¶ˆè²»ç¨åŒºåˆ†ï¼š" + lngtaxclasscode);
+                        console.log("æ¶ˆè²»ç¨é¡ï¼š" + curtaxprice);
                         console.log(money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice));
                         var select = '<select style="width:90px;" onchange="resetTaxPrice(this, 1)">';
                         for (var j = 0; j < data.taxclass.length; j++) {
@@ -135,7 +135,7 @@ var taxList;
                             if (taxclassRow.lngtaxclasscode == lngtaxclasscode) {
                                 select += '<option value="' + taxclassRow.lngtaxclasscode + '" selected>' + taxclassRow.strtaxclassname + '</option>'
                             } else {
-                                if (lngcountrycode == 81) {   // ³¤³°¤ÏÈó²İÀÇ¸ÇÄê
+                                if (lngcountrycode == 81) {   // æµ·å¤–ã¯éèª²ç¨å›ºå®š
                                     select += '<option value="' + taxclassRow.lngtaxclasscode + '">' + taxclassRow.strtaxclassname + '</option>'
                                 }
 
@@ -152,11 +152,11 @@ var taxList;
                             + '<td class="col7">' + row.strproductunitname + '</td>'
                             + '<td class="col8">' + convertNumber(row.lngproductquantity, 0) + '</td>'
                             + '<td class="col9">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
-                            // ¾ÃÈñÀÇ¶èÊ¬
+                            // æ¶ˆè²»ç¨åŒºåˆ†
                             + '<td class="col10">' + select + '</td>'
-                            // ¾ÃÈñÀÇÎ¨
+                            // æ¶ˆè²»ç¨ç‡
                             + '<td class="col11">' + curtaxList + '</td>'
-                            // ¾ÃÈñÀÇ³Û
+                            // æ¶ˆè²»ç¨é¡
                             + '<td class="col12">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice) + '</td>'
                             + '<td class="col13">' + row.dtmdeliverydate + '</td>'
                             + '<td class="col14">' + convertNull(row.strnote) + '</td>'
@@ -198,9 +198,9 @@ var taxList;
     });
 
 
-    // ÄÌ²ßÊÑ¹¹¥¤¥Ù¥ó¥È
+    // é€šè²¨å¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆ
     $('input[name="lngMonetaryUnitCode"]').on('change', function () {
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax({
             url: '/pc/regist/getMonetaryRate.php',
             type: 'post',
@@ -222,9 +222,9 @@ var taxList;
             })
     });
 
-    // ÄÌ²ß¥ì¡¼¥ÈÊÑ¹¹¥¤¥Ù¥ó¥È
+    // é€šè²¨ãƒ¬ãƒ¼ãƒˆå¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆ
     $('select[name="lngMonetaryRateCode"]').on('change', function () {
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax({
             url: '/pc/regist/getMonetaryRate.php',
             type: 'post',
@@ -245,7 +245,7 @@ var taxList;
             })
     });
 
-    // ÅĞÏ¿¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+    // ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnRegist.on('click', function () {
 
         if (workForm.valid()) {
@@ -255,25 +255,25 @@ var taxList;
             var detaildata = new Array();
             var len = 0;
             $("#tbl_order_detail tr").each(function (i, e) {
-                // ÌÀºÙ¹ÔÈÖ¹æ
+                // æ˜ç´°è¡Œç•ªå·
                 var strReceiveCode = $(this).find('td:nth-child(1)').text();
-                // È¯ÃíÌÀºÙ¹ÔÈÖ¹æ
-                // ¼õÃíÌÀºÙÈÖ¹æ
+                // ç™ºæ³¨æ˜ç´°è¡Œç•ªå·
+                // å—æ³¨æ˜ç´°ç•ªå·
                 var chkbox = $(this).find('td:nth-child(2)').find('input:checkbox');
                 if (chkbox.prop("checked")) {
                     len += 1;
-                    // È¯ÃíÈÖ¹æ                
+                    // ç™ºæ³¨ç•ªå·                
                     var lngOrderNo = $(this).find('td:nth-child(20)').text();
-                    // È¯Ãí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ                
+                    // ç™ºæ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·                
                     var lngRevisionNo = $(this).find('td:nth-child(21)').text();
-                    // È¯ÃíÌÀºÙÈÖ¹æ                
+                    // ç™ºæ³¨æ˜ç´°ç•ªå·                
                     var lngOrderDetailNo = $(this).find('td:nth-child(22)').text();
-                    // »ÅÆşÌÀºÙÈÖ¹æ
+                    // ä»•å…¥æ˜ç´°ç•ªå·
                     var lngStockDetailNo = len;
-                    // ¾ÃÈñÀÇ¶èÊ¬
+                    // æ¶ˆè²»ç¨åŒºåˆ†
                     var lngTaxClassCode = $(this).find('td:nth-child(10)').find('select').val();
                     var strTaxClassName = $(this).find('td:nth-child(10)').find('select option:selected').text();
-                    // ¾ÃÈñÎ¨
+                    // æ¶ˆè²»ç‡
                     var curTax = 0;
                     var lngTaxCode = null;
                     if (lngTaxClassCode == "1") {
@@ -284,16 +284,16 @@ var taxList;
                         lngTaxCode = $(this).find('td:nth-child(11)').find('select').val();
                         curTax = $(this).find('td:nth-child(11)').find('select option:selected').text();
                     }
-                    // ¾ÃÈñÀÇ³Û                
+                    // æ¶ˆè²»ç¨é¡                
                     var curTaxPrice = $(this).find('td:nth-child(19)').text();
-                    // Ç¼´ü
+                    // ç´æœŸ
                     var dtmDeliveryDate = $(this).find('td:nth-child(13)').text();
-                    // ¾ÃÈñÀÇ¥³¡¼¥É                
+                    // æ¶ˆè²»ç¨ã‚³ãƒ¼ãƒ‰                
                     //                    var lngTaxCode = $(this).find('td:nth-child(23)').text();
 
-                    // Ç¼´ü¤¬¥Ø¥Ã¥ÀÉô¤ÇÆşÎÏ¤·¤¿À½ÉÊÅşÃåÆü¤ÈÆ±·î¤Ç¤Ê¤¤¹Ô¤¬Â¸ºß¤·¤¿¾ì¹ç
+                    // ç´æœŸãŒãƒ˜ãƒƒãƒ€éƒ¨ã§å…¥åŠ›ã—ãŸè£½å“åˆ°ç€æ—¥ã¨åŒæœˆã§ãªã„è¡ŒãŒå­˜åœ¨ã—ãŸå ´åˆ
                     if (dtmDeliveryDate.substring(1, 7) != dtmExpirationDate.substring(1, 7)) {
-                        alert("È¯Ãí³ÎÄê»ş¤ÎÇ¼´ü¤ÈÇ¼ÉÊÆü¤È°ìÃ×¤·¤Ş¤»¤ó¡£È¯Ãí¥Ç¡¼¥¿¤ò½¤Àµ¤·¤Æ¤¯¤À¤µ¤¤¡£");
+                        alert("ç™ºæ³¨ç¢ºå®šæ™‚ã®ç´æœŸã¨ç´å“æ—¥ã¨ä¸€è‡´ã—ã¾ã›ã‚“ã€‚ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã‚’ä¿®æ­£ã—ã¦ãã ã•ã„ã€‚");
                         exit;
                     }
                     detaildata[len - 1] = {
@@ -324,7 +324,7 @@ var taxList;
 
             var actionUrl = workForm.attr('action');
             //            alert(actionUrl);
-            // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+            // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
             $.ajax({
                 url: actionUrl,
                 type: 'POST',
@@ -346,11 +346,11 @@ var taxList;
                 .fail(function (response) {
                     alert(response);
                     //                    alert("fail");
-                    // Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+                    // Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
                 });
         }
         else {
-            // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Î¥­¥Ã¥¯
+            // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒƒã‚¯
             workForm.find(':submit').click();
         }
     });
@@ -359,7 +359,7 @@ var taxList;
 })();
 
 /**
- * ÀÇ³ÛºÆ·×»»
+ * ç¨é¡å†è¨ˆç®—
  * @param {*} objID 
  */
 function resetTaxPrice(objID, type) {
@@ -377,7 +377,7 @@ function resetTaxPrice(objID, type) {
     var strmonetaryunitsign = $('.' + rowClass).find('.strmonetaryunitsign').text();
     if (type == 1) {
         var lngoldtaxclasscode = $('.' + rowClass).find('.lngtaxclasscode').text();
-        // ²İÀÇ¶èÊ¬¤¬ÊÑ¤ï¤Ã¤¿¤é¾ÃÈñÀÇÎ¨¤âÊÑ¤ï¤ë
+        // èª²ç¨åŒºåˆ†ãŒå¤‰ã‚ã£ãŸã‚‰æ¶ˆè²»ç¨ç‡ã‚‚å¤‰ã‚ã‚‹
         if (lngtaxclasscode == 1) {
             $('.' + rowClass).find('.col11').text(0);
             curtax = 0;
@@ -391,7 +391,7 @@ function resetTaxPrice(objID, type) {
             console.log(taxList);
         }
     } else if (type == 2) {
-        // ²İÀÇ¶èÊ¬¤¬ÊÑ¤ï¤Ã¤¿¤é¾ÃÈñÀÇÎ¨¤âÊÑ¤ï¤ë
+        // èª²ç¨åŒºåˆ†ãŒå¤‰ã‚ã£ãŸã‚‰æ¶ˆè²»ç¨ç‡ã‚‚å¤‰ã‚ã‚‹
         if (lngtaxclasscode == 1) {
             curtax = 0;
         }
@@ -402,10 +402,10 @@ function resetTaxPrice(objID, type) {
     if (lngtaxclasscode == 1) {
         curtaxprice = 0;
         curtax = 0;
-        //¡¡2:³°ÀÇ
+        //ã€€2:å¤–ç¨
     } else if (lngtaxclasscode == 2) {
         curtaxprice = Math.floor(cursubtotalprice * (curtax / 100));
-        // 3:ÆâÀÇ
+        // 3:å†…ç¨
     } else {
         curtaxprice = Math.floor((cursubtotalprice / (1 + (curtax / 100))) * (curtax / 100));
     }
@@ -415,7 +415,7 @@ function resetTaxPrice(objID, type) {
     $('.' + rowClass).find('.lngtaxclasscode').text(lngtaxclasscode);
 }
 /**
- * Ê¸»úÊÑ´¹¡Ênull¤Î¾ì¹ç¡¢""¤ËÊÑ´¹¡Ë
+ * æ–‡å­—å¤‰æ›ï¼ˆnullã®å ´åˆã€""ã«å¤‰æ›ï¼‰
  * @param {} str 
  */
 function convertNull(str) {
@@ -427,7 +427,7 @@ function convertNull(str) {
 }
 
 /**
- * Ê¸»úÊÑ´¹¡Ênull¤Î¾ì¹ç¡¢"0"¤ËÊÑ´¹¡Ë
+ * æ–‡å­—å¤‰æ›ï¼ˆnullã®å ´åˆã€"0"ã«å¤‰æ›ï¼‰
  * @param {} str 
  */
 function convertNullToZero(str) {
@@ -449,13 +449,13 @@ function money_format(lngmonetaryunitcode, strmonetaryunitsign, price) {
 function convertNumber(str, fracctiondigits) {
     console.log(str);
     if ((str != "" && str != undefined && str != "null") || str == 0) {
-        console.log("null°Ê³°¤Î¾ì¹ç¡§" + str);
+        console.log("nullä»¥å¤–ã®å ´åˆï¼š" + str);
         return Number(str).toLocaleString(undefined, {
             minimumFractionDigits: fracctiondigits,
             maximumFractionDigits: fracctiondigits
         });
     } else {
-        console.log("null¤Î¾ì¹ç¡§" + str);
+        console.log("nullã®å ´åˆï¼š" + str);
         return "";
     }
 }

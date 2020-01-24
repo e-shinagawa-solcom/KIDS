@@ -1,6 +1,6 @@
 <?php
 /** 
-*	¸«ÀÑ¸¶²Á´ÉÍı ¼Â¹Ô²èÌÌ
+*	è¦‹ç©åŸä¾¡ç®¡ç† å®Ÿè¡Œç”»é¢
 *
 *	@package   KIDS
 *	@copyright Copyright &copy; 2004, AntsBizShare 
@@ -16,17 +16,17 @@
 	require_once ('conf.inc');
 	require_once ( LIB_DEBUGFILE );
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require_once ( LIB_FILE );
 
-	// ¸«ÀÑ¸¶²ÁÍÑ¥¯¥é¥¹ÆÉ¤ß¹ş¤ß
+	// è¦‹ç©åŸä¾¡ç”¨ã‚¯ãƒ©ã‚¹èª­ã¿è¾¼ã¿
 	require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
 	require_once ( SRC_ROOT . "estimate/cmn/deleteInsertData.php");
 
-	// ¸«ÀÑ¸¶²ÁDB¥¯¥é¥¹ÆÉ¤ß¹ş¤ß
+	// è¦‹ç©åŸä¾¡DBã‚¯ãƒ©ã‚¹èª­ã¿è¾¼ã¿
 	require_once ( SRC_ROOT . "estimate/cmn/estimateDB.php");
 	
-	// htmlÀ¸À®¥¯¥é¥¹ÆÉ¤ß¹ş¤ß
+	// htmlç”Ÿæˆã‚¯ãƒ©ã‚¹èª­ã¿è¾¼ã¿
 	require_once ( SRC_ROOT . "estimate/cmn/makeHTML.php");
 
 	$objDB   = new estimateDB();
@@ -34,17 +34,17 @@
 	
 	$objDB->open( "", "", "", "" );
 
-	// POST¥Ç¡¼¥¿¼èÆÀ
+	// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryData = $_POST;
 
 // fncDebug( 'estimate_regist_action_data.txt', $aryData["aryDetail"], __FILE__, __LINE__);
 
 	$aryCheck["strSessionID"] = "null:numenglish(32,32)";
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 	
-	// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ¤¹¤ë
+	// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›ã™ã‚‹
 	$strErrorMessage = array();
 
 	foreach ( $aryCheckResult as $value ) {
@@ -55,40 +55,40 @@
 	}
 
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 	$lngUserCode = $objAuth->UserCode;
 
 	$functionCode = $aryData["lngFunctionCode"];
 
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	//////////////////////////////////////////////////////////////////////////
-	// ¸«ÀÑ¸¶²Áºï½ü°Ê³°¤Î¾ì¹ç
+	// è¦‹ç©åŸä¾¡å‰Šé™¤ä»¥å¤–ã®å ´åˆ
 	//////////////////////////////////////////////////////////////////////////
 	if (!$functionCode == DEF_FUNCTION_E4 || !fncCheckAuthority( $functionCode, $objAuth )) {
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-// ºï½ü¤¹¤ë¸«ÀÑ¸¶²Á¤Î¾ğÊó¤ò¼èÆÀ
+// å‰Šé™¤ã™ã‚‹è¦‹ç©åŸä¾¡ã®æƒ…å ±ã‚’å–å¾—
 $estimateNo = $aryData['estimateNo'];
 $revisionNo = $aryData['revisionNo'];
 
 $estimate = $objDB->getEstimateDetail($estimateNo);
 
 //////////////////////////////////////////////////////////////////////
-// DB½èÍı³«»Ï
+// DBå‡¦ç†é–‹å§‹
 //////////////////////////////////////////////////////////////////////
 $objDB->transactionBegin();
 
 $objRegist = new deleteInsertData();
 
-// ÅĞÏ¿¤ËÉ¬Í×¤Ê¥Ç¡¼¥¿¤ò¥»¥Ã¥È¤¹¤ë
+// ç™»éŒ²ã«å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 $objRegist->setDeleteParam($estimateNo, $revisionNo, $lngUserCode, $objDB);
 
 $strErrorMessage = $objRegist->delete();
 
-// ¸¡º÷¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤¿¤é¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸½ĞÎÏ²èÌÌ¤ËÁ«°Ü¤¹¤ë
+// æ¤œç´¢ã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸã‚‰ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›ç”»é¢ã«é·ç§»ã™ã‚‹
 if ($strErrorMessage) {
 	makeHTML::outputErrorWindow($strErrorMessage);
 }
@@ -96,11 +96,11 @@ if ($strErrorMessage) {
 $objDB->transactionCommit();
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 
 
-$completeMessage = "À½ÉÊ¥³¡¼¥É". $productCode. "_". $reviseCode. "¤Î¸«ÀÑ¸¶²Á¥Ç¡¼¥¿¤òºï½ü¤¤¤¿¤·¤Ş¤·¤¿¡£";
+$completeMessage = "è£½å“ã‚³ãƒ¼ãƒ‰". $productCode. "_". $reviseCode. "ã®è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã„ãŸã—ã¾ã—ãŸã€‚";
 
 $postData = array(
 	'completeMessage' => $completeMessage

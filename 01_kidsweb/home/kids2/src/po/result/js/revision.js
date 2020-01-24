@@ -39,7 +39,7 @@ $(window).on('load', function(){
 
     // events
     $('img.record.button').on('click', function(){
-        // console.log("ÍúÎò¥Ü¥¿¥ó");
+        // console.log("å±¥æ­´ãƒœã‚¿ãƒ³");
         var orderCode = $(this).attr('strordercode').split('_');
         var revision = ("00" + (parseInt(orderCode[1], 10) - 1)).slice(-2);
         var childOrderCode = orderCode[0] + '_' + revision;

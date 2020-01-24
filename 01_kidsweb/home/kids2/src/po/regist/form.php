@@ -1,6 +1,6 @@
 <?php
 
-	// ÆÉ¤ß¹þ¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
 	require (LIB_FILE);
 	require(SRC_ROOT."po/cmn/lib_po.php");
@@ -11,7 +11,7 @@
 	$aryData["strSessionID"]	= $_GET["strSessionID"];
 	$aryData["lngLanguageCode"]	= $_COOKIE["lngLanguageCode"];
 	
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 	$lngUserCode = $objAuth->UserCode;
 	
@@ -27,62 +27,62 @@
 <body>
 <form name="form1" method="POST" action="index.php">
 
-<!-- ·×¾åÆü -->
+<!-- è¨ˆä¸Šæ—¥ -->
 	<input type="hidden" name="dtmOrderAppDate" value="">
-<!-- È¯Ãí£Î£Ï¡¥  -->
+<!-- ç™ºæ³¨ï¼®ï¼¯ï¼Ž  -->
 	<input type="hidden" name="strOrderCode" value="">
-<!-- »ÅÆþÀè  -->
+<!-- ä»•å…¥å…ˆ  -->
 	<input type="hidden" name="lngCustomerCode" value="1101">
-<!-- ÉôÌç¥³¡¼¥É -->
+<!-- éƒ¨é–€ã‚³ãƒ¼ãƒ‰ -->
 	<input type="hidden" name="lngInChargeGroupCode" value="01">
-<!-- Ã´Åö¼Ô -->
+<!-- æ‹…å½“è€… -->
 	<input type="hidden" name="lngInChargeUserCode" value="105">
-<!-- Ç¼ÉÊ¾ì½ê -->
+<!-- ç´å“å ´æ‰€ -->
 	<input type="hidden" name="lngLocationCode" value="0002">
-<!-- È¯ÃíÍ­¸ú´ü¸ÂÆü -->
+<!-- ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥ -->
 	<input type="hidden" name="dtmExpirationDate" value="2002/12/31">
 	
-<!-- ¾õÂÖ -->
+<!-- çŠ¶æ…‹ -->
 	<input type="hidden" name="lngOrderStatusCode" value="">
-<!-- ÄÌ²ß -->
+<!-- é€šè²¨ -->
 	<input type="hidden" name="lngMonetaryUnitCode" value="1">
-<!-- ¥ì¡¼¥È¥¿¥¤¥× -->
+<!-- ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ— -->
 	<input type="hidden" name="lngMonetaryRateCode" value="0">
-<!-- ´¹»»¥ì¡¼¥È -->
+<!-- æ›ç®—ãƒ¬ãƒ¼ãƒˆ -->
 	<input type="hidden" name="curConversionRate" value="">
-<!-- »ÙÊ§¾ò·ï -->
+<!-- æ”¯æ‰•æ¡ä»¶ -->
 	<input type="hidden" name="lngPayConditionCode" value="0">
 
 
-<!-- ¾µÇ§¥ë¡¼¥È -->
+<!-- æ‰¿èªãƒ«ãƒ¼ãƒˆ -->
 	<input type="hidden" name="lngWorkflowOrderCode" value="3">
-<!-- È÷¹Í -->
-	<input type="hidden" name="strNote" value="È÷¹Í¥Ø¥Ã¥À">
-<!-- ¹ç·×¶â³Û -->
+<!-- å‚™è€ƒ -->
+	<input type="hidden" name="strNote" value="å‚™è€ƒãƒ˜ãƒƒãƒ€">
+<!-- åˆè¨ˆé‡‘é¡ -->
 	<input type="hidden" name="curAllTotalPrice" value="150000">
 	
 	
 
-<!-- À½ÉÊ -->
+<!-- è£½å“ -->
 	<input type="hidden" name="aryPoDitail[0][strProductCode]" value="0725">
-<!-- »ÅÆþ²ÊÌÜ -->
+<!-- ä»•å…¥ç§‘ç›® -->
 	<input type="hidden" name="aryPoDitail[0][strStockSubjectCode]" value="402">
-<!-- »ÅÆþÉôÉÊ -->
+<!-- ä»•å…¥éƒ¨å“ -->
 	<input type="hidden" name="aryPoDitail[0][strStockItemCode]" value="">
-<!-- À½ÉÊÃ±°Ì·×¾å -->
+<!-- è£½å“å˜ä½è¨ˆä¸Š -->
 	<input type="hidden" name="aryPoDitail[0][lngConversionClassCode]" value="1">
-<!-- Ã±²Á -->
+<!-- å˜ä¾¡ -->
 	<input type="hidden" name="aryPoDitail[0][curProductPrice]" value="1000">
-<!-- Ã±°Ì -->
+<!-- å˜ä½ -->
 	<input type="hidden" name="aryPoDitail[0][lngProductUnitCode]" value="1">
-<!-- ¿ôÎÌ -->
+<!-- æ•°é‡ -->
 	<input type="hidden" name="aryPoDitail[0][lngGoodsQuantity]" value="12">
-<!-- ÀÇÈ´¶â³Û -->
+<!-- ç¨ŽæŠœé‡‘é¡ -->
 	<input type="hidden" name="aryPoDitail[0][curTotalPrice]" value="12000">
-<!-- ±¿ÈÂÊýË¡ -->
+<!-- é‹æ¬æ–¹æ³• -->
 	<input type="hidden" name="aryPoDitail[0][lngCarrierCode]" value="1">
-<!-- È÷¹Í -->
-	<input type="hidden" name="aryPoDitail[0][strDetailNote]" value="È÷¹ÍÌÀºÙ¹Ô:»ÅÆþ¤ìÉôÉÊ¤Ê¤·">
+<!-- å‚™è€ƒ -->
+	<input type="hidden" name="aryPoDitail[0][strDetailNote]" value="å‚™è€ƒæ˜Žç´°è¡Œ:ä»•å…¥ã‚Œéƒ¨å“ãªã—">
 
 
 

@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿ ¥Ç¡¼¥¿ÆşÎÏ²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ ãƒ‡ãƒ¼ã‚¿å…¥åŠ›ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,18 +10,18 @@
 *	@version   1.00
 *
 */
-// ÅĞÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID        -> edit.php
 // index.php -> lngActionCode       -> edit.php
 //
-// ½¤Àµ²èÌÌ
+// ä¿®æ­£ç”»é¢
 // index.php -> strSessionID        -> edit.php
 // index.php -> lngActionCode       -> edit.php
 // index.php -> lngmonetaryratecode -> edit.php
 // index.php -> lngmonetaryunitcode -> edit.php
 // index.php -> dtmapplystartdate   -> edit.php
 //
-// ³ÎÇ§²èÌÌ¤Ø
+// ç¢ºèªç”»é¢ã¸
 // edit.php -> strSessionID        -> confirm.php
 // edit.php -> lngActionCode       -> confirm.php
 // edit.php -> lngmonetaryratecode -> confirm.php
@@ -31,30 +31,30 @@
 // edit.php -> dtmapplyenddate     -> confirm.php
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -68,92 +68,92 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE )
 	$aryCheck["dtmapplystartdate"]   = "null:date(/)";
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
-// ¥¨¥é¡¼¤¬¤Ê¤¤¾ì¹ç¡¢¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®¡¢Ê¸»úÎó¥Á¥§¥Ã¥¯¼Â¹Ô
+// ã‚¨ãƒ©ãƒ¼ãŒãªã„å ´åˆã€ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆã€æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( join ( $aryCheckResult ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 
 //////////////////////////////////////////////////////////////////////////
-// ¥­¡¼¥³¡¼¥É¤ÎÉ½¼¨½èÍı
+// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®è¡¨ç¤ºå‡¦ç†
 //////////////////////////////////////////////////////////////////////////
-// ¿·µ¬¤Î¾ì¹ç¡¢¥­¡¼ÆşÎÏ¹àÌÜÀ¸À®
+// æ–°è¦ã®å ´åˆã€ã‚­ãƒ¼å…¥åŠ›é …ç›®ç”Ÿæˆ
 if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 {
-	// ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¤«¤é¹Ô¥Ç¡¼¥¿¤È¥«¥é¥àÌ¾¼èÆÀ
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ã‹ã‚‰è¡Œãƒ‡ãƒ¼ã‚¿ã¨ã‚«ãƒ©ãƒ åå–å¾—
 	$objMaster->setMasterTable( "m_MonetaryRate", "lngmonetaryratecode", NULL, Array (), $objDB );
 
-	// ¥«¥é¥à¿ô¼èÆÀ
+	// ã‚«ãƒ©ãƒ æ•°å–å¾—
 	$lngColumnNum = count ( $objMaster->aryColumnName );
 
-	// ÄÌ²ß¥ì¡¼¥È
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆ
 	$aryParts["MASTER"][0]  = "<span class=\"InputSegs\"><select id=\"Input0\" name=\"" . $objMaster->aryColumnName[0] . "\" onChange=\"subLoadMasterText( 'cnMonetaryRate', this, document.forms[0]." . $objMaster->aryColumnName[3] . ", Array(this.value, document.forms[0]." . $objMaster->aryColumnName[1] . ".value), objDataSourceSetting, 0 );subLoadMasterText( 'cnMonetaryRate2', this, document.forms[0]." . $objMaster->aryColumnName[4] . ", Array(document.forms[0]." . $objMaster->aryColumnName[0] . ".value, document.forms[0]." . $objMaster->aryColumnName[1] . ".value), objDataSourceSetting2, 1 );\">\n";
 	$aryParts["MASTER"][0] .= fncGetPulldown( "m_MonetaryRateClass", "lngMonetaryRateCode", "strMonetaryRateName", $aryData["lngmonetaryratecode"], "", $objDB );
 	$aryParts["MASTER"][0] .= "</select></span>\n";
 
-	// ÄÌ²ßÃ±°Ì
+	// é€šè²¨å˜ä½
 	$aryParts["MASTER"][1]  = "<span class=\"InputSegs\"><select id=\"Input1\" name=\"" . $objMaster->aryColumnName[1] . "\" onChange=\"subLoadMasterText( 'cnMonetaryRate', this, document.forms[0]." . $objMaster->aryColumnName[3] . ", Array(document.forms[0]." . $objMaster->aryColumnName[0] . ".value, this.value), objDataSourceSetting, 0 );subLoadMasterText( 'cnMonetaryRate2', this, document.forms[0]." . $objMaster->aryColumnName[4] . ", Array(document.forms[0]." . $objMaster->aryColumnName[0] . ".value, document.forms[0]." . $objMaster->aryColumnName[1] . ".value), objDataSourceSetting2, 1 );\">\n";
 	$aryParts["MASTER"][1] .= fncGetPulldown( "m_MonetaryUnit", "lngMonetaryUnitCode", "strMonetaryUnitName || ':' ||strMonetaryUnitSign", $aryData["lngmonetaryunitcode"], "WHERE lngMonetaryUnitCode > 1", $objDB );
 	$aryParts["MASTER"][1] .= "</select></span>\n";
 
-	// Å¬ÍÑ³«»Ï·î
+	// é©ç”¨é–‹å§‹æœˆ
 	$aryParts["MASTER"][3] = "<span class=\"InputSegs\"><input id=\"Input3\" type=\"text\" name=\"" . $objMaster->aryColumnName[3] . "\" value=\"" . $aryData[$objMaster->aryColumnName[3]]. "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"10\"></span>\n";
 
-	// ´¹»»¥ì¡¼¥È¤ËÌá¤Ã¤Æ¤­¤¿ºİ¤Î¥Ç¡¼¥¿¤ò³ÊÇ¼
+	// æ›ç®—ãƒ¬ãƒ¼ãƒˆã«æˆ»ã£ã¦ããŸéš›ã®ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´
 	$objMaster->aryData[0][$objMaster->aryColumnName[2]] = $aryData[$objMaster->aryColumnName[2]];
 
-	// Å¬ÍÑ½ªÎ»·î¤ËÌá¤Ã¤Æ¤­¤¿ºİ¤Î¥Ç¡¼¥¿¤ò³ÊÇ¼
+	// é©ç”¨çµ‚äº†æœˆã«æˆ»ã£ã¦ããŸéš›ã®ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´
 	$objMaster->aryData[0][$objMaster->aryColumnName[4]] = $aryData[$objMaster->aryColumnName[4]];
 }
 
-// ÅĞÏ¿°Ê³°¤Î¾ì¹ç¡¢¥­¡¼ÆşÎÏ¹àÌÜ¤Ë¥¹¥â¡¼¥¯¤ò³İ¤±¤ë
+// ç™»éŒ²ä»¥å¤–ã®å ´åˆã€ã‚­ãƒ¼å…¥åŠ›é …ç›®ã«ã‚¹ãƒ¢ãƒ¼ã‚¯ã‚’æ›ã‘ã‚‹
 elseif ( $aryData["lngActionCode"] != DEF_ACTION_INSERT )
 {
-	// ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¤«¤é»ØÄê¹Ô¥Ç¡¼¥¿¤È¥«¥é¥àÌ¾¼èÆÀ
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ã‹ã‚‰æŒ‡å®šè¡Œãƒ‡ãƒ¼ã‚¿ã¨ã‚«ãƒ©ãƒ åå–å¾—
 	$objMaster->setMasterTable( "m_MonetaryRate", "lngmonetaryratecode", $aryData["lngmonetaryratecode"], Array ( "lngmonetaryunitcode" => $aryData["lngmonetaryunitcode"], "dtmapplystartdate" => $aryData["dtmapplystartdate"] ), $objDB );
 
-	// ¥«¥é¥à¿ô¼èÆÀ
+	// ã‚«ãƒ©ãƒ æ•°å–å¾—
 	$lngColumnNum = count ( $objMaster->aryColumnName );
 
-	// ¥­¡¼¥³¡¼¥ÉÉ½¼¨
+	// ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰è¡¨ç¤º
 	$aryData["HIDDEN"]  = "<input type=\"hidden\" name=\"" . $objMaster->aryColumnName[0] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[0]] . "\">\n";
 	$aryData["HIDDEN"] .= "<input type=\"hidden\" name=\"" . $objMaster->aryColumnName[1] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[1]] . "\">\n";
 	$aryData["HIDDEN"] .= "<input type=\"hidden\" name=\"" . $objMaster->aryColumnName[3] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[3]] . "\">\n";
 
-	// ÄÌ²ß¥ì¡¼¥È
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆ
 	$aryParts["MASTER"][0]  = "<span class=\"InputSegs\"><select id=\"Input0\" disabled>\n";
 	$aryParts["MASTER"][0] .= fncGetPulldown( "m_MonetaryRateClass", "lngMonetaryRateCode", "strMonetaryRateName", $objMaster->aryData[0][$objMaster->aryColumnName[0]], "", $objDB );
 	$aryParts["MASTER"][0] .= "</select></span>\n";
 
-	// ÄÌ²ßÃ±°Ì
+	// é€šè²¨å˜ä½
 	$aryParts["MASTER"][1]  = "<span class=\"InputSegs\"><select id=\"Input1\" disabled>\n";
 	$aryParts["MASTER"][1] .= fncGetPulldown( "m_MonetaryUnit", "lngMonetaryUnitCode", "strMonetaryUnitName || ':' ||strMonetaryUnitSign", $objMaster->aryData[0][$objMaster->aryColumnName[1]], "", $objDB );
 	$aryParts["MASTER"][1] .= "</select></span>\n";
 
-	// Å¬ÍÑ³«»Ï·î
+	// é©ç”¨é–‹å§‹æœˆ
 	$aryParts["MASTER"][3] = "<span class=\"InputSegs\"><input id=\"Input3\" type=\"text\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[3]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" disabled></span>\n";}
 
-// ¿·µ¬ÅĞÏ¿¡¢½¤Àµ¶¦ÄÌÆşÎÏ¹àÌÜ
-// ´¹»»¥ì¡¼¥È
+// æ–°è¦ç™»éŒ²ã€ä¿®æ­£å…±é€šå…¥åŠ›é …ç›®
+// æ›ç®—ãƒ¬ãƒ¼ãƒˆ
 $aryParts["MASTER"][2] = "<span class=\"InputSegs\"><input id=\"Input2\" type=\"text\" name=\"" . $objMaster->aryColumnName[2] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[2]]. "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"10\"></span>\n";
 
-// Å¬ÍÑ½ªÎ»·î
+// é©ç”¨çµ‚äº†æœˆ
 $aryParts["MASTER"][4] = "<span class=\"InputSegs\"><input id=\"Input4\" type=\"text\" name=\"" . $objMaster->aryColumnName[4] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[4]]. "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"10\"></span>\n";
 
-// ¥«¥é¥àÉ½¼¨
+// ã‚«ãƒ©ãƒ è¡¨ç¤º
 $aryData["COLUMN"] = "<span id=\"Column0\" class=\"ColumnSegs\"></span>\n<span id=\"Column1\" class=\"ColumnSegs\"></span>\n<span id=\"Column2\" class=\"ColumnSegs\"></span>\n<span id=\"Column3\" class=\"ColumnSegs\"></span>\n<span id=\"Column4\" class=\"ColumnSegs\"></span>\n";
 
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 //echo fncGetReplacedHtml( "m/regist/parts.tmpl", $aryData, $objAuth );
 $count = count ( $aryParts["MASTER"] );
@@ -168,7 +168,7 @@ $objDB->close();
 $aryData["lngLanguageCode"] = 1;
 $aryData["strTableName"]    = $objMaster->strTableName;
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/regist/c/edit.tmpl" );
 $objTemplate->replace( $aryData );

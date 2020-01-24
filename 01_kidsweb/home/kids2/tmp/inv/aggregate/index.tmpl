@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
     <link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
     <link rel="stylesheet" href="/inv/cmn/form/css/forms.css">
-    <!-- COOKIE´ØÏ¢¤Î½èÍı(¸¡º÷²èÌÌ) -->
+    <!-- COOKIEé–¢é€£ã®å‡¦ç†(æ¤œç´¢ç”»é¢) -->
     <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
 </header1>
 
@@ -12,11 +12,11 @@
 </header2>
 
 <header3>
-    <!-- ¥Õ¥©¡¼¥à¥Ü¥¿¥ó css -->
+    <!-- ãƒ•ã‚©ãƒ¼ãƒ ãƒœã‚¿ãƒ³ css -->
     <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
-    <!-- COOKIE É½¼¨¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹ ÊİÂ¸/Éü¸µ -->
+    <!-- COOKIE è¡¨ç¤ºãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ ä¿å­˜/å¾©å…ƒ -->
     <script src="/search/cmn/js/cookie-display-items.js" defer></script>
-    <!-- ¥­¡¼¥Ğ¥¤¥ó¥É -->
+    <!-- ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ -->
     <script src="/search/cmn/js/key-bind.js" defer></script>
 </header3>
 
@@ -24,29 +24,29 @@
 </bodyonload>
 </config>
 
-<!-- º¸¥µ¥¤¥É¥Ğ¡¼ ¥Ê¥Ó¥²¡¼¥È -->
+<!-- å·¦ã‚µã‚¤ãƒ‰ãƒãƒ¼ ãƒŠãƒ“ã‚²ãƒ¼ãƒˆ -->
 <div class="navigation-loadpoint">
     <script>
         $('.navigation-loadpoint').load('/inv/cmn/navigate/inv_navi.html');
     </script>
 </div>
 
-<!-- ÆşÎÏ¥Õ¥©¡¼¥à -->
+<!-- å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  -->
 <div class="form-box--notabs-for-aggregate">
-    <!-- ¥Õ¥©¡¼¥à¥Ø¥Ã¥À -->
+    <!-- ãƒ•ã‚©ãƒ¼ãƒ ãƒ˜ãƒƒãƒ€ -->
     <div class="form-box__header">
-        <p class="form-box__header__title">ÀÁµá½¸·×</p>
+        <p class="form-box__header__title">è«‹æ±‚é›†è¨ˆ</p>
     </div>
-    <!-- ¥Õ¥©¡¼¥à¥³¥ó¥Æ¥ó¥Ä -->
+    <!-- ãƒ•ã‚©ãƒ¼ãƒ ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ -->
     <div class="form-box__contents--with-scroll"  style="overflow-y: initial;">
         <form name="aggrest" method="post"  onsubmit="checkText()">
             <input type="submit">
             <div class="aggregate-box-area">
                 <div class="aggregate-box">
                     <span class="regist-label w240">
-                        <span class="regist-label__text50">ÀÁµá·î</span>
+                        <span class="regist-label__text50">è«‹æ±‚æœˆ</span>
                         <select id="invoiceMonth"  class="w120" name="invoiceMonth"  ></select>
-                        <span class="regist-label__bold">·îÊ¬</span>
+                        <span class="regist-label__bold">æœˆåˆ†</span>
                     </span>
                 </div>
                 <div class="aggregate-box">
@@ -64,17 +64,17 @@
     </div>
 </div>
 <script>
-    // ÀÁµá·î¤Î¥»¥ì¥¯¥ÈBOX
+    // è«‹æ±‚æœˆã®ã‚»ãƒ¬ã‚¯ãƒˆBOX
     function setMonthSelectBox() {
     	var start = new Date('2019-04-01');
         var today = new Date();
         var mm = today.getFullYear()+ '-' + (today.getMonth()+1);
-        // Íè·îÊ¬¤Ş¤ÇÁªÂò²ÄÇ½¤Ë¤¹¤ë¡£
+        // æ¥æœˆåˆ†ã¾ã§é¸æŠå¯èƒ½ã«ã™ã‚‹ã€‚
         today.setMonth(today.getMonth() +1);
-        //·î
+        //æœˆ
         var month = "<select>";
         for (; start<=today; today.setMonth(today.getMonth() -1) ) {
-        	let date = today.getFullYear() + 'Ç¯ ' + (today.getMonth()+1) + '·î';
+        	let date = today.getFullYear() + 'å¹´ ' + (today.getMonth()+1) + 'æœˆ';
         	let val  = today.getFullYear() + '-' + (today.getMonth()+1);
             if( val == mm) {
                 month += '<option value=\"' + val + '\" selected >' + date + '</option>';
@@ -83,7 +83,7 @@
             }
         }
         month += '</select>';
-        $('#invoiceMonth').html(month + "·î");
+        $('#invoiceMonth').html(month + "æœˆ");
     };
     setMonthSelectBox();
 

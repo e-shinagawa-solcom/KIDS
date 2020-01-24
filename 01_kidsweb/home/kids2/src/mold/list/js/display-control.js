@@ -1,56 +1,56 @@
 (function(){
-    // Ä¢É¼¤ò¥Ú¡¼¥¸Ã±°Ì¤Ç¼èÆÀ
+    // å¸³ç¥¨ã‚’ãƒšãƒ¼ã‚¸å˜ä½ã§å–å¾—
     var pages = $('div#mold-report-page');
 
-    // Á°¥Ú¡¼¥¸¥Ü¥¿¥ó
+    // å‰ãƒšãƒ¼ã‚¸ãƒœã‚¿ãƒ³
     var btnPrev = $('img.button.prev-page');
-    // ¼¡¥Ú¡¼¥¸¥Ü¥¿¥ó
+    // æ¬¡ãƒšãƒ¼ã‚¸ãƒœã‚¿ãƒ³
     var btnNext = $('img.button.next-page');
 
-    // ¸½ºß¤Î¥Ú¡¼¥¸¥é¥Ù¥ë
+    // ç¾åœ¨ã®ãƒšãƒ¼ã‚¸ãƒ©ãƒ™ãƒ«
     var labelCurrentPage = $('span.current-page');
-    // ºÇ¸å¤Î¥Ú¡¼¥¸¥é¥Ù¥ë
+    // æœ€å¾Œã®ãƒšãƒ¼ã‚¸ãƒ©ãƒ™ãƒ«
     var labelLastPage = $('span.last-page');
 
-    // 1¥Ú¡¼¥¸ÌÜ
+    // 1ãƒšãƒ¼ã‚¸ç›®
     var firstPage = 1;
 
-    // ºÇÂç¥Ú¡¼¥¸¿ô¤Î¼èÆÀ/ÀßÄê
+    // æœ€å¤§ãƒšãƒ¼ã‚¸æ•°ã®å–å¾—/è¨­å®š
     var lastPage = pages.length;
     labelLastPage.get(0).innerHTML = lastPage;
 
-    // ¸½ºß¥Ú¡¼¥¸(½é´ü)¿ô¤ÎÀßÄê
+    // ç¾åœ¨ãƒšãƒ¼ã‚¸(åˆæœŸ)æ•°ã®è¨­å®š
     var currentPage = firstPage;
     labelCurrentPage.get(0).innerHTML = currentPage;
 
-    // ½é´ü¥Ú¡¼¥¸¤ÎÉ½¼¨
+    // åˆæœŸãƒšãƒ¼ã‚¸ã®è¡¨ç¤º
     $('div#mold-report-page[page=' + currentPage + ']').addClass('show-page');
 
-    // Á°¤Î¥Ú¡¼¥¸¤ØÀÚ¤êÂØ¤¨¤ë
+    // å‰ã®ãƒšãƒ¼ã‚¸ã¸åˆ‡ã‚Šæ›¿ãˆã‚‹
     btnPrev.on('click', function(){
-        // Á´ÂÎ¤Ç1¥Ú¡¼¥¸¤·¤«¤Ê¤¤¾ì¹ç
+        // å…¨ä½“ã§1ãƒšãƒ¼ã‚¸ã—ã‹ãªã„å ´åˆ
         if (lastPage == 1){ return; }
 
-        // ¸½ºß¤Î¥Ú¡¼¥¸¤¬ºÇ½é¤Î1¥Ú¡¼¥¸ÌÜ¤Î¾ì¹ç
+        // ç¾åœ¨ã®ãƒšãƒ¼ã‚¸ãŒæœ€åˆã®1ãƒšãƒ¼ã‚¸ç›®ã®å ´åˆ
         if (currentPage == 1) {
-            // ºÇ¸å¤Î¥Ú¡¼¥¸¤òÉ½¼¨
+            // æœ€å¾Œã®ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤º
             changePage(currentPage, lastPage);
         } else {
-            // Á°¤Î¥Ú¡¼¥¸¤òÉ½¼¨
+            // å‰ã®ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤º
             changePage(currentPage, --currentPage);
         }
     });
-    // ¼¡¤Î¥Ú¡¼¥¸¤ØÀÚ¤êÂØ¤¨¤ë
+    // æ¬¡ã®ãƒšãƒ¼ã‚¸ã¸åˆ‡ã‚Šæ›¿ãˆã‚‹
     btnNext.on('click', function(){
-        // Á´ÂÎ¤Ç1¥Ú¡¼¥¸¤·¤«¤Ê¤¤¾ì¹ç
+        // å…¨ä½“ã§1ãƒšãƒ¼ã‚¸ã—ã‹ãªã„å ´åˆ
         if (lastPage == 1){ return; }
 
-        // ¸½ºß¤Î¥Ú¡¼¥¸¤¬ºÇ¸å¤Î1¥Ú¡¼¥¸ÌÜ¤Î¾ì¹ç
+        // ç¾åœ¨ã®ãƒšãƒ¼ã‚¸ãŒæœ€å¾Œã®1ãƒšãƒ¼ã‚¸ç›®ã®å ´åˆ
         if (currentPage == lastPage) {
-            // ºÇ½é¤Î¥Ú¡¼¥¸¤òÉ½¼¨
+            // æœ€åˆã®ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤º
             changePage(lastPage, firstPage);
         } else {
-            // ¼¡¤Î¥Ú¡¼¥¸¤òÉ½¼¨
+            // æ¬¡ã®ãƒšãƒ¼ã‚¸ã‚’è¡¨ç¤º
             changePage(currentPage, ++currentPage);
         }
     });

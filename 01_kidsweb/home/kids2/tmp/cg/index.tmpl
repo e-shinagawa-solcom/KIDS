@@ -39,12 +39,12 @@
 
 <form>
 
-<!-- ¥Ç¡¼¥¿¥Ğ¥¤¥ó¥ÉÍÑ¥ª¥Ö¥¸¥§¥¯¥È -->
+<!-- ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ -->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,0);
 
-	// ¤â¤·¸µ¤Î´ë¶ÈÌ¾¤¬ÁªÂò¤µ¤ì¤¿¾ì¹ç¡¢¤â¤È¤Î¥°¥ë¡¼¥×¤òÁªÂò¾õÂÖ¤Ë¤â¤É¤¹½èÍı
+	// ã‚‚ã—å…ƒã®ä¼æ¥­åãŒé¸æŠã•ã‚ŒãŸå ´åˆã€ã‚‚ã¨ã®ã‚°ãƒ«ãƒ¼ãƒ—ã‚’é¸æŠçŠ¶æ…‹ã«ã‚‚ã©ã™å‡¦ç†
 	setDefaultGroup(parent.document.forms[0].lngCompanyCodeOriginal, parent.document.forms[0].lngGroupCodeOriginal, document.forms[0].slctCompany, document.forms[0].slctGroup2, document.forms[0].slctGroup1);
 </script>
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting2" WIDTH="0" HEIGHT="0"></OBJECT>
@@ -70,30 +70,30 @@
 
 
 
-<!-- ²ñ¼ÒÁªÂò¥×¥ë¥À¥¦¥ó -->
+<!-- ä¼šç¤¾é¸æŠãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ -->
 <span id="selectCompany">
 	<select class="Slt50" name="slctCompany" tabindex="" onChange="
-		// ÁªÂò»è¡¢ÁªÂò¥°¥ë¡¼¥×°ìÍ÷ºï½ü
+		// é¸æŠè‚¢ã€é¸æŠã‚°ãƒ«ãƒ¼ãƒ—ä¸€è¦§å‰Šé™¤
 		fncSelectOptionDel(document.forms[0].slctGroup1);
 		fncSelectOptionDel(document.forms[0].slctGroup2);
 
-		// ¥°¥ë¡¼¥×ÁªÂò»èÆÉ¤ß¹ş¤ß
+		// ã‚°ãƒ«ãƒ¼ãƒ—é¸æŠè‚¢èª­ã¿è¾¼ã¿
 		var ajaxObj = subLoadMasterOption( 15, this, slctGroup2, Array(this.value), objDataSourceSetting, 0 );
 		ajaxObj.done(function(data){
-		    // ÈóÆ±´ü½èÍı¤¬À®¸ù»ş¤Î½èÍı
+		    // éåŒæœŸå‡¦ç†ãŒæˆåŠŸæ™‚ã®å‡¦ç†
 		    subLoadMasterSetting(data,0);
 		}).fail(function(data){
-		    console.log('ÄÌ¿®¼ºÇÔ');
+		    console.log('é€šä¿¡å¤±æ•—');
 		});
 
-		// ¥¦¥£¥ó¥É¥¦¸Æ¤Ó½Ğ¤·¤â¤È¤Î¥Õ¥©¡¼¥à¤Ë´ë¶ÈÌ¾¤òÈ¿±Ç
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å‘¼ã³å‡ºã—ã‚‚ã¨ã®ãƒ•ã‚©ãƒ¼ãƒ ã«ä¼æ¥­åã‚’åæ˜ 
 		SetCompany( parent.document.forms[0].lngCompanyCode, parent.document.forms[0].strCompanyName, this );
 
-		// ¥¦¥£¥ó¥É¥¦¸Æ¤Ó½Ğ¤·¤â¤È¤Î¥Õ¥©¡¼¥à¤Î¥°¥ë¡¼¥×Ì¾¤òºï½ü
+		// ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å‘¼ã³å‡ºã—ã‚‚ã¨ã®ãƒ•ã‚©ãƒ¼ãƒ ã®ã‚°ãƒ«ãƒ¼ãƒ—åã‚’å‰Šé™¤
 		parent.document.forms[0].lngGroupCode.value='';
 		parent.document.forms[0].strGroupName.value='';
 
-		// ÁªÂò´ë¶È¤¬[¸ÜµÒ]¤«¤É¤¦¤«¤Î¥Õ¥é¥°¤ò¼èÆÀ¡¢ÀßÄê
+		// é¸æŠä¼æ¥­ãŒ[é¡§å®¢]ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°ã‚’å–å¾—ã€è¨­å®š
 		index = this.selectedIndex;
 		subLoadMasterText(19, this.options[index], parent.document.forms[0].lngAttributeCode, Array ( this.options[index].value ), objDataSourceSetting2, 1);
 		return false;
@@ -105,14 +105,14 @@
 
 
 
-<!-- ÁªÂò¥°¥ë¡¼¥×È¿±ÇÀè¥ê¥¹¥È¥Ü¥Ã¥¯¥¹ -->
+<!-- é¸æŠã‚°ãƒ«ãƒ¼ãƒ—åæ˜ å…ˆãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ -->
 <span id="selectGroup1">
 	<select class="Slt50" size="10" name="slctGroup1" tabindex="" style="height:150px;" multiple>
 
 	</select>
 </span>
 
-<!-- ÁªÂò¥°¥ë¡¼¥×¥ê¥¹¥È¥Ü¥Ã¥¯¥¹ -->
+<!-- é¸æŠã‚°ãƒ«ãƒ¼ãƒ—ãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ -->
 <span id="selectGroup2">
 	<select class="Slt50" size="10" name="slctGroup2" tabindex="" style="height:150px;" multiple>
 		_%slctGroup2%_
@@ -120,7 +120,7 @@
 </span>
 
 
-<!-- ¥ê¥¹¥È¹àÌÜ¥¢¥Ã¥×¡¦¥À¥¦¥ó¥Ü¥¿¥ó -->
+<!-- ãƒªã‚¹ãƒˆé …ç›®ã‚¢ãƒƒãƒ—ãƒ»ãƒ€ã‚¦ãƒ³ãƒœã‚¿ãƒ³ -->
 <span id="ListUpBt" onclick="
 	ListMove( document.forms[0].slctGroup1, 'UP' );
 	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,document.forms[0].slctGroup1 );
@@ -132,7 +132,7 @@
 	return false;
 "></span>
 
-<!-- ¥ê¥¹¥È¹àÌÜÄÉ²Ã¡¦ºï½ü¥Ü¥¿¥ó -->
+<!-- ãƒªã‚¹ãƒˆé …ç›®è¿½åŠ ãƒ»å‰Šé™¤ãƒœã‚¿ãƒ³ -->
 <span id="ListAddBt" onclick="
 	fncSelectList(document.forms[0].slctGroup2, document.forms[0].slctGroup1);
 	SetGroup( parent.document.forms[0].lngGroupCode, parent.document.forms[0].strGroupName,document.forms[0].slctGroup1 );
@@ -147,7 +147,7 @@
 
 <div id"close_btn_box" style="position: fixed;bottom: 5px;left: 10px;text-align: center;width: 100%;">
 	<span id="SegAClearBt" onclick="window.parent.ShowCompanyGroup( parent.document.getElementById('CompanyGroup') );">
-		<a href="javascript:void(0);"><img  src="/img/type01/cmn/querybt/close_dark_off_ja_bt.gif" width="72" height="20" border="0" alt="ÊÄ¤¸¤ë"></a>
+		<a href="javascript:void(0);"><img  src="/img/type01/cmn/querybt/close_dark_off_ja_bt.gif" width="72" height="20" border="0" alt="é–‰ã˜ã‚‹"></a>
 	</span>
 </div>
 

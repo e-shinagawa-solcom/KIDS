@@ -1,7 +1,7 @@
 
 (function(){
 
-    // ¥Ş¥¹¥¿¸¡º÷¶¦ÄÌ
+    // ãƒã‚¹ã‚¿æ¤œç´¢å…±é€š
     var searchMaster = {
                     url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),
                     type: 'post',
@@ -9,59 +9,59 @@
                 };
 
     // --------------------------------------------------------------------------
-    // ¥¤¥Ù¥ó¥ÈÅĞÏ¿
+    // ã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²
     // --------------------------------------------------------------------------
-    // ¥Ø¥Ã¥À¥¿¥Ö À½ÉÊ¥³¡¼¥É ¥¤¥Ù¥ó¥ÈÅĞÏ¿
+    // ãƒ˜ãƒƒãƒ€ã‚¿ãƒ– è£½å“ã‚³ãƒ¼ãƒ‰ ã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²
     $('input[name="ProductCode"]').on({
         'change': function(){
             
             revisecode = $('input[name="ReviseCode"]').val();
             if (revisecode != "") {
-                // À½ÉÊÌ¾¾Îº÷°ú
+                // è£½å“åç§°ç´¢å¼•
                 selectProductByCode($(this), revisecode);
-                // ¶â·¿¥ê¥¹¥Èº÷°ú
+                // é‡‘å‹ãƒªã‚¹ãƒˆç´¢å¼•
                 selectMoldSelectionListByReviseCode($(this), revisecode);
             } else {
-                // À½ÉÊÌ¾¾Îº÷°ú
+                // è£½å“åç§°ç´¢å¼•
                 selectProductName($(this));
             }
         }
     });
     
 
-    // ¥Ø¥Ã¥À¥¿¥Ö À½ÉÊ¥³¡¼¥É ¥¤¥Ù¥ó¥ÈÅĞÏ¿
+    // ãƒ˜ãƒƒãƒ€ã‚¿ãƒ– è£½å“ã‚³ãƒ¼ãƒ‰ ã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²
     $('input[name="ReviseCode"]').on({
         'change': function () {
             var revisecode = $(this).val();
             var productcode = $('input[name="ProductCode"]');
             if (productcode.val() != "") {
-                // À½ÉÊÌ¾¾Îº÷°ú
+                // è£½å“åç§°ç´¢å¼•
                 selectProductByCode(productcode, revisecode);
-                // ¶â·¿¥ê¥¹¥Èº÷°ú
+                // é‡‘å‹ãƒªã‚¹ãƒˆç´¢å¼•
                 selectMoldSelectionListByReviseCode(productcode, revisecode);
             }
         }
     });
-    // Êİ´É¸µ¹©¾ì/°ÜÆ°Àè¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É ¥¤¥Ù¥ó¥ÈÅĞÏ¿
+    // ä¿ç®¡å…ƒå·¥å ´/ç§»å‹•å…ˆå·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ ã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²
     $('input[name="SourceFactory"], input[name="DestinationFactory"]').on({
         'change': function(){
-            // É½¼¨Ì¾¤òº÷°ú
+            // è¡¨ç¤ºåã‚’ç´¢å¼•
             selectFactoryName($(this));
-            // JQuery Validation Plugin¤Ç¸¡ÃÎ¤µ¤»¤ë°Ù¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+            // JQuery Validation Pluginã§æ¤œçŸ¥ã•ã›ã‚‹ç‚ºã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
             $(this).trigger('blur');
-            // ¥Õ¥©¡¼¥«¥¹¤òÉ½¼¨²ñ¼ÒÌ¾¤Ë¹ç¤ï¤»¤ë
+            // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’è¡¨ç¤ºä¼šç¤¾åã«åˆã‚ã›ã‚‹
             $(this).next('input').focus();
         }
     });
 
 
     // --------------------------------------------------------------------------
-    // À½ÉÊ¥³¡¼¥É¡¢ºÆÈÎ¥³¡¼¥É¤Ë¤è¤ë¥Ç¡¼¥¿º÷°ú
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã€å†è²©ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹ãƒ‡ãƒ¼ã‚¿ç´¢å¼•
     // --------------------------------------------------------------------------
-    // À½ÉÊ¥³¡¼¥É¡¢ºÆÈÎ¥³¡¼¥É¤«¤éÀ½ÉÊÌ¾¾Î¤ò¸¡º÷
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã€å†è²©ã‚³ãƒ¼ãƒ‰ã‹ã‚‰è£½å“åç§°ã‚’æ¤œç´¢
     var selectProductByCode = function (invoker, revisecode) {
-        console.log("À½ÉÊ¥³¡¼¥É->À½ÉÊÌ¾¾Î change");
-        // ¸¡º÷¾ò·ï
+        console.log("è£½å“ã‚³ãƒ¼ãƒ‰->è£½å“åç§° change");
+        // æ¤œç´¢æ¡ä»¶
         var condition = {
             data: {
                 QueryName: 'selectProductByCode',
@@ -72,44 +72,44 @@
             }
         };
 
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
                 console.log(response);
                 console.log(response.length);
-                console.log("À½ÉÊ¥³¡¼¥É->À½ÉÊÌ¾¾Î done");
-                // ¥Ø¥Ã¥À¥¿¥Ö/¾ÜºÙ¥¿¥Ö¤ÎÀ½ÉÊ¥³¡¼¥ÉµÚ¤ÓÀ½ÉÊÌ¾¾Î¤ËÃÍ¤ò¥»¥Ã¥È
+                console.log("è£½å“ã‚³ãƒ¼ãƒ‰->è£½å“åç§° done");
+                // ãƒ˜ãƒƒãƒ€ã‚¿ãƒ–/è©³ç´°ã‚¿ãƒ–ã®è£½å“ã‚³ãƒ¼ãƒ‰åŠã³è£½å“åç§°ã«å€¤ã‚’ã‚»ãƒƒãƒˆ
                 $('input[name="ProductCode"]').val(invoker.val());
                 $('input[name="ReviseCode"]').val(response[0].revisecode);
                 $('input[name="ProductName"]').val(response[0].productname);
 
-                // JQuery Validation Plugin¤Ç¸¡ÃÎ¤µ¤»¤ë°Ù¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+                // JQuery Validation Pluginã§æ¤œçŸ¥ã•ã›ã‚‹ç‚ºã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
                 $('input[name="ProductCode"]').trigger('blur');
                 $('input[name="ReviseCode"]').trigger('blur');
                 $('input[name="ProductName"]').trigger('blur');
             })
             .fail(function (response) {
-                console.log("À½ÉÊ¥³¡¼¥É->À½ÉÊÌ¾¾Î fail");
+                console.log("è£½å“ã‚³ãƒ¼ãƒ‰->è£½å“åç§° fail");
                 console.log(response.responseText);
-                // ¥Ø¥Ã¥À¥¿¥Ö/¾ÜºÙ¥¿¥Ö¤ÎÀ½ÉÊ¥³¡¼¥ÉµÚ¤ÓÀ½ÉÊÌ¾¾Î¤ÎÃÍ¤ò¥ê¥»¥Ã¥È
+                // ãƒ˜ãƒƒãƒ€ã‚¿ãƒ–/è©³ç´°ã‚¿ãƒ–ã®è£½å“ã‚³ãƒ¼ãƒ‰åŠã³è£½å“åç§°ã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆ
                 $('input[name="ProductCode"]').val('');
                 $('input[name="ReviseCode"]').val('');
                 $('input[name="ProductName"]').val('');
 
-                // JQuery Validation Plugin¤Ç¸¡ÃÎ¤µ¤»¤ë°Ù¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+                // JQuery Validation Pluginã§æ¤œçŸ¥ã•ã›ã‚‹ç‚ºã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
                 $('input[name="ProductCode"]').trigger('blur');
                 $('input[name="ReviseCode"]').trigger('blur');
                 $('input[name="ProductName"]').trigger('blur');
             });
     };
     // --------------------------------------------------------------------------
-    // À½ÉÊ¥³¡¼¥É¤Ë¤è¤ë¥Ç¡¼¥¿º÷°ú
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹ãƒ‡ãƒ¼ã‚¿ç´¢å¼•
     // --------------------------------------------------------------------------
-    // À½ÉÊ¥³¡¼¥É¤«¤éÀ½ÉÊÌ¾¾Î¤ò¸¡º÷
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã‹ã‚‰è£½å“åç§°ã‚’æ¤œç´¢
     var selectProductName = function(invoker){
-        console.log("À½ÉÊ¥³¡¼¥É->À½ÉÊÌ¾¾Î change");
+        console.log("è£½å“ã‚³ãƒ¼ãƒ‰->è£½å“åç§° change");
 
-        // ¸¡º÷¾ò·ï
+        // æ¤œç´¢æ¡ä»¶
         var condition = {
             data: {
                 QueryName: 'selectProductName',
@@ -119,42 +119,42 @@
             }
         };
 
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax($.extend({}, searchMaster, condition))
         .done(function(response){
-            console.log("À½ÉÊ¥³¡¼¥É->À½ÉÊÌ¾¾Î done");
-            // ¥Ø¥Ã¥À¥¿¥Ö/¾ÜºÙ¥¿¥Ö¤ÎÀ½ÉÊ¥³¡¼¥ÉµÚ¤ÓÀ½ÉÊÌ¾¾Î¤ËÃÍ¤ò¥»¥Ã¥È
+            console.log("è£½å“ã‚³ãƒ¼ãƒ‰->è£½å“åç§° done");
+            // ãƒ˜ãƒƒãƒ€ã‚¿ãƒ–/è©³ç´°ã‚¿ãƒ–ã®è£½å“ã‚³ãƒ¼ãƒ‰åŠã³è£½å“åç§°ã«å€¤ã‚’ã‚»ãƒƒãƒˆ
             $('input[name="ProductCode"]').val(invoker.val());            
             if (response.length == 1) {
                 $('input[name="ReviseCode"]').val(response[0].revisecode);
                 $('input[name="ProductName"]').val(response[0].productname);
                 revisecode = response[0].revisecode;
-                // ¶â·¿¥ê¥¹¥Èº÷°ú
+                // é‡‘å‹ãƒªã‚¹ãƒˆç´¢å¼•
                 selectMoldSelectionListByReviseCode(invoker, revisecode);
             }
 
-            // JQuery Validation Plugin¤Ç¸¡ÃÎ¤µ¤»¤ë°Ù¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+            // JQuery Validation Pluginã§æ¤œçŸ¥ã•ã›ã‚‹ç‚ºã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
             $('input[name="ProductCode"]').trigger('blur');
             $('input[name="ProductName"]').trigger('blur');
         })
         .fail(function(response){
-            console.log("À½ÉÊ¥³¡¼¥É->À½ÉÊÌ¾¾Î fail");
+            console.log("è£½å“ã‚³ãƒ¼ãƒ‰->è£½å“åç§° fail");
             console.log(response.responseText);
-            // ¥Ø¥Ã¥À¥¿¥Ö/¾ÜºÙ¥¿¥Ö¤ÎÀ½ÉÊ¥³¡¼¥ÉµÚ¤ÓÀ½ÉÊÌ¾¾Î¤ÎÃÍ¤ò¥ê¥»¥Ã¥È
+            // ãƒ˜ãƒƒãƒ€ã‚¿ãƒ–/è©³ç´°ã‚¿ãƒ–ã®è£½å“ã‚³ãƒ¼ãƒ‰åŠã³è£½å“åç§°ã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆ
             $('input[name="ProductCode"]').val('');
             $('input[name="ProductName"]').val('');
 
-            // JQuery Validation Plugin¤Ç¸¡ÃÎ¤µ¤»¤ë°Ù¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+            // JQuery Validation Pluginã§æ¤œçŸ¥ã•ã›ã‚‹ç‚ºã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
             $('input[name="ProductCode"]').trigger('blur');
             $('input[name="ProductName"]').trigger('blur');
         });
     };
 
-    // À½ÉÊ¥³¡¼¥É¤«¤é¶â·¿¥ê¥¹¥È¤òº÷°ú
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã‹ã‚‰é‡‘å‹ãƒªã‚¹ãƒˆã‚’ç´¢å¼•
     var selectMoldSelectionListByReviseCode = function(invoker, revisecode){
-        console.log("À½ÉÊ¥³¡¼¥É->¶â·¿¥ê¥¹¥È change");
+        console.log("è£½å“ã‚³ãƒ¼ãƒ‰->é‡‘å‹ãƒªã‚¹ãƒˆ change");
 
-        // ¸¡º÷¾ò·ï
+        // æ¤œç´¢æ¡ä»¶
         var condition = {
             data: {
                 QueryName: 'selectMoldSelectionListByReviseCode',
@@ -165,22 +165,22 @@
             }
         };
 
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax($.extend({}, searchMaster, condition))
         .done(function(response){
-            console.log("À½ÉÊ¥³¡¼¥É->¶â·¿¥ê¥¹¥È done");
+            console.log("è£½å“ã‚³ãƒ¼ãƒ‰->é‡‘å‹ãƒªã‚¹ãƒˆ done");
 
-            // ¶â·¿¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤Î¼èÆÀ
+            // é‡‘å‹ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã®å–å¾—
             var moldList = $('.mold-selection__list');
             var moldChoosenList = $('.mold-selection__choosen-list');
 
-            // ´ûÂ¸OPTIONÍ×ÁÇ¤Îºï½ü
+            // æ—¢å­˜OPTIONè¦ç´ ã®å‰Šé™¤
             moldList.find('option').remove();
             moldChoosenList.find('option').remove();
 
-            // º÷°ú·ï¿ôÊ¬Áöºº
+            // ç´¢å¼•ä»¶æ•°åˆ†èµ°æŸ»
             $.each(response, function(index, row){
-                // OPTIONÍ×ÁÇºîÀ®
+                // OPTIONè¦ç´ ä½œæˆ
                 moldList.append(
                     $('<option>')
                         .val(row.moldno)
@@ -190,27 +190,27 @@
             });
         })
         .fail(function(response){
-            console.log("À½ÉÊ¥³¡¼¥É->¶â·¿¥ê¥¹¥È fail");
+            console.log("è£½å“ã‚³ãƒ¼ãƒ‰->é‡‘å‹ãƒªã‚¹ãƒˆ fail");
             console.log(response.responseText);
 
-            // ¶â·¿¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤Î¼èÆÀ
+            // é‡‘å‹ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã®å–å¾—
             var moldList = $('.mold-selection__list');
             var moldChoosenList = $('.mold-selection__choosen-list');
 
-            // ´ûÂ¸OPTIONÍ×ÁÇ¤Îºï½ü
+            // æ—¢å­˜OPTIONè¦ç´ ã®å‰Šé™¤
             moldList.find('option').remove();
             moldChoosenList.find('option').remove();
         });
     };
 
     // --------------------------------------------------------------------------
-    // Ã´Åö¥°¥ë¡¼¥×-É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É¤Ë¤è¤ë¥Ç¡¼¥¿º÷°ú
+    // æ‹…å½“ã‚°ãƒ«ãƒ¼ãƒ—-è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹ãƒ‡ãƒ¼ã‚¿ç´¢å¼•
     // --------------------------------------------------------------------------
-    // Ã´Åö¥°¥ë¡¼¥×-É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É¤«¤éÉ½¼¨Ì¾¤òº÷°ú
+    // æ‹…å½“ã‚°ãƒ«ãƒ¼ãƒ—-è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‹ã‚‰è¡¨ç¤ºåã‚’ç´¢å¼•
     var selectGroupName = function(invoker){
-        console.log("Ã´Åö¥°¥ë¡¼¥×-É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É->É½¼¨Ì¾ change");
+        console.log("æ‹…å½“ã‚°ãƒ«ãƒ¼ãƒ—-è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå change");
 
-        // ¸¡º÷¾ò·ï
+        // æ¤œç´¢æ¡ä»¶
         var condition = {
             data: {
                 QueryName: 'selectGroupName',
@@ -220,28 +220,28 @@
             }
         };
 
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax($.extend({}, searchMaster, condition))
         .done(function(response){
-            console.log("Ã´Åö¥°¥ë¡¼¥×-É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É->É½¼¨Ì¾ done");
-            // »ö¶ÈÉô(¸ÜµÒ)-É½¼¨Ì¾¤ËÃÍ¤ò¥»¥Ã¥È
+            console.log("æ‹…å½“ã‚°ãƒ«ãƒ¼ãƒ—-è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå done");
+            // äº‹æ¥­éƒ¨(é¡§å®¢)-è¡¨ç¤ºåã«å€¤ã‚’ã‚»ãƒƒãƒˆ
             $('input[name="KuwagataGroupName"]').val(response[0].groupdisplayname);
         })
         .fail(function(response){
-            console.log("Ã´Åö¥°¥ë¡¼¥×-É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É->É½¼¨Ì¾ fail");
+            console.log("æ‹…å½“ã‚°ãƒ«ãƒ¼ãƒ—-è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå fail");
             console.log(response.responseText);
-            // »ö¶ÈÉô(¸ÜµÒ)-É½¼¨Ì¾¤ÎÃÍ¤ò¥ê¥»¥Ã¥È
+            // äº‹æ¥­éƒ¨(é¡§å®¢)-è¡¨ç¤ºåã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆ
             $('input[name="KuwagataGroupName"]').val('');
         });
     };
     // --------------------------------------------------------------------------
-    // Ã´Åö¼Ô-É½¼¨¥æ¡¼¥¶¥³¡¼¥É¤Ë¤è¤ë¥Ç¡¼¥¿º÷°ú
+    // æ‹…å½“è€…-è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹ãƒ‡ãƒ¼ã‚¿ç´¢å¼•
     // --------------------------------------------------------------------------
-    // Ã´Åö¼Ô-É½¼¨¥æ¡¼¥¶¥³¡¼¥É¤«¤éÉ½¼¨Ì¾¤òº÷°ú
+    // æ‹…å½“è€…-è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰ã‹ã‚‰è¡¨ç¤ºåã‚’ç´¢å¼•
     var selectUserName = function(invoker){
-        console.log("Ã´Åö¼Ô-É½¼¨¥æ¡¼¥¶¥³¡¼¥É->É½¼¨Ì¾ change");
+        console.log("æ‹…å½“è€…-è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå change");
 
-        // ¸¡º÷¾ò·ï
+        // æ¤œç´¢æ¡ä»¶
         var condition = {
             data: {
                 QueryName: 'selectUserName',
@@ -251,32 +251,32 @@
             }
         };
 
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax($.extend({}, searchMaster, condition))
         .done(function(response){
-            console.log("Ã´Åö¼Ô-É½¼¨¥æ¡¼¥¶¥³¡¼¥É->É½¼¨Ì¾ done");
-            // Ã´Åö¼Ô-É½¼¨Ì¾¤ËÃÍ¤ò¥»¥Ã¥È
+            console.log("æ‹…å½“è€…-è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå done");
+            // æ‹…å½“è€…-è¡¨ç¤ºåã«å€¤ã‚’ã‚»ãƒƒãƒˆ
             $('input[name="KuwagataUserName"]').val(response[0].userdisplayname);
         })
         .fail(function(response){
-            console.log("Ã´Åö¼Ô-É½¼¨¥æ¡¼¥¶¥³¡¼¥É->É½¼¨Ì¾ fail");
+            console.log("æ‹…å½“è€…-è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå fail");
             console.log(response.responseText);
-            // Ã´Åö¼Ô-É½¼¨Ì¾¤ÎÃÍ¤ò¥ê¥»¥Ã¥È
+            // æ‹…å½“è€…-è¡¨ç¤ºåã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆ
             $('input[name="KuwagataUserName"]').val('');
         });
     };
 
     // --------------------------------------------------------------------------
-    // ¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É¤Ë¤è¤ë¥Ç¡¼¥¿º÷°ú
+    // å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹ãƒ‡ãƒ¼ã‚¿ç´¢å¼•
     // --------------------------------------------------------------------------
-    // ¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É¤«¤éÉ½¼¨Ì¾¤òº÷°ú
+    // å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‹ã‚‰è¡¨ç¤ºåã‚’ç´¢å¼•
     var selectFactoryName =  function(invoker){
-        console.log("¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É->É½¼¨Ì¾ change");
-        // º÷°ú·ë²Ì¤Î¥»¥Ã¥ÈÀèCSS¥»¥ì¥¯¥¿¤ÎºîÀ®
+        console.log("å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå change");
+        // ç´¢å¼•çµæœã®ã‚»ãƒƒãƒˆå…ˆCSSã‚»ãƒ¬ã‚¯ã‚¿ã®ä½œæˆ
         var targetCssSelector = 'input[name="' + $(invoker).attr('name') + 'Name"]';
-        // º÷°ú·ë²Ì0·ï¤Î»ş¤Î¥³¡¼¥ÉÍó¤ÎCSS¥»¥ì¥¯¥¿¤ÎºîÀ®
+        // ç´¢å¼•çµæœ0ä»¶ã®æ™‚ã®ã‚³ãƒ¼ãƒ‰æ¬„ã®CSSã‚»ãƒ¬ã‚¯ã‚¿ã®ä½œæˆ
         var targetCodeCssSelector = 'input[name="' + $(invoker).attr('name') +'"]';
-        // ¸¡º÷¾ò·ï
+        // æ¤œç´¢æ¡ä»¶
         var condition = {
             data: {
                 QueryName: 'selectFactoryName',
@@ -286,18 +286,18 @@
             }
         };
 
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax($.extend({}, searchMaster, condition))
         .done(function(response){
-            console.log("¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É->É½¼¨Ì¾ done");
-            // ¹©¾ì-É½¼¨Ì¾¤ËÃÍ¤ò¥»¥Ã¥È
+            console.log("å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå done");
+            // å·¥å ´-è¡¨ç¤ºåã«å€¤ã‚’ã‚»ãƒƒãƒˆ
             $(targetCssSelector).val(response[0].companydisplayname);
             if ($(invoker).attr('name')=="SourceFactory") {
                 $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
             }
         })
         .fail(function(response){
-            console.log("¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É->É½¼¨Ì¾ fail");
+            console.log("å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå fail");
             console.log(response.responseText);
             var listlength = $('.mold-selection__choosen-list').find('option').length;
             if ($(invoker).attr('name')=="SourceFactory") {
@@ -307,7 +307,7 @@
                     $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
                 }
             }
-            // ¹©¾ì-¥³¡¼¥É¡¢É½¼¨Ì¾¤ÎÃÍ¤ò¥ê¥»¥Ã¥È¤·¡¢¥³¡¼¥ÉÍó¤Ë¥Õ¥©¡¼¥«¥¹
+            // å·¥å ´-ã‚³ãƒ¼ãƒ‰ã€è¡¨ç¤ºåã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆã—ã€ã‚³ãƒ¼ãƒ‰æ¬„ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹
             $(targetCssSelector).val('');
             $(targetCodeCssSelector).val('').focus();
         });

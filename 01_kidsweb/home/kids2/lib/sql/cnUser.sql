@@ -1,8 +1,8 @@
 /*
-	���ס���ô���ԥ����ɡסܡ����祳���ɡפ����̾�Ρפ����
-	�оݡ��ʶ��̡�
-	��������ƣ�»�
-	���͡��֥����ɡפ�����פ����̾�Ρפ����
+	概要：「担当者コード」＋「部門コード」から「名称」を取得
+	対象：（共通）
+	作成：斎藤和志
+	備考：「コード」から一致する「名称」を取得
 */
 SELECT mu.struserdisplaycode, mu.struserdisplayname
 FROM m_group mg,  m_grouprelation mgr,  m_user mu,  m_attributerelation mar

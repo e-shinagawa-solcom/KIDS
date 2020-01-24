@@ -2,31 +2,31 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¼õÃí´ÉÍý  ³ÎÄê¼è¾Ã
+*       å—æ³¨ç®¡ç†  ç¢ºå®šå–æ¶ˆ
 *
-*       ½èÍý³µÍ×
-*         ¡¦»ØÄê¼õÃíÈÖ¹æ¥Ç¡¼¥¿¤Î³ÎÄê¾ðÊó¤òÉ½¼¨½èÍý
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»æŒ‡å®šå—æ³¨ç•ªå·ãƒ‡ãƒ¼ã‚¿ã®ç¢ºå®šæƒ…å ±ã‚’è¡¨ç¤ºå‡¦ç†
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "so/cmn/lib_so.php");
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_GET )
 {
@@ -37,26 +37,26 @@ else if ( $_POST )
 	$aryData = $_POST;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
-// ¸¢¸Â³ÎÇ§
-// 402 ¼õÃí´ÉÍý¡Ê¼õÃí¸¡º÷¡Ë
+// æ¨©é™ç¢ºèª
+// 402 å—æ³¨ç®¡ç†ï¼ˆå—æ³¨æ¤œç´¢ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 {
-	fncOutputError ( 9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
-// 405 ¼õÃí´ÉÍý¡Ê³ÎÄê¼è¾Ã¡Ë
+// 405 å—æ³¨ç®¡ç†ï¼ˆç¢ºå®šå–æ¶ˆï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_SO5, $objAuth ) )
 {
-	fncOutputError ( 9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
-//¾ÜºÙ²èÌÌ¤ÎÉ½¼¨
+//è©³ç´°ç”»é¢ã®è¡¨ç¤º
 $lngReceiveNo = $aryData["lngReceiveNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
-// »ØÄê¼õÃíÈÖ¹æ¤Î¼õÃí¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+// æŒ‡å®šå—æ³¨ç•ªå·ã®å—æ³¨ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 $strQuery = fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo, DEF_RECEIVE_ORDER);
 
-// ¾ÜºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+// è©³ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum )
 {
@@ -66,20 +66,20 @@ if ( $lngResultNum )
 	}
 	else
 	{
-		fncOutputError( 403, DEF_ERROR, "³ºÅö¥Ç¡¼¥¿¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Þ¤·¤¿", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError( 403, DEF_ERROR, "è©²å½“ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 }
 else
 {
-	fncOutputError( 403, DEF_ERROR, "¥Ç¡¼¥¿¤¬°Û¾ï¤Ç¤¹", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	fncOutputError( 403, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãŒç•°å¸¸ã§ã™", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 
 $objDB->freeResult( $lngResultID );
-////////// ÌÀºÙ¹Ô¤Î¼èÆÀ ////////////////////
-// »ØÄê¼õÃíÈÖ¹æ¤Î¼õÃíÌÀºÙ¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+////////// æ˜Žç´°è¡Œã®å–å¾— ////////////////////
+// æŒ‡å®šå—æ³¨ç•ªå·ã®å—æ³¨æ˜Žç´°ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 $strQuery = fncGetReceiveDetailNoToInfoSQL ($lngReceiveNo, $lngRevisionNo);
 
-// ÌÀºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+// æ˜Žç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 if ( $lngResultNum )
@@ -91,26 +91,26 @@ if ( $lngResultNum )
 }
 else
 {
-	$strMessage = fncOutputError( 403, DEF_WARNING, "¼õÃíÈÖ¹æ¤ËÂÐ¤¹¤ëÌÀºÙ¾ðÊó¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó¡£", FALSE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	$strMessage = fncOutputError( 403, DEF_WARNING, "å—æ³¨ç•ªå·ã«å¯¾ã™ã‚‹æ˜Žç´°æƒ…å ±ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚", FALSE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 
 $objDB->freeResult( $lngResultID );
 
-// ÄÌ²ßµ­¹æ¤ÎÀßÄê
+// é€šè²¨è¨˜å·ã®è¨­å®š
 if ($aryResult["lngmonetaryunitcode"] == 1) {
     $aryResult["strmonetaryunitsign"] = "&yen;";
 }
 $aryDetailResult["strdetailnote"] = ($aryDetailResult["strdetailnote"] == null) ? " ":$aryDetailResult["strdetailnote"];
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "so/cancel/so_confirm_cancel.html" );
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $aryResult);
 $objTemplate->replace( $aryDetailResult);
 $objTemplate->complete();
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 

@@ -86,13 +86,13 @@ function fncCheckAll2()
 
 
 ///// Admin Check /////
-// ���ٹ��ֹ桢����̾�Ρ��������ܡ��������ʡ��ܵ����֡�������ˡ��Ǽ����ñ����ñ�̡����̡���ȴ��ۡ��������͡�̵���ܥ���
-// 13, 17��29 + 1, 31
+// 明細行番号、製品名称、仕入科目、仕入部品、顧客品番、運搬方法、納期、単価、単位、数量、税抜金額、明細備考、無効ボタン
+// 13, 17〜29 + 1, 31
 function fncAdminSet()
 {
 	if( document.all.Admin.checked == true )
 	{
-		// ���ٹ��ֹ�
+		// 明細行番号
 		document.getElementsByName('ViewColumn[]')[13].disabled = true;
 
 		if( document.getElementsByName('ViewColumn[]')[13].checked == true )
@@ -100,7 +100,7 @@ function fncAdminSet()
 			document.getElementsByName('ViewColumn[]')[13].checked = false;
 		}
 
-		// ����̾�Ρ��������ܡ��������ʡ��ܵ����֡�������ˡ��Ǽ����ñ����ñ�̡����̡���ȴ��ۡ���������
+		// 製品名称、仕入科目、仕入部品、顧客品番、運搬方法、納期、単価、単位、数量、税抜金額、明細備考
 		for( i = 15; i < 29 + 1; i++ )
 		{
 			document.getElementsByName('ViewColumn[]')[i].disabled = true;
@@ -111,13 +111,13 @@ function fncAdminSet()
 			}
 		}
 
-		// ̵���ܥ���
+		// 無効ボタン
 		document.getElementsByName('ViewColumn[]')[31].disabled = false;
 		document.getElementsByName('ViewColumn[]')[31].checked  = true;
 	}
 	else
 	{
-		// ���ٹ��ֹ�
+		// 明細行番号
 		document.getElementsByName('ViewColumn[]')[13].disabled = false;
 
 		if( document.getElementsByName('ViewColumn[]')[13].checked == false )
@@ -125,13 +125,13 @@ function fncAdminSet()
 			document.getElementsByName('ViewColumn[]')[13].checked = true;
 		}
 
-		// ����̾�Ρ��������ܡ��������ʡ��ܵ����֡�������ˡ��Ǽ����ñ����ñ�̡����̡���ȴ��ۡ���������
+		// 製品名称、仕入科目、仕入部品、顧客品番、運搬方法、納期、単価、単位、数量、税抜金額、明細備考
 		for( i = 15; i < 29 + 1; i++ )
 		{
 			document.getElementsByName('ViewColumn[]')[i].disabled = false;
 		}
 
-		// ̵���ܥ���
+		// 無効ボタン
 		document.getElementsByName('ViewColumn[]')[31].disabled = true;
 		document.getElementsByName('ViewColumn[]')[31].checked  = false;
 	}

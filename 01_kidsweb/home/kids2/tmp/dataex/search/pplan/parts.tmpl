@@ -39,11 +39,11 @@
 <input type="hidden" name="lngExportData" value="_%lngExportData%_">
 <input type="hidden" name="lngActionCode" value="2">
 
-<!-- ¥Õ¥©¡¼¥à -->
+<!-- ãƒ•ã‚©ãƒ¼ãƒ  -->
 <div class="form-box__contents">
 	<div class="regist-line">
 		<span class="form-line">
-			<span class="Column">´ð½àÆü</span>
+			<span class="Column">åŸºæº–æ—¥</span>
 			<span class="VarText" id="VarsA01">
 				<span class="VarLabel">FROM</span>
 				<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="" display: inline-block; vertical-align: middle;>
@@ -54,7 +54,7 @@
 	</div>
 	<div class="regist-line">
 		<span class="form-line">
-			<span class="Column">ÉôÌç</span>
+			<span class="Column">éƒ¨é–€</span>
 			<span class="VarCheck" id="VarsA02">
 				_%lngGroupCode%_
 			</span>
@@ -63,10 +63,10 @@
 	<div class="SpacerLong">
 	</div>
 	<div class="QuerySet">
-		<span class="Column">Excel¥Õ¥¡¥¤¥ë¡§</span>
+		<span class="Column">Excelãƒ•ã‚¡ã‚¤ãƒ«ï¼š</span>
 		<span class="QueryBt" id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/stat.html' );return false;" style="visibility:hidden;">
 		</span>
-		<!-- ¥¨¥¯¥¹¥Ý¡¼¥È¥Ü¥¿¥ó -->
+		<!-- ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆãƒœã‚¿ãƒ³ -->
 		<span class="QueryBt" id="ExportBt" onclick="document.PS.lngActionCode.value=2;PS.action='/dataex/result/stat.php';PS.submit();">
 		</span>
 	</div>

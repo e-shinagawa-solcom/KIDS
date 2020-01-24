@@ -1,2 +1,2 @@
-// No13:Ã´Åö¼Ô¥³¡¼¥É			¢ª Ã´Åö¼ÔÌ¾(¾¦ÉÊÅĞÏ¿¡§watanabe)
+// No13:æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰			â†’ æ‹…å½“è€…å(å•†å“ç™»éŒ²ï¼šwatanabe)
 SELECT u.struserdisplaycode,u.struserdisplayname FROM m_user u, m_company c WHERE u.lngcompanycode = c.lngcompanycode AND u.bytuserdisplayflag = true AND u.struserdisplaycode = '_%strFormValue0%_' AND c.strcompanydisplaycode = '_%strFormValue1%_'

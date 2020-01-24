@@ -2,7 +2,7 @@
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ¥Õ¥¡¥¤¥ë³µÍ× : LC´ØÏ¢½èÍı
+* ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ : LCé–¢é€£å‡¦ç†
 *
 *
 *
@@ -15,19 +15,19 @@
 */
 //--------------------------------------------------------------------------------------------------------------------
 
-//¶¦ÄÌÊÑ¿ô
+//å…±é€šå¤‰æ•°
 var session_id;
-var phpData;// PHP¤«¤é¤Î¼èÆÀ¥Ç¡¼¥¿
+var phpData;// PHPã‹ã‚‰ã®å–å¾—ãƒ‡ãƒ¼ã‚¿
 var settingData;
 var lc_data;
 window.onerror = false;
 //---------------------------------------------------
-// ²èÌÌ½é´ü½èÍı
+// ç”»é¢åˆæœŸå‡¦ç†
 //---------------------------------------------------
 function lcInit( json_obj )
 {
 	phpData = JSON.parse(json_obj);
-	//LC¾ğÊó¼èÆÀ
+	//LCæƒ…å ±å–å¾—
 	$("#masking_loader").css("display","block");
 	$.ajax({
 		url:'../lcModel/lcedit_ajax.php',
@@ -43,9 +43,9 @@ function lcInit( json_obj )
 	.done(function(data) {
 		var data = JSON.parse(data);
 		if(data != false){
-			//LC¾ğÊó
+			//LCæƒ…å ±
 			lc_data = data.lc_data;
-			//¶ä¹Ô¥ê¥¹¥È
+			//éŠ€è¡Œãƒªã‚¹ãƒˆ
 			var bank_list = data.bank_list;
 			for(var i = 0; i < bank_list.length; i++){
 				$option = $('<option>')
@@ -53,7 +53,7 @@ function lcInit( json_obj )
 					.text(bank_list[i]["bankomitname"])
 				$('#bankname').append($option);
 			}
-			//²ÙÍÈÃÏ¥ê¥¹¥È
+			//è·æšåœ°ãƒªã‚¹ãƒˆ
 			var portplace_list = data.portplace_list;
 			for(var i = 0; i < portplace_list.length; i++){
 				$option = $('<option>')
@@ -62,7 +62,7 @@ function lcInit( json_obj )
 				$('#portplace').append($option);
 			}
 
-			//¼èÆÀ¤·¤¿¾ğÊó¤ò¥Õ¥©¡¼¥à¤ËÈ¿±Ç
+			//å–å¾—ã—ãŸæƒ…å ±ã‚’ãƒ•ã‚©ãƒ¼ãƒ ã«åæ˜ 
 			$("#pono").val(lc_data.pono);
 			$("#payfcd").val(lc_data.payfcd);
 			$("#payfnameformal").val(lc_data.payfnameformal);
@@ -72,7 +72,7 @@ function lcInit( json_obj )
 			$("#productname").val(lc_data.productname);
 			$("#opendate").val(lc_data.opendate);
 			$("#moneyprice").val(lc_data.moneyprice);
-			//¥Æ¡¼¥Ö¥ë
+			//ãƒ†ãƒ¼ãƒ–ãƒ«
 			$('#portplace option').filter(function(index){
 				return $(this).text() === lc_data.portplace;
 			}).prop('selected', true);
@@ -91,21 +91,21 @@ function lcInit( json_obj )
 			$("#bldetail3date").val(convertDate(lc_data.bldetail3date));
 			$("#bldetail3money").val(lc_data.bldetail3money);
 
-			//¥í¡¼¥À¡¼²ò½ü
+			//ãƒ­ãƒ¼ãƒ€ãƒ¼è§£é™¤
 			$("#masking_loader").css("display","none");
 		} else {
-			alert("L/C¾ğÊó¤¬¼èÆÀ¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£L/C¾ğÊó²èÌÌ¤ËÌá¤ê¤Ş¤¹¡£");
+			alert("L/Cæƒ…å ±ãŒå–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚L/Cæƒ…å ±ç”»é¢ã«æˆ»ã‚Šã¾ã™ã€‚");
 			returnBtn();
 		}
 	})
 	.fail(function() {  
 		alert("tsts");
-		// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+		// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 	});
 }
 
 //---------------------------------------------------
-// Ìá¤ë¥Ü¥¿¥ó½èÍı
+// æˆ»ã‚‹ãƒœã‚¿ãƒ³å‡¦ç†
 //---------------------------------------------------
 function returnBtn()
 {
@@ -113,92 +113,92 @@ function returnBtn()
 }
 																			
 //---------------------------------------------------
-// ¹¹¿·¥Ü¥¿¥ó½èÍı
+// æ›´æ–°ãƒœã‚¿ãƒ³å‡¦ç†
 //---------------------------------------------------
 function updateBtn()
 {
 	try {
-		//ÆşÎÏ¥Á¥§¥Ã¥¯
-		//¥ª¡¼¥×¥óÇ¯·î¤¬¶õ¤Î¾ì¹ç
+		//å…¥åŠ›ãƒã‚§ãƒƒã‚¯
+		//ã‚ªãƒ¼ãƒ—ãƒ³å¹´æœˆãŒç©ºã®å ´åˆ
 		if($("#opendate").val() == "" ){
-			alert("È¯¹Ô·î¤ÎÆşÎÏ¤¬¶õ¤Ç¤¹¡£");
+			alert("ç™ºè¡Œæœˆã®å…¥åŠ›ãŒç©ºã§ã™ã€‚");
 			throw new Error();
 		}
-		//¥ª¡¼¥×¥óÇ¯·î¤Î·Á¼°¤¬ÆüÉÕ·Á¼°¡Êyyyy/mm¡Ë¤Ë¤Ê¤Ã¤Æ¤Ê¤¤ ¢«»ÅÍÍ½ñ¤¬Ì·½â¤·¤Æ¤¤¤ÆYYYYMM¤¬Àµ¤·¤¤¤È»×¤ï¤ì¤ë
+		//ã‚ªãƒ¼ãƒ—ãƒ³å¹´æœˆã®å½¢å¼ãŒæ—¥ä»˜å½¢å¼ï¼ˆyyyy/mmï¼‰ã«ãªã£ã¦ãªã„ â†ä»•æ§˜æ›¸ãŒçŸ›ç›¾ã—ã¦ã„ã¦YYYYMMãŒæ­£ã—ã„ã¨æ€ã‚ã‚Œã‚‹
 		if(!$("#opendate").val().match(/^\d{4}\d{1,2}$/)){
-			alert("È¯¹Ô·î¤Î·Á¼°¤ò³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£");
+			alert("ç™ºè¡Œæœˆã®å½¢å¼ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚");
 			throw new Error();
 		}
 
-		//°ÍÍêÆü¤Î·Á¼°¤¬ÆüÉÕ·Á¼°¡Êyyyy/mm/dd¡Ë¤Ë¤Ê¤Ã¤Æ¤Ê¤¤
+		//ä¾é ¼æ—¥ã®å½¢å¼ãŒæ—¥ä»˜å½¢å¼ï¼ˆyyyy/mm/ddï¼‰ã«ãªã£ã¦ãªã„
 		if(!$("#bankreqdate").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
-			alert("°ÍÍêÆü¤Î·Á¼°¤ò³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£");
+			alert("ä¾é ¼æ—¥ã®å½¢å¼ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚");
 			$("#bankreqdate").focus();
 			throw new Error();
 		}
 
-		//È¯¹ÔÆü¤Î·Á¼°¤¬ÆüÉÕ·Á¼°¡Êyyyy/mm/dd¡Ë¤Ë¤Ê¤Ã¤Æ¤Ê¤¤
+		//ç™ºè¡Œæ—¥ã®å½¢å¼ãŒæ—¥ä»˜å½¢å¼ï¼ˆyyyy/mm/ddï¼‰ã«ãªã£ã¦ãªã„
 		if(!$("#lcamopen").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
-			alert("È¯¹ÔÆü¤Î·Á¼°¤ò³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£");
+			alert("ç™ºè¡Œæ—¥ã®å½¢å¼ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚");
 			$("#lcamopen").focus();
 			throw new Error();
 		}
 		
-		//Í­¸úÆü¤Î·Á¼°¤¬ÆüÉÕ·Á¼°¡Êyyyy/mm/dd¡Ë¤Ë¤Ê¤Ã¤Æ¤Ê¤¤
+		//æœ‰åŠ¹æ—¥ã®å½¢å¼ãŒæ—¥ä»˜å½¢å¼ï¼ˆyyyy/mm/ddï¼‰ã«ãªã£ã¦ãªã„
 		if(!$("#validmonth").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
-			alert("Í­¸úÆü¤Î·Á¼°¤ò³ÎÇ§¤·¤Æ¤¯¤À¤µ¤¤¡£");
+			alert("æœ‰åŠ¹æ—¥ã®å½¢å¼ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚");
 			$("#validmonth").focus();
 			throw new Error();
 		}
 
-		//È¯¹ÔÆü¤¬¶õ¤Ç¤Ï¤Ê¤¯¤Æ¡¢È¯¹ÔÆü¤ÎÇ¯ < ¸½ºßÆüÉÕ¤ÎÇ¯¤Î¾ì¹ç
+		//ç™ºè¡Œæ—¥ãŒç©ºã§ã¯ãªãã¦ã€ç™ºè¡Œæ—¥ã®å¹´ < ç¾åœ¨æ—¥ä»˜ã®å¹´ã®å ´åˆ
 		var lcamopen_d = new Date($("#lcamopen").val());
 		var now = new Date();
 		if(lcamopen_d < now){
-			alert("È¯¹ÔÆü¤Ï¸½ºßÆü¤è¤ê¤âÌ¤Íè¤ËÀßÄê¤·¤Æ¤¯¤À¤µ¤¤¡£");
+			alert("ç™ºè¡Œæ—¥ã¯ç¾åœ¨æ—¥ã‚ˆã‚Šã‚‚æœªæ¥ã«è¨­å®šã—ã¦ãã ã•ã„ã€‚");
 			$("#lcamopen").focus();
 			throw new Error();
 		}
 
-		//Í­¸úÇ¯·î¤¬¶õ¤Ç¤Ï¤Ê¤¯¤Æ¡¢Í­¸úÇ¯·î¤ÎÇ¯ < ¸½ºßÆüÉÕ¤ÎÇ¯¤Î¾ì¹ç
+		//æœ‰åŠ¹å¹´æœˆãŒç©ºã§ã¯ãªãã¦ã€æœ‰åŠ¹å¹´æœˆã®å¹´ < ç¾åœ¨æ—¥ä»˜ã®å¹´ã®å ´åˆ
 		var validmonth_d = new Date($("#validmonth").val());
 		var now = new Date();
 		if(validmonth_d < now){
-			alert("Í­¸úÆü¤Ï¸½ºßÆü¤è¤ê¤âÌ¤Íè¤ËÀßÄê¤·¤Æ¤¯¤À¤µ¤¤¡£");
+			alert("æœ‰åŠ¹æ—¥ã¯ç¾åœ¨æ—¥ã‚ˆã‚Šã‚‚æœªæ¥ã«è¨­å®šã—ã¦ãã ã•ã„ã€‚");
 			$("#validmonth").focus();
 			throw new Error();
 		}
 
-		//°ÍÍêÆü¡¢È¯¹ÔÆü¡¢Í­¸úÆü¤Î¤¤¤º¤ì¤¬¶õ¤Ç¤Ï¤Ê¤¯¤Æ¡¢È¯¹Ô¶ä¹Ô¤¬¶õ¤Î¾ì¹ç
+		//ä¾é ¼æ—¥ã€ç™ºè¡Œæ—¥ã€æœ‰åŠ¹æ—¥ã®ã„ãšã‚ŒãŒç©ºã§ã¯ãªãã¦ã€ç™ºè¡ŒéŠ€è¡ŒãŒç©ºã®å ´åˆ
 		if(($("#opendate").val() != "" || $("#validmonth").val() != "" || $("#lcamopen").val() != "") &&
 			$("#bankname").val() == ""
 		){
-			alert("È¯¹Ô¶ä¹Ô¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£");
+			alert("ç™ºè¡ŒéŠ€è¡Œã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚");
 			$("#bankname").focus();
 			throw new Error();
 		}
 
-		//È¯¹ÔÆü¤¬¶õ¤Ç¤Ï¤Ê¤¤¡¢¤«¤Ä°ÍÍêÆü¤¬¶õ¤Î¾ì¹ç
+		//ç™ºè¡Œæ—¥ãŒç©ºã§ã¯ãªã„ã€ã‹ã¤ä¾é ¼æ—¥ãŒç©ºã®å ´åˆ
 		if($("#lcamopen").val() != "" && $("#bankreqdate").val() == ""){
-			alert("°ÍÍêÆü¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£");
+			alert("ä¾é ¼æ—¥ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
 			$("#bankreqdate").focus();
 			throw new Error();
 		}
 
-		//Í­¸úÆü¡¢È¯¹ÔÆü¤¬¶õ¤Ç¤Ï¤Ê¤¯¤Æ¡¢È¯¹ÔÆü > Í­¸úÆü¤Î¾ì¹ç
+		//æœ‰åŠ¹æ—¥ã€ç™ºè¡Œæ—¥ãŒç©ºã§ã¯ãªãã¦ã€ç™ºè¡Œæ—¥ > æœ‰åŠ¹æ—¥ã®å ´åˆ
 		if($("#validmonth").val() == "" && $("#lcamopen").val() == ""){
 			var validmonth_d = new Date($("#validmonth").val());
 			var lcamopen_d = new Date($("#lcamopen").val());
 			if(validmonth_d < lcamopen_d){
-				alert("Í­¸úÆü¤ÏÈ¯¹ÔÆü¤è¤êÌ¤Íè¤ËÀßÄê¤·¤Æ¤¯¤À¤µ¤¤¡£");
+				alert("æœ‰åŠ¹æ—¥ã¯ç™ºè¡Œæ—¥ã‚ˆã‚Šæœªæ¥ã«è¨­å®šã—ã¦ãã ã•ã„ã€‚");
 				$("#validmonth_d").focus();
 			}
 		}
-		// ¾õÂÖ¤¬£·¤Î¾ì¹ç¡¢
+		// çŠ¶æ…‹ãŒï¼—ã®å ´åˆã€
 		if (lc_data.lcstate == 7) {
-			alert("¥¢¥á¥ó¥É¤ò²ò½ü¤·¤Ş¤¹¡£");
+			alert("ã‚¢ãƒ¡ãƒ³ãƒ‰ã‚’è§£é™¤ã—ã¾ã™ã€‚");
 		}
-		//¹¹¿·½èÍı
+		//æ›´æ–°å‡¦ç†
 		$("#masking_loader").css("display","block");
 		$.ajax({    
 			url:'../lcModel/lcedit_ajax.php',
@@ -222,14 +222,14 @@ function updateBtn()
 			}
 		})
 		.done(function(data) {
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸ
 			var data = JSON.parse(data);
 
-			//¥í¡¼¥À¡¼ÈóÉ½¼¨
+			//ãƒ­ãƒ¼ãƒ€ãƒ¼éè¡¨ç¤º
 			$("#masking_loader").css("display","none");
 		})
 		.fail(function() {  
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 		});
 	} catch (e) {
 		console.log(e);
@@ -238,13 +238,13 @@ function updateBtn()
 }
 
 //---------------------------------------------------
-// ²ò½ü¥Ü¥¿¥ó½èÍı
+// è§£é™¤ãƒœã‚¿ãƒ³å‡¦ç†
 //---------------------------------------------------
 function releaseBtn()
 {
-	if( res = confirm("²ò½üÀßÄê¤·¤Ş¤¹¤«¡£") )
+	if( res = confirm("è§£é™¤è¨­å®šã—ã¾ã™ã‹ã€‚") )
 	{
-		//¹¹¿·½èÍı
+		//æ›´æ–°å‡¦ç†
 		$("#masking_loader").css("display","block");
 		$.ajax({
 			url:'../lcModel/lcedit_ajax.php',
@@ -256,17 +256,17 @@ function releaseBtn()
 			}
 		})
 		.done(function(data) {
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸ
 			var data = JSON.parse(data);
 
-			//LC¾ğÊó²èÌÌ¤ËÁ«°Ü
+			//LCæƒ…å ±ç”»é¢ã«é·ç§»
 			returnBtn();
 
-			//¥í¡¼¥À¡¼ÈóÉ½¼¨
+			//ãƒ­ãƒ¼ãƒ€ãƒ¼éè¡¨ç¤º
 			$("#masking_loader").css("display","none");
 		})
 		.fail(function() {  
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 		});
 	}
 	

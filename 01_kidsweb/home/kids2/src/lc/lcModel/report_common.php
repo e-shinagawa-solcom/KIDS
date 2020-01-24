@@ -1,7 +1,7 @@
 <?php
 
 /**
- * »ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¼èÆÀ
+ * æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—
  *
  * @param [object] $objDB
  * @param [string] $shipym
@@ -11,7 +11,7 @@
  */
 function fncGetSumOfMoneypriceByPayfAndBank($objDB, $data, $type)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     if ($type == 1) {
         $where = "opendate = $1";
     } else if ($type == 2) {
@@ -33,14 +33,14 @@ function fncGetSumOfMoneypriceByPayfAndBank($objDB, $data, $type)
                 group by payfcd, bankcd, payfnameformal
                 order by payfcd, bankcd, payfnameformal
             ";
-    // ¥¯¥¨¥ê¤Ø¤ÎÀßÄêÃÍ¤ÎÄêµÁ
+    // ã‚¯ã‚¨ãƒªã¸ã®è¨­å®šå€¤ã®å®šç¾©
     $bind = array($data["opendate"], $data["currencyclass"]);
 
-    // ¥¯¥¨¥ê¤Î¼Â¹Ô
+    // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "»ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -48,7 +48,7 @@ function fncGetSumOfMoneypriceByPayfAndBank($objDB, $data, $type)
 }
 
 /**
- * »ÙÊ§Àè·îÊÌ¤Î¹ç·×¶â³Û¼èÆÀ
+ * æ”¯æ‰•å…ˆæœˆåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—
  *
  * @param [object] $objDB
  * @param [string] $shipym
@@ -75,13 +75,13 @@ function fncGetSumOfMoneypriceByPayfAndOpenDate($objDB, $data)
             order by payfcd, opendate, bankcd, payfnameformal
             ";
 
-    // ¥¯¥¨¥ê¤Ø¤ÎÀßÄêÃÍ¤ÎÄêµÁ
+    // ã‚¯ã‚¨ãƒªã¸ã®è¨­å®šå€¤ã®å®šç¾©
     $bind = array($data["opendatefrom"], $data["opendateto"], $data["currencyclass"]);
-    // ¥¯¥¨¥ê¤Î¼Â¹Ô
+    // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "»ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -89,7 +89,7 @@ function fncGetSumOfMoneypriceByPayfAndOpenDate($objDB, $data)
 }
 
 /**
- * »ÙÊ§Àè·îÊÌ¤Î¹ç·×¶â³Û¼èÆÀ
+ * æ”¯æ‰•å…ˆæœˆåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—
  *
  * @param [object] $objDB
  * @param [string] $shipym
@@ -116,13 +116,13 @@ function fncGetSumOfMoneypriceByPayfAndShipDate($objDB, $data)
             order by payfcd, shipym, bankcd, payfnameformal
             ";
 
-    // ¥¯¥¨¥ê¤Ø¤ÎÀßÄêÃÍ¤ÎÄêµÁ
+    // ã‚¯ã‚¨ãƒªã¸ã®è¨­å®šå€¤ã®å®šç¾©
     $bind = array($data["opendatefrom"], $data["opendateto"], $data["currencyclass"]);
-    // ¥¯¥¨¥ê¤Î¼Â¹Ô
+    // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "»ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -130,7 +130,7 @@ function fncGetSumOfMoneypriceByPayfAndShipDate($objDB, $data)
 }
 
 /**
- * »ÙÊ§ÀèÊÌ¤Î¹ç·×¶â³Û¼èÆÀ
+ * æ”¯æ‰•å…ˆåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—
  *
  * @param [object] $objDB
  * @param [string] $shipym
@@ -140,7 +140,7 @@ function fncGetSumOfMoneypriceByPayfAndShipDate($objDB, $data)
 function fncGetSumOfMoneypriceByPayf($objDB, $data, $type)
 {
 
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     if ($type == 1) {
         $where = "opendate = $1 and currencyclass = $2";
         $bind = array($data["opendate"], $data["currencyclass"]);
@@ -168,11 +168,11 @@ function fncGetSumOfMoneypriceByPayf($objDB, $data, $type)
                 group by payfcd, payfnameformal
                 order by payfcd, payfnameformal
             ";
-    // ¥¯¥¨¥ê¤Î¼Â¹Ô
+    // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "»ÙÊ§ÀèÊÌ¤Î¹ç·×¶â³Û¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -180,10 +180,10 @@ function fncGetSumOfMoneypriceByPayf($objDB, $data, $type)
 }
 
 /**
- * Ä¢É¼BeneBkÊÌ¹ç·×¤Îºï½ü¤ò¹Ô¤¦
+ * å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteReportByBenebktotal($objDB)
 {
@@ -194,7 +194,7 @@ function fncDeleteReportByBenebktotal($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼BeneBkÊÌ¹ç·×ºï½ü¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆå‰Šé™¤å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -202,10 +202,10 @@ function fncDeleteReportByBenebktotal($objDB)
 }
 
 /**
- * Ä¢É¼Bene·îÊÌ½¸·×¤Îºï½ü¤ò¹Ô¤¦
+ * å¸³ç¥¨Beneæœˆåˆ¥é›†è¨ˆã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteReportByBeneMonthCal($objDB)
 {
@@ -216,7 +216,7 @@ function fncDeleteReportByBeneMonthCal($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Bene·îÊÌ½¸·×ºï½ü¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨Beneæœˆåˆ¥é›†è¨ˆå‰Šé™¤å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -224,10 +224,10 @@ function fncDeleteReportByBeneMonthCal($objDB)
 }
 
 /**
- * Ä¢É¼LCÊÌÌÀºÙ¤Îºï½ü¤ò¹Ô¤¦
+ * å¸³ç¥¨LCåˆ¥æ˜ç´°ã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteReportByLcDetail($objDB)
 {
@@ -238,7 +238,7 @@ function fncDeleteReportByLcDetail($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼LCÊÌÌÀºÙºï½ü¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨LCåˆ¥æ˜ç´°å‰Šé™¤ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -246,10 +246,10 @@ function fncDeleteReportByLcDetail($objDB)
 }
 
 /**
- * Ä¢É¼LCÊÌ¹ç·×¤Îºï½ü¤ò¹Ô¤¦
+ * å¸³ç¥¨LCåˆ¥åˆè¨ˆã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteReportByLcTotal($objDB)
 {
@@ -260,7 +260,7 @@ function fncDeleteReportByLcTotal($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼LCÊÌ¹ç·×¤Îºï½ü¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨LCåˆ¥åˆè¨ˆã®å‰Šé™¤ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -268,10 +268,10 @@ function fncDeleteReportByLcTotal($objDB)
 }
 
 /**
- * Ä¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤Îºï½ü¤ò¹Ô¤¦
+ * å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteReportImpLcOrderInfo($objDB)
 {
@@ -282,7 +282,7 @@ function fncDeleteReportImpLcOrderInfo($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤Îºï½ü¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®å‰Šé™¤ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -290,10 +290,10 @@ function fncDeleteReportImpLcOrderInfo($objDB)
 }
 
 /**
- * Ä¢É¼Ì¤·èºÑ³Û¤Îºï½ü¤ò¹Ô¤¦
+ * å¸³ç¥¨æœªæ±ºæ¸ˆé¡ã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteReportUnSettedPrice($objDB)
 {
@@ -304,7 +304,7 @@ function fncDeleteReportUnSettedPrice($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Ì¤·èºÑ³Û¤Îºï½ü¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨æœªæ±ºæ¸ˆé¡ã®å‰Šé™¤ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -312,10 +312,10 @@ function fncDeleteReportUnSettedPrice($objDB)
 }
 
 /**
- * Ä¢É¼Ì¤·èºÑ³ÛÌ¤¾µÇ§¤Îºï½ü¤ò¹Ô¤¦
+ * å¸³ç¥¨æœªæ±ºæ¸ˆé¡æœªæ‰¿èªã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteReportUnSettedPriceUnapproval($objDB)
 {
@@ -326,7 +326,7 @@ function fncDeleteReportUnSettedPriceUnapproval($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Ì¤·èºÑ³ÛÌ¤¾µÇ§¤Îºï½ü¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨æœªæ±ºæ¸ˆé¡æœªæ‰¿èªã®å‰Šé™¤ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -334,11 +334,11 @@ function fncDeleteReportUnSettedPriceUnapproval($objDB)
 }
 
 /**
- * Ä¢É¼Ì¤·èºÑ³ÛÌ¤¾µÇ§¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * å¸³ç¥¨æœªæ±ºæ¸ˆé¡æœªæ‰¿èªã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return void ÅĞÏ¿·ï¿ô
+ * @return void ç™»éŒ²ä»¶æ•°
  */
 function fncInsertReportUnSettedPriceUnapproval($objDB, $data)
 {
@@ -347,14 +347,14 @@ function fncInsertReportUnSettedPriceUnapproval($objDB, $data)
         values ($1
         ,$2)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["payeeformalname"]
         , $data["unsettledprice"]);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼Ì¤·èºÑ³ÛÌ¤¾µÇ§ÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨æœªæ±ºæ¸ˆé¡æœªæ‰¿èªç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -362,11 +362,11 @@ function fncInsertReportUnSettedPriceUnapproval($objDB, $data)
 }
 
 /**
- * Ä¢É¼Ì¤·èºÑ³Û¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * å¸³ç¥¨æœªæ±ºæ¸ˆé¡ã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return void ÅĞÏ¿·ï¿ô
+ * @return void ç™»éŒ²ä»¶æ•°
  */
 function fncInsertReportUnSettedPrice($objDB, $data)
 {
@@ -380,7 +380,7 @@ function fncInsertReportUnSettedPrice($objDB, $data)
                 ,$6
                 ,$7)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["managementno"]
         , $data["bankname"]
         , $data["payeeformalname"]
@@ -392,7 +392,7 @@ function fncInsertReportUnSettedPrice($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼Ì¤·èºÑ³ÛÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨æœªæ±ºæ¸ˆé¡ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -400,10 +400,10 @@ function fncInsertReportUnSettedPrice($objDB, $data)
 }
 
 /**
- * Ä¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncInsertReportImpLcOrderInfo($objDB, $data)
 {
@@ -428,7 +428,7 @@ function fncInsertReportImpLcOrderInfo($objDB, $data)
                 ,$17
                 ,$18)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["bankreqdate"]
         , $data["pono"]
         , $data["productcd"]
@@ -451,7 +451,7 @@ function fncInsertReportImpLcOrderInfo($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤ÎÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -459,10 +459,10 @@ function fncInsertReportImpLcOrderInfo($objDB, $data)
 }
 
 /**
- * Ä¢É¼LCÊÌ¹ç·×¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * å¸³ç¥¨LCåˆ¥åˆè¨ˆã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncInsertReportByLcTotal($objDB, $data)
 {
@@ -477,7 +477,7 @@ function fncInsertReportByLcTotal($objDB, $data)
                 ,$7
                 ,$8)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["lcno"]
         , $data["factoryname"]
         , $data["price"]
@@ -490,7 +490,7 @@ function fncInsertReportByLcTotal($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼LCÊÌ¹ç·×¤ÎÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨LCåˆ¥åˆè¨ˆã®ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -498,10 +498,10 @@ function fncInsertReportByLcTotal($objDB, $data)
 }
 
 /**
- * Ä¢É¼LCÊÌÌÀºÙ¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * å¸³ç¥¨LCåˆ¥æ˜ç´°ã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncInsertReportByLcDetail($objDB, $data)
 {
@@ -526,7 +526,7 @@ function fncInsertReportByLcDetail($objDB, $data)
                 ,$17
                 ,$18)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["lcno"]
         , $data["pono"]
         , $data["factoryname"]
@@ -549,7 +549,7 @@ function fncInsertReportByLcDetail($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼LCÊÌÌÀºÙ¤ÎÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨LCåˆ¥æ˜ç´°ã®ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -557,10 +557,10 @@ function fncInsertReportByLcDetail($objDB, $data)
 }
 
 /**
- * Ä¢É¼Bene·îÊÌ½¸·×¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * å¸³ç¥¨Beneæœˆåˆ¥é›†è¨ˆã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncInsertReportByBeneMonthCal($objDB, $data)
 {
@@ -580,7 +580,7 @@ function fncInsertReportByBeneMonthCal($objDB, $data)
                 ,$12
                 ,$13)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["beneficiary"]
         , $data["date1"]
         , $data["date2"]
@@ -598,7 +598,7 @@ function fncInsertReportByBeneMonthCal($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼Bene·îÊÌ½¸·×¤ÎÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨Beneæœˆåˆ¥é›†è¨ˆã®ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -606,10 +606,10 @@ function fncInsertReportByBeneMonthCal($objDB, $data)
 }
 
 /**
- * Ä¢É¼BeneBkÊÌ¹ç·×¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncInsertReportByBenebktotal($objDB, $data)
 {
@@ -622,7 +622,7 @@ function fncInsertReportByBenebktotal($objDB, $data)
                 ,$5
                 ,$6)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["beneficiary"]
         , $data["bank1"]
         , $data["bank2"]
@@ -633,7 +633,7 @@ function fncInsertReportByBenebktotal($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼BeneBkÊÌ¹ç·×¤ÎÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆã®ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -641,13 +641,13 @@ function fncInsertReportByBenebktotal($objDB, $data)
 }
 
 /**
- * Ä¢É¼BeneBkÊÌ¹ç·×¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetReportByBenebktotal($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     substr(beneficiary, 0, 50) as beneficiary,
@@ -663,7 +663,7 @@ function fncGetReportByBenebktotal($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼BeneBkÊÌ¹ç·×¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -671,13 +671,13 @@ function fncGetReportByBenebktotal($objDB)
 }
 
 /**
- * Ä¢É¼Bene·îÊÌ½¸·×¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨Beneæœˆåˆ¥é›†è¨ˆã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetReportByBeneMonthCal($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     substr(beneficiary, 0, 31) as beneficiary,
@@ -700,7 +700,7 @@ function fncGetReportByBeneMonthCal($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Bene·îÊÌ½¸·×¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨Beneæœˆåˆ¥é›†è¨ˆã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -708,13 +708,13 @@ function fncGetReportByBeneMonthCal($objDB)
 }
 
 /**
- * Ä¢É¼LCÊÌÌÀºÙ¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨LCåˆ¥æ˜ç´°ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetReportByLcDetail($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     lcno,
@@ -742,7 +742,7 @@ function fncGetReportByLcDetail($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼LCÊÌÌÀºÙ¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨LCåˆ¥æ˜ç´°ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -750,13 +750,13 @@ function fncGetReportByLcDetail($objDB)
 }
 
 /**
- * Ä¢É¼LCÊÌ¹ç·×¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨LCåˆ¥åˆè¨ˆã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetReportByLcTotal($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     lcno,
@@ -765,8 +765,8 @@ function fncGetReportByLcTotal($objDB)
                     to_char(shipterm, 'DD-Mon') as shipterm,
                     to_char(validterm, 'DD-Mon') as validterm,
                     bankname,
-                    to_char(bankreqdate, 'MM·îDDÆü') as bankreqdate,
-                    to_char(lcamopen, 'MM·îDDÆü') as lcamopen
+                    to_char(bankreqdate, 'MMæœˆDDæ—¥') as bankreqdate,
+                    to_char(lcamopen, 'MMæœˆDDæ—¥') as lcamopen
 				from
                     t_reportbylctotal
             ";
@@ -774,7 +774,7 @@ function fncGetReportByLcTotal($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼LCÊÌ¹ç·×¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨LCåˆ¥åˆè¨ˆã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -782,16 +782,16 @@ function fncGetReportByLcTotal($objDB)
 }
 
 /**
- * Ä¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetReportImpLcOrderInfo($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
-                    to_char(bankreqdate, 'MM·îDDÆü') as bankreqdate,
+                    to_char(bankreqdate, 'MMæœˆDDæ—¥') as bankreqdate,
                     pono,
                     productcd,
                     productrevisecd,
@@ -800,8 +800,8 @@ function fncGetReportImpLcOrderInfo($objDB)
                     unitname,
                     unitprice,
                     moneyprice,
-                    to_char(shipstartdate, 'MM·îDDÆü') as shipstartdate,
-                    to_char(shipenddate, 'MM·îDDÆü') as shipenddate,
+                    to_char(shipstartdate, 'MMæœˆDDæ—¥') as shipstartdate,
+                    to_char(shipenddate, 'MMæœˆDDæ—¥') as shipenddate,
                     to_char(shipterm, 'DD-Mon') as shipterm,
                     to_char(validterm, 'DD-Mon') as validterm,
                     lcno,
@@ -817,7 +817,7 @@ function fncGetReportImpLcOrderInfo($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -825,13 +825,13 @@ function fncGetReportImpLcOrderInfo($objDB)
 }
 
 /**
- * Ä¢É¼Ì¤·èºÑ³ÛÌ¤¾µÇ§¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨æœªæ±ºæ¸ˆé¡æœªæ‰¿èªã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetReportUnSettedPriceUnapproval($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     *
@@ -842,7 +842,7 @@ function fncGetReportUnSettedPriceUnapproval($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Ì¤·èºÑ³ÛÌ¤¾µÇ§¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨æœªæ±ºæ¸ˆé¡æœªæ‰¿èªã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -850,19 +850,19 @@ function fncGetReportUnSettedPriceUnapproval($objDB)
 }
 
 /**
- * Ä¢É¼Ì¤·èºÑ³Û¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨æœªæ±ºæ¸ˆé¡ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetReportUnSettedPrice($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     managementno,
                     bankname,
                     substr(payeeformalname, 0, 40) as payeeformalname,
-                    to_char(shipstartdate, 'MM·îDDÆü') as shipstartdate,
+                    to_char(shipstartdate, 'MMæœˆDDæ—¥') as shipstartdate,
                     lcno,
                     productcode,
                     usancesettlement
@@ -873,7 +873,7 @@ function fncGetReportUnSettedPrice($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Ì¤·èºÑ³Û¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨æœªæ±ºæ¸ˆé¡ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -881,13 +881,13 @@ function fncGetReportUnSettedPrice($objDB)
 }
 
 /**
- * »ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×Ì¤·èºÑ¶â³Û¤ò¼èÆÀ¤¹¤ë
+ * æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆæœªæ±ºæ¸ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetSumofUnSettedPriceByPayfAndBank($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     payeeformalname,
@@ -902,7 +902,7 @@ function fncGetSumofUnSettedPriceByPayfAndBank($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "»ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×Ì¤·èºÑ¶â³Û¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆæœªæ±ºæ¸ˆé‡‘é¡ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -910,13 +910,13 @@ function fncGetSumofUnSettedPriceByPayfAndBank($objDB)
 }
 
 /**
- * »ÙÊ§ÀèÊÌ¤Î¹ç·×Ì¤·èºÑ¶â³Û¤ò¼èÆÀ¤¹¤ë
+ * æ”¯æ‰•å…ˆåˆ¥ã®åˆè¨ˆæœªæ±ºæ¸ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetSumofUnSettedPriceByPayf($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     payeeformalname,
@@ -930,7 +930,7 @@ function fncGetSumofUnSettedPriceByPayf($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "»ÙÊ§ÀèÊÌ¤Î¹ç·×Ì¤·èºÑ¶â³Û¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆåˆ¥ã®åˆè¨ˆæœªæ±ºæ¸ˆé‡‘é¡ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -938,7 +938,7 @@ function fncGetSumofUnSettedPriceByPayf($objDB)
 }
 
 /**
- * Ä¢É¼½ĞÎÏÍÑ¤ÎL/CÊÌ¹ç·×
+ * å¸³ç¥¨å‡ºåŠ›ç”¨ã®L/Cåˆ¥åˆè¨ˆ
  *
  * @param [object] $objDB
  * @param [string] $opendate
@@ -947,7 +947,7 @@ function fncGetSumofUnSettedPriceByPayf($objDB)
  */
 function fncGetLcInfoForReportTwo($objDB, $opendate, $currencyclass)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
         select
             payfnameomit,
@@ -1000,12 +1000,12 @@ function fncGetLcInfoForReportTwo($objDB, $opendate, $currencyclass)
             order by lcno, payfnameformal, bankcd
         ";
 
-    // ¥¯¥¨¥ê¤Ø¤ÎÀßÄêÃÍ¤ÎÄêµÁ
+    // ã‚¯ã‚¨ãƒªã¸ã®è¨­å®šå€¤ã®å®šç¾©
     $bind = array($opendate, $currencyclass);
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼2½ĞÎÏÍÑ¤ÎL/CÊÌ¹ç·×¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨2å‡ºåŠ›ç”¨ã®L/Cåˆ¥åˆè¨ˆã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -1013,7 +1013,7 @@ function fncGetLcInfoForReportTwo($objDB, $opendate, $currencyclass)
 }
 
 /**
- * Ä¢É¼½ĞÎÏÍÑ¤ÎL/CÊÌ¹ç·×
+ * å¸³ç¥¨å‡ºåŠ›ç”¨ã®L/Cåˆ¥åˆè¨ˆ
  *
  * @param [object] $objDB
  * @param [string] $opendate
@@ -1027,7 +1027,7 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
     } else {
         $where = " and lcstate = 6";
     }
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
         select
             payfnameomit,
@@ -1081,11 +1081,11 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
         "   order by bankcd, payfnameomit, shipstartdate
         ";
 
-    // ¥¯¥¨¥ê¤Ø¤ÎÀßÄêÃÍ¤ÎÄêµÁ
+    // ã‚¯ã‚¨ãƒªã¸ã®è¨­å®šå€¤ã®å®šç¾©
     $bind = array($startYmd, $endYmd, $currencyclass);
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
     if (!$result) {
-        echo "Ä¢É¼5½ĞÎÏÍÑ¤ÎL/CÊÌ¹ç·×¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨5å‡ºåŠ›ç”¨ã®L/Cåˆ¥åˆè¨ˆã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -1093,7 +1093,7 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
 }
 
 /**
- * ÄÌ²ß¥ì¡¼¥È¤Î¼èÆÀ
+ * é€šè²¨ãƒ¬ãƒ¼ãƒˆã®å–å¾—
  *
  * @param [type] $objDB
  * @param [type] $monetaryRateCode
@@ -1102,7 +1102,7 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
  */
 function fncGetMonetaryRate($objDB, $monetaryRateCode, $monetaryUnitCode)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
         select
             curconversionrate
@@ -1115,13 +1115,13 @@ function fncGetMonetaryRate($objDB, $monetaryRateCode, $monetaryUnitCode)
             and dtmApplyEndDate >= $4
         ";
 
-    // ¥¯¥¨¥ê¤Ø¤ÎÀßÄêÃÍ¤ÎÄêµÁ
+    // ã‚¯ã‚¨ãƒªã¸ã®è¨­å®šå€¤ã®å®šç¾©
     $bind = array($monetaryRateCode, $monetaryUnitCode, date('Y/m/d'), date('Y/m/d'));
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "ÄÌ²ß¥ì¡¼¥È¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€šè²¨ãƒ¬ãƒ¼ãƒˆã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         $data = pg_fetch_all($result);
@@ -1134,7 +1134,7 @@ function fncGetMonetaryRate($objDB, $monetaryRateCode, $monetaryUnitCode)
 }
 
 /**
- * Ä¢É¼½ĞÎÏÍÑ¤ÎL/CÊÌ¹ç·×
+ * å¸³ç¥¨å‡ºåŠ›ç”¨ã®L/Cåˆ¥åˆè¨ˆ
  *
  * @param [object] $objDB
  * @param [string] $opendate
@@ -1143,26 +1143,26 @@ function fncGetMonetaryRate($objDB, $monetaryRateCode, $monetaryUnitCode)
  */
 function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
 {
-    // Á¥ÀÑ·î
+    // èˆ¹ç©æœˆ
     $shipYm = str_replace("/", "-", $data["shipYm"]);
     $firstDate = date('Y/m/d', strtotime('first day of ' . $shipYm));
     $lastDate = date('Y/m/d', strtotime('last day of ' . $shipYm));
     $where = "";
-    // ¶ä¹Ô¥³¡¼¥É¤¬ALL°Ê³°¤Î¾ì¹ç¡¢¸¡º÷¾ò·ï¤È¤Ê¤ë
+    // éŠ€è¡Œã‚³ãƒ¼ãƒ‰ãŒALLä»¥å¤–ã®å ´åˆã€æ¤œç´¢æ¡ä»¶ã¨ãªã‚‹
     if ($data["bankcd"] != "0000") {
         $where .= " and bankcd = '" . $data["bankcd"] . "'";
     }
-    // L/Copen¤¬ALL°Ê³°¤Î¾ì¹ç¡¢¸¡º÷¾ò·ï¤È¤Ê¤ë
-    if ($data["lcopen"] == "Ì¤È¯¹Ô") {
+    // L/CopenãŒALLä»¥å¤–ã®å ´åˆã€æ¤œç´¢æ¡ä»¶ã¨ãªã‚‹
+    if ($data["lcopen"] == "æœªç™ºè¡Œ") {
         $where .= " and lcno = ''";
-    } else if ($data["lcopen"] == "´ûÈ¯¹Ô") {
+    } else if ($data["lcopen"] == "æ—¢ç™ºè¡Œ") {
         $where .= " and lcno <> ''";
     }
-    // ²ÙÍÈÃÏ¤¬ALL°Ê³°¤Î¾ì¹ç¡¢¸¡º÷¾ò·ï¤È¤Ê¤ë
+    // è·æšåœ°ãŒALLä»¥å¤–ã®å ´åˆã€æ¤œç´¢æ¡ä»¶ã¨ãªã‚‹
     if ($data["portplace"] != "ALL") {
         $where .= " and portplace = '" . $data["portplace"] . "'";
     }
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
         select
             payfnameomit,
@@ -1217,21 +1217,21 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
             and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
         order by productcd, productrevisecd, pono, polineno
         ";
-    // ¥¯¥¨¥ê¤Ø¤ÎÀßÄêÃÍ¤ÎÄêµÁ
+    // ã‚¯ã‚¨ãƒªã¸ã®è¨­å®šå€¤ã®å®šç¾©
     $bind = array(str_replace("/", "", $data["openYm"]),
         $firstDate, $lastDate, $data["payfCode"], $currencyclass);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ä¢É¼6½ĞÎÏÍÑ¤ÎL/CÊÌ¹ç·×¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨6å‡ºåŠ›ç”¨ã®L/Cåˆ¥åˆè¨ˆã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
     }
 }
 /**
- * Ä¢É¼5Ì¤·èºÑ¥ê¥¹¥È¹ç·×¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨5æœªæ±ºæ¸ˆãƒªã‚¹ãƒˆåˆè¨ˆãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
  *
  * @param [type] $objDB
  * @return void
@@ -1295,7 +1295,7 @@ function fncGetUnSettedTotal($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼5Ì¤·èºÑ¥ê¥¹¥È¹ç·×¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨5æœªæ±ºæ¸ˆãƒªã‚¹ãƒˆåˆè¨ˆã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result);
@@ -1304,7 +1304,7 @@ function fncGetUnSettedTotal($objDB)
 }
 
 /**
- * Ä¢É¼5Ì¤·èºÑ¥ê¥¹¥È¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨5æœªæ±ºæ¸ˆãƒªã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
  *
  * @param [type] $objDB
  * @return void
@@ -1358,7 +1358,7 @@ function fncGetUnSettedLst($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼5Ì¤·èºÑ¥ê¥¹¥È¥Ç¡¼¥¿¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨5æœªæ±ºæ¸ˆãƒªã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -1367,13 +1367,13 @@ function fncGetUnSettedLst($objDB)
 }
 
 /**
- * Ä¢É¼BeneBK¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨BeneBKã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetSumofBeneBkPrice($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     sum(bank1) as sum_1,
@@ -1388,7 +1388,7 @@ function fncGetSumofBeneBkPrice($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼BeneBK¤Î¹ç·×¶â³Û¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨BeneBKã®åˆè¨ˆé‡‘é¡ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result);
@@ -1396,13 +1396,13 @@ function fncGetSumofBeneBkPrice($objDB)
 }
 
 /**
- * Ä¢É¼Bene·îÊÌ½¸·×¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨Beneæœˆåˆ¥é›†è¨ˆã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetSumofBeneMonCal($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     sum(date1) as sum_1,
@@ -1424,7 +1424,7 @@ function fncGetSumofBeneMonCal($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Bene·îÊÌ½¸·×¤Î¹ç·×¶â³Û¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨Beneæœˆåˆ¥é›†è¨ˆã®åˆè¨ˆé‡‘é¡ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result);
@@ -1432,15 +1432,15 @@ function fncGetSumofBeneMonCal($objDB)
 }
 
 /**
- * Á÷ÉÕ¸µ¥Ş¥¹¥¿¾ğÊó¤ò¼èÆÀ¤¹¤ë
+ * é€ä»˜å…ƒãƒã‚¹ã‚¿æƒ…å ±ã‚’å–å¾—ã™ã‚‹
  *
  * @return void
  */
 function fncGetSendInfo($objDB)
 {
-    //¥¯¥é¥¹¤ÎÀ¸À®
+    //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
     $db = new lcConnect();
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
 					*
@@ -1449,12 +1449,12 @@ function fncGetSendInfo($objDB)
                 order by sendno
             ";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array();
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Á÷ÉÕ¸µ¥Ş¥¹¥¿¾ğÊó¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€ä»˜å…ƒãƒã‚¹ã‚¿æƒ…å ±å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -1463,7 +1463,7 @@ function fncGetSendInfo($objDB)
 
 
 /**
- * »ÙÊ§Àè¥³¡¼¥É¤Ë¤è¤ê»ÙÊ§Àè¥Ş¥¹¥¿¾ğÊó¤ò¼èÆÀ¤¹¤ë
+ * æ”¯æ‰•å…ˆã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚Šæ”¯æ‰•å…ˆãƒã‚¹ã‚¿æƒ…å ±ã‚’å–å¾—ã™ã‚‹
  *
  * @param [object] $objDB
  * @param [string] $payfcd
@@ -1471,9 +1471,9 @@ function fncGetSendInfo($objDB)
  */
 function fncGetPayfInfoByPayfcd($objDB, $payfcd)
 {
-    //¥¯¥é¥¹¤ÎÀ¸À®
+    //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
     $db = new lcConnect();
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
 					*
@@ -1483,13 +1483,13 @@ function fncGetPayfInfoByPayfcd($objDB, $payfcd)
                     payfcd = $1
             ";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($payfcd);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "»ÙÊ§Àè¥³¡¼¥É¤Ë¤è¤ê»ÙÊ§Àè¥Ş¥¹¥¿¾ğÊó¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚Šæ”¯æ‰•å…ˆãƒã‚¹ã‚¿æƒ…å ±å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result);
@@ -1498,13 +1498,13 @@ function fncGetPayfInfoByPayfcd($objDB, $payfcd)
 
 
 /**
- * Ä¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+ * å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetSumofImpLcOrderPrice($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     sum(moneyprice) totalprice
@@ -1515,7 +1515,7 @@ function fncGetSumofImpLcOrderPrice($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Ä¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤Î¹ç·×¶â³Û¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®åˆè¨ˆé‡‘é¡ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result)->totalprice;

@@ -1,7 +1,7 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
-*       ¥¤¥á¡¼¥¸¡¦¥é¡¼¥¸¥ª¥Ö¥¸¥§¥¯¥ÈÁàºî¥¯¥é¥¹
+*       ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ»ãƒ©ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ“ä½œã‚¯ãƒ©ã‚¹
 *
 *
 *       @package    K.I.D.S.
@@ -12,10 +12,10 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*			¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ë¤ò¥é¡¼¥¸¥ª¥Ö¥¸¥§¥¯¥È¤È¤·¤ÆÍÑ¤¤¡¢t_image / m_imagerelation ¥Æ¡¼¥Ö¥ë¤òÁàºî¤¹¤ë
+*       å‡¦ç†æ¦‚è¦
+*			ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ©ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦ç”¨ã„ã€t_image / m_imagerelation ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’æ“ä½œã™ã‚‹
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
@@ -31,34 +31,34 @@
 		}
 
 		//
-		//	³µÍ×¡§
-		// 		$_FILES ÊÑ¿ô¤«¤éÉ¬Í×¤Ê¥Ñ¥é¡¼¥á¡¼¥¿¤ò¼èÆÀ
+		//	æ¦‚è¦ï¼š
+		// 		$_FILES å¤‰æ•°ã‹ã‚‰å¿…è¦ãªãƒ‘ãƒ©ãƒ¼ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—
 		//
-		//	°ú¿ô¡§
-		//		$aryFiles	- $_FILES¹½Â¤ÂÎ
-		//		$strAlias	- ¥Õ¥¡¥¤¥ë¤òÆÃÄê¤¹¤ë°Ù¤Î¥¨¥¤¥ê¥¢¥¹Ì¾¡Ê<input type="file" name= ¤Ë»ØÄê¤µ¤ì¤¿Ì¾Á°¡Ë
+		//	å¼•æ•°ï¼š
+		//		$aryFiles	- $_FILESæ§‹é€ ä½“
+		//		$strAlias	- ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç‰¹å®šã™ã‚‹ç‚ºã®ã‚¨ã‚¤ãƒªã‚¢ã‚¹åï¼ˆ<input type="file" name= ã«æŒ‡å®šã•ã‚ŒãŸåå‰ï¼‰
 		//
-		//	Ìá¤êÃÍ¡§
-		//		$aryImageInfo	- ¥¤¥á¡¼¥¸¾ğÊó³ÊÇ¼¹½Â¤ÂÎ
+		//	æˆ»ã‚Šå€¤ï¼š
+		//		$aryImageInfo	- ã‚¤ãƒ¡ãƒ¼ã‚¸æƒ…å ±æ ¼ç´æ§‹é€ ä½“
 		//
 		function getUploadFileInfo($aryFiles, $strAlias)
 		{
 			if(empty($strAlias)) return false;
 			
-			// ¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤¿¥Õ¥¡¥¤¥ë¤«¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+			// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 			if(!is_uploaded_file($aryFiles[$strAlias]['tmp_name']))
 			{
 				return false;
 			}
 
 			$aryFilesRet = array();
-			// ¥Æ¥ó¥İ¥é¥êÌ¾¤ò¼èÆÀ
+			// ãƒ†ãƒ³ãƒãƒ©ãƒªåã‚’å–å¾—
 			$aryFilesRet['tmp_name'] = $aryFiles[$strAlias]['tmp_name'];
-			// ¥Õ¥¡¥¤¥ëÌ¾¤ò¼èÆÀ
+			// ãƒ•ã‚¡ã‚¤ãƒ«åã‚’å–å¾—
 			$aryFilesRet['name'] = $aryFiles[$strAlias]['name'];
-			// ÇÛÎó¤«¤é¥¿¥¤¥×¤ò¼èÆÀ
+			// é…åˆ—ã‹ã‚‰ã‚¿ã‚¤ãƒ—ã‚’å–å¾—
 			$aryFilesRet['type'] = $aryFiles[$strAlias]['type'];
-			// ÇÛÎó¤«¤é¥µ¥¤¥º¤ò¼èÆÀ
+			// é…åˆ—ã‹ã‚‰ã‚µã‚¤ã‚ºã‚’å–å¾—
 			$aryFilesRet['size'] = $aryFiles[$strAlias]['size'];
 			
 			$this->aryUploadFileInfo = $aryFilesRet;
@@ -68,49 +68,49 @@
 		}
 
 		//
-		//	³µÍ×¡§
-		//		¥Æ¥ó¥İ¥é¥ê¥Ç¥£¥ì¥¯¥È¥ê¤Ë¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ë¤ò¥³¥Ô¡¼¤¹¤ë
+		//	æ¦‚è¦ï¼š
+		//		ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹
 		//
-		//	°ú¿ô¡§
-		//		$strSourcePath	- ¥½¡¼¥¹¥Õ¥¡¥¤¥ëÌ¾
-		//		$strDestDir		- ½ĞÎÏÀè¤Î´ğ½à¥Ç¥£¥ì¥¯¥È¥êÌ¾
-		//		&$strUniqDir	- ¥Æ¥ó¥İ¥é¥ê¥Ç¥£¥ì¥¯¥È¥êÆâ¤Î¥æ¥Ë¡¼¥¯¥Ç¥£¥ì¥¯¥È¥êÌ¾¡Ê»²¾ÈÊÖµÑ¡Ë
-		//		&$strDestFile	- ¥æ¥Ë¡¼¥¯¥Ç¥£¥ì¥¯¥È¥êÌ¾Æâ¤Ë¥³¥Ô¡¼¤µ¤ì¤ë¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ëÌ¾¡Ê»²¾ÈÊÖµÑ¡Ë
+		//	å¼•æ•°ï¼š
+		//		$strSourcePath	- ã‚½ãƒ¼ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«å
+		//		$strDestDir		- å‡ºåŠ›å…ˆã®åŸºæº–ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
+		//		&$strUniqDir	- ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã®ãƒ¦ãƒ‹ãƒ¼ã‚¯ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåï¼ˆå‚ç…§è¿”å´ï¼‰
+		//		&$strDestFile	- ãƒ¦ãƒ‹ãƒ¼ã‚¯ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåå†…ã«ã‚³ãƒ”ãƒ¼ã•ã‚Œã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«åï¼ˆå‚ç…§è¿”å´ï¼‰
 		//
-		//	Ìá¤êÃÍ¡§
-		//		½èÍıÀ®Èİ
+		//	æˆ»ã‚Šå€¤ï¼š
+		//		å‡¦ç†æˆå¦
 		//
 		function setTempImage($aryImageInfo, $strDestDir, &$strUniqDir="", &$strDestFile="")
 		{
 
-			//	³ÈÄ¥»Ò¤Î¼èÆÀ
+			//	æ‹¡å¼µå­ã®å–å¾—
 			preg_match('/(\.jpg|\.gif|\.tif|\.png|\.bmp|\.avi|\.wmv|\.ai|\.rm|\.mov|\.mpg)$/', $aryImageInfo['name'], $aryRet);
 			$strFileextension = $aryRet[0];
-//	echo "<br>".'³ÈÄ¥»ÒÌ¾'." $strFileextension"."<br>";
+//	echo "<br>".'æ‹¡å¼µå­å'." $strFileextension"."<br>";
 
 			$strSourcePath = $aryImageInfo['tmp_name'];
 
 			if(empty($strUniqDir))
 			{
-				// ¥æ¥Ë¡¼¥¯¤Ê¥Ç¥£¥ì¥¯¥È¥êÌ¾¤ÎÀ¸À®
+				// ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã®ç”Ÿæˆ
 				$strUniqDir = uniqid("",false);
 			}
 			$strTempDirPath = $strDestDir.$strUniqDir."/";
 			
-//	echo "<br>".'¥Ç¥£¥ì¥¯¥È¥êÌ¾'." $strTempDir"."<br>";
+//	echo "<br>".'ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå'." $strTempDir"."<br>";
 			
 			if(!file_exists($strTempDirPath))
 			{
 				mkdir($strTempDirPath, 0777);
-//	echo "<br>".'¥Ç¥£¥ì¥¯¥È¥êºîÀ®'." $strTempDir"."<br>";
+//	echo "<br>".'ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä½œæˆ'." $strTempDir"."<br>";
 			}
-			// ¥³¥Ô¡¼Àè¤Î¥Õ¥¡¥¤¥ë¥Ñ¥¹¤òÀ¸À®
+			// ã‚³ãƒ”ãƒ¼å…ˆã®ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’ç”Ÿæˆ
 			$strDestFile = basename($strSourcePath).$strFileextension;
 			$strDestFilePath = $strTempDirPath.$strDestFile;
 			
-//	echo "<br>¥Õ¥¡¥¤¥ë¥³¥Ô¡¼".$strSourcePath."->".$strDestFile."<br>";
+//	echo "<br>ãƒ•ã‚¡ã‚¤ãƒ«ã‚³ãƒ”ãƒ¼".$strSourcePath."->".$strDestFile."<br>";
 	
-			// PHP¥Õ¥¡¥¤¥ë¥¢¥Ã¥×¥í¡¼¥É¸µ¤«¤é»ØÄê¥Ç¥£¥ì¥¯¥È¥ê¤Ø°ÜÆ°
+			// PHPãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰å…ƒã‹ã‚‰æŒ‡å®šãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¸ç§»å‹•
 			if(!move_uploaded_file($strSourcePath, $strDestFilePath))
 			{
 				return false;
@@ -120,24 +120,24 @@
 		}
 
 		//
-		//	³µÍ×¡§
-		//		¥é¡¼¥¸¥ª¥Ö¥¸¥§¥¯¥È¤È¤·¤Æ¥Ç¡¼¥¿¥Ù¡¼¥¹¤ËÊİÂ¸¤µ¤ì¤Æ¤¤¤ë¤â¤Î¤ò¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ë¤È¤·¤Æ½ĞÎÏ¤¹¤ë
+		//	æ¦‚è¦ï¼š
+		//		ãƒ©ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã«ä¿å­˜ã•ã‚Œã¦ã„ã‚‹ã‚‚ã®ã‚’ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«ã¨ã—ã¦å‡ºåŠ›ã™ã‚‹
 		//
-		//	°ú¿ô¡§
-		//		$objDB				- ¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È
-		//		$strImageKeyCode	- ¥¤¥á¡¼¥¸¥­¡¼¥³¡¼¥É¡ÊÀ½ÉÊ¥³¡¼¥É¡Ë
-		//		$strDestDir			- ½ĞÎÏÀè¤Î¥Ç¥£¥ì¥¯¥È¥êÌ¾
-		//		&$aryImageInfo		- ¥¤¥á¡¼¥¸¾ğÊó³ÊÇ¼¹½Â¤ÂÎ
+		//	å¼•æ•°ï¼š
+		//		$objDB				- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		//		$strImageKeyCode	- ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ï¼ˆè£½å“ã‚³ãƒ¼ãƒ‰ï¼‰
+		//		$strDestDir			- å‡ºåŠ›å…ˆã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
+		//		&$aryImageInfo		- ã‚¤ãƒ¡ãƒ¼ã‚¸æƒ…å ±æ ¼ç´æ§‹é€ ä½“
 		//
-		//	Ìá¤êÃÍ¡§
-		//		½èÍıÀ®Èİ
+		//	æˆ»ã‚Šå€¤ï¼š
+		//		å‡¦ç†æˆå¦
 		//
 		function getImageLo($objDB, $strImageKeyCode, $strDestDir, &$aryImageInfo)
 		{
-			// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï½èÍı
+			// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹å‡¦ç†
 			if(!$objDB->transactionBegin()) return false;
-//echo "<br>¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï<br>";
-			// ¼èÆÀÍÑSQLºîÀ®
+//echo "<br>ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹<br>";
+			// å–å¾—ç”¨SQLä½œæˆ
 			$arySql = array();
 			$arySql[] = "select distinct";
 			$arySql[] = "	mi.lngimagecode";
@@ -150,45 +150,45 @@
 			$arySql[] = "where";
 			$arySql[] = "	mi.strimagekeycode = '$strImageKeyCode'";
 			$strSql = implode("\n", $arySql);
-//echo "<br>SQL¡ä$strSql<br>";
+//echo "<br>SQLï¼$strSql<br>";
 
-			// ÁªÂò½èÍı¼Â¹Ô
+			// é¸æŠå‡¦ç†å®Ÿè¡Œ
 			$lngResultID = $objDB->execute($strSql);
-			// ·ë²Ì¿ô¤Î¼èÆÀ
+			// çµæœæ•°ã®å–å¾—
 			$lngRowCount = pg_num_rows($lngResultID);
 			
-			// °ì·ï¤âÌµ¤¤¾ì¹ç
+			// ä¸€ä»¶ã‚‚ç„¡ã„å ´åˆ
 			if($lngRowCount <= 0) return false;
 			
-			// ·ë²Ì¿ôÊ¬¤Î¾ğÊó¤ò¼èÆÀ
+			// çµæœæ•°åˆ†ã®æƒ…å ±ã‚’å–å¾—
 			$aryImageInfo = array();
 			while($objImageData = pg_fetch_object($lngResultID))
 			{
-				// ¥Ç¥£¥ì¥¯¥È¥êÌ¾¤È¥Õ¥¡¥¤¥ëÌ¾¤òÀßÄê¡Ê°ú¿ô¤Ë¤Æ»²¾ÈÊÖµÑ¡Ë
+				// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåã¨ãƒ•ã‚¡ã‚¤ãƒ«åã‚’è¨­å®šï¼ˆå¼•æ•°ã«ã¦å‚ç…§è¿”å´ï¼‰
 				$aryImageInfo['strTempImageDir'][]  = $objImageData->strdirectoryname;
 				$aryImageInfo['strTempImageFile'][] = $objImageData->strfilename;
 
-				// ¼ÂÂÖ¥Õ¥¡¥¤¥ëÌ¾¤Î¼èÆÀ
+				// å®Ÿæ…‹ãƒ•ã‚¡ã‚¤ãƒ«åã®å–å¾—
 				$strImageFileName = $strDestDir.$objImageData->strdirectoryname."/".$objImageData->strfilename;
-				// ´û¤ËÂ¸ºßºÑ¤ß¤«¤ò³ÎÇ§¤¹¤ë
+				// æ—¢ã«å­˜åœ¨æ¸ˆã¿ã‹ã‚’ç¢ºèªã™ã‚‹
 				if(file_exists($strImageFileName))
 				{
 					continue;
 				}
-//echo "<br>¥Õ¥¡¥¤¥ëÃê½Ğ¡ä$strImageFileName<br>";
-				// ¥Ç¥£¥ì¥¯¥È¥ê¤ÎÂ¸ºß³ÎÇ§
+//echo "<br>ãƒ•ã‚¡ã‚¤ãƒ«æŠ½å‡ºï¼$strImageFileName<br>";
+				// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®å­˜åœ¨ç¢ºèª
 				if(!file_exists($strDestDir.$objImageData->strdirectoryname))
 				{
 					mkdir($strDestDir.$objImageData->strdirectoryname, 0777);
-//echo "<br>".'¥Ç¥£¥ì¥¯¥È¥êºîÀ®'." $objImageData->strdirectoryname"."<br>";
+//echo "<br>".'ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä½œæˆ'." $objImageData->strdirectoryname"."<br>";
 				}
 				
 
-				// ´ûÂ¸¥Õ¥¡¥¤¥ë¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤Î¤ß¡¢¥é¡¼¥¸¥ª¥Ö¥¸¥§¥¯¥ÈÃê½Ğ
+				// æ—¢å­˜ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ãªã„å ´åˆã®ã¿ã€ãƒ©ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæŠ½å‡º
 				pg_lo_export($objImageData->objimage, $strImageFileName);
 			}
 
-			// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥³¥ß¥Ã¥È½èÍı
+			// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 			$objDB->transactionCommit();
 			
 			return true;
@@ -196,38 +196,38 @@
 		}
 
 		//
-		//	³µÍ×¡§
-		//		¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ë¤ò¥é¡¼¥¸¥ª¥Ö¥¸¥§¥¯¥È¤È¤·¤Æ¥Ç¡¼¥¿¥Ù¡¼¥¹¤ØÅĞÏ¿¤¹¤ë
+		//	æ¦‚è¦ï¼š
+		//		ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ©ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã¸ç™»éŒ²ã™ã‚‹
 		//
-		//	°ú¿ô¡§
-		//		$objDB				- ¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È
-		//		$strImageKeyCode	- ¥¤¥á¡¼¥¸¥­¡¼¥³¡¼¥É¡ÊÀ½ÉÊ¥³¡¼¥ÉÅù¡Ë
-		//		$aryImageInfo		- ¥¤¥á¡¼¥¸¾ğÊó³ÊÇ¼¹½Â¤ÂÎ
-		//		$strDestPath		- ½ĞÎÏÀè¤Î´ğ½à¥Ç¥£¥ì¥¯¥È¥êÌ¾
-		//		$strTempImageDir	- ¥Æ¥ó¥İ¥é¥ê¥Ç¥£¥ì¥¯¥È¥êÆâ¤Î¥æ¥Ë¡¼¥¯¥Ç¥£¥ì¥¯¥È¥êÌ¾
-		//		$strTempImageFile	- ¥æ¥Ë¡¼¥¯¥Ç¥£¥ì¥¯¥È¥êÌ¾Æâ¤Ë¥³¥Ô¡¼¤µ¤ì¤ë¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ëÌ¾
+		//	å¼•æ•°ï¼š
+		//		$objDB				- ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		//		$strImageKeyCode	- ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ï¼ˆè£½å“ã‚³ãƒ¼ãƒ‰ç­‰ï¼‰
+		//		$aryImageInfo		- ã‚¤ãƒ¡ãƒ¼ã‚¸æƒ…å ±æ ¼ç´æ§‹é€ ä½“
+		//		$strDestPath		- å‡ºåŠ›å…ˆã®åŸºæº–ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
+		//		$strTempImageDir	- ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå†…ã®ãƒ¦ãƒ‹ãƒ¼ã‚¯ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªå
+		//		$strTempImageFile	- ãƒ¦ãƒ‹ãƒ¼ã‚¯ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªåå†…ã«ã‚³ãƒ”ãƒ¼ã•ã‚Œã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«å
 		//
-		//	Ìá¤êÃÍ¡§
-		//		½èÍıÀ®Èİ
+		//	æˆ»ã‚Šå€¤ï¼š
+		//		å‡¦ç†æˆå¦
 		//
 		function addImageLo($objDB, $strImageKeyCode, $aryImageInfo, $strDestPath, $strTempImageDir, $strTempImageFile)
 		{
-			// ¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ë¥Ñ¥¹¤ÎÀ¸À®
+			// ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã®ç”Ÿæˆ
 			$strImagePath = $strDestPath.$strTempImageDir."/".$strTempImageFile;
-//echo "<br>¥Õ¥¡¥¤¥ëÌ¾À¸À®$strImagePath<br>";
+//echo "<br>ãƒ•ã‚¡ã‚¤ãƒ«åç”Ÿæˆ$strImagePath<br>";
 			if(!file_exists($strImagePath)) return false;
 
-			// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï½èÍı
+			// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹å‡¦ç†
 			if(!$objDB->transactionBegin()) return false;
-//echo "<br>¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï<br>";
+//echo "<br>ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹<br>";
 
-			// ¥Õ¥¡¥¤¥ë¤«¤é¥é¡¼¥¸¥ª¥Ö¥¸¥§¥¯¥È¤ò¥¤¥ó¥İ¡¼¥È¤·¡¢¥ª¥Ö¥¸¥§¥¯¥ÈID¤ò¼èÆÀ
+			// ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ©ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆã—ã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆIDã‚’å–å¾—
 			$lngOid   = pg_lo_import($objDB->ConnectID, $strImagePath);
-//echo "<br>¥¤¥á¡¼¥¸¥Ñ¥¹¡ä$strImagePath<br>";
-			// ¥ª¥Ö¥¸¥§¥¯¥ÈID¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤¿
+//echo "<br>ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‘ã‚¹ï¼$strImagePath<br>";
+			// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆIDã®å–å¾—ã«å¤±æ•—ã—ãŸ
 			if(!$lngOid) return false;
 
-			// ¥Æ¡¼¥Ö¥ë¥í¥Ã¥¯½èÍı¤ò¹Ô¤¦
+			// ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ­ãƒƒã‚¯å‡¦ç†ã‚’è¡Œã†
 			$arySql = array();
 			$arySql[] = "select";
 			$arySql[] = "	*";
@@ -236,10 +236,10 @@
 			$arySql[] = "for update";
 			$strSql = implode("\n", $arySql);
 
-			// ¥í¥Ã¥¯½èÍı¼Â¹Ô
+			// ãƒ­ãƒƒã‚¯å‡¦ç†å®Ÿè¡Œ
 			$lngResultID = $objDB->execute($strSql);
 
-			// ºÇÂç¤Î¥¤¥á¡¼¥¸¥³¡¼¥É¤ò¼èÆÀ
+			// æœ€å¤§ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 			$arySql = array();
 			$arySql[] = "select";
 			$arySql[] = "	case when max(lngimagecode) is null then 1 else MAX(lngimagecode)+1 end as lngimagecode";
@@ -247,14 +247,14 @@
 			$arySql[] = "	t_image";
 			$strSql = implode("\n", $arySql);
 
-			// ¼èÆÀ½èÍı¼Â¹Ô
+			// å–å¾—å‡¦ç†å®Ÿè¡Œ
 			$lngResultID = $objDB->execute($strSql);
 			
-			// ·ë²Ì¤ò¥ª¥Ö¥¸¥§¥¯¥È¤È¤·¤Æ¼èÆÀ¤¹¤ë
+			// çµæœã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦å–å¾—ã™ã‚‹
 			$objImageCodeResult = $objDB->fetchObject($lngResultID, 0);
 
 			//
-			// t_image ÅĞÏ¿ÍÑSQLºîÀ®
+			// t_image ç™»éŒ²ç”¨SQLä½œæˆ
 			$arySql = array();
 			$arySql[] = "insert into t_image ";
 			$arySql[] = "(";
@@ -279,17 +279,17 @@
 			$arySql[] = ")";
 			$strSql = implode("\n", $arySql);
 
-//echo "<br>¥¯¥é¥¹ÆâSQL¡ä$strSql<br>";
-			// ÅĞÏ¿½èÍı¼Â¹Ô
+//echo "<br>ã‚¯ãƒ©ã‚¹å†…SQLï¼$strSql<br>";
+			// ç™»éŒ²å‡¦ç†å®Ÿè¡Œ
 			$lngResultID = $objDB->execute($strSql);
-			// ÊÑ¹¹·ë²Ì¿ô¤ò³ÎÇ§
+			// å¤‰æ›´çµæœæ•°ã‚’ç¢ºèª
 			if( pg_affected_rows($lngResultID) <= 0 )
 			{
 				return false;
 			}
 
 
-			// ¥Æ¡¼¥Ö¥ë¥í¥Ã¥¯½èÍı¤ò¹Ô¤¦
+			// ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ­ãƒƒã‚¯å‡¦ç†ã‚’è¡Œã†
 			$arySql = array();
 			$arySql[] = "select";
 			$arySql[] = "	*";
@@ -298,10 +298,10 @@
 			$arySql[] = "for update";
 			$strSql = implode("\n", $arySql);
 
-			// ¥í¥Ã¥¯½èÍı¼Â¹Ô
+			// ãƒ­ãƒƒã‚¯å‡¦ç†å®Ÿè¡Œ
 			$lngResultID = $objDB->execute($strSql);
 
-			// ºÇÂç¤Î¥¤¥á¡¼¥¸¥³¡¼¥É¤ò¼èÆÀ
+			// æœ€å¤§ã®ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 			$arySql = array();
 			$arySql[] = "select";
 			$arySql[] = "	case when max(lngimagerelationcode) is null then 1 else MAX(lngimagerelationcode)+1 end as lngimagerelationcode";
@@ -309,14 +309,14 @@
 			$arySql[] = "	m_imagerelation";
 			$strSql = implode("\n", $arySql);
 
-			// ¼èÆÀ½èÍı¼Â¹Ô
+			// å–å¾—å‡¦ç†å®Ÿè¡Œ
 			$lngResultID = $objDB->execute($strSql);
 			
-			// ·ë²Ì¤ò¥ª¥Ö¥¸¥§¥¯¥È¤È¤·¤Æ¼èÆÀ¤¹¤ë
+			// çµæœã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦å–å¾—ã™ã‚‹
 			$objImageRelationCodeResult = $objDB->fetchObject($lngResultID, 0);
 
 			//
-			// m_imagerelation ÅĞÏ¿
+			// m_imagerelation ç™»éŒ²
 			$arySql = array();
 			$arySql[] = "insert into m_imagerelation";
 			$arySql[] = "	(";
@@ -333,15 +333,15 @@
 			$arySql[] = ")";
 			$strSql = implode("\n", $arySql);
 
-			// ÅĞÏ¿½èÍı¼Â¹Ô
+			// ç™»éŒ²å‡¦ç†å®Ÿè¡Œ
 			$lngResultID = $objDB->execute($strSql);
-			// ÊÑ¹¹·ë²Ì¿ô¤ò³ÎÇ§
+			// å¤‰æ›´çµæœæ•°ã‚’ç¢ºèª
 			if( pg_affected_rows($lngResultID) <= 0 )
 			{
 				return false;
 			}
 
-			// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥³¥ß¥Ã¥È½èÍı
+			// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 			$objDB->transactionCommit();
 			
 			return true;

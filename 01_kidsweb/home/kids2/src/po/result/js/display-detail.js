@@ -6,7 +6,7 @@
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
         lngrevisionno = 'lngRevisionNo=' + $(this).attr('revisionno');
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + lngorderno + '&' + lngrevisionno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

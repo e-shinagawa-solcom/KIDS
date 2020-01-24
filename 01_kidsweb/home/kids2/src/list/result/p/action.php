@@ -1,6 +1,6 @@
 <?
 /**
- *    Ä¢É¼½ĞÎÏ ¾¦ÉÊ´ë²è½ñ °õºş´°Î»²èÌÌ
+ *    å¸³ç¥¨å‡ºåŠ› å•†å“ä¼ç”»æ›¸ å°åˆ·å®Œäº†ç”»é¢
  *
  *    @package   KIDS
  *    @license   http://www.wiseknot.co.jp/
@@ -10,15 +10,15 @@
  *    @version   1.00
  *
  */
-// °õºş¥×¥ì¥Ó¥å¡¼²èÌÌ( * ¤Ï»ØÄêÄ¢É¼¤Î¥Õ¥¡¥¤¥ëÌ¾ )
+// å°åˆ·ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢( * ã¯æŒ‡å®šå¸³ç¥¨ã®ãƒ•ã‚¡ã‚¤ãƒ«å )
 // listoutput.php -> strSessionID       -> action.php
 // listoutput.php -> strReportKeyCode   -> action.php
 // listoutput.php -> lngReportCode      -> action.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require SRC_ROOT . "/list/cmn/lib_lo.php";
 require SRC_ROOT . "m/cmn/lib_m.php";
@@ -28,7 +28,7 @@ $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ($_POST) {
     $aryData = $_POST;
@@ -36,22 +36,22 @@ if ($_POST) {
     $aryData = $_GET;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryCheck["strReportKeyCode"] = "null:number(0,9999999)";
 
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
-// »ØÄê¥­¡¼¥³¡¼¥É¤ÎÄ¢É¼¥Ç¡¼¥¿¤ò¼èÆÀ
+// æŒ‡å®šã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å¸³ç¥¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 $strQuery = fncGetCopyFilePathQuery(DEF_REPORT_PRODUCT, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -61,11 +61,11 @@ if ($lngResultNum === 1) {
     $strListOutputPath = $objResult->strreportpathname;
     unset($objResult);
     $objDB->freeResult($lngResultID);
-	//echo "¥³¥Ô¡¼¥Õ¥¡¥¤¥ëÍ­¤ê¡£";
+	//echo "ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«æœ‰ã‚Šã€‚";
 	
 }
 
-// ¥Ç¡¼¥¿¼èÆÀ¥¯¥¨¥ê
+// ãƒ‡ãƒ¼ã‚¿å–å¾—ã‚¯ã‚¨ãƒª
 $strQuery = fncGetListOutputQuery(DEF_REPORT_PRODUCT, $aryData["strReportKeyCode"], $objDB);
 
 $objMaster = new clsMaster();
@@ -74,49 +74,49 @@ $objMaster->setMasterTableData($strQuery, $objDB);
 $aryParts = &$objMaster->aryData[0];
 
 if ($lngResultNum === 1) {
-    // °õºş²ó¿ô¤ò¹¹¿·¤¹¤ë
+    // å°åˆ·å›æ•°ã‚’æ›´æ–°ã™ã‚‹
     fncUpdatePrintCount(DEF_REPORT_PRODUCT, $aryParts, $objDB);
 }
-// Ä¢É¼¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢¥³¥Ô¡¼Ä¢É¼¥Õ¥¡¥¤¥ë¤òÀ¸À®¡¢ÊİÂ¸
+// å¸³ç¥¨ãŒå­˜åœ¨ã—ãªã„å ´åˆã€ã‚³ãƒ”ãƒ¼å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã€ä¿å­˜
 elseif ($lngResultNum === 0) {
     /////////////////////////////////////////////////////////////////
-    // ÆÃ¼ì½èÍı
+    // ç‰¹æ®Šå‡¦ç†
     /////////////////////////////////////////////////////////////////
-    // ¸ÜµÒÃ´Åö¼Ô¥³¡¼¥É¤¬¤Ê¤«¤Ã¤¿¾ì¹ç¡¢¸ÜµÒÃ´Åö¼ÔÌ¾¤òÉ½¼¨¤¹¤ë½èÍı
+    // é¡§å®¢æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰ãŒãªã‹ã£ãŸå ´åˆã€é¡§å®¢æ‹…å½“è€…åã‚’è¡¨ç¤ºã™ã‚‹å‡¦ç†
     if (!$aryParts["lngcustomerusercode"]) {
         $aryParts["strcustomeruserdisplayname"] = &$aryParts["strcustomerusername"];
     }
-    // ÆâÈ¢(ÂŞ)Æş¿ô¤¬Â¸ºß¤¹¤ë¾ì¹ç¡¢ËöÈø¤Ë"pcs"¤ò¤Ä¤±¤ë
+    // å†…ç®±(è¢‹)å…¥æ•°ãŒå­˜åœ¨ã™ã‚‹å ´åˆã€æœ«å°¾ã«"pcs"ã‚’ã¤ã‘ã‚‹
     if ($aryParts["lngboxquantity"] > 0) {
         $aryParts["lngboxquantity"] .= "pcs";
     } else {
         unset($aryParts["lngboxquantity"]);
     }
-    // ¥«¡¼¥È¥óÆş¿ô¤¬Â¸ºß¤¹¤ë¾ì¹ç¡¢ËöÈø¤Ë"pcs"¤ò¤Ä¤±¤ë
+    // ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ãŒå­˜åœ¨ã™ã‚‹å ´åˆã€æœ«å°¾ã«"pcs"ã‚’ã¤ã‘ã‚‹
     if ($aryParts["lngcartonquantity"] > 0) {
         $aryParts["lngcartonquantity"] .= "pcs";
     } else {
         unset($aryParts["lngcartonquantity"]);
     }
-    // ¾¦ÉÊ¹½À®¤¬Â¸ºß¤¹¤ë¾ì¹ç¡¢¡ÖÁ´¡û¼ï¥¢¥Ã¥»¥ó¥Ö¥ê¡×¤ÈÉ½¼¨
+    // å•†å“æ§‹æˆãŒå­˜åœ¨ã™ã‚‹å ´åˆã€ã€Œå…¨â—‹ç¨®ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªã€ã¨è¡¨ç¤º
     if ($aryParts["strproductcomposition"] > 0) {
-        $aryParts["strproductcomposition"] = "Á´" . $aryParts["strproductcomposition"] . "¼ï¥¢¥Ã¥»¥ó¥Ö¥ê";
+        $aryParts["strproductcomposition"] = "å…¨" . $aryParts["strproductcomposition"] . "ç¨®ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒª";
     } else {
         unset($aryParts["strproductcomposition"]);
     }
 
     //-------------------------------------------------------------------------
-    // ¢£ ½ğÌ¾¥¤¥á¡¼¥¸ÀßÄê
+    // â–  ç½²åã‚¤ãƒ¡ãƒ¼ã‚¸è¨­å®š
     //-------------------------------------------------------------------------
     $strFullPath = SRC_ROOT . "img/signature";
     $bytCheck = false;
 
-    $strImagePath = '/img/signature/'; // ¥¤¥á¡¼¥¸¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
-    $strDefaultImage = 'default.gif'; // ¥Ç¥Õ¥©¥ë¥È¥¤¥á¡¼¥¸
-    $strCreateUserImage = ''; // ºîÀ®¼Ô¥¤¥á¡¼¥¸
-    $strAssentUserImage = ''; // ¾µÇ§¼Ô¥¤¥á¡¼¥¸
+    $strImagePath = '/img/signature/'; // ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
+    $strDefaultImage = 'default.gif'; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚¤ãƒ¡ãƒ¼ã‚¸
+    $strCreateUserImage = ''; // ä½œæˆè€…ã‚¤ãƒ¡ãƒ¼ã‚¸
+    $strAssentUserImage = ''; // æ‰¿èªè€…ã‚¤ãƒ¡ãƒ¼ã‚¸
 
-    // ºîÀ®¼Ô¤Î¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¼èÆÀ
+    // ä½œæˆè€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
     $aryQuery = array();
     $aryQuery[] = "SELECT";
     $aryQuery[] = " mp.lnginputusercode as lngusercode";
@@ -130,13 +130,13 @@ elseif ($lngResultNum === 0) {
 
     list($lngCheckResultID, $lngCheckResultNum) = fncQuery($strQuery, $objDB);
 
-    // ¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¼èÆÀ
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
     if ($lngCheckResultNum == 1) {
         $bytCheck = false;
         $objResult = $objDB->fetchObject($lngCheckResultID, 0);
         $lngusercode = $objResult->lngusercode;
 
-        // ½ğÌ¾¥Õ¥¡¥¤¥ë¤ÎÂ¸ºßÍ­Ìµ³ÎÇ§
+        // ç½²åãƒ•ã‚¡ã‚¤ãƒ«ã®å­˜åœ¨æœ‰ç„¡ç¢ºèª
         $bytCheck = fncSignatureCheckFile($strFullPath, $lngusercode);
 
         if ($bytCheck) {
@@ -145,19 +145,19 @@ elseif ($lngResultNum === 0) {
             $strCreateUserImage = $strImagePath . $strDefaultImage;
         }
     }
-    // ¥æ¡¼¥¶¡¼¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒå­˜åœ¨ã—ãªã„å ´åˆ
     else {
         $strCreateUserImage = $strImagePath . $strDefaultImage;
     }
 
-    // ¾µÇ§¼Ô¤Î¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¼èÆÀ
+    // æ‰¿èªè€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
     $lngusercode = $aryParts["lnginchargeusercode"];
 
-    // ¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¼èÆÀ
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
     if (!$lngusercode) {
         $bytCheck = false;
 
-        // ½ğÌ¾¥Õ¥¡¥¤¥ë¤ÎÂ¸ºßÍ­Ìµ³ÎÇ§
+        // ç½²åãƒ•ã‚¡ã‚¤ãƒ«ã®å­˜åœ¨æœ‰ç„¡ç¢ºèª
         $bytCheck = fncSignatureCheckFile($strFullPath, $lngusercode);
 
         if ($bytCheck) {
@@ -166,28 +166,28 @@ elseif ($lngResultNum === 0) {
             $strAssentUserImage = $strImagePath . $strDefaultImage;
         }
     }
-    // ¥æ¡¼¥¶¡¼¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒå­˜åœ¨ã—ãªã„å ´åˆ
     else {
         $strAssentUserImage = $strImagePath . $strDefaultImage;
     }
 
-    // ºîÀ®¼Ô(ÆşÎÏ¼Ô)½ğÌ¾¥¤¥á¡¼¥¸ÀßÄê
+    // ä½œæˆè€…(å…¥åŠ›è€…)ç½²åã‚¤ãƒ¡ãƒ¼ã‚¸è¨­å®š
     $aryParts["sigCreateImage"] = $strCreateUserImage;
 
-    // ¾µÇ§¼Ô½ğÌ¾¥¤¥á¡¼¥¸ÀßÄê
+    // æ‰¿èªè€…ç½²åã‚¤ãƒ¡ãƒ¼ã‚¸è¨­å®š
     $aryParts["sigAssentImage"] = $strAssentUserImage;
 
-    // ¥Õ¥©¡¼¥Ş¥Ã¥È¥³¡¼¥ÉÀßÄê
+    // ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚³ãƒ¼ãƒ‰è¨­å®š
     $aryParts["strProductFormatCode"] = DEF_P_FORMAT_CODE;
     //-------------------------------------------------------------------------
 
-    // HTML½ĞÎÏ
+    // HTMLå‡ºåŠ›
     //echo getArrayTable( $aryDetail[1], "TABLE" );exit;
 
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("list/result/p.tmpl");
 
-    // ÃÖ¤­´¹¤¨
+    // ç½®ãæ›ãˆ
     $objTemplate->replace($aryParts);
 
     $objTemplate->complete();
@@ -195,34 +195,34 @@ elseif ($lngResultNum === 0) {
 
     $objDB->transactionBegin();
 
-    // ¥·¡¼¥±¥ó¥¹È¯¹Ô
+    // ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç™ºè¡Œ
     $lngSequence = fncGetSequence("t_Report.lngReportCode", $objDB);
 
-    // Ä¢É¼¥Æ¡¼¥Ö¥ë¤ËINSERT
+    // å¸³ç¥¨ãƒ†ãƒ¼ãƒ–ãƒ«ã«INSERT
     $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_PRODUCT . ", " . $aryParts["lnggoodsplancode"] . ", '', '$lngSequence' )";
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     $objDB->freeResult($lngResultID);
 
-    // °õºş²ó¿ô¤ò¹¹¿·¤¹¤ë
+    // å°åˆ·å›æ•°ã‚’æ›´æ–°ã™ã‚‹
     fncUpdatePrintCount(DEF_REPORT_PRODUCT, $aryParts, $objDB);
 
     $objDB->freeResult($lngResultID);
-    // Ä¢É¼¥Õ¥¡¥¤¥ë¥ª¡¼¥×¥ó
+    // å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
     if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {
         list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
-        fncOutputError(9059, DEF_FATAL, "Ä¢É¼¥Õ¥¡¥¤¥ë¤Î¥ª¡¼¥×¥ó¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", true, "", $objDB);
+        fncOutputError(9059, DEF_FATAL, "å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚ªãƒ¼ãƒ—ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, "", $objDB);
     }
 
-    // Ä¢É¼¥Õ¥¡¥¤¥ë¤Ø¤Î½ñ¤­¹ş¤ß
+    // å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®æ›¸ãè¾¼ã¿
     if (!fwrite($fp, $strHtml)) {
         list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
-        fncOutputError(9059, DEF_FATAL, "Ä¢É¼¥Õ¥¡¥¤¥ë¤Î½ñ¤­¹ş¤ß¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", true, "", $objDB);
+        fncOutputError(9059, DEF_FATAL, "å¸³ç¥¨ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, "", $objDB);
     }
 
     $objDB->transactionCommit();
-    //echo "¥³¥Ô¡¼¥Õ¥¡¥¤¥ëºîÀ®";
+    //echo "ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ä½œæˆ";
 }
 
 echo "<script language=javascript>parent.window.close();</script>";

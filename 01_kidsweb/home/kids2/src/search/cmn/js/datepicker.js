@@ -1,7 +1,7 @@
-// datepicker¤ÎÍ×ÁÇ»ØÄê
+// datepickerã®è¦ç´ æŒ‡å®š
 (function () {
 
-    // datepickerÂĞ¾İÍ×ÁÇ
+    // datepickerå¯¾è±¡è¦ç´ 
     var dateElements = [
         $('input[name="ActionDate"]')
         , $('input[name="DtmAppropriationDate"]')
@@ -9,11 +9,11 @@
         , $('input[name="Updated"]')
     ];
 
-    // datepicker¤ÎÀßÄê
+    // datepickerã®è¨­å®š
     $.each(dateElements, function () {
         this.datepicker({
             buttonImage: "/img/type01/date/open_off_on_bt.gif",
-            buttonImageOnly: true,           // ²èÁü¤È¤·¤ÆÉ½¼¨
+            buttonImageOnly: true,           // ç”»åƒã¨ã—ã¦è¡¨ç¤º
             showOn: "both",
             showButtonPanel: true,
             dateFormat: "yy/mm/dd",

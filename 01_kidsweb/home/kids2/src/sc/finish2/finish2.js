@@ -1,39 +1,39 @@
-// ¥À¥¦¥ó¥í¡¼¥É¥Ü¥¿¥ó¤Î²èÁü¥Ñ¥¹
+// ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒœã‚¿ãƒ³ã®ç”»åƒãƒ‘ã‚¹
 var imagepath_download_off = "/img/type01/cmn/querybt/listout_off_ja_bt.gif";
 var imagepath_download_on  = "/img/type01/cmn/querybt/listout_off_on_ja_bt.gif";
 
-// HTML¥¨¥ì¥á¥ó¥È¹½ÃÛ¸å
+// HTMLã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆæ§‹ç¯‰å¾Œ
 function OnloadBody(){
-    // ¥À¥¦¥ó¥í¡¼¥É¥Ü¥¿¥ó¤Î½é´üÀßÄê
+    // ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒœã‚¿ãƒ³ã®åˆæœŸè¨­å®š
     var images = document.getElementsByClassName('btn-download');
     for (var i = 0; i < images.length; i++) 
     {
         var image = images[i];
         image.src = imagepath_download_off;
-        image.alt ="¥À¥¦¥ó¥í¡¼¥É"
+        image.alt ="ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰"
     }
 }
 
-// ¥À¥¦¥ó¥í¡¼¥É¥Ü¥¿¥ó¤Ë¥Ş¥¦¥¹¥«¡¼¥½¥ë¤¬¾è¤Ã¤¿¤È¤­
+// ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒœã‚¿ãƒ³ã«ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãŒä¹—ã£ãŸã¨ã
 function OnMouseOverDownload(obj){
-    // ¥Ş¥¦¥¹¥ª¡¼¥Ğ¡¼ÍÑ²èÁü¤Ëº¹¤·ÂØ¤¨¤ë
+    // ãƒã‚¦ã‚¹ã‚ªãƒ¼ãƒãƒ¼ç”¨ç”»åƒã«å·®ã—æ›¿ãˆã‚‹
     obj.src = imagepath_download_on
 }
-// ¥À¥¦¥ó¥í¡¼¥É¥Ü¥¿¥ó¤«¤é¥Ş¥¦¥¹¥«¡¼¥½¥ë¤¬³°¤ì¤¿¤È¤­
+// ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒœã‚¿ãƒ³ã‹ã‚‰ãƒã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ãŒå¤–ã‚ŒãŸã¨ã
 function OnMouseOutDownload(obj){
-    // ½é´ü²èÁü¤ËÌá¤¹
+    // åˆæœŸç”»åƒã«æˆ»ã™
     obj.src = imagepath_download_off
 }
 
-// ¥À¥¦¥ó¥í¡¼¥É¥Ü¥¿¥ó¤¬²¡¤µ¤ì¤¿
+// ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸ
 function OnClickDownload(obj, lngSlipNo, strSlipCode, lngRevisionNo){
     // --------------------------------------------------------------------------
-    // ¥À¥¦¥ó¥í¡¼¥É¤Î¤¿¤á¤ÎÈóÆ±´üPOST
+    // ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã®ãŸã‚ã®éåŒæœŸPOST
     // 
-    // È÷¹Í¡§jQuery¤Î$.ajax¤ÎPOST¤Ç¤Ï¥Õ¥¡¥¤¥ë¥À¥¦¥ó¥í¡¼¥É¤¬¤¦¤Ş¤¯¤¤¤«¤Ê¤¤¤é¤·¤¤¤Î¤Ç
-    //      ÁÇ¤Îjavascript¤ò»È¤¦
+    // å‚™è€ƒï¼šjQueryã®$.ajaxã®POSTã§ã¯ãƒ•ã‚¡ã‚¤ãƒ«ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãŒã†ã¾ãã„ã‹ãªã„ã‚‰ã—ã„ã®ã§
+    //      ç´ ã®javascriptã‚’ä½¿ã†
     // --------------------------------------------------------------------------
-    // POST¥Ñ¥é¥á¡¼¥¿¤ÎÀßÄê¡£¥»¥Ã¥·¥ç¥óID¤Ï±£¤·¥Õ¥£¡¼¥ë¥É¤«¤é¼èÆÀ
+    // POSTãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®šã€‚ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã¯éš ã—ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã‹ã‚‰å–å¾—
     var postParams = "strMode=download"
                     + "&lngSlipNo=" + lngSlipNo
                     + "&strSlipCode=" + strSlipCode
@@ -41,45 +41,45 @@ function OnClickDownload(obj, lngSlipNo, strSlipCode, lngRevisionNo){
                     + "&strSessionID=" + document.getElementById("strSessionID").value
                     ;
 
-    // ¥À¥¦¥ó¥í¡¼¥É¥Õ¥¡¥¤¥ëÌ¾
+    // ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«å
     var fileName = "KWG" + strSlipCode + ".xlsx";
 
-¡¡¡¡// ÈóÆ±´ü¥ê¥¯¥¨¥¹¥È¤ÎÀßÄê
+ã€€ã€€// éåŒæœŸãƒªã‚¯ã‚¨ã‚¹ãƒˆã®è¨­å®š
     var url = "preview.php"
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url, true);
     xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
-    xhr.responseType = 'blob'; //blob·¿¤Î¥ì¥¹¥İ¥ó¥¹¤ò¼õ¤±ÉÕ¤±¤ë
+    xhr.responseType = 'blob'; //blobå‹ã®ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’å—ã‘ä»˜ã‘ã‚‹
 
-    // ¥³¡¼¥ë¥Ğ¥Ã¥¯ÄêµÁ
+    // ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯å®šç¾©
     xhr.onload = function (e) {
-        // À®¸ù»ş¤Î½èÍı
+        // æˆåŠŸæ™‚ã®å‡¦ç†
         if (this.status == 200) {
-            var blob = this.response;//¥ì¥¹¥İ¥ó¥¹
-            //IE¤È¤½¤ÎÂ¾¤Ç½èÍı¤ÎÀÚ¤êÊ¬¤±
+            var blob = this.response;//ãƒ¬ã‚¹ãƒãƒ³ã‚¹
+            //IEã¨ãã®ä»–ã§å‡¦ç†ã®åˆ‡ã‚Šåˆ†ã‘
             if (navigator.appVersion.toString().indexOf('.NET') > 0) {
                 //IE 10+
                 window.navigator.msSaveBlob(blob, fileName);
             } else {
-                //a¥¿¥°¤ÎÀ¸À®
+                //aã‚¿ã‚°ã®ç”Ÿæˆ
                 var a = document.createElement("a");
-                //¥ì¥¹¥İ¥ó¥¹¤«¤éBlob¥ª¥Ö¥¸¥§¥¯¥È¡õURL¤ÎÀ¸À®
+                //ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‹ã‚‰Blobã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆï¼†URLã®ç”Ÿæˆ
                 var blobUrl = window.URL.createObjectURL(new Blob([blob], {
                     type: blob.type
                 }));
-                //¾å¤ÇÀ¸À®¤·¤¿a¥¿¥°¤ò¥¢¥Ú¥ó¥É
+                //ä¸Šã§ç”Ÿæˆã—ãŸaã‚¿ã‚°ã‚’ã‚¢ãƒšãƒ³ãƒ‰
                 document.body.appendChild(a);
                 a.style = "display: none";
-                //Blob¥ª¥Ö¥¸¥§¥¯¥ÈURL¤ò¥»¥Ã¥È
+                //Blobã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆURLã‚’ã‚»ãƒƒãƒˆ
                 a.href = blobUrl;
-                //¥À¥¦¥ó¥í¡¼¥É¤µ¤»¤ë¥Õ¥¡¥¤¥ëÌ¾¤ÎÀ¸À®
+                //ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ã•ã›ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«åã®ç”Ÿæˆ
                 a.download = fileName;
-                //¥¯¥ê¥Ã¥¯¥¤¥Ù¥ó¥ÈÈ¯²Ğ
+                //ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆç™ºç«
                 a.click();
             }
         }
     };
 
-    // ÈóÆ±´ü¥ê¥¯¥¨¥¹¥È¤ÎÁ÷¿®
+    // éåŒæœŸãƒªã‚¯ã‚¨ã‚¹ãƒˆã®é€ä¿¡
     xhr.send(postParams);
 }

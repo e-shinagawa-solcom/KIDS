@@ -7,18 +7,18 @@
 
 
 
-	// ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	$objDB       = new clsDB();
 	$objAuth     = new clsAuth();
 	$objTemplate = new clsTemplate();
 
 
-	// DB¥³¥Í¥¯¥È
+	// DBã‚³ãƒã‚¯ãƒˆ
 	$objDB->open( "", "", "", "" );
 
 
 
-	// ¥á¥ó¥Ğ¤Î½é´ü²½
+	// ãƒ¡ãƒ³ãƒã®åˆæœŸåŒ–
 	$aryQuery  = array();
 	$strQuery  = '';
 	$aryResult = array();
@@ -44,14 +44,14 @@
 
 
 
-	// ¥¯¥¨¥ê¼Â¹Ô
+	// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 	list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	for( $i = 0; $i < $lngResultNum; $i++ )
 	{
 		if( $lngResultNum )
 		{
-			// ¥Ç¡¼¥¿¤ò¼èÆÀ
+			// ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 			$aryResult[$i] = $objDB->fetchArray( $lngResultID, $i );
 		}
 		else
@@ -60,7 +60,7 @@
 		}
 	}
 
-	// ·ë²ÌID¤ò²òÊü
+	// çµæœIDã‚’è§£æ”¾
 	$objDB->freeResult( $lngResultID );
 
 
@@ -76,7 +76,7 @@
 
 
 
-	// DB¥¯¥í¡¼¥º
+	// DBã‚¯ãƒ­ãƒ¼ã‚º
 	$objDB->close();
 
 
@@ -86,7 +86,7 @@
 
 
 
-	// ½ĞÎÏ
+	// å‡ºåŠ›
 	$objTemplate->getTemplate( "/special/parts.tmpl" );
 
 	$objTemplate->replace( $aryData );

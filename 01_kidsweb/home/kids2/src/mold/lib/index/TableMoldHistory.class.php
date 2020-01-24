@@ -3,23 +3,23 @@
 require_once(SRC_ROOT.'/mold/lib/index/TableMetaData.class.php');
 
 /**
- * ¶â·¿ÍúÎò¤Î¥Æ¡¼¥Ö¥ëÌ¾¤ä¥«¥é¥àÌ¾¤òÄó¶¡¤¹¤ë
+ * é‡‘å‹å±¥æ­´ã®ãƒ†ãƒ¼ãƒ–ãƒ«åã‚„ã‚«ãƒ©ãƒ åã‚’æä¾›ã™ã‚‹
  */
 class TableMoldHistory extends TableMetaData
 {
 	/**
-	 * ¥Æ¡¼¥Ö¥ëÌ¾: ¶â·¿ÍúÎò
+	 * ãƒ†ãƒ¼ãƒ–ãƒ«å: é‡‘å‹å±¥æ­´
 	 * @var string
 	 */
 	const TABLE_NAME = "T_MoldHistory";
 
 	/**
 	 * <pre>
-	 * ¶â·¿NO
+	 * é‡‘å‹NO
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 *
-	 * ´ØÏ¢: ¶â·¿¥Ş¥¹¥¿.¶â·¿NO
+	 * é–¢é€£: é‡‘å‹ãƒã‚¹ã‚¿.é‡‘å‹NO
 	 * </pre>
 	 *
 	 * @var string
@@ -28,9 +28,9 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¶â·¿ÍúÎòNO
+	 * é‡‘å‹å±¥æ­´NO
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 * </pre>
 	 *
 	 * @var string
@@ -39,11 +39,11 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¥¹¥Æ¡¼¥¿¥¹
+	 * ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	 *
-	 * ·¿(postgresql): char
+	 * å‹(postgresql): char
 	 *
-	 * ´ØÏ¢: ¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿.¶ÈÌ³¥³¡¼¥É
+	 * é–¢é€£: æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿.æ¥­å‹™ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -52,9 +52,9 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¼Â»ÜÆü
+	 * å®Ÿæ–½æ—¥
 	 *
-	 * ·¿(postgresql): date
+	 * å‹(postgresql): date
 	 * </pre>
 	 *
 	 * @var string
@@ -63,11 +63,11 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * Êİ´É¸µ¹©¾ì
+	 * ä¿ç®¡å…ƒå·¥å ´
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -76,11 +76,11 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * °ÜÆ°Àè¹©¾ì
+	 * ç§»å‹•å…ˆå·¥å ´
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -89,9 +89,9 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * È÷¹Í1
+	 * å‚™è€ƒ1
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string
@@ -100,9 +100,9 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * È÷¹Í2
+	 * å‚™è€ƒ2
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string
@@ -111,9 +111,9 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * È÷¹Í3
+	 * å‚™è€ƒ3
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string
@@ -122,9 +122,9 @@ class TableMoldHistory extends TableMetaData
 
 	/**
 	 * <pre>
-	 * È÷¹Í4
+	 * å‚™è€ƒ4
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string

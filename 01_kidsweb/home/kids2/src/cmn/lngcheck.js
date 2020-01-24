@@ -1,51 +1,51 @@
 // ---------------------------------------------------------------------------
-// ¥Õ¥¡¥¤¥ë³µÍ×¡§
-//	Web¥ª¥Ö¥¸¥§¥¯¥È¥Á¥§¥Ã¥¯ÍÑ´Ø¿ô
+// ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ï¼š
+//	Webã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒã‚§ãƒƒã‚¯ç”¨é–¢æ•°
 //
-// È÷¹Í¡§
-//       JavaScript -> VBScript¸Æ¤Ó½Ğ¤·¤ò¹Ô¤¤¡¢¥¨¥é¡¼»ş fncErrorMessage() ¤ò¥­¥Ã¥¯¤¹¤ë
+// å‚™è€ƒï¼š
+//       JavaScript -> VBScriptå‘¼ã³å‡ºã—ã‚’è¡Œã„ã€ã‚¨ãƒ©ãƒ¼æ™‚ fncErrorMessage() ã‚’ã‚­ãƒƒã‚¯ã™ã‚‹
 // 
-//		¿ôÃÍ¥Á¥§¥Ã¥¯	¡§fncCheckNumber()
-//		ÆüÉÕ¥Á¥§¥Ã¥¯	¡§fncCheckDate()
-// 		Ê¸»ú¥Á¥§¥Ã¥¯	¡§fncCheckString()
+//		æ•°å€¤ãƒã‚§ãƒƒã‚¯	ï¼šfncCheckNumber()
+//		æ—¥ä»˜ãƒã‚§ãƒƒã‚¯	ï¼šfncCheckDate()
+// 		æ–‡å­—ãƒã‚§ãƒƒã‚¯	ï¼šfncCheckString()
 // 
-// 		ÄÌ²ßµ­¹æÊÑ´¹	¡§fncCheckNumberCurrencySign()
+// 		é€šè²¨è¨˜å·å¤‰æ›	ï¼šfncCheckNumberCurrencySign()
 // 
-// 		¥¨¥é¡¼¥­¥Ã¥¯	¡§fncErrorMessage()
-// 
-// 
+// 		ã‚¨ãƒ©ãƒ¼ã‚­ãƒƒã‚¯	ï¼šfncErrorMessage()
 // 
 // 
-// ºîÀ®Æü¡§2003/10/09
-// ºîÀ®¼Ô¡§Kazushi Saito
-// ½¤ÀµÍúÎò¡§
+// 
+// 
+// ä½œæˆæ—¥ï¼š2003/10/09
+// ä½œæˆè€…ï¼šKazushi Saito
+// ä¿®æ­£å±¥æ­´ï¼š
 //		2004/03/29 K.S
-//			fncCheckNumberValue() ¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ½èÍı¤ÎÄÉ²Ã
+//			fncCheckNumberValue() å°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦å‡¦ç†ã®è¿½åŠ 
 //
 // ---------------------------------------------------------------------------
 
-	// ¥¨¥é¡¼¤¬µ¯¤­¤¿¥ª¥Ö¥¸¥§¥¯¥È¤ÎÌ¾Á°
+	// ã‚¨ãƒ©ãƒ¼ãŒèµ·ããŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰
 	var m_strErrorObjectName = "";
 
 	var m_lngErrorFlag = 0;
 
 	// -------------------------------------------------------
-	// ¥¨¥é¡¼½ĞÎÏ
-	// °ú¿ô¡§
-	//		lngCheckID	-	¥Á¥§¥Ã¥¯ID
-	//		aryArgs		-	ÇÛÎó¼õÅÏÃÍ
+	// ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
+	// å¼•æ•°ï¼š
+	//		lngCheckID	-	ãƒã‚§ãƒƒã‚¯ID
+	//		aryArgs		-	é…åˆ—å—æ¸¡å€¤
 	// -------------------------------------------------------
 	function fncErrorMessage(lngCheckID, strErrorObjectName, aryArgs)
 	{
 
 
-		// ¼«¿È¤ò»²¾È¤¹¤ë¾ì¹ç
+		// è‡ªèº«ã‚’å‚ç…§ã™ã‚‹å ´åˆ
 		if( typeof(ErrorMessageFrame) != 'undefined' )
 		{
 			objWindow1 = window.ErrorMessageFrame;
 			objWindow2 = window.errorWin;
 		}
-		// Iframe¤«¤é»²¾È¤¹¤ë¾ì¹ç
+		// Iframeã‹ã‚‰å‚ç…§ã™ã‚‹å ´åˆ
 		else
 		{
 			objWindow1 = parent.ErrorMessageFrame;
@@ -55,15 +55,15 @@
 
 		switch (lngCheckID)
 		{
-			// Àµ¾ï½ªÎ»
+			// æ­£å¸¸çµ‚äº†
 			case 0:
-				// °ìÅÙ¤Ç¤â¥¨¥é¡¼¤¬µ¯¤­¤¿¥ª¥Ö¥¸¥§¥¯¥È¤ÎÌ¾Á°¤ÈÆ±°ì¤À¤Ã¤¿¤é
+				// ä¸€åº¦ã§ã‚‚ã‚¨ãƒ©ãƒ¼ãŒèµ·ããŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰ã¨åŒä¸€ã ã£ãŸã‚‰
 				if( m_strErrorObjectName == strErrorObjectName )
 				{
-					// ½é´ü²½
+					// åˆæœŸåŒ–
 					m_strErrorObjectName = "";
 
-					// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸ÈóÉ½¼¨
+					// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸éè¡¨ç¤º
 					objWindow1.style.visibility = 'hidden';
 					objWindow2.ErrMeg.innerText = '';
 
@@ -72,43 +72,43 @@
 				}
 				break;
 				
-			// ¿ôÃÍ¥¨¥é¡¼
+			// æ•°å€¤ã‚¨ãƒ©ãƒ¼
 			case 1:
-				// ¥¨¥é¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾¤òÀßÄê
+				// ã‚¨ãƒ©ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã‚’è¨­å®š
 				m_strErrorObjectName = strErrorObjectName;
 
-				// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸É½¼¨
+				// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
 				objWindow1.style.visibility = 'visible';
-				objWindow2.ErrMeg.innerText = 'Àµ¤·¤¤¿ôÃÍ¤Ç¤ÎÆşÎÏ¤¬É¬Í×¤Ç¤¹¡£';
+				objWindow2.ErrMeg.innerText = 'æ­£ã—ã„æ•°å€¤ã§ã®å…¥åŠ›ãŒå¿…è¦ã§ã™ã€‚';
 
 				m_lngErrorFlag = 1;
-				//window.status = ("Àµ¤·¤¤¿ôÃÍ¤Ç¤ÎÆşÎÏ¤¬É¬Í×¤Ç¤¹¡£");
+				//window.status = ("æ­£ã—ã„æ•°å€¤ã§ã®å…¥åŠ›ãŒå¿…è¦ã§ã™ã€‚");
 				break;
 			
-			// ÆüÉÕ¥¨¥é¡¼
+			// æ—¥ä»˜ã‚¨ãƒ©ãƒ¼
 			case 2:
-				// ¥¨¥é¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾¤òÀßÄê
+				// ã‚¨ãƒ©ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã‚’è¨­å®š
 				m_strErrorObjectName = strErrorObjectName;
 
-				// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸É½¼¨
+				// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
 				objWindow1.style.visibility = 'visible';
-				objWindow2.ErrMeg.innerText = 'Àµ¤·¤¤ÆüÉÕ¤Ç¤ÎÆşÎÏ¤¬É¬Í×¤Ç¤¹¡£';
+				objWindow2.ErrMeg.innerText = 'æ­£ã—ã„æ—¥ä»˜ã§ã®å…¥åŠ›ãŒå¿…è¦ã§ã™ã€‚';
 
 				m_lngErrorFlag = 1;
-				//window.status = ("Àµ¤·¤¤ÆüÉÕ¤Ç¤ÎÆşÎÏ¤¬É¬Í×¤Ç¤¹¡£");
+				//window.status = ("æ­£ã—ã„æ—¥ä»˜ã§ã®å…¥åŠ›ãŒå¿…è¦ã§ã™ã€‚");
 				break;
 			
-			// Ê¸»ú¿ô¥¨¥é¡¼
+			// æ–‡å­—æ•°ã‚¨ãƒ©ãƒ¼
 			case 3:
-				// ¥¨¥é¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾¤òÀßÄê
+				// ã‚¨ãƒ©ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã‚’è¨­å®š
 				m_strErrorObjectName = strErrorObjectName;
 
-				// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸É½¼¨
+				// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤º
 				objWindow1.style.visibility = 'visible';
-				objWindow2.ErrMeg.innerText = 'Ê¸»ú¿ô¥ª¡¼¥Ğ¡¼ : ¡Î' + (aryArgs[1]-aryArgs[0]) + '¥Ğ¥¤¥È¡Ïºï½ü¤·¤Æ²¼¤µ¤¤¡£';
+				objWindow2.ErrMeg.innerText = 'æ–‡å­—æ•°ã‚ªãƒ¼ãƒãƒ¼ : ï¼»' + (aryArgs[1]-aryArgs[0]) + 'ãƒã‚¤ãƒˆï¼½å‰Šé™¤ã—ã¦ä¸‹ã•ã„ã€‚';
 
 				m_lngErrorFlag = 1;
-				//window.status = ("Ê¸»ú¿ôÀ©¸Â¡Î" + aryArgs[0] + "¥Ğ¥¤¥È¡Ï¤ËÂĞ¤·¤Æ¡Î" + aryArgs[1] + "¥Ğ¥¤¥È¡Ï¤ÎÊ¸»ú¤¬¤¢¤êÂ¿¤¹¤®¤Ş¤¹¡£\n¡Î" + (aryArgs[1]-aryArgs[0]) + "¥Ğ¥¤¥È¡Ïºï½ü¤·¤Æ²¼¤µ¤¤¡£");
+				//window.status = ("æ–‡å­—æ•°åˆ¶é™ï¼»" + aryArgs[0] + "ãƒã‚¤ãƒˆï¼½ã«å¯¾ã—ã¦ï¼»" + aryArgs[1] + "ãƒã‚¤ãƒˆï¼½ã®æ–‡å­—ãŒã‚ã‚Šå¤šã™ãã¾ã™ã€‚\nï¼»" + (aryArgs[1]-aryArgs[0]) + "ãƒã‚¤ãƒˆï¼½å‰Šé™¤ã—ã¦ä¸‹ã•ã„ã€‚");
 				break;
 			default:
 		}
@@ -117,24 +117,24 @@
 	
 	
 	// -------------------------------------------------------
-	// ÄÌ²ßµ­¹æ¤ÎÊ¸»úÎóÃÍ
+	// é€šè²¨è¨˜å·ã®æ–‡å­—åˆ—å€¤
 	var m_strInitCurrencySign = "\\";
 	var m_strSetingCurrencySign = m_strInitCurrencySign;
 	var m_aryCheckSetValue = new Array();
 	
 	
 	// -------------------------------------------------------
-	// ÄÌ²ßµ­¹æ¤ÎÀßÄê
+	// é€šè²¨è¨˜å·ã®è¨­å®š
 	// -------------------------------------------------------
 	function fncCheckNumberCurrencySign(strCurrency)
 	{
-		// ¥Ç¥Õ¥©¥ë¥ÈÄÌ²ßµ­¹æ¤òÀßÄê
+		// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆé€šè²¨è¨˜å·ã‚’è¨­å®š
 		m_strSetingCurrencySign = strCurrency;
 	}
 	
 	
 	// -------------------------------------------------------
-	// m_aryCheckSetValue ¥¨¥ê¥¢¤ØÃÍ¤òÊİ»ı¤¹¤ë
+	// m_aryCheckSetValue ã‚¨ãƒªã‚¢ã¸å€¤ã‚’ä¿æŒã™ã‚‹
 	// -------------------------------------------------------
 	function fncCheckSetValue(lngSetID, objValue)
 	{
@@ -144,7 +144,7 @@
 	}
 	
 	// -------------------------------------------------------
-	// m_aryCheckSetValue ¥¨¥ê¥¢¤ÎÃÍ¤ò¼èÆÀ¤¹¤ë
+	// m_aryCheckSetValue ã‚¨ãƒªã‚¢ã®å€¤ã‚’å–å¾—ã™ã‚‹
 	// -------------------------------------------------------
 	function fncCheckGetValue(lngSetID)
 	{
@@ -159,29 +159,29 @@
 
 
 	// -------------------------------------------------------
-	// ³µÍ×¡§¿ôÃÍ¤Î¥Á¥§¥Ã¥¯
-	// °ú¿ô¡§
-	//		objObject			-	²èÌÌÆâ¤Î¥ª¥Ö¥¸¥§¥¯¥È
-	//		lngAfterDecimal		-	¾®¿ôÅÀ°Ê²¼²¿·å¤Ç»ØÄê¤¹¤ë¤«
-	//		blnCurrencySign		-	ÄÌ²ßµ­¹æ¤òÉÕ²Ã¤¹¤ë¤«
-	// È÷¹Í¡§
+	// æ¦‚è¦ï¼šæ•°å€¤ã®ãƒã‚§ãƒƒã‚¯
+	// å¼•æ•°ï¼š
+	//		objObject			-	ç”»é¢å†…ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		lngAfterDecimal		-	å°æ•°ç‚¹ä»¥ä¸‹ä½•æ¡ã§æŒ‡å®šã™ã‚‹ã‹
+	//		blnCurrencySign		-	é€šè²¨è¨˜å·ã‚’ä»˜åŠ ã™ã‚‹ã‹
+	// å‚™è€ƒï¼š
 	// -------------------------------------------------------
 	function fncCheckNumber(objObject, lngAfterDecimal, blnCurrencySign)
 	{
-		// ÄÌ²ßµ­¹æ¤Î»ØÄê
+		// é€šè²¨è¨˜å·ã®æŒ‡å®š
 		strCurrencySign = m_strSetingCurrencySign;
-		// ÄÌ²ßµ­¹æ¤ò¾Ã¤¹¾ì¹ç
+		// é€šè²¨è¨˜å·ã‚’æ¶ˆã™å ´åˆ
 		if( blnCurrencySign == false )
 		{
 			strCurrencySign = "";
 		}
 		
-		/* window.execScript¤ÏEdgeÈóÂĞ±ş¤Î¤¿¤á¡¢fncVBSCheckNumber¤òJavascript¤Ë¼ÂÁõ¤·¤Ê¤ª¤·¤Æeval¼Â¹Ô
-		// ÂĞ¾İ¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾¤Î¼èÆÀ
+		/* window.execScriptã¯Edgeéå¯¾å¿œã®ãŸã‚ã€fncVBSCheckNumberã‚’Javascriptã«å®Ÿè£…ã—ãªãŠã—ã¦evalå®Ÿè¡Œ
+		// å¯¾è±¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã®å–å¾—
 		strObjectName = 'window.'+ objObject.form.name +'.'+ objObject.name;
 		strParam = 'Call fncVBSCheckNumber('+ strObjectName +', '+ lngAfterDecimal + ', '+ '"' + strCurrencySign + '"' +')';
 
-		// VBScript¤Î¼Â¹Ô
+		// VBScriptã®å®Ÿè¡Œ
 		window.execScript(strParam, "VBScript");
 		*/
 		
@@ -190,81 +190,81 @@
 	}
 
 	// -------------------------------------------------------
-	// ³µÍ×¡§¿ôÃÍ¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
-	// °ú¿ô¡§
-	//		strValue			-	¼Â¿ôÃÍ
-	//		lngAfterDecimal		-	¾®¿ôÅÀ°Ê²¼²¿·å¤Ç»ØÄê¤¹¤ë¤«
-	//		blnCurrencySign		-	ÄÌ²ßµ­¹æ¤òÉÕ²Ã¤¹¤ë¤«
-	//		lngDecimalCutPoint	-	¾®¿ôÅÀ°Ê²¼¤ò²¿·å¤ÇÀÚ¤ê¼Î¤Æ¤ë¤«¡Ê°ú¿ô¤ò»ØÄê¤·¤Ê¤¤¾ì¹ç or null ¤Î¾ì¹ç¤ÏÀÚ¼Î¤Æ¤Ê¤·¡Ë
-	//		lngCalcCode			-	·×»»ÊıË¡¼ïÊÌ
+	// æ¦‚è¦ï¼šæ•°å€¤ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+	// å¼•æ•°ï¼š
+	//		strValue			-	å®Ÿæ•°å€¤
+	//		lngAfterDecimal		-	å°æ•°ç‚¹ä»¥ä¸‹ä½•æ¡ã§æŒ‡å®šã™ã‚‹ã‹
+	//		blnCurrencySign		-	é€šè²¨è¨˜å·ã‚’ä»˜åŠ ã™ã‚‹ã‹
+	//		lngDecimalCutPoint	-	å°æ•°ç‚¹ä»¥ä¸‹ã‚’ä½•æ¡ã§åˆ‡ã‚Šæ¨ã¦ã‚‹ã‹ï¼ˆå¼•æ•°ã‚’æŒ‡å®šã—ãªã„å ´åˆ or null ã®å ´åˆã¯åˆ‡æ¨ã¦ãªã—ï¼‰
+	//		lngCalcCode			-	è¨ˆç®—æ–¹æ³•ç¨®åˆ¥
 	//
-	// È÷¹Í¡§¤³¤Î´Ø¿ô¤ÏScriptÆâ¤Ç»ÈÍÑ¤¹¤ë¤³¤È¡£
+	// å‚™è€ƒï¼šã“ã®é–¢æ•°ã¯Scriptå†…ã§ä½¿ç”¨ã™ã‚‹ã“ã¨ã€‚
 	// -------------------------------------------------------
 	function fncCheckNumberValue(strValue, lngAfterDecimal, blnCurrencySign, lngDecimalCutPoint, lngCalcCode)
 	{
 		
-		// ÄÌ²ßµ­¹æ¤Î»ØÄê
+		// é€šè²¨è¨˜å·ã®æŒ‡å®š
 		strCurrencySign = m_strSetingCurrencySign;
-		// ÄÌ²ßµ­¹æ¤ò¾Ã¤¹¾ì¹ç
+		// é€šè²¨è¨˜å·ã‚’æ¶ˆã™å ´åˆ
 		if( blnCurrencySign == false )
 		{
 			strCurrencySign = "";
 		}
 		//alert(lngDecimalCutPoint);
-		// »ØÄêÌµ¤·¤Î¾ì¹ç¤Ë¡¢null ¤ÇÅÏ¤¹
+		// æŒ‡å®šç„¡ã—ã®å ´åˆã«ã€null ã§æ¸¡ã™
 		if( typeof(lngDecimalCutPoint) == "undefined" )
 		{
 			lngDecimalCutPoint = null;
 		}
 
-		/* window.execScript¤ÏEdgeÈóÂĞ±ş¤Î¤¿¤á¼Â¹Ô´Ø¿ô¤òjavascript¤ËÃÖ´¹¤·¤ÆÄ¾ÀÜ¼Â¹Ô
-		// ÂĞ¾İ¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾¤Î¼èÆÀ
+		/* window.execScriptã¯Edgeéå¯¾å¿œã®ãŸã‚å®Ÿè¡Œé–¢æ•°ã‚’javascriptã«ç½®æ›ã—ã¦ç›´æ¥å®Ÿè¡Œ
+		// å¯¾è±¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã®å–å¾—
 		//strParam = 'Call fncVBSCheckNumberValue("'+ strValue +'", '+ lngAfterDecimal + ', '+ '"' + strCurrencySign + '", ' + lngDecimalCutPoint + ', ' + lngCalcCode + ')';
 		
-		// VBScript¤Î¼Â¹Ô
+		// VBScriptã®å®Ÿè¡Œ
 		//window.execScript(strParam, "VBScript");
 		*/
 
 		var ret = fncVBSCheckNumberValue(strValue,lngAfterDecimal,strCurrencySign,lngDecimalCutPoint,lngCalcCode);
 
-		// ¼èÆÀ¤·¤¿¥Õ¥©¡¼¥Ş¥Ã¥ÈÃÍ¤òÊÖµÑ
+		// å–å¾—ã—ãŸãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå€¤ã‚’è¿”å´
 		return fncCheckGetValue(1);
 
 	}
 
 	// -------------------------------------------------------
-	// ³µÍ×¡§ÆüÉÕ¤Î¥Á¥§¥Ã¥¯
-	// °ú¿ô¡§
-	//		objObject		Text¥ª¥Ö¥¸¥§¥¯¥È
-	//		lngFormatNo		0 or »ØÄêÌµ¤·:YYYY/MM/DD
+	// æ¦‚è¦ï¼šæ—¥ä»˜ã®ãƒã‚§ãƒƒã‚¯
+	// å¼•æ•°ï¼š
+	//		objObject		Textã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		lngFormatNo		0 or æŒ‡å®šç„¡ã—:YYYY/MM/DD
 	//		                1:YYYY/MM
-	// Ìá¤êÃÍ¡§
+	// æˆ»ã‚Šå€¤ï¼š
 	// -------------------------------------------------------
 	function fncCheckDate(objObject, lngFormatNo)
 	{
-		lngFormat = 0;	// 0:YYYY/MM/DD ¤Ç¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
+		lngFormat = 0;	// 0:YYYY/MM/DD ã§ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 			
-		// ÂĞ¾İ¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾¤Î¼èÆÀ
+		// å¯¾è±¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã®å–å¾—
 		strObjectName = 'window.'+ objObject.form.name +'.'+ objObject.name;
 		
 		var strDate = objObject.value;
 		
-		// ¶õÊ¸»ú¤ÏÌµ»ë
+		// ç©ºæ–‡å­—ã¯ç„¡è¦–
 	    if(strDate == ""){
 	        fncErrorMessage(0, strObjectName);
 	        return true;
 	    }
 		
-		// ÈÖ¹æ¤¬»ØÄê¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+		// ç•ªå·ãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚‹å ´åˆ
 		if( isNaN(lngFormatNo) == false )
 		{
-	        // Ç¯/·î¤Î·Á¼°¤Î¤ßµöÍÆ¤¹¤ë
+	        // å¹´/æœˆã®å½¢å¼ã®ã¿è¨±å®¹ã™ã‚‹
 	        if(!strDate.match(/^\d{4}\/\d{1,2}$/)){
 	            fncErrorMessage(2, strObjectName);
 	            return false;
 	        }
-	        // ÆüÉÕÊÑ´¹¤µ¤ì¤¿ÆüÉÕ¤¬ÆşÎÏÃÍ¤ÈÆ±¤¸»ö¤ò³ÎÇ§
-	        // new Date()¤Î°ú¿ô¤ËÉÔÀµ¤ÊÆüÉÕ¤¬ÆşÎÏ¤µ¤ì¤¿¾ì¹ç¡¢ÁêÅö¤¹¤ëÆüÉÕ¤ËÊÑ´¹¤µ¤ì¤Æ¤·¤Ş¤¦¤¿¤á
+	        // æ—¥ä»˜å¤‰æ›ã•ã‚ŒãŸæ—¥ä»˜ãŒå…¥åŠ›å€¤ã¨åŒã˜äº‹ã‚’ç¢ºèª
+	        // new Date()ã®å¼•æ•°ã«ä¸æ­£ãªæ—¥ä»˜ãŒå…¥åŠ›ã•ã‚ŒãŸå ´åˆã€ç›¸å½“ã™ã‚‹æ—¥ä»˜ã«å¤‰æ›ã•ã‚Œã¦ã—ã¾ã†ãŸã‚
 	        // 
 	        var date = new Date(strDate);  
 	        if(date.getFullYear() !=  strDate.split("/")[0] 
@@ -281,13 +281,13 @@
 		}
 		else
 		{
-	        // Ç¯/·î/Æü¤Î·Á¼°¤Î¤ßµöÍÆ¤¹¤ë
+	        // å¹´/æœˆ/æ—¥ã®å½¢å¼ã®ã¿è¨±å®¹ã™ã‚‹
 	        if(!strDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
 	            fncErrorMessage(2, strObjectName);
 	            return false;
 	        }
-	        // ÆüÉÕÊÑ´¹¤µ¤ì¤¿ÆüÉÕ¤¬ÆşÎÏÃÍ¤ÈÆ±¤¸»ö¤ò³ÎÇ§
-	        // new Date()¤Î°ú¿ô¤ËÉÔÀµ¤ÊÆüÉÕ¤¬ÆşÎÏ¤µ¤ì¤¿¾ì¹ç¡¢ÁêÅö¤¹¤ëÆüÉÕ¤ËÊÑ´¹¤µ¤ì¤Æ¤·¤Ş¤¦¤¿¤á
+	        // æ—¥ä»˜å¤‰æ›ã•ã‚ŒãŸæ—¥ä»˜ãŒå…¥åŠ›å€¤ã¨åŒã˜äº‹ã‚’ç¢ºèª
+	        // new Date()ã®å¼•æ•°ã«ä¸æ­£ãªæ—¥ä»˜ãŒå…¥åŠ›ã•ã‚ŒãŸå ´åˆã€ç›¸å½“ã™ã‚‹æ—¥ä»˜ã«å¤‰æ›ã•ã‚Œã¦ã—ã¾ã†ãŸã‚
 	        // 
 	        var date = new Date(strDate);  
 	        if(date.getFullYear() !=  strDate.split("/")[0] 
@@ -310,56 +310,56 @@
 	}
 
 	// -------------------------------------------------------
-	// Ê¸»ú¤Î¥Á¥§¥Ã¥¯
-	// °ú¿ô¡§
-	// 		objObject	Text¥ª¥Ö¥¸¥§¥¯¥È
-	//		lngMaxLength	¥Á¥§¥Ã¥¯¤·¤¿¤¤ºÇÂçByte¿ô
+	// æ–‡å­—ã®ãƒã‚§ãƒƒã‚¯
+	// å¼•æ•°ï¼š
+	// 		objObject	Textã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		lngMaxLength	ãƒã‚§ãƒƒã‚¯ã—ãŸã„æœ€å¤§Byteæ•°
 	// -------------------------------------------------------
 	function fncCheckString(objObject, lngMaxLength)
 	{
 
 		lngMaxLen = 0;
 
-		// ºÇÂçÃÍ¤ò¼èÆÀ
+		// æœ€å¤§å€¤ã‚’å–å¾—
 		if( isNaN(lngMaxLength) == false)
 		{
 			lngMaxLen = lngMaxLength;
 		}
 
-		// maxLength¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ê¤¤ && text¥ª¥Ö¥¸¥§¥¯¥È¤Î¾ì¹ç¡¢¥ª¥Ö¥¸¥§¥¯¥È¤ÎmaxLength ¤òÀßÄê
+		// maxLengthãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã„ && textã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å ´åˆã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®maxLength ã‚’è¨­å®š
 		if( lngMaxLen == 0 && objObject.type == "text" )
 		{
 			lngMaxLen = objObject.maxLength;
 		}
 		
-		// ÆşÎÏÊ¸»úByte¿ô¤Î¼èÆÀ
+		// å…¥åŠ›æ–‡å­—Byteæ•°ã®å–å¾—
 		lngObjLen = getLength(objObject.value);
 		
-		// ºÇÂçÊ¸»úByte¤ÈÆşÎÏÊ¸»úByte¤ÎÈæ³Ó
+		// æœ€å¤§æ–‡å­—Byteã¨å…¥åŠ›æ–‡å­—Byteã®æ¯”è¼ƒ
 		if( lngObjLen > lngMaxLen )
 		{
 			var aryArgs = new Array;
 			aryArgs[0] = lngMaxLen;
 			aryArgs[1] = lngObjLen;
-			// ¥¨¥é¡¼½ĞÎÏ
+			// ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 			fncErrorMessage(3, objObject.name ,aryArgs);
 			objObject.select();
 			return false;
 		}
 		
-		// ¥¨¥é¡¼Ìµ¤·
+		// ã‚¨ãƒ©ãƒ¼ç„¡ã—
 		fncErrorMessage(0, objObject.name);
 		return true;
 		
-		// ÂĞ¾İ¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾¤Î¼èÆÀ
+		// å¯¾è±¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã®å–å¾—
 		//strObjectName = 'window.'+ objObject.form.name +'.'+ objObject.name;
-		// VBScript¤Î¼Â¹Ô
+		// VBScriptã®å®Ÿè¡Œ
 		//window.execScript('Call fncVBSCheckString('+ strObjectName +', '+ lngMaxLength +')', "VBScript");
 		
 	}
 
 	// -------------------------------------------------------
-	// ÆÃ¼ìÊ¸»ú¤ÎÊÑ´¹
+	// ç‰¹æ®Šæ–‡å­—ã®å¤‰æ›
 	// -------------------------------------------------------
 	function fncCheckReplaceString( strInString )
 	{
@@ -377,7 +377,7 @@
 	}
 
 	// -------------------------------------------------------
-	// Ê¸»úÎó¤òByte´¹»»¤¹¤ë
+	// æ–‡å­—åˆ—ã‚’Byteæ›ç®—ã™ã‚‹
 	// -------------------------------------------------------
 	function getLength(strValue)
 	{
@@ -387,31 +387,31 @@
 	}
 
 	// -------------------------------------------------------
-	// Ê¸»ú¤Î¥Á¥§¥Ã¥¯
-	// °ú¿ô¡§
-	// 		lngCalc1		·×»»ÃÍ£±
-	//		strOperator		»»½Ñ±é»»»Ò ( ^, *, /, \, Mod, +, - )
-	// 		lngCalc2		·×»»ÃÍ£²
-	// È÷¹Í¡§
-	//  ·ë²ÌID = 5
+	// æ–‡å­—ã®ãƒã‚§ãƒƒã‚¯
+	// å¼•æ•°ï¼š
+	// 		lngCalc1		è¨ˆç®—å€¤ï¼‘
+	//		strOperator		ç®—è¡“æ¼”ç®—å­ ( ^, *, /, \, Mod, +, - )
+	// 		lngCalc2		è¨ˆç®—å€¤ï¼’
+	// å‚™è€ƒï¼š
+	//  çµæœID = 5
 	// -------------------------------------------------------
 	function fncVBSNumCalc(lngCalc1, strOperator, lngCalc2)
 	{
 		// alert("[" + parseFloat(lngCalc1) + "]" + strOperator + "[" +  parseFloat(lngCalc2) + "]");
-		// ¿ôÃÍ¤Ç¤ÏÌµ¤¤¾ì¹ç¡¢0¤ÇÊÖµÑ
+		// æ•°å€¤ã§ã¯ç„¡ã„å ´åˆã€0ã§è¿”å´
 		if( isNaN(parseFloat(lngCalc1)) || isNaN(parseFloat(lngCalc2)) )
 		{
 			return 0;
 		}
 
-		// ÂĞ¾İ¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾¤Î¼èÆÀ
+		// å¯¾è±¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã®å–å¾—
 		//strParam = 'Call fncVBSNumberCalculation('+ lngCalc1 + ', '+ '"' + strOperator + '", ' + lngCalc2 + ')';
 		strParam = lngCalc1 + " " + strOperator + " " +  lngCalc2;
 		//alert(strParam);
-		// VBScript¤Î¼Â¹Ô
+		// VBScriptã®å®Ÿè¡Œ
 		//window.execScript(strParam, "VBScript");
 		eval(strParam);
-		// ¼èÆÀ¤·¤¿ÃÍ¤òÊÖµÑ
+		// å–å¾—ã—ãŸå€¤ã‚’è¿”å´
 		return fncCheckGetValue(5);
 
 	}

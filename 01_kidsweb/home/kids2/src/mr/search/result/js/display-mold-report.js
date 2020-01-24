@@ -1,6 +1,6 @@
 
 (function(){
-    // •◊•Ï•”•Â°º…Ωº®
+    // „Éó„É¨„Éì„É•„ÉºË°®Á§∫
     $('img.preview.button').on('click', function(){
         url = '/mold/list/displayMoldReport.php';
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
@@ -8,10 +8,10 @@
         revision = 'Revision=' + $(this).attr('revision');
         version = 'Version=' + $(this).attr('version');
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version, 'display-report', 'resizable=yes, scrollbars=yes, menubar=no');
     });
-    // COPY•◊•Ï•”•Â°º…Ωº®
+    // COPY„Éó„É¨„Éì„É•„ÉºË°®Á§∫
     $('img.copy-preview.button').on('click', function(){
         url = '/mold/list/displayMoldReport.php';
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
@@ -20,7 +20,7 @@
         version = 'Version=' + $(this).attr('version');
         copy= 'isCopy';
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version + '&' + copy, 'display-report', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

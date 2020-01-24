@@ -1,17 +1,17 @@
 <?php
 	
 	//
-	// ¥«¥Æ¥´¥ê¡¼¥Þ¥¹¥¿¤Î¼èÆÀ
-	// ½êÂ°¥°¥ë¡¼¥×¤Ë´ØÏ¢¤¹¤ë¥«¥Æ¥´¥ê¡¼°ìÍ÷¤ò¼èÆÀ
+	// ã‚«ãƒ†ã‚´ãƒªãƒ¼ãƒžã‚¹ã‚¿ã®å–å¾—
+	// æ‰€å±žã‚°ãƒ«ãƒ¼ãƒ—ã«é–¢é€£ã™ã‚‹ã‚«ãƒ†ã‚´ãƒªãƒ¼ä¸€è¦§ã‚’å–å¾—
 	//
-	// @param  Array	$aryParam	¥Ñ¥é¥á¡¼¥¿ÇÛÎó
+	// @param  Array	$aryParam	ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿é…åˆ—
 	//
-	// $aryParam[0]	¥æ¡¼¥¶¡¼¥³¡¼¥É
+	// $aryParam[0]	ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 	//
 	function fncSqlqueryCategory($aryParam)
 	{
-		// SQL ÀßÄê
-		// ¥«¥Æ¥´¥ê¡¼
+		// SQL è¨­å®š
+		// ã‚«ãƒ†ã‚´ãƒªãƒ¼
 /*
 		$aryQuery = array();
 		$aryQuery[] = "SELECT mc.lngcategorycode, mc.strcategoryname";
@@ -41,7 +41,7 @@
 		$aryQuery[] = "FROM";
 		$aryQuery[] = "(";
 		$aryQuery[] = "SELECT mc.lngcategorycode,";
-		$aryQuery[] = "	mg1.strgroupdisplayname || '¡§' || mc.strcategoryname as strcategoryname";
+		$aryQuery[] = "	mg1.strgroupdisplayname || 'ï¼š' || mc.strcategoryname as strcategoryname";
 		$aryQuery[] = "	,mc.lngSortKey";
 		$aryQuery[] = "FROM m_Category mc LEFT JOIN m_CategoryRelation mcr ON mc.lngcategorycode =mcr.lngcategorycode";
 		$aryQuery[] = "	,m_Group mg1";
@@ -68,17 +68,17 @@
 
 
 	//
-	// ¥«¥Æ¥´¥ê¡¼¥Þ¥¹¥¿¤Î¼èÆÀ
-	// ½êÂ°¥°¥ë¡¼¥×¤Ë´ØÏ¢¤¹¤ë¥«¥Æ¥´¥ê¡¼°ìÍ÷¤ò¼èÆÀ¡Ê¾¦ÉÊ¸¡º÷¡¢½é´üÉ½¼¨ÍÑ¡Ë
+	// ã‚«ãƒ†ã‚´ãƒªãƒ¼ãƒžã‚¹ã‚¿ã®å–å¾—
+	// æ‰€å±žã‚°ãƒ«ãƒ¼ãƒ—ã«é–¢é€£ã™ã‚‹ã‚«ãƒ†ã‚´ãƒªãƒ¼ä¸€è¦§ã‚’å–å¾—ï¼ˆå•†å“æ¤œç´¢ã€åˆæœŸè¡¨ç¤ºç”¨ï¼‰
 	//
-	// @param  Array	$aryParam	¥Ñ¥é¥á¡¼¥¿ÇÛÎó
+	// @param  Array	$aryParam	ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿é…åˆ—
 	//
-	// $aryParam[0]	¥æ¡¼¥¶¡¼¥³¡¼¥É
+	// $aryParam[0]	ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 	//
 	function fncSqlqueryCategory2($aryParam)
 	{
-		// SQL ÀßÄê
-		// ¥«¥Æ¥´¥ê¡¼
+		// SQL è¨­å®š
+		// ã‚«ãƒ†ã‚´ãƒªãƒ¼
 
 		$strFile = file_get_contents(LIB_ROOT."sql/cnCategoryGroupUser.sql");
 		if(!$strFile) return "";

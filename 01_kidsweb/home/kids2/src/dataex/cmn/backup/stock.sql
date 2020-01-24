@@ -1,15 +1,15 @@
 /*
-	���ס�����(��������ɽ)���ֵ����̡סֻ������ܡ����硦�����̡�
-	�оݡ��ǡ����������ݡ���
-	������chiba
-	���͡�
+	概要：経理(仕入一覧表)　「客先別」「仕入科目・部門・製品別」
+	対象：データエクスポート
+	作成：chiba
+	備考：
 
-	��������
-	2004.04.07	���ɽ�����ˤ����� 0.XX �ξ��� 0 ���ä��Ƥ��ޤ��Х��ν���
-	2004.04.27	ȯ���ʤ���������Ϥ��ʤ��Х��ν���
-	2004.04.28	���Ǥκݤι�׶�ۤ����ս����
-	2004.05.06	���ܱ߰ʳ��Ǳߴ�����������ü���������ɲ�
-	2005.10.31  ���硦ô���Ԥ����ʥޥ�����껲�Ȥ���褦���ѹ�
+	更新履歴：
+	2004.04.07	金額表示部において 0.XX の場合に 0 が消えてしまうバグの修正
+	2004.04.27	発注なし仕入を出力しないバグの修正
+	2004.04.28	内税の際の合計金額を求める箇所を修正
+	2004.05.06	日本円以外で円換算した場合の端数処理を追加
+	2005.10.31  部門・担当者を製品マスタより参照するように変更
 */
 SELECT
 	s.dtmAppropriationDate
@@ -27,32 +27,32 @@ SELECT
 	,p.strProductName
 	,p.strGoodsCode
 	,
-	/* �ٻѷ׾�ξ�硢ñ������ǳ�� */
+	/* 荷姿計上の場合、単価を数で割る */
 	CASE WHEN sd.lngConversionClassCode = 2 THEN To_char( sd.curProductPrice / p.lngCartonQuantity, '9999990.9999' )
 	  ELSE To_char( sd.curProductPrice, '9999990.9999' )
 	END AS curProductPrice
 	/*pu.strProductUnitName*/
 	,(select  strproductunitname from m_productunit where lngproductunitcode = 1) as productunit
 	,
-	/* �ٻѷ׾�ξ�硢���ʿ��̤򥫡��ȥ�������ǳݤ��� */
+	/* 荷姿計上の場合、製品数量をカートン入り数で掛ける */
 	CASE WHEN sd.lngConversionClassCode = 2 THEN  sd.lngProductQuantity * p.lngCartonQuantity
 	  ELSE sd.lngProductQuantity
 	END AS lngProductQuantity
 	,tc.strTaxClassName
 	,mu.strmonetaryunitname
 	,
-	/* ��ȴ��ۤ��Ф��Ƥϡ����ܱ߰ʳ��Ǳߴ����������ü���������ڼΤơˤ�Ԥ� */
+	/* 税抜金額に対しては　日本円以外で円換算する場合は端数処理（切捨て）を行う */
 	CASE WHEN s.lngMonetaryUnitCode = 1 THEN To_char( sd.curSubTotalPrice, '999999990.99' )
 	  ELSE To_char( TRUNC( sd.curSubTotalPrice * s.curConversionRate ), '999999990.99' )
 	END AS curSubTotalPrice
 	,
-	/* �ǳۤ��Ф��Ƥϡ����ĤǤ�ü���������ڼΤơˤ�Ԥ� */
+	/* 税額に対しては　いつでも端数処理（切捨て）を行う */
 	To_char( TRUNC( sd.curTaxPrice * s.curConversionRate ), '999999990.99' ) AS curTaxPrice
 	,
 	/*
-	���ܱ߰ʳ��Ǥϡ��̾�����ǤʤΤǡ���׶�ۤ���ȴ��ۤǱߴ����ˤ�ü���������ڼΤơˤ�Ԥ�
-	���ܱߤξ��Ǥϡ����ǡ����Ǥξ��ˡ���׶�ۤϡ��ǳۡ���ȴ��ۤǷ׻�����
-	���ܱߤξ��Ǥϡ�����Ǥξ��ˡ���׶�ۤ���ȴ���
+	日本円以外では、通常非課税なので、合計金額は税抜金額で円換算にて端数処理（切捨て）を行う
+	日本円の場合では、内税、外税の場合に、合計金額は　税額＋税抜金額で計算する
+	日本円の場合では、非課税の場合に、合計金額は税抜金額
 	*/
 	CASE WHEN ( s.lngMonetaryUnitCode <> 1 AND sd.lngTaxClassCode = 1 ) 
 	       THEN To_char( TRUNC( sd.curSubTotalPrice * s.curConversionRate ), '999999990.99' )
@@ -63,7 +63,7 @@ SELECT
 	  ELSE To_char( TRUNC( sd.curSubTotalPrice * s.curConversionRate ) + TRUNC( sd.curTaxPrice * s.curConversionRate ), '999999990.99' )
 	END AS curTotalPrice
 	,
-	/*2006/08/28��by�⡡����졼�Ȥ�TTM�졼�Ȥ�ȹ礹�뤿��˹�פ����ĽФ��褦�ˤ��ޤ���*/
+	/*2006/08/28　by高　社内レートとTTMレートを照合するために合計が２つ出すようにしました*/
 	CASE WHEN ( s.lngMonetaryUnitCode <> 1 AND sd.lngTaxClassCode = 1 ) 
 	       THEN To_char( TRUNC( sd.curSubTotalPrice * (select mm.curconversionrate from m_monetaryrate  mm where
 				mm.lngmonetaryratecode = '1'
@@ -116,5 +116,5 @@ WHERE
 	AND sd.lngProductUnitCode    = pu.lngProductUnitCode
 	AND sd.lngTaxClassCode       = tc.lngTaxClassCode
 	AND s.lngmonetaryunitcode = mu.lngmonetaryunitcode
-/* ��1.�������ܡ��ܵҤν� 2.�������ܡ����롼�ס����ʤν� */
+/* 条件：1.仕入科目、顧客の順 2.仕入科目、グループ、製品の順 */
 ORDER BY _%lngExportConditions%_

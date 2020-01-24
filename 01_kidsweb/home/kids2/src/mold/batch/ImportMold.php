@@ -2,7 +2,7 @@
 
 // -----------------------------------------------------------
 //
-// �ⷿ�ޥ�������ݡ��Ƚ���
+// 金型マスタインポート処理
 //
 // -----------------------------------------------------------
 
@@ -10,47 +10,47 @@ include( 'conf.inc' );
 require_once( LIB_FILE );
 require_once(SRC_ROOT.'/mold/lib/UtilMold.class.php');
 
-// �������ϻ��Υץ�ե��å���
+// ログ出力時のプレフィックス
 const LOG_PREFIX = "[KIDS-ImportMold] ";
 
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 
-// DB�����ץ�
+// DBオープン
 $objDB->open("", "", "", "");
 
-// �ꥯ�����ȼ���
+// リクエスト取得
 $aryData = $_REQUEST;
 
-// �ȥ�󥶥�����󳫻�
+// トランザクション開始
 $objDB->transactionBegin();
 
-// Util���󥹥��󥹤μ���
+// Utilインスタンスの取得
 $utilMold = UtilMold::getInstance();
-// ���ߡ��Υ桼�������ɤ�����
+// ダミーのユーザコードを設定
 $utilMold->setUserCode(99999);
 
-// ������Ϣ�Υơ��֥���å�
+// 仕入関連のテーブルロック
 pg_query("LOCK m_stock");
 pg_query("LOCK t_stockdetail");
 
-// �ⷿ��Ϣ�ơ��֥�Υ��å�
+// 金型関連テーブルのロック
 pg_query("LOCK m_mold");
 
-syslog(LOG_INFO, LOG_PREFIX."�ⷿ�ޥ�������ݡ��Ƚ�������");
+syslog(LOG_INFO, LOG_PREFIX."金型マスタインポート処理開始");
 
-// �ȥ�󥶥�����󳫻�
+// トランザクション開始
 $objDB->transactionBegin();
 
-// ����ݡ��ȥ�����¹�
+// インポートクエリ実行
 $affected = $utilMold->importMoldFromStock();
 
-// �����߷���Υ�������
-syslog(LOG_INFO, LOG_PREFIX.$affected."�������");
+// 取り込み件数のログ出力
+syslog(LOG_INFO, LOG_PREFIX.$affected."件取り込み");
 
-// ���ߥå�
+// コミット
 $objDB->transactionCommit();
 
-syslog(LOG_INFO, LOG_PREFIX."�ⷿ�ޥ�������ݡ��Ƚ�����λ");
+syslog(LOG_INFO, LOG_PREFIX."金型マスタインポート処理終了");
 
 return;

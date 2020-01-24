@@ -33,20 +33,20 @@ function ChgEtoJ( lngCount )
 	else if ( lngCount == 1 )
 	{
 
-		SegA01.innerText='¾õÂÖ';
-		SegA02.innerText='°Æ·ï¿½ÀÁ¼Ô';
-		SegA03.innerText='°Æ·ïÆşÎÏ¼Ô';
-		SegA04.innerText='¿½ÀÁÆü';
-		SegA05.innerText='´°Î»Æü';
-		SegA06.innerText='½èÍıÂÔ¤Á¾µÇ§¼Ô';
-		SegA07.innerText='¸¡º÷·ë²ÌÉ½¼¨·ï¿ô';
-		SegA08.innerText='¼ïÊÌ';
+		SegA01.innerText='çŠ¶æ…‹';
+		SegA02.innerText='æ¡ˆä»¶ç”³è«‹è€…';
+		SegA03.innerText='æ¡ˆä»¶å…¥åŠ›è€…';
+		SegA04.innerText='ç”³è«‹æ—¥';
+		SegA05.innerText='å®Œäº†æ—¥';
+		SegA06.innerText='å‡¦ç†å¾…ã¡æ‰¿èªè€…';
+		SegA07.innerText='æ¤œç´¢çµæœè¡¨ç¤ºä»¶æ•°';
+		SegA08.innerText='ç¨®åˆ¥';
 
 
 		//-------------------------------------------------------------------------
 		// v2 tomita update
 		//-------------------------------------------------------------------------
-		SegAPCode.innerText = 'À½ÉÊ¥³¡¼¥É';
+		SegAPCode.innerText = 'è£½å“ã‚³ãƒ¼ãƒ‰';
 		//-------------------------------------------------------------------------
 
 		ViewSearch1.innerHTML= vishImgJ;

@@ -1,6 +1,6 @@
 <?
 /**
- *    �������ܺ١������̵�����ؿ���
+ *    受注　詳細、削除、無効化関数群
  *
  *    @package   kuwagata
  *    @license   http://www.wiseknot.co.jp/
@@ -9,68 +9,68 @@
  *    @access    public
  *    @version   1.01
  *
- *    ��������
- *    ������̴�Ϣ�δؿ�
+ *    処理概要
+ *    検索結果関連の関数
  *
- *    ��������
+ *    修正履歴
  *
- *    2004.03.17    �ܺ�ɽ������ñ����ʬ��ɽ�������򾮿����ʲ�������ѹ�
- *    2004.03.29    ������̰���ɽ���������ٹ��ֹ���ʬ��ɽ���ѥ����ȥ�����ɽ������褦���ѹ�
+ *    2004.03.17    詳細表示時の単価部分の表示方式を小数点以下４桁に変更
+ *    2004.03.29    検索結果一覧表示時の明細行番号部分を表示用ソートキーを表示するように変更
  *
  */
 
 /**
- * ���ꤵ�줿�����ֹ椫������إå�������������ӣѣ�ʸ�����
+ * 指定された受注番号から受注ヘッダ情報を取得するＳＱＬ文を作成
  *
- *    ��������ֹ�Υإå�����μ����ѣӣѣ�ʸ�����ؿ�
+ *    指定受注番号のヘッダ情報の取得用ＳＱＬ文作成関数
  *
- *    @param  Integer     $lngReceiveNo             ������������ֹ�
- *    @return strQuery     $strQuery ������SQLʸ
+ *    @param  Integer     $lngReceiveNo             取得する受注番号
+ *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
 function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
 {
-    // SQLʸ�κ���
+    // SQL文の作成
     $aryQuery[] = "SELECT distinct on (r.lngReceiveNo) r.lngReceiveNo as lngReceiveNo, r.lngRevisionNo as lngRevisionNo";
 
-    // ��Ͽ��
+    // 登録日
     $aryQuery[] = ", to_char( r.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS' ) as dtmInsertDate";
-    // �׾���
+    // 計上日
     $aryQuery[] = ", to_char( r.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmReceiveAppDate";
-    // �ܵҼ����ֹ�
+    // 顧客受注番号
     $aryQuery[] = ", r.strCustomerReceiveCode as strCustomerReceiveCode";
-    // ����������
+    // 受注コード
     $aryQuery[] = ", r.strReceiveCode as strReceiveCode";
-    // ���ʥ�����
+    // 製品コード
     $aryQuery[] = "  , p.strproductcode";
     $aryQuery[] = "  , p.strproductname";
     $aryQuery[] = "  , p.strrevisecode";
-    // ���ϼ�
+    // 入力者
     $aryQuery[] = ", r.lngInputUserCode as lngInputUserCode";
     $aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
     $aryQuery[] = ", input_u.strUserDisplayName as strInputUserDisplayName";
-    // �ܵ�
+    // 顧客
     $aryQuery[] = ", r.lngCustomerCompanyCode as lngCustomerCode";
     $aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
     $aryQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
-    // ����
+    // 部門
     $aryQuery[] = ", r.lngGroupCode as lngInChargeGroupCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
-    // ô����
+    // 担当者
     $aryQuery[] = ", r.lngUserCode as lngInChargeUserCode";
     $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
     $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
-    // �̲�
+    // 通貨
     $aryQuery[] = ", r.lngMonetaryUnitCode as lngMonetaryUnitCode";
     $aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
     $aryQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
-    // �졼�ȥ�����
+    // レートタイプ
     $aryQuery[] = ", r.lngMonetaryRateCode as lngMonetaryRateCode";
     $aryQuery[] = ", mr.strMonetaryRateName as strMonetaryRateName";
-    // �����졼��
+    // 換算レート
     $aryQuery[] = ", r.curConversionRate as curConversionRate";
-    // ����
+    // 状態
     $aryQuery[] = ", r.lngReceiveStatusCode as lngReceiveStatusCode";
     $aryQuery[] = ", rs.strReceiveStatusName as strReceiveStatusName";
     $aryQuery[] = " FROM m_Receive r ";
@@ -142,66 +142,66 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
 }
 
 /**
- * ���ꤵ�줿�����ֹ椫������إå�������������ӣѣ�ʸ�����
+ * 指定された受注番号から受注ヘッダ情報を取得するＳＱＬ文を作成
  *
- *    ��������ֹ�Υإå�����μ����ѣӣѣ�ʸ�����ؿ�
+ *    指定受注番号のヘッダ情報の取得用ＳＱＬ文作成関数
  *
- *    @param  Integer     $lngReceiveNo             ������������ֹ�
- *    @return strQuery     $strQuery ������SQLʸ
+ *    @param  Integer     $lngReceiveNo             取得する受注番号
+ *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
 function fncGetReceiveHeadInfoSQL($lngReceiveNo, $lngestimateno)
 {
-    // SQLʸ�κ���
+    // SQL文の作成
     $aryQuery[] = "SELECT distinct on (r.lngReceiveNo) r.lngReceiveNo as lngReceiveNo, r.lngRevisionNo as lngRevisionNo";
 
-    // ��Ͽ��
+    // 登録日
     $aryQuery[] = ", to_char( r.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS' ) as dtmInsertDate";
-    // �׾���
+    // 計上日
     $aryQuery[] = ", to_char( r.dtmAppropriationDate, 'YYYY/MM/DD' ) as dtmReceiveAppDate";
-    // �ܵҼ����ֹ�
+    // 顧客受注番号
     $aryQuery[] = ", r.strCustomerReceiveCode as strCustomerReceiveCode";
-    // ����������
+    // 受注コード
     $aryQuery[] = ", r.strReceiveCode as strReceiveCode";
-    // �����ֹ�
+    // 製品番号
     $aryQuery[] = "  , p.lngProductNo";
     $aryQuery[] = "  , p.lngRevisionNo as lngProductRevisionNo";
-    // ���ʥ�����
+    // 製品コード
     $aryQuery[] = "  , p.strproductcode";
     $aryQuery[] = "  , p.strproductname";
     $aryQuery[] = "  , p.strrevisecode";
-    // �ܵ�����
+    // 顧客品番
     $aryQuery[] = ", p.strGoodsCode as strGoodsCode";
-    // ���ϼ�
+    // 入力者
     $aryQuery[] = ", r.lngInputUserCode as lngInputUserCode";
     $aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
     $aryQuery[] = ", input_u.strUserDisplayName as strInputUserDisplayName";
-    // �ܵ�
+    // 顧客
     $aryQuery[] = ", r.lngCustomerCompanyCode as lngCustomerCode";
     $aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
     $aryQuery[] = ", cust_c.strshortname as strCustomerDisplayName";
-    // ����
+    // 部門
     $aryQuery[] = ", r.lngGroupCode as lngInChargeGroupCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
-    // ô����
+    // 担当者
     $aryQuery[] = ", r.lngUserCode as lngInChargeUserCode";
     $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
     $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
-    // ��ȯô����
+    // 開発担当者
     $aryQuery[] = ", p.lngdevelopusercode as lngdevelopusercode";
     $aryQuery[] = ", delp_u.strUserDisplayCode as strdevelopuserdisplaycode";
     $aryQuery[] = ", delp_u.strUserDisplayName as strdevelopuserdisplayname";
-    // �̲�
+    // 通貨
     $aryQuery[] = ", r.lngMonetaryUnitCode as lngMonetaryUnitCode";
     $aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
     $aryQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
-    // �졼�ȥ�����
+    // レートタイプ
     $aryQuery[] = ", r.lngMonetaryRateCode as lngMonetaryRateCode";
     $aryQuery[] = ", mr.strMonetaryRateName as strMonetaryRateName";
-    // �����졼��
+    // 換算レート
     $aryQuery[] = ", r.curConversionRate as curConversionRate";
-    // ����
+    // 状態
     $aryQuery[] = ", r.lngReceiveStatusCode as lngReceiveStatusCode";
     $aryQuery[] = ", rs.strReceiveStatusName as strReceiveStatusName";
     $aryQuery[] = " FROM m_Receive r ";
@@ -293,56 +293,56 @@ function fncGetReceiveHeadInfoSQL($lngReceiveNo, $lngestimateno)
     return $strQuery;
 }
 /**
- * ���ꤵ�줿�����ֹ椫��������پ�����������ӣѣ�ʸ�����
+ * 指定された受注番号から受注明細情報を取得するＳＱＬ文を作成
  *
- *    ��������ֹ�����پ���μ����ѣӣѣ�ʸ�����ؿ�
+ *    指定受注番号の明細情報の取得用ＳＱＬ文作成関数
  *
- *    @param  Integer     $lngReceiveNo             ������������ֹ�
- *    @return strQuery     $strQuery ������SQLʸ
+ *    @param  Integer     $lngReceiveNo             取得する受注番号
+ *    @return strQuery     $strQuery 検索用SQL文
  *    @access public
  */
 function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
 {
-    // SQLʸ�κ���
+    // SQL文の作成
     $aryQuery[] = "SELECT rd.lngSortKey as lngRecordNo, ";
     $aryQuery[] = "rd.lngReceiveNo as lngReceiveNo, rd.lngRevisionNo as lngRevisionNo";
     $aryQuery[] = ", rd.lngreceivedetailno";
-    // ���ʥ����ɡ�̾��
+    // 製品コード・名称
     $aryQuery[] = ", rd.strProductCode as strProductCode";
     $aryQuery[] = ", p.strProductName as strProductName";
     $aryQuery[] = ", p.strproductenglishname as strproductenglishname";
     $aryQuery[] = ", me.lngProductQuantity as lngProductQuantity_est";
     $aryQuery[] = ", To_char( me.lngProductQuantity, '9,999,999,990' ) as lngProductQuantity_est2";
-    // ����ʬ
+    // 売上区分
     $aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode";
     $aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
-    // ���ʬ��
+    // 売上分類
     $aryQuery[] = ", sd.lngsalesdivisioncode";
     $aryQuery[] = ", sd.strsalesdivisionname";
-    // �ܵ�����
+    // 顧客品番
     $aryQuery[] = ", p.strGoodsCode as strGoodsCode";
-    // Ǽ��
+    // 納期
     $aryQuery[] = ", rd.dtmDeliveryDate as dtmDeliveryDate";
-    // ñ��
+    // 単価
     $aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
-    // ñ��
+    // 単位
     $aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode";
     $aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
-    $aryQuery[] = ", p.lngcartonquantity";// �����ȥ�����
-    // ����
+    $aryQuery[] = ", p.lngcartonquantity";// カートン入数
+    // 数量
     $aryQuery[] = ", rd.lngProductQuantity as lngProductQuantity_pre";
-    // ����
+    // 数量
     $aryQuery[] = ", To_char( rd.lngProductQuantity, '9,999,999,990' ) as lngProductQuantity";
-    // ����
+    // 入数
     $aryQuery[] = ", To_char( rd.lngunitquantity, '9,999,999,990' ) as lngunitquantity";
-    // ����
+    // 入数
     $aryQuery[] = ", rd.lngunitquantity as lngunitquantity_pre";
-    // ��ȴ���
+    // 税抜金額
     $aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
-    // ��������
+    // 明細備考
     $aryQuery[] = ", rd.strNote as strDetailNote";
 
-    // ���ٹԤ�ɽ��������
+    // 明細行を表示する場合
     $aryQuery[] = " FROM t_ReceiveDetail rd ";
     if ($lngRevisionNo == "") {
         $aryQuery[] = "  inner join ( ";
@@ -385,33 +385,33 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
 }
 
 /**
- * �ܺ�ɽ���ؿ��ʥإå��ѡ�
+ * 詳細表示関数（ヘッダ用）
  *
- *    �ơ��֥빽���Ǽ����ǡ����ܺ٤���Ϥ���ؿ�
- *    �إå��Ԥ�ɽ������
+ *    テーブル構成で受注データ詳細を出力する関数
+ *    ヘッダ行を表示する
  *
- *    @param  Array     $aryResult                 �إå��Ԥθ�����̤���Ǽ���줿����
+ *    @param  Array     $aryResult                 ヘッダ行の検索結果が格納された配列
  *    @access public
  */
 function fncSetReceiveHeadTabelData($aryResult)
 {
     $aryColumnNames = array_keys($aryResult);
 
-    // ɽ���оݥ������������̤ν���
+    // 表示対象カラムの配列より結果の出力
     for ($i = 0; $i < count($aryColumnNames); $i++) {
         $strColumnName = $aryColumnNames[$i];
 
-        // ��Ͽ��
+        // 登録日
         if ($strColumnName == "dtminsertdate") {
             $aryNewResult[$strColumnName] = str_replace("-", "/", substr($aryResult["dtminsertdate"], 0, 19));
         }
 
-        // �׾���
+        // 計上日
         else if ($strColumnName == "dtmreceiveappdate") {
             $aryNewResult[$strColumnName] = str_replace("-", "/", $aryResult["dtmreceiveappdate"]);
         }
 
-        // ���ϼ�
+        // 入力者
         else if ($strColumnName == "lnginputusercode") {
             if ($aryResult["strinputuserdisplaycode"]) {
                 $aryNewResult[$strColumnName] = "[" . $aryResult["strinputuserdisplaycode"] . "]";
@@ -421,7 +421,7 @@ function fncSetReceiveHeadTabelData($aryResult)
             $aryNewResult[$strColumnName] .= " " . $aryResult["strinputuserdisplayname"];
         }
 
-        // �ܵ�
+        // 顧客
         else if ($strColumnName == "lngcustomercode") {
             if ($aryResult["strcustomerdisplaycode"]) {
                 $aryNewResult[$strColumnName] = "[" . $aryResult["strcustomerdisplaycode"] . "]";
@@ -431,7 +431,7 @@ function fncSetReceiveHeadTabelData($aryResult)
             $aryNewResult[$strColumnName] .= " " . $aryResult["strcustomerdisplayname"];
         }
 
-        // ����
+        // 部門
         else if ($strColumnName == "lnginchargegroupcode") {
             if ($aryResult["strinchargegroupdisplaycode"]) {
                 $aryNewResult[$strColumnName] = "[" . $aryResult["strinchargegroupdisplaycode"] . "]";
@@ -441,7 +441,7 @@ function fncSetReceiveHeadTabelData($aryResult)
             $aryNewResult[$strColumnName] .= " " . $aryResult["strinchargegroupdisplayname"];
         }
 
-        // ô����
+        // 担当者
         else if ($strColumnName == "lnginchargeusercode") {
             if ($aryResult["strinchargeuserdisplaycode"]) {
                 $aryNewResult[$strColumnName] = "[" . $aryResult["strinchargeuserdisplaycode"] . "]";
@@ -451,7 +451,7 @@ function fncSetReceiveHeadTabelData($aryResult)
             $aryNewResult[$strColumnName] .= " " . $aryResult["strinchargeuserdisplayname"];
         }
 
-        // ��׶��
+        // 合計金額
         else if ($strColumnName == "curtotalprice") {
             $aryNewResult[$strColumnName] = $aryResult["strmonetaryunitsign"] . " ";
             if (!$aryResult["curtotalprice"]) {
@@ -461,17 +461,17 @@ function fncSetReceiveHeadTabelData($aryResult)
             }
         }
 
-        // ����
+        // 状態
         else if ($strColumnName == "lngreceivestatuscode") {
             $aryNewResult[$strColumnName] = $aryResult["strreceivestatusname"];
         }
 
-        // �̲�
+        // 通貨
         else if ($strColumnName == "lngmonetaryunitcode") {
             $aryNewResult[$strColumnName] = $aryResult["strmonetaryunitname"];
         }
 
-        // �졼�ȥ�����
+        // レートタイプ
         else if ($strColumnName == "lngmonetaryratecode") {
             if ($aryResult["lngmonetaryratecode"] and $aryResult["lngmonetaryunitcode"] != DEF_MONETARY_YEN) {
                 $aryNewResult[$strColumnName] = $aryResult["strmonetaryratename"];
@@ -480,12 +480,12 @@ function fncSetReceiveHeadTabelData($aryResult)
             }
         }
 
-        // ����
+        // 備考
         else if ($strColumnName == "strnote") {
             $aryNewResult[$strColumnName] = nl2br($aryResult["strnote"]);
         }
 
-        // ����¾�ι��ܤϤ��Τޤ޽���
+        // その他の項目はそのまま出力
         else {
             $aryNewResult[$strColumnName] = $aryResult[$strColumnName];
         }
@@ -495,24 +495,24 @@ function fncSetReceiveHeadTabelData($aryResult)
 }
 
 /**
- * �ܺ�ɽ���ؿ��������ѡ�
+ * 詳細表示関数（明細用）
  *
- *    �ơ��֥빽���Ǽ����ǡ����ܺ٤���Ϥ���ؿ�
- *    ���ٹԤ�ɽ������
+ *    テーブル構成で受注データ詳細を出力する関数
+ *    明細行を表示する
  *
- *    @param  Array     $aryDetailResult     ���ٹԤθ�����̤���Ǽ���줿����ʣ��ǡ���ʬ��
- *    @param  Array     $aryHeadResult         �إå��Ԥθ�����̤���Ǽ���줿����ʻ����ѡ�
+ *    @param  Array     $aryDetailResult     明細行の検索結果が格納された配列（１データ分）
+ *    @param  Array     $aryHeadResult         ヘッダ行の検索結果が格納された配列（参照用）
  *    @access public
  */
 function fncSetReceiveDetailTabelData($aryDetailResult, $aryHeadResult)
 {
     $aryColumnNames = array_keys($aryDetailResult);
 
-    // ɽ���оݥ������������̤ν���
+    // 表示対象カラムの配列より結果の出力
     for ($i = 0; $i < count($aryColumnNames); $i++) {
         $strColumnName = $aryColumnNames[$i];
 
-        // ���ʥ�����̾��
+        // 製品コード名称
         if ($strColumnName == "strproductcode") {
             if ($aryDetailResult["strproductcode"]) {
                 $aryNewDetailResult[$strColumnName] = "[" . $aryDetailResult["strproductcode"] . "]";
@@ -522,7 +522,7 @@ function fncSetReceiveDetailTabelData($aryDetailResult, $aryHeadResult)
             $aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strproductname"];
         }
 
-        // ����ʬ
+        // 売上区分
         else if ($strColumnName == "lngsalesclasscode") {
             if ($aryDetailResult["lngsalesclasscode"]) {
                 $aryNewDetailResult[$strColumnName] = "[" . $aryDetailResult["lngsalesclasscode"] . "]";
@@ -532,17 +532,17 @@ function fncSetReceiveDetailTabelData($aryDetailResult, $aryHeadResult)
             $aryNewDetailResult[$strColumnName] .= " " . $aryDetailResult["strsalesclassname"];
         }
 
-        // �ܵ�����
+        // 顧客品番
         else if ($strColumnName == "strgoodscode") {
             $aryNewDetailResult[$strColumnName] = $aryDetailResult[$strColumnName];
         }
 
-        // Ǽ��
+        // 納期
         else if ($strColumnName == "dtmdeliverydate") {
             $aryNewDetailResult[$strColumnName] = str_replace("-", "/", $aryDetailResult["dtmdeliverydate"]);
         }
 
-        // ñ��
+        // 単価
         else if ($strColumnName == "curproductprice") {
             $aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
             if (!$aryDetailResult["curproductprice"]) {
@@ -552,12 +552,12 @@ function fncSetReceiveDetailTabelData($aryDetailResult, $aryHeadResult)
             }
         }
 
-        // ñ��
+        // 単位
         else if ($strColumnName == "lngproductunitcode") {
             $aryNewDetailResult[$strColumnName] = $aryDetailResult["strproductunitname"];
         }
 
-        // ��ȴ���
+        // 税抜金額
         else if ($strColumnName == "cursubtotalprice") {
             $aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
             if (!$aryDetailResult["cursubtotalprice"]) {
@@ -567,12 +567,12 @@ function fncSetReceiveDetailTabelData($aryDetailResult, $aryHeadResult)
             }
         }
 
-        // ��������
+        // 明細備考
         else if ($strColumnName == "strdetailnote") {
             $aryNewDetailResult[$strColumnName] = nl2br($aryDetailResult[$strColumnName]);
         }
 
-        // ����¾�ι��ܤϤ��Τޤ޽���
+        // その他の項目はそのまま出力
         else {
             $aryNewDetailResult[$strColumnName] = $aryDetailResult[$strColumnName];
         }
@@ -582,19 +582,19 @@ function fncSetReceiveDetailTabelData($aryDetailResult, $aryHeadResult)
 }
 
 /**
- * �ܺ�ɽ���ѥ����̾���åȴؿ�
+ * 詳細表示用カラム名セット関数
  *
- *    �ܺ�ɽ�����Υ����̾�����ܸ졢�Ѹ�ˤǤ�����ؿ�
+ *    詳細表示時のカラム名（日本語、英語）での設定関数
  *
- *    @param  Array     $aryResult         ������̤���Ǽ���줿����
- *    @param  Array     $aryTytle         �����̾����Ǽ���줿����
+ *    @param  Array     $aryResult         検索結果が格納された配列
+ *    @param  Array     $aryTytle         カラム名が格納された配列
  *    @access public
  */
 function fncSetReceiveTabelName($aryResult, $aryTytle)
 {
     $aryColumnNames = array_values($aryResult);
 
-    // ɽ���оݥ������������̤ν���
+    // 表示対象カラムの配列より結果の出力
     for ($i = 0; $i < count($aryColumnNames); $i++) {
         $strColumnName = $aryColumnNames[$i];
 
@@ -608,29 +608,29 @@ function fncSetReceiveTabelName($aryResult, $aryTytle)
 }
 
 /**
- * ����Υ����ɤΥǡ�����¾�Υޥ����ǻ��Ѥ��Ƥ��륳���ɼ���
+ * 指定のコードのデータを他のマスタで使用しているコード取得
  *
- *    ���ꥳ���ɤ��Ф��ơ����ꤵ�줿�ޥ����θ����ؿ�
+ *    指定コードに対して、指定されたマスタの検索関数
  *
- *    @param  String         $strCode         �����оݥ�����
- *    @param    Integer        $lngMode        �����⡼��    1:���������ɤ�������ޥ���    �ʽ缡�ɲá�
- *    @param  Object        $objDB            DB���֥�������
- *    @return Array         $aryCode        �����оݥ����ɤ����Ѥ���Ƥ���ޥ�����Υ����ɤ�����
+ *    @param  String         $strCode         検索対象コード
+ *    @param    Integer        $lngMode        検索モード    1:受注コードから仕入マスタ    （順次追加）
+ *    @param  Object        $objDB            DBオブジェクト
+ *    @return Array         $aryCode        検索対象コードが使用されているマスタ内のコードの配列
  *    @access public
  */
 function fncGetDeleteCodeToMaster($strCode, $lngMode, $objDB)
 {
-    // SQLʸ�κ���
+    // SQL文の作成
     $strQuery = "SELECT distinct on (";
     switch ($lngMode) {
-        case 1: // ���������ɤ������ޥ����θ�����
+        case 1: // 受注コードから売上マスタの検索時
             $strQuery .= "s.strSalesCode) s.strSalesCode as lngSearchNo FROM m_Sales s, m_Receive r ";
             $strQuery .= "WHERE s.lngReceiveNo = r.lngReceiveNo AND s.bytInvalidFlag = FALSE AND r.strReceiveCode = '";
             break;
     }
     $strQuery .= $strCode . "'";
 
-    // ���������꡼�μ¹�
+    // 検索クエリーの実行
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     if ($lngResultNum) {
@@ -646,33 +646,33 @@ function fncGetDeleteCodeToMaster($strCode, $lngMode, $objDB)
 }
 
 /**
- * �����NO�Υǡ�����¾�Υޥ����ǻ��Ѥ��Ƥ��륳���ɼ���
+ * 指定のNOのデータを他のマスタで使用しているコード取得
  *
- *    ����NO���Ф��ơ����ꤵ�줿�ޥ����θ����ؿ�
+ *    指定NOに対して、指定されたマスタの検索関数
  *
- *    @param  Integer     $lngNo             �����о�No
- *    @param    Integer        $lngMode        �����⡼��    1:���������ɤ�������ޥ���    �ʽ缡�ɲá�
- *    @param  Object        $objDB            DB���֥�������
- *    @return Array         $aryCode        �����оݥ����ɤ����Ѥ���Ƥ���ޥ�����Υ����ɤ�����
+ *    @param  Integer     $lngNo             検索対象No
+ *    @param    Integer        $lngMode        検索モード    1:受注コードから仕入マスタ    （順次追加）
+ *    @param  Object        $objDB            DBオブジェクト
+ *    @return Array         $aryCode        検索対象コードが使用されているマスタ内のコードの配列
  *    @access public
  */
 function fncGetDeleteNoToMaster($lngNo, $lngMode, $objDB)
 {
-    // SQLʸ�κ���
+    // SQL文の作成
     $strQuery = "SELECT distinct on (";
     switch ($lngMode) {
-        case 1: // ����No��������ޥ����θ�����
+        case 1: // 受注Noから仕入マスタの検索時
             $strQuery .= "s.lngReceiveNo) s.lngReceiveNo as lngSearchNo FROM m_Sales s ";
             $strQuery .= "WHERE s.bytInvalidFlag = FALSE AND s.lngReceiveNo = ";
             break;
-        case 2: // ����No�������ޥ����θ�����
+        case 2: // 受注Noから売上マスタの検索時
             $strQuery .= "s.lngReceiveNo) s.lngReceiveNo as lngSearchNo FROM m_Sales s ";
             $strQuery .= "WHERE s.bytInvalidFlag = FALSE AND s.lngReceiveNo = ";
             break;
     }
     $strQuery .= $lngNo;
 
-    // ���������꡼�μ¹�
+    // 検索クエリーの実行
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     if ($lngResultNum) {
@@ -688,25 +688,25 @@ function fncGetDeleteNoToMaster($lngNo, $lngMode, $objDB)
 }
 
 /**
- * ����μ����ǡ����ˤĤ���̵�������뤳�ȤǤɤ��ʤ뤫�������櫓����
+ * 指定の受注データについて無効化することでどうなるかケースわけする
  *
- *    ����μ����ǡ����ξ��֤�Ĵ�������������櫓����ؿ�
+ *    指定の受注データの状態を調査し、ケースわけする関数
  *
- *    @param  Array         $aryReceiveData     �����ǡ���
- *    @param  Object        $objDB            DB���֥�������
- *    @return Integer     $lngCase        ���֤Υ�����
- *                                        1: �оݼ����ǡ�����̵�������Ƥ⡢�ǿ��μ����ǡ������ƶ������ʤ�
- *                                        2: �оݼ����ǡ�����̵�������뤳�Ȥǡ��ǿ��μ����ǡ����������ؤ��
- *                                        3: �оݼ����ǡ���������ǡ����ǡ����������褹��
- *                                        4: �оݼ����ǡ�����̵�������뤳�Ȥǡ��ǿ��μ����ǡ����ˤʤꤦ������ǡ������ʤ�
+ *    @param  Array         $aryReceiveData     受注データ
+ *    @param  Object        $objDB            DBオブジェクト
+ *    @return Integer     $lngCase        状態のケース
+ *                                        1: 対象受注データを無効化しても、最新の受注データが影響受けない
+ *                                        2: 対象受注データを無効化することで、最新の受注データが入れ替わる
+ *                                        3: 対象受注データが削除データで、受注が復活する
+ *                                        4: 対象受注データを無効化することで、最新の受注データになりうる受注データがない
  *    @access public
  */
 function fncGetInvalidCodeToMaster($aryReceiveData, $objDB)
 {
-    // ���������ɤμ���
+    // 受注コードの取得
     $strReceiveCode = $aryReceiveData["strreceivecode2"];
 
-    // ����оݼ�����Ʊ�����������ɤκǿ��μ���No��Ĵ�٤�
+    // 削除対象受注と同じ受注コードの最新の受注Noを調べる
     $strQuery = "SELECT lngReceiveNo FROM m_Receive r WHERE r.strReceiveCode = '" . $strReceiveCode . "' AND r.bytInvalidFlag = FALSE ";
     $strQuery .= " AND r.lngRevisionNo >= 0";
     $strQuery .= " AND r.lngRevisionNo = ( "
@@ -714,7 +714,7 @@ function fncGetInvalidCodeToMaster($aryReceiveData, $objDB)
     $strQuery .= " AND r1.strReviseCode = ( "
         . "SELECT MAX( r2.strReviseCode ) FROM m_Receive r2 WHERE r2.strReceiveCode = r1.strReceiveCode ) )";
 
-    // ���������꡼�μ¹�
+    // 検索クエリーの実行
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     if ($lngResultNum == 1) {
@@ -725,11 +725,11 @@ function fncGetInvalidCodeToMaster($aryReceiveData, $objDB)
     }
     $objDB->freeResult($lngResultID);
 
-    // ����оݤ��ǿ����ɤ����Υ����å�
+    // 削除対象が最新かどうかのチェック
     if ($lngCase != 4) {
         if ($lngNewReceiveNo == $aryReceiveData["lngreceiveno"]) {
-            // �ǿ��ξ��
-            // ����оݼ����ʳ��Ǥ�Ʊ�����������ɤκǿ��μ���No��Ĵ�٤�
+            // 最新の場合
+            // 削除対象受注以外でと同じ受注コードの最新の受注Noを調べる
             $strQuery = "SELECT lngReceiveNo FROM m_Receive r WHERE r.strReceiveCode = '" . $strReceiveCode . "' AND r.bytInvalidFlag = FALSE ";
             $strQuery .= " AND r.lngReceiveNo <> " . $aryReceiveData["lngreceiveno"] . " AND r.lngRevisionNo >= 0";
             $strQuery .= " AND r.lngRevisionNo = ( "
@@ -737,7 +737,7 @@ function fncGetInvalidCodeToMaster($aryReceiveData, $objDB)
             $strQuery .= " AND r1.strReviseCode = ( "
                 . "SELECT MAX( r2.strReviseCode ) FROM m_Receive r2 WHERE r2.strReceiveCode = r1.strReceiveCode ) )";
 
-            // ���������꡼�μ¹�
+            // 検索クエリーの実行
             list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
             if ($lngResultNum >= 1) {
@@ -747,7 +747,7 @@ function fncGetInvalidCodeToMaster($aryReceiveData, $objDB)
             }
             $objDB->freeResult($lngResultID);
         }
-        // �оݼ���������ǡ������ɤ����γ�ǧ
+        // 対象受注が削除データかどうかの確認
         else if ($aryReceiveData["lngrevisionno"] < 0) {
             $lngCase = 3;
         } else {
@@ -759,13 +759,13 @@ function fncGetInvalidCodeToMaster($aryReceiveData, $objDB)
 }
 
 /**
- * ��¾��������å�
+ * 排他制御チェック
  *
  * @param [type] $lngFunctionCode
  * @param [type] $strProductCode
  * @param [type] $lngRevisionNo
  * @param [type] $objDB
- * @return void [true����¾����ȯ����false����¾����ȯ�����Ƥ��ʤ�]
+ * @return void [true：排他制御発生　false：排他制御発生していない]
  */
 function fncCheckExclusiveControl($lngFunctionCode, $strProductCode, $lngRevisionNo, $objDB)
 {
@@ -778,7 +778,7 @@ function fncCheckExclusiveControl($lngFunctionCode, $strProductCode, $lngRevisio
     $strQuery .= "  and strexclusivekey1 = '" . $strProductCode . "' ";
     $strQuery .= "  and strexclusivekey2 = '" . $lngRevisionNo . "' ";
 
-    // ���������꡼�μ¹�
+    // 検索クエリーの実行
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     if ($lngResultNum >= 1) {

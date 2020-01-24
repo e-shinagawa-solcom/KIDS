@@ -5,17 +5,17 @@ var menuBackImg = '<img src="' + menuback2 + '" width="313" height="27">';
 
 
 ///// MAIN MTITLE IMAGE /////
-var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="¥ï¡¼¥¯¥Õ¥í¡¼">';
+var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼">';
 var maintitleE = '<img src="' + titleE + '" width="314" height="22" border="0" alt="WORK FLOW">';
 
 
 ///// CSS VALUE /////
-var fcolor = '#666666'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
-var segcolor = '#e8f0f1'; //¹àÌÜÇØ·Ê¿§
-var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
-var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //¹àÌÜ±¦¶õ¤­BORDER
-var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //¹àÌÜº¸¶õ¤­BORDER
-var brcolor03 = '#798787 #e8f0f1 #798787 #e8f0f1'; //¹àÌÜº¸±¦¶õ¤­BORDER
+var fcolor = '#666666'; //é …ç›®ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼
+var segcolor = '#e8f0f1'; //é …ç›®èƒŒæ™¯è‰²
+var segbody = '#d6d0b1'; //INPUT A BODY èƒŒæ™¯è‰²
+var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //é …ç›®å³ç©ºãBORDER
+var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //é …ç›®å·¦ç©ºãBORDER
+var brcolor03 = '#798787 #e8f0f1 #798787 #e8f0f1'; //é …ç›®å·¦å³ç©ºãBORDER
 
 
 function initLayoutWF()

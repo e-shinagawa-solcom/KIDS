@@ -2,12 +2,12 @@
 
 
 //-----------------------------------------------------------------------------
-// ³µÍ× : ¥í¡¼¥«¥ëÊÑ¿ôÄêµÁ
-// ²òÀâ :¡ÖTabIndex¡×ÃÍ¤ÎÀßÄê
+// æ¦‚è¦ : ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°å®šç¾©
+// è§£èª¬ :ã€ŒTabIndexã€å€¤ã®è¨­å®š
 //-----------------------------------------------------------------------------
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¥µ¥Ö¥¦¥£¥ó¥É¥¦¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumTabA1   = '' ; // vendor
 var NumTabA1_2 = '' ; // creation
@@ -23,33 +23,33 @@ var NumTabI1   = '' ; // input
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¾¦ÉÊ´ÉÍı¡×¥¿¥Ö
+// é©ç”¨ç®‡æ‰€ :ã€Œå•†å“ç®¡ç†ã€ã‚¿ãƒ–
 //------------------------------------------
 var PTabNumA = '' ; // A
 var PTabNumB = '' ; // B
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¼õÃí¡¦È¯Ãí¡¦Çä¾å¡¦»ÅÆş¡×¥¿¥Ö
+// é©ç”¨ç®‡æ‰€ :ã€Œå—æ³¨ãƒ»ç™ºæ³¨ãƒ»å£²ä¸Šãƒ»ä»•å…¥ã€ã‚¿ãƒ–
 //------------------------------------------
-var TabNumA = '' ; // ¥Ø¥Ã¥À¡¼
-var TabNumB = '' ; // ÌÀºÙ
+var TabNumA = '' ; // ãƒ˜ãƒƒãƒ€ãƒ¼
+var TabNumB = '' ; // æ˜ç´°
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡ÖÅĞÏ¿¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œç™»éŒ²ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var RegistNum = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¹ÔÄÉ²Ã¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œè¡Œè¿½åŠ ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var AddRowNum = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¥«¥ì¥ó¥À¡¼¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumDateTabA = '' ;
 var NumDateTabB = '' ;
@@ -57,7 +57,7 @@ var NumDateTabC = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡ÖÀ½ÉÊ¿ôÎÌ¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œè£½å“æ•°é‡ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumPunitTab = '' ;
 
@@ -68,14 +68,14 @@ var NumPunitTab = '' ;
 
 
 //---------------------------------------------------------
-// ¥¿¥¤¥È¥ë¥¤¥á¡¼¥¸À¸À®
+// ã‚¿ã‚¤ãƒˆãƒ«ã‚¤ãƒ¡ãƒ¼ã‚¸ç”Ÿæˆ
 //---------------------------------------------------------
-var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="¥á¥¤¥ó¥á¥Ë¥å¡¼">';
+var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼">';
 
 
 
 //---------------------------------------------------------
-// ¥á¥Ë¥å¡¼¥Ğ¥Ã¥¯¥á¡¼¥¸À¸À®
+// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒƒã‚¯ãƒ¡ãƒ¼ã‚¸ç”Ÿæˆ
 //---------------------------------------------------------
 var MenuBackImg = '<img src="' + menuback + '" width="978" height="170" border="0">';
 
@@ -83,107 +83,107 @@ var MenuBackImg = '<img src="' + menuback + '" width="978" height="170" border="
 
 
 //-----------------------------------------------------------------------------
-// ³µÍ× : ¥Ü¥¿¥ó¥¤¥á¡¼¥¸À¸À®
-// ²òÀâ : ¥¤¥á¡¼¥¸À¸À®¡¦¥í¡¼¥ë¥ª¡¼¥Ğ¡¼½èÍı¡¦¥Ş¥¦¥¹¥À¥¦¥ó½èÍı¤òÀßÄê
+// æ¦‚è¦ : ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸ç”Ÿæˆ
+// è§£èª¬ : ã‚¤ãƒ¡ãƒ¼ã‚¸ç”Ÿæˆãƒ»ãƒ­ãƒ¼ãƒ«ã‚ªãƒ¼ãƒãƒ¼å‡¦ç†ãƒ»ãƒã‚¦ã‚¹ãƒ€ã‚¦ãƒ³å‡¦ç†ã‚’è¨­å®š
 //-----------------------------------------------------------------------------
 
 //---------------------------------------------------------
-//Å¬ÍÑ :¡Ö¾¦ÉÊ´ÉÍı¡×
+//é©ç”¨ :ã€Œå•†å“ç®¡ç†ã€
 //---------------------------------------------------------
-var pNaviJ1 = '<a href="#"><img onmouseover="fncPButton( \'onJ\' , this );" onmouseout="fncPButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + pJ1 + '" width="151" height="25" border="0" alt="¾¦ÉÊ´ÉÍı" tabindex="1"></a>';
+var pNaviJ1 = '<a href="#"><img onmouseover="fncPButton( \'onJ\' , this );" onmouseout="fncPButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + pJ1 + '" width="151" height="25" border="0" alt="å•†å“ç®¡ç†" tabindex="1"></a>';
 
 
 //---------------------------------------------------------
-//Å¬ÍÑ :¡Ö¸«ÀÑ¸¶²Á´ÉÍı¡×
+//é©ç”¨ :ã€Œè¦‹ç©åŸä¾¡ç®¡ç†ã€
 //---------------------------------------------------------
-var esNaviJ1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, esJ2 );" onmouseout="fncChangeBtImg( this, esJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + esJ1 + '" width="151" height="25" border="0" alt="¸«ÀÑ¸¶²Á´ÉÍı" tabindex="2"></a>';
+var esNaviJ1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, esJ2 );" onmouseout="fncChangeBtImg( this, esJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + esJ1 + '" width="151" height="25" border="0" alt="è¦‹ç©åŸä¾¡ç®¡ç†" tabindex="2"></a>';
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡Ö¼õÃí´ÉÍı¡×
+// é©ç”¨ :ã€Œå—æ³¨ç®¡ç†ã€
 //---------------------------------------------------------
-var soNaviJ1 = '<a href="#"><img onmouseover="fncSOButton( \'onJ\' , this );" onmouseout="fncSOButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + soJ1 + '" width="151" height="25" border="0" alt="¼õÃí´ÉÍı" tabindex="3"></a>';
-
-
-//---------------------------------------------------------
-// Å¬ÍÑ :¡ÖÈ¯Ãí´ÉÍı¡×
-//---------------------------------------------------------
-var poNaviJ1 = '<a href="#"><img onmouseover="fncPOButton( \'onJ\' , this );" onmouseout="fncPOButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + poJ1 + '" width="151" height="25" border="0" alt="È¯Ãí´ÉÍı" tabindex="4"></a>';
+var soNaviJ1 = '<a href="#"><img onmouseover="fncSOButton( \'onJ\' , this );" onmouseout="fncSOButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + soJ1 + '" width="151" height="25" border="0" alt="å—æ³¨ç®¡ç†" tabindex="3"></a>';
 
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡ÖÇä¾å´ÉÍı¡×
+// é©ç”¨ :ã€Œç™ºæ³¨ç®¡ç†ã€
 //---------------------------------------------------------
-var scNaviJ1 = '<a href="#"><img onmouseover="fncSCButton( \'onJ\' , this );" onmouseout="fncSCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + scJ1 + '" width="151" height="25" border="0" alt="Çä¾å´ÉÍı" tabindex="5"></a>';
+var poNaviJ1 = '<a href="#"><img onmouseover="fncPOButton( \'onJ\' , this );" onmouseout="fncPOButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + poJ1 + '" width="151" height="25" border="0" alt="ç™ºæ³¨ç®¡ç†" tabindex="4"></a>';
 
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡Ö»ÅÆş´ÉÍı¡×
+// é©ç”¨ :ã€Œå£²ä¸Šç®¡ç†ã€
 //---------------------------------------------------------
-var pcNaviJ1 = '<a href="#"><img onmouseover="fncPCButton( \'onJ\' , this );" onmouseout="fncPCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + pcJ1 + '" width="151" height="25" border="0" alt="»ÅÆş´ÉÍı" tabindex="6"></a>';
+var scNaviJ1 = '<a href="#"><img onmouseover="fncSCButton( \'onJ\' , this );" onmouseout="fncSCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + scJ1 + '" width="151" height="25" border="0" alt="å£²ä¸Šç®¡ç†" tabindex="5"></a>';
 
 
 //---------------------------------------------------------
-//Å¬ÍÑ :¡ÖÀÁµá´ÉÍı¡×
+// é©ç”¨ :ã€Œä»•å…¥ç®¡ç†ã€
 //---------------------------------------------------------
-var invNaviJ1 = '<a href="#"><img onmouseover="fncINVButton( \'onJ\' , this );" onmouseout="fncINVButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + invJ1 + '" width="151" height="25" border="0" alt="ÀÁµá´ÉÍı" tabindex="7"></a>';
+var pcNaviJ1 = '<a href="#"><img onmouseover="fncPCButton( \'onJ\' , this );" onmouseout="fncPCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + pcJ1 + '" width="151" height="25" border="0" alt="ä»•å…¥ç®¡ç†" tabindex="6"></a>';
 
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡ÖÄ¢É¼½ĞÎÏ¡×
+//é©ç”¨ :ã€Œè«‹æ±‚ç®¡ç†ã€
 //---------------------------------------------------------
-var listNaviJ1 = '<a href="#"><img onmouseover="fncLISTButton( \'onJ\' , this );" onmouseout="fncLISTButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + listoutJ1 + '" width="151" height="25" border="0" alt="Ä¢É¼½ĞÎÏ" tabindex="8"></a>'
+var invNaviJ1 = '<a href="#"><img onmouseover="fncINVButton( \'onJ\' , this );" onmouseout="fncINVButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + invJ1 + '" width="151" height="25" border="0" alt="è«‹æ±‚ç®¡ç†" tabindex="7"></a>';
 
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡Ö¥Ç¡¼¥¿¥¨¥¯¥¹¥İ¡¼¥È¡×
+// é©ç”¨ :ã€Œå¸³ç¥¨å‡ºåŠ›ã€
 //---------------------------------------------------------
-var dataexNaviJ1 = '<a href="#"><img onmouseover="fncDATAEXButton( \'onJ\' , this );" onmouseout="fncDATAEXButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + dataexJ1 + '" width="151" height="25" border="0" alt="¥Ç¡¼¥¿¥¨¥¯¥¹¥İ¡¼¥È" tabindex="9"></a>';
-
-//---------------------------------------------------------
-//Å¬ÍÑ :¡Ö¥¢¥Ã¥×¥í¡¼¥É¡×
-//---------------------------------------------------------
-var uploadNaviJ1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, uploadJ2 );" onmouseout="fncChangeBtImg( this, uploadJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + uploadJ1 + '" width="151" height="25" border="0" alt="¥¢¥Ã¥×¥í¡¼¥É" tabindex="10"></a>';
+var listNaviJ1 = '<a href="#"><img onmouseover="fncLISTButton( \'onJ\' , this );" onmouseout="fncLISTButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + listoutJ1 + '" width="151" height="25" border="0" alt="å¸³ç¥¨å‡ºåŠ›" tabindex="8"></a>'
 
 
 //---------------------------------------------------------
-//Å¬ÍÑ :¡Ö¶â·¿ÍúÎò´ÉÍı¡×
+// é©ç”¨ :ã€Œãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã€
 //---------------------------------------------------------
-var mmNaviJ1 = '<a href="#"><img onmouseover="fncMMButton( \'onJ\' , this );" onmouseout="fncMMButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mmJ1 + '" width="151" height="25" border="0" alt="¶â·¿ÍúÎò´ÉÍı" tabindex="11"></a>';
+var dataexNaviJ1 = '<a href="#"><img onmouseover="fncDATAEXButton( \'onJ\' , this );" onmouseout="fncDATAEXButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + dataexJ1 + '" width="151" height="25" border="0" alt="ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ" tabindex="9"></a>';
 
 //---------------------------------------------------------
-//Å¬ÍÑ :¡Ö¶â·¿Ä¢É¼´ÉÍı¡×
+//é©ç”¨ :ã€Œã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã€
 //---------------------------------------------------------
-var mrNaviJ1 = '<a href="#"><img onmouseover="fncMRButton( \'onJ\' , this );" onmouseout="fncMRButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mrJ1 + '" width="151" height="25" border="0" alt="¶â·¿Ä¢É¼´ÉÍı" tabindex="12"></a>';
-
-//---------------------------------------------------------
-//Å¬ÍÑ :¡ÖLC´ÉÍı¡×
-//---------------------------------------------------------
-var lcNaviJ1 = '<a href="#"><img onmouseover="fncLCButton( \'onJ\' , this );" onmouseout="fncLCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + lcJ1 + '" width="151" height="25" border="0" alt="LC´ÉÍı" tabindex="13"></a>';
+var uploadNaviJ1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, uploadJ2 );" onmouseout="fncChangeBtImg( this, uploadJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + uploadJ1 + '" width="151" height="25" border="0" alt="ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰" tabindex="10"></a>';
 
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡Ö¥æ¡¼¥¶¡¼´ÉÍı¡×
+//é©ç”¨ :ã€Œé‡‘å‹å±¥æ­´ç®¡ç†ã€
+//---------------------------------------------------------
+var mmNaviJ1 = '<a href="#"><img onmouseover="fncMMButton( \'onJ\' , this );" onmouseout="fncMMButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mmJ1 + '" width="151" height="25" border="0" alt="é‡‘å‹å±¥æ­´ç®¡ç†" tabindex="11"></a>';
+
+//---------------------------------------------------------
+//é©ç”¨ :ã€Œé‡‘å‹å¸³ç¥¨ç®¡ç†ã€
+//---------------------------------------------------------
+var mrNaviJ1 = '<a href="#"><img onmouseover="fncMRButton( \'onJ\' , this );" onmouseout="fncMRButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mrJ1 + '" width="151" height="25" border="0" alt="é‡‘å‹å¸³ç¥¨ç®¡ç†" tabindex="12"></a>';
+
+//---------------------------------------------------------
+//é©ç”¨ :ã€ŒLCç®¡ç†ã€
+//---------------------------------------------------------
+var lcNaviJ1 = '<a href="#"><img onmouseover="fncLCButton( \'onJ\' , this );" onmouseout="fncLCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + lcJ1 + '" width="151" height="25" border="0" alt="LCç®¡ç†" tabindex="13"></a>';
+
+
+//---------------------------------------------------------
+// é©ç”¨ :ã€Œãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ã€
 //---------------------------------------------------------
 var ucNavi1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, uc2 );" onmouseout="fncChangeBtImg( this, uc1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + uc1 + '" width="72" height="20" border="0" alt="USER" tabindex="14"></a>';
 
-var ucNaviJ1 = '<a href="#"><img onmouseover="fncUCButton( \'onJ\' , this );" onmouseout="fncUCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + ucJ1 + '" width="151" height="25" border="0" alt="¥æ¡¼¥¶¡¼´ÉÍı" tabindex="14"></a>';
+var ucNaviJ1 = '<a href="#"><img onmouseover="fncUCButton( \'onJ\' , this );" onmouseout="fncUCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + ucJ1 + '" width="151" height="25" border="0" alt="ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†" tabindex="14"></a>';
 
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡Ö¥Ş¥¹¥¿´ÉÍı¡×
+// é©ç”¨ :ã€Œãƒã‚¹ã‚¿ç®¡ç†ã€
 //---------------------------------------------------------
 var mNavi1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, mst2 );" onmouseout="fncChangeBtImg( this, mst1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mst1 + '" width="72" height="20" border="0" alt="MASTER" tabindex="15"></a>';
 
-var mNaviJ1 = '<a href="#"><img onmouseover="fncMButton( \'onJ\' , this );" onmouseout="fncMButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mstJ1 + '" width="151" height="25" border="0" alt="¥Ş¥¹¥¿¡¼´ÉÍı" tabindex="15"></a>';
+var mNaviJ1 = '<a href="#"><img onmouseover="fncMButton( \'onJ\' , this );" onmouseout="fncMButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mstJ1 + '" width="151" height="25" border="0" alt="ãƒã‚¹ã‚¿ãƒ¼ç®¡ç†" tabindex="15"></a>';
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡ÖÄù¤áÆü¡×
+// é©ç”¨ :ã€Œç· ã‚æ—¥ã€
 //---------------------------------------------------------
 var dataclosedNavi1 = '<a href="#"><img onmouseover="fncDataClosedButton( \'on\' , this );" onmouseout="fncDataClosedButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + dataclosed1 + '" width="72" height="20" border="0" alt="DATA CLOSED" tabindex="16"></a>';
 
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡Ö¥·¥¹¥Æ¥à´ÉÍı¡×
+// é©ç”¨ :ã€Œã‚·ã‚¹ãƒ†ãƒ ç®¡ç†ã€
 //---------------------------------------------------------
 var sysNavi1 = '<a href="#"><img onmouseover="fncSYSButton( \'on\' , this );" onmouseout="fncSYSButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + sys1 + '" width="72" height="20" border="0" alt="SYSTEM" tabindex="17"></a>';
 
@@ -196,23 +196,23 @@ var sysNavi1 = '<a href="#"><img onmouseover="fncSYSButton( \'on\' , this );" on
 function initLayoutSegs( obj1 , obj2 )
 {
 
-	var initXpos1 = 24;  //LEFTºÂÉ¸¡¦½é´üÃÍ1
-	var initXpos2 = 24;  //LEFTºÂÉ¸¡¦½é´üÃÍ2 185
+	var initXpos1 = 24;  //LEFTåº§æ¨™ãƒ»åˆæœŸå€¤1
+	var initXpos2 = 24;  //LEFTåº§æ¨™ãƒ»åˆæœŸå€¤2 185
 
-	var moveXpos = 160;   //LEFTºÂÉ¸¡¦°ÜÆ°ÃÍ
-
-
-
-	var navi1Ypos = 318;  //TOPºÂÉ¸¡¦¸ÇÄêÃÍ1
-	var navi2Ypos = 388;  //TOPºÂÉ¸¡¦¸ÇÄêÃÍ2
+	var moveXpos = 160;   //LEFTåº§æ¨™ãƒ»ç§»å‹•å€¤
 
 
 
-	var lay1 = obj1.children; //¥á¥Ë¥å¡¼£±¹àÌÜ
-	var lay2 = obj2.children; //¥á¥Ë¥å¡¼£²¹àÌÜ
+	var navi1Ypos = 318;  //TOPåº§æ¨™ãƒ»å›ºå®šå€¤1
+	var navi2Ypos = 388;  //TOPåº§æ¨™ãƒ»å›ºå®šå€¤2
 
 
-	///// ¥á¥Ë¥å¡¼£±¹àÌÜÅ¸³« /////
+
+	var lay1 = obj1.children; //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ï¼‘é …ç›®
+	var lay2 = obj2.children; //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ï¼’é …ç›®
+
+
+	///// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ï¼‘é …ç›®å±•é–‹ /////
 	if (typeof(obj1)!='undefined')
 	{
 		for (i = 0; i < lay1.length; i++)
@@ -226,7 +226,7 @@ function initLayoutSegs( obj1 , obj2 )
 	}
 
 
-	///// ¥á¥Ë¥å¡¼£²¹àÌÜÅ¸³« /////
+	///// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ï¼’é …ç›®å±•é–‹ /////
 	if (typeof(obj2)!='undefined')
 	{
 		for (i = 0; i < lay2.length; i++)

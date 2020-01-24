@@ -2,93 +2,93 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       LC´ÉÍý  LCÀßÄêÊÑ¹¹²èÌÌ
+ *       LCç®¡ç†  LCè¨­å®šå¤‰æ›´ç”»é¢
  */
 // ----------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-// ¢£ ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ëÆÉ¹þ
+// â–  ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼
 //-------------------------------------------------------------------------
-// ÆÉ¤ß¹þ¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
-//¶¦ÄÌ¥Õ¥¡¥¤¥ëÆÉ¤ß¹þ¤ß
+//å…±é€šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 require_once '../lcModel/lcModelCommon.php';
-//¥¯¥é¥¹¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹þ¤ß
+//ã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once '../lcModel/db_common.php';
 require_once '../lcModel/kidscore_common.php';
 require LIB_FILE;
 
 //-------------------------------------------------------------------------
-// ¢£ ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// â–  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 //-------------------------------------------------------------------------
 $objDB = new clsDB();
 $objAuth = new clsAuth();
-//LCÍÑDBÀÜÂ³¥¤¥ó¥¹¥¿¥ó¥¹À¸À®
+//LCç”¨DBæŽ¥ç¶šã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 $db = new lcConnect();
 
 //-------------------------------------------------------------------------
-// ¢£ DB¥ª¡¼¥×¥ó
+// â–  DBã‚ªãƒ¼ãƒ—ãƒ³
 //-------------------------------------------------------------------------
 $objDB->open("", "", "", "");
 
 //-------------------------------------------------------------------------
-// ¢£ ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+// â–  ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 //-------------------------------------------------------------------------
 $aryData = $_POST;
 
-$aryData["strSessionID"] = $_REQUEST["strSessionID"]; // ¥»¥Ã¥·¥ç¥óID
-$aryData["lngLanguageCode"] = 1; // ¸À¸ì¥³¡¼¥É
+$aryData["strSessionID"] = $_REQUEST["strSessionID"]; // ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+$aryData["lngLanguageCode"] = 1; // è¨€èªžã‚³ãƒ¼ãƒ‰
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 $usrId = trim($objAuth->UserID);
 
-// //¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+// //ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 // $user_id = trim($objAuth->UserID);
 
-// 2100 LC´ÉÍý
+// 2100 LCç®¡ç†
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+//         fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 // }
 
-// // 2102 LCÀßÄêÊÑ¹¹
+// // 2102 LCè¨­å®šå¤‰æ›´
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC2, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+//         fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 // }
 
-//·ÐÍý¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæŽ¥ç¶š
 $lcModel = new lcModel();
 
-//¥í¥°¥¤¥ó¾õ¶·¤ÎºÇÂç´ÉÍýÈÖ¹æ¤Î¼èÆÀ
+//ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®æœ€å¤§ç®¡ç†ç•ªå·ã®å–å¾—
 $maxLgno = $lcModel->getMaxLoginStateNum();
 
-// ¥í¥°¥¢¥¦¥È»þ¹ï¤Î¼èÆÀ
+// ãƒ­ã‚°ã‚¢ã‚¦ãƒˆæ™‚åˆ»ã®å–å¾—
 $acloginstate = $lcModel->getAcLoginstateBylgno($maxLgno);
 $lgoutymd = $acloginstate->lgoutymd;
 
-//¥æ¡¼¥¶¡¼¸¢¸Â¤Î¼èÆÀ
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™ã®å–å¾—
 $loginUserAuth = $lcModel->getUserAuth($usrId);
 
 $userAuth = substr($loginUserAuth, 1, 1);
 
-//¥í¥°¥¤¥ó¾õ¶·È½Äê½èÍý
+//ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³åˆ¤å®šå‡¦ç†
 $logined_flg = false;
 $loginState = $lcModel->getLoginState($usrId);
 
 $objDB->transactionBegin();
-// ackids¤Î¥Ç¡¼¥¿¤òkidscore2¤ËÅÐÏ¿
-// ackids¤Î¶ä¹Ô¾ðÊó¤Î¼èÆÀ
+// ackidsã®ãƒ‡ãƒ¼ã‚¿ã‚’kidscore2ã«ç™»éŒ²
+// ackidsã®éŠ€è¡Œæƒ…å ±ã®å–å¾—
 $bankArry = $lcModel->getBankInfo();
-// kidscore2¤Î¶ä¹Ô¾ðÊó¤Îºï½ü
+// kidscore2ã®éŠ€è¡Œæƒ…å ±ã®å‰Šé™¤
 $deltedNum = fncDeleteBank($objDB);
 if ($deltedNum >= 0) {
-    // kidscore2¤Î¶ä¹Ô¾ðÊó¤ÎÅÐÏ¿
+    // kidscore2ã®éŠ€è¡Œæƒ…å ±ã®ç™»éŒ²
     if (count($bankArry) > 0) {
         foreach ($bankArry as $bank) {
             fncInsertBank($objDB, $bank);
@@ -96,12 +96,12 @@ if ($deltedNum >= 0) {
     }
 }
 
-// ackids¤Î»ÙÊ§Àè¾ðÊó¤Î¼èÆÀ
+// ackidsã®æ”¯æ‰•å…ˆæƒ…å ±ã®å–å¾—
 $payfArry = $lcModel->getPayfInfo();
-// kidscore2¤Î»ÙÊ§Àè¾ðÊó¤Îºï½ü
+// kidscore2ã®æ”¯æ‰•å…ˆæƒ…å ±ã®å‰Šé™¤
 $deltedNum = fncDeletePayfinfo($objDB);
 if ($deltedNum >= 0) {
-// kidscore2¤Î»ÙÊ§Àè¾ðÊó¤ÎÅÐÏ¿
+// kidscore2ã®æ”¯æ‰•å…ˆæƒ…å ±ã®ç™»éŒ²
     if (count($payfArry) > 0) {
         foreach ($payfArry as $payf) {
             fncInsertPayf($objDB, $payf);
@@ -113,13 +113,13 @@ $objDB->transactionCommit();
 $objDB->close();
 $lcModel->close();
 
-//HTML¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+//HTMLã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 $aryData["login_state"] = $loginState;
 
 echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/set/parts.tmpl", $aryData, $objAuth);
 
-//½é´ü½èÍý¼Â¹Ô
-//js¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+//åˆæœŸå‡¦ç†å®Ÿè¡Œ
+//jsã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 $arr = array(
     "login_state" => $loginState,
     "session_id" => $aryData["strSessionID"],

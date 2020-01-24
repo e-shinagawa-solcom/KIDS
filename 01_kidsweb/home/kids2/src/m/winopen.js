@@ -8,9 +8,9 @@ $(function() {
 		e.preventDefault();
 		args = new Array();
 		args[0] = new Array();
-		args[0][0] = strEditURL; // ¼Â¹ÔÀèURL
-		args[0][1] = 'ResultIframeCommonMaster'; // IFrame¤Î¥¹¥¿¥¤¥ëÍÑID
-		args[0][2] = 'YES'; // IFrame¥¹¥¯¥í¡¼¥ë¤Îµö²Ä¡¦ÉÔµö²Ä
+		args[0][0] = strEditURL; // å®Ÿè¡Œå…ˆURL
+		args[0][1] = 'ResultIframeCommonMaster'; // IFrameã®ã‚¹ã‚¿ã‚¤ãƒ«ç”¨ID
+		args[0][2] = 'YES'; // IFrameã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã®è¨±å¯ãƒ»ä¸è¨±å¯
 		args[0][3] = 1; // $lngLanguageCode
 		args[0][4] = 'add'; // 'fix' , 'add' , 'delete'
 		var win = window.open('/result/remove_master.html' , args , 'height=520,width=600,centerscreen=yes,resizable=no,scrollbars=yes,chrome=yes');
@@ -36,9 +36,9 @@ $(function() {
 		var name = $(this).attr('name');
 		args = new Array();
 		args[0] = new Array();
-		args[0][0] = href; // ¼Â¹ÔÀèURL
-		args[0][1] = 'ResultIframeCommonMaster'; // IFrame¤Î¥¹¥¿¥¤¥ëÍÑID
-		args[0][2] = 'YES'; // IFrame¥¹¥¯¥í¡¼¥ë¤Îµö²Ä¡¦ÉÔµö²Ä
+		args[0][0] = href; // å®Ÿè¡Œå…ˆURL
+		args[0][1] = 'ResultIframeCommonMaster'; // IFrameã®ã‚¹ã‚¿ã‚¤ãƒ«ç”¨ID
+		args[0][2] = 'YES'; // IFrameã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã®è¨±å¯ãƒ»ä¸è¨±å¯
 		args[0][3] = 1; // $lngLanguageCode
 		args[0][4] = name; // 'fix' , 'add' , 'delete'
 		var win = window.open('/result/remove_master.html' , args , 'height=520,width=600,centerscreen=yes,resizable=no,scrollbars=yes,chrome=yes');

@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿ ³ÎÇ§²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ ç¢ºèªç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -19,30 +19,30 @@
 // confirm.php -> dtmapplyenddate     -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -55,12 +55,12 @@ $aryCheck["dtmapplystartdate"]   = "null:date(/)";
 $aryCheck["dtmapplyenddate"]     = "null:date(/)";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->setMasterTable( "m_MonetaryRate", "lngmonetaryratecode", $aryData["lngmonetaryratecode"], Array ( "lngmonetaryunitcode" => $aryData["lngmonetaryunitcode"], "dtmapplystartdate" => $aryData["dtmapplystartdate"] ), $objDB );
 $objMaster->setAryMasterInfo( $aryData["lngmonetaryratecode"], $aryData["lngmonetaryunitcode"] );
@@ -68,36 +68,36 @@ $objMaster->setAryMasterInfo( $aryData["lngmonetaryratecode"], $aryData["lngmone
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½èÍı¤ÎÍ­¸úÀ­¤ò¥Á¥§¥Ã¥¯
+// å‡¦ç†ã®æœ‰åŠ¹æ€§ã‚’ãƒã‚§ãƒƒã‚¯
 //////////////////////////////////////////////////////////////////////////
-// ( ÅĞÏ¿ ¤Ş¤¿¤Ï ½¤Àµ ) ¤«¤Ä ¥­¡¼¤Ë¥¨¥é¡¼¤¬¤Ê¤¤ ¾ì¹ç¡¢
-// ¿·µ¬ÅĞÏ¿¡¢½¤Àµ¥Á¥§¥Ã¥¯¼Â¹Ô
+// ( ç™»éŒ² ã¾ãŸã¯ ä¿®æ­£ ) ã‹ã¤ ã‚­ãƒ¼ã«ã‚¨ãƒ©ãƒ¼ãŒãªã„ å ´åˆã€
+// æ–°è¦ç™»éŒ²ã€ä¿®æ­£ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode"] == DEF_ACTION_UPDATE ) && !join ( $aryCheckResult ) )
 {
-	// ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
-	// AND NOT ( ½ªÎ»Ç¯·îÆü < ÆşÎÏ³«»ÏÇ¯·îÆü OR ³«»ÏÇ¯·îÆü > ÆşÎÏ½ªÎ»Ç¯·îÆü )
-	// ¾ò·ïÄÉ²Ã
+	// ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
+	// AND NOT ( çµ‚äº†å¹´æœˆæ—¥ < å…¥åŠ›é–‹å§‹å¹´æœˆæ—¥ OR é–‹å§‹å¹´æœˆæ—¥ > å…¥åŠ›çµ‚äº†å¹´æœˆæ—¥ )
+	// æ¡ä»¶è¿½åŠ 
 	$objMaster->aryCheckQuery["INSERT"] .= " AND NOT ( " . $objMaster->aryColumnName[4] . " < '" . $aryData[$objMaster->aryColumnName[3]] . "' OR " . $objMaster->aryColumnName[3] . " > '" . $aryData[$objMaster->aryColumnName[4]] . "' )";
 
 	 list ( $lngResultID, $lngResultNum ) = fncQuery ( $objMaster->aryCheckQuery["INSERT"], $objDB );
 
-	// ¿·µ¬ÅĞÏ¿ ¤«¤Ä ·ë²Ì·ï¿ô¤¬0°Ê¾å
-	// ¤Ş¤¿¤Ï
-	// ½¤Àµ ¤«¤Ä ·ë²Ì·ï¿ô¤¬1°Ê³° ¤Î¾ì¹ç¡¢¥¨¥é¡¼
+	// æ–°è¦ç™»éŒ² ã‹ã¤ çµæœä»¶æ•°ãŒ0ä»¥ä¸Š
+	// ã¾ãŸã¯
+	// ä¿®æ­£ ã‹ã¤ çµæœä»¶æ•°ãŒ1ä»¥å¤– ã®å ´åˆã€ã‚¨ãƒ©ãƒ¼
 	if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && $lngResultNum > 0 ) || ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $lngResultNum != 1 ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 	}
 
-	// ÅĞÏ¿½èÍı(INSERT)
+	// ç™»éŒ²å‡¦ç†(INSERT)
 	elseif ( $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 	{
 		$count = count ( $objMaster->aryColumnName );
 
-		// INSERT VALUES À¸À®
+		// INSERT VALUES ç”Ÿæˆ
 		for ( $i = 0; $i < $count; $i++ )
 		{
-			// TEXT ·¿¤À¤Ã¤¿¾ì¹ç¡¢¥¯¥©¡¼¥ÈÉÕ²Ã
+			// TEXT å‹ã ã£ãŸå ´åˆã€ã‚¯ã‚©ãƒ¼ãƒˆä»˜åŠ 
 			if ( $objMaster->aryType[$i] == "text" || $objMaster->aryType[$i] == "date" )
 			{
 				$aryValue[$i] = "'" . $aryData[$objMaster->aryColumnName[$i]] . "'";
@@ -111,15 +111,15 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 		$aryQuery[] = "INSERT INTO " . $objMaster->strTableName . " VALUES ( " . join ( ", ", $aryValue ) . ")";
 	}
 
-	// ½¤Àµ½èÍı(UPDATE)
+	// ä¿®æ­£å‡¦ç†(UPDATE)
 	elseif ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE )
 	{
 		$count = count ( $objMaster->aryColumnName );
 
-		// UPDATE VALUES À¸À®
+		// UPDATE VALUES ç”Ÿæˆ
 		for ( $i = 2; $i < $count; $i++ )
 		{
-			// TEXT ·¿¤À¤Ã¤¿¾ì¹ç¡¢¥¯¥©¡¼¥ÈÉÕ²Ã
+			// TEXT å‹ã ã£ãŸå ´åˆã€ã‚¯ã‚©ãƒ¼ãƒˆä»˜åŠ 
 			if ( $objMaster->aryType[$i] == "text" || $objMaster->aryType[$i] == "date" )
 			{
 				$aryValue[$i] = $objMaster->aryColumnName[$i] . " = '" . $aryData[$objMaster->aryColumnName[$i]] . "'";
@@ -130,10 +130,10 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 			}
 		}
 
-		// ¥í¥Ã¥¯
+		// ãƒ­ãƒƒã‚¯
 		$aryQuery[] = "SELECT * FROM " . $objMaster->strTableName . " WHERE " . $objMaster->aryColumnName[0] . " = " . $aryData[$objMaster->aryColumnName[0]] . " AND " . $objMaster->aryColumnName[1] . " = " . $aryData[$objMaster->aryColumnName[1]] . " AND " . $objMaster->aryColumnName[3] . " = '" . $aryData[$objMaster->aryColumnName[3]] . "' FOR UPDATE";
 
-		// UPDATE ¥¯¥¨¥ê
+		// UPDATE ã‚¯ã‚¨ãƒª
 		$aryQuery[] = "UPDATE " . $objMaster->strTableName . " SET " . join ( ", ", $aryValue ) . " WHERE " . $objMaster->aryColumnName[0] . " = " . $aryData[$objMaster->aryColumnName[0]] . " AND " . $objMaster->aryColumnName[1] . " = " . $aryData[$objMaster->aryColumnName[1]] . " AND " . $objMaster->aryColumnName[3] . " = '" . $aryData[$objMaster->aryColumnName[3]] . "'";
 	}
 }
@@ -141,7 +141,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 
 
 ////////////////////////////////////////////////////////////////////////////
-// ¥¯¥¨¥ê¼Â¹Ô
+// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 ////////////////////////////////////////////////////////////////////////////
 $objDB->transactionBegin();
 
@@ -154,16 +154,16 @@ for ( $i = 0; $i < count ( $aryQuery ); $i++ )
 $objDB->transactionCommit();
 
 
-// ¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍı
+// ã‚¨ãƒ©ãƒ¼é …ç›®è¡¨ç¤ºå‡¦ç†
 list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB );
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½ĞÎÏ
+// å‡ºåŠ›
 //////////////////////////////////////////////////////////////////////////
 if ( $bytErrorFlag )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 else
 {

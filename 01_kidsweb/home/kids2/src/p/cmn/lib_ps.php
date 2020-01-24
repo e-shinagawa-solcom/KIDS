@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       À½ÉÊ¡¡¸¡º÷´ØÏ¢´Ø¿ô·²
+*       è£½å“ã€€æ¤œç´¢é–¢é€£é–¢æ•°ç¾¤
 *
 *
 *       @package    K.I.D.S.
@@ -13,10 +13,10 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*		¸¡º÷·ë²Ì´ØÏ¢¤Î´Ø¿ô
+*       å‡¦ç†æ¦‚è¦
+*		æ¤œç´¢çµæœé–¢é€£ã®é–¢æ•°
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
@@ -24,60 +24,60 @@
 
 
 /**
-* ¸¡º÷¹àÌÜ¤«¤é°ìÃ×¤¹¤ëºÇ¿·¤Î¾¦ÉÊ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®´Ø¿ô
+* æ¤œç´¢é …ç›®ã‹ã‚‰ä¸€è‡´ã™ã‚‹æœ€æ–°ã®å•†å“ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆé–¢æ•°
 *
-*	¸¡º÷¹àÌÜ¤«¤é SQLÊ¸¤òºîÀ®¤¹¤ë
+*	æ¤œç´¢é …ç›®ã‹ã‚‰ SQLæ–‡ã‚’ä½œæˆã™ã‚‹
 *
-*	@param  Array 	$aryViewColumn 			É½¼¨ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
-*	@param  Array 	$arySearchColumn 		¸¡º÷ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
-*	@param  Array 	$arySearchDataColumn 	¸¡º÷ÆâÍÆ¤ÎÇÛÎó
-*	@param  Object	$objDB       			DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@param	Array	$aryUserAuthority		¥æ¡¼¥¶¡¼¤Î¸¢¸Â¾ğÊó¤ÎÇÛÎó¡Ê¾¦ÉÊ´ÉÍı¤ËÂĞ¤¹¤ë¸¢¸Â¾ğÊó¡Ë
-*	@return Array 	$strSQL ¸¡º÷ÍÑSQLÊ¸ OR Boolean FALSE
+*	@param  Array 	$aryViewColumn 			è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+*	@param  Array 	$arySearchColumn 		æ¤œç´¢å¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+*	@param  Array 	$arySearchDataColumn 	æ¤œç´¢å†…å®¹ã®é…åˆ—
+*	@param  Object	$objDB       			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@param	Array	$aryUserAuthority		ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®æ¨©é™æƒ…å ±ã®é…åˆ—ï¼ˆå•†å“ç®¡ç†ã«å¯¾ã™ã‚‹æ¨©é™æƒ…å ±ï¼‰
+*	@return Array 	$strSQL æ¤œç´¢ç”¨SQLæ–‡ OR Boolean FALSE
 *	@access public
 */
 function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $aryUserAuthority )
 {
 
-	// É½¼¨ÍÑ¥«¥é¥à¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ëÆâÍÆ¤ò¸¡º÷ÍÑ¤ËÊ¸»úÎóÀßÄê
+	// è¡¨ç¤ºç”¨ã‚«ãƒ©ãƒ ã«è¨­å®šã•ã‚Œã¦ã„ã‚‹å†…å®¹ã‚’æ¤œç´¢ç”¨ã«æ–‡å­—åˆ—è¨­å®š
 	for ( $i = 0; $i < count($aryViewColumn); $i++ )
 	{
 		$strViewColumnName = $aryViewColumn[$i];
 
-		// É½¼¨¹àÌÜ
+		// è¡¨ç¤ºé …ç›®
 
-		// ºîÀ®Æü»ş
+		// ä½œæˆæ—¥æ™‚
 		if ( $strViewColumnName == "dtmInsertDate" )
 		{
 			$arySelectQuery[] = ", to_char( p.dtmInsertDate, 'YYYY/MM/DD' ) as dtmInsertDate\n";
 		}
-		// ´ë²è¿Ê¹Ô¾õ¶·
+		// ä¼ç”»é€²è¡ŒçŠ¶æ³
 		if ( $strViewColumnName == "lngGoodsPlanProgressCode" )
 		{
 			$arySelectQuery[] = ", t_gp.lngGoodsPlanProgressCode as lngGoodsPlanProgressCode\n";
 			$flgT_GoodsPlan = TRUE;
 		}
-		// ²şÄûÆü»ş
+		// æ”¹è¨‚æ—¥æ™‚
 		if ( $strViewColumnName == "dtmRevisionDate" )
 		{
 			$arySelectQuery[] = ", to_char( p.dtmUpdateDate, 'YYYY/MM/DD' ) as dtmRevisionDate\n";
 		}
-		// À½ÉÊ¥³¡¼¥É
+		// è£½å“ã‚³ãƒ¼ãƒ‰
 		if ( $strViewColumnName == "strProductCode" )
 		{
 			$arySelectQuery[] = ", p.strProductCode as strProductCode\n";
 		}
-		// À½ÉÊÌ¾¾Î
+		// è£½å“åç§°
 		if ( $strViewColumnName == "strProductName" )
 		{
 			$arySelectQuery[] = ", p.strProductName as strProductName\n";
 		}
-		// À½ÉÊÌ¾¾Î¡Ê±Ñ¸ì¡Ë
+		// è£½å“åç§°ï¼ˆè‹±èªï¼‰
 		if ( $strViewColumnName == "strProductEnglishName" )
 		{
 			$arySelectQuery[] = ", p.strProductEnglishName as strProductEnglishName\n";
 		}
-		// ÆşÎÏ¼Ô
+		// å…¥åŠ›è€…
 		if ( $strViewColumnName == "lngInputUserCode" )
 		{
 			$arySelectQuery[] = ", p.lngInputUserCode as lngInputUserCode\n";
@@ -85,7 +85,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			$arySelectQuery[] = ", input_u.strUserDisplayName as strInputUserDisplayName\n";
 			$flgInputUser = TRUE;
 		}
-		// ÉôÌç
+		// éƒ¨é–€
 		if ( $strViewColumnName == "lngInChargeGroupCode" )
 		{
 			$arySelectQuery[] = ", p.lngInChargeGroupCode as lngInChargeGroupCode\n";
@@ -93,7 +93,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			$arySelectQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName\n";
 			$flgInChargeGroup = TRUE;
 		}
-		// Ã´Åö¼Ô
+		// æ‹…å½“è€…
 		if ( $strViewColumnName == "lngInChargeUserCode" )
 		{
 			$arySelectQuery[] = ", p.lngInChargeUserCode as lngInChargeUserCode\n";
@@ -101,23 +101,23 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			$arySelectQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName\n";
 			$flgInChargeUser = TRUE;
 		}
-		// ¥«¥Æ¥´¥ê¡¼
+		// ã‚«ãƒ†ã‚´ãƒªãƒ¼
 		if ( $strViewColumnName == "lngCategoryCode" )
 		{
 			$arySelectQuery[] = ", mc.strCategoryName as lngCategoryCode\n";
 			$flgCategory = TRUE;
 		}
-		// ¸ÜµÒÉÊÈÖ
+		// é¡§å®¢å“ç•ª
 		if ( $strViewColumnName == "strGoodsCode" )
 		{
 			$arySelectQuery[] = ", p.strGoodsCode as strGoodsCode\n";
 		}
-		// ¾¦ÉÊÌ¾¾Î
+		// å•†å“åç§°
 		if ( $strViewColumnName == "strGoodsName" )
 		{
 			$arySelectQuery[] = ", p.strGoodsName as strGoodsName\n";
 		}
-		// ¸ÜµÒ
+		// é¡§å®¢
 		if ( $strViewColumnName == "lngCustomerCompanyCode" )
 		{
 			$arySelectQuery[] = ", p.lngCustomerCompanyCode as lngCustomerCompanyCode\n";
@@ -125,7 +125,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			$arySelectQuery[] = ", cust_c.strCompanyDisplayName as strCustomerCompanyDisplayName\n";
 			$flgCustomerCompany = TRUE;
 		}
-		// ¸ÜµÒÃ´Åö¼Ô
+		// é¡§å®¢æ‹…å½“è€…
 		if ( $strViewColumnName == "lngCustomerUserCode" )
 		{
 			$arySelectQuery[] = ", p.lngCustomerUserCode as lngCustomerUserCode\n";
@@ -134,50 +134,50 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			$arySelectQuery[] = ", p.strCustomerUserName as strCustomerUserName\n";
 			$flgCustomerUser = TRUE;
 		}
-		// ²Ù»ÑÃ±°Ì
+		// è·å§¿å˜ä½
 		if ( $strViewColumnName == "lngPackingUnitCode" )
 		{
 			$arySelectQuery[] = ", p.lngPackingUnitCode as lngPackingUnitCode\n";
 			$arySelectQuery[] = ", packingunit.strProductUnitName as strPackingUnitName\n";
 			$flgPackingUnit = TRUE;
 		}
-		// À½ÉÊÃ±°Ì
+		// è£½å“å˜ä½
 		if ( $strViewColumnName == "lngProductUnitCode" )
 		{
 			$arySelectQuery[] = ", p.lngProductUnitCode as lngProductUnitCode\n";
 			$arySelectQuery[] = ", productunit.strProductUnitName as strProductUnitName\n";
 			$flgProductUnit = TRUE;
 		}
-		// ¾¦ÉÊ·ÁÂÖ
+		// å•†å“å½¢æ…‹
 		if ( $strViewColumnName == "lngProductFormCode" )
 		{
 			$arySelectQuery[] = ", p.lngProductFormCode as lngProductFormCode\n";
 			$arySelectQuery[] = ", productform.strProductFormName as strProductFormName\n";
 			$flgProductForm = TRUE;
 		}
-		// ÆâÈ¢¡ÊÂŞ¡ËÆş¿ô
+		// å†…ç®±ï¼ˆè¢‹ï¼‰å…¥æ•°
 		if ( $strViewColumnName == "lngBoxQuantity" )
 		{
 			$arySelectQuery[] = ", To_char( p.lngBoxQuantity, '9,999,999,990' ) as lngBoxQuantity\n";
 		}
-		// ¥«¡¼¥È¥óÆş¿ô
+		// ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
 		if ( $strViewColumnName == "lngCartonQuantity" )
 		{
 			$arySelectQuery[] = ", To_char( p.lngCartonQuantity, '9,999,999,990' ) as lngCartonQuantity\n";
 		}
-		// À¸»ºÍ½Äê¿ô
+		// ç”Ÿç”£äºˆå®šæ•°
 		if ( $strViewColumnName == "lngProductionQuantity" )
 		{
 			$arySelectQuery[] = ", To_char( p.lngProductionQuantity, '9,999,999,990' ) as lngProductionQuantity\n";
 			$arySelectQuery[] = ", p.lngProductionUnitCode as lngProductionUnitCode\n";
 		}
-		// ½é²óÇ¼ÉÊ¿ô
+		// åˆå›ç´å“æ•°
 		if ( $strViewColumnName == "lngFirstDeliveryQuantity" )
 		{
 			$arySelectQuery[] = ", To_char( p.lngFirstDeliveryQuantity, '9,999,999,990' ) as lngFirstDeliveryQuantity\n";
 			$arySelectQuery[] = ", p.lngFirstDeliveryUnitCode as lngFirstDeliveryUnitCode\n";
 		}
-		// À¸»º¹©¾ì
+		// ç”Ÿç”£å·¥å ´
 		if ( $strViewColumnName == "lngFactoryCode" )
 		{
 			$arySelectQuery[] = ", p.lngFactoryCode as lngFactoryCode\n";
@@ -185,7 +185,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			$arySelectQuery[] = ", fact_c.strCompanyDisplayName as strFactoryDisplayName\n";
 			$flgFactory = TRUE;
 		}
-		// ¥¢¥Ã¥»¥ó¥Ö¥ê¹©¾ì
+		// ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå·¥å ´
 		if ( $strViewColumnName == "lngAssemblyFactoryCode" )
 		{
 			$arySelectQuery[] = ", p.lngAssemblyFactoryCode as lngAssemblyFactoryCode\n";
@@ -193,7 +193,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			$arySelectQuery[] = ", assemfact_c.strCompanyDisplayName as strAssemblyFactoryDisplayName\n";
 			$flgAssemblyFactory = TRUE;
 		}
-		// Ç¼ÉÊ¾ì½ê
+		// ç´å“å ´æ‰€
 		if ( $strViewColumnName == "lngDeliveryPlaceCode" )
 		{
 			$arySelectQuery[] = ", p.lngDeliveryPlaceCode as lngDeliveryPlaceCode\n";
@@ -201,79 +201,79 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			$arySelectQuery[] = ", delv_c.strCompanyDisplayName as strDeliveryPlaceDisplayName\n";
 			$flgDeliveryPlace = TRUE;
 		}
-		// Ç¼´ü
+		// ç´æœŸ
 		if ( $strViewColumnName == "dtmDeliveryLimitDate" )
 		{
 			$arySelectQuery[] = ", to_char( p.dtmDeliveryLimitDate, 'YYYY/MM' ) as dtmDeliveryLimitDate";
 		}
-		// Ç¼²Á
+		// ç´ä¾¡
 		if ( $strViewColumnName == "curProductPrice" )
 		{
 			$arySelectQuery[] = ", To_char( p.curProductPrice, '9,999,999,990.99' )  as curProductPrice\n";
 		}
-		// ¾åÂå
+		// ä¸Šä»£
 		if ( $strViewColumnName == "curRetailPrice" )
 		{
 			$arySelectQuery[] = ", To_char( p.curRetailPrice, '9,999,999,990.99' )  as curRetailPrice\n";
 		}
-		// ÂĞ¾İÇ¯Îğ
+		// å¯¾è±¡å¹´é½¢
 		if ( $strViewColumnName == "lngTargetAgeCode" )
 		{
 			$arySelectQuery[] = ", p.lngTargetAgeCode as lngTargetAgeCode\n";
 			$arySelectQuery[] = ", targetage.strTargetAgeName as strTargetAgeName\n";
 			$flgTargetAge = TRUE;
 		}
-		// ¥í¥¤¥ä¥ê¥Æ¥£
+		// ãƒ­ã‚¤ãƒ¤ãƒªãƒ†ã‚£
 		if ( $strViewColumnName == "lngRoyalty" )
 		{
 			$arySelectQuery[] = ", To_char( p.lngRoyalty, '9,999,999,990.99' )  as lngRoyalty\n";
 		}
-		// ¾Ú»æ
+		// è¨¼ç´™
 		if ( $strViewColumnName == "lngCertificateClassCode" )
 		{
 			$arySelectQuery[] = ", p.lngCertificateClassCode as lngCertificateClassCode\n";
 			$arySelectQuery[] = ", certificate.strCertificateClassName as strCertificateClassName\n";
 			$flgCertificateClass = TRUE;
 		}
-		// ÈÇ¸¢¸µ
+		// ç‰ˆæ¨©å…ƒ
 		if ( $strViewColumnName == "lngCopyrightCode" )
 		{
 			$arySelectQuery[] = ", p.lngCopyrightCode as lngCopyrightCode\n";
 			$arySelectQuery[] = ", copyright.strCopyrightName as strCopyrightName\n";
 			$flgCopyright = TRUE;
 		}
-		// ÈÇ¸¢¸µÈ÷¹Í
+		// ç‰ˆæ¨©å…ƒå‚™è€ƒ
 		if ( $strViewColumnName == "strCopyrightNote" )
 		{
 			$arySelectQuery[] = ", p.strCopyrightNote as strCopyrightNote\n";
 		}
-		// ÈÇ¸¢É½¼¨¡Ê¹ï°õ¡Ë
+		// ç‰ˆæ¨©è¡¨ç¤ºï¼ˆåˆ»å°ï¼‰
 		if ( $strViewColumnName == "strCopyrightDisplayStamp" )
 		{
 			$arySelectQuery[] = ", p.strCopyrightDisplayStamp as strCopyrightDisplayStamp\n";
 		}
-		// ÈÇ¸¢É½¼¨¡Ê°õºşÊª¡Ë
+		// ç‰ˆæ¨©è¡¨ç¤ºï¼ˆå°åˆ·ç‰©ï¼‰
 		if ( $strViewColumnName == "strCopyrightDisplayPrint" )
 		{
 			$arySelectQuery[] = ", p.strCopyrightDisplayPrint as strCopyrightDisplayPrint\n";
 		}
-		// À½ÉÊ¹½À®
+		// è£½å“æ§‹æˆ
 		if ( $strViewColumnName == "strProductComposition" )
 		{
 			$arySelectQuery[] = ", p.strProductComposition as strProductComposition\n";
 		}
-		// ¥¢¥Ã¥»¥ó¥Ö¥êÆâÍÆ
+		// ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå†…å®¹
 		if ( $strViewColumnName == "strAssemblyContents" )
 		{
 			$arySelectQuery[] = ", p.strAssemblyContents as strAssemblyContents\n";
 		}
-		// »ÅÍÍ¾ÜºÙ
+		// ä»•æ§˜è©³ç´°
 		if ( $strViewColumnName == "strSpecificationDetails" )
 		{
 			$arySelectQuery[] = ", p.strSpecificationDetails as strSpecificationDetails\n";
 		}
 		
-		// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ
+		// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹
 		if ( $strViewColumnName == "lngWorkFlowStatusCode" )
 		{
 			$arySelectQuery[] = ", (select strWorkflowStatusName from m_WorkflowStatus where lngWorkflowStatusCode = tw.lngWorkflowStatusCode) as lngWorkFlowStatusCode";
@@ -282,10 +282,10 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 		}
 	}
 
-	// ¾ò·ï¤ÎÄÉ²Ã
+	// æ¡ä»¶ã®è¿½åŠ 
 	$detailFlag = FALSE;
 
-	// ¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤Î¸¢¸Â¤Ë¤è¤êºï½ü¤µ¤ì¤¿¾¦ÉÊ¤ÎÉ½¼¨ÈóÉ½¼¨¤òÀÚ¤êÂØ¤¨¤ë
+	// ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®æ¨©é™ã«ã‚ˆã‚Šå‰Šé™¤ã•ã‚ŒãŸå•†å“ã®è¡¨ç¤ºéè¡¨ç¤ºã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
 	if ( !$aryUserAuthority["SearchDelete"] )
 	{
 		$aryQuery[] = " WHERE p.bytInvalidFlag = FALSE\n";
@@ -295,13 +295,13 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 		$aryQuery[] = " WHERE p.lngProductNo >= 0\n";
 	}
 
-	// É½¼¨ÍÑ¥«¥é¥à¤ËÀßÄê¤µ¤ì¤Æ¤¤¤ëÆâÍÆ¤ò¸¡º÷ÍÑ¤ËÊ¸»úÎóÀßÄê
+	// è¡¨ç¤ºç”¨ã‚«ãƒ©ãƒ ã«è¨­å®šã•ã‚Œã¦ã„ã‚‹å†…å®¹ã‚’æ¤œç´¢ç”¨ã«æ–‡å­—åˆ—è¨­å®š
 	for ( $i = 0; $i < count($arySearchColumn); $i++ )
 	{
 		$strSearchColumnName = $arySearchColumn[$i];
 
-		// ////¾¦ÉÊ¥Ş¥¹¥¿Æâ¤Î¸¡º÷¾ò·ï////
-		// À½ÉÊ¥³¡¼¥É
+		// ////å•†å“ãƒã‚¹ã‚¿å†…ã®æ¤œç´¢æ¡ä»¶////
+		// è£½å“ã‚³ãƒ¼ãƒ‰
 		if ( $strSearchColumnName == "strProductCode" )
 		{
 			if ( $arySearchDataColumn["strProductCodeFrom"] )
@@ -316,7 +316,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			}
 		}
 // 2004.04.12 suzukaze update start
-		// À½ÉÊÌ¾¾Î
+		// è£½å“åç§°
 		if ( $strSearchColumnName == "strProductName" )
 		{
 			if ( $arySearchDataColumn["strProductName"] )
@@ -324,7 +324,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$aryQuery[] = " AND UPPER(p.strProductName) LIKE UPPER('%" . $arySearchDataColumn["strProductName"] . "%')\n";
 			}
 		}
-		// À½ÉÊÌ¾¾Î¡Ê±Ñ¸ì¡Ë
+		// è£½å“åç§°ï¼ˆè‹±èªï¼‰
 		if ( $strSearchColumnName == "strProductEnglishName" )
 		{
 			if ( $arySearchDataColumn["strProductEnglishName"] )
@@ -332,7 +332,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$aryQuery[] = " AND UPPER(p.strProductEnglishName) LIKE UPPER('%" . $arySearchDataColumn["strProductEnglishName"] . "%')\n";
 			}
 		}
-		// ÆşÎÏ¼Ô
+		// å…¥åŠ›è€…
 		if ( $strSearchColumnName == "lngInputUserCode" )
 		{
 			if ( $arySearchDataColumn["lngInputUserCode"] )
@@ -346,7 +346,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$flgInputUser = TRUE;
 			}
 		}
-		// ÉôÌç
+		// éƒ¨é–€
 		if ( $strSearchColumnName == "lngInChargeGroupCode" )
 		{
 			if ( $arySearchDataColumn["lngInChargeGroupCode"] )
@@ -360,7 +360,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$flgInChargeGroup = TRUE;
 			}
 		}
-		// Ã´Åö¼Ô
+		// æ‹…å½“è€…
 		if ( $strSearchColumnName == "lngInChargeUserCode" )
 		{
 			if ( $arySearchDataColumn["lngInChargeUserCode"] )
@@ -374,7 +374,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$flgInChargeUser = TRUE;
 			}
 		}
-		// ¥«¥Æ¥´¥ê¡¼
+		// ã‚«ãƒ†ã‚´ãƒªãƒ¼
 		if ( $strSearchColumnName == "lngCategoryCode" )
 		{
 			if ( $arySearchDataColumn["lngCategoryCode"] )
@@ -383,7 +383,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$flgCategory = TRUE;
 			}
 		}
-		// ¸ÜµÒÉÊÈÖ
+		// é¡§å®¢å“ç•ª
 		if ( $strSearchColumnName == "strGoodsCode" )
 		{
 			if ( $arySearchDataColumn["strGoodsCode"] )
@@ -391,7 +391,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$aryQuery[] = " AND UPPER(p.strGoodsCode) LIKE UPPER('%" . $arySearchDataColumn["strGoodsCode"] . "%')\n";
 			}
 		}
-		// ¾¦ÉÊÌ¾¾Î
+		// å•†å“åç§°
 		if ( $strSearchColumnName == "strGoodsName" )
 		{
 			if ( $arySearchDataColumn["strGoodsName"] )
@@ -399,7 +399,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$aryQuery[] = " AND UPPER(p.strGoodsName) LIKE UPPER('%" . $arySearchDataColumn["strGoodsName"] . "%')\n";
 			}
 		}
-		// ¸ÜµÒ
+		// é¡§å®¢
 		if ( $strSearchColumnName == "lngCustomerCompanyCode" )
 		{
 			if ( $arySearchDataColumn["lngCustomerCompanyCode"] )
@@ -413,7 +413,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$flgCustomerCompany = TRUE;
 			}
 		}
-		// ¸ÜµÒÃ´Åö¼Ô
+		// é¡§å®¢æ‹…å½“è€…
 		if ( $strSearchColumnName == "lngCustomerUserCode" )
 		{
 			if ( $arySearchDataColumn["lngCustomerUserCode"] )
@@ -428,7 +428,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$flgCustomerUser = TRUE;
 			}
 		}
-		// À¸»º¹©¾ì
+		// ç”Ÿç”£å·¥å ´
 		if ( $strSearchColumnName == "lngFactoryCode" )
 		{
 			if ( $arySearchDataColumn["lngFactoryCode"] )
@@ -442,7 +442,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$flgFactory = TRUE;
 			}
 		}
-		// ¥¢¥Ã¥»¥ó¥Ö¥ê¹©¾ì
+		// ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå·¥å ´
 		if ( $strSearchColumnName == "lngAssemblyFactoryCode" )
 		{
 			if ( $arySearchDataColumn["lngAssemblyFactoryCode"] )
@@ -456,7 +456,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$flgAssemblyFactory = TRUE;
 			}
 		}
-		// Ç¼ÉÊ¾ì½ê
+		// ç´å“å ´æ‰€
 		if ( $strSearchColumnName == "lngDeliveryPlaceCode" )
 		{
 			if ( $arySearchDataColumn["lngDeliveryPlaceCode"] )
@@ -471,7 +471,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			}
 		}
 // 2004.04.12 suzukaze update end
-		// Ç¼´ü
+		// ç´æœŸ
 		if ( $strSearchColumnName == "dtmDeliveryLimitDate" )
 		{
 			if ( $arySearchDataColumn["dtmDeliveryLimitDateFrom"] )
@@ -484,7 +484,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$aryQuery[] = " AND p.dtmDeliveryLimitDate <= To_Date( '" . $arySearchDataColumn["dtmDeliveryLimitDateTo"] . "', 'YYYY/MM' )\n";
 			}
 		}
-		// ¾Ú»æ
+		// è¨¼ç´™
 		if ( $strSearchColumnName == "lngCertificateClassCode" )
 		{
 			if ( $arySearchDataColumn["lngCertificateClassCode"] )
@@ -492,7 +492,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$aryQuery[] = " AND p.lngCertificateClassCode = " . $arySearchDataColumn["lngCertificateClassCode"] . "\n";
 			}
 		}
-		// ÈÇ¸¢¸µ
+		// ç‰ˆæ¨©å…ƒ
 		if ( $strSearchColumnName == "lngCopyrightCode" )
 		{
 			if ( $arySearchDataColumn["lngCopyrightCode"] )
@@ -500,7 +500,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$aryQuery[] = " AND p.lngCopyrightCode = " . $arySearchDataColumn["lngCopyrightCode"] . "\n";
 			}
 		}
-		// ºîÀ®Æü»ş
+		// ä½œæˆæ—¥æ™‚
 		if ( $strSearchColumnName == "dtmInsertDate" )
 		{
 			if ( $arySearchDataColumn["dtmInsertDateFrom"] )
@@ -514,7 +514,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 				$aryQuery[] = " AND p.dtmInsertDate <= '" . $dtmSearchDate . "'\n";
 			}
 		}
-		// ²şÄûÆü»ş
+		// æ”¹è¨‚æ—¥æ™‚
 		if ( $strSearchColumnName == "dtmRevisionDate" )
 		{
 			if ( $arySearchDataColumn["dtmRevisionDateFrom"] )
@@ -529,8 +529,8 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			}
 		}
 
-		//////  °Ê²¼¾¦ÉÊ´ë²è¥Ş¥¹¥¿Æâ¸¡º÷  //////////
-		// ´ë²è¿ÊÄ½¾õ¶·
+		//////  ä»¥ä¸‹å•†å“ä¼ç”»ãƒã‚¹ã‚¿å†…æ¤œç´¢  //////////
+		// ä¼ç”»é€²æ—çŠ¶æ³
 		if ( $strSearchColumnName == "lngGoodsPlanProgressCode" )
 		{
 			if ( $arySearchDataColumn["lngGoodsPlanProgressCode"] )
@@ -540,23 +540,23 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			}
 		}
 
-			// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ
+			// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹
 			if ( $strSearchColumnName == "lngWorkFlowStatusCode" )
 			{
 				if ( $arySearchDataColumn["lngWorkFlowStatusCode"] )
 				{
-					// ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹ÃÍ¤è¤ê¡¢ÇÛÎó¤ò¤½¤Î¤Ş¤ŞÂåÆş
+					// ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹å€¤ã‚ˆã‚Šã€é…åˆ—ã‚’ãã®ã¾ã¾ä»£å…¥
 					$arySearchStatus = $arySearchDataColumn["lngWorkFlowStatusCode"];
 					
 					if ( is_array( $arySearchStatus ) )
 					{
 						$aryQuery[] = " AND tw.lngworkflowstatuscode in ( ";
 
-						// WF¾õÂÖ¤ÏÊ£¿ôÀßÄê¤µ¤ì¤Æ¤¤¤ë²ÄÇ½À­¤¬¤¢¤ë¤Î¤Ç¡¢ÀßÄê¸Ä¿ôÊ¬¥ë¡¼¥×
+						// WFçŠ¶æ…‹ã¯è¤‡æ•°è¨­å®šã•ã‚Œã¦ã„ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€è¨­å®šå€‹æ•°åˆ†ãƒ«ãƒ¼ãƒ—
 						$strBuff = "";
 						for ( $j = 0; $j < count($arySearchStatus); $j++ )
 						{
-							// ½é²ó½èÍı
+							// åˆå›å‡¦ç†
 							if ( $j <> 0 )
 							{
 								$strBuff .= " ,";
@@ -570,10 +570,10 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 
 	}
 
-	// SQLÊ¸¤ÎºîÀ®
+	// SQLæ–‡ã®ä½œæˆ
 	$strQuery = "SELECT distinct p.lngProductNo as lngProductNo, p.lngInChargeGroupCode as lngGroupCode, p.bytInvalidFlag as bytInvalidFlag\n";
 
-	// É½¼¨ÍÑ¥«¥é¥à¤ÎÀßÄê
+	// è¡¨ç¤ºç”¨ã‚«ãƒ©ãƒ ã®è¨­å®š
 	for ( $i = 0; $i < count( $arySelectQuery ); $i++ )
 	{
 		$strQuery .= $arySelectQuery[$i];
@@ -581,7 +581,7 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 
 	$strQuery .= " FROM m_Product p\n";
 	
-	// ÄÉ²ÃÉ½¼¨ÍÑ¤Î»²¾È¥Ş¥¹¥¿ÂĞ±ş
+	// è¿½åŠ è¡¨ç¤ºç”¨ã®å‚ç…§ãƒã‚¹ã‚¿å¯¾å¿œ
 	if ( $flgInputUser )
 	{
 		$strQuery .= " LEFT JOIN m_User input_u ON p.lngInputUserCode = input_u.lngUserCode\n";
@@ -653,12 +653,12 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 			and tw.lngworkflowsubcode = (select max(lngworkflowsubcode) from t_workflow where lngworkflowcode = tw.lngworkflowcode)
 		) on  mw.strworkflowkeycode = p.strProductCode
 		and mw.dtmstartdate = (select max(dtmstartdate) from m_workflow where strworkflowkeycode = mw.strworkflowkeycode)
-			and mw.lngfunctioncode = " . DEF_FUNCTION_P1; // ¾¦ÉÊÅĞÏ¿»ş¤ÎWF¥Ç¡¼¥¿¤òÂĞ¾İ¤Ë¤¹¤ë°Ù¤Ë¾ò·ï»ØÄê
+			and mw.lngfunctioncode = " . DEF_FUNCTION_P1; // å•†å“ç™»éŒ²æ™‚ã®WFãƒ‡ãƒ¼ã‚¿ã‚’å¯¾è±¡ã«ã™ã‚‹ç‚ºã«æ¡ä»¶æŒ‡å®š
 	}
 
 
 
-	// ¾¦ÉÊ´ë²è¥Ş¥¹¥¿ÂĞ±ş
+	// å•†å“ä¼ç”»ãƒã‚¹ã‚¿å¯¾å¿œ
 	if ( $flgT_GoodsPlan )
 	{
 		$strQuery .= ", t_GoodsPlan t_gp\n";
@@ -680,11 +680,11 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 	{
 		if ( $arySearchDataColumn["strSortOrder"] == "ASC" )
 		{
-			$strAsDs = "ASC";	//¾º¹ß
+			$strAsDs = "ASC";	//æ˜‡é™
 		}
 		else
 		{
-			$strAsDs = "DESC";	//¹ß½ç
+			$strAsDs = "DESC";	//é™é †
 		}
 		$strColumnName = $arySearchDataColumn["strSort"];
 		if ( $arySearchDataColumn["strSort"] == "lnggoodsplanprogresscode" )
@@ -712,15 +712,15 @@ function fncGetSearchProductSQL ( $aryViewColumn, $arySearchColumn, $arySearchDa
 
 
 /**
-* ¸¡º÷·ë²ÌÉ½¼¨´Ø¿ô
+* æ¤œç´¢çµæœè¡¨ç¤ºé–¢æ•°
 *
-*	¸¡º÷·ë²Ì¤«¤é¥Æ¡¼¥Ö¥ë¹½À®¤Ç·ë²Ì¤ò½ĞÎÏ¤¹¤ë´Ø¿ô
+*	æ¤œç´¢çµæœã‹ã‚‰ãƒ†ãƒ¼ãƒ–ãƒ«æ§‹æˆã§çµæœã‚’å‡ºåŠ›ã™ã‚‹é–¢æ•°
 *
-*	@param  Integer $lngColumnCount 		¹Ô¿ô
-*	@param  Array 	$aryResult 				¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
-*	@param  Array 	$aryViewColumn 			É½¼¨ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
-*	@param  Array 	$aryData 				£Ğ£Ï£Ó£Ô¥Ç¡¼¥¿·²
-*	@param	Array	$aryUserAuthority		¥æ¡¼¥¶¡¼¤ÎÁàºî¤ËÂĞ¤¹¤ë¸¢¸Â¤¬Æş¤Ã¤¿ÇÛÎó
+*	@param  Integer $lngColumnCount 		è¡Œæ•°
+*	@param  Array 	$aryResult 				æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
+*	@param  Array 	$aryViewColumn 			è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+*	@param  Array 	$aryData 				ï¼°ï¼¯ï¼³ï¼´ãƒ‡ãƒ¼ã‚¿ç¾¤
+*	@param	Array	$aryUserAuthority		ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®æ“ä½œã«å¯¾ã™ã‚‹æ¨©é™ãŒå…¥ã£ãŸé…åˆ—
 *	@access public
 */
 function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache )
@@ -728,7 +728,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 	$aryHtml[] =  "<tr>";
 	$aryHtml[] =  "\t<td>" . ($lngColumnCount) . "</td>";
 	
-	// É½¼¨ÂĞ¾İ¥«¥é¥à¤ÎÇÛÎó¤è¤ê·ë²Ì¤Î½ĞÎÏ
+	// è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ ã®é…åˆ—ã‚ˆã‚Šçµæœã®å‡ºåŠ›
 	for ( $j = 0; $j < count($aryViewColumn); $j++ )
 	{
 		$strColumnName = $aryViewColumn[$j];
@@ -744,18 +744,18 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 		}
 
 		///////////////////////////////////
-		////// É½¼¨ÂĞ¾İ¤¬¥Ü¥¿¥ó¤Î¾ì¹ç /////
+		////// è¡¨ç¤ºå¯¾è±¡ãŒãƒœã‚¿ãƒ³ã®å ´åˆ /////
 		///////////////////////////////////
 		if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" )
 		{
-			// ¥Ü¥¿¥ó¼ï¤Ë¤è¤êÊÑ¹¹
-			// ¾ÜºÙÉ½¼¨
+			// ãƒœã‚¿ãƒ³ç¨®ã«ã‚ˆã‚Šå¤‰æ›´
+			// è©³ç´°è¡¨ç¤º
 			if ( $strColumnName == "btnDetail" )
 			{
 				if ( ( $aryResult["bytinvalidflag"] and $aryUserAuthority["DetailDelete"] ) 
 					or ( !$aryResult["bytinvalidflag"] and $aryUserAuthority["Detail"] ) )
 				{
-					// ¾¦ÉÊ¥Ç¡¼¥¿¤¬ºï½üÂĞ¾İ¤Î¾ì¹ç¡¢¾ÜºÙÉ½¼¨¥Ü¥¿¥ó¤ÏÁªÂòÉÔ²Ä
+					// å•†å“ãƒ‡ãƒ¼ã‚¿ãŒå‰Šé™¤å¯¾è±¡ã®å ´åˆã€è©³ç´°è¡¨ç¤ºãƒœã‚¿ãƒ³ã¯é¸æŠä¸å¯
 					$aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngproductno=\"" . $aryResult["lngproductno"] . "\" class=\"detail button\"></td>\n";
 				}
 				else
@@ -764,10 +764,10 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				}
 			}
 
-			// ½¤Àµ
+			// ä¿®æ­£
 			if ( $strColumnName == "btnFix" )
 			{
-				// ¾¦ÉÊ¤¬ºï½ü¥Ç¡¼¥¿¤Î¾ì¹ç¤ÏÁªÂòÉÔ²Ä
+				// å•†å“ãŒå‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã®å ´åˆã¯é¸æŠä¸å¯
 				if ( (!$aryResult["bytinvalidflag"] and $aryUserAuthority["Fix"])
 					and $aryResult["lngproductstatuscode"] != DEF_PRODUCT_APPLICATE
 				)
@@ -780,10 +780,10 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				}
 			}
 
-			// ºï½ü
+			// å‰Šé™¤
 			if ( $strColumnName == "btnDelete" )
 			{
-				// ¾¦ÉÊ¤¬ºï½ü¥Ç¡¼¥¿¤Î¾ì¹ç¤ÏÁªÂòÉÔ²Ä¡Ê¿½ÀÁÃæ¤Î¾ì¹ç¤â¡Ë
+				// å•†å“ãŒå‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã®å ´åˆã¯é¸æŠä¸å¯ï¼ˆç”³è«‹ä¸­ã®å ´åˆã‚‚ï¼‰
 				if ( (!$aryResult["bytinvalidflag"] and $aryUserAuthority["Delete"]) 
 					and $aryResult["lngproductstatuscode"] != DEF_PRODUCT_APPLICATE
 				)
@@ -801,9 +801,9 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 			$TdDataUse = true;
 			$strText = "";
 			///////////////////////////////////
-			////// É½¼¨ÂĞ¾İ¤¬ÆüÉÕ¤Î¾ì¹ç ///////
+			////// è¡¨ç¤ºå¯¾è±¡ãŒæ—¥ä»˜ã®å ´åˆ ///////
 			///////////////////////////////////
-			// ºîÀ®Æü»ş¡¢²şÄûÆü»ş
+			// ä½œæˆæ—¥æ™‚ã€æ”¹è¨‚æ—¥æ™‚
 			if ( $strColumnName == "dtmInsertDate" or $strColumnName == "dtmRevisionDate" )
 			{
 				$strLowerColumnName = strtolower($strColumnName);
@@ -812,7 +812,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 					$TdData .= str_replace( "-", "/", $aryResult[$strLowerColumnName] );
 				}
 			}
-			// Ç¼´ü
+			// ç´æœŸ
 			else if ( $strColumnName == "dtmDeliveryLimitDate" )
 			{
 				if ( $aryResult["dtmdeliverylimitdate"] )
@@ -823,9 +823,9 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 			}
 
 			/////////////////////////////////////////////////
-			////// É½¼¨ÂĞ¾İ¤¬¥³¡¼¥É¤«¤éÌ¾¾Î»²¾È¤Î¾ì¹ç ///////
+			////// è¡¨ç¤ºå¯¾è±¡ãŒã‚³ãƒ¼ãƒ‰ã‹ã‚‰åç§°å‚ç…§ã®å ´åˆ ///////
 			/////////////////////////////////////////////////
-			// ´ë²è¿Ê¹Ô¾õ¶·
+			// ä¼ç”»é€²è¡ŒçŠ¶æ³
 			else if ( $strColumnName == "lngGoodsPlanProgressCode" )
 			{
 				if ( $aryResult["lnggoodsplanprogresscode"] )
@@ -833,17 +833,17 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 					$aryGoodsPlanProgressCode = $objCache->GetValue("lnggoodsplanprogresscode", $aryResult["lnggoodsplanprogresscode"]);
 					if( !is_array($aryGoodsPlanProgressCode) )
 					{
-						// ´ë²è¿Ê¹Ô¾õ¶·Ì¾¾Î¤Î¼èÆÀ
+						// ä¼ç”»é€²è¡ŒçŠ¶æ³åç§°ã®å–å¾—
 						$strGoodsPlanProgressName = fncGetMasterValue( "m_goodsplanprogress", "lnggoodsplanprogresscode", "strgoodsplanprogressname" , 
 						$aryResult["lnggoodsplanprogresscode"], "", $objDB );
-						// ´ë²è¿Ê¹Ô¾õ¶·Ì¾¾Î¤ÎÀßÄê
+						// ä¼ç”»é€²è¡ŒçŠ¶æ³åç§°ã®è¨­å®š
 						$aryGoodsPlanProgressCode[0] = $strGoodsPlanProgressName;
 						$objCache->SetValue("lnggoodsplanprogresscode", $strGoodsPlanProgressName, $aryGoodsPlanProgressCode);
 					}
 					$TdData .= $aryGoodsPlanProgressCode[0] . "</td>";
 				}
 			}
-			// ÆşÎÏ¼Ô
+			// å…¥åŠ›è€…
 			else if ( $strColumnName == "lngInputUserCode" )
 			{
 				if ( $aryResult["strinputuserdisplaycode"] )
@@ -857,7 +857,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				$strText .= " " . $aryResult["strinputuserdisplayname"];
 				$TdData .= $strText;
 			}
-			// ÉôÌç
+			// éƒ¨é–€
 			else if ( $strColumnName == "lngInChargeGroupCode" )
 			{
 				if ( $aryResult["strinchargegroupdisplaycode"] )
@@ -871,7 +871,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				$strText .= " " . $aryResult["strinchargegroupdisplayname"] . "</td>";
 				$TdData .= $strText;
 			}
-			// Ã´Åö¼Ô
+			// æ‹…å½“è€…
 			else if ( $strColumnName == "lngInChargeUserCode" )
 			{
 				if ( $aryResult["strinchargeuserdisplaycode"] )
@@ -885,7 +885,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				$strText .= " " . $aryResult["strinchargeuserdisplayname"];
 				$TdData .= $strText;
 			}
-			// ¸ÜµÒ
+			// é¡§å®¢
 			else if ( $strColumnName == "lngCustomerCompanyCode" )
 			{
 				if ( $aryResult["strcustomercompanydisplaycode"] )
@@ -899,7 +899,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				$strText .= " " . $aryResult["strcustomercompanydisplayname"];
 				$TdData .= $strText;
 			}
-			// ¸ÜµÒÃ´Åö¼Ô
+			// é¡§å®¢æ‹…å½“è€…
 			else if ( $strColumnName == "lngCustomerUserCode" )
 			{
 				if ( $aryResult["strcustomeruserdisplaycode"] )
@@ -914,22 +914,22 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				}
 				$TdData .= $strText;
 			}
-			// ²Ù»ÑÃ±°Ì
+			// è·å§¿å˜ä½
 			else if ( $strColumnName == "lngPackingUnitCode" )
 			{
 				$TdData .= $aryResult["strpackingunitname"];
 			}
-			// À½ÉÊÃ±°Ì
+			// è£½å“å˜ä½
 			else if ( $strColumnName == "lngProductUnitCode" )
 			{
 				$TdData .= $aryResult["strproductunitname"];
 			}
-			// ¾¦ÉÊ·ÁÂÖ
+			// å•†å“å½¢æ…‹
 			else if ( $strColumnName == "lngProductFormCode" )
 			{
 				$TdData .= $aryResult["strproductformname"];
 			}
-			// À¸»º¹©¾ì
+			// ç”Ÿç”£å·¥å ´
 			else if ( $strColumnName == "lngFactoryCode" )
 			{
 				if ( $aryResult["strfactorydisplaycode"] )
@@ -943,7 +943,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				$strText .= " " . $aryResult["strfactorydisplayname"];
 				$TdData .= $strText;
 			}
-			// ¥¢¥Ã¥»¥ó¥Ö¥ê¹©¾ì
+			// ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå·¥å ´
 			else if ( $strColumnName == "lngAssemblyFactoryCode" )
 			{
 				if ( $aryResult["strassemblyfactorydisplaycode"] )
@@ -957,7 +957,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				$strText .= " " . $aryResult["strassemblyfactorydisplayname"];
 				$TdData .= $strText;
 			}
-			// Ç¼ÉÊ¾ì½ê
+			// ç´å“å ´æ‰€
 			else if ( $strColumnName == "lngDeliveryPlaceCode" )
 			{
 				if ( $aryResult["strdeliveryplacedisplaycode"] )
@@ -971,26 +971,26 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				$strText .= " " . $aryResult["strdeliveryplacedisplayname"];
 				$TdData .= $strText;
 			}
-			// ÂĞ¾İÇ¯Îğ
+			// å¯¾è±¡å¹´é½¢
 			else if ( $strColumnName == "lngTargetAgeCode" )
 			{
 				$TdData .= $aryResult["strtargetagename"];
 			}
-			// ¾Ú»æ
+			// è¨¼ç´™
 			else if ( $strColumnName == "lngCertificateClassCode" )
 			{
 				$TdData .= $aryResult["strcertificateclassname"];
 			}
-			// ÈÇ¸¢¸µ
+			// ç‰ˆæ¨©å…ƒ
 			else if ( $strColumnName == "lngCopyrightCode" )
 			{
 				$TdData .= $aryResult["strcopyrightname"];
 			}
 
 			///////////////////////////////////
-			////// É½¼¨ÂĞ¾İ¤¬¿ôÎÌ¤Î¾ì¹ç ///////
+			////// è¡¨ç¤ºå¯¾è±¡ãŒæ•°é‡ã®å ´åˆ ///////
 			///////////////////////////////////
-			// ÆâÈ¢¡ÊÂŞ¡ËÆş¿ô¡¢¥«¡¼¥È¥óÆş¿ô
+			// å†…ç®±ï¼ˆè¢‹ï¼‰å…¥æ•°ã€ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
 			else if ( $strColumnName == "lngBoxQuantity" or $strColumnName == "lngCartonQuantity" )
 			{
 				$strLowerColumnName = strtolower($strColumnName);
@@ -1004,7 +1004,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				}
 				$TdData .= $strText;
 			}
-			// À¸»ºÍ½Äê¿ô
+			// ç”Ÿç”£äºˆå®šæ•°
 			else if ( $strColumnName == "lngProductionQuantity" )
 			{
 				if ( !$aryResult["lngproductionquantity"] )
@@ -1015,16 +1015,16 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				{
 					$strText .= $aryResult["lngproductionquantity"];
 				}
-				// Ã±°Ì¤ÎÀßÄê
+				// å˜ä½ã®è¨­å®š
 				if ( $aryResult["lngproductionunitcode"] )
 				{
 					$aryProductUnit = $objCache->GetValue("lngproductunitcode", $aryResult["lngproductionunitcode"]);
 					if( !is_array($aryProductUnit) )
 					{
-						// Ã±°ÌÌ¾¾Î¤Î¼èÆÀ
+						// å˜ä½åç§°ã®å–å¾—
 						$strProductUnitName = fncGetMasterValue( "m_productunit", "lngproductunitcode", "strproductunitname" , 
 							$aryResult["lngproductionunitcode"], "", $objDB );
-						// Ã±°ÌÌ¾¾Î¤ÎÀßÄê
+						// å˜ä½åç§°ã®è¨­å®š
 						$aryProductUnit[0] = $strProductUnitName;
 						$objCache->SetValue("lngproductunitcode", $strProductUnitName, $aryProductUnit);
 					}
@@ -1032,7 +1032,7 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				}
 				$TdData .= $strText;
 			}
-			// ½é²óÇ¼ÉÊ¿ô
+			// åˆå›ç´å“æ•°
 			else if ( $strColumnName == "lngFirstDeliveryQuantity" )
 			{
 				if ( !$aryResult["lngfirstdeliveryquantity"] )
@@ -1043,16 +1043,16 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 				{
 					$strText .= $aryResult[lngfirstdeliveryquantity];
 				}
-				// Ã±°Ì¤ÎÀßÄê
+				// å˜ä½ã®è¨­å®š
 				if ( $aryResult["lngfirstdeliveryunitcode"] )
 				{
 					$aryProductUnit = $objCache->GetValue("lngproductunitcode", $aryResult["lngfirstdeliveryunitcode"]);
 					if( !is_array($aryProductUnit) )
 					{
-						// Ã±°ÌÌ¾¾Î¤Î¼èÆÀ
+						// å˜ä½åç§°ã®å–å¾—
 						$strProductUnitName = fncGetMasterValue( "m_productunit", "lngproductunitcode", "strproductunitname" , 
 							$aryResult["lngfirstdeliveryunitcode"], "", $objDB );
-						// Ã±°ÌÌ¾¾Î¤ÎÀßÄê
+						// å˜ä½åç§°ã®è¨­å®š
 						$aryProductUnit[0] = $strProductUnitName;
 						$objCache->SetValue("lngproductunitcode", $strProductUnitName, $aryProductUnit);
 					}
@@ -1062,9 +1062,9 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 			}
 
 			///////////////////////////////////
-			////// É½¼¨ÂĞ¾İ¤¬²Á³Ê¤Î¾ì¹ç ///////
+			////// è¡¨ç¤ºå¯¾è±¡ãŒä¾¡æ ¼ã®å ´åˆ ///////
 			///////////////////////////////////
-			// Ç¼²Á¡¢¾åÂå
+			// ç´ä¾¡ã€ä¸Šä»£
 			else if ( $strColumnName == "curProductPrice" or $strColumnName == "curRetailPrice" )
 			{
 				$strLowerColumnName = strtolower($strColumnName);
@@ -1081,32 +1081,32 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 			}
 
 			///////////////////////////////////
-			////// É½¼¨ÂĞ¾İ¤¬¿ôÃÍ¤Î¾ì¹ç ///////
+			////// è¡¨ç¤ºå¯¾è±¡ãŒæ•°å€¤ã®å ´åˆ ///////
 			///////////////////////////////////
-			// ¥í¥¤¥ä¥ê¥Æ¥£
+			// ãƒ­ã‚¤ãƒ¤ãƒªãƒ†ã‚£
 			else if ( $strColumnName == "lngRoyalty" )
 			{
 				$TdData .= $aryResult["lngroyalty"];
 			}
 
 			/////////////////////////////////////////
-			////// É½¼¨ÂĞ¾İ¤¬Ê¸»úÎó¹àÌÜ¤Î¾ì¹ç ///////
+			////// è¡¨ç¤ºå¯¾è±¡ãŒæ–‡å­—åˆ—é …ç›®ã®å ´åˆ ///////
 			/////////////////////////////////////////
-			// ¤½¤ÎÂ¾¤Î¹àÌÜ¤Ï¤½¤Î¤Ş¤Ş½ĞÎÏ
+			// ãã®ä»–ã®é …ç›®ã¯ãã®ã¾ã¾å‡ºåŠ›
 			else
 			{
 				$strLowerColumnName = strtolower($strColumnName);
-				// »ÅÍÍ¾ÜºÙ¤Ï²ş¹ÔÀßÄê
+				// ä»•æ§˜è©³ç´°ã¯æ”¹è¡Œè¨­å®š
 				if ( $strColumnName == "strSpecificationDetails" )
 				{
 					$strText .= $aryResult[$strLowerColumnName];
 				}
-				// À½ÉÊ¹½À®¤ÏÊ¸»úÎóÄÉ²Ã
+				// è£½å“æ§‹æˆã¯æ–‡å­—åˆ—è¿½åŠ 
 				else if ( $strColumnName == "strProductComposition" )
 				{
 					if ( $aryResult[$strLowerColumnName] )
 					{
-						$strText .= "Á´" . $aryResult[$strLowerColumnName] . "¼ï¥¢¥Ã¥»¥ó¥Ö¥ê";
+						$strText .= "å…¨" . $aryResult[$strLowerColumnName] . "ç¨®ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒª";
 					}
 					else
 					{
@@ -1130,38 +1130,38 @@ function fncSetProductViewTable ( $lngColumnCount, $aryResult, $aryViewColumn, $
 
 
 /**
-* ¸¡º÷·ë²ÌÉ½¼¨´Ø¿ô
+* æ¤œç´¢çµæœè¡¨ç¤ºé–¢æ•°
 *
-*	¸¡º÷·ë²Ì¤«¤é¥Æ¡¼¥Ö¥ë¹½À®¤Ç·ë²Ì¤ò½ĞÎÏ¤¹¤ë´Ø¿ô
+*	æ¤œç´¢çµæœã‹ã‚‰ãƒ†ãƒ¼ãƒ–ãƒ«æ§‹æˆã§çµæœã‚’å‡ºåŠ›ã™ã‚‹é–¢æ•°
 *
-*	@param  Array 	$aryResult 			¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
-*	@param  Array 	$aryViewColumn 		É½¼¨ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
-*	@param  Array 	$aryData 			£Ğ£Ï£Ó£Ô¥Ç¡¼¥¿·²
-*	@param	Array	$aryUserAuthority	¥æ¡¼¥¶¡¼¤ÎÁàºî¤ËÂĞ¤¹¤ë¸¢¸Â¤¬Æş¤Ã¤¿ÇÛÎó
-*	@param	Array	$aryTytle			¹àÌÜÌ¾¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó¡Ê¸Æ¤Ó½Ğ¤·¸µ¤ÇÆüËÜ¸ìÍÑ¡¢±Ñ¸ìÍÑ¤ÎÀÚ¤êÂØ¤¨¡Ë
-*	@param  Object	$objDB       		DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@param  Object	$objCache       		DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  Array 	$aryResult 			æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
+*	@param  Array 	$aryViewColumn 		è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+*	@param  Array 	$aryData 			ï¼°ï¼¯ï¼³ï¼´ãƒ‡ãƒ¼ã‚¿ç¾¤
+*	@param	Array	$aryUserAuthority	ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®æ“ä½œã«å¯¾ã™ã‚‹æ¨©é™ãŒå…¥ã£ãŸé…åˆ—
+*	@param	Array	$aryTytle			é …ç›®åãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—ï¼ˆå‘¼ã³å‡ºã—å…ƒã§æ—¥æœ¬èªç”¨ã€è‹±èªç”¨ã®åˆ‡ã‚Šæ›¿ãˆï¼‰
+*	@param  Object	$objDB       		DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@param  Object	$objCache       		DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@access public
 */
 function fncSetProductTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTytle, $objDB, $objCache, $aryTableName )
 {
-	// ¥Æ¡¼¥Ö¥ë¤Î·ÁÀ®
+	// ãƒ†ãƒ¼ãƒ–ãƒ«ã®å½¢æˆ
 
-// ¹àÌÜÌ¾Îó¤ÎÀ¸À® start=========================================
+// é …ç›®ååˆ—ã®ç”Ÿæˆ start=========================================
 	$aryHtml[] = "<thead>";
 	$aryHtml[] = "<tr>";
 	$aryHtml[] = "\t<th class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/copy_off_bt.gif\" class=\"copy button\"></th>";
 
-	// É½¼¨ÂĞ¾İ¥«¥é¥à¤ÎÇÛÎó¤è¤ê¹àÌÜÀßÄê
+	// è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ ã®é…åˆ—ã‚ˆã‚Šé …ç›®è¨­å®š
 	for ( $j = 0; $j < count($aryViewColumn); $j++ )
 	{
 		$Addth = "\t<th>";
 		$strColumnName = $aryViewColumn[$j];
 		
-		// ¥½¡¼¥È¹àÌÜ°Ê³°¤Î¾ì¹ç
+		// ã‚½ãƒ¼ãƒˆé …ç›®ä»¥å¤–ã®å ´åˆ
 		if ( $strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" )
 		{
-			// ¥½¡¼¥È¹àÌÜ°Ê³°¤Î¾ì¹ç
+			// ã‚½ãƒ¼ãƒˆé …ç›®ä»¥å¤–ã®å ´åˆ
 			if ( ( $strColumnName == "btnDetail" and $aryUserAuthority["Detail"] ) 
 			or ( $strColumnName == "btnFix" and $aryUserAuthority["Fix"] ) 
 			or ( $strColumnName == "btnDelete" and $aryUserAuthority["Delete"] ) )
@@ -1169,7 +1169,7 @@ function fncSetProductTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuth
 				$Addth .= $aryTytle[$strColumnName];
 			}
 		}
-		// ¥½¡¼¥È¹àÌÜ¤Î¾ì¹ç
+		// ã‚½ãƒ¼ãƒˆé …ç›®ã®å ´åˆ
 		else
 		{
 			$Addth .= $aryTytle[$strColumnName];
@@ -1181,9 +1181,9 @@ function fncSetProductTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuth
 	$aryHtml[] = "</tr>";
 	$aryHtml[] = "</thead>";
 
-// ¹àÌÜÌ¾Îó¤ÎÀ¸À® end=========================================
+// é …ç›®ååˆ—ã®ç”Ÿæˆ end=========================================
 
-// ¸¡º÷·ë²Ì½ĞÎÏ¡¡¡¡¶¦ÄÌstart==================================
+// æ¤œç´¢çµæœå‡ºåŠ›ã€€ã€€å…±é€šstart==================================
 	$lngResultCount = count($aryResult);
 	$lngColumnCount = 0;
 	
@@ -1193,7 +1193,7 @@ function fncSetProductTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuth
 
 		$lngColumnCount++;
 
-		// £±¥ì¥³¡¼¥ÉÊ¬¤Î½ĞÎÏ
+		// ï¼‘ãƒ¬ã‚³ãƒ¼ãƒ‰åˆ†ã®å‡ºåŠ›
 		$aryHtml_add = fncSetProductViewTable ( $lngColumnCount, $aryResult[$i], $aryViewColumn, $aryData, $aryUserAuthority, $objDB, $objCache );
 		
 		$strColBuff = '';
@@ -1202,7 +1202,7 @@ function fncSetProductTable ( $aryResult, $aryViewColumn, $aryData, $aryUserAuth
 			$strColBuff .= $aryHtml_add[$j];
 		}
 		$aryHtml[] =$strColBuff;
-// ¸¡º÷·ë²Ì½ĞÎÏ¡¡¡¡¶¦ÄÌend==================================
+// æ¤œç´¢çµæœå‡ºåŠ›ã€€ã€€å…±é€šend==================================
 	}
 
 	$aryHtml[] = "</tbody>";

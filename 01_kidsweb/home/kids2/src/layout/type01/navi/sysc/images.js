@@ -1,7 +1,7 @@
 <!--
 
 
-	// ¥á¥Ã¥»¡¼¥¸¥Ü¥¿¥ó¥¤¥á¡¼¥¸ÄêµÁ
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸å®šç¾©
 	var messageJ1 = '/img/type01/sysc/message_off_ja_bt.gif';
 	var messageJ2 = '/img/type01/sysc/message_off_on_ja_bt.gif';
 	var messageJ3 = '/img/type01/sysc/message_on_ja_bt.gif';
@@ -12,7 +12,7 @@
 
 
 
-	// ¥µ¡¼¥Ð¥Ü¥¿¥ó¥¤¥á¡¼¥¸ÄêµÁ
+	// ã‚µãƒ¼ãƒãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸å®šç¾©
 	var serverJ1 = '/img/type01/sysc/server_off_ja_bt.gif';
 	var serverJ2 = '/img/type01/sysc/server_off_on_ja_bt.gif';
 	var serverJ3 = '/img/type01/sysc/server_on_ja_bt.gif';
@@ -23,7 +23,7 @@
 
 
 
-	// ¥á¡¼¥ë¥Ü¥¿¥ó¥¤¥á¡¼¥¸ÄêµÁ
+	// ãƒ¡ãƒ¼ãƒ«ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸å®šç¾©
 	var emailJ1 = '/img/type01/sysc/email_off_ja_bt.gif';
 	var emailJ2 = '/img/type01/sysc/email_off_on_ja_bt.gif';
 	var emailJ3 = '/img/type01/sysc/email_on_ja_bt.gif';
@@ -34,7 +34,7 @@
 
 
 
-	// ¥»¥Ã¥·¥ç¥ó¥Ü¥¿¥ó¥¤¥á¡¼¥¸ÄêµÁ
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸å®šç¾©
 	var sessionJ1 = '/img/type01/sysc/session_off_ja_bt.gif';
 	var sessionJ2 = '/img/type01/sysc/session_off_on_ja_bt.gif';
 	var sessionJ3 = '/img/type01/sysc/session_on_ja_bt.gif';

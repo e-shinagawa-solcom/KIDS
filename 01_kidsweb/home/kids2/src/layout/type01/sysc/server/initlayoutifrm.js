@@ -2,12 +2,12 @@
 
 
 //-----------------------------------------------------------------------------
-// ³µÍ× : ¥í¡¼¥«¥ëÊÑ¿ôÄêµÁ
-// ²òÀâ :¡ÖTabIndex¡×ÃÍ¤ÎÀßÄê / ¥Ü¥¿¥ó¥¤¥á¡¼¥¸¤ÎÀßÄê
+// æ¦‚è¦ : ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°å®šç¾©
+// è§£èª¬ :ã€ŒTabIndexã€å€¤ã®è¨­å®š / ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸ã®è¨­å®š
 //-----------------------------------------------------------------------------
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¥µ¥Ö¥¦¥£¥ó¥É¥¦¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumTabA1   = ''   ; // vendor
 var NumTabA1_2 = '' ; // creation
@@ -23,33 +23,33 @@ var NumTabI1   = ''   ; // input
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¾¦ÉÊ´ÉÍı¡×¥¿¥Ö
+// é©ç”¨ç®‡æ‰€ :ã€Œå•†å“ç®¡ç†ã€ã‚¿ãƒ–
 //------------------------------------------
 var PTabNumA = '' ; // A
 var PTabNumB = '' ; // B
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¼õÃí¡¦È¯Ãí¡¦Çä¾å¡¦»ÅÆş¡×¥¿¥Ö
+// é©ç”¨ç®‡æ‰€ :ã€Œå—æ³¨ãƒ»ç™ºæ³¨ãƒ»å£²ä¸Šãƒ»ä»•å…¥ã€ã‚¿ãƒ–
 //------------------------------------------
-var TabNumA = '' ; // ¥Ø¥Ã¥À¡¼
-var TabNumB = '' ; // ÌÀºÙ
+var TabNumA = '' ; // ãƒ˜ãƒƒãƒ€ãƒ¼
+var TabNumB = '' ; // æ˜ç´°
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡ÖÅĞÏ¿¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œç™»éŒ²ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var RegistNum = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¹ÔÄÉ²Ã¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œè¡Œè¿½åŠ ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var AddRowNum = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¥«¥ì¥ó¥À¡¼¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumDateTabA = '' ;
 var NumDateTabB = '' ;
@@ -57,23 +57,23 @@ var NumDateTabC = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡ÖÀ½ÉÊ¿ôÎÌ¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œè£½å“æ•°é‡ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumPunitTab = '' ;
 
 
 //------------------------------------------
-// ²òÀâ : ¥¢¥Ñ¥Ã¥Á ¥ê¥¹¥¿¡¼¥È¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : ã‚¢ãƒ‘ãƒƒãƒ ãƒªã‚¹ã‚¿ãƒ¼ãƒˆãƒœã‚¿ãƒ³ç”Ÿæˆ
 //------------------------------------------
-var restartBtJ1 = '<a href="#"><img onmouseover="fncRestartButton( \'onJ\' , this );" onmouseout="fncRestartButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + restartbtJ1 + '" width="151" height="25" border="0" alt="¥¢¥Ñ¥Ã¥ÁºÆµ¯Æ°"></a>';
+var restartBtJ1 = '<a href="#"><img onmouseover="fncRestartButton( \'onJ\' , this );" onmouseout="fncRestartButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + restartbtJ1 + '" width="151" height="25" border="0" alt="ã‚¢ãƒ‘ãƒƒãƒå†èµ·å‹•"></a>';
 
 var restartBtE1 = '<a href="#"><img onmouseover="fncRestartButton( \'onE\' , this );" onmouseout="fncRestartButton( \'offE\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + restartbtE1 + '" width="151" height="25" border="0" alt="APACHE RESTART"></a>';
 
 
 //------------------------------------------
-// ²òÀâ : ¥¢¥Ñ¥Ã¥Á ¥¹¥È¥Ã¥×¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : ã‚¢ãƒ‘ãƒƒãƒ ã‚¹ãƒˆãƒƒãƒ—ãƒœã‚¿ãƒ³ç”Ÿæˆ
 //------------------------------------------
-var stopBtJ1 = '<a href="#"><img onmouseover="fncStopButton( \'onJ\' , this );" onmouseout="fncStopButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + stopbtJ1 + '" width="151" height="25" border="0" alt="¥¢¥Ñ¥Ã¥ÁÄä»ß"></a>';
+var stopBtJ1 = '<a href="#"><img onmouseover="fncStopButton( \'onJ\' , this );" onmouseout="fncStopButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + stopbtJ1 + '" width="151" height="25" border="0" alt="ã‚¢ãƒ‘ãƒƒãƒåœæ­¢"></a>';
 
 var stopBtE1 = '<a href="#"><img onmouseover="fncStopButton( \'onE\' , this );" onmouseout="fncStopButton( \'offE\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + stopbtE1 + '" width="151" height="25" border="0" alt="APACHE STOP"></a>';
 

@@ -21,11 +21,11 @@
       , $('input[type="checkbox"][name="IsDisplay_strDetailNote"]')
   ];
 
-    // ┤╔═¤╝╘етб╝е╔е┴езе├епе▄е├епе╣дЄепеъе├епд╣ды╗■
+    // чобчРЖшАЕуГвуГ╝уГЙуГБуВзуГГуВпуГЬуГГуВпуВ╣уВТуВпуГкуГГуВпуБЩуВЛцЩВ
     $('input[name="Option_admin"]').on('click', function(){
-        // е┴езе├еп║╤д▀д╬╛ь╣ч
+        // уГБуВзуГГуВпц╕ИуБ┐уБоха┤хРИ
         if (this.checked){
-            // е┴езе├епе▄е├епе╣д╬└▀─ъ
+            // уГБуВзуГГуВпуГЬуГГуВпуВ╣уБошинхоЪ
             $.each(chkboxElements, function(){
                 this.prop('checked', false);
                 this.prop('disabled', true);
@@ -33,9 +33,9 @@
 
 
         }
-        // ╠де┴езе├епд╬╛ь╣ч
+        // цЬкуГБуВзуГГуВпуБоха┤хРИ
         else {
-            // е┴езе├епе▄е├епе╣д╬└▀─ъ
+            // уГБуВзуГГуВпуГЬуГГуВпуВ╣уБошинхоЪ
             $.each(chkboxElements, function(){
                 this.prop('disabled', false);
             });

@@ -5,10 +5,10 @@ require_once (SRC_ROOT. "/estimate/cmn/estimateOtherCellsController.php");
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
 /**
-*	¥Õ¥Ã¥¿ÉôµÚ¤Ó¤½¤ÎÂ¾¥»¥ë¤ÎºÆ·×»»¡¢¥Ç¡¼¥¿¥Á¥§¥Ã¥¯¥¯¥é¥¹
+*	ãƒ•ãƒƒã‚¿éƒ¨åŠã³ãã®ä»–ã‚»ãƒ«ã®å†è¨ˆç®—ã€ãƒ‡ãƒ¼ã‚¿ãƒã‚§ãƒƒã‚¯ã‚¯ãƒ©ã‚¹
 *	
-*	°Ê²¼¤Î¥°¥í¡¼¥Ð¥ëÊÑ¿ô¤òÄêµÁ¤¹¤ë¤³¤È
-*   @param object $objDB        ¥Ç¡¼¥¿¥Ù¡¼¥¹ÀÜÂ³¥ª¥Ö¥¸¥§¥¯¥È(clsDB¤Þ¤¿¤Ï·Ñ¾µ¥¯¥é¥¹)
+*	ä»¥ä¸‹ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã‚’å®šç¾©ã™ã‚‹ã“ã¨
+*   @param object $objDB        ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æŽ¥ç¶šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(clsDBã¾ãŸã¯ç¶™æ‰¿ã‚¯ãƒ©ã‚¹)
 *   
 */
 
@@ -19,14 +19,14 @@ class updateOtherCellsController extends estimateOtherCellsController {
     }
 
     public function calculateParam($objRowList, $objHeader, $standardRateMaster) {
-        // ½þµÑ¤Î¸¡º÷¾ò·ï¼èÆÀ
+        // å„Ÿå´ã®æ¤œç´¢æ¡ä»¶å–å¾—
         $payoffCircle = workSheetConst::PAYOFF_CIRCLE_SIGN;
 
-        // ËÜ²Ù¤Î¸¡º÷¾ò·ï¼èÆÀ
+        // æœ¬è·ã®æ¤œç´¢æ¡ä»¶å–å¾—
         $mainProductDivision = DEF_SALES_DIVISION_CODE_PRODUCT_SALES;
         $mainProduct = DEF_SALES_CLASS_CODE_MAIN_PRODUCT;
 
-        // ½¸·×ÍÑÊÑ¿ô¤Î¥»¥Ã¥È
+        // é›†è¨ˆç”¨å¤‰æ•°ã®ã‚»ãƒƒãƒˆ
         $receiveProductTotalPrice = 0;
         $receiveProductTotalQuantity = 0;
         $productionQuantity = 0;
@@ -40,45 +40,45 @@ class updateOtherCellsController extends estimateOtherCellsController {
         foreach ($objRowList as $objRow) {
 
             if ($objRow->invalidFlag) {
-                // Ìµ¸ú¥Õ¥é¥°¤¬¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç
+                // ç„¡åŠ¹ãƒ•ãƒ©ã‚°ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ãªã„å ´åˆ
                 $objRow->invalidFlag === false;
             }
 
             if ($objRow->invalidFlag === false) {
                 $areaCode = $objRow->areaCode;
-                // ºÆ·×»»·ë²Ì¤¬¤Ê¤¤¾ì¹ç¤Ï¼èÆÀÃÍ¤ò»²¾È¤¹¤ë
+                // å†è¨ˆç®—çµæžœãŒãªã„å ´åˆã¯å–å¾—å€¤ã‚’å‚ç…§ã™ã‚‹
                 $subtotal = isset($objRow->calculatedSubtotalJP) ? $objRow->calculatedSubtotalJP : $objRow->subtotal;
                 switch ($areaCode) {
                     case DEF_AREA_PRODUCT_SALES:
                         $quantity = $objRow->quantity;
                         $divisionSubject = $objRow->divisionSubjectCode;
                         $classItem = $objRow->classItemCode;
-                        // À½ÉÊÇä¾å¹ç·×
+                        // è£½å“å£²ä¸Šåˆè¨ˆ
                         $receiveProductTotalPrice += $subtotal;
-                        // À½ÉÊ¿ôÎÌ¹ç·×
+                        // è£½å“æ•°é‡åˆè¨ˆ
                         $receiveProductTotalQuantity += $quantity;
-                        // ½þµÑ¿ô
+                        // å„Ÿå´æ•°
                         if ($divisionSubject == $mainProductDivision && $classItem == $mainProduct) {
                             $productionQuantity += $quantity;
                         }
                         break;
                     case DEF_AREA_FIXED_COST_SALES:
                         $quantity = $objRow->quantity;
-                        // ¸ÇÄêÈñÇä¾å¹ç·×
+                        // å›ºå®šè²»å£²ä¸Šåˆè¨ˆ
                         $receiveFixedCostTotalPrice += $subtotal;
-                        // ¸ÇÄêÈñ¿ôÎÌ¹ç·×
+                        // å›ºå®šè²»æ•°é‡åˆè¨ˆ
                         $receiveFixedCostTotalQuantity += $quantity;
                         break;
                     case DEF_AREA_FIXED_COST_ORDER:
                         $payoff = $objRow->payoff;
-                        // ¸ÇÄêÈñ¾®·×
+                        // å›ºå®šè²»å°è¨ˆ
                         $orderFixedCostTotalPrice += $subtotal;
                         
                         if ($payoff === $payoffCircle) {
-                            // ½þµÑÈñ
+                            // å„Ÿå´è²»
                             $depreciationCost += $subtotal;
                         } else {
-                            // ½þµÑÂÐ¾Ý³°¹ç·×
+                            // å„Ÿå´å¯¾è±¡å¤–åˆè¨ˆ
                             $orderFixedCostNotDepreciation += $subtotal;
                         }
                         break;
@@ -86,10 +86,10 @@ class updateOtherCellsController extends estimateOtherCellsController {
                         $payoff = $objRow->payoff;
                         
                         if ($payoff === $payoffCircle) {
-                            // ½þµÑÈñ
+                            // å„Ÿå´è²»
                             $depreciationCost += $subtotal;
                         } else {
-                            // ÉôºàÈñ
+                            // éƒ¨æè²»
                             $memberCost += $subtotal;
                         }
                         break;
@@ -97,10 +97,10 @@ class updateOtherCellsController extends estimateOtherCellsController {
                         $payoff = $objRow->payoff;
                         
                         if ($payoff === $payoffCircle) {
-                            // ½þµÑÈñ
+                            // å„Ÿå´è²»
                             $depreciationCost += $subtotal;
                         } else {
-                            // ÉôºàÈñ
+                            // éƒ¨æè²»
                             $memberCost += $subtotal;
                         }
                         break;
@@ -110,51 +110,51 @@ class updateOtherCellsController extends estimateOtherCellsController {
             }
         }
 
-        // ¤½¤ÎÂ¾·×»»
-        // À½ÉÊÇä¾å¹â
+        // ãã®ä»–è¨ˆç®—
+        // è£½å“å£²ä¸Šé«˜
         $productTotalPrice = $receiveProductTotalPrice;
-        // À½Â¤ÈñÍÑ
+        // è£½é€ è²»ç”¨
         $manufacturingCost = $depreciationCost + $memberCost;
-        // À½ÉÊÍø±×
+        // è£½å“åˆ©ç›Š
         $productProfit = $productTotalPrice - $manufacturingCost;
-        // À½ÉÊÍø±×Î¨
+        // è£½å“åˆ©ç›ŠçŽ‡
         $productProfitRate = $productTotalPrice ? ($productProfit / $productTotalPrice) : '';
-        // ¸ÇÄêÈñÇä¾å¹â
+        // å›ºå®šè²»å£²ä¸Šé«˜
         $fixedCostTotalPrice = $receiveFixedCostTotalPrice;
-        // ¸ÇÄêÈñÍø±×
+        // å›ºå®šè²»åˆ©ç›Š
         $fixedCostProfit = $fixedCostTotalPrice - $orderFixedCostNotDepreciation;
-        // ¸ÇÄêÈñÍø±×Î¨
+        // å›ºå®šè²»åˆ©ç›ŠçŽ‡
         $fixedCostProfitRate = $fixedCostTotalPrice ? ($fixedCostProfit / $fixedCostTotalPrice) : '';
-        // ÁíÇä¾å¹â
+        // ç·å£²ä¸Šé«˜
         $salesAmount = $productTotalPrice + $fixedCostTotalPrice;
-        // Çä¾åÁíÍø±×
+        // å£²ä¸Šç·åˆ©ç›Š
         $profit = $productProfit + $fixedCostProfit;
-        // Íø±×Î¨
+        // åˆ©ç›ŠçŽ‡
         $profitRate = $salesAmount ? ($profit / $salesAmount) : '';
-        // É¸½à³ä¹ç
+        // æ¨™æº–å‰²åˆ
         $standardRate = $standardRateMaster;
-        // ´ÖÀÜÀ½Â¤·ÐÈñ
+        // é–“æŽ¥è£½é€ çµŒè²»
         $indirectCost = floor($salesAmount * $standardRate);
-        // ±Ä¶ÈÍø±×
+        // å–¶æ¥­åˆ©ç›Š
         $operatingProfit = $profit - $indirectCost;
-        // ±Ä¶ÈÍø±×Î¨
+        // å–¶æ¥­åˆ©ç›ŠçŽ‡
         $operatingProfitRate = $salesAmount ? ($operatingProfit / $salesAmount) : '';
-        // ÉôºàÈñ¸Ä¿ô
+        // éƒ¨æè²»å€‹æ•°
         $memberQuantity = $productionQuantity;
-        // ½þµÑÈñ¸Ä¿ô
+        // å„Ÿå´è²»å€‹æ•°
         $depreciationQuantity = $productionQuantity;
-        // À½Â¤ÈñÍÑ¸Ä¿ô
+        // è£½é€ è²»ç”¨å€‹æ•°
         $manufacturingQuantity = $productionQuantity;
-        // ÉôºàÈñÃ±²Á
+        // éƒ¨æè²»å˜ä¾¡
         $memberUnitCost = ($memberQuantity > 0) ? $memberCost / $memberQuantity : 0;
-        // ½þµÑÈñÃ±²Á
+        // å„Ÿå´è²»å˜ä¾¡
         $depreciationUnitCost = ($depreciationQuantity > 0) ? $depreciationCost / $depreciationQuantity : 0;
-        // À½Â¤ÈñÍÑ
+        // è£½é€ è²»ç”¨
         $manufacturingUnitCost = ($manufacturingQuantity > 0) ? $manufacturingCost / $manufacturingQuantity : 0;
-        // ½þµÑÂÐ¾Ý³°¸ÇÄêÈñ
+        // å„Ÿå´å¯¾è±¡å¤–å›ºå®šè²»
         $costNotDepreciation = $orderFixedCostNotDepreciation;
 
-        // ¥¯¥é¥¹¤Î¥×¥í¥Ñ¥Æ¥£¤Ë¥»¥Ã¥È
+        // ã‚¯ãƒ©ã‚¹ã®ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã«ã‚»ãƒƒãƒˆ
         $this->receiveProductTotalPrice = $receiveProductTotalPrice;
         $this->receiveProductTotalQuantity = $receiveProductTotalQuantity;
         $this->productionQuantity = $productionQuantity;

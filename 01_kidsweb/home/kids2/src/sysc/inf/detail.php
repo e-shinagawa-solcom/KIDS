@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥·¥¹¥Æ¥à´ÉÍý ¥í¥°¾ÜºÙ²èÌÌ
+*	ã‚·ã‚¹ãƒ†ãƒ ç®¡ç† ãƒ­ã‚°è©³ç´°ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,41 +10,41 @@
 *	@version   1.00
 *
 */
-// ¥·¥¹¥Æ¥à´ÉÍý¼Ô¥í¥°¾ÜºÙ²èÌÌ
+// ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…ãƒ­ã‚°è©³ç´°ç”»é¢
 // log.php -> strSessionID             -> detail.php
 // log.php -> lngSystemInformationCode -> detail.php
 // log.php -> lngPage                  -> detail.php
 //
-// ¥·¥¹¥Æ¥à´ÉÍý¼Ô¥í¥°±ÜÍ÷²èÌÌ(PAGEÊÑ¹¹)¤Ø
+// ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…ãƒ­ã‚°é–²è¦§ç”»é¢(PAGEå¤‰æ›´)ã¸
 // detail.php -> strSessionID          -> log.php
 // detail.php -> lngPage               -> log.php
 
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 //require (SRC_ROOT . "sysc/cmn/lib_sys.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData["lngPage"] = 0;
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_SYS1, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -53,17 +53,17 @@ $aryCheck["lngPage"]                  = "number(0,)";
 $aryCheck["lngSystemInformationCode"] = "null:number(0,)";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 if ( join ( $aryCheckResult ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥·¥¹¥Æ¥à´ÉÍý¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 
 
-// ¤ªÃÎ¤é¤»µ­»ö¼èÆÀ(¼èÆÀ·ï¿ô¤è¤ê1·ïÂ¿¤¯¼èÆÀ¡¢É½¼¨¤Ï·ï¿ôÄÌ¤ê)
+// ãŠçŸ¥ã‚‰ã›è¨˜äº‹å–å¾—(å–å¾—ä»¶æ•°ã‚ˆã‚Š1ä»¶å¤šãå–å¾—ã€è¡¨ç¤ºã¯ä»¶æ•°é€šã‚Š)
 $strQuery = "SELECT * FROM m_SystemInformation WHERE lngSystemInformationCode = " . $aryData["lngSystemInformationCode"];
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -80,7 +80,7 @@ $aryParts["strSessionID"] =& $aryData["strSessionID"];
 $aryParts["lngPage"]      =& $aryData["lngPage"];
 
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "sysc/inf/detail.tmpl" );
 $objTemplate->replace( $aryParts );

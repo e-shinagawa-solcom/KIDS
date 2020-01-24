@@ -1,13 +1,13 @@
 
-// datepicker¤ÎÍ×ÁÇ»ØÄê
+// datepickerã®è¦ç´ æŒ‡å®š
 (function(){
 
-    // datepickerÂĞ¾İÍ×ÁÇ
+    // datepickerå¯¾è±¡è¦ç´ 
     var dateElements = [
             $('input[name="ActionDate"]')
     ];
 
-    // datepicker¤ÎÀßÄê
+    // datepickerã®è¨­å®š
     $.each(dateElements, function(){
         this.datepicker({
                 showButtonPanel: true

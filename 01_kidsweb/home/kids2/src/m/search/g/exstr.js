@@ -3,7 +3,7 @@
 
 
 //////////////////////////////////////////////////////////////////
-////////// ¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncMasterSearchOnload()
 {
 	ChgEtoJ( window.top.lngLanguageCode );
@@ -16,7 +16,7 @@ function fncMasterSearchOnload()
 
 
 ///// HEADER IMAGE /////
-var headerAJ = '<img src="' + mgroupJ + '" width="949" height="30" border="0" alt="¥°¥ë¡¼¥×¥Ş¥¹¥¿¸¡º÷">';
+var headerAJ = '<img src="' + mgroupJ + '" width="949" height="30" border="0" alt="ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿æ¤œç´¢">';
 var headerAE = '<img src="' + mgroupE + '" width="949" height="30" border="0" alt="GROUP MASTER SEARCH">';
 
 

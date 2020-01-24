@@ -36,26 +36,26 @@ $(document).ready(function () {
         }
     }
     // if ($('input[name="strTableName"]').val() == "m_Company") {
-    //     $("#result thead tr td:nth-child(2)").find('div').text('²ñ¼Ò¥³¡¼¥É');
-    //     $("#result thead tr td:nth-child(3)").find('div').text('¹ñ¥³¡¼¥É');
-    //     $("#result thead tr td:nth-child(4)").find('div').text('ÁÈ¿¥¥³¡¼¥É');
-    //     $("#result thead tr td:nth-child(5)").find('div').text('ÁÈ¿¥É½µ­');
-    //     $("#result thead tr td:nth-child(6)").find('div').text('²ñ¼ÒÌ¾¾Î');
-    //     $("#result thead tr td:nth-child(7)").find('div').text('É½¼¨²ñ¼Òµö²Ä');
-    //     $("#result thead tr td:nth-child(8)").find('div').text('É½¼¨²ñ¼Ò¥³¡¼¥É');
-    //     $("#result thead tr td:nth-child(9)").find('div').text('É½¼¨²ñ¼ÒÌ¾¾Î');
-    //     $("#result thead tr td:nth-child(10)").find('div').text('¾ÊÎ¬Ì¾¾Î');
-    //     $("#result thead tr td:nth-child(11)").find('div').text('Í¹ÊØÈÖ¹æ');
-    //     $("#result thead tr td:nth-child(12)").find('div').text('½»½ê1 / ÅÔÆ»ÉÜ¸©');
-    //     $("#result thead tr td:nth-child(13)").find('div').text('½»½ê2 / »Ô¡¢¶è¡¢·´');
-    //     $("#result thead tr td:nth-child(14)").find('div').text('½»½ê3 / Ä®¡¢ÈÖÃÏ');
-    //     $("#result thead tr td:nth-child(15)").find('div').text('½»½ê4 / ¥Ó¥ëÅù¡¢·úÊªÌ¾');
-    //     $("#result thead tr td:nth-child(16)").find('div').text('ÅÅÏÃÈÖ¹æ1');
-    //     $("#result thead tr td:nth-child(17)").find('div').text('ÅÅÏÃÈÖ¹æ2');
-    //     $("#result thead tr td:nth-child(18)").find('div').text('¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ1');
-    //     $("#result thead tr td:nth-child(19)").find('div').text('¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ2');
-    //     $("#result thead tr td:nth-child(20)").find('div').text('¼±ÊÌ¥³¡¼¥É');
-    //     $("#result thead tr td:nth-child(21)").find('div').text('Äù¤áÆü¥³¡¼¥É');
-    //     $("#result thead tr td:nth-child(22)").find('div').text('²ñ¼ÒÂ°À­');
+    //     $("#result thead tr td:nth-child(2)").find('div').text('ä¼šç¤¾ã‚³ãƒ¼ãƒ‰');
+    //     $("#result thead tr td:nth-child(3)").find('div').text('å›½ã‚³ãƒ¼ãƒ‰');
+    //     $("#result thead tr td:nth-child(4)").find('div').text('çµ„ç¹”ã‚³ãƒ¼ãƒ‰');
+    //     $("#result thead tr td:nth-child(5)").find('div').text('çµ„ç¹”è¡¨è¨˜');
+    //     $("#result thead tr td:nth-child(6)").find('div').text('ä¼šç¤¾åç§°');
+    //     $("#result thead tr td:nth-child(7)").find('div').text('è¡¨ç¤ºä¼šç¤¾è¨±å¯');
+    //     $("#result thead tr td:nth-child(8)").find('div').text('è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰');
+    //     $("#result thead tr td:nth-child(9)").find('div').text('è¡¨ç¤ºä¼šç¤¾åç§°');
+    //     $("#result thead tr td:nth-child(10)").find('div').text('çœç•¥åç§°');
+    //     $("#result thead tr td:nth-child(11)").find('div').text('éƒµä¾¿ç•ªå·');
+    //     $("#result thead tr td:nth-child(12)").find('div').text('ä½æ‰€1 / éƒ½é“åºœçœŒ');
+    //     $("#result thead tr td:nth-child(13)").find('div').text('ä½æ‰€2 / å¸‚ã€åŒºã€éƒ¡');
+    //     $("#result thead tr td:nth-child(14)").find('div').text('ä½æ‰€3 / ç”ºã€ç•ªåœ°');
+    //     $("#result thead tr td:nth-child(15)").find('div').text('ä½æ‰€4 / ãƒ“ãƒ«ç­‰ã€å»ºç‰©å');
+    //     $("#result thead tr td:nth-child(16)").find('div').text('é›»è©±ç•ªå·1');
+    //     $("#result thead tr td:nth-child(17)").find('div').text('é›»è©±ç•ªå·2');
+    //     $("#result thead tr td:nth-child(18)").find('div').text('ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·1');
+    //     $("#result thead tr td:nth-child(19)").find('div').text('ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·2');
+    //     $("#result thead tr td:nth-child(20)").find('div').text('è­˜åˆ¥ã‚³ãƒ¼ãƒ‰');
+    //     $("#result thead tr td:nth-child(21)").find('div').text('ç· ã‚æ—¥ã‚³ãƒ¼ãƒ‰');
+    //     $("#result thead tr td:nth-child(22)").find('div').text('ä¼šç¤¾å±æ€§');
     // }
 });

@@ -1,36 +1,36 @@
 /*
-	���ס�����(L/Cͽ��ɽ����)����L/C�ǡ����סַ׾��������
-	�оݡ��ǡ����������ݡ���
-	������chiba
-	���͡�
+	概要：経理(L/C予定表情報)　「L/Cデータ」「計上日指定」
+	対象：データエクスポート
+	作成：chiba
+	備考：
 
-	��������
-	2004.04.07	LCͽ��ɽ�˰ʲ��Υ������ɲ�	���ٹ��ֹ�ʥ����ȥ����ˡ���Х��������ɡ���ʧ���
-	2004.04.07	ORDER BY �ˤ�ȯ��No�ξ��硢���ٹ��ֹ�ξ���˥����Ȥ����褦���ѹ�
-	2004.04.27	�ǿ�ȯ���μ������Ƥ���
-	2004.05.13	Ǽ�ʾ����ɲ�
-	2004.05.13	���������ѹ��������Τʾ�������ꤹ��褦����
-	2004.05.19	LCͽ��ɽ�Ͽ����ʥ�ӥ�����ֹ� 0�ˤΤ� ��Х����˹����Υǡ����ʺ���ǡ����ޤ�ˤ���Ф���褦�˽���
-				�ޤ���ȯ���ξ��֤�ɽ������褦�˽���
+	更新履歴：
+	2004.04.07	LC予定表に以下のカラムを追加	明細行番号（ソートキー）、リバイズコード、支払条件
+	2004.04.07	ORDER BY にて発注Noの昇順、明細行番号の昇順にソートされるように変更
+	2004.04.27	最新発注の取得内容を修正
+	2004.05.13	納品場所の追加
+	2004.05.13	入力日、変更日に正確な情報を設定するよう修正
+	2004.05.19	LC予定表は新規（リビジョン番号 0）のみ リバイズに更新のデータ（削除データ含む）を抽出するように修正
+				また、発注の状態を表示するように修正
 */
 SELECT
 	o.strOrderCode
 	,od.lngSortKey
 	,o.strReviseCode
 	,
-	/* ����ǡ������ɤ������� */
+	/* 削除データかどうか示す */
 	CASE WHEN o.lngRevisionNo < 0 AND o.bytInvalidFlag = FALSE
-	       THEN '���'
+	       THEN '削除'
 	  WHEN o.lngRevisionNo < 0 AND o.bytInvalidFlag = TRUE
-	       THEN '�����ͭ����'
+	       THEN '削除後有効化'
 	  WHEN o.lngOrderStatusCode = 1
-	       THEN '̤��ǧ'
+	       THEN '未承認'
 	  WHEN o.lngOrderStatusCode = 3
-	       THEN 'Ǽ��'
+	       THEN '納品'
 	  WHEN o.lngOrderStatusCode = 4
-	       THEN 'Ǽ��'
+	       THEN '納品'
 	  WHEN o.lngOrderStatusCode = 99
-	       THEN 'Ǽ��'
+	       THEN '納品'
 	  WHEN 0 = 
 	      (
 	        SELECT COUNT ( * ) 
@@ -38,7 +38,7 @@ SELECT
 	        WHERE to_number ( mw.strWorkflowKeyCode, '9999999') = o.lngOrderNo
 	         AND mw.lngFunctionCode = 501
 	      )
-	       THEN '��ǧ��'
+	       THEN '承認済'
 	  WHEN 10 = 
 	      (
 	        SELECT tw.lngWorkflowStatusCode
@@ -51,7 +51,7 @@ SELECT
 	          SELECT MAX ( tw2.lngWorkflowSubCode ) FROM t_Workflow tw2 WHERE tw.lngWorkflowCode = tw2.lngWorkflowCode
 	        )
 	      )
-	       THEN '��ǧ��'
+	       THEN '承認済'
 	  WHEN 4 = 
 	      (
 	        SELECT tw.lngWorkflowStatusCode
@@ -64,7 +64,7 @@ SELECT
 	          SELECT MAX ( tw2.lngWorkflowSubCode ) FROM t_Workflow tw2 WHERE tw.lngWorkflowCode = tw2.lngWorkflowCode
 	        )
 	      )
-	       THEN '̤��ǧ'
+	       THEN '未承認'
 	  WHEN 99 = 
 	      (
 	        SELECT tw.lngWorkflowStatusCode
@@ -77,8 +77,8 @@ SELECT
 	          SELECT MAX ( tw2.lngWorkflowSubCode ) FROM t_Workflow tw2 WHERE tw.lngWorkflowCode = tw2.lngWorkflowCode
 	        )
 	      )
-	       THEN '̤��ǧ'
-	  ELSE '̤��ǧ'
+	       THEN '未承認'
+	  ELSE '未承認'
 	END AS lngOrderStatus
 	,pa.strPayConditionName
 	,NULL
@@ -122,11 +122,11 @@ FROM
 										ON od.lngProductUnitCode = pu.lngProductUnitCode
 						)
 						ON o.lngOrderNo = od.lngOrderNo
-/* ��1.L/C�Υǡ��� 2.��ӥ����NO��0�ʾ�Υǡ��� */
+/* 条件：1.L/Cのデータ 2.リビジョンNOが0以上のデータ */
 WHERE
 	_%lngExportConditions%_
 	AND o.strOrderCode >= '_%strOrderCodeFrom%_'
 	AND o.strOrderCode <= '_%strOrderCodeTo%_'
 	AND o.bytInvalidFlag        = FALSE
-/* ORDER BY ������ */
+/* ORDER BY の設定 */
  ORDER BY o.strOrderCode, od.lngSortKey

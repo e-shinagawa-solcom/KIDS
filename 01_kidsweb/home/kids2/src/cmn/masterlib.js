@@ -1,49 +1,49 @@
 
 	// 
-	//	¥Õ¥¡¥¤¥ë³µÍ×¡§(JavaScript¥Õ¥¡¥¤¥ë)
+	//	ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ï¼š(JavaScriptãƒ•ã‚¡ã‚¤ãƒ«)
 	//	
-	// ¥Ç¡¼¥¿¥Ğ¥¤¥ó¥É¤Îµ¡Ç½¤òÍøÍÑ¤·¤Æ¡¢¥³¡¼¥É¤«¤éÌ¾¾Î¤ò¼èÆÀ¤·¤Ş¤¹
+	// ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ã®æ©Ÿèƒ½ã‚’åˆ©ç”¨ã—ã¦ã€ã‚³ãƒ¼ãƒ‰ã‹ã‚‰åç§°ã‚’å–å¾—ã—ã¾ã™
 	// 
 
 	/*
-		¡Ô²şÄêÍúÎò¡Õ
+		ã€Šæ”¹å®šå±¥æ­´ã€‹
 		2004/03/09	K.Saito
-			subLoadMasterHidden() ´Ø¿ô¤ÎÄÉ²Ã
-			subLoadMasterCheckAlert() ´Ø¿ô¤ÎÄÉ²Ã
+			subLoadMasterHidden() é–¢æ•°ã®è¿½åŠ 
+			subLoadMasterCheckAlert() é–¢æ•°ã®è¿½åŠ 
 		
 		2004/../..
 	*/
 	
 	
-	var g_objLoadMasterInForm;								// input¤µ¤ì¤¿¥ª¥Ö¥¸¥§¥¯¥È
-	var g_objLoadMasterOutForm   = new Array();   			// output ÂĞ¾İ¤Î¥ª¥Ö¥¸¥§¥¯¥È
-	var g_aryLoadMasterErrorFlag = new Array(); 			// new Boolean(false);		// ¥¨¥é¡¼¥Õ¥é¥°
+	var g_objLoadMasterInForm;								// inputã•ã‚ŒãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	var g_objLoadMasterOutForm   = new Array();   			// output å¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	var g_aryLoadMasterErrorFlag = new Array(); 			// new Boolean(false);		// ã‚¨ãƒ©ãƒ¼ãƒ•ãƒ©ã‚°
 	
-	var g_strLoadMasterLoading   = "Loading...";			// ¥Ç¡¼¥¿¥»¥Ã¥ÈÀÜÂ³»ş
-	var g_strLoadMasterNoData    = "(No Data)";				// ¥Ç¡¼¥¿¥»¥Ã¥È0·ï»ş
-	var g_blnLoadMasterDebugFlag = new Boolean(false);		// ¥Ç¥Ğ¥Ã¥¯¥Õ¥é¥°
+	var g_strLoadMasterLoading   = "Loading...";			// ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆæ¥ç¶šæ™‚
+	var g_strLoadMasterNoData    = "(No Data)";				// ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ0ä»¶æ™‚
+	var g_blnLoadMasterDebugFlag = new Boolean(false);		// ãƒ‡ãƒãƒƒã‚¯ãƒ•ãƒ©ã‚°
 	
 	
 	
 	// ---------------------------------------------------------------------------
-	//	³µÍ×¡§
-	//		subLoadMaster() ¸Æ¤Ó½Ğ¤·¡¢¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹-¥ª¥Ö¥¸¥§¥¯¥ÈÍÑ¥é¥Ã¥Ñ¡¼
-	//	°ú¿ô¡§
-	//		strProcessID		-	½èÍıID
-	//		objInForm			-	ÆşÎÏ¥ª¥Ö¥¸¥§¥¯¥È
-	//		objOutForm			-	¸¡º÷·ë²ÌËä¤á¹ş¤ß¥ª¥Ö¥¸¥§¥¯¥È
-	//		arySearchValue		-	¸¡º÷¸µÃÍ¡ÊÇÛÎóÃÍ¡Ë
-	//		objDataSource		-	DataSource¥ª¥Ö¥¸¥§¥¯¥È
-	//		lngObjNo			-	»ÈÍÑ¤¹¤ë¥ª¥Ö¥¸¥§¥¯¥ÈÈÖ¹æ
-	//		blnDebugFlag		-	¥Ç¥Ğ¥Ã¥¯¥Õ¥é¥°
-	//	È÷¹Í¡§
-	//							Ê£¿ô¤Î¥Ç¡¼¥¿¥Ğ¥¤¥ó¥É¤òonChangeÅù¤Î¥¤¥Ù¥ó¥È¤Ç°ìÅÙ¤Ë»ÈÍÑ¤¹¤ë¾ì¹ç
-	//							¤³¤ÎÈÖ¹æ¤ò»ÈÍÑ¤·¤ÆÊ¬ÊÌ¤¹¤ë
-	//							»ØÄê¤¬Ìµ¤¤¾ì¹ç¤Ï 0
+	//	æ¦‚è¦ï¼š
+	//		subLoadMaster() å‘¼ã³å‡ºã—ã€ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹-ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ãƒ©ãƒƒãƒ‘ãƒ¼
+	//	å¼•æ•°ï¼š
+	//		strProcessID		-	å‡¦ç†ID
+	//		objInForm			-	å…¥åŠ›ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		objOutForm			-	æ¤œç´¢çµæœåŸ‹ã‚è¾¼ã¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		arySearchValue		-	æ¤œç´¢å…ƒå€¤ï¼ˆé…åˆ—å€¤ï¼‰
+	//		objDataSource		-	DataSourceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		lngObjNo			-	ä½¿ç”¨ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç•ªå·
+	//		blnDebugFlag		-	ãƒ‡ãƒãƒƒã‚¯ãƒ•ãƒ©ã‚°
+	//	å‚™è€ƒï¼š
+	//							è¤‡æ•°ã®ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ã‚’onChangeç­‰ã®ã‚¤ãƒ™ãƒ³ãƒˆã§ä¸€åº¦ã«ä½¿ç”¨ã™ã‚‹å ´åˆ
+	//							ã“ã®ç•ªå·ã‚’ä½¿ç”¨ã—ã¦åˆ†åˆ¥ã™ã‚‹
+	//							æŒ‡å®šãŒç„¡ã„å ´åˆã¯ 0
 	// ---------------------------------------------------------------------------
 	function subLoadMasterText(strProcessID, objInForm, objOutForm, arySearchValue, objDataSource, lngObjNo, blnDebugFlag )
 	{
-		// InForm, OutForm ¤ÎÃÍ¤ò¥Á¥§¥Ã¥¯
+		// InForm, OutForm ã®å€¤ã‚’ãƒã‚§ãƒƒã‚¯
 		if( typeof( objInForm ) == 'undefined' || 
 			typeof( objOutForm) == 'undefined' )
 		{
@@ -51,75 +51,75 @@
 			return false;
 		}
 
-		// ¥ª¥Ö¥¸¥§¥¯¥ÈNo
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆNo
 		if( isNaN(lngObjNo) )
-		{	// »ØÄê¤¬Ìµ¤¤¾ì¹ç¤Ï 0
+		{	// æŒ‡å®šãŒç„¡ã„å ´åˆã¯ 0
 			lngObjNo = 0;
 		}
 		
-		// ¥Ç¥Ğ¥Ã¥¯¥Õ¥é¥°ÀßÄê
+		// ãƒ‡ãƒãƒƒã‚¯ãƒ•ãƒ©ã‚°è¨­å®š
 		g_blnLoadMasterDebugFlag = blnDebugFlag;
 		
-		// ÆşÎÏ¥ª¥Ö¥¸¥§¥¯¥È
+		// å…¥åŠ›ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		g_objLoadMasterInForm = objInForm;
 
-		// ¸¡º÷¸µÃÍ£±¡¢ÀèÆ¬¤ËÈ¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¾ì¹ç¡¢ºï½ü
+		// æ¤œç´¢å…ƒå€¤ï¼‘ã€å…ˆé ­ã«åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹å ´åˆã€å‰Šé™¤
 		strInFormVal = objInForm.value.replace(/^[\x20]+/, '');
 
-		// ¸¡º÷¸µÃÍ£±¤¬Ìµ¤¤¾ì¹ç
+		// æ¤œç´¢å…ƒå€¤ï¼‘ãŒç„¡ã„å ´åˆ
 		if( strInFormVal == '' )
 		{
 			objOutForm.value = '';
 			return false;
 		}
 
-		// ÀßÄêÀè¤Î¥ª¥Ö¥¸¥§¥¯¥È
+		// è¨­å®šå…ˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		g_objLoadMasterOutForm[lngObjNo] = objOutForm;
 		
-		// ¥³¡¼¥É¤«¤éÌ¾¾Î¤ò¼èÆÀ
+		// ã‚³ãƒ¼ãƒ‰ã‹ã‚‰åç§°ã‚’å–å¾—
 		subLoadMaster(strProcessID, arySearchValue, objDataSource );
 		
 		return true;
 	}
 
 	// ---------------------------------------------------------------------------
-	//	³µÍ×¡§
-	//		subLoadMaster() ¸Æ¤Ó½Ğ¤·¡¢Hidden-¥ª¥Ö¥¸¥§¥¯¥ÈÍÑ¥é¥Ã¥Ñ¡¼
-	//	°ú¿ô¡§
-	//		strProcessID		-	½èÍıID
-	//		objInForm			-	ÆşÎÏ¥ª¥Ö¥¸¥§¥¯¥È
-	//		objOutForm			-	¸¡º÷·ë²ÌËä¤á¹ş¤ß¥ª¥Ö¥¸¥§¥¯¥È
-	//		arySearchValue		-	¸¡º÷¸µÃÍ¡ÊÇÛÎóÃÍ¡Ë
-	//		objDataSource		-	DataSource¥ª¥Ö¥¸¥§¥¯¥È
-	//		lngObjNo			-	»ÈÍÑ¤¹¤ë¥ª¥Ö¥¸¥§¥¯¥ÈÈÖ¹æ
-	//		blnDebugFlag		-	¥Ç¥Ğ¥Ã¥¯¥Õ¥é¥°
-	//	È÷¹Í¡§
-	//							Ê£¿ô¤Î¥Ç¡¼¥¿¥Ğ¥¤¥ó¥É¤òonChangeÅù¤Î¥¤¥Ù¥ó¥È¤Ç°ìÅÙ¤Ë»ÈÍÑ¤¹¤ë¾ì¹ç
-	//							¤³¤ÎÈÖ¹æ¤ò»ÈÍÑ¤·¤ÆÊ¬ÊÌ¤¹¤ë
-	//							»ØÄê¤¬Ìµ¤¤¾ì¹ç¤Ï 0
+	//	æ¦‚è¦ï¼š
+	//		subLoadMaster() å‘¼ã³å‡ºã—ã€Hidden-ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ãƒ©ãƒƒãƒ‘ãƒ¼
+	//	å¼•æ•°ï¼š
+	//		strProcessID		-	å‡¦ç†ID
+	//		objInForm			-	å…¥åŠ›ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		objOutForm			-	æ¤œç´¢çµæœåŸ‹ã‚è¾¼ã¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		arySearchValue		-	æ¤œç´¢å…ƒå€¤ï¼ˆé…åˆ—å€¤ï¼‰
+	//		objDataSource		-	DataSourceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		lngObjNo			-	ä½¿ç”¨ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç•ªå·
+	//		blnDebugFlag		-	ãƒ‡ãƒãƒƒã‚¯ãƒ•ãƒ©ã‚°
+	//	å‚™è€ƒï¼š
+	//							è¤‡æ•°ã®ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ã‚’onChangeç­‰ã®ã‚¤ãƒ™ãƒ³ãƒˆã§ä¸€åº¦ã«ä½¿ç”¨ã™ã‚‹å ´åˆ
+	//							ã“ã®ç•ªå·ã‚’ä½¿ç”¨ã—ã¦åˆ†åˆ¥ã™ã‚‹
+	//							æŒ‡å®šãŒç„¡ã„å ´åˆã¯ 0
 	// ---------------------------------------------------------------------------
 	function subLoadMasterHidden(strProcessID, objInForm, objOutForm, arySearchValue, objDataSource, lngObjNo, blnDebugFlag )
 	{
-		// InForm, OutForm ¤ÎÃÍ¤ò¥Á¥§¥Ã¥¯
+		// InForm, OutForm ã®å€¤ã‚’ãƒã‚§ãƒƒã‚¯
 		if(	typeof( objOutForm) == 'undefined' )
 		{
 			alert("WARNING!! miss match subLoadMasterText() arg object undefined");
 			return false;
 		}
 
-		// ¥ª¥Ö¥¸¥§¥¯¥ÈNo
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆNo
 		if( isNaN(lngObjNo) )
-		{	// »ØÄê¤¬Ìµ¤¤¾ì¹ç¤Ï 0
+		{	// æŒ‡å®šãŒç„¡ã„å ´åˆã¯ 0
 			lngObjNo = 0;
 		}
 		
-		// ¥Ç¥Ğ¥Ã¥¯¥Õ¥é¥°ÀßÄê
+		// ãƒ‡ãƒãƒƒã‚¯ãƒ•ãƒ©ã‚°è¨­å®š
 		g_blnLoadMasterDebugFlag = blnDebugFlag;
 		
-		// ÀßÄêÀè¤Î¥ª¥Ö¥¸¥§¥¯¥È
+		// è¨­å®šå…ˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		g_objLoadMasterOutForm[lngObjNo] = objOutForm;
 		
-		// ¥³¡¼¥É¤«¤éÌ¾¾Î¤ò¼èÆÀ
+		// ã‚³ãƒ¼ãƒ‰ã‹ã‚‰åç§°ã‚’å–å¾—
 		subLoadMaster(strProcessID, arySearchValue, objDataSource );
 		
 		return true;
@@ -128,27 +128,27 @@
 	
 	// ---------------------------------------------------------------------------
 	// 
-	// ³µÍ×¡§subLoadMasterText() ¤Î objInForm ¤ÎÂ¸ºß¥Á¥§¥Ã¥¯Ìµ¤·ÈÇ
+	// æ¦‚è¦ï¼šsubLoadMasterText() ã® objInForm ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯ç„¡ã—ç‰ˆ
 	//
-	// È÷¹Í¡§¤³¤Î´Ø¿ô¤Ï¡¢ScriptÆâ¤«¤é¤Î¸Æ¤Ó½Ğ¤·¤Ë»ÈÍÑ¤·¤Æ²¼¤µ¤¤¡£
-	//       UI ¤«¤é¤Î¸Æ¤Ó½Ğ¤·¤Ë¤ÏÅ¬ÍÑ¤·¤Ê¤¤»ö¡£
+	// å‚™è€ƒï¼šã“ã®é–¢æ•°ã¯ã€Scriptå†…ã‹ã‚‰ã®å‘¼ã³å‡ºã—ã«ä½¿ç”¨ã—ã¦ä¸‹ã•ã„ã€‚
+	//       UI ã‹ã‚‰ã®å‘¼ã³å‡ºã—ã«ã¯é©ç”¨ã—ãªã„äº‹ã€‚
 	// ---------------------------------------------------------------------------
 	function subLoadMasterValue(strProcessID, objInForm, objOutForm, arySearchValue, objDataSource, lngObjNo, blnDebugFlag )
 	{
 		
-		// ¥ª¥Ö¥¸¥§¥¯¥ÈNo
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆNo
 		if( isNaN(lngObjNo) )
-		{	// »ØÄê¤¬Ìµ¤¤¾ì¹ç¤Ï 0
+		{	// æŒ‡å®šãŒç„¡ã„å ´åˆã¯ 0
 			lngObjNo = 0;
 		}
 
-		// ¥Ç¥Ğ¥Ã¥¯¥Õ¥é¥°ÀßÄê
+		// ãƒ‡ãƒãƒƒã‚¯ãƒ•ãƒ©ã‚°è¨­å®š
 		g_blnLoadMasterDebugFlag = blnDebugFlag;
 
-		// ÀßÄêÀè¤Î¥ª¥Ö¥¸¥§¥¯¥È
+		// è¨­å®šå…ˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		g_objLoadMasterOutForm[lngObjNo] = objOutForm;
 
-		// ¥³¡¼¥É¤«¤éÌ¾¾Î¤ò¼èÆÀ
+		// ã‚³ãƒ¼ãƒ‰ã‹ã‚‰åç§°ã‚’å–å¾—
 		subLoadMaster(strProcessID, arySearchValue, objDataSource );
 
 		return true;
@@ -156,47 +156,47 @@
 	
 
 	// ---------------------------------------------------------------------------
-	//	³µÍ×¡§
-	// 		subLoadMaster() ¸Æ¤Ó½Ğ¤·¡¢¥ª¥×¥·¥ç¥ó-¥ª¥Ö¥¸¥§¥¯¥ÈÍÑ¥é¥Ã¥Ñ¡¼
-	//	°ú¿ô¡§
-	//		strProcessID		-	½èÍıID
-	//		objInForm			-	¸¡º÷¸µÃÍ£±¡Ê¥³¡¼¥É¡ËÆşÎÏ¥ª¥Ö¥¸¥§¥¯¥È
-	//		objOutOption		-	¸¡º÷·ë²ÌËä¤á¹ş¤ß¥ª¥Ö¥¸¥§¥¯¥È
-	//		arySearchValue		-	¸¡º÷¸µÃÍ¡ÊÇÛÎóÃÍ¡Ë
-	//		objDataSource		-	DataSource¥ª¥Ö¥¸¥§¥¯¥È
-	//		lngObjNo			-	»ÈÍÑ¤¹¤ë¥ª¥Ö¥¸¥§¥¯¥ÈÈÖ¹æ
-	//		blnDebugFlag		-	¥Ç¥Ğ¥Ã¥¯¥Õ¥é¥°
-	//	È÷¹Í¡§
-	//							Ê£¿ô¤Î¥Ç¡¼¥¿¥Ğ¥¤¥ó¥É¤òonChangeÅù¤Î¥¤¥Ù¥ó¥È¤Ç°ìÅÙ¤Ë»ÈÍÑ¤¹¤ë¾ì¹ç
-	//							¤³¤ÎÈÖ¹æ¤ò»ÈÍÑ¤·¤ÆÊ¬ÊÌ¤¹¤ë
-	//							»ØÄê¤¬Ìµ¤¤¾ì¹ç¤Ï 0
+	//	æ¦‚è¦ï¼š
+	// 		subLoadMaster() å‘¼ã³å‡ºã—ã€ã‚ªãƒ—ã‚·ãƒ§ãƒ³-ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ãƒ©ãƒƒãƒ‘ãƒ¼
+	//	å¼•æ•°ï¼š
+	//		strProcessID		-	å‡¦ç†ID
+	//		objInForm			-	æ¤œç´¢å…ƒå€¤ï¼‘ï¼ˆã‚³ãƒ¼ãƒ‰ï¼‰å…¥åŠ›ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		objOutOption		-	æ¤œç´¢çµæœåŸ‹ã‚è¾¼ã¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		arySearchValue		-	æ¤œç´¢å…ƒå€¤ï¼ˆé…åˆ—å€¤ï¼‰
+	//		objDataSource		-	DataSourceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		lngObjNo			-	ä½¿ç”¨ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç•ªå·
+	//		blnDebugFlag		-	ãƒ‡ãƒãƒƒã‚¯ãƒ•ãƒ©ã‚°
+	//	å‚™è€ƒï¼š
+	//							è¤‡æ•°ã®ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ã‚’onChangeç­‰ã®ã‚¤ãƒ™ãƒ³ãƒˆã§ä¸€åº¦ã«ä½¿ç”¨ã™ã‚‹å ´åˆ
+	//							ã“ã®ç•ªå·ã‚’ä½¿ç”¨ã—ã¦åˆ†åˆ¥ã™ã‚‹
+	//							æŒ‡å®šãŒç„¡ã„å ´åˆã¯ 0
 	// ---------------------------------------------------------------------------
 	function subLoadMasterOption(strProcessID, objInForm, objOutOption, arySearchValue, objDataSource, lngObjNo, blnDebugFlag )
 	{
 		
-		// SELECT¥ª¥Ö¥¸¥§¥¯¥È¤Ç¤ÏÌµ¤¤¾ì¹ç
+		// SELECTã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§ã¯ç„¡ã„å ´åˆ
 		if( ( objOutOption.type != 'select-one' ) && ( objOutOption.type != 'select-multiple' ) )
 		{
 			alert("WARNING!! miss match subLoadMasterOption() arg object");
 			return false;
 		}
 		
-		// ¥ª¥Ö¥¸¥§¥¯¥ÈNo
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆNo
 		if( isNaN(lngObjNo) )
-		{	// »ØÄê¤¬Ìµ¤¤¾ì¹ç¤Ï 0
+		{	// æŒ‡å®šãŒç„¡ã„å ´åˆã¯ 0
 			lngObjNo = 0;
 		}
 
-		// ¥Ç¥Ğ¥Ã¥¯¥Õ¥é¥°ÀßÄê
+		// ãƒ‡ãƒãƒƒã‚¯ãƒ•ãƒ©ã‚°è¨­å®š
 		g_blnLoadMasterDebugFlag = blnDebugFlag;
 		
-		// ÆşÎÏ¥ª¥Ö¥¸¥§¥¯¥È
+		// å…¥åŠ›ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		g_objLoadMasterInForm = objInForm;
 
-		// ÀßÄêÀè¤Î¥ª¥Ö¥¸¥§¥¯¥È
+		// è¨­å®šå…ˆã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		g_objLoadMasterOutForm[lngObjNo] = objOutOption;
 
-		// SELECT¥ª¥Ö¥¸¥§¥¯¥È¤Î½é´ü²½
+		// SELECTã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
 		oOption = objOutOption;
 		subLoadMasterOptionClear( oOption, true );
 		oOption = document.createElement("OPTION");
@@ -204,7 +204,7 @@
 		oOption.value = "";
 		objOutOption.add(oOption);
 		
-		// ¥³¡¼¥É¤«¤éÌ¾¾Î¤ò¼èÆÀ
+		// ã‚³ãƒ¼ãƒ‰ã‹ã‚‰åç§°ã‚’å–å¾—
 		subLoadMaster(strProcessID, arySearchValue, objDataSource );
 		
 		return true;
@@ -212,51 +212,51 @@
 
 
 	// ---------------------------------------------------------------------------
-	//	¥³¡¼¥É¡ÜÌ¾¾Î¡¡¼èÆÀ´Ø¿ô
+	//	ã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã€€å–å¾—é–¢æ•°
 	//
-	//	°ú¿ô¡§
-	//		strProcessID	-	½èÍıID (/lib/sql ²¼¤Ë¤¢¤ë .sql ¤ò½ü¤¤¤¿¥Õ¥¡¥¤¥ëÌ¾
-	//		arySearchValue	-	¸¡º÷¸µÃÍ¡ÊÇÛÎóÃÍ¡Ë
-	//		objDataSource	-	DataSource¥ª¥Ö¥¸¥§¥¯¥È
+	//	å¼•æ•°ï¼š
+	//		strProcessID	-	å‡¦ç†ID (/lib/sql ä¸‹ã«ã‚ã‚‹ .sql ã‚’é™¤ã„ãŸãƒ•ã‚¡ã‚¤ãƒ«å
+	//		arySearchValue	-	æ¤œç´¢å…ƒå€¤ï¼ˆé…åˆ—å€¤ï¼‰
+	//		objDataSource	-	DataSourceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	//
 	// ---------------------------------------------------------------------------
 	function subLoadMaster(strProcessID, arySearchValue, objDataSource )
 	{
 		
-		// ¥¨¥é¡¼Ìµ¤·¤òÀßÄê
+		// ã‚¨ãƒ©ãƒ¼ç„¡ã—ã‚’è¨­å®š
 		g_aryLoadMasterErrorFlag[0] = false;
 		
-		// ½èÍıID¤Î»ØÄê¤ò³ÎÇ§
+		// å‡¦ç†IDã®æŒ‡å®šã‚’ç¢ºèª
 		if( !strProcessID )
 		{
 			return false;
 		}
 		
-		// ÊÑ¿ô½é´ü²½
-		strURL = "";	// URL¾ğÊó³ÊÇ¼
-		strGet = "";	// Get¾ğÊó³ÊÇ¼
+		// å¤‰æ•°åˆæœŸåŒ–
+		strURL = "";	// URLæƒ…å ±æ ¼ç´
+		strGet = "";	// Getæƒ…å ±æ ¼ç´
 		
 		// --------------------------------------------
-		// ¥Ç¡¼¥¿¥½¡¼¥¹¤Î¼èÆÀÀèURL¤òÀßÄê
+		// ãƒ‡ãƒ¼ã‚¿ã‚½ãƒ¼ã‚¹ã®å–å¾—å…ˆURLã‚’è¨­å®š
 		// 
-		// ¥Ç¡¼¥¿¥½¡¼¥¹¤È¤Ê¤ëURL¤òÀßÄê
+		// ãƒ‡ãƒ¼ã‚¿ã‚½ãƒ¼ã‚¹ã¨ãªã‚‹URLã‚’è¨­å®š
 		strURL = "/cmn/getmasterdata.php";
 		strURL = strURL + "?lngProcessID=" + strProcessID;
 		
-		// ¸¡º÷¤ÎÇÛÎó¤ò»ØÄê¿ôÊ¬·ë¹ç
+		// æ¤œç´¢ã®é…åˆ—ã‚’æŒ‡å®šæ•°åˆ†çµåˆ
 		for( i = 0; i < arySearchValue.length; i++ )
 		{
 			strGet = strGet + "&strFormValue[" + String(i) + "]=" + arySearchValue[i];
 		}
 		
-		// ¸¡º÷¥×¥í¥°¥é¥à¤ÈGETÉô¤ò·ë¹ç
+		// æ¤œç´¢ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã¨GETéƒ¨ã‚’çµåˆ
 		strURL = strURL + strGet;
 		
-		// ¥Ç¥Ğ¥Ã¥¯
+		// ãƒ‡ãƒãƒƒã‚¯
 		subLoadMasterDebug(location.protocol + '//' + location.hostname + strURL);
 		// --------------------------------------------
 		
-		// ¥Ç¡¼¥¿¥½¡¼¥¹¤ò¼èÆÀ
+		// ãƒ‡ãƒ¼ã‚¿ã‚½ãƒ¼ã‚¹ã‚’å–å¾—
 		objDataSource.charset = document.charset;
 		objDataSource.UseHeader = "True";
 		objDataSource.FieldDelim = "\t";
@@ -267,8 +267,8 @@
 	}
 
 	// ---------------------------------------------------------------------------
-	//	¥Ç¥Ğ¥Ã¥¯ÍÑ¤Î´Ø¿ô
-	//	°ú¿ô¡§
+	//	ãƒ‡ãƒãƒƒã‚¯ç”¨ã®é–¢æ•°
+	//	å¼•æ•°ï¼š
 	//		strValue	-	URL
 	// ---------------------------------------------------------------------------
 	function subLoadMasterDebug(strValue)
@@ -293,33 +293,33 @@
 	}
 
 	// ---------------------------------------------------------------------------
-	//	¥ì¥³¡¼¥É¥»¥Ã¥È¤«¤é»ØÄê¥ª¥Ö¥¸¥§¥¯¥ÈÃÍ¤Ø¤ÎÀßÄê
+	//	ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆã‹ã‚‰æŒ‡å®šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå€¤ã¸ã®è¨­å®š
 	//
-	//	°ú¿ô¡§
-	// 		objRst		-	¥ì¥³¡¼¥É¥»¥Ã¥È¥ª¥Ö¥¸¥§¥¯¥È
-	//		lngObjNo	-	¥ª¥Ö¥¸¥§¥¯¥ÈNo
+	//	å¼•æ•°ï¼š
+	// 		objRst		-	ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		lngObjNo	-	ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆNo
 	//
 	// ---------------------------------------------------------------------------
 	function subLoadMasterSetting(objRst, lngObjNo)
 	{
-		// ¥ª¥Ö¥¸¥§¥¯¥ÈNo
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆNo
 		if( isNaN(lngObjNo) )
-		{	// »ØÄê¤¬Ìµ¤¤¾ì¹ç¤Ï 0
+		{	// æŒ‡å®šãŒç„¡ã„å ´åˆã¯ 0
 			lngObjNo = 0;
 		}
 
-		// ¥¨¥é¡¼¥Õ¥é¥°¤òÀßÄê
+		// ã‚¨ãƒ©ãƒ¼ãƒ•ãƒ©ã‚°ã‚’è¨­å®š
 		g_aryLoadMasterErrorFlag[lngObjNo] = true;
 
 		// ----------------------------------------------------
-		// ¥ì¥³¡¼¥É¥«¥¦¥ó¥È¤¬0¡Ê¥Ç¡¼¥¿¤¬¼èÆÀ¤Ç¤­¤Ê¤¤¡Ë¤Î¾ì¹ç
+		// ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚«ã‚¦ãƒ³ãƒˆãŒ0ï¼ˆãƒ‡ãƒ¼ã‚¿ãŒå–å¾—ã§ããªã„ï¼‰ã®å ´åˆ
 		// ----------------------------------------------------
 		if( objRst.RecordCount == 0 )
 		{
 			
 			if( g_objLoadMasterOutForm[lngObjNo].type == 'text' )
 			{
-				// ÆşÎÏÃÍ¤òÁªÂò¾õÂÖ¤Ë¤·¡¢ÀßÄêÀè¤ÎÃÍ¤ò¥¯¥ê¥¢¤¹¤ë
+				// å…¥åŠ›å€¤ã‚’é¸æŠçŠ¶æ…‹ã«ã—ã€è¨­å®šå…ˆã®å€¤ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
 				if( g_objLoadMasterInForm.style.visibility != 'hidden' ) g_objLoadMasterInForm.select();
 				g_objLoadMasterOutForm[lngObjNo].value = "";
 			}
@@ -337,17 +337,17 @@
 				strOutFormName = g_objLoadMasterOutForm[lngObjNo].name;
 				switch( strOutFormName )
 				{
-					// À½ÉÊ½ÅÊ£¥Á¥§¥Ã¥¯¤Î¾ì¹ç
+					// è£½å“é‡è¤‡ãƒã‚§ãƒƒã‚¯ã®å ´åˆ
 					case 'productequalcheck':
-					// ¼õÃíNo.½ÅÊ£¥Á¥§¥Ã¥¯¤Î¾ì¹ç
+					// å—æ³¨No.é‡è¤‡ãƒã‚§ãƒƒã‚¯ã®å ´åˆ
 					case 'receivecodeequalcheck':
 					
-						// ÃÍ¤ò½é´ü²½
+						// å€¤ã‚’åˆæœŸåŒ–
 						g_objLoadMasterOutForm[lngObjNo].value = 0;
 						break;
 					
 					default:
-						// ¥Á¥§¥Ã¥¯¥¢¥é¡¼¥ÈÍÑ¤Ç¤¢¤ë¾ì¹ç
+						// ãƒã‚§ãƒƒã‚¯ã‚¢ãƒ©ãƒ¼ãƒˆç”¨ã§ã‚ã‚‹å ´åˆ
 						if( strOutFormName.match(/^check_alert/) )
 						{
 							break;
@@ -363,23 +363,23 @@
 
 
 		// ----------------------------------------------------------------
-		// TEXT¥ª¥Ö¥¸¥§¥¯¥È¤Î¾ì¹ç
+		// TEXTã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å ´åˆ
 		// ----------------------------------------------------------------
 		if( g_objLoadMasterOutForm[lngObjNo].type == 'text' )
 		{
-			// nameÉôÊ¬¤ò¼èÆÀ¤·¤ÆÀßÄê
+			// nameéƒ¨åˆ†ã‚’å–å¾—ã—ã¦è¨­å®š
 			g_objLoadMasterOutForm[lngObjNo].value = objRst.Fields('name1');
 		}
 		
 		// ----------------------------------------------------------------
-		// SELECT¥ª¥Ö¥¸¥§¥¯¥È¤Î¾ì¹ç
+		// SELECTã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å ´åˆ
 		// ----------------------------------------------------------------
 		else if( ( g_objLoadMasterOutForm[lngObjNo].type == 'select-one' ) || ( g_objLoadMasterOutForm[lngObjNo].type == 'select-multiple' ) )
 		{
-			// ÂĞ¾İ¤ÎSELECT¥ª¥Ö¥¸¥§¥¯¥È¤ò½é´ü²½
+			// å¯¾è±¡ã®SELECTã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’åˆæœŸåŒ–
 			subLoadMasterOptionClear( g_objLoadMasterOutForm[lngObjNo] );
 			
-			// ¥ì¥³¡¼¥É¥»¥Ã¥È¤¬Â¸ºß¤¹¤ë¾ì¹ç
+			// ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 			if (objRst.recordcount)
 			{
 				objRst.MoveFirst();
@@ -388,7 +388,7 @@
 					oOption = document.createElement("OPTION");
 					oOption.value = objRst.fields("id").value;
 					oOption.text  = objRst.fields("name1").value;
-					// À½ÉÊÌ¾Ì¾¾Î¡Êname2 ¥«¥é¥à¡Ë¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢¥Æ¥­¥¹¥È¿§¤òÊÑ¹¹¤¹¤ë¡£¡Êname2¤ÏSQL·ë²Ì¤Ë¤è¤Ã¤ÆÀ©¸æ¤·¤Æ¤¤¤ë¡Ë
+					// è£½å“ååç§°ï¼ˆname2 ã‚«ãƒ©ãƒ ï¼‰ãŒå­˜åœ¨ã—ãªã„å ´åˆã€ãƒ†ã‚­ã‚¹ãƒˆè‰²ã‚’å¤‰æ›´ã™ã‚‹ã€‚ï¼ˆname2ã¯SQLçµæœã«ã‚ˆã£ã¦åˆ¶å¾¡ã—ã¦ã„ã‚‹ï¼‰
 					if( objRst.fields.count > 2 )
 					{
 						if( !objRst.fields("name2").value )
@@ -405,7 +405,7 @@
 		}
 		
 		// ----------------------------------------------------------------
-		// HIDDEN ¥ª¥Ö¥¸¥§¥¯¥È¤Î¾ì¹ç
+		// HIDDEN ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å ´åˆ
 		// ----------------------------------------------------------------
 		else if( g_objLoadMasterOutForm[lngObjNo].type == 'hidden' )
 		{
@@ -413,18 +413,18 @@
 			strOutFormName = g_objLoadMasterOutForm[lngObjNo].name;
 			switch( strOutFormName )
 			{
-				// À½ÉÊ½ÅÊ£¥Á¥§¥Ã¥¯¤Î¾ì¹ç
+				// è£½å“é‡è¤‡ãƒã‚§ãƒƒã‚¯ã®å ´åˆ
 				case 'productequalcheck':
-				// ¼õÃíNo.½ÅÊ£¥Á¥§¥Ã¥¯¤Î¾ì¹ç
+				// å—æ³¨No.é‡è¤‡ãƒã‚§ãƒƒã‚¯ã®å ´åˆ
 				case 'receivecodeequalcheck':
 
-					// ÃÍ¤ò½é´ü²½
+					// å€¤ã‚’åˆæœŸåŒ–
 					g_objLoadMasterOutForm[lngObjNo].value = 0;
 						
-					// ¥ì¥³¡¼¥É¥»¥Ã¥È¤¬Â¸ºß¤¹¤ë¾ì¹ç
+					// ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 					if (objRst.recordcount)
 					{
-						// ·ï¿ô¡ÊSQL¸¡º÷·ë²Ì¡Ë¤òÀßÄê
+						// ä»¶æ•°ï¼ˆSQLæ¤œç´¢çµæœï¼‰ã‚’è¨­å®š
 						objRst.MoveFirst();
 						g_objLoadMasterOutForm[lngObjNo].value = parseInt(objRst.fields("id").value);
 					}
@@ -432,16 +432,16 @@
 
 				default:
 					
-					// ¥Á¥§¥Ã¥¯¥¢¥é¡¼¥ÈÍÑ¤Ç¤¢¤ë¾ì¹ç "check_alert..." ¤Ë¥Ş¥Ã¥Á
+					// ãƒã‚§ãƒƒã‚¯ã‚¢ãƒ©ãƒ¼ãƒˆç”¨ã§ã‚ã‚‹å ´åˆ "check_alert..." ã«ãƒãƒƒãƒ
 					if( strOutFormName.match(/^check_alert/) )
 					{
-						// ÃÍ¤ò½é´ü²½
+						// å€¤ã‚’åˆæœŸåŒ–
 						g_objLoadMasterOutForm[lngObjNo].value = "";
 						
-						// ¥ì¥³¡¼¥É¥»¥Ã¥È¤¬Â¸ºß¤¹¤ë¾ì¹ç
+						// ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 						if (objRst.recordcount)
 						{
-							// ·ï¿ô¡ÊSQL¸¡º÷·ë²Ì¡Ë¤òÀßÄê
+							// ä»¶æ•°ï¼ˆSQLæ¤œç´¢çµæœï¼‰ã‚’è¨­å®š
 							objRst.MoveFirst();
 							g_objLoadMasterOutForm[lngObjNo].value = objRst.fields("name1").value;
 						}
@@ -456,7 +456,7 @@
 		}
 		
 		// ----------------------------------------------------------------
-		// ½ĞÎÏÀè¤¬È½Äê³°¤Î¥ª¥Ö¥¸¥§¥¯¥È¤Î¾ì¹ç
+		// å‡ºåŠ›å…ˆãŒåˆ¤å®šå¤–ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å ´åˆ
 		// ----------------------------------------------------------------
 		else
 		{
@@ -465,7 +465,7 @@
 
 		}
 		
-		// ¥¨¥é¡¼Ìµ¤·¤òÀßÄê
+		// ã‚¨ãƒ©ãƒ¼ç„¡ã—ã‚’è¨­å®š
 		g_aryLoadMasterErrorFlag[lngObjNo] = false;
 		return true;
 		
@@ -473,11 +473,11 @@
 
 
 	// ---------------------------------------------------------------------------
-	//	¥ª¥×¥·¥ç¥ó¥ª¥Ö¥¸¥§¥¯¥È¤ÎÆâÍÆ¤ò¥¯¥ê¥¢
+	//	ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å†…å®¹ã‚’ã‚¯ãƒªã‚¢
 	//
-	//	°ú¿ô¡§
-	// 		objOption		-	¥ª¥×¥·¥ç¥ó¥ª¥Ö¥¸¥§¥¯¥È
-	//		blnDisabled		-	¥¢¥¯¥Æ¥£¥Ö²½¥Õ¥é¥°
+	//	å¼•æ•°ï¼š
+	// 		objOption		-	ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		blnDisabled		-	ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–ãƒ•ãƒ©ã‚°
 	//
 	// ---------------------------------------------------------------------------
 	function subLoadMasterOptionClear(objOption, blnDisabled)
@@ -494,32 +494,32 @@
 
 
 	// ---------------------------------------------------------------------------
-	//	¥ì¥³¡¼¥É¥»¥Ã¥È¤«¤é»ØÄê¥ª¥Ö¥¸¥§¥¯¥ÈÃÍ¤Ø¤ÎÀßÄê
+	//	ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆã‹ã‚‰æŒ‡å®šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå€¤ã¸ã®è¨­å®š
 	//
-	//	°ú¿ô¡§
-	// 		objRst		-	¥ì¥³¡¼¥É¥»¥Ã¥È¥ª¥Ö¥¸¥§¥¯¥È
-	//		strSearchID	-	¸¡º÷ÂĞ¾İ¤ÎID¡ÊÊ¸»úÎó¡Ë
+	//	å¼•æ•°ï¼š
+	// 		objRst		-	ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		strSearchID	-	æ¤œç´¢å¯¾è±¡ã®IDï¼ˆæ–‡å­—åˆ—ï¼‰
 	//
 	// ---------------------------------------------------------------------------
 	function subLoadMasterGetIdName(objRst, strSearchID)
 	{
 		aryMatch = false;
 		
-		// ¥ì¥³¡¼¥É¥»¥Ã¥È¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+		// ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆãŒå­˜åœ¨ã—ãªã„å ´åˆ
 		if (!objRst.recordcount)
 		{
 			return false;
 		}
 
-		// ÀèÆ¬¥ì¥³¡¼¥É¤Ø°ÜÆ°
+		// å…ˆé ­ãƒ¬ã‚³ãƒ¼ãƒ‰ã¸ç§»å‹•
 		objRst.MoveFirst();
 		
 		while (!objRst.EOF)
 		{
-			// ¸¡º÷ID¤ÈÆ±°ì¤Îid¤ò¥ì¥³¡¼¥É¥»¥Ã¥È¤«¤é¸¡º÷
+			// æ¤œç´¢IDã¨åŒä¸€ã®idã‚’ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆã‹ã‚‰æ¤œç´¢
 			if( objRst.fields("id").value == strSearchID )
 			{
-				// °ìÃ×¤·¤¿¾ì¹ç¡¢ÇÛÎó¤ÇÊÖµÑ
+				// ä¸€è‡´ã—ãŸå ´åˆã€é…åˆ—ã§è¿”å´
 				aryMatch = new Array();
 				aryMatch['id'] = objRst.fields("id").value;
 				if( objRst.fields("name2").value )
@@ -541,27 +541,27 @@
 
 
 	// ---------------------------------------------------------------------------
-	//	¥ª¥Ö¥¸¥§¥¯¥ÈÀßÄêÃÍ¤Î¥¨¥é¡¼¥Á¥§¥Ã¥¯
+	//	ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¨­å®šå€¤ã®ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
 	//
-	//	°ú¿ô¡§
-	// 		objForm		-	¸¡º÷¸µÃÍ£±¡Ê¥³¡¼¥É¡Ë¤òÆşÎÏ¤·¤¿¥ª¥Ö¥¸¥§¥¯¥È
+	//	å¼•æ•°ï¼š
+	// 		objForm		-	æ¤œç´¢å…ƒå€¤ï¼‘ï¼ˆã‚³ãƒ¼ãƒ‰ï¼‰ã‚’å…¥åŠ›ã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	//
-	//  Ì¾¾Î¼èÆÀ»ş¤Ë¥¨¥é¡¼¤¬È¯À¸¡Ê·ï¿ô0·ï¡Ë¤·¤¿¾ì¹ç¡¢ÆşÎÏÃÍ¡Ê¥³¡¼¥É¡Ë¤ò½é´ü²½¤¹¤ë
-	//  [0]¤Î¥¨¥é¡¼¤ËÂĞ¤·¤Æ¤Î¤ß¡¢¥¨¥é¡¼È½Äê¤ò¹Ô¤¦¡£¤³¤ì¤Ï¡¢Â³¤±¤Æ Setting()¤ò¸Æ¤Ğ¤ì¤¿ºİ¤Ë
-	//  ¥¨¥é¡¼¤¬½é´ü²½¤µ¤ì¤Æ¤·¤Ş¤¦»ö¤ò²óÈò¤¹¤ë¤¿¤á¤Ç¤¹¡£
+	//  åç§°å–å¾—æ™‚ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿï¼ˆä»¶æ•°0ä»¶ï¼‰ã—ãŸå ´åˆã€å…¥åŠ›å€¤ï¼ˆã‚³ãƒ¼ãƒ‰ï¼‰ã‚’åˆæœŸåŒ–ã™ã‚‹
+	//  [0]ã®ã‚¨ãƒ©ãƒ¼ã«å¯¾ã—ã¦ã®ã¿ã€ã‚¨ãƒ©ãƒ¼åˆ¤å®šã‚’è¡Œã†ã€‚ã“ã‚Œã¯ã€ç¶šã‘ã¦ Setting()ã‚’å‘¼ã°ã‚ŒãŸéš›ã«
+	//  ã‚¨ãƒ©ãƒ¼ãŒåˆæœŸåŒ–ã•ã‚Œã¦ã—ã¾ã†äº‹ã‚’å›é¿ã™ã‚‹ãŸã‚ã§ã™ã€‚
 	// ---------------------------------------------------------------------------
 	function subLoadMasterCheck(objForm)
 	{
-		// ¥¨¥é¡¼¤¬È¯À¸¤·¤Æ¤¤¤¿¾ì¹ç
+		// ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¦ã„ãŸå ´åˆ
 		if( g_aryLoadMasterErrorFlag[0] == true )
 		{
-			// Æ±¤¸ÆşÎÏ¥ª¥Ö¥¸¥§¥¯¥È¤Î¾ì¹ç
+			// åŒã˜å…¥åŠ›ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å ´åˆ
 			if( g_objLoadMasterInForm.name == objForm.name )
 			{
-				// ÆşÎÏÃÍ¤Î½é´ü²½
+				// å…¥åŠ›å€¤ã®åˆæœŸåŒ–
 				objForm.value = "";
 				g_objLoadMasterInForm.value="";
-				// ¥¨¥é¡¼¥Õ¥é¥°¤Î½é´ü²½
+				// ã‚¨ãƒ©ãƒ¼ãƒ•ãƒ©ã‚°ã®åˆæœŸåŒ–
 				g_aryLoadMasterErrorFlag[0] = false;
 				return true;
 			}
@@ -569,13 +569,13 @@
 	}
 
 	// ---------------------------------------------------------------------------
-	//	³µÍ×¡§·Ù¹ğ¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤µ¤»¤ë¡£
+	//	æ¦‚è¦ï¼šè­¦å‘Šãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã•ã›ã‚‹ã€‚
 	//
-	//	°ú¿ô¡§
-	// 		objAlert	-	alert¥á¥Ã¥»¡¼¥¸¤¬Êİ»ı¤µ¤ì¤Æ¤¤¤ë(hidden)¥ª¥Ö¥¸¥§¥¯¥È
+	//	å¼•æ•°ï¼š
+	// 		objAlert	-	alertãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒä¿æŒã•ã‚Œã¦ã„ã‚‹(hidden)ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	//
-	//  subLoadMasterText ¤Ë¤Æ check_alert ¥ª¥Ö¥¸¥§¥¯¥È¤Ë¥á¥Ã¥»¡¼¥¸¤òÂåÆş
-	//  ¥á¥Ã¥»¡¼¥¸¤ÏÁ´¤Æ /lib/sql/*.sql ¤Ë³ÊÇ¼
+	//  subLoadMasterText ã«ã¦ check_alert ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ä»£å…¥
+	//  ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¯å…¨ã¦ /lib/sql/*.sql ã«æ ¼ç´
 	// ---------------------------------------------------------------------------
 	function subLoadMasterCheckAlert(objAlert)
 	{

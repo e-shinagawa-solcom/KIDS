@@ -1,58 +1,58 @@
 <?php
 
-// ÆÉ¤ß¹ş¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
-//¥¯¥é¥¹¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+//ã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once 'db_common.php';
-//¶¦ÄÌ¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+//å…±é€šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 require_once './lcModelCommon.php';
-//DBÀÜÂ³¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+//DBæ¥ç¶šãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once './db_common.php';
 require_once './kidscore_common.php';
 require LIB_FILE;
-//PHPÉ¸½à¤ÎJSONÊÑ´¹¥á¥½¥Ã¥É¤Ï¥¨¥é¡¼¤Ë¤Ê¤ë¤Î¤Ç³°Éô¤Î¥é¥¤¥Ö¥é¥ê(¶²¤é¤¯¥¨¥ó¥³¡¼¥É¤ÎÌäÂê)
+//PHPæ¨™æº–ã®JSONå¤‰æ›ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§å¤–éƒ¨ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒª(æã‚‰ãã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®å•é¡Œ)
 require_once 'JSON.php';
 
 require_once(LIB_DEBUGFILE);
 
-//ÃÍ¤Î¼èÆÀ
+//å€¤ã®å–å¾—
 $postdata = file_get_contents("php://input");
 $data = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//·ĞÍı¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæ¥ç¶š
 $lcModel = new lcModel();
 
-//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
+//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 $s = new Services_JSON();
 
-//ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤ÏÄÌ¾ï¤Î POST ¤Ç¼õ¤±¤ë
+//å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯é€šå¸¸ã® POST ã§å—ã‘ã‚‹
 if ($data == null) {
     $data = $_POST;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($data["sessionid"], $objAuth, $objDB);
 
-//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 $usrId = trim($objAuth->UserID);
 
 $lgusrname = trim($objAuth->UserDisplayName);
 
-//·ë²ÌÇÛÎó
+//çµæœé…åˆ—
 $result = array();
 
-//½èÍı¿¶¤êÊ¬¤±
+//å‡¦ç†æŒ¯ã‚Šåˆ†ã‘
 switch ($data['method']) {
-    // LCÀßÄêÊÑ¹¹½é´üÉ½¼¨
+    // LCè¨­å®šå¤‰æ›´åˆæœŸè¡¨ç¤º
     case 'getLcSetting':
-        // L/cÀßÄê¾ğÊó¼èÆÀ
+        // L/cè¨­å®šæƒ…å ±å–å¾—
         $result = getLcSetting($objDB, $lcModel, $data);
         break;
-    // L/CÀßÄêÊÑ¹¹¤ÎÈ¿±Ç¥¤¥Ù¥ó¥È
+    // L/Cè¨­å®šå¤‰æ›´ã®åæ˜ ã‚¤ãƒ™ãƒ³ãƒˆ
     case 'updateLcSetting':
-        // L/CÀßÄê¹¹¿·¤ÎÈ¿±Ç
+        // L/Cè¨­å®šæ›´æ–°ã®åæ˜ 
         $result = updateLcSetting($objDB, $lcModel, $data, $lgusrname);
         break;
 }
@@ -60,12 +60,12 @@ switch ($data['method']) {
 $objDB->close();
 $lcModel->close();
 
-//·ë²Ì½ĞÎÏ
+//çµæœå‡ºåŠ›
 mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);
 
 /**
- * LCÀßÄê¾ğÊó¼èÆÀ
+ * LCè¨­å®šæƒ…å ±å–å¾—
  *
  * @param [object] $lcModel
  * @param [array] $data
@@ -73,11 +73,11 @@ echo $s->encodeUnsafe($result);
  */
 function getLcSetting($objDB, $lcModel, $data)
 {
-    //´ğ½àÆü¤Î¼èÆÀ
+    //åŸºæº–æ—¥ã®å–å¾—
     $base_open_date = $lcModel->getBaseDate();
-    //¶ä¹Ô¾ğÊó¤Î¼èÆÀ
+    //éŠ€è¡Œæƒ…å ±ã®å–å¾—
     $bank_info = fncGetBankInfo($objDB);
-    //»ÙÊ§Àè¾ğÊó¤Î¼èÆÀ
+    //æ”¯æ‰•å…ˆæƒ…å ±ã®å–å¾—
     $payf_info = fncGetPayfInfo($objDB);
 
     $result["base_open_date"] = $base_open_date;
@@ -87,57 +87,57 @@ function getLcSetting($objDB, $lcModel, $data)
     return $result;
 }
 
-// LCÀßÄê¾ğÊó¹¹¿·
+// LCè¨­å®šæƒ…å ±æ›´æ–°
 function updateLcSetting($objDB, $lcModel, $data, $lgusrname)
 {
     $data = mb_convert_encoding($data, 'EUC-JP', 'UTF-8');
-    //Á÷¿®¥Ç¡¼¥¿¼èÆÀ
-    //¼è°úÀè¶ä¹Ô¾ğÊó
+    //é€ä¿¡ãƒ‡ãƒ¼ã‚¿å–å¾—
+    //å–å¼•å…ˆéŠ€è¡Œæƒ…å ±
     $bankInfoChk = $data["send_data"]["bankInfoChk"];
     $bankInfos = $data["send_data"]["bank_info"];
-    //»ÅÆşÀè¾ğÊó
+    //ä»•å…¥å…ˆæƒ…å ±
     $payfInfoChk = $data["send_data"]["payfInfoChk"];
     $payfInfos = $data["send_data"]["payf_info"];
-    //´ğ½àÆü
+    //åŸºæº–æ—¥
     $baseOpenDateChk = $data["send_data"]["baseOpenDateChk"];
     $baseOpenDate = $data["send_data"]["baseOpenDate"];
 
-    // DB½èÍı³«»Ï
+    // DBå‡¦ç†é–‹å§‹
     $objDB->transactionBegin();
-    // DB½èÍı³«»Ï
+    // DBå‡¦ç†é–‹å§‹
     $lcModel->transactionBegin();
     if ($bankInfoChk == "true") {
-        // kidscore2¤Ø¤Î¶ä¹Ô¾ğÊó¤Î¹¹¿·
-        // kidscore2¤Î¶ä¹Ô¾ğÊó¤Îºï½ü
+        // kidscore2ã¸ã®éŠ€è¡Œæƒ…å ±ã®æ›´æ–°
+        // kidscore2ã®éŠ€è¡Œæƒ…å ±ã®å‰Šé™¤
         fncDeleteBank($objDB);
-        // kidscore2¤Î¶ä¹Ô¾ğÊó¤ÎÅĞÏ¿
+        // kidscore2ã®éŠ€è¡Œæƒ…å ±ã®ç™»éŒ²
         foreach ($bankInfos as $bankInfo) {
             fncInsertBank($objDB, $bankInfo);
         }
-        // ackids¤Ø¤Î¶ä¹Ô¾ğÊó¤Î¹¹¿·
+        // ackidsã¸ã®éŠ€è¡Œæƒ…å ±ã®æ›´æ–°
         $lcModel->updateBankInfo(fncGetBankInfo($objDB), $lgusrname);
     }
 
     if ($payfInfoChk == "true") {
-        // kidscore2¤Ø¤Î»ÙÊ§Àè¾ğÊó¤Î¹¹¿·
-        // kidscore2¤Î»ÙÊ§Àè¾ğÊó¤Îºï½ü
+        // kidscore2ã¸ã®æ”¯æ‰•å…ˆæƒ…å ±ã®æ›´æ–°
+        // kidscore2ã®æ”¯æ‰•å…ˆæƒ…å ±ã®å‰Šé™¤
         fncDeletePayfinfo($objDB);
-        // kidscore2¤Î»ÙÊ§Àè¾ğÊó¤ÎÅĞÏ¿
+        // kidscore2ã®æ”¯æ‰•å…ˆæƒ…å ±ã®ç™»éŒ²
         foreach ($payfInfos as $payfInfo) {
             fncInsertPayf($objDB, $payfInfo);
         }
-        //»ÙÊ§Àè¾ğÊó¤Î¹¹¿·
+        //æ”¯æ‰•å…ˆæƒ…å ±ã®æ›´æ–°
         $lcModel->updatePayfInfo($payfInfos, $lgusrname);
     }
 
     if ($baseOpenDateChk == "true") {
-        //´ğ½àÆü¤Î¹¹¿·
+        //åŸºæº–æ—¥ã®æ›´æ–°
         $lcModel->updateBaseOpenDate($baseOpenDate, $lgusrname);
     }
 
-    // DB½èÍı½ªÎ»
+    // DBå‡¦ç†çµ‚äº†
     $lcModel->transactionCommit();
-    // DB½èÍı½ªÎ»
+    // DBå‡¦ç†çµ‚äº†
     $objDB->transactionCommit();
 
     return $result;

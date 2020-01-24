@@ -1,50 +1,50 @@
 <!--
 //: ----------------------------------------------------------------------------
-//: �ե����복��: �����Ȥ�����ؿ���
-//: ����        : ����������
-//: ������      : 2003/11/06 �� 
-//: ������      : Takafumi Tetsuka
-//: ��������    : 
+//: ファイル概要: 明細枠を操作する関数群
+//: 備考        : 日々改良中
+//: 作成日      : 2003/11/06 〜 
+//: 作成者      : Takafumi Tetsuka
+//: 修正履歴    : 
 //: ----------------------------------------------------------------------------
 
 
 //------------------------------------------------------------------------------
-// �������Х��ѿ����
+// グローバル変数定義
 //------------------------------------------------------------------------------
-var saveRecord = new Array();  //���ٹԤ�ñ�̤Ȥ�������
-var index      = -1;           //����Ԥ��Ǽ�����ѿ�
-var returnFlg  = 1 ;           //Detail�Υ��֤򲡤����Ȥ��ˡ���Ͽ����꤬���ä���ɽ��
-var sentakufunouFlg = 0;       //���ٹ�����ν����������ޤǤۤ��������Ǥ��ʤ�����
+var saveRecord = new Array();  //明細行を単位とする配列
+var index      = -1;           //選択行を格納する変数
+var returnFlg  = 1 ;           //Detailのタブを押したときに、登録の戻りがあったら表示
+var sentakufunouFlg = 0;       //明細行選択の処理が終わるまでほかの選択をできなくする
 
 
 //@*****************************************************************************
-// ����   : �������ȡפˡ������ȡפ����Ƥ��ɲ�
-// �о�   : �������ȡפ������Τ��٤�
-// ����   : �������ȡפ��ͤ������aryRecord�פ˳�Ǽ��������������saveRecord�פ˳�Ǽ��
-//           ���ΤȤ������ٹԤ����򤵤�Ƥ���С����򤵤줿����ξ���ɲä�������Ƥ��ʤ���С�
-//           �Ǹ������ɲá�
-//           ���θ塢�ؿ���fncDtDisplay()�פ�ƤӽФ��������Ȥ��ɽ����
+// 概要   : 「明細枠」に「入力枠」の内容を追加
+// 対象   : 「明細枠」があるものすべて
+// 備考   : 「入力枠」の値を配列「aryRecord」に格納し、それを配列「saveRecord」に格納。
+//           このとき、明細行が選択されていれば、選択された配列の上に追加し、されていなければ、
+//           最後尾に追加。
+//           その後、関数「fncDtDisplay()」を呼び出し、明細枠を再表示。
 //******************************************************************************
 function fncDtAddRecord()
 {
-	//���ϥǡ����Υ����å�
+	//入力データのチェック
 	var addFlg = fncDtAddCheck();
 
 	if( addFlg == false ) return false;
 
-	//�����Ȥ��ͤ򿷵�������˳�Ǽ
+	//入力枠の値を新規の配列に格納
 	var aryRecord = fncDtNewAry();
 
-	//���ٹԤ����򤵤�Ƥ��ʤ����
+	//明細行が選択されていない場合
 	if ( index == -1)
 	{
-		//�������Х�����κǸ���ɲ�
+		//グローバル配列の最後に追加
 		saveRecord.push(aryRecord);
 	}
-	//���ٹԤ����򤵤�Ƥ�����
+	//明細行が選択されている場合
 	else
 	{
-		//���򤵤줿����ξ�ˡ�������������ɲä���
+		//選択された配列の上に、新規の配列を追加する
 		saveRecordLength = parseInt(saveRecord.length); 
 		saveRecordLeft  = saveRecord.slice(0,index);
 		saveRecordRigft = saveRecord.slice(index, saveRecordLength);
@@ -52,27 +52,27 @@ function fncDtAddRecord()
 		saveRecord.push(aryRecord);
 		saveRecord      = saveRecord.concat(saveRecordRigft);
 
-		//����ǥå���������
+		//インデックスを初期化
 		index      = -1;
 	}
 
-	//�����Ȥ��ɽ��
+	//明細枠を再表示
 	fncDtDisplay();
 
-	//�إå����̲�������ѹ��Ǥ��ʤ��褦�ˤ���
+	//ヘッダの通貨設定を変更できないようにする
 	fncHdMonetaryUnitCheck();
 }
 
 //@*****************************************************************************
-// ����   : ���򤷤��Ԥ���
-// �о�   : �������ȡפ������Τ��٤�
-// ����   : ����Ԥ����������������
-//          ���θ塢�ؿ���fncDtDisplay()�פ�ƤӽФ��������Ȥ��ɽ����
-// ����   : �Ԥ����򤵤�Ƥ��ʤ����ˤϡ����顼��å���������ϡ�
+// 概要   : 選択した行を削除
+// 対象   : 「明細枠」があるものすべて
+// 備考   : 選択行を除いた配列を作成。
+//          その後、関数「fncDtDisplay()」を呼び出し、明細枠を再表示。
+// 注意   : 行が選択されていない場合には、エラーメッセージを出力。
 //******************************************************************************
 function fncDtDelRecord()
 {
-	//���ٹԤ����򤵤�Ƥ�����
+	//明細行が選択されている場合
 	if( index != -1 )
 	{
 		saveRecordLength = parseInt(saveRecord.length);
@@ -84,34 +84,34 @@ function fncDtDelRecord()
 
 		index = -1;
 
-		//�����Ȥ��ɽ��
+		//明細枠を再表示
 		fncDtDisplay();
 	}
-	//���ٹԤ����򤵤�Ƥ��ʤ����
+	//明細行が選択されていない場合
 	else
 	{
-		alert("���ٹԤ����򤷤Ƥ�������");
+		alert("明細行が選択してください");
 	}
 
-	//���ٹԤ��ʤ���硢�إå����̲�������ѹ���ǽ�ˤ���
+	//明細行がない場合、ヘッダの通貨設定を変更可能にする
 	fncHdMonetaryUnitCheck();
 }
 
 
 //@*****************************************************************************
-// ����   : ���ꥢ�ܥ��󤬲����줿�Ȥ��˽���
-// �о�   : �������ȡפ������Τ��٤�
-// ����   : 
+// 概要   : クリアボタンが押されたときに処理
+// 対象   : 「明細枠」があるものすべて
+// 備考   : 
 //******************************************************************************
 function fncDtClearRecord()
 {
-	//�������ʤ򥯥ꥢ
+	//仕入部品をクリア
 	window.parent.DSO.strStockItemCode.length = 0;
 
-	//ñ���ꥹ�Ȥ򥯥ꥢ
+	//単価リストをクリア
 	window.parent.DSO.lngGoodsPriceCode.length = 0;
 
-	//���ٹԤ�����Ǥ���褦�ˤ���
+	//明細行を選択できるようにする
 	sentakufunouFlg = 0;
 
 	fncDtGsChecked();
@@ -119,52 +119,52 @@ function fncDtClearRecord()
 
 
 //@*****************************************************************************
-// ����   : �����Ȥ��ͤ�����Ԥ��֤�������
-// �о�   : �������ȡפ������Τ��٤�
-// ����   : �����Ȥ��ͤ�����Ԥ��֤������롣
-//          ���θ塢�ؿ���fncDtDisplay()�פ�ƤӽФ��������Ȥ��ɽ����
-// ����    :�Ԥ����򤵤�Ƥ��ʤ����ˤϡ��إå���ʬ�˥��顼��å����������
+// 概要   : 入力枠の値を選択行と置き換える
+// 対象   : 「明細枠」があるものすべて
+// 備考   : 入力枠の値を選択行と置き換える。
+//          その後、関数「fncDtDisplay()」を呼び出し、明細枠を再表示。
+// 注意    :行が選択されていない場合には、ヘッダ部分にエラーメッセージを出力
 //******************************************************************************
 function fncDtCommitRecord()
 {
-	//���ٹԤ����򤵤�Ƥ�����
+	//明細行が選択されている場合
 	if( index != -1)
 	{
-		//�����Ȥ��ͤ�����Ԥ��֤�����
+		//入力枠の値を選択行と置き換え
 		fncDtReplaceAry();
 
-		//����ǥå���������
+		//インデックスを初期化
 		index = -1;
 
-		//�����Ȥ��ɽ��
+		//明細枠を再表示
 		fncDtDisplay();
 	}
-	//���ٹԤ����򤵤�Ƥ��ʤ����
+	//明細行が選択されていない場合
 	else
 	{
-		alert("���ٹԤ����򤵤�Ƥ��ޤ���");
+		alert("明細行が選択されていません");
 	}
 }
 
 
 //@*****************************************************************************
-// ����   : �����Ȥ��ɽ��
-// �о�   : �������ȡפ������Τ��٤�
-// ����   : �����saveRecord�פ��顢�����ȤΥơ��֥���������ɽ��
+// 概要   : 明細枠を再表示
+// 対象   : 「明細枠」があるものすべて
+// 備考   : 配列「saveRecord」から、明細枠のテーブルを作成し、表示
 //******************************************************************************
 function fncDtDisplay()
 {
-	//���ֹ�
+	//行番号
 	lngTrCount = 1;
 	
-	//�����̾�����
+	//カラム名を取得
 	strTableHtml = fncStrTableHtmlColumns();
 
-	//���������
+	//一覧を作成
 	for( i = 0; i < saveRecord.length; i++ )
 	{
 		strTableHtml = strTableHtml + 
-						'<tr class="Lists01" id ="retsu' + i + '" onClick="fncDtSentaku(' + i + ');return false;"' + 'bgcolor="#ffffff"��>' + 
+						'<tr class="Lists01" id ="retsu' + i + '" onClick="fncDtSentaku(' + i + ');return false;"' + 'bgcolor="#ffffff"）>' + 
 						'<td align="center">' + lngTrCount + '</td>' + 
 						fncStrTableHtmlRows(i) + 
 						'</tr>';
@@ -172,174 +172,174 @@ function fncDtDisplay()
 	}
 	strTableHtml = strTableHtml + '</table>';
 
-	//��¸�ΰ����������ľ���������˽񤭴�����
+	//既存の一覧を作成し直した一覧に書き換える
 	document.all.DetailList.innerHTML = strTableHtml;
 
-	//����׶�ۤη׻�
+	//総合計金額の計算
 	fncDtCalAllTotalPrice();
 
-	//���ٹԤ�����Ǥ���褦�ˤ���
+	//明細行を選択できるようにする
 	sentakufunouFlg = 0;
 }
 
 
 //@*****************************************************************************
-// ����   : ���ٹԤ�������ν���
-// �о�   : �������ȡפ������Τ��٤�
-// ����   : ���ٹԤ����򤹤�Ȥ��ˡ����Ǥ����򤵤�Ƥ���Ԥ����ä����ϡ����ιԤ�ȿž�������롣
-//          ��¸�����򤵤�Ƥ���Ԥ�⤦���ٲ��������ˤϡ�index���������롣
-//          ����ʳ��ξ��ˤϡ�����Ԥ��ͤ������Ȥ�ȿ�Ǥ����롣
-// ����   : ���ٹԤ����򤵤�Ƥ�����ǡ�����Ԥ��ѹ����褦�Ȥ������ˤϡ������Ȥ��ѹ����ʤ��������å�����
-//          �ѹ�������С���å���������ϡ�
+// 概要   : 明細行の選択時の処理
+// 対象   : 「明細枠」があるものすべて
+// 備考   : 明細行を選択するときに、すでに選択されている行があった場合は、その行の反転を解除する。
+//          既存の選択されている行をもう一度押した場合には、indexを初期化する。
+//          それ以外の場合には、選択行の値を、入力枠に反映させる。
+// 注意   : 明細行が選択されている場合で、選択行を変更しようとした場合には、入力枠に変更がないかチェックし、
+//          変更があれば、メッセージを出力。
 //******************************************************************************
 function fncDtSentaku(i)
 {
-	//¾�����ٹԤν���������äƤʤ���С����򤵤��ʤ�
+	//他の明細行の処理が終わってなければ、選択させない
 	if( sentakufunouFlg == 1 )
 	{
 		return null;
 	}
 	else
 	{
-		//������Υե饰��Ω�Ƥ�
-		//(���ߤϻ������ʤν���������ä��Ȥ��˲�����Ƥ���)
+		//処理中のフラグを立てる
+		//(現在は仕入部品の処理が終わったときに解除している)
 		sentakufunouFlg = 1;
 	}
 
-	//�����ȤΥ����å��ե饰
+	//入力枠のチェックフラグ
 	res = true;
 
-	//���ٹԤ����򤵤�Ƥ�����
+	//明細行が選択されている場合
 	if( index != -1 )
 	{
-		//�����Ȥ��ѹ����ʤ��������å�
+		//入力枠に変更がないかチェック
 		res = fncDtCheck();
 	}
 
-	//�����Ȥ��ѹ����ʤ����⤷��������Ԥ��ѹ����Ƥ�����Τʤ����
+	//入力枠に変更がない、もしくは選択行を変更しても問題のない場合
 	if(res == true)
 	{
-		//��¸������Ԥ����ä����ˤϡ����ιԤ�ȿž����
+		//既存の選択行があった場合には、その行の反転を解除
 		if( index != -1 )
 		{
 			document.getElementById("retsu" + index).style.backgroundColor="#ffffff";
 		}
 
-		//����������Ԥ�⤦���٥���å��������
+		//以前の選択行をもう一度クリックした場合
 		if (index == i)
 		{
-			//����ǥå���������
+			//インデックスを初期化
 			index = -1;
-			//���ٹԤ�����Ǥ���褦�ˤ���
+			//明細行を選択できるようにする
 			sentakufunouFlg = 0;
 		}
-		//�����Ȱ㤦����Ԥ򥯥�å��������
+		//以前と違う選択行をクリックした場合
 		else
 		{
-			//����ǥå���������Ԥ������ֹ�򥻥å�
+			//インデックスに選択行の配列番号をセット
 			index = i;
 
-			//������ԡפ�ȿž������
+			//「選択行」を反転させる
 			document.getElementById("retsu" + index).style.backgroundColor="#bbbbbb";
 
-			//�����Ȥ򤹤٤ƥ��ꥢ�ʶ��ԤΤȤ��Τ����
+			//入力枠をすべてクリア（空行のときのため）
 			window.parent.fncResetFrm( window.parent.DSO );
-			//�������ʤ򥯥ꥢ�ʶ��ԤΤȤ��Τ����
+			//仕入部品をクリア（空行のときのため）
 			window.parent.DSO.strStockItemCode.length  = 0;
-			//ñ���ꥹ�Ȥ򥯥ꥢ�ʶ��ԤΤȤ��Τ����
+			//単価リストをクリア（空行のときのため）
 			window.parent.DSO.lngGoodsPriceCode.length = 0;
 
 			if( saveRecord[index][0] != "" )
 			{
-				//���ʤ��顢����̾�����
+				//製品から、製品名を作成
 				subLoadMasterValue('cnProduct',
 						 saveRecord[index][0],
 						 window.parent.DSO.strProductName,
 						 Array(saveRecord[index][0]),
 						 window.document.objDataSourceSetting,
 						 0);
-				//���ʤ��顢�ܵ����֤����
+				//製品から、顧客品番を作成
 				subLoadMasterValue('cnGoodsCode',
 						 saveRecord[index][0],
 						 window.parent.DSO.strGoodsCode,
 						 Array(saveRecord[index][0]),
 						 window.document.objDataSourceSetting1,
 						 1);
-				//���ʤ��顢�����ȥ����������
+				//製品から、カートン入数を作成
 				subLoadMasterValue('cnCartonQuantity',
 						 saveRecord[index][0],
 						 window.parent.DSO.lngCartonQuantity,
 						 Array(saveRecord[index][0]),
 						 window.document.objDataSourceSetting13,
 						 13);
-				//�������ܤ��顢�������ʤΥ��ץ�����ͤ����
+				//仕入科目から、仕入部品のオプション値を作成
 				subLoadMasterOption( 'cnStockItem',
 						 window.parent.DSO.strStockSubjectCode, 
 						 window.parent.DSO.strStockItemCode,
 						 Array(saveRecord[index][2]),
 						 window.document.objDataSourceSetting10,
 						 10);
-				//ñ���ꥹ�Ȥ����
+				//単価リストを作成
 				fncDtGoodsPriceList2();
 			}
-			//����Ԥλ������ٹԤ�����Ǥ���褦�ˤ���
+			//空白行の時、明細行を選択できるようにする
 			else
 			{
-				//���ٹԤ�����Ǥ���褦�ˤ���
+				//明細行を選択できるようにする
 				sentakufunouFlg = 0;
 			}
 
-			//�������ȡפ�����Ԥ�ȿ��
+			//「入力枠」に選択行を反映
 			fncDtReplaceInput();
 
-			//����̲ߤ�ɽ��
+			//基準通貨を表示
 			fncDtCalStdTotalPrice();
 
-			//����׶�ۤη׻�
+			//総合計金額の計算
 			fncDtCalAllTotalPrice();
 		}
 	}
 	else
 	{
-		//���ٹԤ�����Ǥ���褦�ˤ���
+		//明細行を選択できるようにする
 		sentakufunouFlg = 0;
 	}
 }
 
 
 //@*****************************************************************************
-// ����   : �����Ȥ�����Ԥκ��ۤ�����å������㤤������С���ǧ������������ɽ��
-// �о�   : �������ȡפ������Τ��٤�
-// ����   : 
-// ����� : [Boolean��] ����Ԥ��ư���Ƥ�褤���ϡ�true����ư���ʤ����ϡ�false
-// ����   : 
+// 概要   : 入力枠と選択行の差異をチェックし、違いがあれば、確認ダイアログを表示
+// 対象   : 「明細枠」があるものすべて
+// 引数   : 
+// 戻り値 : [Boolean型] 選択行を移動してもよい場合は、true、移動しない場合は、false
+// 備考   : 
 //******************************************************************************
 function fncDtCheck()
 {
-	//�����å��ե饰
+	//チェックフラグ
 	var res = true;
 
-	//�������ȡפ��ͤ�����˥��å�
+	//「入力枠」の値を配列にセット
 	var aryRecord = fncDtNewAry();
 
-	//�����Ĺ��
+	//配列の長さ
 	var aryRecordLength = aryRecord.length;
 
 	for( j = 0; j < aryRecordLength ; j++ )
 	{
-		//�����Ȥ�����Ԥ����
+		//入力枠と選択行の比較
 		if( aryRecord[j] != saveRecord[index][j] )
 		{
-			//ñ���ꥹ��,��������̾,��������̾,ñ�̡�̾�Ρ�,
-			//ñ���ɲåꥹ��,���ֹ�ΤȤ������å�
+			//単価リスト,仕入科目名,仕入部品名,単位（名称）,
+			//単価追加リスト,行番号のときスキップ
 			if (j==1 || j == 3 || j == 5 || j == 9 ||j == 14 || j==18) continue;
 
-//�ǥХå��� ��Ǿä�
-//alert("�ѹ����줿�����ֹ� : " + j + "\n" +
-//	  "�������ȡפ��� : " + aryRecord[j] + "\n" +
-//	  "�����ٹԡפ��� : " + saveRecord[index][j]);
+//デバック中 後で消す
+//alert("変更された配列番号 : " + j + "\n" +
+//	  "「入力枠」の値 : " + aryRecord[j] + "\n" +
+//	  "「明細行」の値 : " + saveRecord[index][j]);
 
-			res = confirm("�ѹ��ս꤬����ޤ����ѹ����ʤ��Ƥ��������Ǥ�����")
+			res = confirm("変更箇所があります。変更しなくてもよろしいですか？")
 			break;
 		}
 	}
@@ -349,115 +349,115 @@ function fncDtCheck()
 
 
 //@*****************************************************************************
-// ����   : �ɲåܥ���򲡤����Ȥ����ͤΥ����å�
-// �о�   : �������ȡפ������Τ��٤�
-// ����   : ���꤬����Х��顼�Ȥ�Ф�
+// 概要   : 追加ボタンを押したときの値のチェック
+// 対象   : 「明細枠」があるものすべて
+// 注意   : 問題があればアラートを出す
 //******************************************************************************
 function fncDtAddCheck()
 {
-	//�ͤ����٤Ƥ�����ä��顢���Ԥ��ɲäǤ���
-	if( window.parent.DSO.strProductCode.value            == "" && //���ʥ�����
-		window.parent.DSO.strStockSubjectCode.value       == 0  && //��������
-		window.parent.DSO.strStockItemCode.selectedIndex  == -1 )  //��������
+	//値がすべてからだったら、空行を追加できる
+	if( window.parent.DSO.strProductCode.value            == "" && //製品コード
+		window.parent.DSO.strStockSubjectCode.value       == 0  && //仕入科目
+		window.parent.DSO.strStockItemCode.selectedIndex  == -1 )  //仕入部品
 	{
 		if( window.parent.DSO.lngConversionClassCode[0].checked )
 		{
-			if( window.parent.DSO.curProductPrice_gs.value  == "" && //����ñ�����ʤ�
-				window.parent.DSO.lngGoodsQuantity_gs.value == "" )  //���ʿ��̤��ʤ�
+			if( window.parent.DSO.curProductPrice_gs.value  == "" && //製品単価がない
+				window.parent.DSO.lngGoodsQuantity_gs.value == "" )  //製品数量がない
 			{
 				return true;
 			}
 		}
 		else if( window.parent.DSO.lngConversionClassCode[1].checked )
 		{
-			if( window.parent.DSO.curProductPrice_ps.value  == "" && //�ٻ�ñ�����ʤ�
-				window.parent.DSO.lngGoodsQuantity_ps.value == "" )  //�ٻѿ��̤��ʤ�
+			if( window.parent.DSO.curProductPrice_ps.value  == "" && //荷姿単価がない
+				window.parent.DSO.lngGoodsQuantity_ps.value == "" )  //荷姿数量がない
 			{
 				return true;
 			}
 		}
 	}
 
-	//���顼�����ä����˥�å��ݥ���ͤ�����ѿ�
+	//エラーがあった場合にメッセ−ジを詰め込む変数
 	var alertList = "";
 
-	//�ͤ����٤ƶ��ǤϤʤ����Υ����å�
-	//���ʥ����ɤ����Ϥ��ʤ��ä����
+	//値がすべて空ではない場合のチェック
+	//製品コードの入力がなかった場合
 	if( window.parent.DSO.strProductCode.value == "" )
 	{
-		alertList += "���ʥ����ɤ����Ϥ��Ƥ�������!\n";
+		alertList += "製品コードを入力してください!\n";
 	}
-	//���ʥ����ɤ����Ϥ��������ä����
+	//製品コードの入力が不正だった場合
 	if( isNaN(window.parent.DSO.strProductCode.value) )
 	{
-		alertList += "���ʥ����ɤ��ͤ������Ǥ�!\n";
+		alertList += "製品コードの値が不正です!\n";
 	}
-	//�������ܤ����򤵤�ʤ��ä����
+	//仕入科目が選択されなかった場合
 	if( window.parent.DSO.strStockSubjectCode.value       == 0 )
 	{
-		alertList += "�������ܤ����򤷤Ƥ�������!\n";
+		alertList += "仕入科目を選択してください!\n";
 	}
-	//�������ʤ����򤵤�ʤ��ä����
+	//仕入部品が選択されなかった場合
 	if( window.parent.DSO.strStockItemCode.selectedIndex  == -1 ||
 		window.parent.DSO.strStockItemCode.selectedIndex  == 0  )
 	{
-		alertList += "�������ʤ����򤷤Ƥ�������!\n";
+		alertList += "仕入部品を選択してください!\n";
 	}
 
-	//����ñ�̷׾夬���򤵤�Ƥ�����
+	//製品単位計上が選択されている場合
 	if (window.parent.DSO.lngConversionClassCode[0].checked)
 	{
-		//����ñ�������Ϥ���Ƥ��ʤ��ä����
+		//製品単価が入力されていなかった場合
 		if( window.parent.DSO.curProductPrice_gs.value == "" ||
 			window.parent.DSO.curProductPrice_gs.value == 0  )
 		{
-			alertList += "����ñ�������Ϥ��Ƥ�������!\n";
+			alertList += "製品単価を入力してください!\n";
 		}
-		//���ʿ��̤����Ϥ���Ƥ��ʤ��ä����
+		//製品数量が入力されていなかった場合
 		if( window.parent.DSO.lngGoodsQuantity_gs.value == "" ||
 			window.parent.DSO.lngGoodsQuantity_gs.value == 0  )
 		{
-			alertList += "���ʿ��̤����Ϥ��Ƥ�������!\n";
+			alertList += "製品数量を入力してください!\n";
 		}
-		//����ñ�����ͤ��������ä����
+		//製品単価の値が不正だった場合
 		if( isNaN(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value))) )
 		{
-			alertList += "����ñ�����ͤ������Ǥ�!\n";
+			alertList += "製品単価の値が不正です!\n";
 		}
-		//���ʿ��̤��ͤ��������ä����
+		//製品数量の値が不正だった場合
 		if( isNaN(fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value)) )
 		{
-			alertList += "���ʿ��̤��ͤ������Ǥ�!\n";
+			alertList += "製品数量の値が不正です!\n";
 		}
 	}
-	//�ٻ�ñ�̷׾夬���򤵤�Ƥ�����
+	//荷姿単位計上が選択されている場合
 	else if( window.parent.DSO.lngConversionClassCode[1].checked )
 	{
-		//�ٻ�ñ�������Ϥ���Ƥ��ʤ��ä����
+		//荷姿単価が入力されていなかった場合
 		if( window.parent.DSO.curProductPrice_ps.value == "" ||
 			window.parent.DSO.curProductPrice_ps.value == 0  )
 		{
-			alertList += "����ñ�������Ϥ��Ƥ�������!\n";
+			alertList += "製品単価を入力してください!\n";
 		}
-		//�ٻѿ��̤����Ϥ���Ƥ��ʤ��ä����
+		//荷姿数量が入力されていなかった場合
 		if( window.parent.DSO.lngGoodsQuantity_ps.value == "" ||
 			window.parent.DSO.lngGoodsQuantity_ps.value == 0  )
 		{
-			alertList += "���ʿ��̤����Ϥ��Ƥ�������!\n";
+			alertList += "製品数量を入力してください!\n";
 		}
-		//�ٻ�ñ�����ͤ��������ä����
+		//荷姿単価の値が不正だった場合
 		if( isNaN(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value))) )
 		{
-			alertList += "����ñ�����ͤ������Ǥ�!\n";
+			alertList += "製品単価の値が不正です!\n";
 		}
-		//�ٻѿ��̤��ͤ��������ä����
+		//荷姿数量の値が不正だった場合
 		if( isNaN(fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value)) )
 		{
-			alertList += "���ʿ��̤��ͤ������Ǥ�!\n";
+			alertList += "製品数量の値が不正です!\n";
 		}
 	}
 
-	//���顼�����ä����å����������
+	//エラーがあったらメッセージを出力
 	if( alertList != "" )
 	{
 		alert(alertList);
@@ -469,55 +469,55 @@ function fncDtAddCheck()
 
 
 //@*****************************************************************************
-// ����   : �����Ȥ��ͤ򿷵�������˳�Ǽ
-// �о�   : �������ȡפ������Τ��٤�
-// ����� : aryRecord, [����], ����������
+// 概要   : 入力枠の値を新規の配列に格納
+// 対象   : 「明細枠」があるものすべて
+// 戻り値 : aryRecord, [配列型], 新規の配列
 //******************************************************************************
 function fncDtNewAry()
 {
 	var aryRecord = new Array();
 
-	aryRecord[0]  = window.parent.DSO.strProductCode.value;            //���ʥ�����
-	aryRecord[1]  = window.parent.DSO.lngGoodsPriceCode.value;         //ñ���ꥹ��
-	aryRecord[2]  = window.parent.DSO.strStockSubjectCode.value;       //��������
-	aryRecord[3]  = window.parent.DSO.strStockSubjectCode.options[window.parent.DSO.strStockSubjectCode.selectedIndex].text;     //�������ܡ�value + ̾�Ρ�
-	aryRecord[4]  = window.parent.DSO.strStockItemCode.value;          //��������
+	aryRecord[0]  = window.parent.DSO.strProductCode.value;            //製品コード
+	aryRecord[1]  = window.parent.DSO.lngGoodsPriceCode.value;         //単価リスト
+	aryRecord[2]  = window.parent.DSO.strStockSubjectCode.value;       //仕入科目
+	aryRecord[3]  = window.parent.DSO.strStockSubjectCode.options[window.parent.DSO.strStockSubjectCode.selectedIndex].text;     //仕入科目（value + 名称）
+	aryRecord[4]  = window.parent.DSO.strStockItemCode.value;          //仕入部品
 	if( window.parent.DSO.strStockItemCode.selectedIndex != -1 )
 	{
-	aryRecord[5]  = window.parent.DSO.strStockItemCode.options[window.parent.DSO.strStockItemCode.selectedIndex].text;           //�������ʡ�value + ̾�Ρ�
+	aryRecord[5]  = window.parent.DSO.strStockItemCode.options[window.parent.DSO.strStockItemCode.selectedIndex].text;           //仕入部品（value + 名称）
 	}else{
 	aryRecord[5]  = "";
 	}
 
 	if( window.parent.DSO.lngConversionClassCode[0].checked )
 	{
-	aryRecord[6]  = window.parent.DSO.lngConversionClassCode[0].value; //������ʬ(����ñ�̷׾�)
-	aryRecord[7]  = window.parent.DSO.curProductPrice_gs.value;        //����ñ��
-	aryRecord[8]  = window.parent.DSO.lngProductUnitCode_gs.value;     //����ñ��
-	aryRecord[9]  = window.parent.DSO.lngProductUnitCode_gs.options[window.parent.DSO.lngProductUnitCode_gs.selectedIndex].text; //����ñ�̡�̾�Ρ�
-	aryRecord[10] = window.parent.DSO.lngGoodsQuantity_gs.value;       //���ʿ���
-	aryRecord[14] = window.parent.DSO.curProductPrice_gs.value;        //ñ���ꥹ���ɲåǡ���
+	aryRecord[6]  = window.parent.DSO.lngConversionClassCode[0].value; //換算区分(製品単位計上)
+	aryRecord[7]  = window.parent.DSO.curProductPrice_gs.value;        //製品単価
+	aryRecord[8]  = window.parent.DSO.lngProductUnitCode_gs.value;     //製品単位
+	aryRecord[9]  = window.parent.DSO.lngProductUnitCode_gs.options[window.parent.DSO.lngProductUnitCode_gs.selectedIndex].text; //製品単位（名称）
+	aryRecord[10] = window.parent.DSO.lngGoodsQuantity_gs.value;       //製品数量
+	aryRecord[14] = window.parent.DSO.curProductPrice_gs.value;        //単価リスト追加データ
 	}
 	else if( window.parent.DSO.lngConversionClassCode[1].checked )
 	{
-	aryRecord[6]  = window.parent.DSO.lngConversionClassCode[1].value; //������ʬ(�ٻ�ñ�̷׾�)
-	aryRecord[7]  = window.parent.DSO.curProductPrice_ps.value;        //�ٻ�ñ��
-	aryRecord[8]  = window.parent.DSO.lngProductUnitCode_ps.value;     //�ٻ�ñ��
-	aryRecord[9]  = window.parent.DSO.lngProductUnitCode_ps.options[window.parent.DSO.lngProductUnitCode_ps.selectedIndex].text; //�ٻ�ñ�̡�̾�Ρ�
-	aryRecord[10] = window.parent.DSO.lngGoodsQuantity_ps.value;       //�ٻѿ���
-	aryRecord[14] = fncProductPriceForList();                          //ñ���ꥹ���ɲåǡ���
+	aryRecord[6]  = window.parent.DSO.lngConversionClassCode[1].value; //換算区分(荷姿単位計上)
+	aryRecord[7]  = window.parent.DSO.curProductPrice_ps.value;        //荷姿単価
+	aryRecord[8]  = window.parent.DSO.lngProductUnitCode_ps.value;     //荷姿単位
+	aryRecord[9]  = window.parent.DSO.lngProductUnitCode_ps.options[window.parent.DSO.lngProductUnitCode_ps.selectedIndex].text; //荷姿単位（名称）
+	aryRecord[10] = window.parent.DSO.lngGoodsQuantity_ps.value;       //荷姿数量
+	aryRecord[14] = fncProductPriceForList();                          //単価リスト追加データ
 	}
-	aryRecord[11] = window.parent.DSO.curTotalPrice.value;             //��ȴ���
-	aryRecord[12] = window.parent.DSO.lngCarrierCode.value;            //������ˡ
-	aryRecord[13] = window.parent.DSO.strDetailNote.value;             //����
+	aryRecord[11] = window.parent.DSO.curTotalPrice.value;             //税抜金額
+	aryRecord[12] = window.parent.DSO.lngCarrierCode.value;            //運搬方法
+	aryRecord[13] = window.parent.DSO.strDetailNote.value;             //備考
 
-	//���������ξ��
+	//仕入管理の場合
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-	aryRecord[15] = window.parent.DSO.lngTaxClassCode.value;             //�����Ƕ�ʬ������
-	aryRecord[16] = window.parent.DSO.lngTaxCode.value;                  //������
-	aryRecord[17] = window.parent.DSO.curTaxPrice.value;                 //�����ǳ�
-	aryRecord[18] = "";            //���ֹ�
+	aryRecord[15] = window.parent.DSO.lngTaxClassCode.value;             //消費税区分コード
+	aryRecord[16] = window.parent.DSO.lngTaxCode.value;                  //消費税
+	aryRecord[17] = window.parent.DSO.curTaxPrice.value;                 //消費税額
+	aryRecord[18] = "";            //行番号
 	}
 
 	return aryRecord;
@@ -525,115 +525,115 @@ function fncDtNewAry()
 
 
 //@*****************************************************************************
-// ����   : �����Ȥ��ͤ�����Ԥ��֤�����
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 入力枠の値を選択行と置き換え
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtReplaceAry()
 {
-	saveRecord[index][0]  = window.parent.DSO.strProductCode.value;         //���ʥ�����
-	saveRecord[index][1]  = window.parent.DSO.lngGoodsPriceCode.value;      //ñ���ꥹ��
-	saveRecord[index][2]  = window.parent.DSO.strStockSubjectCode.value;    //��������
-	saveRecord[index][3]  = window.parent.DSO.strStockSubjectCode.options[window.parent.DSO.strStockSubjectCode.selectedIndex].text;     //�������ܡ�value + ̾�Ρ�
-	saveRecord[index][4]  = window.parent.DSO.strStockItemCode.value;       //��������
-	saveRecord[index][5]  = window.parent.DSO.strStockItemCode.options[window.parent.DSO.strStockItemCode.selectedIndex].text;           //�������ʡ�value + ̾�Ρ�
+	saveRecord[index][0]  = window.parent.DSO.strProductCode.value;         //製品コード
+	saveRecord[index][1]  = window.parent.DSO.lngGoodsPriceCode.value;      //単価リスト
+	saveRecord[index][2]  = window.parent.DSO.strStockSubjectCode.value;    //仕入科目
+	saveRecord[index][3]  = window.parent.DSO.strStockSubjectCode.options[window.parent.DSO.strStockSubjectCode.selectedIndex].text;     //仕入科目（value + 名称）
+	saveRecord[index][4]  = window.parent.DSO.strStockItemCode.value;       //仕入部品
+	saveRecord[index][5]  = window.parent.DSO.strStockItemCode.options[window.parent.DSO.strStockItemCode.selectedIndex].text;           //仕入部品（value + 名称）
 
 	if( window.parent.DSO.lngConversionClassCode[0].checked )
 	{
-	saveRecord[index][6]  = window.parent.DSO.lngConversionClassCode[0].value; //������ʬ(����ñ�̷׾�)
-	saveRecord[index][7]  = window.parent.DSO.curProductPrice_gs.value;        //����ñ��
-	saveRecord[index][8]  = window.parent.DSO.lngProductUnitCode_gs.value;     //����ñ��
-	saveRecord[index][9]  = window.parent.DSO.lngProductUnitCode_gs.options[window.parent.DSO.lngProductUnitCode_gs.selectedIndex].text;     //����ñ�̡�̾�Ρ�
-	saveRecord[index][10] = window.parent.DSO.lngGoodsQuantity_gs.value;       //���ʿ���
-	saveRecord[index][14] = window.parent.DSO.curProductPrice_gs.value;        //ñ���ꥹ���ɲåǡ���
+	saveRecord[index][6]  = window.parent.DSO.lngConversionClassCode[0].value; //換算区分(製品単位計上)
+	saveRecord[index][7]  = window.parent.DSO.curProductPrice_gs.value;        //製品単価
+	saveRecord[index][8]  = window.parent.DSO.lngProductUnitCode_gs.value;     //製品単位
+	saveRecord[index][9]  = window.parent.DSO.lngProductUnitCode_gs.options[window.parent.DSO.lngProductUnitCode_gs.selectedIndex].text;     //製品単位（名称）
+	saveRecord[index][10] = window.parent.DSO.lngGoodsQuantity_gs.value;       //製品数量
+	saveRecord[index][14] = window.parent.DSO.curProductPrice_gs.value;        //単価リスト追加データ
 	}
 	else if(window.parent.DSO.lngConversionClassCode[1].checked )
 	{
-	saveRecord[index][6]  =  window.parent.DSO.lngConversionClassCode[1].value; //������ʬ(�ٻ�ñ�̷׾�)
-	saveRecord[index][7]  = window.parent.DSO.curProductPrice_ps.value;         //�ٻ�ñ��
-	saveRecord[index][8]  = window.parent.DSO.lngProductUnitCode_ps.value;      //�ٻ�ñ��
-	saveRecord[index][9]  = window.parent.DSO.lngProductUnitCode_ps.options[window.parent.DSO.lngProductUnitCode_ps.selectedIndex].text;     //�ٻ�ñ�̡�̾�Ρ�
-	saveRecord[index][10] = window.parent.DSO.lngGoodsQuantity_ps.value;        //�ٻѿ���
-	saveRecord[index][14] = fncProductPriceForList();                           //ñ���ꥹ���ɲåǡ���
+	saveRecord[index][6]  =  window.parent.DSO.lngConversionClassCode[1].value; //換算区分(荷姿単位計上)
+	saveRecord[index][7]  = window.parent.DSO.curProductPrice_ps.value;         //荷姿単価
+	saveRecord[index][8]  = window.parent.DSO.lngProductUnitCode_ps.value;      //荷姿単位
+	saveRecord[index][9]  = window.parent.DSO.lngProductUnitCode_ps.options[window.parent.DSO.lngProductUnitCode_ps.selectedIndex].text;     //荷姿単位（名称）
+	saveRecord[index][10] = window.parent.DSO.lngGoodsQuantity_ps.value;        //荷姿数量
+	saveRecord[index][14] = fncProductPriceForList();                           //単価リスト追加データ
 	} 
 
-	saveRecord[index][11] = window.parent.DSO.curTotalPrice.value;          //��ȴ���
-	saveRecord[index][12] = window.parent.DSO.lngCarrierCode.value;         //������ˡ
-	saveRecord[index][13] = window.parent.DSO.strDetailNote.value;          //����
+	saveRecord[index][11] = window.parent.DSO.curTotalPrice.value;          //税抜金額
+	saveRecord[index][12] = window.parent.DSO.lngCarrierCode.value;         //運搬方法
+	saveRecord[index][13] = window.parent.DSO.strDetailNote.value;          //備考
 
-	//���������ξ��
+	//仕入管理の場合
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-	saveRecord[index][15] = window.parent.DSO.lngTaxClassCode.value;         //�����Ƕ�ʬ������
-	saveRecord[index][16] = window.parent.DSO.lngTaxCode.value;              //������
-	saveRecord[index][17] = window.parent.DSO.curTaxPrice.value;             //�����ǳ�
+	saveRecord[index][15] = window.parent.DSO.lngTaxClassCode.value;         //消費税区分コード
+	saveRecord[index][16] = window.parent.DSO.lngTaxCode.value;              //消費税
+	saveRecord[index][17] = window.parent.DSO.curTaxPrice.value;             //消費税額
 	}
 }
 
 
 //@*****************************************************************************
-// ����   : �����Ȥ�����Ԥ�ȿ��
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 入力枠に選択行を反映
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtReplaceInput()
 {
-	window.parent.DSO.strProductCode.value         = saveRecord[index][0];  //���ʥ�����
-	//ñ���ꥹ��(saveRecord[index][1])�ϡ�hmtl��ľ�ܽ񤯡��ٱ�Τ����
-	window.parent.DSO.strStockSubjectCode.value    = saveRecord[index][2];  //��������
-	//��������(saveRecord[index][4])�ϡ�hmtl��ľ�ܽ񤯡��ٱ�Τ����
+	window.parent.DSO.strProductCode.value         = saveRecord[index][0];  //製品コード
+	//単価リスト(saveRecord[index][1])は、hmtlに直接書く（遅延のため）
+	window.parent.DSO.strStockSubjectCode.value    = saveRecord[index][2];  //仕入科目
+	//仕入部品(saveRecord[index][4])は、hmtlに直接書く（遅延のため）
 
 	if( saveRecord[index][6] == "gs" )
 	{
-	window.parent.DSO.lngConversionClassCode[0].checked = true;             //������ʬ(����ñ�̷׾�)
-	window.parent.DSO.curProductPrice_gs.value     = saveRecord[index][7];  //����ñ��
-	window.parent.DSO.lngProductUnitCode_gs.value  = saveRecord[index][8];  //����ñ��
-	window.parent.DSO.lngGoodsQuantity_gs.value    = saveRecord[index][10]; //���ʿ���
+	window.parent.DSO.lngConversionClassCode[0].checked = true;             //換算区分(製品単位計上)
+	window.parent.DSO.curProductPrice_gs.value     = saveRecord[index][7];  //製品単価
+	window.parent.DSO.lngProductUnitCode_gs.value  = saveRecord[index][8];  //製品単位
+	window.parent.DSO.lngGoodsQuantity_gs.value    = saveRecord[index][10]; //製品数量
 
-	//[����ñ��][����ñ��][���ʿ���]�����ϡ�����Ǥ���褦�ˤ���
+	//[製品単価][製品単位][製品数量]を入力、選択できるようにする
 	window.parent.DSO.curProductPrice_gs.disabled    = false;
 	window.parent.DSO.lngProductUnitCode_gs.disabled = false;
 	window.parent.DSO.lngGoodsQuantity_gs.disabled   = false;
 
-	//[�ٻ�ñ��][�ٻ�ñ��][�ٻѿ���]�����ϡ�����Ǥ��ʤ��褦�ˤ���
+	//[荷姿単価][荷姿単位][荷姿数量]を入力、選択できないようにする
 	window.parent.DSO.curProductPrice_ps.disabled    = true;
 	window.parent.DSO.lngProductUnitCode_ps.disabled = true;
 	window.parent.DSO.lngGoodsQuantity_ps.disabled   = true;
 	}
 	else if( saveRecord[index][6] == "ps" )
 	{
-	window.parent.DSO.lngConversionClassCode[1].checked = true;             //������ʬ(�ٻ�ñ�̷׾�)
-	window.parent.DSO.curProductPrice_ps.value     = saveRecord[index][7];  //�ٻ�ñ��
-	window.parent.DSO.lngProductUnitCode_ps.value  = saveRecord[index][8];  //�ٻ�ñ��
-	window.parent.DSO.lngGoodsQuantity_ps.value    = saveRecord[index][10]; //�ٻѿ���
-	window.parent.DSO.curProductPrice_gs.value     = saveRecord[index][14]; //ñ���ꥹ���ɲåǡ���
+	window.parent.DSO.lngConversionClassCode[1].checked = true;             //換算区分(荷姿単位計上)
+	window.parent.DSO.curProductPrice_ps.value     = saveRecord[index][7];  //荷姿単価
+	window.parent.DSO.lngProductUnitCode_ps.value  = saveRecord[index][8];  //荷姿単位
+	window.parent.DSO.lngGoodsQuantity_ps.value    = saveRecord[index][10]; //荷姿数量
+	window.parent.DSO.curProductPrice_gs.value     = saveRecord[index][14]; //単価リスト追加データ
 
-	//[����ñ��][����ñ��][���ʿ���]�����ϡ�����Ǥ��ʤ��褦�ˤ���
+	//[製品単価][製品単位][製品数量]を入力、選択できないようにする
 	window.parent.DSO.curProductPrice_gs.disabled    = true;
 	window.parent.DSO.lngProductUnitCode_gs.disabled = true;
 	window.parent.DSO.lngGoodsQuantity_gs.disabled   = true;
-	//[�ٻ�ñ��][�ٻ�ñ��][�ٻѿ���]�����ϡ�����Ǥ���褦�ˤ���
+	//[荷姿単価][荷姿単位][荷姿数量]を入力、選択できるようにする
 	window.parent.DSO.curProductPrice_ps.disabled    = false;
 	window.parent.DSO.lngProductUnitCode_ps.disabled = false;
 	window.parent.DSO.lngGoodsQuantity_ps.disabled   = false;
 	}
 
-	window.parent.DSO.curTotalPrice.value          = saveRecord[index][11]; //��ȴ���
-	window.parent.DSO.lngCarrierCode.value         = saveRecord[index][12]; //������ˡ
-	window.parent.DSO.strDetailNote.value          = saveRecord[index][13]; //����
+	window.parent.DSO.curTotalPrice.value          = saveRecord[index][11]; //税抜金額
+	window.parent.DSO.lngCarrierCode.value         = saveRecord[index][12]; //運搬方法
+	window.parent.DSO.strDetailNote.value          = saveRecord[index][13]; //備考
 
-	//���������ξ��
+	//仕入管理の場合
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-	window.parent.DSO.lngTaxClassCode.value = saveRecord[index][15];         //�����Ƕ�ʬ������
-	window.parent.DSO.lngTaxCode.value      = saveRecord[index][16];         //������
-	window.parent.DSO.curTaxPrice.value     = saveRecord[index][17];         //�����ǳ�
+	window.parent.DSO.lngTaxClassCode.value = saveRecord[index][15];         //消費税区分コード
+	window.parent.DSO.lngTaxCode.value      = saveRecord[index][16];         //消費税
+	window.parent.DSO.curTaxPrice.value     = saveRecord[index][17];         //消費税額
 	}
 }
 
 
 //@*****************************************************************************
-// ����   : �����ȥơ��֥����̾�����
-// �о�   : �������ȡפ������Τ��٤�
-// ����� : strTableHtml, [String��], �����Ȥ���̾
+// 概要   : 明細枠テーブルの列名を作成
+// 対象   : 「明細枠」があるものすべて
+// 戻り値 : strTableHtml, [String型], 明細枠の列名
 //******************************************************************************
 function fncStrTableHtmlColumns()
 {
@@ -642,14 +642,14 @@ function fncStrTableHtmlColumns()
 		strTableHtml ='<table width="910" cellpadding="0" cellspacing="1" border="0"' + 
 					  'bgcolor="#6f8180"><tr class="TrSegs">' + 
 					  '<td nowrap>&nbsp;</td>'                  +
-					  '<td nowrap id="ExStrDL01">����</td>'     +
-					  '<td nowrap id="ExStrDL02">��������</td>' +
-					  '<td nowrap id="ExStrDL03">��������</td>' +
-					  '<td nowrap id="ExStrDL04">ñ��</td>'     +
-					  '<td nowrap id="ExStrDL05">ñ��</td>'     +
-					  '<td nowrap id="ExStrDL06">����</td>'     +
-					  '<td nowrap id="ExStrDL07">��ȴ���</td>' +
-					  '<td nowrap id="ExStrDL09">����</td>'     +
+					  '<td nowrap id="ExStrDL01">製品</td>'     +
+					  '<td nowrap id="ExStrDL02">仕入科目</td>' +
+					  '<td nowrap id="ExStrDL03">仕入部品</td>' +
+					  '<td nowrap id="ExStrDL04">単価</td>'     +
+					  '<td nowrap id="ExStrDL05">単位</td>'     +
+					  '<td nowrap id="ExStrDL06">数量</td>'     +
+					  '<td nowrap id="ExStrDL07">税抜金額</td>' +
+					  '<td nowrap id="ExStrDL09">備考</td>'     +
 					  '</tr>';
 	}
 	else if( window.parent.lngLanguageCode == 0 )
@@ -673,20 +673,20 @@ function fncStrTableHtmlColumns()
 
 
 //@*****************************************************************************
-// ����   : �����ȥơ��֥�ιԤ����
-// �о�   : �������ȡפ������Τ��٤�
-// ����� : strTableHtml, [String��], �����Ȥ�����
+// 概要   : 明細枠テーブルの行を作成
+// 対象   : 「明細枠」があるものすべて
+// 戻り値 : strTableHtml, [String型], 明細枠の内容
 //******************************************************************************
 function fncStrTableHtmlRows(i)
 {
-	strTableHtml ='<td align="center" nowrap>'      + saveRecord[i][0]  +             //����
-				  '</td><td nowrap>'                + saveRecord[i][3]  +             //�������ܡ�̾�Ρ�
-				  '</td><td nowrap>'                + saveRecord[i][5]  +             //�������ʡ�̾�Ρ�
-				  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +  //ñ��
-				  '</td><td align="center" nowrap>' + saveRecord[i][9]  +             //ñ�̡�̾�Ρ�
-				  '</td><td align="right" nowrap>'  + saveRecord[i][10]  + "&nbsp;" + //����
-				  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +  //��ȴ���
-				  '</td><td nowrap>'                + saveRecord[i][13] +             //����
+	strTableHtml ='<td align="center" nowrap>'      + saveRecord[i][0]  +             //製品
+				  '</td><td nowrap>'                + saveRecord[i][3]  +             //仕入科目（名称）
+				  '</td><td nowrap>'                + saveRecord[i][5]  +             //仕入部品（名称）
+				  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +  //単価
+				  '</td><td align="center" nowrap>' + saveRecord[i][9]  +             //単位（名称）
+				  '</td><td align="right" nowrap>'  + saveRecord[i][10]  + "&nbsp;" + //数量
+				  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +  //税抜金額
+				  '</td><td nowrap>'                + saveRecord[i][13] +             //備考
 				  '</td>'
 
 	return strTableHtml;
@@ -694,99 +694,99 @@ function fncStrTableHtmlRows(i)
 
 
 //@*****************************************************************************
-// ����   : ��Ͽ�ܥ���򲡤����Ȥ��ˡ�header��ˡ������ȤΥǡ�����hidden���Ǥ��Ф�
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 登録ボタンを押したときに、header欄に、明細枠のデータをhiddenに吐き出す
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtRegistRecord(){
 
 	var strHiddenHtml = "";
 
-	//hidden���Ǥ��Ф�Ϣ�֡ʶ��Ԥ�������Ƚ��֤�����뤿����ѡ�
+	//hiddenで吐き出す連番（空行を削除すると順番がかわるため使用）
 	var hiddenNumber = 0 ;
 
 	for( i = 0; i < saveRecord.length; i++ )
 	{
-		//���ԥ����å�
+		//空行チェック
 		if (saveRecord[i][0] == "") continue;
 
 		strHiddenHtml = strHiddenHtml + fncDtHiddenHtml(i, hiddenNumber);
 		hiddenNumber++; 
 	}
 
-	//��ǧ�롼�Ȥ��ɲá�ȯ�������ξ���
+	//承認ルートを追加（発注管理の場合）
 	if( typeof(window.parent.HSO.POFlg) == "object" )
 	{
 		strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngWorkflowOrderCode' value='" + window.parent.DSO.lngWorkflowOrderCode.value + "' >\n" ;
 	}
 
-	//ȯ���ΣϤ��ɲ�
+	//発注ＮＯを追加
 	strHiddenHtml = strHiddenHtml + "<input type='hidden' name='strOrderCode' value='" + window.parent.HSO.strOrderCode.value + "' >\n" ;
 
-	//��ӥ���󥳡��ɤ��ɲ�
+	//リビジョンコードを追加
 	strHiddenHtml = strHiddenHtml + "<input type='hidden' name='strReviseCode' value='" + window.parent.HSO.strReviseCode.value + "' >\n" ;
 
-	//�̲ߤ��ɲ�
+	//通貨を追加
 	strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngMonetaryUnitCode' value='" + window.parent.HSO.lngMonetaryUnitCode.value + "' >\n" ;
 
-	//�졼�ȥ����פ��ɲ�
+	//レートタイプを追加
 	strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngMonetaryRateCode' value='" + window.parent.HSO.lngMonetaryRateCode.value + "' >\n" ;
 
-	//�����졼�Ȥ��ɲ�
+	//換算レートを追加
 	strHiddenHtml = strHiddenHtml + "<input type='hidden' name='curConversionRate' value='" + window.parent.HSO.curConversionRate.value + "' >\n" ;
 
-	//��ʧ�����ɲ�
+	//支払条件を追加
 	strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngPayConditionCode' value='" + window.parent.HSO.lngPayConditionCode.value + "' >\n" ;
 
-	//����׶�ۡ���ȴ���ˤ��ɲ�
+	//総合計金額（税抜き）を追加
 	strHiddenHtml = strHiddenHtml + "<input type='hidden' name='curAllTotalPrice' value='" + fncDelKannma(fncDelCurrencySign(window.parent.DSO.curAllTotalPrice.value)) + "' >\n" ;
 
-//�ǥХå���
+//デバック中
 alert(strHiddenHtml);
 
-	//�ե�����(name="HSO")�������ȤΥǡ������Ϥ�
+	//フォーム(name="HSO")に明細枠のデータを渡す
 	window.parent.document.all.DtHiddenRecord.innerHTML = strHiddenHtml;
 
 
-	//�ե�����HSO�򥵥֥ߥå�
+	//フォームHSOをサブミット
 	window.parent.document.HSO.submit();
 }
 
 
 //@*****************************************************************************
-// ����   : �����Ȥ�hidden���Ǥ��Ф��ǡ��������
-// �о�   : �������ȡפ������Τ��٤�
-// ����� : strHiddenHtml, [string��], �����Ȥ����Ƥ�hidden���֤��������Ǥ��Ф�
-// ����   : 
+// 概要   : 入力枠のhiddenに吐き出すデータを作成
+// 対象   : 「明細枠」があるものすべて
+// 戻り値 : strHiddenHtml, [string型], 明細枠の内容をhiddenに置き換えて吐き出す
+// 備考   : 
 //******************************************************************************
 
 function fncDtHiddenHtml(i, hiddenNumber){
 
-	//���������ξ��Τߤ�hidden��
+	//仕入管理の場合のみのhidden値
 	var strPC = "";
 
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-	strPC = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngTaxClassCode]'  value='" + saveRecord[i][15] + "' >\n" +                                   //�����Ƕ�ʬ������
-			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngTaxCode]'       value='" + saveRecord[i][16] + "' >\n"     +                               //������
-			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTaxPrice]'      value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][17])) + "' >\n" + //�����ǳ�
-			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngorderdetailno]' value='" + saveRecord[i][18] + "' >\n" ;                                   //���ֹ�
+	strPC = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngTaxClassCode]'  value='" + saveRecord[i][15] + "' >\n" +                                   //消費税区分コード
+			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngTaxCode]'       value='" + saveRecord[i][16] + "' >\n"     +                               //消費税
+			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTaxPrice]'      value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][17])) + "' >\n" + //消費税額
+			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngorderdetailno]' value='" + saveRecord[i][18] + "' >\n" ;                                   //行番号
 	}
 
-	strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //����
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //ñ���ꥹ��
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCode]'     value='" + saveRecord[i][2] + "' >\n"  + //��������
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCodeName]' value='" + saveRecord[i][3] + "' >\n"  + //�������ܡ�value + ̾�Ρ�
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCode]'        value='" + saveRecord[i][4] + "' >\n"  + //��������
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCodeName]'    value='" + saveRecord[i][5] + "' >\n"  + //�������ʡ�value + ̾�Ρ�
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //������ʬ
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //ñ��
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //ñ��
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //ñ�̡�̾�Ρ�
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //����
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //��ȴ���
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngCarrierCode]'          value='" + saveRecord[i][12] + "' >\n" + //������ˡ
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //����
-					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //ñ���ꥹ���ɲåǡ���
+	strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //製品
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //単価リスト
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCode]'     value='" + saveRecord[i][2] + "' >\n"  + //仕入科目
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCodeName]' value='" + saveRecord[i][3] + "' >\n"  + //仕入科目（value + 名称）
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCode]'        value='" + saveRecord[i][4] + "' >\n"  + //仕入部品
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCodeName]'    value='" + saveRecord[i][5] + "' >\n"  + //仕入部品（value + 名称）
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //換算区分
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //単価
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //単位
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //単位（名称）
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //数量
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //税抜金額
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngCarrierCode]'          value='" + saveRecord[i][12] + "' >\n" + //運搬方法
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //備考
+					"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //単価リスト追加データ
 					strPC;
 
 	return strHiddenHtml;
@@ -794,41 +794,41 @@ function fncDtHiddenHtml(i, hiddenNumber){
 
 
 //@*****************************************************************************
-// ����   : �����Τ�����Ǥ��Ф��줿hidden�ͤ������Ͽ�ܥ���򲡤������
-//          ��äƤ���hidden�ͤ򿷵�������˳�Ǽ
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 修正のために吐き出されたhidden値および登録ボタンを押した後に
+//          戻ってきたhidden値を新規の配列に格納
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtNewAryForReturn(i)
 {
 	var aryRecord = new Array();
-	aryRecord[0]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strProductCode]").value;          //���ʥ�����
-	aryRecord[1]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsPriceCode]").value;       //ñ���ꥹ��
-	aryRecord[2]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockSubjectCode]").value;     //��������
-	aryRecord[3]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockSubjectCodeName]").value; //�������ܡ�value + ̾�Ρ�
-	aryRecord[4]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockItemCode]").value;        //��������
-	aryRecord[5]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockItemCodeName]").value;    //�������ʡ�value + ̾�Ρ�
-	aryRecord[6]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngConversionClassCode]").value;  //������ʬ(����ñ�̷׾�)
-	aryRecord[7]  = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curProductPrice]").value, 4); //ñ��
-	aryRecord[8]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngProductUnitCode]").value;      //ñ��
-	aryRecord[9]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngProductUnitCodeName]").value;  //ñ�̡�̾�Ρ�
-	aryRecord[10]  = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsQuantity]").value, 0, false); //����
-	aryRecord[11] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curTotalPrice]").value, 2); //��ȴ���
-	aryRecord[12] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngCarrierCode]").value;          //������ˡ
-	aryRecord[13] = window.parent.DSO.elements("aryPoDitail[" + i + "][strDetailNote]").value;           //����
-	aryRecord[14] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curProductPriceForList]").value, 4); //ñ���ꥹ���ɲåǡ���
+	aryRecord[0]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strProductCode]").value;          //製品コード
+	aryRecord[1]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsPriceCode]").value;       //単価リスト
+	aryRecord[2]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockSubjectCode]").value;     //仕入科目
+	aryRecord[3]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockSubjectCodeName]").value; //仕入科目（value + 名称）
+	aryRecord[4]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockItemCode]").value;        //仕入部品
+	aryRecord[5]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockItemCodeName]").value;    //仕入部品（value + 名称）
+	aryRecord[6]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngConversionClassCode]").value;  //換算区分(製品単位計上)
+	aryRecord[7]  = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curProductPrice]").value, 4); //単価
+	aryRecord[8]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngProductUnitCode]").value;      //単位
+	aryRecord[9]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngProductUnitCodeName]").value;  //単位（名称）
+	aryRecord[10]  = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsQuantity]").value, 0, false); //数量
+	aryRecord[11] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curTotalPrice]").value, 2); //税抜金額
+	aryRecord[12] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngCarrierCode]").value;          //運搬方法
+	aryRecord[13] = window.parent.DSO.elements("aryPoDitail[" + i + "][strDetailNote]").value;           //備考
+	aryRecord[14] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curProductPriceForList]").value, 4); //単価リスト追加データ
 
-	//���������ξ��
+	//仕入管理の場合
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-	aryRecord[15] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngTaxClassCode]").value;  //�����Ƕ�ʬ������
-	aryRecord[16] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngTaxCode]").value;       //������
+	aryRecord[15] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngTaxClassCode]").value;  //消費税区分コード
+	aryRecord[16] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngTaxCode]").value;       //消費税
 		if (window.parent.DSO.elements("aryPoDitail[" + i + "][curTaxPrice]").value == "")
 		{
 		aryRecord[17] = fncDtCalTaxPrice(aryRecord[11],aryRecord[15], aryRecord[16]);
 		}else{
-		aryRecord[17] = window.parent.DSO.elements("aryPoDitail[" + i + "][curTaxPrice]").value;      //�����ǳ�
+		aryRecord[17] = window.parent.DSO.elements("aryPoDitail[" + i + "][curTaxPrice]").value;      //消費税額
 		}
-	aryRecord[18] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngorderdetailno]").value; //���ֹ�
+	aryRecord[18] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngorderdetailno]").value; //行番号
 	}
 
 	return aryRecord;
@@ -836,44 +836,44 @@ function fncDtNewAryForReturn(i)
 
 
 //@*****************************************************************************
-// ����   : ��ȴ����פ򻻽Ф���
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 税抜き合計を算出する
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtCalTotalPrice()
 {
- var ProductPrice  = 0; //ñ��
- var GoodsQuantity = 0; //����
- var TotalPrice    = 0; //��ȴ���
+ var ProductPrice  = 0; //単価
+ var GoodsQuantity = 0; //数量
+ var TotalPrice    = 0; //税抜金額
 
-	//������ʬ(����ñ�̷׾�)
+	//換算区分(製品単位計上)
 	if( window.parent.DSO.lngConversionClassCode[0].checked )
 	{
-		//��������å�
+		//空白チェック
 		if( window.parent.DSO.curProductPrice_gs.value  == "" || 
 			window.parent.DSO.lngGoodsQuantity_gs.value == "" )
 		{
-			//��ȴ��ۤ����ˤ���
+			//税抜金額を空白にする
 			window.parent.DSO.curTotalPrice.value = "";
 			return false;
 		}
 		
-		//�����Ȥ�[����ñ��]�����ͤ����ơ��̲ߵ��桢����ޤ���
+		//入力枠の[製品単価]から値を得て、通貨記号、カンマを取る
 		ProductPrice  = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value));
-		//�����Ȥ�[���ʿ���]�����ͤ����ơ�����ޤ���
+		//入力枠の[製品数量]から値を得て、カンマを取る
 		GoodsQuantity = fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value);
 	}
-	//�ٻ�ñ�̷׾�ξ��
+	//荷姿単位計上の場合
 	else if( window.parent.DSO.lngConversionClassCode[1].checked )
 	{
-		//[���ʿ���]��[�����ȥ��]��[�ٻѿ���]��ȿ�Ǥ�����
+		//[製品数量]に[カートン数]×[荷姿数量]を反映させる
 		if( window.parent.DSO.lngGoodsQuantity_ps.value == "" )
 		{
-			//[�ٻѿ���]������ξ��ˤϡ������ȿ��
+			//[荷姿数量]が空白の場合には、空白を反映
 			window.parent.DSO.lngGoodsQuantity_gs.value = "";
 		}
 		else
 		{
-			//�����Ȥβٻѿ��̤����ͤ����ơ�����ޤ���
+			//入力枠の荷姿数量から値を得て、カンマを取る
 			GoodsQuantity = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
 
 			var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
@@ -882,75 +882,75 @@ function fncDtCalTotalPrice()
 			window.parent.fncCheckNumber( window.parent.DSO.lngGoodsQuantity_gs , 0 , false );
 		}
 
-		//[�ٻ�ñ��]�ޤ���[�ٻѿ���]������ξ��
+		//[荷姿単価]または[荷姿数量]が空白の場合
 		if( window.parent.DSO.curProductPrice_ps.value  == "" || 
 			window.parent.DSO.lngGoodsQuantity_ps.value == "" )
 		{
-			//[��ȴ���]�����ˤ���
+			//[税抜金額]を空白にする
 			window.parent.DSO.curTotalPrice.value = "";
 			return false;
 		}
 		else
 		{
-			//�����Ȥβٻ�ñ�������ͤ����ơ��̲ߵ��桢����ޤ���
+			//入力枠の荷姿単価から値を得て、通貨記号、カンマを取る
 			ProductPrice  = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value));
 		}
 	}
 
-	//��ȴ���
+	//税抜金額
 	TotalPrice    = ProductPrice * GoodsQuantity;
-	//��ȴ��ۤ������Ȥ�ȿ��
+	//税抜金額を入力枠に反映
 	window.parent.DSO.curTotalPrice.value = TotalPrice;
-	//��ȴ��ۤ�ե����ޥåȤ���
+	//税抜金額をフォーマットする
 	window.parent.fncCheckNumber( window.parent.DSO.curTotalPrice , 2);
 
-	//���������ξ�硢�ǳۤ�׻�
+	//仕入管理の場合、税額を計算
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		window.parent.DSO.curTaxPrice.value     = fncDtCalTaxPrice(window.parent.DSO.curTotalPrice.value,
 																window.parent.DSO.lngTaxClassCode.value,
-																window.parent.DSO.lngTaxCode.value); //�����ǳ�
+																window.parent.DSO.lngTaxCode.value); //消費税額
 	}
 
-	//����̲ߤ�ɽ��
+	//基準通貨を表示
 	fncDtCalStdTotalPrice();
 }
 
 
 //@*****************************************************************************
-// ����   : ����ñ�̷׾�Υ饸���ܥ��󤬲����줿�Ȥ��ν���
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 製品単位計上のラジオボタンが押されたときの処理
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtGsChecked()
 {
-	//ñ���ꥹ�Ȥ�����Ǥ���褦�ˤ���
+	//単価リストを選択できるようにする
 	window.parent.DSO.lngGoodsPriceCode.disabled = false;
 
-	//[����ñ��][����ñ��][���ʿ���]�����ϡ�����Ǥ���褦�ˤ��롣
+	//[製品単価][製品単位][製品数量]を入力、選択できるようにする。
 	window.parent.DSO.curProductPrice_gs.disabled    = false;
 	window.parent.DSO.lngProductUnitCode_gs.disabled = false;
 	window.parent.DSO.lngGoodsQuantity_gs.disabled   = false;
 
-	//[�ٻ�ñ��][�ٻ�ñ��][�ٻѿ���]�����ϡ�����Ǥ��ʤ��褦�ˤ���
+	//[荷姿単価][荷姿単位][荷姿数量]を入力、選択できないようにする
 	window.parent.DSO.curProductPrice_ps.disabled    = true;
 	window.parent.DSO.lngProductUnitCode_ps.disabled = true;
 	window.parent.DSO.lngGoodsQuantity_ps.disabled   = true;
 
-	//��ȴ��ۤ�Ʒ׻�
+	//税抜金額を再計算
 	fncDtCalTotalPrice();
 }
 
 
 //@*****************************************************************************
-// ����   : �ٻ�ñ�̷׾�Υ饸���ܥ��󤬲����줿�Ȥ��ν���
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 荷姿単位計上のラジオボタンが押されたときの処理
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtPsChecked()
 {
-	//�ܥ�����ư���Ƥ�褤���ɤ����Υե饰
+	//ボタンを移動してもよいかどうかのフラグ
 	var checkFlg = true ;
 
-	//���������ξ��ǡ����ֹ�Τ�����ˡ��ٻ�ñ�̷׾�����򤷤Ƥ�褤���ɤ����Υ����å�
+	//仕入管理の場合で、行番号のある場合に、荷姿単位計上に選択してもよいかどうかのチェック
 	if( typeof(window.parent.HSO.PCFlg) =="object" && 
 			   index != -1 && 
 			   saveRecord[index][18] != "" )
@@ -958,18 +958,18 @@ function fncDtPsChecked()
 		checkFlg = fncDtPsCheckedForPC();
 	}
 
-	//����Ǥ��ʤ����ˤϡ����顼�Ȥ�Ф��ƽ�����ȴ����
+	//選択できない場合には、アラートを出して処理を抜ける
 	if( checkFlg == false )
 	{
-		//������ʬ(����ñ�̷׾�)�˥����å����᤹
+		//換算区分(製品単位計上)にチェックを戻す
 		window.parent.DSO.lngConversionClassCode[0].checked = true;
 
-		alert( "[���ʿ���]��[�����ȥ�����]������ڤ�ʤ�����\n����Ǥ��ޤ���");
+		alert( "[製品数量]÷[カートン入数]が割り切れないため\n選択できません");
 
 		return false;
 	}
 
-	//[����ñ��]������Ǥʤ����ˡ�[�ٻ�ñ��]�ˡ�[����ñ��]��[�����ȥ�����]�򥻥åȤ���
+	//[製品単価]が空白でない場合に、[荷姿単価]に、[製品単価]×[カートン入数]をセットする
 	if( window.parent.DSO.curProductPrice_gs.value != "" )
 	{
 		var ProductPrice_gs  = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value));
@@ -979,48 +979,48 @@ function fncDtPsChecked()
 		window.parent.fncCheckNumber(window.parent.DSO.curProductPrice_ps , 4 );
 	}
 
-	//[�ٻѿ���]������ξ��ˡ�1�פ򥻥åȤ���
+	//[荷姿数量]が空白の場合に「1」をセットする
 	if( window.parent.DSO.lngGoodsQuantity_ps.value == "" )
 	{
 		window.parent.DSO.lngGoodsQuantity_ps.value = 1;
 	}
 
-	//ñ���ꥹ�Ȥ�����Ǥ��ʤ��褦�ˤ���
+	//単価リストを選択できないようにする
 	window.parent.DSO.lngGoodsPriceCode.disabled = true;
 
-	//[����ñ��][����ñ��][���ʿ���]�����ϡ�����Ǥ��ʤ��褦�ˤ���
+	//[製品単価][製品単位][製品数量]を入力、選択できないようにする
 	window.parent.DSO.curProductPrice_gs.disabled    = true;
 	window.parent.DSO.lngProductUnitCode_gs.disabled = true;
 	window.parent.DSO.lngGoodsQuantity_gs.disabled   = true;
 
-	//[�ٻ�ñ��][�ٻ�ñ��][�ٻѿ���]�����ϡ�����Ǥ���褦�ˤ���
+	//[荷姿単価][荷姿単位][荷姿数量]を入力、選択できるようにする
 	window.parent.DSO.curProductPrice_ps.disabled    = false;
 	window.parent.DSO.lngProductUnitCode_ps.disabled = false;
 	window.parent.DSO.lngGoodsQuantity_ps.disabled   = false;
 
-	//��ȴ��ۤ�Ʒ׻�
+	//税抜金額を再計算
 	fncDtCalTotalPrice();
 }
 
 
 //@*****************************************************************************
-//  ����   :�ٻ�ñ�̷׾������Ǥ��뤫�ɤ����Υ����å�
-//  �о�   :���������ǹ��ֹ�Τ�����
+//  概要   :荷姿単位計上に選択できるかどうかのチェック
+//  対象   :仕入管理で行番号のある場合
 //******************************************************************************
 function fncDtPsCheckedForPC()
 {
-	//�����ȥ������
+	//カートン入り数
 	var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
-	//���ʿ���
+	//製品数量
 	var GoodsQuantity_gs = fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value);
 
-	//�����ȥ���̤�0�ޤ��϶��ΤȤ�����Ǥ��ʤ�
+	//カートン数量が0または空のとき選択できない
 	if( CartonQuantity == "" || CartonQuantity == 0 )
 	{
 		return false;
 	}
 
-	//���ʿ��̤ȥ����ȥ���̤�����ڤ�������Ǥ���
+	//製品数量とカートン数量が割り切れれば選択できる
 	if( (GoodsQuantity_gs % CartonQuantity) == 0 )
 	{
 		return true;
@@ -1033,103 +1033,103 @@ function fncDtPsCheckedForPC()
 
 
 //@*****************************************************************************
-//  ����   :�ٻѿ��̤����ϥ����å�
-//  �о�   :���������ǹ��ֹ�Τ�����ǡ��ٻѿ��̤˥����å�����Ƥ�����
+//  概要   :荷姿数量の入力チェック
+//  対象   :仕入管理で行番号のある場合で、荷姿数量にチェックされている場合
 //******************************************************************************
 function fncDtPSGoodsQuantityForPC()
 {
-	//���ֹ椬���ꡢ���򤵤�Ƥ���Ȥ��Τߥ����å�
+	//行番号があり、選択されているときのみチェック
 	if( index != -1 && saveRecord[index][18] != "" )
 	{
-		//�����ȥ������
+		//カートン入り数
 		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
-		//�ǥե���Ȥ����ʿ���
+		//デフォルトの製品数量
 		var GoodsQuantity_gs_defalt = fncDtGSGoodsQuantityDefalt();
-		//���Ϥ��줿�˲ٻѿ���
+		//入力されたに荷姿数量
 		var GoodsQuantity_ps = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
 	
-		//�����ȥ���̤�0�ޤ��϶��ΤȤ������å���λ
+		//カートン数量が0または空のときチェック終了
 		if( CartonQuantity == "" || CartonQuantity == 0 )
 		{
 			return false;
 		}
 	
-		//�ٻѿ��̤����ϤǤ�����
+		//荷姿数量に入力できる上限
 		var GoodsQuantity_ps_max = parseInt(GoodsQuantity_gs_defalt / CartonQuantity) ;
 	
-		//���Ϥ��줿�ٻѿ��̤���¤�Ķ�������
+		//入力された荷姿数量が上限を超えた場合
 		if( GoodsQuantity_ps > GoodsQuantity_ps_max )
 		{
-			//��¤�Ķ����������ͤ򥻥å�
+			//上限を超えたら最大値をセット
 			window.parent.DSO.lngGoodsQuantity_ps.value = fncAddKannma(GoodsQuantity_ps_max);
-			//���顼��å����������
-			alert("�ٻѿ��̤����ϤǤ����¤ϡ�" + GoodsQuantity_ps_max + "�Ǥ�");
+			//エラーメッセージを出力
+			alert("荷姿数量に入力できる上限は、" + GoodsQuantity_ps_max + "です");
 		}
 	}
 }
 
 
 //@*****************************************************************************
-//  ����   :���ʿ��̤����ϥ����å�
-//  �о�   :���������ǹ��ֹ�Τ�����ǡ����ʿ��̤˥����å�����Ƥ�����
+//  概要   :製品数量の入力チェック
+//  対象   :仕入管理で行番号のある場合で、製品数量にチェックされている場合
 //******************************************************************************
 function fncDtGSGoodsQuantityForPC()
 {
-	//���ֹ椬���ꡢ���򤵤�Ƥ���Ȥ��Τߥ����å�
+	//行番号があり、選択されているときのみチェック
 	if( index != -1 && saveRecord[index][18] != "" )
 	{
-		//�ǥե���Ȥ����ʿ���
+		//デフォルトの製品数量
 		var GoodsQuantity_gs_defalt = fncDtGSGoodsQuantityDefalt();
-		//���Ϥ��줿�����ʿ���
+		//入力されたに製品数量
 		var GoodsQuantity_gs = fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value);
 	
-		//���Ϥ��줿���ʿ��̤��ǥե�����ͤ�Ķ�������
+		//入力された製品数量がデフォルト値を超えた場合
 		if( GoodsQuantity_gs > GoodsQuantity_gs_defalt )
 		{
-			//��¤�Ķ����������ͤ򥻥å�
+			//上限を超えたら最大値をセット
 			window.parent.DSO.lngGoodsQuantity_gs.value = fncAddKannma(GoodsQuantity_gs_defalt);
-			//���顼��å����������
-			alert("���ʿ��̤����ϤǤ����¤ϡ�" + GoodsQuantity_gs_defalt + "�Ǥ�");
+			//エラーメッセージを出力
+			alert("製品数量に入力できる上限は、" + GoodsQuantity_gs_defalt + "です");
 		}
 	}
 }
 
 
 //@*****************************************************************************
-//  ����   :���ֹ椫��ǥե���Ȥ����ʿ��̤�����
-//  �о�   :���������ǹ��ֹ�Τ�����
+//  概要   :行番号からデフォルトの製品数量を得る
+//  対象   :仕入管理で行番号のある場合
 //******************************************************************************
 function fncDtGSGoodsQuantityDefalt()
 {
-	//�ǥե���Ȥ����ʿ���
+	//デフォルトの製品数量
 	var GoodsQuantity_gs_defalt = 0;
 
-	//�롼�׽����Υ���ǥå���
+	//ループ処理のインデックス
 	var i = 0;
 
-	//���ʥ����ɤ����뤫����롼��
+	//製品コードがあるかぎりループ
 	while( window.parent.DSO.elements("aryPoDitail[" + i + "][strProductCode]") != null )
 	{
-		//Hidden���Ǥ��Ф��줿���ֹ�����򤵤줿���ֹ椬Ʊ��ξ������ʿ��̤�����
+		//Hiddenで吐き出された行番号と選択された行番号が同一の場合に製品数量を得る
 		if( window.parent.DSO.elements("aryPoDitail[" + i + "][lngorderdetailno]").value == saveRecord[index][18] )
 		{
-			//������ʬ������ñ�̷׾�ξ��
+			//換算区分が製品単位計上の場合
 			if( window.parent.DSO.elements("aryPoDitail[" + i + "][lngConversionClassCode]").value == "gs" )
 			{
-				//�ǥե���Ȥ����ʿ���
+				//デフォルトの製品数量
 				var GoodsQuantity_gs_defalt = window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsQuantity]").value
 			}
-			//������ʬ���ٻ�ñ�̷׾�ξ��
+			//換算区分が荷姿単位計上の場合
 			else if( window.parent.DSO.elements("aryPoDitail[" + i + "][lngConversionClassCode]").value == "ps" )
 			{
-				//�ǥե���Ȥβٻѿ���
+				//デフォルトの荷姿数量
 				var GoodsQuantity_ps_defalt = window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsQuantity]").value
-				//�����ȥ�����
+				//カートン入数
 				var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
-				//�ǥե���Ȥ����ʿ���(�ǥե���Ȥβٻѿ��̡ߥ����ȥ�����)
+				//デフォルトの製品数量(デフォルトの荷姿数量×カートン入数)
 				var GoodsQuantity_gs_defalt = GoodsQuantity_ps_defalt * CartonQuantity;
 			}
-			//�롼�׽�����λ
+			//ループ処理を終了
 			break;
 		}
 		i++;
@@ -1140,21 +1140,21 @@ function fncDtGSGoodsQuantityDefalt()
 
 
 //@*****************************************************************************
-// ����   : ����׶�ۤ򻻽Ф���
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 総合計金額を算出する
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtCalAllTotalPrice()
 {
 	if( saveRecord.length == 0 )
 	{
-		//���ٹԤ��ʤ���������׶�ۤ򤫤�ˤ���
+		//明細行がない場合は総合計金額をからにする
 		window.parent.DSO.curAllTotalPrice.value = "";
 	}
 	else
 	{
-	//����׶��
+	//総合計金額
 	var AllTotalPrice = 0;
-	//���ٹԤο�
+	//明細行の数
 	var saveRecordLength = saveRecord.length;
 
 	for( i = 0; i < saveRecordLength; i++ )
@@ -1164,181 +1164,181 @@ function fncDtCalAllTotalPrice()
 	}
 		AllTotalPrice = AllTotalPrice / 10000 ;
 
-	//����׶�ۤ������Ȥ�ȿ��
+	//総合計金額を入力枠に反映
 	window.parent.DSO.curAllTotalPrice.value = AllTotalPrice;
-	//����׶�ۤ�ե����ޥåȤ���
+	//総合計金額をフォーマットする
 	window.parent.fncCheckNumber( window.parent.DSO.curAllTotalPrice , 2 );
 	}
 }
 
 
 //@*****************************************************************************
-// ����   : ����̲ߤ򻻽Ф���
-// �о�   : �������ȡפ������Τ��̲ߤ����ܱ߰ʳ�
+// 概要   : 基準通貨を算出する
+// 対象   : 「明細枠」があるもので通貨が日本円以外
 //******************************************************************************
 function fncDtCalStdTotalPrice()
 {
-	//���ܱߤΤȤ���ɽ�������ʤ�
+	//日本円のときは表示させない
 	if( window.parent.HSO.lngMonetaryUnitCode.value == "\\" )
 	{
-		//[����̲�]�����ˤ���
+		//[基準通貨]を空白にする
 		window.parent.DSO.curStdTotalPrice.value = "";
 		return false;
 	}
 
-	//[��ȴ���]�����
+	//[税抜金額]を取得
 	var TotalPrice = parseFloat(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curTotalPrice.value)));
 
-	//[�����졼��]�����
+	//[換算レート]を取得
 	var ConversionRate = fncDelKannma(fncDelCurrencySign(window.parent.HSO.curConversionRate.value));
 
-	//[����̲�]����ƥե����ޥå�
+	//[基準通貨]を求めてフォーマット
 	var StdTotalPrice = window.parent.fncCheckNumberValue(TotalPrice * ConversionRate, 2 ,false);
 
-	//[����̲�]�˱ߥޡ�����Ĥ���
+	//[基準通貨]に円マークをつける
 	window.parent.DSO.curStdTotalPrice.value = "\\ " + StdTotalPrice;
 
-	//���֥�����ɤ�ɽ��
-	//ȯ�������ξ��
+	//サブウインドの表示
+	//発注管理の場合
 	if( typeof(window.parent.HSO.POFlg) == "object" )
 	{
-		window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value; //[��׶��]
+		window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value; //[合計金額]
 	}
-	//���������ξ��
+	//仕入管理の場合
 	else if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		//�����ǳ�
+		//消費税額
 		var TaxPrice = parseFloat(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curTaxPrice.value)));
 
-		//����Ǥξ��
+		//非課税の場合
 		if( window.parent.DSO.lngTaxClassCode.value == 1 )
 		{
-			window.parent.DSO.curSubTaxPrice.value = "" ;                                    //[�ǳ�]
-			//[��׶��]=����̲ߤ�Ʊ��
-			window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value ; //[��׶��]
+			window.parent.DSO.curSubTaxPrice.value = "" ;                                    //[税額]
+			//[合計金額]=基準通貨と同様
+			window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value ; //[合計金額]
 		}
-		//���Ǥξ��
+		//外税の場合
 		else if( window.parent.DSO.lngTaxClassCode.value == 2 )
 		{
-			//[�ǳ�]=[�����ǳ�]��[�����졼��]
+			//[税額]=[消費税額]×[換算レート]
 			var SubTaxPrice = window.parent.fncCheckNumberValue(TaxPrice * ConversionRate, 2 ,false);
-			window.parent.DSO.curSubTaxPrice.value = "\\ " + SubTaxPrice ; //[�ǳ�]
-			//[��׶��]=[��ȴ����]+[�����ǳ�]
+			window.parent.DSO.curSubTaxPrice.value = "\\ " + SubTaxPrice ; //[税額]
+			//[合計金額]=[税抜価格]+[消費税額]
 			var TotalStdAmt = window.parent.fncCheckNumberValue(((TotalPrice + TaxPrice) * ConversionRate), 2 ,false);
-			window.parent.DSO.curTotalStdAmt.value = "\\ " + TotalStdAmt ; //[��׶��]
+			window.parent.DSO.curTotalStdAmt.value = "\\ " + TotalStdAmt ; //[合計金額]
 		}
-		//���Ǥξ��
+		//内税の場合
 		else if( window.parent.DSO.lngTaxClassCode.value == 3 )
 		{
-			//[�ǳ�]=[�����ǳ�]��[�����졼��]
+			//[税額]=[消費税額]×[換算レート]
 			var SubTaxPrice = window.parent.fncCheckNumberValue(TaxPrice * ConversionRate, 2 ,false);
-			window.parent.DSO.curSubTaxPrice.value = "\\ " + SubTaxPrice ;                   //[�ǳ�]
-			//[��׶��]=����̲ߤ�Ʊ��
-			window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value ; //[��׶��]
+			window.parent.DSO.curSubTaxPrice.value = "\\ " + SubTaxPrice ;                   //[税額]
+			//[合計金額]=基準通貨と同様
+			window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value ; //[合計金額]
 		}
 	}
 }
 
 
 //@*****************************************************************************
-// ����   : [�̲�]�������ѹ��ˤ�����
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : [通貨]の選択変更による処理
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncHdMonetaryUnitCode()
 {
-	//���ܱߤξ��	
+	//日本円の場合	
 	if( window.parent.HSO.lngMonetaryUnitCode.value == "\\" )
 	{
-		//[�졼�ȥ�����]������Ǥ��ʤ��褦�ˤ���
+		//[レートタイプ]を選択できないようにする
 		window.parent.HSO.lngMonetaryRateCode.disabled = true;
-		//[��ʧ���]������Ǥ��ʤ��褦�ˤ���
+		//[支払条件]を選択できないようにする
 		window.parent.HSO.lngPayConditionCode.disabled = true;
 
-		//[�졼�ȥ�����]�����ˤ���
+		//[レートタイプ]を空白にする
 		window.parent.HSO.lngMonetaryRateCode.value = "0";
 
-		//[�����졼��]�򥯥ꥢ����
+		//[換算レート]をクリアする
 		window.parent.HSO.curConversionRate.value = "1.000000";
 
-		//[��ʧ���]��̤��ˤ���
+		//[支払条件]を未定にする
 		window.parent.HSO.lngPayConditionCode.value = "0";
 
 	}
-	//���ܱ߰ʳ��ξ��
+	//日本円以外の場合
 	else
 	{
-		//[�졼�ȥ�����]������Ǥ���褦�ˤ���
+		//[レートタイプ]を選択できるようにする
 		window.parent.HSO.lngMonetaryRateCode.disabled = false;
 
-		//[�졼�ȥ�����]�Υǥե���Ȥ�ּ���졼�Ȥˤ���פˤ���
+		//[レートタイプ]のデフォルトを「社内レートにする」にする
 		window.parent.HSO.lngMonetaryRateCode.value = "2";
 
-		//[��ʧ���]������Ǥ���褦�ˤ���
+		//[支払条件]を選択できるようにする
 		window.parent.HSO.lngPayConditionCode.disabled = false;
 
 	}
 
 
-	//[����ñ��][�ٻ�ñ��]�򥯥ꥢ
+	//[製品単価][荷姿単価]をクリア
 	window.parent.DSO.curProductPrice_gs.value = "" ;
 	window.parent.DSO.curProductPrice_ps.value = "" ;
 
-	//��ȴ����פ򥯥ꥢ
+	//税抜き合計をクリア
 	window.parent.DSO.curTotalPrice.value = "" ;
 
-	//����̲ߤ򥯥ꥢ
+	//基準通貨をクリア
 	window.parent.DSO.curStdTotalPrice.value = "" ;
 
 }
 
 
 //@*****************************************************************************
-// ����   : ���ٹԤ��ɲä�������[�̲�][�졼�ȥ�����]������Ǥ��ʤ�����
-//           ���ٹԤ��ʤ�����[�̲�][�졼�ȥ�����]������Ǥ���褦�ˤ��롣
-//           ��������[�졼�ȥ�����]������Ǥ���Τϡ����ܱ߰ʳ��ΤȤ���
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 明細行を追加した場合に[通貨][レートタイプ]を選択できなくし、
+//           明細行がない場合に[通貨][レートタイプ]を選択できるようにする。
+//           ただし、[レートタイプ]を選択できるのは、日本円以外のとき。
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncHdMonetaryUnitCheck()
 {
 	if (saveRecord.length == 0)
 	{
-		//[�̲�]������Ǥ���褦�ˤ���
+		//[通貨]を選択できるようにする
 		window.parent.HSO.lngMonetaryUnitCode.disabled = false;
-		//[�졼�ȥ�����]������Ǥ���褦�ˤ���
+		//[レートタイプ]を選択できるようにする
 		window.parent.HSO.lngMonetaryRateCode.disabled = false;
 	}
 	else
 	{
-		//[�̲�]������Ǥ��ʤ��褦�ˤ���
+		//[通貨]を選択できないようにする
 		window.parent.HSO.lngMonetaryUnitCode.disabled = true;
-		//[�졼�ȥ�����]������Ǥ��ʤ��褦�ˤ���
+		//[レートタイプ]を選択できないようにする
 		window.parent.HSO.lngMonetaryRateCode.disabled = true;
 	}
 }
 
 
 //@*****************************************************************************
-// ����   : �̲ߤ����򤷤��顢�����졼�Ȥ�ȿ��
-// �о�   : �������ȡפ������Τ��٤�
+// 概要   : 通貨を選択したら、概算レートに反映
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncCalConversionRate()
 {
-	//[�̲�]�����ܱߤ��ä��顢����󥻥�
+	//[通貨]が日本円だったら、キャンセル
 	if( window.parent.HSO.lngMonetaryUnitCode.value == "\\" ) return false;
 
-	//[�졼�ȥ�����]�ζ�������򤷤��顢�Ұ������򤷤����Ȥˤ���
+	//[レートタイプ]の空白を選択したら、社員を選択したことにする
 	if( window.parent.HSO.lngMonetaryRateCode.value == "0" )
 	{
 		window.parent.HSO.lngMonetaryRateCode.value = "2";
 	}
 
-	//[�׾���]�����ξ��ˡ����ߤ����դ���ȿ��
+	//[計上日]が空の場合に、現在の日付けを反映
 	if( window.parent.HSO.dtmOrderAppDate.value == "" )
 	{
 		window.parent.HSO.dtmOrderAppDate.value = fncYYMMDD();
 	}
 
-	//[�����졼��]��[�졼�ȥ�����][�̲�][�׾���]���Ȥ�ȿ��
+	//[換算レート]を[レートタイプ][通貨][計上日]をもとに反映
 	subLoadMasterValue(23,
 					 window.parent.HSO.lngMonetaryRateCode,
 					 window.parent.HSO.curConversionRate,
@@ -1350,48 +1350,48 @@ function fncCalConversionRate()
 
 
 //@*****************************************************************************
-// ����    �� �ե�����DSO���Ǥ��Ф��줿hidden�ͤ��������ȤΥǡ��������
-//            Detail�Υ��֤򲡤����Ȥ��˼¹Ԥ����
-// �о�   : �������ȡפ������Τ��٤�
+// 概要    ： フォームDSOに吐き出されたhidden値から入力枠のデータを作成
+//            Detailのタブを押したときに実行される
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtHtml()
 {
-	//�̲ߴ���Ʒ׻�
+	//通貨基準を再計算
 	fncDtCalStdTotalPrice();
 
 	//
 	if( returnFlg == -1 || typeof(window.parent.DSO.elements("aryPoDitail[0][strProductCode]")) == "undefined" ) return null;
 
-	//�롼�פν����
+	//ループの初期値
 	var i = 0;
 
 	while (window.parent.DSO.elements("aryPoDitail[" + i + "][strProductCode]") != null)
 	{
 
-		//�ե�����DSO����äƤ���hidden�ͤ򿷵�������˳�Ǽ
+		//フォームDSOに戻ってきたhidden値を新規の配列に格納
 		var aryRecord = fncDtNewAryForReturn(i);
 
-		//����˳�Ǽ
+		//配列に格納
 		saveRecord.push(aryRecord);
 
 		i++;
 	}
 
-	//�����򤹤�Τϰ��٤����Τ��ᡢ�ե饰������
+	//処理をするのは一度だけのため、フラグを設定
 	returnFlg = -1;
 
-	//�����Ȥ��ɽ��
+	//明細枠を再表示
 	fncDtDisplay();//
 }
 
 
 //@*****************************************************************************
-// ����    �� ñ���ꥹ�Ȥ�ɽ��
-// �о�   : �������ȡפ������Τ��٤�
+// 概要    ： 単価リストを表示
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtGoodsPriceList()
 {
-	//���ʥ����ɤ����򤵤�Ƥ��ʤ���С���λ
+	//製品コードが選択されていなければ、終了
 	if( window.parent.DSO.strProductCode.value == ""            ||
 		isNaN(window.parent.DSO.strProductCode.value)           ||
 		window.parent.DSO.strStockSubjectCode.value       == 0  ||
@@ -1412,12 +1412,12 @@ function fncDtGoodsPriceList()
 
 
 //@*****************************************************************************
-// ����    �� ñ���ꥹ�Ȥ�ɽ��(���ٹԤ����򤷤����)
-// �о�   : �������ȡפ������Τ��٤�
+// 概要    ： 単価リストを表示(明細行を選択した場合)
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtGoodsPriceList2()
 {
-	//���ʥ����ɤ����򤵤�Ƥ��ʤ���С���λ
+	//製品コードが選択されていなければ、終了
 	if (saveRecord[index][0] == ""           ||
 		saveRecord[index][2]       == 0 ||
 		saveRecord[index][4]  == -1 ) return false;
@@ -1434,50 +1434,50 @@ function fncDtGoodsPriceList2()
 
 
 //@*****************************************************************************
-// ����    �� ñ���ꥹ�Ȥ����򤷤��顢����ñ����ȿ��
-// �о�   : �������ȡפ������Τ��٤�
+// 概要    ： 単価リストを選択したら、製品単価に反映
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncDtGoodsPriceToProductPrice()
 {
-	//ñ���ꥹ�Ȥ��ʤ��ä��顢EXIT
+	//単価リストがなかったら、EXIT
 	if( window.parent.DSO.lngGoodsPriceCode.selectedIndex == -1 ) return false;
 
-	//ñ���ꥹ�Ȥ��ͤ����
+	//単価リストの値を取得
 	var GoodsPrice = window.parent.DSO.lngGoodsPriceCode[window.parent.DSO.lngGoodsPriceCode.selectedIndex].text;
 
-	//(No Data)���ä����
+	//(No Data)だった場合
 	if( isNaN(GoodsPrice) )
 	{
 		window.parent.DSO.curProductPrice_gs.value = 0;
 	}
 
-	//�ͤ�������
+	//値がある場合
 	else
 	{
 		window.parent.DSO.curProductPrice_gs.value = GoodsPrice;
 	}
 
-	//����ñ����ե����ޥåȤ���
+	//製品単価をフォーマットする
 	window.parent.fncCheckNumber(window.parent.DSO.curProductPrice_gs, 4);
 
-	//��ȴ��ۤ�Ʒ׻�
+	//税抜金額を再計算
 	fncDtCalTotalPrice();
 }
 
 
 //@*****************************************************************************
-// ����    �� [ñ���ꥹ��]�ɲåǡ����Υ����å�
-// �о�   : �������ȡפ������Τ��٤�
+// 概要    ： [単価リスト]追加データのチェック
+// 対象   : 「明細枠」があるものすべて
 //******************************************************************************
 function fncProductPriceForList()
 {
-	//����ñ��
+	//製品単価
 	var productPrice_gs = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value));
 
-	//�ٻ�ñ��
+	//荷姿単価
 	var productPrice_ps = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value));
 
-	//�����ȥ�����
+	//カートン入数
 	var cartonQuantity  = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 
 	//
@@ -1486,7 +1486,7 @@ function fncProductPriceForList()
 
 	if (productPrice_gs != productPriceForList)
 	{
-		//����ñ���Ȳٻ�ñ��/�����ȥ����� ���㤦���
+		//製品単価と荷姿単価/カートン入数 が違う場合
 		productPriceForList = "";
 	}
 	else
@@ -1499,36 +1499,36 @@ function fncProductPriceForList()
 
 
 //@*****************************************************************************
-// ����      : �ǳۤη׻�
-// �о�      : ��������
-// ����      : zeinuki,  [string��], ��ȴ���
-//             zeicode,  [int��]   , �ǥ�����
-//             zeiritsu, [int��]   , ������Ψ
-// �����    : str, [string��], �ǳ�
+// 概要      : 税額の計算
+// 対象      : 仕入管理
+// 引数      : zeinuki,  [string型], 税抜金額
+//             zeicode,  [int型]   , 税コード
+//             zeiritsu, [int型]   , 消費税率
+// 戻り値    : str, [string型], 税額
 //******************************************************************************
 function fncDtCalTaxPrice(zeinuki, zeicode, zeiritsu)
 {
 	var str="";
 
-	//����ǰʳ��ǰ��������٤Ƥ�������ǳۤ�׻�
+	//非課税以外で引数がすべてある場合に税額を計算
 
 	if (zeinuki != "" && zeicode != 1 && zeiritsu != "" )
 	{
-		//��ȴ��פ��饫��ޤ��̲ߵ������
+		//税抜合計からカンマと通貨記号を取る
 		str = fncDelCurrencySign(fncDelKannma(zeinuki));
 
-		//�Ƕ�ʬ�����ǤΤȤ�
+		//税区分が外税のとき
 		if (zeicode == 2 )
 		{
 			str = str * zeiritsu;
 		}
-		//�Ƕ�ʬ�����ǤΤȤ�
+		//税区分が内税のとき
 		else if (zeicode == 3 )
 		{
 			str = (str * zeiritsu)/(1 + parseFloat(zeiritsu));
 		}
 
-		//�ǳۤ���ƥե����ޥå�
+		//税額を求めてフォーマット
 		str = window.parent.fncCheckNumberValue(str, 2);
 
 	}
@@ -1538,86 +1538,86 @@ function fncDtCalTaxPrice(zeinuki, zeicode, zeiritsu)
 
 
 //@*****************************************************************************
-// ����   : �ǳۤη׻�����[�Ƕ�ʬ]���ѹ������Ȥ���
-// �о�   : ��������
-// ����   : object, [object��], �Ƕ�ʬ
-// ����   : �Ƕ�ʬ���ѹ������Ȥ��ˤϥ��顼�Ȥ�Ф�
+// 概要   : 税額の計算２（[税区分]を変更したとき）
+// 対象   : 仕入管理
+// 引数   : object, [object型], 税区分
+// 注意   : 税区分を変更したときにはアラートを出す
 //******************************************************************************
 function fncDtCalTaxPrice2(object)
 {
-	//[��ȴ���]
+	//[税抜金額]
 	var zeinuki  = window.parent.DSO.curTotalPrice.value;
-	//[�Ƕ�ʬ]
+	//[税区分]
 	var zeicode  = object.value;
 
 
-	//����ǰʳ��ǰ��������٤Ƥ�������ǳۤ�׻�
+	//非課税以外で引数がすべてある場合に税額を計算
 	if (zeinuki != "" && zeiritsu != "" )
 	{
-		//��ȴ��פ��饫��ޤ��̲ߵ������
+		//税抜合計からカンマと通貨記号を取る
 		var str = fncDelCurrencySign(fncDelKannma(zeinuki));
 
-		//[��Ψ]
-		var zeiritsu = 0.05; //�׽�����DB����������褦�˽������뤳�ȡ�
+		//[税率]
+		var zeiritsu = 0.05; //要修正（DBが取得するように修正すること）
 
-		//�Ƕ�ʬ������ǤΤȤ�
+		//税区分が非課税のとき
 		if (zeicode == 1 )
 		{
-			window.parent.DSO.lngTaxCode.value  = ""; //��Ψ
-			window.parent.DSO.curTaxPrice.value = ""; //�ǳ�
+			window.parent.DSO.lngTaxCode.value  = ""; //税率
+			window.parent.DSO.curTaxPrice.value = ""; //税額
 		}
-		//�Ƕ�ʬ�����ǤΤȤ�
+		//税区分が外税のとき
 		else if (zeicode == 2 )
 		{
-			window.parent.DSO.lngTaxCode.value  = zeiritsu; //��Ψ
+			window.parent.DSO.lngTaxCode.value  = zeiritsu; //税率
 			str = str * zeiritsu;
-			window.parent.DSO.curTaxPrice.value = window.parent.fncCheckNumberValue(str, 2); //�ǳ�
+			window.parent.DSO.curTaxPrice.value = window.parent.fncCheckNumberValue(str, 2); //税額
 		}
-		//�Ƕ�ʬ�����ǤΤȤ�
+		//税区分が内税のとき
 		else if (zeicode == 3 )
 		{
-			window.parent.DSO.lngTaxCode.value  = zeiritsu; //��Ψ
+			window.parent.DSO.lngTaxCode.value  = zeiritsu; //税率
 			str = (str * zeiritsu)/(1 + zeiritsu);
-			window.parent.DSO.curTaxPrice.value = window.parent.fncCheckNumberValue(str, 2); //�ǳ�
+			window.parent.DSO.curTaxPrice.value = window.parent.fncCheckNumberValue(str, 2); //税額
 		}
 	}
-	//�Ƕ�ʬ���ѹ����줿�Ȥ��ˤϷٹ��Ф���
-	alert("�Ƕ�ʬ���ѹ�����ޤ���");
+	//税区分が変更されたときには警告を出す。
+	alert("税区分が変更されました");
 }
 
 
 //@*****************************************************************************
-// ����   : �������ܤ����򤷤��顢�Ƕ�ʬ����Ψ�����
-// ����   : object, [object��], ��������
-// �о�   : ��������
+// 概要   : 仕入科目を選択したら、税区分と税率を決定
+// 引数   : object, [object型], 仕入科目
+// 対象   : 仕入管理
 //******************************************************************************
 function fncDtTaxClassCode(object)
 {
-	//[��������]����402 ͢���ѡ��Ļ�����ס�433 �ⷿ�������Ѥξ��פ�
-	//�Ƕ�ʬ�������ǡפ�����
+	//[仕入科目]が「402 輸入パーツ仕入高」「433 金型海外償却の場合」に
+	//税区分を「非課税」に設定
 	if (object.value == "402" || object.value == "433")
 	{
-		window.parent.DSO.lngTaxClassCode.value = 1 ; //�����Ƕ�ʬ������
-		window.parent.DSO.lngTaxCode.value      ="" ; //������Ψ
-		window.parent.DSO.curTaxPrice.value     ="" ; //�����ǳ�
+		window.parent.DSO.lngTaxClassCode.value = 1 ; //消費税区分コード
+		window.parent.DSO.lngTaxCode.value      ="" ; //消費税率
+		window.parent.DSO.curTaxPrice.value     ="" ; //消費税額
 	}
-	//�嵭�ʳ��ξ�硢���Ǥ�����
+	//上記以外の場合、外税に設定
 	else
 	{
-		window.parent.DSO.lngTaxClassCode.value = 2;    //�����Ƕ�ʬ������
-		window.parent.DSO.lngTaxCode.value      = 0.05; //������Ψ				�׽�����DB����������褦�˽������뤳�ȡ�
+		window.parent.DSO.lngTaxClassCode.value = 2;    //消費税区分コード
+		window.parent.DSO.lngTaxCode.value      = 0.05; //消費税率				要修正（DBが取得するように修正すること）
 		window.parent.DSO.curTaxPrice.value     = fncDtCalTaxPrice(window.parent.DSO.curTotalPrice.value,
 																window.parent.DSO.lngTaxClassCode.value,
-																window.parent.DSO.lngTaxCode.value); //�����ǳ�
+																window.parent.DSO.lngTaxCode.value); //消費税額
 	}
 }
 
 
 //@*****************************************************************************
-// ����   : ����ޤ�Ȥ�
-// �о�   : ���٤�
-// ����   : num, [string��], ����ޤ��ꤿ����
-// ����� : str, [string��], ����ޤ����������
+// 概要   : カンマをとる
+// 対象   : すべて
+// 引数   : num, [string型], カンマを取りたい値
+// 戻り値 : str, [string型], カンマを取り除いた値
 //******************************************************************************
 function fncDelKannma(num)
 {
@@ -1634,10 +1634,10 @@ function fncDelKannma(num)
 
 
 //@*****************************************************************************
-// ����   : ����ޤ��դ���
-// �о�   : ���٤�
-// ����   : num, [string��], ����ޤ��դ�������
-// ����� : str, [string��], ������դ���
+// 概要   : カンマを付ける
+// 対象   : すべて
+// 引数   : num, [string型], カンマを付けたい値
+// 戻り値 : str, [string型], カンマ付の値
 //******************************************************************************
 function fncAddKannma(num)
 {
@@ -1645,11 +1645,11 @@ function fncAddKannma(num)
 	var max;
 
 	var str = num.toString();
-	//�������ΰ���
+	//小数点の位置
 	var strTen = str.indexOf('.');
-	//�����������
+	//少数点より前
 	var strSeisuu = str.substring(0,strTen);
-	//����������
+	//小数点より後
 	var strShousuu = str.substring(strTen,str.length);
 
 	max = Math.floor(strSeisuu.length/3);
@@ -1666,10 +1666,10 @@ function fncAddKannma(num)
 
 
 //@*****************************************************************************
-// ����   : �̲ߵ������ʶ��򤫤餢�Ȥ���ʬ��ȴ���Ф���
-// �о�   : ���٤�
-// ����   : num, [string��], �̲ߵ�����ꤿ����  (�� \ 1,000.0000)
-// ����� : str, [string��], �̲ߵ�������������(��   1,000.0000)
+// 概要   : 通貨記号を取る（空白からあとの部分を抜き出す）
+// 対象   : すべて
+// 引数   : num, [string型], 通貨記号を取りたい値  (例 \ 1,000.0000)
+// 戻り値 : str, [string型], 通貨記号を取り除いた値(例   1,000.0000)
 //******************************************************************************
 function fncDelCurrencySign(num)
 {
@@ -1690,17 +1690,17 @@ function fncDelCurrencySign(num)
 
 
 //@*****************************************************************************
-// ����   : �̲ߵ�����դ���
-// �о�   : ���٤�
-// ����   : num, [string��], �̲ߵ�����դ������� (��   1,000.0000)
-// ����� : str, [string��], �̲ߵ�����դ�����   (�� \ 1,000.0000)
+// 概要   : 通貨記号を付ける
+// 対象   : すべて
+// 引数   : num, [string型], 通貨記号を付けたい値 (例   1,000.0000)
+// 戻り値 : str, [string型], 通貨記号を付けた値   (例 \ 1,000.0000)
 //******************************************************************************
 function fncAddCurrencySign(num)
 {
 	var str = num.toString();
 	var CurrencySign = window.parent.HSO.lngMonetaryUnitCode.value;
 
-	//����ʳ��ξ����̲ߵ����Ĥ���
+	//空白以外の場合に通貨記号をつける
 	if( str != "" )
 	{
 		str = CurrencySign + " " + str;
@@ -1711,9 +1711,9 @@ function fncAddCurrencySign(num)
 
 
 //@*****************************************************************************
-// ����   : ���������դ����֤�
-// �о�   : ���٤�
-// ����� : YYYYMMDD, [string��], YYYY/MM/DD
+// 概要   : 今日の日付けを返す
+// 対象   : すべて
+// 戻り値 : YYYYMMDD, [string型], YYYY/MM/DD
 //******************************************************************************
 function fncYYMMDD()
 {
@@ -1733,9 +1733,9 @@ function fncYYMMDD()
 
 
 //@*****************************************************************************
-// ����   : YYYY/MM/DD �� YYYY/MM ���֤�
-// ����   : objObject, [object��], YYYY/MM/DD���ͤ����Ϥ���Ƥ��륪�֥�������
-// �о�   : ���ʴ���
+// 概要   : YYYY/MM/DD を YYYY/MM で返す
+// 引数   : objObject, [object型], YYYY/MM/DDの値が入力されているオブジェクト
+// 対象   : 商品管理
 //******************************************************************************
 function fncYYMM(objObject)
 {

@@ -1,35 +1,35 @@
 <!--
-/************************* [ ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿ ] *************************/
+/************************* [ ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿ ] *************************/
 
 
 
 /*
 //////////////////////////////////////////////////////////////////
-////////// [½¤Àµ][ÄÉ²Ã]»ş¡¦¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// [ä¿®æ­£][è¿½åŠ ]æ™‚ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncEditObjectOnload( lngLangCode )
 {
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤Î¼«Æ°¥ì¥¤¥¢¥¦¥È
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è‡ªå‹•ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 	fncInitLayoutObjectModule( objColumn , objInput  , 60 , 216 );
 
 
-	// [ÄÉ²Ã]
+	// [è¿½åŠ ]
 	if( g_strMode == 'add' )
 	{
-		// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎIDÊÑ´¹
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®IDå¤‰æ›
 		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4'  ) ,
 
 								 Array( 'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt40L' ) );
 	}
 
 
-	// [lngLanguageCode]ÃÍ¤Î½é´ü²½
+	// [lngLanguageCode]å€¤ã®åˆæœŸåŒ–
 	var g_lngCode = '';
 
-	// [lngLanguageCode]ÃÍ¤Î¼èÆÀ
+	// [lngLanguageCode]å€¤ã®å–å¾—
 	g_lngCode = lngLangCode;
 
 
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿
 	ChgEtoJ( g_lngCode );
 
 
@@ -43,7 +43,7 @@ function fncEditObjectOnload( lngLangCode )
 
 
 //////////////////////////////////////////////////////////////////////
-////////// [ÄÉ²Ã]»ş¡¦¥¯¥¨¥ê¡¼¥Æ¡¼¥Ö¥ë¥â¥¸¥å¡¼¥ë //////////
+////////// [è¿½åŠ ]æ™‚ãƒ»ã‚¯ã‚¨ãƒªãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« //////////
 function fncQueryTable( lngCode )
 {
 	if( lngCode == 0 )
@@ -61,23 +61,23 @@ function fncQueryTable( lngCode )
 
 
 //////////////////////////////////////////////////////////////////////
-////////// [ÄÉ²Ã]»ş¡¦¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// [è¿½åŠ ]æ™‚ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncEditObjectOnload( lngCode )
 {
 
-	// ¥¯¥¨¥ê¡¼¥Æ¡¼¥Ö¥ë£Ô£Ï£ĞºÂÉ¸
+	// ã‚¯ã‚¨ãƒªãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ï¼´ï¼¯ï¼°åº§æ¨™
 	if( typeof(QueryTable) != 'undefined' )
 	{
 		QueryTable.style.top = 400;
 	}
 
 
-	// [ÄÉ²Ã]
+	// [è¿½åŠ ]
 	if( lngCode == 0 )
 	{
 		ControlTitle.innerText	= 'ADDITION';
 
-		// ¥«¥é¥àÌ¾
+		// ã‚«ãƒ©ãƒ å
 		Column0.innerText	= 'Order name';
 		Column1.innerText	= 'Select order group';
 		Column2.innerText	= 'Select in charge';
@@ -90,15 +90,15 @@ function fncEditObjectOnload( lngCode )
 
 	else if( lngCode == 1 )
 	{
-		ControlTitle.innerText	= 'ÄÉ²Ã';
+		ControlTitle.innerText	= 'è¿½åŠ ';
 
-		// ¥«¥é¥àÌ¾
-		Column0.innerText	= '¥ï¡¼¥¯¥Õ¥í¡¼½ç½øÌ¾¾Î';
-		Column1.innerText	= '¥°¥ë¡¼¥×ÁªÂò';
-		Column2.innerText	= 'Ã´Åö¼ÔÁªÂò';
-		Column3.innerText	= '´ü¸ÂÆü';
-		Column4.innerText	= '½ç½ø';
-		Column5.innerText	= 'ÄÉ²Ã';
+		// ã‚«ãƒ©ãƒ å
+		Column0.innerText	= 'ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºåç§°';
+		Column1.innerText	= 'ã‚°ãƒ«ãƒ¼ãƒ—é¸æŠ';
+		Column2.innerText	= 'æ‹…å½“è€…é¸æŠ';
+		Column3.innerText	= 'æœŸé™æ—¥';
+		Column4.innerText	= 'é †åº';
+		Column5.innerText	= 'è¿½åŠ ';
 
 		fncQueryTable( lngCode );
 	}
@@ -116,25 +116,25 @@ function fncEditObjectOnload( lngCode )
 
 
 //////////////////////////////////////////////////////////////////
-////////// [CONFIRM]»ş¡¦¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// [CONFIRM]æ™‚ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncConfirmObjectOnload( strMode , lngLangCode )
 {
 
-	// ½èÍı¥â¡¼¥É¤Î½é´ü²½
+	// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã®åˆæœŸåŒ–
 	g_strMode = '';
 
-	// ½èÍı¥â¡¼¥É¤Î¼èÆÀ
+	// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã®å–å¾—
 	g_strMode = strMode;
 
 
-	// [lngLanguageCode]ÃÍ¤Î½é´ü²½
+	// [lngLanguageCode]å€¤ã®åˆæœŸåŒ–
 	var g_lngCode = '';
 
-	// [lngLanguageCode]ÃÍ¤Î¼èÆÀ
+	// [lngLanguageCode]å€¤ã®å–å¾—
 	g_lngCode = lngLangCode;
 
 
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿
 	ChgEtoJ( g_lngCode );
 
 
@@ -150,8 +150,8 @@ function fncConfirmObjectOnload( strMode , lngLangCode )
 
 
 //////////////////////////////////////////////////////////////////
-////////// ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸¤ÎÀ¸À® //////////
-var headerAJ = '<img src="' + h_wfJ + '" width="949" height="30" border="0" alt="¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿">';
+////////// ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ã®ç”Ÿæˆ //////////
+var headerAJ = '<img src="' + h_wfJ + '" width="949" height="30" border="0" alt="ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿">';
 var headerAE = '<img src="' + h_wfE + '" width="949" height="30" border="0" alt="WORK FLOW ORDER MASTER">';
 
 
@@ -165,30 +165,30 @@ var headerAE = '<img src="' + h_wfE + '" width="949" height="30" border="0" alt=
 
 
 //////////////////////////////////////////////////////////////////
-////////// ÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ¥â¥¸¥å¡¼¥ë //////////
+////////// æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« //////////
 function ChgEtoJ( g_lngCode )
 {
 
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( g_lngCode == 0 )
 	{
 
-		// ÄÉ²Ã¥Ü¥¿¥ó¥¤¥á¡¼¥¸½ñ¤­½Ğ¤·
+		// è¿½åŠ ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸æ›¸ãå‡ºã—
 		if( typeof(MasterAddBt) != 'undefined' )
 		{
 			MasterAddBt.innerHTML = maddbtE1;
 		}
 
 
-		// ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		if( typeof(fncTitleOutput) != 'undefined' )
 		{
 			fncTitleOutput( 0 );
 		}
 
 
-		// ¥«¥é¥àÌ¾
+		// ã‚«ãƒ©ãƒ å
 		Column0.innerText	= 'Order name';
 		Column1.innerText	= 'Order group name';
 
@@ -208,7 +208,7 @@ function ChgEtoJ( g_lngCode )
 		}
 
 
-		// ½èÍıÌ¾
+		// å‡¦ç†å
 		if( typeof(DeleteColumn) != 'undefined' )
 		{
 			DeleteColumn.innerText 	= 'Delete';
@@ -216,48 +216,48 @@ function ChgEtoJ( g_lngCode )
 
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( g_lngCode == 1 )
 	{
 
-		// ÄÉ²Ã¥Ü¥¿¥ó¥¤¥á¡¼¥¸½ñ¤­½Ğ¤·
+		// è¿½åŠ ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸æ›¸ãå‡ºã—
 		if( typeof(MasterAddBt) != 'undefined' )
 		{
 			MasterAddBt.innerHTML = maddbtJ1;
 		}
 
 
-		// ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		if( typeof(fncTitleOutput) != 'undefined' )
 		{
 			fncTitleOutput( 1 );
 		}
 
 
-		// ¥«¥é¥àÌ¾
-		Column0.innerText	= '½ç½øÌ¾¾Î';
-		Column1.innerText	= '½ç½ø¥°¥ë¡¼¥×Ì¾¾Î';
+		// ã‚«ãƒ©ãƒ å
+		Column0.innerText	= 'é †åºåç§°';
+		Column1.innerText	= 'é †åºã‚°ãƒ«ãƒ¼ãƒ—åç§°';
 
 		if( typeof(Column2) != 'undefined' )
 		{
-			Column2.innerText	= '½ç½ø';
+			Column2.innerText	= 'é †åº';
 		}
 
 		if( typeof(Column3) != 'undefined' )
 		{
-			Column3.innerText	= 'Ã´Åö¼ÔÌ¾';
+			Column3.innerText	= 'æ‹…å½“è€…å';
 		}
 
 		if( typeof(Column4) != 'undefined' )
 		{
-			Column4.innerText	= '´ü¸ÂÆü';
+			Column4.innerText	= 'æœŸé™æ—¥';
 		}
 
 
-		// ½èÍıÌ¾
+		// å‡¦ç†å
 		if( typeof(DeleteColumn) != 'undefined' )
 		{
-			DeleteColumn.innerText	= 'ºï½ü';
+			DeleteColumn.innerText	= 'å‰Šé™¤';
 		}
 
 	}

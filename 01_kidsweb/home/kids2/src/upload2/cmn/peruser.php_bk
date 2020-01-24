@@ -143,29 +143,29 @@ class Excel_Peruser
 	var $oledat;
 	var $tag = array(	// Japanese property tags
 		1 => array(
-			 1 => "¥³¡¼¥É¥Ú¡¼¥¸",
-			 2 => "¥¿¥¤¥È¥ë",
-			 3 => "¥µ¥Ö¥¿¥¤¥È¥ë",
-			 4 => "ºîÀ®¼Ô",
-			 5 => "¥­¡¼¥ï¡¼¥É",
-			 6 => "¥³¥á¥ó¥È",
-			 8 => "ºÇ½ªÊÝÂ¸¼Ô",
-			12 => "ºîÀ®Æü»þ",
-			13 => "Á°²óÊÝÂ¸Æü»þ",
-			17 => "¥×¥ì¥Ó¥å¡¼¤Î¿Þ¤òÊÝÂ¸¤¹¤ë",
-			18 => "ºîÀ®¥¢¥×¥ê",
-			19 => "¥»¥­¥å¥ê¥Æ¥£"
+			 1 => "ã‚³ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸",
+			 2 => "ã‚¿ã‚¤ãƒˆãƒ«",
+			 3 => "ã‚µãƒ–ã‚¿ã‚¤ãƒˆãƒ«",
+			 4 => "ä½œæˆè€…",
+			 5 => "ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰",
+			 6 => "ã‚³ãƒ¡ãƒ³ãƒˆ",
+			 8 => "æœ€çµ‚ä¿å­˜è€…",
+			12 => "ä½œæˆæ—¥æ™‚",
+			13 => "å‰å›žä¿å­˜æ—¥æ™‚",
+			17 => "ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã®å›³ã‚’ä¿å­˜ã™ã‚‹",
+			18 => "ä½œæˆã‚¢ãƒ—ãƒª",
+			19 => "ã‚»ã‚­ãƒ¥ãƒªãƒ†ã‚£"
 			),
 		2 => array(
-			 0 => "¥Ç¥£¥¯¥·¥ç¥Ê¥ê",
-			 1 => "¥³¡¼¥É¥Ú¡¼¥¸",
-			 2 => "Ê¬Îà",
-			11 => "³ÈÂç/½Ì¾®",
-			12 => "¹½À®ÆâÍÆ",
-			13 => "¹½À®ÉôÉÊ",
-			14 => "´ÉÍý¼Ô",
-			15 => "²ñ¼ÒÌ¾",
-			16 => "Ì¤¹¹¿·¤Î¥ê¥ó¥¯¥ª¥Ö¥¸¥§¥¯¥È"
+			 0 => "ãƒ‡ã‚£ã‚¯ã‚·ãƒ§ãƒŠãƒª",
+			 1 => "ã‚³ãƒ¼ãƒ‰ãƒšãƒ¼ã‚¸",
+			 2 => "åˆ†é¡ž",
+			11 => "æ‹¡å¤§/ç¸®å°",
+			12 => "æ§‹æˆå†…å®¹",
+			13 => "æ§‹æˆéƒ¨å“",
+			14 => "ç®¡ç†è€…",
+			15 => "ä¼šç¤¾å",
+			16 => "æœªæ›´æ–°ã®ãƒªãƒ³ã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ"
 			)
 		);
 	var $tag1 = array(	// property tags
@@ -1151,14 +1151,14 @@ class Excel_Peruser
 		$this->recFORMAT[48]='##0.0E+0';
 		$this->recFORMAT[49]='@';
 		$this->recFORMAT[50]='[$-0411]GE.M.D';
-		$this->recFORMAT[51]=mb_convert_encoding('[$-0411]GGGEÇ¯M·îDÆü',$this->charset,'EUC-JP');
-		$this->recFORMAT[52]=mb_convert_encoding('[$-0411]YYYYÇ¯M·î',$this->charset,'EUC-JP');
-		$this->recFORMAT[53]=mb_convert_encoding('[$-0411]M·îDÆü',$this->charset,'EUC-JP');
-		$this->recFORMAT[54]=mb_convert_encoding('[$-0411]GGGEÇ¯M·îDÆü',$this->charset,'EUC-JP');
-		$this->recFORMAT[55]=mb_convert_encoding('[$-0411]YYYYÇ¯M·î',$this->charset,'EUC-JP');
-		$this->recFORMAT[56]=mb_convert_encoding('[$-0411]M·îDÆü',$this->charset,'EUC-JP');
+		$this->recFORMAT[51]=mb_convert_encoding('[$-0411]GGGEå¹´MæœˆDæ—¥',$this->charset,'EUC-JP');
+		$this->recFORMAT[52]=mb_convert_encoding('[$-0411]YYYYå¹´Mæœˆ',$this->charset,'EUC-JP');
+		$this->recFORMAT[53]=mb_convert_encoding('[$-0411]MæœˆDæ—¥',$this->charset,'EUC-JP');
+		$this->recFORMAT[54]=mb_convert_encoding('[$-0411]GGGEå¹´MæœˆDæ—¥',$this->charset,'EUC-JP');
+		$this->recFORMAT[55]=mb_convert_encoding('[$-0411]YYYYå¹´Mæœˆ',$this->charset,'EUC-JP');
+		$this->recFORMAT[56]=mb_convert_encoding('[$-0411]MæœˆDæ—¥',$this->charset,'EUC-JP');
 		$this->recFORMAT[57]='[$-0411]GE.M.D';
-		$this->recFORMAT[58]=mb_convert_encoding('[$-0411]GGGEÇ¯M·îDÆü',$this->charset,'EUC-JP');
+		$this->recFORMAT[58]=mb_convert_encoding('[$-0411]GGGEå¹´MæœˆDæ—¥',$this->charset,'EUC-JP');
 	}
 
 	function fontdeco($opt){

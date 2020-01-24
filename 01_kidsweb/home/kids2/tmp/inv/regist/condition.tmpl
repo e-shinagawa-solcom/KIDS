@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="/inv/cmn/form/css/forms.css">
     <script src="/search/cmn/form/js/tab-function.js" defer></script>
     <script src="/search/cmn/form/js/util-selectbox.js" defer></script>
-    <!-- ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÎÀÚ¤êÂØ¤¨½èÍı -->
+    <!-- ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®åˆ‡ã‚Šæ›¿ãˆå‡¦ç† -->
     <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
-    <!-- ¸¡º÷²èÌÌ¶¦ÄÌÆşÎÏÊä½õ -->
+    <!-- æ¤œç´¢ç”»é¢å…±é€šå…¥åŠ›è£œåŠ© -->
     <script src="/search/cmn/search/js/input-assist.js" defer></script>
-    <!-- msw É½¼¨ -->
+    <!-- msw è¡¨ç¤º -->
     <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
-    <!-- COOKIE´ØÏ¢¤Î½èÍı(¸¡º÷²èÌÌ) -->
+    <!-- COOKIEé–¢é€£ã®å‡¦ç†(æ¤œç´¢ç”»é¢) -->
     <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
     <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script> -->
 </header1>
@@ -21,33 +21,33 @@
 </header2>
 
 <header3>
-    <!-- datepicker¤ÎÍ×ÁÇ»ØÄê -->
+    <!-- datepickerã®è¦ç´ æŒ‡å®š -->
     <script src="/search/cmn/js/datepicker.js" defer></script>
-    <!-- mswÈÆÍÑ¥¹¥¿¥¤¥ë -->
+    <!-- mswæ±ç”¨ã‚¹ã‚¿ã‚¤ãƒ« -->
     <link rel="stylesheet" href="/search/cmn/css/msw.css">
-    <!-- ¥Õ¥©¡¼¥à¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó -->
+    <!-- ãƒ•ã‚©ãƒ¼ãƒ ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ -->
     <script src="/inv/cmn/js/validate-condition-form.js" defer></script>
-    <!-- ¥Ş¥¹¥¿¸¡º÷¸Æ¤Ó½Ğ¤· -->
+    <!-- ãƒã‚¹ã‚¿æ¤œç´¢å‘¼ã³å‡ºã— -->
     <script src="/search/cmn/js/invoke-master-search.js" defer></script>
     <script src="/mold/lib/js/queryMasterData.js" defer></script>
-    <!-- COOKIE É½¼¨¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹ ÊİÂ¸/Éü¸µ -->
+    <!-- COOKIE è¡¨ç¤ºãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ ä¿å­˜/å¾©å…ƒ -->
     <script src="/search/cmn/js/cookie-display-items.js" defer></script>
-    <!-- ¥­¡¼¥Ğ¥¤¥ó¥É -->
+    <!-- ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ -->
     <script src="/search/cmn/js/key-bind.js" defer></script>
-    <!-- ÀÁµáÆüÀßÄê -->
+    <!-- è«‹æ±‚æ—¥è¨­å®š -->
     <script src="/inv/cmn/js/msw-regist.js" defer></script>
     <script>
     $(function(){
-    	// ¿Æ¥¦¥£¥ó¥É¥¦¤Î¾ğÊó¼èÆÀ
+    	// è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®æƒ…å ±å–å¾—
         if (window.opener && !window.opener.closed)
         {
-        	// ¸ÜµÒ¥³¡¼¥É  lngCustomerCode
+        	// é¡§å®¢ã‚³ãƒ¼ãƒ‰  lngCustomerCode
             var parentCustomerCode = window.opener.document.getElementsByClassName('input-code')[0].value;
             $('input[name="lngCustomerCode"]').val(parentCustomerCode);
-            // ¸ÜµÒÌ¾
+            // é¡§å®¢å
             var parentCustomerName = window.opener.document.getElementsByClassName('input-name')[0].value;
             $('input[name="strCustomerName"]').val(parentCustomerName);
-            // From(¥·¥¹¥Æ¥àÆüÉÕ¤Î·î½é) To(¥·¥¹¥Æ¥àÆüÉÕ¤Î·îËö)
+            // From(ã‚·ã‚¹ãƒ†ãƒ æ—¥ä»˜ã®æœˆåˆ) To(ã‚·ã‚¹ãƒ†ãƒ æ—¥ä»˜ã®æœˆæœ«)
             var toDay = new Date();
             var start = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/01';
             var lastDay = new Date(toDay.getFullYear(), toDay.getMonth() + 1, 0);
@@ -66,20 +66,20 @@
 </config>
 
 
-<!-- ¸¡º÷¥Õ¥©¡¼¥à -->
+<!-- æ¤œç´¢ãƒ•ã‚©ãƒ¼ãƒ  -->
 <div class="form-box--notabs-for-condition">
-    <!-- ¥Õ¥©¡¼¥à¥Ø¥Ã¥À -->
+    <!-- ãƒ•ã‚©ãƒ¼ãƒ ãƒ˜ãƒƒãƒ€ -->
     <div class="form-box__header">
-        <p class="form-box__header__title">Ç¼ÉÊ½ñÌÀºÙ¸¡º÷¾ò·ïÆşÎÏ</p>
+        <p class="form-box__header__title">ç´å“æ›¸æ˜ç´°æ¤œç´¢æ¡ä»¶å…¥åŠ›</p>
     </div>
-    <!-- ¥Õ¥©¡¼¥à¥³¥ó¥Æ¥ó¥Ä -->
+    <!-- ãƒ•ã‚©ãƒ¼ãƒ ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ -->
     <div class="form-box__contents--with-scroll">
         <form name="Invoice" method="post"  onsubmit="return false;">
             <input type="submit">
 
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">¸ÜµÒ</span>
+                    <span class="regist-label__text">é¡§å®¢</span>
                     <input class="TxtStyle05L"  name="lngCustomerCode"  type="text" alt="Customer" iscustomer="yes">
                     <input class="disTxt46L"    name="strCustomerName"  type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -87,20 +87,20 @@
             </div>
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">Ç¼ÉÊ½ñNO.</span>
+                    <span class="regist-label__text">ç´å“æ›¸NO.</span>
                     <input class="disTxt5xL" name="strSlipCode" type="text" maxlength="50" onfocus="chColorOn(this);" onblur="chColorOff(this);">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">Ç¼ÉÊÆü</span>
+                    <span class="regist-label__text">ç´å“æ—¥</span>
                     FROM <input class="TxtStyle05L"   name="From_dtmDeliveryDate"  type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" maxlength="10">
                     TO <input   class="TxtStyle05L"   name="To_dtmDeliveryDate"    type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" maxlength="10">
                 </span>
             </div>
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">Ç¼ÉÊ¾ì½ê</span>
+                    <span class="regist-label__text">ç´å“å ´æ‰€</span>
                     <input class="TxtStyle05L" name="lngDeliveryPlaceCode"  type="text" alt="DeliveryPlace">
                     <input class="disTxt46L"   name="strDeliveryPlaceName"  type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -108,7 +108,7 @@
             </div>
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">ÄÌ²ß</span>
+                    <span class="regist-label__text">é€šè²¨</span>
                     <select name="lngMoneyClassCode" class="Slt13">
                         _%monetaryunitList%_
                     </select>
@@ -116,7 +116,7 @@
             </div>
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">²İÀÇ¶èÊ¬</span>
+                    <span class="regist-label__text">èª²ç¨åŒºåˆ†</span>
                     <select name="lngTaxClassCode" class="Slt13">
                         _%taxclassList%_
                     </select>
@@ -124,7 +124,7 @@
             </div>
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">Ã´Åö¼Ô</span>
+                    <span class="regist-label__text">æ‹…å½“è€…</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode"  type="text" alt="InChargeUser">
                     <input class="disTxt46L"   name="strInChargeUserName"  type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-inchargeuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -132,7 +132,7 @@
             </div>
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">ºîÀ®¼Ô</span>
+                    <span class="regist-label__text">ä½œæˆè€…</span>
                     <input class="TxtStyle05L" name="lngInputUserCode" type="text" alt="InputUser">
                     <input class="disTxt46L"   name="lngInputUserName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -153,16 +153,16 @@
         </form>
     </div>
     <div class="msw-loadpoints">
-        <!-- MSW ¸ÜµÒ¥Ş¥¹¥¿¸¡º÷ -->
+        <!-- MSW é¡§å®¢ãƒã‚¹ã‚¿æ¤œç´¢ -->
         <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
         </iframe>
-        <!-- MSW Ã´Åö¼Ô¥Ş¥¹¥¿¸¡º÷ -->
+        <!-- MSW æ‹…å½“è€…ãƒã‚¹ã‚¿æ¤œç´¢ -->
         <iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
         </iframe>
-        <!-- MSW ÆşÎÏ¼Ô¥Ş¥¹¥¿¸¡º÷ -->
+        <!-- MSW å…¥åŠ›è€…ãƒã‚¹ã‚¿æ¤œç´¢ -->
         <iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
         </iframe>        
-		<!-- MSW Ç¼ÉÊ¾ì½ê¥Ş¥¹¥¿¸¡º÷ -->
+		<!-- MSW ç´å“å ´æ‰€ãƒã‚¹ã‚¿æ¤œç´¢ -->
 		<iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
 		</iframe>
     </div>

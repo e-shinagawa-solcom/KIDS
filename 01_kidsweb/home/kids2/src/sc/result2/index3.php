@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       Ç¼ÉÊ½ñºï½ü
+*       ç´å“æ›¸å‰Šé™¤
 *
 *
 *       @package    K.I.D.S.
@@ -13,31 +13,31 @@
 *       @version    2.00
 *
 *
-*       ½èÍý³µÍ×
-*         ¡¦»ØÄêÇ¼ÉÊÅÁÉ¼ÈÖ¹æ¥Ç¡¼¥¿¤Îºï½ü½èÍý
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»æŒ‡å®šç´å“ä¼ç¥¨ç•ªå·ãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤å‡¦ç†
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "sc/cmn/lib_scd1.php");
 require (SRC_ROOT . "sc/cmn/column_scd.php");
 require (LIB_DEBUGFILE);
 require_once (LIB_EXCLUSIVEFILE);
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_GET )
 {
@@ -49,30 +49,30 @@ else if ( $_POST )
 }
 if ( !$aryData["lngSlipNo"] )
 {
-	fncOutputError ( 9061, DEF_ERROR, "¥Ç¡¼¥¿°Û¾ï¤Ç¤¹¡£", TRUE, "", $objDB );
+	fncOutputError ( 9061, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ç•°å¸¸ã§ã™ã€‚", TRUE, "", $objDB );
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
-// TODO:Í×»ÅÍÍ³ÎÇ§
+// TODO:è¦ä»•æ§˜ç¢ºèª
 //$aryCheck["lngSlipNo"]	  = "null:number(0,10)";
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
-// 602 Çä¾å´ÉÍý¡ÊÇä¾å¸¡º÷¡Ë
+// æ¨©é™ç¢ºèª
+// 602 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šæ¤œç´¢ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 {
-	fncOutputError ( 9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
-// 606 Çä¾å´ÉÍý¡ÊÇä¾åºï½ü¡Ë
+// 606 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šå‰Šé™¤ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_SC6, $objAuth ) )
 {
-	fncOutputError ( 9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ºï½üÂÐ¾Ý¤ÎÇ¼ÉÊÅÁÉ¼ÈÖ¹æ¤ÎÇ¼ÉÊ¾ðÊó¼èÆÀ
+// å‰Šé™¤å¯¾è±¡ã®ç´å“ä¼ç¥¨ç•ªå·ã®ç´å“æƒ…å ±å–å¾—
 $strQuery = fncGetSlipHeadNoToInfoSQL ( $aryData["lngSlipNo"], $aryData["lngRevisionNo"] );
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -83,12 +83,12 @@ if ( $lngResultNum == 1 )
 }
 else
 {
-	fncOutputError( 603, DEF_ERROR, "¥Ç¡¼¥¿¤¬°Û¾ï¤Ç¤¹", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	fncOutputError( 603, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãŒç•°å¸¸ã§ã™", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 $objDB->freeResult( $lngResultID );
 
 // *****************************************************
-//   ºï½ü½èÍý¼Â¹Ô¡ÊSubmit»þ¡Ë
+//   å‰Šé™¤å‡¦ç†å®Ÿè¡Œï¼ˆSubmitæ™‚ï¼‰
 // *****************************************************
 if( $aryData["strSubmit"] )
 {
@@ -99,82 +99,82 @@ if( $aryData["strSubmit"] )
 	$strCustomerCode = $aryHeadResult["strcustomercode"];
 
 	// --------------------------------
-	//    ºï½ü½èÍý
+	//    å‰Šé™¤å‡¦ç†
 	// --------------------------------
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
 fncDebug("kids2.log", "step-0", __FILE__, __LINE__, "a");
     
 
 	// --------------------------------
-	//    ºï½ü²ÄÇ½¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
+	//    å‰Šé™¤å¯èƒ½ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
 	// --------------------------------
-	// ¸ÜµÒ¤Î¹ñ¤¬ÆüËÜ¤Ç¡¢¤«¤ÄÇ¼ÉÊ½ñ¥Ø¥Ã¥À¤ËÉ³¤Å¤¯ÀÁµá½ñÌÀºÙ¤¬Â¸ºß¤¹¤ë¾ì¹ç¤Ïºï½üÉÔ²Ä
+	// é¡§å®¢ã®å›½ãŒæ—¥æœ¬ã§ã€ã‹ã¤ç´å“æ›¸ãƒ˜ãƒƒãƒ€ã«ç´ã¥ãè«‹æ±‚æ›¸æ˜Žç´°ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯å‰Šé™¤ä¸å¯
 	if (fncJapaneseInvoiceExists($strCustomerCode, $lngSalesNo, $objDB)){
-		MoveToErrorPage("ÀÁµá½ñÈ¯¹ÔºÑ¤ß¤Î¤¿¤á¡¢ºï½ü¤Ç¤­¤Þ¤»¤ó");
+		MoveToErrorPage("è«‹æ±‚æ›¸ç™ºè¡Œæ¸ˆã¿ã®ãŸã‚ã€å‰Šé™¤ã§ãã¾ã›ã‚“");
 	}
 
-	// Ç¼ÉÊ½ñÌÀºÙ¤ËÉ³¤Å¤¯¼õÃí¥¹¥Æ¡¼¥¿¥¹¤¬¡ÖÄùºÑ¤ß¡×¤Î¾ì¹ç¤Ïºï½üÉÔ²Ä
+	// ç´å“æ›¸æ˜Žç´°ã«ç´ã¥ãå—æ³¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãŒã€Œç· æ¸ˆã¿ã€ã®å ´åˆã¯å‰Šé™¤ä¸å¯
 	if (fncReceiveStatusIsClosed($aryData["lngSlipNo"], $objDB))
 	{
-		MoveToErrorPage("ÄùºÑ¤ß¤Î¤¿¤á¡¢ºï½ü¤Ç¤­¤Þ¤»¤ó");
+		MoveToErrorPage("ç· æ¸ˆã¿ã®ãŸã‚ã€å‰Šé™¤ã§ãã¾ã›ã‚“");
 	}
 
 	
 
 	if( !lockSlip($aryData["lngSlipNo"], $objDB))
 	{
-		MoveToErrorPage("Â¾¥æ¡¼¥¶¡¼¤¬Ç¼ÉÊ½ñ¤òÊÔ½¸Ãæ¤Ç¤¹¡£");
+		MoveToErrorPage("ä»–ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒç´å“æ›¸ã‚’ç·¨é›†ä¸­ã§ã™ã€‚");
 	}
 
 	
 	if( isSlipModified($aryData["lngSlipNo"], $aryData["lngRevisionNo"], $objDB) )
 	{
-		MoveToErrorPage("Ç¼ÉÊ½ñ¤¬Â¾¥æ¡¼¥¶¡¼¤Ë¤è¤ê¹¹¿·¤Þ¤¿¤Ïºï½ü¤µ¤ì¤Æ¤¤¤Þ¤¹¡£");
+		MoveToErrorPage("ç´å“æ›¸ãŒä»–ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«ã‚ˆã‚Šæ›´æ–°ã¾ãŸã¯å‰Šé™¤ã•ã‚Œã¦ã„ã¾ã™ã€‚");
 	}
 
 
-	// Çä¾å¥Ç¡¼¥¿¤Îºï½ü
+	// å£²ä¸Šãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤
 	if (!fncDeleteSales($lngSalesNo, $objDB, $objAuth))
 	{
-		fncOutputError ( 9051, DEF_FATAL, "ºï½ü½èÍý¤ËÈ¼¤¦Çä¾å¥Þ¥¹¥¿½èÍý¼ºÇÔ", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "å‰Šé™¤å‡¦ç†ã«ä¼´ã†å£²ä¸Šãƒžã‚¹ã‚¿å‡¦ç†å¤±æ•—", TRUE, "", $objDB );
 	}
 
-	// Ç¼ÉÊ½ñ¥Ç¡¼¥¿¤Îºï½ü
+	// ç´å“æ›¸ãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤
 	if (!fncDeleteSlip($lngSlipNo, $objDB, $objAuth))	
 	{
-		fncOutputError ( 9051, DEF_FATAL, "ºï½ü½èÍý¤ËÈ¼¤¦Ç¼ÉÊ½ñ¥Þ¥¹¥¿½èÍý¼ºÇÔ", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "å‰Šé™¤å‡¦ç†ã«ä¼´ã†ç´å“æ›¸ãƒžã‚¹ã‚¿å‡¦ç†å¤±æ•—", TRUE, "", $objDB );
 	}
 
 
-	// Ç¼ÉÊÅÁÉ¼ÌÀºÙ¤ËÉ³¤Å¤¯¼õÃí¥Þ¥¹¥¿¤Î¼õÃí¥¹¥Æ¡¼¥¿¥¹¤ò¡Ö¼õÃí¡×¤Ë¹¹¿·
+	// ç´å“ä¼ç¥¨æ˜Žç´°ã«ç´ã¥ãå—æ³¨ãƒžã‚¹ã‚¿ã®å—æ³¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’ã€Œå—æ³¨ã€ã«æ›´æ–°
 	if (!fncUpdateReceiveStatus($aryData["lngSlipNo"], $aryData["lngRevisionNo"], $objDB))
 	{
-		fncOutputError ( 9051, DEF_FATAL, "ºï½ü½èÍý¤ËÈ¼¤¦¼õÃíÌÀºÙ¥Æ¡¼¥Ö¥ë½èÍý¼ºÇÔ", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "å‰Šé™¤å‡¦ç†ã«ä¼´ã†å—æ³¨æ˜Žç´°ãƒ†ãƒ¼ãƒ–ãƒ«å‡¦ç†å¤±æ•—", TRUE, "", $objDB );
 	}
 
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥³¥ß¥Ã¥È
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚³ãƒŸãƒƒãƒˆ
 	$objDB->transactionCommit();
 
-	// ºï½ü´°Î»²èÌÌ¤ÎÉ½¼¨
+	// å‰Šé™¤å®Œäº†ç”»é¢ã®è¡¨ç¤º
 	$aryDeleteData = $aryHeadResult;
 	$aryDeleteData["strAction"] = "/sc/search2/index.php?strSessionID=";
 	$aryDeleteData["strSessionID"] = $aryData["strSessionID"];
 
-	// ¸À¸ì¥³¡¼¥É¡§ÆüËÜ¸ì
+	// è¨€èªžã‚³ãƒ¼ãƒ‰ï¼šæ—¥æœ¬èªž
 	$aryDeleteData["lngLanguageCode"] = 1;
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "sc/finish2/remove_parts.tmpl" );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryDeleteData );
 	$objTemplate->complete();
 
-	// HTML½ÐÎÏ
+	// HTMLå‡ºåŠ›
 	echo $objTemplate->strTemplate;
 
 	$objDB->close();
@@ -183,21 +183,21 @@ fncDebug("kids2.log", "step-0", __FILE__, __LINE__, "a");
 }
 
 // *****************************************************
-//   ºï½ü³ÎÇ§²èÌÌÉ½¼¨¡ÊSubmitÁ°¡Ë
+//   å‰Šé™¤ç¢ºèªç”»é¢è¡¨ç¤ºï¼ˆSubmitå‰ï¼‰
 // *****************************************************
-// ¼èÆÀ¥Ç¡¼¥¿¤òÉ½¼¨ÍÑ¤ËÀ°·Á
+// å–å¾—ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºç”¨ã«æ•´å½¢
 $aryNewResult = fncSetSlipHeadTableData ( $aryHeadResult );
 
-// ¥Ø¥Ã¥ÀÉô¤Î¥«¥é¥àÌ¾¤ÎÀßÄê¡Ê¥­¡¼¤ÎÆ¬¤Ë"CN"¤òÉÕÍ¿¤¹¤ë¡Ë
+// ãƒ˜ãƒƒãƒ€éƒ¨ã®ã‚«ãƒ©ãƒ åã®è¨­å®šï¼ˆã‚­ãƒ¼ã®é ­ã«"CN"ã‚’ä»˜ä¸Žã™ã‚‹ï¼‰
 $aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
 
-// ¾ÜºÙÉô¤Î¥«¥é¥àÌ¾¤ÎÀßÄê¡Ê¥­¡¼¤ÎÆ¬¤Ë"CN"¤òÉÕÍ¿¤¹¤ë¡Ë
+// è©³ç´°éƒ¨ã®ã‚«ãƒ©ãƒ åã®è¨­å®šï¼ˆã‚­ãƒ¼ã®é ­ã«"CN"ã‚’ä»˜ä¸Žã™ã‚‹ï¼‰
 $aryDetailColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryDetailColumnNames );
 
-// »ØÄêÇä¾åÈÖ¹æ¤ÎÇä¾åÌÀºÙ¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+// æŒ‡å®šå£²ä¸Šç•ªå·ã®å£²ä¸Šæ˜Žç´°ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 $strQuery = fncGetSlipDetailNoToInfoSQL ( $aryData["lngSlipNo"], $aryData["lngRevisionNo"] );
 
-// ÌÀºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+// æ˜Žç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum )
 {
@@ -208,25 +208,25 @@ if ( $lngResultNum )
 }
 else
 {
-	$strMessage = fncOutputError( 603, DEF_WARNING, "Ç¼ÉÊÅÁÉ¼ÈÖ¹æ¤ËÂÐ¤¹¤ëÌÀºÙ¤¬Â¸ºß¤·¤Þ¤»¤ó", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	$strMessage = fncOutputError( 603, DEF_WARNING, "ç´å“ä¼ç¥¨ç•ªå·ã«å¯¾ã™ã‚‹æ˜Žç´°ãŒå­˜åœ¨ã—ã¾ã›ã‚“", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 }
 $objDB->freeResult( $lngResultID );
 
 for ( $i = 0; $i < count($arySalesDetailResult); $i++)
 {
-	// ÌÀºÙ¥Ç¡¼¥¿¤òÉ½¼¨ÍÑ¤Ë²Ã¹©
+	// æ˜Žç´°ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºç”¨ã«åŠ å·¥
 	$aryNewDetailResult[$i] = fncSetSlipDetailTableData ( $arySalesDetailResult[$i], $aryNewResult );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "sc/result2/parts_detail.tmpl" );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryDetailColumnNames_CN );
 	$objTemplate->replace( $aryNewDetailResult[$i] );
 	$objTemplate->complete();
 
-	// HTML½ÐÎÏ
+	// HTMLå‡ºåŠ›
 	$aryDetailTable[] = $objTemplate->strTemplate;
 }
 
@@ -240,39 +240,39 @@ $aryNewResult["strAction"] = "index3.php";
 $aryNewResult["strSubmit"] = "submit";
 $aryNewResult["strMode"] = "delete";
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "sc/result2/parts2.tmpl" );
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $aryNewResult );
 $objTemplate->replace( $aryHeadColumnNames_CN );
 $objTemplate->complete();
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 $objDB->close();
 return true;
 
-// ¥¨¥é¡¼²èÌÌ¤Ø¤ÎÁ«°Ü
+// ã‚¨ãƒ©ãƒ¼ç”»é¢ã¸ã®é·ç§»
 function MoveToErrorPage($strMessage){
 	
-	// ¸À¸ì¥³¡¼¥É¡§ÆüËÜ¸ì
+	// è¨€èªžã‚³ãƒ¼ãƒ‰ï¼šæ—¥æœ¬èªž
 	$aryHtml["lngLanguageCode"] = 1;
 
-	// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ÎÀßÄê
+	// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®è¨­å®š
 	$aryHtml["strErrorMessage"] = $strMessage;
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "/result/error/parts.tmpl" );
 	
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryHtml );
 	$objTemplate->complete();
 
-	// HTML½ÐÎÏ
+	// HTMLå‡ºåŠ›
 	echo $objTemplate->strTemplate;
 
 	exit;

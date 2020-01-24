@@ -1,15 +1,15 @@
 function fncWindowClose() {
-    var res = confirm("¤³¤Î²èÌÌ¤òÊÄ¤¸¤Æ¸«ÀÑ¸¶²Á·×»»½ñÅĞÏ¿½èÍı¤òÃæ»ß¤·¤Ş¤¹¡£\n¤è¤í¤·¤¤¤Ç¤¹¤«¡©");
+    var res = confirm("ã“ã®ç”»é¢ã‚’é–‰ã˜ã¦è¦‹ç©åŸä¾¡è¨ˆç®—æ›¸ç™»éŒ²å‡¦ç†ã‚’ä¸­æ­¢ã—ã¾ã™ã€‚\nã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ");
     if( res == true ) {
-        // OK¤Ê¤é°ÜÆ°       
+        // OKãªã‚‰ç§»å‹•       
         window.close();
     }
 }
 
 function fncFileProcess() {
-    var res = confirm("¸«ÀÑ¸¶²Á·×»»½ñ¤òÅĞÏ¿¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡©");
+    var res = confirm("è¦‹ç©åŸä¾¡è¨ˆç®—æ›¸ã‚’ç™»éŒ²ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ");
     if( res == true ) {
-        // OK¤Ê¤é°ÜÆ°       
+        // OKãªã‚‰ç§»å‹•       
         document.formAction.submit();
     }
 }
@@ -60,13 +60,13 @@ function fncCloseButton( strMode , obj )
 			break;
 	}
 }
-// ÅĞÏ¿gif
+// ç™»éŒ²gif
 var registJ1 = '/img/type01/estimate/regist/regist/regist_off_ja_bt.gif';
 var registJ2 = '/img/type01/estimate/regist/regist/regist_off_on_ja_bt.gif';
 var registJ3 = '/img/type01/estimate/regist/regist/regist_on_ja_bt.gif';
 
 
-// ÊÄ¤¸¤ëgif
+// é–‰ã˜ã‚‹gif
 var closeJ1 = '/img/type01/estimate/regist/close/close_off_ja_bt.gif';
 var closeJ2 = '/img/type01/estimate/regist/close/close_off_on_ja_bt.gif';
 var closeJ3 = '/img/type01/estimate/regist/close/close_on_ja_bt.gif';

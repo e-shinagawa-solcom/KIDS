@@ -1,30 +1,30 @@
 
 (function () {
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var form = $('form');
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥¯¥é¥¹Ì¾
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚¯ãƒ©ã‚¹å
     var classNameErrorIcon = 'error-icon';
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥ê¥½¡¼¥¹URL
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãƒªã‚½ãƒ¼ã‚¹URL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(É¬¿Ü¹àÌÜ)
-    var msgRequired = "ÆşÎÏÉ¬¿Ü¹àÌÜ¤Ç¤¹¡£";
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(ÆüÉÕ)
-    var msgDateFormat = "yyyy/mm/dd·Á¼°¤«¤ÄÍ­¸ú¤ÊÆüÉÕ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£";
-    // ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È yyyy/mm/dd·Á¼°
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(å¿…é ˆé …ç›®)
+    var msgRequired = "å…¥åŠ›å¿…é ˆé …ç›®ã§ã™ã€‚";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(æ—¥ä»˜)
+    var msgDateFormat = "yyyy/mm/ddå½¢å¼ã‹ã¤æœ‰åŠ¹ãªæ—¥ä»˜ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚";
+    // æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ yyyy/mm/ddå½¢å¼
     var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/;
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¡Ê½ñ¼°¸í¤ê¡Ë
-    var msgSpecialFormat = "½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹¡£"
-    var msgLessThanToday = "Ì¤Íè¤ÎÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿¡£";
-    var msgLessThantToDate = "FROM¤ËTO¤è¤êÌ¤Íè¤ÎÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿¡£";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ï¼ˆæ›¸å¼èª¤ã‚Šï¼‰
+    var msgSpecialFormat = "æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™ã€‚"
+    var msgLessThanToday = "æœªæ¥ã®æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸã€‚";
+    var msgLessThantToDate = "FROMã«TOã‚ˆã‚Šæœªæ¥ã®æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸã€‚";
 
-    // validation¥­¥Ã¥¯
+    // validationã‚­ãƒƒã‚¯
     $('.hasDatepicker').on({
         'change': function () {
             $(this).blur();
         }
     });
 
-    // ¶èÊ¬¤ÎÉ¬¿Ü¥Á¥§¥Ã¥¯
+    // åŒºåˆ†ã®å¿…é ˆãƒã‚§ãƒƒã‚¯
     $.validator.addMethod(
         "checkSelect",
         function (value, element, params) {
@@ -33,7 +33,7 @@
         msgRequired
     );
 
-    // ¸ÜµÒ¼õÃíÈÖ¹æ¤ËÈ¾³Ñ±Ñ¿ô»ú¡¢[-],[,],[ ]°Ê³°¤ÎÊ¸»ú¤¬ÆşÎÏ¤Ç¤­¤Ê¤¤
+    // é¡§å®¢å—æ³¨ç•ªå·ã«åŠè§’è‹±æ•°å­—ã€[-],[,],[ ]ä»¥å¤–ã®æ–‡å­—ãŒå…¥åŠ›ã§ããªã„
     $.validator.addMethod(
         "checkStrCustomerReceiveCode",
         function (value, element, params) {
@@ -45,7 +45,7 @@
         msgSpecialFormat
     );
 
-    // ¼õÃí¥³¡¼¥É¤Î½ñ¼°¥Á¥§¥Ã¥¯
+    // å—æ³¨ã‚³ãƒ¼ãƒ‰ã®æ›¸å¼ãƒã‚§ãƒƒã‚¯
     $.validator.addMethod(
         "checkStrReceiveCode",
         function (value, element, params) {
@@ -56,7 +56,7 @@
         },
         msgSpecialFormat
     );
-    ¡¡¡¡// À½ÉÊ¥³¡¼¥É¤Î½ñ¼°¥Á¥§¥Ã¥¯
+    ã€€ã€€// è£½å“ã‚³ãƒ¼ãƒ‰ã®æ›¸å¼ãƒã‚§ãƒƒã‚¯
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
@@ -68,7 +68,7 @@
         msgSpecialFormat
     );
 
-    // ÆüÉÕ¤¬yyyy/mm/dd·Á¼°¤Ë¥Ş¥Ã¥Á¤·¤Æ¤¤¤ë¤«,Í­¸ú¤ÊÆüÉÕ¤«
+    // æ—¥ä»˜ãŒyyyy/mm/ddå½¢å¼ã«ãƒãƒƒãƒã—ã¦ã„ã‚‹ã‹,æœ‰åŠ¹ãªæ—¥ä»˜ã‹
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
@@ -94,17 +94,17 @@
                     var d = '01';
                     value = y + "/" + m + "/" + d;
                 }
-                // yyyy/mm/dd·Á¼°¤«
+                // yyyy/mm/ddå½¢å¼ã‹
                 if (!(regDate.test(value))) {
                     return false;
                 }
-                // ÆüÉÕÊ¸»úÎó¤Î»ú¶çÊ¬²ò
+                // æ—¥ä»˜æ–‡å­—åˆ—ã®å­—å¥åˆ†è§£
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ÆüÉÕ¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+                // æ—¥ä»˜ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
                 } else {
@@ -115,7 +115,7 @@
         msgDateFormat
     );
 
-    // ÆüÉÕ¤¬Ì¤ÍèÆü¤Ç¤Ê¤¤¤« ActionDate
+    // æ—¥ä»˜ãŒæœªæ¥æ—¥ã§ãªã„ã‹ ActionDate
     $.validator.addMethod(
         "isLessThanToday",
         function (value, element, params) {
@@ -132,24 +132,24 @@
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ¸½ºß¤ÎÆü»ş¤ÈÈæ³Ó
+                // ç¾åœ¨ã®æ—¥æ™‚ã¨æ¯”è¼ƒ
                 var nowDi = new Date();
-                // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤è¤ê¾®¤µ¤±¤ì¤ĞÀµ
+                // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã‚ˆã‚Šå°ã•ã‘ã‚Œã°æ­£
                 if (nowDi.getFullYear() > di.getFullYear()) {
                     return true;
-                    // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤è¤êÂç¤­¤±¤ì¤Ğ¥¨¥é¡¼
+                    // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã‚ˆã‚Šå¤§ãã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                 } else if (nowDi.getFullYear() < di.getFullYear()) {
                     return false;
-                    // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤ÈÆ±¤¸¾ì¹ç
+                    // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã¨åŒã˜å ´åˆ
                 } else if (nowDi.getFullYear() == di.getFullYear()) {
-                    // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤è¤ê¾®¤µ¤±¤ì¤ĞÀµ
+                    // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã‚ˆã‚Šå°ã•ã‘ã‚Œã°æ­£
                     if (nowDi.getMonth() > di.getMonth()) {
                         return true;
-                        // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤è¤êÂç¤­¤±¤ì¤Ğ¥¨¥é¡¼
+                        // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã‚ˆã‚Šå¤§ãã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                     } else if (nowDi.getMonth() < di.getMonth()) {
                         return false;
                     } else if (nowDi.getMonth() == di.getMonth()) {
-                        // ÆşÎÏ¤·¤¿Æü¤¬¸½ºß¤ÈÆ±¤¸¤«¤½¤ì¤è¤ê¾®¤µ¤±¤ì¤ĞÀµ
+                        // å…¥åŠ›ã—ãŸæ—¥ãŒç¾åœ¨ã¨åŒã˜ã‹ãã‚Œã‚ˆã‚Šå°ã•ã‘ã‚Œã°æ­£
                         if (nowDi.getDate() >= di.getDate()) {
                             return true;
                         } else {
@@ -162,7 +162,7 @@
         msgLessThanToday
     );
 
-    // FROM_XXXX¤¬TO_XXXX¤è¤ê¾®¤µ¤¤¤«(Æ±ÆüÉÔ²Ä)
+    // FROM_XXXXãŒTO_XXXXã‚ˆã‚Šå°ã•ã„ã‹(åŒæ—¥ä¸å¯)
     $.validator.addMethod(
         "isGreaterThanFromDate",
         function (value, element, params) {
@@ -175,7 +175,7 @@
                     value = y + "/" + m + "/" + d;
                 }
                 var params1 = $(params[1]).val();
-                // FROM_XXXX¤¬ÆşÎÏ¤µ¤ì¤¿¾ì¹ç¡¢                
+                // FROM_XXXXãŒå…¥åŠ›ã•ã‚ŒãŸå ´åˆã€                
                 if (params1 != "") {
                     if (/^[0-9]{8}$/.test(params1)) {
                         var str = params1.trim();
@@ -194,23 +194,23 @@
                     mm = regResult[2];
                     dd = regResult[3];
                     var di = new Date(yyyy, mm, dd);
-                    // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                    // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                     if (fromDate.getFullYear() > di.getFullYear()) {
                         return false;
-                        // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                        // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                     } else if (fromDate.getFullYear() < di.getFullYear()) {
                         return true;
-                        // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤ÈÆ±¤¸¾ì¹ç
+                        // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã¨åŒã˜å ´åˆ
                     } else if (fromDate.getFullYear() == di.getFullYear()) {
-                        // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                        // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                         if (fromDate.getMonth() > di.getMonth()) {
                             return false;
-                            // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                            // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                         } else if (fromDate.getMonth() < di.getMonth()) {
                             return true;
-                            // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤ÈÆ±¤¸¾ì¹ç
+                            // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã¨åŒã˜å ´åˆ
                         } else if (fromDate.getMonth() == di.getMonth()) {
-                            // ÆşÎÏ¤·¤¿Æü¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                            // å…¥åŠ›ã—ãŸæ—¥ãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                             if (fromDate.getDate() > di.getDate()) {
                                 return false;
                             } else {
@@ -226,23 +226,23 @@
     );
 
 
-    // ¸¡¾ÚÀßÄê
+    // æ¤œè¨¼è¨­å®š
     form.validate({
         // -----------------------------------------------
-        // ¥¨¥é¡¼É½¼¨½èÍı
+        // ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºå‡¦ç†
         // -----------------------------------------------
         errorPlacement: function (error, element) {
             invalidImg = $('<img>')
                 .attr('class', classNameErrorIcon)
                 .attr('src', urlErrorIcon)
-                // CSSÀßÄê(É½¼¨°ÌÃÖ)
+                // CSSè¨­å®š(è¡¨ç¤ºä½ç½®)
                 .css({
                     position: 'relative',
                     top: -1,
                     left: -2,
                     opacity: 'inherit'
                 })
-                // ¥Ä¡¼¥ë¥Á¥Ã¥×É½¼¨
+                // ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—è¡¨ç¤º
                 .tooltipster({
                     trigger: 'hover',
                     onlyone: false,
@@ -250,102 +250,102 @@
                     content: error.text()
                 });
 
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã—ãªã„å ´åˆ
             if ($(element).prev('img.' + classNameErrorIcon).length <= 0) {
-                // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤òÉ½¼¨
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤º
                 $(element).before(invalidImg);
             }
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤¹¤ë¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
             else {
-                // ´ûÂ¸¤Î¥¨¥é¡¼¥¢¥¤¥³¥ó¤Î¥Ä¡¼¥ë¥Á¥Ã¥×¥Æ¥­¥¹¥È¤ò¹¹¿·
+                // æ—¢å­˜ã®ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°
                 $(element).prev('img.' + classNameErrorIcon)
                     .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
-        // ¸¡¾ÚOK»ş¤Î½èÍı
+        // æ¤œè¨¼OKæ™‚ã®å‡¦ç†
         // -----------------------------------------------
         unhighlight: function (element) {
-            // ¥¨¥é¡¼¥¢¥¤¥³¥óºï½ü
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³å‰Šé™¤
             $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
-        // ¸¡¾Ú¥ë¡¼¥ë
+        // æ¤œè¨¼ãƒ«ãƒ¼ãƒ«
         // -----------------------------------------------
         rules: {
-            // ¥í¥°¥¤¥óµö²Ä
+            // ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯
             bytInvalidFlag: {
                 required: function () {
                     return $('input[name="IsSearch_bytInvalidFlagConditions"]').get(0).checked;
                 }
             },
-            // ¥æ¡¼¥¶¡¼¥³¡¼¥É
+            // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
             lngUserCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngUserCodeConditions"]').get(0).checked;
                 }
             },
-            // ¥æ¡¼¥¶¡¼ID
+            // ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
             strUserID: {
                 required: function () {
                     return $('input[name="IsSearch_strUserIDConditions"]').get(0).checked;
                 }
             },
-            // ¥á¡¼¥ëÇÛ¿®µö²Ä
+            // ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯
             bytMailTransmitFlag: {
                 required: function () {
                     return $('input[name="IsSearch_bytMailTransmitFlagConditions"]').get(0).checked;
                 }
             },
-            // ¥á¡¼¥ë¥¢¥É¥ì¥¹
+            // ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
             strMailAddress: {
                 required: function () {
                     return $('input[name="IsSearch_strMailAddressConditions"]').get(0).checked;
                 }
             },
-            // ¥æ¡¼¥¶¡¼É½¼¨
+            // ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤º
             bytUserDisplayFlag: {
                 required: function () {
                     return $('input[name="IsSearch_bytUserDisplayFlagConditions"]').get(0).checked;
                 }
             },
-            // É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É
+            // è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
             strUserDisplayCode: {
                 required: function () {
                     return $('input[name="IsSearch_strUserDisplayCodeConditions"]').get(0).checked;
                 }
             },
-            // É½¼¨¥æ¡¼¥¶¡¼Ì¾
+            // è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å
             strUserDisplayName: {
                 required: function () {
                     return $('input[name="IsSearch_strUserDisplayNameConditions"]').get(0).checked;
                 }
             },
-            // ¥Õ¥ë¥Í¡¼¥à
+            // ãƒ•ãƒ«ãƒãƒ¼ãƒ 
             strUserFullName: {
                 required: function () {
                     return $('input[name="IsSearch_strUserFullNameConditions"]').get(0).checked;
                 }
             },
-            // ²ñ¼Ò
+            // ä¼šç¤¾
             lngCompanyCode: {
                 checkSelect: function () {
                     return $('input[name="IsSearch_lngCompanyCodeConditions"]').get(0).checked;
                 }
             },
-            // ¥°¥ë¡¼¥×
+            // ã‚°ãƒ«ãƒ¼ãƒ—
             lngGroupCode: {
                 checkSelect: function () {
                     return $('input[name="IsSearch_lngGroupCodeConditions"]').get(0).checked;
                 }
             },
-            // ¸¢¸Â¥°¥ë¡¼¥×
+            // æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—
             lngAuthorityGroupCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngAuthorityGroupCodeConditions"]').get(0).checked;
                 }
             },
-            // ¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹
+            // ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹
             lngAccessIPAddressCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngAccessIPAddressCodeConditions"]').get(0).checked;
@@ -353,58 +353,58 @@
             }
         },
         // -----------------------------------------------
-        // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+        // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
         // -----------------------------------------------
         messages: {
-            // ¥í¥°¥¤¥óµö²Ä
+            // ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯
             bytInvalidFlag: {
                 required: msgRequired
             },
-            // ¥æ¡¼¥¶¡¼¥³¡¼¥É
+            // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
             lngUserCode: {
                 required: msgRequired
             },
-            // ¥æ¡¼¥¶¡¼ID
+            // ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
             strUserID: {
                 required: msgRequired
             },
-            // ¥á¡¼¥ëÇÛ¿®µö²Ä
+            // ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯
             bytMailTransmitFlag: {
                 required: msgRequired
             },
-            // ¥á¡¼¥ë¥¢¥É¥ì¥¹
+            // ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
             strMailAddress: {
                 required: msgRequired
             },
-            // ¥æ¡¼¥¶¡¼É½¼¨
+            // ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤º
             bytUserDisplayFlag: {
                 required: msgRequired
             },
-            // É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É
+            // è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
             strUserDisplayCode: {
                 required: msgRequired
             },
-            // É½¼¨¥æ¡¼¥¶¡¼Ì¾
+            // è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å
             strUserDisplayName: {
                 required: msgRequired
             },
-            // ¥Õ¥ë¥Í¡¼¥à
+            // ãƒ•ãƒ«ãƒãƒ¼ãƒ 
             strUserFullName: {
                 required: msgRequired
             },
-            // ²ñ¼Ò
+            // ä¼šç¤¾
             lngCompanyCode: {
                 required: msgRequired
             },
-            // ¥°¥ë¡¼¥×
+            // ã‚°ãƒ«ãƒ¼ãƒ—
             lngGroupCode: {
                 required: msgRequired
             },
-            // ¸¢¸Â¥°¥ë¡¼¥×
+            // æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—
             lngAuthorityGroupCode: {
                 required: msgRequired
             },
-            // ¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹
+            // ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹
             lngAccessIPAddressCode: {
                 required: msgRequired
             }

@@ -2,11 +2,11 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       �ⷿĢɼ����  ��Ͽ
+*       金型帳票管理  登録
 *
-*       ��������
-*         ����Ͽ����
-*         ����Ͽ������λ�塢��Ͽ��λ���̤�
+*       処理概要
+*         ・登録処理
+*         ・登録処理完了後、登録完了画面へ
 *
 */
 // ----------------------------------------------------------------------------
@@ -19,150 +19,150 @@ require_once(SRC_ROOT.'/mold/lib/UtilMold.class.php');
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 
-// DB�����ץ�
+// DBオープン
 $objDB->open("", "", "", "");
 
-// �ꥯ�����ȼ���
+// リクエスト取得
 $aryData = $_REQUEST;
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// 1900 �ⷿĢɼ����
+// 1900 金型帳票管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MR0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 1901 �ⷿĢɼ����(��Ͽ)
+// 1901 金型帳票管理(登録)
 if ( !fncCheckAuthority( DEF_FUNCTION_MR1, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// ����å��奤�󥹥��󥹤μ���
+// キャッシュインスタンスの取得
 $formCache = FormCache::getInstance();
 $resultFormCache = $formCache->get($aryData["resultHash"]);
 
-// ����å���(�ե�����)�ǡ��������Ф������
+// キャッシュ(フォーム)データが取り出せた場合
 if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 {
 	$result = false;
 
-	// ����å���쥳���ɼ���
+	// キャッシュレコード取得
 	$workCache = pg_fetch_array($resultFormCache, 0, PGSQL_ASSOC);
 
-	// �ǥ��ꥢ�饤��
+	// デシリアライズ
 	$workFormData = FormCache::deserialize($workCache["serializeddata"]);
 
-	// �ǥ��ꥢ�饤������UTF-8�ˤ�����Τ�EUC-JP���᤹
+	// デシリアライズ時にUTF-8にしたものをEUC-JPに戻す
 	mb_convert_variables("euc-jp", "utf-8", $workFormData);
 
-	// �ե�����ǡ����˥桼���������ɤ��ɲ�
+	// フォームデータにユーザーコードを追加
 	$workFormData["UserCode"] = $objAuth->UserCode;
 
-	// Util���󥹥��󥹤μ���
+	// Utilインスタンスの取得
 	$utilMold = UtilMold::getInstance();
 	$utilMold->setUserCode($objAuth->UserCode);
 
-	// �ȥ�󥶥�����󳫻�
+	// トランザクション開始
 	$objDB->transactionBegin();
 
-	// �ⷿ��Ϣ�ơ��֥�Υ��å�
+	// 金型関連テーブルのロック
 	pg_query("LOCK m_moldreport");
 	pg_query("LOCK t_moldreportdetail");
 	pg_query("LOCK t_moldreportrelation");
 	pg_query("LOCK t_moldhistory");
 
-	// �ⷿ�ꥹ�Ȥμ��Ф�
+	// 金型リストの取り出し
 	$molds = $workFormData["list_moldno"];
 
-	// �ⷿ����Υ����������Ⱥ���
+	// 金型履歴のダイジェスト作成
 	$summaryHistory = $utilMold->selectSummaryOfMoldHistory($molds);
 	$digestHistory = FormCache::hash_arrays($summaryHistory);
 
-	// �ⷿĢɼ�Υ����������Ⱥ���
+	// 金型帳票のダイジェスト作成
 	$summaryReport = $utilMold->selectSummaryOfMoldReport($molds);
 	$digestReport = FormCache::hash_arrays($summaryReport);
 
-	// ���ڻ��ζⷿ��������������ȤȰۤʤ���
+	// 検証時の金型履歴ダイジェストと異なる場合
 	if ($digestHistory != $workFormData["digest_history"])
 	{
-		// DB���顼
-		fncOutputError ( 9051, DEF_ERROR, "���򤵤줿�ⷿ�����ѹ�����Ƥ��ޤ���", TRUE, "", $objDB );
+		// DBエラー
+		fncOutputError ( 9051, DEF_ERROR, "選択された金型情報が変更されています。", TRUE, "", $objDB );
 	}
 
-	// ���ڻ��ζⷿĢɼ�����������ȤȰۤʤ���
+	// 検証時の金型帳票ダイジェストと異なる場合
 	if ($digestReport != $workFormData["digest_report"])
 	{
-		// DB���顼
-		fncOutputError ( 9051, DEF_ERROR, "���򤵤줿�ⷿ�����ѹ�����Ƥ��ޤ���", TRUE, "", $objDB );
+		// DBエラー
+		fncOutputError ( 9051, DEF_ERROR, "選択された金型情報が変更されています。", TRUE, "", $objDB );
 	}
-	// �ⷿĢɼ�ޥ����ؤ�INSERT
+	// 金型帳票マスタへのINSERT
 	if ($resultMoldReport = $utilMold->insertMoldReport($workFormData))
 	{
 		$result = $resultMoldReport;
 	}
-	// ��̤������ʤ��ä����
+	// 結果が得られなかった場合
 	else
 	{
-		// DB���顼
-		fncOutputError ( 9051, DEF_ERROR, "�ⷿĢɼ�ޥ����ؤ���Ͽ�˼��Ԥ��ޤ�����", TRUE, "", $objDB );
+		// DBエラー
+		fncOutputError ( 9051, DEF_ERROR, "金型帳票マスタへの登録に失敗しました。", TRUE, "", $objDB );
 	}
 
-	// �ⷿĢɼ�ܺ٤ؤ�INSERT
+	// 金型帳票詳細へのINSERT
 	if ($resultMoldReportDetail = $utilMold->insertMoldReportDetail(
 			$result[TableMoldReport::MoldReportId],
 			$result[TableMoldReport::Revision],
 			$workFormData))
 	{
-		// INSERT����μ���
+		// INSERT件数の取得
 		$result["MoldCount"] = $resultMoldReportDetail;
 	}
-	// ��̤������ʤ��ä����
+	// 結果が得られなかった場合
 	else
 	{
-		// DB���顼
-		fncOutputError ( 9051, DEF_ERROR, "�ⷿĢɼ�ܺ٤ؤ���Ͽ�˼��Ԥ��ޤ�����", TRUE, "", $objDB );
+		// DBエラー
+		fncOutputError ( 9051, DEF_ERROR, "金型帳票詳細への登録に失敗しました。", TRUE, "", $objDB );
 	}
 
-	// ���Ѥ����ե�����ǡ����򥭥�å���ơ��֥뤫����
+	// 使用したフォームデータをキャッシュテーブルから削除
 	if (!$formCache->remove($aryData["resultHash"]))
 	{
-		// DB���顼
-		fncOutputError ( 9051, DEF_ERROR, "����å���ơ��֥�Υ쥳���ɺ���˼��Ԥ��ޤ�����", TRUE, "", $objDB );
+		// DBエラー
+		fncOutputError ( 9051, DEF_ERROR, "キャッシュテーブルのレコード削除に失敗しました。", TRUE, "", $objDB );
 	}
 
-	// ���ߥå�
+	// コミット
 	$objDB->transactionCommit();
 
-	// ��̳�����ɥ桼�ƥ���ƥ��Υ��󥹥��󥹼���
+	// 業務コードユーティリティのインスタンス取得
 	$utilBussinesscode = UtilBussinesscode::getInstance();
-	// Ģɼ��ʬ�Υ���������(EUC-JP)�����
+	// 帳票区分のコード説明(EUC-JP)を取得
 	$result[TableMoldReport::ReportCategory] =
-		$utilBussinesscode->getDescription("Ģɼ��ʬ", $result[TableMoldReport::ReportCategory]);
+		$utilBussinesscode->getDescription("帳票区分", $result[TableMoldReport::ReportCategory]);
 
-	// cookie���å�
+	// cookieセット
 	setcookie("strSessionID", $_REQUEST["strSessionID"]);
 	setcookie(TableMoldReport::MoldReportId, $result[TableMoldReport::MoldReportId]);
 
-	// �ƥ�ץ졼���ɤ߹���
+	// テンプレート読み込み
 	$objTemplate = new clsTemplate ();
 	$objTemplate->getTemplate ( "/mr/finish/mr_finish.html" );
 
-	// �ץ졼���ۥ�����ִ�
+	// プレースホルダー置換
 	$objTemplate->replace($result);
 	$objTemplate->complete();
 
 	$doc = new DOMDocument();
 
-	// �ѡ������顼����
+	// パースエラー抑制
 	libxml_use_internal_errors(true);
-	// DOM�ѡ���
+	// DOMパース
 	$doc->loadHTML($objTemplate->strTemplate);
-	// �ѡ������顼���ꥢ
+	// パースエラークリア
 	libxml_clear_errors();
-	// �ѡ������顼�������
+	// パースエラー抑制解除
 	libxml_use_internal_errors(false);
 
 	$preview = $doc->getElementById("preview");
@@ -170,14 +170,14 @@ if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 	$preview->setAttribute("revision", $result[TableMoldReport::Revision]);
 	$preview->setAttribute("version", $result[TableMoldReport::Version]);
 
-	// HTML����
+	// HTML出力
 	echo $doc->saveHTML();
 }
-// ����å���(�ե�����)�ǡ��������Ф��ʤ��ä����
+// キャッシュ(フォーム)データが取り出せなかった場合
 else
 {
-	// ����å�����Ф�����
+	// キャッシュ取り出し失敗
 	fncOutputError(9065, DEF_ERROR, "", TRUE, "", $objDB);
 }
 
-// DB����������WithQuery�Υǥ��ȥ饯�����Ĥ���١�����Ū�ˤϹԤ�ʤ�
+// DBクローズはWithQueryのデストラクタで閉じる為、明示的には行わない

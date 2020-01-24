@@ -1,8 +1,8 @@
 <?php
 /** 
-*	Äù¤á½èÍý¡¡ÁªÂòÉ½¼¨²èÌÌ
+*	ç· ã‚å‡¦ç†ã€€é¸æŠžè¡¨ç¤ºç”»é¢
 *
-*	Äù¤á½èÍý¤ÎÁªÂòÉ½¼¨½èÍý
+*	ç· ã‚å‡¦ç†ã®é¸æŠžè¡¨ç¤ºå‡¦ç†
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -11,25 +11,25 @@
 *	@access    public
 *	@version   1.00
 *
-*	½èÍý³µÍ×
-*	Äù¤á½èÍý¤ò¹Ô¤¦´ü´Ö¡¢½èÍýÆâÍÆ¤òÁªÂò¤µ¤»¤ë²èÌÌ¤ÎÉ½¼¨½èÍý
+*	å‡¦ç†æ¦‚è¦
+*	ç· ã‚å‡¦ç†ã‚’è¡Œã†æœŸé–“ã€å‡¦ç†å†…å®¹ã‚’é¸æŠžã•ã›ã‚‹ç”»é¢ã®è¡¨ç¤ºå‡¦ç†
 *
 */
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 // require (SRC_ROOT . "closed/cmn/lib_cld.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_GET )
 {
@@ -40,33 +40,33 @@ else if ( $_POST )
 	$aryData = $_POST;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 // $aryResult = fncAllCheck( $aryData, $aryCheck );
 // fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
-// 1400 Äù¤á½èÍý
+// æ¨©é™ç¢ºèª
+// 1400 ç· ã‚å‡¦ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_CLD0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 $aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "closed/closed.tmpl" );
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $aryData );
 $objTemplate->complete();
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 

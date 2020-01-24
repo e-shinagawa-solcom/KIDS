@@ -1,173 +1,173 @@
 
 (function () {
 
-    // •ﬁ•π•ø∏°∫˜∂¶ƒÃ
+    // „Éû„Çπ„ÇøÊ§úÁ¥¢ÂÖ±ÈÄö
     var searchMaster = {
         url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),
         type: 'post',
         dataType: 'json'
     };
 
-    // ∏‹µ“-…Ωº®≤Òº“•≥°º•… •§•Ÿ•Û•»≈–œø
+    // È°ßÂÆ¢-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngCustomerCompanyCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectCustomerName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strCustomerCompanyName"]').focus();
         }
     });
 
-    // ª≈∆˛¿Ë-…Ωº®≤Òº“•≥°º•… •§•Ÿ•Û•»≈–œø
+    // ‰ªïÂÖ•ÂÖà-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngCustomerCode"]').on({
         'change': function () {
             var iscustomer = $(this).attr('iscustomer');
             if (iscustomer == "yes") {
                 selectCustomerName($(this));
             } else {
-                // …Ωº®Ãæ§Ú∫˜∞˙
+                // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
                 selectSupplierName($(this));
             }
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strCustomerName"]').focus();
         }
     });
 
-    // ∏‹µ“√¥≈ˆº‘-…Ωº®•Ê°º•∂°º•≥°º•… •§•Ÿ•Û•»≈–œø
+    // È°ßÂÆ¢ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngCustomerUserCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectUserName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strCustomerUserName"]').focus();
         }
     });
 
-    // ∆˛Œœº‘-…Ωº®•Ê°º•∂°º•≥°º•… •§•Ÿ•Û•»≈–œø
+    // ÂÖ•ÂäõËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngInputUserCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectInputUserName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strInputUserName"]').focus();
         }
     });
 
-    // µØ…ºº‘-…Ωº®•Ê°º•∂°º•≥°º•… •§•Ÿ•Û•»≈–œø
+    // Ëµ∑Á•®ËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngInsertUserCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectInputUserName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strInsertUserName"]').focus();
         }
     });
 
-    // ≥´»Ø√¥≈ˆº‘-…Ωº®•Ê°º•∂°º•≥°º•… •§•Ÿ•Û•»≈–œø
+    // ÈñãÁô∫ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngDevelopUserCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectInputUserName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strDevelopUserName"]').focus();
         }
     });
 
-    // ±ƒ∂»…ÙΩ-…Ωº®•Ê°º•∂°º•≥°º•… •§•Ÿ•Û•»≈–œø
+    // Âñ∂Ê•≠ÈÉ®ÁΩ≤-Ë°®Á§∫„É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngInChargeGroupCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectGroupName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strInChargeGroupName"]').focus();
         }
     });
 
-    // √¥≈ˆº‘-…Ωº®•Ê°º•∂°º•≥°º•… •§•Ÿ•Û•»≈–œø
+    // ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Éº„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngInChargeUserCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectInChargeUserName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strInChargeUserName"]').focus();
         }
     });
 
-    // ¿∏ª∫π©æÏ-…Ωº®≤Òº“•≥°º•… •§•Ÿ•Û•»≈–œø
+    // ÁîüÁî£Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngFactoryCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectFactoryName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strFactoryName"]').focus();
         }
     });
 
-    // •¢•√•ª•Û•÷•Íπ©æÏ-…Ωº®≤Òº“•≥°º•… •§•Ÿ•Û•»≈–œø
+    // „Ç¢„ÉÉ„Çª„É≥„Éñ„É™Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngAssemblyFactoryCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectFactoryName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strAssemblyFactoryName"]').focus();
         }
     });
 
-    // «º… æÏΩÍ-…Ωº®≤Òº“•≥°º•… •§•Ÿ•Û•»≈–œø
+    // Á¥çÂìÅÂ†¥ÊâÄ-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngDeliveryPlaceCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectLocationName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strDeliveryPlaceName"]').focus();
         }
     });
 
-    // «º… æÏΩÍ-…Ωº®≤Òº“•≥°º•… •§•Ÿ•Û•»≈–œø
+    // Á¥çÂìÅÂ†¥ÊâÄ-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ „Ç§„Éô„É≥„ÉàÁôªÈå≤
     $('input[name="lngLocationCode"]').on({
         'change': function () {
-            // …Ωº®Ãæ§Ú∫˜∞˙
+            // Ë°®Á§∫Âêç„ÇíÁ¥¢Âºï
             selectLocationName($(this));
-            // JQuery Validation Plugin§«∏°√Œ§µ§ª§Î∞Ÿ•§•Ÿ•Û•»•≠•√•Ø
+            // JQuery Validation Plugin„ÅßÊ§úÁü•„Åï„Åõ„ÇãÁÇ∫„Ç§„Éô„É≥„Éà„Ç≠„ÉÉ„ÇØ
             $(this).trigger('blur');
-            // •’•©°º•´•π§Ú¿∏ª∫π©æÏÃæ§ÀπÁ§Ô§ª§Î
+            // „Éï„Ç©„Éº„Ç´„Çπ„ÇíÁîüÁî£Â∑•Â†¥Âêç„Å´Âêà„Çè„Åõ„Çã
             $('input[name="strLocationName"]').focus();
         }
     });
 
     // --------------------------------------------------------------------------
-    // «º… æÏΩÍ-…Ωº®≤Òº“•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // Á¥çÂìÅÂ†¥ÊâÄ-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // «º… æÏΩÍ-…Ωº®≤Òº“•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // Á¥çÂìÅÂ†¥ÊâÄ-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectLocationName = function (invoker) {
-        console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ change value=" + $(invoker).val());
-        // ∫˜∞˙∑Î≤Ã§Œ•ª•√•»¿ËCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change value=" + $(invoker).val());
+        // Á¥¢ÂºïÁµêÊûú„ÅÆ„Çª„ÉÉ„ÉàÂÖàCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectLocationName',
@@ -177,33 +177,33 @@
             }
         };
 
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ done");
-                // π©æÏ-…Ωº®Ãæ§À√Õ§Ú•ª•√•»
+                console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
+                // Â∑•Â†¥-Ë°®Á§∫Âêç„Å´ÂÄ§„Çí„Çª„ÉÉ„Éà
                 $(targetCssSelector).val(response[0].locationdisplayname);
             })
             .fail(function (response) {
-                console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ fail");
+                console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
                 console.log(response.responseText);
-                // π©æÏ-•≥°º•…°¢…Ωº®Ãæ§Œ√Õ§Ú•Í•ª•√•»§∑°¢•≥°º•…ÕÛ§À•’•©°º•´•π
+                // Â∑•Â†¥-„Ç≥„Éº„Éâ„ÄÅË°®Á§∫Âêç„ÅÆÂÄ§„Çí„É™„Çª„ÉÉ„Éà„Åó„ÄÅ„Ç≥„Éº„ÉâÊ¨Ñ„Å´„Éï„Ç©„Éº„Ç´„Çπ
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
     };
 
     // --------------------------------------------------------------------------
-    // π©æÏ-…Ωº®≤Òº“•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // π©æÏ-…Ωº®≤Òº“•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectFactoryName = function (invoker) {
-        console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ change value=" + $(invoker).val());
-        // ∫˜∞˙∑Î≤Ã§Œ•ª•√•»¿ËCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change value=" + $(invoker).val());
+        // Á¥¢ÂºïÁµêÊûú„ÅÆ„Çª„ÉÉ„ÉàÂÖàCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectFactoryName',
@@ -213,33 +213,33 @@
             }
         };
 
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ done");
-                // π©æÏ-…Ωº®Ãæ§À√Õ§Ú•ª•√•»
+                console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
+                // Â∑•Â†¥-Ë°®Á§∫Âêç„Å´ÂÄ§„Çí„Çª„ÉÉ„Éà
                 $(targetCssSelector).val(response[0].companydisplayname);
             })
             .fail(function (response) {
-                console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ fail");
+                console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
                 console.log(response.responseText);
-                // π©æÏ-•≥°º•…°¢…Ωº®Ãæ§Œ√Õ§Ú•Í•ª•√•»§∑°¢•≥°º•…ÕÛ§À•’•©°º•´•π
+                // Â∑•Â†¥-„Ç≥„Éº„Éâ„ÄÅË°®Á§∫Âêç„ÅÆÂÄ§„Çí„É™„Çª„ÉÉ„Éà„Åó„ÄÅ„Ç≥„Éº„ÉâÊ¨Ñ„Å´„Éï„Ç©„Éº„Ç´„Çπ
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
     };
 
     // --------------------------------------------------------------------------
-    // ª≈∆˛¿Ë-…Ωº®≤Òº“•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // ‰ªïÂÖ•ÂÖà-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // ª≈∆˛¿Ë-…Ωº®≤Òº“•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // ‰ªïÂÖ•ÂÖà-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectSupplierName = function (invoker) {
-        console.log("ª≈∆˛¿Ë-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ change");
-        // ∫˜∞˙∑Î≤Ã§Œ•ª•√•»¿ËCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        console.log("‰ªïÂÖ•ÂÖà-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change");
+        // Á¥¢ÂºïÁµêÊûú„ÅÆ„Çª„ÉÉ„ÉàÂÖàCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectSupplierName',
@@ -249,33 +249,33 @@
             }
         };
 
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ done");
-                // π©æÏ-…Ωº®Ãæ§À√Õ§Ú•ª•√•»
+                console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
+                // Â∑•Â†¥-Ë°®Á§∫Âêç„Å´ÂÄ§„Çí„Çª„ÉÉ„Éà
                 $(targetCssSelector).val(response[0].supplierdisplayname);
             })
             .fail(function (response) {
-                console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ fail");
+                console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
                 console.log(response.responseText);
-                // π©æÏ-•≥°º•…°¢…Ωº®Ãæ§Œ√Õ§Ú•Í•ª•√•»§∑°¢•≥°º•…ÕÛ§À•’•©°º•´•π
+                // Â∑•Â†¥-„Ç≥„Éº„Éâ„ÄÅË°®Á§∫Âêç„ÅÆÂÄ§„Çí„É™„Çª„ÉÉ„Éà„Åó„ÄÅ„Ç≥„Éº„ÉâÊ¨Ñ„Å´„Éï„Ç©„Éº„Ç´„Çπ
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
     };
 
     // --------------------------------------------------------------------------
-    // ∏‹µ“-…Ωº®≤Òº“•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // È°ßÂÆ¢-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // ∏‹µ“-…Ωº®≤Òº“•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // È°ßÂÆ¢-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectCustomerName = function (invoker) {
-        console.log("∏‹µ“-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ change");
-        // ∫˜∞˙∑Î≤Ã§Œ•ª•√•»¿ËCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        console.log("È°ßÂÆ¢-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change");
+        // Á¥¢ÂºïÁµêÊûú„ÅÆ„Çª„ÉÉ„ÉàÂÖàCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectCustomerName',
@@ -285,31 +285,31 @@
             }
         };
 
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ done");
-                // π©æÏ-…Ωº®Ãæ§À√Õ§Ú•ª•√•»
+                console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
+                // Â∑•Â†¥-Ë°®Á§∫Âêç„Å´ÂÄ§„Çí„Çª„ÉÉ„Éà
                 $(targetCssSelector).val(response[0].companydisplayname);
             })
             .fail(function (response) {
-                console.log("π©æÏ-…Ωº®≤Òº“•≥°º•…->…Ωº®Ãæ fail");
+                console.log("Â∑•Â†¥-Ë°®Á§∫‰ºöÁ§æ„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
                 console.log(response.responseText);
-                // π©æÏ-•≥°º•…°¢…Ωº®Ãæ§Œ√Õ§Ú•Í•ª•√•»§∑°¢•≥°º•…ÕÛ§À•’•©°º•´•π
+                // Â∑•Â†¥-„Ç≥„Éº„Éâ„ÄÅË°®Á§∫Âêç„ÅÆÂÄ§„Çí„É™„Çª„ÉÉ„Éà„Åó„ÄÅ„Ç≥„Éº„ÉâÊ¨Ñ„Å´„Éï„Ç©„Éº„Ç´„Çπ
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
     };
     // --------------------------------------------------------------------------
-    // ∏‹µ“√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // È°ßÂÆ¢ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // ∏‹µ“√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // È°ßÂÆ¢ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectUserName = function (invoker) {
-        console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ change");// ∫˜∞˙∑Î≤Ã§Œ•ª•√•»¿ËCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change");// Á¥¢ÂºïÁµêÊûú„ÅÆ„Çª„ÉÉ„ÉàÂÖàCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectUserName',
@@ -319,31 +319,31 @@
             }
         };
 
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ done");
-                // √¥≈ˆº‘-…Ωº®Ãæ§À√Õ§Ú•ª•√•»
+                console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
+                // ÊãÖÂΩìËÄÖ-Ë°®Á§∫Âêç„Å´ÂÄ§„Çí„Çª„ÉÉ„Éà
                 $(targetCssSelector).val(response[0].userdisplayname);
             })
             .fail(function (response) {
-                console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ fail");
+                console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
                 console.log(response.responseText);
-                // √¥≈ˆº‘-…Ωº®Ãæ§Œ√Õ§Ú•Í•ª•√•»
+                // ÊãÖÂΩìËÄÖ-Ë°®Á§∫Âêç„ÅÆÂÄ§„Çí„É™„Çª„ÉÉ„Éà
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
     };
     // --------------------------------------------------------------------------
-    // ∆˛Œœº‘-…Ωº®•Ê°º•∂•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // ÂÖ•ÂäõËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // ∆˛Œœº‘-…Ωº®•Ê°º•∂•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // ÂÖ•ÂäõËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectInputUserName = function (invoker) {
-        console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ change");// ∫˜∞˙∑Î≤Ã§Œ•ª•√•»¿ËCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change");// Á¥¢ÂºïÁµêÊûú„ÅÆ„Çª„ÉÉ„ÉàÂÖàCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
-        // …Ωº®•’•È•∞¿©∏¬§ŒºË∆¿
+        // Ë°®Á§∫„Éï„É©„Ç∞Âà∂Èôê„ÅÆÂèñÂæó
         var displayFlagLimit = $(invoker).attr('displayFlagLimit');
         if (displayFlagLimit == '0') {
             displayFlagLimit0 = true;
@@ -354,7 +354,7 @@
         } 
 
         console.log(displayFlagLimit1);
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectInputUserName',
@@ -366,33 +366,33 @@
             }
         };
         console.log(condition);
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ done");
+                console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
                 console.log(response);
-                // √¥≈ˆº‘-…Ωº®Ãæ§À√Õ§Ú•ª•√•»
+                // ÊãÖÂΩìËÄÖ-Ë°®Á§∫Âêç„Å´ÂÄ§„Çí„Çª„ÉÉ„Éà
                 $(targetCssSelector).val(response[0].userdisplayname);
             })
             .fail(function (response) {
-                console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ fail");
+                console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
                 console.log(response);
                 console.log(response.responseText);
-                // √¥≈ˆº‘-…Ωº®Ãæ§Œ√Õ§Ú•Í•ª•√•»
+                // ÊãÖÂΩìËÄÖ-Ë°®Á§∫Âêç„ÅÆÂÄ§„Çí„É™„Çª„ÉÉ„Éà
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
     };
     // --------------------------------------------------------------------------
-    // ≥´»Ø√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // ÈñãÁô∫ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // ≥´»Ø√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // ÈñãÁô∫ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectDevelopUserName = function (invoker) {
-        console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ change");// ∫˜∞˙∑Î≤Ã§Œ•ª•√•»¿ËCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change");// Á¥¢ÂºïÁµêÊûú„ÅÆ„Çª„ÉÉ„ÉàÂÖàCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectDevelopUserName',
@@ -402,32 +402,32 @@
             }
         };
 
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ done");
-                // √¥≈ˆº‘-…Ωº®Ãæ§À√Õ§Ú•ª•√•»
+                console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
+                // ÊãÖÂΩìËÄÖ-Ë°®Á§∫Âêç„Å´ÂÄ§„Çí„Çª„ÉÉ„Éà
                 $(targetCssSelector).val(response[0].userdisplayname);
             })
             .fail(function (response) {
-                console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ fail");
+                console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
                 console.log(response.responseText);
-                // √¥≈ˆº‘-…Ωº®Ãæ§Œ√Õ§Ú•Í•ª•√•»
+                // ÊãÖÂΩìËÄÖ-Ë°®Á§∫Âêç„ÅÆÂÄ§„Çí„É™„Çª„ÉÉ„Éà
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
     };
     
     // --------------------------------------------------------------------------
-    // ±ƒ∂»√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // Âñ∂Ê•≠ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // ±ƒ∂»√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // Âñ∂Ê•≠ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectInChargeUserName = function (invoker) {
-        console.log("√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ change");// ∫˜∞˙∑Î≤Ã§Œ•ª•√•»¿ËCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        console.log("ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change");// Á¥¢ÂºïÁµêÊûú„ÅÆ„Çª„ÉÉ„ÉàÂÖàCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';        
-        // …Ωº®•’•È•∞¿©∏¬§ŒºË∆¿
+        // Ë°®Á§∫„Éï„É©„Ç∞Âà∂Èôê„ÅÆÂèñÂæó
         var displayFlagLimit = $(invoker).attr('displayFlagLimit');
         if (displayFlagLimit == '0') {
             displayFlagLimit0 = true;
@@ -436,7 +436,7 @@
             displayFlagLimit0 = true;
             displayFlagLimit1 = true;
         } 
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectInChargeUserName',
@@ -448,17 +448,17 @@
             }
         };
 
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("±ƒ∂»√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ done");
-                // √¥≈ˆº‘-…Ωº®Ãæ§À√Õ§Ú•ª•√•»
+                console.log("Âñ∂Ê•≠ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
+                // ÊãÖÂΩìËÄÖ-Ë°®Á§∫Âêç„Å´ÂÄ§„Çí„Çª„ÉÉ„Éà
                 $(targetCssSelector).val(response[0].userdisplayname);
             })
             .fail(function (response) {
-                console.log("±ƒ∂»√¥≈ˆº‘-…Ωº®•Ê°º•∂•≥°º•…->…Ωº®Ãæ fail");
+                console.log("Âñ∂Ê•≠ÊãÖÂΩìËÄÖ-Ë°®Á§∫„É¶„Éº„Ç∂„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
                 console.log(response.responseText);
-                // √¥≈ˆº‘-…Ωº®Ãæ§Œ√Õ§Ú•Í•ª•√•»
+                // ÊãÖÂΩìËÄÖ-Ë°®Á§∫Âêç„ÅÆÂÄ§„Çí„É™„Çª„ÉÉ„Éà
                 $(targetCssSelector).val('');
                 $(targetCodeCssSelector).val('').focus();
             });
@@ -467,15 +467,15 @@
     
 
     // --------------------------------------------------------------------------
-    // √¥≈ˆ•∞•Î°º•◊-…Ωº®•∞•Î°º•◊•≥°º•…§À§Ë§Î•«°º•ø∫˜∞˙
+    // ÊãÖÂΩì„Ç∞„É´„Éº„Éó-Ë°®Á§∫„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ„Å´„Çà„Çã„Éá„Éº„ÇøÁ¥¢Âºï
     // --------------------------------------------------------------------------
-    // √¥≈ˆ•∞•Î°º•◊-…Ωº®•∞•Î°º•◊•≥°º•…§´§È…Ωº®Ãæ§Ú∫˜∞˙
+    // ÊãÖÂΩì„Ç∞„É´„Éº„Éó-Ë°®Á§∫„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ„Åã„ÇâË°®Á§∫Âêç„ÇíÁ¥¢Âºï
     var selectGroupName = function(invoker){
-        console.log("√¥≈ˆ•∞•Î°º•◊-…Ωº®•∞•Î°º•◊•≥°º•…->…Ωº®Ãæ change");
+        console.log("ÊãÖÂΩì„Ç∞„É´„Éº„Éó-Ë°®Á§∫„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç change");
         var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
-        // ∫˜∞˙∑Î≤Ã0∑Ô§Œª˛§Œ•≥°º•…ÕÛ§ŒCSS•ª•Ï•Ø•ø§Œ∫Ó¿Æ
+        // Á¥¢ÂºïÁµêÊûú0‰ª∂„ÅÆÊôÇ„ÅÆ„Ç≥„Éº„ÉâÊ¨Ñ„ÅÆCSS„Çª„É¨„ÇØ„Çø„ÅÆ‰ΩúÊàê
         var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';        
-        // …Ωº®•’•È•∞¿©∏¬§ŒºË∆¿
+        // Ë°®Á§∫„Éï„É©„Ç∞Âà∂Èôê„ÅÆÂèñÂæó
         var displayFlagLimit = $(invoker).attr('displayFlagLimit');
         if (displayFlagLimit == '0') {
             displayFlagLimit0 = true;
@@ -484,7 +484,7 @@
             displayFlagLimit0 = true;
             displayFlagLimit1 = true;
         } 
-        // ∏°∫˜æÚ∑Ô
+        // Ê§úÁ¥¢Êù°‰ª∂
         var condition = {
             data: {
                 QueryName: 'selectGroupName',
@@ -496,14 +496,14 @@
             }
         };
 
-        // •Í•Ø•®•π•»¡˜øÆ
+        // „É™„ÇØ„Ç®„Çπ„ÉàÈÄÅ‰ø°
         $.ajax($.extend({}, searchMaster, condition))
         .done(function(response){
-            console.log("√¥≈ˆ•∞•Î°º•◊-…Ωº®•∞•Î°º•◊•≥°º•…->…Ωº®Ãæ done");
+            console.log("ÊãÖÂΩì„Ç∞„É´„Éº„Éó-Ë°®Á§∫„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç done");
             $(targetCssSelector).val(response[0].groupdisplayname);
         })
         .fail(function(response){
-            console.log("√¥≈ˆ•∞•Î°º•◊-…Ωº®•∞•Î°º•◊•≥°º•…->…Ωº®Ãæ fail");
+            console.log("ÊãÖÂΩì„Ç∞„É´„Éº„Éó-Ë°®Á§∫„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ->Ë°®Á§∫Âêç fail");
             console.log(response.responseText);
             $(targetCssSelector).val('');
             $(targetCodeCssSelector).val('').focus();

@@ -1,4 +1,4 @@
-/************************* [ ÁÛÄê¥ì¡¼¥È¥Ş¥¹¥¿ ] *************************/
+/************************* [ æƒ³å®šãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ ] *************************/
 $(function(){
     var searchMaster = {
                     url: '/cmn/querydata.php?strSessionID=' + $.cookie('strSessionID'),
@@ -44,28 +44,28 @@ function applyMonetaryRate(objID) {
 
 
 //////////////////////////////////////////////////////////////////
-////////// [½¤Àµ][ÄÉ²Ã]»ş¡¦¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// [ä¿®æ­£][è¿½åŠ ]æ™‚ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncEditObjectOnload()
 {
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤Î¼«Æ°¥ì¥¤¥¢¥¦¥È
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è‡ªå‹•ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 	fncInitLayoutObjectModule( objColumn , objInput  , 60 , 216 );
 
-	// [ÄÉ²Ã]
+	// [è¿½åŠ ]
 	if( g_strMode == 'add' )
 	{
-		// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎIDÊÑ´¹
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®IDå¤‰æ›
 		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2', 'Input3' ) ,
 								 Array( 'Txt15L' , 'Txt10L' , 'Txt10L', 'Txt10L' ) );
 	}
-	// [½¤Àµ]
+	// [ä¿®æ­£]
 	else if( g_strMode == 'fix' )
 	{
-		// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎIDÊÑ´¹
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®IDå¤‰æ›
 		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2', 'Input3' ) ,
 								 Array( 'Txt15L' , 'Txt10L' , 'TxtDis10L', 'Txt10L' ) );
 	}
 
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÌ¾¤ÎÀßÄê
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åã®è¨­å®š
 	setObjectName();
 
 	return true;
@@ -75,18 +75,18 @@ function fncEditObjectOnload()
 
 
 //////////////////////////////////////////////////////////////////
-////////// [CONFIRM]»ş¡¦¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// [CONFIRM]æ™‚ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncConfirmObjectOnload( strMode )
 {
 
-	// ½èÍı¥â¡¼¥É¤Î½é´ü²½
+	// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã®åˆæœŸåŒ–
 	g_strMode = '';
 
-	// ½èÍı¥â¡¼¥É¤Î¼èÆÀ
+	// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã®å–å¾—
 	g_strMode = strMode;
 
 
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÌ¾¤ÎÀßÄê
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åã®è¨­å®š
 	setObjectName();
 
 
@@ -99,7 +99,7 @@ function fncConfirmObjectOnload( strMode )
 
 
 //////////////////////////////////////////////////////////////////
-////////// ÄÉ²Ã¥Ü¥¿¥ó¤ÎÉ½¼¨ //////////
+////////// è¿½åŠ ãƒœã‚¿ãƒ³ã®è¡¨ç¤º //////////
 if( typeof(window.top.MasterAddBt) != 'undefined' )
 {
 	window.top.MasterAddBt.style.visibility = 'visible';
@@ -112,8 +112,8 @@ if( typeof(window.top.MasterAddBt) != 'undefined' )
 
 
 //////////////////////////////////////////////////////////////////
-////////// ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸¤ÎÀ¸À® //////////
-var headerAJ = '<img src="' + h_trateJ + '" width="949" height="30" border="0" alt="ÁÛÄê¥ì¡¼¥È¥Ş¥¹¥¿">';
+////////// ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ã®ç”Ÿæˆ //////////
+var headerAJ = '<img src="' + h_trateJ + '" width="949" height="30" border="0" alt="æƒ³å®šãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿">';
 
 
 
@@ -122,29 +122,29 @@ var headerAJ = '<img src="' + h_trateJ + '" width="949" height="30" border="0" a
 
 
 //////////////////////////////////////////////////////////////////
-////////// ¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾ÀßÄê //////////
+////////// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåè¨­å®š //////////
 function setObjectName()
 {
-	// ¥¯¥¨¥ê¡¼¥Æ¡¼¥Ö¥ë£Ô£Ï£ĞºÂÉ¸
+	// ã‚¯ã‚¨ãƒªãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ï¼´ï¼¯ï¼°åº§æ¨™
 	if( typeof(QueryTable) != 'undefined' )
 	{
 		QueryTable.style.top = 300;
 	}
 
-    // ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸½ñ¤­½Ğ¤·
+    // ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸æ›¸ãå‡ºã—
 	if( typeof(window.top.SegAHeader) != 'undefined' )
 	{
         window.top.SegAHeader.innerHTML = headerAJ;
     }
 
 
-    // ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+    // ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
     if( typeof(fncTitleOutput) != 'undefined' )
     {
         fncTitleOutput( 1 );
     }
 
-    // ÄÉ²Ã¥Ü¥¿¥ó¥¤¥á¡¼¥¸½ñ¤­½Ğ¤·
+    // è¿½åŠ ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸æ›¸ãå‡ºã—
     if( typeof(window.top.MasterAddBt) != 'undefined' )
     {
         window.top.MasterAddBt.innerHTML = maddbtJ1;

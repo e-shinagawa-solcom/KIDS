@@ -6,8 +6,8 @@ require_once (SRC_ROOT.'/mold/lib/exception/SQLException.class.php');
 define("T_CACHE", "t_cache");
 
 /**
- * ¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤Î¥­¥ã¥Ã¥·¥å´ÉÍı¤ò¹Ô¤¦<br>
- * clsDB¤ò»ÈÍÑ¤·¤Æ¤¤¤ë¤¬½èÍı¤¬ÉÔ´°Á´¤Ê°ÙÃí°Õ¤¹¤ë¤³¤È
+ * ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç®¡ç†ã‚’è¡Œã†<br>
+ * clsDBã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹ãŒå‡¦ç†ãŒä¸å®Œå…¨ãªç‚ºæ³¨æ„ã™ã‚‹ã“ã¨
  *
  * @see clsDB
  */
@@ -17,127 +17,127 @@ class FormCache extends WithQuery
 	{
 		parent::__construct();
 
-		// ¥¯¥¨¥ê¥Ñ¥¹¤ò¥­¥ã¥Ã¥·¥åÍÑ¤ËÊÑ¹¹
+		// ã‚¯ã‚¨ãƒªãƒ‘ã‚¹ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ç”¨ã«å¤‰æ›´
 		parent::setPathQuery("mold/sql/cache/");
 	}
 
 	/**
 	 *
-	 * ¥­¥ã¥Ã¥·¥å¤ËÇ¤°Õ¤Î¥Ç¡¼¥¿¤òÄÉ²Ã¤¹¤ë
-	 * ¥­¡¼¤¬½ÅÊ£¤·¤¿¾ì¹ç¤ÏÆ±°ì¥­¡¼¤ÎÃÍ¤ò¾å½ñ¤­¤¹¤ë
+	 * ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ä»»æ„ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ ã™ã‚‹
+	 * ã‚­ãƒ¼ãŒé‡è¤‡ã—ãŸå ´åˆã¯åŒä¸€ã‚­ãƒ¼ã®å€¤ã‚’ä¸Šæ›¸ãã™ã‚‹
 	 *
-	 * @param  string $hashcode ¥­¡¼Ì¾
-	 * @param  $anyData Ç¤°Õ¤Î¥Ç¡¼¥¿
-	 * @return ÄÉ²ÃÀ®¸ù»ş¤ËTRUE¤ò¡¢ÄÉ²Ã¤Ë¼ºÇÔ¤·¤¿¾ì¹ç¤ÏFALSE¤òÊÖ¤¹
+	 * @param  string $hashcode ã‚­ãƒ¼å
+	 * @param  $anyData ä»»æ„ã®ãƒ‡ãƒ¼ã‚¿
+	 * @return è¿½åŠ æˆåŠŸæ™‚ã«TRUEã‚’ã€è¿½åŠ ã«å¤±æ•—ã—ãŸå ´åˆã¯FALSEã‚’è¿”ã™
 	 */
 	public function add($hashcode, $anyData)
 	{
 		$resultStatus = false;
 
-		// °ú¿ô¤¬Í­¸ú¤Ê¾ì¹ç
+		// å¼•æ•°ãŒæœ‰åŠ¹ãªå ´åˆ
 		if (is_string($hashcode) && $anyData)
 		{
-			// Æ±°ì¥Ï¥Ã¥·¥åÃÍ¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+			// åŒä¸€ãƒãƒƒã‚·ãƒ¥å€¤ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 			$pgResultExists = $this->get($hashcode);
 
-			// ¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»·ë²Ì¤¬ÆÀ¤é¤ì¤¿¾ì¹ç
+			// æ¤œç´¢ã®å•ã„åˆã‚ã›çµæœãŒå¾—ã‚‰ã‚ŒãŸå ´åˆ
 			if ($pgResultExists)
 			{
-				// ·ë²Ì·ï¿ô¤ò¼èÆÀ
+				// çµæœä»¶æ•°ã‚’å–å¾—
 				$recordCount = pg_num_rows($pgResultExists);
 
-				// Æ±°ì¥Ï¥Ã¥·¥å¥³¡¼¥É¤¬Â¸ºß¤¹¤ë¾ì¹ç
+				// åŒä¸€ãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 				if (1 <= $recordCount)
 				{
-					// ¸¡º÷·ë²Ì¤ÎÀèÆ¬¹Ô¤«¤é¥Ğ¡¼¥¸¥ç¥ó¤ò¼èÆÀ
+					// æ¤œç´¢çµæœã®å…ˆé ­è¡Œã‹ã‚‰ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã‚’å–å¾—
 					$resultRow = pg_fetch_array($pgResultExists, 0, PGSQL_ASSOC)->version;
 					$version = $resultRow["version"];
 
-					// ¹¹¿·ÆâÍÆ
+					// æ›´æ–°å†…å®¹
 					$setData = array("serializeddata" => $this->convertQueryableData($anyData));
 
-					// ¹¹¿·¾ò·ï
+					// æ›´æ–°æ¡ä»¶
 					$condition = array(
 							"hashcode" => $this->convertQueryableHashcode($hashcode),
 							"version" => $version,
 							"updateby" => $this->getUserCode()
 					);
 
-					// Æ±°ì¥Ï¥Ã¥·¥å¥³¡¼¥É¹Ô¤Î¥Ç¡¼¥¿¹¹¿·
+					// åŒä¸€ãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰è¡Œã®ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 					$pgResultUpdate = pg_update(static::$db->ConnectID, T_CACHE, $setData, $condition, PGSQL_DML_EXEC);
 
-					// ¹¹¿··ë²Ì¤¬ÆÀ¤é¤ì¤¿¾ì¹ç
+					// æ›´æ–°çµæœãŒå¾—ã‚‰ã‚ŒãŸå ´åˆ
 					if ($pgResultUpdate)
 					{
 						if (true)
 						{
 							$resultStatus = true;
 						}
-						// ÂĞ¾İ¥ì¥³¡¼¥É¤Ø¤Î¹¹¿·¤¬¼ºÇÔ¤·¤¿(0·ï)¾ì¹ç
+						// å¯¾è±¡ãƒ¬ã‚³ãƒ¼ãƒ‰ã¸ã®æ›´æ–°ãŒå¤±æ•—ã—ãŸ(0ä»¶)å ´åˆ
 						else
 						{
 							throw new SQLException(
-								"¥­¥ã¥Ã¥·¥å¥Ç¡¼¥¿¤Î¹¹¿·¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£",
+								"ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 								"pg_update",
 								$condition
 							);
 						}
 					}
-					// ¹¹¿··ë²Ì¤¬ÆÀ¤é¤ì¤Ê¤«¤Ã¤¿¾ì¹ç
+					// æ›´æ–°çµæœãŒå¾—ã‚‰ã‚Œãªã‹ã£ãŸå ´åˆ
 					else
 					{
 						throw new SQLException(
-								"¹¹¿·¥¯¥¨¥ê¤Î¼Â¹Ô¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£",
+								"æ›´æ–°ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 								"pg_update",
 								$condition
 						);
 					}
 				}
-				// Æ±°ì¥Ï¥Ã¥·¥å¥³¡¼¥É¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+				// åŒä¸€ãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ãªã„å ´åˆ
 				else
 				{
-					// ÁŞÆş¥­¥ã¥Ã¥·¥å¥Ç¡¼¥¿ºîÀ®(INSERT)
+					// æŒ¿å…¥ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿ä½œæˆ(INSERT)
 					$paramInsert = array(
 							"hashcode" => $this->convertQueryableHashcode($hashcode),
 							"serializeddata" => $this->convertQueryableData($anyData),
 							"createby" => $this->getUserCode(),
 							"updateby" => $this->getUserCode()
 					);
-					// ¥­¥ã¥Ã¥·¥å¥Ç¡¼¥¿¤ÎÁŞÆş
+					// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿ã®æŒ¿å…¥
 					$pgResultInsert = pg_insert(static::$db->ConnectID, T_CACHE, $paramInsert);
 
-					// ÁŞÆş·ë²Ì¤¬ÆÀ¤é¤ì¤¿¾ì¹ç
+					// æŒ¿å…¥çµæœãŒå¾—ã‚‰ã‚ŒãŸå ´åˆ
 					if ($pgResultInsert)
 					{
 						$resultStatus = true;
 					}
-					// ÁŞÆş·ë²Ì¤¬ÆÀ¤é¤ì¤Ê¤«¤Ã¤¿¾ì¹ç
+					// æŒ¿å…¥çµæœãŒå¾—ã‚‰ã‚Œãªã‹ã£ãŸå ´åˆ
 					else
 					{
 						throw new SQLException(
-								"ÁŞÆş¥¯¥¨¥ê¤Î¼Â¹Ô¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£",
+								"æŒ¿å…¥ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 								"pg_insert",
 								$paramInsert
 						);
 					}
 				}
 			}
-			// ¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»·ë²Ì¤¬ÆÀ¤é¤ì¤Ê¤«¤Ã¤¿¾ì¹ç
+			// æ¤œç´¢ã®å•ã„åˆã‚ã›çµæœãŒå¾—ã‚‰ã‚Œãªã‹ã£ãŸå ´åˆ
 			else
 			{
 				throw new SQLException(
-						"¸¡º÷¥¯¥¨¥ê¤Î¼Â¹Ô¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£",
+						"æ¤œç´¢ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 						"FormCache::get"
 				);
 			}
 		}
-		// Ìµ¸ú¤Ê°ú¿ô¤Î¾ì¹ç
+		// ç„¡åŠ¹ãªå¼•æ•°ã®å ´åˆ
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($hashcode)."\n".
-					"°ú¿ô2:".gettype($anyData)."\n"
+					"å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($hashcode)."\n".
+					"å¼•æ•°2:".gettype($anyData)."\n"
 			);
 		}
 
@@ -146,39 +146,39 @@ class FormCache extends WithQuery
 
 	/**
 	 *
-	 * ÆâÉô¥­¥ã¥Ã¥·¥å¤«¤éÇ¤°Õ¤Î¥­¡¼¤ò»ı¤ÄÍ×ÁÇ¤ò¼èÆÀ¤¹¤ë
+	 * å†…éƒ¨ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ä»»æ„ã®ã‚­ãƒ¼ã‚’æŒã¤è¦ç´ ã‚’å–å¾—ã™ã‚‹
 	 *
-	 * @param  string  $keyName ¥­¡¼Ì¾
-	 * @param  boolean $exists $this->exists¸ş¤±¥¹¥¤¥Ã¥Á
-	 * @return ·ë²ÌÊ¸»úÎó¤ò¤Ê¤±¤ì¤ĞFALSE¤òÊÖ¤¹<br>
-	 *         exists¤¬true¤Î¾ì¹ç¤Ïº÷°ú»ş¤Ë¥Ò¥Ã¥È¤·¤¿¹Ô¤ÎÍ­Ìµ¤ò¿¿µ¶¤ÇÊÖ¤¹
+	 * @param  string  $keyName ã‚­ãƒ¼å
+	 * @param  boolean $exists $this->existså‘ã‘ã‚¹ã‚¤ãƒƒãƒ
+	 * @return çµæœæ–‡å­—åˆ—ã‚’ãªã‘ã‚Œã°FALSEã‚’è¿”ã™<br>
+	 *         existsãŒtrueã®å ´åˆã¯ç´¢å¼•æ™‚ã«ãƒ’ãƒƒãƒˆã—ãŸè¡Œã®æœ‰ç„¡ã‚’çœŸå½ã§è¿”ã™
 	 */
 	public function get($hashcode, $exists = false)
 	{
 		$result = false;
 
-		// SQL¥Õ¥¡¥¤¥ë¤Î¼èÆÀ
+		// SQLãƒ•ã‚¡ã‚¤ãƒ«ã®å–å¾—
 		$queryExistsCache = file_get_contents($this->getQueryFileName("selectCacheDataByHashcode"));
-		// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿ºîÀ®(SELECT)
+		// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ(SELECT)
 		$paramExists = array($this->convertQueryableHashcode($hashcode));
 
-		// Æ±°ì¥Ï¥Ã¥·¥åÃÍ¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+		// åŒä¸€ãƒãƒƒã‚·ãƒ¥å€¤ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 		pg_prepare(static::$db->ConnectID, "", $queryExistsCache);
 		$pgResultExists = pg_execute("", $paramExists);
 
-		// ¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤ËÀ®¸ù¤·¤¿¾ì¹ç
+		// æ¤œç´¢ã®å•ã„åˆã‚ã›ã«æˆåŠŸã—ãŸå ´åˆ
 		if ($pgResultExists)
 		{
-			// exists¥¹¥¤¥Ã¥Á¤¬¿¿¤Î¾ì¹ç
+			// existsã‚¹ã‚¤ãƒƒãƒãŒçœŸã®å ´åˆ
 			if($exists)
 			{
-				// °ìÃ×¤¹¤ë¹Ô¤¬Â¸ºß¤¹¤ë¾ì¹ç
+				// ä¸€è‡´ã™ã‚‹è¡ŒãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 				if (1 <= pg_num_rows($pgResultExists))
 				{
 					$result = true;
 				}
 			}
-			// ¤½¤ì°Ê³°(ÄÌ¾ï)
+			// ãã‚Œä»¥å¤–(é€šå¸¸)
 			else
 			{
 				$result = $pgResultExists;
@@ -190,39 +190,39 @@ class FormCache extends WithQuery
 
 	/**
 	 *
-	 * ¥­¥ã¥Ã¥·¥å¤«¤éÇ¤°Õ¤Î¥Ï¥Ã¥·¥å¥³¡¼¥É¤ò»ı¤ÄÍ×ÁÇ¤òºï½ü¤¹¤ë
+	 * ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ä»»æ„ã®ãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰ã‚’æŒã¤è¦ç´ ã‚’å‰Šé™¤ã™ã‚‹
 	 *
-	 * @param  string  $hashcode ¥Ï¥Ã¥·¥å¥³¡¼¥É
-	 * @return ºï½ü¤Ç¤­¤¿¾ì¹çTRUE¤ò¡¢¤Ç¤­¤Ê¤±¤ì¤ĞFALSE¤òÊÖ¤¹
+	 * @param  string  $hashcode ãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰
+	 * @return å‰Šé™¤ã§ããŸå ´åˆTRUEã‚’ã€ã§ããªã‘ã‚Œã°FALSEã‚’è¿”ã™
 	 */
 	public function remove($hashcode)
 	{
 		$resultStatus = false;
 
-		// Í­¸ú¤Ê°ú¿ô¤Î¾ì¹ç
+		// æœ‰åŠ¹ãªå¼•æ•°ã®å ´åˆ
 		if (is_string($hashcode))
 		{
-			// SQL¥Õ¥¡¥¤¥ë¤Î¼èÆÀ
+			// SQLãƒ•ã‚¡ã‚¤ãƒ«ã®å–å¾—
 			$queryDeleteCache = file_get_contents($this->getQueryFileName("deleteCacheDataByHashcode"));
-			// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿ºîÀ®(DELETE)
+			// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ(DELETE)
 			$paramDelete = array($this->convertQueryableHashcode($hashcode));
 
-			// ³ºÅö¥­¥ã¥Ã¥·¥å¥Ç¡¼¥¿ºï½ü
+			// è©²å½“ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿å‰Šé™¤
 			pg_prepare(static::$db->ConnectID, "", $queryDeleteCache);
 			$pgResultDelete = pg_execute("", $paramDelete);
 
-			// ³ºÅö¥ì¥³¡¼¥É¤Îºï½ü¤ËÀ®¸ù¤·¤¿¾ì¹ç
+			// è©²å½“ãƒ¬ã‚³ãƒ¼ãƒ‰ã®å‰Šé™¤ã«æˆåŠŸã—ãŸå ´åˆ
 			if ($pgResultDelete)
 			{
 				$resultStatus = true;
 			}
 		}
-		// Ìµ¸ú¤Ê°ú¿ô¤Î¾ì¹ç
+		// ç„¡åŠ¹ãªå¼•æ•°ã®å ´åˆ
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($hashcode)
+					"å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($hashcode)
 			);
 		}
 
@@ -231,22 +231,22 @@ class FormCache extends WithQuery
 
 	/**
 	 *
-	 * ¥­¥ã¥Ã¥·¥å¥Ç¡¼¥¿¤òÁ´¤Æºï½ü¤¹¤ë
+	 * ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ã¦å‰Šé™¤ã™ã‚‹
 	 *
-	 * @return ºï½ü¤Ç¤­¤¿¾ì¹çTRUE¤ò¡¢¤Ç¤­¤Ê¤±¤ì¤ĞFALSE¤òÊÖ¤¹
+	 * @return å‰Šé™¤ã§ããŸå ´åˆTRUEã‚’ã€ã§ããªã‘ã‚Œã°FALSEã‚’è¿”ã™
 	 */
 	public function clear()
 	{
 		$resultStatus = false;
 
-		// SQL¥Õ¥¡¥¤¥ë¤Î¼èÆÀ
+		// SQLãƒ•ã‚¡ã‚¤ãƒ«ã®å–å¾—
 		$queryDeleteCacheAll = file_get_contents($this->getQueryFileName("deleteCacheDataAll"));
 
-		// ³ºÅö¥­¥ã¥Ã¥·¥å¥Ç¡¼¥¿ºï½ü
+		// è©²å½“ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ‡ãƒ¼ã‚¿å‰Šé™¤
 		pg_prepare(static::$db->ConnectID, "", $queryDeleteCacheAll);
 		$pgResultDeleteAll = pg_execute("", array());
 
-		// ¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤ËÀ®¸ù¤·¤¿¾ì¹ç
+		// æ¤œç´¢ã®å•ã„åˆã‚ã›ã«æˆåŠŸã—ãŸå ´åˆ
 		if ($pgResultDeleteAll)
 		{
 			$resultStatus = true;
@@ -257,23 +257,23 @@ class FormCache extends WithQuery
 
 	/**
 	 *
-	 * ¥­¥ã¥Ã¥·¥åÆâ¤Ë»ØÄê¤µ¤ì¤¿¥Ï¥Ã¥·¥å¥³¡¼¥É¤ò»ı¤Ä¥ì¥³¡¼¥É¤¬Â¸ºß¤¹¤ë¤«³ÎÇ§¤ò¹Ô¤¦
+	 * ã‚­ãƒ£ãƒƒã‚·ãƒ¥å†…ã«æŒ‡å®šã•ã‚ŒãŸãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰ã‚’æŒã¤ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã™ã‚‹ã‹ç¢ºèªã‚’è¡Œã†
 	 *
-	 * @param  string  $hashcode ¥Ï¥Ã¥·¥å¥³¡¼¥É
-	 * @return »ØÄê¤µ¤ì¤¿¥Ï¥Ã¥·¥å¥³¡¼¥É¤ò»ı¤ÄÍ×ÁÇ¤¬Â¸ºß¤¹¤ë¾ì¹ç¤ÏTRUE¤ò
-	 *         ¤Ê¤±¤ì¤ĞFALSE¤òÊÖ¤¹
+	 * @param  string  $hashcode ãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰
+	 * @return æŒ‡å®šã•ã‚ŒãŸãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰ã‚’æŒã¤è¦ç´ ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯TRUEã‚’
+	 *         ãªã‘ã‚Œã°FALSEã‚’è¿”ã™
 	 */
 	public function exists($hashcode)
 	{
-		// ÆâÉô¥­¥ã¥Ã¥·¥å¤Î¥Á¥§¥Ã¥¯
+		// å†…éƒ¨ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ãƒã‚§ãƒƒã‚¯
 		return $this->get($hashcode, true);
 	}
 
 	/**
-	 * ÇÛÎó¤«¤é¥Ï¥Ã¥·¥åÃÍ¤òÀ¸À®¤¹¤ë
+	 * é…åˆ—ã‹ã‚‰ãƒãƒƒã‚·ãƒ¥å€¤ã‚’ç”Ÿæˆã™ã‚‹
 	 *
-	 * @param array ¥Ï¥Ã¥·¥åÃÍÀ¸À®¤Î´ğ¤È¤Ê¤ëÇÛÎó
-	 * @return array ¥Ï¥Ã¥·¥åÃÍ
+	 * @param array ãƒãƒƒã‚·ãƒ¥å€¤ç”Ÿæˆã®åŸºã¨ãªã‚‹é…åˆ—
+	 * @return array ãƒãƒƒã‚·ãƒ¥å€¤
 	 */
 	public static function hash_arrays(array $array)
 	{
@@ -287,10 +287,10 @@ class FormCache extends WithQuery
 	}
 
 	/**
-	 * ÅÏ¤µ¤ì¤¿Ç¤°Õ¤Î¥Ç¡¼¥¿¤òSQL¤È¤·¤ÆÍøÍÑ²ÄÇ½¤ÊÊ¸»úÎó(Ä¾Îó²½)¤Ë¤·¤ÆÊÖ¤¹
+	 * æ¸¡ã•ã‚ŒãŸä»»æ„ã®ãƒ‡ãƒ¼ã‚¿ã‚’SQLã¨ã—ã¦åˆ©ç”¨å¯èƒ½ãªæ–‡å­—åˆ—(ç›´åˆ—åŒ–)ã«ã—ã¦è¿”ã™
 	 *
 	 * @param unknown $anyData
-	 * @return SQL¤Ë¤ÆÍøÍÑ¤ÊÊ¸»úÎó
+	 * @return SQLã«ã¦åˆ©ç”¨ãªæ–‡å­—åˆ—
 	 */
 	private function convertQueryableData($anyData)
 	{
@@ -298,10 +298,10 @@ class FormCache extends WithQuery
 	}
 
 	/**
-	 * ÅÏ¤µ¤ì¤¿¥Ï¥Ã¥·¥å¥³¡¼¥É¤òSQL¤È¤·¤ÆÍøÍÑ²ÄÇ½¤ÊÊ¸»úÎó¤Ë¤·¤ÆÊÖ¤¹
+	 * æ¸¡ã•ã‚ŒãŸãƒãƒƒã‚·ãƒ¥ã‚³ãƒ¼ãƒ‰ã‚’SQLã¨ã—ã¦åˆ©ç”¨å¯èƒ½ãªæ–‡å­—åˆ—ã«ã—ã¦è¿”ã™
 	 *
 	 * @param unknown $anyData
-	 * @return SQL¤Ë¤ÆÍøÍÑ¤ÊÊ¸»úÎó
+	 * @return SQLã«ã¦åˆ©ç”¨ãªæ–‡å­—åˆ—
 	 */
 	private function convertQueryableHashcode($hashcode)
 	{

@@ -1,6 +1,6 @@
 <?php
 /** 
-*	¸«ÀÑ¸¶²Á´ÉÍı ¼Â¹Ô²èÌÌ
+*	è¦‹ç©åŸä¾¡ç®¡ç† å®Ÿè¡Œç”»é¢
 *
 *	@package   KIDS
 *	@copyright Copyright &copy; 2004, AntsBizShare 
@@ -16,14 +16,14 @@
 	require_once ('conf.inc');
 	require_once ( LIB_DEBUGFILE );
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require_once ( LIB_FILE );
 
-	// ¸«ÀÑ¸¶²ÁÍÑ¥¯¥é¥¹ÆÉ¤ß¹ş¤ß
+	// è¦‹ç©åŸä¾¡ç”¨ã‚¯ãƒ©ã‚¹èª­ã¿è¾¼ã¿
 	require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
 	require_once ( SRC_ROOT . "estimate/cmn/registInsertData.php");
 
-	// ¸«ÀÑ¸¶²ÁDB¥¯¥é¥¹ÆÉ¤ß¹ş¤ß
+	// è¦‹ç©åŸä¾¡DBã‚¯ãƒ©ã‚¹èª­ã¿è¾¼ã¿
     require_once ( SRC_ROOT . "estimate/cmn/estimateDB.php");
 
 	$objDB   = new estimateDB();
@@ -31,45 +31,45 @@
 	
 	$objDB->open( "", "", "", "" );
 
-	// POST¥Ç¡¼¥¿¼èÆÀ
+	// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryData = $_POST;
 
 // fncDebug( 'estimate_regist_action_data.txt', $aryData["aryDetail"], __FILE__, __LINE__);
 
 	$aryCheck["strSessionID"] = "null:numenglish(32,32)";
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryCheckResult, $objDB );
 	unset ( $aryCheck );
 
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 	$lngUserCode = $objAuth->UserCode;
 
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	//////////////////////////////////////////////////////////////////////////
-	// ¸«ÀÑ¸¶²ÁÅĞÏ¿¤Î¾ì¹ç
+	// è¦‹ç©åŸä¾¡ç™»éŒ²ã®å ´åˆ
 	//////////////////////////////////////////////////////////////////////////
 	if ($aryData["lngFunctionCode"] == DEF_FUNCTION_E1 && fncCheckAuthority( DEF_FUNCTION_E1, $objAuth )) {
 		
 	}
 	//////////////////////////////////////////////////////////////////////////
-	// ¤½¤ì°Ê³°(¸¢¸ÂERROR)
+	// ãã‚Œä»¥å¤–(æ¨©é™ERROR)
 	//////////////////////////////////////////////////////////////////////////
 	else {
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 	
 
 //////////////////////////////////////////////////////////////////////
-// DB½èÍı³«»Ï
+// DBå‡¦ç†é–‹å§‹
 //////////////////////////////////////////////////////////////////////
 $objDB->transactionBegin();
 
-// ÅĞÏ¿¥Ç¡¼¥¿¤Î¼èÆÀ
+// ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 $registJson = str_replace('/quot/', '"', $aryData['registJson']);
 $regist = json_decode($registJson, true);
 mb_convert_variables('EUC-JP', 'UTF-8', $regist);
@@ -79,10 +79,10 @@ unset($registJson);
 
 $objRegist = new registInsertData();
 
-// ÅĞÏ¿¤ËÉ¬Í×¤Ê¥Ç¡¼¥¿¤ò¥»¥Ã¥È¤¹¤ë
+// ç™»éŒ²ã«å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 $objRegist->setRegistParam($regist, $objAuth->UserCode, $objDB);
 
-// ¸«ÀÑ¸¶²ÁÅĞÏ¿¤Î¾ì¹ç¡¢INSERT
+// è¦‹ç©åŸä¾¡ç™»éŒ²ã®å ´åˆã€INSERT
 if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 ) {
 	$objRegist->regist();
 }
@@ -90,10 +90,10 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 ) {
 $objDB->transactionCommit();
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 
-// ¸«ÀÑ¸¶²Á¾ğÊó¤Î¾ì¹ç
+// è¦‹ç©åŸä¾¡æƒ…å ±ã®å ´åˆ
 if( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 )
 {
 	$sessionID = $aryData['strSessionID'];
@@ -102,9 +102,9 @@ if( $aryData["lngFunctionCode"] == DEF_FUNCTION_E1 )
 	$estimateNo = $objRegist->getEstimateNo();
 
 	if ($reviseCode === '00') {
-		$completeMessage = "À½ÉÊ¥³¡¼¥É". $productCode. "¤ò¿·µ¬ÅĞÏ¿¤¤¤¿¤·¤Ş¤·¤¿¡£";
+		$completeMessage = "è£½å“ã‚³ãƒ¼ãƒ‰". $productCode. "ã‚’æ–°è¦ç™»éŒ²ã„ãŸã—ã¾ã—ãŸã€‚";
 	} else {
-		$completeMessage = "À½ÉÊ¥³¡¼¥É". $productCode. "¤ò". $productCode. "_". $reviseCode. "¤È¤·¤ÆºÆÈÎÅĞÏ¿¤¤¤¿¤·¤Ş¤·¤¿¡£";
+		$completeMessage = "è£½å“ã‚³ãƒ¼ãƒ‰". $productCode. "ã‚’". $productCode. "_". $reviseCode. "ã¨ã—ã¦å†è²©ç™»éŒ²ã„ãŸã—ã¾ã—ãŸã€‚";
 	}
 
 	$postData = array(

@@ -25,10 +25,10 @@ var hiddenCellValue = [];
 var hiddenList = [];
 var hiddenRowHeight = [];
 
-// É½¼¨ÍÑ¥Ç¡¼¥¿¤ÎºîÀ®
+// è¡¨ç¤ºç”¨ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
 for (var sNum = 0; sNum < sheetNumber; sNum++) {
   var sheetData = result[sNum];
-  // ³«»Ï¹ÔÎó¡¢½ªÎ»¹ÔÎó¤Î¼èÆÀ
+  // é–‹å§‹è¡Œåˆ—ã€çµ‚äº†è¡Œåˆ—ã®å–å¾—
   startRow = sheetData['startRow'];
   endRow = sheetData['endRow'];
   startColumn = sheetData['startColumn'];
@@ -36,13 +36,13 @@ for (var sNum = 0; sNum < sheetNumber; sNum++) {
 
   hiddenList[sNum] = sheetData['hiddenList'];
 
-  // ¥»¥ë¤Î¥Ç¡¼¥¿¼èÆÀ
+  // ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿å–å¾—
   cellData[sNum] = sheetData['cellData'];
 
   cellValue[sNum] = [];
   hiddenCellValue[sNum] = [];
 
-  // ¥»¥ë¤Î¾ğÊó¤òÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+  // ã‚»ãƒ«ã®æƒ…å ±ã‚’é…åˆ—ã«æ ¼ç´ã™ã‚‹
   for (var i = startRow; i <= endRow; i++) {
     var rowValue = [];
     var hiddenRowValue = [];
@@ -57,13 +57,13 @@ for (var sNum = 0; sNum < sheetNumber; sNum++) {
     cellValue[sNum].push(rowValue);
     hiddenCellValue[sNum].push(hiddenRowValue);
   }
-  // ¥Ş¡¼¥¸¥»¥ë¤Î¼èÆÀ
+  // ãƒãƒ¼ã‚¸ã‚»ãƒ«ã®å–å¾—
   merge[sNum] = sheetData['mergedCellsList'];
-  // ¹Ô¤Î¹â¤µ¡¢Îó¤ÎÉı¤ò¼èÆÀ
+  // è¡Œã®é«˜ã•ã€åˆ—ã®å¹…ã‚’å–å¾—
   rowHeight[sNum] = sheetData['rowHeight'];
   columnWidth[sNum] = sheetData['columnWidth'];
   hiddenRowHeight[sNum] = sheetData['hiddenRowHeight'];
-  // ¥»¥ë¤Î¥¯¥é¥¹¤ò¼èÆÀ
+  // ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹ã‚’å–å¾—
   cellClass[sNum] = sheetData['cellClass'];
 
   gridId[sNum] = 'grid' + sNum;
@@ -89,7 +89,7 @@ for (var sNum = 0; sNum < sheetNumber; sNum++) {
   });
 }
 
-// Handsontable¤Îtd¥¿¥°CSS
+// Handsontableã®tdã‚¿ã‚°CSS
 function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
   var id = instance.rootElement.id;
   var number = id.replace('grid', '');

@@ -1,41 +1,41 @@
 $(function() {
     var recipient = "";
-    /* ¥â¡¼¥À¥ë¤ò³«¤¯Á°½èÍı¤¹¤ëÆâÍÆ*/
+    /* ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’é–‹ãå‰å‡¦ç†ã™ã‚‹å†…å®¹*/
     $('#payf_dialog,#product_dialog,#group_dialog,#user_dialog,#location_dialog,#customer_dialog,#location_dialog,#supplier_dialog,#inputuser_dialog,#incharge_dialog')
         .on('show.bs.modal', function (event) {
-        //¥â¡¼¥À¥ë¤ò¸Æ¤Ó½Ğ¤¹¤È¤­¤Ë»È¤ï¤ì¤¿¥Ü¥¿¥ó¤ò¼èÆÀ
+        //ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’å‘¼ã³å‡ºã™ã¨ãã«ä½¿ã‚ã‚ŒãŸãƒœã‚¿ãƒ³ã‚’å–å¾—
         var button = $(event.relatedTarget);
-        //data-whatever ¤ÎÃÍ¤ò¼èÆÀ
+        //data-whatever ã®å€¤ã‚’å–å¾—
         recipient = button.data('whatever');
-        //¥â¡¼¥À¥ë¤Î¥³¡¼¥É¡¢Ì¾¾Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ËÃÍ¤òÀßÄê¤¹¤ë
+        //ãƒ¢ãƒ¼ãƒ€ãƒ«ã®ã‚³ãƒ¼ãƒ‰ã€åç§°ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã«å€¤ã‚’è¨­å®šã™ã‚‹
         $($('input[name="input' + recipient + 'Code"]')).val($("#" + recipient + "Code").val());
         $($('input[name="input' + recipient + 'Name"]')).val($("#" + recipient + "Name").val());
-        //¥â¡¼¥À¥ë¤Î¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤«¤éÃÍ¤ò°ÜÆ°¤¹¤ë
+        //ãƒ¢ãƒ¼ãƒ€ãƒ«ã®ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã‹ã‚‰å€¤ã‚’ç§»å‹•ã™ã‚‹
         $('select#sear' + recipient + 'Result option').remove();
     });
 
-    /* ¥â¡¼¥À¥ë¤ò³«¤¤¤¿¤é½èÍı¤¹¤ëÆâÍÆ*/
+    /* ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’é–‹ã„ãŸã‚‰å‡¦ç†ã™ã‚‹å†…å®¹*/
     $('#payf_dialog,#product_dialog,#group_dialog,#user_dialog,#location_dialog,#customer_dialog,#location_dialog,#supplier_dialog,#inputuser_dialog,#incharge_dialog')
         .on('shown.bs.modal', function (event) {
-        //¥â¡¼¥À¥ë¤ò¸Æ¤Ó½Ğ¤¹¤È¤­¤Ë»È¤ï¤ì¤¿¥Ü¥¿¥ó¤ò¼èÆÀ
+        //ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’å‘¼ã³å‡ºã™ã¨ãã«ä½¿ã‚ã‚ŒãŸãƒœã‚¿ãƒ³ã‚’å–å¾—
         var button = $(event.relatedTarget);
-        //data-whatever ¤ÎÃÍ¤ò¼èÆÀ
+        //data-whatever ã®å€¤ã‚’å–å¾—
         recipient = button.data('whatever');
-        //¥â¡¼¥À¥ë¤Î¥³¡¼¥É¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤Ë¥Õ¥©¡¼¥«¥¹¤¹¤ë
+        //ãƒ¢ãƒ¼ãƒ€ãƒ«ã®ã‚³ãƒ¼ãƒ‰ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã™ã‚‹
         $($('input[name="input' + recipient + 'Code"]')).focus();
     });
 
-    // /* ¥â¡¼¥À¥ë¤òÊÄ¤¸¤ëÁ°½èÍı¤¹¤ëÆâÍÆ*/
+    // /* ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’é–‰ã˜ã‚‹å‰å‡¦ç†ã™ã‚‹å†…å®¹*/
     $('#payf_dialog,#product_dialog,#group_dialog,#user_dialog,#location_dialog,#customer_dialog,#location_dialog,#supplier_dialog,#inputuser_dialog,#incharge_dialog')
         .on('hide.bs.modal', function () {
-            //¥â¡¼¥À¥ë¤Î³Æ¥¤¥ó¥×¥Ã¥È¥Ü¥Ã¥¯¥¹¤ÎÃÍ¤ò¥¯¥ê¥¢¤¹¤ë
+            //ãƒ¢ãƒ¼ãƒ€ãƒ«ã®å„ã‚¤ãƒ³ãƒ—ãƒƒãƒˆãƒœãƒƒã‚¯ã‚¹ã®å€¤ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
             $($('input[name="input' + recipient + 'Code"]')).val('');
             $($('input[name="input' + recipient + 'Name"]')).val('');
             $($('input[name="' + recipient + 'Result"]')).val('');
             $('select#sear' + recipient + 'Result option').remove();
     });
 
-    /* ¥â¡¼¥À¥ë¥¦¥£¥ó¥É¥¦¤ò°ÜÆ°¤Ç¤­¤ë¤è¤¦¤ËÀßÄê¤¹¤ë*/
+    /* ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ç§»å‹•ã§ãã‚‹ã‚ˆã†ã«è¨­å®šã™ã‚‹*/
     $('#payf_dialog,#product_dialog,#group_dialog,#user_dialog,#location_dialog,#customer_dialog,#location_dialog,#supplier_dialog,#inputuser_dialog,#incharge_dialog')
         .draggable({
         handle: ".modal-header"
@@ -43,37 +43,37 @@ $(function() {
 });
 
 $(document).ready(function () {
-    //¥â¡¼¥À¥ë¤Î¥ê¥ó¥¯¤ò¼èÆÀ¤¹¤ë
+    //ãƒ¢ãƒ¼ãƒ€ãƒ«ã®ãƒªãƒ³ã‚¯ã‚’å–å¾—ã™ã‚‹
     var searBtn = document.getElementsByClassName("modal-syncer") ;
     alert("test");
     alert(searBtn);
-    //¥â¡¼¥À¥ë¥¦¥£¥ó¥É¥¦¤ò½Ğ¸½¤µ¤»¤ë¥¯¥ê¥Ã¥¯¥¤¥Ù¥ó¥È
+    //ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å‡ºç¾ã•ã›ã‚‹ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆ
     for(var i=0; i<searBtn.length; i++) {
-        //Á´¤Æ¤Î¥ê¥ó¥¯¤Ë¥¿¥Ã¥Á¥¤¥Ù¥ó¥È¤òÀßÄê¤¹¤ë
+        //å…¨ã¦ã®ãƒªãƒ³ã‚¯ã«ã‚¿ãƒƒãƒã‚¤ãƒ™ãƒ³ãƒˆã‚’è¨­å®šã™ã‚‹
         searBtn[i].onclick = function(){
-            //whatever¤È¤Ê¤ë¥³¥ó¥Æ¥ó¥Ä¤ò³ÎÇ§
+            //whateverã¨ãªã‚‹ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚’ç¢ºèª
             var objId = this.getAttribute("data-whatever");
             alert(objId);
-            //¥â¡¼¥À¥ë¤ò³«¤¤¤¿¤È¤­¡¢ÊÄ¤¸¤¿»şÇØ·Ê¤òÊÑ¹¹¤¹¤ë
+            //ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’é–‹ã„ãŸã¨ãã€é–‰ã˜ãŸæ™‚èƒŒæ™¯ã‚’å¤‰æ›´ã™ã‚‹
             createModalOverlay(this, objId);
 
-            // ¥Õ¥©¡¼¥à¤ò¼èÆÀ¤¹¤ë
+            // ãƒ•ã‚©ãƒ¼ãƒ ã‚’å–å¾—ã™ã‚‹
             var searForm = document.getElementById("sear" + objId + "Form");
             if (searForm == null) {
                 return false ;
             }
-            //¥Õ¥©¡¼¥à¤Î¥µ¥Ö¥ß¥Ã¥È¥¤¥Ù¥ó¥È¤òÄêµÁ¤¹¤ë
+            //ãƒ•ã‚©ãƒ¼ãƒ ã®ã‚µãƒ–ãƒŸãƒƒãƒˆã‚¤ãƒ™ãƒ³ãƒˆã‚’å®šç¾©ã™ã‚‹
             searForm.onsubmit = function(e){
-                //¥Õ¥©¡¼¥à¤Î¥İ¥¹¥È¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+                //ãƒ•ã‚©ãƒ¼ãƒ ã®ãƒã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
                 var postData = $("#sear" + objId + "Form").serialize();
                 if (objId == 'user') {
-                    //Ã´Åö¼Ô¸¡º÷¤Î¾ì¹ç¡¢ÉôÌç¥³¡¼¥É¤ò¥İ¥¹¥È¥Ñ¥é¥á¡¼¥¿¤È¤·¤ÆÅÏ¤¹
+                    //æ‹…å½“è€…æ¤œç´¢ã®å ´åˆã€éƒ¨é–€ã‚³ãƒ¼ãƒ‰ã‚’ãƒã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¨ã—ã¦æ¸¡ã™
                     postData = postData + "&groupCode=" + $('#groupCode').val();
                 } else if(objId == 'incharge') {
-                    //¸ÜµÒÃ´Åö¼Ô¸¡º÷¤Î¾ì¹ç¡¢¸ÜµÒ¥³¡¼¥É¤ò¥İ¥¹¥È¥Ñ¥é¥á¡¼¥¿¤È¤·¤ÆÅÏ¤¹
+                    //é¡§å®¢æ‹…å½“è€…æ¤œç´¢ã®å ´åˆã€é¡§å®¢ã‚³ãƒ¼ãƒ‰ã‚’ãƒã‚¹ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¨ã—ã¦æ¸¡ã™
                     postData = postData + "&customerCode=" + $('#customerCode').val();
                 }
-                //¥¢¥¯¥·¥ç¥óURL¤ò¼èÆÀ¤¹¤ë
+                //ã‚¢ã‚¯ã‚·ãƒ§ãƒ³URLã‚’å–å¾—ã™ã‚‹
                 var formURL = $(this).attr("action");
                 $.ajax({
                     headers: {
@@ -85,22 +85,22 @@ $(document).ready(function () {
                     dataType : "json",
                     // scriptCharset: 'utf-8',
                     success : function(josn) {
-                        //¥ì¥¹¥İ¥ó¥¹¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+                        //ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
                         var $data = josn.data;
-                        //¥ê¥¶¥ë¥È¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤Ë¥Ç¡¼¥¿·ï¿ô¤òÀßÄê
+                        //ãƒªã‚¶ãƒ«ãƒˆãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã«ãƒ‡ãƒ¼ã‚¿ä»¶æ•°ã‚’è¨­å®š
                         $($('input[name="' + objId + 'Result"]')).val($data.length);
-                        //¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤Î´ûÂ¸¥Ç¡¼¥¿¤òºï½ü¤¹¤ë
+                        //ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã®æ—¢å­˜ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã™ã‚‹
                         $('select#sear' + objId + 'Result option').remove();
-                        //¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤ò¼èÆÀ¤¹¤ë
+                        //ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
                         var $content = $('#sear' + objId + 'Result');
-                        // ¥ì¥¹¥İ¥ó¥¹¥Ç¡¼¥¿¤¬£°·ï¤Î¾ì¹ç¡¢option¤ËNoData¤ò¥»¥Ã¥È
+                        // ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ‡ãƒ¼ã‚¿ãŒï¼ä»¶ã®å ´åˆã€optionã«NoDataã‚’ã‚»ãƒƒãƒˆ
                         if ($data.length == 0) {
                             $content.append($('<option>')
                                 .html('(No&nbsp;&nbsp;Data)')
                             );
                             $content.prop('disabled', true);
                         } else {
-                            //¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤Ë¥Ç¡¼¥¿¤òÀßÄê¤¹¤ë
+                            //ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã«ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹
                             for (var i =0; i<$data.length; i++) {
                                 $content.append($('<option>')
                                     .attr({
@@ -120,12 +120,12 @@ $(document).ready(function () {
                 e.preventDefault();
             }
 
-            // ¥¯¥ê¥¢¥Ü¥¿¥ó¤ò¼èÆÀ¤¹¤ë
+            // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³ã‚’å–å¾—ã™ã‚‹
             var clearBtn = document.getElementById("clear" + objId + "Btn");
             if (clearBtn == null) {
                 return false ;
             }
-            // ¥¯¥ê¥¢¥Ü¥¿¥ó¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡¢³Æ¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ÎÃÍ¤ò¥¯¥ê¥¢¤¹¤ë
+            // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨ã€å„ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã®å€¤ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
             clearBtn.onclick = function(){
                 $($('input[name="input' + objId + 'Code"]')).val('');
                 $($('input[name="input' + objId + 'Name"]')).val('');
@@ -133,49 +133,49 @@ $(document).ready(function () {
                 $($('input[name="' + objId + 'Result"]')).val('0');
             }
 
-            // ¸¡º÷¥Ü¥¿¥ó¤ò¼èÆÀ¤¹¤ë
+            // æ¤œç´¢ãƒœã‚¿ãƒ³ã‚’å–å¾—ã™ã‚‹
             var searBtn = document.getElementById("sear" + objId + "Btn");
             if (searBtn == null) {
                 return false ;
             }
-            // ¸¡º÷¥Ü¥¿¥ó¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡¢¥Õ¥©¡¼¥à¤ò¥µ¥Ö¥ß¥Ã¥È¤¹¤ë
+            // æ¤œç´¢ãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨ã€ãƒ•ã‚©ãƒ¼ãƒ ã‚’ã‚µãƒ–ãƒŸãƒƒãƒˆã™ã‚‹
             searBtn.onclick = function(){
                 $("#sear" + objId + "Form").submit();
             }
 
-            // Å¬ÍÑ¥Ü¥¿¥ó¤ò¼èÆÀ¤¹¤ë
+            // é©ç”¨ãƒœã‚¿ãƒ³ã‚’å–å¾—ã™ã‚‹
             var applyBtn = document.getElementById("apply" + objId + "Btn");
             if (applyBtn == null) {
                 return false ;
             }
-            // Å¬±ş¥Ü¥¿¥ó¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡¢¥»¥ì¥¯¥·¥ç¥ó¤ËÁªÂò¤·¤¿ÃÍ¤ò¸Æ¤Ó½Ğ¤·¸µ¤Ë°ú¤­ÅÏ¤¹
+            // é©å¿œãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨ã€ã‚»ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã«é¸æŠã—ãŸå€¤ã‚’å‘¼ã³å‡ºã—å…ƒã«å¼•ãæ¸¡ã™
             applyBtn.onclick = function() {
                 if ($('#sear' + objId + 'Result option:selected').val() == null)
                 {
                     return false;
                 }
-                // ÁªÂò¤µ¤ì¤Æ¤¤¤ëvalueÂ°À­ÃÍ¤ò¼è¤ê½Ğ¤¹
+                // é¸æŠã•ã‚Œã¦ã„ã‚‹valueå±æ€§å€¤ã‚’å–ã‚Šå‡ºã™
                 // var val = $('#searResult option:selected').val();
-                // ÁªÂò¤µ¤ì¤Æ¤¤¤ëÉ½¼¨Ê¸»úÎó¤ò¼è¤ê½Ğ¤¹
+                // é¸æŠã•ã‚Œã¦ã„ã‚‹è¡¨ç¤ºæ–‡å­—åˆ—ã‚’å–ã‚Šå‡ºã™
                 var txt = $('#sear' + objId + 'Result option:selected').text().split('???');
                 $("#" + objId + "Code").val(txt[0]);
                 $("#" + objId + "Name").val(txt[1]);
-                // ¥â¡¼¥À¥ë¥¦¥£¥ó¥É¥¦¤òÊÄ¤¸¤ë
+                // ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
                 $('#' + objId + '_dialog').modal('hide');
             }
 
-            // ¥»¥ì¥¯¥·¥ç¥ó¥Ü¥Ã¥¯¥¹¤ò¼èÆÀ¤¹¤ë
+            // ã‚»ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ãƒœãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
             var searResult = document.getElementById("sear" + objId + "Result");
             if (searResult == null) {
                 return false ;
             }
-            // ¥»¥ì¥¯¥·¥ç¥ó¥Ü¥Ã¥¯¥¹¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡¢¥»¥ì¥¯¥·¥ç¥ó¤ËÁªÂò¤·¤¿ÃÍ¤ò¥Æ¥­¥¹¥È¤Ë°ú¤­ÅÏ¤¹
+            // ã‚»ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ãƒœãƒƒã‚¯ã‚¹ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨ã€ã‚»ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ã«é¸æŠã—ãŸå€¤ã‚’ãƒ†ã‚­ã‚¹ãƒˆã«å¼•ãæ¸¡ã™
             searResult.onchange = function () {
                 var txt = $('#sear' + objId + 'Result option:selected').text().split('???');
                 $($('input[name="input' + objId + 'Code"]')).val(txt[0]);
                 $($('input[name="input' + objId + 'Name"]')).val(txt[1]);
             }
-            // SHIFT+TAB¥­¡¼¤ÇinputCode¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ò²¡²¼¤·¤¿¤È¤­¡¢Å¬±ş¥Ü¥¿¥ó¤Ë¥Õ¥©¡¼¥«¥¹¤ò°ÜÆ°
+            // SHIFT+TABã‚­ãƒ¼ã§inputCodeãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã‚’æŠ¼ä¸‹ã—ãŸã¨ãã€é©å¿œãƒœã‚¿ãƒ³ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’ç§»å‹•
             $($('input[name="input' + objId + 'Code"]')).on('keydown', function(e) {
                 if (e.keyCode == 9 && e.shiftKey) {
                     $("#apply"+objId + "Btn").focus();
@@ -183,22 +183,22 @@ $(document).ready(function () {
                 }
             });
 
-            // tab¥­¡¼¤ÇÅ¬±ş¥Ü¥¿¥ó¤ò¥¯¥ê¥Ã¥¯¤¹¤ë¤È¡¢inputCode¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤Ë¥Õ¥©¡¼¥«¥¹¤ò°ÜÆ°¤¹¤ë
+            // tabã‚­ãƒ¼ã§é©å¿œãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹ã¨ã€inputCodeãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’ç§»å‹•ã™ã‚‹
             $("#apply"+objId + "Btn").on('keydown', function(e) {
-                // Tab¤Î¤ß¤Çmsw¤ÎºÇ½é¤ÎÍ×ÁÇ¤Ë¥Õ¥©¡¼¥«¥¹¤òÌá¤¹
+                // Tabã®ã¿ã§mswã®æœ€åˆã®è¦ç´ ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’æˆ»ã™
                 if(e.keyCode == 9 && !e.shiftKey){
-                    //¥â¡¼¥À¥ë¤Î¥³¡¼¥É¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤Ë¥Õ¥©¡¼¥«¥¹¤¹¤ë
+                    //ãƒ¢ãƒ¼ãƒ€ãƒ«ã®ã‚³ãƒ¼ãƒ‰ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã™ã‚‹
                     $($('input[name="input' + objId + 'Code"]')).focus();
                     return false;
                 }
             });
         }
     }
-    //¥ê¥µ¥¤¥º¤µ¤ì¤¿¤é¡¢¥»¥ó¥¿¥ê¥ó¥°¤ò¤¹¤ë´Ø¿ô[centeringModalSyncer()]¤ò¼Â¹Ô¤¹¤ë
+    //ãƒªã‚µã‚¤ã‚ºã•ã‚ŒãŸã‚‰ã€ã‚»ãƒ³ã‚¿ãƒªãƒ³ã‚°ã‚’ã™ã‚‹é–¢æ•°[centeringModalSyncer()]ã‚’å®Ÿè¡Œã™ã‚‹
     $(window).resize(centeringModalSyncer) ;
 });
 /**
- * ¸¡º÷¥â¡¼¥À¥ë¤òºîÀ®¤¹¤ë
+ * æ¤œç´¢ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’ä½œæˆã™ã‚‹
  * @param objId
  * @param objName
  * @param inputCode
@@ -219,7 +219,7 @@ function createModal(objId, objName, inputCode, inputName) {
     div.push("<div class='modal-dialog'>");
     div.push("<div class='modal-content'>");
     div.push("<div class='modal-header text-white bg-steelblue pl-1 pb-0'>");
-    div.push("<small id='dialog" + objId + "Title'>" + objName + "¸¡º÷</small>");
+    div.push("<small id='dialog" + objId + "Title'>" + objName + "æ¤œç´¢</small>");
     div.push("<button type='button' class='close' id='" + objId + "Close' data-dismiss='modal'>");
     div.push("<span aria-hidden='true'>&times</span>");
     div.push("</button>");
@@ -227,13 +227,13 @@ function createModal(objId, objName, inputCode, inputName) {
     div.push("<div class='modal-body bg-white p-1 pb-0'>");
     div.push("<div class='my-0 p-0 bg-white rounded box-shadow border'>");
     div.push("<div class='p-1 bg-pervenche rounded-top'>");
-    div.push("<h6 class='mb-0 text-white small'>¸¡º÷</h6>");
+    div.push("<h6 class='mb-0 text-white small'>æ¤œç´¢</h6>");
     div.push("</div>");
     div.push("<div class='col-12 order-md-1 p-1'>");
     div.push("<form id='sear" + objId + "Form' action='/master/search/" + objId + "' method='POST'>");
     div.push("<div class='row col-12 pb-1'>");
     div.push("<div class='" + lableClass + " pt-1 border-left border-top border-bottom border-gray small'>");
-    div.push("<label id='label" + objId + "Code'>" + objName + "¥³¡¼¥É</label>");
+    div.push("<label id='label" + objId + "Code'>" + objName + "ã‚³ãƒ¼ãƒ‰</label>");
     div.push("</div>");
     div.push("<div class='col-2 p-1 border-right border-top border-bottom border-gray'>");
     div.push("<input type='text' class='form-control form-control-sm' name='input" + objId + "Code' value='" + inputCode + "' tabindex='1'>");
@@ -241,21 +241,21 @@ function createModal(objId, objName, inputCode, inputName) {
     div.push("</div>");
     div.push("<div class='row col-12 pb-1'>");
     div.push("<div class='" + lableClass + " pt-1 border-left border-top border-bottom border-gray small'>");
-    div.push("<label id='label" + objId + "Name'>" + objName + "Ì¾¾Î</label>");
+    div.push("<label id='label" + objId + "Name'>" + objName + "åç§°</label>");
     div.push("</div>");
     div.push("<div class='" + textClass + " p-1 border-right border-top border-bottom border-gray small'>");
     div.push("<input type='text' class='form-control form-control-sm' name='input" + objId + "Name' value='" + inputName + "' tabindex='2'>");
     div.push("</div>");
     div.push("</div>");
     div.push("<div class='col-12 pb-0 text-center'>");
-    div.push("<button type='button' class='btn btn-sm btn-info' tabindex='3' id='sear" + objId + "Btn' >¸¡¡¡º÷</button>");
+    div.push("<button type='button' class='btn btn-sm btn-info' tabindex='3' id='sear" + objId + "Btn' >æ¤œã€€ç´¢</button>");
     div.push("</div>");
     div.push("</form>");
     div.push("</div>");
     div.push("</div>");
     div.push("<div class='bg-white rounded box-shadow border my-1 p-0'>");
     div.push("<div class='p-1 bg-pervenche rounded-top'>");
-    div.push("<h6 class='mb-0 text-white small'>¸¡º÷·ë²Ì</h6>");
+    div.push("<h6 class='mb-0 text-white small'>æ¤œç´¢çµæœ</h6>");
     div.push("</div>");
     div.push("<div class='col-12 p-1'>");
     div.push("<div class='col-12'>");
@@ -264,8 +264,8 @@ function createModal(objId, objName, inputCode, inputName) {
     div.push("</div>");
     div.push("<div class='row col-12 p-0 pb-1'>");
     div.push("<div class='col-8 text-right'>");
-    div.push("<button type='button' class='btn btn-sm  btn-info small' tabindex='5' id='clear" + objId + "Btn'>¥¯¥ê¥¢</button> ");
-    div.push("<button type='button' class='btn btn-sm  btn-info' tabindex='6' id='apply" + objId + "Btn'>Å¬¡¡ÍÑ</button>");
+    div.push("<button type='button' class='btn btn-sm  btn-info small' tabindex='5' id='clear" + objId + "Btn'>ã‚¯ãƒªã‚¢</button> ");
+    div.push("<button type='button' class='btn btn-sm  btn-info' tabindex='6' id='apply" + objId + "Btn'>é©ã€€ç”¨</button>");
     div.push("</div>");
     div.push("<div class='input-group col-4'>");
     div.push("<div class='input-group-prepend small'>");
@@ -283,83 +283,83 @@ function createModal(objId, objName, inputCode, inputName) {
 }
 
 /**
- * ¥â¡¼¥À¥ë¤ò³«¤¯¤È¤­ÊÄ¤¸¤ë¤È¤­¡¢ÇØ·Ê¤òÊÑ²½¤¹¤ë½èÍı
+ * ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’é–‹ãã¨ãé–‰ã˜ã‚‹ã¨ãã€èƒŒæ™¯ã‚’å¤‰åŒ–ã™ã‚‹å‡¦ç†
  * @param {*} btnLink 
  */
 function createModalOverlay(btnLink, objId) {
-    //¥Ü¥¿¥ó¤«¤é¥Õ¥©¡¼¥«¥¹¤ò³°¤¹
+    //ãƒœã‚¿ãƒ³ã‹ã‚‰ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’å¤–ã™
     btnLink.blur() ;
-    //¥¿¡¼¥²¥Ã¥È¤È¤Ê¤ë¥³¥ó¥Æ¥ó¥Ä¤ò³ÎÇ§
+    //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã¨ãªã‚‹ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚’ç¢ºèª
     var target = btnLink.getAttribute( "data-target" ) ;
-    //¥¿¡¼¥²¥Ã¥È¤¬Â¸ºß¤·¤Ê¤±¤ì¤Ğ½ªÎ»
+    //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãŒå­˜åœ¨ã—ãªã‘ã‚Œã°çµ‚äº†
     if( typeof( target )=="undefined" || !target || target==null ){
         return false ;
     }
-    //¥³¥ó¥Æ¥ó¥Ä¤È¤Ê¤ëÍ×ÁÇ¤ò¼èÆÀ
+    //ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã¨ãªã‚‹è¦ç´ ã‚’å–å¾—
     nowModalSyncer = document.getElementById(objId + "_dialog") ;
-    //¥¿¡¼¥²¥Ã¥È¤¬Â¸ºß¤·¤Ê¤±¤ì¤Ğ½ªÎ»
+    //ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãŒå­˜åœ¨ã—ãªã‘ã‚Œã°çµ‚äº†
     if( nowModalSyncer == null ){
         return false ;
     }
 
-    //¥­¡¼¥Ü¡¼¥ÉÁàºî¤Ê¤É¤Ë¤è¤ê¡¢¥ª¡¼¥Ğ¡¼¥ì¥¤¤¬Â¿½Åµ¯Æ°¤¹¤ë¤Î¤òËÉ»ß¤¹¤ë
-    if( $( "#modal-overlay" )[0] ) return false ;		//¿·¤·¤¯¥â¡¼¥À¥ë¥¦¥£¥ó¥É¥¦¤òµ¯Æ°¤·¤Ê¤¤
-    //if($("#modal-overlay")[0]) $("#modal-overlay").remove() ;		//¸½ºß¤Î¥â¡¼¥À¥ë¥¦¥£¥ó¥É¥¦¤òºï½ü¤·¤Æ¿·¤·¤¯µ¯Æ°¤¹¤ë
+    //ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æ“ä½œãªã©ã«ã‚ˆã‚Šã€ã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤ãŒå¤šé‡èµ·å‹•ã™ã‚‹ã®ã‚’é˜²æ­¢ã™ã‚‹
+    if( $( "#modal-overlay" )[0] ) return false ;		//æ–°ã—ããƒ¢ãƒ¼ãƒ€ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’èµ·å‹•ã—ãªã„
+    //if($("#modal-overlay")[0]) $("#modal-overlay").remove() ;		//ç¾åœ¨ã®ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’å‰Šé™¤ã—ã¦æ–°ã—ãèµ·å‹•ã™ã‚‹
 
-    //¥¹¥¯¥í¡¼¥ë°ÌÃÖ¤òµ­Ï¿¤¹¤ë
+    //ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ä½ç½®ã‚’è¨˜éŒ²ã™ã‚‹
     var dElm = document.documentElement , dBody = document.body;
-    sX_syncerModal = dElm.scrollLeft || dBody.scrollLeft;	//¸½ºß°ÌÃÖ¤ÎXºÂÉ¸
-    sY_syncerModal = dElm.scrollTop || dBody.scrollTop;		//¸½ºß°ÌÃÖ¤ÎYºÂÉ¸
+    sX_syncerModal = dElm.scrollLeft || dBody.scrollLeft;	//ç¾åœ¨ä½ç½®ã®Xåº§æ¨™
+    sY_syncerModal = dElm.scrollTop || dBody.scrollTop;		//ç¾åœ¨ä½ç½®ã®Yåº§æ¨™
 
-    //¥ª¡¼¥Ğ¡¼¥ì¥¤¤ò½Ğ¸½¤µ¤»¤ë
+    //ã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤ã‚’å‡ºç¾ã•ã›ã‚‹
     $("body").append( '<div id="modal-overlay"></div>' ) ;
 
     $("#modal-overlay").fadeIn( "fast" ) ;
 
-    //¥³¥ó¥Æ¥ó¥Ä¤ò¥»¥ó¥¿¥ê¥ó¥°¤¹¤ë
+    //ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚’ã‚»ãƒ³ã‚¿ãƒªãƒ³ã‚°ã™ã‚‹
     centeringModalSyncer(nowModalSyncer) ;
 
-    //¥³¥ó¥Æ¥ó¥Ä¤ò¥Õ¥§¡¼¥É¥¤¥ó¤¹¤ë
+    //ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã‚’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã™ã‚‹
     $(nowModalSyncer).fadeIn( "slow" ) ;
 
-    //[#modal-overlay]¡¢¤Ş¤¿¤Ï[#modal-close]¤ò¥¯¥ê¥Ã¥¯¤·¤¿¤é¡Ä
+    //[#modal-overlay]ã€ã¾ãŸã¯[#modal-close]ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸã‚‰â€¦
     $("#modal-overlay,#"+objId + "Close,#apply"+objId + "Btn").unbind().click( function() {
         alert(sX_syncerModal);
-        //¥¹¥¯¥í¡¼¥ë°ÌÃÖ¤òÌá¤¹
+        //ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ä½ç½®ã‚’æˆ»ã™
         window.scrollTo( sX_syncerModal , sY_syncerModal );
 
-        //[#modal-content]¤È[#modal-overlay]¤ò¥Õ¥§¡¼¥É¥¢¥¦¥È¤·¤¿¸å¤Ë¡Ä
+        //[#modal-content]ã¨[#modal-overlay]ã‚’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã—ãŸå¾Œã«â€¦
         $("#modal-content,#modal-overlay").fadeOut( "fast" , function() {
 
-            //[#modal-overlay]¤òºï½ü¤¹¤ë
+            //[#modal-overlay]ã‚’å‰Šé™¤ã™ã‚‹
             $( '#modal-overlay' ).remove() ;
 
         } ) ;
-        //¸½ºß¤Î¥³¥ó¥Æ¥ó¥Ä¾ğÊó¤òºï½ü
+        //ç¾åœ¨ã®ã‚³ãƒ³ãƒ†ãƒ³ãƒ„æƒ…å ±ã‚’å‰Šé™¤
         nowModalSyncer = null ;
     } ) ;
 }
 
 /**
- * ¥»¥ó¥¿¥ê¥ó¥°¤ò¼Â¹Ô¤¹¤ë´Ø¿ô
+ * ã‚»ãƒ³ã‚¿ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã™ã‚‹é–¢æ•°
  */
 function centeringModalSyncer() {
-    //¥â¡¼¥À¥ë¥¦¥£¥ó¥É¥¦¤¬³«¤¤¤Æ¤Ê¤±¤ì¤Ğ½ªÎ»
+    //ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒé–‹ã„ã¦ãªã‘ã‚Œã°çµ‚äº†
     if(nowModalSyncer == null)
     {
         return false ;
     }
-    //²èÌÌ(¥¦¥£¥ó¥É¥¦)¤ÎÉı¡¢¹â¤µ¤ò¼èÆÀ
+    //ç”»é¢(ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦)ã®å¹…ã€é«˜ã•ã‚’å–å¾—
     var w = $( window ).width() ;
     var h = $( window ).height() ;
 
-    //¥³¥ó¥Æ¥ó¥Ä(#modal-content)¤ÎÉı¡¢¹â¤µ¤ò¼èÆÀ
-    // jQuery¤Î¥Ğ¡¼¥¸¥ç¥ó¤Ë¤è¤Ã¤Æ¤Ï¡¢°ú¿ô[{margin:true}]¤ò»ØÄê¤·¤¿»ş¡¢ÉÔ¶ñ¹ç¤òµ¯¤³¤·¤Ş¤¹¡£
+    //ã‚³ãƒ³ãƒ†ãƒ³ãƒ„(#modal-content)ã®å¹…ã€é«˜ã•ã‚’å–å¾—
+    // jQueryã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã«ã‚ˆã£ã¦ã¯ã€å¼•æ•°[{margin:true}]ã‚’æŒ‡å®šã—ãŸæ™‚ã€ä¸å…·åˆã‚’èµ·ã“ã—ã¾ã™ã€‚
     var cw = $( nowModalSyncer ).outerWidth( {margin:true} ) ;
     var ch = $( nowModalSyncer ).outerHeight( {margin:true} ) ;
     // var cw = $( nowModalSyncer ).outerWidth() ;
     // var ch = $( nowModalSyncer ).outerHeight() ;
-    //¥»¥ó¥¿¥ê¥ó¥°¤ò¼Â¹Ô¤¹¤ë
+    //ã‚»ãƒ³ã‚¿ãƒªãƒ³ã‚°ã‚’å®Ÿè¡Œã™ã‚‹
     $(nowModalSyncer).css( {"left": ((w - cw)/2) + "px","top": ((h - ch)/2) + "px"} ) ;
     
 }

@@ -1,12 +1,12 @@
 
 (function(){
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó²¡²¼»ş¤ÎµóÆ°
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®æŒ™å‹•
     $('img.close-action').on({
         'click' : function (){
             window.close();
         }
     });
-    // ºï½ü¥Ü¥¿¥ó²¡²¼»ş¤ÎµóÆ°
+    // å‰Šé™¤ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®æŒ™å‹•
     $('img.delete-action').on({
         'click' : function (){
             url = '/mm/delete/deleteMoldHistory.php';
@@ -15,7 +15,7 @@
             historyNo = 'HistoryNo=' + $(this).attr('HistoryNo');
             version = 'Version=' + $(this).attr('Version');
 
-            // ºï½ü¥ê¥¯¥¨¥¹¥È
+            // å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
             window.location.href = url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version;
         }
     });

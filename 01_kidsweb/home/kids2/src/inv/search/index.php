@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       ÀÁµá´ÉÍý  ÀÁµá½ñÅÐÏ¿²èÌÌ
+ *       è«‹æ±‚ç®¡ç†  è«‹æ±‚æ›¸ç™»éŒ²ç”»é¢
  *
  *
  *       @package    K.I.D.S.
@@ -13,72 +13,72 @@
  *       @version    2.00
  *
  *
- *       ½èÍý³µÍ×
- *         ¡¦ÅÐÏ¿»þ¤ÎÆþÎÏ²èÌÌ¤òÉ½¼¨
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»ç™»éŒ²æ™‚ã®å…¥åŠ›ç”»é¢ã‚’è¡¨ç¤º
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require SRC_ROOT . "m/cmn/lib_m.php";
 require SRC_ROOT . "inv/cmn/lib_regist.php";
 
-// ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 
-// DB¥ª¡¼¥×¥ó
+// DBã‚ªãƒ¼ãƒ—ãƒ³
 $objDB->open("", "", "", "");
 
-// ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 if ($_POST) {
     $aryData = $_POST;
 } elseif ($_GET) {
     $aryData = $_GET;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// cookie¤ËSET
+// cookieã«SET
 if (!empty($aryData["strSessionID"])) {
     setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// 2200 ÀÁµá´ÉÍý
+// 2200 è«‹æ±‚ç®¡ç†
 if (!fncCheckAuthority(DEF_FUNCTION_INV0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
-// 2202 ÀÁµá½ñ¸¡º÷
+// 2202 è«‹æ±‚æ›¸æ¤œç´¢
 if (!fncCheckAuthority(DEF_FUNCTION_INV2, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
-// 2203 ÀÁµá´ÉÍý¡ÊÀÁµá¸¡º÷¡¡´ÉÍý¥â¡¼¥É¡Ë
+// 2203 è«‹æ±‚ç®¡ç†ï¼ˆè«‹æ±‚æ¤œç´¢ã€€ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ï¼‰
 if (fncCheckAuthority(DEF_FUNCTION_INV3, $objAuth)) {
     $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
 } else {
     $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
 }
 
-// ¥Ø¥ë¥×ÂÐ±þ
+// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 $aryData["lngFunctionCode"] = DEF_FUNCTION_INV0;
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/search/search.tmpl", $aryData, $objAuth);
 
 $objDB->close();

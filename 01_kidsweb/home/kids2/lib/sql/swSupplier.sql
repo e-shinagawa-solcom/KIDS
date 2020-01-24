@@ -1,8 +1,8 @@
 /*
-	³µÍ×¡§»ÅÆşÀè¸¡º÷
-	ÂĞ¾İ¡§¶¦ÄÌ¥µ¥Ö¥¦¥£¥ó¥É¥¦
-	ºîÀ®¡§ºØÆ£ÏÂ»Ö
-	È÷¹Í¡§°ìÃ×¤¹¤ë¡Ö¥³¡¼¥É¡ÜÌ¾¾Î¡×°ìÍ÷¤òÀ¸À®
+	æ¦‚è¦ï¼šä»•å…¥å…ˆæ¤œç´¢
+	å¯¾è±¡ï¼šå…±é€šã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+	ä½œæˆï¼šæ–è—¤å’Œå¿—
+	å‚™è€ƒï¼šä¸€è‡´ã™ã‚‹ã€Œã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã€ä¸€è¦§ã‚’ç”Ÿæˆ
 */
 SELECT mc.strcompanydisplaycode,(mc.strcompanydisplaycode || ' ' || mc.strcompanydisplayname) AS strcompanydisplaycodename, mc.strcompanydisplayname
 FROM m_company mc, m_attribute ma, m_attributerelation mar

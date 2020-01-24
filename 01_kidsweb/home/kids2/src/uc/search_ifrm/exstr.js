@@ -35,22 +35,22 @@ function ChgEtoJ( lngCount )
 	else if ( lngCount == 1 )
 	{
 
-		DetailSegs.innerText = '¾ÜºÙ';
-		LoginPermissionSegs.innerText = '¥í¥°¥¤¥óµö²Ä';
-		UserCodeSegs.innerText = '¥æ¡¼¥¶¡¼¥³¡¼¥É';
-		UserIDSegs.innerText = '¥æ¡¼¥¶¡¼ID';
-		EmailPermissionSegs.innerText = '¥á¡¼¥ëÇÛ¿®µö²Ä';
-		EmailSegs.innerText = '¥á¡¼¥ë¥¢¥É¥ì¥¹';
-		DisplayUserSegs.innerText = '¥æ¡¼¥¶¡¼É½¼¨';
-		DisplayUserCodeSegs.innerText = 'É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É';
-		DisplayUserNameSegs.innerText = 'É½¼¨¥æ¡¼¥¶¡¼Ì¾';
-		UserFullNameSegs.innerText = '¥Õ¥ë¥Í¡¼¥à';
-		CompanySegs.innerText = '²ñ¼Ò';
-		GroupSegs.innerText = '¥°¥ë¡¼¥×';
-		AuthorityGroupSegs.innerText = '¸¢¸Â¥°¥ë¡¼¥×';
-		AccessIPAddressSegs.innerText = '¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹';
-		RemarkSegs.innerText = 'È÷¹Í';
-		FixSegs.innerText = '½¤Àµ';
+		DetailSegs.innerText = 'è©³ç´°';
+		LoginPermissionSegs.innerText = 'ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯';
+		UserCodeSegs.innerText = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰';
+		UserIDSegs.innerText = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ID';
+		EmailPermissionSegs.innerText = 'ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯';
+		EmailSegs.innerText = 'ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹';
+		DisplayUserSegs.innerText = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤º';
+		DisplayUserCodeSegs.innerText = 'è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰';
+		DisplayUserNameSegs.innerText = 'è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å';
+		UserFullNameSegs.innerText = 'ãƒ•ãƒ«ãƒãƒ¼ãƒ ';
+		CompanySegs.innerText = 'ä¼šç¤¾';
+		GroupSegs.innerText = 'ã‚°ãƒ«ãƒ¼ãƒ—';
+		AuthorityGroupSegs.innerText = 'æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—';
+		AccessIPAddressSegs.innerText = 'ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹';
+		RemarkSegs.innerText = 'å‚™è€ƒ';
+		FixSegs.innerText = 'ä¿®æ­£';
 
 
 		ViewSearch1.innerHTML= vishImgJ;

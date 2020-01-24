@@ -67,51 +67,51 @@ function ChgEtoJ( lngCount )
 ////////////////////////////////// JAPANESE /////////////////////////////////////
 	else if ( lngCount == 1 )
 	{
-		WFStatus.innerText       = '¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ';
-		ProductsCode.innerText   = 'À½ÉÊ¥³¡¼¥É';
-		ProductsNameJa.innerText = 'À½ÉÊÌ¾¾Î(ÆüËÜ¸ì)';
-		ProductsNameEn.innerText = 'À½ÉÊÌ¾¾Î(±Ñ¸ì)';
-		InjectionMold.innerText  = '£Î£ï¡¥';
-		DeliveryDate.innerText   = 'Ç¼´ü';
+		WFStatus.innerText       = 'ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹';
+		ProductsCode.innerText   = 'è£½å“ã‚³ãƒ¼ãƒ‰';
+		ProductsNameJa.innerText = 'è£½å“åç§°(æ—¥æœ¬èª)';
+		ProductsNameEn.innerText = 'è£½å“åç§°(è‹±èª)';
+		InjectionMold.innerText  = 'ï¼®ï½ï¼';
+		DeliveryDate.innerText   = 'ç´æœŸ';
 
-		SegA01.innerText = '·×¾åÆü';
-		SegA02.innerText = 'È¯Ãí£Î£Ï.';
-		SegA03.innerText = '»ÅÆşÀè';
-		SegA04.innerText = 'ÉôÌç';
-		SegA05.innerText = 'Ã´Åö¼Ô';
-		SegA07.innerText = '¾õÂÖ';
-		SegA11.innerText = '»ÙÊ§¾ò·ï';
-		SegA12.innerText = 'È¯ÃíÍ­¸ú´ü¸ÂÆü';
-		SegA13.innerText = 'È÷¹Í';
-		SegA14.innerText = '¾ÜºÙ';
-		SegA15.innerText = 'ÅĞÏ¿Æü';
-		SegA16.innerText = '¹ç·×¶â³Û';
-		SegA17.innerText = 'ÌÀºÙ¹ÔÈÖ¹æ';
-		SegA18.innerText = 'ÆşÎÏ¼Ô';
+		SegA01.innerText = 'è¨ˆä¸Šæ—¥';
+		SegA02.innerText = 'ç™ºæ³¨ï¼®ï¼¯.';
+		SegA03.innerText = 'ä»•å…¥å…ˆ';
+		SegA04.innerText = 'éƒ¨é–€';
+		SegA05.innerText = 'æ‹…å½“è€…';
+		SegA07.innerText = 'çŠ¶æ…‹';
+		SegA11.innerText = 'æ”¯æ‰•æ¡ä»¶';
+		SegA12.innerText = 'ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥';
+		SegA13.innerText = 'å‚™è€ƒ';
+		SegA14.innerText = 'è©³ç´°';
+		SegA15.innerText = 'ç™»éŒ²æ—¥';
+		SegA16.innerText = 'åˆè¨ˆé‡‘é¡';
+		SegA17.innerText = 'æ˜ç´°è¡Œç•ªå·';
+		SegA18.innerText = 'å…¥åŠ›è€…';
 
-		//SegB01.innerText='À½ÉÊ¥³¡¼¥É¡¦Ì¾¾Î';
+		//SegB01.innerText='è£½å“ã‚³ãƒ¼ãƒ‰ãƒ»åç§°';
 
-		SegB02.innerText='»ÅÆş²ÊÌÜ';
-		SegB03.innerText='»ÅÆşÉôÉÊ';
-		SegB05.innerText='¸ÜµÒÉÊÈÖ';
-		SegB06.innerText='±¿ÈÂÊıË¡';
-		SegB08.innerText='Ã±²Á';
-		SegB09.innerText='Ã±°Ì';
-		SegB10.innerText='¿ôÎÌ';
-		SegB11.innerText='ÀÇÈ´¶â³Û';
-		SegB12.innerText='ÌÀºÙÈ÷¹Í';
+		SegB02.innerText='ä»•å…¥ç§‘ç›®';
+		SegB03.innerText='ä»•å…¥éƒ¨å“';
+		SegB05.innerText='é¡§å®¢å“ç•ª';
+		SegB06.innerText='é‹æ¬æ–¹æ³•';
+		SegB08.innerText='å˜ä¾¡';
+		SegB09.innerText='å˜ä½';
+		SegB10.innerText='æ•°é‡';
+		SegB11.innerText='ç¨æŠœé‡‘é¡';
+		SegB12.innerText='æ˜ç´°å‚™è€ƒ';
 
-		SegB13.innerText='½¤Àµ';
-		SegB14.innerText='ºï½ü';
+		SegB13.innerText='ä¿®æ­£';
+		SegB14.innerText='å‰Šé™¤';
 
 		if( typeof(InvalidSegs) != 'undefined' )
 		{
-			InvalidSegs.innerText='Ìµ¸ú';
+			InvalidSegs.innerText='ç„¡åŠ¹';
 		}
 
 		if( typeof(AdminSet) != 'undefined' )
 		{
-			AdminMode.innerText='´ÉÍı¼Ô¥â¡¼¥É';
+			AdminMode.innerText='ç®¡ç†è€…ãƒ¢ãƒ¼ãƒ‰';
 		}
 
 

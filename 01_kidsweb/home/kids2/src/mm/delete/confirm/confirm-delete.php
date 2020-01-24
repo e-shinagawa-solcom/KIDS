@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- * �ⷿ������� �������ɽ��
+ * 金型履歴管理 削除画面表示
  */
 // ----------------------------------------------------------------------------
 include('conf.inc');
@@ -22,33 +22,33 @@ $objDB = new clsDB ();
 $objAuth = new clsAuth ();
 $objDB->open ( "", "", "", "" );
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession ($_REQUEST["strSessionID"], $objAuth, $objDB);
 
-// 1800 �ⷿĢɼ����
+// 1800 金型帳票管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 1805 �ⷿ����(���)
+// 1805 金型管理(削除)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM5, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// �ѥ�᡼������
+// パラメータ取得
 $moldNo = $_REQUEST["MoldNo"];
 $historyNo = $_REQUEST["HistoryNo"];
 $version = $_REQUEST["Version"];
 
 if (!$moldNo || !(0 <= $historyNo) || !(0 <= $version))
 {
-	// ����μ����˼��Ԥ��ޤ���
+	// 情報の取得に失敗しました
 	fncOutputError(9061, DEF_ERROR, "", TRUE, "", $objDB);
 }
 
-// �桼�ƥ���ƥ��Υ��󥹥��󥹼���
+// ユーティリティのインスタンス取得
 $utilMold = UtilMold::getInstance();
 $utilBussinesscode = UtilBussinesscode::getInstance();
 $utilCompany = UtilCompany::getInstance();
@@ -56,16 +56,16 @@ $utilGroup = UtilGroup::getInstance();
 $utilUser = UtilUser::getInstance();
 $utilProduct = UtilProduct::getInstance();
 
-// �ⷿ����κ���
+// 金型履歴の索引
 try
 {
-	// �ⷿ����
+	// 金型情報
 	$record = $utilMold->selectMoldHistory($moldNo, $historyNo, $version);
 	$infoMold = $utilMold->selectMold($moldNo);
 	$status = $record[TableMoldHistory::Status];
-	$descStatus = $utilBussinesscode->getDescription("�ⷿ���ơ�����", $status);
+	$descStatus = $utilBussinesscode->getDescription("金型ステータス", $status);
 
-	// ���ʥ�����/̾��
+	// 製品コード/名称
 	$productCode = $infoMold[TableMold::ProductCode];
 	$reviseCode = $infoMold[TableMold::ReviseCode];
 	$productName = $utilProduct->selectProductNameByProductCode($productCode, $reviseCode);
@@ -74,11 +74,11 @@ try
 	{
 		case "10":
 		case "20":
-			// �ݴɹ���
+			// 保管工場
 			$srcFactoryCode = $record[TableMoldHistory::SourceFactory];
 			$displaySrcFactoryCode = $utilCompany->selectDisplayCodeByCompanyCode($srcFactoryCode);
 			$displaySrcFactoryName = $utilCompany->selectDisplayNameByCompanyCode($srcFactoryCode);
-			// ��ư�蹩��
+			// 移動先工場
 			$dstFactoryCode = $record[TableMoldHistory::DestinationFactory];
 			$displayDstFactoryCode = $utilCompany->selectDisplayCodeByCompanyCode($dstFactoryCode);
 			$displayDstFactoryName = $utilCompany->selectDisplayNameByCompanyCode($dstFactoryCode);
@@ -89,11 +89,11 @@ try
 }
 catch (SQLException $e)
 {
-	// ����μ����˼��Ԥ��ޤ���
-	fncOutputError(9061, DEF_ERROR, "�����ʥǡ������оݤΥǡ������ѹ����줿��ǽ��������ޤ���", TRUE, "", $objDB);
+	// 情報の取得に失敗しました
+	fncOutputError(9061, DEF_ERROR, "不正なデータか対象のデータが変更された可能性があります。", TRUE, "", $objDB);
 }
 
-// �ִ�ʸ���󷲤κ���
+// 置換文字列群の作成
 $replacement = $record;
 $replacement[TableMoldHistory::ActionDate] = str_replace("-", "/", $record[TableMoldHistory::ActionDate]);
 $replacement[TableMoldHistory::Status] = $descStatus;
@@ -105,27 +105,27 @@ $replacement[FormMoldHistory::SourceFactoryName] = $displaySrcFactoryName;
 $replacement[TableMoldHistory::DestinationFactory] = $displayDstFactoryCode;
 $replacement[FormMoldHistory::DestinationFactoryName] = $displayDstFactoryName;
 
-// �ƥ�ץ졼���ɤ߹���
+// テンプレート読み込み
 $objTemplate = new clsTemplate ();
 $objTemplate->getTemplate ("/mm/delete/mm_confirm_delete.html");
 
-// �ץ졼���ۥ�����ִ�
+// プレースホルダー置換
 $objTemplate->replace($replacement);
 $objTemplate->complete();
 
-// �ⷿ�ơ��֥������ΰ�DOMDocument�����
+// 金型テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
 
-// �ѡ������顼����
+// パースエラー抑制
 libxml_use_internal_errors(true);
-// DOM�ѡ���
+// DOMパース
 $doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
-// �ѡ������顼���ꥢ
+// パースエラークリア
 libxml_clear_errors();
-// �ѡ������顼�������
+// パースエラー抑制解除
 libxml_use_internal_errors(false);
 
-// �ⷿĢɼID�ȥ�ӥ�����������
+// 金型帳票IDとリビジョンの埋め込み
 $btnDelete = $doc->getElementById("delete-button");
 $btnDelete->setAttribute("MoldNo", $moldNo);
 $btnDelete->setAttribute("HistoryNo", $historyNo);
@@ -133,5 +133,5 @@ $btnDelete->setAttribute("Version", $version);
 
 setcookie("strSessionID", $_REQUEST["strSessionID"]);
 
-// HTML����
+// HTML出力
 echo $doc->saveHTML();

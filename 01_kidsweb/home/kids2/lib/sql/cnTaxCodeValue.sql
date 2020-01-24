@@ -1,8 +1,8 @@
 /*
-	³µÍ×¡§·×¾åÆü	¢ª	ÀÇÎ¨
-	ÂÐ¾Ý¡§»ÅÆþ´ÉÍý
-	ºîÀ®¡§¼êÄÍµ®Ê¸
-	È÷¹Í¡§
+	æ¦‚è¦ï¼šè¨ˆä¸Šæ—¥	â†’	ç¨ŽçŽ‡
+	å¯¾è±¡ï¼šä»•å…¥ç®¡ç†
+	ä½œæˆï¼šæ‰‹å¡šè²´æ–‡
+	å‚™è€ƒï¼š
 */
 SELECT lngtaxcode, curtax, MAX(dtmapplystartdate)
 FROM m_tax

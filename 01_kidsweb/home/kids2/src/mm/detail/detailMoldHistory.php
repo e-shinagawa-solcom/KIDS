@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- * �ⷿĢɼ���� �ܺٲ���*
+ * 金型帳票管理 詳細画面*
  */
 // ----------------------------------------------------------------------------
 include('conf.inc');
@@ -24,19 +24,19 @@ $objDB->open ( "", "", "", "" );
 
 $aryData = $_REQUEST;
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession ( $aryData ["strSessionID"], $objAuth, $objDB);
 
-// 1800 �ⷿĢɼ����
+// 1800 金型帳票管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 1803 �ⷿ����(�ܺ�)
+// 1803 金型管理(詳細)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM3, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 
@@ -44,15 +44,15 @@ $moldNo = $_REQUEST["MoldNo"];
 $historyNo = $_REQUEST["HistoryNo"];
 $version = $_REQUEST["Version"];
 
-// �ѥ�᡼���λ��꤬�ʤ����
+// パラメータの指定がない場合
 if (!$moldNo || !(0 <= $historyNo) || !(0 <= $version))
 {
-	// ����������顼
-	fncOutputError(9061, DEF_ERROR, "�����ʥѥ�᡼���Ǥ���", TRUE, "", $objDB);
+	// 情報取得エラー
+	fncOutputError(9061, DEF_ERROR, "不正なパラメータです。", TRUE, "", $objDB);
 }
 
 
-// �桼�ƥ���ƥ��Υ��󥹥��󥹼���
+// ユーティリティのインスタンス取得
 $utilMold = UtilMold::getInstance();
 $utilBussinesscode = UtilBussinesscode::getInstance();
 $utilCompany = UtilCompany::getInstance();
@@ -60,59 +60,59 @@ $utilGroup = UtilGroup::getInstance();
 $utilUser = UtilUser::getInstance();
 $utilProduct = UtilProduct::getInstance();
 
-// �ⷿ����μ���
+// 金型履歴の取得
 if (!$record = $utilMold->selectMoldHistory($moldNo, $historyNo, $version))
 {
-	// ����������顼
-	fncOutputError(9061, DEF_ERROR, "�ⷿĢɼ�μ����˼��Ԥ��ޤ�����", TRUE, "", $objDB);
+	// 情報取得エラー
+	fncOutputError(9061, DEF_ERROR, "金型帳票の取得に失敗しました。", TRUE, "", $objDB);
 }
-// �ⷿ�ޥ����μ���
+// 金型マスタの取得
 if (!$mold = $utilMold->selectMold($moldNo))
 {
-	// ����������顼
-	fncOutputError(9061, DEF_ERROR, "�ⷿ�ޥ����μ����˼��Ԥ��ޤ�����", TRUE, "", $objDB);
+	// 情報取得エラー
+	fncOutputError(9061, DEF_ERROR, "金型マスタの取得に失敗しました。", TRUE, "", $objDB);
 }
 
-// �ⷿ������ִ�ʸ���󷲤��ɲ�
+// 金型履歴を置換文字列群に追加
 $replacement = $record;
 $status = $record[TableMoldHistory::Status];
-// ��̳�����ɤ��饳�������������
-$replacement[TableMoldHistory::Status."Desc"] = $utilBussinesscode->getDescription('�ⷿ���ơ�����',  $replacement[TableMoldHistory::Status]);
+// 業務コードからコード説明を索引
+$replacement[TableMoldHistory::Status."Desc"] = $utilBussinesscode->getDescription('金型ステータス',  $replacement[TableMoldHistory::Status]);
 
 switch($status)
 {
 	case "10":
 	case "20":
-		// �����ɤ���ɽ��̾�����
+		// コードから表示名を取得
 		$replacement["SourceFactoryName"] = $utilCompany->selectDisplayNameByCompanyCode($replacement[TableMoldHistory::SourceFactory]);
 		$replacement["DestinationFactoryName"] = $utilCompany->selectDisplayNameByCompanyCode($replacement[TableMoldHistory::DestinationFactory]);
-		// �����ɤ���ɽ�������ɤ��֤�����
+		// コードから表示コードに置き換え
 		$replacement[TableMoldHistory::SourceFactory] = $utilCompany->selectDisplayCodeByCompanyCode($replacement[TableMoldHistory::SourceFactory]);
 		$replacement[TableMoldHistory::DestinationFactory] = $utilCompany->selectDisplayCodeByCompanyCode($replacement[TableMoldHistory::DestinationFactory]);
 		break;
 }
 
-// �����ɤ���ɽ��̾�����
+// コードから表示名を取得
 $replacement["CreateByName"] = $utilUser->selectDisplayNameByUserCode($replacement[TableMoldHistory::CreateBy]);
 $replacement["UpdateByName"] = $utilUser->selectDisplayNameByUserCode($replacement[TableMoldHistory::UpdateBy]);
 
-// �����ɤ���ɽ�������ɤ��֤�����
+// コードから表示コードに置き換え
 $replacement[TableMoldHistory::CreateBy] = $utilUser->selectDisplayCodeByUserCode($replacement[TableMoldHistory::CreateBy]);
 $replacement[TableMoldHistory::UpdateBy] = $utilUser->selectDisplayCodeByUserCode($replacement[TableMoldHistory::UpdateBy]);
 
-// ���ʥ����ɤμ���
+// 製品コードの取得
 $replacement[TableMold::ProductCode] = $mold[TableMold::ProductCode];
 $replacement[TableMold::ReviseCode] = $mold[TableMold::ReviseCode];
-// ����̾�Τμ���
+// 製品名称の取得
 $replacement["ProductName"] = $utilProduct->selectProductNameByProductCode($replacement[TableMold::ProductCode], $replacement[TableMold::ReviseCode]);
 
-// �ƥ�ץ졼���ɤ߹���
+// テンプレート読み込み
 $objTemplate = new clsTemplate ();
 $objTemplate->getTemplate ("/mm/detail/mm_detail.html");
 
-// �ץ졼���ۥ�����ִ�
+// プレースホルダー置換
 $objTemplate->replace($replacement);
 $objTemplate->complete();
 
-// HTML����
+// HTML出力
 echo $objTemplate->strTemplate;

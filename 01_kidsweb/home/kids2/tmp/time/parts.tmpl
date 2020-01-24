@@ -9,27 +9,27 @@
 
 	function fncTimeLimit()
 	{
-		var lngAlertTime = null;		// •ø•§•‡•¢•¶•»∑Ÿπ…√
-		var aryDate      = new Array();	// •ø•§•‡•¢•¶•»∆¸…’
+		var lngAlertTime = null;		// „Çø„Ç§„É†„Ç¢„Ç¶„ÉàË≠¶ÂëäÁßí
+		var aryDate      = new Array();	// „Çø„Ç§„É†„Ç¢„Ç¶„ÉàÊó•‰ªò
 		var strDate      = "";
 		var strStatus    = "";
 		var blnConfirm   = true;
 
-		// •Ì•∞•§•Û•π•∆°º•ø•π§ŒºË∆¿
+		// „É≠„Ç∞„Ç§„É≥„Çπ„ÉÜ„Éº„Çø„Çπ„ÅÆÂèñÂæó
 		strStatus = document.all.strLoginStatus.value;
 
-		// •ø•§•‡•Í•ﬂ•√•»∆¸…’§ŒºË∆¿
+		// „Çø„Ç§„É†„É™„Éü„ÉÉ„ÉàÊó•‰ªò„ÅÆÂèñÂæó
 		strDate = trim( document.all.strTimeLimtDate.value );
 		aryDate = strDate.split( "/" );
 
-		// •ø•§•‡•Í•ﬂ•√•»∑Ÿπ…√§ŒºË∆¿
+		// „Çø„Ç§„É†„É™„Éü„ÉÉ„ÉàË≠¶ÂëäÁßí„ÅÆÂèñÂæó
 		lngAlertTime = document.all.strTimeLimitRemainSeconds.value;
 
 
-		// •Ì•∞•§•Û•π•∆°º•ø•π§Œ≥Œ«ß
+		// „É≠„Ç∞„Ç§„É≥„Çπ„ÉÜ„Éº„Çø„Çπ„ÅÆÁ¢∫Ë™ç
 		if( strStatus != "valid" )
 		{
-			alert( "ªƒ§Íª˛¥÷5 ¨§¨≤·§Æ§ﬁ§∑§ø§Œ§«°¢•ø•§•‡•¢•¶•»§À§ §Í§ﬁ§∑§ø°£" );
+			alert( "ÊÆã„ÇäÊôÇÈñì5ÂàÜ„ÅåÈÅé„Åé„Åæ„Åó„Åü„ÅÆ„Åß„ÄÅ„Çø„Ç§„É†„Ç¢„Ç¶„Éà„Å´„Å™„Çä„Åæ„Åó„Åü„ÄÇ" );
 			return false;
 		}
 
@@ -62,39 +62,39 @@
 
 		lngRemainSeconds = Math.round( ( s_Time - d_Time ) / 1000 );
 
-		// ∑Ÿπ…Ωº®
+		// Ë≠¶ÂëäË°®Á§∫
 		if( lngRemainSeconds == lngAlertTime )
 		{
-			blnConfirm = confirm( "5 ¨∏Â§À•ø•§•‡•¢•¶•»§∑§ﬁ§π°£∑—¬≥§∑§ﬁ§π§´°©" );
+			blnConfirm = confirm( "5ÂàÜÂæå„Å´„Çø„Ç§„É†„Ç¢„Ç¶„Éà„Åó„Åæ„Åô„ÄÇÁ∂ôÁ∂ö„Åó„Åæ„Åô„ÅãÔºü" );
 
 			if( blnConfirm )
 			{
-				// ΩËÕ˝•‚°º•…§Œ¿ﬂƒÍ
+				// Âá¶ÁêÜ„É¢„Éº„Éâ„ÅÆË®≠ÂÆö
 				document.all.strProcMode.value = 'update';
 
-				// ππø∑
+				// Êõ¥Êñ∞
 				window.frmTime.submit();
 			}
 			else
 			{
-				// ΩËÕ˝•‚°º•…§Œ¿ﬂƒÍ
+				// Âá¶ÁêÜ„É¢„Éº„Éâ„ÅÆË®≠ÂÆö
 				document.all.strProcMode.value = 'init';
 			}
 		}
 
-		// •ø•§•‡•¢•¶•»ΩËÕ˝
+		// „Çø„Ç§„É†„Ç¢„Ç¶„ÉàÂá¶ÁêÜ
 		if( lngRemainSeconds == 0 )
 		{
 			//alert( "TimeOut!!" );
 		}
 
-		// •´•¶•Û•»
+		// „Ç´„Ç¶„É≥„Éà
 		if( lngRemainSeconds > 0 )
 		{
 			setTimeout( "fncTimeLimit()", 1000 );
 		}
 
-		document.all.TimeLimt.innerHTML = "Limit°ß" + dtmYear + "/" + dtmMon + "/" + dtmDay + "  " + dtmHour + ":" + dtmMin + ":" + dtmSec + "§ﬁ§«°¢§¢§» " + lngRemainSeconds + "…√";
+		document.all.TimeLimt.innerHTML = "LimitÔºö" + dtmYear + "/" + dtmMon + "/" + dtmDay + "  " + dtmHour + ":" + dtmMin + ":" + dtmSec + "„Åæ„Åß„ÄÅ„ÅÇ„Å® " + lngRemainSeconds + "Áßí";
 
 
 		delete aryDate;

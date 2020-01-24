@@ -2,12 +2,12 @@
 
 
 //-----------------------------------------------------------------------------
-// ³µÍ× : ¥í¡¼¥«¥ëÊÑ¿ôÄêµÁ
-// ²òÀâ :¡ÖTabIndex¡×ÃÍ¤ÎÀßÄê
+// æ¦‚è¦ : ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°å®šç¾©
+// è§£èª¬ :ã€ŒTabIndexã€å€¤ã®è¨­å®š
 //-----------------------------------------------------------------------------
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¥µ¥Ö¥¦¥£¥ó¥É¥¦¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumTabA1   = ''   ; // vendor
 var NumTabA1_2 = ''   ; // creation
@@ -23,33 +23,33 @@ var NumTabI1   = ''   ; // input
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¾¦ÉÊ´ÉÍı¡×¥¿¥Ö
+// é©ç”¨ç®‡æ‰€ :ã€Œå•†å“ç®¡ç†ã€ã‚¿ãƒ–
 //------------------------------------------
 var PTabNumA = '' ; // A
 var PTabNumB = '' ; // B
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¼õÃí¡¦È¯Ãí¡¦Çä¾å¡¦»ÅÆş¡×¥¿¥Ö
+// é©ç”¨ç®‡æ‰€ :ã€Œå—æ³¨ãƒ»ç™ºæ³¨ãƒ»å£²ä¸Šãƒ»ä»•å…¥ã€ã‚¿ãƒ–
 //------------------------------------------
-var TabNumA = '35' ; // ¥Ø¥Ã¥À¡¼
-var TabNumB = '17' ; // ÌÀºÙ
+var TabNumA = '35' ; // ãƒ˜ãƒƒãƒ€ãƒ¼
+var TabNumB = '17' ; // æ˜ç´°
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡ÖÅĞÏ¿¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œç™»éŒ²ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var RegistNum = '34' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¹ÔÄÉ²Ã¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œè¡Œè¿½åŠ ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var AddRowNum = '32' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¥«¥ì¥ó¥À¡¼¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumDateTabA = '2'  ;
 var NumDateTabB = '15' ;
@@ -57,7 +57,7 @@ var NumDateTabC = '25' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡ÖÀ½ÉÊ¿ôÎÌ¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œè£½å“æ•°é‡ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumPunitTab = '30' ;
 
@@ -69,7 +69,7 @@ var NumPunitTab = '30' ;
 	//-------------------------------------------------------------------------
 	// v2 tomita update
 	//-------------------------------------------------------------------------
-	// ÌÀºÙ¸ÜµÒÉ½¼¨¥Ü¥¿¥ó¥¤¥á¡¼¥¸À¸À®
+	// æ˜ç´°é¡§å®¢è¡¨ç¤ºãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸ç”Ÿæˆ
 	var dinflag = 0;
 
 	var din1 = '<a href="javascript:void(0);"><img onmouseover="fncChangeDINImage( this, 0 ); return false;" onmouseout="fncChangeDINImage( this, 1 ); return false;" src="' + d_in_off + '" width="27" height="109" border="0" tabindex=""></a>';
@@ -77,7 +77,7 @@ var NumPunitTab = '30' ;
 	var din3 = '<a href="javascript:void(0);"><img src="' + d_in_on + '" width="27" height="109" border="0" tabindex=""></a>';
 
 
-	// ¡Ö¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥¦¥£¥ó¥É¥¦¡×¥Ü¥¿¥ó¥¤¥á¡¼¥¸À¸À®
+	// ã€Œãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸ç”Ÿæˆ
 	var darkgrayOpenBt1 = '<a href="javascript:void(0);"><img onfocus="fncDarkGrayOpenButton( \'on\' , this );" onblur="fncDarkGrayOpenButton( \'off\' , this );" onmouseover="fncDarkGrayOpenButton( \'on\' , this );" onmouseout="fncDarkGrayOpenButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + darkgrayopen1 + '" width="19" height="19" border="0" tabindex=""></a>';
 
 	var darkgrayOpenBt3 = '<a href="javascript:void(0);"><img src="' + darkgrayopen3 + '" width="19" height="19" border="0" tabindex=""></a>';
@@ -85,7 +85,7 @@ var NumPunitTab = '30' ;
 	var darkgrayOpenBtNotActive = '<img src="' + darkgrayopen1 + '" width="19" height="19" border="0" tabindex="">';
 
 
-	// HTML½ñ¤­´¹¤¨¡¦ÌÀºÙ¸ÜµÒÉ½¼¨
+	// HTMLæ›¸ãæ›ãˆãƒ»æ˜ç´°é¡§å®¢è¡¨ç¤º
 	function fncSetDINBtn( obj )
 	{
 		if( !dinflag )
@@ -100,13 +100,13 @@ var NumPunitTab = '30' ;
 		}
 	}
 
-	// ¥¤¥á¡¼¥¸½ñ¤­´¹¤¨
+	// ã‚¤ãƒ¡ãƒ¼ã‚¸æ›¸ãæ›ãˆ
 	function fncChangeDINImage( obj, type )
 	{
 		obj.src = ( type == 0 ) ? d_in_off_on : d_in_off ;
 	}
 
-	// ÌÀºÙ¸ÜµÒÉ½¼¨
+	// æ˜ç´°é¡§å®¢è¡¨ç¤º
 	function fncViewDIN( obj )
 	{
 		if( dinflag )
@@ -133,7 +133,7 @@ var NumPunitTab = '30' ;
 		}
 	}
 
-	// ÌÀºÙ¸ÜµÒÉ½¼¨½é´ü²½
+	// æ˜ç´°é¡§å®¢è¡¨ç¤ºåˆæœŸåŒ–
 	function fncResetDINView( mode )
 	{
 		switch( mode )
@@ -176,7 +176,7 @@ var objtabB3 = '<img src="' + tabB3 + '" width="24" height="272" border="0" alt=
 
 /* *v1*
 //----------------------------------------------------
-// ¡Ö¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥¦¥£¥ó¥É¥¦¡×¥Ü¥¿¥ó¥¤¥á¡¼¥¸À¸À®
+// ã€Œãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã€ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸ç”Ÿæˆ
 //----------------------------------------------------
 var darkgrayOpenBt1 = '<a href="javascript:void(0);"><img onfocus="fncDarkGrayOpenButton( \'on\' , this );" onblur="fncDarkGrayOpenButton( \'off\' , this );" onmouseover="fncDarkGrayOpenButton( \'on\' , this );" onmouseout="fncDarkGrayOpenButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + darkgrayopen1 + '" width="19" height="19" border="0" tabindex=""></a>';
 
@@ -199,25 +199,25 @@ var taxbottoms = '<img src="' + taxbottom + '" widht="306" height="12" border="0
 
 
 ///// MAIN MTITLE IMAGE /////
-var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="È¯Ãí´ÉÍı">';
+var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="ç™ºæ³¨ç®¡ç†">';
 var maintitleE = '<img src="' + titleE + '" width="314" height="22" border="0" alt="SALES ORDER">';
 
 
 ///// INPUT A,B,C HEADER IMAGE /////
-var headerAJ = '<img src="' + scdheadtitleAJ + '" width="927" height="30" border="0" alt="Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿">';
+var headerAJ = '<img src="' + scdheadtitleAJ + '" width="927" height="30" border="0" alt="å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²">';
 var headerAE = '<img src="' + headtitleAE + '" width="927" height="30" border="0" alt="HEADER">';
-var headerBJ = '<img src="' + headtitleBJ + '" width="927" height="30" border="0" alt="ÌÀºÙ">';
+var headerBJ = '<img src="' + headtitleBJ + '" width="927" height="30" border="0" alt="æ˜ç´°">';
 var headerBE = '<img src="' + headtitleBE + '" width="927" height="30" border="0" alt="DETAIL">';
-var headerCJ = '<img src="' + headtitleCJ + '" width="927" height="30" border="0" alt="ÌÀºÙ°ìÍ÷">';
+var headerCJ = '<img src="' + headtitleCJ + '" width="927" height="30" border="0" alt="æ˜ç´°ä¸€è¦§">';
 var headerCE = '<img src="' + headtitleCE + '" width="927" height="30" border="0" alt="DETAIL LIST">';
 
 
 ///// CSS VALUE /////
-var fcolor = '#666666'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
-var segcolor = '#e8f0f1'; //¹àÌÜÇØ·Ê¿§
-var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
-var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //¹àÌÜ±¦¶õ¤­BORDER
-var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //¹àÌÜº¸¶õ¤­BORDER
+var fcolor = '#666666'; //é …ç›®ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼
+var segcolor = '#e8f0f1'; //é …ç›®èƒŒæ™¯è‰²
+var segbody = '#d6d0b1'; //INPUT A BODY èƒŒæ™¯è‰²
+var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //é …ç›®å³ç©ºãBORDER
+var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //é …ç›®å·¦ç©ºãBORDER
 
 
 function initLayoutPO()
@@ -289,10 +289,10 @@ function initLayoutPO()
 	var obj = document.DSO.lngWorkflowOrderCode;
 
 
-	// ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤ÎÈ½Äê -> ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤Ï¥Ü¥¿¥ó²¡²¼¶Ø»ß
+	// ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã®åˆ¤å®š -> ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã¯ãƒœã‚¿ãƒ³æŠ¼ä¸‹ç¦æ­¢
 	for( i=0; i < obj.options.length; i++ )
 	{
-		if( obj.options[i].text == '¾µÇ§¤Ê¤·' )
+		if( obj.options[i].text == 'æ‰¿èªãªã—' )
 		{
 			if( i == 0 )
 			{
@@ -318,11 +318,11 @@ function initLayoutPO()
 
 
 //-------------------------------------------------------------------
-// ²òÀâ : ¡ÖÀ½ÉÊÃ±°Ì·×¾å¡×¡Ö²Ù»ÑÃ±°Ì·×¾å¡×¤Ç¤Î¥Õ¥©¡¼¥«¥¹°ÜÆ°½èÍı´Ø¿ô
+// è§£èª¬ : ã€Œè£½å“å˜ä½è¨ˆä¸Šã€ã€Œè·å§¿å˜ä½è¨ˆä¸Šã€ã§ã®ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ç§»å‹•å‡¦ç†é–¢æ•°
 //-------------------------------------------------------------------
 function fncForceFocus( obj )
 {
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÍ­¸úÀ­¤ò³ÎÇ§
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æœ‰åŠ¹æ€§ã‚’ç¢ºèª
 	if( typeof(obj) == "undefined" || obj.disabled == true )
 	{
 		return false;

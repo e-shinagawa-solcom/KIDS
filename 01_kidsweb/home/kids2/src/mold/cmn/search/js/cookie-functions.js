@@ -1,39 +1,39 @@
 // ---------------------------------------------------
-// !!¥°¥í¡¼¥Ğ¥ë!!
+// !!ã‚°ãƒ­ãƒ¼ãƒãƒ«!!
 // ---------------------------------------------------
-// ¸¡º÷²èÌÌ¤Ë¤Æ¡¢É½¼¨¹àÌÜ¤Î¥Á¥§¥Ã¥¯¾õÂÖ¤òCOOKIE¤ËÊİÂ¸¤¹¤ë
+// æ¤œç´¢ç”»é¢ã«ã¦ã€è¡¨ç¤ºé …ç›®ã®ãƒã‚§ãƒƒã‚¯çŠ¶æ…‹ã‚’COOKIEã«ä¿å­˜ã™ã‚‹
 function saveCookieDispayItems(form){
-    // ÊİÂ¸Æü¿ô(Å¬Åö)
+    // ä¿å­˜æ—¥æ•°(é©å½“)
     var expires = 1095;
-    // ÊİÂ¸ÂĞ¾İ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹Í×ÁÇ¤Î¼èÆÀ
+    // ä¿å­˜å¯¾è±¡ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹è¦ç´ ã®å–å¾—
     var items = $(form).find('input[type="checkbox"][name^="IsDisplay_"]');
     // COOKIE keyname
     var keyname = $(form).attr('name') + '_IsDisplay';
-    // É½¼¨¥Õ¥é¥°¤¿¤Á
+    // è¡¨ç¤ºãƒ•ãƒ©ã‚°ãŸã¡
     var flags = '';
-    // ¶èÀÚ¤êÊ¸»ú
+    // åŒºåˆ‡ã‚Šæ–‡å­—
     var delimiter = '&';
     var sepalator = ':';
 
-    // Í×ÁÇ¿ôÊ¬Áöºº
+    // è¦ç´ æ•°åˆ†èµ°æŸ»
     items.each(function(){
         flags += this.name + sepalator + this.checked + delimiter
     });
 
-    // COOKIE¤ØÊİÂ¸
+    // COOKIEã¸ä¿å­˜
     $.cookie(keyname , flags.substr(0, flags.length-1), {
-        'expires':¡¡expires
+        'expires':ã€€expires
     });
 }
-// ¸¡º÷²èÌÌ¤Ë¤Æ¡¢É½¼¨¹àÌÜ¤Î¥Á¥§¥Ã¥¯¾õÂÖ¤òÊİÂ¸¤µ¤ì¤¿COOKIE¤«¤éÉü¸µ¤¹¤ë
+// æ¤œç´¢ç”»é¢ã«ã¦ã€è¡¨ç¤ºé …ç›®ã®ãƒã‚§ãƒƒã‚¯çŠ¶æ…‹ã‚’ä¿å­˜ã•ã‚ŒãŸCOOKIEã‹ã‚‰å¾©å…ƒã™ã‚‹
 function restoreCookieDispayItems(form){
-    // ÊİÂ¸ÂĞ¾İ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹Í×ÁÇ¤Î¼èÆÀ
+    // ä¿å­˜å¯¾è±¡ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹è¦ç´ ã®å–å¾—
     var items = $(form).find();
     // COOKIE keyname
     var keyname = $(form).attr('name') + '_IsDisplay';
-    // É½¼¨¥Õ¥é¥°¤¿¤Á
+    // è¡¨ç¤ºãƒ•ãƒ©ã‚°ãŸã¡
     var flags = $.cookie(keyname);
-    // ¶èÀÚ¤êÊ¸»ú
+    // åŒºåˆ‡ã‚Šæ–‡å­—
     var delimiter = '&';
     var sepalator = ':';
 

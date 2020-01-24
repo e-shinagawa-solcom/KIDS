@@ -43,7 +43,7 @@
 	background-color: #ffffff ;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¹Ô */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  è¡Œ */
 .form-box__contents
 {
 	position : absolute ;
@@ -114,7 +114,7 @@
 }
 
 .VarText {
-	font-family : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-family : ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯, Osaka ;
 	font-style : normal ;
 	font-weight : normal ;
 	font-size : 12px;
@@ -283,7 +283,7 @@
 }
 
 
-/* Í½È÷ PRICE WINDOW */
+/* äºˆå‚™ PRICE WINDOW */
 #PriceBt
 {
 	position : absolute ;

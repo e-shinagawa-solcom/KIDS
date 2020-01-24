@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥·¥¹¥Æ¥à´ÉÍý ¥á¡¼¥ëÀßÄê²èÌÌ
+*	ã‚·ã‚¹ãƒ†ãƒ ç®¡ç† ãƒ¡ãƒ¼ãƒ«è¨­å®šç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,35 +10,35 @@
 *	@version   1.00
 *
 */
-// ¥·¥¹¥Æ¥à¥á¡¼¥ëÀßÄê´°Î»²èÌÌ
+// ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¼ãƒ«è¨­å®šå®Œäº†ç”»é¢
 // index.php -> strSessionID        -> action.php
 // index.php -> strAdminMailAddress -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 //require (SRC_ROOT . "sysc/cmn/lib_sys.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_POST;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_SYS3, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -46,12 +46,12 @@ $aryCheck["strSessionID"]        = "null:numenglish(32,32)";
 $aryCheck["strAdminMailAddress"] = "null:email(1,100)";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 //fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
-// ¥á¡¼¥ëÊ¸»úÎó¥¨¥é¡¼¥Á¥§¥Ã¥¯
+// ãƒ¡ãƒ¼ãƒ«æ–‡å­—åˆ—ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
 if ( $aryCheckResult["strAdminMailAddress_Error"] )
 {
 	//echo getArrayTable( $aryData, "TABLE" );exit;
@@ -64,29 +64,29 @@ if ( $aryCheckResult["strAdminMailAddress_Error"] )
 }
 
 
-// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 $objDB->transactionBegin();
 
-// ¹¹¿·½èÍý¼Â¹Ô
+// æ›´æ–°å‡¦ç†å®Ÿè¡Œ
 $strQuery = "UPDATE m_AdminFunction SET strValue = '" . $aryData["strAdminMailAddress"] . "' WHERE strClass = 'adminmailaddress'";
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-// ÊÑ¹¹°ÆÆâ¥á¡¼¥ëÁ÷¿®
+// å¤‰æ›´æ¡ˆå†…ãƒ¡ãƒ¼ãƒ«é€ä¿¡
 list ( $strSubject, $strBody ) = fncGetMailMessage( DEF_FUNCTION_SYS3, $aryData, $objDB );
 if ( !$aryData["strAdminMailAddress"] || !mail ( $aryData["strAdminMailAddress"], $strSubject, $strBody, "From: " . $aryData["strAdminMailAddress"] . "\nReturn-Path: " . ERROR_MAIL_TO . "\n" ) )
 {
-	// Á÷¿®¼ºÇÔ¤Ë¤è¤ë¥í¡¼¥ë¥Ð¥Ã¥¯
+	// é€ä¿¡å¤±æ•—ã«ã‚ˆã‚‹ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	list ( $lngResultID, $lngResultNum ) = fncQuery( "ROLLBACK", $objDB );
 
-	fncOutputError ( 9053, DEF_WARNING, "¥á¡¼¥ëÁ÷¿®¼ºÇÔ¡£", TRUE, "", $objDB );
+	fncOutputError ( 9053, DEF_WARNING, "ãƒ¡ãƒ¼ãƒ«é€ä¿¡å¤±æ•—ã€‚", TRUE, "", $objDB );
 }
 
-// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥³¥ß¥Ã¥È
+// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚³ãƒŸãƒƒãƒˆ
 $objDB->transactionCommit();
 
 //echo "<a href=../>BACK</a>";
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "sysc/mail/finish.tmpl" );
 $objTemplate->replace( $aryData );

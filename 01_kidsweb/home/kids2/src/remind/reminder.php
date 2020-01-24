@@ -1,6 +1,6 @@
 <?php
 /** 
-*	¥Ñ¥¹¥ï¡¼¥É¥ê¥Ş¥¤¥ó¥À¡¼¡¡´Ø¿ô·²
+*	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒªãƒã‚¤ãƒ³ãƒ€ãƒ¼ã€€é–¢æ•°ç¾¤
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -9,19 +9,19 @@
 *	@access    public
 *	@version   1.00
 *
-*	¹¹¿·ÍúÎò
-*	2004.02.26	¥æ¡¼¥¶¡¼¥Ş¥¹¥¿¹¹¿·»ş¤Ë¡¢ÁªÂò¹Ô¤ò¥í¥Ã¥¯¾õÂÖ¤Ë¤Æ¹¹¿·¤¹¤ë¤è¤¦¤ËÊÑ¹¹
+*	æ›´æ–°å±¥æ­´
+*	2004.02.26	ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒã‚¹ã‚¿æ›´æ–°æ™‚ã«ã€é¸æŠè¡Œã‚’ãƒ­ãƒƒã‚¯çŠ¶æ…‹ã«ã¦æ›´æ–°ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´
 *
 */
 
 /**
-* ¥æ¡¼¥¶¡¼¾ğÊó¼èÆÀ
+* ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±å–å¾—
 *
-*	¥á¡¼¥ë¥¢¥É¥ì¥¹¤ËÂĞ¤¹¤ë¡¢¥æ¡¼¥¶¡¼¾ğÊó¤Î¼èÆÀ
+*	ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã«å¯¾ã™ã‚‹ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã®å–å¾—
 *
-*	@param  String $strMailAddress 	¥á¡¼¥ë¥¢¥É¥ì¥¹
-*	@param  Object $objDB       DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array or Boolean $aryData À®¸ù FALSE ¼ºÇÔ
+*	@param  String $strMailAddress 	ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
+*	@param  Object $objDB       DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array or Boolean $aryData æˆåŠŸ FALSE å¤±æ•—
 *	@access public
 */
 function getMailAddressToInfo( $strMailAddress, $objDB )
@@ -32,7 +32,7 @@ function getMailAddressToInfo( $strMailAddress, $objDB )
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¼èÆÀÃÍ¤ò³Æ¥×¥í¥Ñ¥Æ¥£¡¼¤Ë¥»¥Ã¥È
+	// å–å¾—å€¤ã‚’å„ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ãƒ¼ã«ã‚»ãƒƒãƒˆ
 	if ( $lngResultNum == 1 )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
@@ -72,23 +72,23 @@ function getMailAddressToInfo( $strMailAddress, $objDB )
 
 
 /**
-* ¥Ñ¥¹¥ï¡¼¥É¾ğÊóÊÑ¹¹
+* ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰æƒ…å ±å¤‰æ›´
 *
-*	ÂĞ¾İ¥æ¡¼¥¶¡¼¤Î¥Ñ¥¹¥ï¡¼¥É¾ğÊó¤ÎÊÑ¹¹´Ø¿ô
+*	å¯¾è±¡ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰æƒ…å ±ã®å¤‰æ›´é–¢æ•°
 *
-*	@param  String $lngUserCode 	¥æ¡¼¥¶¡¼¥³¡¼¥É
-*	@param  String $strPassword     ÊÑ¹¹¥Ñ¥¹¥ï¡¼¥É
-*	@param  Object $objDB       DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Boolean TRUE À®¸ù FALSE ¼ºÇÔ
+*	@param  String $lngUserCode 	ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+*	@param  String $strPassword     å¤‰æ›´ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+*	@param  Object $objDB       DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Boolean TRUE æˆåŠŸ FALSE å¤±æ•—
 *	@access public
 */
 function setNewPassword( $lngUserCode, $strPassword, $objDB )
 {
 // 2004.02.26 suzukaze update start
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¥æ¡¼¥¶¡¼¥Ş¥¹¥¿Æâ¤Î¹¹¿·ÂĞ¾İ¹Ô¤ò¥í¥Ã¥¯¾õÂÖ¤Ë¤¹¤ë
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒã‚¹ã‚¿å†…ã®æ›´æ–°å¯¾è±¡è¡Œã‚’ãƒ­ãƒƒã‚¯çŠ¶æ…‹ã«ã™ã‚‹
 	$strQuery = "SELECT lngUserCode FROM m_User WHERE lngUserCode = " . $lngUserCode . " FOR UPDATE ";
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
  	if ( !$lngResultNum )
@@ -104,7 +104,7 @@ function setNewPassword( $lngUserCode, $strPassword, $objDB )
 
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
 	return TRUE;
@@ -116,19 +116,19 @@ function setNewPassword( $lngUserCode, $strPassword, $objDB )
 
 // ---------------------------------------------------------------
 /**
-* IP¥¢¥É¥ì¥¹¥Á¥§¥Ã¥¯¡ÊÃ±½ã¤ÊIP¥¢¥É¥ì¥¹¤Î¤ß¤Î¥Á¥§¥Ã¥¯¡Ë
+* IPã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚§ãƒƒã‚¯ï¼ˆå˜ç´”ãªIPã‚¢ãƒ‰ãƒ¬ã‚¹ã®ã¿ã®ãƒã‚§ãƒƒã‚¯ï¼‰
 *
-*	¥¢¥¯¥»¥¹¤·¤Æ¤¤¤ë¥æ¡¼¥¶¡¼¤Î£É£Ğ¤¬µö²Ä¤µ¤ì¤Æ¤¤¤ë£É£Ğ¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
+*	ã‚¢ã‚¯ã‚»ã‚¹ã—ã¦ã„ã‚‹ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ï¼©ï¼°ãŒè¨±å¯ã•ã‚Œã¦ã„ã‚‹ï¼©ï¼°ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
 *
-*	@param  object  $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@param  Object  $objAuth      Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  object  $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@param  Object  $objAuth      èªè¨¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@return boolean TRUE,FALSE
 *	@access public
 */
 // ---------------------------------------------------------------
 function checkAccessIPSimple( $objDB, $objAuth )
 {
-	// ¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹¥Æ¡¼¥Ö¥ë¤ËÌä¤¤¹ç¤ï¤»
+	// ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹ãƒ†ãƒ¼ãƒ–ãƒ«ã«å•ã„åˆã‚ã›
 	$strQuery = "SELECT ip.strAccessIPAddress " .
 	            "FROM m_AccessIPAddress ip ";
 
@@ -143,7 +143,7 @@ function checkAccessIPSimple( $objDB, $objAuth )
 		return FALSE;
 	}
 
-	// µö²ÄIP¼èÆÀ
+	// è¨±å¯IPå–å¾—
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
 	$aryAccessIP = mb_split ( ",", $objResult->straccessipaddress );
 
@@ -152,7 +152,7 @@ function checkAccessIPSimple( $objDB, $objAuth )
 		return FALSE;
 	}
 
-	// IP¤Î¾È¹ç
+	// IPã®ç…§åˆ
 	foreach ( $aryAccessIP as $strAccessIP )
 	{
 		$strAccessIP = mb_ereg_replace ( "\.", "\.", $strAccessIP );
@@ -169,14 +169,14 @@ function checkAccessIPSimple( $objDB, $objAuth )
 
 // ---------------------------------------------------------------
 /**
-* ¥»¥Ã¥·¥ç¥ó¾ğÊó¤Î³ÎÇ§
+* ã‚»ãƒƒã‚·ãƒ§ãƒ³æƒ…å ±ã®ç¢ºèª
 *
-*	¥»¥Ã¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤è¤êÂĞ¾İ¥»¥Ã¥·¥ç¥ó£É£Ä¤Î¥Á¥§¥Ã¥¯´Ø¿ô
+*	ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ã‚ˆã‚Šå¯¾è±¡ã‚»ãƒƒã‚·ãƒ§ãƒ³ï¼©ï¼¤ã®ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	@param  string  $strSessionID ¥»¥Ã¥·¥ç¥óID
-*	@param  object  $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return object  $aryData      ¥æ¡¼¥¶¡¼¾ğÊó
-*			boolean FALSE         ¥»¥Ã¥·¥ç¥ó¾ğÊó°Û¾ï
+*	@param  string  $strSessionID ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+*	@param  object  $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return object  $aryData      ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±
+*			boolean FALSE         ã‚»ãƒƒã‚·ãƒ§ãƒ³æƒ…å ±ç•°å¸¸
 *	@access public
 */
 // ---------------------------------------------------------------
@@ -187,8 +187,8 @@ function getSessionIDToInfo( $strSessionID, $objDB )
 		return FALSE;
 	}
 
-	// ¥í¥°¥¤¥ó¥»¥Ã¥·¥ç¥ó´ÉÍı¥Æ¡¼¥Ö¥ë¤ËÌä¤¤¹ç¤ï¤»
-	// ¥»¥Ã¥·¥ç¥óÊİ»ı¤Î³ÎÇ§¤ÈID¡¢¥Ñ¥¹¥ï¡¼¥É¤Î¼èÆÀ
+	// ãƒ­ã‚°ã‚¤ãƒ³ã‚»ãƒƒã‚·ãƒ§ãƒ³ç®¡ç†ãƒ†ãƒ¼ãƒ–ãƒ«ã«å•ã„åˆã‚ã›
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ä¿æŒã®ç¢ºèªã¨IDã€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®å–å¾—
 	$strQuery = "SELECT strLoginUserID, strLoginPassword," .
 	            " dtmLoginTime - now() + ( interval '" . REMINDER_LIMIT . " min' ) AS remaining " .
 	            "FROM t_LoginSession " .
@@ -202,12 +202,12 @@ function getSessionIDToInfo( $strSessionID, $objDB )
 		return FALSE;
 	}
 
-	// ¥»¥Ã¥·¥ç¥ó¤òÊİ»ı¤¹¤ë¥æ¡¼¥¶¡¼¤ÎID¤È¥Ñ¥¹¥ï¡¼¥É¤ò¼èÆÀ
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚’ä¿æŒã™ã‚‹ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®IDã¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’å–å¾—
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
 	if ( preg_replace ( "-", $objResult->remaining ) )
 	{
-		// ¥¿¥¤¥à¥¢¥¦¥È½èÍı
+		// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå‡¦ç†
 		$strQuery = "UPDATE t_LoginSession " .
 		            "SET bytSuccessfulFlag = false " .
 		            "WHERE strSessionID = '$strSessionID'";
@@ -226,13 +226,13 @@ function getSessionIDToInfo( $strSessionID, $objDB )
 		return FALSE;
 	}
 
-	// ¥Ş¥Ã¥Á¤¹¤ëID¡¢¥Ñ¥¹¥ï¡¼¥É¤ò¤â¤Ä¥æ¡¼¥¶¡¼¤ò¸¡º÷
+	// ãƒãƒƒãƒã™ã‚‹IDã€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ã‚‚ã¤ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’æ¤œç´¢
 	$strQuery = "SELECT lngUserCode FROM m_User " .
 	            "WHERE strUserID = '" . $objResult->strloginuserid . "'";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¼èÆÀÃÍ¤òÌá¤êÃÍ¤Ë¥»¥Ã¥È
+	// å–å¾—å€¤ã‚’æˆ»ã‚Šå€¤ã«ã‚»ãƒƒãƒˆ
 	if ( $lngResultNum = pg_Num_Rows ( $lngResultID ) )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
@@ -256,14 +256,14 @@ function getSessionIDToInfo( $strSessionID, $objDB )
 
 // ---------------------------------------------------------------
 /**
-* ¥ê¥Ş¥¤¥ó¥À¡¼ÍÑ¥»¥Ã¥·¥ç¥ó¾ğÊó¤ÎÌµ¸ú²½½èÍı
+* ãƒªãƒã‚¤ãƒ³ãƒ€ãƒ¼ç”¨ã‚»ãƒƒã‚·ãƒ§ãƒ³æƒ…å ±ã®ç„¡åŠ¹åŒ–å‡¦ç†
 *
-*	¥Ñ¥¹¥ï¡¼¥É¥ê¥Ş¥¤¥ó¥À¡¼ÍÑ¥»¥Ã¥·¥ç¥ó¥Æ¡¼¥Ö¥ë¤ÎÌµ¸ú²½½èÍı
+*	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒªãƒã‚¤ãƒ³ãƒ€ãƒ¼ç”¨ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ã®ç„¡åŠ¹åŒ–å‡¦ç†
 *
-*	@param  string  $strSessionID ¥»¥Ã¥·¥ç¥óID
-*	@param  object  $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return boolean TRUE          ¥»¥Ã¥·¥ç¥óÌµ¸ú²½À®¸ù
-*	                FALSE         ¥»¥Ã¥·¥ç¥óÌµ¸ú²½¼ºÇÔ
+*	@param  string  $strSessionID ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+*	@param  object  $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return boolean TRUE          ã‚»ãƒƒã‚·ãƒ§ãƒ³ç„¡åŠ¹åŒ–æˆåŠŸ
+*	                FALSE         ã‚»ãƒƒã‚·ãƒ§ãƒ³ç„¡åŠ¹åŒ–å¤±æ•—
 *	@access public
 */
 // ---------------------------------------------------------------
@@ -274,7 +274,7 @@ function setSessionOff( $strSessionID, $objDB )
 		return FALSE;
 	}
 
-	// Ìµ¸ú²½½èÍı
+	// ç„¡åŠ¹åŒ–å‡¦ç†
 	$strQuery = "UPDATE t_LoginSession " .
 	            "SET bytSuccessfulFlag = false " .
 	            "WHERE strSessionID = '$strSessionID'";

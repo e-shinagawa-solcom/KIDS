@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       Ç¼ÉÊ½ñ½¤Àµ
+ *       ç´å“æ›¸ä¿®æ­£
  *
  *
  *       @package    K.I.D.S.
@@ -13,15 +13,15 @@
  *       @version    2.00
  *
  *
- *       ½èÍý³µÍ×
+ *       å‡¦ç†æ¦‚è¦
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-// ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ëÆÉ¹þ
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼
 //-------------------------------------------------------------------------
 include 'conf.inc';
 require LIB_FILE;
@@ -32,9 +32,9 @@ $objDB = new clsDB();
 $objAuth = new clsAuth();
 
 //-------------------------------------------------------------------------
-// ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 //-------------------------------------------------------------------------
-// ¥»¥Ã¥·¥ç¥óID
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
 if ($_POST["strSessionID"]) {
     $aryData["strSessionID"] = $_POST["strSessionID"];
 } else {
@@ -42,286 +42,286 @@ if ($_POST["strSessionID"]) {
 }
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// ½èÍý¥â¡¼¥É
+// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰
 $strMode = $_POST["strMode"];
 
 // --------------------
-// ½¤ÀµÂÐ¾Ý¤ËÉ³¤Å¤¯¾ðÊó
+// ä¿®æ­£å¯¾è±¡ã«ç´ã¥ãæƒ…å ±
 // --------------------
-// Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
+// ç´å“ä¼ç¥¨ç•ªå·
 $lngSlipNo = $_GET["lngSlipNo"];
-// Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
+// ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
 $strSlipCode = $_GET["strSlipCode"];
-// Çä¾åÈÖ¹æ
+// å£²ä¸Šç•ªå·
 $lngSalesNo = $_GET["lngSalesNo"];
-// Çä¾å¥³¡¼¥É
+// å£²ä¸Šã‚³ãƒ¼ãƒ‰
 $strSalesCode = $_GET["strSalesCode"];
-// ¸ÜµÒ¥³¡¼¥É
+// é¡§å®¢ã‚³ãƒ¼ãƒ‰
 $strCustomerCode = $_GET["strCustomerCode"];
 
 $revisionNo = $_GET["lngRevisionNo"];
 
 //-------------------------------------------------------------------------
-// DB¥ª¡¼¥×¥ó
+// DBã‚ªãƒ¼ãƒ—ãƒ³
 //-------------------------------------------------------------------------
 $objDB->open("", "", "", "");
 
 //-------------------------------------------------------------------------
-// ÆþÎÏÊ¸»úÎóÃÍ¡¦¥»¥Ã¥·¥ç¥ó¡¦¸¢¸Â¥Á¥§¥Ã¥¯
+// å…¥åŠ›æ–‡å­—åˆ—å€¤ãƒ»ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ»æ¨©é™ãƒã‚§ãƒƒã‚¯
 //-------------------------------------------------------------------------
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 $lngUserCode = $objAuth->UserCode;
 $lngUserGroup = $objAuth->AuthorityGroupCode;
 
-// 600 Çä¾å´ÉÍý
+// 600 å£²ä¸Šç®¡ç†
 if (!fncCheckAuthority(DEF_FUNCTION_SC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, "sc/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "sc/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
-// 601 Çä¾å´ÉÍý¡ÊÇä¾åÅÐÏ¿¡Ë
+// 601 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šç™»éŒ²ï¼‰
 if (fncCheckAuthority(DEF_FUNCTION_SC1, $objAuth)) {
     $aryData["strRegistURL"] = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
 }
 
-// 610 Çä¾å´ÉÍý¡Ê¹ÔÄÉ²Ã¡¦¹Ôºï½ü¡Ë
+// 610 å£²ä¸Šç®¡ç†ï¼ˆè¡Œè¿½åŠ ãƒ»è¡Œå‰Šé™¤ï¼‰
 if (!fncCheckAuthority(DEF_FUNCTION_SC10, $objAuth)) {
     $aryData["adddelrowview"] = 'hidden';
 }
 
 
 //-------------------------------------------------------------------------
-// ¡Úajax¡Û¸ÜµÒ¤ËÉ³¤Å¤¯¹ñ¥³¡¼¥É¤ò¼èÆÀ
+// ã€ajaxã€‘é¡§å®¢ã«ç´ã¥ãå›½ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 //-------------------------------------------------------------------------
 if ($strMode == "get-lngcountrycode") {
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
-    // ¹ñ¥³¡¼¥É¼èÆÀ
+    // å›½ã‚³ãƒ¼ãƒ‰å–å¾—
     $lngCountryCode = fncGetCountryCode($strCompanyDisplayCode, $objDB);
-    // ¥Ç¡¼¥¿ÊÖµÑ
+    // ãƒ‡ãƒ¼ã‚¿è¿”å´
     echo $lngCountryCode;
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
-    // ½èÍý½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 
 //-------------------------------------------------------------------------
-// ¡Úajax¡Û¸ÜµÒ¤ËÉ³¤Å¤¯Äù¤áÆü¤ò¼èÆÀ
+// ã€ajaxã€‘é¡§å®¢ã«ç´ã¥ãç· ã‚æ—¥ã‚’å–å¾—
 //-------------------------------------------------------------------------
 if ($strMode == "get-closedday") {
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
-    // Äù¤áÆü¼èÆÀ
+    // ç· ã‚æ—¥å–å¾—
     $lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
-    // ¥Ç¡¼¥¿ÊÖµÑ
+    // ãƒ‡ãƒ¼ã‚¿è¿”å´
     echo $lngClosedDay;
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
-    // ½èÍý½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 
 //-------------------------------------------------------------------------
-// ¡Úajax¡ÛÌÀºÙ¸¡º÷
+// ã€ajaxã€‘æ˜Žç´°æ¤œç´¢
 //-------------------------------------------------------------------------
 if ($strMode == "search-detail") {
-    // DB¤«¤éÌÀºÙ¤ò¸¡º÷
+    // DBã‹ã‚‰æ˜Žç´°ã‚’æ¤œç´¢
     $aryReceiveDetail = fncGetReceiveDetail($_POST["condition"], $objDB);
-    // ÌÀºÙÁªÂò¥¨¥ê¥¢¤Ë½ÐÎÏ¤¹¤ëHTML¤ÎºîÀ®
+    // æ˜Žç´°é¸æŠžã‚¨ãƒªã‚¢ã«å‡ºåŠ›ã™ã‚‹HTMLã®ä½œæˆ
     $withCheckBox = true;
     $strHtml = fncGetReceiveDetailHtml($aryReceiveDetail, $withCheckBox);
-    // ¥Ç¡¼¥¿ÊÖµÑ
+    // ãƒ‡ãƒ¼ã‚¿è¿”å´
     echo $strHtml;
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
-    // ½èÍý½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 
 //-------------------------------------------------------------------------
-// ¡Úajax¡ÛÇ¼ÉÊÆüÊÑ¹¹»þ¤Î¾ÃÈñÀÇÎ¨ÁªÂò¹àÌÜºÆÀßÄê
+// ã€ajaxã€‘ç´å“æ—¥å¤‰æ›´æ™‚ã®æ¶ˆè²»ç¨ŽçŽ‡é¸æŠžé …ç›®å†è¨­å®š
 //-------------------------------------------------------------------------
 if ($strMode == "change-deliverydate") {
-    // ÊÑ¹¹¸å¤ÎÇ¼ÉÊÆü¤ËÂÐ±þ¤¹¤ë¾ÃÈñÀÇÎ¨¤ÎÁªÂò¹àÌÜ¤ò¼èÆÀ
+    // å¤‰æ›´å¾Œã®ç´å“æ—¥ã«å¯¾å¿œã™ã‚‹æ¶ˆè²»ç¨ŽçŽ‡ã®é¸æŠžé …ç›®ã‚’å–å¾—
     $optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
-    // ¥Ç¡¼¥¿ÊÖµÑ
+    // ãƒ‡ãƒ¼ã‚¿è¿”å´
     echo $optTaxRate;
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
-    // ½èÍý½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 //-------------------------------------------------------------------------
-// ½¤Àµ²èÌÌ¤òÊÄ¤¸¤ë»þ¥í¥Ã¥¯¤ò²ò½ü
+// ä¿®æ­£ç”»é¢ã‚’é–‰ã˜ã‚‹æ™‚ãƒ­ãƒƒã‚¯ã‚’è§£é™¤
 //-------------------------------------------------------------------------
 if ($strMode == "releaseLock") {
 /*
-    // Â¾¤Ë¥í¥Ã¥¯¤·¤Æ¤¤¤ë¿Í¤¬¤¤¤Ê¤¤¤«³ÎÇ§
+    // ä»–ã«ãƒ­ãƒƒã‚¯ã—ã¦ã„ã‚‹äººãŒã„ãªã„ã‹ç¢ºèª
     $aryLockInfo = fncGetExclusiveLockUser(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
     if ($aryLockInfo["isLock"] != 0) {
-        // ½¤ÀµÂÐ¾Ý¥Ç¡¼¥¿¤Î¥í¥Ã¥¯¤ò²ò½ü¤¹¤ë
+        // ä¿®æ­£å¯¾è±¡ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯ã‚’è§£é™¤ã™ã‚‹
         fncReleaseExclusiveLock(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objDB);
     }
-    // DBÀÚÃÇ
+    // DBåˆ‡æ–­
     $objDB->close();
 */
-    // ½èÍý½ªÎ»
+    // å‡¦ç†çµ‚äº†
     return true;
 }
 //-------------------------------------------------------------------------
-// ½¤ÀµÂÐ¾Ý¥Ç¡¼¥¿¤Î¥í¥Ã¥¯¼èÆÀ
+// ä¿®æ­£å¯¾è±¡ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å–å¾—
 //-------------------------------------------------------------------------
-// Â¾¤Ë¥í¥Ã¥¯¤·¤Æ¤¤¤ë¿Í¤¬¤¤¤Ê¤¤¤«³ÎÇ§
+// ä»–ã«ãƒ­ãƒƒã‚¯ã—ã¦ã„ã‚‹äººãŒã„ãªã„ã‹ç¢ºèª
 /*
 $aryLockInfo = fncGetExclusiveLockUser(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB);
 if ($aryLockInfo["isLock"] == 1) {
-    MoveToErrorPage("¥æ¡¼¥¶¡¼" . $aryLockInfo["lockUserName"] . "¤¬½¤ÀµÃæ¤Ç¤¹¡£");
+    MoveToErrorPage("ãƒ¦ãƒ¼ã‚¶ãƒ¼" . $aryLockInfo["lockUserName"] . "ãŒä¿®æ­£ä¸­ã§ã™ã€‚");
 } else if ($aryLockInfo["isLock"] == 0) {
-    // ½¤ÀµÂÐ¾Ý¥Ç¡¼¥¿¤Î¥í¥Ã¥¯¤ò¼è¤ë
+    // ä¿®æ­£å¯¾è±¡ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯ã‚’å–ã‚‹
     if (!fncTakeExclusiveLock(EXCLUSIVE_CONTROL_FUNCTION_CODE_SC_RENEW, $strSlipCode, $objAuth, $objDB)) {
-        MoveToErrorPage("Ç¼ÉÊ½ñ¥Ç¡¼¥¿¤Î¥í¥Ã¥¯¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£");
+        MoveToErrorPage("ç´å“æ›¸ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
     }
 }
 */
 //-------------------------------------------------------------------------
-// ½¤ÀµÂÐ¾Ý¥Ç¡¼¥¿¼èÆÀ
+// ä¿®æ­£å¯¾è±¡ãƒ‡ãƒ¼ã‚¿å–å¾—
 //-------------------------------------------------------------------------
-// Ç¼ÉÊÅÁÉ¼ÈÖ¹æ¤ËÉ³¤Å¤¯¥Ø¥Ã¥À¡¦¥Õ¥Ã¥¿Éô¤Î¥Ç¡¼¥¿ÆÉ¤ß¹þ¤ß
+// ç´å“ä¼ç¥¨ç•ªå·ã«ç´ã¥ããƒ˜ãƒƒãƒ€ãƒ»ãƒ•ãƒƒã‚¿éƒ¨ã®ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
  
 $aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $revisionNo, $objDB);
 $lngRevisionNo = $aryHeader["lngrevisionno"];
-// Ç¼ÉÊÅÁÉ¼ÈÖ¹æ¤ËÉ³¤Å¤¯¼õÃíÌÀºÙ¾ðÊó¤ò¼èÆÀ¤¹¤ë
+// ç´å“ä¼ç¥¨ç•ªå·ã«ç´ã¥ãå—æ³¨æ˜Žç´°æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 $aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
 
-// ÌÀºÙÉô¤ÎHTML¤òÀ¸À®
-$isCreateNew = false; //½¤Àµ¥â¡¼¥ÉÍÑ
+// æ˜Žç´°éƒ¨ã®HTMLã‚’ç”Ÿæˆ
+$isCreateNew = false; //ä¿®æ­£ãƒ¢ãƒ¼ãƒ‰ç”¨
 
 $strDetailHtml = fncGetReceiveDetailHtml($aryDetail, $isCreateNew);
 
 //-------------------------------------------------------------------------
-// ¥Õ¥©¡¼¥à½é´üÃÍÀßÄê
+// ãƒ•ã‚©ãƒ¼ãƒ åˆæœŸå€¤è¨­å®š
 //-------------------------------------------------------------------------
 // -------------------------
-//  ½¤ÀµÂÐ¾Ý¥Ç¡¼¥¿¤ËÉ³¤Å¤¯ÃÍ
+//  ä¿®æ­£å¯¾è±¡ãƒ‡ãƒ¼ã‚¿ã«ç´ã¥ãå€¤
 // -------------------------
-// Ç¼ÉÊÅÁÉ¼ÈÖ¹æ¡Ê¤³¤ÎÃÍ¤¬¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤¿¤é½¤Àµ¤È¤ß¤Ê¤¹¡Ë
+// ç´å“ä¼ç¥¨ç•ªå·ï¼ˆã“ã®å€¤ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ãŸã‚‰ä¿®æ­£ã¨ã¿ãªã™ï¼‰
 $aryData["lngSlipNo"] = $lngSlipNo;
 $aryData["lngRevisionNo"] = $lngRevisionNo;
-// Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
+// ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
 $aryData["strSlipCode"] = $strSlipCode;
-// Çä¾åÈÖ¹æ
+// å£²ä¸Šç•ªå·
 $aryData["lngSalesNo"] = $lngSalesNo;
-// Çä¾å¥³¡¼¥É
+// å£²ä¸Šã‚³ãƒ¼ãƒ‰
 $aryData["strSalesCode"] = $strSalesCode;
 
 // -------------------------
-//  ½ÐÎÏÌÀºÙ°ìÍ÷¥¨¥ê¥¢
+//  å‡ºåŠ›æ˜Žç´°ä¸€è¦§ã‚¨ãƒªã‚¢
 // -------------------------
-// ÌÀºÙÉô¤ÎHTML¤ò¥»¥Ã¥È
+// æ˜Žç´°éƒ¨ã®HTMLã‚’ã‚»ãƒƒãƒˆ
 $aryData["strEditTableBody"] = $strDetailHtml;
 
 // -------------------------
-//  ¥Ø¥Ã¥À¡¦¥Õ¥Ã¥ÀÉô
+//  ãƒ˜ãƒƒãƒ€ãƒ»ãƒ•ãƒƒãƒ€éƒ¨
 // -------------------------
-// µ¯É¼¼Ô
+// èµ·ç¥¨è€…
 $aryData["lngUserCode"] = $aryHeader["strdrafteruserdisplaycode"];
 $aryData["strUserName"] = $aryHeader["strdrafteruserdisplayname"];
 
-// ¸ÜµÒ
+// é¡§å®¢
 $aryData["lngCustomerCode"] = $aryHeader["strcompanydisplaycode"];
 $aryData["strCustomerName"] = $aryHeader["strcompanydisplayname"];
 
-// ¸ÜµÒÂ¦Ã´Åö¼Ô
+// é¡§å®¢å´æ‹…å½“è€…
 $aryData["strCustomerUserName"] = $aryHeader["strcustomerusername"];
 
-// Ç¼ÉÊÆü
+// ç´å“æ—¥
 $aryData["dtmDeliveryDate"] = $aryHeader["dtmdeliverydate"];
 
-// »ÙÊ§ÊýË¡¥×¥ë¥À¥¦¥ó
+// æ”¯æ‰•æ–¹æ³•ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³
 $lngDefaultPaymentMethodCode = $aryHeader["lngpaymentmethodcode"];
 $optPaymentMethod .= fncGetPulldown("m_paymentmethod", "lngpaymentmethodcode", "strpaymentmethodname", $lngDefaultPaymentMethodCode, "", $objDB);
 $aryData["optPaymentMethod"] = $optPaymentMethod;
 
-// »ÙÊ§´ü¸Â
+// æ”¯æ‰•æœŸé™
 $aryData["dtmPaymentLimit"] = $aryHeader["dtmpaymentlimit"];
 
-// Ç¼ÉÊÀè
+// ç´å“å…ˆ
 $aryData["lngDeliveryPlaceCode"] = $aryHeader["strdeliveryplacecompanydisplaycode"];
 $aryData["strDeliveryPlaceName"] = $aryHeader["strdeliveryplacename"];
 
-// Ç¼ÉÊÀèÃ´Åö¼Ô
+// ç´å“å…ˆæ‹…å½“è€…
 $aryData["strDeliveryPlaceUserName"] = $aryHeader["strdeliveryplaceusername"];
 
-// È÷¹Í
+// å‚™è€ƒ
 $aryData["strNote"] = $aryHeader["strnote"];
 
-// ¾ÃÈñÀÇ¶èÊ¬¥×¥ë¥À¥¦¥ó
+// æ¶ˆè²»ç¨ŽåŒºåˆ†ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³
 $lngDefaultTaxClassCode = $aryHeader["lngtaxclasscode"];
 $optTaxClass .= fncGetPulldown("m_taxclass", "lngtaxclasscode", "strtaxclassname", $lngDefaultTaxClassCode, "", $objDB);
 $aryData["optTaxClass"] = $optTaxClass;
 
-// ¾ÃÈñÀÇÎ¨¥×¥ë¥À¥¦¥ó
+// æ¶ˆè²»ç¨ŽçŽ‡ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³
 if ($aryData["dtmDeliveryDate"]) {
     $curDefaultTax = $aryHeader["curtax"];
     $optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $curDefaultTax, $objDB);
     $aryData["optTaxRate"] = $optTaxRate;
 }
 
-// ¾ÃÈñÀÇ³Û¡Ê¢¨¤³¤³¤Ç¤Ï0¤ò¥»¥Ã¥È¤·¤Æ¤ª¤­¡¢²èÌÌÉ½¼¨»þ¤Ëjavascript¤Ç´Ø¿ô¤ò¸Æ¤Ó½Ð¤·¤Æ·×»»¤¹¤ë¡Ë
+// æ¶ˆè²»ç¨Žé¡ï¼ˆâ€»ã“ã“ã§ã¯0ã‚’ã‚»ãƒƒãƒˆã—ã¦ãŠãã€ç”»é¢è¡¨ç¤ºæ™‚ã«javascriptã§é–¢æ•°ã‚’å‘¼ã³å‡ºã—ã¦è¨ˆç®—ã™ã‚‹ï¼‰
 $aryData["strTaxAmount"] = "0";
 
-// ¹ç·×¶â³Û
+// åˆè¨ˆé‡‘é¡
 $aryData["strTotalAmount"] = $aryHeader["curtotalprice"];
 
 //-------------------------------------------------------------------------
-// ²èÌÌÉ½¼¨
+// ç”»é¢è¡¨ç¤º
 //-------------------------------------------------------------------------
-// ajax POSTÀè¤ò¤³¤Î¥Õ¥¡¥¤¥ë¤Ë¤¹¤ë
+// ajax POSTå…ˆã‚’ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã«ã™ã‚‹
 $aryData["ajaxPostTarget"] = "renew.php";
 
-// Ç¼ÉÊ½ñ½¤Àµ²èÌÌÉ½¼¨
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ç´å“æ›¸ä¿®æ­£ç”»é¢è¡¨ç¤º
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "sc/regist2/renew.html" );
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $aryData );
 $objTemplate->complete();
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
-// DBÀÚÃÇ
+// DBåˆ‡æ–­
 $objDB->close();
 
-// ½èÍý½ªÎ»
+// å‡¦ç†çµ‚äº†
 return true;
 
-// ¥¨¥é¡¼²èÌÌ¤Ø¤ÎÁ«°Ü
+// ã‚¨ãƒ©ãƒ¼ç”»é¢ã¸ã®é·ç§»
 function MoveToErrorPage($strMessage)
 {
 
-    // ¸À¸ì¥³¡¼¥É¡§ÆüËÜ¸ì
+    // è¨€èªžã‚³ãƒ¼ãƒ‰ï¼šæ—¥æœ¬èªž
     $aryHtml["lngLanguageCode"] = 1;
 
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ÎÀßÄê
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®è¨­å®š
     $aryHtml["strErrorMessage"] = $strMessage;
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
     $objTemplate->replace($aryHtml);
     $objTemplate->complete();
 
-    // HTML½ÐÎÏ
+    // HTMLå‡ºåŠ›
     echo $objTemplate->strTemplate;
 
     exit;

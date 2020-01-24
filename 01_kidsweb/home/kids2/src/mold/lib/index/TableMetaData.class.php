@@ -1,15 +1,15 @@
 <?php
 
 /**
- * ¥Æ¡¼¥Ö¥ë¶¦ÄÌ¤Î¥á¥¿¥Ç¡¼¥¿¤ò°·¤¦¥«¥é¥àÌ¾¤òÄó¶¡¤¹¤ë
+ * ãƒ†ãƒ¼ãƒ–ãƒ«å…±é€šã®ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’æ‰±ã†ã‚«ãƒ©ãƒ åã‚’æä¾›ã™ã‚‹
  */
 class TableMetaData
 {
 	/**
 	 * <pre>
-	 * ¥ì¥³¡¼¥ÉºîÀ®Æü»ş
+	 * ãƒ¬ã‚³ãƒ¼ãƒ‰ä½œæˆæ—¥æ™‚
 	 *
-	 * ·¿(postgresql):
+	 * å‹(postgresql):
 	 *     timestamp without time zone
 	 * </pre>
 	 *
@@ -19,9 +19,9 @@ class TableMetaData
 
 	/**
 	 * <pre>
-	 * ºîÀ®¼Ô(¥æ¡¼¥¶¥³¡¼¥É)
+	 * ä½œæˆè€…(ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰)
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 * </pre>
 	 *
 	 * @var string
@@ -30,9 +30,9 @@ class TableMetaData
 
 	/**
 	 * <pre>
-	 * ¥ì¥³¡¼¥É¹¹¿·Æü»ş
+	 * ãƒ¬ã‚³ãƒ¼ãƒ‰æ›´æ–°æ—¥æ™‚
 	 *
-	 * ·¿(postgresql):
+	 * å‹(postgresql):
 	 *     timestamp without time zone
 	 * </pre>
 	 *
@@ -42,9 +42,9 @@ class TableMetaData
 
 	/**
 	 * <pre>
-	 * ¹¹¿·¼Ô(¥æ¡¼¥¶¥³¡¼¥É)
+	 * æ›´æ–°è€…(ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰)
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 * </pre>
 	 *
 	 * @var string
@@ -53,9 +53,9 @@ class TableMetaData
 
 	/**
 	 * <pre>
-	 * ¥Ğ¡¼¥¸¥ç¥ó
+	 * ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 * </pre>
 	 *
 	 * @var string
@@ -64,9 +64,9 @@ class TableMetaData
 
 	/**
 	 * <pre>
-	 * ºï½ü¥Õ¥é¥°
+	 * å‰Šé™¤ãƒ•ãƒ©ã‚°
 	 *
-	 * ·¿(postgresql): boolean
+	 * å‹(postgresql): boolean
 	 * </pre>
 	 * @var string
 	 */

@@ -1,8 +1,8 @@
 <?
 /** 
-*	¥Ñ¥¹¥ï¡¼¥É¥ê¥Þ¥¤¥ó¥É¡¡½èÍý
+*	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒªãƒžã‚¤ãƒ³ãƒ‰ã€€å‡¦ç†
 *
-*	¥á¡¼¥ë¥¢¥É¥ì¥¹¤«¤é¥Ñ¥¹¥ï¡¼¥É¾ðÊó¥Ú¡¼¥¸¤Ø¤Î¥á¡¼¥ëÁ÷¿®
+*	ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‹ã‚‰ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰æƒ…å ±ãƒšãƒ¼ã‚¸ã¸ã®ãƒ¡ãƒ¼ãƒ«é€ä¿¡
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -11,24 +11,24 @@
 *	@access    public
 *	@version   1.00
 *
-*	½èÍý³µÍ×
-*	¥Ñ¥¹¥ï¡¼¥É¥ê¥Þ¥¤¥ó¥À¡¼¤Î¥ê¥ó¥¯¤è¤ê¥á¡¼¥ë¥¢¥É¥ì¥¹ÆþÎÏ²èÌÌ¤òÉ½¼¨¤·
-*	¤½¤Î²èÌÌ¤è¤ê¡¢¥á¡¼¥ë¥¢¥É¥ì¥¹¤ÎÀµÅöÀ­¤ò¥Á¥§¥Ã¥¯¤¹¤ë
-*	¤³¤Î½èÍýÃæ¤Ç¤Ï¥¨¥é¡¼²èÌÌ¤ÏÉ½¼¨¤»¤º¡¢À®¸ù¤·¤Æ¤â¼ºÇÔ¤·¤Æ¤â
-*	Æ±¤¸²èÌÌ¤òÉ½¼¨¤¹¤ë
-*	¥Á¥§¥Ã¥¯¤¬OK¤Ç¤¢¤ì¤Ð¡¢¥Ñ¥¹¥ï¡¼¥É¾ðÊó¥¢¥É¥ì¥¹¤òÀßÄê¤·¤¿
-*	¥á¡¼¥ë¤òÁ÷¿®¤¹¤ë
+*	å‡¦ç†æ¦‚è¦
+*	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒªãƒžã‚¤ãƒ³ãƒ€ãƒ¼ã®ãƒªãƒ³ã‚¯ã‚ˆã‚Šãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹å…¥åŠ›ç”»é¢ã‚’è¡¨ç¤ºã—
+*	ãã®ç”»é¢ã‚ˆã‚Šã€ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã®æ­£å½“æ€§ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
+*	ã“ã®å‡¦ç†ä¸­ã§ã¯ã‚¨ãƒ©ãƒ¼ç”»é¢ã¯è¡¨ç¤ºã›ãšã€æˆåŠŸã—ã¦ã‚‚å¤±æ•—ã—ã¦ã‚‚
+*	åŒã˜ç”»é¢ã‚’è¡¨ç¤ºã™ã‚‹
+*	ãƒã‚§ãƒƒã‚¯ãŒOKã§ã‚ã‚Œã°ã€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰æƒ…å ±ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨­å®šã—ãŸ
+*	ãƒ¡ãƒ¼ãƒ«ã‚’é€ä¿¡ã™ã‚‹
 *
-*	¹¹¿·ÍúÎò
-*	2004.02.26	¥á¡¼¥ë¤Ëµ­ºÜ¤¹¤ë¥¢¥É¥ì¥¹ÉôÊ¬¤ò°ìÉô½¤Àµ
-*	2004.06.01	DBÅÐÏ¿½èÍý»þ¤ÎÃÍ¤Ê¤·ÉôÊ¬¤ÎÈ½ÃÇ½èÍý¤ò½¤Àµ
+*	æ›´æ–°å±¥æ­´
+*	2004.02.26	ãƒ¡ãƒ¼ãƒ«ã«è¨˜è¼‰ã™ã‚‹ã‚¢ãƒ‰ãƒ¬ã‚¹éƒ¨åˆ†ã‚’ä¸€éƒ¨ä¿®æ­£
+*	2004.06.01	DBç™»éŒ²å‡¦ç†æ™‚ã®å€¤ãªã—éƒ¨åˆ†ã®åˆ¤æ–­å‡¦ç†ã‚’ä¿®æ­£
 *
 */
 
-// ÀßÄê¤ÎÆÉ¤ß¹þ¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require ( LIB_FILE );
 require ( SRC_ROOT . "remind/reminder.php" );
 
@@ -36,32 +36,32 @@ $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¤Î¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 $aryBase = $_POST;
 
-// À®¸ù¥Õ¥é¥°¤ÎÀßÄê
+// æˆåŠŸãƒ•ãƒ©ã‚°ã®è¨­å®š
 $bytSuccessFlag = TRUE;
 
-// ÀßÄêÆâÍÆ¤Î³ÎÇ§¡¡¤ª¤è¤Ó¡¡¥á¡¼¥ëÁ÷¿®¾ðÊó¤Î¼èÆÀ
+// è¨­å®šå†…å®¹ã®ç¢ºèªã€€ãŠã‚ˆã³ã€€ãƒ¡ãƒ¼ãƒ«é€ä¿¡æƒ…å ±ã®å–å¾—
 if ( !$aryBase["strMailAddress"] )
 {
-	// ¥¨¥é¡¼¤Ç¤âÀµ¾ï¥á¥Ã¥»¡¼¥¸¤ÎÉ½¼¨
+	// ã‚¨ãƒ©ãƒ¼ã§ã‚‚æ­£å¸¸ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®è¡¨ç¤º
 	require ( SRC_ROOT . 'remind/index.html' );
 	$objDB->close();
 	exit;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strMailAddress"]      = "null:email(0,50)";
 
-// ÊÑ¿ôÌ¾¤È¤Ê¤ë¥­¡¼¤ò¼èÆÀ
+// å¤‰æ•°åã¨ãªã‚‹ã‚­ãƒ¼ã‚’å–å¾—
 $aryKey = array_keys( $aryCheck );
 $flag = TRUE;
-// ¥­¡¼¤Î¿ô¤À¤±¥Á¥§¥Ã¥¯
+// ã‚­ãƒ¼ã®æ•°ã ã‘ãƒã‚§ãƒƒã‚¯
 foreach ( $aryKey as $strKey )
 {
-	// $aryData[$strKey]  : ¥Á¥§¥Ã¥¯ÂÐ¾Ý¥Ç¡¼¥¿
-	// $aryCheck[$strKey] : ¥Á¥§¥Ã¥¯ÆâÍÆ(¿ôÃÍ¡¢±Ñ¿ô»ú¡¢¥¢¥¹¥­¡¼Åù)
+	// $aryData[$strKey]  : ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒ‡ãƒ¼ã‚¿
+	// $aryCheck[$strKey] : ãƒã‚§ãƒƒã‚¯å†…å®¹(æ•°å€¤ã€è‹±æ•°å­—ã€ã‚¢ã‚¹ã‚­ãƒ¼ç­‰)
 	$strResult = fncCheckString( $aryBase[$strKey], $aryCheck[$strKey] );
 	if ( $strResult ) 
 	{
@@ -71,13 +71,13 @@ foreach ( $aryKey as $strKey )
 	}
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯¥¨¥é¡¼
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼
 if ( !$flag )
 {
 	$bytSuccessFlag = FALSE;
 }
 
-// ¥æ¡¼¥¶¡¼¾ðÊó¤Î¼èÆÀ
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã®å–å¾—
 if ( $bytSuccessFlag )
 {
 	if ( !$aryBase["strMailAddress"] or !$aryData = getMailAddressToInfo( $aryBase["strMailAddress"], $objDB ) )
@@ -87,7 +87,7 @@ if ( $bytSuccessFlag )
 	}
 }
 
-// ¥á¡¼¥ëÇÛ¿®µö²Ä¡¢¥á¡¼¥ë¥¢¥É¥ì¥¹¤Î¥Á¥§¥Ã¥¯
+// ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯ã€ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã®ãƒã‚§ãƒƒã‚¯
 if ( $bytSuccessFlag )
 {
 	if ( !$aryData["bytMailTransmitFlag"] || $aryData["strMailAddress"] == "" || $aryData["bytInvalidFlag"] )
@@ -96,7 +96,7 @@ if ( $bytSuccessFlag )
 	}
 }
 
-// ´ÉÍý¥æ¡¼¥¶¡¼¤Î¥¢¥É¥ì¥¹¤Î¼èÆÀ
+// ç®¡ç†ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã®å–å¾—
 if ( $bytSuccessFlag ) 
 {
 	$aryData["strAdminAddress"] = fncGetAdminFunction( "adminmailaddress", $objDB );
@@ -106,11 +106,11 @@ if ( $bytSuccessFlag )
 	}
 }
 
-// ¥ê¥Þ¥¤¥ó¥À¡¼½èÍý¤Î¤¿¤á¤Îconf.inc¤Ë¤ÆÀßÄê¤µ¤ì¤Æ¤¤¤ë»þ´ÖÆâÍ­¸ú¤Ê¥»¥Ã¥·¥ç¥ó¤ÎºîÀ®
-// ¥»¥Ã¥·¥ç¥óIDºîÀ®
+// ãƒªãƒžã‚¤ãƒ³ãƒ€ãƒ¼å‡¦ç†ã®ãŸã‚ã®conf.incã«ã¦è¨­å®šã•ã‚Œã¦ã„ã‚‹æ™‚é–“å†…æœ‰åŠ¹ãªã‚»ãƒƒã‚·ãƒ§ãƒ³ã®ä½œæˆ
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³IDä½œæˆ
 $strSessionID = md5 ( uniqid ( rand(), 1 ) );
 
-// ¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹¥Á¥§¥Ã¥¯
+// ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚§ãƒƒã‚¯
 if ( $bytSuccessFlag )
 {
 	if ( !checkAccessIPSimple( $objDB, $objAuth ) )
@@ -135,7 +135,7 @@ if ( $aryData["lngUserCode"] == "" )
 }
 // 2004.06.01 suzukaze update end
 
-// ¥í¥°¥¤¥ó¥»¥Ã¥·¥ç¥ó´ÉÍý¥Æ¡¼¥Ö¥ë¤Ë½ñ¤­¹þ¤ß
+// ãƒ­ã‚°ã‚¤ãƒ³ã‚»ãƒƒã‚·ãƒ§ãƒ³ç®¡ç†ãƒ†ãƒ¼ãƒ–ãƒ«ã«æ›¸ãè¾¼ã¿
 $strQuery = "INSERT INTO t_LoginSession VALUES (" .
             " '" . $strSessionID . "', " . $aryData["lngUserCode"] . ", '" . $aryData["strUserID"] . "', '" . $aryBase["strMailAddress"] .
 			"', now(), '" . $objAuth->AccessIP . "', " . $SuccessFlag . ")";
@@ -147,22 +147,22 @@ if ( !$objDB->freeResult( $lngResultID ) )
 	$bytSuccessFlag = FALSE;
 }
 
-// ¥ê¥Þ¥¤¥ó¥À¡¼½èÍý¥¢¥É¥ì¥¹¤ÎºîÀ®
+// ãƒªãƒžã‚¤ãƒ³ãƒ€ãƒ¼å‡¦ç†ã‚¢ãƒ‰ãƒ¬ã‚¹ã®ä½œæˆ
 if ( $bytSuccessFlag )
 {
 // 2004.02.26 suzukaze update start
 	$aryData["strURL"] = TOP_URL . 'remind/passwdinfo.php?strInfo=' . $strSessionID;
 // 2004.02.26 suzukaze update end
-	// ¥á¡¼¥ë¿÷·¿¤Î¼èÆÀ¡¢ÃÖ´¹
+	// ãƒ¡ãƒ¼ãƒ«é››åž‹ã®å–å¾—ã€ç½®æ›
 	if ( list( $strSubject, $strBody ) = fncGetMailMessage( DEF_FUNCTION_LOGIN2, $aryData, $objDB ) )
 	{
-		// ÀßÄêÆâÍÆ¤¬£Ï£Ë¤Ê¤é¤Ð¥á¡¼¥ë¤ÎÁ÷¿®
+		// è¨­å®šå†…å®¹ãŒï¼¯ï¼«ãªã‚‰ã°ãƒ¡ãƒ¼ãƒ«ã®é€ä¿¡
 		$strFromMail = fncGetCommonFunction( "adminmailaddress", "m_adminfunction", $objDB );
 		mail( $aryData["strMailAddress"], $strSubject, $strBody, "From: $strFromMail\nReturn-Path: " . ERROR_MAIL_TO . "\n" );
 	}
 }
 
-// ¥¨¥é¡¼¤Ç¤âÀµ¾ï¤Ç¤â¡ÉÀµ¾ï¡É¥á¥Ã¥»¡¼¥¸¤ÎÉ½¼¨
+// ã‚¨ãƒ©ãƒ¼ã§ã‚‚æ­£å¸¸ã§ã‚‚â€æ­£å¸¸â€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®è¡¨ç¤º
 require ( SRC_ROOT . 'remind/confirm.html' );
 
 $objDB->close();

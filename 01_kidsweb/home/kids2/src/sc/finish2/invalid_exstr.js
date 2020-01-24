@@ -2,18 +2,18 @@
 
 
 
-// д╒и╪╫пно╔э╔©╔С
+// Е╦ЁГ╔╗Е┤╨Е┼⌡Ц┐°Ц┌©Ц┐Ё
 var ListoutBt1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncBlownPreviewButton( \'on\' , this );" onmouseout="fncBlownPreviewButton( \'off\' , this );fncAlphaOff( this );" src="' + blownpreviewbt1 + '" width="72" height="20" border="0" alt="PREVIEW"></a>';
 
 
 
-// йд╓╦╓К╔э╔©╔С
-var CloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);" src="' + blownclose1J + '" width="72" height="20" border="0" alt="йд╓╦╓К"></a>';
+// И√┴Ц│≤Ц┌▀Ц┐°Ц┌©Ц┐Ё
+var CloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);" src="' + blownclose1J + '" width="72" height="20" border="0" alt="И√┴Ц│≤Ц┌▀"></a>';
 var CloseBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseEOn(this);" onmouseout="BlownCloseEOff(this);fncAlphaOff( this );" src="' + blownclose1E + '" width="72" height="20" border="0" alt="CLOSE"></a>';
 
 
 
-	// ╔г╔п╔ц╔╟
+	// Ц┐┤Ц┐░Ц┐┐Ц┌╟
 	//var g_lngCode = 1;
 
 
@@ -34,11 +34,11 @@ function fncChgEtoJ()
 	else if ( g_lngCode == 1 )
 	{
 
-		FinishRegist.innerText      = 'л╣╦З╡╫╢╟н╩';
+		FinishRegist.innerText      = 'Г└║Е┼╧Е▄√Е╝▄Д╨├';
 		CloseBt.innerHTML           = CloseBtJ1;
 
 
-		ColumnProductsNo.innerText   = 'гД╬Еёнёо.';
+		ColumnProductsNo.innerText   = 'Её╡Д╦┼О╪╝О╪╞.';
 
 	}
 

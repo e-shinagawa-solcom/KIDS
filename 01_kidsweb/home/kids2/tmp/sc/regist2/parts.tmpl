@@ -1,17 +1,17 @@
 <config>
 <!-- --------------------------------------------------------------------------
-�Բ��������
+《改定履歴》
 2004/03/05 K.Saito
-	objDataSourceSettingCheckAlert ��ǽ���ɲ�
+	objDataSourceSettingCheckAlert 機能の追加
 
 2004/03/30 K.Saito
-	objDataSourceSettingCheckAlert1 ��ǽ���ɲ�
+	objDataSourceSettingCheckAlert1 機能の追加
 
 2004/04/19 K.Suzukaze
-	strPageCondition ��Ͽ���̤��������̤��򼨤���Hidden�� ���ɲ�
+	strPageCondition 登録画面か修正画面かを示す　Hidden値 の追加
 
 2004/04/20 K.Saito
-	SegB04_1��SegB05_1 �Υ���å�����ư����ѹ�
+	SegB04_1、SegB05_1 のクリック時の動作を変更
 
 2004/../.. xxxxxxx
 	xxxxx
@@ -22,7 +22,7 @@
 <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
 <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
-<!-- datepicker�����ܸ첽 -->
+<!-- datepickerの日本語化 -->
 <script src="/cmn/jquery/ui/datepicker-ja.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
@@ -89,11 +89,11 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 <!-- //////////////////////////////////// END MAIN TITLE //////////////////////////////////// -->
 
 
-<!-- �̲ߡ��������� �����å��ٹ� -->
+<!-- 通貨＆仕入科目 チェック警告 -->
 <input type="hidden" name="check_alert" value="">
 <input type="hidden" name="check_alert1" value="">
 
-<!-- �׾���������Ѥ� �����å��ٹ� -->
+<!-- 計上日・締め済み チェック警告 -->
 <input type="hidden" name="check_alert_appdate" value="">
 
 <!-- /////////////////////////////////// START NAVIGATION /////////////////////////////////// -->
@@ -121,62 +121,62 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 <span id="SegABottom"></span>
 <!-- END BOTTOM -->
 
-<!-- ����������ϥܥ��� -->
+<!-- 検索条件入力ボタン -->
 <span id="SearchBt">
 	<a href="#">
 		<img  src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="" style="width: 78px; height: 20px;">
 	</a> 
 </span>
 
-<!-- �ɲåܥ��� -->
+<!-- 追加ボタン -->
 <span id="AddBt">
 	<a href="#">
 		<img src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="" style="width: 78px; height: 20px;">
 	</a>
 </span>
 
-<!-- ����ܥ��� -->
+<!-- 削除ボタン -->
 <span id="DeleteBt">
 	<a href="#">
 		<img src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
 	</a>
 </span>
 
-<!-- ������ܥ��� -->
+<!-- 全削除ボタン -->
 <span id="AllDeleteBt">
 	<a href="#">
 		<img  src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
 	</a>
 </span>
 
-<!-- ���ٹ��ؤ��ܥ��� -->
-<!-- �Ǿ�Ԥذ�ư -->
+<!-- 明細行替えボタン -->
+<!-- 最上行へ移動 -->
 <span id="selectup">
 	<img onclick="" src="/img/type01/cmn/querybt/select_changeup.gif"  alt="" style="width: 25px; height: 25px;">
 </span>
-<!-- ��ιԤذ�ư -->
+<!-- 上の行へ移動 -->
 <span id="selectup1">
 	<img onclick="" src="/img/type01/cmn/querybt/select_changeup1.gif" alt="" style="width: 41px; height: 25px;">
 </span>
-<!-- ���ιԤذ�ư -->
+<!-- 下の行へ移動 -->
 <span id="selectdown1">
 	<img onclick="" src="/img/type01/cmn/querybt/select_changedown1.gif" alt="" style="width: 41px; height: 25px;">
 </span>
-<!-- �ǲ��Ԥذ�ư -->
+<!-- 最下行へ移動 -->
 <span id="selectdown">
 	<img onclick="" src="/img/type01/cmn/querybt/select_changedown.gif" alt="" style="width: 25px; height: 25px;">
 </span>
 
-<!-- �ץ�ӥ塼�ܥ��� -->
+<!-- プレビューボタン -->
 <span id="PreviewBt">
 	<img src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="">
 </span>
 	
 
 <!-- START SEGMENTS -->
-<!-- �إå� -->
+<!-- ヘッダ -->
 
-<span id="SegADrafter">��ɼ��</span>
+<span id="SegADrafter">起票者</span>
 <span id="VarsADrafter">
 	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngInsertUserCode" value="_%lngInsertUserCode%_" alt="InsertUser">
 	<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strInsertUserName" value="_%strInsertUserName%_" contenteditable="false">
@@ -185,7 +185,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 	<img class="msw-button button" invokeMSWName="msw-inputuser" inputCodeMSWName="lngInsertUserCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 </span>
 
-<span id="SegACustomer">�ܵ�</span>
+<span id="SegACustomer">顧客</span>
 <span id="VarsACustomer">
 	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngCustomerCode" value="_%lngCustomerCode%_" iscustomer="yes" alt="Customer">
 	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strCustomerName" value="_%strCustomerName%_" contenteditable="false" readonly>
@@ -194,12 +194,12 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 	<img class="msw-button button" invokeMSWName="msw-customer" inputCodeMSWName="lngCustomerCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 </span>
 
-<span id="SegACustomerUserName">�ܵ�¦ô����</span>
+<span id="SegACustomerUserName">顧客側担当者</span>
 <span id="VarsACustomerUserName">
-	<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strCustomerUserName" value="_%strCustomerUserName%_" >��
+	<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strCustomerUserName" value="_%strCustomerUserName%_" >様
 </span>
 
-<span id="SegADeliveryDate">Ǽ����</span>
+<span id="SegADeliveryDate">納品日</span>
 <span id="VarsADeliveryDate">
 	<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10" 
 		onfocus="chColorOn(this);" 
@@ -208,7 +208,7 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 </span>
 <span id="DateBtB"></span>
 
-<span id="SegADeliveryPlaceName">Ǽ����</span>
+<span id="SegADeliveryPlaceName">納品先</span>
 <span id="VarsADeliveryPlaceName">
 	<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_" alt="DeliveryPlace">
 	<input style="ime-mode:disabled;" class="disTxt32L" type="text" name="strDeliveryPlaceName" value="_%strDeliveryPlaceName%_" contenteditable="false">
@@ -217,24 +217,24 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 	<img class="msw-button button" invokeMSWName="msw-location" inputCodeMSWName="lngDeliveryPlaceCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 </span>
 
-<span id="SegADeliveryPlaceUserName">Ǽ����ô����</span>
+<span id="SegADeliveryPlaceUserName">納品先担当者</span>
 <span id="VarsADeliveryPlaceUserName">
-	<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strDeliveryPlaceUserName" value="_%strDeliveryPlaceUserName%_" >��
+	<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strDeliveryPlaceUserName" value="_%strDeliveryPlaceUserName%_" >様
 </span>
 
-<span id="SegANote">����</span>
+<span id="SegANote">備考</span>
 <span id="VarsANote">
 	<textarea name="strNote">_%strNote%_</textarea>
 </span>
 
-<span id="SegATaxClass">�����Ƕ�ʬ</span>
+<span id="SegATaxClass">消費税区分</span>
 <span id="VarsATaxClass">
 	<select name="lngTaxClassCode" class="Slt13">
 		_%optTaxClass%_
 	</select>
 </span>
 
-<span id="SegATaxRate">������Ψ</span>
+<span id="SegATaxRate">消費税率</span>
 <span id="VarsATaxRate">
 	<select name="lngTaxRate" class="Slt6">
 		_%optTaxRate%_
@@ -242,97 +242,97 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 	&percnt;
 </span>
 
-<span id="SegATaxAmount">�����ǳ�</span>
+<span id="SegATaxAmount">消費税額</span>
 <span id="VarsATaxAmount">
 	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" readonly>
 </span>
 
-<span id="SegAPaymentLimit">��ʧ����</span>
+<span id="SegAPaymentLimit">支払期限</span>
 <span id="VarsAPaymentLimit">
 	<input class="TxtStyle05L is-date" type="text" name="dtmPaymentLimit" value="_%dtmPaymentLimit%_" maxlength="10">
 </span>
 <span id="DateBtC"></span>
 
-<span id="SegAPaymentMethod">��ʧ��ˡ</span>
+<span id="SegAPaymentMethod">支払方法</span>
 <span id="VarsAPaymentMethod">
 	<select name="lngPaymentMethodCode" class="Slt6">
 		_%optPaymentMethod%_
 	</select>
 </span>
 
-<span id="SegATotalAmount">��׶��</span>
+<span id="SegATotalAmount">合計金額</span>
 <span id="VarsATotalAmount">
 	<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTotalAmount" value="_%strTotalAmount%_" readonly>
 </span>
 
 
-<!-- �������򥨥ꥢ -->
+<!-- 明細選択エリア -->
 <span id="SegDetailIN" onselectstart="return false;">
   <table id="DetailTable">
     <thead id="DetailTableHead">
 	  <tr class="TrSegs">
 	  	<th class="not-sortable" style="width:20px;"><input type="checkbox" id="DetailTableBodyAllCheck"></th>
 	  	<th class="not-sortable">No.</th>
-	  	<th class="sortable">�ܵҼ����ֹ�</th>
-	  	<th class="sortable">���ʥ�����</th>
-		<th class="sortable">����̾</th>
-	  	<th class="sortable">����ʬ</th>
-	  	<th class="sortable">Ǽ��</th>
-	  	<th class="sortable">����</th>
-	  	<th class="sortable">����</th>
-	  	<th class="sortable">ñ��</th>
-	  	<th class="sortable">ñ��</th>
-		<th class="sortable">��ȴ���</th>
-	  	<th class="sortable">�ܵ�����</th>
-	  	<th class="sortable">����̾�ʱѸ��</th>
-	  	<th class="sortable">�Ķ�����</th>
-		<th class="forEdit">�����ֹ����ɽ����</th>
-		<th class="forEdit">���������ֹ����ɽ����</th>
-		<th class="forEdit">��ӥ�����ֹ����ɽ����</th>
-		<th class="forEdit">���Υ����ɡ���ɽ����</th>
-		<th class="forEdit">����ʬ�����ɡ���ɽ����</th>
-		<th class="forEdit">����ñ�̥����ɡ���ɽ����</th>
-		<th class="forEdit">���͡���ɽ����</th>
-		<th class="forEdit">�̲�ñ�̥����ɡ���ɽ����</th>
-		<th class="forEdit">�̲ߥ졼�ȥ����ɡ���ɽ����</th>
-		<th class="forEdit">�̲�ñ�̵������ɽ����</th>
-		<th class="forEdit">��������ե饰����ɽ����</th>
+	  	<th class="sortable">顧客受注番号</th>
+	  	<th class="sortable">製品コード</th>
+		<th class="sortable">製品名</th>
+	  	<th class="sortable">売上区分</th>
+	  	<th class="sortable">納期</th>
+	  	<th class="sortable">入数</th>
+	  	<th class="sortable">数量</th>
+	  	<th class="sortable">単位</th>
+	  	<th class="sortable">単価</th>
+		<th class="sortable">税抜金額</th>
+	  	<th class="sortable">顧客品番</th>
+	  	<th class="sortable">製品名（英語）</th>
+	  	<th class="sortable">営業部署</th>
+		<th class="forEdit">受注番号（非表示）</th>
+		<th class="forEdit">受注明細番号（非表示）</th>
+		<th class="forEdit">リビジョン番号（非表示）</th>
+		<th class="forEdit">再販コード（非表示）</th>
+		<th class="forEdit">売上区分コード（非表示）</th>
+		<th class="forEdit">製品単位コード（非表示）</th>
+		<th class="forEdit">備考（非表示）</th>
+		<th class="forEdit">通貨単位コード（非表示）</th>
+		<th class="forEdit">通貨レートコード（非表示）</th>
+		<th class="forEdit">通貨単位記号（非表示）</th>
+		<th class="forEdit">明細統一フラグ（非表示）</th>
 	  </tr>
 	</thead>
 	<tbody id="DetailTableBody">_%strDetailTableBody%_</tbody>
   </table>
 </span>
 
-<!-- �������ٰ������ꥢ -->
+<!-- 出力明細一覧エリア -->
 <span id="SegEditIN">
   <table id="EditTable" cellpadding="0" cellspacing="1" border="0">
 	<thead id="EditTableHead">
 	  <tr class="TrSegs">
 		<th>No.</th>
-		<th>�ܵҼ����ֹ�</th>
-		<th>���ʥ�����</th>
-		<th>����̾</th>
-		<th>����ʬ</th>
-		<th>Ǽ��</th>
-		<th>����</th>
-		<th>����</th>
-		<th>ñ��</th>
-		<th>ñ��</th>
-		<th>��ȴ���</th>
-		<th>�ܵ�����</th>
-		<th>����̾�ʱѸ��</th>
-		<th>�Ķ�����</th>
-		<th class="forEdit">�����ֹ����ɽ����</th>
-		<th class="forEdit">���������ֹ����ɽ����</th>
-		<th class="forEdit">��ӥ�����ֹ����ɽ����</th>
-		<th class="forEdit">���Υ����ɡ���ɽ����</th>
-		<th class="forEdit">����ʬ�����ɡ���ɽ����</th>
-		<th class="forEdit">����ñ�̥����ɡ���ɽ����</th>
-		<th class="forEdit">���͡���ɽ����</th>
-		<th class="forEdit">�̲�ñ�̥����ɡ���ɽ����</th>
-		<th class="forEdit">�̲ߥ졼�ȥ����ɡ���ɽ����</th>
-		<th class="forEdit">�̲�ñ�̵������ɽ����</th>
-		<th class="forEdit">��������ե饰����ɽ����</th>
+		<th>顧客受注番号</th>
+		<th>製品コード</th>
+		<th>製品名</th>
+		<th>売上区分</th>
+		<th>納期</th>
+		<th>入数</th>
+		<th>数量</th>
+		<th>単位</th>
+		<th>単価</th>
+		<th>税抜金額</th>
+		<th>顧客品番</th>
+		<th>製品名（英語）</th>
+		<th>営業部署</th>
+		<th class="forEdit">受注番号（非表示）</th>
+		<th class="forEdit">受注明細番号（非表示）</th>
+		<th class="forEdit">リビジョン番号（非表示）</th>
+		<th class="forEdit">再販コード（非表示）</th>
+		<th class="forEdit">売上区分コード（非表示）</th>
+		<th class="forEdit">製品単位コード（非表示）</th>
+		<th class="forEdit">備考（非表示）</th>
+		<th class="forEdit">通貨単位コード（非表示）</th>
+		<th class="forEdit">通貨レートコード（非表示）</th>
+		<th class="forEdit">通貨単位記号（非表示）</th>
+		<th class="forEdit">明細統一フラグ（非表示）</th>
 	  </tr>
 	</thead>
     <tbody id="EditTableBody">_%strEditTableBody%_</tbody>
@@ -341,19 +341,19 @@ initLayoutBase(); initLayoutPO(); initLayoutQuery(); initLayoutPunit(); initLayo
 
 <span id="SegHidden">
 </span>
-<!-- �����Ȥξ��� -->
+<!-- 明細枠の情報 -->
 <span id="DtHiddenRecord"></span>
 </p>
 
-<!-- �����оݤ�ɳ�Ť�Ǽ����ɼ�ֹ� -->
+<!-- 修正対象に紐づく納品伝票番号 -->
 <input type="hidden" name="lngSlipNo" value="_%lngSlipNo%_">
-<!-- �����оݤ�ɳ�Ť�Ǽ����ɼ������ -->
+<!-- 修正対象に紐づく納品伝票コード -->
 <input type="hidden" name="strSlipCode" value="_%strSlipCode%_">
-<!-- �����оݤ�ɳ�Ť�����ֹ� -->
+<!-- 修正対象に紐づく売上番号 -->
 <input type="hidden" name="lngSalesNo" value="_%lngSalesNo%_">
-<!-- �����оݤ�ɳ�Ť���女���� -->
+<!-- 修正対象に紐づく売上コード -->
 <input type="hidden" name="strSalesCode" value="_%strSalesCode%_">
-<!-- Ajax POST�� -->
+<!-- Ajax POST先 -->
 <input type="hidden" name="ajaxPostTarget" value = "_%ajaxPostTarget%_">
 
 <!-- //////////////////////////////////// END INPUT A SEGMENTS //////////////////////////////////// -->
@@ -373,8 +373,8 @@ _%strDetailHidden%_
 <span id="TaxBodys"></span>
 <span id="TaxHeader"></span>
 <span id="TaxBottom"></span>
-<span id="Tax">�ǳ�</span>
-<span id="TotalStdAmt">��׶��</span>
+<span id="Tax">税額</span>
+<span id="TotalStdAmt">合計金額</span>
 
 <!--  -->
 <span id="TaxVars">
@@ -409,13 +409,13 @@ _%strDetailHidden%_
 
 <!-- //////////////////////////////////// START MSW //////////////////////////////////// -->
 <div class="msw-loadpoints">
-		<!-- MSW �ܵҥޥ������� -->
+		<!-- MSW 顧客マスタ検索 -->
 		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
 		</iframe>
-		<!-- MSW Ǽ�ʾ��ޥ������� -->
+		<!-- MSW 納品場所マスタ検索 -->
 		<iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
 		</iframe>
-		<!-- MSW ���ϼԥޥ������� -->
+		<!-- MSW 入力者マスタ検索 -->
 		<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
 		</iframe>
 </div>
@@ -485,7 +485,7 @@ _%strDetailHidden%_
 <span id="Comments"></span>
 </form>
 
-<!-- ���ϼԥ����� -->
+<!-- 入力者コード -->
 <input type="hidden" name="lngInputUserCode" value="_%lngSelfLoginUserCode%_">
 
 <!-- -->

@@ -2,29 +2,29 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       »ÅÆş´ÉÍı  Ìµ¸ú³ÎÇ§
+ *       ä»•å…¥ç®¡ç†  ç„¡åŠ¹ç¢ºèª
  *
- *       ½èÍı³µÍ×
- *         ¡¦»ØÄê»ÅÆşÈÖ¹æ¥Ç¡¼¥¿¤Î¾ÜºÙÉ½¼¨½èÍı
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æŒ‡å®šä»•å…¥ç•ªå·ãƒ‡ãƒ¼ã‚¿ã®è©³ç´°è¡¨ç¤ºå‡¦ç†
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require SRC_ROOT . "pc/cmn/lib_pc.php";
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ($_GET) {
     $aryData = $_GET;
@@ -32,50 +32,50 @@ if ($_GET) {
     $aryData = $_POST;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¥¨¥é¡¼²èÌÌ¤Ç¤ÎÌá¤êURL
+// ã‚¨ãƒ©ãƒ¼ç”»é¢ã§ã®æˆ»ã‚ŠURL
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 
-// ¸¢¸Â³ÎÇ§
-// 700 »ÅÆş´ÉÍı
+// æ¨©é™ç¢ºèª
+// 700 ä»•å…¥ç®¡ç†
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, $strReturnPath, $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, $strReturnPath, $objDB);
 }
-// 707 »ÅÆş´ÉÍı¡Ê»ÅÆşÌµ¸ú²½¡Ë
+// 707 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥ç„¡åŠ¹åŒ–ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_PC7, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, $strReturnPath, $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, $strReturnPath, $objDB );
 }
-// »ÅÆşÈÖ¹æ¤Î¼èÆÀ
+// ä»•å…¥ç•ªå·ã®å–å¾—
 $lngStockNo = $aryData["lngStockNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
-// Ìµ¸úÂĞ¾İ¤Î»ÅÆşNO¤Î»ÅÆş¾ğÊó¼èÆÀ
+// ç„¡åŠ¹å¯¾è±¡ã®ä»•å…¥NOã®ä»•å…¥æƒ…å ±å–å¾—
 $strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
         $aryResult = $objDB->fetchArray($lngResultID, 0);
-		// ³ºÅö»ÅÆş¤Î¾õÂÖ¤¬¡ÖÄù¤áºÑ¡×¤Î¾õÂÖ¤Ç¤¢¤ì¤Ğ
+		// è©²å½“ä»•å…¥ã®çŠ¶æ…‹ãŒã€Œç· ã‚æ¸ˆã€ã®çŠ¶æ…‹ã§ã‚ã‚Œã°
         if ($aryResult["lngstockstatuscode"] == DEF_STOCK_CLOSED) {
             fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
         }
     } else {
-        fncOutputError(703, DEF_ERROR, "³ºÅö¥Ç¡¼¥¿¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿", true, $strReturnPath, $objDB);
+        fncOutputError(703, DEF_ERROR, "è©²å½“ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ", true, $strReturnPath, $objDB);
     }
 } else {
-    fncOutputError(703, DEF_ERROR, "¥Ç¡¼¥¿¤¬°Û¾ï¤Ç¤¹", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãŒç•°å¸¸ã§ã™", true, $strReturnPath, $objDB);
 }
 
 $objDB->freeResult($lngResultID);
 
-// ¼èÆÀ¥Ç¡¼¥¿¤ÎÄ´À°
+// å–å¾—ãƒ‡ãƒ¼ã‚¿ã®èª¿æ•´
 $aryNewResult = fncSetStockHeadTabelData($aryResult);
 
-// »ØÄê»ÅÆşÈÖ¹æ¤Î»ÅÆşÌÀºÙ¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+// æŒ‡å®šä»•å…¥ç•ªå·ã®ä»•å…¥æ˜ç´°ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 $strQuery = fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo);
-// ÌÀºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+// æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum) {
@@ -83,38 +83,38 @@ if ($lngResultNum) {
         $aryDetailResult[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    $strMessage = fncOutputError(703, DEF_WARNING, "»ÅÆşÈÖ¹æ¤ËÂĞ¤¹¤ëÌÀºÙ¾ğÊó¤¬¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£", false, $strReturnPath, $objDB);
+    $strMessage = fncOutputError(703, DEF_WARNING, "ä»•å…¥ç•ªå·ã«å¯¾ã™ã‚‹æ˜ç´°æƒ…å ±ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚", false, $strReturnPath, $objDB);
 }
 
 $objDB->freeResult($lngResultID);
 
-// ÌÀºÙ¾ğÊó¤Î½ĞÎÏ
+// æ˜ç´°æƒ…å ±ã®å‡ºåŠ›
 for ($i = 0; $i < count($aryDetailResult); $i++) {
     $aryNewDetailResult[$i] = fncSetStockDetailTabelData($aryDetailResult[$i], $aryNewResult);
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("pc/invalid/pc_parts_invalid.html");
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
     $objTemplate->replace($aryNewDetailResult[$i]);
     $objTemplate->complete();
 
-    // HTML½ĞÎÏ
+    // HTMLå‡ºåŠ›
     $aryDetailTable[] = $objTemplate->strTemplate;
 }
 
 $aryNewResult["strDetailTable"] = implode("\n", $aryDetailTable);
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("pc/invalid/pc_invalid.html");
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace($aryNewResult);
 $objTemplate->complete();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 $objDB->close();

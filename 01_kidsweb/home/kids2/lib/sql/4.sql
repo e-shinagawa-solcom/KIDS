@@ -1,2 +1,2 @@
-// No4: ¸ÜµÒ¥³¡¼¥É				¢ª ¸ÜµÒÉÊÈÖ(¾¦ÉÊÅĞÏ¿¡§watanabe)
+// No4: é¡§å®¢ã‚³ãƒ¼ãƒ‰				â†’ é¡§å®¢å“ç•ª(å•†å“ç™»éŒ²ï¼šwatanabe)
 SELECT lngcompanycode,strdistinctcode FROM m_company WHERE strcompanydisplaycode = '_%strFormValue0%_'

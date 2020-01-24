@@ -1,24 +1,24 @@
-/************************* [ ²ñ¼Ò¥Ş¥¹¥¿ ] *************************/
+/************************* [ ä¼šç¤¾ãƒã‚¹ã‚¿ ] *************************/
 
 
 
 //////////////////////////////////////////////////////////////////
-////////// [½¤Àµ][ÄÉ²Ã]»ş¡¦¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// [ä¿®æ­£][è¿½åŠ ]æ™‚ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncEditObjectOnload( lngLangCode )
 {
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤Î¼«Æ°¥ì¥¤¥¢¥¦¥È
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è‡ªå‹•ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 	fncInitLayoutObjectModule( objColumn , objInput  , 60 , 216 );
 
 
-	// ¡Ö²ñ¼ÒÂ°À­¡×ÀìÍÑ¥ì¥¤¥¢¥¦¥È
+	// ã€Œä¼šç¤¾å±æ€§ã€å°‚ç”¨ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 	Column20.style.padding = '50 0 0 8';
 	Column20.style.height = '80';
 
 
-	// [ÄÉ²Ã]
+	// [è¿½åŠ ]
 	if( g_strMode == 'add' )
 	{
-		// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎIDÊÑ´¹
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®IDå¤‰æ›
 		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' ,
 										'Input5' , 'Input6' , 'Input7' , 'Input8' , 'Input9' ,
 										'Input10' , 'Input11' , 'Input12' , 'Input13' , 'Input14' ,
@@ -29,10 +29,10 @@ function fncEditObjectOnload( lngLangCode )
 										'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt40L' , 'Txt40L' ,
 										'Txt40L' , 'Txt40L' , 'Txt02L' , 'TxtSlt20' , 'TxtSlt20' ) );
 	}
-	// [½¤Àµ]
+	// [ä¿®æ­£]
 	else if( g_strMode == 'fix' )
 	{
-		// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎIDÊÑ´¹
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®IDå¤‰æ›
 		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' ,
 										'Input5' , 'Input6' , 'Input7' , 'Input8' , 'Input9' ,
 										'Input10' , 'Input11' , 'Input12' , 'Input13' , 'Input14' ,
@@ -45,14 +45,14 @@ function fncEditObjectOnload( lngLangCode )
 	}
 
 
-	// [lngLanguageCode]ÃÍ¤Î½é´ü²½
+	// [lngLanguageCode]å€¤ã®åˆæœŸåŒ–
 	var g_lngCode = '';
 
-	// [lngLanguageCode]ÃÍ¤Î¼èÆÀ
+	// [lngLanguageCode]å€¤ã®å–å¾—
 	g_lngCode = lngLangCode;
 
 
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿
 	ChgEtoJ( g_lngCode );
 
 
@@ -63,25 +63,25 @@ function fncEditObjectOnload( lngLangCode )
 
 
 //////////////////////////////////////////////////////////////////
-////////// [CONFIRM]»ş¡¦¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// [CONFIRM]æ™‚ãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncConfirmObjectOnload( strMode , lngLangCode )
 {
 
-	// ½èÍı¥â¡¼¥É¤Î½é´ü²½
+	// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã®åˆæœŸåŒ–
 	g_strMode = '';
 
-	// ½èÍı¥â¡¼¥É¤Î¼èÆÀ
+	// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã®å–å¾—
 	g_strMode = strMode;
 
 
-	// [lngLanguageCode]ÃÍ¤Î½é´ü²½
+	// [lngLanguageCode]å€¤ã®åˆæœŸåŒ–
 	var g_lngCode = '';
 
-	// [lngLanguageCode]ÃÍ¤Î¼èÆÀ
+	// [lngLanguageCode]å€¤ã®å–å¾—
 	g_lngCode = lngLangCode;
 
 
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿
 	ChgEtoJ( g_lngCode );
 
 
@@ -97,8 +97,8 @@ function fncConfirmObjectOnload( strMode , lngLangCode )
 
 
 //////////////////////////////////////////////////////////////////
-////////// ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸¤ÎÀ¸À® //////////
-var headerAJ = '<img src="' + h_companyJ + '" width="949" height="30" border="0" alt="²ñ¼Ò¥Ş¥¹¥¿">';
+////////// ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ã®ç”Ÿæˆ //////////
+var headerAJ = '<img src="' + h_companyJ + '" width="949" height="30" border="0" alt="ä¼šç¤¾ãƒã‚¹ã‚¿">';
 var headerAE = '<img src="' + h_companyE + '" width="949" height="30" border="0" alt="COMPANY MASTER">';
 
 
@@ -109,29 +109,29 @@ var headerAE = '<img src="' + h_companyE + '" width="949" height="30" border="0"
 
 
 //////////////////////////////////////////////////////////////////
-////////// ÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ¥â¥¸¥å¡¼¥ë //////////
+////////// æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« //////////
 function ChgEtoJ( g_lngCode )
 {
 
-	// ¥¯¥¨¥ê¡¼¥Æ¡¼¥Ö¥ë£Ô£Ï£ĞºÂÉ¸
+	// ã‚¯ã‚¨ãƒªãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ï¼´ï¼¯ï¼°åº§æ¨™
 	if( typeof(QueryTable) != 'undefined' )
 	{
 		QueryTable.style.top = 800;
 	}
 
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( g_lngCode == 0 )
 	{
 
-		// ÄÉ²Ã¥Ü¥¿¥ó¥¤¥á¡¼¥¸½ñ¤­½Ğ¤·
+		// è¿½åŠ ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸æ›¸ãå‡ºã—
 		if( typeof(MasterAddBt) != 'undefined' )
 		{
 			MasterAddBt.innerHTML = maddbtE1;
 		}
 
 
-		// ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		if( typeof(fncTitleOutput) != 'undefined' )
 		{
 			fncTitleOutput( 0 );
@@ -139,7 +139,7 @@ function ChgEtoJ( g_lngCode )
 
 
 
-		// ¥«¥é¥àÌ¾
+		// ã‚«ãƒ©ãƒ å
 		Column0.innerText	= 'Company code';
 		Column1.innerText	= 'Country code';
 		Column2.innerText	= 'Organization code';
@@ -162,7 +162,7 @@ function ChgEtoJ( g_lngCode )
 		Column19.innerText	= 'Paystyle code';
 		Column20.innerText	= 'Company attribute';
 
-		// ½èÍıÌ¾
+		// å‡¦ç†å
 		if( typeof(FixColumn) != 'undefined' )
 		{
 			FixColumn.innerText		= 'Fix';
@@ -175,53 +175,53 @@ function ChgEtoJ( g_lngCode )
 
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( g_lngCode == 1 )
 	{
-		// ÄÉ²Ã¥Ü¥¿¥ó¥¤¥á¡¼¥¸½ñ¤­½Ğ¤·
+		// è¿½åŠ ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸æ›¸ãå‡ºã—
 		if( typeof(MasterAddBt) != 'undefined' )
 		{
 			MasterAddBt.innerHTML = maddbtJ1;
 		}
 
-		// ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		if( typeof(fncTitleOutput) != 'undefined' )
 		{
 			fncTitleOutput( 1 );
 		}
 
-		// ¥«¥é¥àÌ¾
-		Column0.innerText	= '²ñ¼Ò¥³¡¼¥É';
-		Column1.innerText	= '¹ñ¥³¡¼¥É';
-		Column2.innerText	= 'ÁÈ¿¥¥³¡¼¥É';
-		Column3.innerText	= 'ÁÈ¿¥É½µ­';
-		Column4.innerText	= '²ñ¼ÒÌ¾¾Î';
-		Column5.innerText	= 'É½¼¨²ñ¼Òµö²Ä';
-		Column6.innerText	= 'É½¼¨²ñ¼Ò¥³¡¼¥É';
-		Column7.innerText	= 'É½¼¨²ñ¼ÒÌ¾¾Î';
-		Column8.innerText	= '¾ÊÎ¬Ì¾¾Î';
-		Column9.innerText	= 'Í¹ÊØÈÖ¹æ';
-		Column10.innerText	= '½»½ê1 / ÅÔÆ»ÉÜ¸©';
-		Column11.innerText	= '½»½ê2 / »Ô¡¢¶è¡¢·´';
-		Column12.innerText	= '½»½ê3 / Ä®¡¢ÈÖÃÏ';
-		Column13.innerText	= '½»½ê4 / ¥Ó¥ëÅù¡¢·úÊªÌ¾';
-		Column14.innerText	= 'ÅÅÏÃÈÖ¹æ1';
-		Column15.innerText	= 'ÅÅÏÃÈÖ¹æ2';
-		Column16.innerText	= '¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ1';
-		Column17.innerText	= '¥Õ¥¡¥Ã¥¯¥¹ÈÖ¹æ2';
-		Column18.innerText	= '¼±ÊÌ¥³¡¼¥É';
-		Column19.innerText	= 'Äù¤áÆü¥³¡¼¥É';
-		Column20.innerText	= '²ñ¼ÒÂ°À­';
+		// ã‚«ãƒ©ãƒ å
+		Column0.innerText	= 'ä¼šç¤¾ã‚³ãƒ¼ãƒ‰';
+		Column1.innerText	= 'å›½ã‚³ãƒ¼ãƒ‰';
+		Column2.innerText	= 'çµ„ç¹”ã‚³ãƒ¼ãƒ‰';
+		Column3.innerText	= 'çµ„ç¹”è¡¨è¨˜';
+		Column4.innerText	= 'ä¼šç¤¾åç§°';
+		Column5.innerText	= 'è¡¨ç¤ºä¼šç¤¾è¨±å¯';
+		Column6.innerText	= 'è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰';
+		Column7.innerText	= 'è¡¨ç¤ºä¼šç¤¾åç§°';
+		Column8.innerText	= 'çœç•¥åç§°';
+		Column9.innerText	= 'éƒµä¾¿ç•ªå·';
+		Column10.innerText	= 'ä½æ‰€1 / éƒ½é“åºœçœŒ';
+		Column11.innerText	= 'ä½æ‰€2 / å¸‚ã€åŒºã€éƒ¡';
+		Column12.innerText	= 'ä½æ‰€3 / ç”ºã€ç•ªåœ°';
+		Column13.innerText	= 'ä½æ‰€4 / ãƒ“ãƒ«ç­‰ã€å»ºç‰©å';
+		Column14.innerText	= 'é›»è©±ç•ªå·1';
+		Column15.innerText	= 'é›»è©±ç•ªå·2';
+		Column16.innerText	= 'ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·1';
+		Column17.innerText	= 'ãƒ•ã‚¡ãƒƒã‚¯ã‚¹ç•ªå·2';
+		Column18.innerText	= 'è­˜åˆ¥ã‚³ãƒ¼ãƒ‰';
+		Column19.innerText	= 'ç· ã‚æ—¥ã‚³ãƒ¼ãƒ‰';
+		Column20.innerText	= 'ä¼šç¤¾å±æ€§';
 
-		// ½èÍıÌ¾
+		// å‡¦ç†å
 		if( typeof(FixColumn) != 'undefined' )
 		{
-			FixColumn.innerText		= '½¤Àµ';
+			FixColumn.innerText		= 'ä¿®æ­£';
 		}
 
 		if( typeof(DeleteColumn) != 'undefined' )
 		{
-			DeleteColumn.innerText	= 'ºï½ü';
+			DeleteColumn.innerText	= 'å‰Šé™¤';
 		}
 
 	}

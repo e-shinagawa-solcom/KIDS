@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ¥°¥ë¡¼¥×¥Ş¥¹¥¿ ¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë·ë²Ì°ìÍ÷²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿ ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«çµæœä¸€è¦§ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -14,21 +14,21 @@
 // index.php -> lngAttributeCode    -> index.php
 // index.php -> strGroupDisplayName -> index.php
 //
-// ÅĞÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID        -> edit.php
 // index.php -> lngActionCode       -> edit.php
 // index.php -> strGroupDisplayName -> edit.php
 //
-// ½¤Àµ²èÌÌ
+// ä¿®æ­£ç”»é¢
 // index.php -> strSessionID        -> edit.php
 // index.php -> lngActionCode       -> edit.php
 // index.php -> lngGroupCode        -> edit.php
 // index.php -> strGroupDisplayName -> edit.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
@@ -38,65 +38,65 @@ $objDB->open( "", "", "", "" );
 
 $aryData = $_POST;
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]        = "null:numenglish(32,32)";
 $aryCheck["strGroupDisplayName"] = "length(1,100)";
 
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 
-// ¸¡º÷¥¯¥¨¥êÀ¸À®
+// æ¤œç´¢ã‚¯ã‚¨ãƒªç”Ÿæˆ
 $strQuery = "SELECT *, c.strcompanydisplayname FROM m_Group g, m_Company c";
 
-// É½¼¨¥°¥ë¡¼¥×Ì¾¾Î¾ò·ïÀ¸À®
+// è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—åç§°æ¡ä»¶ç”Ÿæˆ
 if ( $aryData["strGroupDisplayName"] )
 {
 	$aryWhereString[] = " g.strGroupDisplayName LIKE '%" . $aryData["strGroupDisplayName"] . "%'";
 }
 
-// Â°À­¥Æ¡¼¥Ö¥ë¤È¤Î·ë¹ç
+// å±æ€§ãƒ†ãƒ¼ãƒ–ãƒ«ã¨ã®çµåˆ
 $aryWhereString[] = " c.lngCompanyCode = g.lngCompanyCode";
 
-// ¾ò·ïÊ¬¤òÀ¸À®¡¢¥¯¥¨¥ê¤ËÄÉ²Ã
+// æ¡ä»¶åˆ†ã‚’ç”Ÿæˆã€ã‚¯ã‚¨ãƒªã«è¿½åŠ 
 $strWhereString = join ( " AND", $aryWhereString );
 $strQuery .= " WHERE " . $strWhereString . " ORDER BY c.lngCompanyCode, g.lngGroupCode";
 
 
-// ¥Ç¡¼¥¿¤Î¼èÆÀ¤È¥ª¥Ö¥¸¥§¥¯¥È¤Ø¤Î¥»¥Ã¥È
+// ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ã‚»ãƒƒãƒˆ
 $lngResultNum = $objMaster->setMasterTableData( $strQuery, $objDB );
 $objMaster->strTableName = "m_Group";
 
 if ( $lngResultNum )
 {
 	///////////////////////////////////////////////////////////////////
-	// ¥Æ¡¼¥Ö¥ëÀ¸À®
+	// ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 	///////////////////////////////////////////////////////////////////
-	// ·ë²Ì¹ÔÉ½¼¨
+	// çµæœè¡Œè¡¨ç¤º
 	$count = 0;
 
-	// bytGroupDisplayFlag ¼èÆÀ
-	$aryGroupDisplayFlag = Array ( "t" => "É½¼¨", "f" => "ÈóÉ½¼¨" );
+	// bytGroupDisplayFlag å–å¾—
+	$aryGroupDisplayFlag = Array ( "t" => "è¡¨ç¤º", "f" => "éè¡¨ç¤º" );
 
 
-	// ¥ì¥³¡¼¥ÉÉ½¼¨½èÍı
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰è¡¨ç¤ºå‡¦ç†
 	foreach ( $objMaster->aryData as $record )
 	{
 		$count++;
 		$aryParts["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:" . $record[$objMaster->aryColumnName[6]] . ";\">\n";
 
-		// ¥«¥é¥àÀ¸À®
+		// ã‚«ãƒ©ãƒ ç”Ÿæˆ
 		$aryParts["strResultHtml"] .= "		<th>$count</th>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[0]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . fncHTMLSpecialChars( $record["strcompanydisplayname"] ) . "</td>\n";
@@ -107,10 +107,10 @@ if ( $lngResultNum )
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record[$objMaster->aryColumnName[6]] . "</td>\n";
 
 
-		// ½¤Àµ¥Ü¥¿¥óÀ¸À®
+		// ä¿®æ­£ãƒœã‚¿ãƒ³ç”Ÿæˆ
 		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/g/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&lnggroupcode=" . $record["lnggroupcode"] . fncGetURL( $aryData ) . "\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
-		// ºï½ü¥Ü¥¿¥óÀ¸À®
+		// å‰Šé™¤ãƒœã‚¿ãƒ³ç”Ÿæˆ
 		$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/g/confirm.php?lngActionCode=" . DEF_ACTION_DELETE . "&lnggroupcode=" . $record["lnggroupcode"] . fncGetURL( $aryData ) . "\" name=\"delete\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></td>\n";
 
 
@@ -123,20 +123,20 @@ if ( $lngResultNum )
 }
 else
 {
-	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . ( count ( $objMaster->aryColumnName ) + 1 ) . ">·ë²ÌÌµ¤·¡£</th></tr>";
+	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . ( count ( $objMaster->aryColumnName ) + 1 ) . ">çµæœç„¡ã—ã€‚</th></tr>";
 }
 
-// ¥«¥é¥à¹ÔHTML¼èÆÀ
+// ã‚«ãƒ©ãƒ è¡ŒHTMLå–å¾—
 // $aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 7 );
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>¥°¥ë¡¼¥×¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>²ñ¼Ò¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>¥°¥ë¡¼¥×Ì¾¾Î</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>É½¼¨¥°¥ë¡¼¥×µö²Ä</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>É½¼¨¥°¥ë¡¼¥×Ì¾¾Î</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>É½¼¨¥°¥ë¡¼¥×¥«¥é¡¼</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"FixColumn\" nowrap>½¤Àµ</td>\n";
-$aryParts["strColumnHtml"] .= "<td id=\"DeleteColumn\" nowrap>ºï½ü</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ä¼šç¤¾ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>ã‚°ãƒ«ãƒ¼ãƒ—åç§°</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—è¨±å¯</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—åç§°</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"Column0\" nowrap>è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚«ãƒ©ãƒ¼</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"FixColumn\" nowrap>ä¿®æ­£</td>\n";
+$aryParts["strColumnHtml"] .= "<td id=\"DeleteColumn\" nowrap>å‰Šé™¤</td>\n";
 $objDB->close();
 
 
@@ -147,7 +147,7 @@ $aryParts["strTableName"]    = $objMaster->strTableName;
 $aryParts["lngColumnNum"]    = 7;
 $aryParts["strEditURL"]      = "/m/regist/g/edit.php?lngActionCode=" . DEF_ACTION_INSERT . fncGetURL( $aryData );
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/result/parts.tmpl" );
 $objTemplate->replace( $aryParts );

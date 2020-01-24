@@ -1,58 +1,58 @@
 (function(){
-    // ¥Á¥§¥Ã¥¯¥Ü¥¿¥ó²èÁü(Ì¤¥Á¥§¥Ã¥¯)
+    // ãƒã‚§ãƒƒã‚¯ãƒœã‚¿ãƒ³ç”»åƒ(æœªãƒã‚§ãƒƒã‚¯)
     var unchecked="/img/type01/cmn/seg/off_bt.gif";
-    // ¥Á¥§¥Ã¥¯¥Ü¥¿¥ó²èÁü(¥Á¥§¥Ã¥¯ºÑ¤ß)
+    // ãƒã‚§ãƒƒã‚¯ãƒœã‚¿ãƒ³ç”»åƒ(ãƒã‚§ãƒƒã‚¯æ¸ˆã¿)
     var checked="/img/type01/cmn/seg/on_bt.gif"
 
-    // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÎÀÚ¤êÂØ¤¨½èÍı¤Î¥Ğ¥¤¥ó¥É
+    // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®åˆ‡ã‚Šæ›¿ãˆå‡¦ç†ã®ãƒã‚¤ãƒ³ãƒ‰
     $('img.toggle-search').on({
         'click': function() {
             toggleSearchCheckBox();
-            // ¥Á¥§¥Ã¥¯ºÑ¤ß¤Î¾ì¹ç
+            // ãƒã‚§ãƒƒã‚¯æ¸ˆã¿ã®å ´åˆ
             if (this.checked){this.src = unchecked;}
-            // Ì¤¥Á¥§¥Ã¥¯¤Î¾ì¹ç
+            // æœªãƒã‚§ãƒƒã‚¯ã®å ´åˆ
             else {this.src = checked;}
-            // ÆâÉô¥Õ¥é¥°¤òÈ¿Å¾¤·¤ÆÊİ»ı
+            // å†…éƒ¨ãƒ•ãƒ©ã‚°ã‚’åè»¢ã—ã¦ä¿æŒ
             this.checked = !this.checked;
         }
     });
 
-    // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÎÀÚ¤êÂØ¤¨½èÍı¤Î¥Ğ¥¤¥ó¥É
+    // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®åˆ‡ã‚Šæ›¿ãˆå‡¦ç†ã®ãƒã‚¤ãƒ³ãƒ‰
     $('img.toggle-display').on({
         'click': function() {
             toggleDisplayCheckBox();
-            // ¥Á¥§¥Ã¥¯ºÑ¤ß¤Î¾ì¹ç
+            // ãƒã‚§ãƒƒã‚¯æ¸ˆã¿ã®å ´åˆ
             if (this.checked){this.src = unchecked;}
-            // Ì¤¥Á¥§¥Ã¥¯¤Î¾ì¹ç
+            // æœªãƒã‚§ãƒƒã‚¯ã®å ´åˆ
             else {this.src = checked;}
-            // ÆâÉô¥Õ¥é¥°¤òÈ¿Å¾¤·¤ÆÊİ»ı
+            // å†…éƒ¨ãƒ•ãƒ©ã‚°ã‚’åè»¢ã—ã¦ä¿æŒ
             this.checked = !this.checked;
         }
     });
 
-    // ¸¡º÷¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥È¥°¥ë
+    // æ¤œç´¢ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒˆã‚°ãƒ«
     var toggleSearchCheckBox = function(){
         $('input[type="checkbox"].is-search')
             .each(function(){
-                // disabled¤ÊÍ×ÁÇ¤ÏÂĞ¾İ³°
+                // disabledãªè¦ç´ ã¯å¯¾è±¡å¤–
                 if (this.disabled == false){
                     this.checked = !toggleSearchCheckBox.checked;
                 }
             });
-        // ÆâÉô¥Õ¥é¥°¤òÈ¿Å¾¤µ¤»¤ÆÊİ»ı
+        // å†…éƒ¨ãƒ•ãƒ©ã‚°ã‚’åè»¢ã•ã›ã¦ä¿æŒ
         toggleSearchCheckBox.checked = !toggleSearchCheckBox.checked;
     };
 
-    // É½¼¨¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥È¥°¥ë
+    // è¡¨ç¤ºãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒˆã‚°ãƒ«
     var toggleDisplayCheckBox = function(){
         $('input[type="checkbox"].is-display')
             .each(function(){
-                // disabled¤ÊÍ×ÁÇ¤ÏÂĞ¾İ³°
+                // disabledãªè¦ç´ ã¯å¯¾è±¡å¤–
                 if (this.disabled == false){
                     this.checked = !toggleDisplayCheckBox.checked;
                 }
             });
-        // ÆâÉô¥Õ¥é¥°¤òÈ¿Å¾¤µ¤»¤ÆÊİ»ı
+        // å†…éƒ¨ãƒ•ãƒ©ã‚°ã‚’åè»¢ã•ã›ã¦ä¿æŒ
         toggleDisplayCheckBox.checked = !toggleDisplayCheckBox.checked;
     };
 })();

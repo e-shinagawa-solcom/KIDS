@@ -1,7 +1,7 @@
 (function(){
-    // ¶â·¿¥¹¥Æ¡¼¥¿¥¹¤ÎÁªÂò¾õÂÖ¤ò½é´ü²½¤¹¤ë
+    // é‡‘å‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®é¸æŠçŠ¶æ…‹ã‚’åˆæœŸåŒ–ã™ã‚‹
     $status = $('select[init-value]')
-    // ¶â·¿¥¹¥Æ¡¼¥¿¥¹¤Îvalue¤È°ìÃ×
+    // é‡‘å‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã®valueã¨ä¸€è‡´
     $status.find('option[value="' + $status.attr("init-value") + '"]').prop('selected', true);
     $status.change();
 })();

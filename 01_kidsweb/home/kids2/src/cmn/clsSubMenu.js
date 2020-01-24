@@ -2,12 +2,12 @@
 
 
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥á¥ó¥ĞÄêµÁ
+		// æ¦‚è¦ : ãƒ¡ãƒ³ãƒå®šç¾©
 		//
-		// @member Object [g_objMenu]		: ¥á¥Ë¥å¡¼¥ª¥Ö¥¸¥§¥¯¥È
-		// @member Array  [g_arySubMenu]	: ¥á¥Ë¥å¡¼É½¼¨Ê¸»úÎóÇÛÎó
-		// @member Array  [g_aryMenuPos]	: ¥á¥Ë¥å¡¼É½¼¨ºÂÉ¸ÇÛÎó
-		// @member Number [g_lngLang]		: ¸À¸ì¥Õ¥é¥°
+		// @member Object [g_objMenu]		: ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		// @member Array  [g_arySubMenu]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºæ–‡å­—åˆ—é…åˆ—
+		// @member Array  [g_aryMenuPos]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºåº§æ¨™é…åˆ—
+		// @member Number [g_lngLang]		: è¨€èªãƒ•ãƒ©ã‚°
 		//---------------------------------------------------------------------
 		var g_objMenu;
 		var g_arySubMenu;
@@ -18,16 +18,16 @@
 
 
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥á¥Ë¥å¡¼¡¦¥³¥ó¥¹¥È¥é¥¯¥¿
+		// æ¦‚è¦ : ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒ»ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		//
-		// @param Object [objMenu]	: ¥á¥Ë¥å¡¼¥ª¥Ö¥¸¥§¥¯¥È
+		// @param Object [objMenu]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		//---------------------------------------------------------------------
 		function clsSubMenu( objMenu )
 		{
-			// ¥á¥Ë¥å¡¼¥ª¥Ö¥¸¥§¥¯¥È¼èÆÀ
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå–å¾—
 			this.g_objMenu = objMenu;
 
-			// ¥á¥Ë¥å¡¼É½¼¨ºÂÉ¸ÇÛÎóÀ¸À®
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºåº§æ¨™é…åˆ—ç”Ÿæˆ
 			this.g_aryMenuPos = new Array();
 
 			with( this )
@@ -83,14 +83,14 @@
 			}
 		}
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥á¥Ë¥å¡¼É½¼¨Ê¸»úÎóÀ¸À®
+		// æ¦‚è¦ : ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºæ–‡å­—åˆ—ç”Ÿæˆ
 		//---------------------------------------------------------------------
 		function fncInitArySubMenu()
 		{
-			// ¸À¸ì¥Õ¥é¥°¼èÆÀ
+			// è¨€èªãƒ•ãƒ©ã‚°å–å¾—
 			this.g_lngLang = lngLanguageCode;
 
-			// ¥á¥Ë¥å¡¼É½¼¨Ê¸»úÎóÇÛÎóÀ¸À®
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºæ–‡å­—åˆ—é…åˆ—ç”Ÿæˆ
 			this.g_arySubMenu = new Array();
 
 
@@ -146,50 +146,50 @@
 						break;
 
 					case 1:
-						g_arySubMenu['p'][0]	= '¾¦ÉÊÅĞÏ¿';
-						g_arySubMenu['p'][1]	= '¾¦ÉÊ¸¡º÷';
+						g_arySubMenu['p'][0]	= 'å•†å“ç™»éŒ²';
+						g_arySubMenu['p'][1]	= 'å•†å“æ¤œç´¢';
 
-//						g_arySubMenu['es'][0]	= '¸«ÀÑ¸¶²ÁÅĞÏ¿';
-						g_arySubMenu['es'][0]	= '¸«ÀÑ¸¶²Á¸¡º÷';
-						g_arySubMenu['es'][1]	= '¥À¥¦¥ó¥í¡¼¥É';
-						g_arySubMenu['es'][2]	= '¥¢¥Ã¥×¥í¡¼¥É';
+//						g_arySubMenu['es'][0]	= 'è¦‹ç©åŸä¾¡ç™»éŒ²';
+						g_arySubMenu['es'][0]	= 'è¦‹ç©åŸä¾¡æ¤œç´¢';
+						g_arySubMenu['es'][1]	= 'ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰';
+						g_arySubMenu['es'][2]	= 'ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰';
 
-						g_arySubMenu['so'][0]	= '¼õÃíÅĞÏ¿';
-						g_arySubMenu['so'][1]	= '¼õÃí¸¡º÷';
+						g_arySubMenu['so'][0]	= 'å—æ³¨ç™»éŒ²';
+						g_arySubMenu['so'][1]	= 'å—æ³¨æ¤œç´¢';
 
-						g_arySubMenu['po'][0]	= 'È¯Ãí¸¡º÷';
-						g_arySubMenu['po'][1]	= 'È¯Ãí½ñ¸¡º÷';
+						g_arySubMenu['po'][0]	= 'ç™ºæ³¨æ¤œç´¢';
+						g_arySubMenu['po'][1]	= 'ç™ºæ³¨æ›¸æ¤œç´¢';
 
-						g_arySubMenu['sc'][0]	= 'Çä¾å(Ç¼ÉÊ½ñ)ÅĞÏ¿';
-						g_arySubMenu['sc'][1]	= 'Ç¼ÉÊ½ñ¸¡º÷';
-						g_arySubMenu['sc'][2]	= 'Çä¾å¸¡º÷';
+						g_arySubMenu['sc'][0]	= 'å£²ä¸Š(ç´å“æ›¸)ç™»éŒ²';
+						g_arySubMenu['sc'][1]	= 'ç´å“æ›¸æ¤œç´¢';
+						g_arySubMenu['sc'][2]	= 'å£²ä¸Šæ¤œç´¢';
 
-						g_arySubMenu['pc'][0]	= '»ÅÆşÅĞÏ¿';
-						g_arySubMenu['pc'][1]	= '»ÅÆş¸¡º÷';
+						g_arySubMenu['pc'][0]	= 'ä»•å…¥ç™»éŒ²';
+						g_arySubMenu['pc'][1]	= 'ä»•å…¥æ¤œç´¢';
 
-						g_arySubMenu['wf'][0]	= '°Æ·ï°ìÍ÷';
-						g_arySubMenu['wf'][1]	= '°Æ·ï¸¡º÷';
+						g_arySubMenu['wf'][0]	= 'æ¡ˆä»¶ä¸€è¦§';
+						g_arySubMenu['wf'][1]	= 'æ¡ˆä»¶æ¤œç´¢';
 						
-						g_arySubMenu['inv'][0]	= 'ÀÁµá½ñÅĞÏ¿';
-						g_arySubMenu['inv'][1]	= 'ÀÁµá½ñ¸¡º÷';
-						g_arySubMenu['inv'][2]	= 'ÀÁµá½¸·×';
+						g_arySubMenu['inv'][0]	= 'è«‹æ±‚æ›¸ç™»éŒ²';
+						g_arySubMenu['inv'][1]	= 'è«‹æ±‚æ›¸æ¤œç´¢';
+						g_arySubMenu['inv'][2]	= 'è«‹æ±‚é›†è¨ˆ';
 
-						g_arySubMenu['list'][0]	= '¾¦ÉÊ²½´ë²è½ñ';
-						g_arySubMenu['list'][1]	= 'È¯Ãí½ñ';
-						g_arySubMenu['list'][2]	= '¸«ÀÑ¸¶²Á½ñ';
-						g_arySubMenu['list'][3]	= 'Ç¼ÉÊÅÁÉ¼';
-						g_arySubMenu['list'][4]	= 'ÀÁµá½ñ';
+						g_arySubMenu['list'][0]	= 'å•†å“åŒ–ä¼ç”»æ›¸';
+						g_arySubMenu['list'][1]	= 'ç™ºæ³¨æ›¸';
+						g_arySubMenu['list'][2]	= 'è¦‹ç©åŸä¾¡æ›¸';
+						g_arySubMenu['list'][3]	= 'ç´å“ä¼ç¥¨';
+						g_arySubMenu['list'][4]	= 'è«‹æ±‚æ›¸';
 
-						g_arySubMenu['mm'][0]	= '¶â·¿ÍúÎòÅĞÏ¿';
-						g_arySubMenu['mm'][1]	= '¶â·¿ÍúÎò¸¡º÷';
+						g_arySubMenu['mm'][0]	= 'é‡‘å‹å±¥æ­´ç™»éŒ²';
+						g_arySubMenu['mm'][1]	= 'é‡‘å‹å±¥æ­´æ¤œç´¢';
 
-						g_arySubMenu['mr'][0]	= '¶â·¿Ä¢É¼ÅĞÏ¿';
-						g_arySubMenu['mr'][1]	= '¶â·¿Ä¢É¼¸¡º÷';
+						g_arySubMenu['mr'][0]	= 'é‡‘å‹å¸³ç¥¨ç™»éŒ²';
+						g_arySubMenu['mr'][1]	= 'é‡‘å‹å¸³ç¥¨æ¤œç´¢';
 						
-						g_arySubMenu['lc'][0]	= 'L/C ¾ğÊó';
-						g_arySubMenu['lc'][1]	= 'L/C ÀßÄêÊÑ¹¹';
-						g_arySubMenu['lc'][2]	= 'L/C ÊÔ½¸';
-						g_arySubMenu['lc'][3]	= 'L/CÄ¢É¼½ĞÎÏ';
+						g_arySubMenu['lc'][0]	= 'L/C æƒ…å ±';
+						g_arySubMenu['lc'][1]	= 'L/C è¨­å®šå¤‰æ›´';
+						g_arySubMenu['lc'][2]	= 'L/C ç·¨é›†';
+						g_arySubMenu['lc'][3]	= 'L/Cå¸³ç¥¨å‡ºåŠ›';
 						break;
 
 					default:
@@ -201,23 +201,23 @@
 		}
 
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥á¥Ë¥å¡¼É½¼¨
+		// æ¦‚è¦ : ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤º
 		//
-		// @param  String [strMode]	: ¥á¥Ë¥å¡¼¼ïÎàÊ¸»úÎó
+		// @param  String [strMode]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç¨®é¡æ–‡å­—åˆ—
 		//---------------------------------------------------------------------
 		function fncShowSubMenu( strMode )
 		{
-			// ¥á¥Ë¥å¡¼ºÂÉ¸ÈùÄ´À°ÃÍ
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼åº§æ¨™å¾®èª¿æ•´å€¤
 			//var lngBuffXpos = 8;
 			//var lngBuffYpos = 10;
 
-			// ¥á¥Ë¥å¡¼É½¼¨Ê¸»úÎóÀ¸À®
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºæ–‡å­—åˆ—ç”Ÿæˆ
 			this.fncInitArySubMenu();
 
-			// HTMLÀ¸À®
+			// HTMLç”Ÿæˆ
 			this.g_objMenu.innerHTML = this.fncGetSubMenuHTML( strMode, this.g_arySubMenu[strMode] );
 
-			// ¥á¥Ë¥å¡¼ºÂÉ¸Ä´À°
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼åº§æ¨™èª¿æ•´
 			this.g_objMenu.style.left = this.g_aryMenuPos[strMode][0] + 'px';
 			this.g_objMenu.style.top  = this.g_aryMenuPos[strMode][1] + 'px';
 
@@ -225,7 +225,7 @@
 			//this.g_objMenu.style.top  = lngBuffYpos + window.event.clientY + 'px';
 			//alert( this.g_objMenu.style.top );
 
-			// ¥á¥Ë¥å¡¼É½¼¨
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤º
 			this.g_objMenu.style.display = 'block';
 
 			return false;
@@ -233,25 +233,25 @@
 
 
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥á¥Ë¥å¡¼ÈóÉ½¼¨
+		// æ¦‚è¦ : ãƒ¡ãƒ‹ãƒ¥ãƒ¼éè¡¨ç¤º
 		//---------------------------------------------------------------------
 		function fncHideSubMenu()
 		{
-			// ¥µ¥Ö¥á¥Ë¥å¡¼¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢½èÍı½ªÎ»
+			// ã‚µãƒ–ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒå­˜åœ¨ã—ãªã„å ´åˆã€å‡¦ç†çµ‚äº†
 			if( typeof( this.g_objMenu ) == 'undefined' ) return;
 
-			// ¥á¥Ë¥å¡¼ÈóÉ½¼¨
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼éè¡¨ç¤º
 			this.g_objMenu.style.display = 'none';
 
 			return false;
 		}
 		//---------------------------------------------------------------------
-		// ³µÍ× : HTMLÀ¸À®
+		// æ¦‚è¦ : HTMLç”Ÿæˆ
 		//
-		// @param  String [strMode]		: ¥á¥Ë¥å¡¼¼ïÎàÊ¸»úÎó
-		// @param  Array  [arySubMenu]	: ¥á¥Ë¥å¡¼É½¼¨Ê¸»úÎóÇÛÎó
+		// @param  String [strMode]		: ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç¨®é¡æ–‡å­—åˆ—
+		// @param  Array  [arySubMenu]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºæ–‡å­—åˆ—é…åˆ—
 		//
-		// @return String [strHTML]		: ¥á¥Ë¥å¡¼HTML
+		// @return String [strHTML]		: ãƒ¡ãƒ‹ãƒ¥ãƒ¼HTML
 		//---------------------------------------------------------------------
 		function fncGetSubMenuHTML( strMode, arySubMenu )
 		{
@@ -264,14 +264,14 @@
 
 			for( i = 0; i < arySubMenu.length; i++ )
 			{
-				// ¥á¥Ë¥å¡¼¥¹¥Æ¡¼¥¿¥¹¥Á¥§¥Ã¥¯
+				// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒã‚§ãƒƒã‚¯
 				if( !this.fncGetSubMenuStatus( strMode, i ) ) continue;
 
-				// Ref¼èÆÀ¡¦HTMLÀ¸À®
+				// Refå–å¾—ãƒ»HTMLç”Ÿæˆ
 				aryHTML[i] = '<button onmouseover="fncChangeBtnBGCol( this, \'#bcbcbc\' ); return false;" onmouseout="fncChangeBtnBGCol( this, \'#dedede\' ); return false;" onclick="fncSubMenuLocation( \'' + this.fncGetSubMenuRef( strMode, i ) + '\' ); return false;">' + arySubMenu[i] + '</button><br>';
 			}
 
-			// HTMLÊ¸»úÎó¤Î·ë¹ç
+			// HTMLæ–‡å­—åˆ—ã®çµåˆ
 			strHTML += aryHTML.join( "" );
 
 			delete aryHTML;
@@ -279,19 +279,19 @@
 			return strHTML;
 		}
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥á¥Ë¥å¡¼¥¹¥Æ¡¼¥¿¥¹¼èÆÀ
+		// æ¦‚è¦ : ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å–å¾—
 		//
-		// @param  String [strMode]		: ¥á¥Ë¥å¡¼¼ïÎàÊ¸»úÎó
-		// @param  Number [i]			: ¥á¥Ë¥å¡¼É½¼¨Ê¸»úÎóÇÛÎóÈÖ¹æ
+		// @param  String [strMode]		: ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç¨®é¡æ–‡å­—åˆ—
+		// @param  Number [i]			: ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºæ–‡å­—åˆ—é…åˆ—ç•ªå·
 		//
-		// @return Number [lngStatus]	: ¥á¥Ë¥å¡¼¥¹¥Æ¡¼¥¿¥¹
+		// @return Number [lngStatus]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 		//---------------------------------------------------------------------
 		function fncGetSubMenuStatus( strMode, i )
 		{
 			var strStatus = '';
 			var lngStatus = 0;
 
-			// ¥á¥Ë¥å¡¼¥¹¥Æ¡¼¥¿¥¹¼èÆÀ
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å–å¾—
 			strStatus = eval( 'document.all.lngSubFlag_' + strMode + '_' + i ).value;
 
 			lngStatus = Number( strStatus );
@@ -299,43 +299,43 @@
 			return lngStatus;
 		}
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥á¥Ë¥å¡¼Ref¼èÆÀ
+		// æ¦‚è¦ : ãƒ¡ãƒ‹ãƒ¥ãƒ¼Refå–å¾—
 		//
-		// @param  String [strMode]	: ¥á¥Ë¥å¡¼¼ïÎàÊ¸»úÎó
-		// @param  Number [i]		: ¥á¥Ë¥å¡¼É½¼¨Ê¸»úÎóÇÛÎóÈÖ¹æ
+		// @param  String [strMode]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç¨®é¡æ–‡å­—åˆ—
+		// @param  Number [i]		: ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºæ–‡å­—åˆ—é…åˆ—ç•ªå·
 		//
-		// @return String [strRef]	: ¥á¥Ë¥å¡¼Ref
+		// @return String [strRef]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼Ref
 		//---------------------------------------------------------------------
 		function fncGetSubMenuRef( strMode, i )
 		{
 			var strRef = '';
 
-			// ¥á¥Ë¥å¡¼Ref¼èÆÀ
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼Refå–å¾—
 			strRef = eval( 'document.all.lngSubRef_' + strMode + '_' + i ).value;
 
 			return strRef;
 		}
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥á¥Ë¥å¡¼¥í¥±¡¼¥·¥ç¥ó¼Â¹Ô
+		// æ¦‚è¦ : ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³å®Ÿè¡Œ
 		//
-		// @param  String [strURL]	: ¥á¥Ë¥å¡¼RefÊ¸»úÎó
+		// @param  String [strURL]	: ãƒ¡ãƒ‹ãƒ¥ãƒ¼Refæ–‡å­—åˆ—
 		//---------------------------------------------------------------------
 		function fncSubMenuLocation( strURL )
 		{
-			// ¥á¥Ë¥å¡¼¥í¥±¡¼¥·¥ç¥ó¼Â¹Ô
+			// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒ­ã‚±ãƒ¼ã‚·ãƒ§ãƒ³å®Ÿè¡Œ
 			window.location.href = strURL;
 
 			return false;
 		}
 		//---------------------------------------------------------------------
-		// ³µÍ× : ¥Ü¥¿¥óÇØ·Ê¿§ÊÑ¹¹
+		// æ¦‚è¦ : ãƒœã‚¿ãƒ³èƒŒæ™¯è‰²å¤‰æ›´
 		//
-		// @param  Object [objBtn]		: ¥Ü¥¿¥ó¥ª¥Ö¥¸¥§¥¯¥È
-		// @param  String [strColor]	: ÊÑ¹¹¿§
+		// @param  Object [objBtn]		: ãƒœã‚¿ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+		// @param  String [strColor]	: å¤‰æ›´è‰²
 		//---------------------------------------------------------------------
 		function fncChangeBtnBGCol( objBtn, strColor )
 		{
-			// ¥Ü¥¿¥óÇØ·Ê¿§ÊÑ¹¹
+			// ãƒœã‚¿ãƒ³èƒŒæ™¯è‰²å¤‰æ›´
 			objBtn.style.backgroundColor = strColor;
 
 			return false;

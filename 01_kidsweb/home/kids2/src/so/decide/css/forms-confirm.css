@@ -1,5 +1,5 @@
 
-/* а╢бнгь╥й */
+/* Е┘╗Д╫⌠Х┐▄Ф≥╞ */
 .confirm-background
 {
     background-color: #f1f1f1;
@@ -7,7 +7,7 @@
     overflow-y: scroll;
 }
 
-/* ╔©╔╓╔х╔К */
+/* Ц┌©Ц┌╓Ц┐┬Ц┐╚ */
 .confirm-title
 {
     height: 22px;
@@ -19,7 +19,7 @@
     background-color: #799797;
 }
 
-/* йд╓╦╓К/епо© а╙бРBOX */
+/* И√┴Ц│≤Ц┌▀/Г≥╩И▄╡ И│╦Ф┼·BOX */
 .confirm-box
 {
     margin: 20px 5px;
@@ -27,13 +27,13 @@
     border: 1px solid black;
 }
 
-/* йд╓╦╓К/епо© а╙бРBOX div */
+/* И√┴Ц│≤Ц┌▀/Г≥╩И▄╡ И│╦Ф┼·BOX div */
 .confirm-box div
 {
     margin-bottom: 5px;
 }
 
-/* йд╓╦╓К/епо© а╙бРBOX ╔И╔ы╔К */
+/* И√┴Ц│≤Ц┌▀/Г≥╩И▄╡ И│╦Ф┼·BOX Ц┐╘Ц┐≥Ц┐╚ */
 .confirm-box__header
 {
     color: #ffffff;
@@ -43,19 +43,19 @@
     background-color: #799797;
 }
 
-/* йд╓╦╓К/епо© а╙бРBOX ╔э╔©╔С */
+/* И√┴Ц│≤Ц┌▀/Г≥╩И▄╡ И│╦Ф┼·BOX Ц┐°Ц┌©Ц┐Ё */
 .confirm-box__buttons
 {
     text-align: center;
 }
 
-/* ╔г║╪╔©иТ */
+/* Ц┐┤Ц┐╪Ц┌©И┐╗ */
 .confirm-data
 {
     margin: 20px 5px;
 }
 
-/* ╔г║╪╔©иТ ╔╩╔╞╔╥╔Г╔С */
+/* Ц┐┤Ц┐╪Ц┌©И┐╗ Ц┌╩Ц┌╞Ц┌╥Ц┐╖Ц┐Ё */
 .confirm-data__section
 {
     margin: 15px 0px;

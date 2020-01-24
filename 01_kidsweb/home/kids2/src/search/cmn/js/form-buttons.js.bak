@@ -1,20 +1,20 @@
 (function(){
-    // е╒ейб╝ер
+    // уГХуВйуГ╝уГа
     var workForm = $('form');
-    // епеъеве▄е┐еє
+    // уВпуГкуВвуГЬуВ┐уГ│
     var btnClear = $('img.clear');
-    // ┼╨╧┐е▄е┐еє
+    // чЩ╗щМ▓уГЬуВ┐уГ│
     var btnSearch = $('img.search');
 
-    // е╒ейб╝ере╡е╓е▀е├е╚═▐╗▀
+    // уГХуВйуГ╝уГауВ╡уГЦуГЯуГГуГИцКСцнв
     $('document').on('submit', 'form', function(e){
         e.preventDefault();
         return false;
     });
 
-    // епеъеве▄е┐еє
+    // уВпуГкуВвуГЬуВ┐уГ│
     btnClear.on('click', function(){
-        // е╞ене╣е╚╞■╬╧▓╒╜ъдЄеъе╗е├е╚
+        // уГЖуВнуВ╣уГИхЕехКЫчоЗцЙАуВТуГкуВ╗уГГуГИ
         workForm.find('input[type="text"], textarea').val('');
         var checks = workForm.find('input[type="checkbox"]');
         for(var i = 0;i < checks.length;i++){
@@ -22,10 +22,10 @@
         }
     });
 
-    // ╕б║ўе▄е┐еє▓б▓╝╗■д╬╜ш═¤
+    // цдЬч┤вуГЬуВ┐уГ│цК╝ф╕ЛцЩВуБохЗжчРЖ
     btnSearch.on('click', function(){
         var windowName = 'searchResult';
-        // ╗╥ежегеєе╔ежд╬╔╜╝и
+        // хнРуВжуВгуГ│уГЙуВжуБошбичд║
         
         if(workForm.length == 0){
 	        var IFrames = $('iframe');
@@ -40,7 +40,7 @@
 	        }
         }
         
-        // е╒ейб╝ер└▀─ъ
+        // уГХуВйуГ╝уГашинхоЪ
         workForm.get(0).target = windowName;
         workForm.get(0).method = 'post';
         var baseURI = workForm.get(0).baseURI;
@@ -49,7 +49,7 @@
         	var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
         	var screen = baseURI.slice(baseURI.lastIndexOf('/',baseURI.indexOf('/search/index.php')-1)+1,baseURI.indexOf('/search/index.php'))
         	workForm.get(0).action = '/' + screen + '/result/index.php?strSessionID=' + $.cookie('strSessionID');
-        	// е╡е╓е▀е├е╚
+        	// уВ╡уГЦуГЯуГГуГИ
         	workForm.submit();
         }
         else if((baseURI.indexOf('/search.php') > 0) && (baseURI.indexOf('/list/search/') > 0)){
@@ -61,20 +61,20 @@
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* │╡═╫ : ╕б║ў╖ы▓╠╔╜╝и═╤┤╪┐Ї
+* цжВшжБ : цдЬч┤вч╡РцЮЬшбичд║чФищЦвцХ░
 *
-* ▓Є└т : ╕б║ў╖ы▓╠дЄе└едевеэе░дЄ╔╜╝ид╡д╗дыд┐дсд╬┤╪┐Їбг
-*        ╟█╬є[args]д╦е╒ейб╝ер═╫┴╟д╬├═дЄ┬х╞■╕хе└едевеэе░дЄ╔╜╝ид╣дыбг
+* шзгшкм : цдЬч┤вч╡РцЮЬуВТуГАуВдуВвуГнуВ░уВТшбичд║уБХуБЫуВЛуБЯуВБуБощЦвцХ░уАВ
+*        щЕНхИЧ[args]уБлуГХуВйуГ╝уГашжБч┤ауБохАдуВТф╗гхЕех╛МуГАуВдуВвуГнуВ░уВТшбичд║уБЩуВЛуАВ
 *
-* ┬╨╛▌ : ╕б║ў═╤е╞еєе╫еьб╝е╚
+* хп╛ш▒б : цдЬч┤вчФиуГЖуГ│уГЧуГмуГ╝уГИ
 *
-* @param [obj1]      : [еке╓е╕езепе╚╖┐] . е╒ейб╝ерд╬еке╓е╕езепе╚╠╛
-* @param [obj2]      : [╩╕╗·╬є╖┐]       . е└едевеэе░╛хд╟╕╞д╙╜╨д╣┐╞HTMLе╒ебедеыд╬URL
-* @param [strUrl]    : [╩╕╗·╬є╖┐]       . е└едевеэе░╛хд╟╕╞д╙╜╨д╣╗╥HTMLе╒ебедеыд╬URL(Iframe)
-* @param [strID]     : [╩╕╗·╬є╖┐]       . е└едевеэе░╛хд╟╕╞д╙╜╨д╣╗╥HTMLе╒ебедеыд╬ Iframe═╤ID
-* @param [strScroll] : [╩╕╗·╬є╖┐]       . Iframeд╟е╣епеэб╝еыд╬╡Ў▓─бж╔╘╡Ў▓─
+* @param [obj1]      : [уВкуГЦуВ╕уВзуВпуГИхЮЛ] . уГХуВйуГ╝уГауБоуВкуГЦуВ╕уВзуВпуГИхРН
+* @param [obj2]      : [цЦЗхнЧхИЧхЮЛ]       . уГАуВдуВвуГнуВ░ф╕КуБзхС╝уБ│хЗ║уБЩшжкHTMLуГХуВбуВдуГлуБоURL
+* @param [strUrl]    : [цЦЗхнЧхИЧхЮЛ]       . уГАуВдуВвуГнуВ░ф╕КуБзхС╝уБ│хЗ║уБЩхнРHTMLуГХуВбуВдуГлуБоURL(Iframe)
+* @param [strID]     : [цЦЗхнЧхИЧхЮЛ]       . уГАуВдуВвуГнуВ░ф╕КуБзхС╝уБ│хЗ║уБЩхнРHTMLуГХуВбуВдуГлуБо IframeчФиID
+* @param [strScroll] : [цЦЗхнЧхИЧхЮЛ]       . IframeуБзуВ╣уВпуГнуГ╝уГлуБоши▒хПпуГ╗ф╕Нши▒хПп
 *
-* @event [onclick] : ┬╨╛▌еке╓е╕езепе╚
+* @event [onclick] : хп╛ш▒буВкуГЦуВ╕уВзуВпуГИ
 */
 //--------------------------------------------------------------------------------------------------------------------
 function GoResult_list(TargetWindow, obj1 , obj2 , strUrl , strID , strScroll )
@@ -114,7 +114,7 @@ function GoResult_list(TargetWindow, obj1 , obj2 , strUrl , strID , strScroll )
 			continue;
 		}
 
-		// ╕б║ўе┌б╝е╕[╛ї┬╓]╣р╠▄░╩│░
+		// цдЬч┤вуГЪуГ╝уВ╕[чК╢цЕЛ]щаЕчЫоф╗ехдЦ
 		if( obj1.elements[i].name != 'OrderStatusObject' )
 		{
 			args[3][k] = obj1.elements[i].name;

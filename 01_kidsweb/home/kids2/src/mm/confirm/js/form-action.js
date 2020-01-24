@@ -1,19 +1,19 @@
 
 (function(){
-    // ÅĞÏ¿¥Ü¥¿¥ó²¡²¼»ş¤ÎµóÆ°
+    // ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®æŒ™å‹•
     $('img.regist-action').on({
         'click' : function (){
-            // ¥¯¥ê¥Ã¥¯¥¤¥Ù¥ó¥È¤òºï½ü
+            // ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆã‚’å‰Šé™¤
             $(this).off('click');
 
-            // ÅĞÏ¿½èÍı¼Â¹Ô
+            // ç™»éŒ²å‡¦ç†å®Ÿè¡Œ
             window.location.href="/mm/regist/registMoldHistory.php?" +
                 "strSessionID=" + $.cookie('strSessionID') + "&" +
                 "resultHash=" +$.cookie('resultHash');
         }
     });
 
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó²¡²¼»ş¤ÎµóÆ°
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®æŒ™å‹•
     $('img.close-action').on({
         'click' : function(){
             parent.$('iframe.regist-confirm').prev().find('.ui-dialog-titlebar-close').click();

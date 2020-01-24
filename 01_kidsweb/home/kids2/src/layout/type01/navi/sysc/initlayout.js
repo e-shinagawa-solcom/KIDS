@@ -2,49 +2,49 @@
 
 
 //----------------------------------------------------
-// ²òÀâ : ¥á¥Ã¥»¡¼¥¸¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãƒœã‚¿ãƒ³ç”Ÿæˆ
 //----------------------------------------------------
-var messagenaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncMessageButton( \'onJ\' , this );" onmouseout="fncMessageButton( \'offJ\' , this );fncAlphaOff( this );" src="' + messageJ1 + '" width="151" height="25" border="0" alt="¥á¥Ã¥»¡¼¥¸"></a>';
+var messagenaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncMessageButton( \'onJ\' , this );" onmouseout="fncMessageButton( \'offJ\' , this );fncAlphaOff( this );" src="' + messageJ1 + '" width="151" height="25" border="0" alt="ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸"></a>';
 
 var messagenaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncMessageButton( \'onE\' , this );" onmouseout="fncMessageButton( \'offE\' , this );fncAlphaOff( this );" src="' + messageE1 + '" width="151" height="25" border="0" alt="MESSAGE"></a>';
 
-var messagenaviJ3 = '<img src="' + messageJ3 + '" width="151" height="25" border="0" alt="¥á¥Ã¥»¡¼¥¸">';
+var messagenaviJ3 = '<img src="' + messageJ3 + '" width="151" height="25" border="0" alt="ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸">';
 var messagenaviE3 = '<img src="' + messageE3 + '" width="151" height="25" border="0" alt="MESSAGE">';
 
 
 
 //----------------------------------------------------
-// ²òÀâ : ´ÉÍı¼Ô¥á¡¼¥ë¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : ç®¡ç†è€…ãƒ¡ãƒ¼ãƒ«ãƒœã‚¿ãƒ³ç”Ÿæˆ
 //----------------------------------------------------
-var emailnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncEmailButton( \'onJ\' , this );" onmouseout="fncEmailButton( \'offJ\' , this );fncAlphaOff( this );" src="' + emailJ1 + '" width="151" height="25" border="0" alt="´ÉÍı¼Ô¥á¡¼¥ë"></a>';
+var emailnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncEmailButton( \'onJ\' , this );" onmouseout="fncEmailButton( \'offJ\' , this );fncAlphaOff( this );" src="' + emailJ1 + '" width="151" height="25" border="0" alt="ç®¡ç†è€…ãƒ¡ãƒ¼ãƒ«"></a>';
 
 var emailnaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncEmailButton( \'onE\' , this );" onmouseout="fncEmailButton( \'offE\' , this );fncAlphaOff( this );" src="' + emailE1 + '" width="151" height="25" border="0" alt="ADMIN EMAIL"></a>';
 
-var emailnaviJ3 = '<img src="' + emailJ3 + '" width="151" height="25" border="0" alt="´ÉÍı¼Ô¥á¡¼¥ë">';
+var emailnaviJ3 = '<img src="' + emailJ3 + '" width="151" height="25" border="0" alt="ç®¡ç†è€…ãƒ¡ãƒ¼ãƒ«">';
 var emailnaviE3 = '<img src="' + emailE3 + '" width="151" height="25" border="0" alt="ADMIN EMAIL">';
 
 
 
 //----------------------------------------------------
-// ²òÀâ : ¥»¥Ã¥·¥ç¥ó¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒœã‚¿ãƒ³ç”Ÿæˆ
 //----------------------------------------------------
-var sessionnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncSessionButton( \'onJ\' , this );" onmouseout="fncSessionButton( \'offJ\' , this );fncAlphaOff( this );" src="' + sessionJ1 + '" width="151" height="25" border="0" alt="¥»¥Ã¥·¥ç¥ó"></a>';
+var sessionnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncSessionButton( \'onJ\' , this );" onmouseout="fncSessionButton( \'offJ\' , this );fncAlphaOff( this );" src="' + sessionJ1 + '" width="151" height="25" border="0" alt="ã‚»ãƒƒã‚·ãƒ§ãƒ³"></a>';
 
 var sessionnaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncSessionButton( \'onE\' , this );" onmouseout="fncSessionButton( \'offE\' , this );fncAlphaOff( this );" src="' + sessionE1 + '" width="151" height="25" border="0" alt="SESSION"></a>';
 
-var sessionnaviJ3 = '<img src="' + sessionJ3 + '" width="151" height="25" border="0" alt="¥»¥Ã¥·¥ç¥ó">';
+var sessionnaviJ3 = '<img src="' + sessionJ3 + '" width="151" height="25" border="0" alt="ã‚»ãƒƒã‚·ãƒ§ãƒ³">';
 var sessionnaviE3 = '<img src="' + sessionE3 + '" width="151" height="25" border="0" alt="SESSION">';
 
 
 
 //----------------------------------------------------
-// ²òÀâ : ¥µ¡¼¥Ğ¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : ã‚µãƒ¼ãƒãƒœã‚¿ãƒ³ç”Ÿæˆ
 //----------------------------------------------------
-var servernaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncServerButton( \'onJ\' , this );" onmouseout="fncServerButton( \'offJ\' , this );fncAlphaOff( this );" src="' + serverJ1 + '" width="151" height="25" border="0" alt="¥µ¡¼¥Ğ"></a>';
+var servernaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncServerButton( \'onJ\' , this );" onmouseout="fncServerButton( \'offJ\' , this );fncAlphaOff( this );" src="' + serverJ1 + '" width="151" height="25" border="0" alt="ã‚µãƒ¼ãƒ"></a>';
 
 var servernaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncServerButton( \'onE\' , this );" onmouseout="fncServerButton( \'offE\' , this );fncAlphaOff( this );" src="' + serverE1 + '" width="151" height="25" border="0" alt="SERVER"></a>';
 
-var servernaviJ3 = '<img src="' + serverJ3 + '" width="151" height="25" border="0" alt="¥µ¡¼¥Ğ">';
+var servernaviJ3 = '<img src="' + serverJ3 + '" width="151" height="25" border="0" alt="ã‚µãƒ¼ãƒ">';
 var servernaviE3 = '<img src="' + serverE3 + '" width="151" height="25" border="0" alt="SERVER">';
 
 

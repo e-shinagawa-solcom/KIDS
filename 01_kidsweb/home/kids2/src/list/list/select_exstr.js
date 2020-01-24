@@ -3,9 +3,9 @@
 
 
 //------------------------------------------------------------
-// ²òÀâ : ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸¤ÎÄêµÁ
+// è§£èª¬ : ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ã®å®šç¾©
 //------------------------------------------------------------
-var headerAJ = '<img src="' + headtitleAJ + '" width="949" height="30" border="0" alt="Ä¢É¼¸¡º÷">';
+var headerAJ = '<img src="' + headtitleAJ + '" width="949" height="30" border="0" alt="å¸³ç¥¨æ¤œç´¢">';
 var headerAE = '<img src="' + headtitleAE + '" width="949" height="30" border="0" alt="LIST SEARCH">';
 
 
@@ -13,12 +13,12 @@ var headerAE = '<img src="' + headtitleAE + '" width="949" height="30" border="0
 
 
 //------------------------------------------------------------
-// ²òÀâ : ÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ´Ø¿ô
+// è§£èª¬ : æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿é–¢æ•°
 //------------------------------------------------------------
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( lngSelfCode == 0 )
 	{
 
@@ -30,15 +30,15 @@ function ChgEtoJ( lngSelfCode )
 
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( lngSelfCode == 1 )
 	{
 
 		window.top.SegAHeader.innerHTML = headerAJ;
 
-		SltList.innerText     = 'ÁªÂò';
-		ControlName.innerText = '´ÉÍıÌ¾¾Î';
-		ListName.innerText    = 'Ä¢É¼Ì¾¾Î';
+		SltList.innerText     = 'é¸æŠ';
+		ControlName.innerText = 'ç®¡ç†åç§°';
+		ListName.innerText    = 'å¸³ç¥¨åç§°';
 
 	}
 

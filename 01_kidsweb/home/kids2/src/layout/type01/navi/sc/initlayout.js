@@ -2,27 +2,27 @@
 
 
 
-// Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿
+// å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²
 var regiJ1 = '/img/type01/sc/regist_off_ja_bt.gif';
 var regiJ2 = '/img/type01/sc/regist_off_on_ja_bt.gif';
 var regiJ3 = '/img/type01/sc/regist_on_ja_bt.gif';
 
-// Çä¾å¸¡º÷
+// å£²ä¸Šæ¤œç´¢
 var schJA = '/img/type01/sc/search_off_ja_bt.gif';
 var schJB = '/img/type01/sc/search_off_on_ja_bt.gif';
 var schJC = '/img/type01/sc/search_on_ja_bt.gif';
 
-// Ç¼ÉÊ½ñ¸¡º÷
+// ç´å“æ›¸æ¤œç´¢
 var schJ1 = '/img/type01/sc/hoge_off_ja_bt.gif';
 var schJ2 = '/img/type01/sc/hoge_off_on_ja_bt.gif';
 var schJ3 = '/img/type01/sc/hoge_on_ja_bt.gif';
 
-// ¼õÃí¸¡º÷
+// å—æ³¨æ¤œç´¢
 var schJAA = '/img/type01/so/search_off_ja_bt.gif';
 var schJBB = '/img/type01/so/search_off_on_ja_bt.gif';
 var schJCC = '/img/type01/so/search_on_ja_bt.gif';
 
-// ÀÁµá¸¡º÷
+// è«‹æ±‚æ¤œç´¢
 var schJAAA = '/img/type01/inv/search_off_ja_bt.gif';
 var schJBBB = '/img/type01/inv/search_off_on_ja_bt.gif';
 var schJCCC = '/img/type01/inv/search_on_ja_bt.gif';
@@ -36,28 +36,28 @@ var schEC = '/img/type01/cmn/navi/search_on_en_bt.gif';
 
 
 
-// Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿
-var reginaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="RegiJOn(this);" onmouseout="RegiJOff(this);fncAlphaOff( this );" src="' + regiJ1 + '" width="151" height="25" border="0" alt="Çä¾å(Ç¼ÉÊ½ñ)ÅĞÏ¿"></a>';
-var reginaviJ3 = '<img src="' + regiJ3 + '" width="151" height="25" border="0" alt="Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿">';
+// å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²
+var reginaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="RegiJOn(this);" onmouseout="RegiJOff(this);fncAlphaOff( this );" src="' + regiJ1 + '" width="151" height="25" border="0" alt="å£²ä¸Š(ç´å“æ›¸)ç™»éŒ²"></a>';
+var reginaviJ3 = '<img src="' + regiJ3 + '" width="151" height="25" border="0" alt="å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²">';
 
-// Ç¼ÉÊ½ñ¸¡º÷
-var schnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="SchJOn(this);" onmouseout="SchJOff(this);fncAlphaOff( this );" src="' + schJ1 + '" width="151" height="25" border="0" alt="Ç¼ÉÊ½ñ¸¡º÷"></a>';
+// ç´å“æ›¸æ¤œç´¢
+var schnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="SchJOn(this);" onmouseout="SchJOff(this);fncAlphaOff( this );" src="' + schJ1 + '" width="151" height="25" border="0" alt="ç´å“æ›¸æ¤œç´¢"></a>';
 
-var schnaviJ3 = '<img src="' + schJ3 + '" width="151" height="25" border="0" alt="Ç¼ÉÊ½ñ¸¡º÷">';
+var schnaviJ3 = '<img src="' + schJ3 + '" width="151" height="25" border="0" alt="ç´å“æ›¸æ¤œç´¢">';
 
-// Çä¾å¸¡º÷
-var schnaviJA = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncChangeBtnImg( this, schJB );" onmouseout="fncChangeBtnImg( this, schJA ); fncAlphaOff( this );" src="' + schJA + '" width="151" height="25" border="0" alt="Çä¾å¸¡º÷"></a>';
+// å£²ä¸Šæ¤œç´¢
+var schnaviJA = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncChangeBtnImg( this, schJB );" onmouseout="fncChangeBtnImg( this, schJA ); fncAlphaOff( this );" src="' + schJA + '" width="151" height="25" border="0" alt="å£²ä¸Šæ¤œç´¢"></a>';
 
-var schnaviJC = '<img src="' + schJC + '" width="151" height="25" border="0" alt="Çä¾å¸¡º÷">';
+var schnaviJC = '<img src="' + schJC + '" width="151" height="25" border="0" alt="å£²ä¸Šæ¤œç´¢">';
 
 
 
-// ¼õÃí¸¡º÷
-var schnaviJAA = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncChangeBtnImg( this, schJBB );" onmouseout="fncChangeBtnImg( this, schJAA ); fncAlphaOff( this );" src="' + schJAA + '" width="151" height="25" border="0" alt="Çä¾å¸¡º÷"></a>';
+// å—æ³¨æ¤œç´¢
+var schnaviJAA = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncChangeBtnImg( this, schJBB );" onmouseout="fncChangeBtnImg( this, schJAA ); fncAlphaOff( this );" src="' + schJAA + '" width="151" height="25" border="0" alt="å£²ä¸Šæ¤œç´¢"></a>';
 
-var schnaviJCC = '<img src="' + schJC + '" width="151" height="25" border="0" alt="¼õÃí¸¡º÷">';
+var schnaviJCC = '<img src="' + schJC + '" width="151" height="25" border="0" alt="å—æ³¨æ¤œç´¢">';
 
-// ÀÁµá¸¡º÷
-var reginaviJAA = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncChangeBtnImg( this, schJBBB );" onmouseout="fncChangeBtnImg( this, schJAAA ); fncAlphaOff( this );" src="' + schJAAA + '" width="151" height="25" border="0" alt="ÀÁµá¸¡º÷"></a>';
+// è«‹æ±‚æ¤œç´¢
+var reginaviJAA = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncChangeBtnImg( this, schJBBB );" onmouseout="fncChangeBtnImg( this, schJAAA ); fncAlphaOff( this );" src="' + schJAAA + '" width="151" height="25" border="0" alt="è«‹æ±‚æ¤œç´¢"></a>';
 
-var reginaviJCC = '<img src="' + schJCCC + '" width="151" height="25" border="0" alt="ÀÁµá¸¡º÷">';
+var reginaviJCC = '<img src="' + schJCCC + '" width="151" height="25" border="0" alt="è«‹æ±‚æ¤œç´¢">';

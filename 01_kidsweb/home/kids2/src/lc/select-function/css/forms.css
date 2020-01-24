@@ -1,4 +1,4 @@
-/* ���ϥե����ඦ���ط��� �������ɥС�����̵�� */
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
 .form-box
 {
     position: absolute;
@@ -29,7 +29,7 @@
     text-align: center;
     font-size: 14px;
 }
-/* ���ϥե����ඦ���ط��� �������ɥС�����̵�� */
+/* 入力フォーム共通背景枠 右サイドバータブ無し */
 .form-subbox
 {
     top: 50px;

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * LC¾ğÊó¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * LCæƒ…å ±ã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return void ÅĞÏ¿·ï¿ô
+ * @return void ç™»éŒ²ä»¶æ•°
  */
 function fncInsertLcInfo($objDB, $data)
 {
@@ -95,7 +95,7 @@ function fncInsertLcInfo($objDB, $data)
         ,$40
         ,$41)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["payfnameomit"]
         , $data["opendate"]
         , $data["portplace"]
@@ -141,15 +141,15 @@ function fncInsertLcInfo($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "L/C¾ğÊóÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
-        exit("L/C¾ğÊóÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£");
+        echo "L/Cæƒ…å ±ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
+        exit("L/Cæƒ…å ±ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚");
     } else {
         return pg_affected_rows($result);
     }
 }
 
 /**
- * LC¾ğÊó¥ê¥¹¥È¤Î¼èÆÀ¤ò¹Ô¤¦
+ * LCæƒ…å ±ãƒªã‚¹ãƒˆã®å–å¾—ã‚’è¡Œã†
  *
  * @param [object] $objDB
  * @param [array] $data
@@ -157,7 +157,7 @@ function fncInsertLcInfo($objDB, $data)
  */
 function fncGetLcInfoData($objDB, $data)
 {
-    //´ğËÜ¼èÆÀ
+    //åŸºæœ¬å–å¾—
     $sql = "
         select
             payfnameomit,
@@ -210,7 +210,7 @@ function fncGetLcInfoData($objDB, $data)
         case "0":
             break;
         case "1":
-            //Ãê½Ğ¾ò·ï
+            //æŠ½å‡ºæ¡ä»¶
             if ($data["from"] != "" && $data["to"] == "") {
                 $condcount += 1;
                 $sql .= ($condcount == 1) ? " where " : " and ";
@@ -235,7 +235,7 @@ function fncGetLcInfoData($objDB, $data)
             }
             break;
         case "2":
-            //¥·¥ß¥å¥ì¡¼¥È¾ò·ï
+            //ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆæ¡ä»¶
             $sql .= "where opendate = '" . $data["to"] . "'";
             if ($data["getDataModeFlg"] == 1) {
                 $sql .= " and lcstate in (0,3,4,7,8) ";
@@ -251,7 +251,7 @@ function fncGetLcInfoData($objDB, $data)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "L/C¾ğÊó¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "L/Cæƒ…å ±å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -259,10 +259,10 @@ function fncGetLcInfoData($objDB, $data)
 }
 
 /**
- * L/C¾ğÊó¥Ç¡¼¥¿¤Îºï½ü¤ò¹Ô¤¦
+ * L/Cæƒ…å ±ãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteLcInfo($objDB)
 {
@@ -273,7 +273,7 @@ function fncDeleteLcInfo($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "L/C¾ğÊóºï½ü¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "L/Cæƒ…å ±å‰Šé™¤å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -281,16 +281,16 @@ function fncDeleteLcInfo($objDB)
 }
 
 /**
- * LC¾ğÊóÃ±ÂÎ¤Î¼èÆÀ¤ò¹Ô¤¦
+ * LCæƒ…å ±å˜ä½“ã®å–å¾—ã‚’è¡Œã†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return void LC¾ğÊóÃ±ÂÎ
+ * @return void LCæƒ…å ±å˜ä½“
  */
 function fncGetLcInfoSingle($objDB, $data)
 {
 
-    //´ğËÜ¼èÆÀ
+    //åŸºæœ¬å–å¾—
     $sql = "
         select
             payfnameomit,
@@ -342,13 +342,13 @@ function fncGetLcInfoSingle($objDB, $data)
             polineno = $3
         ";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["pono"], $data["poreviseno"], $data["polineno"]);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "L/C¾ğÊóÃ±ÂÎ¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "L/Cæƒ…å ±å˜ä½“å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result);
@@ -356,14 +356,14 @@ function fncGetLcInfoSingle($objDB, $data)
 }
 
 /**
- * ²ÙÍÈÃÏ¾ğÊó¥ê¥¹¥È¤Î¼èÆÀ
+ * è·æšåœ°æƒ…å ±ãƒªã‚¹ãƒˆã®å–å¾—
  *
  * @param [object] $objDB
  * @return array
  */
 function fncGetPortplace($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				SELECT
 					DISTINCT portplace
@@ -374,7 +374,7 @@ function fncGetPortplace($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "²ÙÍÈÃÏ¾ğÊó¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "è·æšåœ°æƒ…å ±å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -382,14 +382,14 @@ function fncGetPortplace($objDB)
 }
 
 /**
- * ²ÙÍÈÃÏ¾ğÊó(ALL)¥ê¥¹¥È¤Î¼èÆÀ
+ * è·æšåœ°æƒ…å ±(ALL)ãƒªã‚¹ãƒˆã®å–å¾—
  *
  * @param [object] $objDB
  * @return array
  */
 function fncGetPortplaceAndAll($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
             select
                 m_constant.value as portplace
@@ -409,7 +409,7 @@ function fncGetPortplaceAndAll($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "²ÙÍÈÃÏ¾ğÊó(ALL)¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "è·æšåœ°æƒ…å ±(ALL)å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -417,14 +417,14 @@ function fncGetPortplaceAndAll($objDB)
 }
 
 /**
- * ÄÌ²ß¶èÊ¬¥ê¥¹¥È¤Î¼èÆÀ
+ * é€šè²¨åŒºåˆ†ãƒªã‚¹ãƒˆã®å–å¾—
  *
  * @param [object] $objDB
  * @return array
  */
 function fncGetCurrencyClassList($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				SELECT
 					currencyclass
@@ -438,7 +438,7 @@ function fncGetCurrencyClassList($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "ÄÌ²ß¶èÊ¬¥ê¥¹¥È¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€šè²¨åŒºåˆ†ãƒªã‚¹ãƒˆå–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -446,14 +446,14 @@ function fncGetCurrencyClassList($objDB)
 }
 
 /**
- * ÄÌ²ß¶èÊ¬¥ê¥¹¥È(Ì¤¾µÇ§´Ş¤à)¤Î¼èÆÀ
+ * é€šè²¨åŒºåˆ†ãƒªã‚¹ãƒˆ(æœªæ‰¿èªå«ã‚€)ã®å–å¾—
  *
  * @param [object] $objDB
  * @return array
  */
 function fncGetCurrencyClassListAll($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				SELECT
 					DISTINCT currencyclass
@@ -467,7 +467,7 @@ function fncGetCurrencyClassListAll($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "ÄÌ²ß¶èÊ¬¥ê¥¹¥È(Ì¤¾µÇ§´Ş¤à)¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€šè²¨åŒºåˆ†ãƒªã‚¹ãƒˆ(æœªæ‰¿èªå«ã‚€)å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -475,14 +475,14 @@ function fncGetCurrencyClassListAll($objDB)
 }
 
 /**
- * ¸½ºß»ş¹ï¤ò¼èÆÀ¤¹¤ë
+ * ç¾åœ¨æ™‚åˆ»ã‚’å–å¾—ã™ã‚‹
  *
  * @param [object] $objDB
  * @return array
  */
 function fncGetCurDate($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
             SELECT CURRENT_TIMESTAMP;
         ";
@@ -490,7 +490,7 @@ function fncGetCurDate($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "¸½ºß»ş¹ï¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "ç¾åœ¨æ™‚åˆ»å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result)->current_timestamp;
@@ -498,11 +498,11 @@ function fncGetCurDate($objDB)
 }
 
 /**
- *È¯Ãí½ñ·ï¿ô¤ò¼èÆÀ¤¹¤ë
+ *ç™ºæ³¨æ›¸ä»¶æ•°ã‚’å–å¾—ã™ã‚‹
  *
  * @param [object] $objDB
  * @param [string] $lcgetdate
- * @return È¯Ãí·ï¿ô
+ * @return ç™ºæ³¨ä»¶æ•°
  */
 function fncGetPurchaseOrderCount($objDB, $lcgetdate)
 {
@@ -511,13 +511,13 @@ function fncGetPurchaseOrderCount($objDB, $lcgetdate)
         from m_purchaseorder
         where dtmInsertDate > $1
     ";
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($lcgetdate);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "È¯Ãí½ñ·ï¿ô¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "ç™ºæ³¨æ›¸ä»¶æ•°å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result)->count;
@@ -525,11 +525,11 @@ function fncGetPurchaseOrderCount($objDB, $lcgetdate)
 }
 
 // /**
-//  *È¯Ãí·ï¿ô¤ò¼èÆÀ¤¹¤ë
+//  *ç™ºæ³¨ä»¶æ•°ã‚’å–å¾—ã™ã‚‹
 //  *
 //  * @param [object] $objDB
 //  * @param [string] $lcgetdate
-//  * @return È¯Ãí·ï¿ô
+//  * @return ç™ºæ³¨ä»¶æ•°
 //  */
 // function fncGetOrderCount($objDB, $lcgetdate)
 // {
@@ -538,24 +538,24 @@ function fncGetPurchaseOrderCount($objDB, $lcgetdate)
 //         from m_order
 //         where dtmInsertDate > $1
 //     ";
-//     //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+//     //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
 //     $bind = array($lcgetdate);
 
 //     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
 //     if (!$result) {
-//         echo "È¯Ãí·ï¿ô¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+//         echo "ç™ºæ³¨ä»¶æ•°å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
 //         exit;
 //     } else {
 //         return pg_fetch_object($result)->count;
 //     }
 // }
 /**
- * È¯Ãí½ñ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+ * ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
  *
  * @param [object] $objDB
  * @param [string] $date
- * @return È¯Ãí¥Ç¡¼¥¿¥ê¥¹¥È
+ * @return ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãƒªã‚¹ãƒˆ
  */
 function fncGetPurchaseOrderData($objDB, $date)
 {
@@ -602,24 +602,24 @@ function fncGetPurchaseOrderData($objDB, $date)
           lngpurchaseorderno
         , lngrevisionno
     ";
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($date);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "È¯Ãí½ñ¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
     }
 }
 // /**
-//  * È¯Ãí¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+//  * ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 //  *
 //  * @param [object] $objDB
 //  * @param [string] $date
-//  * @return È¯Ãí¥Ç¡¼¥¿¥ê¥¹¥È
+//  * @return ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãƒªã‚¹ãƒˆ
 //  */
 // function fncGetOrderData($objDB, $date)
 // {
@@ -648,13 +648,13 @@ function fncGetPurchaseOrderData($objDB, $date)
 //             , lngorderno
 //             , strrevisecode
 //         ";
-//     //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+//     //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
 //     $bind = array($date);
 
 //     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
 //     if (!$result) {
-//         echo "È¯Ãí¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+//         echo "ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
 //         exit;
 //     } else {
 //         return pg_fetch_all($result);
@@ -662,12 +662,12 @@ function fncGetPurchaseOrderData($objDB, $date)
 // }
 
 /**
- * È¯Ãí½ñÌÀºÙ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+ * ç™ºæ³¨æ›¸æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
  *
  * @param [object] $objDB
  * @param [integer] $lngpurchaseorderno
  * @param [integer] $lngrevisionno
- * @return È¯ÃíÌÀºÙ¥ê¥¹¥È
+ * @return ç™ºæ³¨æ˜ç´°ãƒªã‚¹ãƒˆ
  */
 function fncGetPurchaseOrderDetail($objDB, $lngpurchaseorderno, $lngrevisionno)
 {
@@ -700,13 +700,13 @@ function fncGetPurchaseOrderDetail($objDB, $lngpurchaseorderno, $lngrevisionno)
         order by
             tp.lngorderdetailno
         ";
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($lngpurchaseorderno, $lngrevisionno);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "È¯Ãí½ñÌÀºÙ¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "ç™ºæ³¨æ›¸æ˜ç´°ãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -715,12 +715,12 @@ function fncGetPurchaseOrderDetail($objDB, $lngpurchaseorderno, $lngrevisionno)
 }
 
 /**
- * È¯ÃíÌÀºÙ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+ * ç™ºæ³¨æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
  *
  * @param [object] $objDB
  * @param [integer] $lngorderno
  * @param [integer] $lngrevisionno
- * @return È¯ÃíÌÀºÙ¥ê¥¹¥È
+ * @return ç™ºæ³¨æ˜ç´°ãƒªã‚¹ãƒˆ
  */
 function fncGetOrderDetail($objDB, $lngorderno, $lngrevisionno)
 {
@@ -745,13 +745,13 @@ function fncGetOrderDetail($objDB, $lngorderno, $lngrevisionno)
         order by
             lngorderdetailno
         ";
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($lngorderno, $lngrevisionno);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "È¯ÃíÌÀºÙ¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "ç™ºæ³¨æ˜ç´°ãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -760,11 +760,11 @@ function fncGetOrderDetail($objDB, $lngorderno, $lngrevisionno)
 }
 
 /**
- * Ç¼ÉÊ¾ì½ê¤È²ÙÍÈÃÏ¤ò¼èÆÀ¤¹¤ë
+ * ç´å“å ´æ‰€ã¨è·æšåœ°ã‚’å–å¾—ã™ã‚‹
  *
  * @param [object] $objDB
  * @param [integer] $lngcompanycode
- * @return Ç¼ÉÊ¾ì½ê¤È²ÙÍÈÃÏ
+ * @return ç´å“å ´æ‰€ã¨è·æšåœ°
  */
 function fncGetCompanyNameAndCountryName($objDB, $lngcompanycode)
 {
@@ -779,13 +779,13 @@ function fncGetCompanyNameAndCountryName($objDB, $lngcompanycode)
             m_company.lngcountrycode = m_country.lngcountrycode
             and m_company.lngcompanycode = $1
         ";
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($lngcompanycode);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Ç¼ÉÊ¾ì½êÌ¾¾Î¤È²ÙÍÈÃÏ¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "ç´å“å ´æ‰€åç§°ã¨è·æšåœ°å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result);
@@ -794,11 +794,11 @@ function fncGetCompanyNameAndCountryName($objDB, $lngcompanycode)
 }
 
 // /**
-//  * È¯Ãí¥³¡¼¥É¤Ë¤è¤êÈ¯Ãí¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+//  * ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚Šç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 //  *
 //  * @param [object] $objDB
 //  * @param [string] $date
-//  * @return È¯Ãí¥Ç¡¼¥¿¥ê¥¹¥È
+//  * @return ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ãƒªã‚¹ãƒˆ
 //  */
 // function fncGetOrderDataByOrderCode($objDB, $pono, $poreviseno)
 // {
@@ -817,13 +817,13 @@ function fncGetCompanyNameAndCountryName($objDB, $lngcompanycode)
 //         order by
 //             lngorderno desc
 //         ";
-//     //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+//     //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
 //     $bind = array($pono, $poreviseno);
 
 //     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
 //     if (!$result) {
-//         echo "È¯Ãí¥³¡¼¥É¤Ë¤è¤êÈ¯Ãí¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+//         echo "ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚Šç™ºæ³¨ãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
 //         exit;
 //     } else {
 //         return pg_fetch_all($result);
@@ -831,10 +831,10 @@ function fncGetCompanyNameAndCountryName($objDB, $lngcompanycode)
 // }
 
 /**
- * ºï½üÉü³èÈ¯Ãí½ñ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+ * å‰Šé™¤å¾©æ´»ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
  *
  * @param [object] $objDB
- * @return È¯Ãí¥³¡¼¥É¥ê¥¹¥È
+ * @return ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ãƒªã‚¹ãƒˆ
  */
 function fncGetDeletedPurchaseOrderData($objDB)
 {
@@ -850,7 +850,7 @@ function fncGetDeletedPurchaseOrderData($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "ºï½üÉü³èÈ¯Ãí½ñ¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "å‰Šé™¤å¾©æ´»ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -858,10 +858,10 @@ function fncGetDeletedPurchaseOrderData($objDB)
 }
 
 // /**
-//  * ºï½üÉü³èÈ¯Ãí¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+//  * å‰Šé™¤å¾©æ´»ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 //  *
 //  * @param [object] $objDB
-//  * @return È¯Ãí¥³¡¼¥É¥ê¥¹¥È
+//  * @return ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ãƒªã‚¹ãƒˆ
 //  */
 // function fncGetDeletedOrderData($objDB)
 // {
@@ -878,7 +878,7 @@ function fncGetDeletedPurchaseOrderData($objDB)
 //     $result = pg_query($objDB->ConnectID, $sql);
 
 //     if (!$result) {
-//         echo "ºï½üÉü³èÈ¯Ãí¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+//         echo "å‰Šé™¤å¾©æ´»ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
 //         exit;
 //     } else {
 //         return pg_fetch_all($result);
@@ -886,7 +886,7 @@ function fncGetDeletedPurchaseOrderData($objDB)
 // }
 
 /**
- * ÄÌ²ßÊÌPOÈÖ¹æÊÌ¤Î¹ç·×¶â³Û¼èÆÀ
+ * é€šè²¨åˆ¥POç•ªå·åˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—
  *
  * @param [object] $objDB
  * @param [string] $shipym
@@ -895,7 +895,7 @@ function fncGetDeletedPurchaseOrderData($objDB)
  */
 function fncGetSumOfMoneypriceByPono($objDB, $shipym, $currencyclass)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				SELECT
                     pono,
@@ -915,7 +915,7 @@ function fncGetSumOfMoneypriceByPono($objDB, $shipym, $currencyclass)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "ÄÌ²ßÊÌPOÈÖ¹æÊÌ¤Î¹ç·×¶â³Û¼èÆÀ¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€šè²¨åˆ¥POç•ªå·åˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -923,7 +923,7 @@ function fncGetSumOfMoneypriceByPono($objDB, $shipym, $currencyclass)
 }
 
 /**
- * ÄÌ²ßÊÌ¤Î¹ç·×¶â³Û¼èÆÀ
+ * é€šè²¨åˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—
  *
  * @param [object] $objDB
  * @param [string] $shipym
@@ -932,7 +932,7 @@ function fncGetSumOfMoneypriceByPono($objDB, $shipym, $currencyclass)
  */
 function fncGetSumOfMoneyprice($objDB, $shipym, $currencyclass)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				SELECT
                     sum(moneyprice) as totalmoneyprice
@@ -948,7 +948,7 @@ function fncGetSumOfMoneyprice($objDB, $shipym, $currencyclass)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "ÄÌ²ßÊÌ¤Î¹ç·×¶â³Û¼èÆÀ¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€šè²¨åˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_object($result)->totalmoneyprice;
@@ -956,7 +956,7 @@ function fncGetSumOfMoneyprice($objDB, $shipym, $currencyclass)
 }
 
 /**
- * ÄÌ²ßÊÌ¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¼èÆÀ
+ * é€šè²¨åˆ¥éŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—
  *
  * @param [object] $objDB
  * @param [string] $shipym
@@ -965,7 +965,7 @@ function fncGetSumOfMoneyprice($objDB, $shipym, $currencyclass)
  */
 function fncGetSumOfMoneypriceByBankname($objDB, $shipym, $currencyclass)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				SELECT
                     sum(moneyprice) as totalmoneyprice,
@@ -984,7 +984,7 @@ function fncGetSumOfMoneypriceByBankname($objDB, $shipym, $currencyclass)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "ÄÌ²ßÊÌ¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¼èÆÀ¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€šè²¨åˆ¥éŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡å–å¾—å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -992,18 +992,18 @@ function fncGetSumOfMoneypriceByBankname($objDB, $shipym, $currencyclass)
 }
 
 /**
- * L/C¾ğÊó¤ÎÈ¯¹Ô¶ä¹Ô¤Î¹¹¿·
+ * L/Cæƒ…å ±ã®ç™ºè¡ŒéŠ€è¡Œã®æ›´æ–°
  *
  * @param [object] $objDB
  * @param [string] $bankcd
  * @param [string] $bankname
  * @param [string] $currencyclass
  * @param [string] $pono
- * @return ¹¹¿··ï¿ô
+ * @return æ›´æ–°ä»¶æ•°
  */
 function fncUpdateBankname($objDB, $bankcd, $bankname, $currencyclass, $pono)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
                 update t_lcinfo
                 set bankcd = $1,
@@ -1018,7 +1018,7 @@ function fncUpdateBankname($objDB, $bankcd, $bankname, $currencyclass, $pono)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "L/C¾ğÊó¤ÎÈ¯¹Ô¶ä¹Ô¤Î¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "L/Cæƒ…å ±ã®ç™ºè¡ŒéŠ€è¡Œã®æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -1027,15 +1027,15 @@ function fncUpdateBankname($objDB, $bankcd, $bankname, $currencyclass, $pono)
 }
 
 /**
- * L/C¾ğÊó¤Î¹¹¿·
+ * L/Cæƒ…å ±ã®æ›´æ–°
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return ¹¹¿··ï¿ô
+ * @return æ›´æ–°ä»¶æ•°
  */
 function fncUpdateLcinfo($objDB, $data)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
                 update t_lcinfo
                 set opendate = $1,
@@ -1065,7 +1065,7 @@ function fncUpdateLcinfo($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "L/C¾ğÊó¤Î¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "L/Cæƒ…å ±ã®æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -1074,15 +1074,15 @@ function fncUpdateLcinfo($objDB, $data)
 }
 
 /**
- * L/C¾ğÊó¤Î¥¹¥Æ¡¼¥¿¥¹¤òT/T²ò½ü¤Ø¤Î¹¹¿·
+ * L/Cæƒ…å ±ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’T/Tè§£é™¤ã¸ã®æ›´æ–°
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return ¹¹¿··ï¿ô
+ * @return æ›´æ–°ä»¶æ•°
  */
 function fncUpdateLcinfoToAmandCancel($objDB, $data)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
                 update t_lcinfo
                 set opendate = $1,
@@ -1106,7 +1106,7 @@ function fncUpdateLcinfoToAmandCancel($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "L/C¾ğÊó¤Î¥¹¥Æ¡¼¥¿¥¹¤ò¥¢¥á¥ó¥É·Ù¹ğ²ò½ü¤Ø¤Î¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "L/Cæƒ…å ±ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’ã‚¢ãƒ¡ãƒ³ãƒ‰è­¦å‘Šè§£é™¤ã¸ã®æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -1115,15 +1115,15 @@ function fncUpdateLcinfoToAmandCancel($objDB, $data)
 }
 
 /**
- * L/C¾ğÊó¤Î¾õÂÖ¤Î¹¹¿·
+ * L/Cæƒ…å ±ã®çŠ¶æ…‹ã®æ›´æ–°
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return ¹¹¿··ï¿ô
+ * @return æ›´æ–°ä»¶æ•°
  */
 function fncUpdateLcState($objDB, $data)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
                 update t_lcinfo
                 set lcstate = $1
@@ -1136,7 +1136,7 @@ function fncUpdateLcState($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "L/C¾ğÊó¤Î¾õÂÖ¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "L/Cæƒ…å ±ã®çŠ¶æ…‹æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -1144,14 +1144,14 @@ function fncUpdateLcState($objDB, $data)
 }
 
 /**
- * »ÙÊ§Àè¾ğÊó¤ò¼èÆÀ¤¹¤ë
+ * æ”¯æ‰•å…ˆæƒ…å ±ã‚’å–å¾—ã™ã‚‹
  *
  * @param [type] $objDB
  * @return void
  */
 function fncGetPayfInfo($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
 					trim(payfcd) as payfcd
@@ -1164,13 +1164,13 @@ function fncGetPayfInfo($objDB)
 					m_payfinfo
 				order by payfcd
             ";
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array();
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "»ÙÊ§Àè¾ğÊó¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆæƒ…å ±å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -1178,14 +1178,14 @@ function fncGetPayfInfo($objDB)
 }
 
 /**
- * ¶ä¹Ô¾ğÊó¤ò¼èÆÀ¤¹¤ë
+ * éŠ€è¡Œæƒ…å ±ã‚’å–å¾—ã™ã‚‹
  *
  * @param [type] $objDB
  * @return void
  */
 function fncGetBankInfo($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
 					trim(bankcd) as bankcd
@@ -1197,12 +1197,12 @@ function fncGetBankInfo($objDB)
 					m_bank
 				order by bankcd
             ";
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array();
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "¶ä¹Ô¾ğÊó¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "éŠ€è¡Œæƒ…å ±å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -1210,14 +1210,14 @@ function fncGetBankInfo($objDB)
 }
 
 /**
- * ¶ä¹Ô¾ğÊó(ALL)¤ò¼èÆÀ¤¹¤ë
+ * éŠ€è¡Œæƒ…å ±(ALL)ã‚’å–å¾—ã™ã‚‹
  *
  * @param [type] $objDB
  * @return void
  */
 function fncGetBankAndAll($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
             select
                 '0000' as bankcd
@@ -1239,17 +1239,17 @@ function fncGetBankAndAll($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "¶ä¹Ô¾ğÊó(ALL)¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "éŠ€è¡Œæƒ…å ±(ALL)å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);
     }
 }
 /**
- * ¶ä¹Ô¾ğÊó¤Îºï½ü¤ò¹Ô¤¦
+ * éŠ€è¡Œæƒ…å ±ã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteBank($objDB)
 {
@@ -1260,7 +1260,7 @@ function fncDeleteBank($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "¶ä¹Ô¥Ş¥¹¥¿¾ğÊóºï½ü¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "éŠ€è¡Œãƒã‚¹ã‚¿æƒ…å ±å‰Šé™¤å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -1268,10 +1268,10 @@ function fncDeleteBank($objDB)
 }
 
 /**
- * »ÙÊ§Àè¾ğÊó¤Îºï½ü¤ò¹Ô¤¦
+ * æ”¯æ‰•å…ˆæƒ…å ±ã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeletePayfinfo($objDB)
 {
@@ -1282,7 +1282,7 @@ function fncDeletePayfinfo($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "»ÙÊ§Àè¥Ş¥¹¥¿¾ğÊóºï½ü¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "æ”¯æ‰•å…ˆãƒã‚¹ã‚¿æƒ…å ±å‰Šé™¤å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
@@ -1290,10 +1290,10 @@ function fncDeletePayfinfo($objDB)
 }
 
 /**
- * Á÷ÉÕ¸µ¾ğÊó¤Îºï½ü¤ò¹Ô¤¦
+ * é€ä»˜å…ƒæƒ…å ±ã®å‰Šé™¤ã‚’è¡Œã†
  *
  * @param [object] $objDB
- * @return void ºï½ü·ï¿ô
+ * @return void å‰Šé™¤ä»¶æ•°
  */
 function fncDeleteSendinfo($objDB)
 {
@@ -1304,18 +1304,18 @@ function fncDeleteSendinfo($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "Á÷ÉÕ¸µ¥Ş¥¹¥¿¾ğÊóºï½ü¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€ä»˜å…ƒãƒã‚¹ã‚¿æƒ…å ±å‰Šé™¤å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     }
 
     return pg_affected_rows($result);
 }
 /**
- * ¶ä¹Ô¾ğÊó¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * éŠ€è¡Œæƒ…å ±ã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return void ÅĞÏ¿·ï¿ô
+ * @return void ç™»éŒ²ä»¶æ•°
  */
 function fncInsertBank($objDB, $data)
 {
@@ -1327,7 +1327,7 @@ function fncInsertBank($objDB, $data)
         ,$4
         ,$5)";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["bankcd"]
         , $data["bankomitname"]
         , $data["bankformalname"]
@@ -1337,7 +1337,7 @@ function fncInsertBank($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "¶ä¹Ô¥Ş¥¹¥¿¾ğÊóÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "éŠ€è¡Œãƒã‚¹ã‚¿æƒ…å ±ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -1345,11 +1345,11 @@ function fncInsertBank($objDB, $data)
 }
 
 /**
- * »ÙÊ§Àè¥Ş¥¹¥¿¾ğÊó¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * æ”¯æ‰•å…ˆãƒã‚¹ã‚¿æƒ…å ±ã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return void ÅĞÏ¿·ï¿ô
+ * @return void ç™»éŒ²ä»¶æ•°
  */
 function fncInsertPayf($objDB, $data)
 {
@@ -1363,7 +1363,7 @@ function fncInsertPayf($objDB, $data)
             ,$5
             ,$6)";
 
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($data["payfcd"]
             , $data["payfomitname"]
             , $data["payfformalname"]
@@ -1374,7 +1374,7 @@ function fncInsertPayf($objDB, $data)
         $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
         if (!$result) {
-            echo "»ÙÊ§Àè¥Ş¥¹¥¿¾ğÊóÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "æ”¯æ‰•å…ˆãƒã‚¹ã‚¿æƒ…å ±ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         } else {
             return pg_affected_rows($result);
@@ -1382,11 +1382,11 @@ function fncInsertPayf($objDB, $data)
     }
 }
 /**
- * Á÷ÉÕ¸µ¾ğÊó¤ÎÅĞÏ¿¤ò¹Ô¤¦
+ * é€ä»˜å…ƒæƒ…å ±ã®ç™»éŒ²ã‚’è¡Œã†
  *
  * @param [object] $objDB
  * @param [array] $data
- * @return void ÅĞÏ¿·ï¿ô
+ * @return void ç™»éŒ²ä»¶æ•°
  */
 function fncInsertSendInfo($objDB, $data)
 {
@@ -1399,7 +1399,7 @@ function fncInsertSendInfo($objDB, $data)
             ,$5
             )";
 
-    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
     $bind = array($data["sendno"]
         , $data["sendfromname"]
         , $data["sendfromfax"]
@@ -1409,7 +1409,7 @@ function fncInsertSendInfo($objDB, $data)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "Á÷ÉÕ¸µ¥Ş¥¹¥¿¾ğÊóÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "é€ä»˜å…ƒãƒã‚¹ã‚¿æƒ…å ±ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -1417,13 +1417,13 @@ function fncInsertSendInfo($objDB, $data)
 }
 
 /**
- * ¶ä¹Ô¥Ş¥¹¥¿¤è¤êÍ­¸ú¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+ * éŠ€è¡Œãƒã‚¹ã‚¿ã‚ˆã‚Šæœ‰åŠ¹ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
  *
  * @return array
  */
 function fncGetValidBankInfo($objDB)
 {
-    //¥¯¥¨¥ê¤ÎÀ¸À®
+    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
     $sql = "
 				select
                     bankomitname,
@@ -1439,7 +1439,7 @@ function fncGetValidBankInfo($objDB)
     $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "¶ä¹Ô¥Ş¥¹¥¿¤è¤êÍ­¸ú¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+        echo "éŠ€è¡Œãƒã‚¹ã‚¿ã‚ˆã‚Šæœ‰åŠ¹ãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
         exit;
     } else {
         return pg_fetch_all($result);

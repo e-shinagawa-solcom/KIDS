@@ -13,27 +13,27 @@
 }( function( datepicker ) {
 
 datepicker.regional.ja = {
-	closeText: "ÊÄ¤¸¤ë",
-	prevText: "&#x3C;Á°",
-	nextText: "¼¡&#x3E;",
-	currentText: "º£Æü",
-	// monthNames: [ "1·î","2·î","3·î","4·î","5·î","6·î",
-	// "7·î","8·î","9·î","10·î","11·î","12·î" ],
-	// monthNamesShort: [ "1·î","2·î","3·î","4·î","5·î","6·î",
-	// "7·î","8·î","9·î","10·î","11·î","12·î" ],
+	closeText: "é–‰ã˜ã‚‹",
+	prevText: "&#x3C;å‰",
+	nextText: "æ¬¡&#x3E;",
+	currentText: "ä»Šæ—¥",
+	// monthNames: [ "1æœˆ","2æœˆ","3æœˆ","4æœˆ","5æœˆ","6æœˆ",
+	// "7æœˆ","8æœˆ","9æœˆ","10æœˆ","11æœˆ","12æœˆ" ],
+	// monthNamesShort: [ "1æœˆ","2æœˆ","3æœˆ","4æœˆ","5æœˆ","6æœˆ",
+	// "7æœˆ","8æœˆ","9æœˆ","10æœˆ","11æœˆ","12æœˆ" ],
 	monthNames: [ "1","2","3","4","5","6",
 	"7","8","9","10","11","12" ],
 	monthNamesShort: [ "1","2","3","4","5","6",
 	"7","8","9","10","11","12" ],
-	dayNames: [ "ÆüÍËÆü","·îÍËÆü","²ĞÍËÆü","¿åÍËÆü","ÌÚÍËÆü","¶âÍËÆü","ÅÚÍËÆü" ],
-	dayNamesShort: [ "Æü","·î","²Ğ","¿å","ÌÚ","¶â","ÅÚ" ],
-	dayNamesMin: [ "Æü","·î","²Ğ","¿å","ÌÚ","¶â","ÅÚ" ],
-	weekHeader: "½µ",
+	dayNames: [ "æ—¥æ›œæ—¥","æœˆæ›œæ—¥","ç«æ›œæ—¥","æ°´æ›œæ—¥","æœ¨æ›œæ—¥","é‡‘æ›œæ—¥","åœŸæ›œæ—¥" ],
+	dayNamesShort: [ "æ—¥","æœˆ","ç«","æ°´","æœ¨","é‡‘","åœŸ" ],
+	dayNamesMin: [ "æ—¥","æœˆ","ç«","æ°´","æœ¨","é‡‘","åœŸ" ],
+	weekHeader: "é€±",
 	dateFormat: "yy/mm/dd",
 	firstDay: 0,
 	isRTL: false,
 	showMonthAfterYear: true,
-	yearSuffix: "Ç¯" };
+	yearSuffix: "å¹´" };
 datepicker.setDefaults( datepicker.regional.ja );
 
 return datepicker.regional.ja;

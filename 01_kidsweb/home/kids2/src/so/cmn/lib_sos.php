@@ -1,35 +1,35 @@
 <?
 // ----------------------------------------------------------------------------
 /**
- *       ¼õÃí´ÉÍı  ¸¡º÷´ØÏ¢´Ø¿ô·²
+ *       å—æ³¨ç®¡ç†  æ¤œç´¢é–¢é€£é–¢æ•°ç¾¤
  *
  *
- *       ½èÍı³µÍ×
- *         ¡¦¸¡º÷·ë²Ì´ØÏ¢¤Î´Ø¿ô
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æ¤œç´¢çµæœé–¢é€£ã®é–¢æ•°
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
 /**
- * ¸¡º÷¹àÌÜ¤«¤é°ìÃ×¤¹¤ëºÇ¿·¤Î¼õÃí¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®´Ø¿ô
+ * æ¤œç´¢é …ç›®ã‹ã‚‰ä¸€è‡´ã™ã‚‹æœ€æ–°ã®å—æ³¨ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆé–¢æ•°
  *
- *    ¸¡º÷¹àÌÜ¤«¤é SQLÊ¸¤òºîÀ®¤¹¤ë
+ *    æ¤œç´¢é …ç›®ã‹ã‚‰ SQLæ–‡ã‚’ä½œæˆã™ã‚‹
  *
- *    @param  Array     $displayColumns             É½¼¨ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
- *    @param  Array     $searchColumns         ¸¡º÷ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
- *    @param  Array     $from     ¸¡º÷ÆâÍÆ(from)¤ÎÇÛÎó
- *    @param  Array     $to       ¸¡º÷ÆâÍÆ(to)¤ÎÇÛÎó
- *    @param  Array     $searchValue  ¸¡º÷ÆâÍÆ¤ÎÇÛÎó
- *    @return Array     $strSQL ¸¡º÷ÍÑSQLÊ¸
+ *    @param  Array     $displayColumns             è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+ *    @param  Array     $searchColumns         æ¤œç´¢å¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+ *    @param  Array     $from     æ¤œç´¢å†…å®¹(from)ã®é…åˆ—
+ *    @param  Array     $to       æ¤œç´¢å†…å®¹(to)ã®é…åˆ—
+ *    @param  Array     $searchValue  æ¤œç´¢å†…å®¹ã®é…åˆ—
+ *    @return Array     $strSQL æ¤œç´¢ç”¨SQLæ–‡
  *    @access public
  */
 function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns)
 {
-    // ÌÀºÙ¸¡º÷¾ò·ï¿ô
+    // æ˜ç´°æ¤œç´¢æ¡ä»¶æ•°
     $detailConditionCount = 0;
-    // ¥¯¥¨¥ê¤ÎÁÈÎ©¤Æ
+    // ã‚¯ã‚¨ãƒªã®çµ„ç«‹ã¦
     $aryQuery = array();
     $aryQuery[] = "SELECT";
     $aryQuery[] = "  distinct ";
@@ -132,7 +132,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "        left join m_productunit mp ";
     $aryQuery[] = "          on mp.lngproductunitcode = rd1.lngproductunitcode ";
 
-    // À½ÉÊ¥³¡¼¥É
+    // è£½å“ã‚³ãƒ¼ãƒ‰
     if (array_key_exists("strProductCode", $searchColumns) &&
         array_key_exists("strProductCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -160,14 +160,14 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         }
         $aryQuery[] = ")";
     }
-    // À½ÉÊÌ¾¾Î
+    // è£½å“åç§°
     if (array_key_exists("strProductName", $searchColumns) &&
         array_key_exists("strProductName", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
         $aryQuery[] = "UPPER(p.strproductname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
     }
-    // À½ÉÊÌ¾¾Î(±Ñ¸ì)
+    // è£½å“åç§°(è‹±èª)
     if (array_key_exists("strProductEnglishName", $searchColumns) &&
         array_key_exists("strProductEnglishName", $searchValue)) {
         $detailConditionCount += 1;
@@ -175,7 +175,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = "UPPER(p.strproductenglishname) like UPPER('%" . pg_escape_string($searchValue["strProductEnglishName"]) . "%')";
     }
 
-    // ¸ÜµÒÉÊÈÖ
+    // é¡§å®¢å“ç•ª
     if (array_key_exists("strGoodsCode", $searchColumns) &&
         array_key_exists("strGoodsCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -183,7 +183,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = "p.strgoodscode = '" . pg_escape_string($searchValue["strGoodsCode"]) . "'";
     }
 
-    // ±Ä¶ÈÉô½ğ
+    // å–¶æ¥­éƒ¨ç½²
     if (array_key_exists("lngInChargeGroupCode", $searchColumns) &&
         array_key_exists("lngInChargeGroupCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -191,7 +191,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = "mg.strGroupDisplayCode = '" . pg_escape_string($searchValue["lngInChargeGroupCode"]) . "'";
     }
 
-    // ³«È¯Ã´Åö¼Ô
+    // é–‹ç™ºæ‹…å½“è€…
     if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
         array_key_exists("lngInChargeUserCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -199,7 +199,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = "mu.strUserDisplayCode = '" . pg_escape_string($searchValue["lngInChargeUserCode"]) . "'";
     }
 
-    // Çä¾å¶èÊ¬
+    // å£²ä¸ŠåŒºåˆ†
     if (array_key_exists("lngSalesClassCode", $searchColumns) &&
         array_key_exists("lngSalesClassCode", $searchValue)) {
         $detailConditionCount += 1;
@@ -207,7 +207,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = "rd1.lngSalesClassCode = '" . pg_escape_string($searchValue["lngSalesClassCode"]) . "'";
     }
 
-    // Ç¼´ü_from
+    // ç´æœŸ_from
     if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
         array_key_exists("dtmDeliveryDate", $from) && $from["dtmDeliveryDate"] != '') {
         $detailConditionCount += 1;
@@ -215,7 +215,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = "rd1.dtmdeliverydate" .
             " >= '" . $from["dtmDeliveryDate"] . "'";
     }
-    // Ç¼´ü_to
+    // ç´æœŸ_to
     if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
         array_key_exists("dtmDeliveryDate", $to) && $to["dtmDeliveryDate"] != '') {
         $detailConditionCount += 1;
@@ -227,34 +227,34 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "WHERE";
     $aryQuery[] = " rd.lngReceiveNo = r.lngReceiveNo ";
     $aryQuery[] = " AND rd.lngRevisionNo = r.lngRevisionNo ";
-    // ÅĞÏ¿Æü_from
+    // ç™»éŒ²æ—¥_from
     if (array_key_exists("dtmInsertDate", $searchColumns) &&
         array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] != '') {
         $aryQuery[] = "AND r.dtmInsertDate" .
             " >= '" . $from["dtmInsertDate"] . " 00:00:00'";
     }
-    // ÅĞÏ¿Æü_to
+    // ç™»éŒ²æ—¥_to
     if (array_key_exists("dtmInsertDate", $searchColumns) &&
         array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
         $aryQuery[] = "AND r.dtmInsertDate" .
             " <= " . "'" . $to["dtmInsertDate"] . " 23:59:59.99999'";
     }
 
-    // ¸ÜµÒ¼õÃíÈÖ¹æ_from
+    // é¡§å®¢å—æ³¨ç•ªå·_from
     if (array_key_exists("strCustomerReceiveCode", $searchColumns) &&
         array_key_exists("strCustomerReceiveCode", $from) && $from["strCustomerReceiveCode"] != '') {
         $aryQuery[] = "AND r.strCustomerReceiveCode" .
             " >= '" . $from["strCustomerReceiveCode"] . "'";
     }
 
-    // ¸ÜµÒ¼õÃíÈÖ¹æ_to
+    // é¡§å®¢å—æ³¨ç•ªå·_to
     if (array_key_exists("strCustomerReceiveCode", $searchColumns) &&
         array_key_exists("strCustomerReceiveCode", $to) && $to["strCustomerReceiveCode"] != '') {
         $aryQuery[] = "AND r.strCustomerReceiveCode" .
             " <= " . "'" . $to["strCustomerReceiveCode"] . "'";
     }
 
-    // ¼õÃí£Î£ï_from
+    // å—æ³¨ï¼®ï½_from
     if (array_key_exists("strReceiveCode", $searchColumns) &&
         array_key_exists("strReceiveCode", $from) && $from["strReceiveCode"] != '') {
         $fromstrReceiveCode = strpos($from["strReceiveCode"], "-") ? preg_replace(strrchr($from["strReceiveCode"], "-"), "", $from["strReceiveCode"]) : $from["strReceiveCode"];
@@ -262,7 +262,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
             " >= '" . $fromstrReceiveCode . "'";
     }
 
-    // ¼õÃí£Î£ï_to
+    // å—æ³¨ï¼®ï½_to
     if (array_key_exists("strReceiveCode", $searchColumns) &&
         array_key_exists("strReceiveCode", $to) && $to["strReceiveCode"] != '') {
         $tostrReceiveCode = strpos($to["strReceiveCode"], "-") ? preg_replace(strrchr($to["strReceiveCode"], "-"), "", $to["strReceiveCode"]) : $to["strReceiveCode"];
@@ -271,19 +271,19 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
             " <= " . "'" . $tostrReceiveCode . "'";
     }
 
-    // ÆşÎÏ¼Ô
+    // å…¥åŠ›è€…
     if (array_key_exists("lngInputUserCode", $searchColumns) &&
         array_key_exists("lngInputUserCode", $searchValue)) {
         $aryQuery[] = " AND input_u.strUserDisplayCode = '" . $searchValue["lngInputUserCode"] . "'";
     }
 
-    // ¸ÜµÒ
+    // é¡§å®¢
     if (array_key_exists("lngCustomerCompanyCode", $searchColumns) &&
         array_key_exists("lngCustomerCompanyCode", $searchValue)) {
         $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCompanyCode"] . "'";
     }
 
-    // ¾õÂÖ
+    // çŠ¶æ…‹
     if (array_key_exists("lngReceiveStatusCode", $searchColumns) &&
         array_key_exists("lngReceiveStatusCode", $searchValue)) {
         if (is_array($searchValue["lngReceiveStatusCode"])) {
@@ -306,7 +306,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = " AND r.lngRevisionNo >= 0";
     }
 
-    // ¥¯¥¨¥ê¤òÊ¿°×¤ÊÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚¯ã‚¨ãƒªã‚’å¹³æ˜“ãªæ–‡å­—åˆ—ã«å¤‰æ›
     $strQuery = implode("\n", $aryQuery);
 
     return $strQuery;
@@ -314,9 +314,9 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
 
 function fncGetReceivesByStrReceiveCodeSQL($strReceiveCode, $lngReceiveDetailNo, $lngRevisionNo)
 {
-    // ÌÀºÙ¸¡º÷¾ò·ï¿ô
+    // æ˜ç´°æ¤œç´¢æ¡ä»¶æ•°
     $detailConditionCount = 0;
-    // ¥¯¥¨¥ê¤ÎÁÈÎ©¤Æ
+    // ã‚¯ã‚¨ãƒªã®çµ„ç«‹ã¦
     $aryQuery = array();
     $aryQuery[] = "SELECT";
     $aryQuery[] = "  r.lngReceiveNo as lngReceiveNo";
@@ -410,18 +410,18 @@ function fncGetReceivesByStrReceiveCodeSQL($strReceiveCode, $lngReceiveDetailNo,
     $aryQuery[] = "ORDER BY";
     $aryQuery[] = " r.strReceiveCode, rd.lngReceiveDetailNo, r.lngRevisionNo DESC";
 
-    // ¥¯¥¨¥ê¤òÊ¿°×¤ÊÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚¯ã‚¨ãƒªã‚’å¹³æ˜“ãªæ–‡å­—åˆ—ã«å¤‰æ›
     $strQuery = implode("\n", $aryQuery);
 
     return $strQuery;
 }
 
 /**
- * ¼õÃí¥³¡¼¥É¤Ë¤è¤ê¥Ç¡¼¥¿¤Î¾õÂÖ¤ò³ÎÇ§¤¹¤ë
+ * å—æ³¨ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚Šãƒ‡ãƒ¼ã‚¿ã®çŠ¶æ…‹ã‚’ç¢ºèªã™ã‚‹
  *
  * @param [type] $strstrreceivecode
  * @param [type] $objDB
- * @return void [true:ºï½üºÑ¡¦Ìµ¸ú¥Ç¡¼¥¿¡¡false¡§Í­¸ú¥Ç¡¼¥¿]
+ * @return void [true:å‰Šé™¤æ¸ˆãƒ»ç„¡åŠ¹ãƒ‡ãƒ¼ã‚¿ã€€falseï¼šæœ‰åŠ¹ãƒ‡ãƒ¼ã‚¿]
  */
 function fncCheckData($strstrreceivecode, $objDB)
 {
@@ -433,7 +433,7 @@ function fncCheckData($strstrreceivecode, $objDB)
     $aryQuery[] = "WHERE strreceivecode='" . $strstrreceivecode . "' ";
     $aryQuery[] = "group by strreceivecode, bytInvalidFlag";
 
-    // ¥¯¥¨¥ê¤òÊ¿°×¤ÊÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚¯ã‚¨ãƒªã‚’å¹³æ˜“ãªæ–‡å­—åˆ—ã«å¤‰æ›
     $strQuery = implode("\n", $aryQuery);
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -451,7 +451,7 @@ function fncCheckData($strstrreceivecode, $objDB)
 }
 
 /**
- * ¥Ø¥Ã¥À¡¼Éô¥Ç¡¼¥¿¤ÎÀ¸À®
+ * ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨ãƒ‡ãƒ¼ã‚¿ã®ç”Ÿæˆ
  *
  * @param [type] $doc
  * @param [type] $trBody
@@ -463,19 +463,19 @@ function fncCheckData($strstrreceivecode, $objDB)
  */
 function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, $toUTF8Flag)
 {
-    // »ØÄê¤µ¤ì¤¿¥Æ¡¼¥Ö¥ë¹àÌÜ¤Î¥»¥ë¤òºîÀ®¤¹¤ë
+    // æŒ‡å®šã•ã‚ŒãŸãƒ†ãƒ¼ãƒ–ãƒ«é …ç›®ã®ã‚»ãƒ«ã‚’ä½œæˆã™ã‚‹
     foreach ($aryTableHeaderName as $key => $value) {
-        // É½¼¨ÂĞ¾İ¤Î¥«¥é¥à¤Î¾ì¹ç
+        // è¡¨ç¤ºå¯¾è±¡ã®ã‚«ãƒ©ãƒ ã®å ´åˆ
         if (array_key_exists($key, $displayColumns)) {
-            // ¹àÌÜÊÌ¤ËÉ½¼¨¥Æ¥­¥¹¥È¤òÀßÄê
+            // é …ç›®åˆ¥ã«è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®š
             switch ($key) {
-                // ÅĞÏ¿Æü
+                // ç™»éŒ²æ—¥
                 case "dtminsertdate":
                     $td = $doc->createElement("td", $record["dtminsertdate"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // [ÆşÎÏ¼ÔÉ½¼¨¥³¡¼¥É] ÆşÎÏ¼ÔÉ½¼¨Ì¾
+                // [å…¥åŠ›è€…è¡¨ç¤ºã‚³ãƒ¼ãƒ‰] å…¥åŠ›è€…è¡¨ç¤ºå
                 case "lnginputusercode":
                     $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];                        
                     if ($toUTF8Flag) {
@@ -485,13 +485,13 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¸ÜµÒ¼õÃíÈÖ¹æ
+                // é¡§å®¢å—æ³¨ç•ªå·
                 case "strcustomerreceivecode":
                     $td = $doc->createElement("td", $record["strcustomerreceivecode"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¼õÃí£Î£Ï.
+                // å—æ³¨ï¼®ï¼¯.
                 case "strreceivecode":
                     $textContent = $record["strreceivecode"];
                     if ($toUTF8Flag) {
@@ -501,19 +501,19 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+                // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
                 case "lngrevisionno":
                     $td = $doc->createElement("td", $record["lngrevisionno"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À½ÉÊ¥³¡¼¥É
+                // è£½å“ã‚³ãƒ¼ãƒ‰
                 case "strproductcode":
                     $td = $doc->createElement("td", $record["strproductcode"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À½ÉÊ¥Ş¥¹¥¿.À½ÉÊ¥³¡¼¥É(ÆüËÜ¸ì)
+                // è£½å“ãƒã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰(æ—¥æœ¬èª)
                 case "strproductname":
                     $textContent = $record["strproductname"];
                     if ($toUTF8Flag) {
@@ -523,7 +523,7 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À½ÉÊ¥Ş¥¹¥¿.À½ÉÊÌ¾¾Î(±Ñ¸ì)
+                // è£½å“ãƒã‚¹ã‚¿.è£½å“åç§°(è‹±èª)
                 case "strproductenglishname":
                     $textContent = $record["strproductenglishname"];
                     if ($toUTF8Flag) {
@@ -533,7 +533,7 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // [±Ä¶ÈÉô½ğÉ½¼¨¥³¡¼¥É] ±Ä¶ÈÉô½ğÉ½¼¨Ì¾
+                // [å–¶æ¥­éƒ¨ç½²è¡¨ç¤ºã‚³ãƒ¼ãƒ‰] å–¶æ¥­éƒ¨ç½²è¡¨ç¤ºå
                 case "lnginchargegroupcode":
                     if ($record["strgroupdisplaycode"] != '') {
                         $textContent = "[" . $record["strgroupdisplaycode"] . "]" . " " . $record["strgroupdisplayname"];
@@ -547,7 +547,7 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // [³«È¯Ã´Åö¼ÔÉ½¼¨¥³¡¼¥É] ³«È¯Ã´Åö¼ÔÉ½¼¨Ì¾
+                // [é–‹ç™ºæ‹…å½“è€…è¡¨ç¤ºã‚³ãƒ¼ãƒ‰] é–‹ç™ºæ‹…å½“è€…è¡¨ç¤ºå
                 case "lnginchargeusercode":
                     if ($record["struserdisplaycode"] != '') {
                         $textContent = "[" . $record["struserdisplaycode"] . "]" . " " . $record["struserdisplayname"];
@@ -561,7 +561,7 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // Çä¾å¶èÊ¬
+                // å£²ä¸ŠåŒºåˆ†
                 case "lngsalesclasscode":                    
                     if ($record["lngsalesclasscode"] != '') {
                         $textContent = "[" . $record["lngsalesclasscode"] . "]" . " " . $record["strsalesclassname"];
@@ -575,13 +575,13 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¸ÜµÒÉÊÈÖ
+                // é¡§å®¢å“ç•ª
                 case "strgoodscode":
                     $td = $doc->createElement("td", $record["strgoodscode"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // [¸ÜµÒÉ½¼¨¥³¡¼¥É] ¸ÜµÒÉ½¼¨Ì¾
+                // [é¡§å®¢è¡¨ç¤ºã‚³ãƒ¼ãƒ‰] é¡§å®¢è¡¨ç¤ºå
                 case "lngcustomercompanycode":
                     if ($record["strcustomerdisplaycode"] != '') {
                         $textContent = "[" . $record["strcustomerdisplaycode"] . "]" . " " . $record["strcustomerdisplayname"];
@@ -595,7 +595,7 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // Ç¼´ü
+                // ç´æœŸ
                 case "dtmdeliverydate":                
                     $textContent = $record["dtmdeliverydate"];
                     if ($toUTF8Flag) {
@@ -605,7 +605,7 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¾õÂÖ
+                // çŠ¶æ…‹
                 case "lngreceivestatuscode":
                     $textContent = $record["strreceivestatusname"];
                     if ($toUTF8Flag) {
@@ -615,19 +615,19 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÌÀºÙ¹ÔÈÖ¹æ
+                // æ˜ç´°è¡Œç•ªå·
                 case "lngrecordno":
                     $td = $doc->createElement("td", $record["lngreceivedetailno"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // Ã±²Á
+                // å˜ä¾¡
                 case "curproductprice":
                     $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // Ã±°Ì
+                // å˜ä½
                 case "lngproductunitcode":
                     $textContent = $record["lngproductunitname"];
                     if ($toUTF8Flag) {
@@ -637,7 +637,7 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¿ôÎÌ
+                // æ•°é‡
                 case "lngproductquantity":
                     $textContent = $record["lngproductquantity"];
                     if ($toUTF8Flag) {
@@ -647,13 +647,13 @@ function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $dis
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÀÇÈ´¶â³Û
+                // ç¨æŠœé‡‘é¡
                 case "cursubtotalprice":
                     $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÌÀºÙÈ÷¹Í
+                // æ˜ç´°å‚™è€ƒ
                 case "strdetailnote":
                     $textContent = $record["strdetailnote"];
                     if ($toUTF8Flag) {

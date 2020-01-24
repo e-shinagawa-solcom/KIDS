@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       ÀÁµá´ÉÍı  ÌÀºÙ½ñ¸¡º÷²èÌÌ
+ *       è«‹æ±‚ç®¡ç†  æ˜ç´°æ›¸æ¤œç´¢ç”»é¢
  *
  *
  *       @package    K.I.D.S.
@@ -13,32 +13,32 @@
  *       @version    2.00
  *
  *
- *       ½èÍı³µÍ×
- *         ¡¦ÌÀºÙ½ñ¾ÜºÙ¤ò¸¡º÷¤¹¤ë
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æ˜ç´°æ›¸è©³ç´°ã‚’æ¤œç´¢ã™ã‚‹
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-    // ÀßÄêÆÉ¤ß¹ş¤ß
+    // è¨­å®šèª­ã¿è¾¼ã¿
     include_once('conf.inc');
 
-    // ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+    // ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
     require (LIB_FILE);
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
     require_once (SRC_ROOT.'/cmn/exception/SQLException.class.php');
 	require_once (LIB_DEBUGFILE);
 
-    // ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
     $objDB   = new clsDB();
     $objAuth = new clsAuth();
 
-    // DB¥ª¡¼¥×¥ó
+    // DBã‚ªãƒ¼ãƒ—ãƒ³
     $objDB->open("", "", "", "");
 
-    // ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
     if ( $_POST )
     {
         $aryData = $_POST;
@@ -47,71 +47,71 @@
     {
         $aryData = $_GET;
     }
-    // ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+    // ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
     $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-    // cookie¤ËSET
+    // cookieã«SET
     if( !empty($aryData["strSessionID"]) )
         setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-    // 2200 ÀÁµá´ÉÍı
+    // 2200 è«‹æ±‚ç®¡ç†
     if ( !fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
     }
 
-    // 2201 ÀÁµá½ñÈ¯¹Ô
+    // 2201 è«‹æ±‚æ›¸ç™ºè¡Œ
     if ( !fncCheckAuthority( DEF_FUNCTION_INV1, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
     }
-    // ajax ¸¡º÷
+    // ajax æ¤œç´¢
     if(isset($aryData["mode"]) && $aryData["mode"] == 'ajax')
     {
-        // ¸¡º÷¾ò·ï¤ò´Ş¤ó¤Ç¤¤¤ë¾ì¹ç
+        // æ¤œç´¢æ¡ä»¶ã‚’å«ã‚“ã§ã„ã‚‹å ´åˆ
         if(array_key_exists("conditions", $_POST) && count($_POST["conditions"]))
         {
 
-            // ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿¤ÎºîÀ®
+            // ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ä½œæˆ
             foreach ($_POST["conditions"] as $key=>$condition)
             {
                 $params[$key] = pg_escape_string($condition);
             }
-            // SQLÊ¸¼èÆÀ
+            // SQLæ–‡å–å¾—
             $strQuery = fncGetSearchMSlipSQL ($params, null, $objDB);
-            // ¥¯¥¨¥ê¼Â¹Ô
+            // ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-            // ·ë²Ì·ï¿ô¤ò¼èÆÀ
+            // çµæœä»¶æ•°ã‚’å–å¾—
             if($lngResultNum > 0)
             {
-                // ¥ì¥³¡¼¥É·ï¿ôÊ¬Áöºº
+                // ãƒ¬ã‚³ãƒ¼ãƒ‰ä»¶æ•°åˆ†èµ°æŸ»
                 for ($i = 0; $i < $lngResultNum; $i++)
                 {
 
                     $resultDataSet[] = $objDB->fetchObject( $lngResultID, $i );
-                    // ¸¡º÷·ë²Ì¥ì¥³¡¼¥É¤ò¥ª¥Ö¥¸¥§¥¯¥È¤Ç¼èÆÀ¤·É¬Í×¤Êjson¥Ç¡¼¥¿¤Ë²Ã¹©¤¹¤ë
+                    // æ¤œç´¢çµæœãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§å–å¾—ã—å¿…è¦ãªjsonãƒ‡ãƒ¼ã‚¿ã«åŠ å·¥ã™ã‚‹
                     foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                     {
                         $json[$i][mb_convert_encoding($column,"UTF-8","EUC-JP")] = mb_convert_encoding($val,"UTF-8","EUC-JP");
                     }
                 }
 			    $objDB->close();
-	            // ¥ì¥¹¥İ¥ó¥¹¥Ø¥Ã¥ÀÀßÄê
+	            // ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€è¨­å®š
 	            header('Content-Type: application/json');
                 echo json_encode($json);
                 exit;
             }
             else
             {
-            	$json[mb_convert_encoding("Message","UTF-8", "EUC-JP")] = mb_convert_encoding("³ºÅö¤¹¤ë¥ì¥³¡¼¥É¤¬¸«¤Ä¤«¤ê¤Ş¤»¤ó¤Ç¤·¤¿", "UTF-8", "EUC-JP");
+            	$json[mb_convert_encoding("Message","UTF-8", "EUC-JP")] = mb_convert_encoding("è©²å½“ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ", "UTF-8", "EUC-JP");
                 echo  json_encode($json);
             }
         }
-        // ·ë²Ì¤¬ÆÀ¤é¤ì¤Ê¤«¤Ã¤¿(¥¯¥¨¥ê¤Ë¼ºÇÔ¤·¤¿)¾ì¹ç
+        // çµæœãŒå¾—ã‚‰ã‚Œãªã‹ã£ãŸ(ã‚¯ã‚¨ãƒªã«å¤±æ•—ã—ãŸ)å ´åˆ
         else
         {
             throw new SQLException(
-                "Ìä¤¤¹ç¤ï¤»¤Ë¼ºÇÔ¤·¤Ş¤·¤¿",
+                "å•ã„åˆã‚ã›ã«å¤±æ•—ã—ã¾ã—ãŸ",
                 $strQuery,
                 $params);
         }
@@ -121,21 +121,21 @@
     }
     else if(isset($aryData["mode"]) && $aryData["mode"] == 'ajaxRenew')
     {
-        // SQLÊ¸¼èÆÀ
+        // SQLæ–‡å–å¾—
         $invoiceNo = (int)$aryData["invoiceNo"];
         $revisionNo = (int)$aryData["revisionNo"];
         $strQuery = fncGetSearchMSlipInvoiceNoSQL($invoiceNo, $revisionNo);
-        // ¥¯¥¨¥ê¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-        // ·ë²Ì·ï¿ô¤ò¼èÆÀ
+        // çµæœä»¶æ•°ã‚’å–å¾—
         if($lngResultNum > 0)
         {
-            // ¥ì¥³¡¼¥É·ï¿ôÊ¬Áöºº
+            // ãƒ¬ã‚³ãƒ¼ãƒ‰ä»¶æ•°åˆ†èµ°æŸ»
             for ($i = 0; $i < $lngResultNum; $i++)
             {
 
                 // $resultDataSet[] = $objDB->fetchObject( $lngResultID, $i );
-                // ¸¡º÷·ë²Ì¥ì¥³¡¼¥É¤ò¥ª¥Ö¥¸¥§¥¯¥È¤Ç¼èÆÀ¤·É¬Í×¤Êjson¥Ç¡¼¥¿¤Ë²Ã¹©¤¹¤ë
+                // æ¤œç´¢çµæœãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§å–å¾—ã—å¿…è¦ãªjsonãƒ‡ãƒ¼ã‚¿ã«åŠ å·¥ã™ã‚‹
                 foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                 {
                     // $json[$i][$column] = $val;
@@ -144,11 +144,11 @@
             }
             
             $objDB->close();
-            // ¥ì¥¹¥İ¥ó¥¹¥Ø¥Ã¥ÀÀßÄê
+            // ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€è¨­å®š
             header('Content-Type: application/json');
             echo json_encode($json);
         } else {
-            echo "Ç¼ÉÊ½ñ¥Ş¥¹¥¿¥Ç¡¼¥¿¤¬¼èÆÀ¤Ç¤­¤Ş¤»¤ó¡£";
+            echo "ç´å“æ›¸ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ãŒå–å¾—ã§ãã¾ã›ã‚“ã€‚";
         }
 
 
@@ -157,22 +157,22 @@
 
     }
 
-    // ÌÀºÙ¸¡º÷ÌÌ
+    // æ˜ç´°æ¤œç´¢é¢
     $aryData["invConditionUrl"] = '/inv/regist/condition.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . $aryData["lngFunctionCode"] . '&lngApplicantUserCodeVisible=1&lngInputUserCodeVisible=1&dtmStartDateVisible=1&lngInChargeCodeVisible=1&lngWorkflowStatusCodeVisible=1&lngWorkflowStatusCodeConditions=1&lngSelectFunctionCode=500';
 
-    // ÄÌ²ßÃ±°Ì¥Ş¥¹¥¿¤ò¼èÆÀ
+    // é€šè²¨å˜ä½ãƒã‚¹ã‚¿ã‚’å–å¾—
     $strQuery = "SELECT lngmonetaryunitcode, strmonetaryunitsign FROM m_monetaryunit ORDER BY lngmonetaryunitcode";
     $aryData["monetaryunitList"] = fncGetPulldownQueryExec($strQuery, 1, $objDB, false);
-    // ÀÇ¶èÊ¬¥Ş¥¹¥¿¤ò¼èÆÀ
+    // ç¨åŒºåˆ†ãƒã‚¹ã‚¿ã‚’å–å¾—
     $strQuery = "SELECT lngtaxclasscode, strtaxclassname FROM m_taxclass ORDER BY lngtaxclasscode";
     $taxclassList = fncGetPulldownQueryExec($strQuery, 0, $objDB, false);
-    $aryData["taxclassList"] = '<OPTION VALUE="0">Ì¤ÁªÂò</OPTION>' .$taxclassList;
+    $aryData["taxclassList"] = '<OPTION VALUE="0">æœªé¸æŠ</OPTION>' .$taxclassList;
 
-    // ¥·¥¹¥Æ¥àdate¤Î·î½é¡¦·îËö¤òµá¤á¤ë
+    // ã‚·ã‚¹ãƒ†ãƒ dateã®æœˆåˆãƒ»æœˆæœ«ã‚’æ±‚ã‚ã‚‹
     $aryData["DeliveryFrom"] = date('Y/m/d', strtotime('first day of ' . null));
     $aryData["DeliveryTo"]   = date('Y/m/d', strtotime('last day of '  . null));
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     echo fncGetReplacedHtmlWithBase("inv/base_condition.html", "inv/regist/condition.tmpl", $aryData ,$objAuth );
 
     $objDB->close();

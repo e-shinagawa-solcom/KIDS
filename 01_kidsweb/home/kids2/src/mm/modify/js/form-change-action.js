@@ -1,4 +1,4 @@
-// 垛房ステ〖タスが茄逮の眷圭、瘦瓷供眷、败瓢供眷腕を痰跟にする
+// 閲戝瀷銈广儐銉笺偪銈广亴寤冩銇牬鍚堛�佷繚绠″伐鍫淬�佺Щ鍕曞伐鍫存瑒銈掔劇鍔广伀銇欍倠
 $('select[init-value]').on({
     'change': function(){
         if ( $(this).prop('selectedIndex') == 0 | $(this).prop('selectedIndex') == 1 | $(this).prop('selectedIndex') == 2 ) {

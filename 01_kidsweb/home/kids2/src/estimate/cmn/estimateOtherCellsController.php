@@ -4,56 +4,56 @@ require_once ('conf.inc');
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
 /**
-*	¥Õ¥Ã¥¿ÉôµÚ¤Ó¤½¤ÎÂ¾¥»¥ë¤ÎºÆ·×»»¡¢¥Ç¡¼¥¿¥Á¥§¥Ã¥¯¥¯¥é¥¹
+*	ãƒ•ãƒƒã‚¿éƒ¨åŠã³ãã®ä»–ã‚»ãƒ«ã®å†è¨ˆç®—ã€ãƒ‡ãƒ¼ã‚¿ãƒã‚§ãƒƒã‚¯ã‚¯ãƒ©ã‚¹
 *	
-*	°Ê²¼¤Î¥°¥í¡¼¥Ð¥ëÊÑ¿ô¤òÄêµÁ¤¹¤ë¤³¤È
-*   @param object $objDB        ¥Ç¡¼¥¿¥Ù¡¼¥¹ÀÜÂ³¥ª¥Ö¥¸¥§¥¯¥È(clsDB¤Þ¤¿¤Ï·Ñ¾µ¥¯¥é¥¹)
-*   @param object $sheet        phpSpreadSheet¤Î¥·¡¼¥È¥ª¥Ö¥¸¥§¥¯¥È
+*	ä»¥ä¸‹ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã‚’å®šç¾©ã™ã‚‹ã“ã¨
+*   @param object $objDB        ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æŽ¥ç¶šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(clsDBã¾ãŸã¯ç¶™æ‰¿ã‚¯ãƒ©ã‚¹)
+*   @param object $sheet        phpSpreadSheetã®ã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *   
 */
 
 class estimateOtherCellsController {
 
-    protected $errorMessage; // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+    protected $errorMessage; // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
     protected $messageCode;
 
-    // ½ÐÎÏÃÍ
-    public $productionQuantity;                 // ½þµÑ¿ô pcs
-    public $receiveProductTotalPrice;           // À½ÉÊÇä¾å¹ç·×
-    public $receiveProductTotalQuantity;        // À½ÉÊ¿ôÎÌ¹ç·×
-    public $receiveFixedCostTotalPrice;         // ¸ÇÄêÈñÇä¾å¹ç·×
-    public $receiveFixedCostTotalQuantity;      // ¸ÇÄêÈñ¿ôÎÌ¹ç·×
-    public $orderFixedCostTotalPrice;           // ¸ÇÄêÈñ¾®·×
-    public $orderFixedCostNotDepreciation;      // ½þµÑÂÐ¾Ý³°¹ç·×
-    public $productTotalPrice;                  // À½ÉÊÇä¾å¹â
-    public $productProfit;                      // À½ÉÊÍø±×
-    public $productProfitRate;                  // (À½ÉÊÍø±×Î¨)
-    public $fixedCostTotalPrice;                // ¸ÇÄêÈñÇä¾å¹â
-    public $fixedCostProfit;                    // ¸ÇÄêÈñÍø±×
-    public $fixedCostProfitRate;                // (¸ÇÄêÈñÍø±×Î¨)
-    public $salseAmount;                        // ÁíÇä¾å¹â
-    public $profit;                             // Çä¾åÁíÍø±×
-    public $profitRate;                         // (Íø±×Î¨)
-    public $indirectCost;                       // ´ÖÀÜÀ½Â¤·ÐÈñ
-    public $standardRate;                       // É¸½à³ä¹ç
-    public $operatingProfit;                    // ±Ä¶ÈÍø±×
-    public $operatingProfitRate;                // (±Ä¶ÈÍø±×Î¨)
-    public $memberQuantity;                     // ÉôºàÈñ¡Ê¿ôÎÌ¡Ë
-    public $memberUnitCost;                     // ÉôºàÈñ¡ÊÃ±²Á¡Ë
-    public $memberCost;                         // ÉôºàÈñ
-    public $depreciationQuantity;               // ½þµÑÈñ¡Ê¿ôÎÌ¡Ë
-    public $depreciationUnitCost;               // ½þµÑÈñ¡ÊÃ±²Á¡Ë
-    public $depreciationCost;                   // ½þµÑÈñ
-    public $manufacturingQuantity;              // À½Â¤ÈñÍÑ¡Ê¿ôÎÌ¡Ë
-    public $manufacturingUnitCost;              // À½Â¤ÈñÍÑ¡ÊÃ±²Á¡Ë
-    public $manufacturingCost;                  // À½Â¤ÈñÍÑ
-    public $costNotDepreciation;                // ½þµÑÂÐ¾Ý³°¸ÇÄêÈñ
+    // å‡ºåŠ›å€¤
+    public $productionQuantity;                 // å„Ÿå´æ•° pcs
+    public $receiveProductTotalPrice;           // è£½å“å£²ä¸Šåˆè¨ˆ
+    public $receiveProductTotalQuantity;        // è£½å“æ•°é‡åˆè¨ˆ
+    public $receiveFixedCostTotalPrice;         // å›ºå®šè²»å£²ä¸Šåˆè¨ˆ
+    public $receiveFixedCostTotalQuantity;      // å›ºå®šè²»æ•°é‡åˆè¨ˆ
+    public $orderFixedCostTotalPrice;           // å›ºå®šè²»å°è¨ˆ
+    public $orderFixedCostNotDepreciation;      // å„Ÿå´å¯¾è±¡å¤–åˆè¨ˆ
+    public $productTotalPrice;                  // è£½å“å£²ä¸Šé«˜
+    public $productProfit;                      // è£½å“åˆ©ç›Š
+    public $productProfitRate;                  // (è£½å“åˆ©ç›ŠçŽ‡)
+    public $fixedCostTotalPrice;                // å›ºå®šè²»å£²ä¸Šé«˜
+    public $fixedCostProfit;                    // å›ºå®šè²»åˆ©ç›Š
+    public $fixedCostProfitRate;                // (å›ºå®šè²»åˆ©ç›ŠçŽ‡)
+    public $salseAmount;                        // ç·å£²ä¸Šé«˜
+    public $profit;                             // å£²ä¸Šç·åˆ©ç›Š
+    public $profitRate;                         // (åˆ©ç›ŠçŽ‡)
+    public $indirectCost;                       // é–“æŽ¥è£½é€ çµŒè²»
+    public $standardRate;                       // æ¨™æº–å‰²åˆ
+    public $operatingProfit;                    // å–¶æ¥­åˆ©ç›Š
+    public $operatingProfitRate;                // (å–¶æ¥­åˆ©ç›ŠçŽ‡)
+    public $memberQuantity;                     // éƒ¨æè²»ï¼ˆæ•°é‡ï¼‰
+    public $memberUnitCost;                     // éƒ¨æè²»ï¼ˆå˜ä¾¡ï¼‰
+    public $memberCost;                         // éƒ¨æè²»
+    public $depreciationQuantity;               // å„Ÿå´è²»ï¼ˆæ•°é‡ï¼‰
+    public $depreciationUnitCost;               // å„Ÿå´è²»ï¼ˆå˜ä¾¡ï¼‰
+    public $depreciationCost;                   // å„Ÿå´è²»
+    public $manufacturingQuantity;              // è£½é€ è²»ç”¨ï¼ˆæ•°é‡ï¼‰
+    public $manufacturingUnitCost;              // è£½é€ è²»ç”¨ï¼ˆå˜ä¾¡ï¼‰
+    public $manufacturingCost;                  // è£½é€ è²»ç”¨
+    public $costNotDepreciation;                // å„Ÿå´å¯¾è±¡å¤–å›ºå®šè²»
 
     public function __construct() {
 
     }
 
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÆâ¤Î¥»¥ëÌ¾¾Î¤ËÂÐ±þ¤·¤¿¥Ç¡¼¥¿¡Ê·×»»·ë²Ì¡Ë¤ò½ÐÎÏ¤¹¤ë
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå†…ã®ã‚»ãƒ«åç§°ã«å¯¾å¿œã—ãŸãƒ‡ãƒ¼ã‚¿ï¼ˆè¨ˆç®—çµæžœï¼‰ã‚’å‡ºåŠ›ã™ã‚‹
     public function outputParam() {
         $data = array(
             workSheetConst::RECEIVE_PRODUCT_TOTAL_PRICE => $this->receiveProductTotalPrice,

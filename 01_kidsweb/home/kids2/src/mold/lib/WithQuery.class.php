@@ -5,28 +5,28 @@ require_once(SRC_ROOT.'/mold/lib/exception/NoSuchFileException.class.php');
 require_once('clsdb.php');
 
 /**
- * DB¥¢¥¯¥»¥¹¤òÈ¼¤¦¥¯¥é¥¹¤Î´ğÄì¤È¤Ê¤ë¥¯¥é¥¹
+ * DBã‚¢ã‚¯ã‚»ã‚¹ã‚’ä¼´ã†ã‚¯ãƒ©ã‚¹ã®åŸºåº•ã¨ãªã‚‹ã‚¯ãƒ©ã‚¹
  *
  */
 class WithQuery extends Singleton
 {
 	/**
-	 * SQL¤¬ÇÛÃÖ¤µ¤ì¤Æ¤¤¤ë¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
+	 * SQLãŒé…ç½®ã•ã‚Œã¦ã„ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	 * @var string
 	 */
 	private $pathQuery = 'mold/sql/';
 
 	/**
-	 * SQL¥Õ¥¡¥¤¥ë¤ÎÀÜÈø¼­
+	 * SQLãƒ•ã‚¡ã‚¤ãƒ«ã®æ¥å°¾è¾
 	 * @var string
 	 */
 	private $pathSqlFileSuffix = ".sql";
 
 	/**
 	 * <pre>
-	 * ¥æ¡¼¥¶¥Ş¥¹¥¿.¥æ¡¼¥¶¥³¡¼¥É
-	 * ½é´üÃÍ¤Ï99999
-	 * INSERT/UPDATE»ş¤ÎºîÀ®¼Ô/¹¹¿·¼Ô¹àÌÜ¤Ë¥»¥Ã¥È¤µ¤ì¤ë
+	 * ãƒ¦ãƒ¼ã‚¶ãƒã‚¹ã‚¿.ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
+	 * åˆæœŸå€¤ã¯99999
+	 * INSERT/UPDATEæ™‚ã®ä½œæˆè€…/æ›´æ–°è€…é …ç›®ã«ã‚»ãƒƒãƒˆã•ã‚Œã‚‹
 	 * </pre>
 	 *
 	 * @var integer
@@ -34,15 +34,15 @@ class WithQuery extends Singleton
 	protected  $userCode = 99999;
 
 	/**
-	 * DB¥¯¥é¥¹
+	 * DBã‚¯ãƒ©ã‚¹
 	 * @var clsDB
 	 */
 	protected static $db;
 
 	/**
-	 * ¥³¥ó¥¹¥È¥é¥¯¥¿
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 *
-	 * clsDB¤Ë¤Æ¥³¥Í¥¯¥·¥ç¥ó¤ò³«¤¯
+	 * clsDBã«ã¦ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³ã‚’é–‹ã
 	 *
 	 * @param clsDB
 	 */
@@ -53,32 +53,32 @@ class WithQuery extends Singleton
 	}
 
 	/**
-	 * ¥Ç¥¹¥È¥é¥¯¥¿
+	 * ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	 *
-	 * clsDB¤Î¥ê¥½¡¼¥¹ÇË´ş¤ò¹Ô¤¦
+	 * clsDBã®ãƒªã‚½ãƒ¼ã‚¹ç ´æ£„ã‚’è¡Œã†
 	 *
 	 */
 	function __destruct()
 	{
-		// ¥³¥Í¥¯¥·¥ç¥ó¤¬OPEN¤Î¾ì¹ç
+		// ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³ãŒOPENã®å ´åˆ
 		if(static::$db->isOpen())
 		{
-			// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¤¬³«»Ï¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+			// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ãŒé–‹å§‹ã•ã‚Œã¦ã„ã‚‹å ´åˆ
 			if (static::$db->isTransaction())
 			{
 				static::$db->execute("ROLLBACK");
 			}
 
-			// ¥³¥Í¥¯¥·¥ç¥ó¥¯¥í¡¼¥º
+			// ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³ã‚¯ãƒ­ãƒ¼ã‚º
 			static::$db->close();
 		}
 	}
 
 	/**
-	 * »ØÄê¤µ¤ì¤¿SQL¥Õ¥¡¥¤¥ë¤Ø¤Î¥Ñ¥¹¤òÀ¸À®¤¹¤ë
+	 * æŒ‡å®šã•ã‚ŒãŸSQLãƒ•ã‚¡ã‚¤ãƒ«ã¸ã®ãƒ‘ã‚¹ã‚’ç”Ÿæˆã™ã‚‹
 	 *
 	 * @param string $fileName
-	 * @return SQL¥Õ¥¡¥¤¥ë¥Ñ¥¹
+	 * @return SQLãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
 	 * @throws InvalidArgumentException
 	 * @see InvalidArgumentException
 	 */
@@ -90,22 +90,22 @@ class WithQuery extends Singleton
 
 			if (!file_exists($path))
 			{
-				throw new NoSuchFileException("Â¸ºß¤·¤Ê¤¤¥Õ¥¡¥¤¥ë :".$path);
+				throw new NoSuchFileException("å­˜åœ¨ã—ãªã„ãƒ•ã‚¡ã‚¤ãƒ« :".$path);
 			}
 
 			return $path;
 		}
 		else
 		{
-			throw new InvalidArgumentException("°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£°ú¿ô1:".gettype($newPath));
+			throw new InvalidArgumentException("å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚å¼•æ•°1:".gettype($newPath));
 		}
 	}
 
 
 	/**
-	 * ÀßÄê¤µ¤ì¤Æ¤ë¥¯¥¨¥ê¥Ñ¥¹¤òÊÖ¤¹
+	 * è¨­å®šã•ã‚Œã¦ã‚‹ã‚¯ã‚¨ãƒªãƒ‘ã‚¹ã‚’è¿”ã™
 	 *
-	 * @return ¥¯¥¨¥ê¥Ñ¥¹
+	 * @return ã‚¯ã‚¨ãƒªãƒ‘ã‚¹
 	 */
 	protected function getPathQuery()
 	{
@@ -113,9 +113,9 @@ class WithQuery extends Singleton
 	}
 
 	/**
-	 * ¥¯¥¨¥ê¥Ñ¥¹¤òÊÑ¹¹¤¹¤ë
+	 * ã‚¯ã‚¨ãƒªãƒ‘ã‚¹ã‚’å¤‰æ›´ã™ã‚‹
 	 *
-	 * @param string $newPath ¿·¤·¤¤¥¯¥¨¥ê¥Ñ¥¹
+	 * @param string $newPath æ–°ã—ã„ã‚¯ã‚¨ãƒªãƒ‘ã‚¹
 	 * @return void
 	 * @throws NoSuchFileException
 	 * @throws InvalidArgumentException
@@ -128,26 +128,26 @@ class WithQuery extends Singleton
 		{
 			$path = SRC_ROOT.$newPath;
 
-			// ¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹¤Î¥Á¥§¥Ã¥¯
+			// ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹ã®ãƒã‚§ãƒƒã‚¯
 			if(file_exists($path))
 			{
 				$this->pathQuery = $newPath;
 			}
 			else
 			{
-				throw new NoSuchFileException("Â¸ºß¤·¤Ê¤¤¥Ñ¥¹ :" . $path);
+				throw new NoSuchFileException("å­˜åœ¨ã—ãªã„ãƒ‘ã‚¹ :" . $path);
 			}
 		}
 		else
 		{
-			throw new InvalidArgumentException("°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£°ú¿ô1:".gettype($newPath));
+			throw new InvalidArgumentException("å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚å¼•æ•°1:".gettype($newPath));
 		}
 	}
 
 	/**
-	 * ÀßÄê¤µ¤ì¤Æ¤ë¥¯¥¨¥ê¥Ñ¥¹¤ÎÀÜÈø¼­¤òÊÖ¤¹
+	 * è¨­å®šã•ã‚Œã¦ã‚‹ã‚¯ã‚¨ãƒªãƒ‘ã‚¹ã®æ¥å°¾è¾ã‚’è¿”ã™
 	 *
-	 * @return ¥¯¥¨¥ê¥Ñ¥¹¤ÎÀÜÈø¼­
+	 * @return ã‚¯ã‚¨ãƒªãƒ‘ã‚¹ã®æ¥å°¾è¾
 	 */
 	protected function getPathSqlFileSuffix()
 	{
@@ -155,9 +155,9 @@ class WithQuery extends Singleton
 	}
 
 	/**
-	 * ¥¯¥¨¥ê¥Ñ¥¹¤ÎÀÜÈø¼­¤òÊÑ¹¹¤¹¤ë
+	 * ã‚¯ã‚¨ãƒªãƒ‘ã‚¹ã®æ¥å°¾è¾ã‚’å¤‰æ›´ã™ã‚‹
 	 *
-	 * @param string $newSuffix ¿·¤·¤¤ÀÜÈø¼­
+	 * @param string $newSuffix æ–°ã—ã„æ¥å°¾è¾
 	 * @return void
 	 * @throws InvalidArgumentException
 	 * @see InvalidArgumentException
@@ -170,15 +170,15 @@ class WithQuery extends Singleton
 		}
 		else
 		{
-			throw new InvalidArgumentException("°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£°ú¿ô1:".gettype($newSuffix));
+			throw new InvalidArgumentException("å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚å¼•æ•°1:".gettype($newSuffix));
 		}
 	}
 
 
 	/**
-	 * ÀßÄê¤µ¤ì¤Æ¤¤¤ë¥æ¡¼¥¶¥³¡¼¥É¤òÊÖ¤¹¡£
+	 * è¨­å®šã•ã‚Œã¦ã„ã‚‹ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰ã‚’è¿”ã™ã€‚
 	 *
-	 * @return ¥æ¡¼¥¶¥³¡¼¥É
+	 * @return ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
 	 */
 	public function getUserCode()
 	{
@@ -186,10 +186,10 @@ class WithQuery extends Singleton
 	}
 
 	/**
-	 * ÀßÄê¤µ¤ì¤Æ¤¤¤ë¥æ¡¼¥¶¥³¡¼¥É¤òÊÑ¹¹¤¹¤ë
+	 * è¨­å®šã•ã‚Œã¦ã„ã‚‹ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰ã‚’å¤‰æ›´ã™ã‚‹
 	 *
 	 * @param integer $newUsercode
-	 * @return ¿·¤·¤¤¥æ¡¼¥¶¥³¡¼¥É
+	 * @return æ–°ã—ã„ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
 	 */
 	public function setUserCode($newUserCode)
 	{

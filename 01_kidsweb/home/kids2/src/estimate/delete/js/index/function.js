@@ -52,13 +52,13 @@ function fncCloseButton( strMode , obj )
 			break;
 	}
 }
-// ºï½ügif
+// å‰Šé™¤gif
 var deleteJ1 = '/img/type01/estimate/delete/delete/delete_off_ja_bt.gif';
 var deleteJ2 = '/img/type01/estimate/delete/delete/delete_off_on_ja_bt.gif';
 var deleteJ3 = '/img/type01/estimate/delete/delete/delete_on_ja_bt.gif';
 
 
-// ÊÄ¤¸¤ëgif
+// é–‰ã˜ã‚‹gif
 var closeJ1 = '/img/type01/estimate/delete/close/close_off_ja_bt.gif';
 var closeJ2 = '/img/type01/estimate/delete/close/close_off_on_ja_bt.gif';
 var closeJ3 = '/img/type01/estimate/delete/close/close_on_ja_bt.gif';

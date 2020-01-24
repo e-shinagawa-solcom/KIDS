@@ -1,23 +1,23 @@
 (function () {
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var workForm = $('form');
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     var btnClear = $('img.clear');
-    // ÅĞÏ¿¥Ü¥¿¥ó
+    // ç™»éŒ²ãƒœã‚¿ãƒ³
     var btnSearch = $('img.search');
 
-    // ¥Õ¥©¡¼¥à¥µ¥Ö¥ß¥Ã¥ÈÍŞ»ß
+    // ãƒ•ã‚©ãƒ¼ãƒ ã‚µãƒ–ãƒŸãƒƒãƒˆæŠ‘æ­¢
     $('document').on('submit', 'form', function (e) {
         e.preventDefault();
         return false;
     });
 
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     btnClear.on('click', function () {
         window.location.reload();
     });
 
-    // ¸¡º÷¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+    // æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnSearch.on('click', function () {
         if (workForm.valid()) {
             var windowName = 'searchResult';
@@ -26,18 +26,18 @@
             workForm.attr('method', 'post');
             workForm.attr('target', windowName);
             workForm.submit();
-            // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Î¥­¥Ã¥¯
+            // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒƒã‚¯
             // workForm.find(':submit').click();
         }
         else {
-            // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Î¥­¥Ã¥¯
+            // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒƒã‚¯
             workForm.find(':submit').click();
         }
     });
     
-    // ÉôÌç¥³¡¼¥ÉÊÑ¹¹¥¤¥Ù¥ó¥È
+    // éƒ¨é–€ã‚³ãƒ¼ãƒ‰å¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆ
     $('select[name="lngInChargeGroupCodeSelect"]').on('change', function () {
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax({
             url: '/p/search/getCategoryCode.php',
             type: 'post',

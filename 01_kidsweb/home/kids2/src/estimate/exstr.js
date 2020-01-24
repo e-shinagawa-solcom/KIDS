@@ -24,7 +24,7 @@ function ChgEtoJ()
 		strSelectFunctions.innerText = 'SELECT FUNCTIONS';
 
 
-		// ¥¢¥Ã¥×¥í¡¼¥É
+		// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 		if (typeof(UploadNaviBt1)!='undefined')
 		{
 			UploadNaviBt1.innerHTML = uploadNaviE1;
@@ -120,10 +120,10 @@ function ChgEtoJ()
 		MainTitle.innerHTML = maintitleJ;
 
 
-		strSelectFunctions.innerText = 'µ¡Ç½ÁªÂò';
+		strSelectFunctions.innerText = 'æ©Ÿèƒ½é¸æŠ';
 
 
-		// ¥¢¥Ã¥×¥í¡¼¥É
+		// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 		if (typeof(UploadNaviBt1)!='undefined')
 		{
 			UploadNaviBt1.innerHTML = uploadNaviJ1;

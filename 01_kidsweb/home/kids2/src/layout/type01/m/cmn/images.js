@@ -22,101 +22,101 @@
 
 
 
-	////////// ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸ //////////
-	// ¥Ş¥¹¥¿°ìÍ÷
+	////////// ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ //////////
+	// ãƒã‚¹ã‚¿ä¸€è¦§
 	var h_listJ = '/img/type01/m/m_header_title_ja.gif';
 	var h_listE = '/img/type01/m/m_header_title_en.gif';
 
-	// ¥¢¥¯¥»¥¹£É£Ğ¥¢¥É¥ì¥¹¥Ş¥¹¥¿
+	// ã‚¢ã‚¯ã‚»ã‚¹ï¼©ï¼°ã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚¹ã‚¿
 	var h_ipJ = '/img/type01/m/m_header_ip_ja.gif';
 	var h_ipE = '/img/type01/m/m_header_ip_en.gif';
 
-	// ¾Ú»æ¼ïÎà¥Ş¥¹¥¿
+	// è¨¼ç´™ç¨®é¡ãƒã‚¹ã‚¿
 	var h_inspectionJ = '/img/type01/m/m_header_inspection_ja.gif';
 	var h_inspectionE = '/img/type01/m/m_header_inspection_en.gif';
 
-	// ÈÇ¸¢¸µ¥Ş¥¹¥¿
+	// ç‰ˆæ¨©å…ƒãƒã‚¹ã‚¿
 	var h_copyJ = '/img/type01/m/m_header_copy_ja.gif';
 	var h_copyE = '/img/type01/m/m_header_copy_en.gif';
 
-	// ¹ñ¥Ş¥¹¥¿
+	// å›½ãƒã‚¹ã‚¿
 	var h_countryJ = '/img/type01/m/m_header_country_ja.gif';
 	var h_countryE = '/img/type01/m/m_header_country_en.gif';
 
-	// ±¿ÈÂÊıË¡¥Ş¥¹¥¿
+	// é‹æ¬æ–¹æ³•ãƒã‚¹ã‚¿
 	var h_transportJ = '/img/type01/m/m_header_transport_ja.gif';
 	var h_transportE = '/img/type01/m/m_header_transport_en.gif';
 
-	// ÁÈ¿¥¥Ş¥¹¥¿
+	// çµ„ç¹”ãƒã‚¹ã‚¿
 	var h_organizationJ = '/img/type01/m/m_header_organization_ja.gif';
 	var h_organizationE = '/img/type01/m/m_header_organization_en.gif';
 
-	// ¾¦ÉÊ·ÁÂÖ¥Ş¥¹¥¿
+	// å•†å“å½¢æ…‹ãƒã‚¹ã‚¿
 	var h_goodsformJ = '/img/type01/m/m_header_goodsform_ja.gif';
 	var h_goodsformE = '/img/type01/m/m_header_goodsform_en.gif';
 
-	// Çä¾å¶èÊ¬¥Ş¥¹¥¿
+	// å£²ä¸ŠåŒºåˆ†ãƒã‚¹ã‚¿
 	var h_salesclassJ = '/img/type01/m/m_header_salesclass_ja.gif';
 	var h_salesclassE = '/img/type01/m/m_header_salesclass_en.gif';
 
-	// »ÅÆş¶èÊ¬¥Ş¥¹¥¿
+	// ä»•å…¥åŒºåˆ†ãƒã‚¹ã‚¿
 	var h_goodsclassJ = '/img/type01/m/m_header_goodsclass_ja.gif';
 	var h_goodsclassE = '/img/type01/m/m_header_goodsclass_en.gif';
 
-	// »ÅÆşÉôÉÊ¥Ş¥¹¥¿
+	// ä»•å…¥éƒ¨å“ãƒã‚¹ã‚¿
 	var h_goodspartsJ = '/img/type01/m/m_header_goodsparts_ja.gif';
 	var h_goodspartsE = '/img/type01/m/m_header_goodsparts_en.gif';
 
-	// »ÅÆş²ÊÌÜ¥Ş¥¹¥¿
+	// ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿
 	var h_goodssetJ = '/img/type01/m/m_header_goodsset_ja.gif';
 	var h_goodssetE = '/img/type01/m/m_header_goodsset_en.gif';
 
-	// ÂĞ¾İÇ¯Îğ¥Ş¥¹¥¿
+	// å¯¾è±¡å¹´é½¢ãƒã‚¹ã‚¿
 	var h_ageJ = '/img/type01/m/m_header_age_ja.gif';
 	var h_ageE = '/img/type01/m/m_header_age_en.gif';
 
-	// ²ñ¼Ò¥Ş¥¹¥¿
+	// ä¼šç¤¾ãƒã‚¹ã‚¿
 	var h_companyJ = '/img/type01/m/m_header_company_ja.gif';
 	var h_companyE = '/img/type01/m/m_header_company_en.gif';
 
-	// ¥°¥ë¡¼¥×¥Ş¥¹¥¿
+	// ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿
 	var h_groupJ = '/img/type01/m/m_header_group_ja.gif';
 	var h_groupE = '/img/type01/m/m_header_group_en.gif';
 
-	// ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿
 	var h_rateJ = '/img/type01/m/m_header_rate_ja.gif';
 	var h_rateE = '/img/type01/m/m_header_rate_en.gif';
 
-	// ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿
 	var h_wfJ = '/img/type01/m/m_header_wf_ja.gif';
 	var h_wfE = '/img/type01/m/m_header_wf_en.gif';
 
-	// ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿
 	var h_trateJ = '/img/type01/m/m_header_trate_ja.gif';
 
 
 
-	// ¥Ş¥¹¥¿¸¡º÷
+	// ãƒã‚¹ã‚¿æ¤œç´¢
 	var search01J = '/img/type01/m/ms_header_title_ja.gif';
 	var search01E = '/img/type01/m/ms_header_title_en.gif';
 
-	// ²ñ¼Ò¥Ş¥¹¥¿¸¡º÷
+	// ä¼šç¤¾ãƒã‚¹ã‚¿æ¤œç´¢
 	var mcompanyJ = '/img/type01/m/m_company_search_ja.gif';
 	var mcompanyE = '/img/type01/m/m_company_search_en.gif';
 
-	// ¥°¥ë¡¼¥×¥Ş¥¹¥¿¸¡º÷
+	// ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿æ¤œç´¢
 	var mgroupJ = '/img/type01/m/m_group_search_ja.gif';
 	var mgroupE = '/img/type01/m/m_group_search_en.gif';
 
-	// ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿¸¡º÷
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿æ¤œç´¢
 	var mwforderJ = '/img/type01/m/m_wf_order_search_ja.gif';
 	var mwforderE = '/img/type01/m/m_wf_order_search_en.gif';
 
-	// ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¸¡º÷
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿æ¤œç´¢
 	var mmoneyrateJ = '/img/type01/m/m_monetary_rate_search_ja.gif';
 	var mmoneyrateE = '/img/type01/m/m_monetary_rate_search_en.gif';
 
-	// ÁÛÄê¥ì¡¼¥È¥Ş¥¹¥¿¸¡º÷
+	// æƒ³å®šãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿æ¤œç´¢
 	var mtemporaryrateJ = '/img/type01/m/m_temporary_rate_search_ja.gif';
 
 
@@ -131,9 +131,9 @@
 
 
 //////////////////////////////////////////////////////////////////
-////////// ÄÉ²Ã¥Ü¥¿¥ó¤ÎÀ¸À®(¤³¤Î¥Õ¥¡¥¤¥ë¤ËÀßÄê¤¹¤ë¤Î¤ÏÎã³°Åª½èÃÖ¤Î¤¿¤á¤Ç¤¹) //////////
-var maddbtJ1 = '<a href="#"><img onmouseover="MasterAddJOn( this );" onmouseout="MasterAddJOff( this );" src="' + maddJ1 + '" width="72" height="20" border="0" alt="ÄÉ²Ã"></a>';
-var maddbtJ3 = '<img src="' + maddJ3 + '" width="72" height="20" border="0" alt="ÄÉ²Ã">';
+////////// è¿½åŠ ãƒœã‚¿ãƒ³ã®ç”Ÿæˆ(ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã«è¨­å®šã™ã‚‹ã®ã¯ä¾‹å¤–çš„å‡¦ç½®ã®ãŸã‚ã§ã™) //////////
+var maddbtJ1 = '<a href="#"><img onmouseover="MasterAddJOn( this );" onmouseout="MasterAddJOff( this );" src="' + maddJ1 + '" width="72" height="20" border="0" alt="è¿½åŠ "></a>';
+var maddbtJ3 = '<img src="' + maddJ3 + '" width="72" height="20" border="0" alt="è¿½åŠ ">';
 var maddbtE1 = '<a href="#"><img onmouseover="MasterAddEOn( this );" onmouseout="MasterAddEOff( this );" src="' + maddE1 + '" width="72" height="20" border="0" alt="ADDITION"></a>';
 var maddbtE3 = '<img src="' + maddE3 + '" width="72" height="20" border="0" alt="ADDITION">';
 

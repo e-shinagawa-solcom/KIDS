@@ -1,4 +1,4 @@
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« */
 .table-description
 {
     table-layout: fixed;
@@ -8,13 +8,13 @@
     width: 185%;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë thead */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« thead */
 .table-description thead
 {
     color: #ffffff;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë thead > tr */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« thead > tr */
 .table-description thead > tr
 {
     display: block;
@@ -23,7 +23,7 @@
     background-color: #799797;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë tbody */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« tbody */
 .table-description tbody
 {
     display: block;
@@ -39,7 +39,7 @@
     background-color: #f1f1f1;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë tbody > tr */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« tbody > tr */
 .table-description tbody > tr
 {
     height: 20px;

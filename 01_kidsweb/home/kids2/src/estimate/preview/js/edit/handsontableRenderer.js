@@ -1,33 +1,33 @@
-// handsontable¤ÎÁàºî´Ø¿ô
+// handsontableã®æ“ä½œé–¢æ•°
 
 $(function() {
 
-  // Äê¿ô¤ÎÄêµÁ
+  // å®šæ•°ã®å®šç¾©
   const chargeSubjectPattern = RegExp('^1224:');
   const importItemPattern = RegExp('^2:');
   const tariffItemPattern = RegExp('^3:');
   const importOrTariffPattern = RegExp('^(2|3):');
   const backSlashPattern = RegExp('\xA5', 'g');
 
-  // ¥Ç¡¼¥¿¤Î¼èÆÀ
+  // ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
   var script = $('#script').attr('data-param');
   var result = JSON.parse(script);
 
-  // html¤ÎJSONºï½ü
+  // htmlã®JSONå‰Šé™¤
   $('#script').remove();
 
   var grid = [];
   var table = [];
 
-  // É½¼¨ÍÑ¥Ç¡¼¥¿¤ÎºîÀ®
+  // è¡¨ç¤ºç”¨ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
   var sheetData = result[0];
-  // ³«»Ï¹ÔÎó¡¢½ªÎ»¹ÔÎó¤Î¼èÆÀ
+  // é–‹å§‹è¡Œåˆ—ã€çµ‚äº†è¡Œåˆ—ã®å–å¾—
   var startRow = sheetData['startRow'];
   var endRow = sheetData['endRow'];
   var startColumn = sheetData['startColumn'];
   var endColumn = sheetData['endColumn'];
 
-  // ¥»¥ë¤Î¥Ç¡¼¥¿¼èÆÀ
+  // ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿å–å¾—
   var cellData = sheetData['cellData'];
 
   var cellValue = [];
@@ -40,7 +40,7 @@ $(function() {
 
   var detailNoList = sheetData['detailNoList'];
 
-  // ¥»¥ë¤Î¾ğÊó¤òÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+  // ã‚»ãƒ«ã®æƒ…å ±ã‚’é…åˆ—ã«æ ¼ç´ã™ã‚‹
   for (var i = startRow; i <= endRow; i++) {
     var rowValue = [];
     for (var j = startColumn; j <= endColumn; j++) {
@@ -49,9 +49,9 @@ $(function() {
     cellValue.push(rowValue);
   }
 
-  // ¥Ş¡¼¥¸¥»¥ë¤Î¼èÆÀ
+  // ãƒãƒ¼ã‚¸ã‚»ãƒ«ã®å–å¾—
   var merge = sheetData['mergedCellsList'];
-  // ¹Ô¤Î¹â¤µ¡¢Îó¤ÎÉı¤ò¼èÆÀ
+  // è¡Œã®é«˜ã•ã€åˆ—ã®å¹…ã‚’å–å¾—
   var rowHeight = sheetData['rowHeight'];
   var columnWidth = sheetData['columnWidth'].map(function(value) {
     if (value < 80) {
@@ -73,10 +73,10 @@ $(function() {
 
   var width = gridWidth + sideWidth + 30;
 
-  // ¥¦¥£¥ó¥É¥¦¤Î¥ê¥µ¥¤¥º
+  // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒªã‚µã‚¤ã‚º
   window.resizeTo(width, height);
 
-  // ¥»¥ë¤Î¥¯¥é¥¹¤ò¼èÆÀ
+  // ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹ã‚’å–å¾—
   var cellClass = sheetData['cellClass'];
 
   var gridId = 'grid0';
@@ -85,7 +85,7 @@ $(function() {
 
   var classList = cellClass;
 
-  // ¥×¥ë¥À¥¦¥ó¤Î¥ê¥¹¥È¤ò¼èÆÀ
+  // ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã®ãƒªã‚¹ãƒˆã‚’å–å¾—
   var dropdownDSCIList = sheetData['dropdownDSCI'];
   var dropdownCompanyList = sheetData['dropdownCompany'];
   var dropdownGUList = sheetData['dropdownGU'];
@@ -98,23 +98,23 @@ $(function() {
   var dropdownUser = {};
   var dropdownDevUser = [];
 
-  // Çä¾åÊ¬Îà¡Ê»ÅÆş²ÊÌÜ¡Ë¡¢Çä¾å¶èÊ¬¡Ê»ÅÆşÉôÉÊ¡Ë¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥ÈÀ¸À®
+  // å£²ä¸Šåˆ†é¡ï¼ˆä»•å…¥ç§‘ç›®ï¼‰ã€å£²ä¸ŠåŒºåˆ†ï¼ˆä»•å…¥éƒ¨å“ï¼‰ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆç”Ÿæˆ
   for (var i = 0; i < dropdownDSCIList.length; i++) {
     var area = dropdownDSCIList[i].areacode;
     var divisionSubject = dropdownDSCIList[i].divisionsubject;
     var classItem = dropdownDSCIList[i].classitem;
 
-    // ¥¨¥ê¥¢¥³¡¼¥É¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤¬¤Ê¤¤¾ì¹ç¤Ï¥¤¥ó¥Ç¥Ã¥¯¥¹¤òÀ¸À®¤·¡¢¶õÃÍ¤òÇÛÎó¤ËÄÉ²Ã¤¹¤ë
+    // ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãŒãªã„å ´åˆã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ç”Ÿæˆã—ã€ç©ºå€¤ã‚’é…åˆ—ã«è¿½åŠ ã™ã‚‹
     if (isEmpty(dropdownDivSub[area])) {
       dropdownDivSub[area] = [''];
     }
 
-    // ¥×¥ë¥À¥¦¥ó¤Ë½ÅÊ£¤¬¤Ê¤±¤ì¤ĞÄÉ²Ã
+    // ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã«é‡è¤‡ãŒãªã‘ã‚Œã°è¿½åŠ 
     if (dropdownDivSub[area].indexOf(divisionSubject) == -1){
       dropdownDivSub[area].push(divisionSubject);
     }
 
-    // ¥¨¥ê¥¢¥³¡¼¥É¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤¬¤Ê¤¤¾ì¹ç¤Ï¥¤¥ó¥Ç¥Ã¥¯¥¹¤òÀ¸À®¤·¡¢¶õÃÍ¤òÇÛÎó¤ËÄÉ²Ã¤¹¤ë
+    // ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãŒãªã„å ´åˆã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ç”Ÿæˆã—ã€ç©ºå€¤ã‚’é…åˆ—ã«è¿½åŠ ã™ã‚‹
     if (isEmpty(dropdownClsItm[area])) {
       dropdownClsItm[area] = {};
     }
@@ -123,13 +123,13 @@ $(function() {
       dropdownClsItm[area][divisionSubject] = [''];
     }
 
-    // ¥×¥ë¥À¥¦¥ó¤Ë½ÅÊ£¤¬¤Ê¤±¤ì¤ĞÄÉ²Ã
+    // ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã«é‡è¤‡ãŒãªã‘ã‚Œã°è¿½åŠ 
     if (dropdownClsItm[area][divisionSubject].indexOf(classItem) == -1){
       dropdownClsItm[area][divisionSubject].push(classItem);
     }      
   }
 
-  // ¸ÜµÒÀè(»ÅÆşÀè)¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥ÈºîÀ®
+  // é¡§å®¢å…ˆ(ä»•å…¥å…ˆ)ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆä½œæˆ
   for (var i = 0; i < dropdownCompanyList.length; i++) {
     var attributeCode = dropdownCompanyList[i].lngattributecode;
     var customerCompany = dropdownCompanyList[i].customercompany;
@@ -139,48 +139,48 @@ $(function() {
     dropdownCompany[attributeCode].push(customerCompany);
   }
 
-  // ±Ä¶ÈÉô½ğ¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥ÈºîÀ®
+  // å–¶æ¥­éƒ¨ç½²ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆä½œæˆ
   for (var i = 0; i < dropdownGUList.length; i++) {
     var groupCode = dropdownGUList[i].groupcode;
     var userCode = dropdownGUList[i].usercode;
 
-    // ¥°¥ë¡¼¥×¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¤¬¶õ¤Î¾ì¹ç¤Ï¶õÃÍ¤òÇÛÎó¤ËÄÉ²Ã¤¹¤ë
+    // ã‚°ãƒ«ãƒ¼ãƒ—ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãŒç©ºã®å ´åˆã¯ç©ºå€¤ã‚’é…åˆ—ã«è¿½åŠ ã™ã‚‹
     if (isEmpty(dropdownGroup)) {
       dropdownGroup.push('');
     }
 
-    // ¥É¥í¥Ã¥×¥À¥¦¥ó¤Ë½ÅÊ£¤¬¤Ê¤±¤ì¤ĞÄÉ²Ã
+    // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ã«é‡è¤‡ãŒãªã‘ã‚Œã°è¿½åŠ 
     if (dropdownGroup.indexOf(groupCode) == -1){
       dropdownGroup.push(groupCode);
     }
 
-    // ¥°¥ë¡¼¥×¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤¬¤Ê¤¤¾ì¹ç¤Ï¥¤¥ó¥Ç¥Ã¥¯¥¹¤òÀ¸À®¤·¡¢¶õÃÍ¤òÇÛÎó¤ËÄÉ²Ã¤¹¤ë
+    // ã‚°ãƒ«ãƒ¼ãƒ—ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãŒãªã„å ´åˆã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ç”Ÿæˆã—ã€ç©ºå€¤ã‚’é…åˆ—ã«è¿½åŠ ã™ã‚‹
     if (isEmpty(dropdownUser[groupCode])) {
       dropdownUser[groupCode] = [''];
     }
     
-    // ¥×¥ë¥À¥¦¥ó¤Ë½ÅÊ£¤¬¤Ê¤±¤ì¤ĞÄÉ²Ã
+    // ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã«é‡è¤‡ãŒãªã‘ã‚Œã°è¿½åŠ 
     if (dropdownUser[groupCode].indexOf(userCode) == -1){
       dropdownUser[groupCode].push(userCode);
     }      
   }
 
-  // ³«È¯Ã´Åö¼Ô¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥ÈºîÀ®
+  // é–‹ç™ºæ‹…å½“è€…ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆä½œæˆ
   for (var i = 0; i < dropdownDevList.length; i++) {
     var devUserCode = dropdownDevList[i].usercode;
 
-    // ¥°¥ë¡¼¥×¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¤¬¶õ¤Î¾ì¹ç¤Ï¶õÃÍ¤òÇÛÎó¤ËÄÉ²Ã¤¹¤ë
+    // ã‚°ãƒ«ãƒ¼ãƒ—ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãŒç©ºã®å ´åˆã¯ç©ºå€¤ã‚’é…åˆ—ã«è¿½åŠ ã™ã‚‹
     if (isEmpty(dropdownDevUser)) {
       dropdownDevUser.push('');
     }
 
-    // ¥É¥í¥Ã¥×¥À¥¦¥ó¤Ë½ÅÊ£¤¬¤Ê¤±¤ì¤ĞÄÉ²Ã
+    // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ã«é‡è¤‡ãŒãªã‘ã‚Œã°è¿½åŠ 
     if (dropdownDevUser.indexOf(devUserCode) == -1){
       dropdownDevUser.push(devUserCode);
     }   
   }
 
-  // Handsontable¤Ç¥¿¥°¤ËÉ½¤òËä¤á¹ş¤à
+  // Handsontableã§ã‚¿ã‚°ã«è¡¨ã‚’åŸ‹ã‚è¾¼ã‚€
   table[0] = new Handsontable(grid[0], {
     data: cellValue,
     disableVisualSelection: 'area',
@@ -195,7 +195,7 @@ $(function() {
           var col = changes[i][1];
           var oldValue = changes[i][2];
           var newValue = changes[i][3];
-          if (newValue !== oldValue) { // ÊÑ¹¹¤¬¤¢¤Ã¤¿¾ì¹ç
+          if (newValue !== oldValue) { // å¤‰æ›´ãŒã‚ã£ãŸå ´åˆ
             cellValue[row][col] = newValue;
             cellData[row][col]['value'] = cellValue[row][col];
             onChangedValue(row, col, oldValue, newValue);
@@ -213,44 +213,44 @@ $(function() {
     outsideClickDeselects: false,
   });
 
-  // Handsontable¤Î¥¢¥¯¥Æ¥£¥Ö²½¤Î¤¿¤á¡¢table¤Îº¸¾å¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+  // Handsontableã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–ã®ãŸã‚ã€tableã®å·¦ä¸Šã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
   table[0].selectCell(0, 0);
   table[0].deselectCell();
 
 
-  // ¥»¥ë¤ÎÀßÄê
+  // ã‚»ãƒ«ã®è¨­å®š
   function cells(row, col, prop) {
     var cellProperties = {};
     cellProperties = setCellProperties(row, col, prop);
     return cellProperties;
   }
 
-  //---------------------------------(cellProperties¤ÎÀßÄê)-----------------------------------------
+  //---------------------------------(cellPropertiesã®è¨­å®š)-----------------------------------------
 
   /**
-   * ¥»¥ë¥×¥í¥Ñ¥Æ¥£¤ÎÀßÄê
+   * ã‚»ãƒ«ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£ã®è¨­å®š
    * 
-   * @param {integer} row ¹ÔÈÖ¹æ
-   * @param {integer} col ÎóÈÖ¹æ
+   * @param {integer} row è¡Œç•ªå·
+   * @param {integer} col åˆ—ç•ªå·
    * @param {string} prop
    * 
-   * @return {object} cellProperties ¥»¥ë¥×¥í¥Ñ¥Æ¥£
+   * @return {object} cellProperties ã‚»ãƒ«ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
    */
   function setCellProperties(row, col, prop) {
     var cellProperties = {};
 
     var elements = getElementsForRowAndColumn(row, col, cellClass);
 
-    // ¥»¥ë¤Î½ñ¼°¡Ê¥É¥í¥Ã¥×¥À¥¦¥ó¡¢É½¼¨·Á¼°Åù¡Ë¤òÀßÄê¤¹¤ë
+    // ã‚»ãƒ«ã®æ›¸å¼ï¼ˆãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ã€è¡¨ç¤ºå½¢å¼ç­‰ï¼‰ã‚’è¨­å®šã™ã‚‹
     if (!isEmpty(elements)) {
       var className = elements[0].className;
 
-      if (className === 'inchargegroupcode') { // ±Ä¶ÈÉô½ğ
+      if (className === 'inchargegroupcode') { // å–¶æ¥­éƒ¨ç½²
         cellProperties.type = 'dropdown';
         cellProperties.source = dropdownGroup;
 
-      } else if (className === 'inchargeusercode') { // Ã´Åö
-        // ±Ä¶ÈÉô½ğ¤Î¼èÆÀ
+      } else if (className === 'inchargeusercode') { // æ‹…å½“
+        // å–¶æ¥­éƒ¨ç½²ã®å–å¾—
         for (var i = 0; i < cellClass.length; i++) {
           if (cellClass[i].className == 'inchargegroupcode') {
             var groupRow = cellClass[i].row;
@@ -267,38 +267,38 @@ $(function() {
         cellProperties.type = 'dropdown';
         cellProperties.source = dropdownDevUser;
 
-      // ¥Ø¥Ã¥ÀÉô¡¢¥Õ¥Ã¥¿Éô¤Î¿ôÎÌ
-      } else if (className === 'cartonquantity'     // ¥«¡¼¥È¥óÆş¤ê¿ô
-      || className === 'productionquantity'         // ½şµÑ¿ô
-      || className === 'member_quantity'            // ÉôºàÈñÂĞ¾İ¿ô
-      || className === 'depreciation_quantity'      // ½şµÑÂĞ¾İ¿ô
-      || className === 'manufacturing_quantity') {  // ¿ôÎÌ
+      // ãƒ˜ãƒƒãƒ€éƒ¨ã€ãƒ•ãƒƒã‚¿éƒ¨ã®æ•°é‡
+      } else if (className === 'cartonquantity'     // ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
+      || className === 'productionquantity'         // å„Ÿå´æ•°
+      || className === 'member_quantity'            // éƒ¨æè²»å¯¾è±¡æ•°
+      || className === 'depreciation_quantity'      // å„Ÿå´å¯¾è±¡æ•°
+      || className === 'manufacturing_quantity') {  // æ•°é‡
         cellProperties.type = 'numeric';
         cellProperties.numericFormat = {
           pattern: '#,##0',
         };
 
-      } else if (className.includes('detail')) {    // ÌÀºÙ¹Ô¤Ç¤¢¤ë¾ì¹ç
+      } else if (className.includes('detail')) {    // æ˜ç´°è¡Œã§ã‚ã‚‹å ´åˆ
 
-        if (className.includes('divisionSubject')) { // Çä¾å¶èÊ¬¡¢»ÅÆş²ÊÌÜ¤Î½èÍı
+        if (className.includes('divisionSubject')) { // å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥ç§‘ç›®ã®å‡¦ç†
           var area = className.match(/area(\d+)/);
           cellProperties.type = 'dropdown';
           cellProperties.source = dropdownDivSub[Number(area[1])];
 
-        } else if (className.includes('classItem')) { // Çä¾å¶èÊ¬¡¢»ÅÆş²ÊÌÜ¤Î½èÍı          
+        } else if (className.includes('classItem')) { // å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥ç§‘ç›®ã®å‡¦ç†          
           var area = className.match(/area(\d+)/);
           var divSubCol = getColumnForRowAndClassName(row, 'divisionSubject', cellClass);
           var value = cellValue[row][divSubCol];
           cellProperties.type = 'dropdown';
           cellProperties.source = dropdownClsItm[Number(area[1])][value];
 
-        } else if (className.includes('customerCompany')) { // ¸ÜµÒÀè¡Ê»ÅÆşÀè¡Ë¤Î½èÍı        
+        } else if (className.includes('customerCompany')) { // é¡§å®¢å…ˆï¼ˆä»•å…¥å…ˆï¼‰ã®å‡¦ç†        
           var area = className.match(/area(\d+)/);
-          if (Number(area[1]) === 1 || Number(area[1]) === 2) { // ¼õÃí
+          if (Number(area[1]) === 1 || Number(area[1]) === 2) { // å—æ³¨
             cellProperties.type = 'dropdown';
             cellProperties.source = dropdownCompany[2];
 
-          } else if (Number(area[1]) === 3 || Number(area[1]) === 4) { // È¯Ãí
+          } else if (Number(area[1]) === 3 || Number(area[1]) === 4) { // ç™ºæ³¨
             cellProperties.type = 'dropdown';
             cellProperties.source = dropdownCompany[3];
 
@@ -308,29 +308,29 @@ $(function() {
               pattern: '0.00%',
             };
           }
-        } else if (className.includes('monetaryDisplay')) { // ÄÌ²ß
+        } else if (className.includes('monetaryDisplay')) { // é€šè²¨
           cellProperties.type = 'dropdown';
           cellProperties.source = ['', 'JP', 'US', 'HK'];
 
-        } else if (className.includes('payoff')) { // ½şµÑ          
+        } else if (className.includes('payoff')) { // å„Ÿå´          
           cellProperties.type = 'dropdown';
-          cellProperties.source = ['', '¡û'];
+          cellProperties.source = ['', 'â—‹'];
 
-        } else if (className.includes('delivery')) { // Ç¼´ü          
+        } else if (className.includes('delivery')) { // ç´æœŸ          
           cellProperties.type = 'date';
           cellProperties.dateFormat = 'YYYY/MM/DD'
 
-        } else if (className.includes('price')) { // Ã±²Á
+        } else if (className.includes('price')) { // å˜ä¾¡
           cellProperties.type = 'numeric';
           cellProperties.numericFormat = {
             pattern: '#,##0.0000',
           };
-        } else if (className.includes('quantity')) { // ¿ôÎÌ
+        } else if (className.includes('quantity')) { // æ•°é‡
           cellProperties.type = 'numeric';
           cellProperties.numericFormat = {
             pattern: '#,##0',
           };
-        } else if (className.includes('conversionRate')) { // Å¬ÍÑ¥ì¡¼¥È
+        } else if (className.includes('conversionRate')) { // é©ç”¨ãƒ¬ãƒ¼ãƒˆ
           cellProperties.type = 'numeric';
           cellProperties.numericFormat = {
             pattern: '#,##0.0000',
@@ -339,10 +339,10 @@ $(function() {
       }
     }
     
-    // renderer¤ò¥»¥Ã¥È¤¹¤ë¡Ê¥»¥ë¤Î·ÓÀş¤äÇØ·Ê¿§Åù¤Î½ñ¼°ÀßÄê¡¢ÆşÎÏ·Á¼°¤Î»ØÄêÅù¡Ë
+    // rendererã‚’ã‚»ãƒƒãƒˆã™ã‚‹ï¼ˆã‚»ãƒ«ã®ç½«ç·šã‚„èƒŒæ™¯è‰²ç­‰ã®æ›¸å¼è¨­å®šã€å…¥åŠ›å½¢å¼ã®æŒ‡å®šç­‰ï¼‰
     cellProperties.renderer = firstRenderer;
 
-    // ÆÉ¤ß¼è¤êÀìÍÑ¥»¥ë¤òÀßÄê¤¹¤ë
+    // èª­ã¿å–ã‚Šå°‚ç”¨ã‚»ãƒ«ã‚’è¨­å®šã™ã‚‹
     var readOnlyRow = readOnlyDetailRow.some(function(value){
       return value = row;
     })
@@ -358,24 +358,24 @@ $(function() {
 
 
   
-  //------------------------------------(Renderer¤ÎÀßÄê)-----------------------------------------
+  //------------------------------------(Rendererã®è¨­å®š)-----------------------------------------
   
   /**
-   * renderer¤ÎÀßÄê
+   * rendererã®è¨­å®š
    * 
-   * @param {integer} row ¹ÔÈÖ¹æ
-   * @param {integer} col ÎóÈÖ¹æ
+   * @param {integer} row è¡Œç•ªå·
+   * @param {integer} col åˆ—ç•ªå·
    * 
    */
   function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
-    // »ÈÍÑ¤¹¤ërenderer¤Î»ØÄê¡ÊÆşÎÏ·Á¼°Åù¡Ë
-    if (cellProperties.type === 'dropdown') { // ¥É¥í¥Ã¥×¥À¥¦¥ó·¿
+    // ä½¿ç”¨ã™ã‚‹rendererã®æŒ‡å®šï¼ˆå…¥åŠ›å½¢å¼ç­‰ï¼‰
+    if (cellProperties.type === 'dropdown') { // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³å‹
       Handsontable.renderers.DropdownRenderer.apply(this, arguments);
-    } else if (cellProperties.type === 'date') { // ÆüÉÕ·¿
+    } else if (cellProperties.type === 'date') { // æ—¥ä»˜å‹
       Handsontable.renderers.DateRenderer.apply(this, arguments);
-    } else if (cellProperties.type === 'numeric') { // ¿ôÃÍ·¿
+    } else if (cellProperties.type === 'numeric') { // æ•°å€¤å‹
       Handsontable.renderers.NumericRenderer.apply(this, arguments);
-    } else { // ÆÃ¤Ë¶¯¤¤¹´¤ê¤¬¤Ê¤±¤ì¤Ğ¥Æ¥­¥¹¥È(Ê¸»úÎó¡Ë·¿
+    } else { // ç‰¹ã«å¼·ã„æ‹˜ã‚ŠãŒãªã‘ã‚Œã°ãƒ†ã‚­ã‚¹ãƒˆ(æ–‡å­—åˆ—ï¼‰å‹
       Handsontable.renderers.TextRenderer.apply(this, arguments);
     }
 
@@ -412,10 +412,10 @@ $(function() {
     td.classList.add(clsCol);
   }
 
-  // handsontable¤òÁàºî¤¹¤ë¥Ü¥¿¥ó¤Î½èÍı
+  // handsontableã‚’æ“ä½œã™ã‚‹ãƒœã‚¿ãƒ³ã®å‡¦ç†
   
 
-  // ÁªÂò¥»¥ë¤Î¼èÆÀ
+  // é¸æŠã‚»ãƒ«ã®å–å¾—
   function getSelectedCell() {
     var selected = table[0].getSelected();
     if (selected) {
@@ -424,9 +424,9 @@ $(function() {
     return false;
   }
 
-  //-----------------------------------------------(¹ÔÁàºî)-----------------------------------------------------
+  //-----------------------------------------------(è¡Œæ“ä½œ)-----------------------------------------------------
 
-  // ¹ÔÄÉ²Ã
+  // è¡Œè¿½åŠ 
   $('.btnRowAdd').on('click', function() {
     var selectedRange = getSelectedCell();
     if (selectedRange) {
@@ -442,14 +442,14 @@ $(function() {
           var newData = [];
           var blankRow = [];
   
-          // ¶õ¹ÔÇÛÎó¤ÎÀ¸À®
+          // ç©ºè¡Œé…åˆ—ã®ç”Ÿæˆ
           blankRow[0] = JSON.parse(JSON.stringify(cellData[selectedRow]));        
           for (var column = startColumn; column <= endColumn; column++) {
             blankRow[0][column]['value'] = '';
           }
   
           var newRow = startRow;
-          // ¶õ¹Ô¤ò¥Ç¡¼¥¿¤ËÁŞÆş¤¹¤ë
+          // ç©ºè¡Œã‚’ãƒ‡ãƒ¼ã‚¿ã«æŒ¿å…¥ã™ã‚‹
           for (var row = startRow; row <= endRow; row++) {
             if (row == selectedRow) {
               newData[newRow] = blankRow[0];
@@ -459,13 +459,13 @@ $(function() {
             newRow++;
           }
   
-          // ¸µ¤Î¥»¥ë¤Î¾ğÊó¤ò½ñ¤­´¹¤¨¤ë
+          // å…ƒã®ã‚»ãƒ«ã®æƒ…å ±ã‚’æ›¸ãæ›ãˆã‚‹
           cellData = newData;
           endRow += 1;
   
           cellValue = [];
     
-          // ¥»¥ë¤Î¾ğÊó¤òÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+          // ã‚»ãƒ«ã®æƒ…å ±ã‚’é…åˆ—ã«æ ¼ç´ã™ã‚‹
           for (var i = startRow; i <= endRow; i++) {
             var rowValue = [];
             for (var j = startColumn; j <= endColumn; j++) {
@@ -533,10 +533,10 @@ $(function() {
           });
   
         } else {
-          alert('ÌÀºÙ¹Ô°Ê³°¤Î¹ÔÄÉ²Ã¤Ï¤Ç¤­¤Ş¤»¤ó');
+          alert('æ˜ç´°è¡Œä»¥å¤–ã®è¡Œè¿½åŠ ã¯ã§ãã¾ã›ã‚“');
         }
       } else {
-        alert('ÌÀºÙ¹Ô°Ê³°¤Î¹ÔÄÉ²Ã¤Ï¤Ç¤­¤Ş¤»¤ó');
+        alert('æ˜ç´°è¡Œä»¥å¤–ã®è¡Œè¿½åŠ ã¯ã§ãã¾ã›ã‚“');
       }
 
 
@@ -545,7 +545,7 @@ $(function() {
   });
   
 
-  // ¹Ôºï½ü
+  // è¡Œå‰Šé™¤
   $('.btnRowDelete').on('click', function(){
     var selectedRange = getSelectedCell();
     if (selectedRange) {
@@ -564,15 +564,15 @@ $(function() {
           var elements = getElementsForClassName(areaClassName, checkList);
   
           if (readOnlyDetailRow.includes(selectedRow)) {
-            // ³ÎÄêºÑ¤Î¹Ô¤Ïºï½ü¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
-            alert('³ÎÄêºÑ¤ÎÌÀºÙ¤Ïºï½ü¤Ç¤­¤Ş¤»¤ó¡£');
+            // ç¢ºå®šæ¸ˆã®è¡Œã¯å‰Šé™¤ã§ããªã„ã‚ˆã†ã«ã™ã‚‹
+            alert('ç¢ºå®šæ¸ˆã®æ˜ç´°ã¯å‰Šé™¤ã§ãã¾ã›ã‚“ã€‚');
   
           } else if (elements.length > 1) {
             var newData = [];
   
             var newRow = startRow;
   
-            // ¹Ô¤Î¿ôÃÍ¤òºï½ü¤¹¤ë
+            // è¡Œã®æ•°å€¤ã‚’å‰Šé™¤ã™ã‚‹
             for (var row = startRow; row <= endRow; row++) {
               if (row == selectedRow) {
                 continue;
@@ -581,13 +581,13 @@ $(function() {
               newRow++;
             }
     
-            // ¸µ¤Î¥»¥ë¤Î¾ğÊó¤ò½ñ¤­´¹¤¨¤ë
+            // å…ƒã®ã‚»ãƒ«ã®æƒ…å ±ã‚’æ›¸ãæ›ãˆã‚‹
             cellData = newData;
             endRow -= 1;
     
             cellValue = [];
       
-            // ¥»¥ë¤Î¾ğÊó¤òÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+            // ã‚»ãƒ«ã®æƒ…å ±ã‚’é…åˆ—ã«æ ¼ç´ã™ã‚‹
             for (var i = startRow; i <= endRow; i++) {
               var rowValue = [];
               for (var j = startColumn; j <= endColumn; j++) {
@@ -646,11 +646,11 @@ $(function() {
   
             rowHeight.splice(selectedRow, 1);
   
-            // ·×»»¥Õ¥é¥°¤ÎÀßÄê
+            // è¨ˆç®—ãƒ•ãƒ©ã‚°ã®è¨­å®š
   
             var calcFlag = {};
   
-            // ºÆ·×»»¥Õ¥é¥°¤ÎÀßÄê
+            // å†è¨ˆç®—ãƒ•ãƒ©ã‚°ã®è¨­å®š
             setCalcFlagForChangeSubtotal(Number(area[1]), calcFlag);
             setQuantityCalculateFlag(Number(area[1]), calcFlag);
   
@@ -664,20 +664,20 @@ $(function() {
               cell: cellClass,
             });
           } else {
-            alert('³ºÅö¥¨¥ê¥¢¤ÎÌÀºÙ¹Ô¤¬1¹Ô°Ê²¼¤Î¤¿¤á¹Ôºï½ü¤Ç¤­¤Ş¤»¤ó');
+            alert('è©²å½“ã‚¨ãƒªã‚¢ã®æ˜ç´°è¡ŒãŒ1è¡Œä»¥ä¸‹ã®ãŸã‚è¡Œå‰Šé™¤ã§ãã¾ã›ã‚“');
           }
         } else {
-          alert('ÌÀºÙ¹Ô°Ê³°¤Îºï½ü¤Ï¤Ç¤­¤Ş¤»¤ó');
+          alert('æ˜ç´°è¡Œä»¥å¤–ã®å‰Šé™¤ã¯ã§ãã¾ã›ã‚“');
         }
       } else {
-        alert('ÌÀºÙ¹Ô°Ê³°¤Îºï½ü¤Ï¤Ç¤­¤Ş¤»¤ó');
+        alert('æ˜ç´°è¡Œä»¥å¤–ã®å‰Šé™¤ã¯ã§ãã¾ã›ã‚“');
       }
 
       table[0].selectCell(selectedRange[0], selectedRange[1]);
     }
   });
 
-  // ¹Ô°ÜÆ°(¥¨¥ê¥¢ÆâÀèÆ¬¤Ë)
+  // è¡Œç§»å‹•(ã‚¨ãƒªã‚¢å†…å…ˆé ­ã«)
   $('.btnMoveTop').on('click', function(){
     var selectedRange = getSelectedCell();
     if (selectedRange) {
@@ -709,7 +709,7 @@ $(function() {
             var minRowCellValue = cellValue.splice(selectedRow, 1);
             cellValue.splice(minRow, 0, minRowCellValue[0]);
   
-            // readOnly¤ò½ñ¤­´¹¤¨¤ë
+            // readOnlyã‚’æ›¸ãæ›ãˆã‚‹
             var newReadOnly = readOnlyDetailRow.map(function(value){
               if (value == selectedRow) {
                 return minRow;
@@ -731,7 +731,7 @@ $(function() {
               return value;
             });
   
-            // ¸µ¤Î¥»¥ë¥Ç¡¼¥¿¤ò¹¹¿·¤¹¤ë
+            // å…ƒã®ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
             for (var i = minRow; i <= maxRow; i++) {
               for (var j = startColumn; j <= endColumn; j++) {
                 cellData[i][j]['value'] = cellValue[i][j];
@@ -748,17 +748,17 @@ $(function() {
           }
   
         } else {
-          alert('ÌÀºÙ¹Ô°Ê³°¤Î°ÜÆ°¤Ï¤Ç¤­¤Ş¤»¤ó');
+          alert('æ˜ç´°è¡Œä»¥å¤–ã®ç§»å‹•ã¯ã§ãã¾ã›ã‚“');
         }
       } else {
-        alert('ÌÀºÙ¹Ô°Ê³°¤Î°ÜÆ°¤Ï¤Ç¤­¤Ş¤»¤ó');
+        alert('æ˜ç´°è¡Œä»¥å¤–ã®ç§»å‹•ã¯ã§ãã¾ã›ã‚“');
       }
 
       table[0].selectCell(minRow, selectedRange[1]);
     }
   });
 
-  // ¹Ô°ÜÆ°(¥¨¥ê¥¢ÆâºÇ¸åÈø¤Ë)
+  // è¡Œç§»å‹•(ã‚¨ãƒªã‚¢å†…æœ€å¾Œå°¾ã«)
   $('.btnMoveBottom').on('click', function() {
     var selectedRange = getSelectedCell();
     if (selectedRange) {
@@ -790,7 +790,7 @@ $(function() {
             var maxRowCellValue = cellValue.splice(selectedRow, 1);
             cellValue.splice(maxRow, 0, maxRowCellValue[0]);
   
-            // readOnly¤ò½ñ¤­´¹¤¨¤ë
+            // readOnlyã‚’æ›¸ãæ›ãˆã‚‹
             var newReadOnly = readOnlyDetailRow.map(function(value) {
               if (value == selectedRow) {
                 return maxRow;
@@ -812,7 +812,7 @@ $(function() {
               return value;
             });
   
-            // ¸µ¤Î¥»¥ë¥Ç¡¼¥¿¤ò¹¹¿·¤¹¤ë
+            // å…ƒã®ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
             for (var i = minRow; i <= maxRow; i++) {
               for (var j = startColumn; j <= endColumn; j++) {
                 cellData[i][j]['value'] = cellValue[i][j];
@@ -829,11 +829,11 @@ $(function() {
           }
   
         } else {
-          alert('ÌÀºÙ¹Ô°Ê³°¤Î°ÜÆ°¤Ï¤Ç¤­¤Ş¤»¤ó');
+          alert('æ˜ç´°è¡Œä»¥å¤–ã®ç§»å‹•ã¯ã§ãã¾ã›ã‚“');
         }
 
       } else {
-        alert('ÌÀºÙ¹Ô°Ê³°¤Î°ÜÆ°¤Ï¤Ç¤­¤Ş¤»¤ó');
+        alert('æ˜ç´°è¡Œä»¥å¤–ã®ç§»å‹•ã¯ã§ãã¾ã›ã‚“');
       }
 
 
@@ -841,7 +841,7 @@ $(function() {
     }
   });
 
-  // ¹Ô°ÜÆ°(°ì¹Ô¾å¤Ë)
+  // è¡Œç§»å‹•(ä¸€è¡Œä¸Šã«)
   $('.btnMoveUpper').on('click', function() {
     var lock = screenLock();
     var selectedRange = getSelectedCell();
@@ -874,7 +874,7 @@ $(function() {
               var movecellValue = cellValue.splice(selectedRow, 1);
               cellValue.splice(insertRow, 0, movecellValue[0]);
   
-              // readOnly¤ò½ñ¤­´¹¤¨¤ë
+              // readOnlyã‚’æ›¸ãæ›ãˆã‚‹
               var newReadOnly = readOnlyDetailRow.map(function(value) {
                 if (value == selectedRow) {
                   return selectedRow - 1;
@@ -896,7 +896,7 @@ $(function() {
                 return value;
               });
   
-              // ¸µ¤Î¥»¥ë¥Ç¡¼¥¿¤ò¹¹¿·¤¹¤ë
+              // å…ƒã®ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
               for (var j = startColumn; j <= endColumn; j++) {
                 cellData[selectedRow][j]['value'] = cellValue[selectedRow][j];
                 cellData[insertRow][j]['value'] = cellValue[insertRow][j];
@@ -913,10 +913,10 @@ $(function() {
           }
   
         } else {
-          alert('ÌÀºÙ¹Ô°Ê³°¤Î°ÜÆ°¤Ï¤Ç¤­¤Ş¤»¤ó');
+          alert('æ˜ç´°è¡Œä»¥å¤–ã®ç§»å‹•ã¯ã§ãã¾ã›ã‚“');
         }
       } else {
-        alert('ÌÀºÙ¹Ô°Ê³°¤Î°ÜÆ°¤Ï¤Ç¤­¤Ş¤»¤ó');
+        alert('æ˜ç´°è¡Œä»¥å¤–ã®ç§»å‹•ã¯ã§ãã¾ã›ã‚“');
       }
 
       var unlock = screenUnlock();
@@ -926,7 +926,7 @@ $(function() {
 
 
 
-  // ¹Ô°ÜÆ°(°ì¹Ô²¼¤Ë)
+  // è¡Œç§»å‹•(ä¸€è¡Œä¸‹ã«)
   $('.btnMoveLower').on('click', function() {
       $('[class~="btn"]').prop('disabled', true);
 
@@ -961,7 +961,7 @@ $(function() {
               var movecellValue = cellValue.splice(selectedRow, 1);
               cellValue.splice(insertRow, 0, movecellValue[0]);
   
-              // readOnly¤ò½ñ¤­´¹¤¨¤ë
+              // readOnlyã‚’æ›¸ãæ›ãˆã‚‹
               var newReadOnly = readOnlyDetailRow.map(function(value){
                 if (value == selectedRow) {
                   return selectedRow + 1;
@@ -983,7 +983,7 @@ $(function() {
                 return value;
               });
   
-              // ¸µ¤Î¥»¥ë¥Ç¡¼¥¿¤ò¹¹¿·¤¹¤ë
+              // å…ƒã®ã‚»ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’æ›´æ–°ã™ã‚‹
               for (var j = startColumn; j <= endColumn; j++) {
                 cellData[selectedRow][j]['value'] = cellValue[selectedRow][j];
                 cellData[insertRow][j]['value'] = cellValue[insertRow][j];
@@ -999,10 +999,10 @@ $(function() {
           }
   
         } else {
-          alert('ÌÀºÙ¹Ô°Ê³°¤Î°ÜÆ°¤Ï¤Ç¤­¤Ş¤»¤ó');
+          alert('æ˜ç´°è¡Œä»¥å¤–ã®ç§»å‹•ã¯ã§ãã¾ã›ã‚“');
         }
       } else {
-        alert('ÌÀºÙ¹Ô°Ê³°¤Î°ÜÆ°¤Ï¤Ç¤­¤Ş¤»¤ó');
+        alert('æ˜ç´°è¡Œä»¥å¤–ã®ç§»å‹•ã¯ã§ãã¾ã›ã‚“');
       }
 
 
@@ -1013,14 +1013,14 @@ $(function() {
   });
 
 
-  //---------------------------------------(¥»¥ë¤ÎºÆ·×»»½èÍı)------------------------------------------
+  //---------------------------------------(ã‚»ãƒ«ã®å†è¨ˆç®—å‡¦ç†)------------------------------------------
 
   /**
-   * ¥»¥ë¤ÎÆşÎÏÃÍ¤¬ÊÑ¹¹¤µ¤ì¤¿»ş¤Î½èÍı¤ò¹Ô¤¦
-   * @param {integer} row ÊÑ¹¹¥»¥ë¤Î¹Ô
-   * @param {integer} col ÊÑ¹¹¥»¥ë¤ÎÎó
-   * @param {integer} oldValue ÊÑ¹¹Á°¤ÎÃÍ
-   * @param {integer} newValue ÊÑ¹¹¸å¤ÎÃÍ
+   * ã‚»ãƒ«ã®å…¥åŠ›å€¤ãŒå¤‰æ›´ã•ã‚ŒãŸæ™‚ã®å‡¦ç†ã‚’è¡Œã†
+   * @param {integer} row å¤‰æ›´ã‚»ãƒ«ã®è¡Œ
+   * @param {integer} col å¤‰æ›´ã‚»ãƒ«ã®åˆ—
+   * @param {integer} oldValue å¤‰æ›´å‰ã®å€¤
+   * @param {integer} newValue å¤‰æ›´å¾Œã®å€¤
    * 
    */
   function onChangedValue(row, col, oldValue, newValue) {
@@ -1031,8 +1031,8 @@ $(function() {
     var calcFlag = {};
 
     var className = elements[0].className;
-    if (className === 'inchargegroupcode') { // ±Ä¶ÈÉô½ğ
-      // Ã´Åö¤Î¥»¥ë¤Î¼èÆÀ
+    if (className === 'inchargegroupcode') { // å–¶æ¥­éƒ¨ç½²
+      // æ‹…å½“ã®ã‚»ãƒ«ã®å–å¾—
       for (var i = 0; i < checkList.length; i++) {
         if (checkList[i].className == 'inchargeusercode') {
           var userRow = cellClass[i].row;
@@ -1040,31 +1040,31 @@ $(function() {
           break;
         }
       }
-      // Ã´Åö¤ò¶õÍó¤Ë¤¹¤ë
+      // æ‹…å½“ã‚’ç©ºæ¬„ã«ã™ã‚‹
       assignValueForGlobal(userRow, userCol, ''); 
       
-    } else if (className.includes('detail')) { // ÌÀºÙ¹Ô
+    } else if (className.includes('detail')) { // æ˜ç´°è¡Œ
 
-      // ¥»¥ë¤Î¥¯¥é¥¹¾ğÊó¼èÆÀ
+      // ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹æƒ…å ±å–å¾—
       var cellElement = getElementsForRowAndColumn(row, col, checkList);
 
-      // ¥¨¥ê¥¢¥³¡¼¥É¤Î¼èÆÀ
+      // ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã®å–å¾—
       var areaCode = cellElement[0].className.match(/area([0-9]+)/);
 
 
-      if (className.includes('divisionSubject')) { // Çä¾åÊ¬Îà¡ÊËô¤Ï»ÅÆş²ÊÌÜ¡Ë
+      if (className.includes('divisionSubject')) { // å£²ä¸Šåˆ†é¡ï¼ˆåˆã¯ä»•å…¥ç§‘ç›®ï¼‰
         var clsItmCol = getColumnForRowAndClassName(row, 'classItem', checkList);
 
-        // Çä¾å¶èÊ¬¡ÊËô¤Ï»ÅÆşÉôÉÊ¡Ë¤ò¶õÍó¤Ë¤¹¤ë
+        // å£²ä¸ŠåŒºåˆ†ï¼ˆåˆã¯ä»•å…¥éƒ¨å“ï¼‰ã‚’ç©ºæ¬„ã«ã™ã‚‹
         assignValueForGlobal(row, clsItmCol, '');
 
         var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
 
-        if (isNumber(cellValue[row][cusComCol]) === true) { // ¿ôÃÍÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
-          assignValueForGlobal(row, cusComCol, '');  // ¸ÜµÒÀè¡Ê»ÅÆşÀè¡Ë¤ò¥¯¥ê¥¢
+        if (isNumber(cellValue[row][cusComCol]) === true) { // æ•°å€¤å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆ
+          assignValueForGlobal(row, cusComCol, '');  // é¡§å®¢å…ˆï¼ˆä»•å…¥å…ˆï¼‰ã‚’ã‚¯ãƒªã‚¢
 
           var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
-          assignValueForGlobal(row, priceCol, '');  // Ã±²Á¤ò¥¯¥ê¥¢
+          assignValueForGlobal(row, priceCol, '');  // å˜ä¾¡ã‚’ã‚¯ãƒªã‚¢
         }
 
         if (Number(areaCode[1]) === 1) {
@@ -1077,22 +1077,22 @@ $(function() {
 
         calcFlag.subtotal = true;
 
-      } else if (className.includes('classItem')) { // Çä¾å¶èÊ¬¡Ê»ÅÆşÉôÉÊ)
+      } else if (className.includes('classItem')) { // å£²ä¸ŠåŒºåˆ†ï¼ˆä»•å…¥éƒ¨å“)
         var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
 
-        if (isNumber(cellValue[row][cusComCol]) === true) { // »ÅÆşÀè¤Ë¿ôÃÍÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç(¥Ñ¡¼¥»¥ó¥È¤Î¾ì¹ç)
+        if (isNumber(cellValue[row][cusComCol]) === true) { // ä»•å…¥å…ˆã«æ•°å€¤å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆ(ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆã®å ´åˆ)
           var divSubCol = getColumnForRowAndClassName(row, 'divisionSubject', checkList);
           var divSub = cellValue[row][divSubCol];
-          if (divSub.match(chargeSubjectPattern)) { // »ÅÆş²ÊÌÜ¤¬¥Á¥ã¡¼¥¸¤Î¾ì¹ç
-            if (oldValue.match(importOrTariffPattern) && !newValue.match(importOrTariffPattern)) { // ÊÑ¹¹Á°¤ÎÃÍ¤¬Í¢ÆşÈñÍÑËô¤Ï´ØÀÇ¤ÇÊÑ¹¹¸å¤ÎÃÍ¤¬¤½¤ì°Ê³°¤ÎÃÍ¤Î¾ì¹ç
-                assignValueForGlobal(row, cusComCol, '');  // ¸ÜµÒÀè¡Ê»ÅÆşÀè¡Ë¤ò¥¯¥ê¥¢
+          if (divSub.match(chargeSubjectPattern)) { // ä»•å…¥ç§‘ç›®ãŒãƒãƒ£ãƒ¼ã‚¸ã®å ´åˆ
+            if (oldValue.match(importOrTariffPattern) && !newValue.match(importOrTariffPattern)) { // å¤‰æ›´å‰ã®å€¤ãŒè¼¸å…¥è²»ç”¨åˆã¯é–¢ç¨ã§å¤‰æ›´å¾Œã®å€¤ãŒãã‚Œä»¥å¤–ã®å€¤ã®å ´åˆ
+                assignValueForGlobal(row, cusComCol, '');  // é¡§å®¢å…ˆï¼ˆä»•å…¥å…ˆï¼‰ã‚’ã‚¯ãƒªã‚¢
 
                 var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
-                assignValueForGlobal(row, priceCol, '');  // Ã±²Á¤ò¥¯¥ê¥¢
+                assignValueForGlobal(row, priceCol, '');  // å˜ä¾¡ã‚’ã‚¯ãƒªã‚¢
 
                 calcFlag.subtotal = true;                            
             } else {
-              calcFlag.importOrTariff = true // Í¢ÆşÈñÍÑ¡¢´ØÀÇ¤ÎºÆ·×»»¥Õ¥é¥°
+              calcFlag.importOrTariff = true // è¼¸å…¥è²»ç”¨ã€é–¢ç¨ã®å†è¨ˆç®—ãƒ•ãƒ©ã‚°
             }
           }
         }
@@ -1109,7 +1109,7 @@ $(function() {
           calcFlag.substitutePQ = true;
         }
   
-      } else if (className.includes('customerCompany')) { // ¸ÜµÒÀè¡Ê»ÅÆşÀè¡Ë
+      } else if (className.includes('customerCompany')) { // é¡§å®¢å…ˆï¼ˆä»•å…¥å…ˆï¼‰
         if (Number(areaCode[1]) === 5) {
           calcFlag.subtotal = true;
         }
@@ -1121,15 +1121,15 @@ $(function() {
 
       } else if (className.includes('price')) {
         if (Number(areaCode[1]) === 5) {
-          var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList); // »ÅÆşÀèÎó¤ò¼èÆÀ
-          assignValueForGlobal(row, cusComCol, '');  // »ÅÆşÀèÎó¤ÎÃÍ¤ò¥¯¥ê¥¢
+          var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList); // ä»•å…¥å…ˆåˆ—ã‚’å–å¾—
+          assignValueForGlobal(row, cusComCol, '');  // ä»•å…¥å…ˆåˆ—ã®å€¤ã‚’ã‚¯ãƒªã‚¢
         }
 
         calcFlag.subtotal = true;
 
       } else if (className.includes('conversionRate')) {
         calcFlag.subtotal = true;
-      } else if (className.includes('payoff')) { // ½şµÑ
+      } else if (className.includes('payoff')) { // å„Ÿå´
         if (Number(areaCode[1]) === 3) {
           calcFlag.depreciation = true;
         } else if (Number(areaCode[1]) === 4 || Number(areaCode[1]) === 5) {
@@ -1138,7 +1138,7 @@ $(function() {
         }
       }
 
-      // ¾®·×ºÆ·×»»»ş¤Î½èÍı
+      // å°è¨ˆå†è¨ˆç®—æ™‚ã®å‡¦ç†
       if (calcFlag.subtotal === true) {
         setCalcFlagForChangeSubtotal(Number(areaCode[1]), calcFlag)
       }
@@ -1148,7 +1148,7 @@ $(function() {
     return;
   };
 
-  // ¾®·×¤¬ÊÑ¤ï¤Ã¤¿»ş¤ÎºÆ·×»»¥Õ¥é¥°¤ÎÀßÄê
+  // å°è¨ˆãŒå¤‰ã‚ã£ãŸæ™‚ã®å†è¨ˆç®—ãƒ•ãƒ©ã‚°ã®è¨­å®š
   function setCalcFlagForChangeSubtotal(areaCode, calcFlag) {
     if (areaCode === 1) {
       calcFlag.area1TotalPrice = true;
@@ -1166,10 +1166,10 @@ $(function() {
     return;
   }
 
-  // ¥»¥ë¤Î·×»»´Ø¿ô
+  // ã‚»ãƒ«ã®è¨ˆç®—é–¢æ•°
   function calculate(calcFlag, row = null) {
     
-    // ºÆ·×»»¥Õ¥é¥°¤Î½é´ü²½
+    // å†è¨ˆç®—ãƒ•ãƒ©ã‚°ã®åˆæœŸåŒ–
     var calcManufacturing = false;
     var calcProductProfit = false;
     var calcFixedCostProfit = false;
@@ -1181,39 +1181,39 @@ $(function() {
     var calcManufacturingUnit = false;
 
     if (!row) {
-      // ¹ÔÆşÎÏ¤¬¤Ê¤¤¾ì¹ç¤Ï¹Ô´ØÏ¢¤Î½èÍı¤ò¹Ô¤ï¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+      // è¡Œå…¥åŠ›ãŒãªã„å ´åˆã¯è¡Œé–¢é€£ã®å‡¦ç†ã‚’è¡Œã‚ãªã„ã‚ˆã†ã«ã™ã‚‹
       calcFlag.subtotal = false;
       calcFlag.substitutePQ = false;
     }
 
-    // ¥Ø¥Ã¥ÀÉô
-    if (calcFlag.productionQuantity === true) { // ½şµÑ¿ô
+    // ãƒ˜ãƒƒãƒ€éƒ¨
+    if (calcFlag.productionQuantity === true) { // å„Ÿå´æ•°
       calProductionQuantity();
       calcFlag.member = true;
       calcFlag.depreciation = true;
       calcFlag.importOrTariff = true;
     }
 
-    // ÌÀºÙ¹Ô
-    if (calcFlag.subtotal === true) { // ¾®·×¡¡¢¨¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¤Î¾ì¹ç¤Ï¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¤ÎºÆ·×»»´Ø¿ô¤ÎÃæ¤Ç¸Æ¤Ó½Ğ¤¹¤Î¤ÇÉÔÍ×
+    // æ˜ç´°è¡Œ
+    if (calcFlag.subtotal === true) { // å°è¨ˆã€€â€»ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã®å ´åˆã¯ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã®å†è¨ˆç®—é–¢æ•°ã®ä¸­ã§å‘¼ã³å‡ºã™ã®ã§ä¸è¦
       calculateSubtotal(row);
     }
 
-    if (calcFlag.area1TotalQuantity === true) { // À½ÉÊÇä¾å¹ç·×¡Ê¿ôÎÌ¡Ë
+    if (calcFlag.area1TotalQuantity === true) { // è£½å“å£²ä¸Šåˆè¨ˆï¼ˆæ•°é‡ï¼‰
       calculateArea1TotalQuantity();
     }
 
-    if (calcFlag.area1TotalPrice === true) { // À½ÉÊÇä¾å¹ç·×¡Ê¶â³Û¡Ë
+    if (calcFlag.area1TotalPrice === true) { // è£½å“å£²ä¸Šåˆè¨ˆï¼ˆé‡‘é¡ï¼‰
       calculateArea1TotalPrice();
       calcProductProfit = true;
       calcSalesAmount = true;
     }
 
-    if (calcFlag.area2TotalQuantity === true) { // ¸ÇÄêÈñÇä¾å¹ç·×¡Ê¿ôÎÌ¡Ë
+    if (calcFlag.area2TotalQuantity === true) { // å›ºå®šè²»å£²ä¸Šåˆè¨ˆï¼ˆæ•°é‡ï¼‰
       calculateArea2TotalQuantity();
     }
     
-    if (calcFlag.area2TotalPrice === true) { // ¸ÇÄêÈñÇä¾å¹ç·×¡Ê¶â³Û¡Ë
+    if (calcFlag.area2TotalPrice === true) { // å›ºå®šè²»å£²ä¸Šåˆè¨ˆï¼ˆé‡‘é¡ï¼‰
       calculateArea2TotalPrice();
       calcFixedCostProfit = true;
       calcSalesAmount = true;
@@ -1235,46 +1235,46 @@ $(function() {
       calcManufacturing = true;
     }    
 
-    if (calcFlag.importOrTariff === true) { // Í¢ÆşÈñÍÑµÚ¤Ó´ØÀÇ¤ÎÃ±²Á¡¢¾®·×
+    if (calcFlag.importOrTariff === true) { // è¼¸å…¥è²»ç”¨åŠã³é–¢ç¨ã®å˜ä¾¡ã€å°è¨ˆ
       calculateImportOrTariffRows();
     }
 
-    if (calcFlag.member === true) { // ÉôºàÈñ
+    if (calcFlag.member === true) { // éƒ¨æè²»
       calculateMemberCost();
       calcMemberUnit = true;
       calcManufacturing = true;
     }
 
-    if (calcFlag.depreciation === true) { // ½şµÑÈñ
+    if (calcFlag.depreciation === true) { // å„Ÿå´è²»
       calculateDepreciationCost();
       calcDepreciationUnit = true;
       calcManufacturing = true;
     }
     
-    if (calcManufacturing === true) { // À½Â¤ÈñÍÑ
+    if (calcManufacturing === true) { // è£½é€ è²»ç”¨
       calculateManufacturingCost();
       calcManufacturingUnit = true;
       calcProductProfit = true;
     }
 
-    if (calcMemberUnit === true) { // pcsÉôºàÈñÍÑ
+    if (calcMemberUnit === true) { // pcséƒ¨æè²»ç”¨
       calculateMemberUnitCost();
     }
 
-    if (calcDepreciationUnit === true) { // pcs½şµÑÈñÍÑ
+    if (calcDepreciationUnit === true) { // pcså„Ÿå´è²»ç”¨
       calculateDepreciationUnitCost();
     }
     
-    if (calcManufacturingUnit === true) { // pcs¥³¥¹¥È
+    if (calcManufacturingUnit === true) { // pcsã‚³ã‚¹ãƒˆ
       calculateManufacturingUnitCost();
     }
     
-    if (calcProductProfit === true) { // À½ÉÊÍø±×¡¢À½ÉÊÍø±×Î¨
+    if (calcProductProfit === true) { // è£½å“åˆ©ç›Šã€è£½å“åˆ©ç›Šç‡
       calculateProductProfit();
       calcProfit = true;
     }
 
-    if (calcFixedCostProfit === true) { // ¸ÇÄêÈñÍø±×¡¢¸ÇÄêÈñÍø±×Î¨
+    if (calcFixedCostProfit === true) { // å›ºå®šè²»åˆ©ç›Šã€å›ºå®šè²»åˆ©ç›Šç‡
       calculateFixedCostProfit();
       calcProfit = true;
     }
@@ -1295,7 +1295,7 @@ $(function() {
         
   }
   
-  // ½şµÑ¿ô¤ÎºÆ·×»»
+  // å„Ÿå´æ•°ã®å†è¨ˆç®—
   function calProductionQuantity() {
     var areaClass = 'area1';
     // var divisionClass = 'detail ' + areaClass + ' divisionSubject';
@@ -1313,7 +1313,7 @@ $(function() {
     for (var i = 0; i < classElements.length; i++) {
       var classRow = classElements[i].row;
       var classCol = classElements[i].col;
-      var mainProductName = '1:ËÜ²Ù';
+      var mainProductName = '1:æœ¬è·';
       if (cellValue[classRow][classCol] == mainProductName) {
         var quantityRow = quantityElements[i].row;
         var quantityCol = quantityElements[i].col;
@@ -1325,13 +1325,13 @@ $(function() {
     var PQclass = 'productionquantity';
     var PQCell = getElementsForClassName(PQclass, checkList);
 
-    // ½şµÑ¿ô¤ÎÆşÎÏ¥»¥ë°ÌÃÖ¤ò¼èÆÀ
+    // å„Ÿå´æ•°ã®å…¥åŠ›ã‚»ãƒ«ä½ç½®ã‚’å–å¾—
     var PQRow = PQCell[0].row;
     var PQCol = PQCell[0].col;
 
     var beforePQ = cellValue[PQRow][PQCol];
 
-    // ¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤ÎÁàºî
+    // ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã®æ“ä½œ
     assignValueForGlobal(PQRow, PQCol, productionQuantity);
 
     setQuantityForPartsAndOthers(beforePQ, productionQuantity);
@@ -1339,7 +1339,7 @@ $(function() {
     return;
   }
 
-  // pcsÉôºàÈñÍÑ
+  // pcséƒ¨æè²»ç”¨
   function calculateMemberUnitCost() {
     var checkList = cellClass;
 
@@ -1352,7 +1352,7 @@ $(function() {
     return;
   }
 
-  // pcs½şµÑÈñÍÑ
+  // pcså„Ÿå´è²»ç”¨
   function calculateDepreciationUnitCost() {
     var checkList = cellClass;
 
@@ -1365,7 +1365,7 @@ $(function() {
     return;
   }
 
-  // pcs¥³¥¹¥È
+  // pcsã‚³ã‚¹ãƒˆ
   function calculateManufacturingUnitCost() {
     var checkList = cellClass;
 
@@ -1378,7 +1378,7 @@ $(function() {
     return;
   }
 
-  // ¥Õ¥Ã¥¿Éô¤ÎÃ±²ÁºÆ·×»»
+  // ãƒ•ãƒƒã‚¿éƒ¨ã®å˜ä¾¡å†è¨ˆç®—
   function calculateUnitCost(costCell, unitCell, quantityCell) {
     var costRow = costCell[0].row;
     var costCol = costCell[0].col;
@@ -1397,30 +1397,30 @@ $(function() {
       unit = '\xA5' + numberFormat(unit, 2);
     }
 
-    // ¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤ÎÁàºî
+    // ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã®æ“ä½œ
     assignValueForGlobal(unitRow, unitCol, unit);
 
     return;
   }
 
-  // ÉôºàÈñµÚ¤Ó¤½¤ÎÂ¾ÈñÍÑ¤Î¿ôÎÌÀßÄê
+  // éƒ¨æè²»åŠã³ãã®ä»–è²»ç”¨ã®æ•°é‡è¨­å®š
   function setQuantityForPartsAndOthers(beforePQ, productionQuantity = null) {
     var checkList = cellClass;
 
     if (productionQuantity === null) {
-      // ½şµÑ¿ô¤¬Í¿¤¨¤é¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤Ï¥»¥ë°ÌÃÖ¤«¤é½şµÑ¿ô¤ò¼èÆÀ¤¹¤ë
+      // å„Ÿå´æ•°ãŒä¸ãˆã‚‰ã‚Œã¦ã„ãªã„å ´åˆã¯ã‚»ãƒ«ä½ç½®ã‹ã‚‰å„Ÿå´æ•°ã‚’å–å¾—ã™ã‚‹
 
       var PQclass = 'productionquantity';
       var PQCell = getElementsForClassName(PQclass, checkList);
 
-      // ½şµÑ¿ô¤ÎÆşÎÏ¥»¥ë°ÌÃÖ¤ò¼èÆÀ
+      // å„Ÿå´æ•°ã®å…¥åŠ›ã‚»ãƒ«ä½ç½®ã‚’å–å¾—
       var PQRow = PQCell[0].row;
       var PQCol = PQCell[0].col;
 
       var productionQuantity = cellValue[PQRow][PQCol];
     }
 
-    // ¥¨¥ê¥¢4¤Î½èÍı
+    // ã‚¨ãƒªã‚¢4ã®å‡¦ç†
     var areaClass = 'area4';
     var subjectClass = 'detail ' + areaClass + ' divisionSubject';
     var itemClass = 'detail ' + areaClass + ' classItem';
@@ -1430,23 +1430,23 @@ $(function() {
     var itemElements = getElementsForClassName(itemClass, checkList);
     var quantityElements = getElementsForClassName(quantityClass, checkList);
 
-    // ¿ôÎÌÂåÆş½èÍı
+    // æ•°é‡ä»£å…¥å‡¦ç†
     for (var i = 0; i < subjectElements.length; i++) {
       var row = subjectElements[i].row;
       var subCol = subjectElements[i].col;
       var iteCol = itemElements[i].col;
       if (cellValue[row][subCol] && cellValue[row][iteCol]) {
-        // »ÅÆş²ÊÌÜ¤È»ÅÆşÉôÉÊ¤¬Î¾ÊıÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ï¿ôÎÌ¤Ë½şµÑ¿ô¤ò¥»¥Ã¥È¤¹¤ë
+        // ä»•å…¥ç§‘ç›®ã¨ä»•å…¥éƒ¨å“ãŒä¸¡æ–¹å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯æ•°é‡ã«å„Ÿå´æ•°ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
         var quaCol = quantityElements[i].col;
 
-        if (beforePQ == cellValue[row][quaCol]) { // ¿ôÎÌ¤¬ÊÑ¹¹Á°¤Î½şµÑ¿ô¤È°ìÃ×¤¹¤ë¾ì¹ç¤ÏÂåÆş
+        if (beforePQ == cellValue[row][quaCol]) { // æ•°é‡ãŒå¤‰æ›´å‰ã®å„Ÿå´æ•°ã¨ä¸€è‡´ã™ã‚‹å ´åˆã¯ä»£å…¥
           cellValue[row][quaCol] = productionQuantity;
           calculateSubtotal(row);
         }
       }
     }
 
-    // ¥¨¥ê¥¢5¤Î½èÍı
+    // ã‚¨ãƒªã‚¢5ã®å‡¦ç†
     var areaClass = 'area5';
     var subjectClass = 'detail ' + areaClass + ' divisionSubject';
     var itemClass = 'detail ' + areaClass + ' classItem';
@@ -1458,22 +1458,22 @@ $(function() {
     var itemElements = getElementsForClassName(itemClass, checkList);
     var quantityElements = getElementsForClassName(quantityClass, checkList);
 
-    // ¿ôÎÌÂåÆş½èÍı
+    // æ•°é‡ä»£å…¥å‡¦ç†
     for (var i = 0; i < subjectElements.length; i++) {
       var row = subjectElements[i].row;
       var subCol = subjectElements[i].col;
       var iteCol = itemElements[i].col;
       if (cellValue[row][subCol] && cellValue[row][iteCol]) {
-        // »ÅÆş²ÊÌÜ¤È»ÅÆşÉôÉÊ¤¬Î¾ÊıÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ï¿ôÎÌ¤Ë½şµÑ¿ô¤ò¥»¥Ã¥È¤¹¤ë
+        // ä»•å…¥ç§‘ç›®ã¨ä»•å…¥éƒ¨å“ãŒä¸¡æ–¹å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯æ•°é‡ã«å„Ÿå´æ•°ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
         var quaCol = quantityElements[i].col;
-        if (beforePQ == cellValue[row][quaCol]) { // ¿ôÎÌ¤¬ÊÑ¹¹Á°¤Î½şµÑ¿ô¤È°ìÃ×¤¹¤ë¾ì¹ç¤ÏÂåÆş
+        if (beforePQ == cellValue[row][quaCol]) { // æ•°é‡ãŒå¤‰æ›´å‰ã®å„Ÿå´æ•°ã¨ä¸€è‡´ã™ã‚‹å ´åˆã¯ä»£å…¥
           cellValue[row][quaCol] = productionQuantity;
           calculateSubtotal(row);
         }
       }
     }
 
-    // ¥Õ¥Ã¥¿Éô¤Î½èÍı
+    // ãƒ•ãƒƒã‚¿éƒ¨ã®å‡¦ç†
     var MEQcell = getElementsForClassName('member_quantity', checkList);
     cellValue[MEQcell[0].row][MEQcell[0].col] = productionQuantity;
 
@@ -1486,7 +1486,7 @@ $(function() {
     return;
   }
 
-  // ÌÀºÙ¹Ô¤Î¿ôÎÌ¤Ë½şµÑ¿ô¤òÂåÆş¤¹¤ë
+  // æ˜ç´°è¡Œã®æ•°é‡ã«å„Ÿå´æ•°ã‚’ä»£å…¥ã™ã‚‹
   function substitutePQForDetailQuantity(row) {
     var checkList = cellClass;
 
@@ -1495,7 +1495,7 @@ $(function() {
     var quaCol = getColumnForRowAndClassName(row, 'quantity', checkList);
 
     if (cellValue[row][subCol] && cellValue[row][iteCol]) {
-      // »ÅÆş²ÊÌÜ¤È»ÅÆşÉôÉÊ¤¬Î¾ÊıÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ï¿ôÎÌ¤Ë½şµÑ¿ô¤ò¥»¥Ã¥È¤¹¤ë
+      // ä»•å…¥ç§‘ç›®ã¨ä»•å…¥éƒ¨å“ãŒä¸¡æ–¹å…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯æ•°é‡ã«å„Ÿå´æ•°ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
       var PQElement = getElementsForClassName('productionquantity', checkList);
       var PQRow = PQElement[0].row;
       var PQCol = PQElement[0].col;
@@ -1509,24 +1509,24 @@ $(function() {
     calculateSubtotal(row);
   }
 
-  // ÂĞ¾İ¥¨¥ê¥¢¤Î¹ç·×¤Î½èÍı
+  // å¯¾è±¡ã‚¨ãƒªã‚¢ã®åˆè¨ˆã®å‡¦ç†
   function setQuantityCalculateFlag(areaCode, calcFlag) {
     if (areaCode === 1) {
-      // À½ÉÊÇä¾å¹ç·×¡Ê¿ôÎÌ¡Ë¤ÎºÆ·×»»
+      // è£½å“å£²ä¸Šåˆè¨ˆï¼ˆæ•°é‡ï¼‰ã®å†è¨ˆç®—
       calcFlag.area1TotalQuantity = true;
 
-      // ½şµÑ¿ô¤ÎºÆ·×»»
+      // å„Ÿå´æ•°ã®å†è¨ˆç®—
       calcFlag.productionQuantity = true;
 
     } else if (areaCode === 2) {
-      // ¸ÇÄêÈñÇä¾å¹ç·×¡Ê¿ôÎÌ¡Ë¤ÎºÆ·×»»
+      // å›ºå®šè²»å£²ä¸Šåˆè¨ˆï¼ˆæ•°é‡ï¼‰ã®å†è¨ˆç®—
       calcFlag.area2TotalQuantity = true
     }
     return;
   }
 
    /**
-   * ÌÀºÙ¹Ô¤Î¾®·×¡Ê¤Ş¤¿¤Ï·×²è¸¶²Á¡Ë¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * æ˜ç´°è¡Œã®å°è¨ˆï¼ˆã¾ãŸã¯è¨ˆç”»åŸä¾¡ï¼‰ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateSubtotal(row) {
@@ -1551,7 +1551,7 @@ $(function() {
       var subtotal = '';
     }
 
-    // ÃÍ¤ÎÂåÆş
+    // å€¤ã®ä»£å…¥
     assignValueForGlobal(row, subtotalCol, subtotal);
 
     return subtotal;
@@ -1559,7 +1559,7 @@ $(function() {
   
   
    /**
-   * À½ÉÊÇä¾å¹ç·×¡Ê¿ôÎÌ¡Ë¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * è£½å“å£²ä¸Šåˆè¨ˆï¼ˆæ•°é‡ï¼‰ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateArea1TotalQuantity() {
@@ -1577,7 +1577,7 @@ $(function() {
 
     var totalQuantityClassName = 'receive_p_totalquantity';
 
-    // ¥«¥ó¥Ş¶èÀÚ¤êÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šæ–‡å­—åˆ—ã«å¤‰æ›
     totalQuantity = numberFormat(totalQuantity, 0);
 
     assignValueForClassNameCell(totalQuantityClassName, totalQuantity);
@@ -1585,7 +1585,7 @@ $(function() {
 
 
    /**
-   * À½ÉÊÇä¾å¹ç·×¡Ê¶â³Û¡Ë¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * è£½å“å£²ä¸Šåˆè¨ˆï¼ˆé‡‘é¡ï¼‰ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateArea1TotalPrice() {
@@ -1599,24 +1599,24 @@ $(function() {
     for (var i = 0; i < subtotalCells.length; i++) {
       row = subtotalCells[i].row;
       col = subtotalCells[i].col;
-      // ¾®·×Îó¤ÎÃÍ¤ò¿ôÃÍ¤ËÊÑ´¹¤¹¤ë
+      // å°è¨ˆåˆ—ã®å€¤ã‚’æ•°å€¤ã«å¤‰æ›ã™ã‚‹
       subtotal = Number(cellValue[row][col].replace('\xA5', '').split(',').join(''));
       totalPrice += subtotal;
     }
 
-    var totalPriceClassName = 'receive_p_totalprice'; // À½ÉÊÇä¾å¹ç·×¡Ê¶â³Û¡Ë¤Î¥»¥ëÌ¾¾Î
-    var productTotalPriceClassName = 'product_totalprice'; // À½ÉÊÇä¾å¹â¤Î¥»¥ëÌ¾¾Î
+    var totalPriceClassName = 'receive_p_totalprice'; // è£½å“å£²ä¸Šåˆè¨ˆï¼ˆé‡‘é¡ï¼‰ã®ã‚»ãƒ«åç§°
+    var productTotalPriceClassName = 'product_totalprice'; // è£½å“å£²ä¸Šé«˜ã®ã‚»ãƒ«åç§°
 
-    // ·×»»·ë²Ì¤ò¥«¥ó¥Ş¶èÀÚ¤ê¡¢±ß¥Ş¡¼¥¯ÉÕ¤­¤Î½ñ¼°¤ËÊÑ´¹
+    // è¨ˆç®—çµæœã‚’ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã€å††ãƒãƒ¼ã‚¯ä»˜ãã®æ›¸å¼ã«å¤‰æ›
     totalPrice = totalPrice != 0 ? '\xA5' + numberFormat(totalPrice, 0) : '';
 
-    // ÃÍ¤ÎÂåÆş
+    // å€¤ã®ä»£å…¥
     assignValueForClassNameCell(totalPriceClassName, totalPrice);
     assignValueForClassNameCell(productTotalPriceClassName, totalPrice);
   }
 
    /**
-   * ¸ÇÄêÈñÇä¾å¹ç·×¡Ê¿ôÎÌ¡Ë¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * å›ºå®šè²»å£²ä¸Šåˆè¨ˆï¼ˆæ•°é‡ï¼‰ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateArea2TotalQuantity() {
@@ -1634,14 +1634,14 @@ $(function() {
 
     var totalQuantityClassName = 'receive_f_totalquantity';
 
-    // ¥«¥ó¥Ş¶èÀÚ¤êÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šæ–‡å­—åˆ—ã«å¤‰æ›
     totalQuantity = numberFormat(totalQuantity, 0);
 
     assignValueForClassNameCell(totalQuantityClassName, totalQuantity);
   }
 
   /**
-   * ¸ÇÄêÈñÇä¾å¹ç·×¡Ê¶â³Û¡Ë¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * å›ºå®šè²»å£²ä¸Šåˆè¨ˆï¼ˆé‡‘é¡ï¼‰ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateArea2TotalPrice() {
@@ -1659,18 +1659,18 @@ $(function() {
       totalPrice += subtotal;
     }
 
-    var totalPriceClassName = 'receive_f_totalprice'; // ¸ÇÄêÈñÇä¾å¹ç·×¡Ê¶â³Û¡Ë¤Î¥»¥ëÌ¾¾Î
-    var fixedTotalPriceClassName = 'fixedcost_totalprice'; // ¸ÇÄêÈñÇä¾å¹â¤Î¥»¥ëÌ¾¾Î
+    var totalPriceClassName = 'receive_f_totalprice'; // å›ºå®šè²»å£²ä¸Šåˆè¨ˆï¼ˆé‡‘é¡ï¼‰ã®ã‚»ãƒ«åç§°
+    var fixedTotalPriceClassName = 'fixedcost_totalprice'; // å›ºå®šè²»å£²ä¸Šé«˜ã®ã‚»ãƒ«åç§°
 
     totalPrice = totalPrice != 0 ? '\xA5' + numberFormat(totalPrice, 0) : '';
 
-    // ÃÍ¤ÎÂåÆş
+    // å€¤ã®ä»£å…¥
     assignValueForClassNameCell(totalPriceClassName, totalPrice);
     assignValueForClassNameCell(fixedTotalPriceClassName, totalPrice);
   }
 
   /**
-   * ¸ÇÄêÈñ¾®·×¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * å›ºå®šè²»å°è¨ˆã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateArea3TotalCost() {
@@ -1696,7 +1696,7 @@ $(function() {
   }
 
   /**
-   * ½şµÑÂĞ¾İ³°¾®·×¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * å„Ÿå´å¯¾è±¡å¤–å°è¨ˆã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateArea3NotDepreciationCost() {
@@ -1720,24 +1720,24 @@ $(function() {
       row = subtotalCells[i].row;
       payCol = payoffCells[i].col;
       subCol = subtotalCells[i].col;
-      if (cellValue[row][payCol] != '¡û') {
+      if (cellValue[row][payCol] != 'â—‹') {
         subtotal = Number(cellValue[row][subCol].replace('\xA5', '').split(',').join(''));
         totalCost += subtotal;
       }
     }
 
-    var totalCostClassName = 'order_f_cost_not_depreciation'; // ½şµÑÂĞ¾İ³°¾®·×¤Î¥»¥ëÌ¾¾Î
-    var costNotDepClassName = 'cost_not_depreciation'; // ½şµÑÂĞ¾İ³°¸ÇÄêÈñ¤Î¥»¥ëÌ¾¾Î
+    var totalCostClassName = 'order_f_cost_not_depreciation'; // å„Ÿå´å¯¾è±¡å¤–å°è¨ˆã®ã‚»ãƒ«åç§°
+    var costNotDepClassName = 'cost_not_depreciation'; // å„Ÿå´å¯¾è±¡å¤–å›ºå®šè²»ã®ã‚»ãƒ«åç§°
 
     totalCost = totalCost != 0 ? '\xA5' + numberFormat(totalCost, 0) : '';
 
-    // ÃÍ¤ÎÂåÆş
+    // å€¤ã®ä»£å…¥
     assignValueForClassNameCell(totalCostClassName, totalCost);
     assignValueForClassNameCell(costNotDepClassName, totalCost);
   }
 
   /**
-   * Í¢ÆşÈñÍÑµÚ¤Ó´ØÀÇ¤ÎÃ±²Á¡¢¾®·×¤ò·×»»¤¹¤ë¡Ê¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ë»ÈÍÑ¡Ë
+   * è¼¸å…¥è²»ç”¨åŠã³é–¢ç¨ã®å˜ä¾¡ã€å°è¨ˆã‚’è¨ˆç®—ã™ã‚‹ï¼ˆãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆã«ä½¿ç”¨ï¼‰
    * 
    */
   function calculateImportOrTariffRows() {
@@ -1761,12 +1761,12 @@ $(function() {
 
     for (var i = 0; i < checkList.length; i++) {
       targetFlag = false;
-      if (areaCode = checkList[i].className.match(subjectClassNamePattern)) { // »ÅÆş²ÊÌÜ¹Ô¤Î¸¡º÷
+      if (areaCode = checkList[i].className.match(subjectClassNamePattern)) { // ä»•å…¥ç§‘ç›®è¡Œã®æ¤œç´¢
         checkRow = checkList[i].row;
         checkCol = checkList[i].col;
-        if (cellValue[checkRow][checkCol].match(tariffTargetPattern)) { // »ÅÆş²ÊÌÜ¤ÎÃÍ¤¬¹ç·×ÂĞ¾İ¤Î¾ì¹ç
+        if (cellValue[checkRow][checkCol].match(tariffTargetPattern)) { // ä»•å…¥ç§‘ç›®ã®å€¤ãŒåˆè¨ˆå¯¾è±¡ã®å ´åˆ
           ItemCol = getColumnForRowAndClassName(checkRow, 'classItem', checkList);
-          if (cellValue[checkRow][ItemCol]) { // »ÅÆşÉôÉÊ¤Î¶õÃÍ¥Á¥§¥Ã¥¯
+          if (cellValue[checkRow][ItemCol]) { // ä»•å…¥éƒ¨å“ã®ç©ºå€¤ãƒã‚§ãƒƒã‚¯
             subtotalCol = getColumnForRowAndClassName(checkRow, 'subtotal', checkList);
             sum += Number(cellValue[checkRow][subtotalCol].replace('\xA5', '').split(',').join(''));
           }
@@ -1774,33 +1774,33 @@ $(function() {
       }
     }
 
-    // ¤½¤ÎÂ¾ÈñÍÑ¤Î»ÅÆş²ÊÌÜ¥»¥ë¤Î¾ğÊó¤ò¼èÆÀ
+    // ãã®ä»–è²»ç”¨ã®ä»•å…¥ç§‘ç›®ã‚»ãƒ«ã®æƒ…å ±ã‚’å–å¾—
     var subjectClassName = 'detail area5 divisionSubject';
     var subjectElements = getElementsForClassName(subjectClassName, checkList);
 
     var importRows = [];
     var tariffRows = [];
 
-    // Í¢ÆşÈñÍÑ¡¢´ØÀÇ¤ÎÆşÎÏ¹Ô¼èÆÀ
+    // è¼¸å…¥è²»ç”¨ã€é–¢ç¨ã®å…¥åŠ›è¡Œå–å¾—
     for (var i = 0; i < subjectElements.length; i++) {
       var targetRow = subjectElements[i].row;
       var subjectCol = subjectElements[i].col;
-      if (cellValue[targetRow][subjectCol].match(chargeSubjectPattern)) { // ¥Á¥ã¡¼¥¸¤Î¾ì¹ç
+      if (cellValue[targetRow][subjectCol].match(chargeSubjectPattern)) { // ãƒãƒ£ãƒ¼ã‚¸ã®å ´åˆ
         var itemCol = getColumnForRowAndClassName(targetRow, 'classItem', checkList);
-        if (cellValue[targetRow][itemCol].match(importItemPattern)) { // Í¢ÆşÈñÍÑ¤Î¾ì¹ç
+        if (cellValue[targetRow][itemCol].match(importItemPattern)) { // è¼¸å…¥è²»ç”¨ã®å ´åˆ
           importRows.push(targetRow);
-        } else if (cellValue[targetRow][itemCol].match(tariffItemPattern)) { // ´ØÀÇ¤Î¾ì¹ç
+        } else if (cellValue[targetRow][itemCol].match(tariffItemPattern)) { // é–¢ç¨ã®å ´åˆ
           tariffRows.push(targetRow);
         }       
       }
     }
 
-    // ´ØÀÇ¹Ô¤Î½èÍı
+    // é–¢ç¨è¡Œã®å‡¦ç†
     var tariffTotal = tariffRows.reduce(function(total, row) {
       var percentCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
       var percent = (isNaN(cellValue[row][percentCol]) === false) ? Number(cellValue[row][percentCol]) / 100 : 0;
 
-      if (percent) { // ¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤ÏÃ±²Á¤Î·×»»
+      if (percent) { // ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯å˜ä¾¡ã®è¨ˆç®—
         var quantityCol = getColumnForRowAndClassName(row, 'quantity', checkList);
         var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
         var quantity = (isNaN(cellValue[row][quantityCol]) === false) ? Number(cellValue[row][quantityCol]) : 0;
@@ -1809,11 +1809,11 @@ $(function() {
         } else {
           var price = '';
         }
-        // Ã±²Á¤ÎÂåÆş
+        // å˜ä¾¡ã®ä»£å…¥
         assignValueForGlobal(row, priceCol, price);
       }
 
-      // ¾®·×¤ÎÂåÆş¡¢¼èÆÀ
+      // å°è¨ˆã®ä»£å…¥ã€å–å¾—
       var subtotal = calculateSubtotal(row);
       subtotal = Number(subtotal.replace('\xA5', '').split(',').join(''));
 
@@ -1821,12 +1821,12 @@ $(function() {
       
     }, sum);
 
-    // Í¢ÆşÈñÍÑ¹Ô¤Î½èÍı
+    // è¼¸å…¥è²»ç”¨è¡Œã®å‡¦ç†
     importRows.forEach(function(row) {
       var percentCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
       var percent = (isNaN(cellValue[row][percentCol]) === false) ? Number(cellValue[row][percentCol]) / 100 : 0;
 
-      if (percent) { // ¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤ÏÃ±²Á¤Î·×»»
+      if (percent) { // ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯å˜ä¾¡ã®è¨ˆç®—
         var quantityCol = getColumnForRowAndClassName(row, 'quantity', checkList);
         var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
         var quantity = (isNaN(cellValue[row][quantityCol]) === false) ? Number(cellValue[row][quantityCol]) : 0;
@@ -1835,11 +1835,11 @@ $(function() {
         } else {
           var price = '';
         }
-        // Ã±²Á¤ÎÂåÆş
+        // å˜ä¾¡ã®ä»£å…¥
         assignValueForGlobal(row, priceCol, price);
       }
 
-      // ¾®·×¤ÎºÆ·×»»¡¢ÂåÆş
+      // å°è¨ˆã®å†è¨ˆç®—ã€ä»£å…¥
       calculateSubtotal(row);
     });
 
@@ -1847,7 +1847,7 @@ $(function() {
   }
 
   /**
-   * ÉôºàÈñ¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * éƒ¨æè²»ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateMemberCost() {
@@ -1859,17 +1859,17 @@ $(function() {
       if (value.className.match(targetClassNamePattern)) {
         var targetRow = value.row;
         var payoffCol = getColumnForRowAndClassName(targetRow, 'payoff', checkList);
-        if (cellValue[targetRow][payoffCol] !== '¡û') {
+        if (cellValue[targetRow][payoffCol] !== 'â—‹') {
           add = Number(cellValue[targetRow][value.col].replace('\xA5', '').split(',').join(''));
         }
       }
       return sum + add;
     }, 0);
 
-    // ½ñ¼°ÀßÄê
+    // æ›¸å¼è¨­å®š
     var total = '\xA5' + numberFormat(total, 0);
 
-    // ÉôºàÈñ¤ÎÂåÆş
+    // éƒ¨æè²»ã®ä»£å…¥
     assignValueForClassNameCell('membercost', total);
 
     return;
@@ -1877,7 +1877,7 @@ $(function() {
 
 
   /**
-   * ½şµÑÈñ¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * å„Ÿå´è²»ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateDepreciationCost() {
@@ -1889,24 +1889,24 @@ $(function() {
       if (value.className.match(targetClassNamePattern)) {
         var targetRow = value.row;
         var payoffCol = getColumnForRowAndClassName(targetRow, 'payoff', checkList);
-        if (cellValue[targetRow][payoffCol] === '¡û') {
+        if (cellValue[targetRow][payoffCol] === 'â—‹') {
           add = Number(cellValue[targetRow][value.col].replace('\xA5', '').split(',').join(''));
         }
       }
       return sum + add;
     }, 0);
 
-    // ½ñ¼°ÀßÄê
+    // æ›¸å¼è¨­å®š
     total = '\xA5' + numberFormat(total, 0);
 
-    // ½şµÑÈñ¤ÎÂåÆş
+    // å„Ÿå´è²»ã®ä»£å…¥
     assignValueForClassNameCell('depreciation_cost', total);
     
     return;
   }
 
   /**
-   * À½Â¤ÈñÍÑ¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * è£½é€ è²»ç”¨ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateManufacturingCost() {
@@ -1924,17 +1924,17 @@ $(function() {
 
     var manufacturingCost = memberCost + depreciationCost;
 
-    // ½ñ¼°ÀßÄê
+    // æ›¸å¼è¨­å®š
     manufacturingCost = '\xA5' + numberFormat(manufacturingCost, 0);
 
-    // À½Â¤Èñ¤ÎÂåÆş
+    // è£½é€ è²»ã®ä»£å…¥
     assignValueForClassNameCell('manufacturingcost', manufacturingCost);
 
     return;
   }
 
   /**
-   * À½ÉÊÍø±×¤ÈÀ½ÉÊÍø±×Î¨¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * è£½å“åˆ©ç›Šã¨è£½å“åˆ©ç›Šç‡ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateProductProfit() {
@@ -1953,21 +1953,21 @@ $(function() {
     var profit = total - cost;
     var profitRate = profit / total;
 
-    // ½ñ¼°ÀßÄê
+    // æ›¸å¼è¨­å®š
     profit = '\xA5' + numberFormat(profit, 0);
     profitRate = numberFormat(profitRate * 100, 2, '') + '%';
 
-    // À½ÉÊÍø±×¤ÎÂåÆş
+    // è£½å“åˆ©ç›Šã®ä»£å…¥
     assignValueForClassNameCell('product_profit', profit);
 
-    // À½ÉÊÍø±×Î¨¤ÎÂåÆş
+    // è£½å“åˆ©ç›Šç‡ã®ä»£å…¥
     assignValueForClassNameCell('product_profit_rate', profitRate);
 
     return;
   }
   
   /**
-   * ¸ÇÄêÈñÍø±×¤È¸ÇÄêÈñÍø±×Î¨¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * å›ºå®šè²»åˆ©ç›Šã¨å›ºå®šè²»åˆ©ç›Šç‡ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateFixedCostProfit() {
@@ -1986,14 +1986,14 @@ $(function() {
     var profit = total - cost;
     var profitRate = profit / total;
 
-    // ½ñ¼°ÀßÄê
+    // æ›¸å¼è¨­å®š
     profit = '\xA5' + numberFormat(profit, 0);
     profitRate = numberFormat(profitRate * 100, 2, '') + '%';
 
-    // ¸ÇÄêÈñÍø±×¤ÎÂåÆş
+    // å›ºå®šè²»åˆ©ç›Šã®ä»£å…¥
     assignValueForClassNameCell('fixedcost_profit', profit);
 
-    // ¸ÇÄêÈñÍø±×Î¨¤ÎÂåÆş
+    // å›ºå®šè²»åˆ©ç›Šç‡ã®ä»£å…¥
     assignValueForClassNameCell('fixedcost_profit_rate', profitRate);
 
     return;
@@ -2001,7 +2001,7 @@ $(function() {
 
 
   /**
-   * ÁíÇä¾å¹â¡¢´ÖÀÜÀ½Â¤·ĞÈñ¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * ç·å£²ä¸Šé«˜ã€é–“æ¥è£½é€ çµŒè²»ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateSalesAmount() {
@@ -2024,14 +2024,14 @@ $(function() {
     var salesAmount = product + fixed;
     var indirectCost = Math.floor(salesAmount * standardRate);
 
-    // ½ñ¼°ÀßÄê
+    // æ›¸å¼è¨­å®š
     salesAmount = '\xA5' + numberFormat(salesAmount, 0);
     indirectCost = '\xA5' + numberFormat(indirectCost, 0);
 
-    // ÁíÇä¾å¹â¤ÎÂåÆş
+    // ç·å£²ä¸Šé«˜ã®ä»£å…¥
     assignValueForClassNameCell('salesamount', salesAmount);
 
-    // ´ÖÀÜÀ½Â¤·ĞÈñ¤ÎÂåÆş
+    // é–“æ¥è£½é€ çµŒè²»ã®ä»£å…¥
     assignValueForClassNameCell('indirect_cost', indirectCost);
 
     return;
@@ -2039,7 +2039,7 @@ $(function() {
 
 
   /**
-   * Çä¾åÁíÍø±×¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * å£²ä¸Šç·åˆ©ç›Šã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateProfit() {
@@ -2057,17 +2057,17 @@ $(function() {
 
     var profit = product + fixed;
 
-    // ½ñ¼°ÀßÄê
+    // æ›¸å¼è¨­å®š
     profit = '\xA5' + numberFormat(profit, 0);
 
-    // Çä¾åÁíÍø±×¤ÎÂåÆş
+    // å£²ä¸Šç·åˆ©ç›Šã®ä»£å…¥
     assignValueForClassNameCell('profit', profit);
 
     return;
   }
 
   /**
-   * ±Ä¶ÈÍø±×¡¢±Ä¶ÈÍø±×Î¨¡¢¡ÊÇä¾å¡ËÍø±×Î¨¤ÎºÆ·×»»¤ò¹Ô¤¦
+   * å–¶æ¥­åˆ©ç›Šã€å–¶æ¥­åˆ©ç›Šç‡ã€ï¼ˆå£²ä¸Šï¼‰åˆ©ç›Šç‡ã®å†è¨ˆç®—ã‚’è¡Œã†
    * 
    */
   function calculateOperatingProfit() {
@@ -2091,30 +2091,30 @@ $(function() {
     var opeProfitRate = opeProfit / salesAmount;
     var profitRate = profit / salesAmount;
 
-    // ½ñ¼°ÀßÄê
+    // æ›¸å¼è¨­å®š
     opeProfit = '\xA5' + numberFormat(opeProfit, 0);
     opeProfitRate = numberFormat(opeProfitRate * 100, 2, '') + '%';
     profitRate = numberFormat(profitRate * 100, 2, '') + '%';
 
-    // ±Ä¶ÈÍø±×¤ÎÂåÆş
+    // å–¶æ¥­åˆ©ç›Šã®ä»£å…¥
     assignValueForClassNameCell('operating_profit', opeProfit);
 
-    // ±Ä¶ÈÍø±×Î¨¤ÎÂåÆş
+    // å–¶æ¥­åˆ©ç›Šç‡ã®ä»£å…¥
     assignValueForClassNameCell('operating_profit_rate', opeProfitRate);
 
-    // ¡ÊÇä¾å¡ËÍø±×Î¨¤ÎÂåÆş
+    // ï¼ˆå£²ä¸Šï¼‰åˆ©ç›Šç‡ã®ä»£å…¥
     assignValueForClassNameCell('profit_rate', profitRate);
 
     return;
   }
 
-  //----------------------------------------(´ğËÜ½èÍı´Ø¿ô)-----------------------------------------------
+  //----------------------------------------(åŸºæœ¬å‡¦ç†é–¢æ•°)-----------------------------------------------
 
   /**
-   * ÆÃÄê¤Î¥¯¥é¥¹Ì¾¤ò»ı¤Ä¥»¥ë¤ËÃÍ¤òÂåÆş¤¹¤ë
+   * ç‰¹å®šã®ã‚¯ãƒ©ã‚¹åã‚’æŒã¤ã‚»ãƒ«ã«å€¤ã‚’ä»£å…¥ã™ã‚‹
    * 
-   * @param {string} className ¥¯¥é¥¹Ì¾
-   * @param value ÂåÆş¤¹¤ë¥»¥ë¤ÎÃÍ
+   * @param {string} className ã‚¯ãƒ©ã‚¹å
+   * @param value ä»£å…¥ã™ã‚‹ã‚»ãƒ«ã®å€¤
    * 
    */
   function assignValueForClassNameCell(className, value) {
@@ -2126,12 +2126,12 @@ $(function() {
   }
 
   /**
-   * ¥»¥ë¤ÎÃÍ¤ò¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤Î¥»¥ëÃÍ¥ª¥Ö¥¸¥§¥¯¥È¤ËÂåÆş¤¹¤ë
-   * ¢¨ cellVAlueµÚ¤ÓcellData¤òÅö¥Õ¥¡¥¤¥ëÆâ½èÍı¤Î¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤È¤·¤Æ»ÈÍÑ
+   * ã‚»ãƒ«ã®å€¤ã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã®ã‚»ãƒ«å€¤ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ä»£å…¥ã™ã‚‹
+   * â€» cellVAlueåŠã³cellDataã‚’å½“ãƒ•ã‚¡ã‚¤ãƒ«å†…å‡¦ç†ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã¨ã—ã¦ä½¿ç”¨
    * 
-   * @param {integer} row ÂåÆş¤¹¤ë¹Ô
-   * @param {integer} col ÂåÆş¤¹¤ëÎó
-   * @param value ÂåÆş¤¹¤ë¥»¥ë¤ÎÃÍ
+   * @param {integer} row ä»£å…¥ã™ã‚‹è¡Œ
+   * @param {integer} col ä»£å…¥ã™ã‚‹åˆ—
+   * @param value ä»£å…¥ã™ã‚‹ã‚»ãƒ«ã®å€¤
    * 
    */
   function assignValueForGlobal(row, col, value) {
@@ -2141,41 +2141,41 @@ $(function() {
   }
   
   /**
-   * ÃÍ¤¬¶õ¤«¤É¤¦¤«È½Äê¤ò¹Ô¤¦
+   * å€¤ãŒç©ºã‹ã©ã†ã‹åˆ¤å®šã‚’è¡Œã†
    * 
-   * @param value È½Äê¤¹¤ëÃÍ
+   * @param value åˆ¤å®šã™ã‚‹å€¤
    * 
-   * @return {boolean} ¶õÈ½Äê·ë²Ì¡Êtrue:¶õ false:¶õ¤Ç¤Ê¤¤¡Ë
+   * @return {boolean} ç©ºåˆ¤å®šçµæœï¼ˆtrue:ç©º false:ç©ºã§ãªã„ï¼‰
    */
   function isEmpty(value){
-    if (!value) {  //null or undefined or ''(¶õÊ¸»ú) or 0 or false
+    if (!value) {  //null or undefined or ''(ç©ºæ–‡å­—) or 0 or false
         if (value!== 0 && value !== false) {
             return true;
         }
     } else if( typeof value == "object") {  //array or object
         return Object.keys(value).length === 0;
     }
-      return false;  //ÃÍ¤Ï¶õ¤Ç¤Ï¤Ê¤¤
+      return false;  //å€¤ã¯ç©ºã§ã¯ãªã„
   }
 
     /**
-   * ÃÍ¤¬¿ôÃÍ·¿¤«¤É¤¦¤«È½Äê¤ò¹Ô¤¦
+   * å€¤ãŒæ•°å€¤å‹ã‹ã©ã†ã‹åˆ¤å®šã‚’è¡Œã†
    * 
-   * @param value È½Äê¤¹¤ëÃÍ
+   * @param value åˆ¤å®šã™ã‚‹å€¤
    * 
-   * @return {boolean} È½Äê·ë²Ì
+   * @return {boolean} åˆ¤å®šçµæœ
    */
   function isNumber(value) {
     return ((typeof value === 'number') && (isFinite(value)));
   }
 
      /**
-   * ¾®¿ô¤ÎÊ¸»úÎó¤ò¥«¥ó¥Ş¶èÀÚ¤ê¤Ë¤¹¤ë
+   * å°æ•°ã®æ–‡å­—åˆ—ã‚’ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã«ã™ã‚‹
    * 
-   * @param {string} strDecimal ÊÑ´¹¤¹¤ë¿ôÃÍ
-   * @param {string} thousands_sep 3·å¤´¤È¤Î¶èÀÚ¤êÊ¸»ú(default = ',')
+   * @param {string} strDecimal å¤‰æ›ã™ã‚‹æ•°å€¤
+   * @param {string} thousands_sep 3æ¡ã”ã¨ã®åŒºåˆ‡ã‚Šæ–‡å­—(default = ',')
    * 
-   * @return {string} À°·Á¤µ¤ì¤¿Ê¸»úÎó
+   * @return {string} æ•´å½¢ã•ã‚ŒãŸæ–‡å­—åˆ—
    */
   function commaSeparate(strDecimal, thousands_sep = ',') {
     var afterPoint = String(strDecimal).match(/\.\d+$/);
@@ -2187,13 +2187,13 @@ $(function() {
   }
 
    /**
-   * ¥«¥ó¥Ş¶èÀÚ¤ê¡¢¾®¿ôÅÀÉ½µ­¤ÎÊıË¡¤Ë¤Ä¤¤¤Æ»ØÄê¤¹¤ë
+   * ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã€å°æ•°ç‚¹è¡¨è¨˜ã®æ–¹æ³•ã«ã¤ã„ã¦æŒ‡å®šã™ã‚‹
    * 
-   * @param {integer} num ÊÑ´¹¤¹¤ë¿ôÃÍ
-   * @param {integer} decimals ¾®¿ôÅÀ°Ê²¼¤Î·å¿ô(default = 0)
-   * @param {string} thousands_sep 3·å¤´¤È¤Î¶èÀÚ¤êÊ¸»ú(default = ',')
+   * @param {integer} num å¤‰æ›ã™ã‚‹æ•°å€¤
+   * @param {integer} decimals å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°(default = 0)
+   * @param {string} thousands_sep 3æ¡ã”ã¨ã®åŒºåˆ‡ã‚Šæ–‡å­—(default = ',')
    * 
-   * @return {string} À°·Á¤µ¤ì¤¿Ê¸»úÎó
+   * @return {string} æ•´å½¢ã•ã‚ŒãŸæ–‡å­—åˆ—
    */
   function numberFormat(num, decimals = 0, thousands_sep = ',') {
     if (!isNaN(num)) {
@@ -2204,11 +2204,11 @@ $(function() {
   }
 
     /**
-   * »ØÄê¤·¤¿¥¯¥é¥¹Ì¾¤ò»ı¤Ä¥»¥ë¤Î¥¯¥é¥¹¾ğÊó¤ò¼èÆÀ¤¹¤ë
-   * ¢¨¥¯¥é¥¹Ì¾´°Á´°ìÃ×
-   * @param {integer} className »ØÄê¥¯¥é¥¹Ì¾
+   * æŒ‡å®šã—ãŸã‚¯ãƒ©ã‚¹åã‚’æŒã¤ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹æƒ…å ±ã‚’å–å¾—ã™ã‚‹
+   * â€»ã‚¯ãƒ©ã‚¹åå®Œå…¨ä¸€è‡´
+   * @param {integer} className æŒ‡å®šã‚¯ãƒ©ã‚¹å
    * 
-   * @return {Array.object} elements ¥¯¥é¥¹¾ğÊó¥ª¥Ö¥¸¥§¥¯¥È¤ò»ı¤ÄÇÛÎó
+   * @return {Array.object} elements ã‚¯ãƒ©ã‚¹æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŒã¤é…åˆ—
    */
   function getElementsForClassName(className, searchList) {
     var filter = {
@@ -2225,11 +2225,11 @@ $(function() {
   }
   
   /**
-   * »ØÄê¤·¤¿¹Ô¤ª¤è¤ÓÎó¤ò»ı¤Ä¥»¥ë¤Î¥¯¥é¥¹¾ğÊó¤ò¼èÆÀ¤¹¤ë
-   * @param {integer} row »ØÄê¹Ô
-   * @param {integer} col »ØÄêÎó
+   * æŒ‡å®šã—ãŸè¡ŒãŠã‚ˆã³åˆ—ã‚’æŒã¤ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹æƒ…å ±ã‚’å–å¾—ã™ã‚‹
+   * @param {integer} row æŒ‡å®šè¡Œ
+   * @param {integer} col æŒ‡å®šåˆ—
    * 
-   * @return {Array.object} elements ¥¯¥é¥¹¾ğÊó¥ª¥Ö¥¸¥§¥¯¥È¤ò»ı¤ÄÇÛÎó
+   * @return {Array.object} elements ã‚¯ãƒ©ã‚¹æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŒã¤é…åˆ—
    */
   function getElementsForRowAndColumn(row, col, searchList) {
     var filter = {
@@ -2247,11 +2247,11 @@ $(function() {
   }
 
   /**
-   * »ØÄê¤·¤¿¹Ô¤ÎÃæ¤ÇÆÃÄê¤Î¥¯¥é¥¹Ì¾¤ò»ı¤ÄÎó¤ò¼èÆÀ¤¹¤ë
-   * @param {integer} row »ØÄê¹Ô
-   * @param {integer} className ¥¯¥é¥¹Ì¾
+   * æŒ‡å®šã—ãŸè¡Œã®ä¸­ã§ç‰¹å®šã®ã‚¯ãƒ©ã‚¹åã‚’æŒã¤åˆ—ã‚’å–å¾—ã™ã‚‹
+   * @param {integer} row æŒ‡å®šè¡Œ
+   * @param {integer} className ã‚¯ãƒ©ã‚¹å
    * 
-   * @return {Array.object} col ÎóÈÖ¹æ
+   * @return {Array.object} col åˆ—ç•ªå·
    */
   function getColumnForRowAndClassName(row, className, searchList) {
     var filter = {
@@ -2277,8 +2277,8 @@ $(function() {
   }
 
   /**
-   * Å¬ÍÑ¥ì¡¼¥È¤ò¼èÆÀ¤¹¤ë
-   * @param {integer} row »ØÄê¹Ô
+   * é©ç”¨ãƒ¬ãƒ¼ãƒˆã‚’å–å¾—ã™ã‚‹
+   * @param {integer} row æŒ‡å®šè¡Œ
    * 
    */
   function getConversionRate(row) {
@@ -2323,7 +2323,7 @@ $(function() {
       setConversionRate(row, conversionRate);
   
     }).fail(function (xhr,textStatus,errorThrown) {
-      alert('DB¥¨¥é¡¼');
+      alert('DBã‚¨ãƒ©ãƒ¼');
     });
   }
 
@@ -2331,7 +2331,7 @@ $(function() {
     var checkList = cellClass;
     
     if (!conversionRate) {
-      alert('Å¬ÍÑ¥ì¡¼¥È¤ò¼èÆÀ¤Ç¤­¤Ş¤»¤ó¤Ç¤·¤¿¡£');
+      alert('é©ç”¨ãƒ¬ãƒ¼ãƒˆã‚’å–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸã€‚');
     }
 
     var rateCol = getColumnForRowAndClassName(row, 'conversionRate', checkList);
@@ -2341,15 +2341,15 @@ $(function() {
     return;
   }
 
-  // ---------------------------------------------¥Ç¡¼¥¿ÉÔÀ°¹çÂĞºö--------------------------------------------------
+  // ---------------------------------------------ãƒ‡ãƒ¼ã‚¿ä¸æ•´åˆå¯¾ç­–--------------------------------------------------
 
-  // ²èÌÌ¤Î¥í¥Ã¥¯´Ø¿ô
+  // ç”»é¢ã®ãƒ­ãƒƒã‚¯é–¢æ•°
   function screenLock() {
-    // ¥í¥Ã¥¯ÍÑ¤Îdiv¤òÀ¸À®
+    // ãƒ­ãƒƒã‚¯ç”¨ã®divã‚’ç”Ÿæˆ
     var element = document.createElement('div'); 
     element.id = "screenLock";
     
-    // ¥í¥Ã¥¯ÍÑ¤Î¥¹¥¿¥¤¥ë
+    // ãƒ­ãƒƒã‚¯ç”¨ã®ã‚¹ã‚¿ã‚¤ãƒ«
     element.style.height = '100%'; 
     element.style.left = '0px'; 
     element.style.position = 'fixed';
@@ -2362,14 +2362,14 @@ $(function() {
     objBody.appendChild(element);
  
     // setTimeout( function() {
-    //     // ¥í¥Ã¥¯²èÌÌ¤Îºï½ü
+    //     // ãƒ­ãƒƒã‚¯ç”»é¢ã®å‰Šé™¤
     //     screenUnlock();
     // }, 3000 );
 
     return true;
   }
  
-  // ²èÌÌ¤Î¥¢¥ó¥í¥Ã¥¯´Ø¿ô
+  // ç”»é¢ã®ã‚¢ãƒ³ãƒ­ãƒƒã‚¯é–¢æ•°
   function screenUnlock() {
       var dom_obj = document.getElementById('screenLock');
       if (dom_obj) {
@@ -2381,9 +2381,9 @@ $(function() {
       return true;
   }
 
-  // ÊÔ½¸ÊİÂ¸½èÍı
+  // ç·¨é›†ä¿å­˜å‡¦ç†
   $('#update_regist').on('click', function() {
-    if (window.confirm('ÊÔ½¸ÆâÍÆ¤òÊİÂ¸¤·¤Æ¥×¥ì¥Ó¥å¡¼²èÌÌ¤òºÆÆÉ¤ß¹ş¤ß¤·¤Ş¤¹¡£¤è¤í¤·¤¤¤Ç¤¹¤«¡©')){
+    if (window.confirm('ç·¨é›†å†…å®¹ã‚’ä¿å­˜ã—ã¦ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢ã‚’å†èª­ã¿è¾¼ã¿ã—ã¾ã™ã€‚ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ')){
       var postData = {
         value: cellValue,
         class: cellClass,
@@ -2415,7 +2415,7 @@ $(function() {
 
       form.attr('action', '/estimate/preview/update.php');
       form.attr('target', windowName);
-      // ¥µ¥Ö¥ß¥Ã¥È
+      // ã‚µãƒ–ãƒŸãƒƒãƒˆ
       form.submit();
       
     } else {

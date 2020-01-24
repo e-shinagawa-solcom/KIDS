@@ -2,32 +2,32 @@
 
 
 //------------------------------------------------------------
-// ²òÀâ : ÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ´Ø¿ô
+// è§£èª¬ : æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿é–¢æ•°
 //------------------------------------------------------------
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ¥í¥°¥Ü¥¿¥ó½ñ¤­½Ğ¤·
+	// ãƒ­ã‚°ãƒœã‚¿ãƒ³æ›¸ãå‡ºã—
 	LogBt.innerHTML = logBt;
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( lngSelfCode == 0 )
 	{
-		// ÅĞÏ¿¥Ü¥¿¥ó½ñ¤­½Ğ¤·
+		// ç™»éŒ²ãƒœã‚¿ãƒ³æ›¸ãå‡ºã—
 		RegistBt.innerHTML = blownRegiBtE1;
 
 		Column0.innerText = 'Title';
 		Column1.innerText = 'Message';
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( lngSelfCode == 1 )
 	{
-		// ÅĞÏ¿¥Ü¥¿¥ó½ñ¤­½Ğ¤·
+		// ç™»éŒ²ãƒœã‚¿ãƒ³æ›¸ãå‡ºã—
 		RegistBt.innerHTML = blownRegiBtJ1;
 
-		Column0.innerText = '¥¿¥¤¥È¥ë';
-		Column1.innerText = '¥á¥Ã¥»¡¼¥¸';
+		Column0.innerText = 'ã‚¿ã‚¤ãƒˆãƒ«';
+		Column1.innerText = 'ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸';
 	}
 
 	return false;

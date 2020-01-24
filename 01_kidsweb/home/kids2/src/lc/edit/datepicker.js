@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // datepickerÂĞ¾İÍ×ÁÇ
+    // datepickerå¯¾è±¡è¦ç´ 
     var ymElements = [
         $("#opendate")
     ];
@@ -10,7 +10,7 @@ $(document).ready(function () {
         $("#validmonth")
     ];
 
-    // datepicker¤ÎÀßÄê
+    // datepickerã®è¨­å®š
     $.each(ymElements, function () {
         this.datepicker({
             dateFormat: 'yymm',
@@ -36,7 +36,7 @@ $(document).ready(function () {
         });
     });
 
-    // datepicker¤ÎÀßÄê
+    // datepickerã®è¨­å®š
     $.each(ymdElements, function(){
         this.datepicker({
             showButtonPanel: true,

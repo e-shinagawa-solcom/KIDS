@@ -8,7 +8,7 @@
     isRegist = 'isRegist';
 
     $('.report-box__wrap-box-button #preview').on('click', function(){
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + sessionID + '&' + moldReportID  + '&' + revision  + '&' +  version + '&' + isRegist, 'display-report', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

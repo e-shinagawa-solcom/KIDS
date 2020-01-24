@@ -2,15 +2,15 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ÀÁµá´ÉÍý  µ¡Ç½ÁªÂò²èÌÌ
+*       è«‹æ±‚ç®¡ç†  æ©Ÿèƒ½é¸æŠžç”»é¢
 *
-*       ½èÍý³µÍ×
-*         ¡¦¥á¥Ë¥å¡¼²èÌÌ¤Ë¤ÆÀÁµá´ÉÍý¥Ü¥¿¥ó¤òÄ¾ÀÜ²¡²¼¤·¤¿ºÝ¤Ëµ¡Ç½ÁªÂò²èÌÌ¤òÉ½¼¨¤¹¤ë
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã«ã¦è«‹æ±‚ç®¡ç†ãƒœã‚¿ãƒ³ã‚’ç›´æŽ¥æŠ¼ä¸‹ã—ãŸéš›ã«æ©Ÿèƒ½é¸æŠžç”»é¢ã‚’è¡¨ç¤ºã™ã‚‹
 *
 */
 // ----------------------------------------------------------------------------
 
-	// ÆÉ¤ß¹þ¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
 	require (LIB_FILE);
 
@@ -23,20 +23,20 @@
 
 	$aryData["strSessionID"] = $_POST["strSessionID"];
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $_POST["strSessionID"], $objAuth, $objDB );
-	// ¥¯¥Ã¥­¡¼¤Ë¥»¥Ã¥·¥ç¥óID¤ò¥»¥Ã¥È
+	// ã‚¯ãƒƒã‚­ãƒ¼ã«ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã‚’ã‚»ãƒƒãƒˆ
 	setcookie("strSessionID",$_POST["strSessionID"]);
 
-	// 2200 ÀÁµá´ÉÍý
+	// 2200 è«‹æ±‚ç®¡ç†
 	if ( !fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
 	{
-	        fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	        fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
 	$objDB->close();

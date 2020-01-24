@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <!-- ¸ß´¹É½¼¨OFF¤ò¶¯À©¤µ¤»¤ë -->
+    <!-- äº’æ›è¡¨ç¤ºOFFã‚’å¼·åˆ¶ã•ã›ã‚‹ -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    php dom¥Ñ¡¼¥¹ÍÑ¥á¥¿Í×ÁÇ ¥³¥á¥ó¥È¥¢¥¦¥È¤·¤Æ¤¤¤Æ¤âphp¤ÎdomElement->loadHTML¤ÇÇ§¼±¤µ¤ì¤ë
+    php domãƒ‘ãƒ¼ã‚¹ç”¨ãƒ¡ã‚¿è¦ç´  ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ã„ã¦ã‚‚phpã®domElement->loadHTMLã§èªè­˜ã•ã‚Œã‚‹
     -->
     <meta charset="euc-jp">
 
@@ -14,25 +14,25 @@
     <script src="/cmn/jquery/jquery-3.1.0.js"></script>
     <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 
-    <!-- ¥¹¥¿¥¤¥ë½é´ü²½ & ³Æ¼ï¥³¥ó¥È¥í¡¼¥ë¥¹¥¿¥¤¥ë -->
+    <!-- ã‚¹ã‚¿ã‚¤ãƒ«åˆæœŸåŒ– & å„ç¨®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚¹ã‚¿ã‚¤ãƒ« -->
     <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
-    <!-- ³ÎÇ§²èÌÌ¶¦ÄÌ  CSS -->
+    <!-- ç¢ºèªç”»é¢å…±é€š  CSS -->
     <link rel="stylesheet" href="/mold/cmn/confirm/css/confirm.css">
 
-    <!-- ¥Ü¥¿¥ó²èÁü¤Î¶¦ÄÌ¤Î¿¶¤ëÉñ¤¤ CSS -->
+    <!-- ãƒœã‚¿ãƒ³ç”»åƒã®å…±é€šã®æŒ¯ã‚‹èˆã„ CSS -->
     <link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
 
-    <!-- ÊÄ¤¸¤ë/ÅĞÏ¿ ¥Ü¥¿¥ó¤ÎµóÆ° -->
+    <!-- é–‰ã˜ã‚‹/ç™»éŒ² ãƒœã‚¿ãƒ³ã®æŒ™å‹• -->
     <script src="./scripts/confirm-action.js" defer></script>
 </head>
 <body class="confirm-background">
     <div class="confirm-title">
-        ÅĞÏ¿³ÎÇ§
+        ç™»éŒ²ç¢ºèª
     </div>
     <div class="confirm-box">
         <div class="confirm-box__header">
-            ²¼µ­¤ÎÆâÍÆ¤ÇÅĞÏ¿¤·¤Ş¤¹¤«¡©
+            ä¸‹è¨˜ã®å†…å®¹ã§ç™»éŒ²ã—ã¾ã™ã‹ï¼Ÿ
         </div>
         <div class="confirm-box__buttons">
             <img class="close-action button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" alt="close">
@@ -42,21 +42,21 @@
     <div class="confirm-data">
         <div class="confirm-data__section">
             <div class="confirm-data__section__record">
-                <span>¶â·¿Ä¢É¼ID</span>
+                <span>é‡‘å‹å¸³ç¥¨ID</span>
                 <div>_%MoldReportId%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>¥ê¥Ó¥¸¥ç¥ó</span>
+                <span>ãƒªãƒ“ã‚¸ãƒ§ãƒ³</span>
                 <div>_%Revision%_</div>
             </div>
         </div>
         <div class="confirm-data__section">
             <div class="confirm-data__section__record">
-                <span>°ÍÍêÆü</span>
+                <span>ä¾é ¼æ—¥</span>
                 <div>_%RequestDate%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>Ä¢É¼¶èÊ¬</span>
+                <span>å¸³ç¥¨åŒºåˆ†</span>
                 <div>_%ReportCategoryDesc%_</div>
             </div>
             <div class="confirm-data__section__record">
@@ -64,65 +64,65 @@
                 <div>_%SendToName%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>°ÍÍê¶èÊ¬</span>
+                <span>ä¾é ¼åŒºåˆ†</span>
                 <div>_%RequestCategoryDesc%_</div>
             </div>
         </div>
         <div class="confirm-data__section">
             <div class="confirm-data__section__record">
-                <span>À½ÉÊ¥³¡¼¥É</span>
+                <span>è£½å“ã‚³ãƒ¼ãƒ‰</span>
                 <div>_%ProductCode%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>À½ÉÊÌ¾¾Î(ÆüËÜ¸ì)</span>
+                <span>è£½å“åç§°(æ—¥æœ¬èª)</span>
                 <div>_%ProductName%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>¸ÜµÒÉÊÈÖ</span>
+                <span>é¡§å®¢å“ç•ª</span>
                 <div>_%GoodsCode%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>´õË¾Æü</span>
+                <span>å¸Œæœ›æ—¥</span>
                 <div>_%ActionRequestDate%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>°ÜÆ°ÊıË¡</span>
+                <span>ç§»å‹•æ–¹æ³•</span>
                 <div>_%TransferMethodDesc%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>Êİ´É¹©¾ì</span>
+                <span>ä¿ç®¡å·¥å ´</span>
                 <div>[_%SourceFactory%_]&nbsp;_%SourceFactoryName%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>°ÜÆ°Àè¹©¾ì</span>
+                <span>ç§»å‹•å…ˆå·¥å ´</span>
                 <div>[_%DestinationFactory%_]&nbsp;_%DestinationFactoryName%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>»Ø¼¨¶èÊ¬</span>
+                <span>æŒ‡ç¤ºåŒºåˆ†</span>
                 <div>_%InstructionCategoryDesc%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>»ö¶ÈÉô(¸ÜµÒ)</span>
+                <span>äº‹æ¥­éƒ¨(é¡§å®¢)</span>
                 <div>[_%CustomerCode%_]&nbsp;_%CustomerName%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>KWGÃ´ÅöÉô½ğ</span>
+                <span>KWGæ‹…å½“éƒ¨ç½²</span>
                 <div>[_%KuwagataGroupCode%_]&nbsp;_%KuwagataGroupName%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>KWGÃ´Åö¼Ô</span>
+                <span>KWGæ‹…å½“è€…</span>
                 <div>[_%KuwagataUserCode%_]&nbsp;_%KuwagataUserName%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>À¸»º¸å¤Î½èÍı</span>
+                <span>ç”Ÿç”£å¾Œã®å‡¦ç†</span>
                 <div>_%FinalKeepDesc%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>ÊÖµÑÍ½ÄêÆü</span>
+                <span>è¿”å´äºˆå®šæ—¥</span>
                 <div>_%ReturnSchedule%_</div>
             </div>
             <div class="confirm-data__section__record">
-                <span>¤½¤ÎÂ¾</span>
+                <span>ãã®ä»–</span>
                 <div>_%Note%_</div>
             </div>
         </div>
@@ -130,9 +130,9 @@
             <table id="MoldTable" class="confirm-table">
                 <thead>
                     <tr>
-                        <th>¹àÈÖ</th>
-                        <th>¶â·¿NO</th>
-                        <th>¶â·¿ÀâÌÀ</th>
+                        <th>é …ç•ª</th>
+                        <th>é‡‘å‹NO</th>
+                        <th>é‡‘å‹èª¬æ˜</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -141,7 +141,7 @@
         </div>
         <div class="confirm-data__section">
             <div class="confirm-data__section__record--mrgnote">
-                <span>Íó³°È÷¹Í</span>
+                <span>æ¬„å¤–å‚™è€ƒ</span>
                 <div>_%MarginalNote%_</div>
             </div>
         </div>

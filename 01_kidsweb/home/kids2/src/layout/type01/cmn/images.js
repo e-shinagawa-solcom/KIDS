@@ -16,118 +16,118 @@
 
 
 
-	// [BLOWN] REVIVALÕ—•‹•ø•Û
+	// [BLOWN] REVIVALÁî®„Éú„Çø„É≥
 	var blownrevivalbtJ1 = '/img/type01/cmn/querybt/blown_revival_off_ja_bt.gif';
 	var blownrevivalbtJ2 = '/img/type01/cmn/querybt/blown_revival_off_on_ja_bt.gif';
 	var blownrevivalbtE1 = '/img/type01/cmn/querybt/blown_revival_off_en_bt.gif';
 	var blownrevivalbtE2 = '/img/type01/cmn/querybt/blown_revival_off_on_en_bt.gif';
 
 
-	// [BLOWN] PROCESSÕ—•‹•ø•Û
+	// [BLOWN] PROCESSÁî®„Éú„Çø„É≥
 	var blownprocessbtJ1 = '/img/type01/cmn/querybt/blown_process_off_ja_bt.gif';
 	var blownprocessbtJ2 = '/img/type01/cmn/querybt/blown_process_off_on_ja_bt.gif';
 	var blownprocessbtE1 = '/img/type01/cmn/querybt/blown_process_off_en_bt.gif';
 	var blownprocessbtE2 = '/img/type01/cmn/querybt/blown_process_off_on_en_bt.gif';
 
 
-	// [BLOWN] REGISTÕ—•‹•ø•Û
+	// [BLOWN] REGISTÁî®„Éú„Çø„É≥
 	var blownregistbtJ1 = '/img/type01/cmn/querybt/regist_blown_off_ja_bt.gif';
 	var blownregistbtJ2 = '/img/type01/cmn/querybt/regist_blown_off_on_ja_bt.gif';
 	var blownregistbtE1 = '/img/type01/cmn/querybt/regist_blown_off_en_bt.gif';
 	var blownregistbtE2 = '/img/type01/cmn/querybt/regist_blown_off_on_en_bt.gif';
 
 
-	// INVALID BIG•‹•ø•Û
+	// INVALID BIG„Éú„Çø„É≥
 	var invalidbigbtJ1 = '/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif';
 	var invalidbigbtJ2 = '/img/type01/cmn/querybt/invalid_big_off_on_ja_bt.gif';
 	var invalidbigbtE1 = '/img/type01/cmn/querybt/invalid_big_off_en_bt.gif';
 	var invalidbigbtE2 = '/img/type01/cmn/querybt/invalid_big_off_on_en_bt.gif';
 
 
-	// INVALID SMALL•‹•ø•Û
+	// INVALID SMALL„Éú„Çø„É≥
 	var invalidsmallbt1 = '/img/type01/cmn/querybt/invalid_small_off_bt.gif';
 	var invalidsmallbt2 = '/img/type01/cmn/querybt/invalid_small_off_on_bt.gif';
 
 
-	// LOG•‹•ø•Û
+	// LOG„Éú„Çø„É≥
 	var logbt1 = '/img/type01/cmn/querybt/log_off_bt.gif';
 	var logbt2 = '/img/type01/cmn/querybt/log_off_on_bt.gif';
 
-	// BACK SMALL•‹•ø•Û
+	// BACK SMALL„Éú„Çø„É≥
 	var backsmallbt1 = '/img/type01/cmn/querybt/back_small_off_bt.gif';
 	var backsmallbt2 = '/img/type01/cmn/querybt/back_small_off_on_bt.gif';
 
-	// RELOAD•‹•ø•Û
+	// RELOAD„Éú„Çø„É≥
 	var reloadsmallbt1 = '/img/type01/cmn/querybt/reload_small_off_bt.gif';
 	var reloadsmallbt2 = '/img/type01/cmn/querybt/reload_small_off_on_bt.gif';
 
-	// BLOWN NEXT•‹•ø•Û
+	// BLOWN NEXT„Éú„Çø„É≥
 	var blownnextbt1 = '/img/type01/cmn/querybt/blownnext_off_bt.gif';
 	var blownnextbt2 = '/img/type01/cmn/querybt/blownnext_off_on_bt.gif';
 
-	// BLOWN PREV•‹•ø•Û
+	// BLOWN PREV„Éú„Çø„É≥
 	var blownprevbt1 = '/img/type01/cmn/querybt/blownprev_off_bt.gif';
 	var blownprevbt2 = '/img/type01/cmn/querybt/blownprev_off_on_bt.gif';
 
 
 
-	// •·•À•Â°º•–•√•Ø •§•·°º•∏
+	// „É°„Éã„É•„Éº„Éê„ÉÉ„ÇØ „Ç§„É°„Éº„Ç∏
 	var menuback1 = '/img/type01/cmn/seg/menu_back1.gif';
 	var menuback2 = '/img/type01/cmn/seg/menu_back2.gif';
 	var menuback3 = '/img/type01/cmn/seg/menu_back3.gif';
 	var menuback4 = '/img/type01/cmn/seg/menu_back4.gif';
 
 
-	// [GRAY] PREVIEWÕ—•‹•ø•Û
+	// [GRAY] PREVIEWÁî®„Éú„Çø„É≥
 	var graypreviewbt1 = '/img/type01/cmn/querybt/graypreview_off_bt.gif';
 	var graypreviewbt2 = '/img/type01/cmn/querybt/graypreview_off_on_bt.gif';
 
 
-	// [BLOWN] EXPORTÕ—•‹•ø•Û
+	// [BLOWN] EXPORTÁî®„Éú„Çø„É≥
 	var blownexportbt1 = '/img/type01/dataex/blownexport_off_bt.gif';
 	var blownexportbt2 = '/img/type01/dataex/blownexport_off_on_bt.gif';
 
 
-	// [BLOWN] PREVIEWÕ—•‹•ø•Û
+	// [BLOWN] PREVIEWÁî®„Éú„Çø„É≥
 	var blownpreviewbt1 = '/img/type01/cmn/querybt/blownpreview_off_bt.gif';
 	var blownpreviewbt2 = '/img/type01/cmn/querybt/blownpreview_off_on_bt.gif';
 
 
-	// PREVIEWÕ—•‹•ø•Û
+	// PREVIEWÁî®„Éú„Çø„É≥
 	var previewbt1 = '/img/type01/cmn/querybt/preview_off_bt.gif';
 	var previewbt2 = '/img/type01/cmn/querybt/preview_off_on_bt.gif';
 	var previewbt3 = '/img/type01/cmn/querybt/preview_on_bt.gif';
 
 
-	// ∏°∫˜-SEARCH •§•·°º•∏
+	// Ê§úÁ¥¢-SEARCH „Ç§„É°„Éº„Ç∏
 	var searchcolumnJ = '/img/type01/cmn/seg/search_column_ja.gif';
 	var searchcolumnE = '/img/type01/cmn/seg/search_column_en.gif';
 
 
-	// RELOADÕ—•‹•ø•Û
+	// RELOADÁî®„Éú„Çø„É≥
 	var reloadbt1 = '/img/type01/cmn/querybt/reload_off_bt.gif';
 	var reloadbt2 = '/img/type01/cmn/querybt/reload_off_on_bt.gif';
 	var reloadbt3 = '/img/type01/cmn/querybt/reload_on_bt.gif';
 
 
-	// KIDS ENTERÕ—•‹•ø•Û
+	// KIDS ENTERÁî®„Éú„Çø„É≥
 	var enterbt1 = '/img/type01/cmn/seg/enter_off_bt.gif';
 	var enterbt2 = '/img/type01/cmn/seg/enter_off_on_bt.gif';
 	var enterbt3 = '/img/type01/cmn/seg/enter_on_bt.gif';
 
-	// ¢™•‹•ø•Û
+	// ‚Üí„Éú„Çø„É≥
 	var ralowbt1 = '/img/type01/cmn/seg/ralow_off_bt.gif';
 	var ralowbt2 = '/img/type01/cmn/seg/ralow_off_on_bt.gif';
 	var ralowbt3 = '/img/type01/cmn/seg/ralow_on_bt.gif';
 
 
-	///// SUBMIT•‹•ø•Û /////
+	///// SUBMIT„Éú„Çø„É≥ /////
 	var submit1 = '/img/type01/cmn/querybt/submit_off_bt_gold.gif';
 	var submit2 = '/img/type01/cmn/querybt/submit_off_on_bt_gold.gif';
 	var submit3 = '/img/type01/cmn/querybt/submit_on_bt.gif';
 
 
-	///// •Ì•∞•¢•¶•»ª˛§Œ≥∆ºÔ•‹•ø•Û /////
+	///// „É≠„Ç∞„Ç¢„Ç¶„ÉàÊôÇ„ÅÆÂêÑÁ®Æ„Éú„Çø„É≥ /////
 	var darklogout1 = '/img/type01/cmn/querybt/darklogout_off_bt.gif';
 	var darklogout2 = '/img/type01/cmn/querybt/darklogout_off_on_bt.gif';
 	var darklogout3 = '/img/type01/cmn/querybt/darklogout_on_bt.gif';
@@ -137,7 +137,7 @@
 	var darkback3 = '/img/type01/cmn/querybt/darkback_on_bt.gif';
 
 
-	///// ≈–œø¥∞Œªª˛§Œƒ¢…ºΩ–Œœ•‹•ø•Û /////
+	///// ÁôªÈå≤ÂÆå‰∫ÜÊôÇ„ÅÆÂ∏≥Á•®Âá∫Âäõ„Éú„Çø„É≥ /////
 	var blownlistoutJ1 = '/img/type01/cmn/querybt/listout_off_ja_bt.gif';
 	var blownlistoutJ2 = '/img/type01/cmn/querybt/listout_off_on_ja_bt.gif';
 	var blownlistoutJ3 = '/img/type01/cmn/querybt/listout_on_ja_bt.gif';
@@ -146,13 +146,13 @@
 	var blownlistoutE3 = '/img/type01/cmn/querybt/listout_on_en_bt.gif';
 
 
-	// •«°º•ø•™°º•◊•ÛÕ—•‹•ø•Û
+	// „Éá„Éº„Çø„Ç™„Éº„Éó„É≥Áî®„Éú„Çø„É≥
 	var dataopen1 = '/img/type01/cmn/seg/dataopen_off_bt.gif';
 	var dataopen2 = '/img/type01/cmn/seg/dataopen_off_on_bt.gif';
 	var dataopen3 = '/img/type01/cmn/seg/dataopen_on_bt.gif';
 
 
-	// •«°º•ø•ª•√•»Õ—•‹•ø•Û
+	// „Éá„Éº„Çø„Çª„ÉÉ„ÉàÁî®„Éú„Çø„É≥
 	var dataset1 = '/img/type01/cmn/seg/dataset_off_bt.gif';
 	var dataset2 = '/img/type01/cmn/seg/dataset_off_on_bt.gif';
 	var dataset3 = '/img/type01/cmn/seg/dataset_on_bt.gif';
@@ -460,20 +460,20 @@
 	var searchE2 = '/img/type01/cmn/querybt/search_off_on_en_bt.gif';
 
 
-	///// ≥Œ«ß•‹•ø•Û /////
+	///// Á¢∫Ë™ç„Éú„Çø„É≥ /////
 	var confirmJ1 = '/img/type01/cmn/querybt/confirm_off_ja_bt.gif';
 	var confirmJ2 = '/img/type01/cmn/querybt/confirm_off_on_ja_bt.gif';
 	var confirmE1 = '/img/type01/cmn/querybt/confirm_off_en_bt.gif';
 	var confirmE2 = '/img/type01/cmn/querybt/confirm_off_on_en_bt.gif';
 
-	///// ≤æ ›¬∏•‹•ø•Û /////
+	///// ‰ªÆ‰øùÂ≠ò„Éú„Çø„É≥ /////
 	var presaveJ1 = '/img/type01/cmn/querybt/presave_off_ja_bt.gif';
 	var presaveJ2 = '/img/type01/cmn/querybt/presave_off_on_ja_bt.gif';
 	var presaveE1 = '/img/type01/cmn/querybt/presave_off_en_bt.gif';
 	var presaveE2 = '/img/type01/cmn/querybt/presave_off_on_en_bt.gif';
 
 
-	///// ∑ËƒÍ•‹•ø•Û /////
+	///// Ê±∫ÂÆö„Éú„Çø„É≥ /////
 	var decisionJ1 = '/img/type01/cmn/querybt/decision_off_ja_bt.gif';
 	var decisionJ2 = '/img/type01/cmn/querybt/decision_off_on_ja_bt.gif';
 	var decisionE1 = '/img/type01/cmn/querybt/decision_off_en_bt.gif';
@@ -482,7 +482,7 @@
 
 
 
-/* §≥§≥§´§È∫ÔΩ¸ÕΩƒÍ */
+/* „Åì„Åì„Åã„ÇâÂâäÈô§‰∫àÂÆö */
 	///// [ENGLISH]REGISTRATION & SEARCH NAVI BT IMAGE /////
 	var regiE1 = '/img/type01/cmn/navi/regist_off_en_bt.gif';
 	var regiE2 = '/img/type01/cmn/navi/regist_off_on_en_bt.gif';
@@ -490,13 +490,13 @@
 	var schE1 = '/img/type01/cmn/navi/search_off_en_bt.gif';
 	var schE2 = '/img/type01/cmn/navi/search_off_on_en_bt.gif';
 	var schE3 = '/img/type01/cmn/navi/search_on_en_bt.gif';
-/* §≥§≥§ﬁ§« */
+/* „Åì„Åì„Åæ„Åß */
 
 
 
 
 
-/* §≥§≥§´§È∫ÔΩ¸ÕΩƒÍ */
+/* „Åì„Åì„Åã„ÇâÂâäÈô§‰∫àÂÆö */
 	///// LIST OUTPUT NAVI BT IMAGE /////
 	var listoutJ1 = '/img/type01/cmn/navi/listout_off_ja_bt.gif';
 	var listoutJ2 = '/img/type01/cmn/navi/listout_off_on_ja_bt.gif';
@@ -528,7 +528,7 @@
 	var mainE1 = '/img/type01/cmn/navi/main_off_en_bt.gif';
 	var mainE2 = '/img/type01/cmn/navi/main_off_on_en_bt.gif';
 	var mainE3 = '/img/type01/cmn/navi/main_on_en_bt.gif';
-/* §≥§≥§ﬁ§« */
+/* „Åì„Åì„Åæ„Åß */
 
 
 

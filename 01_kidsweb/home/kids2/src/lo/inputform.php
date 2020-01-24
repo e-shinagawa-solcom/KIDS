@@ -1,6 +1,6 @@
 <?
 
-	// ³°Éô¥Õ¥¡¥¤¥ë¤Î¥¤¥ó¥¯¥ë¡¼¥É
+	// å¤–éƒ¨ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 	require("/home/kids2/ListOutput/libs/conf.php");
 	require(CLS_DB_FILE);
 	require(FNC_LIBS_FILE);
@@ -14,7 +14,7 @@
 	if( !isset($aryGET["template"]) )
 	{
 		echo fncGetPages("_%PAGE_HEADER%_");
-		echo fncGetPages("_%PAGE_ERROR%_", "template is not set!<br />ËÜ¥Ú¡¼¥¸¤ÏÄ¾ÀÜÉ½¼¨½ĞÍè¤Ş¤»¤ó¡£<a href=\"/lo\">¤³¤³¤Î¥Ú¡¼¥¸</a>¤«¤é¾ò·ïÀßÄê¤·¤Æ¸Æ¤Ó½Ğ¤·¤Æ²¼¤µ¤¤¡£");
+		echo fncGetPages("_%PAGE_ERROR%_", "template is not set!<br />æœ¬ãƒšãƒ¼ã‚¸ã¯ç›´æ¥è¡¨ç¤ºå‡ºæ¥ã¾ã›ã‚“ã€‚<a href=\"/lo\">ã“ã“ã®ãƒšãƒ¼ã‚¸</a>ã‹ã‚‰æ¡ä»¶è¨­å®šã—ã¦å‘¼ã³å‡ºã—ã¦ä¸‹ã•ã„ã€‚");
 		echo fncGetPages("_%PAGE_FOOTER%_");
 		return;
 	}
@@ -23,10 +23,10 @@
 
 
 
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	$objDB          = new clsDB;
 
-	// DB ÀÜÂ³
+	// DB æ¥ç¶š
 	if( $objDB->open($DB_LOGIN_USERNAME, $DB_LOGIN_PASSWORD, $POSTGRESQL_HOSTNAME, '') == false )
 	{
 		echo "db login failed";
@@ -34,21 +34,21 @@
 	}
 
 
-	// ¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿
 	$aryFile = file($strInputFormTemplate);
 	if( !$aryFile )
 	{
 		echo fncGetPages("_%PAGE_HEADER%_");
-		echo fncGetPages("_%PAGE_ERROR%_", "template is not found!<br />¥Æ¥ó¥×¥ì¡¼¥È¤¬¤¢¤ê¤Ş¤»¤ó¡£ÀßÄê¥Õ¥¡¥¤¥ë¤ò³ÎÇ§¤·¤Æ²¼¤µ¤¤¡£<br />$strInputFormTemplate");
+		echo fncGetPages("_%PAGE_ERROR%_", "template is not found!<br />ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãŒã‚ã‚Šã¾ã›ã‚“ã€‚è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç¢ºèªã—ã¦ä¸‹ã•ã„ã€‚<br />$strInputFormTemplate");
 		echo fncGetPages("_%PAGE_FOOTER%_");
 		return;
 	}
 	
-	// ¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ëÆâ¤ò°ì¹Ô¤Å¤Ä¥Á¥§¥Ã¥¯¤·¡¢ÃÖ¤­´¹¤¨¤ò¹Ô¤¦
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«å†…ã‚’ä¸€è¡Œã¥ã¤ãƒã‚§ãƒƒã‚¯ã—ã€ç½®ãæ›ãˆã‚’è¡Œã†
 	/*
 	while( list($strKey, $strValue) = each($aryFile))
 	{
-		// _%...%_ ¤ò¸¡º÷
+		// _%...%_ ã‚’æ¤œç´¢
 		if( preg_match( "/_%[A-Za-z0-9_]+%_/", $strValue, $aryMatch) )
 		{
 

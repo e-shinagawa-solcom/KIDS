@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¥Ç¡¼¥¿¥¨¥¯¥¹¥İ¡¼¥È ¸¡º÷²èÌÌ
+*       ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ æ¤œç´¢ç”»é¢
 *
 *
 *       @package    K.I.D.S.
@@ -13,44 +13,44 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦¥á¥Ë¥å¡¼²èÌÌ¤òÉ½¼¨
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã‚’è¡¨ç¤º
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
-	// ÀßÄêÆÉ¤ß¹ş¤ß
+	// è¨­å®šèª­ã¿è¾¼ã¿
 	include_once('conf.inc');
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require (LIB_FILE);
 	require (SRC_ROOT . "dataex/cmn/lib_dataex.php");
 
-	// DBÀÜÂ³
+	// DBæ¥ç¶š
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
 	$objDB->open( "", "", "", "" );
 
-	// POST¥Ç¡¼¥¿¼èÆÀ
+	// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryData = $_GET;
 
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-	// ¸¢¸Â³ÎÇ§¤Î¤¿¤á¤Î½ĞÎÏÂĞ¾İ¤Îµ¡Ç½¥³¡¼¥É¤ò¼èÆÀ
+	// æ¨©é™ç¢ºèªã®ãŸã‚ã®å‡ºåŠ›å¯¾è±¡ã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 	$lngFunctionCode = getFunctionCode( $aryData["lngExportData"] );
 
 
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	if ( !fncCheckAuthority( $lngFunctionCode, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
 
@@ -58,11 +58,11 @@
 	$aryCheck["lngExportData"] = "null:number(DEF_EXPORT_SALES,DEF_EXPORT_ESTIMATE)";
 
 
-	// L¡¿CÀßÄêÆü(Á°Æü)
+	// Lï¼Cè¨­å®šæ—¥(å‰æ—¥)
 	$strDefaultSDate = date( "Y/m/d", strtotime( "-1 day" ) );
 	$strDefaultEDate = $strDefaultSDate;
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 	//echo getArrayTable( $aryCheckResult, "TABLE" );
 	//echo getArrayTable( $aryData, "TABLE" );
@@ -70,17 +70,17 @@
 	fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
-	// ¥Ş¥¹¥¿¥Ç¡¼¥¿¤ÎÀ¸À®
+	// ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã®ç”Ÿæˆ
 	switch( (int)$aryData["lngExportData"] )
 	{
 		case 6:	// stat01
 		case 7:	// stat02
-			// ÉôÌç
+			// éƒ¨é–€
 			$aryData["lngGroupCode"]	= fncGetPulldown( "m_Group", "lngGroupCode", "strgroupdisplayname", 0,'where lngcompanycode in (0, 1)', $objDB );
-			// Çä¾å¶èÊ¬
+			// å£²ä¸ŠåŒºåˆ†
 			$aryData["lngSalesClassCode"] 	= fncGetCheckBoxObject( "m_SalesClass", "lngsalesclasscode", "strsalesclassname", "lngSalesClassCode[]", 'where lngsalesclasscode <> 0', $objDB );
 
-			// ¥¯¥Ã¥­¡¼¤ÎÀßÄê
+			// ã‚¯ãƒƒã‚­ãƒ¼ã®è¨­å®š
 			if( $_COOKIE["DataExport_stat01"] )
 			{
 				$aryCookie = fncStringToArray ( $_COOKIE["DataExport_stat01"], "&", ":" );
@@ -92,15 +92,15 @@
 			break;
 
 		case 8:	// pplan
-			// ÉôÌç
+			// éƒ¨é–€
 			//$aryData["lngGroupCode"]	= fncGetPulldown      ( "m_Group", "lngGroupCode", "strgroupdisplayname", 0,'where lngcompanycode in (0, 1)', $objDB );
-			// Çä¾å¶èÊ¬
+			// å£²ä¸ŠåŒºåˆ†
 			$aryData["lngGroupCode"] 	= fncGetCheckBoxObject( "m_Group", "lngGroupCode", "strgroupdisplayname", "lngGroupCode[]", 'where lngcompanycode in (0, 1) AND lngGroupCode not in (0, 6, 7, 9, 10, 26, 29, 30, 31, 36)', $objDB );
 			break;
 	}
 
 	// -------------------------------------------------------
-	// From To ÆüÉÕ¤ÎÀ¸À®
+	// From To æ—¥ä»˜ã®ç”Ÿæˆ
 	// -------------------------------------------------------
 	$year = date("Y");
 	$month = date("m");
@@ -118,8 +118,8 @@
 			$strDefaultEDate = date( "Y/m/d", $varMktime );
 			break;
 
-		case 1:	// Çä¾å¥ì¥·¥Ô
-		case 4:	// »ÅÆş°ìÍ÷É½
+		case 1:	// å£²ä¸Šãƒ¬ã‚·ãƒ”
+		case 4:	// ä»•å…¥ä¸€è¦§è¡¨
 		case 2:	// Purchase recipe
 		case 7:	// stat02
 			$month = $month - "1";
@@ -150,7 +150,7 @@
 	$aryData["lcdateend"]   = $strDefaultEDate;
 
 
-	// HTML½ĞÎÏ
+	// HTMLå‡ºåŠ›
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "dataex/search/" . $aryDirName[$aryData["lngExportData"]] . "/parts.tmpl" );
 	$objTemplate->replace( $aryData );

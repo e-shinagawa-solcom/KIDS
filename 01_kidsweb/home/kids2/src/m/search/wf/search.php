@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿ ¸¡º÷²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿ æ¤œç´¢ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -13,14 +13,14 @@
 // index.php -> strSessionID    -> search.php
 //
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
@@ -28,39 +28,39 @@ $objDB->open( "", "", "", "" );
 $aryData = $_POST;
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// HIDDEN À¸À®
+// HIDDEN ç”Ÿæˆ
 $aryParts["strSessionID"] =& $aryData["strSessionID"];
 
-// ¥ï¡¼¥¯¥Õ¥í¡¼Ì¾¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼åãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
 $aryParts["lngWorkflowOrderCode"]  = "<option value=\"\"></option>\n";
 $aryParts["lngWorkflowOrderCode"] .= fncGetPulldown( "m_WorkflowOrder", "lngWorkflowOrderCode", "strWorkflowOrderName", "Array", "WHERE lngWorkflowOrderNo = 1 AND bytWorkflowOrderDisplayFlag = TRUE", $objDB );
 
-// ¥°¥ë¡¼¥×¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+// ã‚°ãƒ«ãƒ¼ãƒ—ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
 $aryParts["lngWorkflowOrderGroupCode"]  = "<option value=\"\"></option>\n";
 $aryParts["lngWorkflowOrderGroupCode"] .= fncGetPulldown( "m_Group", "lngGroupCode", "strGroupDisplayName", "", "", $objDB );
 
-// ¥æ¡¼¥¶¡¼¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
 $aryParts["lngInChargeCode"]  = "<option value=\"\"></option>\n";
 $aryParts["lngInChargeCode"] .= fncGetPulldown( "m_User", "lngUserCode", "strUserDisplayName", "", "", $objDB );
 
 
 $objDB->close();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "/m/search/wf/parts.tmpl" );

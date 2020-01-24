@@ -2,10 +2,10 @@
 
 // ----------------------------------------------------------------------------
 /**
- * �ⷿĢɼ���� ��Ͽ��ǧ����*
+ * 金型帳票管理 登録確認画面*
  *
- * ��������
- * ����Ͽ��ǧ���̤�ɽ��
+ * 処理概要
+ * ・登録確認画面を表示
  */
 // ----------------------------------------------------------------------------
 include('conf.inc');
@@ -20,125 +20,125 @@ $objAuth = new clsAuth ();
 $objDB->open ( "", "", "", "" );
 
 $aryData = $_REQUEST;
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession ( $aryData ["strSessionID"], $objAuth, $objDB);
 
-// 1900 �ⷿĢɼ����
+// 1900 金型帳票管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MR0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 1901 �ⷿ����(��Ͽ)
+// 1901 金型管理(登録)
 if ( !fncCheckAuthority( DEF_FUNCTION_MR1, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// ����å��奤�󥹥��󥹤μ���
+// キャッシュインスタンスの取得
 $formCache = FormCache::getInstance();
 
-// ����å���(�ե�����)�ǡ����μ��Ф�
+// キャッシュ(フォーム)データの取り出し
 $resultFormCache = $formCache->get($aryData["resultHash"]);
 
-// ����å���(�ե�����)�ǡ��������Ф������
+// キャッシュ(フォーム)データが取り出せた場合
 if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 {
-	// ����å���쥳���ɼ���
+	// キャッシュレコード取得
 	$workCache = pg_fetch_array($resultFormCache, 0, PGSQL_ASSOC);
 
-	// �ǥ��ꥢ�饤��
+	// デシリアライズ
 	$workFormData = FormCache::deserialize($workCache["serializeddata"]);
 
-	// �桼�ƥ���ƥ����󥹥��󥹤μ���
+	// ユーティリティインスタンスの取得
 	$utilBussinesscode = UtilBussinesscode::getInstance();
 	$utilMold = UtilMold::getInstance();
 
-	// ��̳�����ɤ��饳�������������
-	$aryData["ReportCategoryDesc"] = $utilBussinesscode->getDescription('Ģɼ��ʬ',  $workFormData[FormMoldReport::ReportCategory]);
-	$aryData["RequestCategoryDesc"] = $utilBussinesscode->getDescription('�����ʬ', $workFormData[FormMoldReport::RequestCategory]);
-	$aryData["InstructionCategoryDesc"] = $utilBussinesscode->getDescription('�ؼ���ʬ', $workFormData[FormMoldReport::InstructionCategory]);
+	// 業務コードからコード説明を索引
+	$aryData["ReportCategoryDesc"] = $utilBussinesscode->getDescription('帳票区分',  $workFormData[FormMoldReport::ReportCategory]);
+	$aryData["RequestCategoryDesc"] = $utilBussinesscode->getDescription('依頼区分', $workFormData[FormMoldReport::RequestCategory]);
+	$aryData["InstructionCategoryDesc"] = $utilBussinesscode->getDescription('指示区分', $workFormData[FormMoldReport::InstructionCategory]);
 
-	// Ģɼ��ʬ��10:��ư������20:�ֵ��Ǥξ��
+	// 帳票区分が10:移動版又は20:返却版の場合
 	if (($workFormData[FormMoldReport::ReportCategory] == "10" ||
 		 $workFormData[FormMoldReport::ReportCategory] == "20"))
 	{
-		$aryData["TransferMethodDesc"] = $utilBussinesscode->getDescription('��ư��ˡ', $workFormData[FormMoldReport::TransferMethod]);
-		$aryData["FinalKeepDesc"] = $utilBussinesscode->getDescription('������ν���', $workFormData[FormMoldReport::FinalKeep]);
+		$aryData["TransferMethodDesc"] = $utilBussinesscode->getDescription('移動方法', $workFormData[FormMoldReport::TransferMethod]);
+		$aryData["FinalKeepDesc"] = $utilBussinesscode->getDescription('生産後の処理', $workFormData[FormMoldReport::FinalKeep]);
 	}
 
-	// TO����(���������)�κ��� ����Ū�˺ǽ�ζⷿ�λ��������������
+	// TO項目(仕入元会社)の索引 暫定的に最初の金型の仕入元を取得する
 	$venderInfo = $utilMold->getVenderInfomation($workFormData[FormMoldReport::MoldNo."1"]);
 	$aryData["SendTo"] = $venderInfo["companydisplaycode"];
 	$aryData["SendToName"] = $venderInfo["companydisplayname"];
 
-	// �ƥ�ץ졼���ɤ߹���
+	// テンプレート読み込み
 	$objTemplate = new clsTemplate ();
 	$objTemplate->getTemplate ( "/mr/confirm/mr_confirm.html" );
 
-	// �ǥ��ꥢ�饤������UTF-8�ˤ�����Τ�EUC-JP���᤹
+	// デシリアライズ時にUTF-8にしたものをEUC-JPに戻す
 	mb_convert_variables("eucjp-win", "utf-8", $workFormData);
 
-	// �ץ졼���ۥ�����ִ�
+	// プレースホルダー置換
 	$objTemplate->replace(array_merge($aryData, $workFormData));
 	$objTemplate->complete();
 
-	// �ⷿNO�����
+	// 金型NOの抽出
 	$listMoldNo = UtilMold::extractArray($workFormData, FormMoldReport::MoldNo);
-	// �ⷿ���������
+	// 金型説明の抽出
 	$listMoldDescription = UtilMold::extractArray($workFormData, FormMoldReport::MoldDescription);
 
-	// �ⷿ�ơ��֥������ΰ�DOMDocument�����
+	// 金型テーブル生成の為DOMDocumentを使用
 	$doc = new DOMDocument();
 
-	// �ѡ������顼����
+	// パースエラー抑制
 	libxml_use_internal_errors(true);
-	// DOM�ѡ���
+	// DOMパース
 	$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
-	// �ѡ������顼���ꥢ
+	// パースエラークリア
 	libxml_clear_errors();
-	// �ѡ������顼�������
+	// パースエラー抑制解除
 	libxml_use_internal_errors(false);
 
-	// �ⷿ�ơ��֥�μ���
+	// 金型テーブルの取得
 	$moldTable = $doc->getElementById("MoldTable");
 
-	// �ⷿNO�η��ʬ����
+	// 金型NOの件数分走査
 	for($i = 1; $i <= count($listMoldNo); $i++)
 	{
-		// �ⷿ�ơ��֥��tr����
+		// 金型テーブルのtr作成
 		$elmTableRacord = $doc->createElement("tr");
 
-		// �ⷿ�ơ��֥��td���Ǻ���
+		// 金型テーブルのtd要素作成
 		$elmTableCellIndex = $doc->createElement("td");
 		$elmTableCellMoldNo = $doc->createElement("td");
 		$elmTableCellDescription = $doc->createElement("td");
 
-		// td������Υƥ���������
+		// td要素内のテキスト設定
 		$elmTableCellIndex->appendChild($doc->createTextNode($i));
 		$elmTableCellMoldNo->appendChild($doc->createTextNode(toUTF8($listMoldNo[FormMoldReport::MoldNo.$i])));
 		$elmTableCellDescription->appendChild($doc->createTextNode(toUTF8($listMoldDescription[FormMoldReport::MoldDescription.$i])));
 
-		// td���Ǥ�tr���Ǥ��ɲ�
+		// td要素をtr要素に追加
 		$elmTableRacord->appendChild($elmTableCellIndex);
 		$elmTableRacord->appendChild($elmTableCellMoldNo);
 		$elmTableRacord->appendChild($elmTableCellDescription);
 
-		// �ⷿ�ơ��֥��tr���Ǥ��ɲ�
+		// 金型テーブルへtr要素を追加
 		$moldTable->appendChild($elmTableRacord);
 	}
 
-	// cookie���å�
+	// cookieセット
 	setcookie("strSessionID", $_REQUEST["strSessionID"]);
 	setcookie("resultHash", $_REQUEST["resultHash"]);
 
-	// html����
+	// html出力
 	echo $doc->saveHTML();
 }
-// ����å���(�ե�����)�ǡ��������Ф��ʤ��ä����
+// キャッシュ(フォーム)データが取り出せなかった場合
 else
 {
-	// ����å�����Ф�����
+	// キャッシュ取り出し失敗
 	fncOutputError(9065, DEF_ERROR, "", TRUE, "", $objDB);
 }
 

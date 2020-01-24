@@ -1,12 +1,12 @@
 
 //----------------------------------------------------------------------
-// ²òÀâ : ¥í¡¼¥«¥ëÊÑ¿ôÄêµÁ
+// è§£èª¬ : ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°å®šç¾©
 //----------------------------------------------------------------------
-// [ÊÄ¤¸¤ë]¥Ü¥¿¥óÄêµÁ
+// [é–‰ã˜ã‚‹]ãƒœã‚¿ãƒ³å®šç¾©
 var closeBtJ = '<a href="#"><img name="querybt" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" tabindex="1"></a>';
 var closeBtE = '<a href="#"><img name="querybt" onfocus="CloseEOn( this );" onblur="CloseEOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" tabindex="1"></a>';
 
-// [Ìá¤ë]¥Ü¥¿¥óÄêµÁ
+// [æˆ»ã‚‹]ãƒœã‚¿ãƒ³å®šç¾©
 var backBtJ = '<a href="#"><img name="querybt" onfocus="GrayBackJOn( this );" onblur="GrayBackJOff( this );" onmouseover="GrayBackJOn( this );" onmouseout="GrayBackJOff( this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/cmn/querybt/back_gray_off_ja_bt.gif" width="72" height="20" border="0" tabindex="1"></a>';
 var backBtE = '<a href="#"><img name="querybt" onfocus="GrayBackEOn( this );" onblur="GrayBackEOff( this );" onmouseover="GrayBackEOn( this );" onmouseout="GrayBackEOff( this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/cmn/querybt/back_gray_off_en_bt.gif" width="72" height="20" border="0" tabindex="1"></a>';
 
@@ -16,21 +16,21 @@ var backBtE = '<a href="#"><img name="querybt" onfocus="GrayBackEOn( this );" on
 
 
 //----------------------------------------------------------------------
-// ²òÀâ : ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó½ñ¤­½Ð¤·´Ø¿ô
+// è§£èª¬ : ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³æ›¸ãå‡ºã—é–¢æ•°
 //----------------------------------------------------------------------
 function fncObjQuery( lngLanguageCode , lngEventCode )
 {
 
-	// [ÊÄ¤¸¤ë]¥Ü¥¿¥ó
+	// [é–‰ã˜ã‚‹]ãƒœã‚¿ãƒ³
 	if( lngEventCode == 0 )
 	{
 		switch( lngLanguageCode )
 		{
-			case 0: // ±Ñ¸ì
+			case 0: // è‹±èªž
 				objQuery.innerHTML = closeBtE;
 				break;
 
-			case 1: // ÆüËÜ¸ì
+			case 1: // æ—¥æœ¬èªž
 				objQuery.innerHTML = closeBtJ;
 				break;
 
@@ -39,16 +39,16 @@ function fncObjQuery( lngLanguageCode , lngEventCode )
 		}
 	}
 
-	// [Ìá¤ë]¥Ü¥¿¥ó
+	// [æˆ»ã‚‹]ãƒœã‚¿ãƒ³
 	else if( lngEventCode == 1 )
 	{
 		switch( lngLanguageCode )
 		{
-			case 0: // ±Ñ¸ì
+			case 0: // è‹±èªž
 				objQuery.innerHTML = backBtE;
 				break;
 
-			case 1: // ÆüËÜ¸ì
+			case 1: // æ—¥æœ¬èªž
 				objQuery.innerHTML = backBtJ;
 				break;
 
@@ -65,7 +65,7 @@ function fncObjQuery( lngLanguageCode , lngEventCode )
 
 
 //----------------------------------------------------------------------
-// ²òÀâ : ¥Ü¥¿¥ó¥¤¥Ù¥ó¥È½èÍý´Ø¿ô
+// è§£èª¬ : ãƒœã‚¿ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†é–¢æ•°
 //----------------------------------------------------------------------
 function fncClickEvent( strEvent )
 {
@@ -87,7 +87,7 @@ function fncClickEvent( strEvent )
 
 
 //----------------------------------------------------------------------
-// ²òÀâ : ½é´ü¥ì¥¤¥¢¥¦¥È½èÍý´Ø¿ô
+// è§£èª¬ : åˆæœŸãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆå‡¦ç†é–¢æ•°
 //----------------------------------------------------------------------
 var TopMargin = '230';
 

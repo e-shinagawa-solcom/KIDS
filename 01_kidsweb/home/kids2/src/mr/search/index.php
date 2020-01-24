@@ -2,17 +2,17 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¶â·¿Ä¢É¼´ÉÍý  ¸¡º÷²èÌÌ
+*       é‡‘åž‹å¸³ç¥¨ç®¡ç†  æ¤œç´¢ç”»é¢
 *
-*       ½èÍý³µÍ×
-*         ¡¦¸¡º÷²èÌÌÉ½¼¨½èÍý
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»æ¤œç´¢ç”»é¢è¡¨ç¤ºå‡¦ç†
 */
 // ----------------------------------------------------------------------------
 
-// ÀßÄê¤ÎÆÉ¤ß¹þ¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require ( LIB_FILE );
 
 $objDB   = new clsDB();
@@ -20,27 +20,27 @@ $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 $aryData = $_REQUEST;
 
 setcookie("strSessionID", $aryData["strSessionID"]);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
-// 1900 ¶â·¿´ÉÍý
+// æ¨©é™ç¢ºèª
+// 1900 é‡‘åž‹ç®¡ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_MR0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// 1902 ¶â·¿´ÉÍý¡Ê¸¡º÷¡Ë
+// 1902 é‡‘åž‹ç®¡ç†ï¼ˆæ¤œç´¢ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_MR2, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 echo fncGetReplacedHtmlWithBase("base_mold.html", "mr/search/mr_search.tmpl", $aryData ,$objAuth );

@@ -1,31 +1,31 @@
-// handsontable¤ÎÁàºî´Ø¿ô
+// handsontableã®æ“ä½œé–¢æ•°
 
 $(function(){
-  // ¥Ç¡¼¥¿¤Î¼èÆÀ
+  // ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
   var script = $('#script').attr('data-param');
   var result = JSON.parse(script);
 
-  // ¥·¡¼¥È¿ô¤Î¼èÆÀ
+  // ã‚·ãƒ¼ãƒˆæ•°ã®å–å¾—
   var sheetNumber = Object.keys(result).length;
 
   var grid = [];
   var table = [];
 
-  // É½¼¨ÍÑ¥Ç¡¼¥¿¤ÎºîÀ®
+  // è¡¨ç¤ºç”¨ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
   for (var sheetNum = 0; sheetNum < sheetNumber; sheetNum++) {
     var sheetData = result[sheetNum];
-    // ³«»Ï¹ÔÎó¡¢½ªÎ»¹ÔÎó¤Î¼èÆÀ
+    // é–‹å§‹è¡Œåˆ—ã€çµ‚äº†è¡Œåˆ—ã®å–å¾—
     var startRow = sheetData['startRow'];
     var endRow = sheetData['endRow'];
     var startColumn = sheetData['startColumn'];
     var endColumn = sheetData['endColumn'];
 
-    // ¥»¥ë¤Î¥Ç¡¼¥¿¼èÆÀ
+    // ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿å–å¾—
     var cellData = sheetData['cellData'];
 
     var cellValue = [];
 
-    // ¥»¥ë¤Î¾ğÊó¤òÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+    // ã‚»ãƒ«ã®æƒ…å ±ã‚’é…åˆ—ã«æ ¼ç´ã™ã‚‹
     for (var i = startRow; i <= endRow; i++) {
       var rowValue = [];
       for (var j = startColumn; j <= endColumn; j++) {
@@ -34,9 +34,9 @@ $(function(){
       cellValue.push(rowValue);
     }
 
-    // ¥Ş¡¼¥¸¥»¥ë¤Î¼èÆÀ
+    // ãƒãƒ¼ã‚¸ã‚»ãƒ«ã®å–å¾—
     var merge = sheetData['mergedCellsList'];
-    // ¹Ô¤Î¹â¤µ¡¢Îó¤ÎÉı¤ò¼èÆÀ
+    // è¡Œã®é«˜ã•ã€åˆ—ã®å¹…ã‚’å–å¾—
     var rowHeight = sheetData['rowHeight'];
     var columnWidth = sheetData['columnWidth'];
 
@@ -49,23 +49,23 @@ $(function(){
 
     var width = gridWidth + 30;
 
-    // ¥¦¥£¥ó¥É¥¦¤Î¥ê¥µ¥¤¥º
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒªã‚µã‚¤ã‚º
     window.resizeTo(width, height);
 
-    // ¥»¥ë¤Î¥¯¥é¥¹¤ò¼èÆÀ
+    // ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹ã‚’å–å¾—
     var cellClass = sheetData['cellClass'];
 
-    // ¼õÃíÈÖ¹æ¥ê¥¹¥È¤ò¼èÆÀ
+    // å—æ³¨ç•ªå·ãƒªã‚¹ãƒˆã‚’å–å¾—
     var receiveNoList = sheetData['receiveNoList'];
 
-    // È¯ÃíÈÖ¹æ¥ê¥¹¥È¤ò¼èÆÀ
+    // ç™ºæ³¨ç•ªå·ãƒªã‚¹ãƒˆã‚’å–å¾—
     var orderNoList = sheetData['orderNoList'];
 
     var gridId = 'grid' + sheetNum;
 
     grid[sheetNum] = document.getElementById(gridId);
 
-    // Handsontable¤Ç¥¿¥°¤ËÉ½¤òËä¤á¹ş¤à
+    // Handsontableã§ã‚¿ã‚°ã«è¡¨ã‚’åŸ‹ã‚è¾¼ã‚€
     table[sheetNum] = new Handsontable(grid[sheetNum], {
       data: cellValue,
       fillHandle: false,
@@ -84,15 +84,15 @@ $(function(){
     });
   }
 
-  // Handsontable¤Î¥¢¥¯¥Æ¥£¥Ö²½¤Î¤¿¤á¡¢table¤Îº¸¾å¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+  // Handsontableã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–ã®ãŸã‚ã€tableã®å·¦ä¸Šã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
   table[0].selectCell(0, 0);
   table[0].deselectCell();
 
 
-  // Handsontable¤Îtd¥¿¥°CSS
+  // Handsontableã®tdã‚¿ã‚°CSS
   function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
     if (col <= 2) {
-      Handsontable.renderers.HtmlRenderer.apply(this, arguments);  //¡¡¥×¥ì¥Ó¥å¡¼¤Î³ÎÇ§¡¢¼è¾ÃÀßÃÖÍÑ
+      Handsontable.renderers.HtmlRenderer.apply(this, arguments);  //ã€€ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã®ç¢ºèªã€å–æ¶ˆè¨­ç½®ç”¨
     } else {
       Handsontable.renderers.TextRenderer.apply(this, arguments);
     }  

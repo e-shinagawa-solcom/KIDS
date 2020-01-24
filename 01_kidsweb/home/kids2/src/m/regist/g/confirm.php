@@ -1,6 +1,6 @@
 <?
 /** 
-*	�ޥ������� ���롼�ץޥ��� ��ǧ����
+*	マスタ管理 グループマスタ 確認画面
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,7 +10,7 @@
 *	@version   1.00
 *
 */
-// ��Ͽ������
+// 登録、修正
 // edit.php -> strSessionID         -> confirm.php
 // edit.php -> lngActionCode        -> confirm.php
 // edit.php -> lnggroupcode         -> confirm.php
@@ -21,12 +21,12 @@
 // edit.php -> strgroupdisplayname  -> confirm.php
 // edit.php -> strgroupdisplaycolor -> confirm.php
 //
-// ���
+// 削除
 // index.php -> strSessionID         -> confirm.php
 // index.php -> lngActionCode        -> confirm.php
 // index.php -> lnggroupcode         -> confirm.php
 //
-// ��Ͽ�������¹Ԥ�
+// 登録、修正実行へ
 // confirm.php -> strSessionID         -> action.php
 // confirm.php -> lngActionCode        -> action.php
 // confirm.php -> lnggroupcode         -> action.php
@@ -37,37 +37,37 @@
 // confirm.php -> strgroupdisplayname  -> action.php
 // confirm.php -> strgroupdisplaycolor -> action.php
 //
-// ����¹Ԥ�
+// 削除実行へ
 // confirm.php -> strSessionID        -> action.php
 // confirm.php -> lngActionCode       -> action.php
 // confirm.php -> lnggroupcode        -> action.php
 
 
-// �����ɤ߹���
+// 設定読み込み
 include_once('conf.inc');
 
-// �饤�֥���ɤ߹���
+// ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DB��³
+// DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// GET�ǡ�������
+// GETデータ取得
 $aryData = $_GET;
 
 
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ���³�ǧ
+// 権限確認
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 
@@ -76,7 +76,7 @@ $aryCheck["lngActionCode"]       = "null:number(" . DEF_ACTION_INSERT . "," . DE
 
 if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 {
-	// �����꤬�ʤ��ä���硢�ǥե���Ȥ��������
+	// 色指定がなかった場合、デフォルトで白を設定
 	if ( $aryData["strgroupdisplaycolor"] == "" )
 	{
 		$aryData["strgroupdisplaycolor"] = "#FFFFFF";
@@ -91,47 +91,47 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 	$aryCheck["strgroupdisplaycolor"] = "null:color";
 }
 
-// ʸ��������å�
+// 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 //fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
 
 //////////////////////////////////////////////////////////////////////////
-// ������ͭ����������å�
+// 処理の有効性をチェック
 //////////////////////////////////////////////////////////////////////////
-// ( ��Ͽ �ޤ��� ���� ) ���顼���ʤ� ��硢
-// ������Ͽ�����������å��¹�
+// ( 登録 または 修正 ) エラーがない 場合、
+// 新規登録、修正チェック実行
 if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode"] == DEF_ACTION_UPDATE ) && !join ( $aryCheckResult ) )
 {
-	// ���롼�ץ����ɽ�ʣ�����å�
+	// グループコード重複チェック
 	$strQuery = "SELECT * FROM m_Group " .
                 "WHERE lngGroupCode = " . $aryData["lnggroupcode"];
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ������Ͽ ���� ��̷����0�ʾ�
-	// �ޤ���
-	// ���� ���� ��̷����1�ʳ� �ξ�硢���顼
+	// 新規登録 かつ 結果件数が0以上
+	// または
+	// 修正 かつ 結果件数が1以外 の場合、エラー
 	if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && $lngResultNum > 0 ) || ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $lngResultNum != 1 ) )
 	{
 		$aryCheckResult["lnggroupcode_Error"] = 1;
 		$objDB->freeResult( $lngResultID );
 	}
 
-	// Ʊ�������ˤ�����ɽ�����롼�ץ����ɽ�ʣ�����å�
+	// 同じ企業内における表示グループコード重複チェック
 	$strQuery = "SELECT * FROM m_Group " .
                 "WHERE lngCompanyCode = " . $aryData["lngcompanycode"] .
                 " AND strGroupDisplayCode = '" . $aryData["strgroupdisplaycode"] . "'";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ��̷����0�ʾ�ξ�硢���顼Ƚ�������
+	// 結果件数が0以上の場合、エラー判定処理へ
 	if ( $lngResultNum > 0 )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
-		// ( ���� ���� ���롼�ץ����ɤ�Ʊ�� ) �ʳ� �ξ�硢���顼
+		// ( 更新 かつ グループコードが同じ ) 以外 の場合、エラー
 		if ( !( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $objResult->lnggroupcode == $aryData["lnggroupcode"] ) )
 		{
 			$aryCheckResult["strgroupdisplaycode_Error"] = 1;
@@ -140,7 +140,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 		$objDB->freeResult( $lngResultID );
 	}
 
-	// ��������ɽ���ե饰��OFF�ξ�硢�桼������°�����å��¹�
+	// 修正かつ表示フラグがOFFの場合、ユーザー所属チェック実行
 	if ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && !$aryData["bytgroupdisplayflag"] )
 	{
 		$strQuery = "SELECT * FROM m_GroupRelation " .
@@ -148,7 +148,7 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-		// ��̷����1�ʾ�ξ�硢���顼
+		// 結果件数が1以上の場合、エラー
 		if ( $lngResultNum > 0 )
 		{
 			$aryCheckResult["lnggroupcode_Error"] = 1;
@@ -157,14 +157,14 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 	}
 }
 
-// ��� ���� ���顼���ʤ� ��硢
-// ��������å��¹�
+// 削除 かつ エラーがない 場合、
+// 削除チェック実行
 elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResult ) )
 {
-	// �����å��оݥơ��֥�̾��������
+	// チェック対象テーブル名配列を定義
 	$aryTableName = Array ( "m_GroupRelation", "m_Order", "m_Receive", "m_Sales", "m_Stock" );
 
-	// �����å�����������
+	// チェッククエリ生成
 	for ( $i = 0; $i < count ( $aryTableName ); $i++ )
 	{
 		$aryQuery[] = "SELECT lngGroupCode FROM " . $aryTableName[$i] . " WHERE lngGroupCode = " . $aryData["lnggroupcode"];
@@ -175,14 +175,14 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ��̤�1��Ǥ⤢�ä���硢����Բ�ǽ�Ȥ������顼����
+	// 結果が1件でもあった場合、削除不可能とし、エラー出力
 	if ( $lngResultNum > 0 )
 	{
 		$objDB->freeResult( $lngResultID );
-		fncOutputError ( 1201, DEF_WARNING, "�ޥ�����������", TRUE, "", $objDB );
+		fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
 	}
 
-	// ����о�ɽ���Τ���Υǡ��������
+	// 削除対象表示のためのデータを取得
 	$strQuery = "SELECT * FROM m_Group WHERE lngGroupCode = " . $aryData["lnggroupcode"];
 
 	$objMaster = new clsMaster();
@@ -199,11 +199,11 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 	$aryKeys = Array ();
 }
 
-// ���顼����ɽ������
+// エラー項目表示処理
 list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB );
 
 
-// ���롼��ɽ���ե饰����
+// グループ表示フラグ設定
 if ( $aryData["bytgroupdisplayflag"] == "t" )
 {
 	$aryData["bytgroupdisplayflag"] = "TRUE";
@@ -214,7 +214,7 @@ else
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ����
+// 出力
 //////////////////////////////////////////////////////////////////////////
 $aryParts["lngLanguageCode"] =1;
 $aryParts["lngActionCode"]   =& $aryData["lngActionCode"];
@@ -224,10 +224,10 @@ $aryParts["lngKeyCode"]      =& $aryData["lnggroupcode"];
 $aryParts["strSessionID"]    =& $aryData["strSessionID"];
 
 
-// lngCompanyCode ��(CODE+NAME)����
+// lngCompanyCode の(CODE+NAME)取得
 $aryCompanyCode = fncGetMasterValue( "m_Company", "lngCompanyCode", "strCompanyName", "Array", "", $objDB );
-// bytGroupDisplayFlag ��(CODE+NAME)����
-$aryGroupDisplayFlag = Array ( "TRUE" => "ɽ��", "FALSE" => "��ɽ��" );
+// bytGroupDisplayFlag の(CODE+NAME)取得
+$aryGroupDisplayFlag = Array ( "TRUE" => "表示", "FALSE" => "非表示" );
 
 if ( $aryData["lngActionCode"] != DEF_ACTION_INSERT )
 {

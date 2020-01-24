@@ -1,8 +1,8 @@
-// ÊÖµÑÍ½ÄêÆü¡¡½é´ü¾õÂÖ¤Ç¤ÏÆşÎÏÉÔÍ×
+// è¿”å´äºˆå®šæ—¥ã€€åˆæœŸçŠ¶æ…‹ã§ã¯å…¥åŠ›ä¸è¦
 $('input[name="ReturnSchedule"]')
 .prop({ disabled: true })
 .css({ opacity: 0.3 });
-// À¸»º¸å¤Î½èÍı¤¬Êİ´É¹©¾ì¤ËÊÖµÑ¤Î¾ì¹ç¡¢ÊÖµÑÍ½ÄêÆüÍó¤òÍ­¸ú¤Ë¤¹¤ë
+// ç”Ÿç”£å¾Œã®å‡¦ç†ãŒä¿ç®¡å·¥å ´ã«è¿”å´ã®å ´åˆã€è¿”å´äºˆå®šæ—¥æ¬„ã‚’æœ‰åŠ¹ã«ã™ã‚‹
 $('select[name="FinalKeep"]').on({
     'change': function(){
         $('input[name="ReturnSchedule"]').trigger('blur');
@@ -12,7 +12,7 @@ $('select[name="FinalKeep"]').on({
     }
 });
 
-// Ä¢É¼¶èÊ¬¤¬ÇÑ´şÈÇ¤Î¾ì¹ç¡¢°ÜÆ°ÊıË¡¡¢À¸»º¸å¤Î½èÍı¡¢Êİ´É¹©¾ì¡¢°ÜÆ°¹©¾ìÍó¤òÌµ¸ú¤Ë¤¹¤ë
+// å¸³ç¥¨åŒºåˆ†ãŒå»ƒæ£„ç‰ˆã®å ´åˆã€ç§»å‹•æ–¹æ³•ã€ç”Ÿç”£å¾Œã®å‡¦ç†ã€ä¿ç®¡å·¥å ´ã€ç§»å‹•å·¥å ´æ¬„ã‚’ç„¡åŠ¹ã«ã™ã‚‹
 $('select[name="ReportCategory"]').on({
     'change': function(){
         if ( $(this).prop('selectedIndex') == 0 | $(this).prop('selectedIndex') == 1 | $(this).prop('selectedIndex') == 2 ) {
@@ -23,7 +23,7 @@ $('select[name="ReportCategory"]').on({
             $('input[name="DestinationFactory"]').prop('disabled', false).css('opacity', 1);
             $('input[name="DestinationFactoryName"]').prop('disabled', false).css('opacity', 1);
             $('input[name="DestinationFactoryName"] + .msw-button').prop('disabled', false).css('opacity', 1);
-            // À¸»º¸å¤Î½èÍı¤Ë±ş¤¸¤ÆÊÖµÑÍ½ÄêÆü¤ÎÍ­¸úÌµ¸ú¤òÀßÄê
+            // ç”Ÿç”£å¾Œã®å‡¦ç†ã«å¿œã˜ã¦è¿”å´äºˆå®šæ—¥ã®æœ‰åŠ¹ç„¡åŠ¹ã‚’è¨­å®š
             $('select[name="FinalKeep"]').trigger('change');
 
         } else if ( $(this).prop('selectedIndex') == 3 ) {
@@ -35,18 +35,18 @@ $('select[name="ReportCategory"]').on({
             $('input[name="DestinationFactory"]').prop('disabled', true).css('opacity', 0.3);
             $('input[name="DestinationFactoryName"]').prop('disabled', true).css('opacity', 0.3);
             $('input[name="DestinationFactoryName"] + .msw-button').prop('disabled', true).css('opacity', 0.3);
-            // ÊÖµÑÍ½ÄêÆü¤Îvalidation¥­¥Ã¥¯
+            // è¿”å´äºˆå®šæ—¥ã®validationã‚­ãƒƒã‚¯
             $('select[name="FinalKeep"]').trigger('change');
         }
     }
 });
 
-// À½ÉÊ¥³¡¼¥ÉÊÑ¹¹»şÊİ´É¹©¾ì¤È¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë¤ò¥ê¥»¥Ã¥È
+// è£½å“ã‚³ãƒ¼ãƒ‰å¤‰æ›´æ™‚ä¿ç®¡å·¥å ´ã¨é‡‘å‹èª¬æ˜ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ãƒªã‚»ãƒƒãƒˆ
 $('input[name="ProductCode"]').on({
     'change': function(){
-        // Êİ´É¹©¾ì¥ê¥»¥Ã¥È
+        // ä¿ç®¡å·¥å ´ãƒªã‚»ãƒƒãƒˆ
         $('input[name="SourceFactory"]').val('').trigger('change');
-        // ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ëÇÛ²¼¤ÎTBODYÍ×ÁÇ¤Î»ÒÍ×ÁÇ¤òºï½ü
+        // é‡‘å‹èª¬æ˜ãƒ†ãƒ¼ãƒ–ãƒ«é…ä¸‹ã®TBODYè¦ç´ ã®å­è¦ç´ ã‚’å‰Šé™¤
         $('form[name="RegistMoldReport"]').find('table.table-description').find('tbody').children().remove();
     }
 });

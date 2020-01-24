@@ -1,11 +1,11 @@
-// ³Æ¼ï¥Ü¥¿¥ó¤ò¥Õ¥©¡¼¥«¥¹²ÄÇ½¤Ë¤¹¤ë
+// å„ç¨®ãƒœã‚¿ãƒ³ã‚’ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å¯èƒ½ã«ã™ã‚‹
 $('img.msw-button, img.list-add, img.list-del').attr({
     tabindex: 0
 });
 
 $('.form-box__contents').on(
     'keydown', 'img.msw-button, img.list-add, img.list-del', function(e){
-        // 13:Enter¥­¡¼, 32:Space¥­¡¼
+        // 13:Enterã‚­ãƒ¼, 32:Spaceã‚­ãƒ¼
         if(e.which == 13 || e.which == 32){
             $(this).click();
             return false;

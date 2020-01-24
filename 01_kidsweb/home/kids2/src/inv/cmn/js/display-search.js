@@ -6,7 +6,7 @@
         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + lnginvoiceno + '&' + lngRevisionNo + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 
@@ -16,7 +16,7 @@
         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + lnginvoiceno + '&' + lngRevisionNo + '&' + sessionID, 'display-detail', 'width=1011, height=650,resizable=yes, scrollbars=yes, menubar=no');
     });
 
@@ -26,7 +26,7 @@
         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + lnginvoiceno + '&' + lngRevisionNo + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

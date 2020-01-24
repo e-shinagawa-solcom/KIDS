@@ -1,6 +1,6 @@
 <?
 /** 
-*	Ä¢É¼½ÐÎÏ Ä¢É¼ÁªÂò²èÌÌ
+*	å¸³ç¥¨å‡ºåŠ› å¸³ç¥¨é¸æŠžç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,16 +10,16 @@
 *	@version   1.00
 *
 */
-// Ä¢É¼ÁªÂò²èÌÌ
+// å¸³ç¥¨é¸æŠžç”»é¢
 // index.php -> strSessionID    -> index.php
 
-// ¸¡º÷²èÌÌ¤Ø( * ¤Ï»ØÄêÄ¢É¼¤Î¥Õ¥¡¥¤¥ëÌ¾ )
+// æ¤œç´¢ç”»é¢ã¸( * ã¯æŒ‡å®šå¸³ç¥¨ã®ãƒ•ã‚¡ã‚¤ãƒ«å )
 // index.php -> strSessionID    -> *.php
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "list/cmn/lib_lo.php");
 
@@ -28,7 +28,7 @@ $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_POST )
 {
@@ -39,18 +39,18 @@ elseif ( $_GET )
 	$aryData = $_GET;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -59,27 +59,27 @@ $aryParts["strPurchaseOrderURL"] = "#";
 
 if ( fncCheckAuthority( DEF_FUNCTION_LO1, $objAuth ) )
 {
-	// ¾¦ÉÊ²½´ë²è½ñÄ¢É¼½ÐÎÏ²ÄÇ½
+	// å•†å“åŒ–ä¼ç”»æ›¸å¸³ç¥¨å‡ºåŠ›å¯èƒ½
 	$aryParts["strGoodsPlanURL"] = '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=p';
 }
 if ( fncCheckAuthority( DEF_FUNCTION_LO2, $objAuth ) )
 {
-	// È¯Ãí½ñ¡ÊP.O¡ËÄ¢É¼½ÐÎÏ²ÄÇ½
+	// ç™ºæ³¨æ›¸ï¼ˆP.Oï¼‰å¸³ç¥¨å‡ºåŠ›å¯èƒ½
 	$aryParts["strPurchaseOrderURL"] = "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=po";
 }
 if ( fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
 {
-	// ¸«ÀÑ¸¶²Á·×»»Ä¢É¼½ÐÎÏ²ÄÇ½
+	// è¦‹ç©åŽŸä¾¡è¨ˆç®—å¸³ç¥¨å‡ºåŠ›å¯èƒ½
 	$aryParts["strEstimateURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=es";
 }
 if ( fncCheckAuthority( DEF_FUNCTION_SC0, $objAuth ) )
 {
-	// Ç¼ÉÊ½ñÄ¢É¼½ÐÎÏ²ÄÇ½
+	// ç´å“æ›¸å¸³ç¥¨å‡ºåŠ›å¯èƒ½
 	$aryParts["strSlipURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=slp";
 }
 if ( fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
 {
-	// ÀÁµá½ñÄ¢É¼½ÐÎÏ²ÄÇ½
+	// è«‹æ±‚æ›¸å¸³ç¥¨å‡ºåŠ›å¯èƒ½
 	$aryParts["strInvoiceURL"] =  "/list/index.php?strSessionID=" . $aryData["strSessionID"] . "&strListMode=inv";
 }
 
@@ -88,7 +88,7 @@ if ( fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
 $objDB->close();
 
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "/list/list/select.html" );
 $objTemplate->replace( $aryParts );

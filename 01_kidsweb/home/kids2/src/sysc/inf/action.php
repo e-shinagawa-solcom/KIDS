@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥·¥¹¥Æ¥à´ÉÍı ´ÉÍı¼ÔÀßÄê²èÌÌ
+*	ã‚·ã‚¹ãƒ†ãƒ ç®¡ç† ç®¡ç†è€…è¨­å®šç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,35 +10,35 @@
 *	@version   1.00
 *
 */
-// ¥·¥¹¥Æ¥à´ÉÍı¼ÔÀßÄê´°Î»²èÌÌ
+// ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…è¨­å®šå®Œäº†ç”»é¢
 // index.php -> strSessionID              -> action.php
 // index.php -> strSystemInformationTitle -> action.php
 // index.php -> strSystemInformationBody  -> action.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 //require (SRC_ROOT . "sysc/cmn/lib_sys.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_POST;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_SYS1, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -47,17 +47,17 @@ $aryCheck["strSystemInformationTitle"] = "null:length(1,100)";
 $aryCheck["strSystemInformationBody"]  = "null:length(1,1000)";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 //fncPutStringCheckError( $aryCheckResult, $objDB );
 
-// ²ş¹Ô¿ô¥Á¥§¥Ã¥¯(3¹Ô°Ê¾å¤Ï¥¨¥é¡¼)
+// æ”¹è¡Œæ•°ãƒã‚§ãƒƒã‚¯(3è¡Œä»¥ä¸Šã¯ã‚¨ãƒ©ãƒ¼)
 if ( preg_match ( "/\n/", $aryData["strSystemInformationBody"] ) > 2 )
 {
 	$aryCheckResult["strSystemInformationBody"] = TRUE;
 }
 
-// Ê¸»úÎó¥¨¥é¡¼¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
 if ( join ( "", $aryCheckResult ) != "" )
 {
 	//echo getArrayTable( $aryData, "TABLE" );exit;
@@ -69,16 +69,16 @@ if ( join ( "", $aryCheckResult ) != "" )
 	exit;
 }
 
-// ¥¿¥°¡¢CRºï½ü
+// ã‚¿ã‚°ã€CRå‰Šé™¤
 $aryData["strSystemInformationBody"] = preg_replace ( "/(<.+?>|\r)/", "", $aryData["strSystemInformationBody"] );
 
 
-// ¹¹¿·½èÍı¼Â¹Ô
+// æ›´æ–°å‡¦ç†å®Ÿè¡Œ
 $lngSeq = fncGetSequence( "m_SystemInformation.lngSystemInformationCode", $objDB );
 $strQuery = "INSERT INTO m_SystemInformation (lngsysteminformationcode, strsysteminformationtitle, strsysteminformationbody, dtminsertdate) VALUES ( $lngSeq, '" . $aryData["strSystemInformationTitle"] . "', '" . preg_replace ( "/\n/", "<br>", $aryData["strSystemInformationBody"] ) . "', now() )";
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "sysc/inf/finish.tmpl" );
 $objTemplate->replace( $aryData );

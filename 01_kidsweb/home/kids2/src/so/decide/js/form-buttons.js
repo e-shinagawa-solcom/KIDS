@@ -1,32 +1,32 @@
 (function () {
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var workForm = $('form');
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     var btnClear = $('img.clear');
-    // ÅĞÏ¿¥Ü¥¿¥ó
+    // ç™»éŒ²ãƒœã‚¿ãƒ³
     var btnSearch = $('img.search');
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³
     var btnClose = $('img.close');
 
-    // ¥Õ¥©¡¼¥à¥µ¥Ö¥ß¥Ã¥ÈÍŞ»ß
+    // ãƒ•ã‚©ãƒ¼ãƒ ã‚µãƒ–ãƒŸãƒƒãƒˆæŠ‘æ­¢
     $('document').on('submit', 'form', function (e) {
         e.preventDefault();
         return false;
     });
 
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     btnClear.on('click', function () {
-        // ¥Æ¥­¥¹¥ÈÆşÎÏ²Õ½ê¤ò¥ê¥»¥Ã¥È
+        // ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ›ç®‡æ‰€ã‚’ãƒªã‚»ãƒƒãƒˆ
         workForm.find('input[type="text"]').each(function (i, e) {
             $(this).val('');
         });
     });
 
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³
     btnClose.on('click', function () {
-        //¥¦¥£¥ó¥É¥¦¤òÊÄ¤¸¤ë
+        //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
         window.close();
-        // ¿Æ¥¦¥£¥ó¥É¥¦¤Î¥í¥Ã¥¯¤ò²ò½ü¤¹¤ë
+        // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒ­ãƒƒã‚¯ã‚’è§£é™¤ã™ã‚‹
         if (window.opener.$('#lockId').length) {
             window.opener.$('#lockId').remove();
         }
@@ -34,29 +34,29 @@
 
     var parantExistanceFlag = true;
 
-    // ¸¡º÷¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+    // æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnSearch.on('click', function () {
         if (workForm.valid()) {
-            //¥¦¥£¥ó¥É¥¦¥ª¥Ö¥¸¥§¥¯¥È¤¬Â¸ºß¤·¤Æ¤¤¤Ê¤¤»ş·Ù¹ğ¤·¤Æ¥Õ¥é¥°¤òfalse¤Ë
+            //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå­˜åœ¨ã—ã¦ã„ãªã„æ™‚è­¦å‘Šã—ã¦ãƒ•ãƒ©ã‚°ã‚’falseã«
             if (!window.opener || !Object.keys(window.opener).length) {
-                window.alert('¿Æ²èÌÌ¤¬Â¸ºß¤·¤Ş¤»¤ó');
+                window.alert('è¦ªç”»é¢ãŒå­˜åœ¨ã—ã¾ã›ã‚“');
                 parantExistanceFlag = false;
             }
 
-            //¿Æ²èÌÌ¤ËÃÍ¤òÁŞÆş
+            //è¦ªç”»é¢ã«å€¤ã‚’æŒ¿å…¥
             if (parantExistanceFlag) {
                 var strProductCode = $('input[name="strProductCode"]').val();
                 var strProductName = $('input[name="strProductName"]').val();
                 if (strProductCode.length == 0) {
-                    alert("À½ÉÊ¥³¡¼¥É¤òÀßÄê¤·¤Æ¤¯¤À¤µ¤¤¡£");
+                    alert("è£½å“ã‚³ãƒ¼ãƒ‰ã‚’è¨­å®šã—ã¦ãã ã•ã„ã€‚");
                     return;
                 }
 
-                // ¿ÆÀ½ÉÊ¥³¡¼¥É
+                // è¦ªè£½å“ã‚³ãƒ¼ãƒ‰
                 var parentStrProductCode = window.opener.$('input[name="strProductCode"]').val();
                 var lngSalesDivisionCode = $('select[name="lngSalesDivisionCode"] option:selected').val();
                 if (lngSalesDivisionCode === undefined) {
-                    alert("Çä¾åÊ¬Îà¥³¡¼¥É¤òÀßÄê¤·¤Æ¤¯¤À¤µ¤¤¡£");
+                    alert("å£²ä¸Šåˆ†é¡ã‚³ãƒ¼ãƒ‰ã‚’è¨­å®šã—ã¦ãã ã•ã„ã€‚");
                     return;
                 }
 
@@ -68,7 +68,7 @@
                 $('input[name="lngReceiveNo"]').val(decideId);
 
                 var formData = workForm.serializeArray();
-                // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+                // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
                 $.ajax({
                     url: '/so/decide/search_result.php?strSessionID=' + $.cookie('strSessionID'),
                     type: 'post',
@@ -76,17 +76,17 @@
                     data: formData
                 })
                     .done(function (response) {
-                        console.log("¼èÆÀ¥Ç¡¼¥¿¡§" + response);
+                        console.log("å–å¾—ãƒ‡ãƒ¼ã‚¿ï¼š" + response);
                         var response = JSON.parse(response);
                         if (response.count == 0) {
-                            alert("³ºÅö¤¹¤ë¼õÃíÌÀºÙ¤¬Â¸ºß¤·¤Ş¤»¤ó¡£");
+                            alert("è©²å½“ã™ã‚‹å—æ³¨æ˜ç´°ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚");
                             exit;
                         }
 
                         let changeCode = false;
 
                         if (parentStrProductCode != strProductCode) {
-                            var msg = 'ÁªÂò¤µ¤ì¤¿ÌÀºÙ¤òÁ´¤Æ¥¯¥ê¥¢¤·¤Ş¤¹¤¬¡¢¤è¤í¤·¤¤¤Ç¤¹¤«¡©';
+                            var msg = 'é¸æŠã•ã‚ŒãŸæ˜ç´°ã‚’å…¨ã¦ã‚¯ãƒªã‚¢ã—ã¾ã™ãŒã€ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ';
                             var $tableA_rows = window.opener.$('#tbl_detail tbody tr');
                             var $tableA_rows_length = $tableA_rows.length;
                             var warn = ($tableA_rows_length > 0) ? true : false;
@@ -153,21 +153,21 @@
                         resetTableBWidth();
                     })
                     .fail(function (response) {
-                        console.log("½èÍı·ë²Ì¡§" + JSON.stringify(response));
+                        console.log("å‡¦ç†çµæœï¼š" + JSON.stringify(response));
                         alert("fail");
-                        // Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+                        // Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
                     });
             }
-            //¥¦¥£¥ó¥É¥¦¤òÊÄ¤¸¤ë
+            //ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
             window.close();
 
-            // ¿Æ¥¦¥£¥ó¥É¥¦¤Î¥í¥Ã¥¯¤ò²ò½ü¤¹¤ë
+            // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒ­ãƒƒã‚¯ã‚’è§£é™¤ã™ã‚‹
             if (window.opener.$('#lockId').length) {
                 window.opener.$('#lockId').remove();
             }
         }
         else {
-            // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Î¥­¥Ã¥¯
+            // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒƒã‚¯
             workForm.find(':submit').click();
         }
     });
@@ -221,13 +221,13 @@ function resetTableBWidth() {
 }
 
 $(window).on("beforeunload", function (e) {
-    // ¿Æ¥¦¥£¥ó¥É¥¦¤Î¥í¥Ã¥¯¤ò²ò½ü¤¹¤ë
+    // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒ­ãƒƒã‚¯ã‚’è§£é™¤ã™ã‚‹
     if (window.opener.$('#lockId').length) {
         window.opener.$('#lockId').remove();
     }
 });
 /**
- * Ê¸»úÊÑ´¹¡Ênull¤Î¾ì¹ç¡¢""¤ËÊÑ´¹¡Ë
+ * æ–‡å­—å¤‰æ›ï¼ˆnullã®å ´åˆã€""ã«å¤‰æ›ï¼‰
  * @param {} str 
  */
 function convertNull(str) {
@@ -239,7 +239,7 @@ function convertNull(str) {
 }
 
 /**
- * Ê¸»úÊÑ´¹¡Ênull¤Î¾ì¹ç¡¢"0"¤ËÊÑ´¹¡Ë
+ * æ–‡å­—å¤‰æ›ï¼ˆnullã®å ´åˆã€"0"ã«å¤‰æ›ï¼‰
  * @param {} str 
  */
 function convertNullToZero(str) {

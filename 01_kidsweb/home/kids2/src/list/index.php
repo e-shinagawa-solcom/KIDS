@@ -1,6 +1,6 @@
 <?
 /**
- *    Ä¢É¼½ĞÎÏ Ä¢É¼ÁªÂò²èÌÌ
+ *    å¸³ç¥¨å‡ºåŠ› å¸³ç¥¨é¸æŠç”»é¢
  *
  *    @package   KIDS
  *    @license   http://www.wiseknot.co.jp/
@@ -10,16 +10,16 @@
  *    @version   1.00
  *
  */
-// Ä¢É¼ÁªÂò²èÌÌ
+// å¸³ç¥¨é¸æŠç”»é¢
 // index.php -> strSessionID    -> index.php
 
-// ¸¡º÷²èÌÌ¤Ø( * ¤Ï»ØÄêÄ¢É¼¤Î¥Õ¥¡¥¤¥ëÌ¾ )
+// æ¤œç´¢ç”»é¢ã¸( * ã¯æŒ‡å®šå¸³ç¥¨ã®ãƒ•ã‚¡ã‚¤ãƒ«å )
 // index.php -> strSessionID    -> *.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 // require SRC_ROOT . "list/cmn/lib_lo.php";
 // require (SRC_ROOT . "m/cmn/lib_m.php");
@@ -29,7 +29,7 @@ $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ($_POST) {
     $aryData = $_POST;
@@ -39,83 +39,83 @@ if ($_POST) {
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
 if (fncCheckAuthority(DEF_FUNCTION_LO1, $objAuth)) {
-    // ¾¦ÉÊ²½´ë²è½ñÄ¢É¼½ĞÎÏ²ÄÇ½
+    // å•†å“åŒ–ä¼ç”»æ›¸å¸³ç¥¨å‡ºåŠ›å¯èƒ½
     $aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_PRODUCT]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_PRODUCT]["name"] . "</a>\n";
 }
 if (fncCheckAuthority(DEF_FUNCTION_LO2, $objAuth)) {
-    // È¯Ãí½ñ¡ÊP.O¡ËÄ¢É¼½ĞÎÏ²ÄÇ½
+    // ç™ºæ³¨æ›¸ï¼ˆP.Oï¼‰å¸³ç¥¨å‡ºåŠ›å¯èƒ½
     $aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_ORDER]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_ORDER]["name"] . "</a>\n";
 }
 if (fncCheckAuthority(DEF_FUNCTION_LO5, $objAuth)) {
-    // Ç¼ÉÊ½ñÄ¢É¼½ĞÎÏ²ÄÇ½
+    // ç´å“æ›¸å¸³ç¥¨å‡ºåŠ›å¯èƒ½
     $aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_SLIP]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_SLIP]["name"] . "</a>\n";
 }
 if (fncCheckAuthority(DEF_FUNCTION_LO7, $objAuth)) {
-    // ÀÁµá½ñÄ¢É¼½ĞÎÏ²ÄÇ½
+    // è«‹æ±‚æ›¸å¸³ç¥¨å‡ºåŠ›å¯èƒ½
     $aryParts["strManagementMenu"] .= "<a href=search/" . $aryListOutputMenu[DEF_REPORT_INV]["file"] . ".php?strSessionID=" . $aryData["strSessionID"] . ">" . $aryListOutputMenu[DEF_REPORT_INV]["name"] . "</a>\n";
 }
 
 
-// ¥Ø¥ë¥×¥ê¥ó¥¯ÍÑµ¡Ç½¥³¡¼¥É¤ò¥»¥Ã¥È
+// ãƒ˜ãƒ«ãƒ—ãƒªãƒ³ã‚¯ç”¨æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
 $aryData["lngFunctionCode"] = DEF_FUNCTION_LO0;
 
 //-------------------------------------------------------------------------
-// ÆÉ¤ß¹ş¤ß¥Ú¡¼¥¸¤ÎÀßÄê
+// èª­ã¿è¾¼ã¿ãƒšãƒ¼ã‚¸ã®è¨­å®š
 //-------------------------------------------------------------------------
 if (!$aryData["strListMode"]) {
-    // Ä¢É¼ÁªÂò¥Ú¡¼¥¸
+    // å¸³ç¥¨é¸æŠãƒšãƒ¼ã‚¸
     $aryData["strListUrl"] = '/list/select.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . $aryData["lngFunctionCode"] . '&lngApplicantUserCodeVisible=1&lngInputUserCodeVisible=1&dtmStartDateVisible=1&lngInChargeCodeVisible=1&lngWorkflowStatusCodeVisible=1&lngWorkflowStatusCodeConditions=1&lngSelectFunctionCode=500';
 } else {
     switch ($aryData["strListMode"]) {
-        // ¾¦ÉÊ²½´ë²è½ñ ¸¡º÷¥Ú¡¼¥¸
+        // å•†å“åŒ–ä¼ç”»æ›¸ æ¤œç´¢ãƒšãƒ¼ã‚¸
         case 'p':
-            // ´ë²è¿Ê¹Ô¾õ¶·¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+            // ä¼ç”»é€²è¡ŒçŠ¶æ³ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
             $aryData["lngGoodsPlanProgressCode"] = "<option value=\"\"></option>\n";
             $aryData["lngGoodsPlanProgressCode"] .= fncGetPulldown("m_GoodsPlanProgress", "lngGoodsPlanProgressCode", "strGoodsPlanProgressName", "", "", $objDB);
             $strTemplatePath = "list/search/p/p_search.html";
 
             break;
 
-        // È¯Ãí½ñ ¸¡º÷¥Ú¡¼¥¸
+        // ç™ºæ³¨æ›¸ æ¤œç´¢ãƒšãƒ¼ã‚¸
         case 'po':
-            // ²ñ¼ÒÂ°À­¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+            // ä¼šç¤¾å±æ€§ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
             $aryData["lngAttributeCode"] = "<option value=\"\"></option>\n";
             $aryData["lngAttributeCode"] .= fncGetPulldown("m_Attribute", "lngAttributeCode", "strAttributeName", "", "", $objDB);
             $strTemplatePath = "list/search/po/po_search.html";
             break;
 
-        // ¸«ÀÑ¸¶²Á½ñ ¸¡º÷¥Ú¡¼¥¸
+        // è¦‹ç©åŸä¾¡æ›¸ æ¤œç´¢ãƒšãƒ¼ã‚¸
         case 'es':
-            // ²ñ¼ÒÂ°À­¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+            // ä¼šç¤¾å±æ€§ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
             $aryData["lngAttributeCode"] = "<option value=\"\"></option>\n";
             $aryData["lngAttributeCode"] .= fncGetPulldown("m_Attribute", "lngAttributeCode", "strAttributeName", "", "", $objDB);
             $strTemplatePath = "list/search/estimate/es_search.html";
             break;
 
-        // Ç¼ÉÊ½ñ ¸¡º÷¥Ú¡¼¥¸
+        // ç´å“æ›¸ æ¤œç´¢ãƒšãƒ¼ã‚¸
         case 'slp':
-            // Çä¾å¶èÊ¬¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+            // å£²ä¸ŠåŒºåˆ†ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
             $aryData["lngSalesClassCode"] = "<option value=\"\"></option>\n";
             $aryData["lngSalesClassCode"] .= fncGetPulldown("m_salesclass", "lngsalesclasscode", "lngsalesclasscode, strsalesclassname", "", '', $objDB);
 
-            // ¾ÃÈñÀÇ¶èÊ¬¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+            // æ¶ˆè²»ç¨åŒºåˆ†ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
             $aryData["lngTaxClassCode"] = "<option value=\"\"></option>\n";
             $aryData["lngTaxClassCode"] .= fncGetPulldown("m_taxClass", "lngTaxClassCode", "lngTaxClassCode, strtaxclassname", "", '', $objDB);
             $strTemplatePath = "list/search/slip/slp_search.html";
             break;
 
-        // ÀÁµá½ñ ¸¡º÷¥Ú¡¼¥¸
+        // è«‹æ±‚æ›¸ æ¤œç´¢ãƒšãƒ¼ã‚¸
         case 'inv':
-            // ¾ÃÈñÀÇ¶èÊ¬¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ À¸À®
+            // æ¶ˆè²»ç¨åŒºåˆ†ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ ç”Ÿæˆ
             $aryData["lngTaxClassCode"] = "<option value=\"\"></option>\n";
             $aryData["lngTaxClassCode"] .= fncGetPulldown("m_taxClass", "lngTaxClassCode", "lngTaxClassCode, strtaxclassname", "", '', $objDB);
             $strTemplatePath = "list/search/inv/inv_search.html";
@@ -128,11 +128,11 @@ if (!$aryData["strListMode"]) {
 //-------------------------------------------------------------------------
 
 $objDB->close();
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 if (!$aryData["strListMode"]) {
     echo fncGetReplacedHtml("/list/list/parts.html", $aryData, $objAuth);
 } else {
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     echo fncGetReplacedHtmlWithBase("search/base_search.html", $strTemplatePath, $aryData, $objAuth);
 
     // echo fncGetReplacedHtml( "/list/list/parts_button.html", $aryData, $objAuth );

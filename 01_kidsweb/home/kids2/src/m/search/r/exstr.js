@@ -3,7 +3,7 @@
 
 
 //////////////////////////////////////////////////////////////////
-////////// ¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncMasterSearchOnload()
 {
 	ChgEtoJ( window.top.lngLanguageCode );
@@ -15,7 +15,7 @@ function fncMasterSearchOnload()
 
 
 ///// HEADER IMAGE /////
-var headerAJ = '<img src="' + mmoneyrateJ + '" width="949" height="30" border="0" alt="ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¸¡º÷">';
+var headerAJ = '<img src="' + mmoneyrateJ + '" width="949" height="30" border="0" alt="é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿æ¤œç´¢">';
 var headerAE = '<img src="' + mmoneyrateE + '" width="949" height="30" border="0" alt="MONETARY RATE MASTER SEARCH">';
 
 

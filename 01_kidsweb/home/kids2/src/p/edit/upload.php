@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¾¦ÉÊ´ÉÍı  ¾¦ÉÊ»ÅÍÍ¾ÜºÙ¡¦²èÁü¥¢¥Ã¥×¥í¡¼¥É½èÍıÍÑ¥¹¥¯¥ê¥×¥È¡ÊHTMLÀ¸À®¡Ë
+*       å•†å“ç®¡ç†  å•†å“ä»•æ§˜è©³ç´°ãƒ»ç”»åƒã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰å‡¦ç†ç”¨ã‚¹ã‚¯ãƒªãƒ—ãƒˆï¼ˆHTMLç”Ÿæˆï¼‰
 *
 *
 *       @package    K.I.D.S.
@@ -13,48 +13,48 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦½é´üÅĞÏ¿²èÌÌ¤òÉ½¼¨
-*         ¡¦ÆşÎÏ¥¨¥é¡¼¥Á¥§¥Ã¥¯
-*         ¡¦ÅĞÏ¿¥Ü¥¿¥ó²¡²¼¸å¡¢ÅĞÏ¿³ÎÇ§²èÌÌ¤Ø
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»åˆæœŸç™»éŒ²ç”»é¢ã‚’è¡¨ç¤º
+*         ãƒ»å…¥åŠ›ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
+*         ãƒ»ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹å¾Œã€ç™»éŒ²ç¢ºèªç”»é¢ã¸
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
-	// ´Ä¶­ÀßÄêÆÉ¤ß¹ş¤ß
+	// ç’°å¢ƒè¨­å®šèª­ã¿è¾¼ã¿
 	include( 'conf.inc' );
 	require_once(CLS_IMAGELO_FILE);
 	
-	// ¥¤¥á¡¼¥¸¡¦¥é¡¼¥¸¥ª¥Ö¥¸¥§¥¯¥ÈÁàºî¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+	// ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ»ãƒ©ãƒ¼ã‚¸ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ“ä½œã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	$objImageLo = new clsImageLo();
 
-	// ¥Õ¥¡¥¤¥ëÊÑ¿ô¤è¤ê¥¤¥á¡¼¥¸¾ğÊó¹½Â¤ÂÎ¤Ø³ÊÇ¼
+	// ãƒ•ã‚¡ã‚¤ãƒ«å¤‰æ•°ã‚ˆã‚Šã‚¤ãƒ¡ãƒ¼ã‚¸æƒ…å ±æ§‹é€ ä½“ã¸æ ¼ç´
 	$aryImageInfo = $objImageLo->getUploadFileInfo($_FILES, 'userfile');
 
-	// °ìÅÙÊİ»ı¤µ¤ì¤¿¥¤¥á¡¼¥¸¥Ç¥£¥ì¥¯¥È¥ê¤ò»²¾È¤¹¤ë
+	// ä¸€åº¦ä¿æŒã•ã‚ŒãŸã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’å‚ç…§ã™ã‚‹
 	if(!empty($_GET["strTempImageDir"]))
 	{
 		$strTempImageDir = $_GET["strTempImageDir"];
 	}
 
 	$strDestPath = constant("USER_IMAGE_PEDIT_TMPDIR");
-	// ¥¤¥á¡¼¥¸¾ğÊó¹½Â¤ÂÎ¤ò´ğ¤Ë¡¢¥Õ¥¡¥¤¥ë¤ò¥Æ¥ó¥İ¥é¥ê¤ËÊİÂ¸¤·¤½¤Î·ë²Ì¤òÆÀ¤ë
+	// ã‚¤ãƒ¡ãƒ¼ã‚¸æƒ…å ±æ§‹é€ ä½“ã‚’åŸºã«ã€ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ãƒ†ãƒ³ãƒãƒ©ãƒªã«ä¿å­˜ã—ãã®çµæœã‚’å¾—ã‚‹
 	if(!$objImageLo->setTempImage($aryImageInfo, $strDestPath, $strTempImageDir, $strTempImageFile))
 	{
-		// ¥³¥Ô¡¼¼ºÇÔ
+		// ã‚³ãƒ”ãƒ¼å¤±æ•—
 		echo "";
 		exit;
 	}
 
-	//	HTML¤«¤é»²¾È¤¹¤ë¥Ñ¥¹
+	//	HTMLã‹ã‚‰å‚ç…§ã™ã‚‹ãƒ‘ã‚¹
 	$refpath = constant("DEF_PEDIT_IMGTMP").$strTempImageDir."/".$strTempImageFile;
 
 
-	// ²èÁü¥µ¥¤¥º¤Î³ÎÇ§
+	// ç”»åƒã‚µã‚¤ã‚ºã®ç¢ºèª
 	list($lngWidth, $lngHeight, $lngType, $strAttr) = getimagesize($strDestPath.$strTempImageDir."/".$strTempImageFile);
-	// µ¬Äê°Ê¾å¤Î¥µ¥¤¥º¤Î¾ì¹ç¥ê¥µ¥¤¥º¡Ê<img>¥¿¥°¤ÎÍ×ÁÇ»ØÄê¤Î¤ß¡Ë
+	// è¦å®šä»¥ä¸Šã®ã‚µã‚¤ã‚ºã®å ´åˆãƒªã‚µã‚¤ã‚ºï¼ˆ<img>ã‚¿ã‚°ã®è¦ç´ æŒ‡å®šã®ã¿ï¼‰
 	if($lngWidth > 630 || $lngHeight > 380)
 	{
 		$strAttr = 'width="630" height="380"';
@@ -69,14 +69,14 @@
 
 window.onload = function(){
 	
-	//	¥¨¥Ç¥£¥¿¡¼¤Ë²èÁü¤ò¥»¥Ã¥È¤¹¤ë
+	//	ã‚¨ãƒ‡ã‚£ã‚¿ãƒ¼ã«ç”»åƒã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	setImage("<?=$refpath?>");
 	
 }
 
 function setImage(imagepath){
 	
-	//	hiddenÍ×ÁÇ¤Ë¤Ä¤±¤ëPHP»²¾ÈÍÑÇÛÎóÌ¾
+	//	hiddenè¦ç´ ã«ã¤ã‘ã‚‹PHPå‚ç…§ç”¨é…åˆ—å
 	//var PHP_ARRAY_NAME = "uploadimages[]";
 	
 	var HTMLTEXT = window.parent.document.getElementById("htmltext");
@@ -90,15 +90,15 @@ function setImage(imagepath){
 //alert(HTMLTEXT.innerHTML);
 
 
-	// ¥¢¥Ã¥×¥í¡¼¥É¥¤¥á¡¼¥¸¥Ç¥£¥ì¥¯¥È¥ê¤òÊİÂ¸
+	// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ä¿å­˜
 	window.parent.parent.document.all.EditorDir.innerHTML	= '<input type="hidden" name="strTempImageDir" value="<?=$strTempImageDir?>" />';
 
 
-	// ¡Ö»²¾È¡×¥Ü¥Ã¥¯¥¹¤ò¥¯¥ê¥¢
+	// ã€Œå‚ç…§ã€ãƒœãƒƒã‚¯ã‚¹ã‚’ã‚¯ãƒªã‚¢
 	window.parent.document.getElementById( "form-uploadimage" ).reset();
 
 
-	//	hidden¥Î¡¼¥É¤òÄÉ²Ã¤¹¤ë
+	//	hiddenãƒãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹
 	//var PPP = parent.parent;
 	//PPP.document.all.EditorRecord.innerHTML += '<span><?=$encfilename?></span>'
 	//PPP.document.all.EditorRecord.innerHTML += '<input id="'+PHP_ARRAY_NAME+'" name="'+PHP_ARRAY_NAME+'" type="hidden" value="<?=$encfilename?>" />';

@@ -1,2 +1,2 @@
-// NO19:´ë¶È¥³¡¼¥É				¢ªÂ°À­¡Ê¥æ¡¼¥¶¡¼´ÉÍı:chiba)
+// NO19:ä¼æ¥­ã‚³ãƒ¼ãƒ‰				â†’å±æ€§ï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†:chiba)
 SELECT count(*), count(*) FROM m_AttributeRelation WHERE lngCompanyCode = _%strFormValue0%_ AND lngAttributeCode = 2

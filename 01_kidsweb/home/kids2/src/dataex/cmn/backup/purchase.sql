@@ -1,12 +1,12 @@
 /*
-	���ס�Purchase Recipe����L/C�ס�T/T�ס�on board��
-	�оݡ��ǡ����������ݡ���
-	������chiba
-	���͡�
+	概要：Purchase Recipe　「L/C」「T/T」「on board」
+	対象：データエクスポート
+	作成：chiba
+	備考：
 
-	��������
-	2004.04.27	ȯ���ʤ���������Ϥ���褦�˽���
-	2005.10.31  ���硦ô���Ԥ����ʥޥ�����껲�Ȥ���褦���ѹ�
+	更新履歴：
+	2004.04.27	発注なし仕入を出力するように修正
+	2005.10.31  部門・担当者を製品マスタより参照するように変更
 */
 SELECT
 	s.dtmAppropriationDate
@@ -77,5 +77,5 @@ WHERE
 	AND sd.strProductCode        = p.strProductCode
 	AND sd.lngProductUnitCode    = pu.lngProductUnitCode
 
-	/* ��1.L/C�Υǡ��� 2.T/T�Υǡ��� 3.�׾��������������������٤����ǡ��� */
+	/* 条件：1.L/Cのデータ 2.T/Tのデータ 3.計上日〜製品到着日が月を跨いだデータ */
 	_%lngExportConditions%_

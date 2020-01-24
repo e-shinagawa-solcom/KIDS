@@ -1,13 +1,13 @@
 
 ///// HEADER IMAGE /////
-var headerAJ = '<img src="' + search01J + '" width="949" height="30" border="0" alt="¥Ş¥¹¥¿¸¡º÷">';
+var headerAJ = '<img src="' + search01J + '" width="949" height="30" border="0" alt="ãƒã‚¹ã‚¿æ¤œç´¢">';
 var headerAE = '<img src="' + search01E + '" width="949" height="30" border="0" alt="MASTER SEARCH">';
 
 
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( lngSelfCode == 0 )
 	{
 
@@ -23,19 +23,19 @@ function ChgEtoJ( lngSelfCode )
 
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( lngSelfCode == 1 )
 	{
 
 		window.top.SegAHeader.innerHTML = headerAJ;
 
-		SltMaster.innerText       = 'ÁªÂò';
-		MasterName.innerText      = '¥Ş¥¹¥¿Ì¾¾Î';
-		Description.innerText     = '²òÀâ';
+		SltMaster.innerText       = 'é¸æŠ';
+		MasterName.innerText      = 'ãƒã‚¹ã‚¿åç§°';
+		Description.innerText     = 'è§£èª¬';
 
-		m_Company.innerText       = '²ñ¼Ò¥Ş¥¹¥¿´ÉÍı';
-		m_Group.innerText         = '¥°¥ë¡¼¥×¥Ş¥¹¥¿´ÉÍı';
-		m_MonetaryRate.innerText  = 'ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿´ÉÍı';
+		m_Company.innerText       = 'ä¼šç¤¾ãƒã‚¹ã‚¿ç®¡ç†';
+		m_Group.innerText         = 'ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿ç®¡ç†';
+		m_MonetaryRate.innerText  = 'é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ç®¡ç†';
 
 	}
 

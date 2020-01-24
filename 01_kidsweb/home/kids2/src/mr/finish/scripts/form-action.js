@@ -1,6 +1,6 @@
 
 (function(){
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó²¡²¼»ş¤ÎµóÆ°
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®æŒ™å‹•
     $('img.close-action').on({
         'click' : function(){
             parent.$('iframe.regist-confirm').prev().find('.ui-dialog-titlebar-close').click();

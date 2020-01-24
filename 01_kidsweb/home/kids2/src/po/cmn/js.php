@@ -13,15 +13,15 @@
 				$aryJScript[] = ",";
 			}
 			$aryJScript[] = "[ ";
-			$aryJScript[] = $aryData[$i]["strproductcode"].",";				// À½ÉÊ¥³¡¼¥É
-			$aryJScript[] = $aryData[$i]["lngstocksubjectcode"].", ";		// »ÅÆş²ÊÌÜ¥³¡¼¥É
-			$aryJScript[] = $aryData[$i]["lngstockitemcode"].", ";			// »ÅÆşÉôÉÊ¥³¡¼¥É
-			$aryJScript[] = $aryData[$i]["lngconversionclasscode"].", ";	// ´¹»»¶èÊ¬¥³¡¼¥É 
-			$aryJScript[] = $aryData[$i]["curproductprice"].", ";			// À½ÉÊ²Á³Ê
-			$aryJScript[] = $aryData[$i]["lngproductunitcode"].", ";		// À½ÉÊÃ±°Ì¥³¡¼¥É
-//			$aryJScript[] = $aryData[$i]["curtaxprice"].", ";				// ¾ÃÈñÀÇ¶â³Û
-			$aryJScript[] = $aryData[$i]["lngdeliverymethodcode"].", ";		// ±¿ÈÂÊıË¡¥³¡¼¥É
-			$aryJScript[] = $aryData[$i]["strnote"].", ";					// È÷¹Í
+			$aryJScript[] = $aryData[$i]["strproductcode"].",";				// è£½å“ã‚³ãƒ¼ãƒ‰
+			$aryJScript[] = $aryData[$i]["lngstocksubjectcode"].", ";		// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
+			$aryJScript[] = $aryData[$i]["lngstockitemcode"].", ";			// ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰
+			$aryJScript[] = $aryData[$i]["lngconversionclasscode"].", ";	// æ›ç®—åŒºåˆ†ã‚³ãƒ¼ãƒ‰ 
+			$aryJScript[] = $aryData[$i]["curproductprice"].", ";			// è£½å“ä¾¡æ ¼
+			$aryJScript[] = $aryData[$i]["lngproductunitcode"].", ";		// è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+//			$aryJScript[] = $aryData[$i]["curtaxprice"].", ";				// æ¶ˆè²»ç¨é‡‘é¡
+			$aryJScript[] = $aryData[$i]["lngdeliverymethodcode"].", ";		// é‹æ¬æ–¹æ³•ã‚³ãƒ¼ãƒ‰
+			$aryJScript[] = $aryData[$i]["strnote"].", ";					// å‚™è€ƒ
 			$aryJScript[] = "] ";
 
 		}

@@ -77,22 +77,22 @@ function ChgEtoJ()
 		///// INPUT A /////
 		SegAHeader.innerHTML = headerAJ;
 
-		SegA01.innerText='¥í¥°¥¤¥óµö²Ä';
-		SegA02.innerText='¥æ¡¼¥¶¡¼¥³¡¼¥É';
-		SegA03.innerText='¥æ¡¼¥¶¡¼ID';
-		SegA04.innerText='¥Ñ¥¹¥ï¡¼¥É';
-		SegA05.innerText='¥Ñ¥¹¥ï¡¼¥É³ÎÇ§';
-		SegA06.innerText='¥á¡¼¥ëÇÛ¿®µö²Ä';
-		SegA07.innerText='¥á¡¼¥ë¥¢¥É¥ì¥¹';
-		SegA08.innerText='¥æ¡¼¥¶¡¼É½¼¨';
-		SegA09.innerText='É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É';
-		SegA10.innerText='É½¼¨¥æ¡¼¥¶¡¼Ì¾';
-		SegA11.innerText='¥Õ¥ë¥Í¡¼¥à';
-		SegA12.innerText='²ñ¼Ò';
-		SegA13.innerText='¥°¥ë¡¼¥×';
-		SegA14.innerText='¸¢¸Â¥°¥ë¡¼¥×';
-		SegA15.innerText='¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹';
-		SegA16.innerText='È÷¹Í';
+		SegA01.innerText='ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯';
+		SegA02.innerText='ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰';
+		SegA03.innerText='ãƒ¦ãƒ¼ã‚¶ãƒ¼ID';
+		SegA04.innerText='ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰';
+		SegA05.innerText='ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ç¢ºèª';
+		SegA06.innerText='ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯';
+		SegA07.innerText='ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹';
+		SegA08.innerText='ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤º';
+		SegA09.innerText='è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰';
+		SegA10.innerText='è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å';
+		SegA11.innerText='ãƒ•ãƒ«ãƒãƒ¼ãƒ ';
+		SegA12.innerText='ä¼šç¤¾';
+		SegA13.innerText='ã‚°ãƒ«ãƒ¼ãƒ—';
+		SegA14.innerText='æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—';
+		SegA15.innerText='ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹';
+		SegA16.innerText='å‚™è€ƒ';
 
 
 		///// QUERY BUTTON /////

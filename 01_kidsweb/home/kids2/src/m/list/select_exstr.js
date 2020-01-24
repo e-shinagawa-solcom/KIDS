@@ -3,14 +3,14 @@
 
 
 ///// HEADER IMAGE /////
-var headerAJ = '<img src="' + h_listJ + '" width="949" height="30" border="0" alt="¥Ş¥¹¥¿°ìÍ÷">';
+var headerAJ = '<img src="' + h_listJ + '" width="949" height="30" border="0" alt="ãƒã‚¹ã‚¿ä¸€è¦§">';
 var headerAE = '<img src="' + h_listE + '" width="949" height="30" border="0" alt="MASTER LIST">';
 
 
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( lngSelfCode == 0 )
 	{
 
@@ -35,28 +35,28 @@ function ChgEtoJ( lngSelfCode )
 
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( lngSelfCode == 1 )
 	{
 
 		window.top.SegAHeader.innerHTML = headerAJ;
 
-		SltMaster.innerText        = 'ÁªÂò';
-		MasterName.innerText       = '¥Ş¥¹¥¿Ì¾¾Î';
-		Description.innerText      = '²òÀâ';
+		SltMaster.innerText        = 'é¸æŠ';
+		MasterName.innerText       = 'ãƒã‚¹ã‚¿åç§°';
+		Description.innerText      = 'è§£èª¬';
 
-		m_StockClass.innerText       = '»ÅÆş¶èÊ¬¥Ş¥¹¥¿´ÉÍı';
-		m_StockSubject.innerText     = '»ÅÆş²ÊÌÜ¥Ş¥¹¥¿´ÉÍı';
-		m_StockItem.innerText        = '»ÅÆşÉôÉÊ¥Ş¥¹¥¿´ÉÍı';
-		m_AccessIPAddress.innerText  = '¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹¥Ş¥¹¥¿´ÉÍı';
-		m_CertificateClass.innerText = '¾Ú»æ¼ïÎà¥Ş¥¹¥¿´ÉÍı';
-		m_Country.innerText          = '¹ñ¥Ş¥¹¥¿´ÉÍı';
-		m_Copyright.innerText        = 'ÈÇ¸¢¸µ¥Ş¥¹¥¿´ÉÍı';
-		m_Organization.innerText     = 'ÁÈ¿¥¥Ş¥¹¥¿´ÉÍı';
-		m_ProductForm.innerText      = '¾¦ÉÊ·ÁÂÖ¥Ş¥¹¥¿´ÉÍı';
-		m_SalesClass.innerText       = 'Çä¾å¶èÊ¬¥Ş¥¹¥¿´ÉÍı';
-		m_TargetAge.innerText        = 'ÂĞ¾İÇ¯Îğ¥Ş¥¹¥¿´ÉÍı';
-		m_DeliveryMethod.innerText   = '±¿ÈÂÊıË¡¥Ş¥¹¥¿´ÉÍı';
+		m_StockClass.innerText       = 'ä»•å…¥åŒºåˆ†ãƒã‚¹ã‚¿ç®¡ç†';
+		m_StockSubject.innerText     = 'ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ç®¡ç†';
+		m_StockItem.innerText        = 'ä»•å…¥éƒ¨å“ãƒã‚¹ã‚¿ç®¡ç†';
+		m_AccessIPAddress.innerText  = 'ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚¹ã‚¿ç®¡ç†';
+		m_CertificateClass.innerText = 'è¨¼ç´™ç¨®é¡ãƒã‚¹ã‚¿ç®¡ç†';
+		m_Country.innerText          = 'å›½ãƒã‚¹ã‚¿ç®¡ç†';
+		m_Copyright.innerText        = 'ç‰ˆæ¨©å…ƒãƒã‚¹ã‚¿ç®¡ç†';
+		m_Organization.innerText     = 'çµ„ç¹”ãƒã‚¹ã‚¿ç®¡ç†';
+		m_ProductForm.innerText      = 'å•†å“å½¢æ…‹ãƒã‚¹ã‚¿ç®¡ç†';
+		m_SalesClass.innerText       = 'å£²ä¸ŠåŒºåˆ†ãƒã‚¹ã‚¿ç®¡ç†';
+		m_TargetAge.innerText        = 'å¯¾è±¡å¹´é½¢ãƒã‚¹ã‚¿ç®¡ç†';
+		m_DeliveryMethod.innerText   = 'é‹æ¬æ–¹æ³•ãƒã‚¹ã‚¿ç®¡ç†';
 
 	}
 

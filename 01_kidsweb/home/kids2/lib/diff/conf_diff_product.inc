@@ -1,7 +1,7 @@
 <?php
 
 /**
-*	¥Õ¥¡¥¤¥ë³µÍ×	: À½ÉÊ¥Þ¥¹¥¿¡¦º¹Ê¬´ÉÍýÀßÄê
+*	ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦	: è£½å“ãƒžã‚¹ã‚¿ãƒ»å·®åˆ†ç®¡ç†è¨­å®š
 *
 *
 *	@charset	: euc-jp
@@ -9,77 +9,77 @@
 
 
 
-	define ( "PRODUCT_MASTER_UPDATE_FLAG", 1 );	// À½ÉÊ¥Þ¥¹¥¿½ñ¤­´¹¤¨µö²Ä¥Õ¥é¥°  1:µö²Ä  0:ÉÔµö²Ä
+	define ( "PRODUCT_MASTER_UPDATE_FLAG", 1 );	// è£½å“ãƒžã‚¹ã‚¿æ›¸ãæ›ãˆè¨±å¯ãƒ•ãƒ©ã‚°  1:è¨±å¯  0:ä¸è¨±å¯
 
 
 	$aryDiffProduct	= array();
 
-	// Table¡¦KeyÇÛÎó
+	// Tableãƒ»Keyé…åˆ—
 	$aryDiffProduct["table"]	= "m_product";		// table
 	$aryDiffProduct["key"]		= "strproductcode";	// key
 
-	// ÈÝÇ§¹àÌÜÇÛÎó
-	$aryDiffProduct["denial"]["strproductcode"]			= true;		// À½ÉÊ¥³¡¼¥É
-	$aryDiffProduct["denial"]["lnginchargeusercode"]	= true;		// Ã´Åö¼Ô¥³¡¼¥É
+	// å¦èªé …ç›®é…åˆ—
+	$aryDiffProduct["denial"]["strproductcode"]			= true;		// è£½å“ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["denial"]["lnginchargeusercode"]	= true;		// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
 
-	// º¹°Û¥Á¥§¥Ã¥¯¹àÌÜÇÛÎó
-	$aryDiffProduct["diff"]["strproductcode"]			= true;		// À½ÉÊ¥³¡¼¥É
-	$aryDiffProduct["diff"]["strproductname"]			= true;		// À½ÉÊÌ¾¾Î¡ÊÆüËÜ¸ì¡Ë
-	$aryDiffProduct["diff"]["lnginchargegroupcode"]		= true;		// ÉôÌç¥³¡¼¥É
-	$aryDiffProduct["diff"]["lnginchargeusercode"]		= true;		// Ã´Åö¼Ô¥³¡¼¥É
-	$aryDiffProduct["diff"]["lngcartonquantity"]		= true;		// ¥«¡¼¥È¥óÆþ¤ê¿ô
-	$aryDiffProduct["diff"]["lngproductionquantity"]	= true;		// À¸»ºÍ½Äê¿ô
-	$aryDiffProduct["diff"]["dtmdeliverylimitdate"]		= true;		// Ç¼´ü
-	$aryDiffProduct["diff"]["curretailprice"]			= true;		// ¾åÂå
-	$aryDiffProduct["diff"]["curproductprice"]			= true;		// Ç¼²Á
-
-
-	// É½¼¨ÍÑ¹àÌÜÇÛÎó
-	$aryDiffProduct["display"]["strproductcode"]		= "À½ÉÊ¥³¡¼¥É";			// À½ÉÊ¥³¡¼¥É
-	$aryDiffProduct["display"]["strproductname"]		= "À½ÉÊÌ¾¾Î¡ÊÆüËÜ¸ì¡Ë";	// À½ÉÊÌ¾¾Î¡ÊÆüËÜ¸ì¡Ë
-	$aryDiffProduct["display"]["lnginchargegroupcode"]	= "ÉôÌç¥³¡¼¥É";			// ÉôÌç¥³¡¼¥É
-	$aryDiffProduct["display"]["lnginchargeusercode"]	= "Ã´Åö¼Ô¥³¡¼¥É";		// Ã´Åö¼Ô¥³¡¼¥É
-	$aryDiffProduct["display"]["lngcartonquantity"]		= "¥«¡¼¥È¥óÆþ¤ê¿ô";		// ¥«¡¼¥È¥óÆþ¤ê¿ô
-	$aryDiffProduct["display"]["lngproductionquantity"]	= "À¸»ºÍ½Äê¿ô";			// À¸»ºÍ½Äê¿ô
-	$aryDiffProduct["display"]["dtmdeliverylimitdate"]	= "Ç¼´ü";				// Ç¼´ü
-	$aryDiffProduct["display"]["curretailprice"]		= "¾åÂå";				// ¾åÂå
-	$aryDiffProduct["display"]["curproductprice"]		= "Ç¼²Á";				// Ç¼²Á
-	$aryDiffProduct["display"]["curConversionRate"]		= "US¥É¥ë¥ì¡¼¥È";		// ´¹»»¥ì¡¼¥È
-	$aryDiffProduct["display"]["curStandardRate"]		= "É¸½à³ä¹ç";			// É¸½à³ä¹ç
+	// å·®ç•°ãƒã‚§ãƒƒã‚¯é …ç›®é…åˆ—
+	$aryDiffProduct["diff"]["strproductcode"]			= true;		// è£½å“ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["diff"]["strproductname"]			= true;		// è£½å“åç§°ï¼ˆæ—¥æœ¬èªžï¼‰
+	$aryDiffProduct["diff"]["lnginchargegroupcode"]		= true;		// éƒ¨é–€ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["diff"]["lnginchargeusercode"]		= true;		// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["diff"]["lngcartonquantity"]		= true;		// ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
+	$aryDiffProduct["diff"]["lngproductionquantity"]	= true;		// ç”Ÿç”£äºˆå®šæ•°
+	$aryDiffProduct["diff"]["dtmdeliverylimitdate"]		= true;		// ç´æœŸ
+	$aryDiffProduct["diff"]["curretailprice"]			= true;		// ä¸Šä»£
+	$aryDiffProduct["diff"]["curproductprice"]			= true;		// ç´ä¾¡
 
 
-	// À½ÉÊ¥Þ¥¹¥¿¾ðÊó¼èÆÀÍÑSELECT¶çÇÛÎó
-	$aryDiffProduct["select"]["strproductcode"]			= true;												// À½ÉÊ¥³¡¼¥É
-	$aryDiffProduct["select"]["strproductname"]			= true;												// À½ÉÊÌ¾¾Î¡ÊÆüËÜ¸ì¡Ë
-	$aryDiffProduct["select"]["lnginchargegroupcode"]	= true;												// ÉôÌç¥³¡¼¥É
-	$aryDiffProduct["select"]["lnginchargeusercode"]	= true;												// Ã´Åö¼Ô¥³¡¼¥É
-	$aryDiffProduct["select"]["lngcartonquantity"]		= true;												// ¥«¡¼¥È¥óÆþ¤ê¿ô
-	$aryDiffProduct["select"]["lngproductionquantity"]	= true;												// À¸»ºÍ½Äê¿ô
-	$aryDiffProduct["select"]["to_char( dtmdeliverylimitdate, 'YYYY/mm' ) as dtmdeliverylimitdate"]	= true;	// Ç¼´ü
-	$aryDiffProduct["select"]["curretailprice"]			= true;												// ¾åÂå
-	$aryDiffProduct["select"]["curproductprice"]		= true;												// Ç¼²Á
-
-	// Temp¥Æ¡¼¥Ö¥ëÅÐÏ¿ÍÑ¥«¥é¥àÇÛÎó
-	$aryDiffProduct["tempdb"]["strProductCode"]				= true;		// À½ÉÊ¥³¡¼¥É
-	$aryDiffProduct["tempdb"]["strProductName"]				= true;		// À½ÉÊÌ¾¾Î¡ÊÆüËÜ¸ì¡Ë
-	$aryDiffProduct["tempdb"]["strGroupDisplayCode"]		= true;		// ÉôÌç¥³¡¼¥É
-	$aryDiffProduct["tempdb"]["strUserDiplayCode"]			= false;	// Ã´Åö¼Ô¥³¡¼¥É
-	$aryDiffProduct["tempdb"]["lngCartonQuantity"]			= true;		// ¥«¡¼¥È¥óÆþ¤ê¿ô
-	$aryDiffProduct["tempdb"]["lngPlanCartonProduction"]	= true;		// ·×²èC/t
-	$aryDiffProduct["tempdb"]["lngProductionQuantity"]		= true;		// À¸»ºÍ½Äê¿ô
-	$aryDiffProduct["tempdb"]["dtmDeliveryLimitDate"]		= true;		// Ç¼´ü
-	$aryDiffProduct["tempdb"]["curRetailPrice"]				= true;		// ¾åÂå
-	$aryDiffProduct["tempdb"]["curProductPrice"]			= true;		// Ç¼²Á
-	$aryDiffProduct["tempdb"]["curConversionRate"]			= true;		// ´¹»»¥ì¡¼¥È
-	$aryDiffProduct["tempdb"]["curStandardRate"]			= true;		// É¸½à³ä¹ç
-
-	// ¥ì¡¼¥ÈÇÛÎó
-	$aryDiffProduct["rate"]["curConversionRate"]	= true;		// ´¹»»¥ì¡¼¥È
-	$aryDiffProduct["rate"]["curStandardRate"]		= true;		// É¸½à³ä¹ç
+	// è¡¨ç¤ºç”¨é …ç›®é…åˆ—
+	$aryDiffProduct["display"]["strproductcode"]		= "è£½å“ã‚³ãƒ¼ãƒ‰";			// è£½å“ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["display"]["strproductname"]		= "è£½å“åç§°ï¼ˆæ—¥æœ¬èªžï¼‰";	// è£½å“åç§°ï¼ˆæ—¥æœ¬èªžï¼‰
+	$aryDiffProduct["display"]["lnginchargegroupcode"]	= "éƒ¨é–€ã‚³ãƒ¼ãƒ‰";			// éƒ¨é–€ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["display"]["lnginchargeusercode"]	= "æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰";		// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["display"]["lngcartonquantity"]		= "ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°";		// ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
+	$aryDiffProduct["display"]["lngproductionquantity"]	= "ç”Ÿç”£äºˆå®šæ•°";			// ç”Ÿç”£äºˆå®šæ•°
+	$aryDiffProduct["display"]["dtmdeliverylimitdate"]	= "ç´æœŸ";				// ç´æœŸ
+	$aryDiffProduct["display"]["curretailprice"]		= "ä¸Šä»£";				// ä¸Šä»£
+	$aryDiffProduct["display"]["curproductprice"]		= "ç´ä¾¡";				// ç´ä¾¡
+	$aryDiffProduct["display"]["curConversionRate"]		= "USãƒ‰ãƒ«ãƒ¬ãƒ¼ãƒˆ";		// æ›ç®—ãƒ¬ãƒ¼ãƒˆ
+	$aryDiffProduct["display"]["curStandardRate"]		= "æ¨™æº–å‰²åˆ";			// æ¨™æº–å‰²åˆ
 
 
-	// ÆâÉô->É½¼¨¥³¡¼¥ÉÊÑ´¹¹àÌÜ
-	define ( "DISP_INCHARGE_GROUP_CODE",	"lnginchargegroupcode" );	// ÉôÌç¥³¡¼¥É
-	define ( "DISP_INCHARGE_USER_CODE",		"lnginchargeusercode" );	// Ã´Åö¼Ô¥³¡¼¥É
+	// è£½å“ãƒžã‚¹ã‚¿æƒ…å ±å–å¾—ç”¨SELECTå¥é…åˆ—
+	$aryDiffProduct["select"]["strproductcode"]			= true;												// è£½å“ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["select"]["strproductname"]			= true;												// è£½å“åç§°ï¼ˆæ—¥æœ¬èªžï¼‰
+	$aryDiffProduct["select"]["lnginchargegroupcode"]	= true;												// éƒ¨é–€ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["select"]["lnginchargeusercode"]	= true;												// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["select"]["lngcartonquantity"]		= true;												// ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
+	$aryDiffProduct["select"]["lngproductionquantity"]	= true;												// ç”Ÿç”£äºˆå®šæ•°
+	$aryDiffProduct["select"]["to_char( dtmdeliverylimitdate, 'YYYY/mm' ) as dtmdeliverylimitdate"]	= true;	// ç´æœŸ
+	$aryDiffProduct["select"]["curretailprice"]			= true;												// ä¸Šä»£
+	$aryDiffProduct["select"]["curproductprice"]		= true;												// ç´ä¾¡
+
+	// Tempãƒ†ãƒ¼ãƒ–ãƒ«ç™»éŒ²ç”¨ã‚«ãƒ©ãƒ é…åˆ—
+	$aryDiffProduct["tempdb"]["strProductCode"]				= true;		// è£½å“ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["tempdb"]["strProductName"]				= true;		// è£½å“åç§°ï¼ˆæ—¥æœ¬èªžï¼‰
+	$aryDiffProduct["tempdb"]["strGroupDisplayCode"]		= true;		// éƒ¨é–€ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["tempdb"]["strUserDiplayCode"]			= false;	// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+	$aryDiffProduct["tempdb"]["lngCartonQuantity"]			= true;		// ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
+	$aryDiffProduct["tempdb"]["lngPlanCartonProduction"]	= true;		// è¨ˆç”»C/t
+	$aryDiffProduct["tempdb"]["lngProductionQuantity"]		= true;		// ç”Ÿç”£äºˆå®šæ•°
+	$aryDiffProduct["tempdb"]["dtmDeliveryLimitDate"]		= true;		// ç´æœŸ
+	$aryDiffProduct["tempdb"]["curRetailPrice"]				= true;		// ä¸Šä»£
+	$aryDiffProduct["tempdb"]["curProductPrice"]			= true;		// ç´ä¾¡
+	$aryDiffProduct["tempdb"]["curConversionRate"]			= true;		// æ›ç®—ãƒ¬ãƒ¼ãƒˆ
+	$aryDiffProduct["tempdb"]["curStandardRate"]			= true;		// æ¨™æº–å‰²åˆ
+
+	// ãƒ¬ãƒ¼ãƒˆé…åˆ—
+	$aryDiffProduct["rate"]["curConversionRate"]	= true;		// æ›ç®—ãƒ¬ãƒ¼ãƒˆ
+	$aryDiffProduct["rate"]["curStandardRate"]		= true;		// æ¨™æº–å‰²åˆ
+
+
+	// å†…éƒ¨->è¡¨ç¤ºã‚³ãƒ¼ãƒ‰å¤‰æ›é …ç›®
+	define ( "DISP_INCHARGE_GROUP_CODE",	"lnginchargegroupcode" );	// éƒ¨é–€ã‚³ãƒ¼ãƒ‰
+	define ( "DISP_INCHARGE_USER_CODE",		"lnginchargeusercode" );	// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
 
 ?>

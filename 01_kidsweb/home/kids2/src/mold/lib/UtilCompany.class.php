@@ -4,46 +4,46 @@ require_once (SRC_ROOT.'/mold/lib/WithQuery.class.php');
 require_once (SRC_ROOT.'/mold/lib/exception/SQLException.class.php');
 
 /**
- * ��ҥޥ����˴�Ϣ����������󶡤���
- * clsDB����Ѥ��Ƥ��뤬�������Դ����ʰ����դ��뤳��
+ * 会社マスタに関連する処理を提供する
+ * clsDBを使用しているが処理が不完全な為注意すること
  *
  * @see clsDB
  */
 class UtilCompany extends WithQuery
 {
 	/**
-	 * ��ҥ����ɤ��˲��ɽ��̾���������
+	 * 会社コードを基に会社表示名を取得する
 	 *
-	 * @param string $companyCode ��ҥ�����
-	 * @return ɽ���桼��̾
+	 * @param string $companyCode 会社コード
+	 * @return 表示ユーザ名
 	 */
 	public function selectDisplayNameByCompanyCode($companyCode)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"companyCode" => pg_escape_string($companyCode)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ɽ��̾�μ���
+				// 表示名の取得
 				$result = $record["strcompanydisplayname"];
 			}
 			else
 			{
 				throw new SQLException(
-						"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+						"検索条件に一致するレコードが存在しませんでした。",
 						$query,
 						$param
 				);
@@ -52,7 +52,7 @@ class UtilCompany extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -62,38 +62,38 @@ class UtilCompany extends WithQuery
 	}
 
 	/**
-	 * ��ҥ����ɤ��˲��ɽ�������ɤ��������
+	 * 会社コードを基に会社表示コードを取得する
 	 *
-	 * @param string $companyCode ��ҥ�����
-	 * @return ɽ���桼��̾
+	 * @param string $companyCode 会社コード
+	 * @return 表示ユーザ名
 	 */
 	public function selectDisplayCodeByCompanyCode($companyCode)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"companyCode" => pg_escape_string($companyCode)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ɽ��̾�μ���
+				// 表示名の取得
 				$result = $record["strcompanydisplaycode"];
 			}
 			else
 			{
 				throw new SQLException(
-						"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+						"検索条件に一致するレコードが存在しませんでした。",
 						$query,
 						$param
 						);
@@ -102,7 +102,7 @@ class UtilCompany extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -112,42 +112,42 @@ class UtilCompany extends WithQuery
 	}
 
 	/**
-	 * ɽ����ҥ����ɤ��˲�ҥ����ɤ��������
+	 * 表示会社コードを基に会社コードを取得する
 	 *
-	 * @param string $displayCompanyCode ɽ����ҥ�����
-	 * @param boolean $required �������ɬ�ܥե饰
-	 * @return ��ҥ�����
+	 * @param string $displayCompanyCode 表示会社コード
+	 * @param boolean $required 索引結果必須フラグ
+	 * @return 会社コード
 	 */
 	public function selectCompanyCodeByDisplayCompanyCode($displayCompanyCode, $required = true)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"strcompanydisplaycode" => pg_escape_string($displayCompanyCode)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ɽ��̾�μ���
+				// 表示名の取得
 				$result = $record["lngcompanycode"];
 			}
 			else
 			{
-				// ��̤�ɬ�ܤξ��
+				// 結果が必須の場合
 				if ($required)
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 					);
@@ -157,7 +157,7 @@ class UtilCompany extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -168,7 +168,7 @@ class UtilCompany extends WithQuery
 
 	/**
 	 * <pre>
-	 * ɽ����ҥ�����(°��:�ܵ�, ����¾)����ҥޥ������¸�ߤ����Τ������å���Ԥ�
+	 * 表示会社コード(属性:顧客, その他)が会社マスタ上に存在するものかチェックを行う
 	 * </pre>
 	 *
 	 * @param string $companyDisplayCode
@@ -181,18 +181,18 @@ class UtilCompany extends WithQuery
 		if(is_string($companyDisplayCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"strcompanydisplaycode" => pg_escape_string($companyDisplayCode)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -201,7 +201,7 @@ class UtilCompany extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -210,8 +210,8 @@ class UtilCompany extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($companyDisplayCode)
+					"引数の型が不正です。".
+					"引数1:".gettype($companyDisplayCode)
 					);
 		}
 
@@ -220,7 +220,7 @@ class UtilCompany extends WithQuery
 
 	/**
 	 * <pre>
-	 * ɽ����ҥ�����(°��:����, ����¾)����ҥޥ������¸�ߤ����Τ������å���Ԥ�
+	 * 表示会社コード(属性:工場, その他)が会社マスタ上に存在するものかチェックを行う
 	 * </pre>
 	 *
 	 * @param string $companyDisplayCode
@@ -233,18 +233,18 @@ class UtilCompany extends WithQuery
 		if(is_string($companyDisplayCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"strcompanydisplaycode" => pg_escape_string($companyDisplayCode)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -253,7 +253,7 @@ class UtilCompany extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -262,8 +262,8 @@ class UtilCompany extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($companyDisplayCode)
+					"引数の型が不正です。".
+					"引数1:".gettype($companyDisplayCode)
 					);
 		}
 

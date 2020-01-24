@@ -1,7 +1,7 @@
 <?
-define ( "DEF_ACTION_RESTART", 1 ); // ºÆµ¯Æ°¥³¡¼¥É
-define ( "DEF_ACTION_STOP", 2 );    // Ää»ß¥³¡¼¥É
+define ( "DEF_ACTION_RESTART", 1 ); // å†èµ·å‹•ã‚³ãƒ¼ãƒ‰
+define ( "DEF_ACTION_STOP", 2 );    // åœæ­¢ã‚³ãƒ¼ãƒ‰
 
-define ( "DEF_PATH_RESTART", "sudo /usr/local/apache2/bin/apachectl restart" ); // ºÆµ¯Æ°
-define ( "DEF_PATH_STOP", "sudo /usr/local/apache2/bin/apachectl stop" );    // Ää»ß
+define ( "DEF_PATH_RESTART", "sudo /usr/local/apache2/bin/apachectl restart" ); // å†èµ·å‹•
+define ( "DEF_PATH_STOP", "sudo /usr/local/apache2/bin/apachectl stop" );    // åœæ­¢
 ?>

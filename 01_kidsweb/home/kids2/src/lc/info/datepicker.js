@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    // datepickerÂĞ¾İÍ×ÁÇ
+    // datepickerå¯¾è±¡è¦ç´ 
     var ymElements = [
         $("#startYm"),
         $("#endYm"),
         $("#simulateYm")
     ];
 
-    // datepicker¤ÎÀßÄê
+    // datepickerã®è¨­å®š
     $.each(ymElements, function () {
         this.datepicker({
             dateFormat: 'yymm',

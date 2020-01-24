@@ -42,8 +42,8 @@ function Msw1ChgEtoJ( MswCount )
 		ResultHeader01.innerHTML = resultheader01J;
 
 		///// SEGMENTS /////
-		SegA01_1.innerText='¸ÜµÒ¥³¡¼¥É';
-		SegA01_2.innerText='¸ÜµÒÌ¾¾Î';
+		SegA01_1.innerText='é¡§å®¢ã‚³ãƒ¼ãƒ‰';
+		SegA01_2.innerText='é¡§å®¢åç§°';
 
 		///// SEARCH BUTTON /////
 		SearchButton01.innerHTML = searchbuttonAJ1;

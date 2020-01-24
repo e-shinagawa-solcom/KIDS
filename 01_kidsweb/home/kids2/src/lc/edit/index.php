@@ -2,85 +2,85 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       LC´ÉÍý  LCÊÔ½¸²èÌÌ
+ *       LCç®¡ç†  LCç·¨é›†ç”»é¢
  */
 // ----------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-// ¢£ ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ëÆÉ¹þ
+// â–  ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼
 //-------------------------------------------------------------------------
 include 'conf.inc';
-//¶¦ÄÌ¥Õ¥¡¥¤¥ëÆÉ¤ß¹þ¤ß
+//å…±é€šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 require_once '../lcModel/lcModelCommon.php';
-//¥¯¥é¥¹¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹þ¤ß
+//ã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once '../lcModel/db_common.php';
 require_once '../lcModel/kidscore_common.php';
 require LIB_FILE;
 
 //-------------------------------------------------------------------------
-// ¢£ ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// â–  ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 //-------------------------------------------------------------------------
 $objDB = new clsDB();
 $objAuth = new clsAuth();
-//LCÍÑDBÀÜÂ³¥¤¥ó¥¹¥¿¥ó¥¹À¸À®
+//LCç”¨DBæŽ¥ç¶šã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 $db = new lcConnect();
 
 //-------------------------------------------------------------------------
-// ¢£ DB¥ª¡¼¥×¥ó
+// â–  DBã‚ªãƒ¼ãƒ—ãƒ³
 //-------------------------------------------------------------------------
 $objDB->open("", "", "", "");
 
 //-------------------------------------------------------------------------
-// ¢£ ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+// â–  ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 //-------------------------------------------------------------------------
 $aryData = $_GET;
 
-$aryData["strSessionID"] = $_REQUEST["strSessionID"]; // ¥»¥Ã¥·¥ç¥óID
+$aryData["strSessionID"] = $_REQUEST["strSessionID"]; // ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 
-//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 $usrId = trim($objAuth->UserID);
 
-// // 2100 LC´ÉÍý
+// // 2100 LCç®¡ç†
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+//         fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 // }
 
-// // 2101 LCÊÔ½¸
+// // 2101 LCç·¨é›†
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC2, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+//         fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 // }
 
 $objDB->close();
 
-//·ÐÍý¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæŽ¥ç¶š
 $lcModel = new lcModel();
 
-//¥í¥°¥¤¥ó¾õ¶·È½Äê½èÍý
+//ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³åˆ¤å®šå‡¦ç†
 $logined_flg = false;
 $login_state = $lcModel->getLoginState($usrId);
 
-//¥æ¡¼¥¶¡¼¸¢¸Â¤Î¼èÆÀ
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™ã®å–å¾—
 $loginUserAuth = $lcModel->getUserAuth($usrId);
 
 $userAuth = substr($loginUserAuth, 1, 1);
 
 $lcModel->close();
 
-//HTML¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+//HTMLã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 $aryData["login_state"] = $login_state;
 
 echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/edit/parts.tmpl", $aryData, $objAuth);
 
-//½é´ü½èÍý¼Â¹Ô
-//js¤Ø¤Î°ú¤­ÅÏ¤·¥Ç¡¼¥¿
+//åˆæœŸå‡¦ç†å®Ÿè¡Œ
+//jsã¸ã®å¼•ãæ¸¡ã—ãƒ‡ãƒ¼ã‚¿
 $arr = array(
     "login_state" => $login_state,
     "session_id" => $aryData["strSessionID"],

@@ -1,74 +1,74 @@
 <?php
 
-// ÆÉ¤ß¹ş¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
-//¥¯¥é¥¹¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+//ã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once 'db_common.php';
-//¶¦ÄÌ¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+//å…±é€šãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 require_once './lcModelCommon.php';
-//DBÀÜÂ³¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+//DBæ¥ç¶šãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once './db_common.php';
 require_once './kidscore_common.php';
 require_once './report_common.php';
 require_once './reportoutput.php';
 require LIB_FILE;
-//PHPÉ¸½à¤ÎJSONÊÑ´¹¥á¥½¥Ã¥É¤Ï¥¨¥é¡¼¤Ë¤Ê¤ë¤Î¤Ç³°Éô¤Î¥é¥¤¥Ö¥é¥ê(¶²¤é¤¯¥¨¥ó¥³¡¼¥É¤ÎÌäÂê)
+//PHPæ¨™æº–ã®JSONå¤‰æ›ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§å¤–éƒ¨ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒª(æã‚‰ãã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®å•é¡Œ)
 require_once 'JSON.php';
-// phpspreadsheet¥Ñ¥Ã¥±¡¼¥¸¤ò¥¤¥ó¥İ¡¼¥È¤¹¤ë
+// phpspreadsheetãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹
 require PATH_HOME . "/vendor/autoload.php";
 
 use PhpOffice\PhpSpreadsheet\Reader\Xls as XlsReader;
 use PhpOffice\PhpSpreadsheet\Writer\Xls as XlsWriter;
 
-//ÃÍ¤Î¼èÆÀ
+//å€¤ã®å–å¾—
 $postdata = file_get_contents("php://input");
 $data = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//·ĞÍı¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæ¥ç¶š
 $lcModel = new lcModel();
 
-//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
+//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 $s = new Services_JSON();
 
-//ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤ÏÄÌ¾ï¤Î POST ¤Ç¼õ¤±¤ë
+//å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯é€šå¸¸ã® POST ã§å—ã‘ã‚‹
 if ($data == null) {
     $data = $_POST;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($data["sessionid"], $objAuth, $objDB);
 
-//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 $usrId = trim($objAuth->UserID);
 
-//·ë²ÌÇÛÎó
+//çµæœé…åˆ—
 $result = array();
 
-//½èÍı¿¶¤êÊ¬¤±
+//å‡¦ç†æŒ¯ã‚Šåˆ†ã‘
 switch ($data['method']) {
-    // Ä¢É¼½ĞÎÏ½é´üÉ½¼¨¥¤¥Ù¥ó¥È
+    // å¸³ç¥¨å‡ºåŠ›åˆæœŸè¡¨ç¤ºã‚¤ãƒ™ãƒ³ãƒˆ
     case 'getSelLcReport':
-        //½èÍı¸Æ¤Ó½Ğ¤·
+        //å‡¦ç†å‘¼ã³å‡ºã—
         $result = getSelLcReport($objDB, $lcModel);
         $objDB->close();
         $lcModel->close();
         break;
-        // Ä¢É¼½ĞÎÏ¤Î°õºş¥¤¥Ù¥ó¥È
+        // å¸³ç¥¨å‡ºåŠ›ã®å°åˆ·ã‚¤ãƒ™ãƒ³ãƒˆ
         // case 'exportLcReport':
-        //     //½èÍı¸Æ¤Ó½Ğ¤·
+        //     //å‡¦ç†å‘¼ã³å‡ºã—
         //     $result = exportLcReport($objDB, $data);
         //     $objDB->close();
         //     break;
 }
 
-//·ë²Ì½ĞÎÏ
+//çµæœå‡ºåŠ›
 mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);
 
 /**
- * LCÄ¢É¼½ĞÎÏ²èÌÌ-¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¾ğÊó¼èÆÀ
+ * LCå¸³ç¥¨å‡ºåŠ›ç”»é¢-ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹æƒ…å ±å–å¾—
  *
  * @param [type] $objDB
  * @param [type] $lcModel
@@ -76,50 +76,50 @@ echo $s->encodeUnsafe($result);
  */
 function getSelLcReport($objDB, $lcModel)
 {
-    // ackids¤Î¥Ç¡¼¥¿¤òkidscore2¤ËÅĞÏ¿
-    // ackids¤Î¶ä¹Ô¾ğÊó¤Î¼èÆÀ
+    // ackidsã®ãƒ‡ãƒ¼ã‚¿ã‚’kidscore2ã«ç™»éŒ²
+    // ackidsã®éŠ€è¡Œæƒ…å ±ã®å–å¾—
     $bankArry = $lcModel->getBankInfo();
-    // kidscore2¤Î¶ä¹Ô¾ğÊó¤Îºï½ü
+    // kidscore2ã®éŠ€è¡Œæƒ…å ±ã®å‰Šé™¤
     fncDeleteBank($objDB);
-    // kidscore2¤Î¶ä¹Ô¾ğÊó¤ÎÅĞÏ¿
+    // kidscore2ã®éŠ€è¡Œæƒ…å ±ã®ç™»éŒ²
     if (count($bankArry) > 0) {
         foreach ($bankArry as $bank) {
             fncInsertBank($objDB, $bank);
         }
     }
 
-    // ackids¤Î»ÙÊ§Àè¾ğÊó¤Î¼èÆÀ
+    // ackidsã®æ”¯æ‰•å…ˆæƒ…å ±ã®å–å¾—
     $payfArry = $lcModel->getPayfInfo();
-    // kidscore2¤Î»ÙÊ§Àè¾ğÊó¤Îºï½ü
+    // kidscore2ã®æ”¯æ‰•å…ˆæƒ…å ±ã®å‰Šé™¤
     fncDeletePayfinfo($objDB);
-    // kidscore2¤Î»ÙÊ§Àè¾ğÊó¤ÎÅĞÏ¿
+    // kidscore2ã®æ”¯æ‰•å…ˆæƒ…å ±ã®ç™»éŒ²
     if (count($payfArry) > 0) {
         foreach ($payfArry as $payf) {
             fncInsertPayf($objDB, $payf);
         }
     }
 
-    // ackids¤ÎÁ÷ÉÕÀè¥Ş¥¹¥¿¾ğÊó¤Î¼èÆÀ
+    // ackidsã®é€ä»˜å…ˆãƒã‚¹ã‚¿æƒ…å ±ã®å–å¾—
     $sendArry = $lcModel->getSendInfo();
-    // kidscore2¤ÎÁ÷ÉÕÀè¥Ş¥¹¥¿¾ğÊó¤Îºï½ü
+    // kidscore2ã®é€ä»˜å…ˆãƒã‚¹ã‚¿æƒ…å ±ã®å‰Šé™¤
     fncDeleteSendinfo($objDB);
-    // kidscore2¤ÎÁ÷ÉÕÀè¥Ş¥¹¥¿¾ğÊó¤ÎÅĞÏ¿
+    // kidscore2ã®é€ä»˜å…ˆãƒã‚¹ã‚¿æƒ…å ±ã®ç™»éŒ²
     if (count($sendArry) > 0) {
         foreach ($sendArry as $send) {
             fncInsertSendInfo($objDB, $send);
         }
     }
 
-    // ²ÙÍÈÃÏ¥ê¥¹¥È¤Î¼èÆÀ
+    // è·æšåœ°ãƒªã‚¹ãƒˆã®å–å¾—
     $result["portplace"] = fncGetPortplaceAndAll($objDB);
-    // ¶ä¹Ô¥ê¥¹¥È¤Î¼èÆÀ
+    // éŠ€è¡Œãƒªã‚¹ãƒˆã®å–å¾—
     $result["bankinfo"] = fncGetBankAndAll($objDB);
 
     return $result;
 }
 
 /**
- * LCÄ¢É¼½ĞÎÏ²èÌÌ-°õºş½èÍı
+ * LCå¸³ç¥¨å‡ºåŠ›ç”»é¢-å°åˆ·å‡¦ç†
  *
  * @param [object] $objDB
  * @param [string] $data
@@ -128,29 +128,29 @@ function getSelLcReport($objDB, $lcModel)
 function exportLcReport($objDB, $data)
 {
 
-    // ¥Ñ¥é¥á¡¼¥¿¤Î¼èÆÀ
-    // ÂĞ¾İÇ¯·î
+    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å–å¾—
+    // å¯¾è±¡å¹´æœˆ
     $objectYm = $data["objectYm"];
 
-    //ÄÌ²ß¶èÊ¬¥ê¥¹¥È¤Î¼èÆÀ
+    //é€šè²¨åŒºåˆ†ãƒªã‚¹ãƒˆã®å–å¾—
     $currencyClassLst = fncGetCurrencyClassList($objDB);
-    //ÄÌ²ß¶èÊ¬(Ì¤¾µÇ§´Ş¤à)¥ê¥¹¥È¤Î¼èÆÀ
+    //é€šè²¨åŒºåˆ†(æœªæ‰¿èªå«ã‚€)ãƒªã‚¹ãƒˆã®å–å¾—
     $currencyClassAllLst = fncGetCurrencyClassListAll($objDB);
-    // ¶ä¹Ô¥Ş¥¹¥¿¾ğÊó¤Î¼èÆÀ
+    // éŠ€è¡Œãƒã‚¹ã‚¿æƒ…å ±ã®å–å¾—
     $bankLst = fncGetValidBankInfo($objDB);
 
-    //¥Æ¥ó¥×¥ì¡¼¥È¤Î¥³¥Ô¡¼
+    //ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ã‚³ãƒ”ãƒ¼
 
     $reader = new XlsReader();
     $filepath = REPORT_TMPDIR . REPORT_LC_TMPFILE;
-    $spreadsheet = $reader->load($filepath); //template.xlsx ÆÉ¹ş
+    $spreadsheet = $reader->load($filepath); //template.xlsx èª­è¾¼
 
-    // ½ĞÎÏ
+    // å‡ºåŠ›
     if ($data["impletterChk"] == "true") {
         if ($currencyClassLst && count($currencyClassLst) > 0) {
             foreach ($currencyClassLst as $currencyClassObj) {
                 $currencyClass = $currencyClassObj["currencyclass"];
-                // Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¤Î½ĞÎÏ
+                // è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®å‡ºåŠ›
                 reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data);
             }
         }
@@ -160,22 +160,22 @@ function exportLcReport($objDB, $data)
         if ($currencyClassLst && count($currencyClassLst) > 0) {
             foreach ($currencyClassLst as $currencyClassObj) {
                 $currencyClass = $currencyClassObj["currencyclass"];
-                // LCOpen¾ğÊó(Beneficiary¡¦BKÊÌ¹ç·×)¡¼¥ª¡¼¥×¥ó·î¤Î½ĞÎÏ
+                // LCOpenæƒ…å ±(Beneficiaryãƒ»BKåˆ¥åˆè¨ˆ)ãƒ¼ã‚ªãƒ¼ãƒ—ãƒ³æœˆã®å‡ºåŠ›
                 reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $objectYm, 1);
 
-                // LCOpen¾ğÊó(Beneficiary¡¦BKÊÌ¹ç·×)¡¼Á¥ÀÑ·î¤Î½ĞÎÏ
+                // LCOpenæƒ…å ±(Beneficiaryãƒ»BKåˆ¥åˆè¨ˆ)ãƒ¼èˆ¹ç©æœˆã®å‡ºåŠ›
                 reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $objectYm, 2);
 
-                // L/C Open¾ğÊó(LCÊÌ¹ç·×¡Ë¤Î½ĞÎÏ
+                // L/C Openæƒ…å ±(LCåˆ¥åˆè¨ˆï¼‰ã®å‡ºåŠ›
                 reportTwoOutput($objDB, $spreadsheet, $currencyClass, $objectYm);
 
-                // L/C Open¾ğÊó(LCÊÌÌÀºÙ¡Ë¤Î½ĞÎÏ
+                // L/C Openæƒ…å ±(LCåˆ¥æ˜ç´°ï¼‰ã®å‡ºåŠ›
                 reportThreeOutput($objDB, $spreadsheet, $currencyClass, $objectYm);
 
-                // L/C Open¾ğÊó¡ÊOpen·î¡¦BeneficiaryÊÌL/CÈ¯¹ÔÍ½Äê½¸·×É½¡Ë¤Î½ĞÎÏ
+                // L/C Openæƒ…å ±ï¼ˆOpenæœˆãƒ»Beneficiaryåˆ¥L/Cç™ºè¡Œäºˆå®šé›†è¨ˆè¡¨ï¼‰ã®å‡ºåŠ›
                 reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 3);
 
-                // L/C Open¾ğÊó¡ÊÁ¥ÀÑ·î¡¦BeneficiaryÊÌL/CÈ¯¹ÔÍ½Äê½¸·×É½¡Ë¤Î½ĞÎÏ
+                // L/C Openæƒ…å ±ï¼ˆèˆ¹ç©æœˆãƒ»Beneficiaryåˆ¥L/Cç™ºè¡Œäºˆå®šé›†è¨ˆè¡¨ï¼‰ã®å‡ºåŠ›
                 reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 4);
             }
         }
@@ -186,7 +186,7 @@ function exportLcReport($objDB, $data)
         if ($currencyClassAllLst && count($currencyClassAllLst) > 0) {
             foreach ($currencyClassAllLst as $currencyClassObj) {
                 $currencyClass = $currencyClassObj["currencyclass"];
-                // L/C Ì¤·èºÑ¥ê¥¹¥È¤Î½ĞÎÏ
+                // L/C æœªæ±ºæ¸ˆãƒªã‚¹ãƒˆã®å‡ºåŠ›
                 reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data);
             }
         }
@@ -198,7 +198,7 @@ function exportLcReport($objDB, $data)
 }
 
 /**
- * Ä¢É¼¡Ê¥ª¡¼¥×¥ó·î¡Ë_£±¤Î½ĞÎÏ
+ * å¸³ç¥¨ï¼ˆã‚ªãƒ¼ãƒ—ãƒ³æœˆï¼‰_ï¼‘ã®å‡ºåŠ›
  *
  * @param [type] $objDB
  * @param [type] $currencyClass
@@ -213,16 +213,16 @@ function reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $object
     $params["opendate"] = str_replace("/", "", $objectYm);
     $params["currencyclass"] = $currencyClass;
 
-    // »ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+    // æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
     $totalPriceByPayfBankLst = fncGetSumOfMoneypriceByPayfAndBank($objDB, $params, $type);
 
-    // »ÙÊ§ÀèÊÌ¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+    // æ”¯æ‰•å…ˆåˆ¥ã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
     $totalPriceByPayfLst = fncGetSumOfMoneypriceByPayf($objDB, $params, $type);
 
-    // Ä¢É¼BeneBkÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤Î¥Ç¡¼¥¿¤òÁ´·ïºï½ü¤¹¤ë
+    // å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å‰Šé™¤ã™ã‚‹
     fncDeleteReportByBenebktotal($objDB);
 
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼BeneB£ëÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨BeneBï½‹åˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
     if ($totalPriceByPayfLst && count($totalPriceByPayfLst) > 0) {
         foreach ($totalPriceByPayfLst as $totalPriceByPayf) {
             $payfcd = $totalPriceByPayf["payfcd"];
@@ -248,20 +248,20 @@ function reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $object
                 }
             }
 
-            // Ä¢É¼BeneB£ëÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤ÎÅĞÏ¿ÀßÄê
+            // å¸³ç¥¨BeneBï½‹åˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã®ç™»éŒ²è¨­å®š
             fncInsertReportByBenebktotal($objDB, $insertData);
 
             unset($insertData);
 
         }
-        // ¥Æ¥ó¥×¥ì¡¼¥È¤Î½ĞÎÏ
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®å‡ºåŠ›
         fncSetReportOne($objDB, $spreadsheet, "1", $currencyClass, $bankLst, $objectYm, $type);
 
     }
 }
 
 /**
- * Ä¢É¼_2¤Î½ĞÎÏ
+ * å¸³ç¥¨_2ã®å‡ºåŠ›
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -273,10 +273,10 @@ function reportTwoOutput($objDB, $spreadsheet, $currencyClass, $objectYm)
 {
     $insertData = array();
     $priceTotal = 0;
-    // Ä¢É¼½ĞÎÏÍÑ¤ÎL/CÊÌ¹ç·×
+    // å¸³ç¥¨å‡ºåŠ›ç”¨ã®L/Cåˆ¥åˆè¨ˆ
     $lcinfoLst = fncGetLcInfoForReportTwo($objDB, str_replace("/", "", $objectYm), $currencyClass);
 
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼LCÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤Î¥Ç¡¼¥¿¤òÁ´·ïºï½ü¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨LCåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å‰Šé™¤ã™ã‚‹
     fncDeleteReportByLcTotal($objDB);
 
     if ($lcinfoLst && count($lcinfoLst) > 0) {
@@ -289,23 +289,23 @@ function reportTwoOutput($objDB, $spreadsheet, $currencyClass, $objectYm)
             $insertData["bankname"] = $lcinfo["bankname"];
             $insertData["bankreqdate"] = $lcinfo["bankreqdate"];
             $insertData["lcamopen"] = $lcinfo["lcamopen"];
-            // ¹ç·×¶â³Û¤ÎÀßÄê
+            // åˆè¨ˆé‡‘é¡ã®è¨­å®š
             $priceTotal += $lcinfo["moneyprice"];
 
-            // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼LCÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
+            // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨LCåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
             fncInsertReportByLcTotal($objDB, $insertData);
 
             unset($insertData);
         }
 
-        // ¥Æ¥ó¥×¥ì¡¼¥È¤Î½ĞÎÏ
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®å‡ºåŠ›
         fncSetReportTwo($objDB, $spreadsheet, "2", $currencyClass, $objectYm, $priceTotal);
 
     }
 }
 
 /**
- * Ä¢É¼_3¤Î½ĞÎÏ
+ * å¸³ç¥¨_3ã®å‡ºåŠ›
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -317,10 +317,10 @@ function reportThreeOutput($objDB, $spreadsheet, $currencyClass, $objectYm)
 {
     $insertData = array();
     $priceTotal = 0;
-    // Ä¢É¼½ĞÎÏÍÑ¤ÎL/CÊÌ¹ç·×
+    // å¸³ç¥¨å‡ºåŠ›ç”¨ã®L/Cåˆ¥åˆè¨ˆ
     $lcinfoLst = fncGetLcInfoForReportTwo($objDB, str_replace("/", "", $objectYm), $currencyClass);
 
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼LCÊÌÌÀºÙ¥Æ¡¼¥Ö¥ë¤Î¥Ç¡¼¥¿¤òÁ´·ïºï½ü¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨LCåˆ¥æ˜ç´°ãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å‰Šé™¤ã™ã‚‹
     fncDeleteReportByLcDetail($objDB);
 
     if ($lcinfoLst && count($lcinfoLst) > 0) {
@@ -343,13 +343,13 @@ function reportThreeOutput($objDB, $spreadsheet, $currencyClass, $objectYm)
             $insertData["bankname"] = $lcinfo["bankname"];
             $insertData["bankreqdate"] = $lcinfo["bankreqdate"];
             $insertData["lcamopen"] = $lcinfo["lcamopen"];
-            // ¹ç·×¶â³Û¤ÎÀßÄê
+            // åˆè¨ˆé‡‘é¡ã®è¨­å®š
             $priceTotal += $lcinfo["moneyprice"];
 
-            // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼LCÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
+            // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨LCåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
             fncInsertReportByLcDetail($objDB, $insertData);
         }
-        // ¥Æ¥ó¥×¥ì¡¼¥È¤Î½ĞÎÏ
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®å‡ºåŠ›
         fncSetReportThree($objDB, $spreadsheet, "3", $currencyClass, $objectYm, $priceTotal);
 
     }
@@ -357,7 +357,7 @@ function reportThreeOutput($objDB, $spreadsheet, $currencyClass, $objectYm)
 }
 
 /**
- * Ä¢É¼_4¤Î½ĞÎÏ
+ * å¸³ç¥¨_4ã®å‡ºåŠ›
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -388,13 +388,13 @@ function reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $type
     $params["opendateto"] = $dates["date11"];
     $params["currencyclass"] = $currencyClass;
 
-    // »ÙÊ§Àè·îÊÌ¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+    // æ”¯æ‰•å…ˆæœˆåˆ¥ã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
     $totalPriceByPayfDateLst = fncGetSumOfMoneypriceByPayfAndOpenDate($objDB, $params, $type);
 
-    // »ÙÊ§ÀèÊÌ¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+    // æ”¯æ‰•å…ˆåˆ¥ã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
     $totalPriceByPayfLst = fncGetSumOfMoneypriceByPayf($objDB, $params, $type);
 
-    // Ä¢É¼Bene·îÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤Î¥Ç¡¼¥¿¤òÁ´·ïºï½ü¤¹¤ë
+    // å¸³ç¥¨Beneæœˆåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å‰Šé™¤ã™ã‚‹
     fncDeleteReportByBeneMonthCal($objDB);
 
     if (count($totalPriceByPayfLst) > 0 && count($totalPriceByPayfDateLst) > 0) {
@@ -442,13 +442,13 @@ function reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $type
             }
 
             $insertData["total"] = $total;
-            // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼Bene·îÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
+            // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨Beneæœˆåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
             fncInsertReportByBeneMonthCal($objDB, $insertData);
 
             unset($insertData);
 
         }
-        // ¥Æ¥ó¥×¥ì¡¼¥È¤Î½ĞÎÏ
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®å‡ºåŠ›
         fncSetReportFour($objDB, $spreadsheet, "4", $currencyClass, $objectYm, $type);
 
     }
@@ -456,7 +456,7 @@ function reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $type
 }
 
 /**
- * Ä¢É¼_5¤Î½ĞÎÏ
+ * å¸³ç¥¨_5ã®å‡ºåŠ›
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -468,11 +468,11 @@ function reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $type
 function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
 {
     $insertData = array();
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼Ì¤·èºÑ³Û¥Æ¡¼¥Ö¥ë¥Ç¡¼¥¿¤òÁ´·ïºï½ü¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨æœªæ±ºæ¸ˆé¡ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å‰Šé™¤ã™ã‚‹
     fncDeleteReportUnSettedPrice($objDB);
-    // L/C¾ğÊó¼èÆÀ
+    // L/Cæƒ…å ±å–å¾—
     $lcinfoLst = fncGetLcInfoForReportFive($objDB, $data["startDate"], $data["endDate"], $currencyClass, 1);
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼Ì¤·èºÑ³Û¥Æ¡¼¥Ö¥ë¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨æœªæ±ºæ¸ˆé¡ãƒ†ãƒ¼ãƒ–ãƒ«ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
     if ($lcinfoLst && count($lcinfoLst) > 0) {
         $data = array();
         $manageno = 1;
@@ -492,13 +492,13 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
         }
     }
 
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼Ì¤·èºÑ³ÛÌ¤¾µÇ§¥Æ¡¼¥Ö¥ë¥Ç¡¼¥¿¤òÁ´·ïºï½ü¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨æœªæ±ºæ¸ˆé¡æœªæ‰¿èªãƒ†ãƒ¼ãƒ–ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å‰Šé™¤ã™ã‚‹
     fncDeleteReportUnSettedPriceUnapproval($objDB);
 
-    // L/C¾ğÊó¼èÆÀ
+    // L/Cæƒ…å ±å–å¾—
     $lcinfoLst = fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyClass, 2);
 
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼Ì¤·èºÑ³ÛÌ¤¾µÇ§¥Æ¡¼¥Ö¥ë¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨æœªæ±ºæ¸ˆé¡æœªæ‰¿èªãƒ†ãƒ¼ãƒ–ãƒ«ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
     if ($lcinfoLst && count($lcinfoLst) > 0) {
         foreach ($lcinfoLst as $lcinfo) {
             $insertData["payeeformalname"] = $lcinfo["payfnameformal"];
@@ -510,16 +510,16 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
         }
     }
 
-    // Ä¢É¼BeneBKÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¥Ç¡¼¥¿¤òÁ´·ïºï½ü¤¹¤ë
+    // å¸³ç¥¨BeneBKåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å‰Šé™¤ã™ã‚‹
     fncDeleteReportByBenebktotal($objDB);
 
-    // »ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+    // æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
     $totalUnSettedPriceByPayfBankLst = fncGetSumofUnSettedPriceByPayfAndBank($objDB);
 
-    // »ÙÊ§Àè¶ä¹ÔÊÌ¤Î¹ç·×¶â³Û¤ò¼èÆÀ¤¹¤ë
+    // æ”¯æ‰•å…ˆéŠ€è¡Œåˆ¥ã®åˆè¨ˆé‡‘é¡ã‚’å–å¾—ã™ã‚‹
     $totalUnSettedPriceByPayfLst = fncGetSumofUnSettedPriceByPayf($objDB);
 
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼BeneBkÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
     if ($totalUnSettedPriceByPayf && count($totalUnSettedPriceByPayf) > 0) {
         foreach ($totalUnSettedPriceByPayfLst as $totalUnSettedPriceByPayf) {
             $payfcd = $totalUnSettedPriceByPayf["payfcd"];
@@ -543,45 +543,45 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
                 }
             }
 
-            // Ä¢É¼BeneBkÊÌ¹ç·×¥Æ¡¼¥Ö¥ë¤ÎÅĞÏ¿ÀßÄê
+            // å¸³ç¥¨BeneBkåˆ¥åˆè¨ˆãƒ†ãƒ¼ãƒ–ãƒ«ã®ç™»éŒ²è¨­å®š
             fncInsertReportByBenebktotal($objDB, $insertData);
 
             unset($insertData);
         }
     }
 
-    // ¥ì¡¼¥È¤òÀßÄê¤¹¤ë
+    // ãƒ¬ãƒ¼ãƒˆã‚’è¨­å®šã™ã‚‹
     $rate = 0;
     if ($data["rate"] != "" && $data["rate"] > 0) {
         $rate = $data["rate"];
     } else {
-        // ¥Ñ¥é¥á¡¼¥¿¤ÎÄÌ²ß¶èÊ¬¡ÊÌ¤¾µÇ§´Ş¤à¡Ë¤¬¡É±ß¡É¤Î¾ì¹ç¡¢ÄÌ²ß¶èÊ¬ = 1
-        if ($currencyClass == "±ß") {
+        // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®é€šè²¨åŒºåˆ†ï¼ˆæœªæ‰¿èªå«ã‚€ï¼‰ãŒâ€å††â€ã®å ´åˆã€é€šè²¨åŒºåˆ† = 1
+        if ($currencyClass == "å††") {
             $monetaryUnitCode = DEF_MONETARY_YEN;
 
-            // ¥Ñ¥é¥á¡¼¥¿¤ÎÄÌ²ß¶èÊ¬¡ÊÌ¤¾µÇ§´Ş¤à¡Ë¤¬¡ÉUS¥É¥ë¡É¤Î¾ì¹ç¡¢ÄÌ²ß¶èÊ¬ = 2
-        } else if ($currencyClass == "US¥É¥ë") {
+            // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®é€šè²¨åŒºåˆ†ï¼ˆæœªæ‰¿èªå«ã‚€ï¼‰ãŒâ€USãƒ‰ãƒ«â€ã®å ´åˆã€é€šè²¨åŒºåˆ† = 2
+        } else if ($currencyClass == "USãƒ‰ãƒ«") {
             $monetaryUnitCode = DEF_MONETARY_USD;
 
-            // ¥Ñ¥é¥á¡¼¥¿¤ÎÄÌ²ß¶èÊ¬¡ÊÌ¤¾µÇ§´Ş¤à¡Ë¤¬¡ÉHK¥É¥ë¡É¤Î¾ì¹ç¡¢ÄÌ²ß¶èÊ¬ = 3
-        } else if ($currencyClass == "HK¥É¥ë") {
+            // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®é€šè²¨åŒºåˆ†ï¼ˆæœªæ‰¿èªå«ã‚€ï¼‰ãŒâ€HKãƒ‰ãƒ«â€ã®å ´åˆã€é€šè²¨åŒºåˆ† = 3
+        } else if ($currencyClass == "HKãƒ‰ãƒ«") {
             $monetaryUnitCode = DEF_MONETARY_HKD;
         }
-        // ÄÌ²ß¶èÊ¬¡ÊÌ¤¾µÇ§´Ş¤à¡Ë¤¬¡É±ß¡É¤Î¾ì¹ç¡¢
-        if ($currencyClass == "±ß") {
+        // é€šè²¨åŒºåˆ†ï¼ˆæœªæ‰¿èªå«ã‚€ï¼‰ãŒâ€å††â€ã®å ´åˆã€
+        if ($currencyClass == "å††") {
             $rate = 0;
         } else {
             $rate = fncGetMonetaryRate($objDB, DEF_MONETARYCLASS_SHANAI, $monetaryUnitCode);
         }
 
-        // ¥Æ¥ó¥×¥ì¡¼¥È¤Î½ĞÎÏ
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®å‡ºåŠ›
         fncSetReportFive($objDB, $spreadsheet, "5", $currencyClass, $bankLst, $data["startDate"], $data["endDate"], $rate);
 
     }
 }
 
 /**
- * Ä¢É¼_6¤Î½ĞÎÏ
+ * å¸³ç¥¨_6ã®å‡ºåŠ›
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -593,13 +593,13 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
 function reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
 {
     $insertData = array();
-    // L/C¾ğÊó¤ò¼èÆÀ¤¹¤ë
+    // L/Cæƒ…å ±ã‚’å–å¾—ã™ã‚‹
     $lcinfoLst = fncGetLcInfoForReportSix($objDB, $currencyClass, $data);
 
-    // ¡ÊÎ×»ş¥Æ¡¼¥Ö¥ë¡ËÄ¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¥Æ¡¼¥Ö¥ë¤è¤ê¥Ç¡¼¥¿¤òÁ´·ïºï½ü¤¹¤ë
+    // ï¼ˆè‡¨æ™‚ãƒ†ãƒ¼ãƒ–ãƒ«ï¼‰å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ãƒ†ãƒ¼ãƒ–ãƒ«ã‚ˆã‚Šãƒ‡ãƒ¼ã‚¿ã‚’å…¨ä»¶å‰Šé™¤ã™ã‚‹
     fncDeleteReportImpLcOrderInfo($objDB);
 
-    // ¾åµ­¼èÆÀ¤·¤¿LC¾ğÊó¤òÄ¢É¼Í¢Æş¿®ÍÑ¾õÈ¯¹Ô¾ğÊó¥Æ¡¼¥Ö¥ë¤ËÅĞÏ¿¤¹¤ë
+    // ä¸Šè¨˜å–å¾—ã—ãŸLCæƒ…å ±ã‚’å¸³ç¥¨è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ãƒ†ãƒ¼ãƒ–ãƒ«ã«ç™»éŒ²ã™ã‚‹
     if ($lcinfoLst && count($lcinfoLst) > 0) {
         foreach ($lcinfoLst as $lcinfo) {
             $insertData["bankreqdate"] = $lcinfo["bankreqdate"];
@@ -625,7 +625,7 @@ function reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
 
             unset($insertData);
         }
-        // ¥Æ¥ó¥×¥ì¡¼¥È¤Î½ĞÎÏ
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®å‡ºåŠ›
         return fncSetReportSix($objDB, $spreadsheet, "6", $currencyClass, $bankLst, $data);
 
     }

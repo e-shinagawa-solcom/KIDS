@@ -49,39 +49,39 @@ function ListMatch( objSelect , strMatch )
 
 // -----------------------------------------------------------------------
 //
-// fncSelectList(select, add) ¥ê¥¹¥È¤ÎÁªÂò¤ª¤è¤Óºï½ü
+// fncSelectList(select, add) ãƒªã‚¹ãƒˆã®é¸æŠãŠã‚ˆã³å‰Šé™¤
 //
-//   select - ÁªÂò»è<SELECT>¥ª¥Ö¥¸¥§¥¯¥È
-//   addd   - ÁªÂò<SELECT>¥ª¥Ö¥¸¥§¥¯¥È
+//   select - é¸æŠè‚¢<SELECT>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   addd   - é¸æŠ<SELECT>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function fncSelectList(select, add)
 {
-	// ÁªÂò»èÂ¦¤ËÁªÂò»è¤¬¤¢¤ë¤«¤É¤¦¤«¤Î³ÎÇ§
+	// é¸æŠè‚¢å´ã«é¸æŠè‚¢ãŒã‚ã‚‹ã‹ã©ã†ã‹ã®ç¢ºèª
 	if ( select.selectedIndex > -1 )
 	{
-		// ÁªÂò»è¤Î¿ô
+		// é¸æŠè‚¢ã®æ•°
 		selectLength = select.length;
 
-		// ¹àÌÜÄÉ²Ã
+		// é …ç›®è¿½åŠ 
 		for ( i = 0; i < selectLength; i++ )
 		{
 			if ( select.options[i].selected == true )
 			{
-				// ÁªÂòÂ¦¤Î¥ê¥¹¥È¤òÄÉ²Ã
+				// é¸æŠå´ã®ãƒªã‚¹ãƒˆã‚’è¿½åŠ 
 				add.length++;
 
-				// ÁªÂòÂ¦¤Î¿ô
+				// é¸æŠå´ã®æ•°
 				valueLength = add.length - 1;
 				add.options[valueLength].text = select.options[i].text;
 				add.options[valueLength].value = select.options[i].value;
 			}
 		}
 
-		// ¹àÌÜºï½ü
+		// é …ç›®å‰Šé™¤
 		j = 0;
 		for ( i = 0; i < selectLength; i++ )
 		{
-			// ¹àÌÜ¤ò¤º¤é¤¹½èÍı
+			// é …ç›®ã‚’ãšã‚‰ã™å‡¦ç†
 			if ( select.options[i].selected != true )
 			{
 				select.options[j].text = select.options[i].text;
@@ -102,17 +102,17 @@ function fncSelectList(select, add)
 // -----------------------------------------------------------------------
 //
 // fncSelectListSet(fromCompany, fromGroup, toCompany, toGroup)
-// ´ë¶È¡¢¥°¥ë¡¼¥×¤òÁªÂò¾õÂÖ¤ª¤è¤Ó¥ê¥¹¥È¤ËÈ¿±Ç
+// ä¼æ¥­ã€ã‚°ãƒ«ãƒ¼ãƒ—ã‚’é¸æŠçŠ¶æ…‹ãŠã‚ˆã³ãƒªã‚¹ãƒˆã«åæ˜ 
 //
-//   objFromCompany - ¥Ç¡¼¥¿¸µ ´ë¶È     CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objFromGroup   - ¥Ç¡¼¥¿¸µ ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objToCompany   - È¿±ÇÀè   ´ë¶È     CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objToGroup     - È¿±ÇÀè   ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objTargetGroup - objToGroup¤ÎÁªÂò¤òÈ¿±Ç¤¹¤ë ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
+//   objFromCompany - ãƒ‡ãƒ¼ã‚¿å…ƒ ä¼æ¥­     CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objFromGroup   - ãƒ‡ãƒ¼ã‚¿å…ƒ ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objToCompany   - åæ˜ å…ˆ   ä¼æ¥­     CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objToGroup     - åæ˜ å…ˆ   ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objTargetGroup - objToGroupã®é¸æŠã‚’åæ˜ ã™ã‚‹ ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function fncSelectListSet(objFromCompany, objFromGroup, objToCompany, objToGroup, objTargetGroup)
 {
-	// ´ë¶ÈÁªÂò
+	// ä¼æ¥­é¸æŠ
 	for ( i = 0; i < objToCompany.length; i++ )
 	{
 		if ( objToCompany.options[i].value == objFromCompany.value )
@@ -121,13 +121,13 @@ function fncSelectListSet(objFromCompany, objFromGroup, objToCompany, objToGroup
 		}
 	}
 
-	// Ï¢·ë¥°¥ë¡¼¥×¥³¡¼¥ÉÊ¸»úÎó¼èÆÀ
+	// é€£çµã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰æ–‡å­—åˆ—å–å¾—
 	strGroupCode = objFromGroup.value;
 
-	// Ï¢·ëÊ¸»úÎó¤òÊ¬³ä¤·¡¢¥°¥ë¡¼¥×¥³¡¼¥É¤ÎÇÛÎó¤òÀ¸À®
+	// é€£çµæ–‡å­—åˆ—ã‚’åˆ†å‰²ã—ã€ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã®é…åˆ—ã‚’ç”Ÿæˆ
 	aryGroupCode = strGroupCode.split(':');
 
-	// »ØÄê¥°¥ë¡¼¥×¥³¡¼¥É¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+	// æŒ‡å®šã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 	for ( x = 1; x < aryGroupCode.length; x++ )
 	{
 		y = 0;
@@ -152,10 +152,10 @@ function fncSelectListSet(objFromCompany, objFromGroup, objToCompany, objToGroup
 // -----------------------------------------------------------------------
 //
 // fncSelectListDel(objFromGroup, objToGroup)
-// ´ë¶È¡¢¥°¥ë¡¼¥×¤òÁªÂò¾õÂÖ¤ª¤è¤Ó¥ê¥¹¥È¤ËÈ¿±Ç
+// ä¼æ¥­ã€ã‚°ãƒ«ãƒ¼ãƒ—ã‚’é¸æŠçŠ¶æ…‹ãŠã‚ˆã³ãƒªã‚¹ãƒˆã«åæ˜ 
 //
-//   objFromGroup - ¥Á¥§¥Ã¥¯¸µ¥Õ¥©¡¼¥à¥°¥ë¡¼¥× ¥ª¥Ö¥¸¥§¥¯¥È
-//   objToGroup   - È¿±ÇÀè¥Õ¥©¡¼¥à¥°¥ë¡¼¥× ¥ª¥Ö¥¸¥§¥¯¥È
+//   objFromGroup - ãƒã‚§ãƒƒã‚¯å…ƒãƒ•ã‚©ãƒ¼ãƒ ã‚°ãƒ«ãƒ¼ãƒ— ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objToGroup   - åæ˜ å…ˆãƒ•ã‚©ãƒ¼ãƒ ã‚°ãƒ«ãƒ¼ãƒ— ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function fncSelectListDel(objFromGroup, objToGroup)
 {
@@ -170,9 +170,9 @@ function fncSelectListDel(objFromGroup, objToGroup)
 // -----------------------------------------------------------------------
 //
 // fncSelectOptionDel(objFromGroup, objToGroup)
-// OPTION ¤Îºï½ü
+// OPTION ã®å‰Šé™¤
 //
-//   objFormSelect - FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
+//   objFormSelect - FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function fncSelectOptionDel(objFormSelect)
 {
@@ -184,11 +184,11 @@ function fncSelectOptionDel(objFormSelect)
 // -----------------------------------------------------------------------
 //
 // SetCompany( objCode, objName, objValue )
-// ¥µ¥Ö¥¦¥£¥ó¥É¥¦¤ÇÁªÂò¤µ¤ì¤¿´ë¶È¥³¡¼¥É¡¢¥°¥ë¡¼¥×¥³¡¼¥É¤ò¥Õ¥©¡¼¥à¤ËÈ¿±Ç¤µ¤»¤ë
+// ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã§é¸æŠã•ã‚ŒãŸä¼æ¥­ã‚³ãƒ¼ãƒ‰ã€ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’ãƒ•ã‚©ãƒ¼ãƒ ã«åæ˜ ã•ã›ã‚‹
 //
-//   objCode  - ¥³¡¼¥É FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objName  - Ì¾¾Î   FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objValue - ÁªÂò   FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
+//   objCode  - ã‚³ãƒ¼ãƒ‰ FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objName  - åç§°   FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objValue - é¸æŠ   FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function SetCompany( objCode, objName, objValue )
 {
@@ -205,11 +205,11 @@ function SetCompany( objCode, objName, objValue )
 // -----------------------------------------------------------------------
 //
 // SetGroup( objCode, objName, objValue )
-// ¥µ¥Ö¥¦¥£¥ó¥É¥¦¤ÇÁªÂò¤µ¤ì¤¿´ë¶È¥³¡¼¥É¡¢¥°¥ë¡¼¥×¥³¡¼¥É¤ò¥Õ¥©¡¼¥à¤ËÈ¿±Ç¤µ¤»¤ë
+// ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã§é¸æŠã•ã‚ŒãŸä¼æ¥­ã‚³ãƒ¼ãƒ‰ã€ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’ãƒ•ã‚©ãƒ¼ãƒ ã«åæ˜ ã•ã›ã‚‹
 //
-//   objCode  - ¥³¡¼¥É FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objName  - Ì¾¾Î   FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objValue - ÁªÂò   FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
+//   objCode  - ã‚³ãƒ¼ãƒ‰ FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objName  - åç§°   FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objValue - é¸æŠ   FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function SetGroup( objCode, objName, objValue )
 {
@@ -239,10 +239,10 @@ function SetGroup( objCode, objName, objValue )
 // -----------------------------------------------------------------------
 //
 // ListMove( select, action )
-// SELECT BOX Æâ¤Î OPTION ¤òÆş¤ìÂØ¤¨¤ë
+// SELECT BOX å†…ã® OPTION ã‚’å…¥ã‚Œæ›¿ãˆã‚‹
 //
-//   select - ÁªÂò FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
-//   action - ¹ÔÆ°(UP or DOWN)
+//   select - é¸æŠ FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   action - è¡Œå‹•(UP or DOWN)
 // -----------------------------------------------------------------------
 function ListMove( select, action )
 {
@@ -297,7 +297,7 @@ function fncChangeProperty( lngAttribute, form )
 	{
 		form.bytMailTransmitFlag.disabled = false;
 
-		// ¥æ¡¼¥¶¡¼ÀßÄê°Ê³°¤Î¾ì¹ç¡¢¸¢¸Â¥°¥ë¡¼¥×¤ÎÊÑ¹¹¤òµö²Ä
+		// ãƒ¦ãƒ¼ã‚¶ãƒ¼è¨­å®šä»¥å¤–ã®å ´åˆã€æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã®å¤‰æ›´ã‚’è¨±å¯
 		if ( form.lngFunctionCode.value != 1101 )
 		{
 			form.bytInvalidFlag.checked = true;
@@ -313,17 +313,17 @@ function fncChangeProperty( lngAttribute, form )
 // -----------------------------------------------------------------------
 //
 // setDefaultGroup(fromCompany, fromGroup, toCompany, toGroup)
-// ¤â¤È¤â¤È¤Î´ë¶È¤¬ÁªÂò¤µ¤ì¤¿¾ì¹ç¡¢
-// ¤â¤È¤â¤È¤Î¥°¥ë¡¼¥×¤òÁªÂò¾õÂÖ¤ª¤è¤Ó¥ê¥¹¥È¤ËÈ¿±Ç
+// ã‚‚ã¨ã‚‚ã¨ã®ä¼æ¥­ãŒé¸æŠã•ã‚ŒãŸå ´åˆã€
+// ã‚‚ã¨ã‚‚ã¨ã®ã‚°ãƒ«ãƒ¼ãƒ—ã‚’é¸æŠçŠ¶æ…‹ãŠã‚ˆã³ãƒªã‚¹ãƒˆã«åæ˜ 
 //
-//   objFromCompany - ¥Ç¡¼¥¿¸µ ´ë¶È     CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objFromGroup   - ¥Ç¡¼¥¿¸µ ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objToCompany   - È¿±ÇÀè   ´ë¶È     CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objToGroup     - È¿±ÇÀè   ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objTargetGroup - objToGroup¤ÎÁªÂò¤òÈ¿±Ç¤¹¤ë ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
+//   objFromCompany - ãƒ‡ãƒ¼ã‚¿å…ƒ ä¼æ¥­     CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objFromGroup   - ãƒ‡ãƒ¼ã‚¿å…ƒ ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objToCompany   - åæ˜ å…ˆ   ä¼æ¥­     CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objToGroup     - åæ˜ å…ˆ   ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objTargetGroup - objToGroupã®é¸æŠã‚’åæ˜ ã™ã‚‹ ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function setDefaultGroup(objFromCompany, objFromGroup, objToCompany, objToGroup, objTargetGroup){
-	// ÁªÂò´ë¶È¤È¥Ç¥Õ¥©¥ë¥È´ë¶È¤¬Æ±¤¸¾ì¹ç¡¢¥Ç¥Õ¥©¥ë¥È¥°¥ë¡¼¥×¤ò¥»¥Ã¥È
+	// é¸æŠä¼æ¥­ã¨ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆä¼æ¥­ãŒåŒã˜å ´åˆã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚°ãƒ«ãƒ¼ãƒ—ã‚’ã‚»ãƒƒãƒˆ
 	index = objToCompany.selectedIndex;
 	if ( objFromCompany.value == objToCompany.options[index].value )
 	{

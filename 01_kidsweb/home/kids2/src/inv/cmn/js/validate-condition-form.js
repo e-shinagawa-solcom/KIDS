@@ -1,36 +1,36 @@
 
 (function(){
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var form = $('form[name="Invoice"]');
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥¯¥é¥¹Ì¾
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚¯ãƒ©ã‚¹å
     var classNameErrorIcon = 'error-icon';
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥ê¥½¡¼¥¹URL
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãƒªã‚½ãƒ¼ã‚¹URL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
 
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(É¬¿Ü¹àÌÜ)
-    var msgRequired = "ÆşÎÏÉ¬¿Ü¹àÌÜ¤Ç¤¹¡£";
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(É¬¿Ü¹àÌÜ)
-    var msgEmpty    = "¤¬Ì¤ÆşÎÏ¤Ç¤¹¡£";
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(ÁªÂò¤·¤Æ¤¯¤À¤µ¤¤)
-    var msgTaxEmpty    = "¾ÃÈñÀÇ¶èÊ¬¤¬Ì¤ÆşÎÏ¤Ç¤¹";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(å¿…é ˆé …ç›®)
+    var msgRequired = "å…¥åŠ›å¿…é ˆé …ç›®ã§ã™ã€‚";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(å¿…é ˆé …ç›®)
+    var msgEmpty    = "ãŒæœªå…¥åŠ›ã§ã™ã€‚";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(é¸æŠã—ã¦ãã ã•ã„)
+    var msgTaxEmpty    = "æ¶ˆè²»ç¨åŒºåˆ†ãŒæœªå…¥åŠ›ã§ã™";
 
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(ÆüÉÕ)
-    var msgDateFormat = "yyyy/mm/dd·Á¼°¤«¤ÄÍ­¸ú¤ÊÆüÉÕ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£";
-    var msgGreaterThanToday = "¸½ºß¤è¤êÀè¤ÎÆüÉÕ¤·¤«ÆşÎÏ¤Ç¤­¤Ş¤»¤ó¡£";
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(°ÜÆ°Àè¤¬Êİ´É¸µ¤ÈÆ±°ì¹©¾ì)
-    var msgSameFactory = "°ÜÆ°Àè¹©¾ì¤ËÊİ´É¸µ¹©¾ì¤ÈÆ±¤¸¹©¾ì¤ò»ØÄê¤¹¤ë¤³¤È¤Ï¤Ç¤­¤Ş¤»¤ó¡£";
-    // yyyy/mm/dd ¥Õ¥©¡¼¥Ş¥Ã¥È
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(æ—¥ä»˜)
+    var msgDateFormat = "yyyy/mm/ddå½¢å¼ã‹ã¤æœ‰åŠ¹ãªæ—¥ä»˜ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚";
+    var msgGreaterThanToday = "ç¾åœ¨ã‚ˆã‚Šå…ˆã®æ—¥ä»˜ã—ã‹å…¥åŠ›ã§ãã¾ã›ã‚“ã€‚";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(ç§»å‹•å…ˆãŒä¿ç®¡å…ƒã¨åŒä¸€å·¥å ´)
+    var msgSameFactory = "ç§»å‹•å…ˆå·¥å ´ã«ä¿ç®¡å…ƒå·¥å ´ã¨åŒã˜å·¥å ´ã‚’æŒ‡å®šã™ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚";
+    // yyyy/mm/dd ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
     var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/;
-    // ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È yyyy/mm(m)/dd(d)·Á¼°
+    // æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ yyyy/mm(m)/dd(d)å½¢å¼
     var regDate2 = /([0-9]{4})\/([0-9]{1,2})\/([0-9]{1,2})/;
-    // validation¥­¥Ã¥¯
+    // validationã‚­ãƒƒã‚¯
     $('.hasDatepicker').on({
         'change': function(){
             $(this).blur();
         }
     })
 
-    // ²İÀÇ¶èÊ¬
+    // èª²ç¨åŒºåˆ†
     $.validator.addMethod(
     	"checkTax",
         function(value, element, params) {
@@ -39,13 +39,13 @@
         msgTaxEmpty
     );
 
-    // ÆüÉÕ¤¬yyyy/mm/dd·Á¼°¤Ë¥Ş¥Ã¥Á¤·¤Æ¤¤¤ë¤«,Í­¸ú¤ÊÆüÉÕ¤«
+    // æ—¥ä»˜ãŒyyyy/mm/ddå½¢å¼ã«ãƒãƒƒãƒã—ã¦ã„ã‚‹ã‹,æœ‰åŠ¹ãªæ—¥ä»˜ã‹
     $.validator.addMethod(
         "checkDateFormat",
         function(value, params) {
         	if(!value){return true;}
             if(params){
-                // yyyy/mm(m)/dd(d)·Á¼°¤«
+                // yyyy/mm(m)/dd(d)å½¢å¼ã‹
                 if (!(regDate2.test(value))) {
                     return false;
                 }
@@ -54,7 +54,7 @@
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ÆüÉÕ¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+                // æ—¥ä»˜ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
                 } else {
@@ -65,7 +65,7 @@
         msgDateFormat
     );
 
-    // ÆüÉÕ¤¬²áµî¤Ç¤Ê¤¤¤« ActionDate
+    // æ—¥ä»˜ãŒéå»ã§ãªã„ã‹ ActionDate
     $.validator.addMethod(
         "equalsOrGreaterThanToday",
         function(value, element, params) {
@@ -75,24 +75,24 @@
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ¸½ºß¤ÎÆü»ş¤ÈÈæ³Ó
+                // ç¾åœ¨ã®æ—¥æ™‚ã¨æ¯”è¼ƒ
                 var nowDi = new Date();
-                // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                 if (nowDi.getFullYear() > di.getFullYear()){
                     return false;
-                // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                 } else if (nowDi.getFullYear() < di.getFullYear()) {
                     return true;
-                // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤ÈÆ±¤¸¾ì¹ç
+                // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã¨åŒã˜å ´åˆ
                 } else if (nowDi.getFullYear() == di.getFullYear()) {
-                    // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                    // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                     if (nowDi.getMonth() > di.getMonth()){
                         return false;
-                    // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                    // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                     } else if (nowDi.getMonth() < di.getMonth()){
                         return true;
                     } else if (nowDi.getMonth() == di.getMonth()){
-                        // ÆşÎÏ¤·¤¿Æü¤¬¸½ºß¤ÈÆ±¤¸¤«¤½¤ì¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                        // å…¥åŠ›ã—ãŸæ—¥ãŒç¾åœ¨ã¨åŒã˜ã‹ãã‚Œã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                         if (nowDi.getDate() > di.getDate()) {
                             return false;
                         }
@@ -104,23 +104,23 @@
         msgGreaterThanToday
     );
 
-    // ¸¡¾ÚÀßÄê
+    // æ¤œè¨¼è¨­å®š
     form.validate({
         // -----------------------------------------------
-        // ¥¨¥é¡¼É½¼¨½èÍı
+        // ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºå‡¦ç†
         // -----------------------------------------------
         errorPlacement: function (error, element){
             invalidImg = $('<img>')
                             .attr('class', classNameErrorIcon)
                             .attr('src', urlErrorIcon)
-                            // CSSÀßÄê(É½¼¨°ÌÃÖ)
+                            // CSSè¨­å®š(è¡¨ç¤ºä½ç½®)
                             .css({
                                 position: 'absolute',
                                 top: $(element).position().top,
                                 left: $(element).position().left - 20,
                                 opacity: 'inherit'
                             })
-                            // ¥Ä¡¼¥ë¥Á¥Ã¥×É½¼¨
+                            // ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—è¡¨ç¤º
                             .tooltipster({
                                 trigger: 'hover',
                                 onlyone: false,
@@ -128,64 +128,64 @@
                                 content: error.text()
                             });
 
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã—ãªã„å ´åˆ
             if ($(element).prev('img.' + classNameErrorIcon).length <= 0){
-                // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤òÉ½¼¨
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤º
                 $(element).before(invalidImg);
             }
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤¹¤ë¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
             else {
-                // ´ûÂ¸¤Î¥¨¥é¡¼¥¢¥¤¥³¥ó¤Î¥Ä¡¼¥ë¥Á¥Ã¥×¥Æ¥­¥¹¥È¤ò¹¹¿·
+                // æ—¢å­˜ã®ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°
                 $(element).prev('img.' + classNameErrorIcon)
                             .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
-        // ¸¡¾ÚOK»ş¤Î½èÍı
+        // æ¤œè¨¼OKæ™‚ã®å‡¦ç†
         // -----------------------------------------------
         unhighlight: function(element){
-                // ¥¨¥é¡¼¥¢¥¤¥³¥óºï½ü
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³å‰Šé™¤
                 $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
-        // ¸¡¾Ú¥ë¡¼¥ë
+        // æ¤œè¨¼ãƒ«ãƒ¼ãƒ«
         // -----------------------------------------------
         rules:{
-            // ¸ÜµÒ¥³¡¼¥É
+            // é¡§å®¢ã‚³ãƒ¼ãƒ‰
             lngCustomerCode: {
                 required: true
             },
-            // ²İÀÇ¶èÊ¬
+            // èª²ç¨åŒºåˆ†
             lngTaxClassCode: {
 //                required: true,
                 checkTax: true
             },
-            // Ç¼ÉÊÆüFrom
+            // ç´å“æ—¥From
             From_dtmDeliveryDate: {
             	checkDateFormat: true
             },
-            // Ç¼ÉÊÆüTo
+            // ç´å“æ—¥To
             To_dtmDeliveryDate: {
             	checkDateFormat: true
             }
         },
         // -----------------------------------------------
-        // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+        // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
         // -----------------------------------------------
         messages: {
-            // ¸ÜµÒ¥³¡¼¥É
+            // é¡§å®¢ã‚³ãƒ¼ãƒ‰
             lngCustomerCode: {
-                required: '¸ÜµÒ¥³¡¼¥É' + msgEmpty
+                required: 'é¡§å®¢ã‚³ãƒ¼ãƒ‰' + msgEmpty
             },
-            // ²İÀÇ¶èÊ¬
+            // èª²ç¨åŒºåˆ†
             lngTaxClassCode: {
-                required: '²İÀÇ¶èÊ¬' + msgEmpty
+                required: 'èª²ç¨åŒºåˆ†' + msgEmpty
             },
-            // Ç¼ÉÊÆüFrom
+            // ç´å“æ—¥From
             From_dtmDeliveryDate: {
                 required: + msgDateFormat
             },
-            // Ç¼ÉÊÆüTo
+            // ç´å“æ—¥To
             To_dtmDeliveryDate: {
                 required: + msgDateFormat
             }

@@ -4,13 +4,13 @@ require_once(SRC_ROOT.'/mold/lib/index/TableMoldReportDetail.class.php');
 
 
 /**
- * ¸¡º÷²èÌÌ¤Ç¤Î¥Õ¥©¡¼¥à¥Ç¡¼¥¿½èÍı¤Ë´Ø¤¹¤ëµ¡Ç½¤òÄó¶¡¤¹¤ë
+ * æ¤œç´¢ç”»é¢ã§ã®ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿å‡¦ç†ã«é–¢ã™ã‚‹æ©Ÿèƒ½ã‚’æä¾›ã™ã‚‹
  *
  */
 class UtilSearchForm
 {
 	/**
-	 * ÇÛÎó¤«¤éÀÜÈø¼­¤¬°ìÃ×¤¹¤ëÍ×ÁÇ·²¤òÀÜÈø¼­¤ò¼è¤ê½ü¤¤¤¿ÇÛÎó¤òÊÖ¤¹¡£
+	 * é…åˆ—ã‹ã‚‰æ¥å°¾è¾ãŒä¸€è‡´ã™ã‚‹è¦ç´ ç¾¤ã‚’æ¥å°¾è¾ã‚’å–ã‚Šé™¤ã„ãŸé…åˆ—ã‚’è¿”ã™ã€‚
 	 * @param array $formData
 	 * @param string $prefix
 	 * @return array
@@ -25,10 +25,10 @@ class UtilSearchForm
 		{
 			foreach ($formData as $key => $value)
 			{
-				// ¥­¡¼¤ÎÀÜÈø¼­¤È°ìÃ×¤¹¤ë¾ì¹ç
+				// ã‚­ãƒ¼ã®æ¥å°¾è¾ã¨ä¸€è‡´ã™ã‚‹å ´åˆ
 				if (preg_match($pattern, $key))
 				{
-					// ÀÜÈø¼­¤ò¼è¤ê½ü¤¤¤¿¥­¡¼¤ÎÊ¸»úÎó¤ò¥»¥Ã¥È
+					// æ¥å°¾è¾ã‚’å–ã‚Šé™¤ã„ãŸã‚­ãƒ¼ã®æ–‡å­—åˆ—ã‚’ã‚»ãƒƒãƒˆ
 					$result[preg_replace($pattern, "", $key)] = $value;
 				}
 			}
@@ -38,11 +38,11 @@ class UtilSearchForm
 	}
 
 	/**
-	 * FROM,TO¤ÎÆâÍÆ¤ò´ğ¤ËSQL¤ÎWHERE¶çÊ¸»úÎó¤òºîÀ®¤¹¤ë
+	 * FROM,TOã®å†…å®¹ã‚’åŸºã«SQLã®WHEREå¥æ–‡å­—åˆ—ã‚’ä½œæˆã™ã‚‹
 	 * @param array $from
 	 * @param array $to
 	 * @param string $column
-	 * @return string WHERE¶ç¤ÎÊ¸»úÎó
+	 * @return string WHEREå¥ã®æ–‡å­—åˆ—
 	 */
 	public static function createQueryCondition(array $from, array $to, $column)
 	{
@@ -68,7 +68,7 @@ class UtilSearchForm
 	}
 
 	/**
-	 * ÇÛÎó¤«¤éÀÜÈø¼­("IsSearch_")¤¬°ìÃ×¤¹¤ëÍ×ÁÇ·²¤òÀÜÈø¼­¤ò¼è¤ê½ü¤¤¤¿ÇÛÎó¤òÊÖ¤¹¡£
+	 * é…åˆ—ã‹ã‚‰æ¥å°¾è¾("IsSearch_")ãŒä¸€è‡´ã™ã‚‹è¦ç´ ç¾¤ã‚’æ¥å°¾è¾ã‚’å–ã‚Šé™¤ã„ãŸé…åˆ—ã‚’è¿”ã™ã€‚
 	 * @param array $formData
 	 * @return array
 	 */
@@ -78,7 +78,7 @@ class UtilSearchForm
 	}
 
 	/**
-	 * ÇÛÎó¤«¤éÀÜÈø¼­("IsDisplay_")¤¬°ìÃ×¤¹¤ëÍ×ÁÇ·²¤òÀÜÈø¼­¤ò¼è¤ê½ü¤¤¤¿ÇÛÎó¤òÊÖ¤¹¡£
+	 * é…åˆ—ã‹ã‚‰æ¥å°¾è¾("IsDisplay_")ãŒä¸€è‡´ã™ã‚‹è¦ç´ ç¾¤ã‚’æ¥å°¾è¾ã‚’å–ã‚Šé™¤ã„ãŸé…åˆ—ã‚’è¿”ã™ã€‚
 	 * @param array $formData
 	 * @return array
 	 */
@@ -88,7 +88,7 @@ class UtilSearchForm
 	}
 
 	/**
-	 * ÇÛÎó¤«¤éÀÜÈø¼­("From_")¤¬°ìÃ×¤¹¤ëÍ×ÁÇ·²¤òÀÜÈø¼­¤ò¼è¤ê½ü¤¤¤¿ÇÛÎó¤òÊÖ¤¹¡£
+	 * é…åˆ—ã‹ã‚‰æ¥å°¾è¾("From_")ãŒä¸€è‡´ã™ã‚‹è¦ç´ ç¾¤ã‚’æ¥å°¾è¾ã‚’å–ã‚Šé™¤ã„ãŸé…åˆ—ã‚’è¿”ã™ã€‚
 	 * @param array $formData
 	 * @return array
 	 */
@@ -98,7 +98,7 @@ class UtilSearchForm
 	}
 
 	/**
-	 * ÇÛÎó¤«¤éÀÜÈø¼­("To_")¤¬°ìÃ×¤¹¤ëÍ×ÁÇ·²¤òÀÜÈø¼­¤ò¼è¤ê½ü¤¤¤¿ÇÛÎó¤òÊÖ¤¹¡£
+	 * é…åˆ—ã‹ã‚‰æ¥å°¾è¾("To_")ãŒä¸€è‡´ã™ã‚‹è¦ç´ ç¾¤ã‚’æ¥å°¾è¾ã‚’å–ã‚Šé™¤ã„ãŸé…åˆ—ã‚’è¿”ã™ã€‚
 	 * @param array $formData
 	 * @return array
 	 */
@@ -108,7 +108,7 @@ class UtilSearchForm
 	}
 
 	/**
-	 * ÇÛÎó¤«¤éÀÜÈø¼­("Option_")¤¬°ìÃ×¤¹¤ëÍ×ÁÇ·²¤òÀÜÈø¼­¤ò¼è¤ê½ü¤¤¤¿ÇÛÎó¤òÊÖ¤¹¡£
+	 * é…åˆ—ã‹ã‚‰æ¥å°¾è¾("Option_")ãŒä¸€è‡´ã™ã‚‹è¦ç´ ç¾¤ã‚’æ¥å°¾è¾ã‚’å–ã‚Šé™¤ã„ãŸé…åˆ—ã‚’è¿”ã™ã€‚
 	 * @param array $formData
 	 * @return array
 	 */
@@ -118,7 +118,7 @@ class UtilSearchForm
 	}
 
 	/**
-	 * ¶â·¿ÍúÎò¸¡º÷·ë²Ì²èÌÌ¤Î¥«¥é¥à¤ÎÉ½¼¨½ç¤ò¼¨¤¹Ï¢ÁÛÇÛÎó¤òÊÖ¤¹
+	 * é‡‘å‹å±¥æ­´æ¤œç´¢çµæœç”»é¢ã®ã‚«ãƒ©ãƒ ã®è¡¨ç¤ºé †ã‚’ç¤ºã™é€£æƒ³é…åˆ—ã‚’è¿”ã™
 	 *
 	 * @return array
 	 */
@@ -126,58 +126,58 @@ class UtilSearchForm
 	{
 		$order = array();
 
-		// ¶â·¿Ä¢É¼ID
+		// é‡‘å‹å¸³ç¥¨ID
 		$order[TableMoldReport::MoldReportId] = TableMoldReport::MoldReportId;
-		// »ÅÆş¥Ş¥¹¥¿.»ÅÆş·×¾åÆü
+		// ä»•å…¥ãƒã‚¹ã‚¿.ä»•å…¥è¨ˆä¸Šæ—¥
 		$order["dtmappropriationdate"] = "dtmappropriationdate";
-		// È¯Ãí¥Ş¥¹¥¿.È¯Ãí¥³¡¼¥É-È¯Ãí¥Ş¥¹¥¿.½¤Àµ¥³¡¼¥É
+		// ç™ºæ³¨ãƒã‚¹ã‚¿.ç™ºæ³¨ã‚³ãƒ¼ãƒ‰-ç™ºæ³¨ãƒã‚¹ã‚¿.ä¿®æ­£ã‚³ãƒ¼ãƒ‰
 		$order["strordercode"] = "strordercode";
-		// [²ñ¼Ò¥Ş¥¹¥¿.É½¼¨²ñ¼Ò¥³¡¼¥É] ²ñ¼Ò¥Ş¥¹¥¿.É½¼¨²ñ¼ÒÌ¾¾Î
+		// [ä¼šç¤¾ãƒã‚¹ã‚¿.è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰] ä¼šç¤¾ãƒã‚¹ã‚¿.è¡¨ç¤ºä¼šç¤¾åç§°
 		$order["strcompanydisplaycode"] = "strcompanydisplaycode";
-		// À½ÉÊ¥Ş¥¹¥¿.À½ÉÊ¥³¡¼¥É
+		// è£½å“ãƒã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰
 		$order["strproductcode"] = "strproductcode";
-		// ¶â·¿ÍúÎò.¶â·¿NO
+		// é‡‘å‹å±¥æ­´.é‡‘å‹NO
 		$order[TableMoldHistory::MoldNo] = TableMoldHistory::MoldNo;
-		// ¶â·¿ÍúÎò.ÍúÎòÈÖ¹æ
+		// é‡‘å‹å±¥æ­´.å±¥æ­´ç•ªå·
 		$order[TableMoldHistory::HistoryNo] = TableMoldHistory::HistoryNo;
-		// À½ÉÊ¥Ş¥¹¥¿.À½ÉÊÌ¾¾Î(ÆüËÜ¸ì)
+		// è£½å“ãƒã‚¹ã‚¿.è£½å“åç§°(æ—¥æœ¬èª)
 		$order["strproductname"] = "strproductname";
-		// À½ÉÊ¥Ş¥¹¥¿.À½ÉÊÌ¾¾Î(±Ñ¸ì)
+		// è£½å“ãƒã‚¹ã‚¿.è£½å“åç§°(è‹±èª)
 		$order["strproductenglishname"] = "strproductenglishname";
-		// À½ÉÊ¥Ş¥¹¥¿.¸ÜµÒÉÊÈÖ
+		// è£½å“ãƒã‚¹ã‚¿.é¡§å®¢å“ç•ª
 		$order["strgoodscode"] = "strgoodscode";
-		// [¥°¥ë¡¼¥×¥Ş¥¹¥¿.É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É] ¥°¥ë¡¼¥×¥Ş¥¹¥¿.É½¼¨¥°¥ë¡¼¥×Ì¾
+		// [ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿.è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰] ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿.è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—å
 		$order["strgroupdisplaycode"] = "strgroupdisplaycode";
-		// [¥æ¡¼¥¶¥Ş¥¹¥¿.É½¼¨¥æ¡¼¥¶¥³¡¼¥É] ¥æ¡¼¥¶¥Ş¥¹¥¿.É½¼¨¥æ¡¼¥¶Ì¾
+		// [ãƒ¦ãƒ¼ã‚¶ãƒã‚¹ã‚¿.è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰] ãƒ¦ãƒ¼ã‚¶ãƒã‚¹ã‚¿.è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶å
 		$order["struserdisplaycode"] = "struserdisplaycode";
-		// »ÅÆş¾ÜºÙ.À½ÉÊ¿ôÎÌ
+		// ä»•å…¥è©³ç´°.è£½å“æ•°é‡
 		$order["lngproductquantity"] = "lngproductquantity";
-		// ÄÌ²ßÃ±°Ì¥Ş¥¹¥¿.ÄÌ²ßÃ±°Ì || »ÅÆş¾ÜºÙ.ÀÇÈ´¶â³Û
+		// é€šè²¨å˜ä½ãƒã‚¹ã‚¿.é€šè²¨å˜ä½ || ä»•å…¥è©³ç´°.ç¨æŠœé‡‘é¡
 		$order["strmonetaryunitsign"] = "strmonetaryunitsign";
-		// ¶â·¿ÍúÎò.¶â·¿¥¹¥Æ¡¼¥¿¥¹
+		// é‡‘å‹å±¥æ­´.é‡‘å‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 		$order[TableMoldHistory::Status] = TableMoldHistory::Status;
-		// ¶â·¿ÍúÎò.¼Â»ÜÆü
+		// é‡‘å‹å±¥æ­´.å®Ÿæ–½æ—¥
 		$order[TableMoldHistory::ActionDate] = TableMoldHistory::ActionDate;
-		// ¶â·¿ÍúÎò.Êİ´É¹©¾ì
+		// é‡‘å‹å±¥æ­´.ä¿ç®¡å·¥å ´
 		$order[TableMoldHistory::SourceFactory] = TableMoldHistory::SourceFactory;
-		// ¶â·¿ÍúÎò.°ÜÆ°Àè¹©¾ì
+		// é‡‘å‹å±¥æ­´.ç§»å‹•å…ˆå·¥å ´
 		$order[TableMoldHistory::DestinationFactory] = TableMoldHistory::DestinationFactory;
-		// ¶â·¿ÍúÎò.ÅĞÏ¿Æü»ş
+		// é‡‘å‹å±¥æ­´.ç™»éŒ²æ—¥æ™‚
 		$order[TableMoldHistory::Created] = TableMoldHistory::Created;
-		// ¶â·¿ÍúÎò.ÅĞÏ¿¼Ô
+		// é‡‘å‹å±¥æ­´.ç™»éŒ²è€…
 		$order[TableMoldHistory::CreateBy] = TableMoldHistory::CreateBy;
-		// ¶â·¿ÍúÎò.¹¹¿·Æü»ş
+		// é‡‘å‹å±¥æ­´.æ›´æ–°æ—¥æ™‚
 		$order[TableMoldHistory::Updated] = TableMoldHistory::Updated;
-		// ¶â·¿ÍúÎò.¹¹¿·¼Ô
+		// é‡‘å‹å±¥æ­´.æ›´æ–°è€…
 		$order[TableMoldHistory::UpdateBy] = TableMoldHistory::UpdateBy;
-		// ¶â·¿ÍúÎò.ºï½ü¥Õ¥é¥°
+		// é‡‘å‹å±¥æ­´.å‰Šé™¤ãƒ•ãƒ©ã‚°
 		$order[TableMoldHistory::DeleteFlag] = TableMoldHistory::DeleteFlag;
 
 		return $order;
 	}
 
 	/**
-	 * ¶â·¿Ä¢É¼¸¡º÷·ë²Ì²èÌÌ¤Î¥«¥é¥à¤ÎÉ½¼¨½ç¤ò¼¨¤¹Ï¢ÁÛÇÛÎó¤òÊÖ¤¹
+	 * é‡‘å‹å¸³ç¥¨æ¤œç´¢çµæœç”»é¢ã®ã‚«ãƒ©ãƒ ã®è¡¨ç¤ºé †ã‚’ç¤ºã™é€£æƒ³é…åˆ—ã‚’è¿”ã™
 	 *
 	 * @return array
 	 */
@@ -185,57 +185,57 @@ class UtilSearchForm
 	{
 		$order = array();
 
-		// Ä¢É¼¶èÊ¬
+		// å¸³ç¥¨åŒºåˆ†
 		$order[TableMoldReport::ReportCategory] = TableMoldReport::ReportCategory;
-		// ¥¹¥Æ¡¼¥¿¥¹
+		// ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 		$order[TableMoldReport::Status] = TableMoldReport::Status;
-		// °ÍÍêÆü
+		// ä¾é ¼æ—¥
 		$order[TableMoldReport::RequestDate] = TableMoldReport::RequestDate;
-		// ¶â·¿Ä¢É¼ID
+		// é‡‘å‹å¸³ç¥¨ID
 		$order[TableMoldReport::MoldReportId] = TableMoldReport::MoldReportId;
-		// ¥ê¥Ó¥¸¥ç¥ó
+		// ãƒªãƒ“ã‚¸ãƒ§ãƒ³
 		$order[TableMoldReport::Revision] = TableMoldReport::Revision;
-		// À½ÉÊ¥³¡¼¥É
+		// è£½å“ã‚³ãƒ¼ãƒ‰
 		$order[TableMoldReport::ProductCode] = TableMoldReport::ProductCode;
-		// À½ÉÊÌ¾¾Î
+		// è£½å“åç§°
 		$order["strproductname"] = "strproductname";
-		// À½ÉÊÌ¾¾Î(±Ñ¸ì)
+		// è£½å“åç§°(è‹±èª)
 		$order["strproductenglishname"] = "strproductenglishname";
-		// ¸ÜµÒÉÊÈÖ
+		// é¡§å®¢å“ç•ª
 		$order[TableMoldReport::GoodsCode] = TableMoldReport::GoodsCode;
-		// ¶â·¿NO
+		// é‡‘å‹NO
 		$order[TableMoldReportDetail::MoldNo] = TableMoldReportDetail::MoldNo;
-		// Êİ´É¹©¾ì
+		// ä¿ç®¡å·¥å ´
 		$order[TableMoldReport::SourceFactory] = TableMoldReport::SourceFactory;
-		// °ÜÆ°Àè¹©¾ì
+		// ç§»å‹•å…ˆå·¥å ´
 		$order[TableMoldReport::DestinationFactory] = TableMoldReport::DestinationFactory;
-		// °ÍÍê¶èÊ¬
+		// ä¾é ¼åŒºåˆ†
 		$order[TableMoldReport::RequestCategory] = TableMoldReport::RequestCategory;
-		// ´õË¾Æü
+		// å¸Œæœ›æ—¥
 		$order[TableMoldReport::ActionRequestDate] = TableMoldReport::ActionRequestDate;
-		// °ÜÆ°ÊıË¡
+		// ç§»å‹•æ–¹æ³•
 		$order[TableMoldReport::TransferMethod] = TableMoldReport::TransferMethod;
-		// »Ø¼¨¶èÊ¬
+		// æŒ‡ç¤ºåŒºåˆ†
 		$order[TableMoldReport::InstructionCategory] = TableMoldReport::InstructionCategory;
-		// »ö¶ÈÉô(¸ÜµÒ)
+		// äº‹æ¥­éƒ¨(é¡§å®¢)
 		$order[TableMoldReport::CustomerCode] = TableMoldReport::CustomerCode;
-		// KWGÃ´ÅöÉô½ğ
+		// KWGæ‹…å½“éƒ¨ç½²
 		$order[TableMoldReport::KuwagataGroupCode] = TableMoldReport::KuwagataGroupCode;
-		// KWGÃ´Åö¼Ô
+		// KWGæ‹…å½“è€…
 		$order[TableMoldReport::KuwagataUserCode] = TableMoldReport::KuwagataUserCode;
-		// À¸»º¸å¤Î½èÍı
+		// ç”Ÿç”£å¾Œã®å‡¦ç†
 		$order[TableMoldReport::FinalKeep] = TableMoldReport::FinalKeep;
-		// ÊÖµÑÍ½ÄêÆü
+		// è¿”å´äºˆå®šæ—¥
 		$order[TableMoldReport::ReturnSchedule] = TableMoldReport::ReturnSchedule;
-		// ÅĞÏ¿Æü
+		// ç™»éŒ²æ—¥
 		$order[TableMoldReport::Created] = TableMoldReport::Created;
-		// ÅĞÏ¿¼Ô
+		// ç™»éŒ²è€…
 		$order[TableMoldReport::CreateBy] = TableMoldReport::CreateBy;
-		// ¹¹¿·Æü
+		// æ›´æ–°æ—¥
 		$order[TableMoldReport::Updated] = TableMoldReport::Updated;
-		// ¹¹¿·¼Ô
+		// æ›´æ–°è€…
 		$order[TableMoldReport::UpdateBy] = TableMoldReport::UpdateBy;
-		// ºï½ü¥Õ¥é¥°
+		// å‰Šé™¤ãƒ•ãƒ©ã‚°
 		$order[TableMoldReport::DeleteFlag] = TableMoldReport::DeleteFlag;
 
 		return $order;

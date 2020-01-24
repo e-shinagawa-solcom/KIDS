@@ -1,31 +1,31 @@
-// handsontable¤ÎÁàºî´Ø¿ô
+// handsontableã®æ“ä½œé–¢æ•°
 
 $(function(){
-  // ¥Ç¡¼¥¿¤Î¼èÆÀ
+  // ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
   var script = $('#script').attr('data-param');
   var result = JSON.parse(script);
 
-  // ¥·¡¼¥È¿ô¤Î¼èÆÀ
+  // ã‚·ãƒ¼ãƒˆæ•°ã®å–å¾—
   var sheetNumber = Object.keys(result).length;
 
   var grid = [];
   var table = [];
 
-  // É½¼¨ÍÑ¥Ç¡¼¥¿¤ÎºîÀ®
+  // è¡¨ç¤ºç”¨ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
   for (var sheetNum = 0; sheetNum < sheetNumber; sheetNum++) {
     var sheetData = result[sheetNum];
-    // ³«»Ï¹ÔÎó¡¢½ªÎ»¹ÔÎó¤Î¼èÆÀ
+    // é–‹å§‹è¡Œåˆ—ã€çµ‚äº†è¡Œåˆ—ã®å–å¾—
     var startRow = sheetData['startRow'];
     var endRow = sheetData['endRow'];
     var startColumn = sheetData['startColumn'];
     var endColumn = sheetData['endColumn'];
 
-    // ¥»¥ë¤Î¥Ç¡¼¥¿¼èÆÀ
+    // ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿å–å¾—
     var cellData = sheetData['cellData'];
 
     var cellValue = [];
 
-    // ¥»¥ë¤Î¾ğÊó¤òÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+    // ã‚»ãƒ«ã®æƒ…å ±ã‚’é…åˆ—ã«æ ¼ç´ã™ã‚‹
     for (var i = startRow; i <= endRow; i++) {
       var rowValue = [];
       for (var j = startColumn; j <= endColumn; j++) {
@@ -34,9 +34,9 @@ $(function(){
       cellValue.push(rowValue);
     }
 
-    // ¥Ş¡¼¥¸¥»¥ë¤Î¼èÆÀ
+    // ãƒãƒ¼ã‚¸ã‚»ãƒ«ã®å–å¾—
     var merge = sheetData['mergedCellsList'];
-    // ¹Ô¤Î¹â¤µ¡¢Îó¤ÎÉı¤ò¼èÆÀ
+    // è¡Œã®é«˜ã•ã€åˆ—ã®å¹…ã‚’å–å¾—
     var rowHeight = sheetData['rowHeight'];
     var columnWidth = sheetData['columnWidth'];
 
@@ -49,23 +49,23 @@ $(function(){
 
     var width = gridWidth + 30;
 
-    // ¥¦¥£¥ó¥É¥¦¤Î¥ê¥µ¥¤¥º
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ãƒªã‚µã‚¤ã‚º
     window.resizeTo(width, height);
 
-    // ¥»¥ë¤Î¥¯¥é¥¹¤ò¼èÆÀ
+    // ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹ã‚’å–å¾—
     var cellClass = sheetData['cellClass'];
 
-    // ¼õÃíÈÖ¹æ¥ê¥¹¥È¤ò¼èÆÀ
+    // å—æ³¨ç•ªå·ãƒªã‚¹ãƒˆã‚’å–å¾—
     var receiveNoList = sheetData['receiveNoList'];
 
-    // È¯ÃíÈÖ¹æ¥ê¥¹¥È¤ò¼èÆÀ
+    // ç™ºæ³¨ç•ªå·ãƒªã‚¹ãƒˆã‚’å–å¾—
     var orderNoList = sheetData['orderNoList'];
 
     var gridId = 'grid' + sheetNum;
 
     grid[sheetNum] = document.getElementById(gridId);
 
-    // Handsontable¤Ç¥¿¥°¤ËÉ½¤òËä¤á¹ş¤à
+    // Handsontableã§ã‚¿ã‚°ã«è¡¨ã‚’åŸ‹ã‚è¾¼ã‚€
     table[sheetNum] = new Handsontable(grid[sheetNum], {
       data: cellValue,
       fillHandle: false,
@@ -84,14 +84,14 @@ $(function(){
     });
   }
 
-  // Handsontable¤Î¥¢¥¯¥Æ¥£¥Ö²½¤Î¤¿¤á¡¢table¤Îº¸¾å¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+  // Handsontableã®ã‚¢ã‚¯ãƒ†ã‚£ãƒ–åŒ–ã®ãŸã‚ã€tableã®å·¦ä¸Šã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
   table[0].selectCell(0, 0);
   table[0].deselectCell();
 
-  // Handsontable¤Îtd¥¿¥°CSS
+  // Handsontableã®tdã‚¿ã‚°CSS
   function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
     if (col <= 2) {
-      Handsontable.renderers.HtmlRenderer.apply(this, arguments);  //¡¡¥×¥ì¥Ó¥å¡¼¤Î³ÎÇ§¡¢¼è¾ÃÀßÃÖÍÑ
+      Handsontable.renderers.HtmlRenderer.apply(this, arguments);  //ã€€ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã®ç¢ºèªã€å–æ¶ˆè¨­ç½®ç”¨
     } else {
       Handsontable.renderers.TextRenderer.apply(this, arguments);
     }  
@@ -129,11 +129,11 @@ $(function(){
   }
   
   /**
-   * »ØÄê¤·¤¿¹Ô¤ª¤è¤ÓÎó¤ò»ı¤Ä¥»¥ë¤Î¥¯¥é¥¹¾ğÊó¤ò¼èÆÀ¤¹¤ë
-   * @param {integer} row »ØÄê¹Ô
-   * @param {integer} col »ØÄêÎó
+   * æŒ‡å®šã—ãŸè¡ŒãŠã‚ˆã³åˆ—ã‚’æŒã¤ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹æƒ…å ±ã‚’å–å¾—ã™ã‚‹
+   * @param {integer} row æŒ‡å®šè¡Œ
+   * @param {integer} col æŒ‡å®šåˆ—
    * 
-   * @return {Array.object} elements ¥¯¥é¥¹¾ğÊó¥ª¥Ö¥¸¥§¥¯¥È¤ò»ı¤ÄÇÛÎó
+   * @return {Array.object} elements ã‚¯ãƒ©ã‚¹æƒ…å ±ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŒã¤é…åˆ—
    */
   function getElementsForRowAndColumn(row, col, searchList) {
     var filter = {
@@ -150,7 +150,7 @@ $(function(){
     return elements;
   }
 
-  // ¥¹¥¯¥í¡¼¥ë»ş¤Ë¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¾õÂÖ¤òÊİ»ı¤¹¤ë¤¿¤á¤Î´Ø¿ô¡Ê³ÎÄê¡Ë
+  // ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«æ™‚ã«ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®çŠ¶æ…‹ã‚’ä¿æŒã™ã‚‹ãŸã‚ã®é–¢æ•°ï¼ˆç¢ºå®šï¼‰
   $(document).on('change', '.checkbox_applicate', function() {
     var row = $(this).parents('td').attr('class').match(/\srow(\d+)\s/);
     var col = $(this).parents('td').attr('class').match(/\scol(\d+)\s/);
@@ -164,7 +164,7 @@ $(function(){
     }
   });
 
-  // ¥¹¥¯¥í¡¼¥ë»ş¤Ë¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¾õÂÖ¤òÊİ»ı¤¹¤ë¤¿¤á¤Î´Ø¿ô(¼è¾Ã)
+  // ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«æ™‚ã«ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®çŠ¶æ…‹ã‚’ä¿æŒã™ã‚‹ãŸã‚ã®é–¢æ•°(å–æ¶ˆ)
   $(document).on('change', '.checkbox_cancel', function() {
     var row = $(this).parents('td').attr('class').match(/\srow(\d+)\s/);
     var col = $(this).parents('td').attr('class').match(/\scol(\d+)\s/);
@@ -178,7 +178,7 @@ $(function(){
     }
   });
 
-  // ¼õÃí³ÎÄê½èÍı
+  // å—æ³¨ç¢ºå®šå‡¦ç†
   $(document).on('click', '.btn_confirm_receive', function() {
     var searchName = $(this).val();
 
@@ -198,10 +198,10 @@ $(function(){
 
     var keyLength = Object.keys(cellValue).length;
 
-    // ¥»¥ë¤Ë³ÊÇ¼¤µ¤ì¤¿html¤ÎÊ¸¾Ï¤«¤éÂĞ¾İ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¼èÆÀ¤¹¤ë
-    // handsontable¤¬²èÌÌ³°¤ËÉ½¤òºîÀ®¤·¤Ê¤¤(= ²èÌÌ³°¤ÎÉ½¤Ë¤Ïhtml¤¬Â¸ºß¤·¤Æ¤¤¤Ê¤¤)¤¿¤á¡¢htmlÍ×ÁÇ¤«¤é¤Î¼èÆÀ¤Ï¹Ô¤Ã¤Æ¤¤¤Ê¤¤)
+    // ã‚»ãƒ«ã«æ ¼ç´ã•ã‚ŒãŸhtmlã®æ–‡ç« ã‹ã‚‰å¯¾è±¡ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
+    // handsontableãŒç”»é¢å¤–ã«è¡¨ã‚’ä½œæˆã—ãªã„(= ç”»é¢å¤–ã®è¡¨ã«ã¯htmlãŒå­˜åœ¨ã—ã¦ã„ãªã„)ãŸã‚ã€htmlè¦ç´ ã‹ã‚‰ã®å–å¾—ã¯è¡Œã£ã¦ã„ãªã„)
     for (var row = 1; row < keyLength; row++) {
-      // ²¡²¼¤·¤¿¥Ü¥¿¥ó¤ËÂĞ±ş¤¹¤ë(¥¨¥ê¥¢¤´¤È¡Ë¤«¤Ä¥Á¥§¥Ã¥¯ºÑ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¼èÆÀ
+      // æŠ¼ä¸‹ã—ãŸãƒœã‚¿ãƒ³ã«å¯¾å¿œã™ã‚‹(ã‚¨ãƒªã‚¢ã”ã¨ï¼‰ã‹ã¤ãƒã‚§ãƒƒã‚¯æ¸ˆã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å–å¾—
       if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {   
         // var companyCol = getColumnForRowAndClassName(row, companyClassName, searchList);
 
@@ -212,7 +212,7 @@ $(function(){
         // }
 
         // if (check === false) {
-        //   alert('Ê£¿ô¤Î¸ÜµÒÀè¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ş¤¹¡£');
+        //   alert('è¤‡æ•°ã®é¡§å®¢å…ˆãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ã€‚');
         //   return false;
         // }
 
@@ -220,13 +220,13 @@ $(function(){
       }
     }
     
-    var target = ret.map(function(value) { // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ËÂĞ±ş¤¹¤ë¼õÃíËô¤ÏÈ¯ÃíÈÖ¹æ¤ò¼èÆÀ¤·¡¢¥«¥ó¥Ş¶èÀÚ¤ê¤ÎÊ¸»úÎóÀ¸À®
+    var target = ret.map(function(value) { // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã«å¯¾å¿œã™ã‚‹å—æ³¨åˆã¯ç™ºæ³¨ç•ªå·ã‚’å–å¾—ã—ã€ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®æ–‡å­—åˆ—ç”Ÿæˆ
       var ret = value[confirmCol].match(/value=\"(\d+)\"/);
       return ret[1];
     }).join(",");
 
     if (target) {
-      var text = 'ÁªÂò¤µ¤ì¤¿¼õÃí¤ò³ÎÄê¤·¤Ş¤¹¡£\n¤è¤í¤·¤¤¤Ç¤¹¤«¡©';
+      var text = 'é¸æŠã•ã‚ŒãŸå—æ³¨ã‚’ç¢ºå®šã—ã¾ã™ã€‚\nã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ';
       var result = confirm(text);
       if (result) {
         var sessionID = $('input[name="strSessionID"]').val();
@@ -246,11 +246,11 @@ $(function(){
         return false;
       }
     } else {
-      alert('¼õÃí¤ò³ÎÄê¤¹¤ëÌÀºÙ¹Ô¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£');
+      alert('å—æ³¨ã‚’ç¢ºå®šã™ã‚‹æ˜ç´°è¡Œã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚');
     }
   });
 
-  // È¯Ãí³ÎÄê½èÍı
+  // ç™ºæ³¨ç¢ºå®šå‡¦ç†
   $(document).on('click', '.btn_confirm_order', function() {
     var searchName = $(this).val();
 
@@ -272,10 +272,10 @@ $(function(){
 
     var keyLength = Object.keys(cellValue).length;
 
-    // ¥»¥ë¤Ë³ÊÇ¼¤µ¤ì¤¿html¤ÎÊ¸¾Ï¤«¤éÂĞ¾İ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¼èÆÀ¤¹¤ë
-    // handsontable¤¬²èÌÌ³°¤ËÉ½¤òºîÀ®¤·¤Ê¤¤(= ²èÌÌ³°¤ÎÉ½¤Ë¤Ïhtml¤¬Â¸ºß¤·¤Æ¤¤¤Ê¤¤)¤¿¤á¡¢htmlÍ×ÁÇ¤«¤é¤Î¼èÆÀ¤Ï¹Ô¤Ã¤Æ¤¤¤Ê¤¤)
+    // ã‚»ãƒ«ã«æ ¼ç´ã•ã‚ŒãŸhtmlã®æ–‡ç« ã‹ã‚‰å¯¾è±¡ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
+    // handsontableãŒç”»é¢å¤–ã«è¡¨ã‚’ä½œæˆã—ãªã„(= ç”»é¢å¤–ã®è¡¨ã«ã¯htmlãŒå­˜åœ¨ã—ã¦ã„ãªã„)ãŸã‚ã€htmlè¦ç´ ã‹ã‚‰ã®å–å¾—ã¯è¡Œã£ã¦ã„ãªã„)
     for (var row = 1; row < keyLength; row++) {
-      // ²¡²¼¤·¤¿¥Ü¥¿¥ó¤ËÂĞ±ş¤¹¤ë(¥¨¥ê¥¢¤´¤È¡Ë¤«¤Ä¥Á¥§¥Ã¥¯ºÑ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¼èÆÀ
+      // æŠ¼ä¸‹ã—ãŸãƒœã‚¿ãƒ³ã«å¯¾å¿œã™ã‚‹(ã‚¨ãƒªã‚¢ã”ã¨ï¼‰ã‹ã¤ãƒã‚§ãƒƒã‚¯æ¸ˆã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å–å¾—
       if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {   
         var companyCol = getColumnForRowAndClassName(row, companyClassName, searchList);
         var monetaryCol = getColumnForRowAndClassName(row, monetaryClassName, searchList);
@@ -293,7 +293,7 @@ $(function(){
         }
 
         if (check === false) {
-          alert('Ê£¿ô¤Î»ÅÆşÀè¤Ş¤¿¤ÏÄÌ²ß¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ş¤¹¡£');
+          alert('è¤‡æ•°ã®ä»•å…¥å…ˆã¾ãŸã¯é€šè²¨ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã™ã€‚');
           return false;
         }
 
@@ -301,13 +301,13 @@ $(function(){
       }
     }
     
-    var target = ret.map(function(value) { // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ËÂĞ±ş¤¹¤ë¼õÃíËô¤ÏÈ¯ÃíÈÖ¹æ¤ò¼èÆÀ¤·¡¢¥«¥ó¥Ş¶èÀÚ¤ê¤ÎÊ¸»úÎóÀ¸À®
+    var target = ret.map(function(value) { // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã«å¯¾å¿œã™ã‚‹å—æ³¨åˆã¯ç™ºæ³¨ç•ªå·ã‚’å–å¾—ã—ã€ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®æ–‡å­—åˆ—ç”Ÿæˆ
       var ret = value[confirmCol].match(/value=\"(\d+)\"/);
       return ret[1];
     }).join(",");
 
     if (target) {
-      var text = 'ÁªÂò¤µ¤ì¤¿È¯Ãí¤ò³ÎÄê¤·¤Ş¤¹¡£\n¤è¤í¤·¤¤¤Ç¤¹¤«¡©';
+      var text = 'é¸æŠã•ã‚ŒãŸç™ºæ³¨ã‚’ç¢ºå®šã—ã¾ã™ã€‚\nã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ';
       var result = confirm(text);
       if (result) {
         var sessionID = $('input[name="strSessionID"]').val();
@@ -329,11 +329,11 @@ $(function(){
         return false;
       }
     } else {
-      alert('È¯Ãí¤ò³ÎÄê¤¹¤ëÌÀºÙ¹Ô¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£');
+      alert('ç™ºæ³¨ã‚’ç¢ºå®šã™ã‚‹æ˜ç´°è¡Œã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚');
     }
   });
 
-  // È¯Ãí¼è¾Ã½èÍı
+  // ç™ºæ³¨å–æ¶ˆå‡¦ç†
   $(document).on('click', '.btn_cancel_order', function() {
     var searchName = $(this).val();
 
@@ -341,14 +341,14 @@ $(function(){
     var buttonMatch = "name=\"" + searchName + "\"";
     var checkedMatch = "checked=\"checked\"";
 
-    // ¥»¥ë¤Ë³ÊÇ¼¤µ¤ì¤¿html¤ÎÊ¸¾Ï¤«¤éÂĞ¾İ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¼èÆÀ¤¹¤ë
-    // handsontable¤¬²èÌÌ³°¤ËÉ½¤òºîÀ®¤·¤Ê¤¤(= ²èÌÌ³°¤ÎÉ½¤Ë¤Ïhtml¤¬Â¸ºß¤·¤Æ¤¤¤Ê¤¤)¤¿¤á¡¢htmlÍ×ÁÇ¤«¤é¤Î¼èÆÀ¤Ï¹Ô¤Ã¤Æ¤¤¤Ê¤¤)
+    // ã‚»ãƒ«ã«æ ¼ç´ã•ã‚ŒãŸhtmlã®æ–‡ç« ã‹ã‚‰å¯¾è±¡ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å–å¾—ã™ã‚‹
+    // handsontableãŒç”»é¢å¤–ã«è¡¨ã‚’ä½œæˆã—ãªã„(= ç”»é¢å¤–ã®è¡¨ã«ã¯htmlãŒå­˜åœ¨ã—ã¦ã„ãªã„)ãŸã‚ã€htmlè¦ç´ ã‹ã‚‰ã®å–å¾—ã¯è¡Œã£ã¦ã„ãªã„)
     var target = cellValue.filter(function(value) {
-      // ¥Ü¥¿¥ó¤ËÂĞ±ş¤¹¤ë¥Á¥§¥Ã¥¯ºÑ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¼èÆÀ
+      // ãƒœã‚¿ãƒ³ã«å¯¾å¿œã™ã‚‹ãƒã‚§ãƒƒã‚¯æ¸ˆã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å–å¾—
       if (value[cancelCol].match(buttonMatch) && value[cancelCol].match(checkedMatch)) {
         return value;
       }
-    }).map(function(value) { // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ËÂĞ±ş¤¹¤ë¼õÃíËô¤ÏÈ¯ÃíÈÖ¹æ¤ò¼èÆÀ¤·¡¢¥«¥ó¥Ş¶èÀÚ¤ê¤ÎÊ¸»úÎóÀ¸À®
+    }).map(function(value) { // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã«å¯¾å¿œã™ã‚‹å—æ³¨åˆã¯ç™ºæ³¨ç•ªå·ã‚’å–å¾—ã—ã€ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®æ–‡å­—åˆ—ç”Ÿæˆ
       var ret = value[cancelCol].match(/value=\"(\d+)\"/);
       return ret[1];
     });
@@ -356,7 +356,7 @@ $(function(){
     var count = target.length;
 
     if (count === 1) {
-      var text = 'ÁªÂò¤µ¤ì¤¿È¯Ãí¤Î³ÎÄê¤ò¼è¤ê¾Ã¤·¤Ş¤¹¡£\n¤è¤í¤·¤¤¤Ç¤¹¤«¡©';
+      var text = 'é¸æŠã•ã‚ŒãŸç™ºæ³¨ã®ç¢ºå®šã‚’å–ã‚Šæ¶ˆã—ã¾ã™ã€‚\nã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ';
       var result = confirm(text);
       if (result) {
         var sessionID = $('input[name="strSessionID"]').val();
@@ -374,19 +374,19 @@ $(function(){
         return false;
       }
     } else if (count > 1) {
-      alert('Ê£¿ôÌÀºÙ¤ÎÁªÂò¤Ï¤Ç¤­¤Ş¤»¤ó¡£');
+      alert('è¤‡æ•°æ˜ç´°ã®é¸æŠã¯ã§ãã¾ã›ã‚“ã€‚');
     } else {
-      alert('ÂĞ¾İÌÀºÙ¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£');
+      alert('å¯¾è±¡æ˜ç´°ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚');
     }
   });
 
 
   /**
-   * »ØÄê¤·¤¿¹Ô¤ÎÃæ¤ÇÆÃÄê¤Î¥¯¥é¥¹Ì¾¤ò»ı¤ÄÎó¤ò¼èÆÀ¤¹¤ë
-   * @param {integer} row »ØÄê¹Ô
-   * @param {integer} className ¥¯¥é¥¹Ì¾
+   * æŒ‡å®šã—ãŸè¡Œã®ä¸­ã§ç‰¹å®šã®ã‚¯ãƒ©ã‚¹åã‚’æŒã¤åˆ—ã‚’å–å¾—ã™ã‚‹
+   * @param {integer} row æŒ‡å®šè¡Œ
+   * @param {integer} className ã‚¯ãƒ©ã‚¹å
    * 
-   * @return {Array.object} col ÎóÈÖ¹æ
+   * @return {Array.object} col åˆ—ç•ªå·
    */
   function getColumnForRowAndClassName(row, className, searchList) {
     var filter = {

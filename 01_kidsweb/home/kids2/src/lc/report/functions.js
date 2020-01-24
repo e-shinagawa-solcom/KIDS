@@ -2,7 +2,7 @@
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ¥Õ¥¡¥¤¥ë³µÍ× : LC´ØÏ¢½èÍı
+* ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ : LCé–¢é€£å‡¦ç†
 *
 *
 *
@@ -15,7 +15,7 @@
 */
 //--------------------------------------------------------------------------------------------------------------------
 
-//¶¦ÄÌÊÑ¿ô
+//å…±é€šå¤‰æ•°
 var session_id;
 var phpData;
 var reportResult;
@@ -24,17 +24,17 @@ var nextIndex = 0;
 var displayLst = [];
 
 //---------------------------------------------------
-// ²èÌÌ½é´ü½èÍı
+// ç”»é¢åˆæœŸå‡¦ç†
 //---------------------------------------------------
 function lcInit(json_obj) {
 	phpData = JSON.parse(json_obj);
 	session_id = phpData.session_id;
 
-	//½é´üÃÍÀßÄê
+	//åˆæœŸå€¤è¨­å®š
 	// $("#openYm").val(phpData.openDate);
 	// $("#objectYm").val(phpData.openDate);
 
-	//¥»¥ì¥¯¥È¥Õ¥©¡¼¥à¼èÆÀ
+	//ã‚»ãƒ¬ã‚¯ãƒˆãƒ•ã‚©ãƒ¼ãƒ å–å¾—
 	$("#masking_loader").css("display", "block");
 	$.ajax({
 		url: '../lcModel/lcreport_ajax.php',
@@ -44,10 +44,10 @@ function lcInit(json_obj) {
 			'sessionid': phpData["session_id"]
 		}
 	})
-		// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù¤·¤¿»şÈ¯Æ°
+		// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸã—ãŸæ™‚ç™ºå‹•
 		.done((data) => {
 			var data = JSON.parse(data);
-			//¶ä¹Ô¥»¥ì¥¯¥ÈÀ¸À®
+			//éŠ€è¡Œã‚»ãƒ¬ã‚¯ãƒˆç”Ÿæˆ
 			for (var i = 0; i < data.bankinfo.length; i++) {
 				if (data.bankinfo[i].bankcd == "0000") {
 					$("#bankcd").append("<option value='" + data.bankinfo[i].bankcd + "' selected>" + data.bankinfo[i].bankomitname + "</option>");
@@ -56,7 +56,7 @@ function lcInit(json_obj) {
 
 				}
 			}
-			//²ÙÍÈÃÏ¥»¥ì¥¯¥ÈÀ¸À®
+			//è·æšåœ°ã‚»ãƒ¬ã‚¯ãƒˆç”Ÿæˆ
 			for (var i = 0; i < data.portplace.length; i++) {
 				if (data.portplace[i].portplace == "ALL") {
 					$("#portplace").append("<option value='" + data.portplace[i].portplace + "' selected>" + data.portplace[i].portplace + "</option>");
@@ -67,85 +67,85 @@ function lcInit(json_obj) {
 			}
 
 		})
-		// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ¤·¤¿»şÈ¯Æ°
+		// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—ã—ãŸæ™‚ç™ºå‹•
 		.fail((data) => {
 		})
-		// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù¡¦¼ºÇÔ¤É¤Á¤é¤Ç¤âÈ¯Æ°
+		// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸãƒ»å¤±æ•—ã©ã¡ã‚‰ã§ã‚‚ç™ºå‹•
 		.always((data) => {
 			$("#masking_loader").css("display", "none");
 		});
 }
 
 //---------------------------------------------------
-// Ìá¤ë¥Ü¥¿¥ó½èÍı
+// æˆ»ã‚‹ãƒœã‚¿ãƒ³å‡¦ç†
 //---------------------------------------------------
 function returnBtn() {
 	location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
 }
 
 //---------------------------------------------------
-// °õºş¥Ü¥¿¥ó½èÍı
+// å°åˆ·ãƒœã‚¿ãƒ³å‡¦ç†
 //---------------------------------------------------
 function printBtn() {
 	try {
-		//ÆşÎÏ¥Á¥§¥Ã¥¯
+		//å…¥åŠ›ãƒã‚§ãƒƒã‚¯
 		if ($("#impletterChk").prop("checked")) {
 			if ($("#openYm").val() == "") {
-				alert("¥ª¡¼¥×¥ó·î¤¬¶õ¤Ç¤¹¡£");
+				alert("ã‚ªãƒ¼ãƒ—ãƒ³æœˆãŒç©ºã§ã™ã€‚");
 				throw new Error();
 			}
 			if ($("#openYm").val().match(/(\d{4})(\d{2})/)) {
-				alert("¥ª¡¼¥×¥ó·î¤Î·Á¼°¤¬ÉÔÀµ¤Ç¤¹¡£Îã¡§2019/01");
+				alert("ã‚ªãƒ¼ãƒ—ãƒ³æœˆã®å½¢å¼ãŒä¸æ­£ã§ã™ã€‚ä¾‹ï¼š2019/01");
 				throw new Error();
 			}
 			if ($("#shipYm").val() == "") {
-				alert("Á¥ÀÑ·î¤¬¶õ¤Ç¤¹¡£");
+				alert("èˆ¹ç©æœˆãŒç©ºã§ã™ã€‚");
 				throw new Error();
 			}
 			if ($("#shipYm").val().match(/(\d{4})(\d{2})/)) {
-				alert("Á¥ÀÑ·î¤Î·Á¼°¤¬ÉÔÀµ¤Ç¤¹¡£Îã¡§2019/01");
+				alert("èˆ¹ç©æœˆã®å½¢å¼ãŒä¸æ­£ã§ã™ã€‚ä¾‹ï¼š2019/01");
 				throw new Error();
 			}
 			if ($("#payfCode").val() == "") {
-				alert("»ÙÊ§Àè¥³¡¼¥É¤¬¶õ¤Ç¤¹¡£");
+				alert("æ”¯æ‰•å…ˆã‚³ãƒ¼ãƒ‰ãŒç©ºã§ã™ã€‚");
 				throw new Error();
 			}
 		}
 
 		if ($("#setChk").prop("checked")) {
 			if ($("#objectYm").val() == "") {
-				alert("ÂĞ¾İÇ¯·î¤¬¶õ¤Ç¤¹¡£");
+				alert("å¯¾è±¡å¹´æœˆãŒç©ºã§ã™ã€‚");
 				throw new Error();
 			}
 			if ($("#objectYm").val().match(/(\d{4})(\d{2})/)) {
-				alert("ÂĞ¾İÇ¯·î¤Î·Á¼°¤¬ÉÔÀµ¤Ç¤¹¡£Îã¡§2019/01");
+				alert("å¯¾è±¡å¹´æœˆã®å½¢å¼ãŒä¸æ­£ã§ã™ã€‚ä¾‹ï¼š2019/01");
 				throw new Error();
 			}
 		}
 
 		if ($("#unsetChk").prop("checked")) {
 			if ($("#startDate").val() == "") {
-				alert("³«»ÏÇ¯·î¤¬¶õ¤Ç¤¹¡£");
+				alert("é–‹å§‹å¹´æœˆãŒç©ºã§ã™ã€‚");
 				throw new Error();
 			}
 			if ($("#startDate").val().match(/(\d{4})(\d{2})/)) {
-				alert("³«»ÏÇ¯·î¤Î·Á¼°¤¬ÉÔÀµ¤Ç¤¹¡£Îã¡§2019/01");
+				alert("é–‹å§‹å¹´æœˆã®å½¢å¼ãŒä¸æ­£ã§ã™ã€‚ä¾‹ï¼š2019/01");
 				throw new Error();
 			}
 			if ($("#endDate").val() == "") {
-				alert("½ªÎ»Ç¯·î¤¬¶õ¤Ç¤¹¡£");
+				alert("çµ‚äº†å¹´æœˆãŒç©ºã§ã™ã€‚");
 				throw new Error();
 			}
 			if ($("#endDate").val().match(/(\d{4})(\d{2})/)) {
-				alert("½ªÎ»Ç¯·î¤Î·Á¼°¤¬ÉÔÀµ¤Ç¤¹¡£Îã¡§2019/01");
+				alert("çµ‚äº†å¹´æœˆã®å½¢å¼ãŒä¸æ­£ã§ã™ã€‚ä¾‹ï¼š2019/01");
 				throw new Error();
 			}
 			if ($("#rate").val() == "") {
-				alert("±ß²Á´¹»»³Û¤¬¶õ¤Ç¤¹¡£");
+				alert("å††ä¾¡æ›ç®—é¡ãŒç©ºã§ã™ã€‚");
 				throw new Error();
 			}
 			if ($("#rate").val().match(/^[0-9]+$/)) {
-				alert("±ß²Á´¹»»³Û¤ÏÈ¾³Ñ¿ô»ú¤ÇÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£");
+				alert("å††ä¾¡æ›ç®—é¡ã¯åŠè§’æ•°å­—ã§å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
 				throw new Error();
 			}
 		}
@@ -153,7 +153,7 @@ function printBtn() {
 		console.log($("#setChk").prop("checked"));
 		console.log($("#unsetChk").prop("checked"));
 		console.log($("#impletterChk").prop("checked"));
-		//½ĞÎÏ½èÍı
+		//å‡ºåŠ›å‡¦ç†
 		$("#masking_loader").css("display", "block");
 		$.ajax({
 			// url:'../lcModel/lcreport_ajax.php',
@@ -161,26 +161,26 @@ function printBtn() {
 			type: 'POST',
 			data: {
 				'method': 'exportLcReport',
-				'impletterChk': $("#impletterChk").prop("checked"),//Í¢Æş¿®ÍÑ¾õ½ĞÎÏ¥Õ¥é¥°
-				'setChk': $("#setChk").prop("checked"),            //Ä¢É¼¥»¥Ã¥È½ĞÎÏ¥Õ¥é¥°
-				'unsetChk': $("#unsetChk").prop("checked"),        //Ì¤·èºÑ¥ê¥¹¥È½ĞÎÏ¥Õ¥é¥°	
-				'openYm': $("#openYm").val(),        			   //¥ª¡¼¥×¥ó·î
-				'shipYm': $("#shipYm").val(),                      //Á¥ÀÑ·î
-				'payfCode': $("#payfCode").val(),                  //»ÙÊ§Àè¥³¡¼¥É
-				'payfName': $("#payfName").val(),                  //»ÙÊ§ÀèÌ¾
-				'bankcd': $("#bankcd option:selected").val(),                      //¶ä¹ÔÌ¾¥³¡¼¥É
-				'bankname': $("#bankcd option:selected").text(),                      //¶ä¹ÔÌ¾¥³¡¼¥É
+				'impletterChk': $("#impletterChk").prop("checked"),//è¼¸å…¥ä¿¡ç”¨çŠ¶å‡ºåŠ›ãƒ•ãƒ©ã‚°
+				'setChk': $("#setChk").prop("checked"),            //å¸³ç¥¨ã‚»ãƒƒãƒˆå‡ºåŠ›ãƒ•ãƒ©ã‚°
+				'unsetChk': $("#unsetChk").prop("checked"),        //æœªæ±ºæ¸ˆãƒªã‚¹ãƒˆå‡ºåŠ›ãƒ•ãƒ©ã‚°	
+				'openYm': $("#openYm").val(),        			   //ã‚ªãƒ¼ãƒ—ãƒ³æœˆ
+				'shipYm': $("#shipYm").val(),                      //èˆ¹ç©æœˆ
+				'payfCode': $("#payfCode").val(),                  //æ”¯æ‰•å…ˆã‚³ãƒ¼ãƒ‰
+				'payfName': $("#payfName").val(),                  //æ”¯æ‰•å…ˆå
+				'bankcd': $("#bankcd option:selected").val(),                      //éŠ€è¡Œåã‚³ãƒ¼ãƒ‰
+				'bankname': $("#bankcd option:selected").text(),                      //éŠ€è¡Œåã‚³ãƒ¼ãƒ‰
 				'lcopen': $("#lcopen option:selected").text(),                      //L/Copen
-				'portplace': $("#portplace").val(),                //²ÙÍÈÃÏ
-				'objectYm': $("#objectYm").val(),                  //ÂĞ¾İÇ¯·î
-				'startDate': $("#startDate").val(),                //³«»ÏÇ¯·î
-				'endDate': $("#endDate").val(),                    //½ªÎ»Ç¯·î
-				'rate': $("#rate").val(),                          //±ß²Á´¹»»³Û,
+				'portplace': $("#portplace").val(),                //è·æšåœ°
+				'objectYm': $("#objectYm").val(),                  //å¯¾è±¡å¹´æœˆ
+				'startDate': $("#startDate").val(),                //é–‹å§‹å¹´æœˆ
+				'endDate': $("#endDate").val(),                    //çµ‚äº†å¹´æœˆ
+				'rate': $("#rate").val(),                          //å††ä¾¡æ›ç®—é¡,
 				'sessionid': phpData["session_id"]
 			}
 		})
 			.done(function (data) {
-				var w = window.open("", "L/CÄ¢É¼", "width=700,height=250,scrollbars=yes,resizable=yes,status=yes");	
+				var w = window.open("", "L/Cå¸³ç¥¨", "width=700,height=250,scrollbars=yes,resizable=yes,status=yes");	
 				// var w = window.open();				
 				w.document.open();
 				w.document.write(data);
@@ -190,11 +190,11 @@ function printBtn() {
 
 			})
 			.fail(function (data) {
-				// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+				// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 				alert(data);
 			});
 
-		//¥í¡¼¥À¡¼ÈóÉ½¼¨
+		//ãƒ­ãƒ¼ãƒ€ãƒ¼éè¡¨ç¤º
 		$("#masking_loader").css("display", "none");
 	} catch (e) {
 		console.log(e);
@@ -202,7 +202,7 @@ function printBtn() {
 }
 
 //---------------------------------------------------
-// ¥¯¥ê¥¢¥Ü¥¿¥ó½èÍı
+// ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³å‡¦ç†
 //---------------------------------------------------
 function clearBtn() {
 	$(".form-box__contents")
@@ -399,7 +399,7 @@ function lcreport() {
 }
 
 /**
- * Ä¢É¼_1_É½¼¨ÆâÍÆ¤òÀßÄê¤¹¤ë
+ * å¸³ç¥¨_1_è¡¨ç¤ºå†…å®¹ã‚’è¨­å®šã™ã‚‹
  * @param {*} reportData 
  */
 function setReport1Data(reportData, startIndex, endIndex) {
@@ -447,7 +447,7 @@ function setReport1Data(reportData, startIndex, endIndex) {
 
 
 /**
- * Ä¢É¼_2_É½¼¨ÆâÍÆ¤òÀßÄê¤¹¤ë
+ * å¸³ç¥¨_2_è¡¨ç¤ºå†…å®¹ã‚’è¨­å®šã™ã‚‹
  * @param {*} reportData 
  */
 function setReport2Data(reportData, startIndex, endIndex) {
@@ -479,7 +479,7 @@ function setReport2Data(reportData, startIndex, endIndex) {
 
 
 /**
- * Ä¢É¼_3_É½¼¨ÆâÍÆ¤òÀßÄê¤¹¤ë
+ * å¸³ç¥¨_3_è¡¨ç¤ºå†…å®¹ã‚’è¨­å®šã™ã‚‹
  * @param {*} reportData 
  */
 function setReport3Data(reportData, startIndex, endIndex) {
@@ -517,7 +517,7 @@ function setReport3Data(reportData, startIndex, endIndex) {
 }
 
 /**
- * Ä¢É¼_4_É½¼¨ÆâÍÆ¤òÀßÄê¤¹¤ë
+ * å¸³ç¥¨_4_è¡¨ç¤ºå†…å®¹ã‚’è¨­å®šã™ã‚‹
  * @param {*} reportData 
  */
 function setReport4Data(reportData, startIndex, endIndex) {
@@ -597,7 +597,7 @@ function setReport4Data(reportData, startIndex, endIndex) {
 }
 
 /**
- * Ä¢É¼_5_É½¼¨ÆâÍÆ¤òÀßÄê¤¹¤ë
+ * å¸³ç¥¨_5_è¡¨ç¤ºå†…å®¹ã‚’è¨­å®šã™ã‚‹
  * @param {*} reportData 
  */
 function setReport5Data(reportData, startIndex, endIndex) {
@@ -656,7 +656,7 @@ function setReport5Data(reportData, startIndex, endIndex) {
 }
 
 /**
- * Ä¢É¼_6_É½¼¨ÆâÍÆ¤òÀßÄê¤¹¤ë
+ * å¸³ç¥¨_6_è¡¨ç¤ºå†…å®¹ã‚’è¨­å®šã™ã‚‹
  * @param {*} reportData 
  */
 function setReport6Data(reportData, startIndex, endIndex) {
@@ -683,7 +683,7 @@ function setReport6Data(reportData, startIndex, endIndex) {
 	}
 
 
-	tblTbody.rows[7].cells[10].innerHTML = "¡Ê" + Math.ceil((endIndex + 1) /15)  + "¡¿" + Math.ceil(reportData.report_main.length/15) + "¡Ë";	;
+	tblTbody.rows[7].cells[10].innerHTML = "ï¼ˆ" + Math.ceil((endIndex + 1) /15)  + "ï¼" + Math.ceil(reportData.report_main.length/15) + "ï¼‰";	;
 
 	var reportmain = reportData.report_main;
 	var row = 11;
@@ -713,7 +713,7 @@ function setReport6Data(reportData, startIndex, endIndex) {
 }
 
 /**
- * Ê¸»úÊÑ´¹¡Ênull¤Î¾ì¹ç¡¢""¤ËÊÑ´¹¡Ë
+ * æ–‡å­—å¤‰æ›ï¼ˆnullã®å ´åˆã€""ã«å¤‰æ›ï¼‰
  * @param {} str 
  */
 function convertNull(str) {
@@ -726,7 +726,7 @@ function convertNull(str) {
 
 function convertNumber(str, currencyclass) {
 	if (str != "" && str != undefined && str != "null") {
-		if (currencyclass == '±ß') {			
+		if (currencyclass == 'å††') {			
 			return Number(str).toLocaleString(undefined, {
 				minimumFractionDigits: 0,
 				maximumFractionDigits: 0

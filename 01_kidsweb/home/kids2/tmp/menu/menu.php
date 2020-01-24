@@ -1,8 +1,8 @@
 <?php
 /**
-*	¥á¥¤¥ó¥á¥Ë¥å¡¼É½¼¨¡¡½èÍý
+*	ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºã€€å‡¦ç†
 *
-*	¥á¥¤¥ó¥á¥Ë¥å¡¼²èÌÌ¤ÎÉ½¼¨½èÍý
+*	ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã®è¡¨ç¤ºå‡¦ç†
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/
@@ -11,18 +11,18 @@
 *	@access    public
 *	@version   1.00
 *
-*	½èÍý³µÍ×
-*	¥á¥¤¥ó¥á¥Ë¥å¡¼²èÌÌ¤ÎÉ½¼¨½èÍý
+*	å‡¦ç†æ¦‚è¦
+*	ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã®è¡¨ç¤ºå‡¦ç†
 *
 */
 
-// ¥á¥¤¥ó¥á¥Ë¥å¡¼²èÌÌ
+// ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 // index.php -> strSessionID    -> index.php
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require( SRC_ROOT. "menu/cmn/lib_submenu.php" );
 
@@ -34,21 +34,21 @@ $objDB->open( "", "", "", "" );
 $aryData["strSessionID"]    = $_GET["strSessionID"];
 setcookie("lngLanguageCode", 1,0,"/");
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]   = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§¡Ê¥á¥¤¥ó¥á¥Ë¥å¡¼²èÌÌ¡Ë
+// æ¨©é™ç¢ºèªï¼ˆãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_MENU0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", FALSE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", FALSE, "", $objDB );
 }
 
-// ¾¦ÉÊ´ÉÍý¥á¥Ë¥å¡¼
+// å•†å“ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_P0, $objAuth ) )
 {
 	$aryData["Pnavi_visibility"] = "visible";
@@ -57,7 +57,7 @@ else
 {
 	$aryData["Pnavi_visibility"] = "hidden";
 }
-// ¼õÃí´ÉÍý¥á¥Ë¥å¡¼
+// å—æ³¨ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_SO0, $objAuth ) )
 {
 	$aryData["SOnavi_visibility"] = "visible";
@@ -66,7 +66,7 @@ else
 {
 	$aryData["SOnavi_visibility"] = "hidden";
 }
-// È¯Ãí´ÉÍý¥á¥Ë¥å¡¼
+// ç™ºæ³¨ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
 {
 	$aryData["POnavi_visibility"] = "visible";
@@ -75,7 +75,7 @@ else
 {
 	$aryData["POnavi_visibility"] = "hidden";
 }
-// Çä¾å´ÉÍý¥á¥Ë¥å¡¼
+// å£²ä¸Šç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_SC0, $objAuth ) )
 {
 	$aryData["SCnavi_visibility"] = "visible";
@@ -84,7 +84,7 @@ else
 {
 	$aryData["SCnavi_visibility"] = "hidden";
 }
-// »ÅÆþ´ÉÍý¥á¥Ë¥å¡¼
+// ä»•å…¥ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_PC0, $objAuth ) )
 {
 	$aryData["PCnavi_visibility"] = "visible";
@@ -93,7 +93,7 @@ else
 {
 	$aryData["PCnavi_visibility"] = "hidden";
 }
-// ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍý¥á¥Ë¥å¡¼
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_WF0, $objAuth ) )
 {
 	$aryData["WFnavi_visibility"] = "visible";
@@ -102,7 +102,7 @@ else
 {
 	$aryData["WFnavi_visibility"] = "hidden";
 }
-// Ä¢É¼½ÐÎÏ¥á¥Ë¥å¡¼
+// å¸³ç¥¨å‡ºåŠ›ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) )
 {
 	$aryData["LOnavi_visibility"] = "visible";
@@ -111,7 +111,7 @@ else
 {
 	$aryData["LOnavi_visibility"] = "hidden";
 }
-// ¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È¥á¥Ë¥å¡¼
+// ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_DE0, $objAuth ) )
 {
 	$aryData["DEnavi_visibility"] = "visible";
@@ -122,7 +122,7 @@ else
 }
 
 
-// ¥¢¥Ã¥×¥í¡¼¥É¥á¥Ë¥å¡¼
+// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 {
 	$aryData["UPLOADnavi_visibility"] = "visible";
@@ -133,7 +133,7 @@ else
 }
 
 
-// ¥æ¡¼¥¶¡¼´ÉÍý¥á¥Ë¥å¡¼
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_UC0, $objAuth ) )
 {
 	$aryData["UCnavi_visibility"] = "";
@@ -142,7 +142,7 @@ else
 {
 	$aryData["UCnavi_visibility"] = "none";
 }
-// ¥Þ¥¹¥¿¡¼´ÉÍý¥á¥Ë¥å¡¼
+// ãƒžã‚¹ã‚¿ãƒ¼ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
 	$aryData["Mnavi_visibility"] = "";
@@ -152,7 +152,7 @@ else
 	$aryData["Mnavi_visibility"] = "none";
 }
 
-// ¥·¥¹¥Æ¥à´ÉÍý¥á¥Ë¥å¡¼
+// ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_SYS0, $objAuth ) )
 {
 	$aryData["SYSnavi_visibility"] = "";
@@ -162,7 +162,7 @@ else
 	$aryData["SYSnavi_visibility"] = "none";
 }
 
-// Äù¤á½èÍý¥á¥Ë¥å¡¼
+// ç· ã‚å‡¦ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_CLD0, $objAuth ) )
 {
 	$aryData["DATACLOSEDnavi_visibility"] = "";
@@ -172,7 +172,7 @@ else
 	$aryData["DATACLOSEDnavi_visibility"] = "none";
 }
 
-// ¸«ÀÑ¤â¤ê¸¶²Á·×»»¥á¥Ë¥å¡¼
+// è¦‹ç©ã‚‚ã‚ŠåŽŸä¾¡è¨ˆç®—ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 if ( fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
 {
 	$aryData["Enavi_visibility"] = "visible";
@@ -183,7 +183,7 @@ else
 }
 
 
-// ¶â·¿´ÉÍý
+// é‡‘åž‹ç®¡ç†
 if ( fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth))
 {
 	$aryData["MMnavi_visibility"] = "visible";
@@ -193,7 +193,7 @@ else
 	$aryData["MMnavi_visibility"] = "hidden";
 }
 
-// ¶â·¿Ä¢É¼´ÉÍý
+// é‡‘åž‹å¸³ç¥¨ç®¡ç†
 if ( fncCheckAuthority( DEF_FUNCTION_MR0, $objAuth))
 {
 	$aryData["MRnavi_visibility"] = "visible";
@@ -202,7 +202,7 @@ else
 {
 	$aryData["MRnavi_visibility"] = "hidden";
 }
-// L/C´ÉÍý
+// L/Cç®¡ç†
 if ( fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth))
 {
 	$aryData["LCnavi_visibility"] = "visible";
@@ -211,7 +211,7 @@ else
 {
 	$aryData["LCnavi_visibility"] = "hidden";
 }
-// ÀÁµá´ÉÍý
+// è«‹æ±‚ç®¡ç†
 if ( fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth))
 {
 	$aryData["INVnavi_visibility"] = "visible";
@@ -220,14 +220,14 @@ else
 {
 	$aryData["INVnavi_visibility"] = "hidden";
 }
-	// ¥µ¥Ö¥á¥Ë¥å¡¼À¸À®
+	// ã‚µãƒ–ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”Ÿæˆ
 	$aryData = fncSetSubMenu( $aryData, $objAuth, $objDB );
 
 
 
 $aryData["strSessionID"] = $objAuth->SessionID;
 
-// ¸½ºß¤Î¤ªÃÎ¤é¤»µ­»ö¼èÆÀ
+// ç¾åœ¨ã®ãŠçŸ¥ã‚‰ã›è¨˜äº‹å–å¾—
 $strQuery = "SELECT strSystemInformationTitle, strSystemInformationBody FROM m_SystemInformation ORDER BY dtmInsertDate DESC LIMIT 1";
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum > 0 )
@@ -242,10 +242,10 @@ if ( $lngResultNum > 0 )
 
 $aryData["strSystemVersion"] = DEF_SYSTEM_VERSION;
 
-// ¥Ø¥ë¥×ÂÐ±þ
+// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 $aryData["lngFunctionCode"] = DEF_FUNCTION_MENU0;
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo fncGetReplacedHtml( "menu/parts.tmpl", $aryData, $objAuth );
 
 

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ����ե��� �Ʒ�����¹Բ���
+*       ワークフロー 案件処理実行画面
 *
 *
 *       @package    K.I.D.S.
@@ -13,43 +13,43 @@
 *       @version    2.00
 *
 *
-*       ��������
+*       処理概要
 *
-*		lib_wf.php�ˤ��ɤ߹��९�������̤��뤿��ν���������(���ܤ�DEF_FUNCTION_WF6)
-*		confirm.php -> lngActionFunctionCode -> action.php ����������
+*		lib_wf.phpにて読み込むクエリを区別するための処理コード(基本はDEF_FUNCTION_WF6)
+*		confirm.php -> lngActionFunctionCode -> action.php 処理コード
 *	
-*		ɽ������Ʒ�ε�ǽ������(DEF_FUNCTION)(�����500:ȯ�������Τ�)
+*		表示する案件の機能コード(DEF_FUNCTION)(初期は500:発注管理のみ)
 *		confirm.php -> lngSelectFunctionCode -> action.php
 *	
-*		�������ܥ���(DEF_STATUS_ORDER, DEF_STATUS_DENIAL, DEF_STATUS_CANCELL)
+*		押したボタン(DEF_STATUS_ORDER, DEF_STATUS_DENIAL, DEF_STATUS_CANCELL)
 *		confirm.php -> lngTransactionCode    -> action.php
 *
-*       ��������
+*       更新履歴
 *
 */
 // ----------------------------------------------------------------------------
 
 
-	// �����ɤ߹���
+	// 設定読み込み
 	require('conf.inc');
 
-	// �饤�֥���ɤ߹���
+	// ライブラリ読み込み
 	require (LIB_FILE);
 	require (SRC_ROOT . "wf/cmn/lib_wf.php");
 	require (LIB_DEBUGFILE);
 	require ( CLS_TABLETEMP_FILE ); // Temporary DB Object
 	require ( LIB_ROOT . "tabletemp/excel2temp.php" );
 
-	// DB��³
+	// DB接続
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
 	$objDB->open( "", "", "", "" );
 
-	// GET�ǡ�������
+	// GETデータ取得
 	$aryData = $_GET;
 
 
-	// ������ΰƷ�Τ߽�������ǽ�ʤ��ᡢ���ֿ֡�����פ򸡺����Ȥ��ƶ���
+	// 申請中の案件のみ処理が可能なため、状態「申請中」を検索条件として強制
 	$aryData["lngWorkflowStatusCodeConditions"] =1;
 	$aryData["lngWorkflowStatusCode"] = DEF_STATUS_ORDER;
 
@@ -71,60 +71,60 @@
 	$aryCheck["strNote"]               = "length(0,300)";
 
 
-	// ���å�����ǧ
+	// セッション確認
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-	// ���³�ǧ
+	// 権限確認
 	if ( !fncCheckAuthority( DEF_FUNCTION_WF6, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 
-	// ʸ��������å�
+	// 文字列チェック
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 	//echo getArrayTable( $aryData, "TABLE" );exit;
 	fncPutStringCheckError( $aryCheckResult, $objDB );
 
-	// ���̼����Ϥ�URL����(���å����ID���ڡ������Ƹ������)
+	// 共通受け渡しURL生成(セッションID、ページ、各検索条件)
 	$strURL = fncGetURL( $aryData );
 
-	// ����ե�������
-	// �Ʒ��ɤ߹��ߡ��������ܺپ������������ؿ�
+	// ワークフロー管理
+	// 案件読み込み、検索、詳細情報取得クエリ関数
 	list ( $lngResultID, $lngResultNum, $strErrorMessage ) = getWorkflowQuery( $objAuth->UserCode, $aryData, $objDB );
 
 	if ( !$lngResultNum )
 	{
-	// ���ξ��֤��оݰƷ郎���Ĥ���ʤ�������¾�Υ桼������������¹Ԥ���
-	// ��¾�Υ桼�����ν����ˤ�ꡢ�оݰƷ�ϡֿ�����פǤϤʤ��ʤ�ޤ������פΥ�å�������ɽ������
+	// この状態で対象案件が見つからない状況＝他のユーザーが処理を実行した
+	// 「他のユーザーの処理により、対象案件は「申請中」ではなくなりました。」のメッセージを表示する
 		fncOutputError ( 803, DEF_WARNING, "", TRUE, "", $objDB );
 	}
 
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
 	//////////////////////////////////////////////////////////////////////////
-	// �¹Խ���
+	// 実行処理
 	//////////////////////////////////////////////////////////////////////////
 
-	// lngWorkflowSubCode���󥯥����
+	// lngWorkflowSubCodeインクリメント
 	$lngWorkflowSubCode = $objResult->lngworkflowsubcode + 1;
 
 
-	// �ȥ�󥶥�����󳫻�
+	// トランザクション開始
 	$objDB->transactionBegin();
 
-	// �ơ��֥���å�
+	// テーブルロック
 	list ( $lngResultID, $lngResultNum ) = fncQuery( "LOCK TABLE t_Workflow IN EXCLUSIVE MODE", $objDB );
 	list ( $lngResultID, $lngResultNum ) = fncQuery( "LOCK TABLE m_Workflow IN EXCLUSIVE MODE", $objDB );
 	list ( $lngResultID, $lngResultNum ) = fncQuery( "LOCK TABLE m_Order IN EXCLUSIVE MODE", $objDB );
 
 
 
-	// ������ �ޤ��� ��ǧ ����
-	// ��ǧ�Ԥ���������桼������Ʊ��
+	// 申請中 または 否認 かつ
+	// 承認者がログインユーザーと同じ
 	if ( ( $objResult->tstatuscode == DEF_STATUS_ORDER || $objResult->tstatuscode == DEF_STATUS_DENIAL ) && $objResult->lnginchargecode == $objAuth->UserCode )
 	{
 		////////////////////////////////////////////////
-		// ��������ǧ
+		// 申請・否認
 		////////////////////////////////////////////////
 		list ( $arySendMailAddress, $aryParts["strStatusName"] ) = fncAction( $aryData["lngWorkflowCode"]
 																, $lngWorkflowSubCode
@@ -148,12 +148,12 @@
 	}
 
 
-	// ������ ����
-	// ���ϼԤ���������桼������Ʊ��
+	// 申請中 かつ
+	// 入力者がログインユーザーと同じ
 	elseif ( $objResult->tstatuscode == DEF_STATUS_ORDER && $objResult->lnginputusercode == $objAuth->UserCode )
 	{
 		////////////////////////////////////////////////
-		// �������
+		// 申請取消
 		////////////////////////////////////////////////
 		list ( $arySendMailAddress, $aryParts["strStatusName"] ) = fncAction( $aryData["lngWorkflowCode"]
 																, $lngWorkflowSubCode
@@ -176,23 +176,23 @@
 																, $objDB );
 	}
 
-	// ������ ����
-	// ��������桼�����Υ���ե������֡㸽�ߤν��֤Ǥ���
-	// ���ϡֿ�����áפ�ɽ��
+	// 申請中 かつ
+	// ログインユーザーのワークフロー順番＜現在の順番である
+	// 場合は「申請取消」を表示
 	elseif ( $objResult->tstatuscode == DEF_STATUS_ORDER )
 	{
-		// �桼���������ɤ������ե�����������ɤȽ���ֹ�����
+		// ユーザーコードからワークフロー順序コードと順序番号を取得
 		list ( $aryWorkflowOrderCode, $aryWorkflowOrderNo ) = fncGetArrayData( $objAuth->UserCode, 0, $objDB );
 
-		// ��������桼�����Υ���ե��������ֹ椬
-		// ɽ������Ʒ���ֹ��꾮�������
-		// ���ϡֿ�����áפ�ɽ��
+		// ログインユーザーのワークフロー順番番号が
+		// 表示する案件の番号より小さい場合
+		// 場合は「申請取消」を表示
 		for ( $j = 0; $j < count ( $aryWorkflowOrderCode ); $j++ )
 		{
 			if ( $aryWorkflowOrderCode[$j] == $objResult->lngworkflowordercode && $aryWorkflowOrderNo[$j] < $objResult->lngworkfloworderno )
 			{
 				////////////////////////////////////////////////
-				// �������
+				// 申請取消
 				////////////////////////////////////////////////
 				list ( $arySendMailAddress, $aryParts["strStatusName"] ) = fncAction( $aryData["lngWorkflowCode"]
 																, $lngWorkflowSubCode
@@ -218,7 +218,7 @@
 		}
 	}
 
-	// �ȥ�󥶥�����󥳥ߥå�
+	// トランザクションコミット
 	$objDB->transactionCommit();
 
 //	$aryParts["strSessionID"]    &= $aryData["strSessionID"];
@@ -226,25 +226,25 @@
 	$aryParts["strWorkflowName"]  = $objResult->strworkflowname;
 	if ( count ( $arySendMailAddress ) > 0 )
 	{
-		$aryParts["strMailAddress"] = "[" . join ( ", ", $arySendMailAddress ) . "]����" . $aryParts["strStatusName"] . "�᡼����������ޤ�����";
+		$aryParts["strMailAddress"] = "[" . join ( ", ", $arySendMailAddress ) . "]宛に" . $aryParts["strStatusName"] . "メールを送信しました。";
 	}
 
 
 	//////////////////////////////////////////////////////////////////////////
-	// ��̼��������Ͻ���
+	// 結果取得、出力処理
 	//////////////////////////////////////////////////////////////////////////
 	$objTemplate = new clsTemplate();
 
-	// �ƥ�ץ졼���ɤ߹���
+	// テンプレート読み込み
 	$objTemplate->getTemplate( "wf/regist/finish.tmpl" );
 
-	// �ƥ�ץ졼������
+	// テンプレート生成
 	$objTemplate->replace( $aryParts );
 	$objTemplate->complete();
 
 //fncDebug('wf.txt', $objTemplate->strTemplate, __FILE__, __LINE__);
 
-	// HTML����
+	// HTML出力
 	echo $objTemplate->strTemplate;
 
 
@@ -252,38 +252,38 @@
 
 
 	//////////////////////////////////////////////////////////////////////////////
-	// �����ؿ�
+	// 処理関数
 	//////////////////////////////////////////////////////////////////////////////
 	/**
-	* �����ؿ�
+	* 処理関数
 	*
-	*	�����ؿ�
+	*	処理関数
 	*
-	*	@param  Long   $lngWorkflowCode        ���򤷤��Ʒ�Υ���ե���������
-	*	@param  Long   $lngWorkflowSubCode     ���򤷤��Ʒ�Υ���ե������֥�����
-	*	@param  Long   $lngWorkflowOrderNo     ���򤷤��Ʒ�Υ���ե������������
-	*	@param  Long   $lngWorkflowStatusCode  ���򤷤��Ʒ�Υ���ե������֥�����
-	*                                          1:��ǧ�� 2:�ǽ���ǧ��
-	*	@param  Long   $lngFunctionCode        ��ǽ������(EX.500ȯ������)
-	*	@param  String $strWorkflowName        ����ե���̾
-	*	@param  String $strNote                ����(�᡼��˽񤭹���)
-	*	@param  Long   $lngLimitDays           ������
-	*	@param  Long   $lngTransactionCode     ���򤷤��Ʒ�ε�ǽ������
-	*                                          ��������ǧ���������
-	*	@param  String $strWorkflowKeyCode     ����������(�Ƶ�ǽ�Υ�������)
-	*	@param  String $strRecognitionMail     ��ǧ�ԤΥ᡼�륢�ɥ쥹
-	*	@param  String $strInputMail           �����ԤΥ᡼�륢�ɥ쥹
-	*	@param  String $bytRecognitionMailFlag ��ǧ�ԤΥ᡼���ۿ����ĥե饰
-	*	@param  String $bytInputMailFlag       �����ԤΥ᡼���ۿ����ĥե饰
-	*	@param  String $strUserDisplayName     ��������桼������ɽ��̾
-	*	@param  String $strActionUser          ������¹Ԥ��Ƥ���桼�����ξ���
-	*                                          ��ǧ��:ApprovalUser
-	*                                          ������:InputUser
-	*	@param  Long   $lngInChargeCode        ��ǧ�ԥ�����
-	*	@param  Long   $lngUserCode            ��������桼����������
-	*	@param  Object $objDB                  DB���֥�������
-	*	@return Array  $arySendMailAddress     ���������顼��å�����
-	*	        String $strStatusName          ��������
+	*	@param  Long   $lngWorkflowCode        選択した案件のワークフローコード
+	*	@param  Long   $lngWorkflowSubCode     選択した案件のワークフローサブコード
+	*	@param  Long   $lngWorkflowOrderNo     選択した案件のワークフロー順序コード
+	*	@param  Long   $lngWorkflowStatusCode  選択した案件のワークフロー状態コード
+	*                                          1:承認者 2:最終承認者
+	*	@param  Long   $lngFunctionCode        機能コード(EX.500発注管理)
+	*	@param  String $strWorkflowName        ワークフロー名
+	*	@param  String $strNote                備考(メールに書き込む)
+	*	@param  Long   $lngLimitDays           期限日
+	*	@param  Long   $lngTransactionCode     選択した案件の機能コード
+	*                                          申請・否認・申請取消
+	*	@param  String $strWorkflowKeyCode     キーコード(各機能のキーの値)
+	*	@param  String $strRecognitionMail     承認者のメールアドレス
+	*	@param  String $strInputMail           申請者のメールアドレス
+	*	@param  String $bytRecognitionMailFlag 承認者のメール配信許可フラグ
+	*	@param  String $bytInputMailFlag       申請者のメール配信許可フラグ
+	*	@param  String $strUserDisplayName     ログインユーザーの表示名
+	*	@param  String $strActionUser          処理を実行しているユーザーの状態
+	*                                          承認者:ApprovalUser
+	*                                          申請者:InputUser
+	*	@param  Long   $lngInChargeCode        承認者コード
+	*	@param  Long   $lngUserCode            ログインユーザーコード
+	*	@param  Object $objDB                  DBオブジェクト
+	*	@return Array  $arySendMailAddress     処理、エラーメッセージ
+	*	        String $strStatusName          処理内容
 	*	@access public
 	*/
 	function fncAction( $lngWorkflowCode
@@ -312,9 +312,9 @@
 		$aryData["strURL"] = LOGIN_URL;
 		$aryQuery = array ();
 
-		$strCommitStatusCode = "null";	// �����ơ��֥�Υ��ơ�����������
+		$strCommitStatusCode = "null";	// 管理テーブルのステータス更新値
 
-		// �ǽ���ǧ����ǧ����������Ѥ˥�������桼�����Υ᡼�륢�ɥ쥹�����
+		// 最終承認、否認、申請取消用にログインユーザーのメールアドレスを取得
 		$strQuery = "SELECT strMailAddress FROM m_User WHERE lngUserCode = " . $lngUserCode;
 
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -324,19 +324,19 @@
 			$objResult = $objDB->fetchObject( $lngResultID, 0 );
 			$objDB->freeResult( $lngResultID );
 
-			// �ǥե�����ͤȤ��������ԥ��ɥ쥹���������桼�����Υ᡼�륢�ɥ쥹�Ȥ���
-			// �ʤ����������澵ǧ�����ξ��Ͽ����Ԥξ���Ǿ�񤭤����
+			// デフォルト値として送信者アドレスをログインユーザーのメールアドレスとする
+			// （ただし、途中承認処理の場合は申請者の情報で上書きする）
 			$strFromMailAddress = $objResult->strmailaddress;
 		}
 
 		//////////////////////////////////////////////////////////////////
-		// ���澵ǧ����(lngStatusCode = DEF_APPROVER)
+		// 途中承認処理(lngStatusCode = DEF_APPROVER)
 		//////////////////////////////////////////////////////////////////
 		if ( $lngTransactionCode == DEF_STATUS_ORDER 
 			&& $lngWorkflowStatusCode == DEF_APPROVER 
 			&& $lngInChargeCode == $lngUserCode )
 		{
-			// lngWorkflowOrderNo���󥯥����
+			// lngWorkflowOrderNoインクリメント
 			$lngWorkflowOrderNo++;
 
 			$aryQuery[0] = "INSERT INTO t_Workflow " .
@@ -345,7 +345,7 @@
 	                       " '$strNote', now()," .
 	                       " now() + ( interval '$lngLimitDays day' ) )";
 
-			// ����ե��������ɤ��鼡�ξ�ǧ�ԤΥ᡼�륢�ɥ쥹�Ȥ��ε��ĥե饰�����
+			// ワークフローコードから次の承認者のメールアドレスとその許可フラグを取得
 			$strQuery = "SELECT u.strMailAddress, u.bytMailTransmitFlag " .
 	                    "FROM m_WorkflowOrder o, m_Workflow m, m_User u " .
 	                    "WHERE m.lngWorkflowCode = $lngWorkflowCode" .
@@ -362,15 +362,15 @@
 				$objResult = $objDB->fetchObject( $lngResultID, 0 );
 				$objDB->freeResult( $lngResultID );
 
-				// ���ξ�ǧ�Ԥ˥᡼��
+				// 次の承認者にメール
 				$aryMailTransmit[0] = FALSE;
 				if ( $objResult->strmailaddress && $objResult->bytmailtransmitflag == "t" )
 				{
 					$aryMailTransmit[0] = TRUE;
 					$aryMailAddress[0]  = $objResult->strmailaddress;
 
-					// ���澵ǧ�����ξ�硢�᡼����ʸ�˵��ܤ����̾�Ͽ����ԡ����ϼԡ�̾�Ȥ���
-					// �ޤ����᡼��������ԤϿ����ԡ����ϼԡˤΥ᡼�륢�ɥ쥹�Ȥ���
+					// 途中承認処理の場合、メール本文に記載する人名は申請者（入力者）名とする
+					// また、メールの送信者は申請者（入力者）のメールアドレスとする
 					$strQuery = "SELECT m.lngApplicantUserCode as lngApplicantUserCode, "
 						. "m.lngInputUserCode as lngInputUserCode, "
 						. "au.strUserDisplayName as strApplicantUserDisplayName, "
@@ -389,21 +389,21 @@
 						$objResult = $objDB->fetchObject( $lngResultID, 0 );
 						$objDB->freeResult( $lngResultID );
 
-						// �����Ԥ����ϼԤξ�����ǧ����
+						// 申請者と入力者の情報を確認する
 						if ( $objResult->lngapplicantusercode != $objResult->lnginputusercode )
-						// �����Ԥ����ϼԤ��㤦��硢���ϼԾ������Ѥ���
+						// 申請者と入力者が違う場合、入力者情報を使用する
 						{
-							// $aryData �����ꤵ��Ƥ������Ƥ���
+							// $aryData に設定されている内容を上書き
 							$aryData["strUserDisplayName"] = $objResult->strinputuserdisplayname;
-							// �᡼��������Ԥ����ϼԤΥ᡼�륢�ɥ쥹������
+							// メールの送信者を入力者のメールアドレスに設定
 							$strFromMailAddress = $objResult->strinputusermailaddress;
 						}
 						else
-						// �����Ԥ����ϼԤ�Ʊ����硢�����Ծ������Ѥ���
+						// 申請者と入力者が同じ場合、申請者情報を使用する
 						{
-							// $aryData �����ꤵ��Ƥ������Ƥ���
+							// $aryData に設定されている内容を上書き
 							$aryData["strUserDisplayName"] = $objResult->strapplicantuserdisplayname;
-							// �᡼��������Ԥ����ԤΥ᡼�륢�ɥ쥹������
+							// メールの送信者を申請者のメールアドレスに設定
 							$strFromMailAddress = $objResult->strapplicantusermailaddress;
 						}
 					}
@@ -411,55 +411,55 @@
 					list ( $arySubject[0], $aryBody[0] ) = fncGetMailMessage( 807, $aryData, $objDB );
 				}
 			}
-			$strStatusName = "��ǧ";
+			$strStatusName = "承認";
 		}
 
 		//////////////////////////////////////////////////////////////////
-		// �ǽ���ǧ����(lngStatusCode = DEF_FINAL_APPROVER)
+		// 最終承認処理(lngStatusCode = DEF_FINAL_APPROVER)
 		//////////////////////////////////////////////////////////////////
 		elseif ( $lngTransactionCode == DEF_STATUS_ORDER 
 				&& $lngWorkflowStatusCode == DEF_FINAL_APPROVER 
 				&& $lngInChargeCode == $lngUserCode )
 		{
-			// ����ե����ơ��֥�ˡ־�ǧ�פȤ����ɲ�
+			// ワークフローテーブルに「承認」として追加
 			$aryQuery[0] = "INSERT INTO t_Workflow " .
 	                       "VALUES ( $lngWorkflowCode, $lngWorkflowSubCode," .
 	                       " $lngWorkflowOrderNo, " . DEF_STATUS_APPROVE . "," .
 	                       " '$strNote', now()," .
 	                       " NULL )";
 
-			// ����ե����ޥ������Ρִ�λ���פ򹹿�
+			// ワークフローマスターの「完了日」を更新
 			$aryQuery[1] = "UPDATE m_Workflow " .
 	                       "SET dtmEndDate = now() " .
 	                       "WHERE lngWorkflowCode = $lngWorkflowCode";
 
-			// �����������ơ��֥�ι������ơ����������
+			// 申請元管理テーブルの更新ステータスを決定
 			switch ( $lngFunctionCode )
 			{
-				case DEF_FUNCTION_P1:	// ���ʥޥ�����֥ޥ�������׾��֤ˤ���
+				case DEF_FUNCTION_P1:	// 商品マスタを「マスタ正常」状態にする
 					$strCommitStatusCode = DEF_PRODUCT_NORMAL;
 					break;
-				case DEF_FUNCTION_SO1:	// �����ޥ�������ּ����׾��֤ˤ���
+				case DEF_FUNCTION_SO1:	// 受注マスターを「受注」状態にする
 					$strCommitStatusCode = DEF_RECEIVE_ORDER;
 					break;
-				case DEF_FUNCTION_PO1:	// ȯ���ޥ��������ȯ���׾��֤ˤ���
+				case DEF_FUNCTION_PO1:	// 発注マスターを「発注」状態にする
 					$strCommitStatusCode = DEF_ORDER_ORDER;
 					break;
-				case DEF_FUNCTION_SC1:	// ���ޥ��������Ǽ����׾��֤ˤ���
+				case DEF_FUNCTION_SC1:	// 売上マスターを「納品中」状態にする
 					$strCommitStatusCode = DEF_ORDER_DELIVER;
 					break;
-				case DEF_FUNCTION_SO1:	// �����ޥ��������Ǽ����׾��֤ˤ���
+				case DEF_FUNCTION_SO1:	// 仕入マスターを「納品中」状態にする
 					$strCommitStatusCode = DEF_STOCK_DELIVER;
 					break;
-				case DEF_FUNCTION_E1:	// ���Ѹ����������Ф������ե���
+				case DEF_FUNCTION_E1:	// 見積原価管理に対するワークフロー
 					$strCommitStatusCode = DEF_ESTIMATE_APPROVE;
 					break;
 			}
 
-			// �б�����ǡ���������å�����
+			// 対応するデータをチェックする
 			switch ( $lngFunctionCode )
 			{
-				case DEF_FUNCTION_SO1:	// �����������ǡ����Υ����å���
+				case DEF_FUNCTION_SO1:	// 受注　（売上データのチェック）
 					$arySql = array();
 					$arySql[] = "select count(*) as count";
 					$arySql[] = "from";
@@ -481,13 +481,13 @@
 					$arySql[] = "		SELECT MIN( s2.lngRevisionNo ) FROM m_Sales s2 WHERE s2.bytInvalidFlag = false and s2.strSalesCode = ms.strSalesCode )";
 
 					$strQuery = implode("\n", $arySql);
-					// �ģ��䤤��碌
+					// ＤＢ問い合わせ
 					list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 					if ( $lngResultNum == 1 )
 					{
 						$objResult	= $objDB->fetchObject( $lngResultID, 0 );
-						// ��İʾ塢���ǡ���������С���Ǽ����פȤ���
+						// 一個以上、売上データがあれば、「納品中」とする
 						if( 1 <= (int)$objResult->count)
 						{
 							$strCommitStatusCode = DEF_RECEIVE_DELIVER;
@@ -495,7 +495,7 @@
 					}
 					break;
 
-				case DEF_FUNCTION_PO1:	// ȯ�����ʻ����ǡ����Υ����å���
+				case DEF_FUNCTION_PO1:	// 発注　（仕入データのチェック）
 					$arySql = array();
 					$arySql[] = "select count(*) as count";
 					$arySql[] = "from";
@@ -517,13 +517,13 @@
 					$arySql[] = "		SELECT MIN( s2.lngRevisionNo ) FROM m_stock s2 WHERE s2.bytInvalidFlag = false and s2.strStockCode = ms.strStockCode )";
 
 					$strQuery = implode("\n", $arySql);
-					// �ģ��䤤��碌
+					// ＤＢ問い合わせ
 					list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 					if ( $lngResultNum == 1 )
 					{
 						$objResult	= $objDB->fetchObject( $lngResultID, 0 );
-						// ��İʾ塢�����ǡ���������С���Ǽ����פȤ���
+						// 一個以上、仕入データがあれば、「納品中」とする
 						if( 1 <= (int)$objResult->count)
 						{
 							$strCommitStatusCode = DEF_ORDER_DELIVER;
@@ -531,8 +531,8 @@
 					}
 					break;
 
-				case DEF_FUNCTION_E1:	// ���Ѹ����������Ф������ե���
-					// Excel���饢�åץ����ɤ��줿�ե�����������������å�
+				case DEF_FUNCTION_E1:	// 見積原価管理に対するワークフロー
+					// Excelからアップロードされたファイルを処理するロジック
 					$arySql = array();
 					$arySql[] = "select me.lngtempno as lngtempno";
 					$arySql[] = "from";
@@ -543,14 +543,14 @@
 					$arySql[] = "and me.lngestimateno=".$strWorkflowKeyCode;
 
 					$strQuery = implode("\n", $arySql);
-					// �ģ��䤤��碌
+					// ＤＢ問い合わせ
 					list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-					// lngTempNo ��¸�ߤ��ǧ
+					// lngTempNo の存在を確認
 					if( $lngResultNum != 1 )
 					{
 						break;
 					}
-					// lngTempNo �����
+					// lngTempNo を取得
 					$objResult = $objDB->fetchObject( $lngResultID, 0 );
 					$lngTempNo = trim($objResult->lngtempno);
 					if(!is_numeric($lngTempNo))
@@ -558,13 +558,13 @@
 						break;
 					}
 
-					// �ƥ�ݥ��ơ��֥�ξ�����Ѥ��ƾ��ʥޥ�������
+					// テンポラリテーブルの情報を用いて商品マスタを上書き
 					if( !fncTemp2ProductUpdate( $objDB, $lngTempNo) )
 					{
 						fncOutputError ( 9101, DEF_WARNING, "", TRUE, "", $objDB );
 					}
 
-					// �оݸ��Ѹ����ơ��֥��lngTempNo��ä�
+					// 対象見積原価テーブルのlngTempNoを消す
 					if( !fncDeleteEstimateTempNo( $objDB, $strWorkflowKeyCode ) )
 					{
 						fncOutputError ( 9101, DEF_WARNING, "", TRUE, "", $objDB );
@@ -576,7 +576,7 @@
 //fncDebug('action.txt', $objResult->count, __FILE__, __LINE__);
 
 /*2011 12 9 kou and
-ȯ�����ǽ���ǧ��å����������ʥ������ɲ�*/
+発注　最終承認メッセージに製品コード追加*/
 
 			if($lngFunctionCode == DEF_FUNCTION_PO1)
 			{
@@ -596,17 +596,17 @@
 						$strProductName = $objResult->strproductname;
 					}
 
-				$aryData["strWorkflowName"]    = "���ʥ����ɡ�[ ". $strProductCode . "]\n ����̾�Ρ�". $strProductName ."\n ". $strWorkflowName;
+				$aryData["strWorkflowName"]    = "製品コード：[ ". $strProductCode . "]\n 製品名称：". $strProductName ."\n ". $strWorkflowName;
 			
 			}
 
 
 //fncDebug('action.txt', $objResult->strproductcode, $objResult->strproductname __FILE__, __LINE__);
 /*
-		$aryParts["strMailAddress"] = "[" . join ( ", ", $arySendMailAddress ) . "]����" . $aryParts["strStatusName"] . "�᡼����������ޤ�����";
+		$aryParts["strMailAddress"] = "[" . join ( ", ", $arySendMailAddress ) . "]宛に" . $aryParts["strStatusName"] . "メールを送信しました。";
 2011 12 9 kou end
 */
-			// �����Ԥ˥᡼��
+			// 申請者にメール
 			$aryMailTransmit[0] = FALSE;
 			if ( $bytInputMailFlag == "t" )
 			{
@@ -614,37 +614,37 @@
 				$aryMailAddress[0]  = $strInputMail;
 				list ( $arySubject[0], $aryBody[0] ) = fncGetMailMessage( 808, $aryData, $objDB );
 			}
-			$strStatusName = "�ǽ���ǧ";
+			$strStatusName = "最終承認";
 		}
 
 		//////////////////////////////////////////////////////////////////
-		// ��ǧ����
+		// 否認処理
 		//////////////////////////////////////////////////////////////////
 		elseif ( $lngTransactionCode == DEF_STATUS_DENIAL && $lngInChargeCode == $lngUserCode )
 		{
 
-			// �����������ơ��֥�ι������ơ����������
+			// 申請元管理テーブルの更新ステータスを決定
 			switch ( $lngFunctionCode )
 			{
-				case DEF_FUNCTION_P1:	// ���ʥޥ�����֥ޥ�������׾��֤ˤ���
+				case DEF_FUNCTION_P1:	// 商品マスタを「マスタ正常」状態にする
 					$strCommitStatusCode = DEF_PRODUCT_NORMAL;
 					break;
-				// ���ʥޥ����ʳ���NULL
+				// 商品マスタ以外はNULL
 			}
 
-			// ����ե����ơ��֥�ˡ���ǧ�פȤ����ɲ�
+			// ワークフローテーブルに「否認」として追加
 			$aryQuery[0] = "INSERT INTO t_Workflow " .
 	                       "VALUES ( $lngWorkflowCode, $lngWorkflowSubCode," .
 	                       " $lngWorkflowOrderNo, " . DEF_STATUS_DENIAL . "," .
 	                       " '$strNote', now()," .
 	                       " NULL )";
 
-			// ����ե����ޥ������Ρִ�λ���פ򹹿�
+			// ワークフローマスターの「完了日」を更新
 			$aryQuery[1] = "UPDATE m_Workflow " .
 	                       "SET dtmEndDate = now() " .
 	                       "WHERE lngWorkflowCode = $lngWorkflowCode";
 
-			// �����Ԥ˥᡼��
+			// 申請者にメール
 			$aryMailTransmit[0] = FALSE;
 			if ( $bytInputMailFlag == "t" )
 			{
@@ -652,36 +652,36 @@
 				$aryMailAddress[0]  = $strInputMail;
 				list ( $arySubject[0], $aryBody[0] ) = fncGetMailMessage( 809, $aryData, $objDB );
 			}
-			$strStatusName = "��ǧ";
+			$strStatusName = "否認";
 		}
 
 		//////////////////////////////////////////////////////////////////
-		// ������ý���
+		// 申請取消処理
 		//////////////////////////////////////////////////////////////////
 		elseif ( $lngTransactionCode == DEF_STATUS_CANCELL )
 		{
 
-			// �����������ơ��֥�ι������ơ����������
+			// 申請元管理テーブルの更新ステータスを決定
 			switch ( $lngFunctionCode )
 			{
-				case DEF_FUNCTION_P1:	// ���ʥޥ�����֥ޥ�������׾��֤ˤ���
+				case DEF_FUNCTION_P1:	// 商品マスタを「マスタ正常」状態にする
 					$strCommitStatusCode = DEF_PRODUCT_NORMAL;
 					break;
-				// ���ʥޥ����ʳ���NULL
+				// 商品マスタ以外はNULL
 			}
 
-			// ����ե����ơ��֥�ˡֿ�����áפȤ����ɲ�
+			// ワークフローテーブルに「申請取消」として追加
 			$aryQuery[0] = "INSERT INTO t_Workflow " .
 	                       "VALUES ( $lngWorkflowCode, $lngWorkflowSubCode," .
 	                       " $lngWorkflowOrderNo, " . DEF_STATUS_CANCELL . "," .
 	                       " '$strNote', now(), NULL )";
 
-			// ����ե����ޥ������Ρִ�λ���פ򹹿�
+			// ワークフローマスターの「完了日」を更新
 			$aryQuery[1] = "UPDATE m_Workflow " .
 	                       "SET dtmEndDate = now() " .
 	                       "WHERE lngWorkflowCode = $lngWorkflowCode";
 
-			// ���ߤξ�ǧ�Ԥ˥᡼��
+			// 現在の承認者にメール
 			$aryMailTransmit[0] = FALSE;
 			if ( $bytRecognitionMailFlag == "t" )
 			{
@@ -690,10 +690,10 @@
 				list ( $arySubject[0], $aryBody[0] ) = fncGetMailMessage( 810, $aryData, $objDB );
 			}
 
-			// ��������桼��������ǧ�Ԥ��ä����
+			// ログインユーザーが承認者だった場合
 			if ( $strActionUser == "ApprovalUser" )
 			{
-				// �����Ԥ˥᡼��
+				// 申請者にメール
 				$aryMailTransmit[1] = FALSE;
 				if ( $bytInputMailFlag == "t" )
 				{
@@ -702,12 +702,12 @@
 					list ( $arySubject[1], $aryBody[1] ) = fncGetMailMessage( 810, $aryData, $objDB );
 				}
 			}
-			$strStatusName = "���";
+			$strStatusName = "取消";
 		}
 
 		//
-		// �ǽ���ǧ����ǧ��������ý����ξ��Τߡ������������ơ��֥�Υ��ơ������򹹿�����
-		//	$strCommitStatusCode �����ꤵ��ʤ���硢���ơ�������null�ǹ���
+		// 最終承認、否認、申請取消処理の場合のみ、申請元管理テーブルのステータスを更新する
+		//	$strCommitStatusCode が設定されない場合、ステータスはnullで更新
 		//
 		if(    ($lngTransactionCode == DEF_STATUS_ORDER  && $lngWorkflowStatusCode == DEF_FINAL_APPROVER )
 			|| ($lngTransactionCode == DEF_STATUS_DENIAL && $lngInChargeCode == $lngUserCode)
@@ -718,14 +718,14 @@
 			
 			switch ( $lngFunctionCode )
 			{
-				case DEF_FUNCTION_P1:	// ���ʥޥ�����֥ޥ�������׾��֤ˤ���
+				case DEF_FUNCTION_P1:	// 商品マスタを「マスタ正常」状態にする
 					$arySqlLine[] = "UPDATE m_Product ";
 					$arySqlLine[] = "SET lngProductStatusCode = " . $strCommitStatusCode . ",";
 					$arySqlLine[] = "dtmUpdateDate = now()";
 					$arySqlLine[] = " WHERE lngProductNo = $strWorkflowKeyCode";
 					$arySqlLine[] = " AND bytInvalidFlag = FALSE";
 					break;
-				case DEF_FUNCTION_SO1:	// �����ޥ�������֡����׾��֤ˤ��롡�ʼ�����Ǽ�����
+				case DEF_FUNCTION_SO1:	// 受注マスターを「○○」状態にする　（受注、納品中）
 					$arySqlLine[] = "UPDATE m_Receive ";
 					$arySqlLine[] = "SET lngReceiveStatusCode = " . $strCommitStatusCode . ",";
 					$arySqlLine[] = "dtmInsertDate = now()";
@@ -733,7 +733,7 @@
 					$arySqlLine[] = " AND lngRevisionNo > -1";
 					$arySqlLine[] = " AND bytInvalidFlag = FALSE";
 					break;
-				case DEF_FUNCTION_PO1:	// ȯ���ޥ�������֡����׾��֤ˤ��롡��ȯ����Ǽ�����
+				case DEF_FUNCTION_PO1:	// 発注マスターを「○○」状態にする　（発注、納品中）
 					$arySqlLine[] = "UPDATE m_Order ";
 					$arySqlLine[] = "SET lngOrderStatusCode = " . $strCommitStatusCode . ",";
 					$arySqlLine[] = "dtmInsertDate = now()";
@@ -741,7 +741,7 @@
 					$arySqlLine[] = " AND lngRevisionNo > -1";
 					$arySqlLine[] = " AND bytInvalidFlag = FALSE";
 					break;
-				case DEF_FUNCTION_SC1:	// ���ޥ��������Ǽ����׾��֤ˤ���
+				case DEF_FUNCTION_SC1:	// 売上マスターを「納品中」状態にする
 					$arySqlLine[] = "UPDATE m_Order ";
 					$arySqlLine[] = "SET lngOrderStatusCode = " . $strCommitStatusCode . ",";
 					$arySqlLine[] = "dtmInsertDate = now()";
@@ -749,7 +749,7 @@
 					$arySqlLine[] = " AND lngRevisionNo > -1";
 					$arySqlLine[] = " AND bytInvalidFlag = FALSE";
 					break;
-				case DEF_FUNCTION_PC1:	// �����ޥ��������Ǽ����׾��֤ˤ���
+				case DEF_FUNCTION_PC1:	// 仕入マスターを「納品中」状態にする
 					$arySqlLine[] = "UPDATE m_Stock ";
 					$arySqlLine[] = "SET lngStockStatusCode = " . $strCommitStatusCode . ",";
 					$arySqlLine[] = "dtmInsertDate = now()";
@@ -757,7 +757,7 @@
 					$arySqlLine[] = " AND lngRevisionNo > -1";
 					$arySqlLine[] = " AND bytInvalidFlag = FALSE";
 					break;
-				case DEF_FUNCTION_E1:	// ���Ѹ����������Ф������ե���
+				case DEF_FUNCTION_E1:	// 見積原価管理に対するワークフロー
 					$arySqlLine[] = "UPDATE m_Estimate ";
 					$arySqlLine[] = "SET lngEstimateStatusCode = " . $strCommitStatusCode . ",";
 					$arySqlLine[] = "dtmInsertDate = now()";
@@ -766,26 +766,26 @@
 					$arySqlLine[] = " AND bytInvalidFlag = FALSE";
 					break;
 			}
-			// arySqlLine ���
+			// arySqlLine 結合
 			if( !empty($arySqlLine) )
 			{
 				$aryQuery[2] = implode("\n", $arySqlLine);
 			}
 		}
 
-		// ������¹�
+		// クエリ実行
 		foreach ( $aryQuery as $strQuery )
 		{
-			//echo "������¹�$strQuery\n";
+			//echo "クエリ実行$strQuery\n";
 			if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 			{
-				fncOutputError ( 802, DEF_FATAL, "�������ԡ�", TRUE, "", $objDB );
+				fncOutputError ( 802, DEF_FATAL, "更新失敗。", TRUE, "", $objDB );
 			}
 
 			$objDB->freeResult( $lngResultID );
 		}
 
-		// �᡼������
+		// メール送信
 		for ( $i = 0; $i < count ( $aryMailTransmit ); $i++ )
 		{
 			$strAdminMailAddress = fncGetCommonFunction( "adminmailaddress", "m_adminfunction", $objDB );
@@ -795,7 +795,7 @@
 			
 			if ( !$aryMailTransmit[$i] || !$aryMailAddress[$i] || !bytMailSendFlag )
 			{
-				$arySendMailAddress[] = fncOutputError ( 9053, DEF_WARNING, "�᡼���������ԡ�", FALSE, "", $objDB );
+				$arySendMailAddress[] = fncOutputError ( 9053, DEF_WARNING, "メール送信失敗。", FALSE, "", $objDB );
 			}
 		}
 		return Array ( $arySendMailAddress, $strStatusName );

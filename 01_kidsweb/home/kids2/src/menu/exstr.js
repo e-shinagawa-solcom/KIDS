@@ -128,7 +128,7 @@ function ChgEtoJ()
 		///// SYSTEM MESSAGE /////
 		if (typeof(ColumnAdminMessage)!='undefined')
 		{
-			ColumnAdminMessage.innerText = '¥·¥¹¥Æ¥à ¥á¥Ã¥»¡¼¥¸'
+			ColumnAdminMessage.innerText = 'ã‚·ã‚¹ãƒ†ãƒ  ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸'
 		}
 
 

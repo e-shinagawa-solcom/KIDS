@@ -1,10 +1,10 @@
 
-// ����(���߻���)��ɽ��������
+// 時計(現在時刻)を表示させる
 $(function(){
 
 	aryWeek = new Array( 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' );
 
-	// 1����˸��߻����ɽ��/��������
+	// 1秒毎に現在時刻を表示/更新する
 	setInterval(function(){
 
 		objDate = new Date();
@@ -40,8 +40,8 @@ $(function(){
 
 
 
-// �ۥ���URL��ɽ������
-// defer���ɤ߹���Τǥȥꥬ���ʤ��Ǽ¹Ԥ�����
+// ホストURLを表示する
+// deferで読み込むのでトリガーなしで実行させる
 $('.Login-information__host').text(
 	'HOST : '+ location.protocol + '//' + location.hostname
 )

@@ -1,7 +1,7 @@
-// ¥³¥Ô¡¼¥Ü¥¿¥ó
+// ã‚³ãƒ”ãƒ¼ãƒœã‚¿ãƒ³
 $('img.copy').on({
     'click': function () {
-        // ¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤ËÃÍ¤òÈ¿±Ç
+        // ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«å€¤ã‚’åæ˜ 
         if (window.getSelection) {
             var selection = getSelection();
             selection.removeAllRanges();
@@ -10,9 +10,9 @@ $('img.copy').on({
             selection.addRange(range);
             document.execCommand('copy');
             selection.removeAllRanges();
-            alert('¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤Ë¥³¥Ô¡¼¤·¤Ş¤·¤¿¡£');
+            alert('ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ã—ã¾ã—ãŸã€‚');
         } else {
-            alert("¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤Ø¤Î¥³¥Ô¡¼¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£");
+            alert("ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã¸ã®ã‚³ãƒ”ãƒ¼ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
         }
     }
 });

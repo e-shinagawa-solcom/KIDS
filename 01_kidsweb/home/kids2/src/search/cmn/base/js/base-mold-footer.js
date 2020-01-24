@@ -1,24 +1,24 @@
 
 $(function() {
-	// е╗е├е╖ечеєID╝ш╞└
+	// уВ╗уГГуВ╖уГзуГ│IDхПЦх╛Ч
 	var sessionId = $.cookie('strSessionID');
-	// еседеєесе╦ехб╝е▄е┐еє
+	// уГбуВдуГ│уГбуГЛуГеуГ╝уГЬуВ┐уГ│
 	$('.control-block__buttan-main-menu').on({
 		'click' : function() {
-			// ╝ш╞└д╟днд┐╛ь╣ч
+			// хПЦх╛ЧуБзуБНуБЯха┤хРИ
 			if (sessionId) {
-				// еседеєесе╦ехб╝д╪┴л░▄
+				// уГбуВдуГ│уГбуГЛуГеуГ╝уБ╕щБ╖чз╗
 				window.location.href = '/menu/menu.php?strSessionID=' + sessionId;
 			}
 		}
 	});
 
-	// еэе░евеже╚е▄е┐еє
+	// уГнуВ░уВвуВжуГИуГЬуВ┐уГ│
 	$('.control-block__button-logout').on({
 		'click' : function() {
-			// ╝ш╞└д╟днд┐╛ь╣ч
+			// хПЦх╛ЧуБзуБНуБЯха┤хРИ
 			if (sessionId) {
-				// еседеєесе╦ехб╝д╪┴л░▄
+				// уГбуВдуГ│уГбуГЛуГеуГ╝уБ╕щБ╖чз╗
 				window.location.href = '/login/logout.php?strSessionID=' + sessionId;
 			}
 		}

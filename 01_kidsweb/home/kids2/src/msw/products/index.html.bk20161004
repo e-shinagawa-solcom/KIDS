@@ -29,7 +29,7 @@
 
 <script type="text/javascript" language="javascript">
 
-	// ÆşÎÏ¼Ô¥³¡¼¥É¼èÆÀ½èÍı
+	// å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰å–å¾—å‡¦ç†
 	function fncGetInputUserCode()
 	{
 		var lngUserCode = '';
@@ -48,7 +48,7 @@
 
 		if( typeof( window.parent.document.all.HSO ) != 'undefined' )
 		{
-			// ¼õÃí¡¦È¯Ãí¡¦¸«ÀÑ¸¶²Á´ÉÍı¤Î¾ì¹ç
+			// å—æ³¨ãƒ»ç™ºæ³¨ãƒ»è¦‹ç©åŸä¾¡ç®¡ç†ã®å ´åˆ
 			if( typeof(window.parent.document.all.HSO.SOFlg) == "object" || 
 				typeof(window.parent.document.all.HSO.POFlg) == "object" ||
 				typeof(window.parent.document.all.HSO.ESFlg) == "object" )
@@ -68,7 +68,7 @@
 <body id="BaseBack" onContextmenu="return false;" onload="initLayoutBase();initLayoutDragbar(); initLayoutQuery(); fncGetInputUserCode();" onclick="parent.Zchange( parent.MiFrame03 );">
 
 
-<!-- ¥Ç¡¼¥¿¥Ğ¥¤¥ó¥ÉÍÑ¥ª¥Ö¥¸¥§¥¯¥È -->
+<!-- ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ -->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,0);
@@ -95,8 +95,8 @@
 <span id="SearchHeader02"></span>
 
 
-<span id="SegA01_1">À½ÉÊ¥³¡¼¥É</span>
-<span id="SegA01_2">À½ÉÊÌ¾¾Î</span>
+<span id="SegA01_1">è£½å“ã‚³ãƒ¼ãƒ‰</span>
+<span id="SegA01_2">è£½å“åç§°</span>
 
 
 
@@ -141,20 +141,20 @@
 
 
 
-<!-- Å¬ÍÑ¥Ç¡¼¥¿³ÊÇ¼ -->
+<!-- é©ç”¨ãƒ‡ãƒ¼ã‚¿æ ¼ç´ -->
 <input type="hidden" name="lngCodeParentHidden" value="">
 <input type="hidden" name="strNameParentHidden" value="">
 
-<!-- ¥«¥¦¥ó¥¿¡¼ÃÍ³ÊÇ¼ -->
+<!-- ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼å€¤æ ¼ç´ -->
 <input type="hidden" name="lngCounterParentHidden" value="">
 
-<!-- ¥µ¥Ö¥¦¥£¥ó¥É¥¦¥¿¥¤¥×¼±ÊÌ -->
+<!-- ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¿ã‚¤ãƒ—è­˜åˆ¥ -->
 <input type="hidden" name="strSubMasterWindowType" value="products">
 
-<!-- ÆşÎÏ¼Ô¥³¡¼¥É -->
+<!-- å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰ -->
 <input type="hidden" name="lngInputUserCode" value="">
 
-<!-- SQL¥Õ¥¡¥¤¥ëÌ¾ -->
+<!-- SQLãƒ•ã‚¡ã‚¤ãƒ«å -->
 <input type="hidden" name="strSqlFileName" value="">
 </form>
 </body>

@@ -2,23 +2,23 @@
 
 
 ///// MAIN MTITLE IMAGE /////
-var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍı">';
+var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†">';
 var maintitleE = '<img src="' + titleE + '" width="314" height="22" border="0" alt="WORK FLOW">';
 
 
 ///// INPUT A,B,C HEADER IMAGE /////
-var headerAJ = '<img src="' + wfheader01J + '" width="949" height="30" border="0" alt="°Æ·ï°ìÍ÷">';
+var headerAJ = '<img src="' + wfheader01J + '" width="949" height="30" border="0" alt="æ¡ˆä»¶ä¸€è¦§">';
 var headerAE = '<img src="' + wfheader01E + '" width="949" height="30" border="0" alt="WORK FLOW LIST">';
-//var headerBJ = '<img src="' + headtitleBJ + '" width="766" height="30" border="0" alt="ÌÀºÙ">';
+//var headerBJ = '<img src="' + headtitleBJ + '" width="766" height="30" border="0" alt="æ˜ç´°">';
 //var headerBE = '<img src="' + headtitleBE + '" width="766" height="30" border="0" alt="DETAIL">';
 
 
 ///// CSS VALUE /////
-var fcolor = '#666666'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
-var segcolor = '#e8f0f1'; //¹àÌÜÇØ·Ê¿§
-var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
-var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //¹àÌÜ±¦¶õ¤­BORDER
-var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //¹àÌÜº¸¶õ¤­BORDER
+var fcolor = '#666666'; //é …ç›®ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼
+var segcolor = '#e8f0f1'; //é …ç›®èƒŒæ™¯è‰²
+var segbody = '#d6d0b1'; //INPUT A BODY èƒŒæ™¯è‰²
+var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //é …ç›®å³ç©ºãBORDER
+var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //é …ç›®å·¦ç©ºãBORDER
 
 
 function initLayoutWF()

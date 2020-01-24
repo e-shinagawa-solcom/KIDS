@@ -2,12 +2,12 @@
 
 
 //----------------------------------------------------
-// ²òÀâ : ±ÑÆüÀÚÂØ´Ø¿ô
+// è§£èª¬ : è‹±æ—¥åˆ‡æ›¿é–¢æ•°
 //----------------------------------------------------
 function ChgEtoJ()
 {
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if( lngClickCode == 0 )
 	{
 		// SET COOKIE
@@ -45,7 +45,7 @@ function ChgEtoJ()
 		lngClickCode = 1;
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if( lngClickCode == 1 )
 	{
 		// SET COOKIE
@@ -57,7 +57,7 @@ function ChgEtoJ()
 		// MAIN TITLE
 		MainTitle.innerHTML = maintitleJ;
 
-		strSelectFunctions.innerText = 'µ¡Ç½ÁªÂò';
+		strSelectFunctions.innerText = 'æ©Ÿèƒ½é¸æŠ';
 
 		if( typeof(MessageBt) != 'undefined' )
 		{

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       È¯Ãí´ÉÍı  ¡ÖÈ¯Ãí¥Ç¡¼¥¿¡×¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+*       ç™ºæ³¨ç®¡ç†  ã€Œç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã€ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
 *
 *
 *       @package    K.I.D.S.
@@ -13,12 +13,12 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦È¯Ãí¥Ç¡¼¥¿¤Î½¤ÀµÁ°¤Ë¡¢³ºÅöÈÖ¹æ¤Î¥Ç¡¼¥¿¤¬
-*           ¡ÖÇ¼ÉÊºÑ¡×°Ê¾å¡ÊÇ¼ÉÊºÑ(4)¡¢Äù¤áºÑ(99)¡Ë¤«¤ò³ÎÇ§¤·
-*           Åö¤Æ¤Ï¤Ş¤ë¾ì¹ç¡¢¥¨¥é¡¼¤È¤·½¤ÀµÉÔ²ÄÇ½¤È¤¹¤ë
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ä¿®æ­£å‰ã«ã€è©²å½“ç•ªå·ã®ãƒ‡ãƒ¼ã‚¿ãŒ
+*           ã€Œç´å“æ¸ˆã€ä»¥ä¸Šï¼ˆç´å“æ¸ˆ(4)ã€ç· ã‚æ¸ˆ(99)ï¼‰ã‹ã‚’ç¢ºèªã—
+*           å½“ã¦ã¯ã¾ã‚‹å ´åˆã€ã‚¨ãƒ©ãƒ¼ã¨ã—ä¿®æ­£ä¸å¯èƒ½ã¨ã™ã‚‹
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
@@ -26,17 +26,17 @@
 
 
 	//
-	// ³µÍ×¡§¡ÖÈ¯Ãí¥Ç¡¼¥¿¡×¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
-	// °ú¿ô¡§
-	//		$lngOrderNo		È¯ÃíÈÖ¹æ
-	//		$objDB			ÀÜÂ³ºÑ¤ß¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È
-	// Ìá¤êÃÍ¡§
+	// æ¦‚è¦ï¼šã€Œç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã€ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
+	// å¼•æ•°ï¼š
+	//		$lngOrderNo		ç™ºæ³¨ç•ªå·
+	//		$objDB			æ¥ç¶šæ¸ˆã¿ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	// æˆ»ã‚Šå€¤ï¼š
 	//		boolean
 	//
 	function fncPoDataStatusCheck($lngOrderNo, $objDB)
 	{
 		//
-		// °ú¿ô¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+		// å¼•æ•°ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 		//
 		if( !trim($lngOrderNo) || !isset($objDB) )
 		{
@@ -47,21 +47,21 @@
 		$lngResultID = 0;
 
 		//
-		// ¡ÖÈ¯Ãí¥Ç¡¼¥¿¡×¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+		// ã€Œç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã€ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
 		//
 		$aryQuery = array();
 		$aryQuery[] = "SELECT";													// 
-		$aryQuery[] = "strOrderCode				as strordercode";				// 1:È¯ÃíÈÖ¹æ
-		$aryQuery[] = ",strReviseCode			as strrevisecode";				// 2:¥ê¥Ğ¥¤¥ºÈÖ¹æ
-		$aryQuery[] = ",lngOrderStatusCode		as lngorderstatuscode";			// 3:È¯Ãí¥¹¥Æ¡¼¥¿¥¹
-		$aryQuery[] = ",bytInvalidFlag			as bytinvalidflag";				// 4:Ìµ¸ú¥Õ¥é¥°
+		$aryQuery[] = "strOrderCode				as strordercode";				// 1:ç™ºæ³¨ç•ªå·
+		$aryQuery[] = ",strReviseCode			as strrevisecode";				// 2:ãƒªãƒã‚¤ã‚ºç•ªå·
+		$aryQuery[] = ",lngOrderStatusCode		as lngorderstatuscode";			// 3:ç™ºæ³¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
+		$aryQuery[] = ",bytInvalidFlag			as bytinvalidflag";				// 4:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
 		$aryQuery[] = "FROM";
 		$aryQuery[] = "m_Order";
 		$aryQuery[] = "WHERE";
 		$aryQuery[] = "lngOrderNo = ".$lngOrderNo;
 
 		$strQuery = implode("\n", $aryQuery );
-		// ¥¯¥¨¥ê¡¼¼Â¹Ô
+		// ã‚¯ã‚¨ãƒªãƒ¼å®Ÿè¡Œ
 		$objDB->freeResult( $lngResultID );
 		if ( !$lngResultID = $objDB->execute( $strQuery ) )
 		{
@@ -70,10 +70,10 @@
 		}
 		$aryData2 = pg_fetch_array( $lngResultID, 0, PGSQL_ASSOC );
 		
-		// Ç¼ÉÊºÑ(4)°Ê¾å¡ÊÇ¼ÉÊºÑ¡¢Äù¤áºÑ¡Ë¡¢Ëô¤ÏÌµ¸ú¤Ç¤¢¤ì¤Ğ¡¢½¤Àµ½ĞÍè¤Ê¤¤¤â¤Î¤È¤¹¤ë
+		// ç´å“æ¸ˆ(4)ä»¥ä¸Šï¼ˆç´å“æ¸ˆã€ç· ã‚æ¸ˆï¼‰ã€åˆã¯ç„¡åŠ¹ã§ã‚ã‚Œã°ã€ä¿®æ­£å‡ºæ¥ãªã„ã‚‚ã®ã¨ã™ã‚‹
 		if( (int)$aryData2["lngorderstatuscode"] >= DEF_ORDER_END || $aryData2["bytinvalidflag"] == "t" )
 		{
-			$strErrMsg = '¡ÊËô¤ÏÌµ¸ú¤Ê¥Ç¡¼¥¿¤Ç¤¹¡ËÈ¯ÃíNo.¡§'.$aryData2["strordercode"]."-".$aryData2["strrevisecode"];
+			$strErrMsg = 'ï¼ˆåˆã¯ç„¡åŠ¹ãªãƒ‡ãƒ¼ã‚¿ã§ã™ï¼‰ç™ºæ³¨No.ï¼š'.$aryData2["strordercode"]."-".$aryData2["strrevisecode"];
 			fncOutputError( 708, DEF_ERROR, $strErrMsg, TRUE, "", $objDB );
 			return false;
 		}

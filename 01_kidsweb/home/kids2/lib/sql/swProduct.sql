@@ -1,12 +1,12 @@
 /*
-	³µÍ×¡§À½ÉÊ¸¡º÷
-	ÂĞ¾İ¡§¶¦ÄÌ¥µ¥Ö¥¦¥£¥ó¥É¥¦
-	ºîÀ®¡§ºØÆ£ÏÂ»Ö
-	È÷¹Í¡§À½ÉÊ¥³¡¼¥É¡ÜÌ¾¾Î¤«¤é°ìÃ×¤¹¤ë¡Ö¥³¡¼¥É¡ÜÌ¾¾Î¡×°ìÍ÷¤òÀ¸À®
+	æ¦‚è¦ï¼šè£½å“æ¤œç´¢
+	å¯¾è±¡ï¼šå…±é€šã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+	ä½œæˆï¼šæ–è—¤å’Œå¿—
+	å‚™è€ƒï¼šè£½å“ã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã‹ã‚‰ä¸€è‡´ã™ã‚‹ã€Œã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã€ä¸€è¦§ã‚’ç”Ÿæˆ
 	
-		_%strFormValue0%_¡§À½ÉÊ¥³¡¼¥É
-		_%strFormValue1%_¡§À½ÉÊÌ¾¾Î
-		_%strFormValue2%_¡§ÆşÎÏ¼Ô¥³¡¼¥É¡Ê¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¡Ë
+		_%strFormValue0%_ï¼šè£½å“ã‚³ãƒ¼ãƒ‰
+		_%strFormValue1%_ï¼šè£½å“åç§°
+		_%strFormValue2%_ï¼šå…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰ï¼ˆãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ï¼‰
 
 */
 SELECT   a.strproductcode, 
@@ -26,12 +26,12 @@ FROM
 	WHERE mp.bytinvalidflag = false
 		AND (mp.strproductcode LIKE '%_%strFormValue0%_%')
 		AND (mp.strproductname LIKE '%_%strFormValue1%_%')
-		and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WF¿½ÀÁÃæ */
+		and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WFç”³è«‹ä¸­ */
 	GROUP BY mp.strproductcode, mp.strproductname, mp.lnginchargeusercode
 	UNION
 	SELECT	mp.strproductcode			AS strproductcode
 			,NULL						AS strproductname
-			,'¡ÊÀ½ÉÊÌ¾¾Î¤¬¶õ¤Ç¤¹¡Ë'		AS strproductnamenull
+			,'ï¼ˆè£½å“åç§°ãŒç©ºã§ã™ï¼‰'		AS strproductnamenull
 			,mp.lnginchargeusercode		as lnginchargeusercode
 	FROM m_product mp
 	WHERE mp.bytinvalidflag = false

@@ -1,13 +1,13 @@
 // ---------------------------------------------------
-// /mold/cmn/search/js/cookie-functions.js¤Ë°ÍÂ¸
+// /mold/cmn/search/js/cookie-functions.jsã«ä¾å­˜
 // ---------------------------------------------------
 (function(){
     var form = $('form');
-    // ¸¡º÷¥Ü¥¿¥ó²¡²¼»ş¤Ë¸½ºß¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¾õÂÖ¤òCOOKIE¤ËÊİÂ¸
+    // æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã«ç¾åœ¨ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®çŠ¶æ…‹ã‚’COOKIEã«ä¿å­˜
     $('img.search.button').on('click', function(){
         saveCookieDispayItems(form);
     });
 
-    // COOKIE¤«¤é¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¾õÂÖ¤òÉü¸µ
+    // COOKIEã‹ã‚‰ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®çŠ¶æ…‹ã‚’å¾©å…ƒ
     restoreCookieDispayItems(form)
 })();

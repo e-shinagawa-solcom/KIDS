@@ -55,7 +55,7 @@ function ChgEtoJ()
 
 
 
-		colExcel.innerText	= 'Excel ¥Õ¥¡¥¤¥ë';
+		colExcel.innerText	= 'Excel ãƒ•ã‚¡ã‚¤ãƒ«';
 
 
 		lngLanguageCode	= 1;

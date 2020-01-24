@@ -2,12 +2,12 @@
 
 
 //-----------------------------------------------------------------------------
-// ���� : ���������ѿ����
-// ���� :��TabIndex���ͤ����� / �ܥ��󥤥᡼��������
+// 概要 : ローカル変数定義
+// 解説 :「TabIndex」値の設定 / ボタンイメージの設定
 //-----------------------------------------------------------------------------
 
 //------------------------------------------
-// Ŭ�Ѳս� :�֥��֥�����ɥ��ܥ����
+// 適用箇所 :「サブウィンドウボタン」
 //------------------------------------------
 var NumTabA1   = ''   ; // vendor
 var NumTabA1_2 = '' ; // creation
@@ -23,33 +23,33 @@ var NumTabI1   = ''   ; // input
 
 
 //------------------------------------------
-// Ŭ�Ѳս� :�־��ʴ����ץ���
+// 適用箇所 :「商品管理」タブ
 //------------------------------------------
 var PTabNumA = '' ; // A
 var PTabNumB = '' ; // B
 
 
 //------------------------------------------
-// Ŭ�Ѳս� :�ּ�����ȯ������塦�����ץ���
+// 適用箇所 :「受注・発注・売上・仕入」タブ
 //------------------------------------------
-var TabNumA = '' ; // �إå���
-var TabNumB = '' ; // ����
+var TabNumA = '' ; // ヘッダー
+var TabNumB = '' ; // 明細
 
 
 //------------------------------------------
-// Ŭ�Ѳս� :����Ͽ�ܥ����
+// 適用箇所 :「登録ボタン」
 //------------------------------------------
 var RegistNum = '' ;
 
 
 //------------------------------------------
-// Ŭ�Ѳս� :�ֹ��ɲåܥ����
+// 適用箇所 :「行追加ボタン」
 //------------------------------------------
 var AddRowNum = '' ;
 
 
 //------------------------------------------
-// Ŭ�Ѳս� :�֥��������ܥ����
+// 適用箇所 :「カレンダーボタン」
 //------------------------------------------
 var NumDateTabA = '' ;
 var NumDateTabB = '' ;
@@ -57,47 +57,47 @@ var NumDateTabC = '' ;
 
 
 //------------------------------------------
-// Ŭ�Ѳս� :�����ʿ��̥ܥ����
+// 適用箇所 :「製品数量ボタン」
 //------------------------------------------
 var NumPunitTab = '' ;
 
 
 //------------------------------------------
-// ���� : ��Ͽ�ܥ�������
+// 解説 : 登録ボタン生成
 //------------------------------------------
-var blownRegiBtJ1 = '<a href="#"><img onmouseover="fncBlownRegistButton( \'onJ\' , this );" onmouseout="fncBlownRegistButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + blownregistbtJ1 + '" width="72" height="20" border="0" alt="��Ͽ"></a>';
+var blownRegiBtJ1 = '<a href="#"><img onmouseover="fncBlownRegistButton( \'onJ\' , this );" onmouseout="fncBlownRegistButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + blownregistbtJ1 + '" width="72" height="20" border="0" alt="登録"></a>';
 
 var blownRegiBtE1 = '<a href="#"><img onmouseover="fncBlownRegistButton( \'onE\' , this );" onmouseout="fncBlownRegistButton( \'offE\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + blownregistbtE1 + '" width="72" height="20" border="0" alt="REGIST"></a>';
 
 
 //------------------------------------------
-// ���� : LOG�ܥ�������
+// 解説 : LOGボタン生成
 //------------------------------------------
 var logBt = '<a href="#"><img onmouseover="fncLogButton( \'on\' , this );" onmouseout="fncLogButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + logbt1 + '" width="58" height="16" border="0" alt="LOG"></a>';
 
 
 //------------------------------------------
-// ���� : BACK SMALL�ܥ�������
+// 解説 : BACK SMALLボタン生成
 //------------------------------------------
 var backsmallBt = '<a href="#"><img onmouseover="fncBackSmallButton( \'on\' , this );" onmouseout="fncBackSmallButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + backsmallbt1 + '" width="58" height="16" border="0" alt="BACK"></a>';
 
 
 //------------------------------------------
-// ���� : NEXT SMALL�ܥ�������
+// 解説 : NEXT SMALLボタン生成
 //------------------------------------------
 var blownnextBt = '<a href="#"><img onmouseover="fncNextSmallButton( \'on\' , this );" onmouseout="fncNextSmallButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + blownnextbt1 + '" width="58" height="16" border="0" alt="NEXT"></a>';
 
 
 //------------------------------------------
-// ���� : PREV SMALL�ܥ�������
+// 解説 : PREV SMALLボタン生成
 //------------------------------------------
 var blownprevBt = '<a href="#"><img onmouseover="fncPrevSmallButton( \'on\' , this );" onmouseout="fncPrevSmallButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + blownprevbt1 + '" width="58" height="16" border="0" alt="PREV"></a>';
 
 
 //------------------------------------------
-// ���� : ���ܥ�������
+// 解説 : 戻るボタン生成
 //------------------------------------------
-var BackBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackJOn(this);" onmouseout="BlownBackJOff(this);" src="' + blownbackJ1 + '" width="72" height="20" border="0" alt="���"></a>';
+var BackBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackJOn(this);" onmouseout="BlownBackJOff(this);" src="' + blownbackJ1 + '" width="72" height="20" border="0" alt="戻る"></a>';
 var BackBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackEOn(this);" onmouseout="BlownBackEOff(this);fncAlphaOff( this );" src="' + blownbackE1 + '" width="72" height="20" border="0" alt="BACK"></a>';
 
 

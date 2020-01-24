@@ -2,7 +2,7 @@
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ¥Õ¥¡¥¤¥ë³µÍ× : LC´ØÏ¢½èÍı
+* ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ : LCé–¢é€£å‡¦ç†
 *
 *
 *
@@ -15,30 +15,30 @@
 */
 //--------------------------------------------------------------------------------------------------------------------
 
-//¶¦ÄÌÊÑ¿ô
+//å…±é€šå¤‰æ•°
 var session_id;
-var getDataModeFlg = 0; //0:Á´¥Ç¡¼¥¿ 1:Í­¸ú¥Ç¡¼¥¿
-var phpData;// PHP¤«¤é¤Î¼èÆÀ¥Ç¡¼¥¿
+var getDataModeFlg = 0; //0:å…¨ãƒ‡ãƒ¼ã‚¿ 1:æœ‰åŠ¹ãƒ‡ãƒ¼ã‚¿
+var phpData;// PHPã‹ã‚‰ã®å–å¾—ãƒ‡ãƒ¼ã‚¿
 var lcInfoHit;
-var getInfoFlg;//Ãê½Ğ¥Õ¥é¥°
-var tableData;//¥Æ¡¼¥Ö¥ë¥Ç¡¼¥¿³ÎÊİÇÛÎó
+var getInfoFlg;//æŠ½å‡ºãƒ•ãƒ©ã‚°
+var tableData;//ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ‡ãƒ¼ã‚¿ç¢ºä¿é…åˆ—
 
 //---------------------------------------------------
-// ²èÌÌ½é´ü½èÍı
+// ç”»é¢åˆæœŸå‡¦ç†
 //---------------------------------------------------
 function lcInit(json_obj) {
 	phpData = $.parseJSON(json_obj);
 	if (phpData.reSearchFlg == "true" && $.cookie("lcInfoSearchConditions") != undefined) {
-		//Â¾²èÌÌ¤«¤é¤ÎÌá¤ê¤Ê¤É¤Ç¡¢°ÜÆ°Á°¤Î¸¡º÷¾ò·ï¤ÇºÆ¸¡º÷¤¹¤ë¾ì¹ç
-		//Ãê½Ğ¾ò·ï¤òcookie¤«¤é¼èÆÀ
+		//ä»–ç”»é¢ã‹ã‚‰ã®æˆ»ã‚Šãªã©ã§ã€ç§»å‹•å‰ã®æ¤œç´¢æ¡ä»¶ã§å†æ¤œç´¢ã™ã‚‹å ´åˆ
+		//æŠ½å‡ºæ¡ä»¶ã‚’cookieã‹ã‚‰å–å¾—
 		getSearchConditions();
 
-		//Ãê½Ğ¥Õ¥é¥°¤¬Íè¤Æ¤ë¾ì¹ç¤ÏÃê½Ğ½èÍı
+		//æŠ½å‡ºãƒ•ãƒ©ã‚°ãŒæ¥ã¦ã‚‹å ´åˆã¯æŠ½å‡ºå‡¦ç†
 		getLcInfo(1, 2);
 	} else {
-		//Ãê½Ğ¾ò·ï¤òcookie¤«¤éºï½ü
+		//æŠ½å‡ºæ¡ä»¶ã‚’cookieã‹ã‚‰å‰Šé™¤
 		delSearchConditions();
-		//Á´·ï¸¡º÷
+		//å…¨ä»¶æ¤œç´¢
 		getLcInfo(0);
 	}
 
@@ -46,25 +46,25 @@ function lcInit(json_obj) {
 }
 
 //---------------------------------------------------
-// LC¾ğÊó¥Æ¡¼¥Ö¥ëÅ¬±ş
+// LCæƒ…å ±ãƒ†ãƒ¼ãƒ–ãƒ«é©å¿œ
 //---------------------------------------------------
 function setLcInfoTable(data, phpData) {
-	//´ûÂ¸¥Ç¡¼¥¿¤Îºï½ü
+	//æ—¢å­˜ãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤
 	$("#lc_table_body").empty();
 	$("#lc_table_radio").empty();
 
 	for (var i = 0; i < data.length; i++) {
-		//¹Ô¥Ç¡¼¥¿
+		//è¡Œãƒ‡ãƒ¼ã‚¿
 		var row = data[i];
 
-		//L/C¾ğÊó¤Î¾õÂÖ = 0/4/8¤Î¾ì¹ç¡¢¾åµ­¤Ç¼èÆÀ¤·¤¿strclrstatus = 0 ¤ÎÇØ·Ê¿§¤òÀßÄê¤¹¤ë
-		//L/C¾ğÊó¤Î¾õÂÖ = 1¤Î¾ì¹ç¡¢¾åµ­¤Ç¼èÆÀ¤·¤¿strclrstatus = 1 ¤ÎÇØ·Ê¿§¤òÀßÄê¤¹¤ë
-		//L/C¾ğÊó¤Î¾õÂÖ = 2/5/10¤Î¾ì¹ç¡¢¾åµ­¤Ç¼èÆÀ¤·¤¿strclrstatus = 2 ¤ÎÇØ·Ê¿§¤òÀßÄê¤¹¤ë
-		//L/C¾ğÊó¤Î¾õÂÖ = 3¤Î¾ì¹ç¡¢¾åµ­¤Ç¼èÆÀ¤·¤¿strclrstatus = 3 ¤ÎÇØ·Ê¿§¤òÀßÄê¤¹¤ë
-		//L/C¾ğÊó¤Î¾õÂÖ = 6¤Î¾ì¹ç¡¢¾åµ­¤Ç¼èÆÀ¤·¤¿strclrstatus = 6 ¤ÎÇØ·Ê¿§¤òÀßÄê¤¹¤ë
-		//L/C¾ğÊó¤Î¾õÂÖ = 7¤Î¾ì¹ç¡¢¾åµ­¤Ç¼èÆÀ¤·¤¿strclrstatus = 7 ¤ÎÇØ·Ê¿§¤òÀßÄê¤¹¤ë
-		//L/C¾ğÊó¤Î¾õÂÖ = 9¤Î¾ì¹ç¡¢¾åµ­¤Ç¼èÆÀ¤·¤¿strclrstatus = 9 ¤ÎÇØ·Ê¿§¤òÀßÄê¤¹¤ë
-		var background_color = "255,255,255";//¥Ç¥Õ¥©¥ë¥È
+		//L/Cæƒ…å ±ã®çŠ¶æ…‹ = 0/4/8ã®å ´åˆã€ä¸Šè¨˜ã§å–å¾—ã—ãŸstrclrstatus = 0 ã®èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
+		//L/Cæƒ…å ±ã®çŠ¶æ…‹ = 1ã®å ´åˆã€ä¸Šè¨˜ã§å–å¾—ã—ãŸstrclrstatus = 1 ã®èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
+		//L/Cæƒ…å ±ã®çŠ¶æ…‹ = 2/5/10ã®å ´åˆã€ä¸Šè¨˜ã§å–å¾—ã—ãŸstrclrstatus = 2 ã®èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
+		//L/Cæƒ…å ±ã®çŠ¶æ…‹ = 3ã®å ´åˆã€ä¸Šè¨˜ã§å–å¾—ã—ãŸstrclrstatus = 3 ã®èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
+		//L/Cæƒ…å ±ã®çŠ¶æ…‹ = 6ã®å ´åˆã€ä¸Šè¨˜ã§å–å¾—ã—ãŸstrclrstatus = 6 ã®èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
+		//L/Cæƒ…å ±ã®çŠ¶æ…‹ = 7ã®å ´åˆã€ä¸Šè¨˜ã§å–å¾—ã—ãŸstrclrstatus = 7 ã®èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
+		//L/Cæƒ…å ±ã®çŠ¶æ…‹ = 9ã®å ´åˆã€ä¸Šè¨˜ã§å–å¾—ã—ãŸstrclrstatus = 9 ã®èƒŒæ™¯è‰²ã‚’è¨­å®šã™ã‚‹
+		var background_color = "255,255,255";//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
 		var background_color_data;
 		switch (row.lcstate) {
 			case "0":
@@ -94,7 +94,7 @@ function setLcInfoTable(data, phpData) {
 				break;
 		}
 		if (background_color_data != null) {
-			//ÇØ·Ê¿§À¸À®
+			//èƒŒæ™¯è‰²ç”Ÿæˆ
 			background_color = background_color_data["lngcolorred"] + "," + background_color_data["lngcolorgreen"] + "," + background_color_data["lngcolorblue"];
 		}
 
@@ -174,51 +174,51 @@ function setLcInfoTable(data, phpData) {
 	$("#lc_table").trigger("update");
 
 
-	//0·ï¤Î¾ì¹ç¤Ï¥¨¥é¡¼
+	//0ä»¶ã®å ´åˆã¯ã‚¨ãƒ©ãƒ¼
 	lcInfoHit = true;
 	if (data == false) {
 		lcInfoHit = false;
-		alert("¾ò·ï¤Ë¥Ò¥Ã¥È¤¹¤ëL/C¾ğÊó¤Ï¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£");
+		alert("æ¡ä»¶ã«ãƒ’ãƒƒãƒˆã™ã‚‹L/Cæƒ…å ±ã¯è¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚");
 	}
 
-	//¥í¡¼¥À¡¼²ò½ü
+	//ãƒ­ãƒ¼ãƒ€ãƒ¼è§£é™¤
 	$("#masking_loader").css("display", "none");
 }
 
 //---------------------------------------------------
-// Ãê½Ğ½èÍı
+// æŠ½å‡ºå‡¦ç†
 //---------------------------------------------------
 function getLcInfo(mode, type = 1) {
 
 	var error = false;
 	var error_msg = "";
-	//mode¡§0 Á´·ï, 1 ¸¡º÷¾ò·ï´Ş¤àÃê½Ğ½èÍı
+	//modeï¼š0 å…¨ä»¶, 1 æ¤œç´¢æ¡ä»¶å«ã‚€æŠ½å‡ºå‡¦ç†
 	if (mode == 1) {
 		var from = $("#startYm").val().replace("/", "");
 		var to = $("#endYm").val().replace("/", "");
 
 		if (from == "" && to == "" && $("#payfCode").val() == "" && $("#payfName").val() == "" && type == 1) {
 			error = true;
-			error_msg += "¾ò·ï¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£\r\n";
+			error_msg += "æ¡ä»¶ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚\r\n";
 		}
 
-		//Ç¯·î¡ÊFROM¡ËÆüÉÕ¤Ç¤Ï¤Ê¤¤¾ì¹ç¡¢¥¨¥é¡¼
+		//å¹´æœˆï¼ˆFROMï¼‰æ—¥ä»˜ã§ã¯ãªã„å ´åˆã€ã‚¨ãƒ©ãƒ¼
 		if (from != "" && !from.match(/(\d{4})(\d{2})/)) {
 			error = true;
-			error_msg += "FROM¤Î·Á¼°¤¬ÉÔÀµ¤Ç¤¹¡£Îã¡§2019/01\r\n";
+			error_msg += "FROMã®å½¢å¼ãŒä¸æ­£ã§ã™ã€‚ä¾‹ï¼š2019/01\r\n";
 		}
-		//Ç¯·î¡ÊTO¡ËÆüÉÕ¤Ç¤Ï¤Ê¤¤¾ì¹ç¡¢¥¨¥é¡¼
+		//å¹´æœˆï¼ˆTOï¼‰æ—¥ä»˜ã§ã¯ãªã„å ´åˆã€ã‚¨ãƒ©ãƒ¼
 		if (to != "" && !to.match(/(\d{4})(\d{2})/)) {
 			error = true;
-			error_msg += "TO¤Î·Á¼°¤¬ÉÔÀµ¤Ç¤¹¡£Îã¡§2019/01\r\n";
+			error_msg += "TOã®å½¢å¼ãŒä¸æ­£ã§ã™ã€‚ä¾‹ï¼š2019/01\r\n";
 		}
-		//Ç¯·î¡ÊFROM¡Ë¡äÇ¯·î¡ÊTO¡Ë¤Î¾ì¹ç¡¢¥¨¥é¡¼
+		//å¹´æœˆï¼ˆFROMï¼‰ï¼å¹´æœˆï¼ˆTOï¼‰ã®å ´åˆã€ã‚¨ãƒ©ãƒ¼
 		if (from != "" && to != "" && to < from) {
 			error = true;
-			error_msg += "TO¤ÏFROM¤è¤êÌ¤Íè¤òÀßÄê¤·¤Æ¤¯¤À¤µ¤¤¡£\r\n";
+			error_msg += "TOã¯FROMã‚ˆã‚Šæœªæ¥ã‚’è¨­å®šã—ã¦ãã ã•ã„ã€‚\r\n";
 		}
 
-		//Ãê½Ğ¾ò·ï¤òcookie¤Ë³ÎÊİ
+		//æŠ½å‡ºæ¡ä»¶ã‚’cookieã«ç¢ºä¿
 		saveSearchConditions();
 		getInfoFlg = 1;
 	} else if (mode == 0) {
@@ -227,7 +227,7 @@ function getLcInfo(mode, type = 1) {
 
 
 	if (error == false) {
-		//LC¾ğÊó¼èÆÀ
+		//LCæƒ…å ±å–å¾—
 		$("#masking_loader").css("display", "block");
 		$.ajax({
 			url: '/lc/lcModel/lcinfo_ajax.php',
@@ -244,7 +244,7 @@ function getLcInfo(mode, type = 1) {
 			}
 		})
 			.done(function (data) {
-				// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù
+				// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸ
 				var data = JSON.parse(data);
 				tableData = data;
 				setLcInfoTable(data, phpData);
@@ -252,37 +252,37 @@ function getLcInfo(mode, type = 1) {
 			})
 			.fail(function (data) {
 				alert("fail");
-				// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+				// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 			});
 	} else {
-		//¸¡º÷¥Õ¥©¡¼¥à¥¨¥é¡¼½ĞÎÏ
+		//æ¤œç´¢ãƒ•ã‚©ãƒ¼ãƒ ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 		alert(error_msg);
 	}
 
 }
 
 //---------------------------------------------------
-// ¥·¥ß¥å¥ì¡¼¥È½èÍı
+// ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆå‡¦ç†
 //---------------------------------------------------
 function getSimulateLcInfo() {
 
 	var to = $("#simulateYm").val().replace("/", "");
 
-	//Ç¯·î¤¬¶õ¤Î¾ì¹ç¡¢¥¨¥é¡¼
+	//å¹´æœˆãŒç©ºã®å ´åˆã€ã‚¨ãƒ©ãƒ¼
 	var error = false;
 	var error_msg = "";
 	if (to == "") {
 		error = true;
-		error_msg += "Ç¯·î¤¬¶õ¤Ç¤¹¡£\r\n";
+		error_msg += "å¹´æœˆãŒç©ºã§ã™ã€‚\r\n";
 	}
-	//Ç¯·îÆüÉÕ¤Ç¤Ï¤Ê¤¤¾ì¹ç¡¢¥¨¥é¡¼
+	//å¹´æœˆæ—¥ä»˜ã§ã¯ãªã„å ´åˆã€ã‚¨ãƒ©ãƒ¼
 	if (to != "" && !to.match(/(\d{4})(\d{2})/)) {
 		error = true;
-		error_msg += "Ç¯·î¤Î·Á¼°¤¬ÉÔÀµ¤Ç¤¹¡£Îã¡§2019/01\r\n";
+		error_msg += "å¹´æœˆã®å½¢å¼ãŒä¸æ­£ã§ã™ã€‚ä¾‹ï¼š2019/01\r\n";
 	}
 
 	if (error == false) {
-		//LC¾ğÊó¼èÆÀ
+		//LCæƒ…å ±å–å¾—
 		$("#masking_loader").css("display", "block");
 		$.ajax({
 			url: '../lcModel/lcinfo_ajax.php',
@@ -296,30 +296,30 @@ function getSimulateLcInfo() {
 			}
 		})
 			.done(function (data) {
-				// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù
+				// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸ
 				var data = JSON.parse(data);
 				tableData = data;
 				setLcInfoTable(data, phpData);
 				setBtnControll();
 			})
 			.fail(function () {
-				// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+				// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 			});
 		$("#masking_loader").css("display", "none");
 	} else {
-		//¸¡º÷¥Õ¥©¡¼¥à¥¨¥é¡¼½ĞÎÏ
+		//æ¤œç´¢ãƒ•ã‚©ãƒ¼ãƒ ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 		alert(error_msg);
 	}
 }
 
 //---------------------------------------------------
-// ÊÔ½¸½èÍı
+// ç·¨é›†å‡¦ç†
 //---------------------------------------------------
 function openEdit() {
-	//¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¤«¤É¤¦¤«
+	//è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹
 	var sel = $('input[name=selectRow]:checked').val();
 	if (sel == undefined) {
-		alert("ÊÔ½¸¤¹¤ëL/C¾ğÊó¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£");
+		alert("ç·¨é›†ã™ã‚‹L/Cæƒ…å ±ã‚’é¸æŠã—ã¦ãã ã•ã„ã€‚");
 		return;
 	}
 	var row = $('#lc_table_body tr:nth-child(' + sel + ')');
@@ -335,7 +335,7 @@ function openEdit() {
 		lcstate != 7 &&
 		lcstate != 8 &&
 		lcstate != 9) {
-		alert("ÁªÂò¤µ¤ì¤¿L/C¾ğÊó¤ÏÊÔ½¸¤¹¤ë¤³¤È¤¬½ĞÍè¤Ş¤»¤ó¡£");
+		alert("é¸æŠã•ã‚ŒãŸL/Cæƒ…å ±ã¯ç·¨é›†ã™ã‚‹ã“ã¨ãŒå‡ºæ¥ã¾ã›ã‚“ã€‚");
 	} else {
 		location.href = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
 		 + polineno + '&poreviseno=' + poreviseno;
@@ -343,7 +343,7 @@ function openEdit() {
 }
 
 //---------------------------------------------------
-// ¥¯¥ê¥¢½èÍı
+// ã‚¯ãƒªã‚¢å‡¦ç†
 //---------------------------------------------------
 function formClear() {
 	$("#startYm").val("");
@@ -353,7 +353,7 @@ function formClear() {
 }
 
 //---------------------------------------------------
-//ÆÃÄê¤Î°ÌÃÖ¤ËÊ¸»úÁŞÆş
+//ç‰¹å®šã®ä½ç½®ã«æ–‡å­—æŒ¿å…¥
 //---------------------------------------------------
 function strIns(str, idx, val) {
 	if (str != "" && str != null && str != "null") {
@@ -366,7 +366,7 @@ function strIns(str, idx, val) {
 };
 
 /**
- * Ê¸»úÊÑ´¹¡Ênull¤Î¾ì¹ç¡¢""¤ËÊÑ´¹¡Ë
+ * æ–‡å­—å¤‰æ›ï¼ˆnullã®å ´åˆã€""ã«å¤‰æ›ï¼‰
  * @param {} str 
  */
 function convertNull(str) {
@@ -378,21 +378,21 @@ function convertNull(str) {
 }
 
 //---------------------------------------------------
-//Í­¸ú¡¦Á´¥Ç¡¼¥¿¥Ü¥¿¥ó¥¤¥Ù¥ó¥È
+//æœ‰åŠ¹ãƒ»å…¨ãƒ‡ãƒ¼ã‚¿ãƒœã‚¿ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆ
 //---------------------------------------------------
 function switchGetModeBtn(flg, serch_flg) {
 	$("#allBtn").removeClass("selected-btn");
 	$("#validBtn").removeClass("selected-btn");
 	getDataModeFlg = flg;
 	if (getDataModeFlg == 1) {
-		//Í­¸ú¥Ç¡¼¥¿
+		//æœ‰åŠ¹ãƒ‡ãƒ¼ã‚¿
 		$("#validBtn").addClass("selected-btn");
 	} else {
-		//Á´¥Ç¡¼¥¿
+		//å…¨ãƒ‡ãƒ¼ã‚¿
 		$("#allBtn").addClass("selected-btn");
 	}
 
-	//Ãê½Ğ¼Â¹Ô
+	//æŠ½å‡ºå®Ÿè¡Œ
 	if (serch_flg) {
 		getLcInfo(1, 2);
 	}
@@ -401,10 +401,10 @@ function switchGetModeBtn(flg, serch_flg) {
 
 
 //---------------------------------------------------
-//È¿±Ç¥Ç¡¼¥¿¥Ü¥¿¥ó¥¤¥Ù¥ó¥È
+//åæ˜ ãƒ‡ãƒ¼ã‚¿ãƒœã‚¿ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆ
 //---------------------------------------------------
 function reflectLcInfo() {
-	// È¿±Ç¥¤¥Ù¥ó¥È¤Î½é´ü½èÍı
+	// åæ˜ ã‚¤ãƒ™ãƒ³ãƒˆã®åˆæœŸå‡¦ç†
 	$.ajax({
 		url: '../info/reflect.php',
 		type: 'POST',
@@ -414,15 +414,15 @@ function reflectLcInfo() {
 		}
 	})
 		.done(function (data) {
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸ
 			var data = JSON.parse(data);
-			// ¼èÆÀ¤·¤¿lgoutymd¤¬¶õ¤Ç¤Ï¤Ê¤¤¾ì¹ç¡¢ÇÓÂ¾²ò½ü¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤·¡¢½èÍı½ªÎ»
+			// å–å¾—ã—ãŸlgoutymdãŒç©ºã§ã¯ãªã„å ´åˆã€æ’ä»–è§£é™¤ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã—ã€å‡¦ç†çµ‚äº†
 			if (data.lgoutymd != null) {
-				alert("ÇÓÂ¾À©¸æ¤¬²ò½ü¤µ¤ì¤Ş¤·¤¿¡£¥µ¡¼¥Ğ¡¼¤Î¾ğÊó¤ò¹¹¿·¤¹¤ë¾ì¹ç¤Ï¥í¥°¥¤¥ó¤·Ä¾¤·¤Æ¤¯¤À¤µ¤¤¡£");
+				alert("æ’ä»–åˆ¶å¾¡ãŒè§£é™¤ã•ã‚Œã¾ã—ãŸã€‚ã‚µãƒ¼ãƒãƒ¼ã®æƒ…å ±ã‚’æ›´æ–°ã™ã‚‹å ´åˆã¯ãƒ­ã‚°ã‚¤ãƒ³ã—ç›´ã—ã¦ãã ã•ã„ã€‚");
 				return;
 			} else {
-				// ¼èÆÀ¤·¤¿lgoutymd¤¬¶õ¤Î¾ì¹ç¡¢È¿±Ç³ÎÇ§¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤¹¤ë
-				if (res = confirm("¹¹¿·¤·¤¿¾ğÊó¤ò¥µ¡¼¥Ğ¤ËÈ¿±Ç¤·¤Ş¤¹¤«¡£")) {
+				// å–å¾—ã—ãŸlgoutymdãŒç©ºã®å ´åˆã€åæ˜ ç¢ºèªãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹
+				if (res = confirm("æ›´æ–°ã—ãŸæƒ…å ±ã‚’ã‚µãƒ¼ãƒã«åæ˜ ã—ã¾ã™ã‹ã€‚")) {
 					$("#masking_loader").css("display", "block");
 					$.ajax({
 						url: '../lcModel/lcinfo_ajax.php',
@@ -434,15 +434,15 @@ function reflectLcInfo() {
 					})
 						.done(function (data) {
 							if (data == "true") {
-								alert("È¿±Ç¤¬´°Î»¤·¤Ş¤·¤¿¡£");
+								alert("åæ˜ ãŒå®Œäº†ã—ã¾ã—ãŸã€‚");
 							} else {
-								alert("È¿±Ç¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤Ş¤·¤¿¡£");
+								alert("åæ˜ ã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚");
 							}
 						})
 						.fail(function () {
-							// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+							// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 						});
-					//¥í¡¼¥À¡¼²ò½ü
+					//ãƒ­ãƒ¼ãƒ€ãƒ¼è§£é™¤
 					$("#masking_loader").css("display", "none");
 				} else {
 					return;
@@ -451,40 +451,40 @@ function reflectLcInfo() {
 		})
 		.fail(function () {
 			alert("fail");
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 		});
 }
 
 
 //---------------------------------------------------
-//³Æ¥Ü¥¿¥óÀ©¸æ
+//å„ãƒœã‚¿ãƒ³åˆ¶å¾¡
 //---------------------------------------------------
 function setBtnControll() {
-	//¥·¥ß¥å¥ì¡¼¥È¥Ü¥¿¥ó
+	//ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆãƒœã‚¿ãƒ³
 	if (!lcInfoHit && getInfoFlg == 1) {
 		$("#simulateBtn").prop("disabled", true);
 	} else {
 		$("#simulateBtn").prop("disabled", false);
 	}
-	//ÊÔ½¸¥Ü¥¿¥ó
+	//ç·¨é›†ãƒœã‚¿ãƒ³
 	if (lcInfoHit) {
 		$("#editBtn").prop("disabled", false);
 	} else {
 		$("#editBtn").prop("disabled", true);
 	}
-	//¥¨¥¯¥¹¥İ¡¼¥È¥Ü¥¿¥ó
+	//ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆãƒœã‚¿ãƒ³
 	if (lcInfoHit) {
 		$("#exportBtn").prop("disabled", false);
 	} else {
 		$("#exportBtn").prop("disabled", true);
 	}
-	//Ä¢É¼½ĞÎÏ¥Ü¥¿¥ó
+	//å¸³ç¥¨å‡ºåŠ›ãƒœã‚¿ãƒ³
 	if (lcInfoHit) {
 		$("#reportOutputBtn").prop("disabled", false);
 	} else {
 		$("#reportOutputBtn").prop("disabled", true);
 	}
-	//È¿±Ç¥Ü¥¿¥ó
+	//åæ˜ ãƒœã‚¿ãƒ³
 	if (lcInfoHit && phpData["userAuth"] == 1) {
 		$("#reflectionBtn").prop("disabled", false);
 	} else {
@@ -493,7 +493,7 @@ function setBtnControll() {
 }
 
 //---------------------------------------------------
-//¸¡º÷¾ò·ïÊİÂ¸
+//æ¤œç´¢æ¡ä»¶ä¿å­˜
 //---------------------------------------------------
 function saveSearchConditions() {
 	var search_conditions = {
@@ -508,7 +508,7 @@ function saveSearchConditions() {
 }
 
 //---------------------------------------------------
-//¸¡º÷¾ò·ïÈ¿±Ç
+//æ¤œç´¢æ¡ä»¶åæ˜ 
 //---------------------------------------------------
 function getSearchConditions() {
 	var search_conditions = $.parseJSON($.cookie('lcInfoSearchConditions'));
@@ -522,28 +522,28 @@ function getSearchConditions() {
 
 
 //---------------------------------------------------
-//¸¡º÷¾ò·ïºï½ü
+//æ¤œç´¢æ¡ä»¶å‰Šé™¤
 //---------------------------------------------------
 function delSearchConditions() {
 	$.removeCookie("lcInfoSearchConditions");
 }
 
 //---------------------------------------------------
-// Ä¢É¼½ĞÎÏ¥Ü¥¿¥ó½èÍı
+// å¸³ç¥¨å‡ºåŠ›ãƒœã‚¿ãƒ³å‡¦ç†
 //---------------------------------------------------
 function reportOutputBtn() {
 	location.href = '/lc/report/index.php?strSessionID=' + phpData["session_id"] + '&openDate=' + $("#simulateYm").val();
 }
 
 /**
- * ¥¤¥ó¥İ¡¼¥È¥Ü¥¿¥ó½èÍı
+ * ã‚¤ãƒ³ãƒãƒ¼ãƒˆãƒœã‚¿ãƒ³å‡¦ç†
  */
 function chooseFile() {
 	$('#txtFile').click();
 }
 
 /**
- * ¥¤¥ó¥İ¡¼¥È¤Ç¤ÎÁªÂò¥Õ¥¡¥¤¥ëÊÑ¹¹»ş¤Î½èÍı
+ * ã‚¤ãƒ³ãƒãƒ¼ãƒˆã§ã®é¸æŠãƒ•ã‚¡ã‚¤ãƒ«å¤‰æ›´æ™‚ã®å‡¦ç†
  */
 function importFile() {
 	var fd = new FormData();
@@ -560,25 +560,25 @@ function importFile() {
 	})
 		.done(function (data) {
 			if (data == "success") {
-				alert("¥¤¥ó¥İ¡¼¥È¤¬´°Î»¤·¤Ş¤·¤¿¡£");
+				alert("ã‚¤ãƒ³ãƒãƒ¼ãƒˆãŒå®Œäº†ã—ã¾ã—ãŸã€‚");
 				getLcInfo(0);
 			} else {
-				alert("¥¤¥ó¥İ¡¼¥È¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤Ş¤·¤¿¡£");
+				alert("ã‚¤ãƒ³ãƒãƒ¼ãƒˆã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚");
 			}
 		})
 		.fail(function () {
 			alert("fail");
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 		});
-	//¥í¡¼¥À¡¼²ò½ü
+	//ãƒ­ãƒ¼ãƒ€ãƒ¼è§£é™¤
 	$("#masking_loader").css("display", "none");
 }
 
 /**
- * ¥¨¥¯¥¹¥İ¡¼¥È¥Ü¥¿¥ó½èÍı
+ * ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆãƒœã‚¿ãƒ³å‡¦ç†
  */
 function exportFile() {
-	// ¥Õ¥¡¥¤¥ë¥¨¥¯¥¹¥İ¡¼¥È½èÍı¤ò¹Ô¤¦
+	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆå‡¦ç†ã‚’è¡Œã†
 	location.href = '/lc/info/export.php?sessionid=' + phpData["session_id"] +
 		'&mode=1' +
 		'&from=' + $("#startYm").val() +
@@ -590,7 +590,7 @@ function exportFile() {
 function convertNumber(str, currencyclass, fracctiondigits) {
 	if (str != "" && str != undefined && str != "null") {
 		if (currencyclass != "") {
-			if (currencyclass == '±ß') {
+			if (currencyclass == 'å††') {
 				return Number(str).toLocaleString(undefined, {
 					minimumFractionDigits: 0,
 					maximumFractionDigits: 0

@@ -3,23 +3,23 @@
 require_once(SRC_ROOT.'/mold/lib/index/TableMetaData.class.php');
 
 /**
- * ¶â·¿Ä¢É¼¾ÜºÙ¤Î¥Æ¡¼¥Ö¥ëÌ¾¤ä¥«¥é¥àÌ¾¤òÄó¶¡¤¹¤ë
+ * é‡‘å‹å¸³ç¥¨è©³ç´°ã®ãƒ†ãƒ¼ãƒ–ãƒ«åã‚„ã‚«ãƒ©ãƒ åã‚’æä¾›ã™ã‚‹
  */
 class TableMoldReportDetail extends TableMetaData
 {
 	/**
-	 * ¥Æ¡¼¥Ö¥ëÌ¾: ¶â·¿Ä¢É¼¾ÜºÙ
+	 * ãƒ†ãƒ¼ãƒ–ãƒ«å: é‡‘å‹å¸³ç¥¨è©³ç´°
 	 * @var string
 	 */
 	const TABLE_NAME = "T_MoldReportDetail";
 
 	/**
 	 * <pre>
-	 * ¶â·¿Ä¢É¼ID
+	 * é‡‘å‹å¸³ç¥¨ID
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -28,9 +28,9 @@ class TableMoldReportDetail extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¥ê¥Ó¥¸¥ç¥ó
+	 * ãƒªãƒ“ã‚¸ãƒ§ãƒ³
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 * </pre>
 	 *
 	 * @var string
@@ -39,9 +39,9 @@ class TableMoldReportDetail extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ½ç½ø
+	 * é †åº
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 * </pre>
 	 *
 	 * @var string
@@ -50,9 +50,9 @@ class TableMoldReportDetail extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¶â·¿NO
+	 * é‡‘å‹NO
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string
@@ -61,9 +61,9 @@ class TableMoldReportDetail extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¶â·¿ÀâÌÀ
+	 * é‡‘å‹èª¬æ˜
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string

@@ -6,22 +6,22 @@ require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
 class productSalesRowController extends estimateRowController {
 
-    protected static $customerCompanyCodeMaster; // ¸ÜµÒÀè¡¢»ÅÆşÀè¥Ş¥¹¥¿¡¼
-    protected static $divisionSubjectCodeMaster; // Çä¾åÊ¬Îà¡¢»ÅÆş²ÊÌÜ¥Ş¥¹¥¿¡¼(Çä¾å¶èÊ¬¡¢»ÅÆşÉôÉÊ·ë¹çºÑ¤ß¡Ë
+    protected static $customerCompanyCodeMaster; // é¡§å®¢å…ˆã€ä»•å…¥å…ˆãƒã‚¹ã‚¿ãƒ¼
+    protected static $divisionSubjectCodeMaster; // å£²ä¸Šåˆ†é¡ã€ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ãƒ¼(å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥éƒ¨å“çµåˆæ¸ˆã¿ï¼‰
 
-    protected static $headerNameList; // ÂĞ¾İ¥¨¥ê¥¢¤Î¥Ø¥Ã¥À¡¼¤Î¥»¥ëÌ¾¾Î
-    protected static $resultNameList; // ÂĞ¾İ¥¨¥ê¥¢¤Î·×»»·ë²Ì¤Î¥»¥ëÌ¾¾Î(ÌÀºÙºÇ½ª¹Ô¤Î¼¡¤Î¹Ô)
+    protected static $headerNameList; // å¯¾è±¡ã‚¨ãƒªã‚¢ã®ãƒ˜ãƒƒãƒ€ãƒ¼ã®ã‚»ãƒ«åç§°
+    protected static $resultNameList; // å¯¾è±¡ã‚¨ãƒªã‚¢ã®è¨ˆç®—çµæœã®ã‚»ãƒ«åç§°(æ˜ç´°æœ€çµ‚è¡Œã®æ¬¡ã®è¡Œ)
 
-    protected static $productionQuantity = 0; // ½şµÑ¿ô·×»»·ë²Ì
+    protected static $productionQuantity = 0; // å„Ÿå´æ•°è¨ˆç®—çµæœ
 
     protected static $PQOutputFlag;
 
-    // ¼è¤ê¹ş¤ßÃÍ
-    public $columnNumberList; // Îó¤ÎÈÖ¹æ¥ê¥¹¥È
-    protected $columnDisplayNameList; // Îó¤ÎÉ½¼¨Ì¾¥ê¥¹¥È
+    // å–ã‚Šè¾¼ã¿å€¤
+    public $columnNumberList; // åˆ—ã®ç•ªå·ãƒªã‚¹ãƒˆ
+    protected $columnDisplayNameList; // åˆ—ã®è¡¨ç¤ºåãƒªã‚¹ãƒˆ
 
     public function __construct($objDB) {
-        $this->areaCode = DEF_AREA_PRODUCT_SALES; // ¥¨¥ê¥¢¥³¡¼¥É¤Î¥»¥Ã¥È
+        $this->areaCode = DEF_AREA_PRODUCT_SALES; // ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã®ã‚»ãƒƒãƒˆ
         parent::__construct($objDB);
     }
 
@@ -34,7 +34,7 @@ class productSalesRowController extends estimateRowController {
         }
     }
 
-    // Çä¾åÊ¬Îà¤Î¥Ş¥¹¥¿¡¼¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // å£²ä¸Šåˆ†é¡ã®ãƒã‚¹ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     protected function setDivisionSubjectCodeMaster() {
         if (!static::$divisionSubjectCodeMaster) {
             $areaCode = $this->areaCode;
@@ -43,7 +43,7 @@ class productSalesRowController extends estimateRowController {
         }
     }
 
-    // ½şµÑ¿ô¤ËËÜ²Ù¤Î¿ôÎÌ¤ò²Ã»»¤¹¤ë
+    // å„Ÿå´æ•°ã«æœ¬è·ã®æ•°é‡ã‚’åŠ ç®—ã™ã‚‹
     protected function addProductionQuantity() {
         if ($this->invalidFlag !== true) {
             if ($this->divisionSubjectCode === DEF_SALES_DIVISION_CODE_PRODUCT_SALES
@@ -57,10 +57,10 @@ class productSalesRowController extends estimateRowController {
         return;
     }
 
-    // ÅĞÏ¿»ş¤Î¥Ñ¥é¥á¡¼¥¿¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+    // ç™»éŒ²æ™‚ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
     public function workSheetRegistCheck() {
         if (self::$PQOutputFlag === true) {
-            // ½şµÑ¿ô¤¬°ìÅÙ¤Ç¤â½ĞÎÏ¤µ¤ì¤Æ¤¤¤¿¾ì¹ç¤ÏÉÔÀµ½èÍı
+            // å„Ÿå´æ•°ãŒä¸€åº¦ã§ã‚‚å‡ºåŠ›ã•ã‚Œã¦ã„ãŸå ´åˆã¯ä¸æ­£å‡¦ç†
             return false;
         }
         parent::workSheetRegistCheck();
@@ -68,7 +68,7 @@ class productSalesRowController extends estimateRowController {
         return;
     }
 
-    // ½şµÑ¿ô¤Î·×»»·ë²Ì¤ò½ĞÎÏ¤¹¤ë
+    // å„Ÿå´æ•°ã®è¨ˆç®—çµæœã‚’å‡ºåŠ›ã™ã‚‹
     public static function outputProductionQuantity() {
         static $PQOutputFlag = true;
         return self::$productionQuantity;

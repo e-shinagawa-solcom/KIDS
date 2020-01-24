@@ -6,12 +6,12 @@
 
 
 
-	// ╢ї═єе┴езе├епбве╒ебедеыеве├е╫еэб╝е╔
+	// чй║цмДуГБуВзуГГуВпуАБуГХуВбуВдуГлуВвуГГуГЧуГнуГ╝уГЙ
 	function fncCheckField()
 	{
 		if( document.exc_upload.excel_file.value.length == 0 )
 		{
-			alert( 'е╒ебедеыдЄ╗╪─ъд╖д╞дпд└д╡ддбг' );
+			alert( 'уГХуВбуВдуГлуВТцМЗхоЪуБЧуБжуБПуБауБХуБДуАВ' );
 			return false;
 		}
 
@@ -20,17 +20,17 @@
 	}
 
 
-	// е└едевеэе░╔╜╝и╜ш═¤
+	// уГАуВдуВвуГнуВ░шбичд║хЗжчРЖ
 	function fncFileUpload( lngValue, objFrm )
 	{
-		// е└едевеэе░╔╜╝ие╒еще░дм╠╡╕·д╬╛ь╣ч
+		// уГАуВдуВвуГнуВ░шбичд║уГХуГйуВ░уБМчДбхК╣уБоха┤хРИ
 		if( lngValue != "1" )
 		{
 			return false;
 		}
 		else
 		{
-			// ╖ы▓╠е└едевеэе░┼╕│л
+			// ч╡РцЮЬуГАуВдуВвуГнуВ░х▒ХщЦЛ
 			GoResult( objFrm, '/result/index.html', '/result/ifrm.html', 'ResultIframe', 'YES' );
 		}
 

@@ -1,8 +1,8 @@
 /*
-	³µÍ×¡§ÆşÎÏ¼Ô¸¡º÷
-	ÂĞ¾İ¡§¶¦ÄÌ¥µ¥Ö¥¦¥£¥ó¥É¥¦
-	ºîÀ®¡§ºØÆ£ÏÂ»Ö
-	È÷¹Í¡§ÆşÎÏ¼Ô¥³¡¼¥É¡Ü¡ÜÌ¾¾Î¤«¤é°ìÃ×¤¹¤ë¡Ö¥³¡¼¥É¡ÜÌ¾¾Î¡×°ìÍ÷¤òÀ¸À®
+	æ¦‚è¦ï¼šå…¥åŠ›è€…æ¤œç´¢
+	å¯¾è±¡ï¼šå…±é€šã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+	ä½œæˆï¼šæ–è—¤å’Œå¿—
+	å‚™è€ƒï¼šå…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰ï¼‹ï¼‹åç§°ã‹ã‚‰ä¸€è‡´ã™ã‚‹ã€Œã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã€ä¸€è¦§ã‚’ç”Ÿæˆ
 */
 SELECT DISTINCT mu.struserdisplaycode,(mu.struserdisplaycode || ' ' || mu.struserdisplayname) AS struserdisplaycodename, mu.struserdisplayname
 FROM m_group mg,  m_grouprelation mgr,  m_user mu,  m_attributerelation mar

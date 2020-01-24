@@ -1,6 +1,6 @@
 <?
 /**
- *    ¸«ÀÑ¸¶²Á´ÉÍı ¸¡º÷·ë²ÌÉ½¼¨²èÌÌ
+ *    è¦‹ç©åŸä¾¡ç®¡ç† æ¤œç´¢çµæœè¡¨ç¤ºç”»é¢
  *
  *    @package   kuwagata
  *    @license   http://www.wiseknot.co.jp/
@@ -12,17 +12,17 @@
  */
 // -------------------------------------------------------------------------
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 require_once LIB_DEBUGFILE;
 require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require_once LIB_FILE;
 require_once SRC_ROOT . "estimate/cmn/makeHTML.php";
 require SRC_ROOT . "search/cmn/lib_search.php";
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
@@ -31,7 +31,7 @@ $aryData = $_REQUEST;
 
 $strSessionID = $aryData["strSessionID"];
 
-// ¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤«¤é³Æ¥«¥Æ¥´¥ê¤Î¿¶¤êÊ¬¤±¤ò¹Ô¤¦
+// ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å„ã‚«ãƒ†ã‚´ãƒªã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
 $options = UtilSearchForm::extractArrayByOption($aryData);
 $isDisplay = UtilSearchForm::extractArrayByIsDisplay($aryData);
 $isSearch = UtilSearchForm::extractArrayByIsSearch($aryData);
@@ -39,7 +39,7 @@ $from = UtilSearchForm::extractArrayByFrom($aryData);
 $to = UtilSearchForm::extractArrayByTo($aryData);
 
 $optionColumns = array();
-// ¥ª¥×¥·¥ç¥ó¹àÌÜ¤ÎÃê½Ğ
+// ã‚ªãƒ—ã‚·ãƒ§ãƒ³é …ç›®ã®æŠ½å‡º
 foreach ($options as $key => $flag) {
     if ($flag == "on") {
         $optionColumns[$key] = $key;
@@ -50,14 +50,14 @@ $displayColumns = array_keys($isDisplay);
 $searchColumns = array_keys($isSearch);
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 
 $searchData = array();
 
-// ¸¡º÷¾ò·ï¤ÎÇÛÎó¤òÀ¸À®¤¹¤ë
+// æ¤œç´¢æ¡ä»¶ã®é…åˆ—ã‚’ç”Ÿæˆã™ã‚‹
 foreach ($searchColumns as $column) {
-    //     ÈÏ°Ï»ØÄê¤Î¾ì¹ç
+    //     ç¯„å›²æŒ‡å®šã®å ´åˆ
     if (isset($from[$column]) || isset($to[$column])) {
         $searchData[$column] = array(
             'from' => $from[$column],
@@ -69,56 +69,56 @@ foreach ($searchColumns as $column) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ¥»¥Ã¥·¥ç¥ó¡¢¸¢¸Â³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ã€æ¨©é™ç¢ºèª
 //////////////////////////////////////////////////////////////////////////
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if (!fncCheckAuthority(DEF_FUNCTION_E2, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
-// ¸¡º÷·ë²Ì¤Î¥«¥é¥àÉ½µ­¤Î¸À¸ìÀßÄê
+// æ¤œç´¢çµæœã®ã‚«ãƒ©ãƒ è¡¨è¨˜ã®è¨€èªè¨­å®š
 $aryColumnLang = array(
-    "btnDetail" => "¾ÜºÙ",
-    "btnHistory" => "ÍúÎò",
-    "dtmInsertDate" => "ºîÀ®Æü",
-    "strProductCode" => "À½ÉÊ¥³¡¼¥É",
-    "strProductName" => "À½ÉÊÌ¾¾Î(ÆüËÜ¸ì)",
-    "strProductEnglishName" => "À½ÉÊÌ¾¾Î(±Ñ¸ì)",
-    "lngInChargeGroupCode" => "±Ä¶ÈÉô½ğ",
-    "lngInChargeUserCode" => "Ã´Åö",
-    "lngDevelopUserCode" => "³«È¯Ã´Åö¼Ô",
-    "dtmDeliveryLimitDate" => "µÒÀèÇ¼ÉÊÆü",
-    "curRetailPrice" => "¾åÂå",
-    "lngInputUserCode" => "ÆşÎÏ¼Ô",
-    "lngCartonQuantity" => "¥«¡¼¥È¥óÆş¿ô",
-    "lngProductionQuantity" => "À¸»º¿ô",
-    "curSalesAmount" => "À½ÉÊÇä¾å¹â",
-    "curSalesProfit" => "À½ÉÊÍø±×",
-    "curSalesProfitRate" => "À½ÉÊÍø±×Î¨",
-    "curFixedCostSales" => "¸ÇÄêÈñÇä¾å¹â",
-    "curFixedCostSalesProfit" => "¸ÇÄêÈñÍø±×",
-    "curFixedCostSalesProfitRate" => "¸ÇÄêÈñÍø±×Î¨",
-    "curTotalSales" => "ÁíÇä¾å¹â",
-    "curTotalPrice" => "Çä¾åÁíÍø±×",
-    "curTotalPriceRate" => "Çä¾åÁíÍø±×Î¨",
-    "curIndirectManufacturingCost" => "´ÖÀÜÀ½Â¤·ĞÈñ",
-    "curStandardRate" => "´ÖÀÜÀ½Â¤·ĞÈñÎ¨",
-    "curProfit" => "±Ä¶ÈÍø±×",
-    "curProfitRate" => "±Ä¶ÈÍø±×Î¨",
-    "curMemberCostPieces" => "pcsÉôºàÈñÍÑ",
-    "curMemberCost" => "ÉôºàÈñ¹ç·×",
-    "curFixedCostPieces" => "pcs½şµÑÈñÍÑ",
-    "curFixedCost" => "½şµÑÈñ¹ç·×",
-    "curManufacturingCostPieces" => "pcs¥³¥¹¥È",
-    "curManufacturingCost" => "À½Â¤ÈñÍÑ¹ç·×",
-    "btnDelete" => "ºï½ü",
+    "btnDetail" => "è©³ç´°",
+    "btnHistory" => "å±¥æ­´",
+    "dtmInsertDate" => "ä½œæˆæ—¥",
+    "strProductCode" => "è£½å“ã‚³ãƒ¼ãƒ‰",
+    "strProductName" => "è£½å“åç§°(æ—¥æœ¬èª)",
+    "strProductEnglishName" => "è£½å“åç§°(è‹±èª)",
+    "lngInChargeGroupCode" => "å–¶æ¥­éƒ¨ç½²",
+    "lngInChargeUserCode" => "æ‹…å½“",
+    "lngDevelopUserCode" => "é–‹ç™ºæ‹…å½“è€…",
+    "dtmDeliveryLimitDate" => "å®¢å…ˆç´å“æ—¥",
+    "curRetailPrice" => "ä¸Šä»£",
+    "lngInputUserCode" => "å…¥åŠ›è€…",
+    "lngCartonQuantity" => "ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°",
+    "lngProductionQuantity" => "ç”Ÿç”£æ•°",
+    "curSalesAmount" => "è£½å“å£²ä¸Šé«˜",
+    "curSalesProfit" => "è£½å“åˆ©ç›Š",
+    "curSalesProfitRate" => "è£½å“åˆ©ç›Šç‡",
+    "curFixedCostSales" => "å›ºå®šè²»å£²ä¸Šé«˜",
+    "curFixedCostSalesProfit" => "å›ºå®šè²»åˆ©ç›Š",
+    "curFixedCostSalesProfitRate" => "å›ºå®šè²»åˆ©ç›Šç‡",
+    "curTotalSales" => "ç·å£²ä¸Šé«˜",
+    "curTotalPrice" => "å£²ä¸Šç·åˆ©ç›Š",
+    "curTotalPriceRate" => "å£²ä¸Šç·åˆ©ç›Šç‡",
+    "curIndirectManufacturingCost" => "é–“æ¥è£½é€ çµŒè²»",
+    "curStandardRate" => "é–“æ¥è£½é€ çµŒè²»ç‡",
+    "curProfit" => "å–¶æ¥­åˆ©ç›Š",
+    "curProfitRate" => "å–¶æ¥­åˆ©ç›Šç‡",
+    "curMemberCostPieces" => "pcséƒ¨æè²»ç”¨",
+    "curMemberCost" => "éƒ¨æè²»åˆè¨ˆ",
+    "curFixedCostPieces" => "pcså„Ÿå´è²»ç”¨",
+    "curFixedCost" => "å„Ÿå´è²»åˆè¨ˆ",
+    "curManufacturingCostPieces" => "pcsã‚³ã‚¹ãƒˆ",
+    "curManufacturingCost" => "è£½é€ è²»ç”¨åˆè¨ˆ",
+    "btnDelete" => "å‰Šé™¤",
 );
 
 //////////////////////////////////////////////////////////////////////////
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 //////////////////////////////////////////////////////////////////////////
 
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
@@ -133,10 +133,10 @@ $aryCheck["dtmCreationDateTo"] = "date(/)";
 $aryCheck["dtmDeliveryLimitDateFrom"] = "date(/)";
 $aryCheck["dtmDeliveryLimitDateTo"] = "date(/)";
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck($aryData, $aryCheck);
 
-// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ¤¹¤ë
+// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›ã™ã‚‹
 $strErrorMessage = array();
 
 foreach ($aryCheckResult as $value) {
@@ -147,7 +147,7 @@ foreach ($aryCheckResult as $value) {
 }
 
 if (!count($strErrorMessage)) {
-    // ¸«ÀÑ¸¶²Á¤Î¥Ç¡¼¥¿¼èÆÀ
+    // è¦‹ç©åŸä¾¡ã®ãƒ‡ãƒ¼ã‚¿å–å¾—
     $selectQuery =
         "SELECT
 			TO_CHAR(me.dtmInsertDate, 'YYYY/MM/DD') AS dtminsertdate,
@@ -190,7 +190,7 @@ if (!count($strErrorMessage)) {
 
 		INNER JOIN m_product mp";
 
-        // ´ÉÍı¼Ô¥â¡¼¥É¤Ç¤Ê¤¤¾ì¹ç
+        // ç®¡ç†è€…ãƒ¢ãƒ¼ãƒ‰ã§ãªã„å ´åˆ
 //        if (!array_key_exists("admin", $optionColumns)) {
             $selectQuery = $selectQuery . " ON mp.strproductcode = me.strproductcode";
 //        }
@@ -260,7 +260,7 @@ if (!count($strErrorMessage)) {
 				MAX(lngrevisionno) AS lngrevisionno
 			FROM m_estimate
 			GROUP BY lngestimateno";
-    // ´ÉÍı¼Ô¥â¡¼¥É¤Ç¤Ê¤¤¾ì¹ç
+    // ç®¡ç†è€…ãƒ¢ãƒ¼ãƒ‰ã§ãªã„å ´åˆ
     if (!array_key_exists("admin", $optionColumns)) {
         $selectQuery .=
             " HAVING MIN(lngrevisionno) >= 0";
@@ -283,7 +283,7 @@ if (!count($strErrorMessage)) {
         ) min_rev
         	ON min_rev.lngestimateno = me.lngestimateno
     ";
-    // WHERE¶çÀ¸À®
+    // WHEREå¥ç”Ÿæˆ
     $where = '';
 
     foreach ($searchData as $key => $condition) {
@@ -293,9 +293,9 @@ if (!count($strErrorMessage)) {
         $searchs = array();
         $searchNumber = array();
 
-        // ¸¡º÷¾ò·ï¤ò¿¶¤êÊ¬¤±¤ë
+        // æ¤œç´¢æ¡ä»¶ã‚’æŒ¯ã‚Šåˆ†ã‘ã‚‹
         switch ($key) {
-            // ÆşÎÏÆü
+            // å…¥åŠ›æ—¥
             case 'dtmInsertDate':
                 if ($condition['from']) {
                     $fromCondition = "me.dtminsertdate >= TO_TIMESTAMP('" . $condition['from'] . " 00:00:00', 'YYYY/MM/DD HH24:MI:SS')";
@@ -305,7 +305,7 @@ if (!count($strErrorMessage)) {
                 }
                 break;
 
-            // À½ÉÊ¥³¡¼¥É
+            // è£½å“ã‚³ãƒ¼ãƒ‰
             case 'strProductCode':
                 $strProductCodeArray = explode(",", $condition);
                 $search = " (";
@@ -331,42 +331,42 @@ if (!count($strErrorMessage)) {
                 $search .= ")";
                 break;
 
-            // À½ÉÊÌ¾¾Î
+            // è£½å“åç§°
             case 'strProductName';
                 if (strlen($condition)) {
                     $search = "mp.strProductName LIKE '%" . $condition . "%'";
                 }
                 break;
 
-            // À½ÉÊÌ¾¾Î(±Ñ¸ì)
+            // è£½å“åç§°(è‹±èª)
             case 'strProductEnglishName';
                 if (strlen($condition)) {
                     $search = "mp.strproductenglishname LIKE '%" . $condition . "%'";
                 }
                 break;
 
-            // ±Ä¶ÈÉô½ğ
+            // å–¶æ¥­éƒ¨ç½²
             case 'lngInChargeGroupCode':
                 if (strlen($condition)) {
                     $search = "mg.strgroupdisplaycode = '" . $condition . "'";
                 }
                 break;
 
-            // Ã´Åö
+            // æ‹…å½“
             case 'lngInChargeUserCode':
                 if (strlen($condition)) {
                     $search = "mu1.struserdisplaycode = '" . $condition . "'";
                 }
                 break;
 
-            // ³«È¯Ã´Åö¼Ô
+            // é–‹ç™ºæ‹…å½“è€…
             case 'lngDevelopUserCode':
                 if (strlen($condition)) {
                     $search = "mu2.struserdisplaycode = '" . $condition . "'";
                 }
                 break;
 
-            // ÆşÎÏ¼Ô
+            // å…¥åŠ›è€…
             case 'lngInputUserCode':
                 if (strlen($condition)) {
                     $search = "mu3.struserdisplaycode = '" . $condition . "'";
@@ -394,7 +394,7 @@ if (!count($strErrorMessage)) {
         }
     }
 
-    // ¥½¡¼¥ÈÀßÄê
+    // ã‚½ãƒ¼ãƒˆè¨­å®š
     list($column, $sortNum, $DESC) = explode("_", $aryData["strSort"]);
 
     if ($column) {
@@ -413,20 +413,20 @@ if (!count($strErrorMessage)) {
     }
 }
 
-// ¸¡º÷¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤¿¤é¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò²èÌÌ¤Ë½ĞÎÏ¤¹¤ë
+// æ¤œç´¢ã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸã‚‰ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ç”»é¢ã«å‡ºåŠ›ã™ã‚‹
 if ($strErrorMessage) {
     makeHTML::outputErrorWindow($strErrorMessage);
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 
 $header = '';
 $columns = 0;
 $sort = 0;
 
-// ¥Ø¥Ã¥ÀÉô¤ÎºîÀ®
+// ãƒ˜ãƒƒãƒ€éƒ¨ã®ä½œæˆ
 foreach ($displayColumns as $column) {
 
     $title = htmlspecialchars($aryColumnLang[$column], ENT_QUOTES);
@@ -442,8 +442,8 @@ foreach ($displayColumns as $column) {
     ++$columns;
 }
 
-// ¼èÆÀ¤·¤¿¸¡º÷·ë²Ì¤òÊÑ´¹¤¹¤ë¤¿¤á¤ÎÇÛÎó
-// ¥«¥ó¥Ş¶èÀÚ¤ê¤Ë¤¹¤ë¹àÌÜ
+// å–å¾—ã—ãŸæ¤œç´¢çµæœã‚’å¤‰æ›ã™ã‚‹ãŸã‚ã®é…åˆ—
+// ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã«ã™ã‚‹é …ç›®
 $commaSeparateList = array(
     "curRetailPrice" => true,
     "lngCartonQuantity" => true,
@@ -469,7 +469,7 @@ $commaSeparateList = array(
     "curManufacturingCost" => true,
 );
 
-// ±ß¥Ş¡¼¥¯¤ò¤Ä¤±¤ë¹àÌÜ
+// å††ãƒãƒ¼ã‚¯ã‚’ã¤ã‘ã‚‹é …ç›®
 $yenAddList = array(
     "curRetailPrice" => true,
     "curSalesAmount" => true,
@@ -488,7 +488,7 @@ $yenAddList = array(
     "curManufacturingCost" => true,
 );
 
-// ¥Ñ¡¼¥»¥ó¥ÈÉ½µ­¤Ë¤¹¤ë¹àÌÜ
+// ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆè¡¨è¨˜ã«ã™ã‚‹é …ç›®
 $percentList = array(
     "curSalesProfitRate" => true,
     "curFixedCostSalesProfitRate" => true,
@@ -497,7 +497,7 @@ $percentList = array(
     "curStandardRate" => true,
 );
 
-// ¸¡º÷·ë²Ì¤ÎÉ½¤òºîÀ®
+// æ¤œç´¢çµæœã®è¡¨ã‚’ä½œæˆ
 $body = '';
 
 for ($i = 0; $i < $resultNum; ++$i) {
@@ -515,13 +515,13 @@ for ($i = 0; $i < $resultNum; ++$i) {
     $body .= "<td nowrap>" . $number . "</td>";
 
     foreach ($displayColumns as $column) {
-        if ($column === 'btnDetail') { // ¾ÜºÙ
+        if ($column === 'btnDetail') { // è©³ç´°
             $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
             // $body .= "<button type=\"button\" class=\"cells btnDetail\" action=\"/estimate/preview/index.php?strSessionID=" . $strSessionID . "&estimateNo=" . $estimateNo . "\" value=\"" . $result['lngrevisionno'] . "\">";
             $body .= "<img src=\"/img/type01/pc/detail_off_bt.gif\" class=\"detail button\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\" action=\"/estimate/preview/index.php?strSessionID=" . $strSessionID . "&estimateNo=" . $estimateNo . "\" value=\"" . $result['lngrevisionno'] . "\">";
             $body .= "</button></td>";
 
-        } else if ($column === 'btnHistory') { // ÍúÎò
+        } else if ($column === 'btnHistory') { // å±¥æ­´
             if ($result["lngrevisionno"] <> 0) {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
                 $body .= "<img src=\"/img/type01/pc/renew_off_bt.gif\" class=\"history button\"  width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\"  rownum=\"" . $number . "\" estimateNo=\"" . $estimateNo . "\" revisionNo=\"" . $result['lngrevisionno'] . "\">";
@@ -530,7 +530,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
                 $body .= "<td nowrap align=\"left\"></td>";
             }
 
-		} else if ($column === 'btnDelete') { // ºï½ü
+		} else if ($column === 'btnDelete') { // å‰Šé™¤
             if (array_key_exists("admin", $optionColumns) and $result['deleteflag'] === 't') {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
                 $body .= "<img src=\"/img/type01/pc/delete_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\" class=\"delete button\" action=\"/estimate/delete/index.php\" value=\"" . $result['lngrevisionno'] . "\">";
@@ -570,7 +570,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
     $body .= "</tr>";
 }
 
-// Æ±¤¸¹àÌÜ¤Î¥½¡¼¥È¤ÏµÕ½ç¤Ë¤¹¤ë½èÍı
+// åŒã˜é …ç›®ã®ã‚½ãƒ¼ãƒˆã¯é€†é †ã«ã™ã‚‹å‡¦ç†
 list($column, $sortNum, $DESC) = explode("_", $aryData["strSort"]);
 
 if ($DESC == 'ASC') {
@@ -580,12 +580,12 @@ if ($DESC == 'ASC') {
     $header = str_replace($pattern, $replace, $header);
 }
 
-// ¸¡º÷²èÌÌ¤Î¾ğÊó¤òhidden¤ÇÅÏ¤¹
+// æ¤œç´¢ç”»é¢ã®æƒ…å ±ã‚’hiddenã§æ¸¡ã™
 unset($aryData["strSort"]);
 
 $form = makeHTML::getHiddenData($aryData);
 
-// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("estimate/result/base.tmpl");
 
@@ -594,11 +594,11 @@ $baseData['FORM'] = $form;
 $baseData['HEADER'] = $header;
 $baseData['tabledata'] = $body;
 $baseData["displayColumns"] = implode(",", $displayColumns);
-// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace($baseData);
 $objTemplate->complete();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 $objDB->close();

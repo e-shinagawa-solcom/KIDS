@@ -7,7 +7,7 @@
         historyNo = 'HistoryNo=' + $(this).attr('historyno');
         version = 'Version=' + $(this).attr('version');
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version, 'display-detail', 'width=972, height=520,resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

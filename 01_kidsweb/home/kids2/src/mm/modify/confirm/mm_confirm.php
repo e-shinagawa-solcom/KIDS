@@ -2,10 +2,10 @@
 
 // ----------------------------------------------------------------------------
 /**
- * �ⷿ������� ��Ͽ��ǧ����*
+ * 金型履歴管理 登録確認画面*
  *
- * ��������
- * ����Ͽ������̤�ɽ��
+ * 処理概要
+ * ・登録履歴画面を表示
  */
 // ----------------------------------------------------------------------------
 include('conf.inc');
@@ -21,64 +21,64 @@ $objDB->open ( "", "", "", "" );
 
 $replacement = $_REQUEST;
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession ( $replacement ["strSessionID"], $objAuth, $objDB);
 
-// 1800 �ⷿ�������
+// 1800 金型履歴管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 1804 �ⷿ�������(����)
+// 1804 金型履歴管理(修正)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM4, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// ����å��奤�󥹥��󥹤μ���
+// キャッシュインスタンスの取得
 $formCache = FormCache::getInstance();
 
-// ����å���(�ե�����)�ǡ����μ��Ф�
+// キャッシュ(フォーム)データの取り出し
 $resultFormCache = $formCache->get($replacement["resultHash"]);
 
-// ����å���(�ե�����)�ǡ��������Ф������
+// キャッシュ(フォーム)データが取り出せた場合
 if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 {
-	// ����å���쥳���ɼ���
+	// キャッシュレコード取得
 	$workCache = pg_fetch_array($resultFormCache, 0, PGSQL_ASSOC);
 
-	// �ǥ��ꥢ�饤��
+	// デシリアライズ
 	$workFormData = FormCache::deserialize($workCache["serializeddata"]);
 
-	// �桼�ƥ���ƥ����󥹥��󥹤μ���
+	// ユーティリティインスタンスの取得
 	$utilBussinesscode = UtilBussinesscode::getInstance();
 	$utilMold = UtilMold::getInstance();
 
-	// ��̳�����ɤ��饳�������������
-	$replacement["StatusDesc"] = $utilBussinesscode->getDescription('�ⷿ���ơ�����',  $workFormData[FormMoldHistory::Status]);
+	// 業務コードからコード説明を索引
+	$replacement["StatusDesc"] = $utilBussinesscode->getDescription('金型ステータス',  $workFormData[FormMoldHistory::Status]);
 
-	// �ƥ�ץ졼���ɤ߹���
+	// テンプレート読み込み
 	$objTemplate = new clsTemplate ();
 	$objTemplate->getTemplate ( "/mm/confirm/mm_modify_confirm.html" );
 
-	// �ǥ��ꥢ�饤������UTF-8�ˤ�����Τ�EUC-JP���᤹
+	// デシリアライズ時にUTF-8にしたものをEUC-JPに戻す
 	mb_convert_variables("eucjp-win", "utf-8", $workFormData);
 
-	// �ץ졼���ۥ�����ִ�
+	// プレースホルダー置換
 	$objTemplate->replace(array_merge($replacement, $workFormData));
 	$objTemplate->complete();
 
-	// cookie���å�
+	// cookieセット
 	setcookie("strSessionID", $_REQUEST["strSessionID"]);
 	setcookie("resultHash", $_REQUEST["resultHash"]);
 
-	// html����
+	// html出力
 	echo $objTemplate->strTemplate;
 }
-// ����å���(�ե�����)�ǡ��������Ф��ʤ��ä����
+// キャッシュ(フォーム)データが取り出せなかった場合
 else
 {
-	// ����å�����Ф�����
+	// キャッシュ取り出し失敗
 	fncOutputError(9065, DEF_ERROR, "", TRUE, "", $objDB);
 }

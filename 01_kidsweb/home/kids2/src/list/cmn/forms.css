@@ -1,5 +1,5 @@
 
-/* ¸¡º÷¥Õ¥©¡¼¥à ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹ input */
+/* æ¤œç´¢ãƒ•ã‚©ãƒ¼ãƒ  ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ input */
 .search-label--checkbox
 {
     display: inline-block;
@@ -13,13 +13,13 @@
 
     background-color: #e8f0f1;
 }
-/* ¸¡º÷¥Õ¥©¡¼¥à ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹ °ÌÃÖÄ´À° */
+/* æ¤œç´¢ãƒ•ã‚©ãƒ¼ãƒ  ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ ä½ç½®èª¿æ•´ */
 .search-label--checkbox input[type="checkbox"].is-search
 {
     margin-right: 10px;
 }
 
-/* ¸¡º÷/É½¼¨ Á´ÀÚ¤êÂØ¤¨¥Ü¥¿¥ó */
+/* æ¤œç´¢/è¡¨ç¤º å…¨åˆ‡ã‚Šæ›¿ãˆãƒœã‚¿ãƒ³ */
 img.toggle-search
 {
     margin: 0px 0px 0px 20px;

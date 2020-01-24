@@ -2,12 +2,12 @@
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ¥Õ¥¡¥¤¥ë³µÍ× : [ÅĞÏ¿¡¦¾ÜºÙ¡¦ºï½ü¡¦Ìµ¸ú²½]½èÍı¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë¥â¥¸¥å¡¼¥ë
+* ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ : [ç™»éŒ²ãƒ»è©³ç´°ãƒ»å‰Šé™¤ãƒ»ç„¡åŠ¹åŒ–]å‡¦ç†ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 *
 *
 *
-* È÷¹Í : ¾¦ÉÊ¡¦¼õÃí¡¦È¯Ãí¡¦Çä¾å¡¦»ÅÆş¤Î¸¡º÷·ë²Ì²èÌÌ¤«¤é¤Î³Æ½èÍı»ş¤Ë
-*        ½ñ¤­½Ğ¤¹¥Æ¡¼¥Ö¥ë¤òÄêµÁ¤·¤Æ¤¤¤ë¡£
+* å‚™è€ƒ : å•†å“ãƒ»å—æ³¨ãƒ»ç™ºæ³¨ãƒ»å£²ä¸Šãƒ»ä»•å…¥ã®æ¤œç´¢çµæœç”»é¢ã‹ã‚‰ã®å„å‡¦ç†æ™‚ã«
+*        æ›¸ãå‡ºã™ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’å®šç¾©ã—ã¦ã„ã‚‹ã€‚
 *
 * @package k.i.d.s.
 * @license http://www.wiseknot.co.jp/
@@ -40,14 +40,14 @@
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ³µÍ× : ÆüËÜ¸ì±Ñ¸ìÀÚÂØÍÑ¥°¥í¡¼¥Ğ¥ëÊÑ¿ô
+* æ¦‚è¦ : æ—¥æœ¬èªè‹±èªåˆ‡æ›¿ç”¨ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *
-* ÂĞ¾İ : [ÅĞÏ¿¡¦¾ÜºÙ¡¦ºï½ü¡¦Ìµ¸ú²½]ÍÑ¥Æ¥ó¥×¥ì¡¼¥È
+* å¯¾è±¡ : [ç™»éŒ²ãƒ»è©³ç´°ãƒ»å‰Šé™¤ãƒ»ç„¡åŠ¹åŒ–]ç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 *
-* @param [g_lngCode] : [¿ôÃÍ·¿] . ¿Æiframe¤«¤é¼èÆÀ
+* @param [g_lngCode] : [æ•°å€¤å‹] . è¦ªiframeã‹ã‚‰å–å¾—
 */
 //--------------------------------------------------------------------------------------------------------------------
-// var g_lngCode = parent.lngLanguageCode.value; // [lngLanguageCode]ÃÍ¼èÆÀ-------------------------------------------
+// var g_lngCode = parent.lngLanguageCode.value; // [lngLanguageCode]å€¤å–å¾—-------------------------------------------
 var g_lngCode = 1
 
 
@@ -66,75 +66,75 @@ var g_lngCode = 1
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ³µÍ× : ³Æ½èÍı¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë¥»¥Ã¥È¤ÎÄêµÁ
+* æ¦‚è¦ : å„å‡¦ç†ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒƒãƒˆã®å®šç¾©
 *
-* ²òÀâ : ³Æ[ÅĞÏ¿³ÎÇ§¡¦¾ÜºÙ³ÎÇ§¡¦ºï½ü³ÎÇ§¡¦Ìµ¸ú²½³ÎÇ§]ÍÑ¤Î
-*        ¥Æ¡¼¥Ö¥ë¥»¥Ã¥È(ÆüËÜ¸ì¡¦±Ñ¸ì)¤òÄêµÁ¤¹¤ë¡£
+* è§£èª¬ : å„[ç™»éŒ²ç¢ºèªãƒ»è©³ç´°ç¢ºèªãƒ»å‰Šé™¤ç¢ºèªãƒ»ç„¡åŠ¹åŒ–ç¢ºèª]ç”¨ã®
+*        ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒƒãƒˆ(æ—¥æœ¬èªãƒ»è‹±èª)ã‚’å®šç¾©ã™ã‚‹ã€‚
 *
-* ÂĞ¾İ : [ÅĞÏ¿¡¦¾ÜºÙ¡¦ºï½ü¡¦Ìµ¸ú²½]ÍÑ¥Æ¥ó¥×¥ì¡¼¥È
+* å¯¾è±¡ : [ç™»éŒ²ãƒ»è©³ç´°ãƒ»å‰Šé™¤ãƒ»ç„¡åŠ¹åŒ–]ç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 *
-* ³°Éô´Ø¿ô : [fncProcessingOutputModule] ½èÍı¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·¥â¥¸¥å¡¼¥ë
+* å¤–éƒ¨é–¢æ•° : [fncProcessingOutputModule] å‡¦ç†ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 *
-* @param [registTableJ]    : [Ê¸»úÎó·¿] . ÅĞÏ¿³ÎÇ§ÍÑ(ÆüËÜ¸ì)
-* @param [registTableE]    : [Ê¸»úÎó·¿] . ÅĞÏ¿³ÎÇ§ÍÑ(±Ñ¸ì)
-* @param [deleteTableJ]    : [Ê¸»úÎó·¿] . ºï½ü³ÎÇ§ÍÑ(ÆüËÜ¸ì)
-* @param [deleteTableE]    : [Ê¸»úÎó·¿] . ºï½ü³ÎÇ§ÍÑ(±Ñ¸ì)
-* @param [detailTableJ]    : [Ê¸»úÎó·¿] . ¾ÜºÙ³ÎÇ§ÍÑ(ÆüËÜ¸ì)
-* @param [detailTableE]    : [Ê¸»úÎó·¿] . ¾ÜºÙ³ÎÇ§ÍÑ(±Ñ¸ì)
-* @param [invalidTable01J] : [Ê¸»úÎó·¿] . Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£±(ÆüËÜ¸ì)
-* @param [invalidTable01E] : [Ê¸»úÎó·¿] . Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£±(±Ñ¸ì)
-* @param [invalidTable02J] : [Ê¸»úÎó·¿] . Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£²(ÆüËÜ¸ì)
-* @param [invalidTable02E] : [Ê¸»úÎó·¿] . Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£²(±Ñ¸ì)
-* @param [invalidTable03J] : [Ê¸»úÎó·¿] . Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£³(ÆüËÜ¸ì)
-* @param [invalidTable03E] : [Ê¸»úÎó·¿] . Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£³(±Ñ¸ì)
-* @param [invalidTable04J] : [Ê¸»úÎó·¿] . Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£´(ÆüËÜ¸ì)
-* @param [invalidTable04E] : [Ê¸»úÎó·¿] . Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£´(±Ñ¸ì)
+* @param [registTableJ]    : [æ–‡å­—åˆ—å‹] . ç™»éŒ²ç¢ºèªç”¨(æ—¥æœ¬èª)
+* @param [registTableE]    : [æ–‡å­—åˆ—å‹] . ç™»éŒ²ç¢ºèªç”¨(è‹±èª)
+* @param [deleteTableJ]    : [æ–‡å­—åˆ—å‹] . å‰Šé™¤ç¢ºèªç”¨(æ—¥æœ¬èª)
+* @param [deleteTableE]    : [æ–‡å­—åˆ—å‹] . å‰Šé™¤ç¢ºèªç”¨(è‹±èª)
+* @param [detailTableJ]    : [æ–‡å­—åˆ—å‹] . è©³ç´°ç¢ºèªç”¨(æ—¥æœ¬èª)
+* @param [detailTableE]    : [æ–‡å­—åˆ—å‹] . è©³ç´°ç¢ºèªç”¨(è‹±èª)
+* @param [invalidTable01J] : [æ–‡å­—åˆ—å‹] . ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼‘(æ—¥æœ¬èª)
+* @param [invalidTable01E] : [æ–‡å­—åˆ—å‹] . ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼‘(è‹±èª)
+* @param [invalidTable02J] : [æ–‡å­—åˆ—å‹] . ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼’(æ—¥æœ¬èª)
+* @param [invalidTable02E] : [æ–‡å­—åˆ—å‹] . ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼’(è‹±èª)
+* @param [invalidTable03J] : [æ–‡å­—åˆ—å‹] . ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼“(æ—¥æœ¬èª)
+* @param [invalidTable03E] : [æ–‡å­—åˆ—å‹] . ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼“(è‹±èª)
+* @param [invalidTable04J] : [æ–‡å­—åˆ—å‹] . ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼”(æ—¥æœ¬èª)
+* @param [invalidTable04E] : [æ–‡å­—åˆ—å‹] . ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼”(è‹±èª)
 */
 //--------------------------------------------------------------------------------------------------------------------
-// ÅĞÏ¿³ÎÇ§ÍÑ(ÆüËÜ¸ì)
-var registTableJ = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>²¼µ­¤ÎÆâÍÆ¤ÇÅĞÏ¿¤·¤Ş¤¹¤«¡©</td></tr><tr><td bgcolor="#f1f1f1"><span id="regist_proc"><a href="#" onclick="fncClose();return false;"><img id="close_btn" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="document.getElementById('+'\'regist_proc\''+').outerText='+'\'ÅĞÏ¿½èÍıÃæ...\''+'; window.form1.submit();return false;"><img id="regist_btn" onfocus="GrayRegistJOn( this );" onblur="GrayRegistJOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="GrayRegistJOn(this)" onmouseout="GrayRegistJOff(this);fncAlphaOff( this );" src="/img/type01/cmn/querybt/regist_gray_off_ja_bt.gif" width="72" height="20" border="0" alt="ÅĞÏ¿"><a></span></td></tr></table>';
-// ÅĞÏ¿³ÎÇ§ÍÑ(±Ñ¸ì)
+// ç™»éŒ²ç¢ºèªç”¨(æ—¥æœ¬èª)
+var registTableJ = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>ä¸‹è¨˜ã®å†…å®¹ã§ç™»éŒ²ã—ã¾ã™ã‹ï¼Ÿ</td></tr><tr><td bgcolor="#f1f1f1"><span id="regist_proc"><a href="#" onclick="fncClose();return false;"><img id="close_btn" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="document.getElementById('+'\'regist_proc\''+').outerText='+'\'ç™»éŒ²å‡¦ç†ä¸­...\''+'; window.form1.submit();return false;"><img id="regist_btn" onfocus="GrayRegistJOn( this );" onblur="GrayRegistJOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="GrayRegistJOn(this)" onmouseout="GrayRegistJOff(this);fncAlphaOff( this );" src="/img/type01/cmn/querybt/regist_gray_off_ja_bt.gif" width="72" height="20" border="0" alt="ç™»éŒ²"><a></span></td></tr></table>';
+// ç™»éŒ²ç¢ºèªç”¨(è‹±èª)
 var registTableE = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>Does it register from the following contents?</td></tr><tr><td bgcolor="#f1f1f1"><span id="regist_proc"><a href="#" onclick="fncClose;return false;"><img id="close_btn" onfocus="CloseEOn( this );" onblur="CloseEOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<span name=""><a href="#" onclick="document.getElementById('+'\'regist_proc\''+').outerText='+'\'Registering...\''+'; window.form1.submit();return false;"><img id="regist_btn" onfocus="GrayRegistEOff( this );" onblur="GrayRegistEOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="GrayRegistEOn(this);fncAlphaOff( this );" onmouseout="GrayRegistEOff(this);fncAlphaOff( this );" src="/img/type01/cmn/querybt/regist_gray_off_en_bt.gif" width="72" height="20" border="0" alt="REGIST"><a></span></td></tr></table>';
 
 
-// ºï½ü³ÎÇ§ÍÑ(ÆüËÜ¸ì)
-var deleteTableJ = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>ºï½ü¤·¤Ş¤¹¤«¡©</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="DeleteJOn( this );" onblur="DeleteJOff( this );" onmouseover="DeleteJOn( this );" onmouseout="DeleteJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/delete_off_ja_bt.gif" width="72" height="20" border="0" alt="DELETE"><a></td></tr></table>';
-// ºï½ü³ÎÇ§ÍÑ(±Ñ¸ì)
+// å‰Šé™¤ç¢ºèªç”¨(æ—¥æœ¬èª)
+var deleteTableJ = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="DeleteJOn( this );" onblur="DeleteJOff( this );" onmouseover="DeleteJOn( this );" onmouseout="DeleteJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/delete_off_ja_bt.gif" width="72" height="20" border="0" alt="DELETE"><a></td></tr></table>';
+// å‰Šé™¤ç¢ºèªç”¨(è‹±èª)
 var deleteTableE = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>Does it delete?</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseEOn( this );" onblur="CloseEOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="DeleteEOn( this );" onblur="DeleteEOff( this );" onmouseover="DeleteEOn( this );" onmouseout="DeleteEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/delete_off_en_bt.gif" width="72" height="20" border="0" alt="DELETE"><a></td></tr></table>';
 
 
-// ¾ÜºÙ³ÎÇ§ÍÑ(ÆüËÜ¸ì)
+// è©³ç´°ç¢ºèªç”¨(æ—¥æœ¬èª)
 var detailTableJ = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a></td></tr></table>';
-// ¾ÜºÙ³ÎÇ§ÍÑ(±Ñ¸ì)
+// è©³ç´°ç¢ºèªç”¨(è‹±èª)
 var detailTableE = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseEOn( this );" onblur="CloseEOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a></td></tr></table>';
 
 
 
-// Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£± [ÆâÍÆ]¡§Ìµ¸ú²½½èÍı¤Ç¥Ç¡¼¥¿¤ÎÆş¤ìÂØ¤¨¤Ê¤É²¿¤âÈ¯À¸¤·¤Ê¤¤¾ì¹ç
-// (ÆüËÜ¸ì)
-var invalidTable01J = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>Ìµ¸ú²½¤·¤Ş¤¹¤«¡©</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose;"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onJ\' , this );" onblur="fncInvalidBigButton( \'offJ\' , this );" onmouseover="fncInvalidBigButton( \'onJ\' , this );" onmouseout="fncInvalidBigButton( \'offJ\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
-// (±Ñ¸ì)
+// ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼‘ [å†…å®¹]ï¼šç„¡åŠ¹åŒ–å‡¦ç†ã§ãƒ‡ãƒ¼ã‚¿ã®å…¥ã‚Œæ›¿ãˆãªã©ä½•ã‚‚ç™ºç”Ÿã—ãªã„å ´åˆ
+// (æ—¥æœ¬èª)
+var invalidTable01J = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>ç„¡åŠ¹åŒ–ã—ã¾ã™ã‹ï¼Ÿ</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose;"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onJ\' , this );" onblur="fncInvalidBigButton( \'offJ\' , this );" onmouseover="fncInvalidBigButton( \'onJ\' , this );" onmouseout="fncInvalidBigButton( \'offJ\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
+// (è‹±èª)
 var invalidTable01E = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>Does it invalid?</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose;"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseEOn( this );" onblur="CloseEOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onE\' , this );" onblur="fncInvalidBigButton( \'offE\' , this );" onmouseover="fncInvalidBigButton( \'onE\' , this );" onmouseout="fncInvalidBigButton( \'offE\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_en_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
 
 
-// Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£² [ÆâÍÆ]¡§Ìµ¸ú²½½èÍı¤ÇÁ°¤ÎÈ¯Ãí¤¬Í­¸ú¤Ë¤Ê¤ë¾ì¹ç
-// (ÆüËÜ¸ì)
-var invalidTable02J = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>°ÊÁ°¤Î¥Ç¡¼¥¿¤¬Éü³è¤·¤Ş¤¹¡£Ìµ¸ú²½¤·¤Ş¤¹¤«¡©</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onJ\' , this );" onblur="fncInvalidBigButton( \'offJ\' , this );" onmouseover="fncInvalidBigButton( \'onJ\' , this );" onmouseout="fncInvalidBigButton( \'offJ\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
-// (±Ñ¸ì)
+// ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼’ [å†…å®¹]ï¼šç„¡åŠ¹åŒ–å‡¦ç†ã§å‰ã®ç™ºæ³¨ãŒæœ‰åŠ¹ã«ãªã‚‹å ´åˆ
+// (æ—¥æœ¬èª)
+var invalidTable02J = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>ä»¥å‰ã®ãƒ‡ãƒ¼ã‚¿ãŒå¾©æ´»ã—ã¾ã™ã€‚ç„¡åŠ¹åŒ–ã—ã¾ã™ã‹ï¼Ÿ</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onJ\' , this );" onblur="fncInvalidBigButton( \'offJ\' , this );" onmouseover="fncInvalidBigButton( \'onJ\' , this );" onmouseout="fncInvalidBigButton( \'offJ\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
+// (è‹±èª)
 var invalidTable02E = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>Former data revives. Does it invalid?</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseEOn( this );" onblur="CloseEOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onE\' , this );" onblur="fncInvalidBigButton( \'offE\' , this );" onmouseover="fncInvalidBigButton( \'onE\' , this );" onmouseout="fncInvalidBigButton( \'offE\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_en_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
 
 
-// Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£³ [ÆâÍÆ]¡§ºï½ü¥Ç¡¼¥¿¤òÌµ¸ú²½¤¹¤ë¤³¤È¤Ç¡¢¥Ç¡¼¥¿¤¬Éü³è¤¹¤ë¾ì¹ç
-// (ÆüËÜ¸ì)
-var invalidTable03J = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>ºï½ü¤µ¤ì¤¿¥Ç¡¼¥¿¤¬Éü³è¤·¤Ş¤¹¡£Ìµ¸ú²½¤·¤Ş¤¹¤«¡©</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onJ\' , this );" onblur="fncInvalidBigButton( \'offJ\' , this );" onmouseover="fncInvalidBigButton( \'onJ\' , this );" onmouseout="fncInvalidBigButton( \'offJ\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
-// (±Ñ¸ì)
+// ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼“ [å†…å®¹]ï¼šå‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã‚’ç„¡åŠ¹åŒ–ã™ã‚‹ã“ã¨ã§ã€ãƒ‡ãƒ¼ã‚¿ãŒå¾©æ´»ã™ã‚‹å ´åˆ
+// (æ—¥æœ¬èª)
+var invalidTable03J = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>å‰Šé™¤ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãŒå¾©æ´»ã—ã¾ã™ã€‚ç„¡åŠ¹åŒ–ã—ã¾ã™ã‹ï¼Ÿ</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onJ\' , this );" onblur="fncInvalidBigButton( \'offJ\' , this );" onmouseover="fncInvalidBigButton( \'onJ\' , this );" onmouseout="fncInvalidBigButton( \'offJ\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
+// (è‹±èª)
 var invalidTable03E = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>The deleted data revives. Does it invalid?</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseEOn( this );" onblur="CloseEOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onE\' , this );" onblur="fncInvalidBigButton( \'offE\' , this );" onmouseover="fncInvalidBigButton( \'onE\' , this );" onmouseout="fncInvalidBigButton( \'offE\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_en_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
 
 
-// Ìµ¸ú²½½èÍıÍÑ¥Ñ¥¿¡¼¥ó£´ [ÆâÍÆ]¡§Ìµ¸ú²½½èÍı¤ÇÍ­¸ú¤Ë¤Ê¤ë¥Ç¡¼¥¿¤¬Ìµ¤¤¾ì¹ç
-// (ÆüËÜ¸ì)
-var invalidTable04J = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>Éü³è¤¹¤ë¥Ç¡¼¥¿¤¬Â¸ºß¤·¤Ş¤»¤ó¡£Ìµ¸ú²½¤·¤Ş¤¹¤«¡©</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onJ\' , this );" onblur="fncInvalidBigButton( \'offJ\' , this );" onmouseover="fncInvalidBigButton( \'onJ\' , this );" onmouseout="fncInvalidBigButton( \'offJ\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
-// (±Ñ¸ì)
+// ç„¡åŠ¹åŒ–å‡¦ç†ç”¨ãƒ‘ã‚¿ãƒ¼ãƒ³ï¼” [å†…å®¹]ï¼šç„¡åŠ¹åŒ–å‡¦ç†ã§æœ‰åŠ¹ã«ãªã‚‹ãƒ‡ãƒ¼ã‚¿ãŒç„¡ã„å ´åˆ
+// (æ—¥æœ¬èª)
+var invalidTable04J = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>å¾©æ´»ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚ç„¡åŠ¹åŒ–ã—ã¾ã™ã‹ï¼Ÿ</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseJOn( this );" onblur="CloseJOff( this );" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onJ\' , this );" onblur="fncInvalidBigButton( \'offJ\' , this );" onmouseover="fncInvalidBigButton( \'onJ\' , this );" onmouseout="fncInvalidBigButton( \'offJ\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
+// (è‹±èª)
 var invalidTable04E = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>The data to revitalize does not exist. Does it invalid?</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="fncClose();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="CloseEOn( this );" onblur="CloseEOff( this );" onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );fncAlphaOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onfocus="fncInvalidBigButton( \'onE\' , this );" onblur="fncInvalidBigButton( \'offE\' , this );" onmouseover="fncInvalidBigButton( \'onE\' , this );" onmouseout="fncInvalidBigButton( \'offE\' , this );fncAlphaOff( this );" src="/img/type01/cmn/querybt/invalid_big_off_en_bt.gif" width="72" height="20" border="0" alt="INVALID"><a></td></tr></table>';
 
 
@@ -160,23 +160,23 @@ function fncClose() {
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ³µÍ× : ½èÍı¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·¥â¥¸¥å¡¼¥ë
+* æ¦‚è¦ : å‡¦ç†ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 *
-* ²òÀâ : ³Æ½èÍıÍÑ¥Æ¥ó¥×¥ì¡¼¥È¤Ç»ÈÍÑ¤¹¤ë[fncChgEtoJ]´Ø¿ôÆâ¤Ç»ÈÍÑ¡£
+* è§£èª¬ : å„å‡¦ç†ç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã§ä½¿ç”¨ã™ã‚‹[fncChgEtoJ]é–¢æ•°å†…ã§ä½¿ç”¨ã€‚
 *
-* ÂĞ¾İ : ÆşÎÏ¥Õ¥£¡¼¥ë¥É
+* å¯¾è±¡ : å…¥åŠ›ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
 *
-* ³°Éô´Ø¿ô : [fncChgEtoJ] ¸Æ½ĞÀè´Ø¿ô¡£
+* å¤–éƒ¨é–¢æ•° : [fncChgEtoJ] å‘¼å‡ºå…ˆé–¢æ•°ã€‚
 *            /src/pc/cmn/resultexstr.js
 *            /src/po/cmn/resultexstr.js
 *            /src/sc/cmn/resultexstr.js
 *            /src/so/cmn/resultexstr.js
 *            /src/uc/cmn/resultexstr.js
 *
-* @param [lngCode] : [¿ôÃÍ·¿]   . [0/1]¤Î¿ôÃÍ
-* @param [strMode] : [Ê¸»úÎó·¿] . 'regist' , 'detail' , 'delete' , 'use' ,
+* @param [lngCode] : [æ•°å€¤å‹]   . [0/1]ã®æ•°å€¤
+* @param [strMode] : [æ–‡å­—åˆ—å‹] . 'regist' , 'detail' , 'delete' , 'use' ,
 *                                 'Invalid01' , 'Invalid02' , 'Invalid03' , 'Invalid04'
-*                                 ¤Î½èÍı¿¶Ê¬¤±ÍÑ¤Î°ì°Õ¤ÎÊ¸»úÎó
+*                                 ã®å‡¦ç†æŒ¯åˆ†ã‘ç”¨ã®ä¸€æ„ã®æ–‡å­—åˆ—
 *
 * @event [onload] : body
 */
@@ -196,7 +196,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = 'ÅĞÏ¿³ÎÇ§';
+				ControlTitle.innerText = 'ç™»éŒ²ç¢ºèª';
 				objQuery.innerHTML = registTableJ;
 			}
 
@@ -212,7 +212,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = 'ÅĞÏ¿³ÎÇ§';
+				ControlTitle.innerText = 'ç™»éŒ²ç¢ºèª';
 				objQuery.innerHTML = registTableJ;
 			}
 
@@ -228,7 +228,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = '¾ÜºÙ³ÎÇ§';
+				ControlTitle.innerText = 'è©³ç´°ç¢ºèª';
 				objQuery.innerHTML = detailTableJ;
 			}
 
@@ -244,7 +244,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = 'ºï½ü³ÎÇ§';
+				ControlTitle.innerText = 'å‰Šé™¤ç¢ºèª';
 				objQuery.innerHTML = deleteTableJ;
 			}
 
@@ -260,7 +260,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = '¥Ç¡¼¥¿»ÈÍÑÃæ';
+				ControlTitle.innerText = 'ãƒ‡ãƒ¼ã‚¿ä½¿ç”¨ä¸­';
 				objQuery.innerHTML = detailTableJ;
 			}
 
@@ -276,7 +276,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = 'Ìµ¸ú²½³ÎÇ§';
+				ControlTitle.innerText = 'ç„¡åŠ¹åŒ–ç¢ºèª';
 				objQuery.innerHTML = invalidTable01J;
 			}
 
@@ -292,7 +292,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = 'Ìµ¸ú²½³ÎÇ§';
+				ControlTitle.innerText = 'ç„¡åŠ¹åŒ–ç¢ºèª';
 				objQuery.innerHTML = invalidTable02J;
 			}
 
@@ -308,7 +308,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = 'Ìµ¸ú²½³ÎÇ§';
+				ControlTitle.innerText = 'ç„¡åŠ¹åŒ–ç¢ºèª';
 				objQuery.innerHTML = invalidTable03J;
 			}
 
@@ -324,7 +324,7 @@ function fncProcessingOutputModule( strMode , lngCode )
 			}
 			else if( lngCode == 1 )
 			{
-				ControlTitle.innerText = 'Ìµ¸ú²½³ÎÇ§';
+				ControlTitle.innerText = 'ç„¡åŠ¹åŒ–ç¢ºèª';
 				objQuery.innerHTML = invalidTable04J;
 			}
 

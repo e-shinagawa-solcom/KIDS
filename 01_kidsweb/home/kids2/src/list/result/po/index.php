@@ -1,6 +1,6 @@
 <?
 /**
- *    Ä¢É¼½ĞÎÏ È¯Ãí½ñ ¸¡º÷·ë²Ì²èÌÌ
+ *    å¸³ç¥¨å‡ºåŠ› ç™ºæ³¨æ›¸ æ¤œç´¢çµæœç”»é¢
  *
  *    @package   KIDS
  *    @license   http://www.wiseknot.co.jp/
@@ -10,19 +10,19 @@
  *    @version   1.00
  *
  */
-// ¸¡º÷·ë²Ì²èÌÌ( * ¤Ï»ØÄêÄ¢É¼¤Î¥Õ¥¡¥¤¥ëÌ¾ )
+// æ¤œç´¢çµæœç”»é¢( * ã¯æŒ‡å®šå¸³ç¥¨ã®ãƒ•ã‚¡ã‚¤ãƒ«å )
 // *.php -> strSessionID       -> index.php
 
-// °õºş²èÌÌ¤Ø
+// å°åˆ·ç”»é¢ã¸
 // index.php -> strSessionID       -> index.php
 // index.php -> lngReportCode      -> index.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
 require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require SRC_ROOT . "list/cmn/lib_lo.php";
 require LIB_DEBUGFILE;
@@ -31,39 +31,39 @@ $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
-// ¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤«¤é³Æ¥«¥Æ¥´¥ê¤Î¿¶¤êÊ¬¤±¤ò¹Ô¤¦
+// ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å„ã‚«ãƒ†ã‚´ãƒªã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
 $isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
 $from = UtilSearchForm::extractArrayByFrom($_REQUEST);
 $to = UtilSearchForm::extractArrayByTo($_REQUEST);
 $searchValue = $_REQUEST;
 
-// ¥¯¥¨¥ê¤ÎÁÈÎ©¤Ë»ÈÍÑ¤¹¤ë¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤òÃê½Ğ
+// ã‚¯ã‚¨ãƒªã®çµ„ç«‹ã«ä½¿ç”¨ã™ã‚‹ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’æŠ½å‡º
 $searchColumns = array();
 $conditions = array();
 
-// ¸¡º÷¹àÌÜ¤ÎÃê½Ğ
+// æ¤œç´¢é …ç›®ã®æŠ½å‡º
 foreach ($isSearch as $key => $flag) {
     if ($flag == "on") {
         $searchColumns[$key] = $key;
     }
 }
 
-// È¯ÃíÄ¢É¼½ĞÎÏ
-// ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¼èÆÀ¥¯¥¨¥êÀ¸À®
+// ç™ºæ³¨å¸³ç¥¨å‡ºåŠ›
+// ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
 $strCopyQuery = "SELECT strReportKeyCode, lngReportCode FROM t_Report WHERE lngReportClassCode = " . DEF_REPORT_ORDER;
 
-// È¯Ãí½ñ¼èÆÀ¥¯¥¨¥êÀ¸À®
+// ç™ºæ³¨æ›¸å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
 $aryQuery[] = "SELECT distinct";
 $aryQuery[] = "  po.strOrderCode AS strOrderNo";
 $aryQuery[] = "  , u1.struserdisplaycode as strinsertusercode";
@@ -116,33 +116,33 @@ $aryQuery[] = "      po2.strordercode = po.strordercode";
 $aryQuery[] = "      AND po2.lngRevisionNo < 0";
 $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
-// ¸¡º÷¾ò·ï
+// æ¤œç´¢æ¡ä»¶
 /////////////////////////////////////////////////////////////////
-// ºîÀ®Æü»ş
+// ä½œæˆæ—¥æ™‚
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
     array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] != '') {
     $aryQuery[] = " AND date_trunc('day', po.dtmInsertDate )" .
     " >= '" . pg_escape_string($from["dtmInsertDate"]) . "'";
 }
-// ºîÀ®Æü»ş
+// ä½œæˆæ—¥æ™‚
 if (array_key_exists("dtmInsertDate", $searchColumns) &&
     array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
     $aryQuery[] = " AND date_trunc('day', po.dtmInsertDate )" .
     " <= " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
 }
-// È¯Ãí½ñ£Î£Ï.
+// ç™ºæ³¨æ›¸ï¼®ï¼¯.
 if (array_key_exists("strOrderCode", $searchColumns) &&
     array_key_exists("strOrderCode", $from) && $from["strOrderCode"] != '') {
     $aryQuery[] = " AND po.strOrderCode" .
     " >= '" . pg_escape_string($from["strOrderCode"]) . "'";
 }
-// È¯Ãí½ñ£Î£Ï.
+// ç™ºæ³¨æ›¸ï¼®ï¼¯.
 if (array_key_exists("strOrderCode", $searchColumns) &&
     array_key_exists("strOrderCode", $to) && $to["strOrderCode"] != '') {
     $aryQuery[] = " AND po.strOrderCode" .
     " <= " . "'" . pg_escape_string($to["strOrderCode"]) . "'";
 }
-// À½ÉÊ¥³¡¼¥É
+// è£½å“ã‚³ãƒ¼ãƒ‰
 if (array_key_exists("strProductCode", $searchColumns) &&
     array_key_exists("strProductCode", $searchValue)) {
     $strProductCodeArray = explode(",", $searchValue["strProductCode"]);
@@ -168,29 +168,29 @@ if (array_key_exists("strProductCode", $searchColumns) &&
     }
     $aryQuery[] = ")";
 }
-// ÆşÎÏ¼Ô
+// å…¥åŠ›è€…
 if (array_key_exists("lngInputUserCode", $searchColumns) &&
     array_key_exists("lngInputUserCode", $searchValue)) {
     $aryQuery[] = " AND u1.struserdisplaycode = '" . $searchValue["lngInputUserCode"] . "'";
 }
-// »ÅÆşÀè
+// ä»•å…¥å…ˆ
 if (array_key_exists("lngCustomerCompanyCode", $searchColumns) &&
     array_key_exists("lngCustomerCompanyCode", $searchValue)) {
     $aryQuery[] = " AND c.strCompanyDisplayCode = '" . $searchValue["lngCustomerCompanyCode"] . "'";
 }
-// ÉôÌç
+// éƒ¨é–€
 if (array_key_exists("lngInChargeGroupCode", $searchColumns) &&
     array_key_exists("lngInChargeGroupCode", $searchValue)) {
     $aryQuery[] = " AND g.strgroupdisplaycode = '" . $searchValue["lngInChargeGroupCode"] . "'";
 }
-// Ã´Åö¼Ô
+// æ‹…å½“è€…
 if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
     array_key_exists("lngInChargeUserCode", $searchValue)) {
     $aryQuery[] = " AND u2.struserdisplaycode = '" . $searchValue["lngInChargeUserCode"] . "'";
 }
 $aryQuery[] = "ORDER BY strOrderNo DESC";
 
-// ¥Ê¥ó¥Ğ¡¼¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤ËÄ¢É¼¥³¡¼¥É¤ò¼èÆÀ
+// ãƒŠãƒ³ãƒãƒ¼ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã«å¸³ç¥¨ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 list($lngResultID, $lngResultNum) = fncQuery($strCopyQuery, $objDB);
 
 for ($i = 0; $i < $lngResultNum; $i++) {
@@ -202,14 +202,14 @@ if ($lngResultNum > 0) {
     $objDB->freeResult($lngResultID);
 }
 
-// Ä¢É¼¥Ç¡¼¥¿¼èÆÀ¥¯¥¨¥ê¼Â¹Ô¡¦¥Æ¡¼¥Ö¥ëÀ¸À®
+// å¸³ç¥¨ãƒ‡ãƒ¼ã‚¿å–å¾—ã‚¯ã‚¨ãƒªå®Ÿè¡Œãƒ»ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 $strQuery = implode("\n", $aryQuery);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
-// ¸¡º÷·ï¿ô¤¬¤¢¤ê¤Î¾ì¹ç
+// æ¤œç´¢ä»¶æ•°ãŒã‚ã‚Šã®å ´åˆ
 if ($lngResultNum > 0) {
-    // »ØÄê¿ô°Ê¾å¤Î¾ì¹ç¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤¹¤ë
+    // æŒ‡å®šæ•°ä»¥ä¸Šã®å ´åˆã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹
     if ($lngResultNum > DEF_SEARCH_MAX) {
         $errorFlag = true;
         $lngErrorCode = 9057;
@@ -221,23 +221,23 @@ if ($lngResultNum > 0) {
     $aryErrorMessage = "";
 }
 if ($errorFlag) {
-    // ¥¨¥é¡¼²èÌÌ¤ÎÌá¤êÀè
+    // ã‚¨ãƒ©ãƒ¼ç”»é¢ã®æˆ»ã‚Šå…ˆ
     // $strReturnPath = "../list/po/index.php?strSessionID=" . $aryData["strSessionID"];
 
     $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, $strReturnPath, $objDB);
 
-    // [strErrorMessage]½ñ¤­½Ğ¤·
+    // [strErrorMessage]æ›¸ãå‡ºã—
     $aryHtml["strErrorMessage"] = $strMessage;
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
     $objTemplate->replace($aryHtml);
     $objTemplate->complete();
 
-    // HTML½ĞÎÏ
+    // HTMLå‡ºåŠ›
     echo $objTemplate->strTemplate;
 
     exit;
@@ -256,18 +256,18 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 
     $aryParts["strResult"] .= "<td align=center>";
 
-    // °õºş²ó¿ô¤¬0¤è¤êÂç¤­¤¤¾ì¹ç¡¢¥³¥Ô¡¼Ä¢É¼½ĞÎÏ¥Ü¥¿¥óÉ½¼¨
+    // å°åˆ·å›æ•°ãŒ0ã‚ˆã‚Šå¤§ãã„å ´åˆã€ã‚³ãƒ”ãƒ¼å¸³ç¥¨å‡ºåŠ›ãƒœã‚¿ãƒ³è¡¨ç¤º
     if (intval($objResult->lngprintcount) > 0) {
-        // ¥³¥Ô¡¼Ä¢É¼½ĞÎÏ¥Ü¥¿¥óÉ½¼¨
+        // ã‚³ãƒ”ãƒ¼å¸³ç¥¨å‡ºåŠ›ãƒœã‚¿ãƒ³è¡¨ç¤º
         $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_ORDER . "&strReportKeyCode=" . $objResult->strreportkeycode . "&lngReportCode=" . $aryReportCode[$objResult->strreportkeycode] . "' );return false;\" onmouseover=\"fncCopyPreviewButton( 'on' , this );\" onmouseout=\"fncCopyPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/list/copybig_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"COPY PREVIEW\"></a>";
     }
 
     $aryParts["strResult"] .= "</td>\n<td align=center>";
 
-    // ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¥Ñ¥¹¤¬Â¸ºß¤·¤Ê¤¤ ¤Ş¤¿¤Ï ¥³¥Ô¡¼²ò½ü¸¢¸Â¤¬¤¢¤ë¾ì¹ç¡¢
-    // Ä¢É¼½ĞÎÏ¥Ü¥¿¥óÉ½¼¨
+    // ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ãŒå­˜åœ¨ã—ãªã„ ã¾ãŸã¯ ã‚³ãƒ”ãƒ¼è§£é™¤æ¨©é™ãŒã‚ã‚‹å ´åˆã€
+    // å¸³ç¥¨å‡ºåŠ›ãƒœã‚¿ãƒ³è¡¨ç¤º
     if ($aryReportCode[$objResult->strreportkeycode] == null || fncCheckAuthority(DEF_FUNCTION_LO4, $objAuth)) {
-        // Ä¢É¼½ĞÎÏ¥Ü¥¿¥óÉ½¼¨
+        // å¸³ç¥¨å‡ºåŠ›ãƒœã‚¿ãƒ³è¡¨ç¤º
         $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_ORDER . "&strReportKeyCode=" . $objResult->strreportkeycode . "' );return false;\" onmouseover=\"fncPreviewButton( 'on' , this );\" onmouseout=\"fncPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/cmn/querybt/preview_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"PREVIEW\"></a>";
     }
 
@@ -277,13 +277,13 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 }
 
 $aryParts["strColumn"] = "
-						<td id=\"Column0\" nowrap>È¯Ãí No.</td>
-						<td id=\"Column1\" nowrap>ÆşÎÏ¼Ô</td>
-						<td id=\"Column2\" nowrap>»ÅÆşÀè</td>
-						<td id=\"Column3\" nowrap>ÉôÌç</td>
-						<td id=\"Column4\" nowrap>Ã´Åö¼Ô</td>
-						<td id=\"Column5\" nowrap>COPY ¥×¥ì¥Ó¥å¡¼</td>
-						<td id=\"Column6\" nowrap>¥×¥ì¥Ó¥å¡¼</td>
+						<td id=\"Column0\" nowrap>ç™ºæ³¨ No.</td>
+						<td id=\"Column1\" nowrap>å…¥åŠ›è€…</td>
+						<td id=\"Column2\" nowrap>ä»•å…¥å…ˆ</td>
+						<td id=\"Column3\" nowrap>éƒ¨é–€</td>
+						<td id=\"Column4\" nowrap>æ‹…å½“è€…</td>
+						<td id=\"Column5\" nowrap>COPY ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼</td>
+						<td id=\"Column6\" nowrap>ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼</td>
 	";
 
 $aryParts["strListType"] = "po";
@@ -291,7 +291,7 @@ $aryParts["HIDDEN"] = getArrayTable($searchValue, "HIDDEN");
 
 $objDB->close();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("list/result/parts.html");
 $objTemplate->replace($aryParts);

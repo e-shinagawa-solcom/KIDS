@@ -1,7 +1,7 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
- *       Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿´Ø¿ô·²
+ *       å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²é–¢æ•°ç¾¤
  *
  *
  *       @package    K.I.D.S.
@@ -12,24 +12,24 @@
  *       @version    2.00
  *
  *
- *       ½èÍı³µÍ×
- *         ¡¦Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿´ØÏ¢¤Î´Ø¿ô
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²é–¢é€£ã®é–¢æ•°
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
 require_once LIB_DEBUGFILE;
 require_once LIB_EXCLUSIVEFILE;
-// ½¤ÀµÂĞ¾İ¥Ç¡¼¥¿¤ËÂĞ¤·¤Æ¥í¥Ã¥¯¤·¤Æ¤¤¤ë¿Í¤ò³ÎÇ§¤¹¤ë
-// ¥í¥Ã¥¯¤·¤Æ¤¤¤ë¿Í¤¬¤¤¤Ê¤¤¤Ê¤é¶õÊ¸»úÎó¤òÊÖ¤¹
+// ä¿®æ­£å¯¾è±¡ãƒ‡ãƒ¼ã‚¿ã«å¯¾ã—ã¦ãƒ­ãƒƒã‚¯ã—ã¦ã„ã‚‹äººã‚’ç¢ºèªã™ã‚‹
+// ãƒ­ãƒƒã‚¯ã—ã¦ã„ã‚‹äººãŒã„ãªã„ãªã‚‰ç©ºæ–‡å­—åˆ—ã‚’è¿”ã™
 
 function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
 {
     $lockUserName = "";
-    $v_lngusercode = $objAuth->UserCode; //1:¥æ¡¼¥¶¥³¡¼¥É
-    $v_stripaddress = $objAuth->AccessIP; //2:Ã¼ËöIP¥¢¥É¥ì¥¹
+    $v_lngusercode = $objAuth->UserCode; //1:ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
+    $v_stripaddress = $objAuth->AccessIP; //2:ç«¯æœ«IPã‚¢ãƒ‰ãƒ¬ã‚¹
 
     $aryQuery = array();
     $aryQuery[] = "SELECT ";
@@ -51,17 +51,17 @@ function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objAuth, $objD
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
         if ($v_lngusercode != $aryResult[0]["lngusercode"] || $v_stripaddress != $aryResult[0]["stripaddress"]) {
-            // ¥í¥Ã¥¯¤·¤Æ¤¤¤ë¥æ¡¼¥¶¡¼¤ÎÉ½¼¨ÍÑ¥æ¡¼¥¶¡¼Ì¾¤òÀßÄê
+            // ãƒ­ãƒƒã‚¯ã—ã¦ã„ã‚‹ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®è¡¨ç¤ºç”¨ãƒ¦ãƒ¼ã‚¶ãƒ¼åã‚’è¨­å®š
             $lockUserName = $aryResult[0]["struserdisplayname"];
-            $isLock = 1; // ÊÌ¥æ¡¼¥¶¡¼¥í¥Ã¥¯Ãæ
+            $isLock = 1; // åˆ¥ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ­ãƒƒã‚¯ä¸­
         } else {
             $lockUserName = "";
-            $isLock = 2; // Æ±¥æ¡¼¥¶¡¼¥í¥Ã¥¯Ãæ
+            $isLock = 2; // åŒãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ­ãƒƒã‚¯ä¸­
         }
     } else {
-        // ¤À¤ì¤â¥í¥Ã¥¯¤·¤Æ¤¤¤Ê¤¤
+        // ã ã‚Œã‚‚ãƒ­ãƒƒã‚¯ã—ã¦ã„ãªã„
         $lockUserName = "";
-        $isLock = 0; // Ì¤¥í¥Ã¥¯
+        $isLock = 0; // æœªãƒ­ãƒƒã‚¯
     }
     $objDB->freeResult($lngResultID);
 
@@ -70,55 +70,55 @@ function fncGetExclusiveLockUser($lngFunctionCode, $strSlipCode, $objAuth, $objD
     return $aryResult;
 }
 
-// ÂĞ¾İ¤Îµ¡Ç½ID¤ËÂĞ¤·¤ÆÇÓÂ¾¥í¥Ã¥¯¤ò¼è¤ë
+// å¯¾è±¡ã®æ©Ÿèƒ½IDã«å¯¾ã—ã¦æ’ä»–ãƒ­ãƒƒã‚¯ã‚’å–ã‚‹
 function fncTakeExclusiveLock($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
 {
     $locked = false;
 
-    // ÇÓÂ¾¥­¡¼1¤Î¤ßÂĞ±ş¡ÊÂ¾¤Ï¥Ç¥Õ¥©¥ë¥ÈÃÍ¡Ë
-    $v_lngfunctioncode = $lngFunctionCode; //1:µ¡Ç½¥³¡¼¥É
-    $v_strexclusivekey1 = withQuote($strSlipCode); //2:ÇÓÂ¾¥­¡¼1
-    $v_lngusercode = $objAuth->UserCode; //5:¥æ¡¼¥¶¥³¡¼¥É
-    $v_stripaddress = withQuote($objAuth->AccessIP); //6:Ã¼ËöIP¥¢¥É¥ì¥¹
-    $v_dtminsertdate = "now()"; //7:ÅĞÏ¿Æü
+    // æ’ä»–ã‚­ãƒ¼1ã®ã¿å¯¾å¿œï¼ˆä»–ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ï¼‰
+    $v_lngfunctioncode = $lngFunctionCode; //1:æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
+    $v_strexclusivekey1 = withQuote($strSlipCode); //2:æ’ä»–ã‚­ãƒ¼1
+    $v_lngusercode = $objAuth->UserCode; //5:ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
+    $v_stripaddress = withQuote($objAuth->AccessIP); //6:ç«¯æœ«IPã‚¢ãƒ‰ãƒ¬ã‚¹
+    $v_dtminsertdate = "now()"; //7:ç™»éŒ²æ—¥
 
     $aryInsert[] = "INSERT  ";
     $aryInsert[] = " INTO t_exclusivecontrol(  ";
-    $aryInsert[] = "  lngfunctioncode "; //1:µ¡Ç½¥³¡¼¥É
-    $aryInsert[] = "  , strexclusivekey1 "; //2:ÇÓÂ¾¥­¡¼1
-    $aryInsert[] = "  , lngusercode "; //5:¥æ¡¼¥¶¥³¡¼¥É
-    $aryInsert[] = "  , stripaddress "; //6:Ã¼ËöIP¥¢¥É¥ì¥¹
-    $aryInsert[] = "  , dtminsertdate "; //7:ÅĞÏ¿Æü
+    $aryInsert[] = "  lngfunctioncode "; //1:æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , strexclusivekey1 "; //2:æ’ä»–ã‚­ãƒ¼1
+    $aryInsert[] = "  , lngusercode "; //5:ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , stripaddress "; //6:ç«¯æœ«IPã‚¢ãƒ‰ãƒ¬ã‚¹
+    $aryInsert[] = "  , dtminsertdate "; //7:ç™»éŒ²æ—¥
     $aryInsert[] = ")  ";
     $aryInsert[] = " VALUES (  ";
-    $aryInsert[] = "  " . $v_lngfunctioncode; //1:µ¡Ç½¥³¡¼¥É
-    $aryInsert[] = " ," . $v_strexclusivekey1; //2:ÇÓÂ¾¥­¡¼1
-    $aryInsert[] = " ," . $v_lngusercode; //5:¥æ¡¼¥¶¥³¡¼¥É
-    $aryInsert[] = " ," . $v_stripaddress; //6:Ã¼ËöIP¥¢¥É¥ì¥¹
-    $aryInsert[] = " ," . $v_dtminsertdate; //7:ÅĞÏ¿Æü
+    $aryInsert[] = "  " . $v_lngfunctioncode; //1:æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_strexclusivekey1; //2:æ’ä»–ã‚­ãƒ¼1
+    $aryInsert[] = " ," . $v_lngusercode; //5:ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_stripaddress; //6:ç«¯æœ«IPã‚¢ãƒ‰ãƒ¬ã‚¹
+    $aryInsert[] = " ," . $v_dtminsertdate; //7:ç™»éŒ²æ—¥
     $aryInsert[] = ") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
 
-    // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+    // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
     $objDB->transactionBegin();
 
-    // ÅĞÏ¿¼Â¹Ô
+    // ç™»éŒ²å®Ÿè¡Œ
     if (!$lngResultID = $objDB->execute($strQuery)) {
-        // ¼ºÇÔ
+        // å¤±æ•—
         $locked = false;
     } else {
         $objDB->freeResult($lngResultID);
-        // ¥³¥ß¥Ã¥È
+        // ã‚³ãƒŸãƒƒãƒˆ
         $objDB->transactionCommit();
-        // À®¸ù
+        // æˆåŠŸ
         $locked = true;
     }
 
     return $locked;
 }
 
-// ÂĞ¾İ¤Îµ¡Ç½ID¤ËÂĞ¤·¤ÆÇÓÂ¾¥í¥Ã¥¯¤ò²ò½ü¤¹¤ë
+// å¯¾è±¡ã®æ©Ÿèƒ½IDã«å¯¾ã—ã¦æ’ä»–ãƒ­ãƒƒã‚¯ã‚’è§£é™¤ã™ã‚‹
 function fncReleaseExclusiveLock($lngFunctionCode, $strSlipCode, $objDB)
 {
     $unlocked = false;
@@ -133,30 +133,30 @@ function fncReleaseExclusiveLock($lngFunctionCode, $strSlipCode, $objDB)
     $strQuery = "";
     $strQuery .= implode("\n", $aryDelete);
 
-    // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+    // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
     $objDB->transactionBegin();
 
-    // ÅĞÏ¿¼Â¹Ô
+    // ç™»éŒ²å®Ÿè¡Œ
     if (!$lngResultID = $objDB->execute($strQuery)) {
-        // ¼ºÇÔ
+        // å¤±æ•—
         $unlocked = false;
     } else {
         $objDB->freeResult($lngResultID);
 
-        // ¥³¥ß¥Ã¥È
+        // ã‚³ãƒŸãƒƒãƒˆ
         $objDB->transactionCommit();
 
-        // À®¸ù
+        // æˆåŠŸ
         $unlocked = true;
     }
 
     return $unlocked;
 }
 
-// ¾ÃÈñÀÇÎ¨¥×¥ë¥À¥¦¥ó¤ÎÁªÂò¹àÌÜºîÀ®
+// æ¶ˆè²»ç¨ç‡ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã®é¸æŠé …ç›®ä½œæˆ
 function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
 {
-    // DB¤«¤é¥Ç¡¼¥¿¼èÆÀ
+    // DBã‹ã‚‰ãƒ‡ãƒ¼ã‚¿å–å¾—
     $strQuery = "SELECT lngtaxcode, curtax * 100 as curtax "
         . " FROM m_tax "
         . " WHERE dtmapplystartdate <= '$dtmDeliveryDate' "
@@ -168,17 +168,17 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "¾ÃÈñÀÇ¾ğÊó¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "æ¶ˆè²»ç¨æƒ…å ±ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
-    // ÁªÂò¹àÌÜºîÀ®
+    // é¸æŠé …ç›®ä½œæˆ
     $strHtml = "<OPTION VALUE=\"\" SELECTED>0%</OPTION>\n";
     for ($i = 0; $i < count($aryResult); $i++) {
         $optionValue = $aryResult[$i]["lngtaxcode"];
-        $displayText = $aryResult[$i]["curtax"] * 1 . "%"; // ¾®¿ôÅÀËöÈø¤Î0¤ò¥«¥Ã¥È
+        $displayText = $aryResult[$i]["curtax"] * 1 . "%"; // å°æ•°ç‚¹æœ«å°¾ã®0ã‚’ã‚«ãƒƒãƒˆ
 
-        // ¥Ç¥Õ¥©¥ë¥ÈÃÍ¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¡¢¤½¤ÎÃÍ¤òÁªÂò
+        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ãŒè¨­å®šã•ã‚Œã¦ã„ã‚‹å ´åˆã€ãã®å€¤ã‚’é¸æŠ
         if ($curDefaultTax == $displayText) {
             $strHtml .= "<OPTION VALUE=\"$optionValue\" SELECTED>$displayText</OPTION>\n";
         } else {
@@ -189,7 +189,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
     return $strHtml;
 }
 
-// Ç¼ÉÊÅÁÉ¼ÈÖ¹æ¤ËÉ³¤Å¤¯¥Ø¥Ã¥À¹àÌÜ¼èÆÀ
+// ç´å“ä¼ç¥¨ç•ªå·ã«ç´ã¥ããƒ˜ãƒƒãƒ€é …ç›®å–å¾—
 function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 {
 
@@ -197,25 +197,25 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "SELECT ";
     $aryQuery[] = "  s.lngslipno, ";
     $aryQuery[] = "  s.lngrevisionno, ";
-    $aryQuery[] = "  u_ins.lngusercode as lngdrafterusercode,  "; //µ¯É¼¼Ô¡Ê¥æ¡¼¥¶¡¼¥³¡¼¥É¡Ë
-    $aryQuery[] = "  u_ins.struserdisplaycode as strdrafteruserdisplaycode,  "; //µ¯É¼¼Ô¡ÊÉ½¼¨ÍÑ¥æ¡¼¥¶¡¼¥³¡¼¥É¡Ë
-    $aryQuery[] = "  u_ins.struserdisplayname as strdrafteruserdisplayname, "; //µ¯É¼¼Ô¡ÊÉ½¼¨ÍÑ¥æ¡¼¥¶¡¼Ì¾¡Ë
-    $aryQuery[] = "  c_cust.strcompanydisplaycode as strcompanydisplaycode, "; //¸ÜµÒ¡ÊÉ½¼¨ÍÑ²ñ¼Ò¥³¡¼¥É¡Ë
-    $aryQuery[] = "  c_cust.strcompanydisplayname as strcompanydisplayname, "; //¸ÜµÒ¡ÊÉ½¼¨ÍÑ²ñ¼ÒÌ¾¡Ë
-    $aryQuery[] = "  s.strcustomerusername, "; //¸ÜµÒÃ´Åö¼Ô
-    $aryQuery[] = "  TO_CHAR(s.dtmdeliverydate, 'YYYY/MM/DD') as dtmdeliverydate, "; //Ç¼ÉÊÆü
-    $aryQuery[] = "  TO_CHAR(s.dtmpaymentlimit, 'YYYY/MM/DD') as dtmpaymentlimit, "; //»ÙÊ§´ü¸Â
-    $aryQuery[] = "  s.lngpaymentmethodcode, "; //»ÙÊ§ÊıË¡
-    $aryQuery[] = "  c_deli.strcompanydisplaycode as strdeliveryplacecompanydisplaycode, "; //Ç¼ÉÊÀè¡ÊÉ½¼¨ÍÑ²ñ¼Ò¥³¡¼¥É¡Ë
-    $aryQuery[] = "  s.strdeliveryplacename, "; //Ç¼ÉÊÀè¡ÊÉ½¼¨ÍÑ²ñ¼ÒÌ¾¡Ë
-    $aryQuery[] = "  s.strdeliveryplaceusername, "; //Ç¼ÉÊÀèÃ´Åö¼Ô
-    $aryQuery[] = "  s.strnote, "; //È÷¹Í
-    $aryQuery[] = "  s.lngtaxclasscode, "; //¾ÃÈñÀÇ¶èÊ¬¡Ê¥³¡¼¥ÉÃÍ¡Ë
-    $aryQuery[] = "  s.strtaxclassname, "; //¾ÃÈñÀÇ¶èÊ¬¡ÊÌ¾¾Î¡Ë
-    $aryQuery[] = "  s.curtax, "; //¾ÃÈñÀÇÎ¨¡Ê¿ôÃÍ¡Ë
-    $aryQuery[] = "  Null as lngtaxcode, "; //¾ÃÈñÀÇÎ¨¡Ê¥³¡¼¥ÉÃÍ¡Ë
-    $aryQuery[] = "  Null as strtaxamount, "; //¾ÃÈñÀÇ³Û
-    $aryQuery[] = "  s.curtotalprice "; //¹ç·×¶â³Û
+    $aryQuery[] = "  u_ins.lngusercode as lngdrafterusercode,  "; //èµ·ç¥¨è€…ï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ï¼‰
+    $aryQuery[] = "  u_ins.struserdisplaycode as strdrafteruserdisplaycode,  "; //èµ·ç¥¨è€…ï¼ˆè¡¨ç¤ºç”¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ï¼‰
+    $aryQuery[] = "  u_ins.struserdisplayname as strdrafteruserdisplayname, "; //èµ·ç¥¨è€…ï¼ˆè¡¨ç¤ºç”¨ãƒ¦ãƒ¼ã‚¶ãƒ¼åï¼‰
+    $aryQuery[] = "  c_cust.strcompanydisplaycode as strcompanydisplaycode, "; //é¡§å®¢ï¼ˆè¡¨ç¤ºç”¨ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ï¼‰
+    $aryQuery[] = "  c_cust.strcompanydisplayname as strcompanydisplayname, "; //é¡§å®¢ï¼ˆè¡¨ç¤ºç”¨ä¼šç¤¾åï¼‰
+    $aryQuery[] = "  s.strcustomerusername, "; //é¡§å®¢æ‹…å½“è€…
+    $aryQuery[] = "  TO_CHAR(s.dtmdeliverydate, 'YYYY/MM/DD') as dtmdeliverydate, "; //ç´å“æ—¥
+    $aryQuery[] = "  TO_CHAR(s.dtmpaymentlimit, 'YYYY/MM/DD') as dtmpaymentlimit, "; //æ”¯æ‰•æœŸé™
+    $aryQuery[] = "  s.lngpaymentmethodcode, "; //æ”¯æ‰•æ–¹æ³•
+    $aryQuery[] = "  c_deli.strcompanydisplaycode as strdeliveryplacecompanydisplaycode, "; //ç´å“å…ˆï¼ˆè¡¨ç¤ºç”¨ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ï¼‰
+    $aryQuery[] = "  s.strdeliveryplacename, "; //ç´å“å…ˆï¼ˆè¡¨ç¤ºç”¨ä¼šç¤¾åï¼‰
+    $aryQuery[] = "  s.strdeliveryplaceusername, "; //ç´å“å…ˆæ‹…å½“è€…
+    $aryQuery[] = "  s.strnote, "; //å‚™è€ƒ
+    $aryQuery[] = "  s.lngtaxclasscode, "; //æ¶ˆè²»ç¨åŒºåˆ†ï¼ˆã‚³ãƒ¼ãƒ‰å€¤ï¼‰
+    $aryQuery[] = "  s.strtaxclassname, "; //æ¶ˆè²»ç¨åŒºåˆ†ï¼ˆåç§°ï¼‰
+    $aryQuery[] = "  s.curtax, "; //æ¶ˆè²»ç¨ç‡ï¼ˆæ•°å€¤ï¼‰
+    $aryQuery[] = "  Null as lngtaxcode, "; //æ¶ˆè²»ç¨ç‡ï¼ˆã‚³ãƒ¼ãƒ‰å€¤ï¼‰
+    $aryQuery[] = "  Null as strtaxamount, "; //æ¶ˆè²»ç¨é¡
+    $aryQuery[] = "  s.curtotalprice "; //åˆè¨ˆé‡‘é¡
     $aryQuery[] = " FROM m_slip s ";
     $aryQuery[] = "   LEFT JOIN m_user u_ins ON s.lngusercode = u_ins.lngusercode ";
     $aryQuery[] = "   LEFT JOIN m_company c_cust ON s.lngcustomercode = c_cust.lngcompanycode ";
@@ -233,19 +233,19 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "Ç¼ÉÊ½ñ¥Ç¡¼¥¿¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "ç´å“æ›¸ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult[0];
 }
 
-// Ç¼ÉÊÅÁÉ¼ÈÖ¹æ¤ËÉ³¤Å¤¯¼õÃíÌÀºÙ¾ğÊó¤ò¼èÆÀ¤¹¤ë
+// ç´å“ä¼ç¥¨ç•ªå·ã«ç´ã¥ãå—æ³¨æ˜ç´°æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 function fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 {
-    // ÌÀºÙÉô¤Î¥­¡¼¤ò¼èÆÀ¤¹¤ë
+    // æ˜ç´°éƒ¨ã®ã‚­ãƒ¼ã‚’å–å¾—ã™ã‚‹
     $aryDetailKey = fncGetDetailKeyBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
-    // ÌÀºÙÉô¤Î¥­¡¼¤ËÉ³¤Å¤¯¼õÃíÌÀºÙ¾ğÊó¤ò¼èÆÀ¤¹¤ë
+    // æ˜ç´°éƒ¨ã®ã‚­ãƒ¼ã«ç´ã¥ãå—æ³¨æ˜ç´°æƒ…å ±ã‚’å–å¾—ã™ã‚‹
     $aryDetail = array();
     for ($i = 0; $i < count($aryDetailKey); $i++) {
 
@@ -254,7 +254,7 @@ function fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
         $aryCondition["lngReceiveDetailNo"] = $aryDetailKey[$i]["lngreceivedetailno"];
         $aryCondition["lngReceiveRevisionNo"] = $aryDetailKey[$i]["lngreceiverevisionno"];
 
-        // ¥­¡¼¤ËÉ³¤Å¤¯ÌÀºÙ¤ò1·ï¤º¤Ä¼èÆÀ¤·¤ÆÁ´ÂÎ¤ÎÇÛÎó¤Ë¥Ş¡¼¥¸
+        // ã‚­ãƒ¼ã«ç´ã¥ãæ˜ç´°ã‚’1ä»¶ãšã¤å–å¾—ã—ã¦å…¨ä½“ã®é…åˆ—ã«ãƒãƒ¼ã‚¸
         $arySubDetail = fncGetReceiveDetail($aryCondition, $objDB);
         $aryDetail = array_merge($aryDetail, $arySubDetail);
     }
@@ -262,7 +262,7 @@ function fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     return $aryDetail;
 }
 
-// Ç¼ÉÊÅÁÉ¼ÈÖ¹æ¤ËÉ³¤Å¤¯ÌÀºÙ¤Î¥­¡¼¹àÌÜ¤ò¼èÆÀ
+// ç´å“ä¼ç¥¨ç•ªå·ã«ç´ã¥ãæ˜ç´°ã®ã‚­ãƒ¼é …ç›®ã‚’å–å¾—
 function fncGetDetailKeyBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 {
     $aryQuery = array();
@@ -285,48 +285,48 @@ function fncGetDetailKeyBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "ÌÀºÙ¤Î¥­¡¼¹àÌÜ¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "æ˜ç´°ã®ã‚­ãƒ¼é …ç›®ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult;
 }
 
-// ÌÀºÙ¸¡º÷
+// æ˜ç´°æ¤œç´¢
 function fncGetReceiveDetail($aryCondition, $objDB)
 {
     // -------------------
-    //  ÁªÂò¹àÌÜ
+    //  é¸æŠé …ç›®
     // -------------------
     $arySelect[] = " SELECT";
     $arySelect[] = "  rd.lngsortkey,"; //No.
-    $arySelect[] = "  r.strcustomerreceivecode,"; //¸ÜµÒ¼õÃíÈÖ¹æ
-    $arySelect[] = "  r.strreceivecode,"; //¼õÃíÈÖ¹æ
-    $arySelect[] = "  r.lngreceivestatuscode,"; //¼õÃí¥¹¥Æ¡¼¥¿¥¹
-    $arySelect[] = "  p.strgoodscode,"; //¸ÜµÒÉÊÈÖ
-    $arySelect[] = "  rd.strproductcode,"; //À½ÉÊ¥³¡¼¥É
-    $arySelect[] = "  rd.strrevisecode,"; //¥ê¥Ğ¥¤¥º¥³¡¼¥É¡ÊºÆÈÎ¥³¡¼¥É¡Ë
-    $arySelect[] = "  p.strproductname,"; //À½ÉÊÌ¾
-    $arySelect[] = "  p.strproductenglishname,"; //À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
-    $arySelect[] = "  g.strgroupdisplayname as strsalesdeptname,"; //±Ä¶ÈÉô½ğ¡ÊÌ¾¾Î¡Ë
-    $arySelect[] = "  rd.lngsalesclasscode,"; //Çä¾å¶èÊ¬¥³¡¼¥É
-    $arySelect[] = "  sc.strsalesclassname,"; //Çä¾å¶èÊ¬¡ÊÌ¾¾Î¡Ë
-    $arySelect[] = "  TO_CHAR(rd.dtmdeliverydate, 'YYYY/MM/DD') as dtmdeliverydate,"; //Ç¼´ü
-    $arySelect[] = "  rd.lngunitquantity,"; //Æş¿ô
-    $arySelect[] = "  rd.curproductprice,"; //Ã±²Á
-    $arySelect[] = "  rd.lngproductunitcode,"; //Ã±°Ì¥³¡¼¥É
-    $arySelect[] = "  pu.strproductunitname,"; //Ã±°Ì¡ÊÌ¾¾Î¡Ë
-    $arySelect[] = "  rd.lngproductquantity,"; //¿ôÎÌ
-    $arySelect[] = "  rd.cursubtotalprice,"; //ÀÇÈ´¶â³Û
-    $arySelect[] = "  rd.lngreceiveno,"; //¼õÃíÈÖ¹æ¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
-    $arySelect[] = "  rd.lngreceivedetailno,"; //¼õÃíÌÀºÙÈÖ¹æ¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
-    $arySelect[] = "  rd.lngrevisionno as lngreceiverevisionno,"; //¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
-    $arySelect[] = "  rd.strnote,"; //È÷¹Í¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
-    $arySelect[] = "  r.lngmonetaryunitcode,"; //ÄÌ²ßÃ±°Ì¥³¡¼¥É¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
-    $arySelect[] = "  r.lngmonetaryratecode,"; //ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
-    $arySelect[] = "  mu.strmonetaryunitsign,"; //ÄÌ²ßÃ±°Ìµ­¹æ¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
-    $arySelect[] = "  mu.strmonetaryunitname,"; //ÄÌ²ßÃ±°Ì
-    $arySelect[] = "  sc.bytdetailunifiedflg"; //ÌÀºÙÅı°ì¥Õ¥é¥°¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+    $arySelect[] = "  r.strcustomerreceivecode,"; //é¡§å®¢å—æ³¨ç•ªå·
+    $arySelect[] = "  r.strreceivecode,"; //å—æ³¨ç•ªå·
+    $arySelect[] = "  r.lngreceivestatuscode,"; //å—æ³¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
+    $arySelect[] = "  p.strgoodscode,"; //é¡§å®¢å“ç•ª
+    $arySelect[] = "  rd.strproductcode,"; //è£½å“ã‚³ãƒ¼ãƒ‰
+    $arySelect[] = "  rd.strrevisecode,"; //ãƒªãƒã‚¤ã‚ºã‚³ãƒ¼ãƒ‰ï¼ˆå†è²©ã‚³ãƒ¼ãƒ‰ï¼‰
+    $arySelect[] = "  p.strproductname,"; //è£½å“å
+    $arySelect[] = "  p.strproductenglishname,"; //è£½å“åï¼ˆè‹±èªï¼‰
+    $arySelect[] = "  g.strgroupdisplayname as strsalesdeptname,"; //å–¶æ¥­éƒ¨ç½²ï¼ˆåç§°ï¼‰
+    $arySelect[] = "  rd.lngsalesclasscode,"; //å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    $arySelect[] = "  sc.strsalesclassname,"; //å£²ä¸ŠåŒºåˆ†ï¼ˆåç§°ï¼‰
+    $arySelect[] = "  TO_CHAR(rd.dtmdeliverydate, 'YYYY/MM/DD') as dtmdeliverydate,"; //ç´æœŸ
+    $arySelect[] = "  rd.lngunitquantity,"; //å…¥æ•°
+    $arySelect[] = "  rd.curproductprice,"; //å˜ä¾¡
+    $arySelect[] = "  rd.lngproductunitcode,"; //å˜ä½ã‚³ãƒ¼ãƒ‰
+    $arySelect[] = "  pu.strproductunitname,"; //å˜ä½ï¼ˆåç§°ï¼‰
+    $arySelect[] = "  rd.lngproductquantity,"; //æ•°é‡
+    $arySelect[] = "  rd.cursubtotalprice,"; //ç¨æŠœé‡‘é¡
+    $arySelect[] = "  rd.lngreceiveno,"; //å—æ³¨ç•ªå·ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
+    $arySelect[] = "  rd.lngreceivedetailno,"; //å—æ³¨æ˜ç´°ç•ªå·ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
+    $arySelect[] = "  rd.lngrevisionno as lngreceiverevisionno,"; //ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
+    $arySelect[] = "  rd.strnote,"; //å‚™è€ƒï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
+    $arySelect[] = "  r.lngmonetaryunitcode,"; //é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
+    $arySelect[] = "  r.lngmonetaryratecode,"; //é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
+    $arySelect[] = "  mu.strmonetaryunitsign,"; //é€šè²¨å˜ä½è¨˜å·ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
+    $arySelect[] = "  mu.strmonetaryunitname,"; //é€šè²¨å˜ä½
+    $arySelect[] = "  sc.bytdetailunifiedflg"; //æ˜ç´°çµ±ä¸€ãƒ•ãƒ©ã‚°ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
     $arySelect[] = "  INNER JOIN ( ";
@@ -403,95 +403,95 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "    ON r.lngmonetaryunitcode = mu.lngmonetaryunitcode ";
 
     // -------------------
-    //  ¸¡º÷¾ò·ïÀßÄê
+    //  æ¤œç´¢æ¡ä»¶è¨­å®š
     // -------------------
-    $aryWhere[] = " WHERE 1=1"; // ¥À¥ß¡¼¸¡º÷¾ò·ï¡Ê¾ï¤Ë¿¿¡£¸åÂ³¤Î¸¡º÷¾ò·ï¤ËºÇ½é¤«¤éAND¤òÉÕÍ¿¤¹¤ë¤¿¤á¤ËÂ¸ºß¡Ë
+    $aryWhere[] = " WHERE 1=1"; // ãƒ€ãƒŸãƒ¼æ¤œç´¢æ¡ä»¶ï¼ˆå¸¸ã«çœŸã€‚å¾Œç¶šã®æ¤œç´¢æ¡ä»¶ã«æœ€åˆã‹ã‚‰ANDã‚’ä»˜ä¸ã™ã‚‹ãŸã‚ã«å­˜åœ¨ï¼‰
 
-    // ¼õÃí¾õÂÖ¥³¡¼¥É
+    // å—æ³¨çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰
     if ($aryCondition["lngreceivestatuscode"]) {
         $aryWhere[] = " AND r.lngreceivestatuscode = '" . $aryCondition["lngreceivestatuscode"] . "'";
     }
 
-    // ¸ÜµÒ¡Ê¥³¡¼¥É¤Ç¸¡º÷¡Ë
+    // é¡§å®¢ï¼ˆã‚³ãƒ¼ãƒ‰ã§æ¤œç´¢ï¼‰
     if ($aryCondition["strCompanyDisplayCode"]) {
         $aryWhere[] = " AND c.strcompanydisplaycode = '" . $aryCondition["strCompanyDisplayCode"] . "'";
     }
 
-    // ¸ÜµÒ¼õÃíÈÖ¹æ
+    // é¡§å®¢å—æ³¨ç•ªå·
     if ($aryCondition["strCustomerReceiveCode"]) {
         $aryWhere[] = " AND r.strcustomerreceivecode = '" . $aryCondition["strCustomerReceiveCode"] . "'";
     }
 
-    // ¼õÃíÈÖ¹æ
+    // å—æ³¨ç•ªå·
     if ($aryCondition["lngReceiveNo"]) {
         $aryWhere[] = " AND r.lngReceiveNo = " . $aryCondition["lngReceiveNo"];
     }
 
-    // ¼õÃí¥³¡¼¥É
+    // å—æ³¨ã‚³ãƒ¼ãƒ‰
     if ($aryCondition["strReceiveCode"]) {
         $aryWhere[] = " AND r.strreceivecode = '" . $aryCondition["strReceiveCode"] . "'";
     }
 
-    // ¼õÃíÌÀºÙÈÖ¹æ
+    // å—æ³¨æ˜ç´°ç•ªå·
     if ($aryCondition["lngReceiveDetailNo"]) {
         $aryWhere[] = " AND rd.lngreceivedetailno = " . $aryCondition["lngReceiveDetailNo"];
     }
 
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     if ($aryCondition["lngReceiveRevisionNo"]) {
         $aryWhere[] = " AND rd.lngrevisionno = " . $aryCondition["lngReceiveRevisionNo"];
     }
 
-    // À½ÉÊ¥³¡¼¥É
+    // è£½å“ã‚³ãƒ¼ãƒ‰
     if ($aryCondition["strReceiveDetailProductCode"]) {
         $aryWhere[] = " AND rd.strproductcode = '" . $aryCondition["strReceiveDetailProductCode"] . "'";
     }
 
-    // ±Ä¶ÈÉô½ğ¡Ê¥³¡¼¥É¤Ç¸¡º÷¡Ë
+    // å–¶æ¥­éƒ¨ç½²ï¼ˆã‚³ãƒ¼ãƒ‰ã§æ¤œç´¢ï¼‰
     if ($aryCondition["lngInChargeGroupCode"]) {
         $aryWhere[] = " AND g.strgroupdisplaycode = '" . $aryCondition["lngInChargeGroupCode"] . "'";
     }
 
-    // Çä¾å¶èÊ¬¡Ê¥³¡¼¥É¤Ç¸¡º÷¡Ë
+    // å£²ä¸ŠåŒºåˆ†ï¼ˆã‚³ãƒ¼ãƒ‰ã§æ¤œç´¢ï¼‰
     if ($aryCondition["lngSalesClassCode"]) {
         $aryWhere[] = " AND rd.lngsalesclasscode = " . $aryCondition["lngSalesClassCode"];
     }
 
-    // ¸ÜµÒÉÊÈÖ
+    // é¡§å®¢å“ç•ª
     if ($aryCondition["strGoodsCode"]) {
         $aryWhere[] = " AND p2.strgoodscode = " . $aryCondition["strGoodsCode"];
     }
 
-    // Ç¼ÉÊÆü(FROM)
+    // ç´å“æ—¥(FROM)
     if ($aryCondition["From_dtmDeliveryDate"]) {
         $dtmSearchDate = $aryCondition["From_dtmDeliveryDate"] . " 00:00:00";
         $aryWhere[] = " AND rd.dtmdeliverydate >= '" . $dtmSearchDate . "'";
     }
 
-    // Ç¼ÉÊÆü(TO)
+    // ç´å“æ—¥(TO)
     if ($aryCondition["To_dtmDeliveryDate"]) {
         $dtmSearchDate = $aryCondition["To_dtmDeliveryDate"] . " 23:59:59.99999";
         $aryWhere[] = " AND rd.dtmdeliverydate <= '" . $dtmSearchDate . "'";
     }
 
-    // ÌÀºÙÈ÷¹Í
+    // æ˜ç´°å‚™è€ƒ
     if ($aryCondition["strNote"]) {
         $aryWhere[] = " AND rd.strNote LIKE '%" . $aryCondition["strNote"] . "%'";
     }
 
-    // ºÆÈÎ¤ò´Ş¤à¡Êoff¤Î¾ì¹ç¡¢t_receivedetail.strrevisecode='00'¤Î¤ß¤òÂĞ¾İ¡Ë
+    // å†è²©ã‚’å«ã‚€ï¼ˆoffã®å ´åˆã€t_receivedetail.strrevisecode='00'ã®ã¿ã‚’å¯¾è±¡ï¼‰
     if ($aryCondition["IsIncludingResale"] == "Off") {
         $aryWhere[] = " AND rd.strrevisecode = '00'";
     }
 
     // -------------------
-    //  ÊÂ¤Ó½çÄêµÁ
+    //  ä¸¦ã³é †å®šç¾©
     // -------------------
     $aryOrder[] = " ORDER BY";
     $aryOrder[] = "  rd.lngsortkey";
 
     // -------------------
-    // ¥¯¥¨¥êºîÀ®
+    // ã‚¯ã‚¨ãƒªä½œæˆ
     // -------------------
     $strQuery = "";
     $strQuery .= implode("\n", $arySelect);
@@ -500,12 +500,12 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $strQuery .= "\n";
     $strQuery .= implode("\n", $aryOrder);
     // -------------------
-    // ¥¯¥¨¥ê¼Â¹Ô
+    // ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
     // -------------------
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
-    // ·ë²Ì¤òÇÛÎó¤Ë³ÊÇ¼
-    $aryResult = []; //¶õ¤ÎÇÛÎó¤Ç½é´ü²½
+    // çµæœã‚’é…åˆ—ã«æ ¼ç´
+    $aryResult = []; //ç©ºã®é…åˆ—ã§åˆæœŸåŒ–
     if (0 < $lngResultNum) {
         for ($j = 0; $j < $lngResultNum; $j++) {
             $aryResult[] = $objDB->fetchArray($lngResultID, $j);
@@ -523,103 +523,103 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
     $detail_body_html = "";
     for ($i = 0; $i < count($aryDetail); $i++) {
         $strDisplayValue = "";
-        // ÌÀºÙÁªÂò¥¨¥ê¥¢¤Ï¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¢¤ê¡¢½ĞÎÏÌÀºÙ°ìÍ÷¥¨¥ê¥¢¤Ï¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Ê¤·¤Î¤¿¤á¤³¤Î¤è¤¦¤Ê¥¹¥¤¥Ã¥Á¤òÍÑ°Õ
+        // æ˜ç´°é¸æŠã‚¨ãƒªã‚¢ã¯ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚ã‚Šã€å‡ºåŠ›æ˜ç´°ä¸€è¦§ã‚¨ãƒªã‚¢ã¯ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãªã—ã®ãŸã‚ã“ã®ã‚ˆã†ãªã‚¹ã‚¤ãƒƒãƒã‚’ç”¨æ„
         if ($isCreateNew) {
 
             $chkbox_body_html .= "<tr onmousedown='RowClick(this,false);'>";
-            // ¥Ç¡¼¥¿ÅĞÏ¿»ş¡¢ÌÀºÙÁªÂò¥¨¥ê¥¢¤Ë¤ÏÁªÂò¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬É¬Í×¡Ê¥Ç¡¼¥¿½¤Àµ»ş¡¢½ĞÎÏÌÀºÙ°ìÍ÷¥¨¥ê¥¢¤Ë¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÏÉÔÍ×¡Ë
+            // ãƒ‡ãƒ¼ã‚¿ç™»éŒ²æ™‚ã€æ˜ç´°é¸æŠã‚¨ãƒªã‚¢ã«ã¯é¸æŠãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒå¿…è¦ï¼ˆãƒ‡ãƒ¼ã‚¿ä¿®æ­£æ™‚ã€å‡ºåŠ›æ˜ç´°ä¸€è¦§ã‚¨ãƒªã‚¢ã«ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã¯ä¸è¦ï¼‰
             $chkbox_body_html .= "<td style='text-align:center;'><input type='checkbox' name='edit' style='width:10px;'></td>";
 
             $chkbox_body_html .= "</tr>";
         }
 
-        //¹ÔÁªÂò¥¹¥¯¥ê¥×¥ÈËä¤á¹ş¤ß
+        //è¡Œé¸æŠã‚¹ã‚¯ãƒªãƒ—ãƒˆåŸ‹ã‚è¾¼ã¿
         $detail_body_html .= "<tr onmousedown='RowClick(this,false);'>";
 
         //NO.
-        // ¥Ç¡¼¥¿½¤Àµ»ş¡¢½ĞÎÏÌÀºÙ°ìÍ÷¥¨¥ê¥¢¤ÎNo.¤ÏÌÀºÙ¤ÎÇÛÎó¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹+1¤È¤¹¤ë¡Ê¹ÔÈÖ¹æ¡Ë
+        // ãƒ‡ãƒ¼ã‚¿ä¿®æ­£æ™‚ã€å‡ºåŠ›æ˜ç´°ä¸€è¦§ã‚¨ãƒªã‚¢ã®No.ã¯æ˜ç´°ã®é…åˆ—ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹+1ã¨ã™ã‚‹ï¼ˆè¡Œç•ªå·ï¼‰
         $rownumber = $i + 1;
         $detail_body_html .= "<td name='rownum'>" . $rownumber . "</td>";
-        //¸ÜµÒÈ¯ÃíÈÖ¹æ
+        //é¡§å®¢ç™ºæ³¨ç•ªå·
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strcustomerreceivecode"]);
         $detail_body_html .= "<td class='detailCustomerReceiveCode'>" . $strDisplayValue . "</td>";
-        //À½ÉÊ¥³¡¼¥É
+        //è£½å“ã‚³ãƒ¼ãƒ‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductcode"]);
         $strDisplayValue .= "_";
         $strDisplayValue .= htmlspecialchars($aryDetail[$i]["strrevisecode"]);
         $detail_body_html .= "<td class='detailProductCode'>" . $strDisplayValue . "</td>";
-        //À½ÉÊÌ¾
+        //è£½å“å
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductname"]);
         $detail_body_html .= "<td class='detailProductName'>" . $strDisplayValue . "</td>";
-        //Çä¾å¶èÊ¬
+        //å£²ä¸ŠåŒºåˆ†
         $strDisplayValue = "[". htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]) ."]"
         . htmlspecialchars($aryDetail[$i]["strsalesclassname"]);
         $detail_body_html .= "<td class='detailSalesClassName'>" . $strDisplayValue . "</td>";
-        //Ç¼´ü
+        //ç´æœŸ
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["dtmdeliverydate"]);
         $detail_body_html .= "<td class='detailDeliveryDate'>" . $strDisplayValue . "</td>";
-        //Æş¿ô
+        //å…¥æ•°
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngunitquantity"]);
         $detail_body_html .= "<td class='detailUnitQuantity'>" . $strDisplayValue . "</td>";
-        //¿ôÎÌ
+        //æ•°é‡
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngproductquantity"]);
         $detail_body_html .= "<td class='detailProductQuantity' style='text-align:right;'>" . number_format($strDisplayValue) . "</td>";
-        //Ã±°Ì
+        //å˜ä½
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductunitname"]);
         $detail_body_html .= "<td class='detailProductUnitName'>" . $strDisplayValue . "</td>";
-        //Ã±²Á
+        //å˜ä¾¡
         $strDisplayValue = toMoneyFormat($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], number_format($aryDetail[$i]["curproductprice"], 4));
         // $strDisplayValue = "&yen". number_format($aryDetail[$i]["curproductprice"], 4);
         $detail_body_html .= "<td class='detailProductPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
-        //ÀÇÈ´¶â³Û        
+        //ç¨æŠœé‡‘é¡        
         $strDisplayValue = toMoneyFormat($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], number_format($aryDetail[$i]["cursubtotalprice"]));
         $detail_body_html .= "<td class='detailSubTotalPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
-        //¸ÜµÒÉÊÈÖ
+        //é¡§å®¢å“ç•ª
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strgoodscode"]);
         $detail_body_html .= "<td class='detailGoodsCode'>" . $strDisplayValue . "</td>";
-        //À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
+        //è£½å“åï¼ˆè‹±èªï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductenglishname"]);
         $detail_body_html .= "<td class='detailProductEnglishName'>" . $strDisplayValue . "</td>";
-        //±Ä¶ÈÉô½ğ
+        //å–¶æ¥­éƒ¨ç½²
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strsalesdeptname"]);
         $detail_body_html .= "<td class='detailSalesDeptName'>" . $strDisplayValue . "</td>";
-        //¼õÃíÈÖ¹æ¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //å—æ³¨ç•ªå·ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceiveno"]);
         $detail_body_html .= "<td class='forEdit detailReceiveNo'>" . $strDisplayValue . "</td>";
-        //¼õÃíÌÀºÙÈÖ¹æ¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //å—æ³¨æ˜ç´°ç•ªå·ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceivedetailno"]);
         $detail_body_html .= "<td class='forEdit detailReceiveDetailNo'>" . $strDisplayValue . "</td>";
-        //¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceiverevisionno"]);
         $detail_body_html .= "<td class='forEdit detailReceiveRevisionNo'>" . $strDisplayValue . "</td>";
-        //ºÆÈÎ¥³¡¼¥É¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //å†è²©ã‚³ãƒ¼ãƒ‰ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strrevisecode"]);
         $detail_body_html .= "<td class='forEdit detailReviseCode'>" . $strDisplayValue . "</td>";
-        //Çä¾å¶èÊ¬¥³¡¼¥É¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]);
         $detail_body_html .= "<td class='forEdit detailSalesClassCode'>" . $strDisplayValue . "</td>";
-        //À½ÉÊÃ±°Ì¥³¡¼¥É¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngproductunitcode"]);
         $detail_body_html .= "<td class='forEdit detailProductUnitCode'>" . $strDisplayValue . "</td>";
-        //È÷¹Í¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //å‚™è€ƒï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strnote"]);
         $detail_body_html .= "<td class='forEdit detailNote'>" . $strDisplayValue . "</td>";
-        //ÄÌ²ßÃ±°Ì¥³¡¼¥É¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngmonetaryunitcode"]);
         $detail_body_html .= "<td class='forEdit detailMonetaryUnitCode'>" . $strDisplayValue . "</td>";
-        //ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngmonetaryratecode"]);
         $detail_body_html .= "<td class='forEdit detailMonetaryRateCode'>" . $strDisplayValue . "</td>";
-        //ÄÌ²ßÃ±°Ìµ­¹æ¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //é€šè²¨å˜ä½è¨˜å·ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strmonetaryunitsign"]);
         $detail_body_html .= "<td class='forEdit detailMonetaryUnitSign'>" . $strDisplayValue . "</td>";
-        //ÌÀºÙÅı°ì¥Õ¥é¥°¡ÊÌÀºÙÅĞÏ¿ÍÑ¡Ë
+        //æ˜ç´°çµ±ä¸€ãƒ•ãƒ©ã‚°ï¼ˆæ˜ç´°ç™»éŒ²ç”¨ï¼‰
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["bytdetailunifiedflg"]);
         $detail_body_html .= "<td class='forEdit detailUnifiedFlg'>" . $strDisplayValue . "</td>";
-        //Ã±²Á
+        //å˜ä¾¡
         $strDisplayValue = htmlspecialchars(number_format($aryDetail[$i]["curproductprice"], 4));
         $detail_body_html .= "<td class='forEdit detailProductPrice' style='text-align:right;'>" . $strDisplayValue . "</td>";
-        //ÀÇÈ´¶â³Û
+        //ç¨æŠœé‡‘é¡
         $strDisplayValue = htmlspecialchars(number_format($aryDetail[$i]["cursubtotalprice"]));
         $detail_body_html .= "<td class='forEdit detailSubTotalPrice' style='text-align:right;'>" . $strDisplayValue . "</td>";
 
@@ -635,7 +635,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
     return $aryResult;
 }
 
-// Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿¤è¤êºîÀ®Æü¤ò¼èÆÀ
+// ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ã‚ˆã‚Šä½œæˆæ—¥ã‚’å–å¾—
 function fncGetInsertDateBySlipCode($strSlipCode, $objDB)
 {
     $strQuery = ""
@@ -653,14 +653,14 @@ function fncGetInsertDateBySlipCode($strSlipCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "Ç¼ÉÊÅÁÉ¼¤ÎºîÀ®Æü¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "ç´å“ä¼ç¥¨ã®ä½œæˆæ—¥ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult[0]["dtminsertdate"];
 }
 
-// Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿¤è¤êÇä¾åÈÖ¹æ¤ò¼èÆÀ
+// ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ã‚ˆã‚Šå£²ä¸Šç•ªå·ã‚’å–å¾—
 function fncGetSalesNoBySlipCode($strSlipCode, $objDB)
 {
     $strQuery = ""
@@ -678,14 +678,14 @@ function fncGetSalesNoBySlipCode($strSlipCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "Ç¼ÉÊÅÁÉ¼¤ÎÇä¾åÈÖ¹æ¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "ç´å“ä¼ç¥¨ã®å£²ä¸Šç•ªå·ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult[0]["lngsalesno"];
 }
 
-// °õºş²ó¿ô¤ò1Áı¤ä¤¹
+// å°åˆ·å›æ•°ã‚’1å¢—ã‚„ã™
 function fncIncrementPrintCountBySlipCode($strSlipCode, $objDB)
 {
 
@@ -697,22 +697,22 @@ function fncIncrementPrintCountBySlipCode($strSlipCode, $objDB)
     $strQuery = "";
     $strQuery .= implode("\n", $aryUpdate);
 
-    // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+    // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
     $objDB->transactionBegin();
 
-    // ÅĞÏ¿¼Â¹Ô
+    // ç™»éŒ²å®Ÿè¡Œ
     if (!$lngResultID = $objDB->execute($strQuery)) {
-        // ¼ºÇÔ
-        fncOutputError(9501, DEF_FATAL, "Ç¼ÉÊÅÁÉ¼¤Î°õºş²ó¿ô¤Î¹¹¿·¤Ë¼ºÇÔ", true, "", $objDB);
+        // å¤±æ•—
+        fncOutputError(9501, DEF_FATAL, "ç´å“ä¼ç¥¨ã®å°åˆ·å›æ•°ã®æ›´æ–°ã«å¤±æ•—", true, "", $objDB);
     } else {
-        // À®¸ù
+        // æˆåŠŸ
         $objDB->freeResult($lngResultID);
         $objDB->transactionCommit();
     }
 
 }
 
-// ¼õÃí¾õÂÖ¥³¡¼¥É¤Ë¤è¤ë¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó
+// å—æ³¨çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³
 function fncNotReceivedDetailExists($aryDetail, $objDB, $isNew)
 {
     for ($i = 0; $i < count($aryDetail); $i++) {
@@ -720,8 +720,8 @@ function fncNotReceivedDetailExists($aryDetail, $objDB, $isNew)
 
         $lngReceiveNo = $d["lngreceiveno"];
         $lngRevisionNo = $d["lngreceiverevisionno"];
-        /* ¹¹¿·Á°¤ËÄù¤áºÑ¥Ç¡¼¥¿°Ê³°¤ò2¤Ë¥ê¥»¥Ã¥È¤¹¤ë¤¿¤á¡¢°ìÎ§2¤Ç¥Á¥§¥Ã¥¯
-        // ¹¹¿·¤Ç¼õÃí¾õÂÖ¥³¡¼¥É¤¬2,4°Ê³°¤ÎÌÀºÙ¤¬Â¸ºß¤¹¤ë¤Ê¤étrue¤òÊÖ¤·¤Æ¸¡º÷ÂÇ¤ÁÀÚ¤ê
+        /* æ›´æ–°å‰ã«ç· ã‚æ¸ˆãƒ‡ãƒ¼ã‚¿ä»¥å¤–ã‚’2ã«ãƒªã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã€ä¸€å¾‹2ã§ãƒã‚§ãƒƒã‚¯
+        // æ›´æ–°ã§å—æ³¨çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ãŒ2,4ä»¥å¤–ã®æ˜ç´°ãŒå­˜åœ¨ã™ã‚‹ãªã‚‰trueã‚’è¿”ã—ã¦æ¤œç´¢æ‰“ã¡åˆ‡ã‚Š
         if(!$isNew){
         if( isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)
         && isReceiveModified($lngReceiveNo, DEF_RECEIVE_END, $objDB)){
@@ -729,7 +729,7 @@ function fncNotReceivedDetailExists($aryDetail, $objDB, $isNew)
         }
         }
          */
-        // ¿·µ¬¤Ç¼õÃí¾õÂÖ¥³¡¼¥É¤¬2°Ê³°¤ÎÌÀºÙ¤¬Â¸ºß¤¹¤ë¤Ê¤étrue¤òÊÖ¤·¤Æ¸¡º÷ÂÇ¤ÁÀÚ¤ê
+        // æ–°è¦ã§å—æ³¨çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ãŒ2ä»¥å¤–ã®æ˜ç´°ãŒå­˜åœ¨ã™ã‚‹ãªã‚‰trueã‚’è¿”ã—ã¦æ¤œç´¢æ‰“ã¡åˆ‡ã‚Š
         if (isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)) {
             return true;
         }
@@ -739,7 +739,7 @@ function fncNotReceivedDetailExists($aryDetail, $objDB, $isNew)
 
 }
 
-// ÌÀºÙ¤ËÉ³¤Å¤¯¼õÃí¥Ş¥¹¥¿¤Î¼õÃí¾õÂÖ¥³¡¼¥É¤ò¹¹¿·
+// æ˜ç´°ã«ç´ã¥ãå—æ³¨ãƒã‚¹ã‚¿ã®å—æ³¨çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ã‚’æ›´æ–°
 function fncUpdateReceiveMaster($aryDetail, $objDB)
 {
     for ($i = 0; $i < count($aryDetail); $i++) {
@@ -758,34 +758,34 @@ function fncUpdateReceiveMaster($aryDetail, $objDB)
             . "  AND lngrevisionno = " . $lngRevisionNo
         ;
 
-        // ¹¹¿·¼Â¹Ô
+        // æ›´æ–°å®Ÿè¡Œ
         if (!$lngResultID = $objDB->execute($strQuery)) {
-            fncOutputError(9051, DEF_ERROR, "¼õÃí¥Ş¥¹¥¿¹¹¿·¼ºÇÔ¡£", true, "", $objDB);
-            // ¼ºÇÔ
+            fncOutputError(9051, DEF_ERROR, "å—æ³¨ãƒã‚¹ã‚¿æ›´æ–°å¤±æ•—ã€‚", true, "", $objDB);
+            // å¤±æ•—
             return false;
         }
         $objDB->freeResult($lngResultID);
     }
 
-    // À®¸ù
+    // æˆåŠŸ
     return true;
 }
 
-// É½¼¨ÍÑ²ñ¼Ò¥³¡¼¥É¤«¤é²ñ¼Ò¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë
+// è¡¨ç¤ºç”¨ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 function fncGetNumericCompanyCode($strCompanyDisplayCode, $objDB)
 {
     $lngCompanyCode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $strCompanyDisplayCode . ":str", '', $objDB);
     return $lngCompanyCode;
 }
 
-// É½¼¨ÍÑ²ñ¼Ò¥³¡¼¥É¤«¤é¹ñ¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë
+// è¡¨ç¤ºç”¨ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‹ã‚‰å›½ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 function fncGetCountryCode($strCompanyDisplayCode, $objDB)
 {
     $lngCountryCode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcountrycode", "$strCompanyDisplayCode:str", '', $objDB);
     return $lngCountryCode;
 }
 
-// É½¼¨ÍÑ²ñ¼Ò¥³¡¼¥É¤«¤éÄù¤áÆü¤ò¼èÆÀ¤¹¤ë
+// è¡¨ç¤ºç”¨ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ç· ã‚æ—¥ã‚’å–å¾—ã™ã‚‹
 function fncGetClosedDay($strCompanyDisplayCode, $objDB)
 {
     $strQuery = ""
@@ -805,21 +805,21 @@ function fncGetClosedDay($strCompanyDisplayCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "Äù¤áÆü¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "ç· ã‚æ—¥ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult[0]["lngclosedday"];
 }
 
-// É½¼¨ÍÑ¥æ¡¼¥¶¡¼¥³¡¼¥É¤«¤é¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë
+// è¡¨ç¤ºç”¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 function fncGetNumericUserCode($strUserDisplayCode, $objDB)
 {
     $lngUserCode = fncGetMasterValue("m_user", "struserdisplaycode", "lngusercode", $strUserDisplayCode . ":str", '', $objDB);
     return $lngUserCode;
 }
 
-// ²ñ¼Ò¥³¡¼¥É¤ËÉ³¤Å¤¯Ä¢É¼ÅÁÉ¼¼ïÊÌ¤ò¼èÆÀ
+// ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã«ç´ã¥ãå¸³ç¥¨ä¼ç¥¨ç¨®åˆ¥ã‚’å–å¾—
 function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)
 {
     $strQuery = ""
@@ -842,14 +842,14 @@ function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "Ä¢É¼ÅÁÉ¼¼ïÊÌ¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "å¸³ç¥¨ä¼ç¥¨ç¨®åˆ¥ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult[0];
 }
 
-// ²ñ¼Ò¥³¡¼¥É¤ËÉ³¤Å¤¯²ñ¼Ò¾ğÊó¤ò¼èÆÀ
+// ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã«ç´ã¥ãä¼šç¤¾æƒ…å ±ã‚’å–å¾—
 function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
 {
     $strQuery = ""
@@ -883,21 +883,21 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "²ñ¼Ò¾ğÊó¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "ä¼šç¤¾æƒ…å ±ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult[0];
 }
 
-// ¸ÜµÒ¼ÒÌ¾¤ò¼èÆÀ
+// é¡§å®¢ç¤¾åã‚’å–å¾—
 function fncGetCustomerCompanyName($lngCountryCode, $aryCompanyInfo)
 {
     if (strlen($aryCompanyInfo["strprintcompanyname"]) != 0) {
         return $aryCompanyInfo["strprintcompanyname"];
     }
 
-    // Ä¢É¼ÍÑ²ñ¼ÒÌ¾¼èÆÀ
+    // å¸³ç¥¨ç”¨ä¼šç¤¾åå–å¾—
     if ($lngCountryCode != 81) {
         return $aryCompanyInfo["strcompanyname"];
     } else if ($aryCompanyInfo["bytorganizationfront"] == true) {
@@ -907,13 +907,13 @@ function fncGetCustomerCompanyName($lngCountryCode, $aryCompanyInfo)
     }
 }
 
-// ¸ÜµÒÌ¾¤ò¼èÆÀ
+// é¡§å®¢åã‚’å–å¾—
 function fncGetCustomerName($aryCompanyInfo)
 {
     return $aryCompanyInfo["strcompanyname"];
 }
 
-// ¥æ¡¼¥¶¡¼¥³¡¼¥É¤ËÉ³¤Å¤¯¥æ¡¼¥¶¡¼¾ğÊó¤ò¼èÆÀ
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã«ç´ã¥ããƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—
 function fncGetUserInfoByUserCode($lngUserCode, $objDB)
 {
     $strQuery = ""
@@ -933,14 +933,14 @@ function fncGetUserInfoByUserCode($lngUserCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "¥æ¡¼¥¶¡¼¾ğÊó¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult[0];
 }
 
-// ¼õÃí¥Ç¡¼¥¿¤ËÉ³¤Å¤¯´¹»»¥ì¡¼¥È¤ò¼èÆÀ
+// å—æ³¨ãƒ‡ãƒ¼ã‚¿ã«ç´ã¥ãæ›ç®—ãƒ¬ãƒ¼ãƒˆã‚’å–å¾—
 function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo, $dtmAppropriationDate, $objDB)
 {
     $strQuery = ""
@@ -964,14 +964,14 @@ function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo,
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "´¹»»¥ì¡¼¥È¤Î¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "æ›ç®—ãƒ¬ãƒ¼ãƒˆã®å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
     return $aryResult[0];
 }
 
-// Ç¼ÉÊ½ñNO¤ÎÈ¯¹Ô
+// ç´å“æ›¸NOã®ç™ºè¡Œ
 function fncPublishSlipCode($dtmPublishDate, $objDB)
 {
     $strYYYYMM = substr($dtmPublishDate, 0, 4) . substr($dtmPublishDate, 5, 2);
@@ -994,16 +994,16 @@ function fncPublishSlipCode($dtmPublishDate, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "Ç¼ÉÊ½ñNO¤ÎÈ¯¹Ô¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "ç´å“æ›¸NOã®ç™ºè¡Œã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
-    // Ç¼ÉÊ½ñNO¤ÎÀ¸À®
+    // ç´å“æ›¸NOã®ç”Ÿæˆ
     if ($lngResultNum != 0) {
         $lngNumber = intval($aryResult[0]["nn"]);
         $lngNumber += 1;
     } else {
-        // ÅöÆü1·ïÌÜ¤Ï nn='01' ¤Ç³«»Ï
+        // å½“æ—¥1ä»¶ç›®ã¯ nn='01' ã§é–‹å§‹
         $lngNumber = 1;
     }
 
@@ -1013,26 +1013,26 @@ function fncPublishSlipCode($dtmPublishDate, $objDB)
     return $strPublishdSlipCode;
 }
 
-// ¾ÃÈñÀÇ³Û¤Î·×»»
+// æ¶ˆè²»ç¨é¡ã®è¨ˆç®—
 function fncCalcTaxPrice($curPrice, $lngTaxClassCode, $curTax)
 {
     $curTaxPrice = 0;
 
     if ($lngTaxClassCode == "1") {
-        // 1:Èó²İÀÇ
+        // 1:éèª²ç¨
         $curTaxPrice = 0;
     } else if ($lngTaxClassCode == "2") {
-        // 2:³°ÀÇ
+        // 2:å¤–ç¨
         $curTaxPrice = floor($curPrice * $curTax);
     } else if ($lngTaxClassCode == "3") {
-        // 3:ÆâÀÇ
+        // 3:å†…ç¨
         $curTaxPrice = floor(($curPrice / (1 + $curTax)) * $curTax);
     }
 
     return $curTaxPrice;
 }
 
-// Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿¤Î¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤ÎºÇÂçÃÍ¤ò¼èÆÀ¤¹¤ë
+// ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã®æœ€å¤§å€¤ã‚’å–å¾—ã™ã‚‹
 function fncGetSlipMaxRevisionNo($lngSlipNo, $objDB)
 {
     $aryQuery = array();
@@ -1055,7 +1055,7 @@ function fncGetSlipMaxRevisionNo($lngSlipNo, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿¤Î¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¼èÆÀ¤Ë¼ºÇÔ", true, "", $objDB);
+        fncOutputError(9501, DEF_FATAL, "ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·å–å¾—ã«å¤±æ•—", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -1064,38 +1064,38 @@ function fncGetSlipMaxRevisionNo($lngSlipNo, $objDB)
 
 // --------------------------------
 //
-// Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿¥á¥¤¥ó´Ø¿ô
+// å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²ãƒ¡ã‚¤ãƒ³é–¢æ•°
 //
 // --------------------------------
 function fncRegisterSalesAndSlip(
     $lngRenewTargetSlipNo, $strRenewTargetSlipCode, $lngRenewTargetSalesNo, $strRenewTargetSalesCode,
     $aryHeader, $aryDetail, $objDB, $objAuth) {
-    // Ìá¤êÃÍ¤Î½é´ü²½
+    // æˆ»ã‚Šå€¤ã®åˆæœŸåŒ–
     $aryRegisterResult = array();
     $aryRegisterResult["result"] = false;
     $aryRegisterResult["aryPerPage"] = array();
 
-    // ÅĞÏ¿¤«½¤Àµ¤«¡Ê½¤ÀµÂĞ¾İ¤È¤Ê¤ëÇ¼ÉÊÅÁÉ¼ÈÖ¹æ¤¬¶õ¤Ê¤éÅĞÏ¿¡¢¶õ¤Ç¤Ê¤¤¤Ê¤é½¤Àµ¡Ë
+    // ç™»éŒ²ã‹ä¿®æ­£ã‹ï¼ˆä¿®æ­£å¯¾è±¡ã¨ãªã‚‹ç´å“ä¼ç¥¨ç•ªå·ãŒç©ºãªã‚‰ç™»éŒ²ã€ç©ºã§ãªã„ãªã‚‰ä¿®æ­£ï¼‰
     $isCreateNew = strlen($lngRenewTargetSlipNo) == 0;
 
-    // ¸½ºßÆüÉÕ
+    // ç¾åœ¨æ—¥ä»˜
     $dtmNowDate = date('Y/m/d', time());
-    // ·×¾åÆü
+    // è¨ˆä¸Šæ—¥
     $dtmAppropriationDate = $dtmNowDate;
-    // ¸ÜµÒ¤Î²ñ¼Ò¥³¡¼¥É¤ò¼èÆÀ
+    // é¡§å®¢ã®ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
     $lngCustomerCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
-    // ¸ÜµÒ¤Î²ñ¼Ò¥³¡¼¥É¤ËÉ³¤Å¤¯²ñ¼Ò¾ğÊó¤ò¼èÆÀ
+    // é¡§å®¢ã®ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã«ç´ã¥ãä¼šç¤¾æƒ…å ±ã‚’å–å¾—
     $aryCustomerCompany = fncGetCompanyInfoByCompanyCode($lngCustomerCompanyCode, $objDB);
-    // ´¹»»¥ì¡¼¥È¤Î¼èÆÀ
+    // æ›ç®—ãƒ¬ãƒ¼ãƒˆã®å–å¾—
     $aryConversionRate = fncGetConversionRateByReceiveData($aryDetail[0]["lngreceiveno"], $aryDetail[0]["lngreceiverevisionno"], $dtmAppropriationDate, $objDB);
 
-    // µ¯É¼¼Ô¤ËÉ³¤Å¤¯¥æ¡¼¥¶¡¼¾ğÊó¤ò¼èÆÀ
+    // èµ·ç¥¨è€…ã«ç´ã¥ããƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚’å–å¾—
     if ($aryHeader["strdrafteruserdisplaycode"]) {
-        // µ¯É¼¼Ô¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+        // èµ·ç¥¨è€…ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆ
         $lngDrafterUserCode = fncGetNumericUserCode($aryHeader["strdrafteruserdisplaycode"], $objDB);
         $aryDrafter = fncGetUserInfoByUserCode($lngDrafterUserCode, $objDB);
     } else {
-        // µ¯É¼¼Ô¤¬Ì¤ÆşÎÏ¤Î¾ì¹ç
+        // èµ·ç¥¨è€…ãŒæœªå…¥åŠ›ã®å ´åˆ
         $aryDrafter = array();
         $aryDrafter["lngusercode"] = null;
         $aryDrafter["struserdisplaycode"] = null;
@@ -1103,88 +1103,88 @@ function fncRegisterSalesAndSlip(
         $aryDrafter["lnggroupcode"] = null;
     }
 
-    // ¸ÜµÒ¤Î¹ñ¥³¡¼¥É¤ò¼èÆÀ
+    // é¡§å®¢ã®å›½ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
     $lngCustomerCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
-    // ¸ÜµÒ¼ÒÌ¾¤Î¼èÆÀ
+    // é¡§å®¢ç¤¾åã®å–å¾—
     $strCustomerCompanyName = fncGetCustomerCompanyName($lngCustomerCountryCode, $aryCustomerCompany);
-    // ¸ÜµÒÌ¾¤Î¼èÆÀ
+    // é¡§å®¢åã®å–å¾—
     $strCustomerName = fncGetCustomerName($aryCustomerCompany);
-    // Ç¼ÉÊÀè¤Î²ñ¼Ò¥³¡¼¥É¤Î¼èÆÀ
+    // ç´å“å…ˆã®ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã®å–å¾—
     if ($aryHeader["strdeliveryplacecompanydisplaycode"]) {
-        // Ç¼ÉÊÀè¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+        // ç´å“å…ˆãŒå…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆ
         $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
     } else {
-        // Ç¼ÉÊÀè¤¬Ì¤ÆşÎÏ¤Î¾ì¹ç
+        // ç´å“å…ˆãŒæœªå…¥åŠ›ã®å ´åˆ
         $lngDeliveryPlaceCode = null;
     }
 
-    // ¸ÜµÒ¤Î²ñ¼Ò¥³¡¼¥É¤ËÉ³¤Å¤¯Ç¼ÉÊÅÁÉ¼¼ïÊÌ¤ò¼èÆÀ
+    // é¡§å®¢ã®ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã«ç´ã¥ãç´å“ä¼ç¥¨ç¨®åˆ¥ã‚’å–å¾—
     $aryReport = fncGetSlipKindByCompanyCode($lngCustomerCompanyCode, $objDB);
-    // ¸ÜµÒ¤ËÉ³¤Å¤¯Ä¢É¼1¥Ú¡¼¥¸¤¢¤¿¤ê¤ÎºÇÂçÌÀºÙ¿ô¤ò¼èÆÀ¤¹¤ë
+    // é¡§å®¢ã«ç´ã¥ãå¸³ç¥¨1ãƒšãƒ¼ã‚¸ã‚ãŸã‚Šã®æœ€å¤§æ˜ç´°æ•°ã‚’å–å¾—ã™ã‚‹
     $maxItemPerPage = intval($aryReport["lngmaxline"]);
-    // ÅĞÏ¿¤¹¤ëÁ´ÌÀºÙ¤Î¿ô
+    // ç™»éŒ²ã™ã‚‹å…¨æ˜ç´°ã®æ•°
     $totalItemCount = count($aryDetail);
-    // ºÇÂç¥Ú¡¼¥¸¿ô¤Î·×»»
+    // æœ€å¤§ãƒšãƒ¼ã‚¸æ•°ã®è¨ˆç®—
     $maxPageCount = ceil($totalItemCount / $maxItemPerPage);
 
-    // ¥Ú¡¼¥¸Ã±°Ì¤Ç¤Î¥Ç¡¼¥¿ÅĞÏ¿
+    // ãƒšãƒ¼ã‚¸å˜ä½ã§ã®ãƒ‡ãƒ¼ã‚¿ç™»éŒ²
     for ($page = 1; $page <= $maxPageCount; $page++) {
 
-        // ¸½ºß¤Î¥Ú¡¼¥¸¿ô¤È1¥Ú¡¼¥¸¤¢¤¿¤ê¤ÎÌÀºÙ¿ô¤«¤é¡¢
-        // ÅĞÏ¿¤¹¤ëÌÀºÙ¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤ÎºÇ¾®ÃÍ¤ÈºÇÂçÃÍ¤òµá¤á¤ë
+        // ç¾åœ¨ã®ãƒšãƒ¼ã‚¸æ•°ã¨1ãƒšãƒ¼ã‚¸ã‚ãŸã‚Šã®æ˜ç´°æ•°ã‹ã‚‰ã€
+        // ç™»éŒ²ã™ã‚‹æ˜ç´°ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æœ€å°å€¤ã¨æœ€å¤§å€¤ã‚’æ±‚ã‚ã‚‹
         $itemMinIndex = ($page - 1) * $maxItemPerPage;
         $itemMaxIndex = $page * $maxItemPerPage - 1;
         if ($itemMaxIndex > $totalItemCount - 1) {
             $itemMaxIndex = $totalItemCount - 1;
         }
 
-        // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+        // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
         if ($isCreateNew) {
-            // ÅĞÏ¿¡§0 ¸ÇÄê
+            // ç™»éŒ²ï¼š0 å›ºå®š
             $lngRevisionNo = 0;
         } else {
-            // ½¤Àµ¡§Æ±°ìÇ¼ÉÊÅÁÉ¼ÈÖ¹æÆâ¤Ç¤ÎºÇÂçÃÍ¡Ü£±
+            // ä¿®æ­£ï¼šåŒä¸€ç´å“ä¼ç¥¨ç•ªå·å†…ã§ã®æœ€å¤§å€¤ï¼‹ï¼‘
             $lngRevisionNo = fncGetSlipMaxRevisionNo($lngRenewTargetSlipNo, $objDB) + 1;
         }
 
-        // Çä¾åÈÖ¹æ
+        // å£²ä¸Šç•ªå·
         if ($isCreateNew) {
-            // ÅĞÏ¿¡§¥·¡¼¥±¥ó¥¹¤è¤êÈ¯ÈÖ
+            // ç™»éŒ²ï¼šã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã‚ˆã‚Šç™ºç•ª
             $lngSalesNo = fncGetSequence('m_sales.lngSalesNo', $objDB);
         } else {
-            // ½¤Àµ¡§½¤ÀµÂĞ¾İ¤ËÉ³¤Å¤¯ÃÍ
+            // ä¿®æ­£ï¼šä¿®æ­£å¯¾è±¡ã«ç´ã¥ãå€¤
             $lngSalesNo = $lngRenewTargetSalesNo;
         }
 
-        // Çä¾å¥³¡¼¥É
+        // å£²ä¸Šã‚³ãƒ¼ãƒ‰
         if ($isCreateNew) {
-            // ÅĞÏ¿¡§Åö·î¤ËÉ³¤Å¤¯Çä¾å¥³¡¼¥É¤ÎÈ¯ÈÖ
+            // ç™»éŒ²ï¼šå½“æœˆã«ç´ã¥ãå£²ä¸Šã‚³ãƒ¼ãƒ‰ã®ç™ºç•ª
             $strSalesCode = fncGetDateSequence(date('Y', strtotime($dtmNowDate)),
                 date('m', strtotime($dtmNowDate)), "m_sales.lngSalesNo", $objDB);
         } else {
-            // ½¤Àµ¡§½¤ÀµÂĞ¾İ¤ËÉ³¤Å¤¯ÃÍ
+            // ä¿®æ­£ï¼šä¿®æ­£å¯¾è±¡ã«ç´ã¥ãå€¤
             $strSalesCode = $strRenewTargetSalesCode;
         }
 
-        // Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
+        // ç´å“ä¼ç¥¨ç•ªå·
         if ($isCreateNew) {
-            // ÅĞÏ¿¡§¥·¡¼¥±¥ó¥¹¤è¤êÈ¯ÈÖ
+            // ç™»éŒ²ï¼šã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã‚ˆã‚Šç™ºç•ª
             $lngSlipNo = fncGetSequence('m_Slip.lngSlipNo', $objDB);
         } else {
-            // ½¤Àµ¡§½¤ÀµÂĞ¾İ¤ËÉ³¤Å¤¯ÃÍ
+            // ä¿®æ­£ï¼šä¿®æ­£å¯¾è±¡ã«ç´ã¥ãå€¤
             $lngSlipNo = $lngRenewTargetSlipNo;
         }
 
-        // Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
+        // ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
         if ($isCreateNew) {
-            // ÅĞÏ¿¡§ÅöÆü¤ËÉ³¤Å¤¯Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¤ÎÈ¯ÈÖ
+            // ç™»éŒ²ï¼šå½“æ—¥ã«ç´ã¥ãç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰ã®ç™ºç•ª
             $strSlipCode = fncPublishSlipCode($dtmNowDate, $objDB);
         } else {
-            // ½¤Àµ¡§½¤ÀµÂĞ¾İ¤ËÉ³¤Å¤¯ÃÍ
+            // ä¿®æ­£ï¼šä¿®æ­£å¯¾è±¡ã«ç´ã¥ãå€¤
             $strSlipCode = $strRenewTargetSlipCode;
         }
 
-        // ¥Ú¡¼¥¸Ã±°Ì¤Î¾ğÊó¤òÊİÂ¸¡Ê¸å¤ÎÅĞÏ¿·ë²Ì²èÌÌ¤Ç»È¤¦¡Ë
+        // ãƒšãƒ¼ã‚¸å˜ä½ã®æƒ…å ±ã‚’ä¿å­˜ï¼ˆå¾Œã®ç™»éŒ²çµæœç”»é¢ã§ä½¿ã†ï¼‰
         $aryPageInfo = array();
         $aryPageInfo["lngSlipNo"] = $lngSlipNo;
         $aryPageInfo["strSlipCode"] = $strSlipCode;
@@ -1192,57 +1192,57 @@ function fncRegisterSalesAndSlip(
         $aryRegisterResult["aryPerPage"][] = $aryPageInfo;
 
         // --------------------------------
-        //   ¥Ç¡¼¥¿¥Ù¡¼¥¹ÊÑ¹¹
+        //   ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹å¤‰æ›´
         // --------------------------------
-        // Çä¾å¥Ş¥¹¥¿ÅĞÏ¿
+        // å£²ä¸Šãƒã‚¹ã‚¿ç™»éŒ²
         if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryConversionRate, $aryCustomerCompany, $aryDrafter,
             $aryHeader, $aryDetail, $objDB, $objAuth)) {
-            // ¼ºÇÔ
+            // å¤±æ•—
             $aryRegisterResult["result"] = false;
             return $aryRegisterResult;
         }
 
-        // Çä¾åÌÀºÙÅĞÏ¿
+        // å£²ä¸Šæ˜ç´°ç™»éŒ²
         if (!fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo,
             $aryHeader, $aryDetail, $objDB, $objAuth)) {
-            // ¼ºÇÔ
+            // å¤±æ•—
             $aryRegisterResult["result"] = false;
             return $aryRegisterResult;
         }
 
-        // Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿ÅĞÏ¿
+        // ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ç™»éŒ²
         if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
             $aryDrafter, $aryHeader, $aryDetail, $objDB, $objAuth)) {
-            // ¼ºÇÔ
+            // å¤±æ•—
             $aryRegisterResult["result"] = false;
             return $aryRegisterResult;
         }
 
-        // Ç¼ÉÊÅÁÉ¼ÌÀºÙÅĞÏ¿
+        // ç´å“ä¼ç¥¨æ˜ç´°ç™»éŒ²
         if (!fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo,
             $aryHeader, $aryDetail, $objDB, $objAuth)) {
-            // ¼ºÇÔ
+            // å¤±æ•—
             $aryRegisterResult["result"] = false;
             return $aryRegisterResult;
         }
 
     }
 
-    // À®¸ù
+    // æˆåŠŸ
     $aryRegisterResult["result"] = true;
     return $aryRegisterResult;
 }
 
 // --------------------------------
-// ¥Ñ¥é¥á¡¼¥¿¥Ğ¥¤¥ó¥ÉÍÑ¥Ø¥ë¥Ñ´Ø¿ô
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ç”¨ãƒ˜ãƒ«ãƒ‘é–¢æ•°
 // --------------------------------
-// ¥·¥ó¥°¥ë¥¯¥©¡¼¥È¤Ç°Ï¤à
+// ã‚·ãƒ³ã‚°ãƒ«ã‚¯ã‚©ãƒ¼ãƒˆã§å›²ã‚€
 function withQuote($source)
 {
     return "'" . $source . "'";
 }
 
-// Null¤À¤Ã¤¿¤é"Null"¡¢Null°Ê³°¤À¤Ã¤¿¤éÃÍ¤ò¤½¤Î¤Ş¤ŞÊÖ¤¹
+// Nullã ã£ãŸã‚‰"Null"ã€Nullä»¥å¤–ã ã£ãŸã‚‰å€¤ã‚’ãã®ã¾ã¾è¿”ã™
 function nullIfEmpty($source)
 {
     if (is_null($source)) {
@@ -1256,7 +1256,7 @@ function nullIfEmpty($source)
     return $source;
 }
 
-// Null¤À¤Ã¤¿¤é"Null"¡¢Null°Ê³°¤À¤Ã¤¿¤éÃÍ¤ò¥·¥ó¥°¥ë¥¯¥©¡¼¥È¤Ç°Ï¤Ã¤ÆÊÖ¤¹
+// Nullã ã£ãŸã‚‰"Null"ã€Nullä»¥å¤–ã ã£ãŸã‚‰å€¤ã‚’ã‚·ãƒ³ã‚°ãƒ«ã‚¯ã‚©ãƒ¼ãƒˆã§å›²ã£ã¦è¿”ã™
 function nullIfEmptyWithQuote($source)
 {
     if (is_null($source)) {
@@ -1270,197 +1270,197 @@ function nullIfEmptyWithQuote($source)
     return withQuote($source);
 }
 
-// Çä¾å¥Ş¥¹¥¿ÅĞÏ¿
+// å£²ä¸Šãƒã‚¹ã‚¿ç™»éŒ²
 function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryConversionRate, $aryCustomerCompany, $aryDrafter,
     $aryHeader, $aryDetail, $objDB, $objAuth) {
-    // ´¹»»¥ì¡¼¥È¤ÎÀßÄê
+    // æ›ç®—ãƒ¬ãƒ¼ãƒˆã®è¨­å®š
     if (strlen($aryConversionRate["curconversionrate"]) == 0) {
         $curConversionRate = "Null";
     } else {
         $curConversionRate = $aryConversionRate["curconversionrate"];
     }
 
-    // ÅĞÏ¿¥Ç¡¼¥¿¤Î¥»¥Ã¥È
-    $v_lngsalesno = $lngSalesNo; //1:Çä¾åÈÖ¹æ
-    $v_lngrevisionno = $lngRevisionNo; //2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $v_strsalescode = withQuote($strSalesCode); //3:Çä¾å¥³¡¼¥É
-    $v_dtmappropriationdate = withQuote($dtmAppropriationDate); //4:·×¾åÆü
-    $v_lngcustomercompanycode = $aryCustomerCompany["lngcompanycode"]; //5:¸ÜµÒ¥³¡¼¥É
-    $v_lnggroupcode = nullIfEmpty($aryDrafter["lnggroupcode"]); //6:¥°¥ë¡¼¥×¥³¡¼¥É
-    $v_lngusercode = nullIfEmpty($aryDrafter["lngusercode"]); //7:¥æ¡¼¥¶¥³¡¼¥É
-    $v_lngsalesstatuscode = "4"; //8:Çä¾å¾õÂÖ¥³¡¼¥É
-    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //9:ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    $v_lngmonetaryratecode = $aryDetail[0]["lngmonetaryratecode"]; //10:ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É
-    $v_curconversionrate = $curConversionRate; //11:´¹»»¥ì¡¼¥È
-    $v_strslipcode = withQuote($strSlipCode); //12:Ç¼ÉÊ½ñNO
-    $v_lnginvoiceno = "Null"; //13:ÀÁµá½ñÈÖ¹æ
-    $v_curtotalprice = $aryHeader["curtotalprice"]; //14:¹ç·×¶â³Û
-    $v_strnote = withQuote($aryHeader["strnote"]); //15:È÷¹Í
-    $v_lnginputusercode = $objAuth->UserCode; //16:ÆşÎÏ¼Ô¥³¡¼¥É
-    $v_bytinvalidflag = "FALSE"; //17:Ìµ¸ú¥Õ¥é¥°
-    $v_dtminsertdate = "now()"; //18:ÅĞÏ¿Æü
+    // ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
+    $v_lngsalesno = $lngSalesNo; //1:å£²ä¸Šç•ªå·
+    $v_lngrevisionno = $lngRevisionNo; //2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $v_strsalescode = withQuote($strSalesCode); //3:å£²ä¸Šã‚³ãƒ¼ãƒ‰
+    $v_dtmappropriationdate = withQuote($dtmAppropriationDate); //4:è¨ˆä¸Šæ—¥
+    $v_lngcustomercompanycode = $aryCustomerCompany["lngcompanycode"]; //5:é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $v_lnggroupcode = nullIfEmpty($aryDrafter["lnggroupcode"]); //6:ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
+    $v_lngusercode = nullIfEmpty($aryDrafter["lngusercode"]); //7:ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
+    $v_lngsalesstatuscode = "4"; //8:å£²ä¸ŠçŠ¶æ…‹ã‚³ãƒ¼ãƒ‰
+    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //9:é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    $v_lngmonetaryratecode = $aryDetail[0]["lngmonetaryratecode"]; //10:é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰
+    $v_curconversionrate = $curConversionRate; //11:æ›ç®—ãƒ¬ãƒ¼ãƒˆ
+    $v_strslipcode = withQuote($strSlipCode); //12:ç´å“æ›¸NO
+    $v_lnginvoiceno = "Null"; //13:è«‹æ±‚æ›¸ç•ªå·
+    $v_curtotalprice = $aryHeader["curtotalprice"]; //14:åˆè¨ˆé‡‘é¡
+    $v_strnote = withQuote($aryHeader["strnote"]); //15:å‚™è€ƒ
+    $v_lnginputusercode = $objAuth->UserCode; //16:å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+    $v_bytinvalidflag = "FALSE"; //17:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
+    $v_dtminsertdate = "now()"; //18:ç™»éŒ²æ—¥
 
-    // ÅĞÏ¿¥¯¥¨¥êºîÀ®
+    // ç™»éŒ²ã‚¯ã‚¨ãƒªä½œæˆ
     $aryInsert = [];
     $aryInsert[] = "INSERT  ";
     $aryInsert[] = "INTO m_sales(  ";
-    $aryInsert[] = "  lngsalesno "; //1:Çä¾åÈÖ¹æ
-    $aryInsert[] = "  , lngrevisionno "; //2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $aryInsert[] = "  , strsalescode "; //3:Çä¾å¥³¡¼¥É
-    $aryInsert[] = "  , dtmappropriationdate "; //4:·×¾åÆü
-    $aryInsert[] = "  , lngcustomercompanycode "; //5:¸ÜµÒ¥³¡¼¥É
-    $aryInsert[] = "  , lnggroupcode "; //6:¥°¥ë¡¼¥×¥³¡¼¥É
-    $aryInsert[] = "  , lngusercode "; //7:¥æ¡¼¥¶¥³¡¼¥É
-    $aryInsert[] = "  , lngsalesstatuscode "; //8:Çä¾å¾õÂÖ¥³¡¼¥É
-    $aryInsert[] = "  , lngmonetaryunitcode "; //9:ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    $aryInsert[] = "  , lngmonetaryratecode "; //10:ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É
-    $aryInsert[] = "  , curconversionrate "; //11:´¹»»¥ì¡¼¥È
-    $aryInsert[] = "  , strslipcode "; //12:Ç¼ÉÊ½ñNO
-    $aryInsert[] = "  , lnginvoiceno "; //13:ÀÁµá½ñÈÖ¹æ
-    $aryInsert[] = "  , curtotalprice "; //14:¹ç·×¶â³Û
-    $aryInsert[] = "  , strnote "; //15:È÷¹Í
-    $aryInsert[] = "  , lnginputusercode "; //16:ÆşÎÏ¼Ô¥³¡¼¥É
-    $aryInsert[] = "  , bytinvalidflag "; //17:Ìµ¸ú¥Õ¥é¥°
-    $aryInsert[] = "  , dtminsertdate "; //18:ÅĞÏ¿Æü
+    $aryInsert[] = "  lngsalesno "; //1:å£²ä¸Šç•ªå·
+    $aryInsert[] = "  , lngrevisionno "; //2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $aryInsert[] = "  , strsalescode "; //3:å£²ä¸Šã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , dtmappropriationdate "; //4:è¨ˆä¸Šæ—¥
+    $aryInsert[] = "  , lngcustomercompanycode "; //5:é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , lnggroupcode "; //6:ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , lngusercode "; //7:ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , lngsalesstatuscode "; //8:å£²ä¸ŠçŠ¶æ…‹ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , lngmonetaryunitcode "; //9:é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , lngmonetaryratecode "; //10:é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , curconversionrate "; //11:æ›ç®—ãƒ¬ãƒ¼ãƒˆ
+    $aryInsert[] = "  , strslipcode "; //12:ç´å“æ›¸NO
+    $aryInsert[] = "  , lnginvoiceno "; //13:è«‹æ±‚æ›¸ç•ªå·
+    $aryInsert[] = "  , curtotalprice "; //14:åˆè¨ˆé‡‘é¡
+    $aryInsert[] = "  , strnote "; //15:å‚™è€ƒ
+    $aryInsert[] = "  , lnginputusercode "; //16:å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , bytinvalidflag "; //17:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
+    $aryInsert[] = "  , dtminsertdate "; //18:ç™»éŒ²æ—¥
     $aryInsert[] = ")  ";
     $aryInsert[] = "VALUES (  ";
-    $aryInsert[] = "  " . $v_lngsalesno; //1:Çä¾åÈÖ¹æ
-    $aryInsert[] = " ," . $v_lngrevisionno; //2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $aryInsert[] = " ," . $v_strsalescode; //3:Çä¾å¥³¡¼¥É
-    $aryInsert[] = " ," . $v_dtmappropriationdate; //4:·×¾åÆü
-    $aryInsert[] = " ," . $v_lngcustomercompanycode; //5:¸ÜµÒ¥³¡¼¥É
-    $aryInsert[] = " ," . $v_lnggroupcode; //6:¥°¥ë¡¼¥×¥³¡¼¥É
-    $aryInsert[] = " ," . $v_lngusercode; //7:¥æ¡¼¥¶¥³¡¼¥É
-    $aryInsert[] = " ," . $v_lngsalesstatuscode; //8:Çä¾å¾õÂÖ¥³¡¼¥É
-    $aryInsert[] = " ," . $v_lngmonetaryunitcode; //9:ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    $aryInsert[] = " ," . $v_lngmonetaryratecode; //10:ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É
-    $aryInsert[] = " ," . $v_curconversionrate; //11:´¹»»¥ì¡¼¥È
-    $aryInsert[] = " ," . $v_strslipcode; //12:Ç¼ÉÊ½ñNO
-    $aryInsert[] = " ," . $v_lnginvoiceno; //13:ÀÁµá½ñÈÖ¹æ
-    $aryInsert[] = " ," . $v_curtotalprice; //14:¹ç·×¶â³Û
-    $aryInsert[] = " ," . $v_strnote; //15:È÷¹Í
-    $aryInsert[] = " ," . $v_lnginputusercode; //16:ÆşÎÏ¼Ô¥³¡¼¥É
-    $aryInsert[] = " ," . $v_bytinvalidflag; //17:Ìµ¸ú¥Õ¥é¥°
-    $aryInsert[] = " ," . $v_dtminsertdate; //18:ÅĞÏ¿Æü
+    $aryInsert[] = "  " . $v_lngsalesno; //1:å£²ä¸Šç•ªå·
+    $aryInsert[] = " ," . $v_lngrevisionno; //2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $aryInsert[] = " ," . $v_strsalescode; //3:å£²ä¸Šã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_dtmappropriationdate; //4:è¨ˆä¸Šæ—¥
+    $aryInsert[] = " ," . $v_lngcustomercompanycode; //5:é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_lnggroupcode; //6:ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_lngusercode; //7:ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_lngsalesstatuscode; //8:å£²ä¸ŠçŠ¶æ…‹ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_lngmonetaryunitcode; //9:é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_lngmonetaryratecode; //10:é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_curconversionrate; //11:æ›ç®—ãƒ¬ãƒ¼ãƒˆ
+    $aryInsert[] = " ," . $v_strslipcode; //12:ç´å“æ›¸NO
+    $aryInsert[] = " ," . $v_lnginvoiceno; //13:è«‹æ±‚æ›¸ç•ªå·
+    $aryInsert[] = " ," . $v_curtotalprice; //14:åˆè¨ˆé‡‘é¡
+    $aryInsert[] = " ," . $v_strnote; //15:å‚™è€ƒ
+    $aryInsert[] = " ," . $v_lnginputusercode; //16:å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_bytinvalidflag; //17:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
+    $aryInsert[] = " ," . $v_dtminsertdate; //18:ç™»éŒ²æ—¥
     $aryInsert[] = ") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
 
-    // ÅĞÏ¿¼Â¹Ô
+    // ç™»éŒ²å®Ÿè¡Œ
     if (!$lngResultID = $objDB->execute($strQuery)) {
-        fncOutputError(9051, DEF_ERROR, "Çä¾å¥Ş¥¹¥¿ÅĞÏ¿¼ºÇÔ¡£", true, "", $objDB);
-        // ¼ºÇÔ
+        fncOutputError(9051, DEF_ERROR, "å£²ä¸Šãƒã‚¹ã‚¿ç™»éŒ²å¤±æ•—ã€‚", true, "", $objDB);
+        // å¤±æ•—
         return false;
     }
     $objDB->freeResult($lngResultID);
 
-    // À®¸ù
+    // æˆåŠŸ
     return true;
 }
 
-// Çä¾åÌÀºÙÅĞÏ¿
+// å£²ä¸Šæ˜ç´°ç™»éŒ²
 function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo,
     $aryHeader, $aryDetail, $objDB, $objAuth) {
-    // ¾ÃÈñÀÇÎ¨
+    // æ¶ˆè²»ç¨ç‡
     $curTax = floatval($aryHeader["curtax"]);
-    // ¾ÃÈñÀÇ¶èÊ¬
+    // æ¶ˆè²»ç¨åŒºåˆ†
     $lngTaxClassCode = $aryHeader["lngtaxclasscode"];
 
     for ($i = $itemMinIndex; $i <= $itemMaxIndex; $i++) {
         $d = $aryDetail[$i];
 
-        // ÌÀºÙÃ±°Ì¤Ç¤Î¾ÃÈñÀÇ¶â³Û¤Î·×»»
+        // æ˜ç´°å˜ä½ã§ã®æ¶ˆè²»ç¨é‡‘é¡ã®è¨ˆç®—
         $curTaxPrice = fncCalcTaxPrice($d["cursubtotalprice"], $lngTaxClassCode, $curTax);
 
-        // ÅĞÏ¿¥Ç¡¼¥¿¤Î¥»¥Ã¥È
-        $v_lngsalesno = $lngSalesNo; //1:Çä¾åÈÖ¹æ
-        $v_lngsalesdetailno = $d["rownumber"]; //2:Çä¾åÌÀºÙÈÖ¹æ
-        $v_lngrevisionno = $lngRevisionNo; //3:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $v_strproductcode = withQuote(mb_substr($d["strproductcode"], 0, 5)); //4:À½ÉÊ¥³¡¼¥É
-        $v_strrevisecode = withQuote($d["strrevisecode"]); //5:ºÆÈÎ¥³¡¼¥É
-        $v_lngsalesclasscode = $d["lngsalesclasscode"]; //6:Çä¾å¶èÊ¬¥³¡¼¥É
-        $v_lngconversionclasscode = "Null"; //7:´¹»»¶èÊ¬¥³¡¼¥É
-        $v_lngquantity = $d["lngunitquantity"]; //8:Æş¿ô
-        $v_curproductprice = $d["curproductprice"]; //9:À½ÉÊ²Á³Ê
-        $v_lngproductquantity = $d["lngproductquantity"]; //10:À½ÉÊ¿ôÎÌ
-        $v_lngproductunitcode = $d["lngproductunitcode"]; //11:À½ÉÊÃ±°Ì¥³¡¼¥É
-        $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"]; //12:¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-        $v_lngtaxcode = nullIfEmpty($aryHeader["lngtaxcode"]); //13:¾ÃÈñÀÇÎ¨¥³¡¼¥É
-        $v_curtaxprice = $curTaxPrice; //14:¾ÃÈñÀÇ¶â³Û
-        $v_cursubtotalprice = $d["cursubtotalprice"]; //15:¾®·×¶â³Û
-        $v_strnote = withQuote($d["strnote"]); //16:È÷¹Í
-        $v_lngsortkey = $d["rownumber"]; //17:É½¼¨ÍÑ¥½¡¼¥È¥­¡¼
-        $v_lngreceiveno = $d["lngreceiveno"]; //18:¼õÃíÈÖ¹æ
-        $v_lngreceivedetailno = $d["lngreceivedetailno"]; //19:¼õÃíÌÀºÙÈÖ¹æ
-        $v_lngreceiverevisionno = $d["lngreceiverevisionno"]; //20:¼õÃí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+        // ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
+        $v_lngsalesno = $lngSalesNo; //1:å£²ä¸Šç•ªå·
+        $v_lngsalesdetailno = $d["rownumber"]; //2:å£²ä¸Šæ˜ç´°ç•ªå·
+        $v_lngrevisionno = $lngRevisionNo; //3:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $v_strproductcode = withQuote(mb_substr($d["strproductcode"], 0, 5)); //4:è£½å“ã‚³ãƒ¼ãƒ‰
+        $v_strrevisecode = withQuote($d["strrevisecode"]); //5:å†è²©ã‚³ãƒ¼ãƒ‰
+        $v_lngsalesclasscode = $d["lngsalesclasscode"]; //6:å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $v_lngconversionclasscode = "Null"; //7:æ›ç®—åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $v_lngquantity = $d["lngunitquantity"]; //8:å…¥æ•°
+        $v_curproductprice = $d["curproductprice"]; //9:è£½å“ä¾¡æ ¼
+        $v_lngproductquantity = $d["lngproductquantity"]; //10:è£½å“æ•°é‡
+        $v_lngproductunitcode = $d["lngproductunitcode"]; //11:è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+        $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"]; //12:æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $v_lngtaxcode = nullIfEmpty($aryHeader["lngtaxcode"]); //13:æ¶ˆè²»ç¨ç‡ã‚³ãƒ¼ãƒ‰
+        $v_curtaxprice = $curTaxPrice; //14:æ¶ˆè²»ç¨é‡‘é¡
+        $v_cursubtotalprice = $d["cursubtotalprice"]; //15:å°è¨ˆé‡‘é¡
+        $v_strnote = withQuote($d["strnote"]); //16:å‚™è€ƒ
+        $v_lngsortkey = $d["rownumber"]; //17:è¡¨ç¤ºç”¨ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
+        $v_lngreceiveno = $d["lngreceiveno"]; //18:å—æ³¨ç•ªå·
+        $v_lngreceivedetailno = $d["lngreceivedetailno"]; //19:å—æ³¨æ˜ç´°ç•ªå·
+        $v_lngreceiverevisionno = $d["lngreceiverevisionno"]; //20:å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
 
-        // ÅĞÏ¿¥¯¥¨¥êºîÀ®
+        // ç™»éŒ²ã‚¯ã‚¨ãƒªä½œæˆ
         $aryInsert = [];
         $aryInsert[] = "INSERT  ";
         $aryInsert[] = "INTO t_salesdetail(  ";
-        $aryInsert[] = "  lngsalesno "; //1:Çä¾åÈÖ¹æ
-        $aryInsert[] = "  , lngsalesdetailno "; //2:Çä¾åÌÀºÙÈÖ¹æ
-        $aryInsert[] = "  , lngrevisionno "; //3:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $aryInsert[] = "  , strproductcode "; //4:À½ÉÊ¥³¡¼¥É
-        $aryInsert[] = "  , strrevisecode "; //5:ºÆÈÎ¥³¡¼¥É
-        $aryInsert[] = "  , lngsalesclasscode "; //6:Çä¾å¶èÊ¬¥³¡¼¥É
-        $aryInsert[] = "  , lngconversionclasscode "; //7:´¹»»¶èÊ¬¥³¡¼¥É
-        $aryInsert[] = "  , lngquantity "; //8:Æş¿ô
-        $aryInsert[] = "  , curproductprice "; //9:À½ÉÊ²Á³Ê
-        $aryInsert[] = "  , lngproductquantity "; //10:À½ÉÊ¿ôÎÌ
-        $aryInsert[] = "  , lngproductunitcode "; //11:À½ÉÊÃ±°Ì¥³¡¼¥É
-        $aryInsert[] = "  , lngtaxclasscode "; //12:¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-        $aryInsert[] = "  , lngtaxcode "; //13:¾ÃÈñÀÇÎ¨¥³¡¼¥É
-        $aryInsert[] = "  , curtaxprice "; //14:¾ÃÈñÀÇ¶â³Û
-        $aryInsert[] = "  , cursubtotalprice "; //15:¾®·×¶â³Û
-        $aryInsert[] = "  , strnote "; //16:È÷¹Í
-        $aryInsert[] = "  , lngsortkey "; //17:É½¼¨ÍÑ¥½¡¼¥È¥­¡¼
-        $aryInsert[] = "  , lngreceiveno "; //18:¼õÃíÈÖ¹æ
-        $aryInsert[] = "  , lngreceivedetailno "; //19:¼õÃíÌÀºÙÈÖ¹æ
-        $aryInsert[] = "  , lngreceiverevisionno "; //20:¼õÃí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+        $aryInsert[] = "  lngsalesno "; //1:å£²ä¸Šç•ªå·
+        $aryInsert[] = "  , lngsalesdetailno "; //2:å£²ä¸Šæ˜ç´°ç•ªå·
+        $aryInsert[] = "  , lngrevisionno "; //3:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $aryInsert[] = "  , strproductcode "; //4:è£½å“ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , strrevisecode "; //5:å†è²©ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , lngsalesclasscode "; //6:å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , lngconversionclasscode "; //7:æ›ç®—åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , lngquantity "; //8:å…¥æ•°
+        $aryInsert[] = "  , curproductprice "; //9:è£½å“ä¾¡æ ¼
+        $aryInsert[] = "  , lngproductquantity "; //10:è£½å“æ•°é‡
+        $aryInsert[] = "  , lngproductunitcode "; //11:è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , lngtaxclasscode "; //12:æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , lngtaxcode "; //13:æ¶ˆè²»ç¨ç‡ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , curtaxprice "; //14:æ¶ˆè²»ç¨é‡‘é¡
+        $aryInsert[] = "  , cursubtotalprice "; //15:å°è¨ˆé‡‘é¡
+        $aryInsert[] = "  , strnote "; //16:å‚™è€ƒ
+        $aryInsert[] = "  , lngsortkey "; //17:è¡¨ç¤ºç”¨ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
+        $aryInsert[] = "  , lngreceiveno "; //18:å—æ³¨ç•ªå·
+        $aryInsert[] = "  , lngreceivedetailno "; //19:å—æ³¨æ˜ç´°ç•ªå·
+        $aryInsert[] = "  , lngreceiverevisionno "; //20:å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
         $aryInsert[] = ")  ";
         $aryInsert[] = "VALUES (  ";
-        $aryInsert[] = "  " . $v_lngsalesno; //1:Çä¾åÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngsalesdetailno; //2:Çä¾åÌÀºÙÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngrevisionno; //3:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $aryInsert[] = " ," . $v_strproductcode; //4:À½ÉÊ¥³¡¼¥É
-        $aryInsert[] = " ," . $v_strrevisecode; //5:ºÆÈÎ¥³¡¼¥É
-        $aryInsert[] = " ," . $v_lngsalesclasscode; //6:Çä¾å¶èÊ¬¥³¡¼¥É
-        $aryInsert[] = " ," . $v_lngconversionclasscode; //7:´¹»»¶èÊ¬¥³¡¼¥É
-        $aryInsert[] = " ," . $v_lngquantity; //8:Æş¿ô
-        $aryInsert[] = " ," . $v_curproductprice; //9:À½ÉÊ²Á³Ê
-        $aryInsert[] = " ," . $v_lngproductquantity; //10:À½ÉÊ¿ôÎÌ
-        $aryInsert[] = " ," . $v_lngproductunitcode; //11:À½ÉÊÃ±°Ì¥³¡¼¥É
-        $aryInsert[] = " ," . $v_lngtaxclasscode; //12:¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-        $aryInsert[] = " ," . $v_lngtaxcode; //13:¾ÃÈñÀÇÎ¨¥³¡¼¥É
-        $aryInsert[] = " ," . $v_curtaxprice; //14:¾ÃÈñÀÇ¶â³Û
-        $aryInsert[] = " ," . $v_cursubtotalprice; //15:¾®·×¶â³Û
-        $aryInsert[] = " ," . $v_strnote; //16:È÷¹Í
-        $aryInsert[] = " ," . $v_lngsortkey; //17:É½¼¨ÍÑ¥½¡¼¥È¥­¡¼
-        $aryInsert[] = " ," . $v_lngreceiveno; //18:¼õÃíÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngreceivedetailno; //19:¼õÃíÌÀºÙÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngreceiverevisionno; //20:¼õÃí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+        $aryInsert[] = "  " . $v_lngsalesno; //1:å£²ä¸Šç•ªå·
+        $aryInsert[] = " ," . $v_lngsalesdetailno; //2:å£²ä¸Šæ˜ç´°ç•ªå·
+        $aryInsert[] = " ," . $v_lngrevisionno; //3:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $aryInsert[] = " ," . $v_strproductcode; //4:è£½å“ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_strrevisecode; //5:å†è²©ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_lngsalesclasscode; //6:å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_lngconversionclasscode; //7:æ›ç®—åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_lngquantity; //8:å…¥æ•°
+        $aryInsert[] = " ," . $v_curproductprice; //9:è£½å“ä¾¡æ ¼
+        $aryInsert[] = " ," . $v_lngproductquantity; //10:è£½å“æ•°é‡
+        $aryInsert[] = " ," . $v_lngproductunitcode; //11:è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_lngtaxclasscode; //12:æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_lngtaxcode; //13:æ¶ˆè²»ç¨ç‡ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_curtaxprice; //14:æ¶ˆè²»ç¨é‡‘é¡
+        $aryInsert[] = " ," . $v_cursubtotalprice; //15:å°è¨ˆé‡‘é¡
+        $aryInsert[] = " ," . $v_strnote; //16:å‚™è€ƒ
+        $aryInsert[] = " ," . $v_lngsortkey; //17:è¡¨ç¤ºç”¨ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
+        $aryInsert[] = " ," . $v_lngreceiveno; //18:å—æ³¨ç•ªå·
+        $aryInsert[] = " ," . $v_lngreceivedetailno; //19:å—æ³¨æ˜ç´°ç•ªå·
+        $aryInsert[] = " ," . $v_lngreceiverevisionno; //20:å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
         $aryInsert[] = ") ";
         $strQuery = "";
         $strQuery .= implode("\n", $aryInsert);
 
-        // ÅĞÏ¿¼Â¹Ô
+        // ç™»éŒ²å®Ÿè¡Œ
         if (!$lngResultID = $objDB->execute($strQuery)) {
-            fncOutputError(9051, DEF_ERROR, "Çä¾åÌÀºÙÅĞÏ¿¼ºÇÔ¡£", true, "", $objDB);
-            // ¼ºÇÔ
+            fncOutputError(9051, DEF_ERROR, "å£²ä¸Šæ˜ç´°ç™»éŒ²å¤±æ•—ã€‚", true, "", $objDB);
+            // å¤±æ•—
             return false;
         }
         $objDB->freeResult($lngResultID);
     }
 
-    // À®¸ù
+    // æˆåŠŸ
     return true;
 }
 
-// Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿ÅĞÏ¿
+// ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ç™»éŒ²
 function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
     $aryDrafter, $aryHeader, $aryDetail, $objDB, $objAuth) {
-    // »ÅÆşÀè¥³¡¼¥É¤Î¼èÆÀ¡Ê¶õ¤Î¾ì¹ç¤ÏÌÀ¼¨Åª¤ËNull¤ò¥»¥Ã¥È¡Ë
+    // ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰ã®å–å¾—ï¼ˆç©ºã®å ´åˆã¯æ˜ç¤ºçš„ã«Nullã‚’ã‚»ãƒƒãƒˆï¼‰
     if (strlen($aryCustomerCompany["strstockcompanycode"]) != 0) {
         $strShipperCode = withQuote($aryCustomerCompany["strstockcompanycode"]);
     } else {
@@ -1473,252 +1473,252 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
         $dtmPaymentLimit = "Null";
     }
 
-    // ÅĞÏ¿¥Ç¡¼¥¿¤Î¥»¥Ã¥È
-    $v_lngslipno = $lngSlipNo; //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-    $v_lngrevisionno = $lngRevisionNo; //2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $v_strslipcode = withQuote($strSlipCode); //3:Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
-    $v_lngsalesno = $lngSalesNo; //4:Çä¾åÈÖ¹æ
-    $v_lngcustomercode = nullIfEmpty($aryCustomerCompany["lngcompanycode"]); //5:¸ÜµÒ¥³¡¼¥É
-    $v_strcustomercompanyname = withQuote($strCustomerCompanyName); //6:¸ÜµÒ¼ÒÌ¾
-    $v_strcustomername = withQuote($strCustomerName); //7:¸ÜµÒÌ¾
-    $v_strcustomeraddress1 = nullIfEmptyWithQuote($aryCustomerCompany["straddress1"]); //8:¸ÜµÒ½»½ê1
-    $v_strcustomeraddress2 = nullIfEmptyWithQuote($aryCustomerCompany["straddress2"]); //9:¸ÜµÒ½»½ê2
-    $v_strcustomeraddress3 = nullIfEmptyWithQuote($aryCustomerCompany["straddress3"]); //10:¸ÜµÒ½»½ê3
-    $v_strcustomeraddress4 = nullIfEmptyWithQuote($aryCustomerCompany["straddress4"]); //11:¸ÜµÒ½»½ê4
-    $v_strcustomerphoneno = nullIfEmptyWithQuote($aryCustomerCompany["strtel1"]); //12:¸ÜµÒÅÅÏÃÈÖ¹æ
-    $v_strcustomerfaxno = nullIfEmptyWithQuote($aryCustomerCompany["strfax1"]); //13:¸ÜµÒFAXÈÖ¹æ
-    $v_strcustomerusername = withQuote($aryHeader["strcustomerusername"]); //14:¸ÜµÒÃ´Åö¼ÔÌ¾
-    $v_strshippercode = $strShipperCode; //15:»ÅÆşÀè¥³¡¼¥É¡Ê½Ğ²Ù¼Ô¡Ë
-    $v_dtmdeliverydate = withQuote($aryHeader["dtmdeliverydate"]); //16:Ç¼ÉÊÆü
-    $v_lngdeliveryplacecode = nullIfEmpty($lngDeliveryPlaceCode); //17:Ç¼ÉÊ¾ì½ê¥³¡¼¥É
-    $v_strdeliveryplacename = withQuote($aryHeader["strdeliveryplacename"]); //18:Ç¼ÉÊ¾ì½êÌ¾
-    $v_strdeliveryplaceusername = withQuote($aryHeader["strdeliveryplaceusername"]); //19:Ç¼ÉÊ¾ì½êÃ´Åö¼ÔÌ¾
-    $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"]; //20:»ÙÊ§ÊıË¡¥³¡¼¥É
-    $v_dtmpaymentlimit = $dtmPaymentLimit; //21:»ÙÊ§´ü¸Â
-    $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"]; //22:²İÀÇ¶èÊ¬¥³¡¼¥É
-    $v_strtaxclassname = withQuote($aryHeader["strtaxclassname"]); //23:²İÀÇ¶èÊ¬
-    $v_curtax = $aryHeader["curtax"]; //24:¾ÃÈñÀÇÎ¨
-    $v_lngusercode = nullIfEmpty($aryDrafter["lngusercode"]); //25:Ã´Åö¼Ô¥³¡¼¥É
-    $v_strusername = withQuote($aryDrafter["struserdisplayname"]); //26:Ã´Åö¼ÔÌ¾
-    $v_curtotalprice = $aryHeader["curtotalprice"]; //27:¹ç·×¶â³Û
-    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //28:ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    $v_strmonetaryunitsign = withQuote($aryDetail[0]["strmonetaryunitsign"]); //29:ÄÌ²ßÃ±°Ì
-    $v_dtminsertdate = "now()"; //30:ºîÀ®Æü
-    $v_lnginsertusercode = nullIfEmpty($objAuth->UserCode); //31:ÆşÎÏ¼Ô¥³¡¼¥É
-    $v_strinsertusername = withQuote($objAuth->UserDisplayName); //32:ÆşÎÏ¼ÔÌ¾
-    $v_strnote = withQuote($aryHeader["strnote"]); //33:È÷¹Í
-    $v_lngprintcount = 0; //34:°õºş²ó¿ô
-    $v_bytinvalidflag = "FALSE"; //35:Ìµ¸ú¥Õ¥é¥°
+    // ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
+    $v_lngslipno = $lngSlipNo; //1:ç´å“ä¼ç¥¨ç•ªå·
+    $v_lngrevisionno = $lngRevisionNo; //2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $v_strslipcode = withQuote($strSlipCode); //3:ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
+    $v_lngsalesno = $lngSalesNo; //4:å£²ä¸Šç•ªå·
+    $v_lngcustomercode = nullIfEmpty($aryCustomerCompany["lngcompanycode"]); //5:é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $v_strcustomercompanyname = withQuote($strCustomerCompanyName); //6:é¡§å®¢ç¤¾å
+    $v_strcustomername = withQuote($strCustomerName); //7:é¡§å®¢å
+    $v_strcustomeraddress1 = nullIfEmptyWithQuote($aryCustomerCompany["straddress1"]); //8:é¡§å®¢ä½æ‰€1
+    $v_strcustomeraddress2 = nullIfEmptyWithQuote($aryCustomerCompany["straddress2"]); //9:é¡§å®¢ä½æ‰€2
+    $v_strcustomeraddress3 = nullIfEmptyWithQuote($aryCustomerCompany["straddress3"]); //10:é¡§å®¢ä½æ‰€3
+    $v_strcustomeraddress4 = nullIfEmptyWithQuote($aryCustomerCompany["straddress4"]); //11:é¡§å®¢ä½æ‰€4
+    $v_strcustomerphoneno = nullIfEmptyWithQuote($aryCustomerCompany["strtel1"]); //12:é¡§å®¢é›»è©±ç•ªå·
+    $v_strcustomerfaxno = nullIfEmptyWithQuote($aryCustomerCompany["strfax1"]); //13:é¡§å®¢FAXç•ªå·
+    $v_strcustomerusername = withQuote($aryHeader["strcustomerusername"]); //14:é¡§å®¢æ‹…å½“è€…å
+    $v_strshippercode = $strShipperCode; //15:ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰ï¼ˆå‡ºè·è€…ï¼‰
+    $v_dtmdeliverydate = withQuote($aryHeader["dtmdeliverydate"]); //16:ç´å“æ—¥
+    $v_lngdeliveryplacecode = nullIfEmpty($lngDeliveryPlaceCode); //17:ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
+    $v_strdeliveryplacename = withQuote($aryHeader["strdeliveryplacename"]); //18:ç´å“å ´æ‰€å
+    $v_strdeliveryplaceusername = withQuote($aryHeader["strdeliveryplaceusername"]); //19:ç´å“å ´æ‰€æ‹…å½“è€…å
+    $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"]; //20:æ”¯æ‰•æ–¹æ³•ã‚³ãƒ¼ãƒ‰
+    $v_dtmpaymentlimit = $dtmPaymentLimit; //21:æ”¯æ‰•æœŸé™
+    $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"]; //22:èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    $v_strtaxclassname = withQuote($aryHeader["strtaxclassname"]); //23:èª²ç¨åŒºåˆ†
+    $v_curtax = $aryHeader["curtax"]; //24:æ¶ˆè²»ç¨ç‡
+    $v_lngusercode = nullIfEmpty($aryDrafter["lngusercode"]); //25:æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+    $v_strusername = withQuote($aryDrafter["struserdisplayname"]); //26:æ‹…å½“è€…å
+    $v_curtotalprice = $aryHeader["curtotalprice"]; //27:åˆè¨ˆé‡‘é¡
+    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //28:é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    $v_strmonetaryunitsign = withQuote($aryDetail[0]["strmonetaryunitsign"]); //29:é€šè²¨å˜ä½
+    $v_dtminsertdate = "now()"; //30:ä½œæˆæ—¥
+    $v_lnginsertusercode = nullIfEmpty($objAuth->UserCode); //31:å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+    $v_strinsertusername = withQuote($objAuth->UserDisplayName); //32:å…¥åŠ›è€…å
+    $v_strnote = withQuote($aryHeader["strnote"]); //33:å‚™è€ƒ
+    $v_lngprintcount = 0; //34:å°åˆ·å›æ•°
+    $v_bytinvalidflag = "FALSE"; //35:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
 
-    // ÅĞÏ¿¥¯¥¨¥êºîÀ®
+    // ç™»éŒ²ã‚¯ã‚¨ãƒªä½œæˆ
     $aryInsert = [];
     $aryInsert[] = "INSERT  ";
     $aryInsert[] = "INTO m_slip(  ";
-    $aryInsert[] = "  lngslipno "; //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-    $aryInsert[] = "  , lngrevisionno "; //2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $aryInsert[] = "  , strslipcode "; //3:Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
-    $aryInsert[] = "  , lngsalesno "; //4:Çä¾åÈÖ¹æ
-    $aryInsert[] = "  , lngcustomercode "; //5:¸ÜµÒ¥³¡¼¥É
-    $aryInsert[] = "  , strcustomercompanyname "; //6:¸ÜµÒ¼ÒÌ¾
-    $aryInsert[] = "  , strcustomername "; //7:¸ÜµÒÌ¾
-    $aryInsert[] = "  , strcustomeraddress1 "; //8:¸ÜµÒ½»½ê1
-    $aryInsert[] = "  , strcustomeraddress2 "; //9:¸ÜµÒ½»½ê2
-    $aryInsert[] = "  , strcustomeraddress3 "; //10:¸ÜµÒ½»½ê3
-    $aryInsert[] = "  , strcustomeraddress4 "; //11:¸ÜµÒ½»½ê4
-    $aryInsert[] = "  , strcustomerphoneno "; //12:¸ÜµÒÅÅÏÃÈÖ¹æ
-    $aryInsert[] = "  , strcustomerfaxno "; //13:¸ÜµÒFAXÈÖ¹æ
-    $aryInsert[] = "  , strcustomerusername "; //14:¸ÜµÒÃ´Åö¼ÔÌ¾
-    $aryInsert[] = "  , strshippercode "; //15:»ÅÆşÀè¥³¡¼¥É¡Ê½Ğ²Ù¼Ô¡Ë
-    $aryInsert[] = "  , dtmdeliverydate "; //16:Ç¼ÉÊÆü
-    $aryInsert[] = "  , lngdeliveryplacecode "; //17:Ç¼ÉÊ¾ì½ê¥³¡¼¥É
-    $aryInsert[] = "  , strdeliveryplacename "; //18:Ç¼ÉÊ¾ì½êÌ¾
-    $aryInsert[] = "  , strdeliveryplaceusername "; //19:Ç¼ÉÊ¾ì½êÃ´Åö¼ÔÌ¾
-    $aryInsert[] = "  , lngpaymentmethodcode "; //20:»ÙÊ§ÊıË¡¥³¡¼¥É
-    $aryInsert[] = "  , dtmpaymentlimit "; //21:»ÙÊ§´ü¸Â
-    $aryInsert[] = "  , lngtaxclasscode "; //22:²İÀÇ¶èÊ¬¥³¡¼¥É
-    $aryInsert[] = "  , strtaxclassname "; //23:²İÀÇ¶èÊ¬
-    $aryInsert[] = "  , curtax "; //24:¾ÃÈñÀÇÎ¨
-    $aryInsert[] = "  , lngusercode "; //25:Ã´Åö¼Ô¥³¡¼¥É
-    $aryInsert[] = "  , strusername "; //26:Ã´Åö¼ÔÌ¾
-    $aryInsert[] = "  , curtotalprice "; //27:¹ç·×¶â³Û
-    $aryInsert[] = "  , lngmonetaryunitcode "; //28:ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    $aryInsert[] = "  , strmonetaryunitsign "; //29:ÄÌ²ßÃ±°Ì
-    $aryInsert[] = "  , dtminsertdate "; //30:ºîÀ®Æü
-    $aryInsert[] = "  , lnginsertusercode "; //31:ÆşÎÏ¼Ô¥³¡¼¥É
-    $aryInsert[] = "  , strinsertusername "; //32:ÆşÎÏ¼ÔÌ¾
-    $aryInsert[] = "  , strnote "; //33:È÷¹Í
-    $aryInsert[] = "  , lngprintcount "; //34:°õºş²ó¿ô
-    $aryInsert[] = "  , bytinvalidflag "; //35:Ìµ¸ú¥Õ¥é¥°
+    $aryInsert[] = "  lngslipno "; //1:ç´å“ä¼ç¥¨ç•ªå·
+    $aryInsert[] = "  , lngrevisionno "; //2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $aryInsert[] = "  , strslipcode "; //3:ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , lngsalesno "; //4:å£²ä¸Šç•ªå·
+    $aryInsert[] = "  , lngcustomercode "; //5:é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , strcustomercompanyname "; //6:é¡§å®¢ç¤¾å
+    $aryInsert[] = "  , strcustomername "; //7:é¡§å®¢å
+    $aryInsert[] = "  , strcustomeraddress1 "; //8:é¡§å®¢ä½æ‰€1
+    $aryInsert[] = "  , strcustomeraddress2 "; //9:é¡§å®¢ä½æ‰€2
+    $aryInsert[] = "  , strcustomeraddress3 "; //10:é¡§å®¢ä½æ‰€3
+    $aryInsert[] = "  , strcustomeraddress4 "; //11:é¡§å®¢ä½æ‰€4
+    $aryInsert[] = "  , strcustomerphoneno "; //12:é¡§å®¢é›»è©±ç•ªå·
+    $aryInsert[] = "  , strcustomerfaxno "; //13:é¡§å®¢FAXç•ªå·
+    $aryInsert[] = "  , strcustomerusername "; //14:é¡§å®¢æ‹…å½“è€…å
+    $aryInsert[] = "  , strshippercode "; //15:ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰ï¼ˆå‡ºè·è€…ï¼‰
+    $aryInsert[] = "  , dtmdeliverydate "; //16:ç´å“æ—¥
+    $aryInsert[] = "  , lngdeliveryplacecode "; //17:ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , strdeliveryplacename "; //18:ç´å“å ´æ‰€å
+    $aryInsert[] = "  , strdeliveryplaceusername "; //19:ç´å“å ´æ‰€æ‹…å½“è€…å
+    $aryInsert[] = "  , lngpaymentmethodcode "; //20:æ”¯æ‰•æ–¹æ³•ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , dtmpaymentlimit "; //21:æ”¯æ‰•æœŸé™
+    $aryInsert[] = "  , lngtaxclasscode "; //22:èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , strtaxclassname "; //23:èª²ç¨åŒºåˆ†
+    $aryInsert[] = "  , curtax "; //24:æ¶ˆè²»ç¨ç‡
+    $aryInsert[] = "  , lngusercode "; //25:æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , strusername "; //26:æ‹…å½“è€…å
+    $aryInsert[] = "  , curtotalprice "; //27:åˆè¨ˆé‡‘é¡
+    $aryInsert[] = "  , lngmonetaryunitcode "; //28:é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , strmonetaryunitsign "; //29:é€šè²¨å˜ä½
+    $aryInsert[] = "  , dtminsertdate "; //30:ä½œæˆæ—¥
+    $aryInsert[] = "  , lnginsertusercode "; //31:å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = "  , strinsertusername "; //32:å…¥åŠ›è€…å
+    $aryInsert[] = "  , strnote "; //33:å‚™è€ƒ
+    $aryInsert[] = "  , lngprintcount "; //34:å°åˆ·å›æ•°
+    $aryInsert[] = "  , bytinvalidflag "; //35:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
     $aryInsert[] = ")  ";
     $aryInsert[] = "VALUES (  ";
-    $aryInsert[] = "  " . $v_lngslipno; //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-    $aryInsert[] = " ," . $v_lngrevisionno; //2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $aryInsert[] = " ," . $v_strslipcode; //3:Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
-    $aryInsert[] = " ," . $v_lngsalesno; //4:Çä¾åÈÖ¹æ
-    $aryInsert[] = " ," . $v_lngcustomercode; //5:¸ÜµÒ¥³¡¼¥É
-    $aryInsert[] = " ," . $v_strcustomercompanyname; //6:¸ÜµÒ¼ÒÌ¾
-    $aryInsert[] = " ," . $v_strcustomername; //7:¸ÜµÒÌ¾
-    $aryInsert[] = " ," . $v_strcustomeraddress1; //8:¸ÜµÒ½»½ê1
-    $aryInsert[] = " ," . $v_strcustomeraddress2; //9:¸ÜµÒ½»½ê2
-    $aryInsert[] = " ," . $v_strcustomeraddress3; //10:¸ÜµÒ½»½ê3
-    $aryInsert[] = " ," . $v_strcustomeraddress4; //11:¸ÜµÒ½»½ê4
-    $aryInsert[] = " ," . $v_strcustomerphoneno; //12:¸ÜµÒÅÅÏÃÈÖ¹æ
-    $aryInsert[] = " ," . $v_strcustomerfaxno; //13:¸ÜµÒFAXÈÖ¹æ
-    $aryInsert[] = " ," . $v_strcustomerusername; //14:¸ÜµÒÃ´Åö¼ÔÌ¾
-    $aryInsert[] = " ," . $v_strshippercode; //15:»ÅÆşÀè¥³¡¼¥É¡Ê½Ğ²Ù¼Ô¡Ë
-    $aryInsert[] = " ," . $v_dtmdeliverydate; //16:Ç¼ÉÊÆü
-    $aryInsert[] = " ," . $v_lngdeliveryplacecode; //17:Ç¼ÉÊ¾ì½ê¥³¡¼¥É
-    $aryInsert[] = " ," . $v_strdeliveryplacename; //18:Ç¼ÉÊ¾ì½êÌ¾
-    $aryInsert[] = " ," . $v_strdeliveryplaceusername; //19:Ç¼ÉÊ¾ì½êÃ´Åö¼ÔÌ¾
-    $aryInsert[] = " ," . $v_lngpaymentmethodcode; //20:»ÙÊ§ÊıË¡¥³¡¼¥É
-    $aryInsert[] = " ," . $v_dtmpaymentlimit; //21:»ÙÊ§´ü¸Â
-    $aryInsert[] = " ," . $v_lngtaxclasscode; //22:²İÀÇ¶èÊ¬¥³¡¼¥É
-    $aryInsert[] = " ," . $v_strtaxclassname; //23:²İÀÇ¶èÊ¬
-    $aryInsert[] = " ," . $v_curtax; //24:¾ÃÈñÀÇÎ¨
-    $aryInsert[] = " ," . $v_lngusercode; //25:Ã´Åö¼Ô¥³¡¼¥É
-    $aryInsert[] = " ," . $v_strusername; //26:Ã´Åö¼ÔÌ¾
-    $aryInsert[] = " ," . $v_curtotalprice; //27:¹ç·×¶â³Û
-    $aryInsert[] = " ," . $v_lngmonetaryunitcode; //28:ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    $aryInsert[] = " ," . $v_strmonetaryunitsign; //29:ÄÌ²ßÃ±°Ì
-    $aryInsert[] = " ," . $v_dtminsertdate; //30:ºîÀ®Æü
-    $aryInsert[] = " ," . $v_lnginsertusercode; //31:ÆşÎÏ¼Ô¥³¡¼¥É
-    $aryInsert[] = " ," . $v_strinsertusername; //32:ÆşÎÏ¼ÔÌ¾
-    $aryInsert[] = " ," . $v_strnote; //33:È÷¹Í
-    $aryInsert[] = " ," . $v_lngprintcount; //34:°õºş²ó¿ô
-    $aryInsert[] = " ," . $v_bytinvalidflag; //35:Ìµ¸ú¥Õ¥é¥°
+    $aryInsert[] = "  " . $v_lngslipno; //1:ç´å“ä¼ç¥¨ç•ªå·
+    $aryInsert[] = " ," . $v_lngrevisionno; //2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $aryInsert[] = " ," . $v_strslipcode; //3:ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_lngsalesno; //4:å£²ä¸Šç•ªå·
+    $aryInsert[] = " ," . $v_lngcustomercode; //5:é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_strcustomercompanyname; //6:é¡§å®¢ç¤¾å
+    $aryInsert[] = " ," . $v_strcustomername; //7:é¡§å®¢å
+    $aryInsert[] = " ," . $v_strcustomeraddress1; //8:é¡§å®¢ä½æ‰€1
+    $aryInsert[] = " ," . $v_strcustomeraddress2; //9:é¡§å®¢ä½æ‰€2
+    $aryInsert[] = " ," . $v_strcustomeraddress3; //10:é¡§å®¢ä½æ‰€3
+    $aryInsert[] = " ," . $v_strcustomeraddress4; //11:é¡§å®¢ä½æ‰€4
+    $aryInsert[] = " ," . $v_strcustomerphoneno; //12:é¡§å®¢é›»è©±ç•ªå·
+    $aryInsert[] = " ," . $v_strcustomerfaxno; //13:é¡§å®¢FAXç•ªå·
+    $aryInsert[] = " ," . $v_strcustomerusername; //14:é¡§å®¢æ‹…å½“è€…å
+    $aryInsert[] = " ," . $v_strshippercode; //15:ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰ï¼ˆå‡ºè·è€…ï¼‰
+    $aryInsert[] = " ," . $v_dtmdeliverydate; //16:ç´å“æ—¥
+    $aryInsert[] = " ," . $v_lngdeliveryplacecode; //17:ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_strdeliveryplacename; //18:ç´å“å ´æ‰€å
+    $aryInsert[] = " ," . $v_strdeliveryplaceusername; //19:ç´å“å ´æ‰€æ‹…å½“è€…å
+    $aryInsert[] = " ," . $v_lngpaymentmethodcode; //20:æ”¯æ‰•æ–¹æ³•ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_dtmpaymentlimit; //21:æ”¯æ‰•æœŸé™
+    $aryInsert[] = " ," . $v_lngtaxclasscode; //22:èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_strtaxclassname; //23:èª²ç¨åŒºåˆ†
+    $aryInsert[] = " ," . $v_curtax; //24:æ¶ˆè²»ç¨ç‡
+    $aryInsert[] = " ," . $v_lngusercode; //25:æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_strusername; //26:æ‹…å½“è€…å
+    $aryInsert[] = " ," . $v_curtotalprice; //27:åˆè¨ˆé‡‘é¡
+    $aryInsert[] = " ," . $v_lngmonetaryunitcode; //28:é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_strmonetaryunitsign; //29:é€šè²¨å˜ä½
+    $aryInsert[] = " ," . $v_dtminsertdate; //30:ä½œæˆæ—¥
+    $aryInsert[] = " ," . $v_lnginsertusercode; //31:å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+    $aryInsert[] = " ," . $v_strinsertusername; //32:å…¥åŠ›è€…å
+    $aryInsert[] = " ," . $v_strnote; //33:å‚™è€ƒ
+    $aryInsert[] = " ," . $v_lngprintcount; //34:å°åˆ·å›æ•°
+    $aryInsert[] = " ," . $v_bytinvalidflag; //35:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
     $aryInsert[] = ") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
 
-    // ÅĞÏ¿¼Â¹Ô
+    // ç™»éŒ²å®Ÿè¡Œ
     if (!$lngResultID = $objDB->execute($strQuery)) {
-        fncOutputError(9051, DEF_ERROR, "Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿ÅĞÏ¿¼ºÇÔ¡£", true, "", $objDB);
-        // ¼ºÇÔ
+        fncOutputError(9051, DEF_ERROR, "ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ç™»éŒ²å¤±æ•—ã€‚", true, "", $objDB);
+        // å¤±æ•—
         return false;
     }
     $objDB->freeResult($lngResultID);
 
-    // À®¸ù
+    // æˆåŠŸ
     return true;
 }
 
-// Ç¼ÉÊÅÁÉ¼ÌÀºÙÅĞÏ¿
+// ç´å“ä¼ç¥¨æ˜ç´°ç™»éŒ²
 function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo,
     $aryHeader, $aryDetail, $objDB, $objAuth) {
     for ($i = $itemMinIndex; $i <= $itemMaxIndex; $i++) {
         $d = $aryDetail[$i];
 
-        // ÅĞÏ¿¥Ç¡¼¥¿¤Î¥»¥Ã¥È
-        $v_lngslipno = $lngSlipNo; //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-        $v_lngslipdetailno = $d["rownumber"]; //2:Ç¼ÉÊÅÁÉ¼ÌÀºÙÈÖ¹æ
-        $v_lngrevisionno = $lngRevisionNo; //3:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $v_strcustomersalescode = withQuote($d["strcustomerreceivecode"]); //4:¸ÜµÒ¼õÃíÈÖ¹æ
-        $v_lngsalesclasscode = $d["lngsalesclasscode"]; //5:Çä¾å¶èÊ¬¥³¡¼¥É
-        $v_strsalesclassname = withQuote($d["strsalesclassname"]); //6:Çä¾å¶èÊ¬Ì¾
-        $v_strgoodscode = withQuote($d["strgoodscode"]); //7:¸ÜµÒÉÊÈÖ
-        $v_strproductcode = withQuote(mb_substr($d["strproductcode"], 0, 5)); //8:À½ÉÊ¥³¡¼¥É
-        $v_strrevisecode = withQuote($d["strrevisecode"]); //9:ºÆÈÎ¥³¡¼¥É
-        $v_strproductname = withQuote($d["strproductname"]); //10:À½ÉÊÌ¾
-        $v_strproductenglishname = withQuote($d["strproductenglishname"]); //11:À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
-        $v_curproductprice = $d["curproductprice"]; //12:Ã±²Á
-        $v_lngquantity = $d["lngunitquantity"]; //13:Æş¿ô
-        $v_lngproductquantity = $d["lngproductquantity"]; //14:¿ôÎÌ
-        $v_lngproductunitcode = $d["lngproductunitcode"]; //15:À½ÉÊÃ±°Ì¥³¡¼¥É
-        $v_strproductunitname = withQuote($d["strproductunitname"]); //16:À½ÉÊÃ±°ÌÌ¾
-        $v_cursubtotalprice = $d["cursubtotalprice"]; //17:¾®·×
-        $v_strnote = withQuote($d["strnote"]); //18:ÌÀºÙÈ÷¹Í
-        $v_lngreceiveno = $d["lngreceiveno"]; //19:¼õÃíÈÖ¹æ
-        $v_lngreceivedetailno = $d["lngreceivedetailno"]; //20:¼õÃíÌÀºÙÈÖ¹æ
-        $v_lngreceiverevisionno = $d["lngreceiverevisionno"]; //21:¼õÃí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $v_lngsortkey = $d["rownumber"]; //22:É½¼¨ÍÑ¥½¡¼¥È¥­¡¼
+        // ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
+        $v_lngslipno = $lngSlipNo; //1:ç´å“ä¼ç¥¨ç•ªå·
+        $v_lngslipdetailno = $d["rownumber"]; //2:ç´å“ä¼ç¥¨æ˜ç´°ç•ªå·
+        $v_lngrevisionno = $lngRevisionNo; //3:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $v_strcustomersalescode = withQuote($d["strcustomerreceivecode"]); //4:é¡§å®¢å—æ³¨ç•ªå·
+        $v_lngsalesclasscode = $d["lngsalesclasscode"]; //5:å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $v_strsalesclassname = withQuote($d["strsalesclassname"]); //6:å£²ä¸ŠåŒºåˆ†å
+        $v_strgoodscode = withQuote($d["strgoodscode"]); //7:é¡§å®¢å“ç•ª
+        $v_strproductcode = withQuote(mb_substr($d["strproductcode"], 0, 5)); //8:è£½å“ã‚³ãƒ¼ãƒ‰
+        $v_strrevisecode = withQuote($d["strrevisecode"]); //9:å†è²©ã‚³ãƒ¼ãƒ‰
+        $v_strproductname = withQuote($d["strproductname"]); //10:è£½å“å
+        $v_strproductenglishname = withQuote($d["strproductenglishname"]); //11:è£½å“åï¼ˆè‹±èªï¼‰
+        $v_curproductprice = $d["curproductprice"]; //12:å˜ä¾¡
+        $v_lngquantity = $d["lngunitquantity"]; //13:å…¥æ•°
+        $v_lngproductquantity = $d["lngproductquantity"]; //14:æ•°é‡
+        $v_lngproductunitcode = $d["lngproductunitcode"]; //15:è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+        $v_strproductunitname = withQuote($d["strproductunitname"]); //16:è£½å“å˜ä½å
+        $v_cursubtotalprice = $d["cursubtotalprice"]; //17:å°è¨ˆ
+        $v_strnote = withQuote($d["strnote"]); //18:æ˜ç´°å‚™è€ƒ
+        $v_lngreceiveno = $d["lngreceiveno"]; //19:å—æ³¨ç•ªå·
+        $v_lngreceivedetailno = $d["lngreceivedetailno"]; //20:å—æ³¨æ˜ç´°ç•ªå·
+        $v_lngreceiverevisionno = $d["lngreceiverevisionno"]; //21:å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $v_lngsortkey = $d["rownumber"]; //22:è¡¨ç¤ºç”¨ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
 
-        // ÅĞÏ¿¥¯¥¨¥êºîÀ®
+        // ç™»éŒ²ã‚¯ã‚¨ãƒªä½œæˆ
         $aryInsert = [];
         $aryInsert[] = "INSERT  ";
         $aryInsert[] = "INTO t_slipdetail(  ";
-        $aryInsert[] = "  lngslipno "; //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-        $aryInsert[] = "  , lngslipdetailno "; //2:Ç¼ÉÊÅÁÉ¼ÌÀºÙÈÖ¹æ
-        $aryInsert[] = "  , lngrevisionno "; //3:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $aryInsert[] = "  , strcustomersalescode "; //4:¸ÜµÒ¼õÃíÈÖ¹æ
-        $aryInsert[] = "  , lngsalesclasscode "; //5:Çä¾å¶èÊ¬¥³¡¼¥É
-        $aryInsert[] = "  , strsalesclassname "; //6:Çä¾å¶èÊ¬Ì¾
-        $aryInsert[] = "  , strgoodscode "; //7:¸ÜµÒÉÊÈÖ
-        $aryInsert[] = "  , strproductcode "; //8:À½ÉÊ¥³¡¼¥É
-        $aryInsert[] = "  , strrevisecode "; //9:ºÆÈÎ¥³¡¼¥É
-        $aryInsert[] = "  , strproductname "; //10:À½ÉÊÌ¾
-        $aryInsert[] = "  , strproductenglishname "; //11:À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
-        $aryInsert[] = "  , curproductprice "; //12:Ã±²Á
-        $aryInsert[] = "  , lngquantity "; //13:Æş¿ô
-        $aryInsert[] = "  , lngproductquantity "; //14:¿ôÎÌ
-        $aryInsert[] = "  , lngproductunitcode "; //15:À½ÉÊÃ±°Ì¥³¡¼¥É
-        $aryInsert[] = "  , strproductunitname "; //16:À½ÉÊÃ±°ÌÌ¾
-        $aryInsert[] = "  , cursubtotalprice "; //17:¾®·×
-        $aryInsert[] = "  , strnote "; //18:ÌÀºÙÈ÷¹Í
-        $aryInsert[] = "  , lngreceiveno "; //19:¼õÃíÈÖ¹æ
-        $aryInsert[] = "  , lngreceivedetailno "; //20:¼õÃíÌÀºÙÈÖ¹æ
-        $aryInsert[] = "  , lngreceiverevisionno "; //21:¼õÃí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $aryInsert[] = "  , lngsortkey "; //22:É½¼¨ÍÑ¥½¡¼¥È¥­¡¼
+        $aryInsert[] = "  lngslipno "; //1:ç´å“ä¼ç¥¨ç•ªå·
+        $aryInsert[] = "  , lngslipdetailno "; //2:ç´å“ä¼ç¥¨æ˜ç´°ç•ªå·
+        $aryInsert[] = "  , lngrevisionno "; //3:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $aryInsert[] = "  , strcustomersalescode "; //4:é¡§å®¢å—æ³¨ç•ªå·
+        $aryInsert[] = "  , lngsalesclasscode "; //5:å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , strsalesclassname "; //6:å£²ä¸ŠåŒºåˆ†å
+        $aryInsert[] = "  , strgoodscode "; //7:é¡§å®¢å“ç•ª
+        $aryInsert[] = "  , strproductcode "; //8:è£½å“ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , strrevisecode "; //9:å†è²©ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , strproductname "; //10:è£½å“å
+        $aryInsert[] = "  , strproductenglishname "; //11:è£½å“åï¼ˆè‹±èªï¼‰
+        $aryInsert[] = "  , curproductprice "; //12:å˜ä¾¡
+        $aryInsert[] = "  , lngquantity "; //13:å…¥æ•°
+        $aryInsert[] = "  , lngproductquantity "; //14:æ•°é‡
+        $aryInsert[] = "  , lngproductunitcode "; //15:è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = "  , strproductunitname "; //16:è£½å“å˜ä½å
+        $aryInsert[] = "  , cursubtotalprice "; //17:å°è¨ˆ
+        $aryInsert[] = "  , strnote "; //18:æ˜ç´°å‚™è€ƒ
+        $aryInsert[] = "  , lngreceiveno "; //19:å—æ³¨ç•ªå·
+        $aryInsert[] = "  , lngreceivedetailno "; //20:å—æ³¨æ˜ç´°ç•ªå·
+        $aryInsert[] = "  , lngreceiverevisionno "; //21:å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $aryInsert[] = "  , lngsortkey "; //22:è¡¨ç¤ºç”¨ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
         $aryInsert[] = ")  ";
         $aryInsert[] = "VALUES (  ";
-        $aryInsert[] = "  " . $v_lngslipno; //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngslipdetailno; //2:Ç¼ÉÊÅÁÉ¼ÌÀºÙÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngrevisionno; //3:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $aryInsert[] = " ," . $v_strcustomersalescode; //4:¸ÜµÒ¼õÃíÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngsalesclasscode; //5:Çä¾å¶èÊ¬¥³¡¼¥É
-        $aryInsert[] = " ," . $v_strsalesclassname; //6:Çä¾å¶èÊ¬Ì¾
-        $aryInsert[] = " ," . $v_strgoodscode; //7:¸ÜµÒÉÊÈÖ
-        $aryInsert[] = " ," . $v_strproductcode; //8:À½ÉÊ¥³¡¼¥É
-        $aryInsert[] = " ," . $v_strrevisecode; //9:ºÆÈÎ¥³¡¼¥É
-        $aryInsert[] = " ," . $v_strproductname; //10:À½ÉÊÌ¾
-        $aryInsert[] = " ," . $v_strproductenglishname; //11:À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
-        $aryInsert[] = " ," . $v_curproductprice; //12:Ã±²Á
-        $aryInsert[] = " ," . $v_lngquantity; //13:Æş¿ô
-        $aryInsert[] = " ," . $v_lngproductquantity; //14:¿ôÎÌ
-        $aryInsert[] = " ," . $v_lngproductunitcode; //15:À½ÉÊÃ±°Ì¥³¡¼¥É
-        $aryInsert[] = " ," . $v_strproductunitname; //16:À½ÉÊÃ±°ÌÌ¾
-        $aryInsert[] = " ," . $v_cursubtotalprice; //17:¾®·×
-        $aryInsert[] = " ," . $v_strnote; //18:ÌÀºÙÈ÷¹Í
-        $aryInsert[] = " ," . $v_lngreceiveno; //19:¼õÃíÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngreceivedetailno; //20:¼õÃíÌÀºÙÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngreceiverevisionno; //21:¼õÃí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $aryInsert[] = " ," . $v_lngsortkey; //22:É½¼¨ÍÑ¥½¡¼¥È¥­¡¼
+        $aryInsert[] = "  " . $v_lngslipno; //1:ç´å“ä¼ç¥¨ç•ªå·
+        $aryInsert[] = " ," . $v_lngslipdetailno; //2:ç´å“ä¼ç¥¨æ˜ç´°ç•ªå·
+        $aryInsert[] = " ," . $v_lngrevisionno; //3:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $aryInsert[] = " ," . $v_strcustomersalescode; //4:é¡§å®¢å—æ³¨ç•ªå·
+        $aryInsert[] = " ," . $v_lngsalesclasscode; //5:å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_strsalesclassname; //6:å£²ä¸ŠåŒºåˆ†å
+        $aryInsert[] = " ," . $v_strgoodscode; //7:é¡§å®¢å“ç•ª
+        $aryInsert[] = " ," . $v_strproductcode; //8:è£½å“ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_strrevisecode; //9:å†è²©ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_strproductname; //10:è£½å“å
+        $aryInsert[] = " ," . $v_strproductenglishname; //11:è£½å“åï¼ˆè‹±èªï¼‰
+        $aryInsert[] = " ," . $v_curproductprice; //12:å˜ä¾¡
+        $aryInsert[] = " ," . $v_lngquantity; //13:å…¥æ•°
+        $aryInsert[] = " ," . $v_lngproductquantity; //14:æ•°é‡
+        $aryInsert[] = " ," . $v_lngproductunitcode; //15:è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+        $aryInsert[] = " ," . $v_strproductunitname; //16:è£½å“å˜ä½å
+        $aryInsert[] = " ," . $v_cursubtotalprice; //17:å°è¨ˆ
+        $aryInsert[] = " ," . $v_strnote; //18:æ˜ç´°å‚™è€ƒ
+        $aryInsert[] = " ," . $v_lngreceiveno; //19:å—æ³¨ç•ªå·
+        $aryInsert[] = " ," . $v_lngreceivedetailno; //20:å—æ³¨æ˜ç´°ç•ªå·
+        $aryInsert[] = " ," . $v_lngreceiverevisionno; //21:å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $aryInsert[] = " ," . $v_lngsortkey; //22:è¡¨ç¤ºç”¨ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
         $aryInsert[] = ") ";
         $strQuery = "";
         $strQuery .= implode("\n", $aryInsert);
 
-        // ÅĞÏ¿¼Â¹Ô
+        // ç™»éŒ²å®Ÿè¡Œ
         if (!$lngResultID = $objDB->execute($strQuery)) {
-            fncOutputError(9051, DEF_ERROR, "Ç¼ÉÊÅÁÉ¼ÌÀºÙÅĞÏ¿ÅĞÏ¿¼ºÇÔ¡£", true, "", $objDB);
-            // ¼ºÇÔ
+            fncOutputError(9051, DEF_ERROR, "ç´å“ä¼ç¥¨æ˜ç´°ç™»éŒ²ç™»éŒ²å¤±æ•—ã€‚", true, "", $objDB);
+            // å¤±æ•—
             return false;
         }
         $objDB->freeResult($lngResultID);
     }
 
-    // À®¸ù
+    // æˆåŠŸ
     return true;
 }
 
-// Ê¸»ú¥³¡¼¥É EUC-JP -> UTF-8 ÊÑ´¹ÍÑ¥Ø¥ë¥Ñ´Ø¿ô
+// æ–‡å­—ã‚³ãƒ¼ãƒ‰ EUC-JP -> UTF-8 å¤‰æ›ç”¨ãƒ˜ãƒ«ãƒ‘é–¢æ•°
 function fncToUtf8($eucjpText)
 {
     return mb_convert_encoding($eucjpText, 'UTF-8', 'EUC-JP');
 }
 
-// Ê¸»ú¥³¡¼¥É UTF-8 -> EUC-JP ÊÑ´¹ÍÑ¥Ø¥ë¥Ñ´Ø¿ô
+// æ–‡å­—ã‚³ãƒ¼ãƒ‰ UTF-8 -> EUC-JP å¤‰æ›ç”¨ãƒ˜ãƒ«ãƒ‘é–¢æ•°
 function fncToEucjp($utf8Text)
 {
     return mb_convert_encoding($utf8Text, 'EUC-JP', 'UTF-8');
 }
 
-// »ØÄê¥¢¥É¥ì¥¹¤Î¥»¥ë¤ËÃÍ¤ò¥»¥Ã¥È¤¹¤ë¥Ø¥ë¥Ñ´Ø¿ô
+// æŒ‡å®šã‚¢ãƒ‰ãƒ¬ã‚¹ã®ã‚»ãƒ«ã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãƒ˜ãƒ«ãƒ‘é–¢æ•°
 function setCellValue($xlWorkSheet, $address, $value)
 {
     $value = fncToUtf8($value);
     $xlWorkSheet->GetCell($address)->SetValue($value);
 }
 
-// ¹Ô¤òÊÑ¤¨¤Ê¤¬¤é¥»¥ë¤ËÃÍ¤ò¥»¥Ã¥È¤¹¤ë¥Ø¥ë¥Ñ´Ø¿ô
+// è¡Œã‚’å¤‰ãˆãªãŒã‚‰ã‚»ãƒ«ã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãƒ˜ãƒ«ãƒ‘é–¢æ•°
 function setCellDetailValue($xlWorkSheet, $columnAddress, $rowNumber, $value)
 {
     $address = $columnAddress . $rowNumber;
@@ -1786,92 +1786,92 @@ function fncConvertArrayDetailToEucjp($aryDetail)
 }
 
 /**
- * ¥Æ¥ó¥×¥ì¡¼¥È¤«¤éÄ¢É¼¥¤¥á¡¼¥¸¤òÀ¸À®¤¹¤ë
- * @param  string  $strMode     Æ°ºî¥â¡¼¥É¡§"html"->¥×¥ì¥Ó¥å¡¼ÍÑHTMLÀ¸À®¡¢"download"->¥À¥¦¥ó¥í¡¼¥ÉÍÑWriterÀ¸À®
- * @param  array   $aryHeader   ¥Ø¥Ã¥ÀÉô¥Ç¡¼¥¿
- * @param  array   $aryDetail   ÌÀºÙÉô¥Ç¡¼¥¿
- * @param  object  $objDB       ¥Ç¡¼¥¿¥Ù¡¼¥¹Áàºî¥¯¥é¥¹
- * @return array   $$aryGenerateResult  À¸À®·ë²Ì¡£Æ°ºî¥â¡¼¥É¤Ë¤è¤ê³ÊÇ¼¤µ¤ì¤ëÃÍ¤¬°Û¤Ê¤ë
+ * ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‹ã‚‰å¸³ç¥¨ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’ç”Ÿæˆã™ã‚‹
+ * @param  string  $strMode     å‹•ä½œãƒ¢ãƒ¼ãƒ‰ï¼š"html"->ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”¨HTMLç”Ÿæˆã€"download"->ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ç”¨Writerç”Ÿæˆ
+ * @param  array   $aryHeader   ãƒ˜ãƒƒãƒ€éƒ¨ãƒ‡ãƒ¼ã‚¿
+ * @param  array   $aryDetail   æ˜ç´°éƒ¨ãƒ‡ãƒ¼ã‚¿
+ * @param  object  $objDB       ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æ“ä½œã‚¯ãƒ©ã‚¹
+ * @return array   $$aryGenerateResult  ç”Ÿæˆçµæœã€‚å‹•ä½œãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã‚Šæ ¼ç´ã•ã‚Œã‚‹å€¤ãŒç•°ãªã‚‹
  */
 function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
     $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate,
     $objDB) {
-    // À¸À®·ë²Ì¡ÊÌá¤êÃÍ¡Ë
+    // ç”Ÿæˆçµæœï¼ˆæˆ»ã‚Šå€¤ï¼‰
     $aryGenerateResult = array();
 
-    // DBG:°ì»ş¥³¥á¥ó¥È¥¢¥¦¥ÈÂĞ¾İ
+    // DBG:ä¸€æ™‚ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆå¯¾è±¡
     // --------------------------------------------
-    //  ¥Ç¡¼¥¿¼èÆÀ
+    //  ãƒ‡ãƒ¼ã‚¿å–å¾—
     // --------------------------------------------
-    // ¸ÜµÒ¤Î²ñ¼Ò¥³¡¼¥É¤ò¼èÆÀ
+    // é¡§å®¢ã®ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
     $lngCustomerCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
-    // ¸ÜµÒ¤Î²ñ¼Ò¥³¡¼¥É¤ËÉ³¤Å¤¯Ç¼ÉÊÅÁÉ¼¼ïÊÌ¤ò¼èÆÀ
+    // é¡§å®¢ã®ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã«ç´ã¥ãç´å“ä¼ç¥¨ç¨®åˆ¥ã‚’å–å¾—
     $aryReport = fncGetSlipKindByCompanyCode($lngCustomerCompanyCode, $objDB);
-    // ¸ÜµÒ¤Î²ñ¼Ò¥³¡¼¥É¤ËÉ³¤Å¤¯²ñ¼Ò¾ğÊó¤ò¼èÆÀ
+    // é¡§å®¢ã®ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã«ç´ã¥ãä¼šç¤¾æƒ…å ±ã‚’å–å¾—
     $aryCustomerCompany = fncGetCompanyInfoByCompanyCode($lngCustomerCompanyCode, $objDB);
-    // ¸ÜµÒ¤Î¹ñ¥³¡¼¥É¤ò¼èÆÀ
+    // é¡§å®¢ã®å›½ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
     $lngCustomerCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
-    // ¸ÜµÒ¼ÒÌ¾¤Î¼èÆÀ
+    // é¡§å®¢ç¤¾åã®å–å¾—
     $strCustomerCompanyName = fncGetCustomerCompanyName($lngCustomerCountryCode, $aryCustomerCompany);
-    // ¸ÜµÒÌ¾¤Î¼èÆÀ
+    // é¡§å®¢åã®å–å¾—
     $strCustomerName = fncGetCustomerName($aryCustomerCompany);
-    // Ç¼ÉÊÀè¤Î²ñ¼Ò¥³¡¼¥É¤Î¼èÆÀ
+    // ç´å“å…ˆã®ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã®å–å¾—
     $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
 
-    // Ä¢É¼¼ïÊÌ¤Î¼èÆÀ
+    // å¸³ç¥¨ç¨®åˆ¥ã®å–å¾—
     $lngSlipKindCode = $aryReport["lngslipkindcode"];
-    // ¸ÜµÒ¤ËÉ³¤Å¤¯Ä¢É¼1¥Ú¡¼¥¸¤¢¤¿¤ê¤ÎºÇÂçÌÀºÙ¿ô¤ò¼èÆÀ¤¹¤ë
+    // é¡§å®¢ã«ç´ã¥ãå¸³ç¥¨1ãƒšãƒ¼ã‚¸ã‚ãŸã‚Šã®æœ€å¤§æ˜ç´°æ•°ã‚’å–å¾—ã™ã‚‹
     $maxItemPerPage = intval($aryReport["lngmaxline"]);
-    // ÅĞÏ¿¤¹¤ëÁ´ÌÀºÙ¤Î¿ô
+    // ç™»éŒ²ã™ã‚‹å…¨æ˜ç´°ã®æ•°
     $totalItemCount = count($aryDetail);
-    // ºÇÂç¥Ú¡¼¥¸¿ô¤Î·×»»
+    // æœ€å¤§ãƒšãƒ¼ã‚¸æ•°ã®è¨ˆç®—
     $maxPageCount = ceil($totalItemCount / $maxItemPerPage);
-    // Ä¢É¼¼ïÊÌ¤´¤È¤Ë°Û¤Ê¤ë¾ğÊó¤Î¼èÆÀ
+    // å¸³ç¥¨ç¨®åˆ¥ã”ã¨ã«ç•°ãªã‚‹æƒ…å ±ã®å–å¾—
     if ($lngSlipKindCode == 1) {
-        //1:»ØÄê¡¦ÀìÍÑ
-        $templatFileName = "Ç¼ÉÊ½ñtemple_B¼Ò_Ï¢Íí½ñÉÕ.xlsx";
-        $activeSheetName = fncToUtf8("Ç¼ÉÊ½ñ");
+        //1:æŒ‡å®šãƒ»å°‚ç”¨
+        $templatFileName = "ç´å“æ›¸temple_Bç¤¾_é€£çµ¡æ›¸ä»˜.xlsx";
+        $activeSheetName = fncToUtf8("ç´å“æ›¸");
     } else if ($lngSlipKindCode == 2) {
-        //2:»ÔÈÎ
-        $templatFileName = "Ç¼ÉÊ½ñtemple_»ÔÈÎ_Ï¢Íí½ñÉÕ.xlsx";
-        $activeSheetName = fncToUtf8("Ç¼ÉÊ½ñ");
+        //2:å¸‚è²©
+        $templatFileName = "ç´å“æ›¸temple_å¸‚è²©_é€£çµ¡æ›¸ä»˜.xlsx";
+        $activeSheetName = fncToUtf8("ç´å“æ›¸");
     } else if ($lngSlipKindCode == 3) {
         //3:DEBIT NOTE
         $templatFileName = "DEBIT NOTE.xlsx";
         $activeSheetName = fncToUtf8("DEBIT NOTE");
     } else {
-        throw new Exception("Ä¢É¼¥Æ¥ó¥×¥ì¡¼¥È¤òÆÃÄê¤Ç¤­¤Ş¤»¤ó¡£lngSlipKindCode=" . $lngSlipKindCode);
+        throw new Exception("å¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ç‰¹å®šã§ãã¾ã›ã‚“ã€‚lngSlipKindCode=" . $lngSlipKindCode);
     }
 
     // --------------------------------------------
-    //  ¥¹¥×¥ì¥Ã¥É¥·¡¼¥È½é´ü²½
+    //  ã‚¹ãƒ—ãƒ¬ãƒƒãƒ‰ã‚·ãƒ¼ãƒˆåˆæœŸåŒ–
     // --------------------------------------------
-    // ÆüËÜ¸ìÂĞ±ş
+    // æ—¥æœ¬èªå¯¾å¿œ
     ini_set('default_charset', 'UTF-8');
-    // Ä¢É¼¥Æ¥ó¥×¥ì¡¼¥È¤Î¥Õ¥ë¥Ñ¥¹
+    // å¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ãƒ•ãƒ«ãƒ‘ã‚¹
     $spreadSheetFilePath = fncToUtf8(REPORT_TMPDIR . $templatFileName);
-    // ¥Ç¡¼¥¿¤òÀßÄê¤¹¤ë¥·¡¼¥ÈÌ¾
-    $dataSheetName = fncToUtf8("¥Ç¡¼¥¿ÀßÄêÍÑ");
+    // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®šã™ã‚‹ã‚·ãƒ¼ãƒˆå
+    $dataSheetName = fncToUtf8("ãƒ‡ãƒ¼ã‚¿è¨­å®šç”¨");
 
     // --------------------------------------------
-    //  Æ°ºî¥â¡¼¥É¤Ë¤è¤ë½èÍıÊ¬´ô
+    //  å‹•ä½œãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã‚‹å‡¦ç†åˆ†å²
     // --------------------------------------------
     if ($strMode == "download") {
         // --------------------------------------------
-        //  ¥À¥¦¥ó¥í¡¼¥ÉÍÑWriterÀ¸À®
+        //  ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ç”¨Writerç”Ÿæˆ
         // --------------------------------------------
-        //¥¹¥×¥ì¥Ã¥É¥·¡¼¥ÈÀ¸À®
+        //ã‚¹ãƒ—ãƒ¬ãƒƒãƒ‰ã‚·ãƒ¼ãƒˆç”Ÿæˆ
         $xlSpreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($spreadSheetFilePath);
-        //¥ï¡¼¥¯¥·¡¼¥ÈÀ¸À®
+        //ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆç”Ÿæˆ
         $xlWorkSheet = $xlSpreadSheet->GetSheetByName($dataSheetName);
-        //XlsxWriterÀ¸À®
+        //XlsxWriterç”Ÿæˆ
         $xlWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($xlSpreadSheet);
 
-        //1¥Ú¡¼¥¸Ê¬¤ÎÌÀºÙ¤Î¤ßÂ¸ºß¤¹¤ë¤È¤¤¤¦Á°Äó
+        //1ãƒšãƒ¼ã‚¸åˆ†ã®æ˜ç´°ã®ã¿å­˜åœ¨ã™ã‚‹ã¨ã„ã†å‰æ
         $itemMinIndex = 0;
         $itemMaxIndex = count($aryDetail) - 1;
 
-        //¥ï¡¼¥¯¥·¡¼¥È¤ËÇ¼ÉÊ½ñ¥Ç¡¼¥¿¤òÀßÄê
+        //ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã«ç´å“æ›¸ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         fncSetSlipDataToWorkSheet(
             $xlWorkSheet,
             $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
@@ -1879,43 +1879,43 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryHeader, $aryDetail,
             $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate);
 
-        //¥¢¥¯¥Æ¥£¥Ö¥·¡¼¥ÈÊÑ¹¹
+        //ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã‚·ãƒ¼ãƒˆå¤‰æ›´
         $xlSpreadSheet->setActiveSheetIndexByName($activeSheetName);
 
-        //Writer¤À¤±Ìá¤·¤Æ¤ß¤ë
+        //Writerã ã‘æˆ»ã—ã¦ã¿ã‚‹
         $aryGenerateResult["XlsxWriter"] = $xlWriter;
     } else if ($strMode == "html") {
         if ($lngSlipKindCode == 1 || $lngSlipKindCode == 2) {
             // --------------------------------------------
-            //  ¥×¥ì¥Ó¥å¡¼HTMLÀ¸À®
+            //  ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼HTMLç”Ÿæˆ
             // --------------------------------------------
-            // ¥×¥ì¥Ó¥å¡¼ÍÑCSS
+            // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”¨CSS
             $previewStyle = "";
-            // ¥×¥ì¥Ó¥å¡¼HTML
+            // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼HTML
             $previewData = "";
 
-            // ¥Ú¡¼¥¸Ã±°Ì¤Ç¤ÎHTMLÀ¸À®
+            // ãƒšãƒ¼ã‚¸å˜ä½ã§ã®HTMLç”Ÿæˆ
             for ($page = 1; $page <= $maxPageCount; $page++) {
 
-                // ³Î¼Â¤Ë½é´ü²½¤¹¤ë¤¿¤á1¥Ú¡¼¥¸Ëè¤Ë¥¹¥×¥ì¥Ã¥É¥·¡¼¥È¤òÆÉ¤ß¹ş¤ß¤Ê¤ª¤¹
+                // ç¢ºå®Ÿã«åˆæœŸåŒ–ã™ã‚‹ãŸã‚1ãƒšãƒ¼ã‚¸æ¯ã«ã‚¹ãƒ—ãƒ¬ãƒƒãƒ‰ã‚·ãƒ¼ãƒˆã‚’èª­ã¿è¾¼ã¿ãªãŠã™
                 $xlSpreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($spreadSheetFilePath);
                 $xlWorkSheet = $xlSpreadSheet->GetSheetByName($dataSheetName);
                 $xlWriter = new \PhpOffice\PhpSpreadsheet\Writer\Html($xlSpreadSheet);
 
                 if (strlen($previewStyle) == 0) {
-                    // CSS¤ÏÁ´ÂÎ¤Ç1¤Ä¤¢¤ì¤Ğ¤è¤¤
+                    // CSSã¯å…¨ä½“ã§1ã¤ã‚ã‚Œã°ã‚ˆã„
                     $previewStyle = $xlWriter->generateStyles(true);
                 }
 
-                // ¸½ºß¤Î¥Ú¡¼¥¸¿ô¤È1¥Ú¡¼¥¸¤¢¤¿¤ê¤ÎÌÀºÙ¿ô¤«¤é
-                // ½ĞÎÏ¤¹¤ëÌÀºÙ¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤ÎºÇ¾®ÃÍ¤ÈºÇÂçÃÍ¤òµá¤á¤ë
+                // ç¾åœ¨ã®ãƒšãƒ¼ã‚¸æ•°ã¨1ãƒšãƒ¼ã‚¸ã‚ãŸã‚Šã®æ˜ç´°æ•°ã‹ã‚‰
+                // å‡ºåŠ›ã™ã‚‹æ˜ç´°ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æœ€å°å€¤ã¨æœ€å¤§å€¤ã‚’æ±‚ã‚ã‚‹
                 $itemMinIndex = ($page - 1) * $maxItemPerPage;
                 $itemMaxIndex = $page * $maxItemPerPage - 1;
                 if ($itemMaxIndex > $totalItemCount - 1) {
                     $itemMaxIndex = $totalItemCount - 1;
                 }
 
-                // 1¥Ú¡¼¥¸Ê¬¤Î¥×¥ì¥Ó¥å¡¼HTMLÀ¸À®
+                // 1ãƒšãƒ¼ã‚¸åˆ†ã®ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼HTMLç”Ÿæˆ
                 fncSetSlipDataToWorkSheet(
                     $xlWorkSheet,
                     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
@@ -1923,40 +1923,40 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
                     $aryHeader, $aryDetail,
                     $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate);
 
-                // Á´ÂÎ¤ËÄÉ²Ã
+                // å…¨ä½“ã«è¿½åŠ 
                 $pageHtml = $xlWriter->generateSheetData();
                 $previewData .= $pageHtml;
 
-                // ÆüËÜ¸ìÂĞ±ş
+                // æ—¥æœ¬èªå¯¾å¿œ
                 ini_set('default_charset', 'EUC-JP');
-                // ºÇ¸å¤ËUTF-8¤«¤éEUC-JP¤ËÊÑ´¹¤·¤¿·ë²Ì¤ò¥»¥Ã¥È
+                // æœ€å¾Œã«UTF-8ã‹ã‚‰EUC-JPã«å¤‰æ›ã—ãŸçµæœã‚’ã‚»ãƒƒãƒˆ
                 $aryGenerateResult["PreviewStyle"] = fncToEucjp($previewStyle);
                 $aryGenerateResult["PreviewData"] = fncToEucjp($previewData);
 
             }
         } else if ($lngSlipKindCode == 3) {
-            // // ÆüËÜ¸ìÂĞ±ş
+            // // æ—¥æœ¬èªå¯¾å¿œ
             ini_set('default_charset', 'EUC-JP');
             $strTemplateHeaderPath = "list/result/slip_debit_header.html";
             $strTemplatePath = "list/result/slip_debit.html";
             // $strTemplateFooterPath = "list/result/slip_debit_footer.html";
 
-            $aryParts["strslipcode"] = $strSlipCode; //Ç¼ÉÊ½ñNO.
-            $aryParts["strcustomername"] = $strCustomerName; //7:¸ÜµÒÌ¾
-            $aryParts["strcustomeraddress1"] = $aryCustomerCompany["straddress1"]; //8:¸ÜµÒ½»½ê1
-            $aryParts["strcustomeraddress2"] = $aryCustomerCompany["straddress2"]; //9:¸ÜµÒ½»½ê2
-            $aryParts["strcustomeraddress3"] = $aryCustomerCompany["straddress3"]; //10:¸ÜµÒ½»½ê3
-            $aryParts["strcustomeraddress4"] = $aryCustomerCompany["straddress4"]; //11:¸ÜµÒ½»½ê4
+            $aryParts["strslipcode"] = $strSlipCode; //ç´å“æ›¸NO.
+            $aryParts["strcustomername"] = $strCustomerName; //7:é¡§å®¢å
+            $aryParts["strcustomeraddress1"] = $aryCustomerCompany["straddress1"]; //8:é¡§å®¢ä½æ‰€1
+            $aryParts["strcustomeraddress2"] = $aryCustomerCompany["straddress2"]; //9:é¡§å®¢ä½æ‰€2
+            $aryParts["strcustomeraddress3"] = $aryCustomerCompany["straddress3"]; //10:é¡§å®¢ä½æ‰€3
+            $aryParts["strcustomeraddress4"] = $aryCustomerCompany["straddress4"]; //11:é¡§å®¢ä½æ‰€4
             $aryParts["dtmdeliverydate"] = $aryHeader["dtmdeliverydate"];
             $lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];
             $strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"];
-            // ¸ÜµÒÅÅÏÃÈÖ¹æ
+            // é¡§å®¢é›»è©±ç•ªå·
             $aryParts["strcustomertel"] = "Tel:" . $aryCustomerCompany["strtel1"] . " " . $aryCustomerCompany["strtel2"];
 
-            // ¸ÜµÒFAXÈÖ¹æ
+            // é¡§å®¢FAXç•ªå·
             $aryParts["strcustomerfax"] = "Fax.:" . $aryCustomerCompany["strfax1"] . " " . $aryCustomerCompany["strfax2"];
 
-            // ¹ç·×¶â³Û
+            // åˆè¨ˆé‡‘é¡
             $curTotalPrice = ($lngmonetaryunitcode == 1 ? "&yen; " : $strmonetaryunitsign) . " " . number_format($aryHeader["curtotalprice"], 2, '.', ',');
 
             $aryParts["curtotalprice"] = $curTotalPrice;
@@ -1969,7 +1969,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["accountname"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "KUWAGATA CO.,LTD." : "";
             $aryParts["accountno"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "1063143" : "";
 
-            // HTML½ĞÎÏ
+            // HTMLå‡ºåŠ›
             $objTemplateHeader = new clsTemplate();
             $objTemplateHeader->getTemplate($strTemplateHeaderPath);
             $strTemplateHeader = $objTemplateHeader->strTemplate;
@@ -1990,13 +1990,13 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
                 $aryParts["strsalesclassname" . ($i)] = $aryDetail[$i]["strsalesclassname"];
                 $aryParts["strnote" . ($i)] = $aryDetail[$i]["strnote"];
 
-                // ¸ÜµÒ¼õÃíÈÖ¹æ
+                // é¡§å®¢å—æ³¨ç•ªå·
                 if ($aryParts["strcustomersalescode" . ($i)] != "") {
                     $aryParts["strcustomersalescode" . ($i)] = "(PO No:" . $aryParts["strcustomersalescode" . ($i)] . ")";
                 }
             }
 
-            // ÃÖ¤­´¹¤¨
+            // ç½®ãæ›ãˆ
             $objTemplate->replace($aryParts);
             $objTemplate->complete();
             $strBodyHtml = $objTemplate->strTemplate;
@@ -2005,150 +2005,150 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
         }
         // $aryGenerateResult["PreviewData"] = $previewData;
     } else {
-        // ÉÔÌÀ¤Ê¥â¡¼¥É
-        throw new Exception("ÉÔÌÀ¤Ê¥â¡¼¥É¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿¡£strMode=" . $strMode);
+        // ä¸æ˜ãªãƒ¢ãƒ¼ãƒ‰
+        throw new Exception("ä¸æ˜ãªãƒ¢ãƒ¼ãƒ‰ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸã€‚strMode=" . $strMode);
     }
 
     // --------------------------------------------
-    //  À¸À®·ë²Ì¤òÊÖ¤¹
+    //  ç”Ÿæˆçµæœã‚’è¿”ã™
     // --------------------------------------------
     return $aryGenerateResult;
 }
 
-// Ç¼ÉÊ½ñ¥Ç¡¼¥¿¤òÄ¢É¼¥Æ¥ó¥×¥ì¡¼¥È¤Î¥ï¡¼¥¯¥·¡¼¥È¤ËÀßÄê
+// ç´å“æ›¸ãƒ‡ãƒ¼ã‚¿ã‚’å¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã«è¨­å®š
 function fncSetSlipDataToWorkSheet(
     $xlWorkSheet,
     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
     $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
     $aryHeader, $aryDetail,
     $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate) {
-    // ¡ÚÊäÂ­¡Û
-    // lngSlipNo,lngRevisionNo,strSlipCode,lngSalesNo,dtmInsertDate¤Ï¥Ç¡¼¥¿ÅĞÏ¿¤¹¤ë¤Ş¤Ç³ÎÄê¤·¤Ê¤¤¤¿¤á
-    // ¥×¥ì¥Ó¥å¡¼É½¼¨»ş¤Ï¶õ¤Ë¤»¤¶¤ë¤òÆÀ¤Ê¤¤¡£¥À¥¦¥ó¥í¡¼¥É»ş¤Ï¥Ç¡¼¥¿ÅĞÏ¿ºÑ¤ß¤Ê¤¿¤á½ĞÎÏ²ÄÇ½¡£
+    // ã€è£œè¶³ã€‘
+    // lngSlipNo,lngRevisionNo,strSlipCode,lngSalesNo,dtmInsertDateã¯ãƒ‡ãƒ¼ã‚¿ç™»éŒ²ã™ã‚‹ã¾ã§ç¢ºå®šã—ãªã„ãŸã‚
+    // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼è¡¨ç¤ºæ™‚ã¯ç©ºã«ã›ã–ã‚‹ã‚’å¾—ãªã„ã€‚ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰æ™‚ã¯ãƒ‡ãƒ¼ã‚¿ç™»éŒ²æ¸ˆã¿ãªãŸã‚å‡ºåŠ›å¯èƒ½ã€‚
 
     // ------------------------------------------
-    //   ¥Ş¥¹¥¿¥Ç¡¼¥¿¤Î¥»¥Ã¥È
+    //   ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
     // ------------------------------------------
-    // ÃÍ¤ÎÀßÄê
-    $v_lngslipno = is_null($lngSlipNo) ? "" : $lngSlipNo; //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-    $v_lngrevisionno = is_null($lngRevisionNo) ? "" : $lngRevisionNo; //2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $v_strslipcode = is_null($strSlipCode) ? "" : $strSlipCode; //3:Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
-    $v_lngsalesno = is_null($lngSalesNo) ? "" : $lngSalesNo; //4:Çä¾åÈÖ¹æ
-    $v_strcustomercode = $aryCustomerCompany["lngcompanycode"]; //5:¸ÜµÒ¥³¡¼¥É
-    $v_strcustomercompanyname = $strCustomerCompanyName; //6:¸ÜµÒ¼ÒÌ¾
-    $v_strcustomername = $strCustomerName; //7:¸ÜµÒÌ¾
-    $v_strcustomeraddress1 = $aryCustomerCompany["straddress1"]; //8:¸ÜµÒ½»½ê1
-    $v_strcustomeraddress2 = $aryCustomerCompany["straddress2"]; //9:¸ÜµÒ½»½ê2
-    $v_strcustomeraddress3 = $aryCustomerCompany["straddress3"]; //10:¸ÜµÒ½»½ê3
-    $v_strcustomeraddress4 = $aryCustomerCompany["straddress4"]; //11:¸ÜµÒ½»½ê4
-    $v_strcustomerphoneno = $aryCustomerCompany["strtel1"]; //12:¸ÜµÒÅÅÏÃÈÖ¹æ
-    $v_strcustomerfaxno = $aryCustomerCompany["strfax1"]; //13:¸ÜµÒFAXÈÖ¹æ
-    $v_strcustomerusername = $aryHeader["strcustomerusername"]; //14:¸ÜµÒÃ´Åö¼ÔÌ¾
-    $v_dtmdeliverydate = $aryHeader["dtmdeliverydate"]; //15:Ç¼ÉÊÆü
-    $v_lngdeliveryplacecode = $lngDeliveryPlaceCode; //16:Ç¼ÉÊ¾ì½ê¥³¡¼¥É
-    $v_strdeliveryplacename = $aryHeader["strdeliveryplacename"]; //17:Ç¼ÉÊ¾ì½êÌ¾
-    $v_strdeliveryplaceusername = $aryHeader["strdeliveryplaceusername"]; //18:Ç¼ÉÊ¾ì½êÃ´Åö¼ÔÌ¾
-    $v_strusercode = $aryHeader["strdrafteruserdisplaycode"]; //19:Ã´Åö¼Ô¥³¡¼¥É
-    $v_strusername = $aryHeader["strdrafteruserdisplayname"]; //20:Ã´Åö¼ÔÌ¾
-    $v_curtotalprice = $aryHeader["curtotalprice"]; //21:¹ç·×¶â³Û
-    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //22:ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    $v_strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"]; //23:ÄÌ²ßÃ±°Ì
-    $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"]; //24:²İÀÇ¶èÊ¬¥³¡¼¥É
-    $v_strtaxclassname = $aryHeader["strtaxclassname"]; //25:²İÀÇ¶èÊ¬
-    $v_curtax = $aryHeader["curtax"]; //26:¾ÃÈñÀÇÎ¨
-    $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"]; //27:»ÙÊ§ÊıË¡¥³¡¼¥É
-    $v_dtmpaymentlimit = $aryHeader["dtmpaymentlimit"]; //28:»ÙÊ§´ü¸Â
-    $v_dtminsertdate = is_null($dtmInsertDate) ? "" : $dtmInsertDate; //29:ºîÀ®Æü
-    $v_strnote = $aryHeader["strnote"]; //30:È÷¹Í
-    $v_strshippercode = $aryCustomerCompany["strstockcompanycode"]; //31:»ÅÆşÀè¥³¡¼¥É¡Ê½Ğ²Ù¼Ô¡Ë
+    // å€¤ã®è¨­å®š
+    $v_lngslipno = is_null($lngSlipNo) ? "" : $lngSlipNo; //1:ç´å“ä¼ç¥¨ç•ªå·
+    $v_lngrevisionno = is_null($lngRevisionNo) ? "" : $lngRevisionNo; //2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $v_strslipcode = is_null($strSlipCode) ? "" : $strSlipCode; //3:ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
+    $v_lngsalesno = is_null($lngSalesNo) ? "" : $lngSalesNo; //4:å£²ä¸Šç•ªå·
+    $v_strcustomercode = $aryCustomerCompany["lngcompanycode"]; //5:é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $v_strcustomercompanyname = $strCustomerCompanyName; //6:é¡§å®¢ç¤¾å
+    $v_strcustomername = $strCustomerName; //7:é¡§å®¢å
+    $v_strcustomeraddress1 = $aryCustomerCompany["straddress1"]; //8:é¡§å®¢ä½æ‰€1
+    $v_strcustomeraddress2 = $aryCustomerCompany["straddress2"]; //9:é¡§å®¢ä½æ‰€2
+    $v_strcustomeraddress3 = $aryCustomerCompany["straddress3"]; //10:é¡§å®¢ä½æ‰€3
+    $v_strcustomeraddress4 = $aryCustomerCompany["straddress4"]; //11:é¡§å®¢ä½æ‰€4
+    $v_strcustomerphoneno = $aryCustomerCompany["strtel1"]; //12:é¡§å®¢é›»è©±ç•ªå·
+    $v_strcustomerfaxno = $aryCustomerCompany["strfax1"]; //13:é¡§å®¢FAXç•ªå·
+    $v_strcustomerusername = $aryHeader["strcustomerusername"]; //14:é¡§å®¢æ‹…å½“è€…å
+    $v_dtmdeliverydate = $aryHeader["dtmdeliverydate"]; //15:ç´å“æ—¥
+    $v_lngdeliveryplacecode = $lngDeliveryPlaceCode; //16:ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
+    $v_strdeliveryplacename = $aryHeader["strdeliveryplacename"]; //17:ç´å“å ´æ‰€å
+    $v_strdeliveryplaceusername = $aryHeader["strdeliveryplaceusername"]; //18:ç´å“å ´æ‰€æ‹…å½“è€…å
+    $v_strusercode = $aryHeader["strdrafteruserdisplaycode"]; //19:æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+    $v_strusername = $aryHeader["strdrafteruserdisplayname"]; //20:æ‹…å½“è€…å
+    $v_curtotalprice = $aryHeader["curtotalprice"]; //21:åˆè¨ˆé‡‘é¡
+    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //22:é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    $v_strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"]; //23:é€šè²¨å˜ä½
+    $v_lngtaxclasscode = $aryHeader["lngtaxclasscode"]; //24:èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    $v_strtaxclassname = $aryHeader["strtaxclassname"]; //25:èª²ç¨åŒºåˆ†
+    $v_curtax = $aryHeader["curtax"]; //26:æ¶ˆè²»ç¨ç‡
+    $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"]; //27:æ”¯æ‰•æ–¹æ³•ã‚³ãƒ¼ãƒ‰
+    $v_dtmpaymentlimit = $aryHeader["dtmpaymentlimit"]; //28:æ”¯æ‰•æœŸé™
+    $v_dtminsertdate = is_null($dtmInsertDate) ? "" : $dtmInsertDate; //29:ä½œæˆæ—¥
+    $v_strnote = $aryHeader["strnote"]; //30:å‚™è€ƒ
+    $v_strshippercode = $aryCustomerCompany["strstockcompanycode"]; //31:ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰ï¼ˆå‡ºè·è€…ï¼‰
 
-    // ¥»¥ë¤ËÃÍ¤ò¥»¥Ã¥È
-    setCellValue($xlWorkSheet, "B3", mb_convert_encoding($v_lngslipno, 'euc-jp', 'UTF8')); //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-    setCellValue($xlWorkSheet, "C3", mb_convert_encoding($v_lngrevisionno, 'euc-jp', 'UTF8')); //2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    setCellValue($xlWorkSheet, "D3", mb_convert_encoding($v_strslipcode, 'euc-jp', 'UTF8')); //3:Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
-    setCellValue($xlWorkSheet, "E3", mb_convert_encoding($v_lngsalesno, 'euc-jp', 'UTF8')); //4:Çä¾åÈÖ¹æ
-    setCellValue($xlWorkSheet, "F3", mb_convert_encoding($v_strcustomercode, 'euc-jp', 'UTF8')); //5:¸ÜµÒ¥³¡¼¥É
-    setCellValue($xlWorkSheet, "G3", $v_strcustomercompanyname); //6:¸ÜµÒ¼ÒÌ¾
-    setCellValue($xlWorkSheet, "H3", $v_strcustomername); //7:¸ÜµÒÌ¾
-    setCellValue($xlWorkSheet, "I3", mb_convert_encoding($v_strcustomeraddress1, 'euc-jp', 'UTF8')); //8:¸ÜµÒ½»½ê1
-    setCellValue($xlWorkSheet, "J3", mb_convert_encoding($v_strcustomeraddress2, 'euc-jp', 'UTF8')); //9:¸ÜµÒ½»½ê2
-    setCellValue($xlWorkSheet, "K3", mb_convert_encoding($v_strcustomeraddress3, 'euc-jp', 'UTF8')); //10:¸ÜµÒ½»½ê3
-    setCellValue($xlWorkSheet, "L3", mb_convert_encoding($v_strcustomeraddress4, 'euc-jp', 'UTF8')); //11:¸ÜµÒ½»½ê4
-    setCellValue($xlWorkSheet, "M3", mb_convert_encoding($v_strcustomerphoneno, 'euc-jp', 'UTF8')); //12:¸ÜµÒÅÅÏÃÈÖ¹æ
-    setCellValue($xlWorkSheet, "N3", mb_convert_encoding($v_strcustomerfaxno, 'euc-jp', 'UTF8')); //13:¸ÜµÒFAXÈÖ¹æ
-    setCellValue($xlWorkSheet, "O3", mb_convert_encoding($v_strcustomerusername, 'euc-jp', 'UTF8')); //14:¸ÜµÒÃ´Åö¼ÔÌ¾
-    setCellValue($xlWorkSheet, "P3", mb_convert_encoding($v_dtmdeliverydate, 'euc-jp', 'UTF8')); //15:Ç¼ÉÊÆü
-    setCellValue($xlWorkSheet, "Q3", mb_convert_encoding($v_lngdeliveryplacecode, 'euc-jp', 'UTF8')); //16:Ç¼ÉÊ¾ì½ê¥³¡¼¥É
-    setCellValue($xlWorkSheet, "R3", mb_convert_encoding($v_strdeliveryplacename, 'euc-jp', 'UTF8')); //17:Ç¼ÉÊ¾ì½êÌ¾
-    setCellValue($xlWorkSheet, "S3", mb_convert_encoding($v_strdeliveryplaceusername, 'euc-jp', 'UTF8')); //18:Ç¼ÉÊ¾ì½êÃ´Åö¼ÔÌ¾
-    setCellValue($xlWorkSheet, "T3", mb_convert_encoding($v_strusercode, 'euc-jp', 'UTF8')); //19:Ã´Åö¼Ô¥³¡¼¥É
-    setCellValue($xlWorkSheet, "U3", mb_convert_encoding($v_strusername, 'euc-jp', 'UTF8')); //20:Ã´Åö¼ÔÌ¾
-    setCellValue($xlWorkSheet, "V3", $v_curtotalprice); //21:¹ç·×¶â³Û
-    setCellValue($xlWorkSheet, "W3", mb_convert_encoding($v_lngmonetaryunitcode, 'euc-jp', 'UTF8')); //22:ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    setCellValue($xlWorkSheet, "X3", mb_convert_encoding($v_strmonetaryunitsign, 'euc-jp', 'UTF8')); //23:ÄÌ²ßÃ±°Ì
-    setCellValue($xlWorkSheet, "Y3", mb_convert_encoding($v_lngtaxclasscode, 'euc-jp', 'UTF8')); //24:²İÀÇ¶èÊ¬¥³¡¼¥É
-    setCellValue($xlWorkSheet, "Z3", mb_convert_encoding($v_strtaxclassname, 'euc-jp', 'UTF8')); //25:²İÀÇ¶èÊ¬
-    setCellValue($xlWorkSheet, "AA3", mb_convert_encoding($v_curtax, 'euc-jp', 'UTF8')); //26:¾ÃÈñÀÇÎ¨
-    setCellValue($xlWorkSheet, "AB3", mb_convert_encoding($v_lngpaymentmethodcode, 'euc-jp', 'UTF8')); //27:»ÙÊ§ÊıË¡¥³¡¼¥É
-    setCellValue($xlWorkSheet, "AC3", mb_convert_encoding($v_dtmpaymentlimit, 'euc-jp', 'UTF8')); //28:»ÙÊ§´ü¸Â
-    setCellValue($xlWorkSheet, "AD3", mb_convert_encoding($v_dtminsertdate, 'euc-jp', 'UTF8')); //29:ºîÀ®Æü
-    setCellValue($xlWorkSheet, "AE3", mb_convert_encoding($v_strnote, 'euc-jp', 'UTF8')); //30:È÷¹Í
-    setCellValue($xlWorkSheet, "AF3", mb_convert_encoding($v_strshippercode, 'euc-jp', 'UTF8')); //31:»ÅÆşÀè¥³¡¼¥É¡Ê½Ğ²Ù¼Ô¡Ë
+    // ã‚»ãƒ«ã«å€¤ã‚’ã‚»ãƒƒãƒˆ
+    setCellValue($xlWorkSheet, "B3", mb_convert_encoding($v_lngslipno, 'euc-jp', 'UTF8')); //1:ç´å“ä¼ç¥¨ç•ªå·
+    setCellValue($xlWorkSheet, "C3", mb_convert_encoding($v_lngrevisionno, 'euc-jp', 'UTF8')); //2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    setCellValue($xlWorkSheet, "D3", mb_convert_encoding($v_strslipcode, 'euc-jp', 'UTF8')); //3:ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
+    setCellValue($xlWorkSheet, "E3", mb_convert_encoding($v_lngsalesno, 'euc-jp', 'UTF8')); //4:å£²ä¸Šç•ªå·
+    setCellValue($xlWorkSheet, "F3", mb_convert_encoding($v_strcustomercode, 'euc-jp', 'UTF8')); //5:é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    setCellValue($xlWorkSheet, "G3", $v_strcustomercompanyname); //6:é¡§å®¢ç¤¾å
+    setCellValue($xlWorkSheet, "H3", $v_strcustomername); //7:é¡§å®¢å
+    setCellValue($xlWorkSheet, "I3", mb_convert_encoding($v_strcustomeraddress1, 'euc-jp', 'UTF8')); //8:é¡§å®¢ä½æ‰€1
+    setCellValue($xlWorkSheet, "J3", mb_convert_encoding($v_strcustomeraddress2, 'euc-jp', 'UTF8')); //9:é¡§å®¢ä½æ‰€2
+    setCellValue($xlWorkSheet, "K3", mb_convert_encoding($v_strcustomeraddress3, 'euc-jp', 'UTF8')); //10:é¡§å®¢ä½æ‰€3
+    setCellValue($xlWorkSheet, "L3", mb_convert_encoding($v_strcustomeraddress4, 'euc-jp', 'UTF8')); //11:é¡§å®¢ä½æ‰€4
+    setCellValue($xlWorkSheet, "M3", mb_convert_encoding($v_strcustomerphoneno, 'euc-jp', 'UTF8')); //12:é¡§å®¢é›»è©±ç•ªå·
+    setCellValue($xlWorkSheet, "N3", mb_convert_encoding($v_strcustomerfaxno, 'euc-jp', 'UTF8')); //13:é¡§å®¢FAXç•ªå·
+    setCellValue($xlWorkSheet, "O3", mb_convert_encoding($v_strcustomerusername, 'euc-jp', 'UTF8')); //14:é¡§å®¢æ‹…å½“è€…å
+    setCellValue($xlWorkSheet, "P3", mb_convert_encoding($v_dtmdeliverydate, 'euc-jp', 'UTF8')); //15:ç´å“æ—¥
+    setCellValue($xlWorkSheet, "Q3", mb_convert_encoding($v_lngdeliveryplacecode, 'euc-jp', 'UTF8')); //16:ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
+    setCellValue($xlWorkSheet, "R3", mb_convert_encoding($v_strdeliveryplacename, 'euc-jp', 'UTF8')); //17:ç´å“å ´æ‰€å
+    setCellValue($xlWorkSheet, "S3", mb_convert_encoding($v_strdeliveryplaceusername, 'euc-jp', 'UTF8')); //18:ç´å“å ´æ‰€æ‹…å½“è€…å
+    setCellValue($xlWorkSheet, "T3", mb_convert_encoding($v_strusercode, 'euc-jp', 'UTF8')); //19:æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+    setCellValue($xlWorkSheet, "U3", mb_convert_encoding($v_strusername, 'euc-jp', 'UTF8')); //20:æ‹…å½“è€…å
+    setCellValue($xlWorkSheet, "V3", $v_curtotalprice); //21:åˆè¨ˆé‡‘é¡
+    setCellValue($xlWorkSheet, "W3", mb_convert_encoding($v_lngmonetaryunitcode, 'euc-jp', 'UTF8')); //22:é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    setCellValue($xlWorkSheet, "X3", mb_convert_encoding($v_strmonetaryunitsign, 'euc-jp', 'UTF8')); //23:é€šè²¨å˜ä½
+    setCellValue($xlWorkSheet, "Y3", mb_convert_encoding($v_lngtaxclasscode, 'euc-jp', 'UTF8')); //24:èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    setCellValue($xlWorkSheet, "Z3", mb_convert_encoding($v_strtaxclassname, 'euc-jp', 'UTF8')); //25:èª²ç¨åŒºåˆ†
+    setCellValue($xlWorkSheet, "AA3", mb_convert_encoding($v_curtax, 'euc-jp', 'UTF8')); //26:æ¶ˆè²»ç¨ç‡
+    setCellValue($xlWorkSheet, "AB3", mb_convert_encoding($v_lngpaymentmethodcode, 'euc-jp', 'UTF8')); //27:æ”¯æ‰•æ–¹æ³•ã‚³ãƒ¼ãƒ‰
+    setCellValue($xlWorkSheet, "AC3", mb_convert_encoding($v_dtmpaymentlimit, 'euc-jp', 'UTF8')); //28:æ”¯æ‰•æœŸé™
+    setCellValue($xlWorkSheet, "AD3", mb_convert_encoding($v_dtminsertdate, 'euc-jp', 'UTF8')); //29:ä½œæˆæ—¥
+    setCellValue($xlWorkSheet, "AE3", mb_convert_encoding($v_strnote, 'euc-jp', 'UTF8')); //30:å‚™è€ƒ
+    setCellValue($xlWorkSheet, "AF3", mb_convert_encoding($v_strshippercode, 'euc-jp', 'UTF8')); //31:ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰ï¼ˆå‡ºè·è€…ï¼‰
 
     // ------------------------------------------
-    //   ÌÀºÙ¥Ç¡¼¥¿¤Î¥»¥Ã¥È
+    //   æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
     // ------------------------------------------
-    // ÌÀºÙ¥Ç¡¼¥¿¤ò¥»¥Ã¥È¤¹¤ë³«»Ï¹Ô
+    // æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹é–‹å§‹è¡Œ
     $startRowIndex = 6;
     for ($i = $itemMinIndex; $i <= $itemMaxIndex; $i++) {
         $d = $aryDetail[$i];
 
-        // ÃÍ¤ÎÀßÄê
-        $v_lngslipno = is_null($lngSlipNo) ? "" : $lngSlipNo; //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-        $v_lngslipdetailno = $d["rownumber"]; //2:Ç¼ÉÊÅÁÉ¼ÌÀºÙÈÖ¹æ
-        $v_lngrevisionno = is_null($lngRevisionNo) ? "" : $lngRevisionNo; //3:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $v_strcustomersalescode = $d["strcustomerreceivecode"]; //4:¸ÜµÒ¼õÃíÈÖ¹æ
-        $v_lngsalesclasscode = $d["lngsalesclasscode"]; //5:Çä¾å¶èÊ¬¥³¡¼¥É
-        $v_strsalesclassname = $d["strsalesclassname"]; //6:Çä¾å¶èÊ¬Ì¾
-        $v_strgoodscode = $d["strgoodscode"]; //7:¸ÜµÒÉÊÈÖ
-        $v_strproductcode = $d["strproductcode"]; //8:À½ÉÊ¥³¡¼¥É
-        $v_strrevisecode = $d["strrevisecode"]; //9:ºÆÈÎ¥³¡¼¥É
-        $v_strproductname = $d["strproductname"]; //10:À½ÉÊÌ¾
-        $v_strproductenglishname = $d["strproductenglishname"]; //11:À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
-        $v_curproductprice = number_format($d["curproductprice"]); //12:Ã±²Á
-        $v_lngquantity = number_format($d["lngunitquantity"]); //13:Æş¿ô
-        $v_lngproductquantity = number_format($d["lngproductquantity"]); //14:¿ôÎÌ
-        $v_lngproductunitcode = $d["lngproductunitcode"]; //15:À½ÉÊÃ±°Ì¥³¡¼¥É
-        $v_strproductunitname = $d["strproductunitname"]; //16:À½ÉÊÃ±°ÌÌ¾
-        $v_cursubtotalprice = $d["cursubtotalprice"]; //17:¾®·×
-        $v_strnote = $d["strnote"]; //18:ÌÀºÙÈ÷¹Í
+        // å€¤ã®è¨­å®š
+        $v_lngslipno = is_null($lngSlipNo) ? "" : $lngSlipNo; //1:ç´å“ä¼ç¥¨ç•ªå·
+        $v_lngslipdetailno = $d["rownumber"]; //2:ç´å“ä¼ç¥¨æ˜ç´°ç•ªå·
+        $v_lngrevisionno = is_null($lngRevisionNo) ? "" : $lngRevisionNo; //3:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $v_strcustomersalescode = $d["strcustomerreceivecode"]; //4:é¡§å®¢å—æ³¨ç•ªå·
+        $v_lngsalesclasscode = $d["lngsalesclasscode"]; //5:å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $v_strsalesclassname = $d["strsalesclassname"]; //6:å£²ä¸ŠåŒºåˆ†å
+        $v_strgoodscode = $d["strgoodscode"]; //7:é¡§å®¢å“ç•ª
+        $v_strproductcode = $d["strproductcode"]; //8:è£½å“ã‚³ãƒ¼ãƒ‰
+        $v_strrevisecode = $d["strrevisecode"]; //9:å†è²©ã‚³ãƒ¼ãƒ‰
+        $v_strproductname = $d["strproductname"]; //10:è£½å“å
+        $v_strproductenglishname = $d["strproductenglishname"]; //11:è£½å“åï¼ˆè‹±èªï¼‰
+        $v_curproductprice = number_format($d["curproductprice"]); //12:å˜ä¾¡
+        $v_lngquantity = number_format($d["lngunitquantity"]); //13:å…¥æ•°
+        $v_lngproductquantity = number_format($d["lngproductquantity"]); //14:æ•°é‡
+        $v_lngproductunitcode = $d["lngproductunitcode"]; //15:è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+        $v_strproductunitname = $d["strproductunitname"]; //16:è£½å“å˜ä½å
+        $v_cursubtotalprice = $d["cursubtotalprice"]; //17:å°è¨ˆ
+        $v_strnote = $d["strnote"]; //18:æ˜ç´°å‚™è€ƒ
 
-        // ¥»¥ë¤ËÃÍ¤ò¥»¥Ã¥È
+        // ã‚»ãƒ«ã«å€¤ã‚’ã‚»ãƒƒãƒˆ
         $r = $startRowIndex + ($i - $itemMinIndex);
-        setCellDetailValue($xlWorkSheet, "B", $r, mb_convert_encoding($v_lngslipno, 'euc-jp', 'UTF8')); //1:Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-        setCellDetailValue($xlWorkSheet, "C", $r, mb_convert_encoding($v_lngslipdetailno, 'euc-jp', 'UTF8')); //2:Ç¼ÉÊÅÁÉ¼ÌÀºÙÈÖ¹æ
-        setCellDetailValue($xlWorkSheet, "D", $r, mb_convert_encoding($v_lngrevisionno, 'euc-jp', 'UTF8')); //3:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        setCellDetailValue($xlWorkSheet, "E", $r, mb_convert_encoding($v_strcustomersalescode, 'euc-jp', 'UTF8')); //4:¸ÜµÒ¼õÃíÈÖ¹æ
-        setCellDetailValue($xlWorkSheet, "F", $r, mb_convert_encoding($v_lngsalesclasscode, 'euc-jp', 'UTF8')); //5:Çä¾å¶èÊ¬¥³¡¼¥É
-        setCellDetailValue($xlWorkSheet, "G", $r, mb_convert_encoding($v_strsalesclassname, 'euc-jp', 'UTF8')); //6:Çä¾å¶èÊ¬Ì¾
-        setCellDetailValue($xlWorkSheet, "H", $r, mb_convert_encoding($v_strgoodscode, 'euc-jp', 'UTF8')); //7:¸ÜµÒÉÊÈÖ
-        setCellDetailValue($xlWorkSheet, "I", $r, mb_convert_encoding($v_strproductcode, 'euc-jp', 'UTF8')); //8:À½ÉÊ¥³¡¼¥É
-        setCellDetailValue($xlWorkSheet, "J", $r, mb_convert_encoding($v_strrevisecode, 'euc-jp', 'UTF8')); //9:ºÆÈÎ¥³¡¼¥É
-        setCellDetailValue($xlWorkSheet, "K", $r, mb_convert_encoding($v_strproductname, 'euc-jp', 'UTF8')); //10:À½ÉÊÌ¾
-        setCellDetailValue($xlWorkSheet, "L", $r, mb_convert_encoding($v_strproductenglishname, 'euc-jp', 'UTF8')); //11:À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
-        setCellDetailValue($xlWorkSheet, "M", $r, $v_curproductprice); //12:Ã±²Á
-        setCellDetailValue($xlWorkSheet, "N", $r, $v_lngquantity); //13:Æş¿ô
-        setCellDetailValue($xlWorkSheet, "O", $r, $v_lngproductquantity); //14:¿ôÎÌ
-        setCellDetailValue($xlWorkSheet, "P", $r, $v_lngproductunitcode); //15:À½ÉÊÃ±°Ì¥³¡¼¥É
-        setCellDetailValue($xlWorkSheet, "Q", $r, mb_convert_encoding($v_strproductunitname, 'euc-jp', 'UTF8')); //16:À½ÉÊÃ±°ÌÌ¾
-        setCellDetailValue($xlWorkSheet, "R", $r, $v_cursubtotalprice); //17:¾®·×
-        setCellDetailValue($xlWorkSheet, "S", $r, mb_convert_encoding($v_strnote, 'euc-jp', 'UTF8')); //18:ÌÀºÙÈ÷¹Í
+        setCellDetailValue($xlWorkSheet, "B", $r, mb_convert_encoding($v_lngslipno, 'euc-jp', 'UTF8')); //1:ç´å“ä¼ç¥¨ç•ªå·
+        setCellDetailValue($xlWorkSheet, "C", $r, mb_convert_encoding($v_lngslipdetailno, 'euc-jp', 'UTF8')); //2:ç´å“ä¼ç¥¨æ˜ç´°ç•ªå·
+        setCellDetailValue($xlWorkSheet, "D", $r, mb_convert_encoding($v_lngrevisionno, 'euc-jp', 'UTF8')); //3:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        setCellDetailValue($xlWorkSheet, "E", $r, mb_convert_encoding($v_strcustomersalescode, 'euc-jp', 'UTF8')); //4:é¡§å®¢å—æ³¨ç•ªå·
+        setCellDetailValue($xlWorkSheet, "F", $r, mb_convert_encoding($v_lngsalesclasscode, 'euc-jp', 'UTF8')); //5:å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        setCellDetailValue($xlWorkSheet, "G", $r, mb_convert_encoding($v_strsalesclassname, 'euc-jp', 'UTF8')); //6:å£²ä¸ŠåŒºåˆ†å
+        setCellDetailValue($xlWorkSheet, "H", $r, mb_convert_encoding($v_strgoodscode, 'euc-jp', 'UTF8')); //7:é¡§å®¢å“ç•ª
+        setCellDetailValue($xlWorkSheet, "I", $r, mb_convert_encoding($v_strproductcode, 'euc-jp', 'UTF8')); //8:è£½å“ã‚³ãƒ¼ãƒ‰
+        setCellDetailValue($xlWorkSheet, "J", $r, mb_convert_encoding($v_strrevisecode, 'euc-jp', 'UTF8')); //9:å†è²©ã‚³ãƒ¼ãƒ‰
+        setCellDetailValue($xlWorkSheet, "K", $r, mb_convert_encoding($v_strproductname, 'euc-jp', 'UTF8')); //10:è£½å“å
+        setCellDetailValue($xlWorkSheet, "L", $r, mb_convert_encoding($v_strproductenglishname, 'euc-jp', 'UTF8')); //11:è£½å“åï¼ˆè‹±èªï¼‰
+        setCellDetailValue($xlWorkSheet, "M", $r, $v_curproductprice); //12:å˜ä¾¡
+        setCellDetailValue($xlWorkSheet, "N", $r, $v_lngquantity); //13:å…¥æ•°
+        setCellDetailValue($xlWorkSheet, "O", $r, $v_lngproductquantity); //14:æ•°é‡
+        setCellDetailValue($xlWorkSheet, "P", $r, $v_lngproductunitcode); //15:è£½å“å˜ä½ã‚³ãƒ¼ãƒ‰
+        setCellDetailValue($xlWorkSheet, "Q", $r, mb_convert_encoding($v_strproductunitname, 'euc-jp', 'UTF8')); //16:è£½å“å˜ä½å
+        setCellDetailValue($xlWorkSheet, "R", $r, $v_cursubtotalprice); //17:å°è¨ˆ
+        setCellDetailValue($xlWorkSheet, "S", $r, mb_convert_encoding($v_strnote, 'euc-jp', 'UTF8')); //18:æ˜ç´°å‚™è€ƒ
 
     }
 
 }
 
-// ¥Ú¡¼¥¸Ëè¤Î¾ğÊó¤«¤éÅĞÏ¿·ë²ÌHTML¤òÀ¸À®
+// ãƒšãƒ¼ã‚¸æ¯ã®æƒ…å ±ã‹ã‚‰ç™»éŒ²çµæœHTMLã‚’ç”Ÿæˆ
 function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
 {
     $strHtml = "";
@@ -2156,17 +2156,17 @@ function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
     for ($i = 0; $i < count($aryPerPage); $i++) {
         $aryPage = $aryPerPage[$i];
 
-        // Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
+        // ç´å“ä¼ç¥¨ç•ªå·
         $lngSlipNo = $aryPage["lngSlipNo"];
-        // Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
+        // ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
         $strSlipCode = $aryPage["strSlipCode"];
-        // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+        // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
         $lngRevisionNo = $aryPage["lngRevisionNo"];
 
-        // ºîÀ®Æü¤Î¼èÆÀ
+        // ä½œæˆæ—¥ã®å–å¾—
         $dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
 
-        // HTML¤ÎÀ¸À®¡Ê/sc/finish2/finish2.js ¤Î¥Õ¥¡¥ó¥¯¥·¥ç¥ó¸Æ¤Ó½Ğ¤·¤ò´Ş¤à¡Ë
+        // HTMLã®ç”Ÿæˆï¼ˆ/sc/finish2/finish2.js ã®ãƒ•ã‚¡ãƒ³ã‚¯ã‚·ãƒ§ãƒ³å‘¼ã³å‡ºã—ã‚’å«ã‚€ï¼‰
         $aryHtml = array();
         $aryHtml[] = "                <tr>";
         $aryHtml[] = "                    <td class='item-value'>" . $strSlipCode . "</td>";
@@ -2186,7 +2186,7 @@ function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
 
 }
 
-// ÀÁµá½èÍıºÑ¤ß¥Á¥§¥Ã¥¯
+// è«‹æ±‚å‡¦ç†æ¸ˆã¿ãƒã‚§ãƒƒã‚¯
 function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
 {
     $strQuery = "SELECT *";
@@ -2212,7 +2212,7 @@ function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
 
 }
 
-// ¹¹¿·Á°¤ÎÌÀºÙ¤ËÉ³¤Å¤¯¼õÃí¥Ç¡¼¥¿¤Î¥í¥Ã¥¯
+// æ›´æ–°å‰ã®æ˜ç´°ã«ç´ã¥ãå—æ³¨ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯
 function fncLockReceiveByOldDetail($lngSlipNo, $lngRevisisonNo, $objDB)
 {
 
@@ -2237,7 +2237,7 @@ function fncLockReceiveByOldDetail($lngSlipNo, $lngRevisisonNo, $objDB)
     return true;
 }
 
-// ¹¹¿·Á°¤ÎÌÀºÙ¤ËÉ³¤Å¤¯¼õÃí¥Ç¡¼¥¿¤Î¥¹¥Æ¡¼¥¿¥¹¥ê¥»¥Ã¥È¡ÊÄù¤áºÑ¤Ï½ü³°¡Ë
+// æ›´æ–°å‰ã®æ˜ç´°ã«ç´ã¥ãå—æ³¨ãƒ‡ãƒ¼ã‚¿ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒªã‚»ãƒƒãƒˆï¼ˆç· ã‚æ¸ˆã¯é™¤å¤–ï¼‰
 function fncResetReceiveStatus($lngSlipNo, $lngRevisisonNo, $objDB)
 {
 

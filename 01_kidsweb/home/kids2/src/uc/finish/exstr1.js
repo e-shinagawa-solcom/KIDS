@@ -2,9 +2,9 @@
 
 
 //------------------------------------------
-// ²òÀâ : Ìá¤ë¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : æˆ»ã‚‹ãƒœã‚¿ãƒ³ç”Ÿæˆ
 //------------------------------------------
-var CloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackJOn(this);" onmouseout="BlownBackJOff(this);" src="' + blownbackJ1 + '" width="72" height="20" border="0" alt="Ìá¤ë"></a>';
+var CloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackJOn(this);" onmouseout="BlownBackJOff(this);" src="' + blownbackJ1 + '" width="72" height="20" border="0" alt="æˆ»ã‚‹"></a>';
 var CloseBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackEOn(this);" onmouseout="BlownBackEOff(this);fncAlphaOff( this );" src="' + blownbackE1 + '" width="72" height="20" border="0" alt="BACK"></a>';
 
 
@@ -64,7 +64,7 @@ function ChgEtoJ()
 		///// INPUT A /////
 		SegAHeader.innerHTML = headerAJ;
 
-		FinishRegist.innerText = 'ÅĞÏ¿´°Î»';
+		FinishRegist.innerText = 'ç™»éŒ²å®Œäº†';
 		CloseBt.innerHTML      = CloseBtJ1;
 
 

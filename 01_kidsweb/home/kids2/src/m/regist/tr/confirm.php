@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ÁÛÄê¥ì¡¼¥È¥Ş¥¹¥¿ ³ÎÇ§²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† æƒ³å®šãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ ç¢ºèªç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.Solcom.co.jp/ 
@@ -17,7 +17,7 @@
 // edit.php -> dtmapplystartdate   -> confirm.php
 // edit.php -> dtmapplyenddate     -> confirm.php
 
-// ¼Â¹Ô¤Ø
+// å®Ÿè¡Œã¸
 // confirm.php -> strSessionID        -> action.php
 // confirm.php -> lngActionCode       -> action.php
 // confirm.php -> lngmonetaryunitcode -> action.php
@@ -26,31 +26,31 @@
 // confirm.php -> dtmapplyenddate     -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -61,7 +61,7 @@ $aryCheck["curconversionrate"]   = "null:number(0.000001,9999999999.999999)";
 $aryCheck["dtmapplystartdate"]   = "null:date(/)";
 $aryCheck["dtmapplyenddate"]     = "null:date(/)";
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 if ( $aryData["dtmapplystartdate"] > $aryData["dtmapplyenddate"] )
 {
@@ -69,31 +69,31 @@ if ( $aryData["dtmapplystartdate"] > $aryData["dtmapplyenddate"] )
 	$aryCheckResult["dtmapplyenddate_Error"]   = 1;
 }
 
-// ¥¨¥é¡¼¤¬¤Ê¤¤¾ì¹ç¡¢¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®¡¢Ê¸»úÎó¥Á¥§¥Ã¥¯¼Â¹Ô
+// ã‚¨ãƒ©ãƒ¼ãŒãªã„å ´åˆã€ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆã€æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( !$aryCheckResult["strSessionID"] && !join ( $aryCheckResult ) )
 {
-	// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+	// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	$objMaster = new clsMaster();
 	$objMaster->setMasterTable( "m_TemporaryRate", "lngmonetaryunitcode", $aryData["lngmonetaryunitcode"], Array ( "dtmapplystartdate" => $aryData["dtmapplystartdate"] ), $objDB );
 	$objMaster->setAryMasterInfo( $aryData["lngmonetaryunitcode"], "" );
 }
 //////////////////////////////////////////////////////////////////////////
-// ½èÍı¤ÎÍ­¸úÀ­¤ò¥Á¥§¥Ã¥¯
+// å‡¦ç†ã®æœ‰åŠ¹æ€§ã‚’ãƒã‚§ãƒƒã‚¯
 //////////////////////////////////////////////////////////////////////////
-// ( ÅĞÏ¿ ¤Ş¤¿¤Ï ½¤Àµ ) ¥¨¥é¡¼¤¬¤Ê¤¤ ¾ì¹ç¡¢
-// ¿·µ¬ÅĞÏ¿¡¢½¤Àµ¥Á¥§¥Ã¥¯¼Â¹Ô
+// ( ç™»éŒ² ã¾ãŸã¯ ä¿®æ­£ ) ã‚¨ãƒ©ãƒ¼ãŒãªã„ å ´åˆã€
+// æ–°è¦ç™»éŒ²ã€ä¿®æ­£ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode"] == DEF_ACTION_UPDATE ) && !join ( $aryCheckResult ) )
 {
-	// ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
-	// ³«»Ï¡¢½ªÎ»2¤Ä¤È¤â»ş´ü¤¬½Å¤Ê¤é¤Ê¤¤°Ê³°¤Î¾ò·ï¤òÉÕ²Ã
-	// AND NOT ( ½ªÎ»Ç¯·îÆü < ÆşÎÏ³«»ÏÇ¯·îÆü OR ³«»ÏÇ¯·îÆü > ÆşÎÏ½ªÎ»Ç¯·îÆü )
-	// ¾ò·ïÄÉ²Ã
+	// ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
+	// é–‹å§‹ã€çµ‚äº†2ã¤ã¨ã‚‚æ™‚æœŸãŒé‡ãªã‚‰ãªã„ä»¥å¤–ã®æ¡ä»¶ã‚’ä»˜åŠ 
+	// AND NOT ( çµ‚äº†å¹´æœˆæ—¥ < å…¥åŠ›é–‹å§‹å¹´æœˆæ—¥ OR é–‹å§‹å¹´æœˆæ—¥ > å…¥åŠ›çµ‚äº†å¹´æœˆæ—¥ )
+	// æ¡ä»¶è¿½åŠ 
 	$objMaster->aryCheckQuery["INSERT"] .= " AND NOT (dtmapplyenddate < '" . $aryData["dtmapplystartdate"] . "' OR dtmapplystartdate > '" . $aryData["dtmapplyenddate"] . "' )";
 	list ( $lngResultID, $lngResultNum ) = fncQuery ( $objMaster->aryCheckQuery["INSERT"], $objDB );
 
-	// ¿·µ¬ÅĞÏ¿ ¤«¤Ä ·ë²Ì·ï¿ô¤¬0°Ê¾å
-	// ¤Ş¤¿¤Ï
-	// ½¤Àµ ¤«¤Ä ·ë²Ì·ï¿ô¤¬1°Ê³° ¤Î¾ì¹ç¡¢¥¨¥é¡¼
+	// æ–°è¦ç™»éŒ² ã‹ã¤ çµæœä»¶æ•°ãŒ0ä»¥ä¸Š
+	// ã¾ãŸã¯
+	// ä¿®æ­£ ã‹ã¤ çµæœä»¶æ•°ãŒ1ä»¥å¤– ã®å ´åˆã€ã‚¨ãƒ©ãƒ¼
 	if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && $lngResultNum > 0 ) || ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $lngResultNum != 1 ) )
 	{
 		$aryCheckResult[$objMaster->aryColumnName[0] . "_Error"] = 1;
@@ -101,16 +101,16 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 	}
 }
 
-// ¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍı
+// ã‚¨ãƒ©ãƒ¼é …ç›®è¡¨ç¤ºå‡¦ç†
 list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB );
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½ĞÎÏ
+// å‡ºåŠ›
 //////////////////////////////////////////////////////////////////////////
 $aryParts["lngActionCode"]   = $aryData["lngActionCode"];
 $aryParts["strSessionID"]    = $aryData["strSessionID"];
-// lngmonetaryunitcode ¤Î(CODE+NAME)¼èÆÀ
+// lngmonetaryunitcode ã®(CODE+NAME)å–å¾—
 $aryMonetaryUnitCode = fncGetMasterValue( "m_MonetaryUnit", "lngmonetaryunitcode", "strMonetaryUnitName || ':' || strMonetaryUnitSign", "Array", "", $objDB );
 $aryParts["lngMonetaryUnitName"] = $aryMonetaryUnitCode[$aryData["lngmonetaryunitcode"]];
 $aryParts["lngmonetaryunitcode"] = $aryData["lngmonetaryunitcode"];

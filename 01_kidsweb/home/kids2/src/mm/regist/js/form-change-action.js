@@ -1,4 +1,4 @@
-// Ä¢É¼¶èÊ¬¤¬ÇÑ´şÈÇ¤Î¾ì¹ç¡¢Êİ´É¹©¾ì¡¢°ÜÆ°¹©¾ìÍó¤òÌµ¸ú¤Ë¤¹¤ë
+// å¸³ç¥¨åŒºåˆ†ãŒå»ƒæ£„ç‰ˆã®å ´åˆã€ä¿ç®¡å·¥å ´ã€ç§»å‹•å·¥å ´æ¬„ã‚’ç„¡åŠ¹ã«ã™ã‚‹
 $('select[name="Status"]').on({
     'change': function(){
         if ( $(this).prop('selectedIndex') == 0 | $(this).prop('selectedIndex') == 1 | $(this).prop('selectedIndex') == 2 ) {
@@ -17,10 +17,10 @@ $('select[name="Status"]').on({
     }
 });
 
-// À½ÉÊ¥³¡¼¥ÉÊÑ¹¹»şÊİ´É¹©¾ì¤ò¥ê¥»¥Ã¥È
+// è£½å“ã‚³ãƒ¼ãƒ‰å¤‰æ›´æ™‚ä¿ç®¡å·¥å ´ã‚’ãƒªã‚»ãƒƒãƒˆ
 $('input[name="ProductCode"]').on({
     'change': function(){
-        // Êİ´É¹©¾ì¥ê¥»¥Ã¥È
+        // ä¿ç®¡å·¥å ´ãƒªã‚»ãƒƒãƒˆ
         $('input[name="SourceFactory"]').val('').trigger('change');
         $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
     }

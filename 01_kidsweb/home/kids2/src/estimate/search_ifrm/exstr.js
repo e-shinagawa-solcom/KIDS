@@ -46,34 +46,34 @@ function ChgEtoJ( lngCount )
 ////////////////////////////////// JAPANESE /////////////////////////////////////
 	else if ( lngCount == 1 )
 	{
-		col00.innerText = '¾ÜºÙ';
-		col01.innerText = 'À½ÉÊ¥³¡¼¥É';
-		col02.innerText = 'À½ÉÊÌ¾¾Î(ÆüËÜ¸ì)';
-		col03.innerText = 'ÉôÌç';
-		col04.innerText = 'Ã´Åö¼Ô';
-		col05.innerText = 'ÆşÎÏ¼Ô';
-		col06.innerText = 'ºîÀ®Æü»ş';
-		col07.innerText = 'Ç¼´ü';
-		col08.innerText = 'Ç¼²Á';
-		col09.innerText = '¾åÂå';
-		col10.innerText = '¥«¡¼¥È¥óÆş¿ô';
-		col11.innerText = '·×²èC/t';
-		col12.innerText = 'À¸»ºÍ½Äê¿ô';
-		col13.innerText = '¸«ÀÑ¾ğÊó';
-		col14.innerText = '½şµÑ¹ç·×¶â³Û';
-		col15.innerText = 'ÉôºàÈñ¹ç·×';
-		col16.innerText = 'À½Â¤ÈñÍÑ¹ç·×';
-		col17.innerText = 'Í½ÄêÁíÇä¾å¹â';
-		col18.innerText = '´ë²èÌÜÉ¸ÁíÍø±×';
-		col19.innerText = 'ÌÜÉ¸Íø±×Î¨';
-		col20.innerText = '´ÖÀÜÀ½Â¤·ĞÈñ';
-		col21.innerText = 'Çä¾åÁíÍø±×';
-		col22.innerText = 'ÊİÂ¸¾õÂÖ';
+		col00.innerText = 'è©³ç´°';
+		col01.innerText = 'è£½å“ã‚³ãƒ¼ãƒ‰';
+		col02.innerText = 'è£½å“åç§°(æ—¥æœ¬èª)';
+		col03.innerText = 'éƒ¨é–€';
+		col04.innerText = 'æ‹…å½“è€…';
+		col05.innerText = 'å…¥åŠ›è€…';
+		col06.innerText = 'ä½œæˆæ—¥æ™‚';
+		col07.innerText = 'ç´æœŸ';
+		col08.innerText = 'ç´ä¾¡';
+		col09.innerText = 'ä¸Šä»£';
+		col10.innerText = 'ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°';
+		col11.innerText = 'è¨ˆç”»C/t';
+		col12.innerText = 'ç”Ÿç”£äºˆå®šæ•°';
+		col13.innerText = 'è¦‹ç©æƒ…å ±';
+		col14.innerText = 'å„Ÿå´åˆè¨ˆé‡‘é¡';
+		col15.innerText = 'éƒ¨æè²»åˆè¨ˆ';
+		col16.innerText = 'è£½é€ è²»ç”¨åˆè¨ˆ';
+		col17.innerText = 'äºˆå®šç·å£²ä¸Šé«˜';
+		col18.innerText = 'ä¼ç”»ç›®æ¨™ç·åˆ©ç›Š';
+		col19.innerText = 'ç›®æ¨™åˆ©ç›Šç‡';
+		col20.innerText = 'é–“æ¥è£½é€ çµŒè²»';
+		col21.innerText = 'å£²ä¸Šç·åˆ©ç›Š';
+		col22.innerText = 'ä¿å­˜çŠ¶æ…‹';
 
-		WFStatus.innerText = '¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ';
+		WFStatus.innerText = 'ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹';
 
-		FixSegs.innerHTML    = '½¤Àµ';
-		DeleteSegs.innerHTML = 'ºï½ü';
+		FixSegs.innerHTML    = 'ä¿®æ­£';
+		DeleteSegs.innerHTML = 'å‰Šé™¤';
 
 
 		ViewSearch1.innerHTML= vishImgJ;

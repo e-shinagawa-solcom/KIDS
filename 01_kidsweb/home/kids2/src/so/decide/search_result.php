@@ -1,38 +1,38 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
- *       ¼õÃí´ÉÍı ³ÎÄê²èÌÌ¤Î³ÎÄê¥Ü¥¿¥ó
+ *       å—æ³¨ç®¡ç† ç¢ºå®šç”»é¢ã®ç¢ºå®šãƒœã‚¿ãƒ³
  *
- *       ½èÍı³µÍ×
- *         ¡¦³ÎÄêÂĞ¾İÌÀºÙ¹ÔÁªÂòÉô¤ÇÁªÂò¤·¤¿¹Ô¤ò³ÎÄê¤¹¤ë½èÍı
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»ç¢ºå®šå¯¾è±¡æ˜ç´°è¡Œé¸æŠéƒ¨ã§é¸æŠã—ãŸè¡Œã‚’ç¢ºå®šã™ã‚‹å‡¦ç†
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÆÉ¤ß¹ş¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
 require LIB_FILE;
 
-//PHPÉ¸½à¤ÎJSONÊÑ´¹¥á¥½¥Ã¥É¤Ï¥¨¥é¡¼¤Ë¤Ê¤ë¤Î¤Ç³°Éô¤Î¥é¥¤¥Ö¥é¥ê(¶²¤é¤¯¥¨¥ó¥³¡¼¥É¤ÎÌäÂê)
+//PHPæ¨™æº–ã®JSONå¤‰æ›ãƒ¡ã‚½ãƒƒãƒ‰ã¯ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹ã®ã§å¤–éƒ¨ã®ãƒ©ã‚¤ãƒ–ãƒ©ãƒª(æã‚‰ãã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã®å•é¡Œ)
 include 'JSON.php';
 
-//ÃÍ¤Î¼èÆÀ
+//å€¤ã®å–å¾—
 $postdata = file_get_contents("php://input");
 $aryData = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
+//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 $s = new Services_JSON();
 
-//ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤ÏÄÌ¾ï¤Î POST ¤Ç¼õ¤±¤ë
+//å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯é€šå¸¸ã® POST ã§å—ã‘ã‚‹
 if ($aryData == null) {
     $aryData = $_POST;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($_GET["strSessionID"], $objAuth, $objDB);
 
 $aryQuery = array();
@@ -42,41 +42,41 @@ $aryQuery[] = ", r.strReceiveCode";
 $aryQuery[] = ", r.strcustomerreceivecode";
 $aryQuery[] = ", r.strMonetaryUnitSign";
 $aryQuery[] = ", rd.lngreceivedetailno as lngreceivedetailno";
-$aryQuery[] = ", rd.strProductCode as strProductCode"; // À½ÉÊ¥³¡¼¥É¡¦Ì¾¾Î
+$aryQuery[] = ", rd.strProductCode as strProductCode"; // è£½å“ã‚³ãƒ¼ãƒ‰ãƒ»åç§°
 $aryQuery[] = ", p.strProductName as strProductName";
-$aryQuery[] = ", r.strCompanyDisplayCode as strCustomerDisplayCode"; // ¸ÜµÒ¥³¡¼¥É¡¦Ì¾¾Î
+$aryQuery[] = ", r.strCompanyDisplayCode as strCustomerDisplayCode"; // é¡§å®¢ã‚³ãƒ¼ãƒ‰ãƒ»åç§°
 $aryQuery[] = ", r.strCompanyDisplayName as strCustomerDisplayName";
 $aryQuery[] = ", p.lngproductno as lngproductno";
-$aryQuery[] = ", sd.lngsalesdivisioncode"; // Çä¾å¶èÊ¬
+$aryQuery[] = ", sd.lngsalesdivisioncode"; // å£²ä¸ŠåŒºåˆ†
 $aryQuery[] = ", sd.strsalesdivisionname";
-$aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode"; // Çä¾å¶èÊ¬
+$aryQuery[] = ", rd.lngSalesClassCode as lngSalesClassCode"; // å£²ä¸ŠåŒºåˆ†
 $aryQuery[] = ", ss.strSalesClassName as strSalesClassName";
-// À½ÉÊÈÖ¹æ
+// è£½å“ç•ªå·
 $aryQuery[] = " , p.lngProductNo";
 $aryQuery[] = " , p.strrevisecode";
 $aryQuery[] = " , p.lngRevisionNo as lngProductRevisionNo";
-$aryQuery[] = ", p.strGoodsCode as strGoodsCode"; // ¸ÜµÒÉÊÈÖ
-// ÉôÌç
+$aryQuery[] = ", p.strGoodsCode as strGoodsCode"; // é¡§å®¢å“ç•ª
+// éƒ¨é–€
 $aryQuery[] = ", p.lnginchargegroupcode as lngInChargeGroupCode";
 $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
 $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
-// Ã´Åö¼Ô
+// æ‹…å½“è€…
 $aryQuery[] = ", p.lnginchargeusercode as lngInChargeUserCode";
 $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
 $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
-// ³«È¯Ã´Åö¼Ô
+// é–‹ç™ºæ‹…å½“è€…
 $aryQuery[] = ", p.lngdevelopusercode as lngdevelopusercode";
 $aryQuery[] = ", delp_u.strUserDisplayCode as strdevelopuserdisplaycode";
 $aryQuery[] = ", delp_u.strUserDisplayName as strdevelopuserdisplayname";
 
-$aryQuery[] = ", rd.dtmDeliveryDate as dtmDeliveryDate"; // Ç¼´ü
-$aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice"; // Ã±²Á
-$aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode"; // Ã±°Ì
+$aryQuery[] = ", rd.dtmDeliveryDate as dtmDeliveryDate"; // ç´æœŸ
+$aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice"; // å˜ä¾¡
+$aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode"; // å˜ä½
 $aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
-$aryQuery[] = ", p.lngcartonquantity"; // ¥«¡¼¥È¥óÆş¿ô
-$aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice"; // ÀÇÈ´¶â³Û
-$aryQuery[] = ", rd.strNote as strDetailNote"; // ÌÀºÙÈ÷¹Í
-$aryQuery[] = ", ed.lngproductquantity as lngproductquantity"; // À½ÉÊ¿ôÎÌ
+$aryQuery[] = ", p.lngcartonquantity"; // ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
+$aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice"; // ç¨æŠœé‡‘é¡
+$aryQuery[] = ", rd.strNote as strDetailNote"; // æ˜ç´°å‚™è€ƒ
+$aryQuery[] = ", ed.lngproductquantity as lngproductquantity"; // è£½å“æ•°é‡
 $aryQuery[] = " FROM t_ReceiveDetail rd";
 $aryQuery[] = "  INNER JOIN ( ";
 $aryQuery[] = "    SELECT";
@@ -162,9 +162,9 @@ $objDB->freeResult($lngResultID);
 
 $strQuery = "SELECT lngproductunitcode, strproductunitname FROM m_productunit";
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-// ¸¡º÷·ï¿ô¤¬¤¢¤ê¤Î¾ì¹ç
+// æ¤œç´¢ä»¶æ•°ãŒã‚ã‚Šã®å ´åˆ
 if ($lngResultNum) {
-    // »ØÄê¿ô°ÊÆâ¤Ç¤¢¤ì¤ĞÄÌ¾ï½èÍı
+    // æŒ‡å®šæ•°ä»¥å†…ã§ã‚ã‚Œã°é€šå¸¸å‡¦ç†
     for ($i = 0; $i < $lngResultNum; $i++) {
         $aryProductUnit[] = $objDB->fetchArray($lngResultID, $i);
     }
@@ -175,15 +175,15 @@ $objDB->close();
 
 $lngReceiveNos = explode(",", $aryData["lngReceiveNo"]);
 if ($lngReceiveNos) {
-    // É½¼¨¹àÌÜ¤ÎÃê½Ğ
+    // è¡¨ç¤ºé …ç›®ã®æŠ½å‡º
     foreach ($lngReceiveNos as $key) {
         $lngReceiveNos[$key] = $key;
     }
 }
 
-// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ëÀ¸À®¤Î°ÙDOMDocument¤ò»ÈÍÑ
+// æ¤œç´¢çµæœãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆã®ç‚ºDOMDocumentã‚’ä½¿ç”¨
 $doc = new DOMDocument();
-// ÌÀºÙ¾ğÊó¤Î½ĞÎÏ
+// æ˜ç´°æƒ…å ±ã®å‡ºåŠ›
 $detailNum = 0;
 $decideNum = 0;
 $tblA_chkbox_body_html = "";
@@ -198,9 +198,9 @@ foreach ($aryDetailResult as $detailResult) {
 
     if (!$isdecideObj) {
         $detailNum += 1;
-        // tbody > trÍ×ÁÇºîÀ®
+        // tbody > trè¦ç´ ä½œæˆ
         $trChkBox = $doc->createElement("tr");
-        // ÁªÂò¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+        // é¸æŠãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
         $chkBox = $doc->createElement("input");
         $chkBox->setAttribute("type", "checkbox");
         $id = $detailResult["lngreceiveno"] . "_" . $detailResult["lngreceivedetailno"] . "_" . $detailResult["lngrevisionno"];
@@ -215,7 +215,7 @@ foreach ($aryDetailResult as $detailResult) {
 
     } else {
         $decideNum += 1;
-        // tbody > trÍ×ÁÇºîÀ®
+        // tbody > trè¦ç´ ä½œæˆ
         $trBody = $doc->createElement("tr");
         // No.
         $td = $doc->createElement("td", $decideNum);
@@ -225,7 +225,7 @@ foreach ($aryDetailResult as $detailResult) {
         $tblB_no_html .= $doc->saveXML($trBody);
     }
 
-    // tbody > trÍ×ÁÇºîÀ®
+    // tbody > trè¦ç´ ä½œæˆ
     $trBody = $doc->createElement("tr");
 
     // if (!$isdecideObj) {
@@ -238,12 +238,12 @@ foreach ($aryDetailResult as $detailResult) {
         $trBody->appendChild($td);
     // }
 
-    // ÌÀºÙ¹ÔÈÖ¹æ
+    // æ˜ç´°è¡Œç•ªå·
     $td = $doc->createElement("td", $detailResult["lngreceivedetailno"]);
     $td->setAttribute("id", "lngreceivedetailno");
     $trBody->appendChild($td);
 
-    // ¸ÜµÒ¼õÃíÈÖ¹æ
+    // é¡§å®¢å—æ³¨ç•ªå·
     $td = $doc->createElement("td");
     $td->setAttribute("id", "strcustomerreceivecode");
     $text = $doc->createElement("input");
@@ -257,7 +257,7 @@ foreach ($aryDetailResult as $detailResult) {
     // }
     $trBody->appendChild($td);
 
-    // ¸ÜµÒ
+    // é¡§å®¢
     if ($detailResult["strcustomerdisplaycode"] != "") {
         $textContent = "[" . $detailResult["strcustomerdisplaycode"] . "]" . " " . $detailResult["strcustomerdisplayname"];
     } else {
@@ -267,30 +267,30 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("id", "strcompanydisplaycode");
     $trBody->appendChild($td);
 
-    // Ç¼´ü
+    // ç´æœŸ
     $td = $doc->createElement("td", $detailResult["dtmdeliverydate"]);
     $td->setAttribute("id", "dtmdeliverydate");
     $trBody->appendChild($td);
 
-    // Çä¾åÊ¬Îà
+    // å£²ä¸Šåˆ†é¡
     $textContent = "[" . $detailResult["lngsalesdivisioncode"] . "]" . " " . $detailResult["strsalesdivisionname"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngsalesdivisioncode");
     $trBody->appendChild($td);
 
-    // Çä¾å¶èÊ¬
+    // å£²ä¸ŠåŒºåˆ†
     $textContent = "[" . $detailResult["lngsalesclasscode"] . "]" . " " . $detailResult["strsalesclassname"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngsalesclasscode");
     $trBody->appendChild($td);
 
-    // Ã±²Á
+    // å˜ä¾¡
     $textContent = toMoneyFormat($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["curproductprice"]);
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "curproductprice");
     $trBody->appendChild($td);
 
-    // Ã±°Ì
+    // å˜ä½
     $td = $doc->createElement("td");
     $td->setAttribute("id", "lngproductunitcode");
     $select = $doc->createElement("select");
@@ -305,7 +305,7 @@ foreach ($aryDetailResult as $detailResult) {
     $td->appendChild($select);
     $trBody->appendChild($td);
 
-    // Æş¿ô
+    // å…¥æ•°
     $lngunitquantity = 1;
     $detailResult["lngcartonquantity"] = $detailResult["lngcartonquantity"] == null ? 0 : $detailResult["lngcartonquantity"];
     $detailResult["lngproductquantity"] = $detailResult["lngproductquantity_est"] == null ? 0 : $detailResult["lngproductquantity_est"];
@@ -328,19 +328,19 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
 
-    // ¿ôÎÌ
+    // æ•°é‡
     $textContent = number_format($lngproductquantity);
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngproductquantity_re");
     $trBody->appendChild($td);
 
-    // ¾®·×
+    // å°è¨ˆ
     $textContent = toMoneyFormat($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["cursubtotalprice"]);
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "cursubtotalprice");
     $trBody->appendChild($td);
 
-    // È÷¹Í
+    // å‚™è€ƒ
     $td = $doc->createElement("td");
     $td->setAttribute("id", "strdetailnote");
     $text = $doc->createElement("input");
@@ -351,56 +351,56 @@ foreach ($aryDetailResult as $detailResult) {
     $td->appendChild($text);
     $trBody->appendChild($td);
 
-    // À½ÉÊ¥³¡¼¥É
+    // è£½å“ã‚³ãƒ¼ãƒ‰
     $textContent = $detailResult["strproductcode"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "strproductcode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // À½ÉÊÌ¾¾Î
+    // è£½å“åç§°
     $textContent = "[" . $detailResult["strproductcode"] . "]" . " " . $detailResult["strproductname"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "strproductname");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ¼õÃíÈÖ¹æ
+    // å—æ³¨ç•ªå·
     $textContent = $detailResult["lngreceiveno"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngreceiveno");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ¼õÃí¥³¡¼¥É
+    // å—æ³¨ã‚³ãƒ¼ãƒ‰
     $textContent = $detailResult["strreceivecode"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "strreceivecode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $textContent = $detailResult["lngrevisionno"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngrevisionno");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ¥«¡¼¥È¥óÆş¿ô
+    // ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
     $textContent = $detailResult["lngcartonquantity"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngcartonquantity");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // ¿ôÎÌ
+    // æ•°é‡
     $textContent = $detailResult["lngproductquantity"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngproductquantity");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
-    // À½ÉÊ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // è£½å“ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $textContent = $detailResult["strrevisecode"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "strrevisecode");
@@ -421,7 +421,7 @@ foreach ($aryDetailResult as $detailResult) {
     }
 }
 
-// ¼èÆÀ¥Ç¡¼¥¿¤ÎÄ´À°
+// å–å¾—ãƒ‡ãƒ¼ã‚¿ã®èª¿æ•´
 $aryResult = array();
 $aryResult["strProductCode"] = $aryDetailResult[0]["strproductcode"] . "_" . $aryDetailResult[0]["strrevisecode"];
 $aryResult["strProductName"] = $aryDetailResult[0]["strproductname"];
@@ -442,6 +442,6 @@ $aryResult["tblB_no_result"] = $tblB_no_html;
 $aryResult["tblB_body_result"] = $tblB_body_html;
 $aryResult["count"] = count($aryDetailResult);
 
-//·ë²Ì½ĞÎÏ
+//çµæœå‡ºåŠ›
 mb_convert_variables('UTF-8', 'EUC-JP', $aryResult);
 echo $s->encodeUnsafe($aryResult);

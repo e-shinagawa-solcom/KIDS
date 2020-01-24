@@ -1,24 +1,24 @@
-/* ¥×¥ì¥Ó¥å¡¼²èÌÌ¤Îcss */
-/* °õºş¥ì¥¤¥¢¥¦¥È¥º¥ìÂĞ±ş */
+/* ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢ã®css */
+/* å°åˆ·ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚ºãƒ¬å¯¾å¿œ */
 body
 {
     margin: 0;
 }
 
-/* Ä¢É¼É½¼¨ÀÚ¤êÂØ¤¨¥Ñ¥Í¥ë */
+/* å¸³ç¥¨è¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆãƒ‘ãƒãƒ« */
 div#report-control-panel
 {
     display: none;
 }
 
-/* ÀÁµá½ñ¥×¥ì¥Ó¥å¡¼ */
+/* è«‹æ±‚æ›¸ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ */
 div#regist-preview-page
 {
     display: block;
     page-break-after: always;
 }
 
-/* COPY ¥ª¡¼¥Ğ¡¼¥ì¥¤ */
+/* COPY ã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤ */
 div.copy-overlay
 {
     display: none;
@@ -37,7 +37,7 @@ div.copy-overlay img.copy
     opacity: 0.4;
 }
 
-/* ¥Ø¥Ã¥À¥¿¥¤¥È¥ë */
+/* ãƒ˜ãƒƒãƒ€ã‚¿ã‚¤ãƒˆãƒ« */
 .box_header
 {
     position: absolute;
@@ -72,7 +72,7 @@ div.copy-overlay img.copy
 .form-box__header__box-title
 {
     text-align: center;
-    font-family : Arial , £Í£Ó¡¡£Ğ¥´¥·¥Ã¥¯ ;
+    font-family : Arial , ï¼­ï¼³ã€€ï¼°ã‚´ã‚·ãƒƒã‚¯ ;
     color : #ffffff ;
     background : #555555 ;
     padding : 4px 6px 3px 6px ;

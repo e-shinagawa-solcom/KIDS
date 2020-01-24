@@ -2,7 +2,7 @@
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ¥Õ¥¡¥¤¥ë³µÍ× : LC´ØÏ¢½èÍı
+* ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ : LCé–¢é€£å‡¦ç†
 *
 *
 *
@@ -15,27 +15,27 @@
 */
 //--------------------------------------------------------------------------------------------------------------------
 
-//¶¦ÄÌÊÑ¿ô
+//å…±é€šå¤‰æ•°
 var session_id;
 
 //---------------------------------------------------
-// ²èÌÌ½é´ü½èÍı
+// ç”»é¢åˆæœŸå‡¦ç†
 //---------------------------------------------------
 function lcInit( json_obj )
 {
 	var phpData = JSON.parse(json_obj);
 	session_id = phpData.session_id;
 
-	//userAuth¤Î2·åÌÜ¤¬1¤Î¾ì¹ç¤Ï¡ÖL/CÀßÄêÊÑ¹¹¡×¤¬ÍøÍÑ²ÄÇ½
+	//userAuthã®2æ¡ç›®ãŒ1ã®å ´åˆã¯ã€ŒL/Cè¨­å®šå¤‰æ›´ã€ãŒåˆ©ç”¨å¯èƒ½
 	var auth = phpData.login_user_auth.substr(1, 1);
 	if(auth != "1")
 	{
 		$("#lcsetBtn").prop("disabled", true);
 	}
 
-	//Æ±°ì¸¢¸Â¤Î¥æ¡¼¥¶¡¼¤¬¥í¥°¥¤¥óºÑ¤ß¤Î¾ì¹ç¤Î¥³¥ó¥Õ¥¡¡¼¥à
+	//åŒä¸€æ¨©é™ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒãƒ­ã‚°ã‚¤ãƒ³æ¸ˆã¿ã®å ´åˆã®ã‚³ãƒ³ãƒ•ã‚¡ãƒ¼ãƒ 
 	if(phpData.logined_flg == true){
-		if( res = confirm("²¼µ­¤Î¥í¥°¥¤¥ó¾ğÊó¤Ï¥í¥°¥¢¥¦¥È¤·¤Æ¤¤¤Ş¤»¤ó¡£\r\n" + phpData.lcInfoDate.lcgetdate + " " + phpData.lcInfoDate.lgusrname  + "¶¯À©¥í¥°¥¢¥¦¥È¤ò¼Â¹Ô¤·¤Ş¤¹¤«¡£") )
+		if( res = confirm("ä¸‹è¨˜ã®ãƒ­ã‚°ã‚¤ãƒ³æƒ…å ±ã¯ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã—ã¦ã„ã¾ã›ã‚“ã€‚\r\n" + phpData.lcInfoDate.lcgetdate + " " + phpData.lcInfoDate.lgusrname  + "å¼·åˆ¶ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã‚’å®Ÿè¡Œã—ã¾ã™ã‹ã€‚") )
 		{
 			$.ajax({
 				url:'../lcModel/lcinfo_ajax.php',
@@ -45,13 +45,13 @@ function lcInit( json_obj )
 					'lgno': phpData.login_state.login_obj.lgno
 				}
 			})
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù¤·¤¿»şÈ¯Æ°
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸã—ãŸæ™‚ç™ºå‹•
 			.done( (data) => {
 			})
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ¤·¤¿»şÈ¯Æ°
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—ã—ãŸæ™‚ç™ºå‹•
 			.fail( (data) => {
 			})
-			// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù¡¦¼ºÇÔ¤É¤Á¤é¤Ç¤âÈ¯Æ°
+			// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸãƒ»å¤±æ•—ã©ã¡ã‚‰ã§ã‚‚ç™ºå‹•
 			.always( (data) => {
 
 			});
@@ -60,7 +60,7 @@ function lcInit( json_obj )
 }
 
 /**
- * L/C¾ğÊó¼èÆÀ½é´ü½èÍı
+ * L/Cæƒ…å ±å–å¾—åˆæœŸå‡¦ç†
  * @param {} sessionId 
  */
 function initLcinfo(sessionId)
@@ -73,10 +73,10 @@ function initLcinfo(sessionId)
 		}
 	})
 	.done(function(data) {
-		// Ajax¥ê¥¯¥¨¥¹¥È¤¬À®¸ù
+		// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæˆåŠŸ
 		var data = JSON.parse(data);
 		if (data.lcgetdate != "" && data.lcgetdate != null) {
-			if( res = confirm("´û¤ËL/C¾ğÊó¤Î¼èÆÀ¤ò¹Ô¤Ã¤Æ¤¤¤Ş¤¹¡£ºÇ¿·¤Î¾ğÊó¤ò¼èÆÀ¤·¤Ş¤¹¤«¡£")) 
+			if( res = confirm("æ—¢ã«L/Cæƒ…å ±ã®å–å¾—ã‚’è¡Œã£ã¦ã„ã¾ã™ã€‚æœ€æ–°ã®æƒ…å ±ã‚’å–å¾—ã—ã¾ã™ã‹ã€‚")) 
 			{
 				location.href="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=true"
 			} else {
@@ -90,6 +90,6 @@ function initLcinfo(sessionId)
 	})
 	.fail(function() {
 		alert("fail");
-		// Ajax¥ê¥¯¥¨¥¹¥È¤¬¼ºÇÔ
+		// Ajaxãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—
 	});
 }

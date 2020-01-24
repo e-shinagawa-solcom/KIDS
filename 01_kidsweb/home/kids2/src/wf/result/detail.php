@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥ï¡¼¥¯¥Õ¥í¡¼ ¾ÜºÙ¾ğÊóÉ½¼¨²èÌÌ
+*	ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ è©³ç´°æƒ…å ±è¡¨ç¤ºç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -9,8 +9,8 @@
 *	@access    public
 *	@version   1.00
 *
-*	¹¹¿·ÍúÎò
-*	2004.04.19	¾ÜºÙ²èÌÌ¤«¤éÈ¯Ãí¾ÜºÙÉ½¼¨»ş¤Ë¥»¥Ã¥·¥ç¥ó¥¨¥é¡¼¤òÉ½¼¨¤¹¤ë¥Ğ¥°¤Î½¤Àµ
+*	æ›´æ–°å±¥æ­´
+*	2004.04.19	è©³ç´°ç”»é¢ã‹ã‚‰ç™ºæ³¨è©³ç´°è¡¨ç¤ºæ™‚ã«ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚¨ãƒ©ãƒ¼ã‚’è¡¨ç¤ºã™ã‚‹ãƒã‚°ã®ä¿®æ­£
 *
 */
 // index.php -> strSessionID          -> detail.php
@@ -26,20 +26,20 @@
 // index.php -> lngWorkflowCode       -> detail.php
 // index.php -> lngSelectFunctionCode -> index.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "wf/cmn/lib_wf.php");
 require( LIB_DEBUGFILE );
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 $aryCheck["strSessionID"]            = "null:numenglish(32,32)";
@@ -55,16 +55,16 @@ $aryCheck["lngInChargeCode"]         = "number(0,32767)";
 $aryCheck["lngWorkflowCode"]         = "number(0,2147483647)";
 $aryCheck["lngSelectFunctionCode"] = "number(0,32767)";
 
-// ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÇÅÏ¤µ¤ì¤¿WF¥¹¥Æ¡¼¥¿¥¹¤òÊ¸»úÎó¤ÇÀßÄê
+// ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã§æ¸¡ã•ã‚ŒãŸWFã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’æ–‡å­—åˆ—ã§è¨­å®š
 $aryData["lngWorkflowStatusCode"] = fncGetArrayToWorkflowStatusCode($aryData["lngWorkflowStatusCode"]);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_WF4, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 if ( fncCheckAuthority( DEF_FUNCTION_WF5, $objAuth ) )
 {
@@ -72,19 +72,19 @@ if ( fncCheckAuthority( DEF_FUNCTION_WF5, $objAuth ) )
 }
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
-// ¶¦ÄÌ¼õ¤±ÅÏ¤·URLÀ¸À®(¥»¥Ã¥·¥ç¥óID¡¢¥Ú¡¼¥¸¡¢³Æ¸¡º÷¾ò·ï)
+// å…±é€šå—ã‘æ¸¡ã—URLç”Ÿæˆ(ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã€ãƒšãƒ¼ã‚¸ã€å„æ¤œç´¢æ¡ä»¶)
 $strURL = fncGetURL( $aryData );
 
-// ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍı
-// °Æ·ïÆÉ¤ß¹ş¤ß¡¢¸¡º÷¡¢¾ÜºÙ¾ğÊó¼èÆÀ¥¯¥¨¥ê´Ø¿ô
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†
+// æ¡ˆä»¶èª­ã¿è¾¼ã¿ã€æ¤œç´¢ã€è©³ç´°æƒ…å ±å–å¾—ã‚¯ã‚¨ãƒªé–¢æ•°
 list ( $lngResultID, $lngResultNum, $strErrorMessage ) = getWorkflowQuery( $objAuth->UserCode, $aryData, $objDB );
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -103,14 +103,14 @@ $lngFunctionCode    = $objResult->lngfunctioncode;
 
 /*
 //
-// È¯Ãí¡¦¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+// ç™ºæ³¨ãƒ»ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 //
 if( $objResult->lngfunctioncode == DEF_FUNCTION_PO1 )
 {
-	// È¯Ãí¤Ë¤Æ»ØÄê¤·¤Æ¤¤¤ëÀ½ÉÊ¥³¡¼¥É¤Î¼èÆÀ½èÍı
+	// ç™ºæ³¨ã«ã¦æŒ‡å®šã—ã¦ã„ã‚‹è£½å“ã‚³ãƒ¼ãƒ‰ã®å–å¾—å‡¦ç†
 	$strProductCodeQuery = "SELECT od.strProductCode as strProductCode FROM t_OrderDetail od WHERE od.lngOrderNo = " . $partsData["strWorkflowKeyCode"];
 
-	// ÃÍ¤ò¤È¤ë =====================================
+	// å€¤ã‚’ã¨ã‚‹ =====================================
 	$lngEstimateNo = "";
 	list ( $lngResultProductCodeID, $lngResultProductCodeNum ) = fncQuery( $strProductCodeQuery, $objDB );
 	if ( $lngResultProductCodeNum )
@@ -118,7 +118,7 @@ if( $objResult->lngfunctioncode == DEF_FUNCTION_PO1 )
 		$objProductCodeResult = $objDB->fetchObject( $lngResultProductCodeID, 0 );
 		$strProductCode = $objProductCodeResult->strproductcode;
 
-		// ¸«ÀÑ¸¶²Á¥Ç¡¼¥¿¼èÆÀ
+		// è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿å–å¾—
 		$aryEstimateQuery[] = "SELECT e.lngEstimateNo ";
 		$aryEstimateQuery[] = "FROM m_Estimate e";
 		$aryEstimateQuery[] = "WHERE e.strProductCode = '" . $strProductCode . "'";
@@ -141,24 +141,24 @@ if( $objResult->lngfunctioncode == DEF_FUNCTION_PO1 )
 	}
 	$objDB->freeResult( $lngResultProductCodeID );
 
-	// ´û¤Ë»ØÄê¤ÎÀ½ÉÊ¥³¡¼¥É¤ËÂĞ¤·¤Æ¸«ÀÑ¸¶²Á¾ğÊó¤¬Â¸ºß¤¹¤ì¤Ğ
+	// æ—¢ã«æŒ‡å®šã®è£½å“ã‚³ãƒ¼ãƒ‰ã«å¯¾ã—ã¦è¦‹ç©åŸä¾¡æƒ…å ±ãŒå­˜åœ¨ã™ã‚Œã°
 	if ( $lngEstimateNo != "" )
 	{
-		// È¯ÃíÆâÍÆ¤È¸«ÀÑ¸¶²ÁÁĞÊı¤Î¥¦¥£¥ó¥É¥¦¤ò³«¤¯½èÍı
+		// ç™ºæ³¨å†…å®¹ã¨è¦‹ç©åŸä¾¡åŒæ–¹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ãå‡¦ç†
 		$partsData["strWorkflowName"]   = "<td class=\"Segs\" onClick=\"javascript:fncShowWfDialogCommon('/po/result/index2.php?strSessionID=" . $aryData["strSessionID"] . "&lngOrderNo=" . $partsData["strWorkflowKeyCode"] . "' , window.form1 , 'ResultIframeWf' , 'YES' , " . $_COOKIE["lngLanguageCode"] . " , 'detail', 505, 679, 6, 30 );\"><a class=wfA href=\"/estimate/result/detail.php?strSessionID=" . $aryData["strSessionID"] . "&lngEstimateNo=" . $lngEstimateNo . "\" target=_blank>" . $partsData["strWorkflowName"] . "</a></td>";
 	}
 }
 //
-// ¸«ÀÑ¸¶²Á¤Î¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+// è¦‹ç©åŸä¾¡ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 //
 elseif( $objResult->lngfunctioncode == DEF_FUNCTION_E1 )
 {
-	// ¸«ÀÑ¸¶²Á¤Î¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç¡¢¸«ÀÑ¸¶²Á¾ğÊóÆâÍÆ¤Î¥¦¥£¥ó¥É¥¦¤ò³«¤¯½èÍı
+	// è¦‹ç©åŸä¾¡ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆã€è¦‹ç©åŸä¾¡æƒ…å ±å†…å®¹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ãå‡¦ç†
 	$partsData["strWorkflowName"]   = "<td class=\"Segs\"><a class=wfA href=\"/estimate/result/detail.php?strSessionID=" . $aryData["strSessionID"] . "&lngEstimateNo=" . $partsData["strWorkflowKeyCode"] . "\" target=_blank>" . $partsData["strWorkflowName"] . "</a></td>";
 }
 
 //
-// ¾åµ­¡¢È¯Ãí¡Ê¸«ÀÑ¸¶²Á¡¦Ê»ÍÑ¡Ë¡¢¸«ÀÑ¸¶²Á¡¢¤Ë³ºÅö¤·¤Ê¤¤¡¢Â¾¤Î¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+// ä¸Šè¨˜ã€ç™ºæ³¨ï¼ˆè¦‹ç©åŸä¾¡ãƒ»ä½µç”¨ï¼‰ã€è¦‹ç©åŸä¾¡ã€ã«è©²å½“ã—ãªã„ã€ä»–ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 //
 if( empty($partsData["strWorkflowName"]) )
 {
@@ -166,7 +166,7 @@ if( empty($partsData["strWorkflowName"]) )
 }
 */
 
-// °Æ·ï¾ğÊó¡Ê³Æ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ¤«¤éÀ¸À®¡Ë
+// æ¡ˆä»¶æƒ…å ±ï¼ˆå„ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹ã‹ã‚‰ç”Ÿæˆï¼‰
 $partsData["strWorkflowName"] = fncGetWorkflowNameLink( $objDB, $objResult, $aryData["strSessionID"]);
 
 fncDebug('wf.txt', $partsData["strWorkflowName"], __FILE__, __LINE__);
@@ -175,7 +175,7 @@ fncDebug('wf.txt', $partsData["strWorkflowName"], __FILE__, __LINE__);
 $objDB->freeResult( $lngResultID );
 
 
-// ¥ï¡¼¥¯¥Õ¥í¡¼½çÈÖ¤ò¼èÆÀ
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †ç•ªã‚’å–å¾—
 $strQuery = "SELECT wfo.lngWorkflowOrderNo, u.strUserDisplayName " .
             "FROM m_Workflow wf, m_WorkflowOrder wfo, m_User u " .
             "WHERE wf.lngWorkflowCode = " . $aryData["lngWorkflowCode"] . " " .
@@ -186,7 +186,7 @@ $strQuery = "SELECT wfo.lngWorkflowOrderNo, u.strUserDisplayName " .
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum < 1 )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 for ( $i = 0; $i < $lngResultNum; $i++ )
 {
@@ -206,12 +206,12 @@ $partsData["strProcessAction"] = "";
 */
 
 
-// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "wf/result/parts.tmpl" );
 $strPartsTemplate = $objTemplate->strTemplate;
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 if( $lngFunctionCode == DEF_FUNCTION_E1 )
 {
 	$objTemplate->getTemplate( "wf/regist/confirm_estimate.tmpl" );
@@ -221,12 +221,12 @@ else
 	$objTemplate->getTemplate( "wf/regist/confirm.tmpl" );
 }
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $partsData );
 $objTemplate->replace( $aryData );
 $objTemplate->complete();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 $objDB->close();
 

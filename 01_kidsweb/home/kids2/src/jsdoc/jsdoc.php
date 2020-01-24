@@ -1,7 +1,7 @@
 <?php
 require_once("htmltemplate.inc"); 
 
-//¥Ç¥Õ¥©¥ë¥È¤Î¥µ¡¼¥Á¥­¡¼¤ò¥»¥Ã¥È
+//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®ã‚µãƒ¼ãƒã‚­ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 if( IsSet($_POST["jsdir"]) )
 {
 	$jsparam[searchkey] = $_POST["jsdir"];
@@ -18,98 +18,98 @@ $jsparam;
 
 fncJSfile($jsdir,$index);
 
-//¥¤¥ó¥Ç¥Ã¥¯¥¹ÈÖ¹æ
+//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·
 
 function fncJSfile($jsdir)
 {
 	global $jsparam;
 	global $index;
 
-	//windows¤Î´Ä¶­¤Ç»ÈÍÑ¤¹¤ë¾ì¹ç¤Î¤ß»ÈÍÑ
+	//windowsã®ç’°å¢ƒã§ä½¿ç”¨ã™ã‚‹å ´åˆã®ã¿ä½¿ç”¨
 //	Mb_Convert_Variables("SJIS","EUC-JP", $jsdir);
 	
-	//ºî¶È¥Ç¥£¥ì¥¯¥È¥ê¤Î°ÜÆ°
+	//ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®ç§»å‹•
 	@ChDir($jsdir);
 	
-	//ºî¶È¥Ç¥£¥ì¥¯¥È¥ê¤Îjavascript¥Õ¥¡¥¤¥ë¤òÇÛÎó¤Ç¼èÆÀ
+	//ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®javascriptãƒ•ã‚¡ã‚¤ãƒ«ã‚’é…åˆ—ã§å–å¾—
 	$aryJSfiles = Glob("*.js");
 	
-	//ºî¶È¥Ç¥£¥ì¥¯¥È¥ê¤Îjavascript¥Õ¥¡¥¤¥ë¤Î¿ô
+	//ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã®javascriptãƒ•ã‚¡ã‚¤ãƒ«ã®æ•°
 	$aryJSfilesLength = Count($aryJSfiles);
 
-	//javascript¤Î¥Õ¥¡¥¤¥ë¤¬¤¢¤Ã¤¿¤é¥Õ¥©¥ë¥À¤Î¥Ñ¥¹¤òÇÛÎó¤Ë³ÊÇ¼
+	//javascriptã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã£ãŸã‚‰ãƒ•ã‚©ãƒ«ãƒ€ã®ãƒ‘ã‚¹ã‚’é…åˆ—ã«æ ¼ç´
 	if($aryJSfilesLength > 0)
 	{
 		$jsparam[jsfiles][] = "<div class=\"sub\">";
-		$jsparam[jsfiles][] = "¢£¡Ö".GetCwd()."¡×<br>";
+		$jsparam[jsfiles][] = "â– ã€Œ".GetCwd()."ã€<br>";
 	}
 
-	//¥¤¥ó¥Ç¥Ã¥¯¥¹
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	for( $i=0 ; $i<$aryJSfilesLength ; $i++ )
 	{
-		//¥Õ¥¡¥¤¥ëÌ¾¤òÉ½¼¨
+		//ãƒ•ã‚¡ã‚¤ãƒ«åã‚’è¡¨ç¤º
 		$filename = $aryJSfiles[$i];
-		$jsparam[jsfiles][] = "<a href=# onClick='treeMenu(\"".$index."_".$i."\"); return false;'>¡û<b>".$filename."</b></a><br>";
+		$jsparam[jsfiles][] = "<a href=# onClick='treeMenu(\"".$index."_".$i."\"); return false;'>â—‹<b>".$filename."</b></a><br>";
 	
 		$jsparam[jsfiles][] = "<div id=\"menuId_".$index."_".$i."\" style=\"display:none\">";
 	
-		//¥Õ¥¡¥¤¥ë¤Î°ì¹Ô¤Å¤Å¤òÇÛÎó¤ËÆş¤ì¤ë
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã®ä¸€è¡Œã¥ã¥ã‚’é…åˆ—ã«å…¥ã‚Œã‚‹
 		$file = File( $aryJSfiles[$i] );
 	
-		//ÇÛÎó¤ÎÄ¹¤µ(¥Õ¥¡¥¤¥ë¤Î¹Ô¤ÎÄ¹¤µ)
+		//é…åˆ—ã®é•·ã•(ãƒ•ã‚¡ã‚¤ãƒ«ã®è¡Œã®é•·ã•)
 		$fileLength = Count($file);
 		
-		//mainÉôÊ¬¤òºîÀ®¤¹¤ë
+		//mainéƒ¨åˆ†ã‚’ä½œæˆã™ã‚‹
 		fncJSMain($file, $fileLength, $filename, $i);
 
-		//³Æ´Ø¿ô¥Ö¥í¥Ã¥¯¤ÎÀèÆ¬¹ÔÈÖ¹æ
+		//å„é–¢æ•°ãƒ–ãƒ­ãƒƒã‚¯ã®å…ˆé ­è¡Œç•ªå·
 		$sentouNo = 0;
 
-		//indexÉôÊ¬¤òºîÀ®¤¹¤ë
-		//ÇÛÎó¤ò0¤«¤é¥«¥¦¥ó¥È¤¹¤ë¤È¡Ö<!--¡×¤¬½ĞÎÏ¤µ¤ì¤½¤ì°Ê¹ß¤¹¤Ù¤Æ¤¬¥³¥á¥ó¥È¥¢¥¦¥È¤µ¤ì¤ë¤¿¤á
-		//ÇÛÎó£±¤«¤é¥«¥¦¥ó¥È
+		//indexéƒ¨åˆ†ã‚’ä½œæˆã™ã‚‹
+		//é…åˆ—ã‚’0ã‹ã‚‰ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹ã¨ã€Œ<!--ã€ãŒå‡ºåŠ›ã•ã‚Œãã‚Œä»¥é™ã™ã¹ã¦ãŒã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã•ã‚Œã‚‹ãŸã‚
+		//é…åˆ—ï¼‘ã‹ã‚‰ã‚«ã‚¦ãƒ³ãƒˆ
 		for( $j=1 ; $j<$fileLength - 1 ; $j++ )
 		{
-			//³Æ´Ø¿ô¥Ö¥í¥Ã¥¯¤ÎÀèÆ¬¹ÔÈÖ¹æ¤ò³ÊÇ¼
+			//å„é–¢æ•°ãƒ–ãƒ­ãƒƒã‚¯ã®å…ˆé ­è¡Œç•ªå·ã‚’æ ¼ç´
 			if( Mb_EReg("^//@", $file[$j]) ||
 				Mb_EReg("^'@",  $file[$j]) )
 			{
 				$sentouNo = $j;
 			}
 
-			//¡Öfunction¡×¤Îµ­½Ò¤¬¤¢¤Ã¤¿¤é½ĞÎÏ
+			//ã€Œfunctionã€ã®è¨˜è¿°ãŒã‚ã£ãŸã‚‰å‡ºåŠ›
 			if( Mb_EReg("^function", $file[$j]) )
 			{
-				//´Ø¿ôÌ¾¤òÈ´¤­½Ğ¤¹
-				//¶õÇò¤Î°ÌÃÖ
+				//é–¢æ•°åã‚’æŠœãå‡ºã™
+				//ç©ºç™½ã®ä½ç½®
 				$intStart = StrCSpn($file[$j], " ") +1;
-				//¡Ö(¡×¤Î°ÌÃÖ
+				//ã€Œ(ã€ã®ä½ç½®
 				$intEnd   = StrCSpn($file[$j], "(") - $intStart;
-				//´Ø¿ôÌ¾
+				//é–¢æ•°å
 				$functionName = Mb_StrCut($file[$j], $intStart, $intEnd);
 
-				//¥ê¥ó¥¯Àè¤Î¹ÔÈÖ¹æ
+				//ãƒªãƒ³ã‚¯å…ˆã®è¡Œç•ªå·
 				$linkNo = $index."_".$i."_".$sentouNo;
 
-				//´Ø¿ôÌ¾¤ò½ĞÎÏ
-				$jsparam[jsfiles][] = "¡¡¡¦<a href=\"#fileId".$linkNo."\" onClick=\"fncSentaku('linkId".$linkNo."')\">".$functionName."</a><br>";
+				//é–¢æ•°åã‚’å‡ºåŠ›
+				$jsparam[jsfiles][] = "ã€€ãƒ»<a href=\"#fileId".$linkNo."\" onClick=\"fncSentaku('linkId".$linkNo."')\">".$functionName."</a><br>";
 			}
-			//¡ÖPublic Function¡×¤Îµ­½Ò¤¬¤¢¤Ã¤¿¤é½ĞÎÏ
+			//ã€ŒPublic Functionã€ã®è¨˜è¿°ãŒã‚ã£ãŸã‚‰å‡ºåŠ›
 			else if( Mb_EReg("^Public Function", $file[$j]) )
 			{
-				//´Ø¿ôÌ¾¤òÈ´¤­½Ğ¤¹
-				//³«»Ï°ÌÃÖ
+				//é–¢æ•°åã‚’æŠœãå‡ºã™
+				//é–‹å§‹ä½ç½®
 				$intStart = 15;
-				//¡Ö(¡×¤Î°ÌÃÖ
+				//ã€Œ(ã€ã®ä½ç½®
 				$intEnd   = StrCSpn($file[$j], "(") - $intStart;
-				//´Ø¿ôÌ¾
+				//é–¢æ•°å
 				$functionName = Mb_StrCut($file[$j], $intStart, $intEnd);
 
-				//¥ê¥ó¥¯Àè¤Î¹ÔÈÖ¹æ
+				//ãƒªãƒ³ã‚¯å…ˆã®è¡Œç•ªå·
 				$linkNo = $index."_".$i."_".$sentouNo;
 
-				//´Ø¿ôÌ¾¤ò½ĞÎÏ
-				$jsparam[jsfiles][] = "¡¡¡¦<a href=\"#fileId".$linkNo."\" onClick=\"fncSentaku('linkId".$linkNo."')\">".$functionName."</a><br>";
+				//é–¢æ•°åã‚’å‡ºåŠ›
+				$jsparam[jsfiles][] = "ã€€ãƒ»<a href=\"#fileId".$linkNo."\" onClick=\"fncSentaku('linkId".$linkNo."')\">".$functionName."</a><br>";
 			}
 
 		}
@@ -117,14 +117,14 @@ function fncJSfile($jsdir)
 		$jsparam[jsfiles][] = "</div>";
 	}
 
-	//javascript¤Î¥Õ¥¡¥¤¥ë¤¬¤¢¤Ã¤¿¤é¥Ö¥í¥Ã¥¯¤òÊÄ¤¸¤ë
+	//javascriptã®ãƒ•ã‚¡ã‚¤ãƒ«ãŒã‚ã£ãŸã‚‰ãƒ–ãƒ­ãƒƒã‚¯ã‚’é–‰ã˜ã‚‹
 	if($aryJSfilesLength > 0)
 	{
 		$jsparam[jsfiles][] = "</div>";
 	}
 
 
-	//¥Ç¥£¥ì¥¯¥È¥ê¤Ë¥Õ¥©¥ë¥À¤¬¤¢¤Ã¤¿¤é¡¢ºÆµ¢Åª¤Ë´Ø¿ô¤òÆÉ¤ß½Ğ¤¹
+	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã«ãƒ•ã‚©ãƒ«ãƒ€ãŒã‚ã£ãŸã‚‰ã€å†å¸°çš„ã«é–¢æ•°ã‚’èª­ã¿å‡ºã™
 	if ($handle = @opendir($jsdir))
 	{
 		while( $dirName = ReadDir($handle) )
@@ -140,33 +140,33 @@ function fncJSfile($jsdir)
 }
 
 
-//main¤ÎÉôÊ¬¤òºîÀ®
+//mainã®éƒ¨åˆ†ã‚’ä½œæˆ
 function fncJSMain($file, $fileLength, $filename ,$i)
 {
 	global $jsparam;
 	global $index;
 
-	//¥Ö¥í¥Ã¥¯¤Î³«»Ï¤òÉ½¼¨
+	//ãƒ–ãƒ­ãƒƒã‚¯ã®é–‹å§‹ã‚’è¡¨ç¤º
 	$jsparam[main][] = "<div id=\"mainId_".$index."_".$i."\" style=\"display:none\">";
 
-	//¥Õ¥¡¥¤¥ëÌ¾¤òÉ½¼¨
-	$jsparam[main][] = "¡û<b>".$filename."</b><br><br>";
+	//ãƒ•ã‚¡ã‚¤ãƒ«åã‚’è¡¨ç¤º
+	$jsparam[main][] = "â—‹<b>".$filename."</b><br><br>";
 
-	//´Ø¿ô¤ÎÀèÆ¬¥Õ¥é¥°
+	//é–¢æ•°ã®å…ˆé ­ãƒ•ãƒ©ã‚°
 	$sentouFlg = 0;
 
-	//³ÆÀâÌÀÊ¸¤Î¥Õ¥é¥°
+	//å„èª¬æ˜æ–‡ã®ãƒ•ãƒ©ã‚°
 	$helpFlg = 0;
 
-	//´Ø¿ô¤ÎÉôÊ¬¤À¤Ã¤¿¤é¥Õ¥é¥°¡£¡Ö(function fncName(°ú¿ô)¡×¤òÉ½¼¨¤¹¤ë¤¿¤á)
+	//é–¢æ•°ã®éƒ¨åˆ†ã ã£ãŸã‚‰ãƒ•ãƒ©ã‚°ã€‚ã€Œ(function fncName(å¼•æ•°)ã€ã‚’è¡¨ç¤ºã™ã‚‹ãŸã‚)
 	$kansuuFlg = 0;
 
-	//´Ø¿ô¤Î¸Ä¿ô¤Î¤Ä¤¸¤Ä¤Ş¤¢¤ï¤»¡£ºÇ¸å¤Î´Ø¿ô¤Ë¡Ö</div>¡×¤òÁŞÆş¤¹¤ë¤¿¤á¤Ë»ÈÍÑ
+	//é–¢æ•°ã®å€‹æ•°ã®ã¤ã˜ã¤ã¾ã‚ã‚ã›ã€‚æœ€å¾Œã®é–¢æ•°ã«ã€Œ</div>ã€ã‚’æŒ¿å…¥ã™ã‚‹ãŸã‚ã«ä½¿ç”¨
 	$tsujitsumaFlg = 0;
 
 	for( $j=1 ; $j<$fileLength ; $j++ )
 	{
-		//¥Õ¥¡¥¤¥ë¤Î³µÍ×¤òÉ½¼¨¤¹¤ë
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã®æ¦‚è¦ã‚’è¡¨ç¤ºã™ã‚‹
 		if( Mb_EReg("^//:", $file[$j]) || 
 			Mb_EReg("^':", $file[$j]) )
 		{
@@ -175,11 +175,11 @@ function fncJSMain($file, $fileLength, $filename ,$i)
 			continue;
 		}
 
-		//³Æ´Ø¿ô¤ÎÀèÆ¬¡Ö//@¡×¤òÃµ¤¹
+		//å„é–¢æ•°ã®å…ˆé ­ã€Œ//@ã€ã‚’æ¢ã™
 		if( Mb_EReg("^//@", $file[$j]) || 
 			Mb_EReg("^'@", $file[$j]) )
 		{
-			//ºÇ½é¤Î´Ø¿ô
+			//æœ€åˆã®é–¢æ•°
 			if($sentouFlg == 0)
 			{
 				$jsparam[main][] = "<br><br>";
@@ -187,38 +187,38 @@ function fncJSMain($file, $fileLength, $filename ,$i)
 			}
 			else
 			{
-				//´Ø¿ô¤Î½ªÎ»¥Ö¥í¥Ã¥¯¤ò¡¢ÊÑ¿ô¤Ëµ­½Ò
+				//é–¢æ•°ã®çµ‚äº†ãƒ–ãƒ­ãƒƒã‚¯ã‚’ã€å¤‰æ•°ã«è¨˜è¿°
 				$jsparam[main][] = "</div>";
 				$tsujitsumaFlg = 0;
 			}
-			//´Ø¿ô¤Î³«»Ï¥Ö¥í¥Ã¥¯¤ò¡¢ÊÑ¿ô¤Ë³ÊÇ¼
+			//é–¢æ•°ã®é–‹å§‹ãƒ–ãƒ­ãƒƒã‚¯ã‚’ã€å¤‰æ•°ã«æ ¼ç´
 			$jsparam[main][] = "<div id=\"linKId".$index."_".$i."_".$j."\">";
 			$jsparam[main][] = "<a name=\"fileId".$index."_".$i."_".$j."\"></a>";
 
 			$helpFlg = 1;
 			$tsujitsumaFlg = 1;
 
-			//¹Ô¤òHTML½ĞÎÏÍÑ¤ËÊÑ´¹¤·¡¢ÊÑ¿ô¤Ë³ÊÇ¼
+			//è¡Œã‚’HTMLå‡ºåŠ›ç”¨ã«å¤‰æ›ã—ã€å¤‰æ•°ã«æ ¼ç´
 			$file[$j] = fncConvertForHtml($file[$j]);
 			$jsparam[main][] = $file[$j]."<br>";
 			continue;
 		}
 
-		//function¤Îµ­½Ò¤«¤é¡¢¤¹¤Ù¤Æ¤Î°ú¿ô¤òÉ½¼¨¤¹¤ë¤Ş¤ÇÂ³¹Ô
+		//functionã®è¨˜è¿°ã‹ã‚‰ã€ã™ã¹ã¦ã®å¼•æ•°ã‚’è¡¨ç¤ºã™ã‚‹ã¾ã§ç¶šè¡Œ
 		if( $kansuuFlg == 1 )
 		{
 			if( Mb_EReg("\)", $file[$j]) )
 			{
-				//¡Ö{)¡×¤¬ÀèÆ¬¤À¤Ã¤¿¤é²ş¹Ô¤Î¤ß
+				//ã€Œ{)ã€ãŒå…ˆé ­ã ã£ãŸã‚‰æ”¹è¡Œã®ã¿
 				if( Mb_EReg("^\)", $file[$j]) )
 				{
-					//²ş¹Ô
+					//æ”¹è¡Œ
 					$jsparam[main][] = "<br>";
 				}
-				//¡Ö)¡×¤¬ÀèÆ¬°Ê³°¤À¤Ã¤¿¤é³Æ¹Ô¤Î½ĞÎÏ¤ª¤è¤Ó²ş¹Ô
+				//ã€Œ)ã€ãŒå…ˆé ­ä»¥å¤–ã ã£ãŸã‚‰å„è¡Œã®å‡ºåŠ›ãŠã‚ˆã³æ”¹è¡Œ
 				else
 				{
-					//¹Ô¤òHTML½ĞÎÏÍÑ¤ËÊÑ´¹¤·¡¢ÊÑ¿ô¤Ë³ÊÇ¼
+					//è¡Œã‚’HTMLå‡ºåŠ›ç”¨ã«å¤‰æ›ã—ã€å¤‰æ•°ã«æ ¼ç´
 					$file[$j] = fncConvertForHtml($file[$j]);
 					$jsparam[main][] = $file[$j]."<br>";
 				}
@@ -226,28 +226,28 @@ function fncJSMain($file, $fileLength, $filename ,$i)
 			}
 			else
 			{
-				//¹Ô¤òHTML½ĞÎÏÍÑ¤ËÊÑ´¹¤·¡¢ÊÑ¿ô¤Ë³ÊÇ¼
+				//è¡Œã‚’HTMLå‡ºåŠ›ç”¨ã«å¤‰æ›ã—ã€å¤‰æ•°ã«æ ¼ç´
 				$file[$j] = fncConvertForHtml($file[$j]);
 				$jsparam[main][] = $file[$j]."<br>";
 			}
 			continue;
 		}
 
-		//¡Öfunction¡×¡ÖPublic Function¡×¤Îµ­½Ò¤¬¤¢¤Ã¤¿¤é½ĞÎÏ
+		//ã€Œfunctionã€ã€ŒPublic Functionã€ã®è¨˜è¿°ãŒã‚ã£ãŸã‚‰å‡ºåŠ›
 		if( Mb_EReg("^function", $file[$j]) || 
 			Mb_EReg("^Public Function", $file[$j]) )
 		{
-			//ÀâÌÀÊ¸¤Îµ­½Ò¤ò»ß¤á¤ë
+			//èª¬æ˜æ–‡ã®è¨˜è¿°ã‚’æ­¢ã‚ã‚‹
 			$helpFlg = 0;
 
-			//¹Ô¤òHTML½ĞÎÏÍÑ¤ËÊÑ´¹¤·¡¢ÊÑ¿ô¤Ë³ÊÇ¼
+			//è¡Œã‚’HTMLå‡ºåŠ›ç”¨ã«å¤‰æ›ã—ã€å¤‰æ•°ã«æ ¼ç´
 			$file[$j] = fncConvertForHtml($file[$j]);
 			$jsparam[main][] = $file[$j]."<br>";
 
-			//¡Ö)¡×´Ø¿ô¤Î³«»Ï°ÌÃÖ¤ò¸¡º÷¡Ê°ú¿ô¤ò¤¹¤Ù¤ÆÉ½¼¨¤µ¤»¤Æ¡¢²ş¹Ô¤¹¤ë¤¿¤á¡Ë
+			//ã€Œ)ã€é–¢æ•°ã®é–‹å§‹ä½ç½®ã‚’æ¤œç´¢ï¼ˆå¼•æ•°ã‚’ã™ã¹ã¦è¡¨ç¤ºã•ã›ã¦ã€æ”¹è¡Œã™ã‚‹ãŸã‚ï¼‰
 			if( Mb_EReg("\)", $file[$j]) )
 			{
-				//²ş¹Ô
+				//æ”¹è¡Œ
 				$jsparam[main][] = "<br>";
 			}
 			else
@@ -257,22 +257,22 @@ function fncJSMain($file, $fileLength, $filename ,$i)
 			continue;
 		}
 
-		//´Ø¿ô¤ÎÀâÌÀÊ¸¤Î½ĞÎÏ¡Ê¡Öfunction¡×¡ÖPublic Function¡×¤¬¸½¤ì¤ë¤Ş¤ÇÂ³¹Ô¡Ë
+		//é–¢æ•°ã®èª¬æ˜æ–‡ã®å‡ºåŠ›ï¼ˆã€Œfunctionã€ã€ŒPublic Functionã€ãŒç¾ã‚Œã‚‹ã¾ã§ç¶šè¡Œï¼‰
 		if( $helpFlg == 1 )
 		{
-			//¹Ô¤òHTML½ĞÎÏÍÑ¤ËÊÑ´¹¤·¡¢ÊÑ¿ô¤Ë³ÊÇ¼
+			//è¡Œã‚’HTMLå‡ºåŠ›ç”¨ã«å¤‰æ›ã—ã€å¤‰æ•°ã«æ ¼ç´
 			$file[$j] = fncConvertForHtml($file[$j]);
 			$jsparam[main][] = $file[$j]."<br>";
 			continue;
 		}
 
-		//¥Õ¥¡¥¤¥ë¤ÎËöÈø
+		//ãƒ•ã‚¡ã‚¤ãƒ«ã®æœ«å°¾
 		if( $j == ($fileLength - 1) )
 		{
-			//</div>¥¿¥°¤Î¿ô¤¬¤¢¤Ã¤Æ¤Ê¤«¤Ã¤¿¤é
+			//</div>ã‚¿ã‚°ã®æ•°ãŒã‚ã£ã¦ãªã‹ã£ãŸã‚‰
 			if($tsujitsumaFlg == 1)
 			{
-				//´Ø¿ô¤Î½ªÎ»¥Ö¥í¥Ã¥¯¤ò¡¢ÊÑ¿ô¤Ëµ­½Ò
+				//é–¢æ•°ã®çµ‚äº†ãƒ–ãƒ­ãƒƒã‚¯ã‚’ã€å¤‰æ•°ã«è¨˜è¿°
 				$jsparam[main][] = "</div>";
 				$tsujitsumaFlg = 0;
 				continue;
@@ -280,24 +280,24 @@ function fncJSMain($file, $fileLength, $filename ,$i)
 		}
 
 	}
-	//¥Ö¥í¥Ã¥¯¤Î½ª¤ï¤ê¤òÉ½¼¨
+	//ãƒ–ãƒ­ãƒƒã‚¯ã®çµ‚ã‚ã‚Šã‚’è¡¨ç¤º
 	$jsparam[main][] = "</div>";
 }
 
 
-//html¤Ø½ĞÎÏ¤¹¤ë¤¿¤á¤ÎÊÑ´¹
+//htmlã¸å‡ºåŠ›ã™ã‚‹ãŸã‚ã®å¤‰æ›
 function fncConvertForHtml($file)
 {
-	//²ş¹ÔÊ¸»ú¥³¡¼¥É¤ò¾Ê¤¯
+	//æ”¹è¡Œæ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’çœã
 	$file = str_replace("\n","",$file);
-	//¥¿¥Ö¤ò&nbsp;¤ËÊÑ´¹
+	//ã‚¿ãƒ–ã‚’&nbsp;ã«å¤‰æ›
 	$file = str_replace("\t","&nbsp;&nbsp;&nbsp;&nbsp;",$file);
-	//È¾³Ñ¥¹¥Ú¡¼¥¹¤ò&nbsp;¤ËÊÑ´¹
+	//åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ã‚’&nbsp;ã«å¤‰æ›
 	$file = str_replace(" ","&nbsp;",$file);
 
-	//¡Ö<¡×¥¿¥°¤ÎÊÑ´¹
+	//ã€Œ<ã€ã‚¿ã‚°ã®å¤‰æ›
 	$file = str_replace("<","&lt;",$file);
-	//¡Ö>¡×¥¿¥°¤ÎÊÑ´¹
+	//ã€Œ>ã€ã‚¿ã‚°ã®å¤‰æ›
 	$file = str_replace(">","&gt;",$file);
 
 	return $file;

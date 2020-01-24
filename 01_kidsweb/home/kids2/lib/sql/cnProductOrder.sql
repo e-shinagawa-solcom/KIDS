@@ -1,12 +1,12 @@
 /*
-	³µÍ×¡§¡ÖÀ½ÉÊ¥³¡¼¥É¡×¤«¤é¡ÖÀ½ÉÊÌ¾¾Î¡×¤ò¼èÆÀ
-	ÂÐ¾Ý¡§È¯Ãí´ÉÍý¡¢»ÅÆþ´ÉÍý¡¢¼õÃí´ÉÍý¡¢Çä¾å´ÉÍý
-	ºîÀ®¡§watanabe
-	¹¹¿·¡§ºØÆ£ÏÂ»Ö
-	È÷¹Í¡§¡Ö¥³¡¼¥É¡×¤«¤é°ìÃ×¤¹¤ë¡ÖÌ¾¾Î¡×¤ò¼èÆÀ
+	æ¦‚è¦ï¼šã€Œè£½å“ã‚³ãƒ¼ãƒ‰ã€ã‹ã‚‰ã€Œè£½å“åç§°ã€ã‚’å–å¾—
+	å¯¾è±¡ï¼šç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã€å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†
+	ä½œæˆï¼šwatanabe
+	æ›´æ–°ï¼šæ–Žè—¤å’Œå¿—
+	å‚™è€ƒï¼šã€Œã‚³ãƒ¼ãƒ‰ã€ã‹ã‚‰ä¸€è‡´ã™ã‚‹ã€Œåç§°ã€ã‚’å–å¾—
 */
 SELECT mp.lngproductno,
-	CASE WHEN mp.strproductname IS NULL THEN '¡ÊÀ½ÉÊÌ¾¾Î¤¬¶õ¤Ç¤¹¡Ë'
+	CASE WHEN mp.strproductname IS NULL THEN 'ï¼ˆè£½å“åç§°ãŒç©ºã§ã™ï¼‰'
 		ELSE mp.strproductname
 	END
 FROM m_product mp

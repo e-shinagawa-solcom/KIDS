@@ -2,12 +2,12 @@
 
 
 //-----------------------------------------------------------------------------
-// ³µÍ× : ¥í¡¼¥«¥ëÊÑ¿ôÄêµÁ
-// ²òÀâ :¡ÖTabIndex¡×ÃÍ¤ÎÀßÄê / ¥Ü¥¿¥ó¥¤¥á¡¼¥¸¤ÎÀßÄê
+// æ¦‚è¦ : ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°å®šç¾©
+// è§£èª¬ :ã€ŒTabIndexã€å€¤ã®è¨­å®š / ãƒœã‚¿ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸ã®è¨­å®š
 //-----------------------------------------------------------------------------
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¥µ¥Ö¥¦¥£¥ó¥É¥¦¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumTabA1   = ''   ; // vendor
 var NumTabA1_2 = '' ; // creation
@@ -23,33 +23,33 @@ var NumTabI1   = ''   ; // input
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¾¦ÉÊ´ÉÍı¡×¥¿¥Ö
+// é©ç”¨ç®‡æ‰€ :ã€Œå•†å“ç®¡ç†ã€ã‚¿ãƒ–
 //------------------------------------------
 var PTabNumA = '' ; // A
 var PTabNumB = '' ; // B
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¼õÃí¡¦È¯Ãí¡¦Çä¾å¡¦»ÅÆş¡×¥¿¥Ö
+// é©ç”¨ç®‡æ‰€ :ã€Œå—æ³¨ãƒ»ç™ºæ³¨ãƒ»å£²ä¸Šãƒ»ä»•å…¥ã€ã‚¿ãƒ–
 //------------------------------------------
-var TabNumA = '' ; // ¥Ø¥Ã¥À¡¼
-var TabNumB = '' ; // ÌÀºÙ
+var TabNumA = '' ; // ãƒ˜ãƒƒãƒ€ãƒ¼
+var TabNumB = '' ; // æ˜ç´°
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡ÖÅĞÏ¿¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œç™»éŒ²ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var RegistNum = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¹ÔÄÉ²Ã¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œè¡Œè¿½åŠ ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var AddRowNum = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡Ö¥«¥ì¥ó¥À¡¼¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumDateTabA = '' ;
 var NumDateTabB = '' ;
@@ -57,23 +57,23 @@ var NumDateTabC = '' ;
 
 
 //------------------------------------------
-// Å¬ÍÑ²Õ½ê :¡ÖÀ½ÉÊ¿ôÎÌ¥Ü¥¿¥ó¡×
+// é©ç”¨ç®‡æ‰€ :ã€Œè£½å“æ•°é‡ãƒœã‚¿ãƒ³ã€
 //------------------------------------------
 var NumPunitTab = '' ;
 
 
 //------------------------------------------
-// ²òÀâ : ÅĞÏ¿¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : ç™»éŒ²ãƒœã‚¿ãƒ³ç”Ÿæˆ
 //------------------------------------------
-var blownRegiBtJ1 = '<a href="#"><img onmouseover="fncBlownRegistButton( \'onJ\' , this );" onmouseout="fncBlownRegistButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + blownregistbtJ1 + '" width="72" height="20" border="0" alt="ÅĞÏ¿"></a>';
+var blownRegiBtJ1 = '<a href="#"><img onmouseover="fncBlownRegistButton( \'onJ\' , this );" onmouseout="fncBlownRegistButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + blownregistbtJ1 + '" width="72" height="20" border="0" alt="ç™»éŒ²"></a>';
 
 var blownRegiBtE1 = '<a href="#"><img onmouseover="fncBlownRegistButton( \'onE\' , this );" onmouseout="fncBlownRegistButton( \'offE\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + blownregistbtE1 + '" width="72" height="20" border="0" alt="REGIST"></a>';
 
 
 //------------------------------------------
-// ²òÀâ : Ìá¤ë¥Ü¥¿¥óÀ¸À®
+// è§£èª¬ : æˆ»ã‚‹ãƒœã‚¿ãƒ³ç”Ÿæˆ
 //------------------------------------------
-var BackBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackJOn(this);" onmouseout="BlownBackJOff(this);" src="' + blownbackJ1 + '" width="72" height="20" border="0" alt="Ìá¤ë"></a>';
+var BackBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackJOn(this);" onmouseout="BlownBackJOff(this);" src="' + blownbackJ1 + '" width="72" height="20" border="0" alt="æˆ»ã‚‹"></a>';
 var BackBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackEOn(this);" onmouseout="BlownBackEOff(this);fncAlphaOff( this );" src="' + blownbackE1 + '" width="72" height="20" border="0" alt="BACK"></a>';
 
 

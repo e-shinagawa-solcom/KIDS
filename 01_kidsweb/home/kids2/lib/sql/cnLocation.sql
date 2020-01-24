@@ -1,8 +1,8 @@
 /*
-	���ס���Ǽ�ʾ�ꥳ���ɡפ����̾�Ρפ����
-	�оݡ��ʶ��̡�
-	��������ƣ�»�
-	���͡����פ���֥����ɡ�̾�Ρװ���������
+	概要：「納品場所コード」から「名称」を取得
+	対象：（共通）
+	作成：斎藤和志
+	備考：一致する「コード＋名称」一覧を生成
 */
 SELECT mc.strcompanydisplaycode, mc.strcompanydisplayname
 FROM m_company mc, m_attribute ma, m_attributerelation mar

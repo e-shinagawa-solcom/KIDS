@@ -2,19 +2,19 @@
 
 
 //------------------------------------------------------------
-// ²òÀâ : ÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ´Ø¿ô
+// è§£èª¬ : æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿é–¢æ•°
 //------------------------------------------------------------
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ¥í¥°¥Ü¥¿¥ó½ñ¤­½Ğ¤·
+	// ãƒ­ã‚°ãƒœã‚¿ãƒ³æ›¸ãå‡ºã—
 	BackBt.innerHTML = backsmallBt;
 
-	// PREV & NEXT¥Ü¥¿¥ó½ñ¤­½Ğ¤·
+	// PREV & NEXTãƒœã‚¿ãƒ³æ›¸ãå‡ºã—
 	NextBt.innerHTML = blownnextBt;
 	PrevBt.innerHTML = blownprevBt;
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( lngSelfCode == 0 )
 	{
 
@@ -26,15 +26,15 @@ function ChgEtoJ( lngSelfCode )
 
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( lngSelfCode == 1 )
 	{
 
-		ControlTitle.innerText = '¥í¥°';
+		ControlTitle.innerText = 'ãƒ­ã‚°';
 		Column0.innerText      = 'No';
-		Column1.innerText      = '¥¿¥¤¥È¥ë';
-		Column2.innerText      = 'ÅĞÏ¿Æü»ş';
-		Column3.innerText      = '¾ÜºÙ';
+		Column1.innerText      = 'ã‚¿ã‚¤ãƒˆãƒ«';
+		Column2.innerText      = 'ç™»éŒ²æ—¥æ™‚';
+		Column3.innerText      = 'è©³ç´°';
 
 	}
 

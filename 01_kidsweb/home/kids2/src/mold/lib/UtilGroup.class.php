@@ -4,18 +4,18 @@ require_once (SRC_ROOT.'/mold/lib/WithQuery.class.php');
 require_once (SRC_ROOT.'/mold/lib/exception/SQLException.class.php');
 
 /**
- * ���롼�ץޥ����˴�Ϣ����������󶡤���
- * clsDB����Ѥ��Ƥ��뤬�������Դ����ʰ����դ��뤳��
+ * グループマスタに関連する処理を提供する
+ * clsDBを使用しているが処理が不完全な為注意すること
  *
  * @see clsDB
  */
 class UtilGroup extends WithQuery
 {
 	/**
-	 * ���롼�ץ����ɤ��˥��롼�פ�ɽ��̾���������
+	 * グループコードを基にグループの表示名を取得する
 	 *
-	 * @param string $groupCode ���롼�ץ�����
-	 * @return ɽ�����롼��̾
+	 * @param string $groupCode グループコード
+	 * @return 表示グループ名
 	 */
 	public function selectDisplayNameByGroupCode($groupCode)
 	{
@@ -24,28 +24,28 @@ class UtilGroup extends WithQuery
 		if(is_string($groupCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"groupCode" => pg_escape_string($groupCode)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$record = pg_fetch_array($pgResult, 0);
-					// ɽ��̾�μ���
+					// 表示名の取得
 					$result = $record["strgroupdisplayname"];
 				}
 				else
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 					);
@@ -54,7 +54,7 @@ class UtilGroup extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -63,8 +63,8 @@ class UtilGroup extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($groupCode)
+					"引数の型が不正です。".
+					"引数1:".gettype($groupCode)
 					);
 		}
 
@@ -72,10 +72,10 @@ class UtilGroup extends WithQuery
 	}
 
 	/**
-	 * ���롼�ץ����ɤ���ɽ�������ɤ��������
+	 * グループコードを基に表示コードを取得する
 	 *
-	 * @param string $groupCode ���롼�ץ�����
-	 * @return ɽ�����롼��̾
+	 * @param string $groupCode グループコード
+	 * @return 表示グループ名
 	 */
 	public function selectDisplayCodeByGroupCode($groupCode)
 	{
@@ -84,28 +84,28 @@ class UtilGroup extends WithQuery
 		if(is_string($groupCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"groupCode" => pg_escape_string($groupCode)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$record = pg_fetch_array($pgResult, 0);
-					// ɽ��̾�μ���
+					// 表示名の取得
 					$result = $record["strgroupdisplaycode"];
 				}
 				else
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -114,7 +114,7 @@ class UtilGroup extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -123,8 +123,8 @@ class UtilGroup extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($groupCode)
+					"引数の型が不正です。".
+					"引数1:".gettype($groupCode)
 					);
 		}
 
@@ -132,42 +132,42 @@ class UtilGroup extends WithQuery
 	}
 
 	/**
-	 * ɽ�����롼�ץ����ɤ��˥��롼�ץ����ɤ��������
+	 * 表示グループコードを基にグループコードを取得する
 	 *
-	 * @param string $displayGroupCode ɽ�����롼�ץ�����
-	 * @param boolean $required �������ɬ�ܥե饰
-	 * @return ���롼�ץ�����
+	 * @param string $displayGroupCode 表示グループコード
+	 * @param boolean $required 索引結果必須フラグ
+	 * @return グループコード
 	 */
 	public function selectGroupCodeByDisplayGroupCode($displayGroupCode, $required = true)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"strgroupdisplaycode" => pg_escape_string($displayGroupCode)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ɽ��̾�μ���
+				// 表示名の取得
 				$result = $record["lnggroupcode"];
 			}
 			else
 			{
-				// ��̤�ɬ�ܤξ��
+				// 結果が必須の場合
 				if ($required)
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -177,7 +177,7 @@ class UtilGroup extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -188,7 +188,7 @@ class UtilGroup extends WithQuery
 
 	/**
 	 * <pre>
-	 * ɽ�����롼�ץ����ɤ����롼�ץޥ������¸�ߤ����Τ������å���Ԥ�
+	 * 表示グループコードがグループマスタ上に存在するものかチェックを行う
 	 * </pre>
 	 *
 	 * @param string $groupDisplayCode
@@ -201,18 +201,18 @@ class UtilGroup extends WithQuery
 		if(is_string($groupDisplayCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"strgroupdisplaycode" => pg_escape_string($groupDisplayCode)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -221,7 +221,7 @@ class UtilGroup extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -230,8 +230,8 @@ class UtilGroup extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($groupDisplayCode)
+					"引数の型が不正です。".
+					"引数1:".gettype($groupDisplayCode)
 					);
 		}
 

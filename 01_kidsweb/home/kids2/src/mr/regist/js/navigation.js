@@ -1,25 +1,25 @@
 (function(sessionId){
-		// ¥µ¥¤¥É¥Ğ¡¼É½¼¨ÀÚÂØ
+		// ã‚µã‚¤ãƒ‰ãƒãƒ¼è¡¨ç¤ºåˆ‡æ›¿
 		$('.navigate').on('click', function(){
 			$('.navigate-box').toggle();
 		});
-		// ¶â·¿ÍúÎòÅĞÏ¿²èÌÌ
+		// é‡‘å‹å±¥æ­´ç™»éŒ²ç”»é¢
 		$('.navi-mold-history-regist').on('click', function(){
 			$(location).attr('href', '/mm/regist/index.php?strSessionID=' + sessionId);
 		});
-		// ¶â·¿ÍúÎò¸¡º÷²èÌÌ
+		// é‡‘å‹å±¥æ­´æ¤œç´¢ç”»é¢
 		$('.navi-mold-history-search').on('click', function(){
 			// $(location).attr('href', '/mm/search/index.php?strSessionID=' + sessionId);
 		});
-		// ¶â·¿Ä¢É¼ÅĞÏ¿²èÌÌ
+		// é‡‘å‹å¸³ç¥¨ç™»éŒ²ç”»é¢
 		$('.navi-mold-report-regist').on('click', function(){
 			$(location).attr('href', '/mr/regist/index.php?strSessionID=' + sessionId);
 		});
-		// ¶â·¿Ä¢É¼¸¡º÷²èÌÌ
+		// é‡‘å‹å¸³ç¥¨æ¤œç´¢ç”»é¢
 		$('.navi-mold-report-search').on('click', function(){
 			$(location).attr('href', '/mr/search/index.php?strSessionID=' + sessionId);
 		});
-		// ¶â·¿Ä¢É¼½ĞÎÏ²èÌÌ
+		// é‡‘å‹å¸³ç¥¨å‡ºåŠ›ç”»é¢
 		$('.navi-list').on('click', function(){
 			$(location).attr('href', '/list/index.php?strSessionID=' + sessionId);
 		});

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       È¯Ãí´ÉÍý  ¸¡º÷²èÌÌ
+*       ç™ºæ³¨ç®¡ç†  æ¤œç´¢ç”»é¢
 *
 *
 *       @package    K.I.D.S.
@@ -13,20 +13,20 @@
 *       @version    2.00
 *
 *
-*       ½èÍý³µÍ×
-*         ¡¦¸¡º÷²èÌÌÉ½¼¨½èÍý
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»æ¤œç´¢ç”»é¢è¡¨ç¤ºå‡¦ç†
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// ÀßÄê¤ÎÆÉ¤ß¹þ¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require ( LIB_FILE );
 require(SRC_ROOT."po/cmn/lib_po.php");
 
@@ -35,7 +35,7 @@ $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_POST )
 {
@@ -48,32 +48,32 @@ elseif ( $_GET )
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]   = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â¥Á¥§¥Ã¥¯
-// 500	È¯Ãí´ÉÍý
+// æ¨©é™ãƒã‚§ãƒƒã‚¯
+// 500	ç™ºæ³¨ç®¡ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
 {
-    fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+    fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// 502 È¯Ãí´ÉÍý¡ÊÈ¯Ãí¸¡º÷¡Ë
+// 502 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨æ¤œç´¢ï¼‰
 if ( fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
 {
 	$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
 }
 
-// 503 È¯Ãí´ÉÍý¡ÊÈ¯Ãí¸¡º÷¡¡´ÉÍý¥â¡¼¥É¡Ë
+// 503 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨æ¤œç´¢ã€€ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ï¼‰
 if ( fncCheckAuthority( DEF_FUNCTION_PO3, $objAuth ) )
 {
 	$aryData["AdminSet_visibility"] = "visible";
-	// 507 È¯Ãí´ÉÍý¡ÊÌµ¸ú²½¡Ë
+	// 507 ç™ºæ³¨ç®¡ç†ï¼ˆç„¡åŠ¹åŒ–ï¼‰
 	if ( fncCheckAuthority( DEF_FUNCTION_PO7, $objAuth ) )
 	{
 		$aryData["btnInvalid_visibility"] = "visible";
@@ -91,7 +91,7 @@ else
 	$aryData["btnInvalid_visibility"] = "hidden";
 	$aryData["btnInvalidVisible"] = "";
 }
-// 504 È¯Ãí´ÉÍý¡Ê¾ÜºÙÉ½¼¨¡Ë
+// 504 ç™ºæ³¨ç®¡ç†ï¼ˆè©³ç´°è¡¨ç¤ºï¼‰
 if ( fncCheckAuthority( DEF_FUNCTION_PO4, $objAuth ) )
 {
 	$aryData["btnDetail_visibility"] = "visible";
@@ -103,21 +103,21 @@ else
 	$aryData["btnDetailVisible"] = "";
 }
 
-// ´ÉÍý¼Ô¥â¡¼¥É
+// ç®¡ç†è€…ãƒ¢ãƒ¼ãƒ‰
 if($objAuth->AuthorityGroupCode <= 3){
 	$aryData["displayMode"] = "inline";
 } else {
 	$aryData["displayMode"] = "none";
 }
 
-// »ÅÆþ²ÊÌÜ
+// ä»•å…¥ç§‘ç›®
 $aryData["lngStockSubjectCode"]		= fncGetPulldown( "m_stocksubject", "lngstocksubjectcode", "lngstocksubjectcode,	strstocksubjectname", 1, '', $objDB );
-// »ÅÆþÉôÉÊ
+// ä»•å…¥éƒ¨å“
 $aryData["lngStockItemCode"] 		= fncGetPulldown( "m_stockitem", "lngstocksubjectcode || '-' || lngstockitemcode", "lngstockitemcode, 	strstockitemname", 0, '', $objDB );
-// »ÅÆþ¾õÂÖ
+// ä»•å…¥çŠ¶æ…‹
 $aryData["lngOrderStatusCode"] = fncGetCheckBoxObject("m_orderstatus", "lngorderstatuscode", "strorderstatusname", "lngOrderStatusCode[]", 'where lngOrderStatusCode not in (3,99)', $objDB);
 
-// »ÅÆþÉôÉÊÉü¸µÍÑ
+// ä»•å…¥éƒ¨å“å¾©å…ƒç”¨
 $TmpAry = explode("\n",$aryData["lngStockItemCode"]);
 
 foreach($TmpAry as $key => $value) {
@@ -138,24 +138,24 @@ foreach($TmpAry as $key => $value) {
 	}
 }
 
-//¡¡¥×¥ë¥À¥¦¥ó¥ê¥¹¥È¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤¿¾ì¹ç¥¨¥é¡¼É½¼¨
+//ã€€ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®å–å¾—ã«å¤±æ•—ã—ãŸå ´åˆã‚¨ãƒ©ãƒ¼è¡¨ç¤º
 if ( !$aryData["lngStockSubjectCode"] or !$aryData["lngStockItemCode"] )
 {
-	fncOutputError ( 9055, DEF_WARNING, "¥·¥¹¥Æ¥à´ÉÍý¼Ô¤Ë¤ªÌä¤¤¹ç¤ï¤»²¼¤µ¤¤¡£", TRUE, "", $objDB );
+	fncOutputError ( 9055, DEF_WARNING, "ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…ã«ãŠå•ã„åˆã‚ã›ä¸‹ã•ã„ã€‚", TRUE, "", $objDB );
 }
 
 $aryData["lngStockItemCodeValue"]	= "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"></option>";
 $aryData["lngStockItemCodeDisp"]	= mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"></option>","EUC-JP","ASCII,JIS,UTF-8,EUC-JP,SJIS");
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥Ø¥ë¥×ÂÐ±þ
+// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 $aryData["lngFunctionCode"] = DEF_FUNCTION_PO2;
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 echo fncGetReplacedHtmlWithBase("search/base_search.html", "po/search/po_search.tmpl", $aryData ,$objAuth );
 
 $objDB->close();

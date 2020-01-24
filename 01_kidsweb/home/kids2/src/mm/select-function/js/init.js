@@ -1,17 +1,17 @@
 $(function () {
-    // ÀÚ¤êÂØ¤¨ÂĞ¾İÍ×ÁÇ¤Î¥­¥ã¥Ã¥·¥å
+    // åˆ‡ã‚Šæ›¿ãˆå¯¾è±¡è¦ç´ ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
     var title = $('.base-header__title-image');
     var label = $('.label-select-function');
     var regist = $('.function-buttons__regist');
     var search = $('.function-buttons__search');
 
-    // ¥¿¥¤¥È¥ë²èÁüÀßÄê
+    // ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒè¨­å®š
     title.attr('src', '/img/type01/mm/title_ja.gif');
-    // ¥é¥Ù¥ë µ¡Ç½ÁªÂò
-    label.text('µ¡Ç½ÁªÂò');
+    // ãƒ©ãƒ™ãƒ« æ©Ÿèƒ½é¸æŠ
+    label.text('æ©Ÿèƒ½é¸æŠ');
 
-    // ¥Ü¥¿¥ó²èÁüÀßÄê(¶â·¿ÍúÎòÅĞÏ¿²èÌÌ)
+    // ãƒœã‚¿ãƒ³ç”»åƒè¨­å®š(é‡‘å‹å±¥æ­´ç™»éŒ²ç”»é¢)
     regist.attr('src', '/img/type01/mm/regist_off_ja_bt.gif');
-    // ¥Ü¥¿¥ó²èÁüÀßÄê(¶â·¿ÍúÎòÅĞÏ¿²èÌÌ)
+    // ãƒœã‚¿ãƒ³ç”»åƒè¨­å®š(é‡‘å‹å±¥æ­´ç™»éŒ²ç”»é¢)
     search.attr('src', '/img/type01/mm/search_off_ja_bt.gif');
 });

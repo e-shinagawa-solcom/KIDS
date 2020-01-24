@@ -2,31 +2,31 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       ¾¦ÉÊ´ÉÍý  ¾ÜºÙ
+ *       å•†å“ç®¡ç†  è©³ç´°
  *
- *       ½èÍý³µÍ×
- *         ¡¦»ØÄêÀ½ÉÊÈÖ¹æ¥Ç¡¼¥¿¤Î¾ÜºÙÉ½¼¨½èÍý
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æŒ‡å®šè£½å“ç•ªå·ãƒ‡ãƒ¼ã‚¿ã®è©³ç´°è¡¨ç¤ºå‡¦ç†
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 
 // require (LIB_ROOT . "clscache.php" );
 require (SRC_ROOT . "p/cmn/lib_ps1.php");
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ($_GET) {
     $aryData = $_GET;
@@ -34,45 +34,45 @@ if ($_GET) {
     $aryData = $_POST;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
-// ¸¢¸Â³ÎÇ§
-// 302 ¾¦ÉÊ´ÉÍý¡Ê¾¦ÉÊ¸¡º÷¡Ë
+// æ¨©é™ç¢ºèª
+// 302 å•†å“ç®¡ç†ï¼ˆå•†å“æ¤œç´¢ï¼‰
 if (!fncCheckAuthority(DEF_FUNCTION_P2, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
-// 304 ¾¦ÉÊ´ÉÍý¡Ê¾ÜºÙÉ½¼¨¡Ë
+// 304 å•†å“ç®¡ç†ï¼ˆè©³ç´°è¡¨ç¤ºï¼‰
 if (!fncCheckAuthority(DEF_FUNCTION_P4, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
 $lngProductNo = $aryData["lngProductNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
 
-// »ØÄê¾¦ÉÊÈÖ¹æ¤Î¾¦ÉÊ¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+// æŒ‡å®šå•†å“ç•ªå·ã®å•†å“ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 $strQuery = fncGetProductNoToInfoSQL($lngProductNo, $lngRevisionNo);
 
-// ¾ÜºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+// è©³ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
         $aryResult = $objDB->fetchArray($lngResultID, 0);
     } else {
-        fncOutputError(303, DEF_ERROR, "³ºÅö¥Ç¡¼¥¿¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Þ¤·¤¿", true, "../p/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+        fncOutputError(303, DEF_ERROR, "è©²å½“ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ", true, "../p/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
     }
 } else {
-    fncOutputError(303, DEF_ERROR, "¥Ç¡¼¥¿¤¬°Û¾ï¤Ç¤¹", true, "../p/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(303, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãŒç•°å¸¸ã§ã™", true, "../p/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 $objDB->freeResult($lngResultID);
 
-// ¼èÆÀ¥Ç¡¼¥¿¤ÎÄ´À°
+// å–å¾—ãƒ‡ãƒ¼ã‚¿ã®èª¿æ•´
 $aryNewResult = fncSetProductTableData($aryResult, $objDB);
 
-// Ä¢É¼½ÐÎÏÂÐ±þ
-// É½¼¨ÂÐ¾Ý¤¬ºï½ü¥Ç¡¼¥¿¤Î¾ì¹ç¤Ï¥×¥ì¥Ó¥å¡¼¥Ü¥¿¥ó¤òÉ½¼¨¤·¤Ê¤¤
-// ¤Ê¤ª¸¢¸Â¤ò»ý¤Ã¤Æ¤Ê¤¤¾ì¹ç¤â¥×¥ì¥Ó¥å¡¼¥Ü¥¿¥ó¤òÉ½¼¨¤·¤Ê¤¤
+// å¸³ç¥¨å‡ºåŠ›å¯¾å¿œ
+// è¡¨ç¤ºå¯¾è±¡ãŒå‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã®å ´åˆã¯ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤ºã—ãªã„
+// ãªãŠæ¨©é™ã‚’æŒã£ã¦ãªã„å ´åˆã‚‚ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤ºã—ãªã„
 if (!$aryResult["bytInvalidFlag"] && fncCheckAuthority(DEF_FUNCTION_LO1, $objAuth)) {
     $aryNewResult["strPreviewAction"] = "../../list/result/frameset.php?strSessionID=" . $aryData["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_PRODUCT . "&strReportKeyCode=" . $lngProductNo . "&bytCopyFlag=TRUE";
 
@@ -81,15 +81,15 @@ if (!$aryResult["bytInvalidFlag"] && fncCheckAuthority(DEF_FUNCTION_LO1, $objAut
     $aryNewResult["listview"] = 'style="visibility: hidden"';
 }
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("p/detail/p_detail.html");
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace($aryNewResult);
 $objTemplate->complete();
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 $objDB->close();

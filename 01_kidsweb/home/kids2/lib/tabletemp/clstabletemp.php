@@ -1,7 +1,7 @@
 <?
 // ----------------------------------------------------------------------------
 /**
-*       ¥Æ¥ó¥İ¥é¥ê¡¼¥Æ¡¼¥Ö¥ëÁàºî¥¯¥é¥¹
+*       ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«æ“ä½œã‚¯ãƒ©ã‚¹
 *
 *
 *       @package    K.I.D.S.
@@ -12,12 +12,12 @@
 *       @version    1.00
 *
 *
-*       ½èÍı³µÍ×
-*   	t_temp ¥Æ¡¼¥Ö¥ë¤Ø¤Î¥Ç¡¼¥¿ÅĞÏ¿¡¢¼èÆÀ¤ò¹Ô¤¦¡£
+*       å‡¦ç†æ¦‚è¦
+*   	t_temp ãƒ†ãƒ¼ãƒ–ãƒ«ã¸ã®ãƒ‡ãƒ¼ã‚¿ç™»éŒ²ã€å–å¾—ã‚’è¡Œã†ã€‚
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *		2006/05/27	New
-*		2006/05/28  strKey ¤ÎÅĞÏ¿¡¦¼èÆÀ¤ò Á´¤Æ¾®Ê¸»ú¤ËÊÑ´¹¤¹¤ë¤è¤¦¤Ë¤·¤¿
+*		2006/05/28  strKey ã®ç™»éŒ²ãƒ»å–å¾—ã‚’ å…¨ã¦å°æ–‡å­—ã«å¤‰æ›ã™ã‚‹ã‚ˆã†ã«ã—ãŸ
 *
 */
 // ----------------------------------------------------------------------------
@@ -51,13 +51,13 @@ class clsTableTemp
 
 		$lngFatalCnt=0;
 
-		// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+		// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 		$this->objDB->transactionBegin();
 
-		// t_temp.lngtempno ¤Î¼èÆÀ
+		// t_temp.lngtempno ã®å–å¾—
 		$lngtempno = fncGetSequence("t_temp.lngtempno", $this->objDB);
 
-		// $aryIn ÇÛÎóÊ¬¤ÎÅĞÏ¿½èÍı
+		// $aryIn é…åˆ—åˆ†ã®ç™»éŒ²å‡¦ç†
 		while(list($strKey, $strValue) = each($aryIn))
 		{
 			$arySql = array();
@@ -66,12 +66,12 @@ class clsTableTemp
 			$arySql[] = 'values('.$lngtempno.", '".strtolower($strKey)."', '".$strValue."')";
 			$strSql = implode($arySql,"\n");
 
-			// ÅĞÏ¿¼Â¹Ô
+			// ç™»éŒ²å®Ÿè¡Œ
 			list ($lngResultID, $lngResultNum) = fncQuery($strSql, $this->objDB);
-			// ¥¨¥é¡¼¤Îºİ¤ÏDB¥¨¥é¡¼¤ÇÉ½¼¨¤µ¤ì¤ë
+			// ã‚¨ãƒ©ãƒ¼ã®éš›ã¯DBã‚¨ãƒ©ãƒ¼ã§è¡¨ç¤ºã•ã‚Œã‚‹
 		}
 
-		// ¥³¥ß¥Ã¥È
+		// ã‚³ãƒŸãƒƒãƒˆ
 		$this->objDB->transactionCommit();
 
 		return $lngtempno;
@@ -88,10 +88,10 @@ class clsTableTemp
 		$arySql[] = 'where lngtempno='.$lngTempNo;
 		$strSql = implode($arySql,"\n");
 		
-		// strKey, strValue ¤ò¼èÆÀ
+		// strKey, strValue ã‚’å–å¾—
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSql, $this->objDB );
 
-		// strKey, strValue ¤ÎÁÈ¤ß¹ç¤ï¤»¤ò¥á¥ó¥Ğ¡¼ÊÑ¿ô¤ØÀßÄê
+		// strKey, strValue ã®çµ„ã¿åˆã‚ã›ã‚’ãƒ¡ãƒ³ãƒãƒ¼å¤‰æ•°ã¸è¨­å®š
 		for($i = 0; $i < $lngResultNum; $i++)
 		{
 			$objTemp = $this->objDB->fetchObject( $lngResultID, $i );

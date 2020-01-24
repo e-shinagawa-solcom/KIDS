@@ -13,27 +13,27 @@ var bottomImage02 = '<img src="' + bottomimg02 + '" width="677" height="7" borde
 var countImage = '<img src="' + counter + '" width="100" height="19" border="0">';
 
 ///// SEARCH HEADER 01 /////
-var searchheader01J = '<img src="' + schheader01J + '" width="493" height="25" border="0" alt="¸¡º÷">';
+var searchheader01J = '<img src="' + schheader01J + '" width="493" height="25" border="0" alt="æ¤œç´¢">';
 var searchheader01E = '<img src="' + schheader01E + '" width="493" height="25" border="0" alt="SEARCH">';
 
 ///// RESULT HEADER 01 /////
-var resultheader01J = '<img src="' + rltheader01J + '" width="493" height="25" border="0" alt="¸¡º÷·ë²Ì">';
+var resultheader01J = '<img src="' + rltheader01J + '" width="493" height="25" border="0" alt="æ¤œç´¢çµæžœ">';
 var resultheader01E = '<img src="' + rltheader01E + '" width="493" height="25" border="0" alt="RESULT">';
 
 ///// SEARCH HEADER 01b /////
-var searchheader01bJ = '<img src="' + schheader01J + '" width="493" height="25" border="0" alt="¸¡º÷">';
+var searchheader01bJ = '<img src="' + schheader01J + '" width="493" height="25" border="0" alt="æ¤œç´¢">';
 var searchheader01bE = '<img src="' + schheader01E + '" width="493" height="25" border="0" alt="SEARCH">';
 
 ///// RESULT HEADER 01b /////
-var resultheader01bJ = '<img src="' + rltheader01J + '" width="493" height="25" border="0" alt="¸¡º÷·ë²Ì">';
+var resultheader01bJ = '<img src="' + rltheader01J + '" width="493" height="25" border="0" alt="æ¤œç´¢çµæžœ">';
 var resultheader01bE = '<img src="' + rltheader01E + '" width="493" height="25" border="0" alt="RESULT">';
 
 ///// SEARCH HEADER 02 /////
-var searchheader02J = '<img src="' + schheader02J + '" width="677" height="25" border="0" alt="¸¡º÷">';
+var searchheader02J = '<img src="' + schheader02J + '" width="677" height="25" border="0" alt="æ¤œç´¢">';
 var searchheader02E = '<img src="' + schheader02E + '" width="677" height="25" border="0" alt="SEARCH">';
 
 ///// RESULT HEADER 02 /////
-var resultheader02J = '<img src="' + rltheader02J + '" width="677" height="25" border="0" alt="¸¡º÷·ë²Ì">';
+var resultheader02J = '<img src="' + rltheader02J + '" width="677" height="25" border="0" alt="æ¤œç´¢çµæžœ">';
 var resultheader02E = '<img src="' + rltheader02E + '" width="677" height="25" border="0" alt="RESULT">';
 
 

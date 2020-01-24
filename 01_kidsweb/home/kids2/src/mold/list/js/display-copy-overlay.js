@@ -1,7 +1,7 @@
 (function(){
-    // епеиеъ╩╕╗·╬єд╦isCopyдм┤▐д▐дьд╞ддды╛ь╣ч
+    // уВпуВиуГкцЦЗхнЧхИЧуБлisCopyуБМхРлуБ╛уВМуБжуБДуВЛха┤хРИ
     if(window.location.search.match(/isCopy/)){
-        // COPY екб╝е╨б╝еьеддЄ╔╜╝и
+        // COPY уВкуГ╝уГРуГ╝уГмуВдуВТшбичд║
         $('.copy-overlay').toggle();
     }
 })();

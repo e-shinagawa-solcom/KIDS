@@ -3,54 +3,54 @@
 require_once(SRC_ROOT.'/mold/lib/index/FormMoldRegistBase.class.php');
 
 /**
- * ¶â·¿ÍúÎò½èÍı¤Ç¤Î¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤Ë¥¢¥¯¥»¥¹¤¹¤ë°Ù¤Î¥­¡¼¤òÄó¶¡¤¹¤ë
+ * é‡‘å‹å±¥æ­´å‡¦ç†ã§ã®ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ç‚ºã®ã‚­ãƒ¼ã‚’æä¾›ã™ã‚‹
  */
 class FormMoldHistory extends FormMoldRegistBase
 {
 	/**
-	 * ¶â·¿ÍúÎòNO
+	 * é‡‘å‹å±¥æ­´NO
 	 *
 	 * @var string
 	 */
 	const HistoryNo = "HistoryNo";
 
 	/**
-	 * ¥¹¥Æ¡¼¥¿¥¹
+	 * ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	 *
 	 * @var string
 	 */
 	const Status = "Status";
 
 	/**
-	 * ¼Â»ÜÆü
+	 * å®Ÿæ–½æ—¥
 	 *
 	 * @var string
 	 */
 	const ActionDate = "ActionDate";
 
 	/**
-	 * È÷¹Í1
+	 * å‚™è€ƒ1
 	 *
 	 * @var string
 	 */
 	const Remark1 = "Remark1";
 
 	/**
-	 * È÷¹Í2
+	 * å‚™è€ƒ2
 	 *
 	 * @var string
 	 */
 	const Remark2 = "Remark2";
 
 	/**
-	 * È÷¹Í3
+	 * å‚™è€ƒ3
 	 *
 	 * @var string
 	 */
 	const Remark3 = "Remark3";
 
 	/**
-	 * È÷¹Í4
+	 * å‚™è€ƒ4
 	 *
 	 * @var string
 	 */

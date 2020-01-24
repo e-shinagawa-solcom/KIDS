@@ -2,12 +2,12 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¶â·¿ÍúÎò´ÉÍı  ½¤Àµ²èÌÌ
+*       é‡‘å‹å±¥æ­´ç®¡ç†  ä¿®æ­£ç”»é¢
 *
 */
 // ----------------------------------------------------------------------------
 
-// ÀßÄê¤ÎÆÉ¤ß¹ş¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 require ( LIB_FILE );
 require_once(SRC_ROOT.'/mold/validation/UtilValidation.class.php');
@@ -25,34 +25,34 @@ $objDB->open( "", "", "", "" );
 
 setcookie("strSessionID", $_REQUEST["strSessionID"]);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
-// 1800 ¶â·¿´ÉÍı
+// æ¨©é™ç¢ºèª
+// 1800 é‡‘å‹ç®¡ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// 1804 ¶â·¿´ÉÍı¡Ê½¤Àµ¡Ë
+// 1804 é‡‘å‹ç®¡ç†ï¼ˆä¿®æ­£ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_MM4, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 $moldNo = $_REQUEST["MoldNo"];
 $historyNo = $_REQUEST["HistoryNo"];
 $version = $_REQUEST["Version"];
 
 if (!$moldNo || !(0 <= $historyNo) || !(0 <= $version))
 {
-	// ¾ğÊó¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿
+	// æƒ…å ±ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ
 	fncOutputError(9061, DEF_ERROR, "", TRUE, "", $objDB);
 }
 
-// ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¥¯¥é¥¹¤Î¥¤¥ó¥¹¥¿¥ó¥¹¼èÆÀ
+// ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 $utilMold = UtilMold::getInstance();
 $utilValidation = UtilValidation::getInstance();
 $utilBussinesscode = UtilBussinesscode::getInstance();
@@ -61,15 +61,15 @@ $utilGroup = UtilGroup::getInstance();
 $utilUser = UtilUser::getInstance();
 $utilProduct = UtilProduct::getInstance();
 
-// ¶â·¿ÍúÎò¤Îº÷°ú
+// é‡‘å‹å±¥æ­´ã®ç´¢å¼•
 try
 {
-	// ¶â·¿¾ğÊó
+	// é‡‘å‹æƒ…å ±
 	$record = $utilMold->selectMoldHistory($moldNo, $historyNo, $version);
 	$infoMold = $utilMold->selectMold($moldNo);
 	$status = $record[TableMoldHistory::Status];
 
-	// À½ÉÊ¥³¡¼¥É/Ì¾¾Î
+	// è£½å“ã‚³ãƒ¼ãƒ‰/åç§°
 	$productCode = $infoMold[TableMold::ProductCode];
 	$reviseCode = $infoMold[TableMold::ReviseCode];
 // echo "reviseCode:" . $reviseCode . "<br>";
@@ -79,11 +79,11 @@ try
 	{
 		case "10":
 		case "20":
-			// Êİ´É¹©¾ì
+			// ä¿ç®¡å·¥å ´
 			$srcFactoryCode = $record[TableMoldHistory::SourceFactory];
 			$displaySrcFactoryCode = $utilCompany->selectDisplayCodeByCompanyCode($srcFactoryCode);
 			$displaySrcFactoryName = $utilCompany->selectDisplayNameByCompanyCode($srcFactoryCode);
-			// °ÜÆ°Àè¹©¾ì
+			// ç§»å‹•å…ˆå·¥å ´
 			$dstFactoryCode = $record[TableMoldHistory::DestinationFactory];
 			$displayDstFactoryCode = $utilCompany->selectDisplayCodeByCompanyCode($dstFactoryCode);
 			$displayDstFactoryName = $utilCompany->selectDisplayNameByCompanyCode($dstFactoryCode);
@@ -94,11 +94,11 @@ try
 }
 catch (SQLException $e)
 {
-	// ¾ğÊó¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿
-	fncOutputError(9061, DEF_ERROR, "ÉÔÀµ¤Ê¥Ç¡¼¥¿¤«ÂĞ¾İ¤Î¥Ç¡¼¥¿¤¬ÊÑ¹¹¤µ¤ì¤¿²ÄÇ½À­¤¬¤¢¤ê¤Ş¤¹¡£", TRUE, "", $objDB);
+	// æƒ…å ±ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ
+	fncOutputError(9061, DEF_ERROR, "ä¸æ­£ãªãƒ‡ãƒ¼ã‚¿ã‹å¯¾è±¡ã®ãƒ‡ãƒ¼ã‚¿ãŒå¤‰æ›´ã•ã‚ŒãŸå¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚", TRUE, "", $objDB);
 }
 
-// ÃÖ´¹Ê¸»úÎó·²¤ÎºîÀ®
+// ç½®æ›æ–‡å­—åˆ—ç¾¤ã®ä½œæˆ
 $replacement = $record;
 $replacement[TableMoldHistory::ActionDate] = str_replace("-", "/", $record[TableMoldHistory::ActionDate]);
 $replacement[FormMoldHistory::ProductCode] = $productCode;
@@ -109,5 +109,5 @@ $replacement[FormMoldHistory::SourceFactoryName] = $displaySrcFactoryName;
 $replacement[TableMoldHistory::DestinationFactory] = $displayDstFactoryCode;
 $replacement[FormMoldHistory::DestinationFactoryName] = $displayDstFactoryName;
 $replacement["DummyStatus"] = $record[TableMoldHistory::Status];
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 echo fncGetReplacedHtmlWithBase("base_mold_noframes.html", "mm/modify/mm_modify.tmpl", $replacement ,$objAuth );

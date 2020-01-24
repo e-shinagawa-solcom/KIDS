@@ -1,17 +1,17 @@
 
 
 
-	///// REGISTRATION NAVI BT IMAGE Çä¾å¡ÊÇ¼ÉÊ½ñ¡ËÅĞÏ¿/////
+	///// REGISTRATION NAVI BT IMAGE å£²ä¸Šï¼ˆç´å“æ›¸ï¼‰ç™»éŒ²/////
 	var regiJ1 = '/img/type01/sc/regist_off_ja_bt.gif';
 	var regiJ2 = '/img/type01/sc/regist_off_on_ja_bt.gif';
 	var regiJ3 = '/img/type01/sc/regist_on_ja_bt.gif';
 
-	///// SEARCH NAVI BT IMAGE Ç¼ÉÊ½ñ¸¡º÷ /////
+	///// SEARCH NAVI BT IMAGE ç´å“æ›¸æ¤œç´¢ /////
 	var hghJ1 = '/img/type01/sc/hoge_off_ja_bt.gif';
 	var hghJ2 = '/img/type01/sc/hoge_off_on_ja_bt.gif';
 	var hghJ3 = '/img/type01/sc/hoge_on_ja_bt.gif';
 	
-	///// SEARCH NAVI BT IMAGE¡¡Çä¾å¸¡º÷ /////
+	///// SEARCH NAVI BT IMAGEã€€å£²ä¸Šæ¤œç´¢ /////
 	var schJ1 = '/img/type01/sc/search_off_ja_bt.gif';
 	var schJ2 = '/img/type01/sc/search_off_on_ja_bt.gif';
 	var schJ3 = '/img/type01/sc/search_on_ja_bt.gif';

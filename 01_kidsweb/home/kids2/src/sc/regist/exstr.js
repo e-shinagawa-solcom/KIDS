@@ -26,16 +26,16 @@ function ChgEtoJ()
 
 		SegA01.innerHTML = 'Date';
 		SegA02.innerHTML = 'S control No.';
-		SegA03.innerHTML = '<span class="CheckMark">¡ı</span>Vendor';
-		// *v1* SegA04.innerHTML = '<span class="CheckMark">¡ı</span>Dept';
-		// *v1* SegA05.innerHTML = '<span class="CheckMark">¡ı</span>In charge name';
+		SegA03.innerHTML = '<span class="CheckMark">â—</span>Vendor';
+		// *v1* SegA04.innerHTML = '<span class="CheckMark">â—</span>Dept';
+		// *v1* SegA05.innerHTML = '<span class="CheckMark">â—</span>In charge name';
 		SegA06.innerHTML = 'Status';
 		SegA07.innerHTML = 'Currency';
 		SegA08.innerHTML = 'Rate type';
 		SegA09.innerHTML = 'Rate';
 		SegA10.innerHTML = 'Remark';
 		// *v1* SegA11.innerHTML = 'S order No.';
-		SegA12.innerHTML = '<span class="CheckMark">¡ı</span>Shipping No.';
+		SegA12.innerHTML = '<span class="CheckMark">â—</span>Shipping No.';
 
 
 		///// QUERY BUTTON /////
@@ -45,15 +45,15 @@ function ChgEtoJ()
 		///// INPUT B /////
 		SegBHeader.innerHTML = headerBE;
 
-		SegB01.innerHTML   = '<span class="CheckMark">¡ı</span>Sales class';
-		SegB02.innerHTML   = '<span class="CheckMark">¡ı</span>Products c/n';
+		SegB01.innerHTML   = '<span class="CheckMark">â—</span>Sales class';
+		SegB02.innerHTML   = '<span class="CheckMark">â—</span>Products c/n';
 		SegB03.innerHTML   = 'Goods code(Corresp)';
-		SegB04_1.innerHTML = '<span class="CheckMark">¡ı</span>Products Unit';
+		SegB04_1.innerHTML = '<span class="CheckMark">â—</span>Products Unit';
 		SegB04_2.innerHTML = 'Products Price';
 		SegB04_3.innerHTML = 'Products Unit';
 		SegB04_4.innerHTML = 'Products Qty';
 		SegB04_5.innerHTML = 'Amt Bfr tax';
-		SegB05_1.innerHTML = '<span class="CheckMark">¡ı</span>Packing unit';
+		SegB05_1.innerHTML = '<span class="CheckMark">â—</span>Packing unit';
 		SegB05_2.innerHTML = 'Packing price';
 		SegB05_3.innerHTML = 'Packing unit';
 		SegB05_4.innerHTML = 'Packing Qty';
@@ -96,10 +96,10 @@ function ChgEtoJ()
 /*
 		var obj = document.DSO.lngWorkflowOrderCode;
 
-		// ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤ÎÈ½Äê -> ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤Ï¥Ü¥¿¥ó²¡²¼¶Ø»ß
+		// ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã®åˆ¤å®š -> ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã¯ãƒœã‚¿ãƒ³æŠ¼ä¸‹ç¦æ­¢
 		for( i=0; i < obj.options.length; i++ )
 		{
-			if( obj.options[i].text == '¾µÇ§¤Ê¤·' )
+			if( obj.options[i].text == 'æ‰¿èªãªã—' )
 			{
 				if( i == 0 )
 				{
@@ -170,18 +170,18 @@ function ChgEtoJ()
 		///// INPUT A /////
 		SegAHeader.innerHTML = headerAJ;
 
-		SegA01.innerHTML = 'Ç¼ÉÊÆü';
-		SegA02.innerHTML = 'µ¯É¼¼Ô';
-		SegA03.innerHTML = '¸ÜµÒ';
-		// *v1* SegA04.innerHTML = '<span class="CheckMark">¡ı</span>ÉôÌç';
-		// *v1* SegA05.innerHTML = '<span class="CheckMark">¡ı</span>Ã´Åö¼Ô';
-		SegA06.innerHTML = '¸ÜµÒÂ¦Ã´Åö¼Ô';
-		SegA07.innerHTML = 'Ç¼ÉÊÀèÃ´Åö¼Ô';
-		SegA08.innerHTML = '¾ÃÈñÀÇ³Û';
-		SegA09.innerHTML = '¹ç·×¶â³Û';
-		SegA10.innerHTML = 'È÷¹Í';
-		// *v1* SegA11.innerHTML = '¼õÃí£Î£Ï¡¥';
-		SegA12.innerHTML = '<span class="CheckMark">¡ı</span>Ç¼ÉÊ½ñ£Î£Ï.';
+		SegA01.innerHTML = 'ç´å“æ—¥';
+		SegA02.innerHTML = 'èµ·ç¥¨è€…';
+		SegA03.innerHTML = 'é¡§å®¢';
+		// *v1* SegA04.innerHTML = '<span class="CheckMark">â—</span>éƒ¨é–€';
+		// *v1* SegA05.innerHTML = '<span class="CheckMark">â—</span>æ‹…å½“è€…';
+		SegA06.innerHTML = 'é¡§å®¢å´æ‹…å½“è€…';
+		SegA07.innerHTML = 'ç´å“å…ˆæ‹…å½“è€…';
+		SegA08.innerHTML = 'æ¶ˆè²»ç¨é¡';
+		SegA09.innerHTML = 'åˆè¨ˆé‡‘é¡';
+		SegA10.innerHTML = 'å‚™è€ƒ';
+		// *v1* SegA11.innerHTML = 'å—æ³¨ï¼®ï¼¯ï¼';
+		SegA12.innerHTML = '<span class="CheckMark">â—</span>ç´å“æ›¸ï¼®ï¼¯.';
 
 
 		///// QUERY BUTTON /////
@@ -191,26 +191,26 @@ function ChgEtoJ()
 		///// INPUT B /////
 		SegBHeader.innerHTML = headerBJ;
 
-		SegB01.innerHTML   = '<span class="CheckMark">¡ı</span>Çä¾å¶èÊ¬';
-		SegB02.innerHTML   = '<span class="CheckMark">¡ı</span>À½ÉÊ¥³¡¼¥ÉÌ¾¾Î';
-		SegB03.innerHTML   = '¸ÜµÒÉÊÈÖ';
-		SegB04_1.innerHTML = '<span class="CheckMark">¡ı</span>À½ÉÊÃ±°Ì·×¾å';
-		SegB04_2.innerHTML = 'À½ÉÊÃ±²Á';
-		SegB04_3.innerHTML = 'À½ÉÊÃ±°Ì';
-		SegB04_4.innerHTML = 'À½ÉÊ¿ôÎÌ';
-		SegB04_5.innerHTML = 'ÀÇÈ´¶â³Û';
-		SegB05_1.innerHTML = '<span class="CheckMark">¡ı</span>²Ù»ÑÃ±°Ì·×¾å';
-		SegB05_2.innerHTML = '²Ù»ÑÃ±²Á';
-		SegB05_3.innerHTML = '²Ù»ÑÃ±°Ì';
-		SegB05_4.innerHTML = '²Ù»Ñ¿ôÎÌ';
-		SegB05_5.innerHTML = '¥«¡¼¥È¥óÆş¿ô';
-		SegB06.innerHTML   = 'Ç¼´ü';
-		SegB07.innerHTML   = 'È÷¹Í';
-		SegB08.innerHTML   = 'Ã±²Á¥ê¥¹¥È';
-		SegB13.innerHTML   = 'ÀÇ¶èÊ¬';
-		SegB14.innerHTML   = 'ÀÇÎ¨';
-		SegB15.innerHTML   = 'ÀÇ³Û';
-		SegB16.innerHTML   = 'Áí¹ç·×¶â³Û';
+		SegB01.innerHTML   = '<span class="CheckMark">â—</span>å£²ä¸ŠåŒºåˆ†';
+		SegB02.innerHTML   = '<span class="CheckMark">â—</span>è£½å“ã‚³ãƒ¼ãƒ‰åç§°';
+		SegB03.innerHTML   = 'é¡§å®¢å“ç•ª';
+		SegB04_1.innerHTML = '<span class="CheckMark">â—</span>è£½å“å˜ä½è¨ˆä¸Š';
+		SegB04_2.innerHTML = 'è£½å“å˜ä¾¡';
+		SegB04_3.innerHTML = 'è£½å“å˜ä½';
+		SegB04_4.innerHTML = 'è£½å“æ•°é‡';
+		SegB04_5.innerHTML = 'ç¨æŠœé‡‘é¡';
+		SegB05_1.innerHTML = '<span class="CheckMark">â—</span>è·å§¿å˜ä½è¨ˆä¸Š';
+		SegB05_2.innerHTML = 'è·å§¿å˜ä¾¡';
+		SegB05_3.innerHTML = 'è·å§¿å˜ä½';
+		SegB05_4.innerHTML = 'è·å§¿æ•°é‡';
+		SegB05_5.innerHTML = 'ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°';
+		SegB06.innerHTML   = 'ç´æœŸ';
+		SegB07.innerHTML   = 'å‚™è€ƒ';
+		SegB08.innerHTML   = 'å˜ä¾¡ãƒªã‚¹ãƒˆ';
+		SegB13.innerHTML   = 'ç¨åŒºåˆ†';
+		SegB14.innerHTML   = 'ç¨ç‡';
+		SegB15.innerHTML   = 'ç¨é¡';
+		SegB16.innerHTML   = 'ç·åˆè¨ˆé‡‘é¡';
 
 
 		///// QUERY BUTTON /////
@@ -224,26 +224,26 @@ function ChgEtoJ()
 		//-------------------------------------------------------------------------
 		// v2 tomita update
 		//-------------------------------------------------------------------------
-		SegCRC.innerHTML      = '¸ÜµÒ¼õÃíÈÖ¹æ';
-		SegPC.innerHTML       = 'À½ÉÊ¥³¡¼¥É';
-		//SegRC.innerHTML       = '¼õÃí£Î£Ï¡¥';
-		SegDept.innerHTML     = 'ÉôÌç';
-		SegIncharge.innerHTML = 'Ã´Åö¼Ô';
-		SegBWF.innerHTML      = '¾µÇ§¥ë¡¼¥È';
+		SegCRC.innerHTML      = 'é¡§å®¢å—æ³¨ç•ªå·';
+		SegPC.innerHTML       = 'è£½å“ã‚³ãƒ¼ãƒ‰';
+		//SegRC.innerHTML       = 'å—æ³¨ï¼®ï¼¯ï¼';
+		SegDept.innerHTML     = 'éƒ¨é–€';
+		SegIncharge.innerHTML = 'æ‹…å½“è€…';
+		SegBWF.innerHTML      = 'æ‰¿èªãƒ«ãƒ¼ãƒˆ';
 		// window.WFrootWin.RootWin.fncChgEtoJ( 1 );
 
 		RegistBt.innerHTML = registbtJ1;
 
-		if( typeof( excrctext ) != 'undefined' ) excrctext.innerHTML = '¸ÜµÒ¼õÃíÈÖ¹æ¤¬Ê£¿ôÂ¸ºß¤·¤Æ¤¤¤Ş¤¹¡£²¼µ­¤è¤êÁªÂò¤·¤Æ¤¯¤À¤µ¤¤¡£';
-		if( typeof( excrc ) != 'undefined' ) excrc.innerHTML = '¸ÜµÒ¼õÃíÈÖ¹æ';
-		if( typeof( exdeli ) != 'undefined' ) exdeli.innerHTML = 'Ç¼´ü';
+		if( typeof( excrctext ) != 'undefined' ) excrctext.innerHTML = 'é¡§å®¢å—æ³¨ç•ªå·ãŒè¤‡æ•°å­˜åœ¨ã—ã¦ã„ã¾ã™ã€‚ä¸‹è¨˜ã‚ˆã‚Šé¸æŠã—ã¦ãã ã•ã„ã€‚';
+		if( typeof( excrc ) != 'undefined' ) excrc.innerHTML = 'é¡§å®¢å—æ³¨ç•ªå·';
+		if( typeof( exdeli ) != 'undefined' ) exdeli.innerHTML = 'ç´æœŸ';
 /*
 		var obj = document.DSO.lngWorkflowOrderCode;
 
-		// ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤ÎÈ½Äê -> ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤Ï¥Ü¥¿¥ó²¡²¼¶Ø»ß
+		// ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã®åˆ¤å®š -> ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã¯ãƒœã‚¿ãƒ³æŠ¼ä¸‹ç¦æ­¢
 		for( i=0; i < obj.options.length; i++ )
 		{
-			if( obj.options[i].text == '¾µÇ§¤Ê¤·' )
+			if( obj.options[i].text == 'æ‰¿èªãªã—' )
 			{
 				if( i == 0 )
 				{

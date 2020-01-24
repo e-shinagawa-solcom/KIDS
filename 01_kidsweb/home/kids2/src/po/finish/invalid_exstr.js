@@ -2,18 +2,18 @@
 
 
 
-// Ä¢É¼½ĞÎÏ¥Ü¥¿¥ó
+// å¸³ç¥¨å‡ºåŠ›ãƒœã‚¿ãƒ³
 var ListoutBt1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncBlownPreviewButton( \'on\' , this );" onmouseout="fncBlownPreviewButton( \'off\' , this );fncAlphaOff( this );" src="' + blownpreviewbt1 + '" width="72" height="20" border="0" alt="PREVIEW"></a>';
 
 
 
-// ÊÄ¤¸¤ë¥Ü¥¿¥ó
-var CloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);" src="' + blownclose1J + '" width="72" height="20" border="0" alt="ÊÄ¤¸¤ë"></a>';
+// é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³
+var CloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);" src="' + blownclose1J + '" width="72" height="20" border="0" alt="é–‰ã˜ã‚‹"></a>';
 var CloseBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseEOn(this);" onmouseout="BlownCloseEOff(this);fncAlphaOff( this );" src="' + blownclose1E + '" width="72" height="20" border="0" alt="CLOSE"></a>';
 
 
 
-	// ¥Ç¥Ğ¥Ã¥°
+	// ãƒ‡ãƒãƒƒã‚°
 	//var g_lngCode = 1;
 
 
@@ -40,15 +40,15 @@ function fncChgEtoJ()
 	else if ( g_lngCode == 1 )
 	{
 
-		FinishRegist.innerText      = 'Ìµ¸ú²½´°Î»';
+		FinishRegist.innerText      = 'ç„¡åŠ¹åŒ–å®Œäº†';
 		CloseBt.innerHTML           = CloseBtJ1;
 
 
-		ColumnProductsNo.innerText   = 'È¯Ãí£Î£Ï.';
+		ColumnProductsNo.innerText   = 'ç™ºæ³¨ï¼®ï¼¯.';
 
 		if( typeof(ColumnListout) != 'undefined' )
 		{
-			ColumnListout.innerText      = 'Ä¢É¼¥×¥ì¥Ó¥å¡¼';     
+			ColumnListout.innerText      = 'å¸³ç¥¨ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼';     
 			ListOutputBt.innerHTML       = ListoutBt1;
 		}
 

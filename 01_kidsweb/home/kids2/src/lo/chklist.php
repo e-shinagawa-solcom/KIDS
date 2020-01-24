@@ -1,6 +1,6 @@
 <?
 
-	// ³°Éô¥Õ¥¡¥¤¥ë¤Î¥¤¥ó¥¯¥ë¡¼¥É
+	// å¤–éƒ¨ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
 	require("/home/kids2/ListOutput/libs/conf.php");
 	require(CLS_DB_FILE);
 	require(CLS_LO_FILE);
@@ -9,11 +9,11 @@
 	mb_internal_encoding("EUC-JP");
 	mb_http_output("EUC-JP");
 
-	// ListOutput¥ª¥Ö¥¸¥§¥¯¥ÈÀßÄêÍÑ¡¢½é´üÀßÄê¥Õ¥¡¥¤¥ë¤Î¼èÆÀ
+	// ListOutputã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¨­å®šç”¨ã€åˆæœŸè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®å–å¾—
 	if( !isset($_POST["conf"]) )
 	{
 		echo fncGetPages("_%PAGE_HEADER%_");
-		echo fncGetPages("_%PAGE_ERROR%_", "conf is not set!<br />ËÜ¥Ú¡¼¥¸¤ÏÄ¾ÀÜÉ½¼¨½ĞÍè¤Ş¤»¤ó¡£<a href=\"/lo\">¤³¤³¤Î¥Ú¡¼¥¸</a>¤«¤é¾ò·ïÀßÄê¤·¤Æ¸Æ¤Ó½Ğ¤·¤Æ²¼¤µ¤¤¡£");
+		echo fncGetPages("_%PAGE_ERROR%_", "conf is not set!<br />æœ¬ãƒšãƒ¼ã‚¸ã¯ç›´æ¥è¡¨ç¤ºå‡ºæ¥ã¾ã›ã‚“ã€‚<a href=\"/lo\">ã“ã“ã®ãƒšãƒ¼ã‚¸</a>ã‹ã‚‰æ¡ä»¶è¨­å®šã—ã¦å‘¼ã³å‡ºã—ã¦ä¸‹ã•ã„ã€‚");
 		echo fncGetPages("_%PAGE_FOOTER%_");
 		return;
 	}
@@ -26,12 +26,12 @@
 //var_dump($_POST);
 
 
-	// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	$objDB          = new clsDB;
 	$objListOutput  = new CListOutput;
 	
 
-	// DB ÀÜÂ³
+	// DB æ¥ç¶š
 	if( $objDB->open($DB_LOGIN_USERNAME, $DB_LOGIN_PASSWORD, $POSTGRESQL_HOSTNAME, '') == false )
 	{
 		echo "db login failed";
@@ -43,24 +43,24 @@
 //	}
 
 
-	// ListOutput ÀßÄê
+	// ListOutput è¨­å®š
 	$objListOutput->SetReplaceMode(CLISTOUTPUT_REPLACE_ALL);
 	$objListOutput->SetConfigDir(CHKLIST_CONFIG_DIR);
 	$objListOutput->SetTemplateDir(CHKLIST_TEMPLATE_DIR);
 	$objListOutput->SetEvalMode(CLISTOUTPUT_EVAL_CLASS);
 
-	// ÃÖ´¹¤¨ÀßÄê
+	// ç½®æ›ãˆè¨­å®š
 	$aryReplaceList["template"] = $aryPOST["template"];
 	$aryReplaceList[strtolower("lngGroupCode")] = $aryPOST["lngGroupCode"];
 	$aryReplaceList[strtolower("lngUserCode")] = $aryPOST["lngUserCode"];
 	$aryReplaceList["productno_in"] = $aryPOST["productno_in"];
 	if( strlen(trim($aryPOST["productno_in"])) > 0 )
 	{
-		// SQLÍÑ
+		// SQLç”¨
 		$aryReplaceList[strtolower("column_lngProductNo_in_enable")] = "";
 		$aryReplaceList[strtolower("column_lngProductNo_in_disable")] = "--";
 
-		// HTMLÍÑ
+		// HTMLç”¨
 		$aryReplaceList[strtolower("column_lngProductNo_in_enable_html_start")] = "";
 		$aryReplaceList[strtolower("column_lngProductNo_in_enable_html_end")] = "";
 		$aryReplaceList[strtolower("column_lngProductNo_in_disable_html_start")] = "<!--";
@@ -68,11 +68,11 @@
 	}
 	else
 	{
-		// SQLÍÑ
+		// SQLç”¨
 		$aryReplaceList[strtolower("column_lngProductNo_in_enable")] = "--";
 		$aryReplaceList[strtolower("column_lngProductNo_in_disable")] = "";
 
-		// HTMLÍÑ
+		// HTMLç”¨
 		$aryReplaceList[strtolower("column_lngProductNo_in_enable_html_start")] = "<!--";
 		$aryReplaceList[strtolower("column_lngProductNo_in_enable_html_end")] = "-->";
 		$aryReplaceList[strtolower("column_lngProductNo_in_disable_html_start")] = "";
@@ -84,7 +84,7 @@
 	$aryReplaceList["cal_date_to"]   = $aryPOST["cal_date_to"];
 	$aryReplaceList[strtolower("lngOrderStatusCode")]   = $aryPOST["lngOrderStatusCode"];
 	
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É¤ÎÀßÄê
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã®è¨­å®š
 	if( $aryPOST["lngUserCode"] == "0" )
 	{
 		$aryReplaceList[strtolower("column_lngUserCode_enable")] = "--";
@@ -96,7 +96,7 @@
 		$aryReplaceList[strtolower("column_lngUserCode_flag")] = "TRUE";
 	}
 
-	// È¯Ãí¾õÂÖ¤ÎÀßÄê
+	// ç™ºæ³¨çŠ¶æ…‹ã®è¨­å®š
 	if( $aryPOST["lngOrderStatusCode"] == "0" )
 	{
 		$aryReplaceList[strtolower("column_lngOrderStatusCode_enable")] = "--";
@@ -110,19 +110,19 @@
 
 
 	if( empty($aryPOST["import_first"]) == false) {
-		// ÃÖ´¹¤¨¤Î¥¤¥ó¥İ¡¼¥È
+		// ç½®æ›ãˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 		$objListOutput->ImportReplaceList($aryReplaceList);
 	}
 
-	// conf¥Õ¥¡¥¤¥ë¤ÎÀßÄê
+	// confãƒ•ã‚¡ã‚¤ãƒ«ã®è¨­å®š
 	if( $objListOutput->SetConfigFile($strConfigFileName) )
 	{
 		if( empty($aryPOST["import_first"]) == true) {
-			// ÃÖ´¹¤¨¤Î¥¤¥ó¥İ¡¼¥È
+			// ç½®æ›ãˆã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 			$objListOutput->ImportReplaceList($aryReplaceList);
 		}
 
-		// ¼Â¹Ô
+		// å®Ÿè¡Œ
 		if( $objListOutput->ListExecute($objDB, $strPage) == false )
 		{
 			echo "ListExecute Error!<br>";
@@ -138,7 +138,7 @@
 
 //	echo $objListOutput->GetErrorMessage();
 	
-	// ³Æ·ë²Ì¤Î¼è¤ê½Ğ¤·(É¬Í×¤Ë±ş¤¸¤Æ)
+	// å„çµæœã®å–ã‚Šå‡ºã—(å¿…è¦ã«å¿œã˜ã¦)
 //	$objListOutput->GetResult($aryResult);
 //	var_dump($aryResult);
 	
@@ -152,7 +152,7 @@
 	echo $strPage;
 	if( $strPage == "" )
 	{
-		echo fncGetPages("_%PAGE_ERROR%_", "data is not found!<br />ÁªÂò¤µ¤ì¤¿¾ò·ï¤Ç¤Î¥Ç¡¼¥¿¤¬¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£<a href=\"javascript:history.back()\">Ìá¤ë</a>");
+		echo fncGetPages("_%PAGE_ERROR%_", "data is not found!<br />é¸æŠã•ã‚ŒãŸæ¡ä»¶ã§ã®ãƒ‡ãƒ¼ã‚¿ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚<a href=\"javascript:history.back()\">æˆ»ã‚‹</a>");
 	}
 	echo fncGetPages("_%PAGE_FOOTER%_");
 	//var_dump($aryResult);

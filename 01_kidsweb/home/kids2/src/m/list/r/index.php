@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿ ¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë·ë²Ì°ìÍ÷²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«çµæœä¸€è¦§ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -12,20 +12,20 @@
 */
 // index.php -> strSessionID    -> index.php
 //
-// ÅĞÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 //
-// ½¤Àµ²èÌÌ
+// ä¿®æ­£ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 // index.php -> lngmonetaryratecode   -> edit.php
 // index.php -> lngmonetaryunitcode   -> edit.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
@@ -37,22 +37,22 @@ $objDB->open( "", "", "", "" );
 
 $aryData = $_POST;
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]       = "null:numenglish(32,32)";
 
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->setMasterTable( $aryData["strMasterTableName"], "", "", $aryData, $objDB );
 
@@ -61,26 +61,26 @@ $objMaster->setMasterTable( $aryData["strMasterTableName"], "", "", $aryData, $o
 
 
 ///////////////////////////////////////////////////////////////////
-// ¥Æ¡¼¥Ö¥ëÀ¸À®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 ///////////////////////////////////////////////////////////////////
-// ·ë²Ì¹ÔÉ½¼¨
+// çµæœè¡Œè¡¨ç¤º
 $count = 0;
 foreach ( $objMaster->aryData as $record )
 {
-	// ºÇ½é¤Î¥«¥é¥à¤ò¥­¡¼¤È¤¹¤ë
+	// æœ€åˆã®ã‚«ãƒ©ãƒ ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹
 	$aryData["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:#ffffff;\">\n";
 
-	// ¥«¥é¥àÀ¸À®
+	// ã‚«ãƒ©ãƒ ç”Ÿæˆ
 	foreach ( $record as $colmun )
 	{
 		$aryData["strResultHtml"] .= "		<td nowrap>$colmun</td>\n";
 	}
 
-	// GET¤ÇÅÏ¤¹Ê¸»úÎóÀ¸À®
+	// GETã§æ¸¡ã™æ–‡å­—åˆ—ç”Ÿæˆ
 	$getUrl = "strSessionID=" .$aryData["strSessionID"]. "&lngmonetaryratecode=" . $record["lngmonetaryratecode"] . "&lngmonetaryunitcode=" . $record["lngmonetaryunitcode"];
 
 
-	// ½¤Àµ¥Ü¥¿¥óÀ¸À®
+	// ä¿®æ­£ãƒœã‚¿ãƒ³ç”Ÿæˆ
 	$aryData["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/r/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&$getUrl' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , 1 , 'fix' );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 
 	$aryData["strResultHtml"] .= "	</tr>\n";
@@ -93,12 +93,12 @@ $objDB->close();
 
 
 
-// ÅĞÏ¿¥Ü¥¿¥ó¤ÎGETÊ¸»úÎóÀ¸À®
+// ç™»éŒ²ãƒœã‚¿ãƒ³ã®GETæ–‡å­—åˆ—ç”Ÿæˆ
 $aryData["strInsertForm"] = "/m/regist/r/edit.php?strSessionID=" .$aryData["strSessionID"]. "&lngActionCode=" . DEF_ACTION_INSERT;
 
 $aryData["lngLanguageCode"] =1;
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/list/r/parts.tmpl" );
 $objTemplate->replace( $aryData );

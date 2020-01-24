@@ -1,6 +1,6 @@
 <?php
 /**
-*	¥·¥¹¥Æ¥àÄê¿ôÀë¸À
+*	ã‚·ã‚¹ãƒ†ãƒ å®šæ•°å®£è¨€
 *
 *       @package    K.I.D.S.
 *       @license    http://www.kuwagata.co.jp/
@@ -17,7 +17,7 @@
 // HTTP/1.0
 //header("Pragma: no-cache");
 
-// ¥Û¥¹¥ÈÌ¾¤ò¼«Æ°¼èÆÀ
+// ãƒ›ã‚¹ãƒˆåã‚’è‡ªå‹•å–å¾—
 $strHost="";
 if(isset($_SERVER['HTTPS']))
 {
@@ -28,7 +28,7 @@ else
 	$strHost="http://".$_SERVER["HTTP_HOST"];
 }
 
-// ¼Â¹Ô¥µ¡¼¥Ð¡¼Ì¾
+// å®Ÿè¡Œã‚µãƒ¼ãƒãƒ¼å
 define ( "EXECUTE_HOST_NAME_DEV",	"kids.devs.biz" );
 //define ( "EXECUTE_HOST_NAME_KWG_WEBv2",       "192.168.10.229" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
@@ -36,40 +36,40 @@ define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
 // define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
 //define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ¥í¡¼¥«¥ë³ÎÇ§ÍÑ
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ãƒ­ãƒ¼ã‚«ãƒ«ç¢ºèªç”¨
 
-// ¼Â¹Ô¥µ¡¼¥Ð¡¼Ì¾¾Î¤Î¼èÆÀ
+// å®Ÿè¡Œã‚µãƒ¼ãƒãƒ¼åç§°ã®å–å¾—
 $strExcuteHttpHostName = $_SERVER["HTTP_HOST"];
 
 
 define ( "TOP_URL",	$strHost."/" );
 
-// ³«È¯´Ä¶­¤ÈËÜÈÖ´Ä¶­¤ò¥Û¥¹¥ÈÌ¾¤Ç¿¶¤êÊ¬¤±
+// é–‹ç™ºç’°å¢ƒã¨æœ¬ç•ªç’°å¢ƒã‚’ãƒ›ã‚¹ãƒˆåã§æŒ¯ã‚Šåˆ†ã‘
 switch( $strExcuteHttpHostName )
 {
 	case EXECUTE_HOST_NAME_DEV:
 		// URL
 //		define ( "TOP_URL", "https://".EXECUTE_HOST_NAME_DEV."/" );
-		// DBÀßÄê
+		// DBè¨­å®š
 		define ( "POSTGRESQL_HOSTNAME", "localhost" );
 		define ( "POSTGRESQL_HOSTPORT", "5432" );
 		define ( "DB_LOGIN_USERNAME", "kids" );
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore2" );
-		// ¥¨¥é¡¼¥á¡¼¥ëÁ÷¿®Àè
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒ¼ãƒ«é€ä¿¡å…ˆ
 		define ( "ERROR_MAIL_TO", "devs.biz@gmail.com" );
 		//define ( "ERROR_MAIL_TO", "miyata@testdomain.local" );
 		define ( "SEND_MAIL_FLAG", true);
-		// ³Æ¥ë¡¼¥È¥Ñ¥¹
+		// å„ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹
 		define ( "PATH_HOME",	"/home/kids2/" );
-		// ÄÌ²ß(ÆüËÜ±ß)µ­¹æ¥³¡¼¥É
+		// é€šè²¨(æ—¥æœ¬å††)è¨˜å·ã‚³ãƒ¼ãƒ‰
 		define ( "DEF_MONETARY_CODE_YEN", "\\" );
 		break;
 
 	case EXECUTE_HOST_NAME_KWG_WEBv2:
 		// URL
 //		define ( "TOP_URL", "https://".EXECUTE_HOST_NAME_KWG_WEBv2."/" );
-		// DBÀßÄê
+		// DBè¨­å®š
 //		define ( "POSTGRESQL_HOSTNAME", EXECUTE_HOST_NAME_KWG_DB );
 		define ( "POSTGRESQL_HOSTNAME", "localhost" );
 //                define ( "POSTGRESQL_HOSTPORT", "5432" );
@@ -77,12 +77,12 @@ switch( $strExcuteHttpHostName )
 		define ( "DB_LOGIN_USERNAME", "kids" );
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore2" );
-		// ¥¨¥é¡¼¥á¡¼¥ëÁ÷¿®Àè
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒ¼ãƒ«é€ä¿¡å…ˆ
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
-		// ³Æ¥ë¡¼¥È¥Ñ¥¹
+		// å„ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹
 		define ( "PATH_HOME",	"/home/kids2" );
-		// ÄÌ²ß(ÆüËÜ±ß)µ­¹æ¥³¡¼¥É
+		// é€šè²¨(æ—¥æœ¬å††)è¨˜å·ã‚³ãƒ¼ãƒ‰
 		//define ( "DEF_MONETARY_CODE_YEN", "\\\\" );
 		define ( "DEF_MONETARY_CODE_YEN", "\\" );
 		break;
@@ -90,41 +90,41 @@ switch( $strExcuteHttpHostName )
 	case EXECUTE_HOST_NAME_KWG_WEBv1:
 		// URL
 //		define ( "TOP_URL", "https://".EXECUTE_HOST_NAME_KWG_WEBv1."/" );
-		// DBÀßÄê
+		// DBè¨­å®š
 		define ( "POSTGRESQL_HOSTNAME", EXECUTE_HOST_NAME_KWG_DB );
 		define ( "POSTGRESQL_HOSTPORT", "5432" );
 		define ( "DB_LOGIN_USERNAME", "kids" );
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore" );
-		// ¥¨¥é¡¼¥á¡¼¥ëÁ÷¿®Àè
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒ¼ãƒ«é€ä¿¡å…ˆ
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", false);
-		// ³Æ¥ë¡¼¥È¥Ñ¥¹
+		// å„ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹
 		define ( "PATH_HOME",	"/home/kids2" );
-		// ÄÌ²ß(ÆüËÜ±ß)µ­¹æ¥³¡¼¥É
+		// é€šè²¨(æ—¥æœ¬å††)è¨˜å·ã‚³ãƒ¼ãƒ‰
 		//define ( "DEF_MONETARY_CODE_YEN", "\\\\" );
 		define ( "DEF_MONETARY_CODE_YEN", "\\" );
 		break;
 	case EXECUTE_HOST_NAME_KWG_BACK:
 		// URL
 //		define ( "TOP_URL", "https://".EXECUTE_HOST_NAME_KWG_BACK."/" );
-		// DBÀßÄê
+		// DBè¨­å®š
 		define ( "POSTGRESQL_HOSTNAME", EXECUTE_HOST_NAME_KWG_BACK );
 		define ( "POSTGRESQL_HOSTPORT", "5432" );
 		define ( "DB_LOGIN_USERNAME", "kids" );
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore2" );
-		// ¥¨¥é¡¼¥á¡¼¥ëÁ÷¿®Àè
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒ¼ãƒ«é€ä¿¡å…ˆ
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
-		// ³Æ¥ë¡¼¥È¥Ñ¥¹
+		// å„ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹
 		define ( "PATH_HOME",	"/home/kids2" );
-		// ÄÌ²ß(ÆüËÜ±ß)µ­¹æ¥³¡¼¥É
+		// é€šè²¨(æ—¥æœ¬å††)è¨˜å·ã‚³ãƒ¼ãƒ‰
 		//define ( "DEF_MONETARY_CODE_YEN", "\\\\" );
 		define ( "DEF_MONETARY_CODE_YEN", "\\" );
 		break;
 	default:
-		// DBÀßÄê
+		// DBè¨­å®š
 		define ( "POSTGRESQL_HOSTNAME", EXECUTE_HOST_NAME_KWG_DB );
 		define ( "POSTGRESQL_HOSTPORT", "5432" );
 		define ( "DB_LOGIN_USERNAME", "kids" );
@@ -135,37 +135,37 @@ switch( $strExcuteHttpHostName )
 		define ( "LC_DB_LOGIN_USERNAME", "ackids" );
 		define ( "LC_DB_LOGIN_PASSWORD", "kids" );
 		define ( "LC_DB_NAME", "ackids" );
-		// ¥¨¥é¡¼¥á¡¼¥ëÁ÷¿®Àè
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒ¼ãƒ«é€ä¿¡å…ˆ
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
-		// ³Æ¥ë¡¼¥È¥Ñ¥¹
+		// å„ãƒ«ãƒ¼ãƒˆãƒ‘ã‚¹
 		// define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
-		// define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ¥í¡¼¥«¥ë³ÎÇ§ÍÑ
+		// define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ãƒ­ãƒ¼ã‚«ãƒ«ç¢ºèªç”¨
 		// define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
-        define ( "PATH_HOME",    "/Users/esash/Desktop/solcom/git/KIDS2/01_kidsweb/home/kids2" ); // ¥í¡¼¥«¥ë³ÎÇ§ÍÑ
-        define ( "LOG_FILE",     PATH_HOME ."/src/logs/debug.log" ); // ¥í¡¼¥«¥ë³ÎÇ§ÍÑ
+        define ( "PATH_HOME",    "/Users/esash/Desktop/solcom/git/KIDS2/01_kidsweb/home/kids2" ); // ãƒ­ãƒ¼ã‚«ãƒ«ç¢ºèªç”¨
+        define ( "LOG_FILE",     PATH_HOME ."/src/logs/debug.log" ); // ãƒ­ãƒ¼ã‚«ãƒ«ç¢ºèªç”¨
 
 		break;
 }
 
 
-// ¥í¥°½ÐÎÏÀè
+// ãƒ­ã‚°å‡ºåŠ›å…ˆ
 define ("DEF_DEBUG_DIR",	PATH_HOME . "/log/");
 
-// ¥í¥°¥¤¥óURL
+// ãƒ­ã‚°ã‚¤ãƒ³URL
 define ( "LOGIN_URL",	TOP_URL );
 
-// ¥·¥¹¥Æ¥à¥Ð¡¼¥¸¥ç¥ó
+// ã‚·ã‚¹ãƒ†ãƒ ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 define ( "DEF_SYSTEM_VERSION",	"2.1" );
 
-// Ä¾ÀÜÅÐÏ¿²ÄÇ½¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É
+// ç›´æŽ¥ç™»éŒ²å¯èƒ½æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
 define ( "DEF_DIRECT_REGIST_AUTHORITY_CODE",	4 );
 
-// ÀßÄê
-// ¥¿¥¤¥à¥¢¥¦¥È»þ´Ö(Ê¬)
+// è¨­å®š
+// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“(åˆ†)
 define ( "REMINDER_LIMIT",	1440 );
 
-// ¥¿¥¤¥à¥¢¥¦¥È·Ù¹ðÉ½¼¨(ÉÃ)
+// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆè­¦å‘Šè¡¨ç¤º(ç§’)
 define ( "LIMIT_REMAIN_SECONDS",	300 );
 
 
@@ -179,7 +179,7 @@ define ( "SRC_ROOT",	PATH_HOME . "/src/" );
 define ( "SQLLOG_ROOT",	PATH_HOME . "/temp/" );
 define ( "VENDOR_ROOT",	PATH_HOME . "/vendor/" );
 
-// ¥¯¥é¥¹¡¦¥é¥¤¥Ö¥é¥ê¥Ñ¥¹
+// ã‚¯ãƒ©ã‚¹ãƒ»ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ‘ã‚¹
 define ( "LIB_FILE",			LIB_ROOT . "lib.php" );
 define ( "LIB_DEBUGFILE",		LIB_ROOT . "libdebug.php" );			// added by saito 20051017
 define ( "LIB_EXCELPARSER_FILE",	LIB_ROOT . "excelparser/excelparser.php" );	// Excel Parser Module
@@ -190,430 +190,430 @@ define ( "CLS_CACHE_FILE",		LIB_ROOT . "clscache.php" );
 define ( "CLS_EXCELMAP_FILE",		LIB_ROOT . "mapping/clsMapping.php" );		// Excel Mapping Object
 define ( "CLS_TABLETEMP_FILE",		LIB_ROOT . "tabletemp/clstabletemp.php" );	// Temporary DB Object
 define ( "CLS_IMAGELO_FILE",		LIB_ROOT . "clsImageLo.php" );
-define ( "VENDOR_AUTOLOAD_FILE",	VENDOR_ROOT . "autoload.php" ); // Composer¤Îautoload¤Î¥Ñ¥¹
+define ( "VENDOR_AUTOLOAD_FILE",	VENDOR_ROOT . "autoload.php" ); // Composerã®autoloadã®ãƒ‘ã‚¹
 
-// ²èÁü¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
-define ( "USER_IMAGE_TMPDIR",		PATH_HOME . "/image_tmp/" );	// ²¾ÊÝÂ¸¾ì½ê
-define ( "USER_IMAGE_DIR",		SRC_ROOT . "face/" );		// ²èÁüÃÖ¤­¾ì
-define ( "USER_IMAGE_TYPE",		"pjpeg|jpeg|gif" );		// ²èÁü MIME-TYPE
+// ç”»åƒãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
+define ( "USER_IMAGE_TMPDIR",		PATH_HOME . "/image_tmp/" );	// ä»®ä¿å­˜å ´æ‰€
+define ( "USER_IMAGE_DIR",		SRC_ROOT . "face/" );		// ç”»åƒç½®ãå ´
+define ( "USER_IMAGE_TYPE",		"pjpeg|jpeg|gif" );		// ç”»åƒ MIME-TYPE
 define ( "USER_IMAGE_URL",		TOP_URL . "face/" );
 define ( "USER_IMAGE_DEFAULT_URL",	USER_IMAGE_URL . "default.gif" );
 
-// ¾¦ÉÊ»ÅÍÍ¾ÜºÙ¡¦²èÁüUP¡¦DEST¾ì½ê
-define ( "DEF_PEDIT_IMGTMP", 		"/p/edit/image_tmp/" );			// URL»²¾ÈÍÑ¥Ñ¥¹
-define ( "USER_IMAGE_PEDIT_TMPDIR",	SRC_ROOT . "p/edit/image_tmp/" );	// ¥·¥¹¥Æ¥à¥Õ¥¡¥¤¥ë»²¾ÈÍÑ¥Ñ¥¹
+// å•†å“ä»•æ§˜è©³ç´°ãƒ»ç”»åƒUPãƒ»DESTå ´æ‰€
+define ( "DEF_PEDIT_IMGTMP", 		"/p/edit/image_tmp/" );			// URLå‚ç…§ç”¨ãƒ‘ã‚¹
+define ( "USER_IMAGE_PEDIT_TMPDIR",	SRC_ROOT . "p/edit/image_tmp/" );	// ã‚·ã‚¹ãƒ†ãƒ ãƒ•ã‚¡ã‚¤ãƒ«å‚ç…§ç”¨ãƒ‘ã‚¹
 
-// ¥Õ¥¡¥¤¥ë¥¢¥Ã¥×¥í¡¼¥É¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
-define ( "FILE_UPLOAD_TMPDIR",	PATH_HOME . "/upload_tmp/" );	// ¥Õ¥¡¥¤¥ë¥¢¥Ã¥×¥í¡¼¥É²¾ÊÝÂ¸¾ì½ê
+// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
+define ( "FILE_UPLOAD_TMPDIR",	PATH_HOME . "/upload_tmp/" );	// ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ä»®ä¿å­˜å ´æ‰€
 
 
-// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ¥³¡¼¥É¤¬»Ø¤¹¾õÂÖÇÛÎó¤ÎÀ¸À®
-$aryWorkflowStatus = Array ( "0"=>"½é´üÃÍ", "1"=>"¿½ÀÁÃæ", "2"=>"¸¡Æ¤Ãæ", "3"=>"º¹Ìá¤·", "4"=>"¿½ÀÁ¼è¾Ã", "10"=>"¾µÇ§", "99"=>"ÈÝÇ§" );
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ãŒæŒ‡ã™çŠ¶æ…‹é…åˆ—ã®ç”Ÿæˆ
+$aryWorkflowStatus = Array ( "0"=>"åˆæœŸå€¤", "1"=>"ç”³è«‹ä¸­", "2"=>"æ¤œè¨Žä¸­", "3"=>"å·®æˆ»ã—", "4"=>"ç”³è«‹å–æ¶ˆ", "10"=>"æ‰¿èª", "99"=>"å¦èª" );
 
 // t_Workflow.lngWorkflowStatusCode
-define ( "DEF_STATUS_VOID",		0 );	// ½é´üÃÍ
-define ( "DEF_STATUS_ORDER",	1 );	// ¿½ÀÁÃæ
-define ( "DEF_STATUS_CONSIDER",	2 );	// ¸¡Æ¤Ãæ
-define ( "DEF_STATUS_BACK",		3 );	// º¹¤·Ìá¤·
-define ( "DEF_STATUS_CANCELL",	4 );	// ¿½ÀÁ¿½ÀÁ¼è¾Ã
-define ( "DEF_STATUS_APPROVE",	10 );	// ¾µÇ§
-define ( "DEF_STATUS_DENIAL",	99 );	// ÈÝÇ§
+define ( "DEF_STATUS_VOID",		0 );	// åˆæœŸå€¤
+define ( "DEF_STATUS_ORDER",	1 );	// ç”³è«‹ä¸­
+define ( "DEF_STATUS_CONSIDER",	2 );	// æ¤œè¨Žä¸­
+define ( "DEF_STATUS_BACK",		3 );	// å·®ã—æˆ»ã—
+define ( "DEF_STATUS_CANCELL",	4 );	// ç”³è«‹ç”³è«‹å–æ¶ˆ
+define ( "DEF_STATUS_APPROVE",	10 );	// æ‰¿èª
+define ( "DEF_STATUS_DENIAL",	99 );	// å¦èª
 
 // m_WorkflowOrder.lngWorkflowStatusCode
-define ( "DEF_APPROVE_VOID",	0 );	// ½é´üÃÍ
-define ( "DEF_APPROVER",		1 );	// ¾µÇ§¼Ô
-define ( "DEF_FINAL_APPROVER",	2 );	// ºÇ½ª¾µÇ§¼Ô
+define ( "DEF_APPROVE_VOID",	0 );	// åˆæœŸå€¤
+define ( "DEF_APPROVER",		1 );	// æ‰¿èªè€…
+define ( "DEF_FINAL_APPROVER",	2 );	// æœ€çµ‚æ‰¿èªè€…
 
 // m_Product.lngProductStatusCode
-define ( "DEF_PRODUCT_NORMAL",		0 );	// ¥Þ¥¹¥¿Àµ¾ï
-define ( "DEF_PRODUCT_APPLICATE",	1 );	// ¿½ÀÁÃæ
+define ( "DEF_PRODUCT_NORMAL",		0 );	// ãƒžã‚¹ã‚¿æ­£å¸¸
+define ( "DEF_PRODUCT_APPLICATE",	1 );	// ç”³è«‹ä¸­
 
 // t_GoodsPlan.lngGoodsPlanProgressCode
-define ( "DEF_GOODSPLAN_AFOOT",	1 );	// ´ë²è¿Ê¹ÔÃæ
-define ( "DEF_GOODSPLAN_HOLD",	2 );	// ÊÝÎ±
-define ( "DEF_GOODSPLAN_HALT",	3 );	// Ãæ»ß
-define ( "DEF_GOODSPLAN_END",	4 );	// Ç¼ÉÊºÑ
+define ( "DEF_GOODSPLAN_AFOOT",	1 );	// ä¼ç”»é€²è¡Œä¸­
+define ( "DEF_GOODSPLAN_HOLD",	2 );	// ä¿ç•™
+define ( "DEF_GOODSPLAN_HALT",	3 );	// ä¸­æ­¢
+define ( "DEF_GOODSPLAN_END",	4 );	// ç´å“æ¸ˆ
 
 // m_Estimate.lngEstimateStatusCode
-define ( "DEF_ESTIMATE_TEMPORARY",	1 );	// ²¾ÊÝÂ¸
-define ( "DEF_ESTIMATE_APPLICATE",	2 );	// ¿½ÀÁÃæ
-define ( "DEF_ESTIMATE_CANCELL",	3 );	// ¿½ÀÁ¼è¾Ã
-define ( "DEF_ESTIMATE_APPROVE",	4 );	// ¾µÇ§
-define ( "DEF_ESTIMATE_DENIAL",		5 );	// ÈÝÇ§
+define ( "DEF_ESTIMATE_TEMPORARY",	1 );	// ä»®ä¿å­˜
+define ( "DEF_ESTIMATE_APPLICATE",	2 );	// ç”³è«‹ä¸­
+define ( "DEF_ESTIMATE_CANCELL",	3 );	// ç”³è«‹å–æ¶ˆ
+define ( "DEF_ESTIMATE_APPROVE",	4 );	// æ‰¿èª
+define ( "DEF_ESTIMATE_DENIAL",		5 );	// å¦èª
 
 // m_receivestatus.lngReceiveStatusCode
-define ( "DEF_RECEIVE_APPLICATE",	1 );	// ²¾¼õÃí
-define ( "DEF_RECEIVE_ORDER",		2 );	// ¼õÃí
-define ( "DEF_RECEIVE_DELIVER",		3 );	// Ç¼ÉÊÃæ
-define ( "DEF_RECEIVE_END",			4 );	// Ç¼ÉÊºÑ
-define ( "DEF_RECEIVE_CLOSED",		99 );	// Äù¤áºÑ
+define ( "DEF_RECEIVE_APPLICATE",	1 );	// ä»®å—æ³¨
+define ( "DEF_RECEIVE_ORDER",		2 );	// å—æ³¨
+define ( "DEF_RECEIVE_DELIVER",		3 );	// ç´å“ä¸­
+define ( "DEF_RECEIVE_END",			4 );	// ç´å“æ¸ˆ
+define ( "DEF_RECEIVE_CLOSED",		99 );	// ç· ã‚æ¸ˆ
 
 // m_Sales.lngSalesStatusCode
-//Ä¾Çä¾åÅÐÏ¿¤ÇÇ¼ÉÊºÑ¤ß¤Ë¤¹¤ë½¤ÀµBy¡¡kou¡¡2007/10/2
-define ( "DEF_SALES_APPLICATE",	1 );	// ¿½ÀÁÃæ
-define ( "DEF_SALES_ORDER",		4 );	// Çä¾å
-define ( "DEF_SALES_DELIVER",	3 );	// Ç¼ÉÊÃæ
-define ( "DEF_SALES_END",		4 );	// Ç¼ÉÊºÑ
-define ( "DEF_SALES_DENIAL",	5 );	// ÈÝÇ§
-define ( "DEF_SALES_CLOSED",	99 );	// Äù¤áºÑ
+//ç›´å£²ä¸Šç™»éŒ²ã§ç´å“æ¸ˆã¿ã«ã™ã‚‹ä¿®æ­£Byã€€kouã€€2007/10/2
+define ( "DEF_SALES_APPLICATE",	1 );	// ç”³è«‹ä¸­
+define ( "DEF_SALES_ORDER",		4 );	// å£²ä¸Š
+define ( "DEF_SALES_DELIVER",	3 );	// ç´å“ä¸­
+define ( "DEF_SALES_END",		4 );	// ç´å“æ¸ˆ
+define ( "DEF_SALES_DENIAL",	5 );	// å¦èª
+define ( "DEF_SALES_CLOSED",	99 );	// ç· ã‚æ¸ˆ
 
 // m_orderstatus.lngOrderStatusCode
-define ( "DEF_ORDER_APPLICATE",	1 );	// ²¾¼õÃí
-define ( "DEF_ORDER_ORDER",		2 );	// È¯Ãí
-define ( "DEF_ORDER_DELIVER",	3 );	// Ç¼ÉÊÃæ
-define ( "DEF_ORDER_END",		4 );	// Ç¼ÉÊºÑ
-define ( "DEF_ORDER_CLOSED",	99 );	// Äù¤áºÑ
+define ( "DEF_ORDER_APPLICATE",	1 );	// ä»®å—æ³¨
+define ( "DEF_ORDER_ORDER",		2 );	// ç™ºæ³¨
+define ( "DEF_ORDER_DELIVER",	3 );	// ç´å“ä¸­
+define ( "DEF_ORDER_END",		4 );	// ç´å“æ¸ˆ
+define ( "DEF_ORDER_CLOSED",	99 );	// ç· ã‚æ¸ˆ
 
 // m_Stock.lngStockStatusCode
-define ( "DEF_STOCK_APPLICATE",	1 );	// ¿½ÀÁÃæ
-define ( "DEF_STOCK_ORDER",		2 );	// »ÅÆþ
-define ( "DEF_STOCK_DELIVER",	3 );	// Ç¼ÉÊÃæ
-define ( "DEF_STOCK_END",		4 );	// Ç¼ÉÊºÑ
-define ( "DEF_STOCK_DENIAL",	5 );	// ÈÝÇ§
-define ( "DEF_STOCK_CLOSED",	99 );	// Äù¤áºÑ
+define ( "DEF_STOCK_APPLICATE",	1 );	// ç”³è«‹ä¸­
+define ( "DEF_STOCK_ORDER",		2 );	// ä»•å…¥
+define ( "DEF_STOCK_DELIVER",	3 );	// ç´å“ä¸­
+define ( "DEF_STOCK_END",		4 );	// ç´å“æ¸ˆ
+define ( "DEF_STOCK_DENIAL",	5 );	// å¦èª
+define ( "DEF_STOCK_CLOSED",	99 );	// ç· ã‚æ¸ˆ
 
 // m_AuthorityGroup.lngAuthorityLevel
-define ( "DEF_AUTHG_ADMIN",		10 );	// ¥·¥¹¥Æ¥à´ÉÍý¼Ô
-define ( "DEF_AUTHG_OPERATOR",	20 );	// ¥·¥¹¥Æ¥à±¿ÍÑ¼Ô
-define ( "DEF_AUTHG_DIRECTOR",	100 );	// ¥Ç¥£¥ì¥¯¥¿¡¼
-define ( "DEF_AUTHG_MANAGER",	110 );	// ¥Þ¥Í¡¼¥¸¥ã¡¼
-define ( "DEF_AUTHG_USER",		120 );	// ¥æ¡¼¥¶¡¼
-define ( "DEF_AUTHG_GUEST",		130 );	// ¥²¥¹¥È
+define ( "DEF_AUTHG_ADMIN",		10 );	// ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…
+define ( "DEF_AUTHG_OPERATOR",	20 );	// ã‚·ã‚¹ãƒ†ãƒ é‹ç”¨è€…
+define ( "DEF_AUTHG_DIRECTOR",	100 );	// ãƒ‡ã‚£ãƒ¬ã‚¯ã‚¿ãƒ¼
+define ( "DEF_AUTHG_MANAGER",	110 );	// ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+define ( "DEF_AUTHG_USER",		120 );	// ãƒ¦ãƒ¼ã‚¶ãƒ¼
+define ( "DEF_AUTHG_GUEST",		130 );	// ã‚²ã‚¹ãƒˆ
 
 // m_Attribute.lngAttributeCode
-define ( "DEF_ATTRIBUTE_HEADOFFICE",	1 );	// ËÜ¼Ò
-define ( "DEF_ATTRIBUTE_CLIENT",		2 );	// ¸ÜµÒ
-define ( "DEF_ATTRIBUTE_SUPPLIER",      3 );    // »ÅÆþÀè
-define ( "DEF_ATTRIBUTE_DELIVERY",      5 );    // Ç¼ÉÊ¾ì½ê¡¦ÁÒ¸Ë
+define ( "DEF_ATTRIBUTE_HEADOFFICE",	1 );	// æœ¬ç¤¾
+define ( "DEF_ATTRIBUTE_CLIENT",		2 );	// é¡§å®¢
+define ( "DEF_ATTRIBUTE_SUPPLIER",      3 );    // ä»•å…¥å…ˆ
+define ( "DEF_ATTRIBUTE_DELIVERY",      5 );    // ç´å“å ´æ‰€ãƒ»å€‰åº«
 
 // m_ReportClass.lngReportClassCode
-define ( "DEF_REPORT_PRODUCT",	1 );	// ¾¦ÉÊ²½´ë²è½ñ
-define ( "DEF_REPORT_ORDER",	2 );	// PurchaseOrder(È¯Ãí)
-define ( "DEF_REPORT_ESTIMATE",	3 );	// ¸«ÀÑ¸¶²Á·×»»
-define ( "DEF_REPORT_MOLD",	4 );		// ¶â·¿°ÍÍê½ñ
-define ( "DEF_REPORT_SLIP",	5 );		// Ç¼ÉÊ½ñ
+define ( "DEF_REPORT_PRODUCT",	1 );	// å•†å“åŒ–ä¼ç”»æ›¸
+define ( "DEF_REPORT_ORDER",	2 );	// PurchaseOrder(ç™ºæ³¨)
+define ( "DEF_REPORT_ESTIMATE",	3 );	// è¦‹ç©åŽŸä¾¡è¨ˆç®—
+define ( "DEF_REPORT_MOLD",	4 );		// é‡‘åž‹ä¾é ¼æ›¸
+define ( "DEF_REPORT_SLIP",	5 );		// ç´å“æ›¸
 
 // m_Organization.lngOrganizationCode
-define ( "DEF_ORGANIZATION_FOREIGN",	11 ); // ³¤³°
+define ( "DEF_ORGANIZATION_FOREIGN",	11 ); // æµ·å¤–
 
 // m_Function.lngFunctionCode
-define ( "DEF_FUNCTION_LOGIN0",	100 );	//  100 ¥í¥°¥¤¥ó
-define ( "DEF_FUNCTION_LOGIN1",	101 );	//  101 ¥í¥°¥¤¥ó¸å
-define ( "DEF_FUNCTION_LOGIN2",	102 );	//  102 ¥Ñ¥¹¥ï¡¼¥É¥ê¥Þ¥¤¥ó¥À¡¼
-define ( "DEF_FUNCTION_MENU0",	200 );	//  200 ¥á¥Ë¥å¡¼É½¼¨
+define ( "DEF_FUNCTION_LOGIN0",	100 );	//  100 ãƒ­ã‚°ã‚¤ãƒ³
+define ( "DEF_FUNCTION_LOGIN1",	101 );	//  101 ãƒ­ã‚°ã‚¤ãƒ³å¾Œ
+define ( "DEF_FUNCTION_LOGIN2",	102 );	//  102 ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒªãƒžã‚¤ãƒ³ãƒ€ãƒ¼
+define ( "DEF_FUNCTION_MENU0",	200 );	//  200 ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤º
 
-define ( "DEF_FUNCTION_P0",	300 );      //  300 ¾¦ÉÊ´ÉÍý
-define ( "DEF_FUNCTION_P1",	301 );      //  301 ¾¦ÉÊ´ÉÍý¡Ê¾¦ÉÊÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_P2",	302 );      //  302 ¾¦ÉÊ´ÉÍý¡Ê¾¦ÉÊ¸¡º÷¡Ë
-define ( "DEF_FUNCTION_P3",	303 );      //  303 ¾¦ÉÊ´ÉÍý¡Ê¾¦ÉÊ¸¡º÷¡¡ºï½ü¥Ç¡¼¥¿¤ÎÉ½¼¨¡Ë
-define ( "DEF_FUNCTION_P4",	304 );      //  304 ¾¦ÉÊ´ÉÍý¡Ê¾¦ÉÊ¾ðÊó¾ÜºÙ¡Ë
-define ( "DEF_FUNCTION_P5",	305 );      //  305 ¾¦ÉÊ´ÉÍý¡Ê¾¦ÉÊ¾ðÊó¾ÜºÙ¡¡ºï½ü¥Ç¡¼¥¿¤ÎÉ½¼¨¡Ë
-define ( "DEF_FUNCTION_P6",	306 );      //  306 ¾¦ÉÊ´ÉÍý¡Ê¾¦ÉÊ½¤Àµ¡Ë
-define ( "DEF_FUNCTION_P7",	307 );      //  307 ¾¦ÉÊ´ÉÍý¡Ê¾¦ÉÊºï½ü¡Ë
+define ( "DEF_FUNCTION_P0",	300 );      //  300 å•†å“ç®¡ç†
+define ( "DEF_FUNCTION_P1",	301 );      //  301 å•†å“ç®¡ç†ï¼ˆå•†å“ç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_P2",	302 );      //  302 å•†å“ç®¡ç†ï¼ˆå•†å“æ¤œç´¢ï¼‰
+define ( "DEF_FUNCTION_P3",	303 );      //  303 å•†å“ç®¡ç†ï¼ˆå•†å“æ¤œç´¢ã€€å‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã®è¡¨ç¤ºï¼‰
+define ( "DEF_FUNCTION_P4",	304 );      //  304 å•†å“ç®¡ç†ï¼ˆå•†å“æƒ…å ±è©³ç´°ï¼‰
+define ( "DEF_FUNCTION_P5",	305 );      //  305 å•†å“ç®¡ç†ï¼ˆå•†å“æƒ…å ±è©³ç´°ã€€å‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã®è¡¨ç¤ºï¼‰
+define ( "DEF_FUNCTION_P6",	306 );      //  306 å•†å“ç®¡ç†ï¼ˆå•†å“ä¿®æ­£ï¼‰
+define ( "DEF_FUNCTION_P7",	307 );      //  307 å•†å“ç®¡ç†ï¼ˆå•†å“å‰Šé™¤ï¼‰
 
-define ( "DEF_FUNCTION_SO0",	400 );     //  400 ¼õÃí´ÉÍý
-define ( "DEF_FUNCTION_SO1",	401 );     //  401 ¼õÃí´ÉÍý¡Ê¼õÃí¸¡º÷¡Ë
-define ( "DEF_FUNCTION_SO2",	402 );     //  402 ¼õÃí´ÉÍý¡Ê¼õÃí¸¡º÷¡¡´ÉÍý¥â¡¼¥É¡Ë
-define ( "DEF_FUNCTION_SO3",	403 );     //  403 ¼õÃí´ÉÍý¡Ê¼õÃí¾ÜºÙÉ½¼¨¡Ë
-define ( "DEF_FUNCTION_SO4",	404 );     //  404 ¼õÃí´ÉÍý¡Ê¼õÃí³ÎÄê¡Ë
-define ( "DEF_FUNCTION_SO5",	405 );     //  405 ¼õÃí´ÉÍý¡Ê¼õÃí³ÎÄê¼è¾Ã¡Ë
+define ( "DEF_FUNCTION_SO0",	400 );     //  400 å—æ³¨ç®¡ç†
+define ( "DEF_FUNCTION_SO1",	401 );     //  401 å—æ³¨ç®¡ç†ï¼ˆå—æ³¨æ¤œç´¢ï¼‰
+define ( "DEF_FUNCTION_SO2",	402 );     //  402 å—æ³¨ç®¡ç†ï¼ˆå—æ³¨æ¤œç´¢ã€€ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ï¼‰
+define ( "DEF_FUNCTION_SO3",	403 );     //  403 å—æ³¨ç®¡ç†ï¼ˆå—æ³¨è©³ç´°è¡¨ç¤ºï¼‰
+define ( "DEF_FUNCTION_SO4",	404 );     //  404 å—æ³¨ç®¡ç†ï¼ˆå—æ³¨ç¢ºå®šï¼‰
+define ( "DEF_FUNCTION_SO5",	405 );     //  405 å—æ³¨ç®¡ç†ï¼ˆå—æ³¨ç¢ºå®šå–æ¶ˆï¼‰
 
-define ( "DEF_FUNCTION_PO0",	500 );     //  500 È¯Ãí´ÉÍý
-define ( "DEF_FUNCTION_PO1",	501 );     //  501 È¯Ãí´ÉÍý¡ÊÈ¯ÃíÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_PO2",	502 );     //  502 È¯Ãí´ÉÍý¡ÊÈ¯Ãí¸¡º÷¡Ë
-define ( "DEF_FUNCTION_PO3",	503 );     //  503 È¯Ãí´ÉÍý¡ÊÈ¯Ãí¸¡º÷¡¡´ÉÍý¥â¡¼¥É¡Ë
-define ( "DEF_FUNCTION_PO4",	504 );     //  504 È¯Ãí´ÉÍý¡ÊÈ¯Ãí¾ÜºÙÉ½¼¨¡Ë
-define ( "DEF_FUNCTION_PO5",	505 );     //  505 È¯Ãí´ÉÍý¡ÊÈ¯Ãí½¤Àµ¡Ë
-define ( "DEF_FUNCTION_PO6",	506 );     //  506 È¯Ãí´ÉÍý¡ÊÈ¯Ãíºï½ü¡Ë
-define ( "DEF_FUNCTION_PO7",	507 );     //  507 È¯Ãí´ÉÍý¡ÊÈ¯Ãí¤ÎÌµ¸ú²½½èÍý¡Ë
-define ( "DEF_FUNCTION_PO8",	508 );     //  508 È¯Ãí´ÉÍý¡Ê¾¦ÉÊ¥Þ¥¹¥¿¥À¥¤¥ì¥¯¥È½¤Àµ¡Ë
+define ( "DEF_FUNCTION_PO0",	500 );     //  500 ç™ºæ³¨ç®¡ç†
+define ( "DEF_FUNCTION_PO1",	501 );     //  501 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨ç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_PO2",	502 );     //  502 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨æ¤œç´¢ï¼‰
+define ( "DEF_FUNCTION_PO3",	503 );     //  503 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨æ¤œç´¢ã€€ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ï¼‰
+define ( "DEF_FUNCTION_PO4",	504 );     //  504 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨è©³ç´°è¡¨ç¤ºï¼‰
+define ( "DEF_FUNCTION_PO5",	505 );     //  505 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨ä¿®æ­£ï¼‰
+define ( "DEF_FUNCTION_PO6",	506 );     //  506 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨å‰Šé™¤ï¼‰
+define ( "DEF_FUNCTION_PO7",	507 );     //  507 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨ã®ç„¡åŠ¹åŒ–å‡¦ç†ï¼‰
+define ( "DEF_FUNCTION_PO8",	508 );     //  508 ç™ºæ³¨ç®¡ç†ï¼ˆå•†å“ãƒžã‚¹ã‚¿ãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆä¿®æ­£ï¼‰
 
-define ( "DEF_FUNCTION_SC0",	600 );     //  600 Çä¾å´ÉÍý
-define ( "DEF_FUNCTION_SC1",	601 );     //  601 Çä¾å´ÉÍý¡ÊÇä¾åÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_SC2",	602 );     //  602 Çä¾å´ÉÍý¡ÊÇä¾å¸¡º÷¡Ë
-define ( "DEF_FUNCTION_SC3",	603 );     //  602 Çä¾å´ÉÍý¡ÊÇä¾å¸¡º÷¡¡´ÉÍý¥â¡¼¥É¡Ë
-define ( "DEF_FUNCTION_SC4",	604 );     //  604 Çä¾å´ÉÍý¡ÊÇä¾å¾ÜºÙÉ½¼¨¡Ë
-define ( "DEF_FUNCTION_SC5",	605 );     //  603 Çä¾å´ÉÍý¡ÊÇä¾å½¤Àµ¡Ë
-define ( "DEF_FUNCTION_SC6",	606 );     //  604 Çä¾å´ÉÍý¡ÊÇä¾åºï½ü¡Ë
-define ( "DEF_FUNCTION_SC7",	607 );     //  607 Çä¾å´ÉÍý¡ÊÇä¾å¤ÎÌµ¸ú²½½èÍý¡Ë
-define ( "DEF_FUNCTION_SC8",	608 );     //  608 Çä¾å´ÉÍý¡ÊÇä¾å¤Î¼õÃíNo¤ò»ØÄê¤·¤Ê¤¤ÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_SC9",	609 );     //  609 Çä¾å´ÉÍý¡ÊÇä¾å¤Î¼õÃíNo¤ò»ØÄê¤·¤Ê¤¤ÀßÄê¶â³Û¡ÊDEF_MONEY_NO_CODE¡Ë°Ê¾å¤ÎÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_SC10",	610 );     //  610 Çä¾å´ÉÍý¡Ê¹ÔÄÉ²Ã¡¦¹Ôºï½ü¡Ë
+define ( "DEF_FUNCTION_SC0",	600 );     //  600 å£²ä¸Šç®¡ç†
+define ( "DEF_FUNCTION_SC1",	601 );     //  601 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_SC2",	602 );     //  602 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šæ¤œç´¢ï¼‰
+define ( "DEF_FUNCTION_SC3",	603 );     //  602 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šæ¤œç´¢ã€€ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ï¼‰
+define ( "DEF_FUNCTION_SC4",	604 );     //  604 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šè©³ç´°è¡¨ç¤ºï¼‰
+define ( "DEF_FUNCTION_SC5",	605 );     //  603 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šä¿®æ­£ï¼‰
+define ( "DEF_FUNCTION_SC6",	606 );     //  604 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šå‰Šé™¤ï¼‰
+define ( "DEF_FUNCTION_SC7",	607 );     //  607 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šã®ç„¡åŠ¹åŒ–å‡¦ç†ï¼‰
+define ( "DEF_FUNCTION_SC8",	608 );     //  608 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šã®å—æ³¨Noã‚’æŒ‡å®šã—ãªã„ç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_SC9",	609 );     //  609 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šã®å—æ³¨Noã‚’æŒ‡å®šã—ãªã„è¨­å®šé‡‘é¡ï¼ˆDEF_MONEY_NO_CODEï¼‰ä»¥ä¸Šã®ç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_SC10",	610 );     //  610 å£²ä¸Šç®¡ç†ï¼ˆè¡Œè¿½åŠ ãƒ»è¡Œå‰Šé™¤ï¼‰
 
-define ( "DEF_FUNCTION_PC0",	700 );     //  700 »ÅÆþ´ÉÍý
-define ( "DEF_FUNCTION_PC1",	701 );     //  701 »ÅÆþ´ÉÍý¡Ê»ÅÆþÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_PC2",	702 );     //  702 »ÅÆþ´ÉÍý¡Ê»ÅÆþ¸¡º÷¡Ë
-define ( "DEF_FUNCTION_PC3",	703 );     //  703 »ÅÆþ´ÉÍý¡Ê»ÅÆþ¸¡º÷¡¡´ÉÍý¥â¡¼¥É¡Ë
-define ( "DEF_FUNCTION_PC4",	704 );     //  704 »ÅÆþ´ÉÍý¡Ê»ÅÆþ¾ÜºÙÉ½¼¨¡Ë
-define ( "DEF_FUNCTION_PC5",	705 );     //  705 »ÅÆþ´ÉÍý¡Ê»ÅÆþ½¤Àµ¡Ë
-define ( "DEF_FUNCTION_PC6",	706 );     //  706 »ÅÆþ´ÉÍý¡Ê»ÅÆþºï½ü¡Ë
-define ( "DEF_FUNCTION_PC7",	707 );     //  707 »ÅÆþ´ÉÍý¡Ê»ÅÆþ¤ÎÌµ¸ú²½½èÍý¡Ë
-define ( "DEF_FUNCTION_PC8",	708 );     //  708 »ÅÆþ´ÉÍý¡Ê»ÅÆþ¤ÎÈ¯ÃíNo¤ò»ØÄê¤·¤Ê¤¤ÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_PC9",	709 );     //  709 »ÅÆþ´ÉÍý¡Ê»ÅÆþ¤ÎÈ¯ÃíNo¤ò»ØÄê¤·¤Ê¤¤ÀßÄê¶â³Û¡ÊDEF_MONEY_NO_CODE¡Ë°Ê¾å¤ÎÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_PC10",	710 );     //  710 »ÅÆþ´ÉÍý¡Ê¹ÔÄÉ²Ã¡¦¹Ôºï½ü¡Ë
+define ( "DEF_FUNCTION_PC0",	700 );     //  700 ä»•å…¥ç®¡ç†
+define ( "DEF_FUNCTION_PC1",	701 );     //  701 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥ç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_PC2",	702 );     //  702 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥æ¤œç´¢ï¼‰
+define ( "DEF_FUNCTION_PC3",	703 );     //  703 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥æ¤œç´¢ã€€ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ï¼‰
+define ( "DEF_FUNCTION_PC4",	704 );     //  704 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥è©³ç´°è¡¨ç¤ºï¼‰
+define ( "DEF_FUNCTION_PC5",	705 );     //  705 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥ä¿®æ­£ï¼‰
+define ( "DEF_FUNCTION_PC6",	706 );     //  706 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥å‰Šé™¤ï¼‰
+define ( "DEF_FUNCTION_PC7",	707 );     //  707 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥ã®ç„¡åŠ¹åŒ–å‡¦ç†ï¼‰
+define ( "DEF_FUNCTION_PC8",	708 );     //  708 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥ã®ç™ºæ³¨Noã‚’æŒ‡å®šã—ãªã„ç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_PC9",	709 );     //  709 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥ã®ç™ºæ³¨Noã‚’æŒ‡å®šã—ãªã„è¨­å®šé‡‘é¡ï¼ˆDEF_MONEY_NO_CODEï¼‰ä»¥ä¸Šã®ç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_PC10",	710 );     //  710 ä»•å…¥ç®¡ç†ï¼ˆè¡Œè¿½åŠ ãƒ»è¡Œå‰Šé™¤ï¼‰
 
-define ( "DEF_FUNCTION_WF0",	800 );     //  800 ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍý
-define ( "DEF_FUNCTION_WF1",	801 );     //  801 ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍý¡Ê°Æ·ï°ìÍ÷¡Ë
-define ( "DEF_FUNCTION_WF2",	802 );     //  802 ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍý¡Ê°Æ·ï¸¡º÷¡Ë
-define ( "DEF_FUNCTION_WF3",	803 );     //  803 ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍý¡Ê°Æ·ï¸¡º÷£²¡Ë
-define ( "DEF_FUNCTION_WF4",	804 );     //  804 ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍý¡Ê°Æ·ï¾ðÊó¾ÜºÙ¡Ë
-define ( "DEF_FUNCTION_WF5",	805 );     //  805 ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍý¡Ê°Æ·ï¾ðÊó¾ÜºÙ£²¡Ë
-define ( "DEF_FUNCTION_WF6",	806 );     //  806 ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍý¡Ê°Æ·ï¤Î½èÍý¡Ë
+define ( "DEF_FUNCTION_WF0",	800 );     //  800 ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†
+define ( "DEF_FUNCTION_WF1",	801 );     //  801 ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ï¼ˆæ¡ˆä»¶ä¸€è¦§ï¼‰
+define ( "DEF_FUNCTION_WF2",	802 );     //  802 ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ï¼ˆæ¡ˆä»¶æ¤œç´¢ï¼‰
+define ( "DEF_FUNCTION_WF3",	803 );     //  803 ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ï¼ˆæ¡ˆä»¶æ¤œç´¢ï¼’ï¼‰
+define ( "DEF_FUNCTION_WF4",	804 );     //  804 ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ï¼ˆæ¡ˆä»¶æƒ…å ±è©³ç´°ï¼‰
+define ( "DEF_FUNCTION_WF5",	805 );     //  805 ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ï¼ˆæ¡ˆä»¶æƒ…å ±è©³ç´°ï¼’ï¼‰
+define ( "DEF_FUNCTION_WF6",	806 );     //  806 ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ï¼ˆæ¡ˆä»¶ã®å‡¦ç†ï¼‰
 
-define ( "DEF_FUNCTION_LO0",	900 );     //  900 Ä¢É¼½ÐÎÏ
-define ( "DEF_FUNCTION_LO1",	901 );     //  901 Ä¢É¼½ÐÎÏ(¾¦ÉÊ²½´ë²è½ñ)
-define ( "DEF_FUNCTION_LO2",	902 );     //  902 Ä¢É¼½ÐÎÏ(È¯Ãí½ñ£Ð£Ï)
-define ( "DEF_FUNCTION_LO3",	903 );     //  903 Ä¢É¼½ÐÎÏ(¾¦ÉÊ²½´ë²è½ñ)¥³¥Ô¡¼²ò½ü¸¢¸Â
-define ( "DEF_FUNCTION_LO4",	904 );     //  904 Ä¢É¼½ÐÎÏ(È¯Ãí½ñ£Ð£Ï)¥³¥Ô¡¼²ò½ü¸¢¸Â
-define ( "DEF_FUNCTION_LO5",	905 );     //  905 Ä¢É¼½ÐÎÏ(Ç¼ÉÊ½ñ)
-define ( "DEF_FUNCTION_LO6",	906 );     //  906 Ä¢É¼½ÐÎÏ(Ç¼ÉÊ½ñ)¥³¥Ô¡¼²ò½ü¸¢¸Â
+define ( "DEF_FUNCTION_LO0",	900 );     //  900 å¸³ç¥¨å‡ºåŠ›
+define ( "DEF_FUNCTION_LO1",	901 );     //  901 å¸³ç¥¨å‡ºåŠ›(å•†å“åŒ–ä¼ç”»æ›¸)
+define ( "DEF_FUNCTION_LO2",	902 );     //  902 å¸³ç¥¨å‡ºåŠ›(ç™ºæ³¨æ›¸ï¼°ï¼¯)
+define ( "DEF_FUNCTION_LO3",	903 );     //  903 å¸³ç¥¨å‡ºåŠ›(å•†å“åŒ–ä¼ç”»æ›¸)ã‚³ãƒ”ãƒ¼è§£é™¤æ¨©é™
+define ( "DEF_FUNCTION_LO4",	904 );     //  904 å¸³ç¥¨å‡ºåŠ›(ç™ºæ³¨æ›¸ï¼°ï¼¯)ã‚³ãƒ”ãƒ¼è§£é™¤æ¨©é™
+define ( "DEF_FUNCTION_LO5",	905 );     //  905 å¸³ç¥¨å‡ºåŠ›(ç´å“æ›¸)
+define ( "DEF_FUNCTION_LO6",	906 );     //  906 å¸³ç¥¨å‡ºåŠ›(ç´å“æ›¸)ã‚³ãƒ”ãƒ¼è§£é™¤æ¨©é™
 
-define ( "DEF_FUNCTION_DE0",	1000 );    // 1000 ¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È
-define ( "DEF_FUNCTION_DE1",	1001 );    // 1001 ¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È(È¯Ãí´ÉÍý/L/C Í½ÄêÉ½)
-define ( "DEF_FUNCTION_DE2",	1002 );    // 1002 ¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È(Çä¾å´ÉÍý/Çä¾å¥ì¥·¥Ô)
-define ( "DEF_FUNCTION_DE3",	1003 );    // 1003 ¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È(»ÅÆþ´ÉÍý/»ÅÆþ°ìÍ÷É½)
-define ( "DEF_FUNCTION_DE4",	1004 );    // 1004 ¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È(»ÅÆþ´ÉÍý/Purchase recipe file)
-define ( "DEF_FUNCTION_DE5",	1005 );    // 1005 ¸«ÀÑ¸¶²Á½ñ
-define ( "DEF_FUNCTION_DE6",	1006 );    // 1006 ¼ÒÆâÅý·×¥Ç¡¼¥¿¡ÊÇä¾å¸«¹þ¡Ë
-define ( "DEF_FUNCTION_DE7",	1007 );    // 1007 ¼ÒÆâÅý·×¥Ç¡¼¥¿¡Ê³µ»»Çä¾å¡Ë
-define ( "DEF_FUNCTION_DE8",	1008 );    // 1008 ¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È(¾¦ÉÊ·×²è½ñ)
+define ( "DEF_FUNCTION_DE0",	1000 );    // 1000 ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
+define ( "DEF_FUNCTION_DE1",	1001 );    // 1001 ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ(ç™ºæ³¨ç®¡ç†/L/C äºˆå®šè¡¨)
+define ( "DEF_FUNCTION_DE2",	1002 );    // 1002 ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ(å£²ä¸Šç®¡ç†/å£²ä¸Šãƒ¬ã‚·ãƒ”)
+define ( "DEF_FUNCTION_DE3",	1003 );    // 1003 ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ(ä»•å…¥ç®¡ç†/ä»•å…¥ä¸€è¦§è¡¨)
+define ( "DEF_FUNCTION_DE4",	1004 );    // 1004 ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ(ä»•å…¥ç®¡ç†/Purchase recipe file)
+define ( "DEF_FUNCTION_DE5",	1005 );    // 1005 è¦‹ç©åŽŸä¾¡æ›¸
+define ( "DEF_FUNCTION_DE6",	1006 );    // 1006 ç¤¾å†…çµ±è¨ˆãƒ‡ãƒ¼ã‚¿ï¼ˆå£²ä¸Šè¦‹è¾¼ï¼‰
+define ( "DEF_FUNCTION_DE7",	1007 );    // 1007 ç¤¾å†…çµ±è¨ˆãƒ‡ãƒ¼ã‚¿ï¼ˆæ¦‚ç®—å£²ä¸Šï¼‰
+define ( "DEF_FUNCTION_DE8",	1008 );    // 1008 ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ(å•†å“è¨ˆç”»æ›¸)
 
-define ( "DEF_FUNCTION_UC0",	1100 );    // 1100 ¥æ¡¼¥¶¡¼´ÉÍý
-define ( "DEF_FUNCTION_UC1",	1101 );    // 1101 ¥æ¡¼¥¶¡¼´ÉÍý¡Ê¥æ¡¼¥¶¡¼¾ðÊó¡Ë
-define ( "DEF_FUNCTION_UC2",	1102 );    // 1102 ¥æ¡¼¥¶¡¼´ÉÍý¡Ê¥æ¡¼¥¶¡¼ÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_UC3",	1103 );    // 1103 ¥æ¡¼¥¶¡¼´ÉÍý¡Ê¥æ¡¼¥¶¡¼¸¡º÷¡Ë
-define ( "DEF_FUNCTION_UC4",	1104 );    // 1104 ¥æ¡¼¥¶¡¼´ÉÍý¡Ê¥æ¡¼¥¶¡¼¾ÜºÙ¡Ë
-define ( "DEF_FUNCTION_UC5",	1105 );    // 1105 ¥æ¡¼¥¶¡¼´ÉÍý¡Ê¥æ¡¼¥¶¡¼½¤Àµ¡Ë
+define ( "DEF_FUNCTION_UC0",	1100 );    // 1100 ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†
+define ( "DEF_FUNCTION_UC1",	1101 );    // 1101 ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ï¼‰
+define ( "DEF_FUNCTION_UC2",	1102 );    // 1102 ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼ç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_UC3",	1103 );    // 1103 ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼æ¤œç´¢ï¼‰
+define ( "DEF_FUNCTION_UC4",	1104 );    // 1104 ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼è©³ç´°ï¼‰
+define ( "DEF_FUNCTION_UC5",	1105 );    // 1105 ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ï¼ˆãƒ¦ãƒ¼ã‚¶ãƒ¼ä¿®æ­£ï¼‰
 
-define ( "DEF_FUNCTION_M0" ,	1200 );   // 1200 ¥Þ¥¹¥¿´ÉÍý
-define ( "DEF_FUNCTION_SYS0",	1300 );   // 1300 ¥·¥¹¥Æ¥à´ÉÍý
-define ( "DEF_FUNCTION_SYS1",	1301 );   // 1301 ¥·¥¹¥Æ¥à´ÉÍý(¤ªÃÎ¤é¤»)
-define ( "DEF_FUNCTION_SYS2",	1302 );   // 1302 ¥·¥¹¥Æ¥à´ÉÍý(¥µ¡¼¥Ð¡¼´ÉÍý)
-define ( "DEF_FUNCTION_SYS3",	1303 );   // 1303 ¥·¥¹¥Æ¥à´ÉÍý(´ÉÍý¼Ô¥á¡¼¥ë)
-define ( "DEF_FUNCTION_SYS4",	1304 );   // 1304 ¥·¥¹¥Æ¥à´ÉÍý(¥»¥Ã¥·¥ç¥ó)
-define ( "DEF_FUNCTION_SYS5",	1305 );   // 1305 ¥·¥¹¥Æ¥à´ÉÍý(·î¼¡¥Ð¥Ã¥Á½èÍý)
+define ( "DEF_FUNCTION_M0" ,	1200 );   // 1200 ãƒžã‚¹ã‚¿ç®¡ç†
+define ( "DEF_FUNCTION_SYS0",	1300 );   // 1300 ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†
+define ( "DEF_FUNCTION_SYS1",	1301 );   // 1301 ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†(ãŠçŸ¥ã‚‰ã›)
+define ( "DEF_FUNCTION_SYS2",	1302 );   // 1302 ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†(ã‚µãƒ¼ãƒãƒ¼ç®¡ç†)
+define ( "DEF_FUNCTION_SYS3",	1303 );   // 1303 ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†(ç®¡ç†è€…ãƒ¡ãƒ¼ãƒ«)
+define ( "DEF_FUNCTION_SYS4",	1304 );   // 1304 ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†(ã‚»ãƒƒã‚·ãƒ§ãƒ³)
+define ( "DEF_FUNCTION_SYS5",	1305 );   // 1305 ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†(æœˆæ¬¡ãƒãƒƒãƒå‡¦ç†)
 
-define ( "DEF_FUNCTION_CLD0",	1400 );	// 1400 Äù¤á½èÍý
+define ( "DEF_FUNCTION_CLD0",	1400 );	// 1400 ç· ã‚å‡¦ç†
 
-define ( "DEF_FUNCTION_E0",	1500 );	// 1500 ¸«ÀÑ¸¶²Á´ÉÍý
-define ( "DEF_FUNCTION_E1",	1501 );	// 1501 ¸«ÀÑ¸¶²Á´ÉÍý¡ÊÅÐÏ¿¡Ë
-define ( "DEF_FUNCTION_E2",	1502 );	// 1502 ¸«ÀÑ¸¶²Á´ÉÍý¡Ê¸¡º÷¡Ë
-define ( "DEF_FUNCTION_E3",	1503 );	// 1503 ¸«ÀÑ¸¶²Á´ÉÍý¡Ê½¤Àµ¡Ë
-define ( "DEF_FUNCTION_E4",	1504 );	// 1504 ¸«ÀÑ¸¶²Á´ÉÍý¡Ê¾ÜºÙ¡Ë
-define ( "DEF_FUNCTION_E5",	1505 );	// 1505 ¸«ÀÑ¸¶²Á´ÉÍý¡Êºï½ü¡Ë
+define ( "DEF_FUNCTION_E0",	1500 );	// 1500 è¦‹ç©åŽŸä¾¡ç®¡ç†
+define ( "DEF_FUNCTION_E1",	1501 );	// 1501 è¦‹ç©åŽŸä¾¡ç®¡ç†ï¼ˆç™»éŒ²ï¼‰
+define ( "DEF_FUNCTION_E2",	1502 );	// 1502 è¦‹ç©åŽŸä¾¡ç®¡ç†ï¼ˆæ¤œç´¢ï¼‰
+define ( "DEF_FUNCTION_E3",	1503 );	// 1503 è¦‹ç©åŽŸä¾¡ç®¡ç†ï¼ˆä¿®æ­£ï¼‰
+define ( "DEF_FUNCTION_E4",	1504 );	// 1504 è¦‹ç©åŽŸä¾¡ç®¡ç†ï¼ˆè©³ç´°ï¼‰
+define ( "DEF_FUNCTION_E5",	1505 );	// 1505 è¦‹ç©åŽŸä¾¡ç®¡ç†ï¼ˆå‰Šé™¤ï¼‰
 
-define ( "DEF_FUNCTION_UP0",	1600 );	// 1600 ¥¢¥Ã¥×¥í¡¼¥É´ÉÍý
-define ( "DEF_FUNCTION_UP1",	1601 );	// 1601 ¥¢¥Ã¥×¥í¡¼¥É´ÉÍý¡ÊÅÐÏ¿¡Ë
+define ( "DEF_FUNCTION_UP0",	1600 );	// 1600 ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ç®¡ç†
+define ( "DEF_FUNCTION_UP1",	1601 );	// 1601 ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ç®¡ç†ï¼ˆç™»éŒ²ï¼‰
 
-define ( "DEF_FUNCTION_BG02",	1702 );	// 1702 ¥Ð¥Ã¥°¥°¥é¥¦¥ó¥É½èÍý¡Ê¸ø³«¥·¥¹¥Æ¥à¡¦¿ÊÄ½´ÉÍýµ¡Ç½Ï¢·È¡¿WF¾µÇ§¸å¥á¡¼¥ëÁ÷¿®¡Ë
+define ( "DEF_FUNCTION_BG02",	1702 );	// 1702 ãƒãƒƒã‚°ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰å‡¦ç†ï¼ˆå…¬é–‹ã‚·ã‚¹ãƒ†ãƒ ãƒ»é€²æ—ç®¡ç†æ©Ÿèƒ½é€£æºï¼WFæ‰¿èªå¾Œãƒ¡ãƒ¼ãƒ«é€ä¿¡ï¼‰
 
-define ( "DEF_FUNCTION_MM0", 1800 );	//¶â·¿´ÉÍý
-define ( "DEF_FUNCTION_MM1", 1801 );	//¶â·¿´ÉÍý(ÅÐÏ¿)
-define ( "DEF_FUNCTION_MM2", 1802 );	//¶â·¿´ÉÍý(¸¡º÷)
-define ( "DEF_FUNCTION_MM3", 1803 );	//¶â·¿´ÉÍý(¾ÜºÙ)
-define ( "DEF_FUNCTION_MM4", 1804 );	//¶â·¿´ÉÍý(½¤Àµ)
-define ( "DEF_FUNCTION_MM5", 1805 );	//¶â·¿´ÉÍý(ºï½ü)
+define ( "DEF_FUNCTION_MM0", 1800 );	//é‡‘åž‹ç®¡ç†
+define ( "DEF_FUNCTION_MM1", 1801 );	//é‡‘åž‹ç®¡ç†(ç™»éŒ²)
+define ( "DEF_FUNCTION_MM2", 1802 );	//é‡‘åž‹ç®¡ç†(æ¤œç´¢)
+define ( "DEF_FUNCTION_MM3", 1803 );	//é‡‘åž‹ç®¡ç†(è©³ç´°)
+define ( "DEF_FUNCTION_MM4", 1804 );	//é‡‘åž‹ç®¡ç†(ä¿®æ­£)
+define ( "DEF_FUNCTION_MM5", 1805 );	//é‡‘åž‹ç®¡ç†(å‰Šé™¤)
 
-define ( "DEF_FUNCTION_MR0", 1900 );	//¶â·¿Ä¢É¼´ÉÍý
-define ( "DEF_FUNCTION_MR1", 1901 );	//¶â·¿Ä¢É¼´ÉÍý(ÅÐÏ¿)
-define ( "DEF_FUNCTION_MR2", 1902 );	//¶â·¿Ä¢É¼´ÉÍý(¸¡º÷)
-define ( "DEF_FUNCTION_MR3", 1903 );	//¶â·¿Ä¢É¼´ÉÍý(¾ÜºÙ)
-define ( "DEF_FUNCTION_MR4", 1904 );	//¶â·¿Ä¢É¼´ÉÍý(½¤Àµ)
-define ( "DEF_FUNCTION_MR5", 1905 );	//¶â·¿Ä¢É¼´ÉÍý(ºï½ü)
+define ( "DEF_FUNCTION_MR0", 1900 );	//é‡‘åž‹å¸³ç¥¨ç®¡ç†
+define ( "DEF_FUNCTION_MR1", 1901 );	//é‡‘åž‹å¸³ç¥¨ç®¡ç†(ç™»éŒ²)
+define ( "DEF_FUNCTION_MR2", 1902 );	//é‡‘åž‹å¸³ç¥¨ç®¡ç†(æ¤œç´¢)
+define ( "DEF_FUNCTION_MR3", 1903 );	//é‡‘åž‹å¸³ç¥¨ç®¡ç†(è©³ç´°)
+define ( "DEF_FUNCTION_MR4", 1904 );	//é‡‘åž‹å¸³ç¥¨ç®¡ç†(ä¿®æ­£)
+define ( "DEF_FUNCTION_MR5", 1905 );	//é‡‘åž‹å¸³ç¥¨ç®¡ç†(å‰Šé™¤)
 
-define ( "DEF_FUNCTION_DWN",	2001 );	// 2001 ¥À¥¦¥ó¥í¡¼¥É´ÉÍý
+define ( "DEF_FUNCTION_DWN",	2001 );	// 2001 ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ç®¡ç†
 
-define ( "DEF_FUNCTION_LC0",	2100 );	// 2100 L/C´ÉÍý
-define ( "DEF_FUNCTION_LC1",	2101 );	// 2101 L/C¾ðÊó
-define ( "DEF_FUNCTION_LC2",	2102 );	// 2102 L/CÀßÄêÊÑ¹¹
-define ( "DEF_FUNCTION_LC3",	2103 );	// 2103 L/CÊÔ½¸
-define ( "DEF_FUNCTION_LC4",	2104 );	// 2104 L/CÄ¢É¼½ÐÎÏ
+define ( "DEF_FUNCTION_LC0",	2100 );	// 2100 L/Cç®¡ç†
+define ( "DEF_FUNCTION_LC1",	2101 );	// 2101 L/Cæƒ…å ±
+define ( "DEF_FUNCTION_LC2",	2102 );	// 2102 L/Cè¨­å®šå¤‰æ›´
+define ( "DEF_FUNCTION_LC3",	2103 );	// 2103 L/Cç·¨é›†
+define ( "DEF_FUNCTION_LC4",	2104 );	// 2104 L/Cå¸³ç¥¨å‡ºåŠ›
 
-define ( "DEF_FUNCTION_INV0",	2200 );	// 2200 ÀÁµá´ÉÍý
-define ( "DEF_FUNCTION_INV1",	2201 );	//  ÀÁµá½ñÈ¯¹Ô
-define ( "DEF_FUNCTION_INV2",	2202 );	// 2202 ÀÁµá½ñ¸¡º÷
-define ( "DEF_FUNCTION_INV3",	2203 );	// 2203 ÀÁµá½¸·×
+define ( "DEF_FUNCTION_INV0",	2200 );	// 2200 è«‹æ±‚ç®¡ç†
+define ( "DEF_FUNCTION_INV1",	2201 );	//  è«‹æ±‚æ›¸ç™ºè¡Œ
+define ( "DEF_FUNCTION_INV2",	2202 );	// 2202 è«‹æ±‚æ›¸æ¤œç´¢
+define ( "DEF_FUNCTION_INV3",	2203 );	// 2203 è«‹æ±‚é›†è¨ˆ
 
-// ¥¨¥é¡¼¼ïÎà
-define ( "DEF_WARNING",		1 );           //  1 Ãí°Õ¥ì¥Ù¥ë¡ÊÆþÎÏ¥ß¥¹¤Ê¤É¡Ë
-define ( "DEF_ERROR",		2 );           //  2 ¥¨¥é¡¼¥ì¥Ù¥ë
-define ( "DEF_FATAL",		3 );           //  3 ¥·¥¹¥Æ¥à¥¨¥é¡¼¥ì¥Ù¥ë
-define ( "DEF_ANNOUNCE",	99 );          //  99 ¥·¥¹¥Æ¥à¥¢¥Ê¥¦¥ó¥¹
+// ã‚¨ãƒ©ãƒ¼ç¨®é¡ž
+define ( "DEF_WARNING",		1 );           //  1 æ³¨æ„ãƒ¬ãƒ™ãƒ«ï¼ˆå…¥åŠ›ãƒŸã‚¹ãªã©ï¼‰
+define ( "DEF_ERROR",		2 );           //  2 ã‚¨ãƒ©ãƒ¼ãƒ¬ãƒ™ãƒ«
+define ( "DEF_FATAL",		3 );           //  3 ã‚·ã‚¹ãƒ†ãƒ ã‚¨ãƒ©ãƒ¼ãƒ¬ãƒ™ãƒ«
+define ( "DEF_ANNOUNCE",	99 );          //  99 ã‚·ã‚¹ãƒ†ãƒ ã‚¢ãƒŠã‚¦ãƒ³ã‚¹
 
-// ¥Ç¥Ð¥Ã¥°¥â¡¼¥É
-define ( "DEF_DEBUG_MODE",	0 );         //  ËÜ²ÔÆ°¥â¡¼¥É¡¡¡¡¥¨¥é¡¼²èÌÌÉ½¼¨
-//define ( "DEF_DEBUG_MODE",	1 );      //  ¥Ç¥Ð¥Ã¥°¥â¡¼¥É¡¡¥¨¥é¡¼²èÌÌÈóÉ½¼¨
+// ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰
+define ( "DEF_DEBUG_MODE",	0 );         //  æœ¬ç¨¼å‹•ãƒ¢ãƒ¼ãƒ‰ã€€ã€€ã‚¨ãƒ©ãƒ¼ç”»é¢è¡¨ç¤º
+//define ( "DEF_DEBUG_MODE",	1 );      //  ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã€€ã‚¨ãƒ©ãƒ¼ç”»é¢éžè¡¨ç¤º
 
-// È¯ÃíÅÐÏ¿
-define ("DEF_M_WORKFLOW_FUNCTIONCODE",	1);		// µ¡Ç½¥³¡¼¥É
-define ("DEF_T_WORKFLOW_SUBCODE",		1);		// ¥ï¡¼¥¯¥Õ¥í¡¼¥µ¥Ö¥³¡¼¥É
-define ("DEF_T_WORKFLOW_ORDERNO",		1);		// ¥ï¡¼¥¯¥Õ¥í¡¼½ç½øÈÖ¹æ
-define ("DEF_T_WORKFLOW_STATUS",		1);		// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ¥³¡¼¥É
+// ç™ºæ³¨ç™»éŒ²
+define ("DEF_M_WORKFLOW_FUNCTIONCODE",	1);		// æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
+define ("DEF_T_WORKFLOW_SUBCODE",		1);		// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã‚µãƒ–ã‚³ãƒ¼ãƒ‰
+define ("DEF_T_WORKFLOW_ORDERNO",		1);		// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºç•ªå·
+define ("DEF_T_WORKFLOW_STATUS",		1);		// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰
 
-// ÄÌ²ß¥¿¥¤¥×
-define ("DEF_MONETARY_YEN",	1);				// ÆüËÜ±ß
-define ("DEF_MONETARY_USD",	2);				// US¥É¥ë
-define ("DEF_MONETARY_HKD",	3);				// HK¥É¥ë
+// é€šè²¨ã‚¿ã‚¤ãƒ—
+define ("DEF_MONETARY_YEN",	1);				// æ—¥æœ¬å††
+define ("DEF_MONETARY_USD",	2);				// USãƒ‰ãƒ«
+define ("DEF_MONETARY_HKD",	3);				// HKãƒ‰ãƒ«
 
-// ¼ÒÆâ¥ì¡¼¥ÈÄêµÁ
-define ("DEF_MONETARYCLASS_SHANAI", 	2);		// ¼ÒÆâ
+// ç¤¾å†…ãƒ¬ãƒ¼ãƒˆå®šç¾©
+define ("DEF_MONETARYCLASS_SHANAI", 	2);		// ç¤¾å†…
 
-define ("DEF_MONEY_USER",		0);			// ¥æ¡¼¥¶¤Ï¤Ê¤·
-define ("DEF_MONEY_MANAGER",	50000);		// ¥Þ¥Í¡¼¥¸¥ã¡¼¤Ï5Ëü¤Þ¤Ç
-define ("DEF_MONEY_DIRECTOR",	200000);	// ¥Ç¥£¥ì¥¯¥¿¡¼¤Ï20Ëü¤Þ¤Ç 
+define ("DEF_MONEY_USER",		0);			// ãƒ¦ãƒ¼ã‚¶ã¯ãªã—
+define ("DEF_MONEY_MANAGER",	50000);		// ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã¯5ä¸‡ã¾ã§
+define ("DEF_MONEY_DIRECTOR",	200000);	// ãƒ‡ã‚£ãƒ¬ã‚¯ã‚¿ãƒ¼ã¯20ä¸‡ã¾ã§ 
 
 // 2004.03.01 suzukaze update start
-define ("DEF_MONEY_NO_CODE",	50000);		// »ÅÆþÇä¾å¤Ç¤ÎÈ¯Ãí¼õÃíNo¤Ê¤·¤Ç¤ÎÅÐÏ¿²ÄÇ½¶â³Û  ¾åµ­¥³¡¼¥É¤ò»ÈÍÑ¤·¤Ê¤¤¤è¤¦¤Ë½¤Àµ
+define ("DEF_MONEY_NO_CODE",	50000);		// ä»•å…¥å£²ä¸Šã§ã®ç™ºæ³¨å—æ³¨Noãªã—ã§ã®ç™»éŒ²å¯èƒ½é‡‘é¡  ä¸Šè¨˜ã‚³ãƒ¼ãƒ‰ã‚’ä½¿ç”¨ã—ãªã„ã‚ˆã†ã«ä¿®æ­£
 // 2004.03.01 suzukaze update end
 
-// ¾¦ÉÊ¤Î²Á³Ê¤Î¥Ç¥Õ¥©¥ë¥ÈÄÌ²ß
-define ("DEF_PRODUCT_MONETARYSIGN",	"\\");	// ¾¦ÉÊ¾ðÊóÉ½¼¨»þ¤ÎÄÌ²ßÉ½µ­
+// å•†å“ã®ä¾¡æ ¼ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆé€šè²¨
+define ("DEF_PRODUCT_MONETARYSIGN",	"\\");	// å•†å“æƒ…å ±è¡¨ç¤ºæ™‚ã®é€šè²¨è¡¨è¨˜
 
-// ¸¡º÷·ï¿ô¤ÎÉ½¼¨£Í£Á£Ø·ï¿ô
-define ("DEF_SEARCH_MAX",	1000);			// ¥Ç¥Õ¥©¥ë¥È¤Ç1000·ï°Ê¾å¤Î¾ì¹ç¤Ï¥¨¥é¡¼É½¼¨¤¹¤ë
+// æ¤œç´¢ä»¶æ•°ã®è¡¨ç¤ºï¼­ï¼¡ï¼¸ä»¶æ•°
+define ("DEF_SEARCH_MAX",	1000);			// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§1000ä»¶ä»¥ä¸Šã®å ´åˆã¯ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºã™ã‚‹
 
-// ¥¨¥é¡¼»þ¤ÎÆ°ºî
-define ("DEF_ERROR_CLOSE",		0);				// ¥¨¥é¡¼»þ¤Ë¥¦¥£¥ó¥É¥¦¤òÊÄ¤¸¤ë
-define ("DEF_ERROR_BACK",		1);				// ¥¨¥é¡¼»þ¤ËÁ°¤Î²èÌÌ¤ËÌá¤ë
+// ã‚¨ãƒ©ãƒ¼æ™‚ã®å‹•ä½œ
+define ("DEF_ERROR_CLOSE",		0);				// ã‚¨ãƒ©ãƒ¼æ™‚ã«ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
+define ("DEF_ERROR_BACK",		1);				// ã‚¨ãƒ©ãƒ¼æ™‚ã«å‰ã®ç”»é¢ã«æˆ»ã‚‹
 
-// ·î¼¡¥Ð¥Ã¥Á½èÍý
-define ("DEF_BATCH_DAY",	   	"01");		// ·î¼¡¥Ð¥Ã¥Á½èÍý¼Â¹ÔÆüÉÕ
-define ("DEF_BATCH_USERID",		"batsys");	// ¡ÊÌ¤»ÈÍÑ¡Ë¥Ð¥Ã¥Á½èÍý¼Â¹Ô¥æ¡¼¥¶¡¼
-define ("DEF_BATCH_USERCODE",	 0);		// ¥Ð¥Ã¥Á½èÍý¼Â¹Ô¥æ¡¼¥¶¡¼¤Î¥æ¡¼¥¶¡¼¥³¡¼¥É
+// æœˆæ¬¡ãƒãƒƒãƒå‡¦ç†
+define ("DEF_BATCH_DAY",	   	"01");		// æœˆæ¬¡ãƒãƒƒãƒå‡¦ç†å®Ÿè¡Œæ—¥ä»˜
+define ("DEF_BATCH_USERID",		"batsys");	// ï¼ˆæœªä½¿ç”¨ï¼‰ãƒãƒƒãƒå‡¦ç†å®Ÿè¡Œãƒ¦ãƒ¼ã‚¶ãƒ¼
+define ("DEF_BATCH_USERCODE",	 0);		// ãƒãƒƒãƒå‡¦ç†å®Ÿè¡Œãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 
 // 2004/03/12 suzukaze update start
-// ´¹»»¶èÊ¬
-define ("DEF_CONVERSION_SEIHIN",		1);		// À½ÉÊÃ±°Ì·×¾å
-define ("DEF_CONVERSION_NISUGATA",		2);		// ²Ù»ÑÃ±°Ì·×¾å
+// æ›ç®—åŒºåˆ†
+define ("DEF_CONVERSION_SEIHIN",		1);		// è£½å“å˜ä½è¨ˆä¸Š
+define ("DEF_CONVERSION_NISUGATA",		2);		// è·å§¿å˜ä½è¨ˆä¸Š
 
-// Ã±°Ì
+// å˜ä½
 define ("DEF_PRODUCTUNIT_PCS",		1);			// Piece
 define ("DEF_PRODUCTUNIT_CTN",		2);			// Carton
 define ("DEF_PRODUCTUNIT_SET",		3);			// Set
 // 2004/03/12 suzukaze update end
 
 // 2004/03/12 watanabe update start
-define ( "DEF_EN_MARK",	"\\");				// ¾¦ÉÊÅÐÏ¿¤Î³ÎÇ§²èÌÌ¤Ç¡Ö¡ï¡×¤òÉ½¼¨
+define ( "DEF_EN_MARK",	"\\");				// å•†å“ç™»éŒ²ã®ç¢ºèªç”»é¢ã§ã€Œï¿¥ã€ã‚’è¡¨ç¤º
 // watanabe update end
 
 // 2004.03.24 suzukaze update start
-// ¼õÃíºï½ü»þ¤Ë¼õÃíNo¤ËÄÉ²Ã¤¹¤ëÊ¸»ú
-define ( "DEF_RECEIVE_DEL_START",	"*");		// ³«»ÏÊ¸»ú
-define ( "DEF_RECEIVE_DEL_END",		"*");		// ½ªÎ»Ê¸»ú
+// å—æ³¨å‰Šé™¤æ™‚ã«å—æ³¨Noã«è¿½åŠ ã™ã‚‹æ–‡å­—
+define ( "DEF_RECEIVE_DEL_START",	"*");		// é–‹å§‹æ–‡å­—
+define ( "DEF_RECEIVE_DEL_END",		"*");		// çµ‚äº†æ–‡å­—
 // 2004.03.24 suzukaze update end
 
 // 2004.03.25 suzukaze update start
 // 2004.05.31 suzukaze update start
-// ¶â·¿ÈÖ¹æ¤ò¼èÆÀ¤¹¤ë»ÅÆþ²ÊÌÜ¡¢»ÅÆþÉôÉÊ
-define ( "DEF_MOLD_STOCK_SUBJECT",	433);		// »ÅÆþ²ÊÌÜ¡¡£´£³£³¡Ê¶â·¿³¤³°½þµÑ¡Ë
-define ( "DEF_MOLD_STOCK_ITEM",		1);			// »ÅÆþÉôÉÊ¡¡£±¡ÊInjection Mold¡Ë
-// ¶â·¿ÈÖ¹æ¤ò¼èÆÀ¤¹¤ë»ÅÆþ²ÊÌÜ¡¢»ÅÆþÉôÉÊ ÄÉ²ÃÊ¬
-define ( "DEF_MOLD_STOCK_SUBJECT_ADD",	431);	// »ÅÆþ²ÊÌÜ¡¡£´£³£±¡Ê¶â·¿½þµÑ¹â¡Ë
-define ( "DEF_MOLD_STOCK_ITEM_ADD",		8);		// »ÅÆþÉôÉÊ¡¡£¸¡Ê¶â·¿¡Ë
+// é‡‘åž‹ç•ªå·ã‚’å–å¾—ã™ã‚‹ä»•å…¥ç§‘ç›®ã€ä»•å…¥éƒ¨å“
+define ( "DEF_MOLD_STOCK_SUBJECT",	433);		// ä»•å…¥ç§‘ç›®ã€€ï¼”ï¼“ï¼“ï¼ˆé‡‘åž‹æµ·å¤–å„Ÿå´ï¼‰
+define ( "DEF_MOLD_STOCK_ITEM",		1);			// ä»•å…¥éƒ¨å“ã€€ï¼‘ï¼ˆInjection Moldï¼‰
+// é‡‘åž‹ç•ªå·ã‚’å–å¾—ã™ã‚‹ä»•å…¥ç§‘ç›®ã€ä»•å…¥éƒ¨å“ è¿½åŠ åˆ†
+define ( "DEF_MOLD_STOCK_SUBJECT_ADD",	431);	// ä»•å…¥ç§‘ç›®ã€€ï¼”ï¼“ï¼‘ï¼ˆé‡‘åž‹å„Ÿå´é«˜ï¼‰
+define ( "DEF_MOLD_STOCK_ITEM_ADD",		8);		// ä»•å…¥éƒ¨å“ã€€ï¼˜ï¼ˆé‡‘åž‹ï¼‰
 // 2004.05.31 suzukaze update end
 // 2004.03.25 suzukaze update end
 
 // 2004.03.30 suzukaze update start
-// ÀÇ¶èÊ¬
-define ("DEF_TAXCLASS_HIKAZEI",	1);				// Èó²ÝÀÇ
-define ("DEF_TAXCLASS_SOTOZEI",	2);				// ³°ÀÇ
-define ("DEF_TAXCLASS_UCHIZEI",	3);				// ÆâÀÇ
+// ç¨ŽåŒºåˆ†
+define ("DEF_TAXCLASS_HIKAZEI",	1);				// éžèª²ç¨Ž
+define ("DEF_TAXCLASS_SOTOZEI",	2);				// å¤–ç¨Ž
+define ("DEF_TAXCLASS_UCHIZEI",	3);				// å†…ç¨Ž
 // 2004.03.30 suzukaze update end
 
 // 2004.04.08 suzukaze update start
-// Ã¼¿ô½èÍýÊýË¡
-define ("DEF_CALC_SISHAGONYU",	0);				// »Í¼Î¸ÞÆþ
-define ("DEF_CALC_KIRISUTE",	1);				// ÀÚ¼Î¤Æ
-define ("DEF_CALC_KIRIAGE",		2);				// ÀÚ¾å¤²
+// ç«¯æ•°å‡¦ç†æ–¹æ³•
+define ("DEF_CALC_SISHAGONYU",	0);				// å››æ¨äº”å…¥
+define ("DEF_CALC_KIRISUTE",	1);				// åˆ‡æ¨ã¦
+define ("DEF_CALC_KIRIAGE",		2);				// åˆ‡ä¸Šã’
 // 2004.04.08 suzukaze update end
 
 // 2004.04.09 suzukaze update start
-// ÄÌ²ß¤ËÂÐ¤¹¤ëÃ¼¿ô½èÍýÂÐ¾Ý·å¿ô
-define ("DEF_CALCMONETARY_YEN",		0);				// ±ß¤Î¾ì¹ç¡¢Ã¼¿ô½èÍý¤Ï£°·å Ex. 1234.56-->1234.00
-define ("DEF_CALCMONETARY_OTHER",	2);				// ±ß°Ê³°¤Î¾ì¹ç¡¢Ã¼¿ô½èÍý¤Ï¾®¿ôÅÀ°Ê²¼£²·å Ex. 1234.5678-->1234.58
+// é€šè²¨ã«å¯¾ã™ã‚‹ç«¯æ•°å‡¦ç†å¯¾è±¡æ¡æ•°
+define ("DEF_CALCMONETARY_YEN",		0);				// å††ã®å ´åˆã€ç«¯æ•°å‡¦ç†ã¯ï¼æ¡ Ex. 1234.56-->1234.00
+define ("DEF_CALCMONETARY_OTHER",	2);				// å††ä»¥å¤–ã®å ´åˆã€ç«¯æ•°å‡¦ç†ã¯å°æ•°ç‚¹ä»¥ä¸‹ï¼’æ¡ Ex. 1234.5678-->1234.58
 // 2004.04.09 suzukaze update end
 
 // 2004.05.13 suzukaze update start
-// »ÙÊ§¾ò·ï
+// æ”¯æ‰•æ¡ä»¶
 define ("DEF_PAYCONDITION_LC",		1);		// LC
 define ("DEF_PAYCONDITION_TT",		2);		// TT
 // 2004.05.13 suzukaze update end
 
-// ¾¦ÉÊ²½´ë²è½ñ¥Õ¥©¡¼¥Þ¥Ã¥È¥³¡¼¥É
+// å•†å“åŒ–ä¼ç”»æ›¸ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã‚³ãƒ¼ãƒ‰
 define ( "DEF_P_FORMAT_CODE",	"2004-12-1" );
 
-// ÂÐ¾Ý¥¨¥ê¥¢¥³¡¼¥É
-define ( "DEF_AREA_PRODUCT_SALES",     1);  // À½ÉÊÇä¾å
-define ( "DEF_AREA_FIXED_COST_SALES",  2);  // ¸ÇÄêÈñÇä¾å
-define ( "DEF_AREA_FIXED_COST_ORDER",  3);  // ¸ÇÄêÈñ
-define ( "DEF_AREA_PARTS_COST_ORDER",  4);  // ÉôºàÈñ
-define ( "DEF_AREA_OTHER_COST_ORDER",  5);  // ¤½¤ÎÂ¾ÈñÍÑ
+// å¯¾è±¡ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰
+define ( "DEF_AREA_PRODUCT_SALES",     1);  // è£½å“å£²ä¸Š
+define ( "DEF_AREA_FIXED_COST_SALES",  2);  // å›ºå®šè²»å£²ä¸Š
+define ( "DEF_AREA_FIXED_COST_ORDER",  3);  // å›ºå®šè²»
+define ( "DEF_AREA_PARTS_COST_ORDER",  4);  // éƒ¨æè²»
+define ( "DEF_AREA_OTHER_COST_ORDER",  5);  // ãã®ä»–è²»ç”¨
 
-// ÄÌ²ß¥ì¡¼¥È¶èÊ¬
+// é€šè²¨ãƒ¬ãƒ¼ãƒˆåŒºåˆ†
 define ( "DEF_MONETARY_RATE_CODE_TTM",           1); // TTM
-define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // ¼ÒÆâ
+define ( "DEF_MONETARY_RATE_CODE_COMPANY_LOCAL", 2); // ç¤¾å†…
 
-// // ¥á¥Ã¥»¡¼¥¸¥³¡¼¥É
-define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",    9201); // ÄÌ²ß¥ì¡¼¥È¼èÆÀÉÔ²Ä
-define ( "DEF_MESSAGE_CODE_RATE_DIFFER",              9202); // ÄÌ²ß¥ì¡¼¥Èº¹°Û
-define ( "DEF_MESSAGE_CODE_NOT_ENTRY_ERROR",          9203); // Ì¤ÆþÎÏ¥¨¥é¡¼
-define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",             9204); // ·Á¼°¥¨¥é¡¼
-define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",       9205); // ¥Þ¥¹¥¿¡¼¥Á¥§¥Ã¥¯¥¨¥é¡¼
-define ( "DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR",       9206); // À½ÉÊ¥³¡¼¥É¥Á¥§¥Ã¥¯¥¨¥é¡¼
-define ( "DEF_MESSAGE_CODE_FILE_UPLOAD_ERROR",        9207); // ¥Õ¥¡¥¤¥ë¥¢¥Ã¥×¥í¡¼¥É¥¨¥é¡¼
-define ( "DEF_MESSAGE_CODE_VALID_SHEET_ABSENT_ERROR", 9208); // Í­¸ú¥·¡¼¥ÈÈóÂ¸ºß¥¨¥é¡¼
+// // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚³ãƒ¼ãƒ‰
+define ( "DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING",    9201); // é€šè²¨ãƒ¬ãƒ¼ãƒˆå–å¾—ä¸å¯
+define ( "DEF_MESSAGE_CODE_RATE_DIFFER",              9202); // é€šè²¨ãƒ¬ãƒ¼ãƒˆå·®ç•°
+define ( "DEF_MESSAGE_CODE_NOT_ENTRY_ERROR",          9203); // æœªå…¥åŠ›ã‚¨ãƒ©ãƒ¼
+define ( "DEF_MESSAGE_CODE_FORMAT_ERROR",             9204); // å½¢å¼ã‚¨ãƒ©ãƒ¼
+define ( "DEF_MESSAGE_CODE_MASTER_CHECK_ERROR",       9205); // ãƒžã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼
+define ( "DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR",       9206); // è£½å“ã‚³ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼
+define ( "DEF_MESSAGE_CODE_FILE_UPLOAD_ERROR",        9207); // ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã‚¨ãƒ©ãƒ¼
+define ( "DEF_MESSAGE_CODE_VALID_SHEET_ABSENT_ERROR", 9208); // æœ‰åŠ¹ã‚·ãƒ¼ãƒˆéžå­˜åœ¨ã‚¨ãƒ©ãƒ¼
 
-// »ÅÆþ¶èÊ¬¥Þ¥¹¥¿¥³¡¼¥É
-define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // ºàÎÁÈñ
-define ("DEF_STOCK_CLASS_CODE_PRODUCTION", 2); // À½Â¤ÈñÍÑ
-define ("DEF_STOCK_CLASS_CODE_TEST",       3); // ¥Æ¥¹¥ÈÈñÍÑ
+// ä»•å…¥åŒºåˆ†ãƒžã‚¹ã‚¿ã‚³ãƒ¼ãƒ‰
+define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // ææ–™è²»
+define ("DEF_STOCK_CLASS_CODE_PRODUCTION", 2); // è£½é€ è²»ç”¨
+define ("DEF_STOCK_CLASS_CODE_TEST",       3); // ãƒ†ã‚¹ãƒˆè²»ç”¨
 
-// Ç¼ÉÊÅÁÉ¼¼ïÎà¥Þ¥¹¥¿¥³¡¼¥É
-define ("DEF_SLIP_KIND_EXCLUSIVE", 1);   // ÀìÍÑÄ¢É¼
-define ("DEF_SLIP_KIND_COMM",      2);   // »ÔÈÎÄ¢É¼
+// ç´å“ä¼ç¥¨ç¨®é¡žãƒžã‚¹ã‚¿ã‚³ãƒ¼ãƒ‰
+define ("DEF_SLIP_KIND_EXCLUSIVE", 1);   // å°‚ç”¨å¸³ç¥¨
+define ("DEF_SLIP_KIND_COMM",      2);   // å¸‚è²©å¸³ç¥¨
 define ("DEF_SLIP_KIND_DEBIT",     3);   // DEBIT NOTE
 
-// Çä¾åÊ¬Îà¥Þ¥¹¥¿¥³¡¼¥É
-define ("DEF_SALES_DIVISION_CODE_FIXED_COST_SALES",    1); // ¸ÇÄêÈñÇä¾å
-define ("DEF_SALES_DIVISION_CODE_PRODUCT_SALES",       2); // À½ÉÊÇä¾å
+// å£²ä¸Šåˆ†é¡žãƒžã‚¹ã‚¿ã‚³ãƒ¼ãƒ‰
+define ("DEF_SALES_DIVISION_CODE_FIXED_COST_SALES",    1); // å›ºå®šè²»å£²ä¸Š
+define ("DEF_SALES_DIVISION_CODE_PRODUCT_SALES",       2); // è£½å“å£²ä¸Š
 
-// Çä¾å¶èÊ¬¥Þ¥¹¥¿¥³¡¼¥É
-define ("DEF_SALES_CLASS_CODE_MAIN_PRODUCT",    1); // ËÜ²Ù
+// å£²ä¸ŠåŒºåˆ†ãƒžã‚¹ã‚¿ã‚³ãƒ¼ãƒ‰
+define ("DEF_SALES_CLASS_CODE_MAIN_PRODUCT",    1); // æœ¬è·
 
-// »ÅÆþ²ÊÌÜ¥Þ¥¹¥¿¥³¡¼¥É
-define ("DEF_STOCK_SUBJECT_CODE_OVERSEA_MANUFACTURE",       420); // ³°Ãí²Ã¹©Èñ
-define ("DEF_STOCK_SUBJECT_CODE_MOLD_DEPRECIATION",         431); // ¶â·¿½þµÑ¹â
-define ("DEF_STOCK_SUBJECT_CODE_OVERSEA_MOLD_DEPRECIATION", 433); // ¶â·¿³¤³°½þµÑ
-define ("DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST",       401); // ºàÎÁ¥Ñ¡¼¥Ä»ÅÆþ¹â
-define ("DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST",         402); // Í¢Æþ¥Ñ¡¼¥Ä»ÅÆþ¹â
-define ("DEF_STOCK_SUBJECT_CODE_CHARGE",                   1224); // ¥Á¥ã¡¼¥¸
-define ("DEF_STOCK_SUBJECT_CODE_EXPENSE" ,                 1230); // ·ÐÈñ
-define ("DEF_STOCK_SUBJECT_CODE_MATERIAL_TOOLS_COST",       403); // ºàÎÁ¥Ä¡¼¥ë»ÅÆþ¹â
+// ä»•å…¥ç§‘ç›®ãƒžã‚¹ã‚¿ã‚³ãƒ¼ãƒ‰
+define ("DEF_STOCK_SUBJECT_CODE_OVERSEA_MANUFACTURE",       420); // å¤–æ³¨åŠ å·¥è²»
+define ("DEF_STOCK_SUBJECT_CODE_MOLD_DEPRECIATION",         431); // é‡‘åž‹å„Ÿå´é«˜
+define ("DEF_STOCK_SUBJECT_CODE_OVERSEA_MOLD_DEPRECIATION", 433); // é‡‘åž‹æµ·å¤–å„Ÿå´
+define ("DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST",       401); // ææ–™ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜
+define ("DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST",         402); // è¼¸å…¥ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜
+define ("DEF_STOCK_SUBJECT_CODE_CHARGE",                   1224); // ãƒãƒ£ãƒ¼ã‚¸
+define ("DEF_STOCK_SUBJECT_CODE_EXPENSE" ,                 1230); // çµŒè²»
+define ("DEF_STOCK_SUBJECT_CODE_MATERIAL_TOOLS_COST",       403); // ææ–™ãƒ„ãƒ¼ãƒ«ä»•å…¥é«˜
 
-// »ÅÆþÉôÉÊ¥Þ¥¹¥¿¥³¡¼¥É
-define ("DEF_STOCK_ITEM_CODE_IMPORT_COST",  2); // Í¢ÆþÈñÍÑ
-define ("DEF_STOCK_ITEM_CODE_TARIFF",       3); // ´ØÀÇ
-// Ä¢É¼¥Æ¥ó¥×¥ì¡¼¥È¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
+// ä»•å…¥éƒ¨å“ãƒžã‚¹ã‚¿ã‚³ãƒ¼ãƒ‰
+define ("DEF_STOCK_ITEM_CODE_IMPORT_COST",  2); // è¼¸å…¥è²»ç”¨
+define ("DEF_STOCK_ITEM_CODE_TARIFF",       3); // é–¢ç¨Ž
+// å¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 define ( "REPORT_TMPDIR",	PATH_HOME . "/report_tmp/" );
-// L/CÄ¢É¼¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë
-define ( "REPORT_LC_TMPFILE",	"Ä¢É¼¥Æ¥ó¥×¥ì¡¼¥È.xls" );
-// L/CÄ¢É¼¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë
-define ( "REPORT_LC_OUTPUTFILE",	"Ä¢É¼¥Æ¥ó¥×¥ì¡¼¥È_copy.xls" );
+// L/Cå¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«
+define ( "REPORT_LC_TMPFILE",	"å¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ.xls" );
+// L/Cå¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«
+define ( "REPORT_LC_OUTPUTFILE",	"å¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ_copy.xls" );
 
-// ¥ï¡¼¥¯¥·¡¼¥È¥Æ¥ó¥×¥ì¡¼¥È¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
+// ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 define ( "EXCEL_TMP_ROOT", PATH_HOME . "/excel_tmp/");
 
-// ²ñ¼Ò¥³¡¼¥É
-define ( "DEF_COMPANY_CODE_OTHERS", 0); // ¤½¤ÎÂ¾
+// ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
+define ( "DEF_COMPANY_CODE_OTHERS", 0); // ãã®ä»–
 
-// É½¼¨ÍÑ²ñ¼Ò¥³¡¼¥É
-define ( "DEF_DISPLAY_COMPANY_CODE_OTHERS", '0000'); // ¤½¤ÎÂ¾
+// è¡¨ç¤ºç”¨ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
+define ( "DEF_DISPLAY_COMPANY_CODE_OTHERS", '0000'); // ãã®ä»–
 
-// ¥°¥ë¡¼¥×Â°À­¥³¡¼¥É
-define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP",              1);  // ±Ä¶ÈÉôÌç
-define ( "DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP",            2);  // ³«È¯ÉôÌç
-define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_SUPPORT",            3);  // ±Ä¶È¥µ¥Ý¡¼¥È
-define ( "DEF_GROUP_ATTRIBUTE_CODE_ACCOUNTING",               4);  // ·ÐÍý
-define ( "DEF_GROUP_ATTRIBUTE_CODE_QUALITY_ASSURANCE",        5);  // ÉÊ¼ÁÊÝ¾Ú
+// ã‚°ãƒ«ãƒ¼ãƒ—å±žæ€§ã‚³ãƒ¼ãƒ‰
+define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP",              1);  // å–¶æ¥­éƒ¨é–€
+define ( "DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP",            2);  // é–‹ç™ºéƒ¨é–€
+define ( "DEF_GROUP_ATTRIBUTE_CODE_SALES_SUPPORT",            3);  // å–¶æ¥­ã‚µãƒãƒ¼ãƒˆ
+define ( "DEF_GROUP_ATTRIBUTE_CODE_ACCOUNTING",               4);  // çµŒç†
+define ( "DEF_GROUP_ATTRIBUTE_CODE_QUALITY_ASSURANCE",        5);  // å“è³ªä¿è¨¼
 
 ?>

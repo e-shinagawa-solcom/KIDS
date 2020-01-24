@@ -6,7 +6,7 @@ var absnow = now;
 
 
 //---------------------------------------------------
-// Å¬ÍÑ¡§¡ÖNEXT¡×¥Ü¥¿¥ó
+// é©ç”¨ï¼šã€ŒNEXTã€ãƒœã‚¿ãƒ³
 //---------------------------------------------------
 function fncNextButton( strMode , obj )
 {
@@ -28,7 +28,7 @@ function fncNextButton( strMode , obj )
 }
 
 //---------------------------------------------------
-// Å¬ÍÑ¡§¡ÖPREV¡×¥Ü¥¿¥ó
+// é©ç”¨ï¼šã€ŒPREVã€ãƒœã‚¿ãƒ³
 //---------------------------------------------------
 function fncPrevButton( strMode , obj )
 {
@@ -50,7 +50,7 @@ function fncPrevButton( strMode , obj )
 }
 
 //---------------------------------------------------
-// Å¬ÍÑ¡§¡ÖNOW¡×¥Ü¥¿¥ó
+// é©ç”¨ï¼šã€ŒNOWã€ãƒœã‚¿ãƒ³
 //---------------------------------------------------
 function fncNowButton( strMode , obj )
 {
@@ -77,84 +77,84 @@ function fncNowButton( strMode , obj )
 
 function fncCalendar( object, returnFlg ,arg1 )
 {
-	//ÃÍ¤ò¥»¥Ã¥È¤¹¤ë¥ª¥Ö¥¸¥§¥¯¥È
+	//å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	returnObject = 'parent.'+ object.form.name + '.' + object.name;
 
-	//·î°ÜÆ°¥Õ¥é¥°¥Ç¥Õ¥©¥ë¥ÈÀßÄê
+	//æœˆç§»å‹•ãƒ•ãƒ©ã‚°ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¨­å®š
 	if( !arguments[2] )
 	{
 		arg1 = 0;
 	}
 
-	//¸½ºß½é´ü²½
+	//ç¾åœ¨åˆæœŸåŒ–
 	if( arg1 == 0 )
 	{
 		now = new Date()
 	}
 
-	//Ç¯·îÆü¼èÆÀ
+	//å¹´æœˆæ—¥å–å¾—
 	nowdate  = now.getDate();
 	nowmonth = now.getMonth();
 	nowyear  = now.getYear();
 
-	//·î°ÜÆ°½èÍı
-	//12·î¤Çarg1¤¬+¤Ê¤é
+	//æœˆç§»å‹•å‡¦ç†
+	//12æœˆã§arg1ãŒ+ãªã‚‰
 	if( nowmonth == 11 && arg1 > 0 )
 	{
-		//·î¤Ïarg1-1;1Ç¯²Ã»»
+		//æœˆã¯arg1-1;1å¹´åŠ ç®—
 		nowmonth = -1 + arg1 ;
 		nowyear++ ;
 	}
-	//1·î¤Çarg1¤¬-¤Ê¤é
+	//1æœˆã§arg1ãŒ-ãªã‚‰
 	else if(nowmonth==0 && arg1 < 0)
 	{
-		//·î¤Ïarg1+12;1Ç¯¸º»»
+		//æœˆã¯arg1+12;1å¹´æ¸›ç®—
 		nowmonth = 12 + arg1;
 		nowyear--;
 	}
 	else
 	{
-		//2-11·î¤Ê¤é·î¤Ï+arg1
+		//2-11æœˆãªã‚‰æœˆã¯+arg1
 		nowmonth +=  arg1;
 	}
 
-	//2000Ç¯ÌäÂêÂĞ±ş
+	//2000å¹´å•é¡Œå¯¾å¿œ
 	if( nowyear < 1900 )
 	{
 		nowyear = 1900 + nowyear;
 	}
 
-	//¸½ºß·î¤ò³ÎÄê
+	//ç¾åœ¨æœˆã‚’ç¢ºå®š
 	now = new Date(nowyear, nowmonth, 1);
 
-	//YYYYMMºîÀ®
+	//YYYYMMä½œæˆ
 	nowyyyymm = nowyear * 100 + nowmonth;
 
-	//YYYY/MMºîÀ®
+	//YYYY/MMä½œæˆ
 	nowtitleyyyymm = nowyear + '/' + (nowmonth + 1);
 
-	//½µÀßÄê
+	//é€±è¨­å®š
 	week = fncAryWeek();
 
-	//¥«¥ì¥ó¥À¡¼¹½ÃÛÍÑ´ğ½àÆü¤Î¼èÆÀ
-	//º£·î¤Î1Æü
+	//ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼æ§‹ç¯‰ç”¨åŸºæº–æ—¥ã®å–å¾—
+	//ä»Šæœˆã®1æ—¥
 	fstday   = now;
-	//ºÇ½é¤ÎÆüÍËÆü
+	//æœ€åˆã®æ—¥æ›œæ—¥
 	startday = fstday - ( fstday.getDay() * 1000*60*60*24 );
 	startday = new Date(startday);
 
 
-	// ¥«¥ì¥ó¥À¡¼¹½ÃÛÍÑHTML
+	// ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼æ§‹ç¯‰ç”¨HTML
 	ddata = '<form><table width="355" height="136" border="0">\n';
 
-	// Ç¯·î¤òÉ½¼¨¤¹¤ëHTML
+	// å¹´æœˆã‚’è¡¨ç¤ºã™ã‚‹HTML
 	ddata += '   <tr class="strYYYYMM">\n';
 		ddata += '  <td colspan="7">\n';
 		ddata +=      nowtitleyyyymm;
 		ddata += '  </td>\n';
 	ddata += '   </tr>\n';
 
-	// ½µ¤òÉ½¼¨¤¹¤ëHTML
+	// é€±ã‚’è¡¨ç¤ºã™ã‚‹HTML
 	ddata += '   <tr>\n';
 		for( i=0; i<7; i++ )
 		{
@@ -165,7 +165,7 @@ function fncCalendar( object, returnFlg ,arg1 )
 	ddata += '   </tr>\n';
 
 
-	// Æü¤òÉ½¼¨¤¹¤ëHTML
+	// æ—¥ã‚’è¡¨ç¤ºã™ã‚‹HTML
 	for( j=0; j<6; j++ )
 	{
 		ddata += '   <tr bgcolor=#ffffff>\n';
@@ -182,10 +182,10 @@ function fncCalendar( object, returnFlg ,arg1 )
 			wrtyyyymmdd = ''+wrtyear +'/'+ (wrtmonth + 1) +'/'+wrtdate;
 			getday      = getWeek(wrtyyyymmdd);
 
-			//½ĞÎÏ¤¹¤ëÆü
+			//å‡ºåŠ›ã™ã‚‹æ—¥
 			wrtdateA = wrtdate;
 
-			//º£·î¤Ç¤Ï¤Ê¤¤Æü¤ÎÉ½¼¨
+			//ä»Šæœˆã§ã¯ãªã„æ—¥ã®è¡¨ç¤º
 			if(wrtyyyymm != nowyyyymm)
 			{
 				ddata += ' <td class="strDateOther" \n';
@@ -195,7 +195,7 @@ function fncCalendar( object, returnFlg ,arg1 )
 				ddata += ' onmouseout="javascript:this.style.backgroundColor=\'#cccccc\'" >\n';
 				ddata += wrtdateA;
 			}
-			//¸½ºßÆü¤Î¾ì¹ç¤ÎÉ½¼¨
+			//ç¾åœ¨æ—¥ã®å ´åˆã®è¡¨ç¤º
 			else if( wrtdate         == absnow.getDate()  && 
 					 wrtmonth         == absnow.getMonth() && 
 					 wrtday.getYear() == absnow.getYear()  )
@@ -207,7 +207,7 @@ function fncCalendar( object, returnFlg ,arg1 )
 				ddata += ' onmouseout="javascript:this.style.backgroundColor=\'#ff9999\'" >\n';
 				ddata += '<font color="#ffffff">'+wrtdateA+'</FONT>\n';
 			}
-			//¥Ç¥Õ¥©¥ë¥È¤ÎÉ½¼¨
+			//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è¡¨ç¤º
 			else
 			{
 				ddata += ' <td class="strDate" \n';
@@ -226,7 +226,7 @@ function fncCalendar( object, returnFlg ,arg1 )
 		startday = new Date(startday);
 	}
 
-	//·îÊÑ¹¹¥Ü¥¿¥ó¡¢¸½ºß·î¥Ü¥¿¥ó
+	//æœˆå¤‰æ›´ãƒœã‚¿ãƒ³ã€ç¾åœ¨æœˆãƒœã‚¿ãƒ³
 	ddata += '   <tr><td>&nbsp;</td></tr>\n';
 	ddata += '   <tr>\n';
 		ddata += '  <td colspan="7" align="center">\n';
@@ -251,13 +251,13 @@ function fncCalendar( object, returnFlg ,arg1 )
 	ddata += '</body>\n';
 	ddata += '</html>\n';
 
-	//ºîÀ®¤·¤¿²èÌÌ¤òÈ¿±Ç
+	//ä½œæˆã—ãŸç”»é¢ã‚’åæ˜ 
 
 	document.all.DateDisplay.innerHTML = ddata;
 	//alert( document.all.DateDisplay.innerHTML );
 }
 
-// ÍËÆü¼èÆÀ
+// æ›œæ—¥å–å¾—
 function getWeek(date)
 {
 	if( arguments.length > 0 )
@@ -267,28 +267,28 @@ function getWeek(date)
 		date = null;
 	}
 	var now  = new Date(date);
-	var week = new Array('Æü','·î','²Ğ','¿å','ÌÚ','¶â','ÅÚ');
+	var week = new Array('æ—¥','æœˆ','ç«','æ°´','æœ¨','é‡‘','åœŸ');
 	return week[now.getDay()];
 }
 
 
-//À°·Á¤·½ĞÎÏ
+//æ•´å½¢ã—å‡ºåŠ›
 function fncOutputDate( wrtyear , wrtmonth , wrtdate , object, returnFlg)
 {
 	wrtmonth += 1;
 
-	//1-9¤Î¤È¤­01-09¤ËÀ°·Á
+	//1-9ã®ã¨ã01-09ã«æ•´å½¢
 	if( wrtmonth < 10 )  { wrtmonth = "0" + wrtmonth; }
 	if( wrtdate  < 10 )  { wrtdate  = "0" + wrtdate; }
 
-	//ÆüÉÕ¤±¥Ç¡¼¥¿¤òyyyy/mm/dd·¿¤ËÀ°·Á
+	//æ—¥ä»˜ã‘ãƒ‡ãƒ¼ã‚¿ã‚’yyyy/mm/ddå‹ã«æ•´å½¢
 	outputdate = wrtyear + '/' + wrtmonth + '/' + wrtdate ;
 
-	//»ØÄê¤µ¤ì¤¿ÆşÎÏÍó¤Ë½ĞÎÏ
+	//æŒ‡å®šã•ã‚ŒãŸå…¥åŠ›æ¬„ã«å‡ºåŠ›
 	object.value = outputdate;
 
-	//¥¦¥£¥ó¥É¥¦¤òÊÄ¤¸¤ë
-	// ·×¾åÆü
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
+	// è¨ˆä¸Šæ—¥
 	if( returnFlg == "DateA" )
 	{
 		parent.DisplayerM10( '' , document.all.Mdata10 );
@@ -299,39 +299,39 @@ function fncOutputDate( wrtyear , wrtmonth , wrtdate , object, returnFlg)
 			parent.document.all.DateAImg.focus();
 		}
 
-		// ´¹»»¥ì¡¼¥ÈºÆ·×»»
-		// ¼õÃí´ÉÍı
+		// æ›ç®—ãƒ¬ãƒ¼ãƒˆå†è¨ˆç®—
+		// å—æ³¨ç®¡ç†
 		if( typeof( window.parent.HSO.SOFlg ) == "object" )
 		{
 			window.parent.DLwin.fncCalConversionRate();
 
-			// Äù¤áºÑ¤ßÇ¯·î¥Á¥§¥Ã¥¯
+			// ç· ã‚æ¸ˆã¿å¹´æœˆãƒã‚§ãƒƒã‚¯
 			window.parent.subLoadMasterHidden( 'caCheckClosedReceive', 0, window.parent.document.all.check_alert_appdate, Array ( outputdate ), window.parent.document.all.objDataSourceSettingCheckAlertAppDate, 9 );
 
 		}
-		//È¯Ãí´ÉÍı
+		//ç™ºæ³¨ç®¡ç†
 		if( typeof( window.parent.HSO.POFlg ) == "object" )
 		{
 			window.parent.DLwin.fncCalConversionRate();
 
-			// Äù¤áºÑ¤ßÇ¯·î¥Á¥§¥Ã¥¯
+			// ç· ã‚æ¸ˆã¿å¹´æœˆãƒã‚§ãƒƒã‚¯
 			window.parent.subLoadMasterHidden( 'caCheckClosedOrder', 0, window.parent.document.all.check_alert_appdate, Array ( outputdate ), window.parent.document.all.objDataSourceSettingCheckAlertAppDate, 9 );
 
 		}
-		// Çä¾å´ÉÍı
+		// å£²ä¸Šç®¡ç†
 		if( typeof( window.parent.HSO.SCFlg ) == "object" )
 		{
 			window.parent.DLwin.fncCalConversionRate();
 
-			// Äù¤áºÑ¤ßÇ¯·î¥Á¥§¥Ã¥¯
+			// ç· ã‚æ¸ˆã¿å¹´æœˆãƒã‚§ãƒƒã‚¯
 			window.parent.subLoadMasterHidden( 'caCheckClosedSales', 0, window.parent.document.all.check_alert_appdate, Array ( outputdate ), window.parent.document.all.objDataSourceSettingCheckAlertAppDate, 9 );
 		}
-		// »ÅÆş´ÉÍı
+		// ä»•å…¥ç®¡ç†
 		if( typeof( window.parent.HSO.PCFlg ) == "object" )
 		{
 			window.parent.DLwin.fncCalConversionRate();
 
-			// Äù¤áºÑ¤ßÇ¯·î¥Á¥§¥Ã¥¯
+			// ç· ã‚æ¸ˆã¿å¹´æœˆãƒã‚§ãƒƒã‚¯
 			window.parent.subLoadMasterHidden( 'caCheckClosedStock', 0, window.parent.document.all.check_alert_appdate, Array ( outputdate ), window.parent.document.all.objDataSourceSettingCheckAlertAppDate, 9 );
 
 		}
@@ -366,16 +366,16 @@ function fncOutputDate( wrtyear , wrtmonth , wrtdate , object, returnFlg)
 
 
 //@*****************************************************************************
-// ³µÍ×   : ÍËÆü¤òÇÛÎó¤ÇÊÖ¤¹
-// ÂĞ¾İ   : D¥Ü¥¿¥ó¤ò²¡¤·¤¿¤È¤­¤Î¥«¥ì¥ó¥À¡¼
-// Ìá¤êÃÍ : ÍËÆü¤ÎÇÛÎó
+// æ¦‚è¦   : æ›œæ—¥ã‚’é…åˆ—ã§è¿”ã™
+// å¯¾è±¡   : Dãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã®ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼
+// æˆ»ã‚Šå€¤ : æ›œæ—¥ã®é…åˆ—
 //******************************************************************************
 
 function fncAryWeek()
 {
 	if( window.parent.lngLanguageCode == 1 )
 	{
-		week = new Array('Æü', '·î', '²Ğ', '¿å', 'ÌÚ', '¶â', 'ÅÚ');
+		week = new Array('æ—¥', 'æœˆ', 'ç«', 'æ°´', 'æœ¨', 'é‡‘', 'åœŸ');
 	}
 	else if( window.parent.lngLanguageCode == 0 )
 	{

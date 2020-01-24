@@ -1,7 +1,7 @@
 <!--
 
 
-var BackBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackJOn(this);" onmouseout="BlownBackJOff(this);" src="' + blownbackJ1 + '" width="72" height="20" border="0" alt="Ìá¤ë"></a>';
+var BackBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackJOn(this);" onmouseout="BlownBackJOff(this);" src="' + blownbackJ1 + '" width="72" height="20" border="0" alt="æˆ»ã‚‹"></a>';
 
 var BackBtE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownBackEOn(this);" onmouseout="BlownBackEOff(this);fncAlphaOff( this );" src="' + blownbackE1 + '" width="72" height="20" border="0" alt="BACK"></a>';
 
@@ -25,11 +25,11 @@ function ChgEtoJ( lngCode )
 
 		BackBt.innerHTML = BackBtJ1;
 
-		//strComments.innerHTML = 'ÁªÂò¤µ¤ì¤¿¥Ç¡¼¥¿¤Ï²¼µ­¤Î¹àÌÜ¤Ë¤Æ»ÈÍÑ¤µ¤ì¤Æ¤¤¤Ş¤¹¡£';
-		Column0.innerHTML     = '´ÉÍıÌ¾¾Î';
-		Column1.innerHTML     = '£Î£Ï.';
+		//strComments.innerHTML = 'é¸æŠã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã¯ä¸‹è¨˜ã®é …ç›®ã«ã¦ä½¿ç”¨ã•ã‚Œã¦ã„ã¾ã™ã€‚';
+		Column0.innerHTML     = 'ç®¡ç†åç§°';
+		Column1.innerHTML     = 'ï¼®ï¼¯.';
 
-		ControlTitle.innerHTML = '½èÍı´°Î»';
+		ControlTitle.innerHTML = 'å‡¦ç†å®Œäº†';
 	}
 
 	return false;

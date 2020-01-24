@@ -1,15 +1,15 @@
 <!--
 
 
-	////////// ¥Ê¥Ó¥²¡¼¥·¥ç¥ó¥Ü¥¿¥ó //////////
-	// ¥Þ¥¹¥¿£Á
+	////////// ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ãƒœã‚¿ãƒ³ //////////
+	// ãƒžã‚¹ã‚¿ï¼¡
 	var mAJ1 = '/img/type01/m/master_a_off_ja_bt.gif';
 	var mAJ2 = '/img/type01/m/master_a_off_on_ja_bt.gif';
 	var mAJ3 = '/img/type01/m/master_a_on_ja_bt.gif';
 	var mAE1 = '/img/type01/m/master_a_off_en_bt.gif';
 	var mAE2 = '/img/type01/m/master_a_off_on_en_bt.gif';
 	var mAE3 = '/img/type01/m/master_a_on_en_bt.gif';
-	// ¥Þ¥¹¥¿£Â
+	// ãƒžã‚¹ã‚¿ï¼¢
 	var mBJ1 = '/img/type01/m/master_b_off_ja_bt.gif';
 	var mBJ2 = '/img/type01/m/master_b_off_on_ja_bt.gif';
 	var mBJ3 = '/img/type01/m/master_b_on_ja_bt.gif';

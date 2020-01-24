@@ -1,32 +1,32 @@
 
-var DeleteBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="DeleteJOn(this);" onmouseout="DeleteJOff(this);" src="' + delete1J + '" width="72" height="20" border="0" alt="ºï½ü"></a>';
-var CloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseJOn(this);" onmouseout="CloseJOff(this);" src="' + close1J + '" width="72" height="20" border="0" alt="ÊÄ¤¸¤ë"></a>';
+var DeleteBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="DeleteJOn(this);" onmouseout="DeleteJOff(this);" src="' + delete1J + '" width="72" height="20" border="0" alt="å‰Šé™¤"></a>';
+var CloseBtJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="CloseJOn(this);" onmouseout="CloseJOff(this);" src="' + close1J + '" width="72" height="20" border="0" alt="é–‰ã˜ã‚‹"></a>';
 
-// ÆüËÜ¸ì±Ñ¸ìÀÚÂØ
+// æ—¥æœ¬èªè‹±èªåˆ‡æ›¿
 function fncChgEtoJ( strMode )
 {
 	if (strMode == 'detail'){
 		// -----------------
-		//   ¾ÜºÙ²èÌÌ
+		//   è©³ç´°ç”»é¢
 		// -----------------
-		// ¥À¥¤¥¢¥í¥°¥¿¥¤¥È¥ë
-		ControlTitle.innerText = '¾ÜºÙ³ÎÇ§';
-		// ¥á¥Ã¥»¡¼¥¸¥¿¥¤¥È¥ë¢ª¤Ê¤·
+		// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚¿ã‚¤ãƒˆãƒ«
+		ControlTitle.innerText = 'è©³ç´°ç¢ºèª';
+		// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¿ã‚¤ãƒˆãƒ«â†’ãªã—
 		document.getElementById("MessageTitle").style.display ="none";
-		// ÊÄ¤¸¤ë¥Ü¥¿¥óÄÉ²Ã
+		// é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³è¿½åŠ 
 		CloseBt.innerHTML = CloseBtJ1;
 	}else if (strMode == 'delete'){
 		// -----------------
-		//   ºï½ü²èÌÌ
+		//   å‰Šé™¤ç”»é¢
 		// -----------------
-		// ¥À¥¤¥¢¥í¥°¥¿¥¤¥È¥ë
-		ControlTitle.innerText = 'ºï½ü³ÎÇ§';
-		// ¥á¥Ã¥»¡¼¥¸¥¿¥¤¥È¥ë
+		// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚¿ã‚¤ãƒˆãƒ«
+		ControlTitle.innerText = 'å‰Šé™¤ç¢ºèª';
+		// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚¿ã‚¤ãƒˆãƒ«
 		document.getElementById("MessageTitle").style.display ="block";
-		MessageTitle.innerText = 'ºï½ü¤·¤Ş¤¹¤«¡©';
-		// ÊÄ¤¸¤ë¥Ü¥¿¥óÄÉ²Ã
+		MessageTitle.innerText = 'å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ';
+		// é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³è¿½åŠ 
 		CloseBt.innerHTML = CloseBtJ1;
-		// ºï½ü¥Ü¥¿¥óÄÉ²Ã
+		// å‰Šé™¤ãƒœã‚¿ãƒ³è¿½åŠ 
 		DeleteBt.innerHTML = DeleteBtJ1;
 	}
 

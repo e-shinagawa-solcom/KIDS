@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       È¯Ãí´ÉÍı  ÅĞÏ¿³ÎÇ§²èÌÌ
+ *       ç™ºæ³¨ç®¡ç†  ç™»éŒ²ç¢ºèªç”»é¢
  *
  *
  *       @package    K.I.D.S.
@@ -13,17 +13,17 @@
  *       @version    2.00
  *
  *
- *       ½èÍı³µÍ×
- *         ¡¦ÅĞÏ¿³ÎÇ§²èÌÌ¤òÉ½¼¨
- *         ¡¦¥¨¥é¡¼¥Á¥§¥Ã¥¯
- *         ¡¦ÅĞÏ¿¥Ü¥¿¥ó²¡²¼¸å¡¢ÅĞÏ¿½èÍı¤Ø
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»ç™»éŒ²ç¢ºèªç”»é¢ã‚’è¡¨ç¤º
+ *         ãƒ»ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
+ *         ãƒ»ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹å¾Œã€ç™»éŒ²å‡¦ç†ã¸
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÆÉ¤ß¹ş¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
 require LIB_FILE;
 require SRC_ROOT . "po/cmn/lib_po.php";
@@ -45,17 +45,17 @@ $objDB->open("", "", "", "");
 $aryData["strSessionID"] = $_GET["strSessionID"];
 //    aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($_POST["strSessionID"], $objAuth, $objDB);
 $UserDisplayName = trim($objAuth->UserDisplayName);
 $UserDisplayCode = trim($objAuth->UserID);
 
-// ¤³¤³¤«¤éÄÉ²Ã¥Ü¥¿¥ó²¡²¼½èÍı
+// ã“ã“ã‹ã‚‰è¿½åŠ ãƒœã‚¿ãƒ³æŠ¼ä¸‹å‡¦ç†
 if ($_POST["strMode"] == "update") {
 
     $_POST["strPayConditionName"] = mb_convert_encoding($_POST["strPayConditionName"], "EUC-JP", "UTF-8");
@@ -64,30 +64,30 @@ if ($_POST["strMode"] == "update") {
 
 	$objDB->transactionBegin();
 	
-	// È¯Ãí½ñ¥Ş¥¹¥¿¥í¥Ã¥¯
+	// ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ãƒ­ãƒƒã‚¯
     if( !lockOrder($_POST["lngPurchaseOrderNo"], $objDB) )
     {
-        fncOutputError(9051, DEF_ERROR, "È¯Ãí½ñ¤Î¥í¥Ã¥¯¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", true, "", $objDB);
+        fncOutputError(9051, DEF_ERROR, "ç™ºæ³¨æ›¸ã®ãƒ­ãƒƒã‚¯å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", true, "", $objDB);
         return false;
     }
     
-    // È¯Ãí½ñ¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+    // ç™ºæ³¨æ›¸æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
     if( isPurchaseOrderModified($_POST["lngPurchaseOrderNo"], $_POST["lngRevisionNo"], $objDB) )
     {
-        fncOutputError(9051, DEF_ERROR, "Â¾¥æ¡¼¥¶¡¼¤¬È¯Ãí½ñ¤ò¹¹¿·¤Ş¤¿¤Ïºï½ü¤·¤Æ¤¤¤Ş¤¹¡£", true, "", $objDB);
+        fncOutputError(9051, DEF_ERROR, "ä»–ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒç™ºæ³¨æ›¸ã‚’æ›´æ–°ã¾ãŸã¯å‰Šé™¤ã—ã¦ã„ã¾ã™ã€‚", true, "", $objDB);
         return false;
     }
     
     
-	// È¯Ãí½ñ¥Ş¥¹¥¿¹¹¿·
+	// ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿æ›´æ–°
 fncDebug("kids2.log", "pass-2", __FILE__, __LINE__, "a" );
 	if(!fncUpdatePurchaseOrder($_POST, $objDB, $objAuth)) { return false; }
 fncDebug("kids2.log", "pass-3", __FILE__, __LINE__, "a" );
-	// È¯Ãí½ñÌÀºÙ¹¹¿·
+	// ç™ºæ³¨æ›¸æ˜ç´°æ›´æ–°
 	if(!fncUpdatePurchaseOrderDetail($_POST, $objDB)) { return false; }
 fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 
-	// ¹¹¿·¸å¤Î¥Ç¡¼¥¿¤òºÆÅÙÆÉ¤ß¹ş¤à
+	// æ›´æ–°å¾Œã®ãƒ‡ãƒ¼ã‚¿ã‚’å†åº¦èª­ã¿è¾¼ã‚€
 	$updatedPurchaseOrder = fncGetPurchaseOrderEdit($_POST["lngPurchaseOrderNo"], $_POST["lngRevisionNo"], $objDB);
 
 	$strHtml = fncCreatePurchaseOrderUpdateHtml($updatedPurchaseOrder, $aryData["strSessionID"]);
@@ -96,24 +96,24 @@ fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 	// $objDB->transactionRollback();
 	$objDB->transactionCommit();
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 
 	header("Content-type: text/plain; charset=EUC-JP");
 	$objTemplate->getTemplate( "po/finish/parts.tmpl" );
 		
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryData );
 
-	// HTML½ĞÎÏ
+	// HTMLå‡ºåŠ›
 	echo $objTemplate->strTemplate;
 
 	return true;
 
 }
-// ÄÉ²Ã¥Ü¥¿¥ó²¡²¼½èÍı¤³¤³¤Ş¤Ç
+// è¿½åŠ ãƒœã‚¿ãƒ³æŠ¼ä¸‹å‡¦ç†ã“ã“ã¾ã§
 
-// ¹¹¿·¥Ç¡¼¥¿¼èÆÀ
+// æ›´æ–°ãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData["lngCustomerCompanyCode"] = $_POST["lngCustomerCompanyCode"];
 $aryData["lngOrderNo"] = $_POST["lngOrderNo"];
 $aryData["lngPurchaseOrderNo"] = $_POST["lngPurchaseOrderNo"];
@@ -127,7 +127,7 @@ $aryData["lngMonetaryUnitCode"] = $_POST["lngMonetaryUnitCode"];
 $aryData["strmonetaryunitname"] = mb_convert_encoding($_POST["strMonetaryUnitName"],"EUC-JP", "UTF-8");
 $aryData["aryDetail"] = $_POST["aryDetail"];
 
-// ÌÀºÙ¹Ô¤ò½ü¤¯
+// æ˜ç´°è¡Œã‚’é™¤ã
 for ($i = 0; $i < count($_POST); $i++) {
     list($strKeys, $strValues) = each($_POST);
     if ($strKeys != "aryDetail") {
@@ -135,14 +135,14 @@ for ($i = 0; $i < count($_POST); $i++) {
     }
 }
 
-// ÌÀºÙ¹Ô½èÍı ===========================================================================================
-// ÌÀºÙ¹Ô¤ÎhiddenÀ¸À®
+// æ˜ç´°è¡Œå‡¦ç† ===========================================================================================
+// æ˜ç´°è¡Œã®hiddenç”Ÿæˆ
 if (is_array($_POST["aryDetail"])) {
     $aryData["strDetailHidden"] = fncDetailHidden($_POST["aryDetail"], "insert", $objDB);
 }
 
 /*
-// ¸À¸ì¤ÎÀßÄê
+// è¨€èªã®è¨­å®š
 if ( isset($aryData["lngLanguageCode"]) and  $aryData["lngLanguageCode"] == 0 )
 {
 $aryTytle = $aryTableTytleEng;
@@ -154,7 +154,7 @@ $aryTytle = $aryTableTytle;
  */
 
 $aryTytle = $aryTableTytle;
-// ¥«¥é¥àÌ¾¤ÎÀßÄê
+// ã‚«ãƒ©ãƒ åã®è¨­å®š
 $aryHeadColumnNames = fncSetPurchaseTabelName($aryTableViewHead, $aryTytle);
 $aryDetailColumnNames = fncSetPurchaseTabelName($aryTableViewDetail, $aryTytle);
 $allPrice = 0;
@@ -163,16 +163,16 @@ for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
 
     $_POST["aryDetail"][$i]["lngrecordno"] = $i + 1;
 
-    // »ÅÆş²ÊÌÜ
+    // ä»•å…¥ç§‘ç›®
     $_POST["aryDetail"][$i]["strStockSubjectName"] = fncGetMasterValue("m_stocksubject", "lngstocksubjectcode", "strstocksubjectname", $_POST["aryDetail"][$i]["lngStockSubjectCode"], '', $objDB);
-    // »ÅÆşÉôÉÊ
+    // ä»•å…¥éƒ¨å“
     $_POST["aryDetail"][$i]["strStockItemName"] = fncGetMasterValue("m_stockitem", "lngstockitemcode", "strstockitemname", $_POST["aryDetail"][$i]["lngStockItemCode"], "lngstocksubjectcode = " . $_POST["aryDetail"][$i]["lngStockSubjectCode"], $objDB);
 
 /*
-// ¸ÜµÒÉÊÈÖ
+// é¡§å®¢å“ç•ª
 $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strproductcode", "strGoodsCode", $_POST["aryDetail"][$i]["strProductCode"].":str", "bytinvalidflag = false", $objDB );
  */
-    // ±¿ÈÂÊıË¡
+    // é‹æ¬æ–¹æ³•
     $_POST["aryDetail"][$i]["strCarrierName"] = fncGetMasterValue("m_deliverymethod", "lngdeliverymethodcode", "strdeliverymethodname", $_POST["aryDetail"][$i]["lngDeliveryMethodCode"], '', $objDB);
 
     $_POST["aryDetail"][$i]["dtmdeliverydate"] = $_POST["aryDetail"][$i]["dtmDeliveryDate"];
@@ -180,7 +180,7 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
 
     $_POST["aryDetail"][$i]["strDetailNote"] = mb_convert_encoding($_POST["aryDetail"][$i]["strDetailNote"],"EUC-JP", "UTF-8");
     // 2004/03/11 number_format watanabe
-    // Ã±²Á
+    // å˜ä¾¡
     $_POST["aryDetail"][$i]["strMonetarySign"] = $aryData["lngMonetaryUnitCode"];
     $_POST["aryDetail"][$i]["curproductprice_DIS"] = ($_POST["aryDetail"][$i]["curProductPrice"] != "") ? number_format((double) (str_replace(",", "", $_POST["aryDetail"][$i]["curProductPrice"])), 4) : "";
     $_POST["aryDetail"][$i]["lnggoodsquantity_DIS"] = ($_POST["aryDetail"][$i]["lngProductQuantity"] != "") ? number_format(str_replace(",", "", $_POST["aryDetail"][$i]["lngProductQuantity"])) : "";
@@ -188,22 +188,22 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
     $allPrice = $allPrice + (double) (str_replace(",", "", $_POST["aryDetail"][$i]["curSubtotalPrice"]));
     // watanabe update end
 
-    // 2004/03/19 watanabe update ¥³¡¼¥É¢ªÌ¾¾Î¤ÏÁ´¤Æ½èÍı¤¹¤ë¡£¥³¡¼¥É¤¬¤Ê¤¤¾ì¹ç¤Ï[]¤òÉ½¼¨¤·¤Ê¤¤¡ÊÉ¬¿Ü¹àÌÜ¤âÁ´¤Æ¡£½èÍı¤À¤±¡Ë
+    // 2004/03/19 watanabe update ã‚³ãƒ¼ãƒ‰â†’åç§°ã¯å…¨ã¦å‡¦ç†ã™ã‚‹ã€‚ã‚³ãƒ¼ãƒ‰ãŒãªã„å ´åˆã¯[]ã‚’è¡¨ç¤ºã—ãªã„ï¼ˆå¿…é ˆé …ç›®ã‚‚å…¨ã¦ã€‚å‡¦ç†ã ã‘ï¼‰
     $_POST["aryDetail"][$i]["strproductcode_DISCODE"] = ($_POST["strProductCode"] != "") ? "[" . $_POST["strProductCode"] . "]" : "";
     $_POST["aryDetail"][$i]["strproductname"] = mb_convert_encoding($_POST["strProductName"], "EUC-JP", "UTF-8");
     $_POST["aryDetail"][$i]["strstockitemcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockItemCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockItemCode"] . "]" : "";
     $_POST["aryDetail"][$i]["strstocksubjectcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockSubjectCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockSubjectCode"] . "]" : "";
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("po/result/parts_detail2.tmpl");
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
     $objTemplate->replace($aryDetailColumnNames);
     $objTemplate->replace($_POST["aryDetail"][$i]);
     $objTemplate->complete();
 
-    // HTML½ĞÎÏ
+    // HTMLå‡ºåŠ›
     $aryDetailTable[] = $objTemplate->strTemplate;
 }
 $aryData["curAllTotalPrice"] = $allPrice;
@@ -215,65 +215,65 @@ $aryData["strDetailTable"] = implode("\n", $aryDetailTable);
 
 $aryData["strMode"] = "update";
 
-// ÅĞÏ¿Æü
+// ç™»éŒ²æ—¥
 $aryData["dtminsertdate"] = date('Y/m/d', time());
 
-// ÆşÎÏ¼Ô
+// å…¥åŠ›è€…
 $aryData["lngInputUserCode"] = $UserDisplayCode;
 $aryData["strInputUserName"] = $UserDisplayName;
-// »ÙÊ§¾ò·ï
+// æ”¯æ‰•æ¡ä»¶
 $strPayConditionName = fncGetMasterValue("m_paycondition", "lngpayconditioncode", "strpayconditionname", $_POST["lngPayConditionCode"], '', $objDB);
-// ¤¢¤¨¤Æ¥Ï¥¤¥Õ¥ó¾Ã¤¹¤Î¡©
-$aryData["strPayConditionName"] = ($strPayConditionName == "¡İ") ? "" : $strPayConditionName;
+// ã‚ãˆã¦ãƒã‚¤ãƒ•ãƒ³æ¶ˆã™ã®ï¼Ÿ
+$aryData["strPayConditionName"] = ($strPayConditionName == "âˆ’") ? "" : $strPayConditionName;
 
-// Ç¼ÉÊ¾ì½ê
+// ç´å“å ´æ‰€
 $aryData["strLocationName"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "strcompanydisplayname", $_POST["lngLocationCode"] . ":str", '', $objDB);
 
-// ¾õÂÖ
+// çŠ¶æ…‹
 $aryData["strAction"] = "/po/confirm2/index.php?strSessionID=" . $_POST["strSessionID"];
 $aryData["strMonetarySign"] = $aryData["lngMonetaryUnitCode"];
 
-//¥Ø¥Ã¥ÀÈ÷¹Í¤ÎÆÃ¼ìÊ¸»úÊÑ´¹
+//ãƒ˜ãƒƒãƒ€å‚™è€ƒã®ç‰¹æ®Šæ–‡å­—å¤‰æ›
 $aryData["strNote"] = fncHTMLSpecialChars(mb_convert_encoding($_POST["strNote"], "EUC-JP", "auto"));
 
-// ÄÌ²ßµ­¹æ+¹ç·×¶â³Û
+// é€šè²¨è¨˜å·+åˆè¨ˆé‡‘é¡
 
-$aryData["curAllTotalPrice_DIS"] = number_format($aryData["curAllTotalPrice"], 2); // ¹ç·×¶â³Û
+$aryData["curAllTotalPrice_DIS"] = number_format($aryData["curAllTotalPrice"], 2); // åˆè¨ˆé‡‘é¡
 
-// ¥³¡¼¥É¢ªÌ¾¾Î¤ÏÁ´¤Æ½èÍı¤¹¤ë¡£¥³¡¼¥É¤¬¤Ê¤¤¾ì¹ç¤Ï[]¤òÉ½¼¨¤·¤Ê¤¤¡ÊÉ¬¿Ü¹àÌÜ¤âÁ´¤Æ¡£½èÍı¤À¤±¡Ë
+// ã‚³ãƒ¼ãƒ‰â†’åç§°ã¯å…¨ã¦å‡¦ç†ã™ã‚‹ã€‚ã‚³ãƒ¼ãƒ‰ãŒãªã„å ´åˆã¯[]ã‚’è¡¨ç¤ºã—ãªã„ï¼ˆå¿…é ˆé …ç›®ã‚‚å…¨ã¦ã€‚å‡¦ç†ã ã‘ï¼‰
 
-// ÆşÎÏ¼Ô
+// å…¥åŠ›è€…
 $aryData["lngInputUserCode_DISCODE"] = ($aryData["lngInputUserCode"] != "") ? "[" . $aryData["lngInputUserCode"] . "]" : "";
-// »ÅÆşÀè
+// ä»•å…¥å…ˆ
 //$aryData["strCustomerCode"] = $aryData["lngCustomerCompanyCode"];
 $aryData["strCustomerName"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "strcompanydisplayname", $aryData["lngCustomerCompanyCode"] . ":str", '', $objDB);
 $aryData["lngCustomerCode_DISCODE"] = ($aryData["lngCustomerCompanyCode"] != "") ? "[" . $aryData["lngCustomerCompanyCode"] . "]" : "";
 
-// Ç¼ÉÊ¾ì½ê
+// ç´å“å ´æ‰€
 $aryData["lngLocationCode_DISCODE"] = ($aryData["lngLocationCode"] != "") ? "[" . $aryData["lngLocationCode"] . "]" : "";
 
 // watanabe update end
 
-// »ÙÊ§¾ò·ïÀ°¹çÀ­¥Á¥§¥Ã¥¯
+// æ”¯æ‰•æ¡ä»¶æ•´åˆæ€§ãƒã‚§ãƒƒã‚¯
 //$aryData["lngMonetaryUnitCode"] = $aryData["lngMonetaryUnitCode"];
 $aryData["lngCustomerCode"] = $aryData["lngCustomerCompanyCode"];
 $aryData = fncPayConditionCodeMatch($aryData, $aryHeadColumnNames, $_POST["aryDetail"], $objDB);
 
 $objDB->close();
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 //var_dump($aryData);
 
 $objTemplate->getTemplate("po/confirm2/parts.tmpl");
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 
 $objTemplate->replace($aryHeadColumnNames);
 $objTemplate->replace($aryData);
 $objTemplate->complete();
 
-// HTML½ĞÎÏ ÌÀºÙ¹Ô¤Ï_%strDetailTable%_¤Ç¼õ¤±ÅÏ¤·
+// HTMLå‡ºåŠ› æ˜ç´°è¡Œã¯_%strDetailTable%_ã§å—ã‘æ¸¡ã—
 echo $objTemplate->strTemplate;
 
 return true;

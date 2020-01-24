@@ -9,14 +9,14 @@
 	height: 35px;
 }
 
-/* ¶¦ÄÌ¥Õ¥Ã¥¿ ÇØ·Ê²èÁü */
+/* å…±é€šãƒ•ãƒƒã‚¿ èƒŒæ™¯ç”»åƒ */
 .base-footer__background-image
 {
 	width: 100%;
 	height: 100%;
 }
 
- /* ¥Õ¥Ã¥¿¥³¥ó¥È¥í¡¼¥ë¥Ö¥í¥Ã¥¯ */
+ /* ãƒ•ãƒƒã‚¿ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ãƒ–ãƒ­ãƒƒã‚¯ */
 .control-block
 {
 	position: absolute;
@@ -29,7 +29,7 @@
 	text-align: right;
 }
 
-/* ¥á¥¤¥ó¥á¥Ë¥å¡¼¥Ü¥¿¥ó */
+/* ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ */
 .control-block__buttan-main-menu
 {
 	position: absolute;
@@ -37,7 +37,7 @@
 	left: 0px;
 }
 
-/* ¸À¸ìÀÚ¤êÂØ¤¨¥Ü¥¿¥ó */
+/* è¨€èªåˆ‡ã‚Šæ›¿ãˆãƒœã‚¿ãƒ³ */
 .control-block__button-language
 {
 	position: absolute;
@@ -45,7 +45,7 @@
 	right: 120px;
 }
 
-/* ¥í¥°¥¢¥¦¥È¥Ü¥¿¥ó */
+/* ãƒ­ã‚°ã‚¢ã‚¦ãƒˆãƒœã‚¿ãƒ³ */
 .control-block__button-logout
 {
 	position: absolute;
@@ -53,7 +53,7 @@
 	right: 30px;
 }
 
-/* ¥Ø¥ë¥×¥Ü¥¿¥ó */
+/* ãƒ˜ãƒ«ãƒ—ãƒœã‚¿ãƒ³ */
 .control-block__button-help
 {
 	position: absolute;

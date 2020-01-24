@@ -6,7 +6,7 @@
 	var titleE = '/img/type01/dataex/title_en.gif';
 
 	///// MAIN MTITLE IMAGE /////
-	var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="¥Ç¡¼¥¿¥¨¥¯¥¹¥Ý¡¼¥È">';
+	var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ">';
 	var maintitleE = '<img src="' + titleE + '" width="314" height="22" border="0" alt="DATA EXPORT">';
 
 

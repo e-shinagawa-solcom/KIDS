@@ -4,7 +4,7 @@
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ±Ñ¸ì
+	// è‹±èªž
 	if ( lngSelfCode == 0 )
 	{
 
@@ -15,7 +15,7 @@ function ChgEtoJ( lngSelfCode )
 
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èªž
 	else if ( lngSelfCode == 1 )
 	{
 

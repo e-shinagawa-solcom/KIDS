@@ -3,17 +3,17 @@
 require_once ('conf.inc');
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
-// Composer¤Î¥ª¡¼¥È¥í¡¼¥É¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+// Composerã®ã‚ªãƒ¼ãƒˆãƒ­ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 require_once ( VENDOR_AUTOLOAD_FILE );
 
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 /**
-*	¹Ô¤´¤È¤Î¥Ç¡¼¥¿¥Á¥§¥Ã¥¯¥¯¥é¥¹
+*	è¡Œã”ã¨ã®ãƒ‡ãƒ¼ã‚¿ãƒã‚§ãƒƒã‚¯ã‚¯ãƒ©ã‚¹
 *	
-*	°Ê²¼¤Î¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤òÄêµÁ¤¹¤ë¤³¤È
-*   @param object $objDB        ¥Ç¡¼¥¿¥Ù¡¼¥¹ÀÜÂ³¥ª¥Ö¥¸¥§¥¯¥È(clsDB¤Ş¤¿¤Ï·Ñ¾µ¥¯¥é¥¹)
-*   @param object $sheet        phpSpreadSheet¤Î¥·¡¼¥È¥ª¥Ö¥¸¥§¥¯¥È
+*	ä»¥ä¸‹ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã‚’å®šç¾©ã™ã‚‹ã“ã¨
+*   @param object $objDB        ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æ¥ç¶šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(clsDBã¾ãŸã¯ç¶™æ‰¿ã‚¯ãƒ©ã‚¹)
+*   @param object $sheet        phpSpreadSheetã®ã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *   
 */
 
@@ -21,17 +21,17 @@ abstract class estimateRowController {
 
     abstract protected function setDivisionSubjectCodeMaster();
 
-    abstract protected function setNameList(); // ÂĞ¾İ¥¨¥ê¥¢¤´¤È¤Î¥»¥ëÌ¾¾Î¤Î»ØÄê
+    abstract protected function setNameList(); // å¯¾è±¡ã‚¨ãƒªã‚¢ã”ã¨ã®ã‚»ãƒ«åç§°ã®æŒ‡å®š
 
     protected $objDB;
 
-    protected $errorMessage; // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+    protected $errorMessage; // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 
-    // ¼è¤ê¹ş¤ßÃÍ
-    public $columnNumberList; // Îó¤ÎÈÖ¹æ¥ê¥¹¥È
-    protected $columnDisplayNameList; // Îó¤ÎÉ½¼¨Ì¾¥ê¥¹¥È
+    // å–ã‚Šè¾¼ã¿å€¤
+    public $columnNumberList; // åˆ—ã®ç•ªå·ãƒªã‚¹ãƒˆ
+    protected $columnDisplayNameList; // åˆ—ã®è¡¨ç¤ºåãƒªã‚¹ãƒˆ
 
-    // ¥»¥ë¤Î¼èÆÀÃÍ
+    // ã‚»ãƒ«ã®å–å¾—å€¤
     public $delivery;
     public $quantity;
     public $price;
@@ -46,39 +46,39 @@ abstract class estimateRowController {
 
     protected $row;
 
-    // ÅĞÏ¿ÍÑ¤Ë¥»¥Ã¥È¤¹¤ëÃÍ
+    // ç™»éŒ²ç”¨ã«ã‚»ãƒƒãƒˆã™ã‚‹å€¤
     public $divisionSubjectCode;
     public $classItemCode;
     public $customerCompanyCode;
 
-    public $acquiredRate; // ¥Ş¥¹¥¿¡¼¤«¤é¼èÆÀ¤·¤¿ÄÌ²ß¥ì¡¼¥È
-    public $calculatedSubtotal; // ¾®·×¤ÎºÆ·×»»·ë²Ì
-    public $percentInputFlag; // ¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¥Õ¥é¥°
+    public $acquiredRate; // ãƒã‚¹ã‚¿ãƒ¼ã‹ã‚‰å–å¾—ã—ãŸé€šè²¨ãƒ¬ãƒ¼ãƒˆ
+    public $calculatedSubtotal; // å°è¨ˆã®å†è¨ˆç®—çµæœ
+    public $percentInputFlag; // ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ãƒ•ãƒ©ã‚°
 
     public $invalidFlag;
     public $messageCode;
 
     protected $salesOrder;
 
-    // staticÊÑ¿ô¡§½èÍı¤ÎÃæ¤ÇÉÔÊÑ¤Î¥Ç¡¼¥¿¡Ê¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¡¢Äê¿ôÅù¡Ë¤ò¥»¥Ã¥È
-    // ¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿ÇÛÎó
-    protected static $customerCompanyCodeMaster; // ¸ÜµÒÀè¡¢»ÅÆşÀè¥Ş¥¹¥¿¡¼
-    protected static $divisionSubjectCodeMaster; // Çä¾åÊ¬Îà¡¢»ÅÆş²ÊÌÜ¥Ş¥¹¥¿¡¼(Çä¾å¶èÊ¬¡¢»ÅÆşÉôÉÊ·ë¹çºÑ¤ß¡Ë
-    protected static $conversionRateMaster; // ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¡¼
-    protected static $salesGroupAndUserMaster; // ±Ä¶È¥°¥ë¡¼¥×µÚ¤Ó¥æ¡¼¥¶¥Ş¥¹¥¿
-    protected static $developGroupAndUserMaster; // ³«È¯¥°¥ë¡¼¥×¤ª¤è¤Ó¥æ¡¼¥¶¥Ş¥¹¥¿
-    protected static $groupDisplayMaster; // É½¼¨ÍÑ¤Î¥°¥ë¡¼¥×¥Ş¥¹¥¿
-    protected static $userDispayMaster; // É½¼¨ÍÑ¤Î¥æ¡¼¥¶¥Ş¥¹¥¿
+    // staticå¤‰æ•°ï¼šå‡¦ç†ã®ä¸­ã§ä¸å¤‰ã®ãƒ‡ãƒ¼ã‚¿ï¼ˆãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã€å®šæ•°ç­‰ï¼‰ã‚’ã‚»ãƒƒãƒˆ
+    // ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿é…åˆ—
+    protected static $customerCompanyCodeMaster; // é¡§å®¢å…ˆã€ä»•å…¥å…ˆãƒã‚¹ã‚¿ãƒ¼
+    protected static $divisionSubjectCodeMaster; // å£²ä¸Šåˆ†é¡ã€ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ãƒ¼(å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥éƒ¨å“çµåˆæ¸ˆã¿ï¼‰
+    protected static $conversionRateMaster; // é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ãƒ¼
+    protected static $salesGroupAndUserMaster; // å–¶æ¥­ã‚°ãƒ«ãƒ¼ãƒ—åŠã³ãƒ¦ãƒ¼ã‚¶ãƒã‚¹ã‚¿
+    protected static $developGroupAndUserMaster; // é–‹ç™ºã‚°ãƒ«ãƒ¼ãƒ—ãŠã‚ˆã³ãƒ¦ãƒ¼ã‚¶ãƒã‚¹ã‚¿
+    protected static $groupDisplayMaster; // è¡¨ç¤ºç”¨ã®ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿
+    protected static $userDispayMaster; // è¡¨ç¤ºç”¨ã®ãƒ¦ãƒ¼ã‚¶ãƒã‚¹ã‚¿
 
-    // ¥»¥ëÌ¾¾Î¥ê¥¹¥È
-    protected static $headerNameList; // ÂĞ¾İ¥¨¥ê¥¢¤Î¥Ø¥Ã¥À¡¼¡Ê¥¿¥¤¥È¥ë¡Ë¤Î¥»¥ëÌ¾¾Î
-    protected static $resultNameList; // ÂĞ¾İ¥¨¥ê¥¢¤Î·×»»·ë²Ì¤Î¥»¥ëÌ¾¾Î(ÌÀºÙºÇ½ª¹Ô¤Î¼¡¤Î¹Ô)
+    // ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
+    protected static $headerNameList; // å¯¾è±¡ã‚¨ãƒªã‚¢ã®ãƒ˜ãƒƒãƒ€ãƒ¼ï¼ˆã‚¿ã‚¤ãƒˆãƒ«ï¼‰ã®ã‚»ãƒ«åç§°
+    protected static $resultNameList; // å¯¾è±¡ã‚¨ãƒªã‚¢ã®è¨ˆç®—çµæœã®ã‚»ãƒ«åç§°(æ˜ç´°æœ€çµ‚è¡Œã®æ¬¡ã®è¡Œ)
 
     
 
 
     protected function __construct($objDB) {
-        // ¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿ÆÉ¤ß¹ş¤ß
+        // ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
         $this->objDB = $objDB;
         $this->setSalesOrder();
         $this->setCustomerCompanyCodeMaster();
@@ -87,7 +87,7 @@ abstract class estimateRowController {
         $this->setGroupAndUserMaster();
     }
 
-    // ¸ÜµÒÀè¡¢»ÅÆşÀè¤Î¥Ş¥¹¥¿¡¼¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // é¡§å®¢å…ˆã€ä»•å…¥å…ˆã®ãƒã‚¹ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     protected function setCustomerCompanyCodeMaster() {
         if (!static::$customerCompanyCodeMaster) {
             $areaCode = $this->areaCode;
@@ -96,7 +96,7 @@ abstract class estimateRowController {
         }        
     }
     
-    // ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¡¼¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     protected function setConversionRateMaster() {
         if (!self::$conversionRateMaster) {
             $masterData = $this->objDB->getTemporaryRateList();
@@ -146,7 +146,7 @@ abstract class estimateRowController {
         return true;
     }
 
-    // ¥»¥ëÌ¾¾Î¤ËÂĞ±ş¤·¤¿¥»¥ë¤Î¥ê¥¹¥È¤È¹ÔÈÖ¹æ¤Ë¤è¤ë½é´ü¥Ç¡¼¥¿ºîÀ®
+    // ã‚»ãƒ«åç§°ã«å¯¾å¿œã—ãŸã‚»ãƒ«ã®ãƒªã‚¹ãƒˆã¨è¡Œç•ªå·ã«ã‚ˆã‚‹åˆæœŸãƒ‡ãƒ¼ã‚¿ä½œæˆ
     public function initialize($cellAddressList, $row) {
         $this->cellAddressList = $cellAddressList;
         $this->row = $row;
@@ -165,13 +165,13 @@ abstract class estimateRowController {
         $this->setRowParams($params);
     }
 
-    // ³Æ¹àÌÜ¤ÎÎóÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
+    // å„é …ç›®ã®åˆ—ç•ªå·ã‚’å–å¾—ã™ã‚‹
     protected function setColumnNumberList() {
         $headerNameList = static::$headerNameList;
         $cellAddressList = $this->cellAddressList;
         foreach ($headerNameList as $key => $name) {
             if (preg_match("/\A[A-Z]+[1-9][0-9]*\z/", $cellAddressList[$name])) {
-                // ¥»¥ë°ÌÃÖ¤Î¿ôÃÍÉôÊ¬¤ò½üµî¤¹¤ë
+                // ã‚»ãƒ«ä½ç½®ã®æ•°å€¤éƒ¨åˆ†ã‚’é™¤å»ã™ã‚‹
                 $columnNumber[$key] = preg_replace("/[1-9][0-9]*/", '', $cellAddressList[$name]);
             } else {
                 return false;
@@ -181,7 +181,7 @@ abstract class estimateRowController {
         return true;
     }
 
-    // ³Æ¹àÌÜ¤ÎÌ¾¾Î¤ò¼èÆÀ¤¹¤ë
+    // å„é …ç›®ã®åç§°ã‚’å–å¾—ã™ã‚‹
     protected function setColumnDisplayNameList() {
         global $sheet;
         $headerNameList = static::$headerNameList;
@@ -194,7 +194,7 @@ abstract class estimateRowController {
         return true;
     }
 
-    // ³Æ¹àÌÜ¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // å„é …ç›®ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     protected function getRowParams() {
         $columnNumberList = $this->columnNumberList;
         global $sheet;
@@ -215,7 +215,7 @@ abstract class estimateRowController {
         return $param;
     }
 
-    // ³Æ¹àÌÜ¤Î¥Ç¡¼¥¿·¿¤ò¼èÆÀ¤¹¤ë
+    // å„é …ç›®ã®ãƒ‡ãƒ¼ã‚¿å‹ã‚’å–å¾—ã™ã‚‹
     protected function getRowDataType() {
         $columnNumberList = $this->columnNumberList;
         global $sheet;
@@ -231,100 +231,100 @@ abstract class estimateRowController {
         return $dataType;
     }
 
-    // ÇÛÎóÆâ¤Î¥Ç¡¼¥¿¤ò³ÆÄê¿ô¤Ë¥»¥Ã¥È¤¹¤ë
+    // é…åˆ—å†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’å„å®šæ•°ã«ã‚»ãƒƒãƒˆã™ã‚‹
     protected function setRowParams($data) {
         $this->delivery = isset($data['delivery']) ? $data['delivery'] : '';
         $this->quantity = isset($data['quantity']) ? $data['quantity'] : '';
-        $this->price = isset($data['price']) ? $data['price'] : 0; // Ã±²Á¤ÏÌ¤ÆşÎÏ¤ò0¤È¤¹¤ë
+        $this->price = isset($data['price']) ? $data['price'] : 0; // å˜ä¾¡ã¯æœªå…¥åŠ›ã‚’0ã¨ã™ã‚‹
         $this->divisionSubject = isset($data['divisionSubject']) ? $data['divisionSubject'] : '';
         $this->classItem = isset($data['classItem']) ? $data['classItem'] : '';
-        $this->subtotal = isset($data['subtotal']) ? $data['subtotal'] : 0; /// ¾®·×¤ÏÌ¤ÆşÎÏ¤ò0¤È¤¹¤ë
+        $this->subtotal = isset($data['subtotal']) ? $data['subtotal'] : 0; /// å°è¨ˆã¯æœªå…¥åŠ›ã‚’0ã¨ã™ã‚‹
         $this->conversionRate = isset($data['conversionRate']) ? $data['conversionRate'] : '';
         $this->monetaryDisplay = isset($data['monetaryDisplay']) ? $data['monetaryDisplay'] : '';
-        $this->monetary = isset($data['monetary']) ? (int)$data['monetary'] : ''; // Èæ³Ó¤¹¤ë¤Î¤Çint·¿¤Ç¼èÆÀ
+        $this->monetary = isset($data['monetary']) ? (int)$data['monetary'] : ''; // æ¯”è¼ƒã™ã‚‹ã®ã§intå‹ã§å–å¾—
         $this->customerCompany = isset($data['customerCompany']) ? $data['customerCompany'] : '';
         $this->payoff = isset($data['payoff']) ? $data['payoff'] : '';
         $this->note = isset($data['note']) ? $data['note'] : '';
         return true;
     }
 
-    // ¥»¥ë¤Î¥Ç¡¼¥¿·Á¼°¤òÀßÄê¤¹¤ë
+    // ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿å½¢å¼ã‚’è¨­å®šã™ã‚‹
     public function setRowDataType() {
         $dataType = $this->getRowDataType();
         $this->dataType = $dataType;
         return true;
     }
 
-    // Ìµ¸ú¥Õ¥é¥°¤òÀßÄê¤¹¤ë
+    // ç„¡åŠ¹ãƒ•ãƒ©ã‚°ã‚’è¨­å®šã™ã‚‹
     public function setInvalidFlag() {
         $invalidFlag = $this->getInvalidFlag();
         $this->invalidFlag = $invalidFlag;
         return true;
     }
 
-    // Ìµ¸ú¥Õ¥é¥°¤ò¼èÆÀ¤¹¤ë
+    // ç„¡åŠ¹ãƒ•ãƒ©ã‚°ã‚’å–å¾—ã™ã‚‹
     public function getInvalidFlag() {
-        // Á´¤Æ¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¼èÆÀ¤·¤¿¤¤¾ì¹ç¤Ï$ret¤ò»ÈÍÑ¤¹¤ë¤³¤È
+        // å…¨ã¦ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã—ãŸã„å ´åˆã¯$retã‚’ä½¿ç”¨ã™ã‚‹ã“ã¨
         // $ret = false;
 
-        // Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ¤Î¥Á¥§¥Ã¥¯
+        // å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®ã®ãƒã‚§ãƒƒã‚¯
         $this->validateDivisionSubject();
 
         if ($this->messageCode['divisionSubject']) {
-            // Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ¤ÎÆşÎÏ¤¬Àµ³Î¤Ç¤Ê¤¤¾ì¹ç¤ÏÉ½¼¨¤·¤Ê¤¤
+            // å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®ã®å…¥åŠ›ãŒæ­£ç¢ºã§ãªã„å ´åˆã¯è¡¨ç¤ºã—ãªã„
             return true;
             // $ret = true;
         }
 
-        // Çä¾å¶èÊ¬¡¢»ÅÆşÉôÉÊ¤Î¥Á¥§¥Ã¥¯
+        // å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥éƒ¨å“ã®ãƒã‚§ãƒƒã‚¯
         $this->validateClassItem();
 
         if ($this->messageCode['classItem']) {
-            // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤ÎÆşÎÏ¤¬Àµ³Î¤Ç¤Ê¤¤¾ì¹ç¤ÏÉ½¼¨¤·¤Ê¤¤
+            // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã®å…¥åŠ›ãŒæ­£ç¢ºã§ãªã„å ´åˆã¯è¡¨ç¤ºã—ãªã„
             return true;
             // $ret = true;
         }
 
-        // ¿ôÎÌ¤Î¥Á¥§¥Ã¥¯
+        // æ•°é‡ã®ãƒã‚§ãƒƒã‚¯
         $this->validateQuantity();
 
         if ($this->messageCode['quantity']) {
-            // ¿ôÎÌ¤ÎÆşÎÏ¤¬Àµ³Î¤Ç¤Ê¤¤¾ì¹ç
+            // æ•°é‡ã®å…¥åŠ›ãŒæ­£ç¢ºã§ãªã„å ´åˆ
             return true;
             // $ret = true;
         }
 
-        // Ã±²Á¤Î¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó
+        // å˜ä¾¡ã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³
         $this->validatePrice();
 
         if ($this->messageCode['price']) {
-            // Ã±²Á¤ÎÆşÎÏ¤¬Àµ³Î¤Ç¤Ê¤¤¾ì¹ç
+            // å˜ä¾¡ã®å…¥åŠ›ãŒæ­£ç¢ºã§ãªã„å ´åˆ
             return true;
             // $ret = true;
         }
 
-        // Í¢ÆşÈñÍÑ¡¢´ØÀÇ¥Õ¥é¥°¤òÀßÄê¤¹¤ë
+        // è¼¸å…¥è²»ç”¨ã€é–¢ç¨ãƒ•ãƒ©ã‚°ã‚’è¨­å®šã™ã‚‹
         $this->setDistinctionFlag();
 
-        // Ç¼´ü¤Î¥Á¥§¥Ã¥¯
+        // ç´æœŸã®ãƒã‚§ãƒƒã‚¯
         $this->validateDelivery();
 
         if ($this->messageCode['delivery']) {
-            // Ç¼´ü¤ÎÆşÎÏ¤¬Àµ³Î¤Ç¤Ê¤¤¾ì¹ç¤ÏÈóÉ½¼¨¤Ë¤¹¤ë
+            // ç´æœŸã®å…¥åŠ›ãŒæ­£ç¢ºã§ãªã„å ´åˆã¯éè¡¨ç¤ºã«ã™ã‚‹
             return true;
             // $ret = true;
         }
 
 
-        if ($this->importCostFlag || $this->tariffFlag) { // Í¢ÆşÈñÍÑ¡¢´ØÀÇ¤Î¾ì¹ç¡¢¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¥Õ¥é¥°¤ÎÈ½Äê¤ò¹Ô¤¦
-            // ÆşÎÏ½ñ¼°¤ò¼èÆÀ¤¹¤ë
+        if ($this->importCostFlag || $this->tariffFlag) { // è¼¸å…¥è²»ç”¨ã€é–¢ç¨ã®å ´åˆã€ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ãƒ•ãƒ©ã‚°ã®åˆ¤å®šã‚’è¡Œã†
+            // å…¥åŠ›æ›¸å¼ã‚’å–å¾—ã™ã‚‹
             $dataType = $this->dataType;
             if ($dataType) {
                 if ($dataType['price'] === DataType::TYPE_FORMULA) {
                     if (is_numeric($this->customerCompany)) {
                         $this->percentInputFlag = true;
                     } else {
-                        // Ã±²Á¤¬¿ô¼°¤Î¾ì¹ç¡¢¸ÜµÒÀè¤Ë¿ôÃÍ¤¬Æş¤Ã¤Æ¤¤¤Ê¤¤¾ì¹ç¤ÏÌµ¸ú¤Ë¤¹¤ë
+                        // å˜ä¾¡ãŒæ•°å¼ã®å ´åˆã€é¡§å®¢å…ˆã«æ•°å€¤ãŒå…¥ã£ã¦ã„ãªã„å ´åˆã¯ç„¡åŠ¹ã«ã™ã‚‹
                         return true;
                         // $ret = true;
                     }
@@ -333,38 +333,38 @@ abstract class estimateRowController {
                 if (is_numeric($this->customerCompany)) {
                     $this->percentInputFlag = true;
                 } else if (!is_numeric($this->price)) {
-                    // Ã±²Á¤¬¿ô¼°¤Î¾ì¹ç¡¢¸ÜµÒÀè¤Ë¿ôÃÍ¤¬Æş¤Ã¤Æ¤¤¤Ê¤¤¾ì¹ç¤ÏÌµ¸ú¤Ë¤¹¤ë
+                    // å˜ä¾¡ãŒæ•°å¼ã®å ´åˆã€é¡§å®¢å…ˆã«æ•°å€¤ãŒå…¥ã£ã¦ã„ãªã„å ´åˆã¯ç„¡åŠ¹ã«ã™ã‚‹
                     return true;
                     // $ret = true;
                 }
             }
 
-        } else { // Í¢ÆşÈñÍÑ¡¢´ØÀÇ°Ê³°¤Î¾ì¹ç
-            // ¸ÜµÒÀè¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+        } else { // è¼¸å…¥è²»ç”¨ã€é–¢ç¨ä»¥å¤–ã®å ´åˆ
+            // é¡§å®¢å…ˆã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
             $this->validateCustomerCompany();
             if ($this->messageCode['customerCompany']) {
-                // ¸ÜµÒÀè¤ÎÆşÎÏ¤¬Àµ³Î¤Ç¤Ê¤¤¾ì¹çÈóÉ½¼¨
+                // é¡§å®¢å…ˆã®å…¥åŠ›ãŒæ­£ç¢ºã§ãªã„å ´åˆéè¡¨ç¤º
                 return true;
                 // $ret = true;
             }
         }
 
-        // ÄÌ²ß¥ì¡¼¥È¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+        // é€šè²¨ãƒ¬ãƒ¼ãƒˆã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
         $this->validateConversionRate();
 
         if ($this->messageCode['conversionRate']) {
-            // ÄÌ²ß¥ì¡¼¥È¤¬Àµ¾ï¤Ç¤Ê¤¤¾ì¹ç
+            // é€šè²¨ãƒ¬ãƒ¼ãƒˆãŒæ­£å¸¸ã§ãªã„å ´åˆ
             return true;
             // $ret = true;
         }
 
-        // Í¢ÆşÈñÍÑ¤È´ØÀÇ°Ê³°¤Î¾ì¹ç¤Ï¾®·×¤òºÆ·×»»¤·¡¢¥Á¥§¥Ã¥¯¤¹¤ë
+        // è¼¸å…¥è²»ç”¨ã¨é–¢ç¨ä»¥å¤–ã®å ´åˆã¯å°è¨ˆã‚’å†è¨ˆç®—ã—ã€ãƒã‚§ãƒƒã‚¯ã™ã‚‹
         if (!$this->importCostFlag && !$this->tariffFlag) {
-            // Ã±²Á¤Î¾®¿ôÅÀ°Ê²¼¤Î·å¿ô¤òÀ°¤¨¡¢¾®·×¤òºÆ·×»»¤¹¤ë
+            // å˜ä¾¡ã®å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°ã‚’æ•´ãˆã€å°è¨ˆã‚’å†è¨ˆç®—ã™ã‚‹
             $this->resettingPriceAndSubtotal();
 
             if ($this->messageCode['subtotal']) {
-                // ¾®·×¤ÎÃÍ¤¬Àµ¾ï¤Ç¤Ê¤¤¾ì¹ç
+                // å°è¨ˆã®å€¤ãŒæ­£å¸¸ã§ãªã„å ´åˆ
                 return true;
                 // $ret = true;
             }
@@ -376,7 +376,7 @@ abstract class estimateRowController {
 
 
 
-    // Ã±²Á¤ÎºÆ·×»»¤ò¹Ô¤¦
+    // å˜ä¾¡ã®å†è¨ˆç®—ã‚’è¡Œã†
     protected function calcuratePrice() {
         $quantity = $this->quantity;
         $subtotal = $this->subtotal;
@@ -387,15 +387,15 @@ abstract class estimateRowController {
         return $recalculatedPrice;
     }
 
-    // Ã±²Á¤Î·å¿ôÄ´À°¡¢¾®·×¤ÎºÆ·×»»¤ò¹Ô¤¦
+    // å˜ä¾¡ã®æ¡æ•°èª¿æ•´ã€å°è¨ˆã®å†è¨ˆç®—ã‚’è¡Œã†
     protected function resettingPriceAndSubtotal() {
         $price = $this->price;
         $monetary = $this->monetary;
 
-        // ÄÌ²ß¤´¤È¤ÎÃ±²Á¤Î¾®¿ôÅÀ°Ê²¼¤Î·å¿ô¤ò¼èÆÀ
+        // é€šè²¨ã”ã¨ã®å˜ä¾¡ã®å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°ã‚’å–å¾—
         $decimalDigit = workSheetConst::PRICE_DECIMAL_DIGIT;
 
-        // Ê¸»úÎó·¿¤ËÊÑ´¹
+        // æ–‡å­—åˆ—å‹ã«å¤‰æ›
         $strPrice = (string)$price;
 
         list($strInt, $strDecimal) = explode('.', $strPrice);
@@ -406,22 +406,22 @@ abstract class estimateRowController {
 
         $price = $strInt.'.'. $strDecimal;
 
-        // Ã±²Á¤Î¾®¿ôÅÀ°Ê²¼¤Î½èÍı
+        // å˜ä¾¡ã®å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†
         $price = number_format($price, 4, '.', '');
 
-        // ºÆ·×»»·ë²Ì¤ò¥»¥Ã¥È¤¹¤ë
+        // å†è¨ˆç®—çµæœã‚’ã‚»ãƒƒãƒˆã™ã‚‹
         $this->price = $price;
         
-        // ¾®·×¤Î·×»»¤ò¹Ô¤¦
+        // å°è¨ˆã®è¨ˆç®—ã‚’è¡Œã†
         $this->calculateSubtotal();
 
-        // ¾®·×¤Î¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó
+        // å°è¨ˆã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³
         $this->validateSubtotal();
 
         return true;
     }
 
-    // ¾®·×¤ÎºÆ·×»»¤ò¹Ô¤¦
+    // å°è¨ˆã®å†è¨ˆç®—ã‚’è¡Œã†
     public function calculateSubtotal() {
         $quantity = $this->quantity;
         $price = $this->price;
@@ -432,28 +432,28 @@ abstract class estimateRowController {
             $calculatedSubtotalJP = $quantity * $price * $conversionRate;
         }
 
-        // ·×»»ÃÍ¤òÂåÆş
+        // è¨ˆç®—å€¤ã‚’ä»£å…¥
         $this->calculatedSubtotal = $calculatedSubtotal;
         $this->calculatedSubtotalJP = $calculatedSubtotalJP;
         
         return true;
     }
 
-    // ÅĞÏ¿ÍÑ¤Î¥Ç¡¼¥¿¤ò½ĞÎÏ¤¹¤ë
+    // ç™»éŒ²ç”¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹
     public function outputRegistData() {
         if (!isset($this->percentInputFlag)) {
             $this->percentInputFlag = false;
         }
         $registData = array(
             'areaCode' => $this->areaCode,
-            'salesOrder' => $this->salesOrder, // ¼õÃí¤Ş¤¿¤ÏÈ¯Ãí
+            'salesOrder' => $this->salesOrder, // å—æ³¨ã¾ãŸã¯ç™ºæ³¨
             'delivery' => $this->delivery,
             'quantity' => $this->quantity,
             'price' => $this->price,
             'divisionSubject' => $this->divisionSubjectCode,
             'classItem' => $this->classItemCode,
-            'subtotal' => $this->calculatedSubtotal, // ºÆ·×»»·ë²Ì¤ò½ĞÎÏ
-            'conversionRate' => $this->conversionRate, // DB¤«¤é¼èÆÀ¤·¤¿ÄÌ²ß¥³¡¼¥É¤ò½ĞÎÏ
+            'subtotal' => $this->calculatedSubtotal, // å†è¨ˆç®—çµæœã‚’å‡ºåŠ›
+            'conversionRate' => $this->conversionRate, // DBã‹ã‚‰å–å¾—ã—ãŸé€šè²¨ã‚³ãƒ¼ãƒ‰ã‚’å‡ºåŠ›
             'monetary' => $this->monetary,
             'customerCompany' => $this->customerCompanyCode,
             'payoff' => $this->payoff,
@@ -464,14 +464,14 @@ abstract class estimateRowController {
         return $registData;
     }
 
-    // ¹ÔÈÖ¹æ¤ò½ĞÎÏ¤¹¤ë
+    // è¡Œç•ªå·ã‚’å‡ºåŠ›ã™ã‚‹
     public function outputRow() {
         return $this->row;
     }
     
 
 
-    // ¥¨¥é¡¼ÍÑ¤Ë½ĞÎÏ¤¹¤ë¥Ñ¥é¥á¡¼¥¿¤ò¥»¥Ã¥È¤¹¤ë
+    // ã‚¨ãƒ©ãƒ¼ç”¨ã«å‡ºåŠ›ã™ã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     protected function outputErrorValueList() {
         $errorValue = array(
             'delivery' => $this->delivery,
@@ -491,14 +491,14 @@ abstract class estimateRowController {
     }
 
 
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÁªÂò»ş¤Î¥ï¡¼¥¯¥·¡¼¥È¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆé¸æŠæ™‚ã®ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
     public function workSheetSelectCheck() {
-        // Ìµ¸ú¥Õ¥é¥°¤òÀßÄê¤¹¤ë
+        // ç„¡åŠ¹ãƒ•ãƒ©ã‚°ã‚’è¨­å®šã™ã‚‹
         $this->setInvalidFlag();
         return true;
     }
 
-    // ¼õÃí¡¢È¯Ãí¤òÈ½Äê¤·¥»¥Ã¥È¤¹¤ë
+    // å—æ³¨ã€ç™ºæ³¨ã‚’åˆ¤å®šã—ã‚»ãƒƒãƒˆã™ã‚‹
     protected function setSalesOrder() {
         $areaCode = $this->areaCode;
         $salesOrderList = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA;
@@ -511,19 +511,19 @@ abstract class estimateRowController {
         return true;
     }
 
-    // ÅĞÏ¿²èÌÌ°Ü¹Ô»ş¤Î¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó½èÍı
+    // ç™»éŒ²ç”»é¢ç§»è¡Œæ™‚ã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³å‡¦ç†
     public function workSheetRegistCheck() {
         $this->setInvalidFlag();
         if ($this->invalidFlag === false) {
             if (!$this->importCostFlag && !$this->tariffFlag) {
-                // Ã±²Á¤Î·å¿ôºÆÀßÄê¤È¾®·×¤ÎºÆ·×»»
+                // å˜ä¾¡ã®æ¡æ•°å†è¨­å®šã¨å°è¨ˆã®å†è¨ˆç®—
                 $this->resettingPriceAndSubtotal();
             }
         }
         return;
     }
     
-    // »ÅÆş²ÊÌÜ¡¢»ÅÆşÉôÉÊ¤Ë¤è¤ë¶èÊÌ¥Õ¥é¥°¤ÎÀßÄê¡Ê¥Á¥ã¡¼¥¸¡¢·ĞÈñ¡Ë
+    // ä»•å…¥ç§‘ç›®ã€ä»•å…¥éƒ¨å“ã«ã‚ˆã‚‹åŒºåˆ¥ãƒ•ãƒ©ã‚°ã®è¨­å®šï¼ˆãƒãƒ£ãƒ¼ã‚¸ã€çµŒè²»ï¼‰
     protected function setDistinctionFlag() {
         $messageCodeList = $this->messageCodeList;
         $divisionSubjectCode = $this->divisionSubjectCode;
@@ -534,10 +534,10 @@ abstract class estimateRowController {
                 case DEF_STOCK_SUBJECT_CODE_CHARGE:
                     switch ($classItemCode) {
                         case DEF_STOCK_ITEM_CODE_IMPORT_COST:
-                            $this->importCostFlag = true; // Í¢ÆşÈñÍÑ¥Õ¥é¥°
+                            $this->importCostFlag = true; // è¼¸å…¥è²»ç”¨ãƒ•ãƒ©ã‚°
                             break;
                         case DEF_STOCK_ITEM_CODE_TARIFF:
-                            $this->tariffFlag = true; // ´ØÀÇ¥Õ¥é¥°
+                            $this->tariffFlag = true; // é–¢ç¨ãƒ•ãƒ©ã‚°
                             break;
                         default:
                             break;
@@ -557,7 +557,7 @@ abstract class estimateRowController {
     }
 
 
-    // ¥á¥Ã¥»¡¼¥¸¤ÎÀèÆ¬¤ËÉ½¼¨¤¹¤ëÊ¸»úÎó¤òÀ¸À®¤¹¤ë¡§Çä¾åÊ¬Îà¡Ê»ÅÆş²ÊÌÜ¡Ë¡ÜÇä¾å¶èÊ¬¡Ê»ÅÆşÉôÉÊ¡Ë
+    // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å…ˆé ­ã«è¡¨ç¤ºã™ã‚‹æ–‡å­—åˆ—ã‚’ç”Ÿæˆã™ã‚‹ï¼šå£²ä¸Šåˆ†é¡ï¼ˆä»•å…¥ç§‘ç›®ï¼‰ï¼‹å£²ä¸ŠåŒºåˆ†ï¼ˆä»•å…¥éƒ¨å“ï¼‰
     protected function setPrefixOfMessage() {
         $divisionSubjectPrefix = '';
         $classItemPrefix = '';
@@ -576,7 +576,7 @@ abstract class estimateRowController {
         return $prefix;
     }
 
-    // Í¢ÆşÈñÍÑ¡¢´ØÀÇ¤Î½èÍı
+    // è¼¸å…¥è²»ç”¨ã€é–¢ç¨ã®å‡¦ç†
     public function chargeCalculate($conditionalTotal) {
         $monetary = $this->monetary;
         if ($monetary !== DEF_MONETARY_YEN) {
@@ -584,35 +584,35 @@ abstract class estimateRowController {
             return false;
         }
 
-        $quantity = $this->quantity; // ¿ôÎÌ
+        $quantity = $this->quantity; // æ•°é‡
 
         if ($this->percentInputFlag) {
-            // ¥Ñ¡¼¥»¥ó¥ÈÃÍ¤Î¼èÆÀ
+            // ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå€¤ã®å–å¾—
             $percent = $this->customerCompany;
-            // Ã±²Á¤ÎºÆ·×»»
+            // å˜ä¾¡ã®å†è¨ˆç®—
             $price = $percent * $conditionalTotal / $quantity;
 
-            // »ÅÆşÀè¤Î½ĞÎÏÃÍ¤ò¶õÇò¤Ë¤¹¤ë
+            // ä»•å…¥å…ˆã®å‡ºåŠ›å€¤ã‚’ç©ºç™½ã«ã™ã‚‹
             $this->customerCompany = null;
-            // ¥Ñ¡¼¥»¥ó¥ÈÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+            // ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
             $this->percent = $percent;
         } else {
             $price = $this->price;
         }
 
-        // ÄÌ²ß¤´¤È¤ÎÃ±²Á¤Î¾®¿ôÅÀ°Ê²¼¤Î·å¿ô¤ò¼èÆÀ
+        // é€šè²¨ã”ã¨ã®å˜ä¾¡ã®å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°ã‚’å–å¾—
         $decimalDigit = workSheetConst::PRICE_DECIMAL_DIGIT;
 
-        // ¾®¿ôÅÀÂè4·å°Ê²¼ÀÚ¤ê¼Î¤Æ
+        // å°æ•°ç‚¹ç¬¬4æ¡ä»¥ä¸‹åˆ‡ã‚Šæ¨ã¦
         $price = floor($price * pow(10, $decimalDigit[$monetary])) / pow(10, $decimalDigit[$monetary]);
         $price = number_format($price, 4, '.', '');
 
-        // ºÆ·×»»·ë²Ì¤ÇÃÖ´¹
+        // å†è¨ˆç®—çµæœã§ç½®æ›
         $this->price = $price;
         
-        $conversionRate = $this->conversionRate; // ¥Ş¥¹¥¿¡¼¾å¤ÎÄÌ²ß¥ì¡¼¥È
+        $conversionRate = $this->conversionRate; // ãƒã‚¹ã‚¿ãƒ¼ä¸Šã®é€šè²¨ãƒ¬ãƒ¼ãƒˆ
 
-        // ¾®·×¤ÎºÆ·×»»
+        // å°è¨ˆã®å†è¨ˆç®—
         $calculatedSubtotal = $price * $conversionRate * $quantity;
         $this->calculatedSubtotal = $calculatedSubtotal;
         $this->calculatedSubtotalJP = $calculatedSubtotal;
@@ -622,138 +622,138 @@ abstract class estimateRowController {
 
     //----------------------------------------------------------------------------------------------------
     
-    // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó´Ø¿ô
+    // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³é–¢æ•°
 
     //----------------------------------------------------------------------------------------------------
 
-    // Ç¼´ü¤Î¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó
+    // ç´æœŸã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³
     protected function validateDelivery() {
         $delivery = $this->delivery;
         if (isset($delivery) && $delivery !=='') {
             if (preg_match("/\A(\d{4})\/(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\z/", $delivery)) {
                 list ($year, $month, $day) = explode('/', $delivery);
                 if (!checkdate($month, $day, $year)) {
-                    // Â¸ºß¤·¤Ê¤¤ÆüÉÕ¥¨¥é¡¼
+                    // å­˜åœ¨ã—ãªã„æ—¥ä»˜ã‚¨ãƒ©ãƒ¼
                     $this->messageCode['delivery'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
                 }
             } else {
-                // ÆşÎÏ·Á¼°ÉÔÀµ
+                // å…¥åŠ›å½¢å¼ä¸æ­£
                 $this->messageCode['delivery'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // É¬¿Ü¥¨¥é¡¼
+            // å¿…é ˆã‚¨ãƒ©ãƒ¼
             $this->messageCode['delivery'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
 
-    // ¿ôÎÌ¤ÎÆşÎÏÃÍ¤ò¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤¹¤ë
+    // æ•°é‡ã®å…¥åŠ›å€¤ã‚’ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã™ã‚‹
     protected function validateQuantity() {
         $quantity = $this->quantity;
-        // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (isset($quantity) && $quantity !=='') {
             if(!preg_match("/\A\d+\z/", $quantity) || $quantity <= 0) {
-                // ¼«Á³¿ô¤Ç¤Ê¤¤¾ì¹ç¤Ï¥¨¥é¡¼½èÍı
+                // è‡ªç„¶æ•°ã§ãªã„å ´åˆã¯ã‚¨ãƒ©ãƒ¼å‡¦ç†
                 $this->messageCode['quantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else if ((int)$quantity > DEF_DB_INTEGER_MAX_LIMIT) {
-                // ¥ª¡¼¥Ğ¡¼¥Õ¥í¡¼¤¹¤ë¾ì¹ç¤Ï¥¨¥é¡¼½èÍı
+                // ã‚ªãƒ¼ãƒãƒ¼ãƒ•ãƒ­ãƒ¼ã™ã‚‹å ´åˆã¯ã‚¨ãƒ©ãƒ¼å‡¦ç†
                 $this->messageCode['quantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            $this->messageCode['quantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // É¬¿Ü¥Á¥§¥Ã¥¯
+            $this->messageCode['quantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // å¿…é ˆãƒã‚§ãƒƒã‚¯
         }
         return true;
     }
 
-    // Ã±²Á¤ÎÆşÎÏÃÍ¤ò¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤¹¤ë
+    // å˜ä¾¡ã®å…¥åŠ›å€¤ã‚’ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã™ã‚‹
     protected function validatePrice() {
         $price = $this->price;
-        // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (isset($price) && $price !=='') {
-            if (!preg_match("/\A-?\d{0,14}(\.[0-9]+)?\z/", $price)) { // À°¿ôÉô¤¬14·å¤Ş¤ÇµöÍÆ
-                // ¥¨¥é¡¼½èÍı
+            if (!preg_match("/\A-?\d{0,14}(\.[0-9]+)?\z/", $price)) { // æ•´æ•°éƒ¨ãŒ14æ¡ã¾ã§è¨±å®¹
+                // ã‚¨ãƒ©ãƒ¼å‡¦ç†
                 $this->messageCode['price'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // Ì¤ÆşÎÏ¤Î¾ì¹ç¤Ï0¤ò¥»¥Ã¥È¤¹¤ë
+            // æœªå…¥åŠ›ã®å ´åˆã¯0ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
             $this->price = 0;
         }
 
         return true;
     }
 
-    // ÄÌ²ß
+    // é€šè²¨
     protected function validateMonetary() {
         $monetary = $this->monetary;
         if (!isset($monetary) || $monetary === '') {
-            // ¼èÆÀ¤Ç¤­¤Ê¤«¤Ã¤¿¾ì¹ç¤ÏJP¤È¤·¤Æ½èÍı¤ò¤¹¤ë
+            // å–å¾—ã§ããªã‹ã£ãŸå ´åˆã¯JPã¨ã—ã¦å‡¦ç†ã‚’ã™ã‚‹
             $this->monetary = DEF_MONETARY_YEN;
         }
         return true;
     }
 
-    // Çä¾åÊ¬Îà¡¢»ÅÆş²ÊÌÜ
+    // å£²ä¸Šåˆ†é¡ã€ä»•å…¥ç§‘ç›®
     protected function validateDivisionSubject() {
         $divisionSubject = $this->divisionSubject;
         if (isset($divisionSubject) && $divisionSubject !=='') {
-            // Ê¸»úÎó¥Á¥§¥Ã¥¯
+            // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
             if (preg_match("/\A[0-9]+:.*\z/", $divisionSubject)) {
                 list ($divisionSubjectCode, $divisionSubjectName) = explode(':', $divisionSubject);
                 $masterData = static::$divisionSubjectCodeMaster;
 
                 $this->divisionSubjectCode = (int)$divisionSubjectCode;
 
-                // ¥Ş¥¹¥¿¡¼¥Á¥§¥Ã¥¯
+                // ãƒã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯
                 if (!isset($masterData[(int)$divisionSubjectCode])) {
-                    // ¥Ş¥¹¥¿¡¼¥Á¥§¥Ã¥¯¥¨¥é¡¼
+                    // ãƒã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼
                     $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
 
             } else {
-                // ½ñ¼°¥¨¥é¡¼
+                // æ›¸å¼ã‚¨ãƒ©ãƒ¼
                 $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // É¬¿Ü¥¨¥é¡¼
+            // å¿…é ˆã‚¨ãƒ©ãƒ¼
             $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
 
-    // Çä¾å¶èÊ¬¡¢»ÅÆşÉôÉÊ
+    // å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥éƒ¨å“
     protected function validateClassItem() {
         $classItem = $this->classItem;
-        // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (isset($classItem) && $classItem !=='') {
             if (preg_match("/\A[0-9]+:.*\z/", $classItem)) {
                 list ($classItemCode, $classItemName) = explode(':', $classItem);
                 $masterData = static::$divisionSubjectCodeMaster;
                 $divisionSubjectCode = $this->divisionSubjectCode;
                 $this->classItemCode = (int)$classItemCode;
-                // ¥Ş¥¹¥¿¡¼¥Á¥§¥Ã¥¯
+                // ãƒã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯
                 if (!isset($masterData[$divisionSubjectCode][(int)$classItemCode])) {
                     $this->messageCode['classItem'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
             } else {
-                // ÆşÎÏ·Á¼°ÉÔÀµ
+                // å…¥åŠ›å½¢å¼ä¸æ­£
                 $this->messageCode['classItem'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // É¬¿Ü¥¨¥é¡¼
+            // å¿…é ˆã‚¨ãƒ©ãƒ¼
             $this->messageCode['classItem'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
 
 
-    // ÄÌ²ß¥ì¡¼¥È¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+    // é€šè²¨ãƒ¬ãƒ¼ãƒˆã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
     protected function validateConversionRate() {
         $conversionRate = $this->conversionRate;
         if (!$conversionRate) {
             $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
             return true;
         }
-        if (preg_match("/\A\d{0,15}(\.[0-9]+)?\z/", $conversionRate) && $conversionRate > 0) { // À°¿ôÉôÊ¬¤¬15¥±¥¿°ÊÆâ¤«³ÎÇ§
+        if (preg_match("/\A\d{0,15}(\.[0-9]+)?\z/", $conversionRate) && $conversionRate > 0) { // æ•´æ•°éƒ¨åˆ†ãŒ15ã‚±ã‚¿ä»¥å†…ã‹ç¢ºèª
             return true;
         } else {
             $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
@@ -762,7 +762,7 @@ abstract class estimateRowController {
         return true;
     }
 
-    // ¸ÜµÒÀè
+    // é¡§å®¢å…ˆ
     protected function validateCustomerCompany() {
         $customerCompany = $this->customerCompany;
         if (isset($customerCompany) && $customerCompany !=='') {
@@ -770,18 +770,18 @@ abstract class estimateRowController {
                 list ($customerCompanyCode, $customerCompanyName) = explode(':', $customerCompany);
                 $masterData = static::$customerCompanyCodeMaster;
                 $this->customerCompanyCode = (string)$customerCompanyCode;
-                // ¥Ş¥¹¥¿¡¼¥Á¥§¥Ã¥¯
+                // ãƒã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯
                 if (!isset($masterData[$customerCompanyCode])) {
                     $this->messageCode['customerCompany'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
                 $display = $masterData[$customerCompanyCode]['shortName'];
                 $this->customerCompany = $customerCompanyCode. ':'. $display;
             } else {
-                // ÆşÎÏ·Á¼°ÉÔÀµ
+                // å…¥åŠ›å½¢å¼ä¸æ­£
                 $this->messageCode['customerCompany'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // ¶õÍó¤Î¾ì¹ç¤Ï'0000'¤ò¥»¥Ã¥È
+            // ç©ºæ¬„ã®å ´åˆã¯'0000'ã‚’ã‚»ãƒƒãƒˆ
             $customerCompanyCode = (string)DEF_DISPLAY_COMPANY_CODE_OTHERS;
             $this->customerCompanyCode = $customerCompanyCode;
             $masterData = static::$customerCompanyCodeMaster;
@@ -791,30 +791,30 @@ abstract class estimateRowController {
         return true;
     }
 
-    // ¾®·×¤Î¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤ò¹Ô¤¦
+    // å°è¨ˆã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã†
     protected function validateSubtotal() {
-        // ¸½ÃÏÄÌ²ß¤ÎºÆ·×»»·ë²Ì¤ò¼èÆÀ¡ÊDB¤ËÅĞÏ¿¤¹¤ëÃÍ¡Ë
+        // ç¾åœ°é€šè²¨ã®å†è¨ˆç®—çµæœã‚’å–å¾—ï¼ˆDBã«ç™»éŒ²ã™ã‚‹å€¤ï¼‰
         $subtotal = $this->calculatedSubtotal;
 
-        // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (!preg_match("/\A-?\d{0,14}(\.[0-9]+)?\z/", $subtotal)) {
-            // ¥¨¥é¡¼½èÍı
+            // ã‚¨ãƒ©ãƒ¼å‡¦ç†
             $this->messageCode['subtotal'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
         }
 
         return true;
     }
     
-    // ÂĞ¾İ¥¨¥ê¥¢¤Î¹ÔÈÏ°Ï¤ò¼èÆÀ¤¹¤ë(³«»Ï¹Ô¤È½ªÎ»¹Ô)
+    // å¯¾è±¡ã‚¨ãƒªã‚¢ã®è¡Œç¯„å›²ã‚’å–å¾—ã™ã‚‹(é–‹å§‹è¡Œã¨çµ‚äº†è¡Œ)
     protected function getRowRangeOfTargetArea($addressListOfCellName) {
-        // ÂĞ¾İ¥¨¥ê¥¢¤Î¥»¥ëÌ¾¾Î¼èÆÀ
+        // å¯¾è±¡ã‚¨ãƒªã‚¢ã®ã‚»ãƒ«åç§°å–å¾—
         $headerNameList = $this->headerNameList;
         $resultNameList = $this->resultNameList;
-        // ¥Ø¥Ã¥À¡¼¤ª¤è¤Ó¥Õ¥Ã¥¿¡¼¡Ê·×»»·ë²Ì¡Ë¤Î¥»¥ëÌ¾¾Î¤ò1¤Ä¥»¥Ã¥È¤¹¤ë
+        // ãƒ˜ãƒƒãƒ€ãƒ¼ãŠã‚ˆã³ãƒ•ãƒƒã‚¿ãƒ¼ï¼ˆè¨ˆç®—çµæœï¼‰ã®ã‚»ãƒ«åç§°ã‚’1ã¤ã‚»ãƒƒãƒˆã™ã‚‹
         $upperCellName = $this->getFirstElement($headerNameList);
         $belowCellName = $this->getFirstElement($resultNameList);
 
-        // ¥»¥ëÌ¾¾Î¤«¤é¹ÔÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
+        // ã‚»ãƒ«åç§°ã‹ã‚‰è¡Œç•ªå·ã‚’å–å¾—ã™ã‚‹
         $upperRow = $this->getRowNumberFromCellName($addressListOfCellName, $upperCellName);
         $belowRow = $this->getRowNumberFromCellName($addressListOfCellName, $belowCellName);
         $rows = array(
@@ -824,7 +824,7 @@ abstract class estimateRowController {
         return $rows;
     }
 
-    // ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¡¼¤«¤éÇ¼´ü¤ËÂĞ±ş¤¹¤ëÄÌ²ß¥ì¡¼¥È¤ò¼èÆÀ¤¹¤ë
+    // é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ãƒ¼ã‹ã‚‰ç´æœŸã«å¯¾å¿œã™ã‚‹é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚’å–å¾—ã™ã‚‹
     protected function getConversionRateForDelivery() {
         $monetary = $this->monetary;
         $delivery = $this->delivery;
@@ -839,7 +839,7 @@ abstract class estimateRowController {
                 $acquiredRate = null;
             } else {
                 foreach ($conversionRateMaster[$monetary] as $data) {
-                    // Ç¼ÉÊÆü¤ËÂĞ±ş¤¹¤ëÄÌ²ß¥ì¡¼¥È¤ò¼èÆÀ¤¹¤ë¡ÊDB¤«¤é¼èÆÀ¤·¤¿¥ê¥¹¥ÈÆâ¤Î¸¡º÷¡Ë
+                    // ç´å“æ—¥ã«å¯¾å¿œã™ã‚‹é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚’å–å¾—ã™ã‚‹ï¼ˆDBã‹ã‚‰å–å¾—ã—ãŸãƒªã‚¹ãƒˆå†…ã®æ¤œç´¢ï¼‰
                     if (strtotime($delivery) <= strtotime($data['endDate']) 
                         && strtotime($data['startDate']) <= strtotime($delivery)) {
                         $acquiredRate = $data['conversionRate'];
@@ -853,7 +853,7 @@ abstract class estimateRowController {
         return $acquiredRate;
     }
 
-    // ÄÌ²ß¥ì¡¼¥È¤Îº¹Ê¬¥Ç¡¼¥¿¤òºîÀ®¤¹¤ë
+    // é€šè²¨ãƒ¬ãƒ¼ãƒˆã®å·®åˆ†ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã™ã‚‹
     protected function makeDifferenceData() {
         $delivery = $this->delivery;
         $monetary = $this->monetary;

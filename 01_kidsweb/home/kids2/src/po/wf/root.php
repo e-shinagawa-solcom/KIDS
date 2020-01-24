@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¶¦ÄÌ  ¾µÇ§¥ë¡¼¥È
+*       å…±é€š  æ‰¿èªãƒ«ãƒ¼ãƒˆ
 *
 *
 *       @package    K.I.D.S.
@@ -13,20 +13,20 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦³ÆÅĞÏ¿¤ª¤è¤Ó½¤Àµ²èÌÌ¾å¤Î¾µÇ§¥ë¡¼¥È°ìÍ÷¤òÀ¸À®
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»å„ç™»éŒ²ãŠã‚ˆã³ä¿®æ­£ç”»é¢ä¸Šã®æ‰¿èªãƒ«ãƒ¼ãƒˆä¸€è¦§ã‚’ç”Ÿæˆ
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
@@ -45,31 +45,31 @@ else
 	$aryData = $_GET;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]              = "null:numenglish(32,32)";
 
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->strTableName = "m_WorkflowOrder";
 
 $lngUserCode = $objAuth->UserCode;
 
-// ¥æ¡¼¥¶¡¼¤ÎÂ°¤¹¤ë¥°¥ë¡¼¥×¤ò´Ş¤à¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø
-// ¤«¤Ä(EXCEPT)
-// ¥æ¡¼¥¶¡¼¤¬Â°¤¹¤ë¥ï¡¼¥¯¥Õ¥í¡¼½çÈÖ ¤Ş¤¿¤Ï ¥æ¡¼¥¶¡¼°Ê¾å¤Î¸¢¸Â¤ò¤â¤Ä¥æ¡¼¥¶¡¼¤ÎÂ°¤¹¤ë¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø
-// °Ê¾å¤Î¾ò·ï¤Î¥ï¡¼¥¯¥Õ¥í¡¼¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë¥¯¥¨¥êÀ¸À®
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®å±ã™ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—ã‚’å«ã‚€ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åº
+// ã‹ã¤(EXCEPT)
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒå±ã™ã‚‹ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †ç•ª ã¾ãŸã¯ ãƒ¦ãƒ¼ã‚¶ãƒ¼ä»¥ä¸Šã®æ¨©é™ã‚’ã‚‚ã¤ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®å±ã™ã‚‹ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åº
+// ä»¥ä¸Šã®æ¡ä»¶ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹ã‚¯ã‚¨ãƒªç”Ÿæˆ
 $aryQuery[] = "SELECT DISTINCT ON ( w.lngWorkflowOrderCode ) w.lngWorkflowOrderCode ";
 $aryQuery[] = "FROM m_WorkflowOrder w, m_GroupRelation gr ";
 $aryQuery[] = "WHERE gr.lngUserCode = $lngUserCode ";
@@ -116,7 +116,7 @@ if ( $lngResultNum > 0 )
 
 	$strQuery = join ( "", $aryQuery );
 
-	// ¥Ç¡¼¥¿¤Î¼èÆÀ¤È¥ª¥Ö¥¸¥§¥¯¥È¤Ø¤Î¥»¥Ã¥È
+	// ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ã‚»ãƒƒãƒˆ
 	$lngResultNum = $objMaster->setMasterTableData( $strQuery, $objDB );
 }
 
@@ -125,48 +125,48 @@ unset ( $aryQuery );
 if ( $lngResultNum > 0 )
 {
 	///////////////////////////////////////////////////////////////////
-	// ¥Æ¡¼¥Ö¥ëÀ¸À®
+	// ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 	///////////////////////////////////////////////////////////////////
-	// ·ë²Ì¹ÔÉ½¼¨
+	// çµæœè¡Œè¡¨ç¤º
 	$count = 0;
 
-	// lngWorkflowOrderCode ¿ô¡¢½é´ü²½
+	// lngWorkflowOrderCode æ•°ã€åˆæœŸåŒ–
 	$codeCount = -1;
 
-	// ¥ì¥³¡¼¥ÉÉ½¼¨½èÍı
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰è¡¨ç¤ºå‡¦ç†
 	foreach ( $objMaster->aryData as $record )
 	{
-		// lngWorkflowOrderNo ¿ô(¤Ş¤È¤á¤ë¹Ô¿ô)¡¢¥¤¥ó¥¯¥ê¥á¥ó¥È
+		// lngWorkflowOrderNo æ•°(ã¾ã¨ã‚ã‚‹è¡Œæ•°)ã€ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		$noCount++;
 
-		// ºÇ½é¤Î¥ï¡¼¥¯¥Õ¥í¡¼½ç½øÈÖ¹æ¤Î¾ì¹ç¡¢¥ï¡¼¥¯¥Õ¥í¡¼Ì¾¤È¥°¥ë¡¼¥×Ì¾¤òÉ½¼¨
+		// æœ€åˆã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºç•ªå·ã®å ´åˆã€ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼åã¨ã‚°ãƒ«ãƒ¼ãƒ—åã‚’è¡¨ç¤º
 		if ( $record["lngworkfloworderno"] == 1 )
 		{
-			// lngWorkflowOrderCode ¿ô¡¢¥¤¥ó¥¯¥ê¥á¥ó¥È
+			// lngWorkflowOrderCode æ•°ã€ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 			$codeCount++;
 
-			// lngWorkflowOrderNo ¿ô(¤Ş¤È¤á¤ë¹Ô¿ô)¡¢½é´ü²½
+			// lngWorkflowOrderNo æ•°(ã¾ã¨ã‚ã‚‹è¡Œæ•°)ã€åˆæœŸåŒ–
 			$noCount = 0;
 
 			 $aryParts["strResultHtml"] .= "	<tr id=\"TD" . $codeCount . "_" . $noCount . "\" class=\"Segs\">\n";
 			 //$aryParts["strResultHtml"] .= "	<tr id=\"TD" . $codeCount . "_" . $noCount . "\" class=\"Segs\" onclick=\"fncSelectSomeTrColor( this , 'TD" . $codeCount . "_' , _%count" . $record["lngworkflowordercode"] . "%_ );\" style=\"background:" . $record["strgroupdisplaycolor"] . ";\">\n";
 
-			// ¥«¥é¥àÀ¸À®
+			// ã‚«ãƒ©ãƒ ç”Ÿæˆ
 			$aryParts["strResultHtml"] .= "		<td nowrap rowspan=_%count" . $record["lngworkflowordercode"] . "%_>" . fncHTMLSpecialChars( $record["strworkflowordername"] ) . "</td>\n";
 			$aryParts["strResultHtml"] .= "		<td nowrap rowspan=_%count" . $record["lngworkflowordercode"] . "%_>" . fncHTMLSpecialChars( $record["strgroupdisplayname"] ) . "</td>\n";
 		}
 
-		// ¤½¤ì°Ê³°¤Î¾ì¹ç¡¢<tr>¤Î¤ß¤òÉ½¼¨
+		// ãã‚Œä»¥å¤–ã®å ´åˆã€<tr>ã®ã¿ã‚’è¡¨ç¤º
 		else
 		{
 			 $aryParts["strResultHtml"] .= "	<tr id=\"TD" . $codeCount . "_" . $noCount . "\" class=\"Segs\">\n";
 			 //$aryParts["strResultHtml"] .= "	<tr id=\"TD" . $codeCount . "_" . $noCount . "\" class=\"Segs\" onclick=\"fncSelectSomeTrColor( this , 'TD" . $codeCount . "_' , _%count" . $record["lngworkflowordercode"] . "%_ );\" style=\"background:" . $record["strgroupdisplaycolor"] . ";\">\n";
 		}
 
-		// ¥«¥é¥à¤ÎÉ½¼¨
+		// ã‚«ãƒ©ãƒ ã®è¡¨ç¤º
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["lngworkfloworderno"] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["struserdisplayname"] . "</td>\n";
-		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["lnglimitdays"] . "Æü´Ö</td>\n";
+		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["lnglimitdays"] . "æ—¥é–“</td>\n";
 
 		$aryParts["strResultHtml"] .= "	</tr>\n";
 		$aryCount[$record["lngworkflowordercode"]] = $record["lngworkfloworderno"];
@@ -175,7 +175,7 @@ if ( $lngResultNum > 0 )
 
 	$aryKeys = array_keys ( $aryCount );
 
-	// ROWSPAN Ëä¤á¹ş¤ß
+	// ROWSPAN åŸ‹ã‚è¾¼ã¿
 	foreach ( $aryKeys as $lngworkflowordercode )
 	{
 		$aryParts["strResultHtml"] = preg_replace ( "/_%count$lngworkflowordercode%_/", $aryCount[$lngworkflowordercode], $aryParts["strResultHtml"] );
@@ -184,11 +184,11 @@ if ( $lngResultNum > 0 )
 }
 else
 {
-	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . ( count ( $objMaster->aryColumnName ) + 1 ) . ">·ë²ÌÌµ¤·¡£</th></tr>";
+	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . ( count ( $objMaster->aryColumnName ) + 1 ) . ">çµæœç„¡ã—ã€‚</th></tr>";
 }
 
 
-// ¥«¥é¥à¹ÔHTML¼èÆÀ
+// ã‚«ãƒ©ãƒ è¡ŒHTMLå–å¾—
 for ( $i = 0; $i < 5; $i++ )
 {
 	$aryParts["strColumnHtml"] .= "		<td id=\"Column$i\" nowrap>Column$i</td>\n";
@@ -204,7 +204,7 @@ $aryParts["lngLanguageCode"] =& $_COOKIE["lngLanguageCode"];
 $aryParts["strTableName"]    = $objMaster->strTableName;
 $aryParts["lngColumnNum"]    = 5;
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 //echo getArrayTable( $aryParts, "TABLE" );exit;
 $objTemplate->getTemplate( "/po/wf/parts.tmpl" );

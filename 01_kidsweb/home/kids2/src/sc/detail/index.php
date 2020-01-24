@@ -2,30 +2,30 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       Çä¾å´ÉÍı  ¾ÜºÙ
+ *       å£²ä¸Šç®¡ç†  è©³ç´°
  *
- *       ½èÍı³µÍ×
- *         ¡¦»ØÄêÇä¾åÈÖ¹æ¥Ç¡¼¥¿¤Î¾ÜºÙÉ½¼¨½èÍı
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æŒ‡å®šå£²ä¸Šç•ªå·ãƒ‡ãƒ¼ã‚¿ã®è©³ç´°è¡¨ç¤ºå‡¦ç†
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 
 require SRC_ROOT . "sc/cmn/lib_scs.php";
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ($_GET) {
     $aryData = $_GET;
@@ -33,46 +33,46 @@ if ($_GET) {
     $aryData = $_POST;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
-// ¸¢¸Â³ÎÇ§
-// 602 Çä¾å´ÉÍı¡ÊÇä¾å¸¡º÷¡Ë
+// æ¨©é™ç¢ºèª
+// 602 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šæ¤œç´¢ï¼‰
 if (!fncCheckAuthority(DEF_FUNCTION_SC2, $objAuth)) {
-    fncOutputError(9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
-// 611 Çä¾å´ÉÍı¡Ê¾ÜºÙÉ½¼¨¡Ë
+// 611 å£²ä¸Šç®¡ç†ï¼ˆè©³ç´°è¡¨ç¤ºï¼‰
 if (!fncCheckAuthority(DEF_FUNCTION_SC11, $objAuth)) {
-    fncOutputError(9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
 $lngSalesNo = $aryData["lngSalesNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
 
-// »ØÄêÇä¾åÈÖ¹æ¤ÎÇä¾å¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+// æŒ‡å®šå£²ä¸Šç•ªå·ã®å£²ä¸Šãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 $strQuery = fncGetSalesHeadNoToInfoSQL($lngSalesNo, $lngRevisionNo);
 
-// ¾ÜºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+// è©³ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
         $aryResult = $objDB->fetchArray($lngResultID, 0);
     } else {
-        fncOutputError(603, DEF_ERROR, "³ºÅö¥Ç¡¼¥¿¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿", true, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+        fncOutputError(603, DEF_ERROR, "è©²å½“ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ", true, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
     }
 } else {
-    fncOutputError(603, DEF_ERROR, "¥Ç¡¼¥¿¤¬°Û¾ï¤Ç¤¹", true, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(603, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãŒç•°å¸¸ã§ã™", true, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 $objDB->freeResult($lngResultID);
 
-// ¼èÆÀ¥Ç¡¼¥¿¤ÎÄ´À°
+// å–å¾—ãƒ‡ãƒ¼ã‚¿ã®èª¿æ•´
 $aryNewResult = fncSetSalesHeadTabelData($aryResult);
 
-////////// ÌÀºÙ¹Ô¤Î¼èÆÀ ////////////////////
-// »ØÄêÇä¾åÈÖ¹æ¤ÎÇä¾åÌÀºÙ¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+////////// æ˜ç´°è¡Œã®å–å¾— ////////////////////
+// æŒ‡å®šå£²ä¸Šç•ªå·ã®å£²ä¸Šæ˜ç´°ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 $strQuery = fncGetSalesDetailNoToInfoSQL($lngSalesNo, $lngRevisionNo);
-// ÌÀºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+// æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum) {
@@ -80,12 +80,12 @@ if ($lngResultNum) {
         $aryDetailResult[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    $strMessage = fncOutputError(603, DEF_WARNING, "Çä¾åÈÖ¹æ¤ËÂĞ¤¹¤ëÌÀºÙ¾ğÊó¤¬¸«¤Ä¤«¤ê¤Ş¤»¤ó¡£", false, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    $strMessage = fncOutputError(603, DEF_WARNING, "å£²ä¸Šç•ªå·ã«å¯¾ã™ã‚‹æ˜ç´°æƒ…å ±ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚", false, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 $objDB->freeResult($lngResultID);
 
-// ÌÀºÙ¾ğÊó¤Î½ĞÎÏ
+// æ˜ç´°æƒ…å ±ã®å‡ºåŠ›
 for ($i = 0; $i < count($aryDetailResult); $i++) {
 
     $aryNewDetailResult[$i] = fncSetSalesDetailTabelData($aryDetailResult[$i], $aryNewResult);
@@ -93,29 +93,29 @@ for ($i = 0; $i < count($aryDetailResult); $i++) {
     $aryNewDetailResult[$i]["lngmonetaryunitcode"] = $aryNewResult["strmonetaryunitname"];
     $aryNewDetailResult[$i]["curconversionrate"] = $aryNewResult["curconversionrate"];
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("sc/detail/sc_parts_detail.html");
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
     $objTemplate->replace($aryNewDetailResult[$i]);
     $objTemplate->complete();
 
-    // HTML½ĞÎÏ
+    // HTMLå‡ºåŠ›
     $aryDetailTable[] = $objTemplate->strTemplate;
 }
 
 $aryNewResult["strDetailTable"] = implode("\n", $aryDetailTable);
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("sc/detail/sc_detail.html");
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace($aryNewResult);
 $objTemplate->complete();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 $objDB->close();

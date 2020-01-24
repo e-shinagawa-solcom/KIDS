@@ -2,19 +2,19 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¼õÃí´ÉÍı  ¥á¥Ë¥å¡¼²èÌÌ
+*       å—æ³¨ç®¡ç†  ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 *
-*       ½èÍı³µÍ×
-*         ¡¦¥á¥Ë¥å¡¼²èÌÌ¤òÉ½¼¨
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã‚’è¡¨ç¤º
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-	// ÆÉ¤ß¹ş¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
 	require (LIB_FILE);
 	
@@ -26,28 +26,28 @@
 	$aryData["strSessionID"] = $_POST["strSessionID"];
 
 	
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 	
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $_POST["strSessionID"], $objAuth, $objDB );
 
 
-	// 400	¼õÃí´ÉÍı
+	// 400	å—æ³¨ç®¡ç†
 	if ( !fncCheckAuthority( DEF_FUNCTION_SO0, $objAuth ) )
 	{
-	        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 	
-	// 402 ¼õÃí´ÉÍı¡Ê¼õÃí¸¡º÷¡Ë
+	// 402 å—æ³¨ç®¡ç†ï¼ˆå—æ³¨æ¤œç´¢ï¼‰
 	if ( fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 	{
 		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 
-	// ¥Ø¥ë¥×ÂĞ±ş
+	// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_SO0;
 
 	echo fncGetReplacedHtml( "so/parts.tmpl", $aryData ,$objAuth );

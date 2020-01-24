@@ -1,18 +1,18 @@
 <?php
 
-require_once ( 'conf.inc' );		// ÀßÄêÆÉ¤ß¹ş¤ß
-require_once ( LIB_FILE );			// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
-require_once ( LIB_DEBUGFILE );			// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+require_once ( 'conf.inc' );		// è¨­å®šèª­ã¿è¾¼ã¿
+require_once ( LIB_FILE );			// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
+require_once ( LIB_DEBUGFILE );			// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 
-require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php"); // ¥ï¡¼¥¯¥·¡¼¥È½èÍıÍÑÄê¿ô¥Õ¥¡¥¤¥ë
+require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php"); // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå‡¦ç†ç”¨å®šæ•°ãƒ•ã‚¡ã‚¤ãƒ«
 include_once (LIB_DEBUGFILE);
-// ¸«ÀÑ¸¶²ÁDB¥Ç¡¼¥¿½èÍı¥¯¥é¥¹
+// è¦‹ç©åŸä¾¡DBãƒ‡ãƒ¼ã‚¿å‡¦ç†ã‚¯ãƒ©ã‚¹
 class estimateDB extends clsDB {
     public function __construct() {
         parent::__construct();
     }
 
-    // Å¬ÍÑ¥ì¡¼¥È¤Î¼èÆÀ(¼ÒÆâ¥ì¡¼¥È)
+    // é©ç”¨ãƒ¬ãƒ¼ãƒˆã®å–å¾—(ç¤¾å†…ãƒ¬ãƒ¼ãƒˆ)
     public function getTemporaryRateList() {        
         if (!$this->isOpen()) {
 			return false;
@@ -20,7 +20,7 @@ class estimateDB extends clsDB {
             $today = date('Y/m/d');
             $thisMonthfirstDay = date('Y/m/1');
             $endDay = date('Y/m/t', strtotime($thisMonthfirstDay . "+6 month"));
-            $monetaryRateCode = DEF_MONETARY_RATE_CODE_COMPANY_LOCAL; // ¼ÒÆâ¥ì¡¼¥È
+            $monetaryRateCode = DEF_MONETARY_RATE_CODE_COMPANY_LOCAL; // ç¤¾å†…ãƒ¬ãƒ¼ãƒˆ
     
             $strQuery = "SELECT";
             $strQuery .= " lngmonetaryunitcode,";
@@ -29,7 +29,7 @@ class estimateDB extends clsDB {
             $strQuery .= " dtmapplyenddate";
             $strQuery .= " FROM m_monetaryrate";
     
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
     
             for ($i = 0; $i < $queryResult[1]; ++$i) {
                 $result = pg_fetch_array($queryResult[0], $i, PGSQL_ASSOC);
@@ -46,14 +46,14 @@ class estimateDB extends clsDB {
         }
     }
 
-    // ÄÌ²ßÌ¾¾Î¼èÆÀ
+    // é€šè²¨åç§°å–å¾—
     public function getMonetaryUnitList() {
         if (!$this->isOpen()) {
 			return false;
 		} else {
             $strQuery = "SELECT lngmonetaryunitcode, strmonetaryunitname FROM m_monetaryunit";
         }
-        $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
+        $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
     
         for ($i = 0; $i < $queryResult[1]; ++$i) {
             $result = pg_fetch_array($queryResult[0], $i, PGSQL_ASSOC);
@@ -64,12 +64,12 @@ class estimateDB extends clsDB {
         return $monetaryUnitList;
     }
     
-    // ¸ÜµÒÀè¡¢»ÅÆşÀè¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¼èÆÀ
+    // é¡§å®¢å…ˆã€ä»•å…¥å…ˆãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿å–å¾—
     public function getCustomerCompanyCodeList($areaCode) {
         if (!$this->isOpen()) {
             return false;
         } else {
-            $orderAttributeArray = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA; // Çä¾å¡¢»ÅÆş
+            $orderAttributeArray = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA; // å£²ä¸Šã€ä»•å…¥
             foreach ($orderAttributeArray as $key => $val) {
                 if($val[$areaCode] === true) {
                     $orderAttribute = $key;
@@ -102,7 +102,7 @@ class estimateDB extends clsDB {
             }
             $strQuery .= " ORDER BY mc.strcompanydisplaycode";
 
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
 
             if ($queryResult[1]) {
                 for ($i = 0; $i < $queryResult[1]; ++$i) {
@@ -125,9 +125,9 @@ class estimateDB extends clsDB {
     }
 
     /**
-    *	»ÈÍÑ²ÄÇ½¤ÊÈ¯Ãí¥³¡¼¥É¤òÈ¯ÈÖ¤¹¤ë
+    *	ä½¿ç”¨å¯èƒ½ãªç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã‚’ç™ºç•ªã™ã‚‹
     *	
-    *   @return string $orderCode      È¯Ãí¥³¡¼¥É
+    *   @return string $orderCode      ç™ºæ³¨ã‚³ãƒ¼ãƒ‰
     *   
     */
     public function getOrderCode() {
@@ -137,13 +137,13 @@ class estimateDB extends clsDB {
             $thisMonth = date('Ym');
             $strQuery = "SELECT * FROM m_order WHERE strordercode LIKE '". $thisMonth. "%' ORDER BY strordercode DESC"; 
             list($resultID, $resultNumber) = fncQuery($strQuery, $this);
-            // ¼èÆÀ¤Ç¤­¤¿¾ì¹ç
+            // å–å¾—ã§ããŸå ´åˆ
             if (0 < $resultNumber) {
                 $result = pg_fetch_object($resultID, 0);
                 $maxOrderCode = $result->strordercode;
-                // ºÇÂç¤ÎÈ¯Ãí¥³¡¼¥É¤Ë1¤òÂ­¤¹
+                // æœ€å¤§ã®ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã«1ã‚’è¶³ã™
                 $orderCode = (string)((int)$maxOrderCode + 1);
-            // Åö·î¤ËÈ¯¹Ô¤µ¤ì¤¿È¯ÃíÈÖ¹æ¤ò¼èÆÀ¤Ç¤­¤Ê¤«¤Ã¤¿¾ì¹ç¤Ï001¤«¤éºÎÈÖ¤¹¤ë
+            // å½“æœˆã«ç™ºè¡Œã•ã‚ŒãŸç™ºæ³¨ç•ªå·ã‚’å–å¾—ã§ããªã‹ã£ãŸå ´åˆã¯001ã‹ã‚‰æ¡ç•ªã™ã‚‹
             } else {
                 $orderCode = $thisMonth.'001';
             }
@@ -153,9 +153,9 @@ class estimateDB extends clsDB {
     }
 
     /**
-    *	»ÈÍÑ²ÄÇ½¤Ê¼õÃí¥³¡¼¥É¤òÈ¯ÈÖ¤¹¤ë
+    *	ä½¿ç”¨å¯èƒ½ãªå—æ³¨ã‚³ãƒ¼ãƒ‰ã‚’ç™ºç•ªã™ã‚‹
     *	
-    *   @return string $reviceCode      ¼õÃí¥³¡¼¥É
+    *   @return string $reviceCode      å—æ³¨ã‚³ãƒ¼ãƒ‰
     *   
     */
     public function getReceiveCode() {
@@ -168,11 +168,11 @@ class estimateDB extends clsDB {
             if (0 < $resultNumber) {
                 $result = pg_fetch_object($resultID, 0);
                 $maxReceiveCode = $result->strreceivecode;
-                // ºÇÂç¤Î¼õÃí¥³¡¼¥É¤Ë1¤òÂ­¤¹
+                // æœ€å¤§ã®å—æ³¨ã‚³ãƒ¼ãƒ‰ã«1ã‚’è¶³ã™
                 $reviceCode = (int)(str_replace('d', '', $maxReceiveCode)) + 1;
-                // ÀÜÆ¬¼­¤Îd¤ò¤Ä¤±¤ë
+                // æ¥é ­è¾ã®dã‚’ã¤ã‘ã‚‹
                 $reviceCode = 'd'. $reviceCode;
-            // Åö·î¤ËÈ¯¹Ô¤µ¤ì¤¿¼õÃíÈÖ¹æ¤ò¼èÆÀ¤Ç¤­¤Ê¤«¤Ã¤¿¾ì¹ç¤Ï001¤«¤éºÎÈÖ¤¹¤ë
+            // å½“æœˆã«ç™ºè¡Œã•ã‚ŒãŸå—æ³¨ç•ªå·ã‚’å–å¾—ã§ããªã‹ã£ãŸå ´åˆã¯001ã‹ã‚‰æ¡ç•ªã™ã‚‹
             } else {
                 $reviceCode = 'd'. $thisMonth. '001';
             }
@@ -182,10 +182,10 @@ class estimateDB extends clsDB {
     }
 
     /**
-    *	À½ÉÊ¥³¡¼¥É¤Ç¸¡º÷¤·¤¿·ë²Ì¤ÎÃæ¤Ç¡¢¥ê¥Ğ¥¤¥¹¥³¡¼¥É¤¬ºÇÂç¤ÎÃæ¤«¤é¥ê¥Ó¥¸¥ç¥ó¤¬ºÇÂç¤Î¥ì¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë
+    *	è£½å“ã‚³ãƒ¼ãƒ‰ã§æ¤œç´¢ã—ãŸçµæœã®ä¸­ã§ã€ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ãŒæœ€å¤§ã®ä¸­ã‹ã‚‰ãƒªãƒ“ã‚¸ãƒ§ãƒ³ãŒæœ€å¤§ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
     *	
-    *   @param string $productCode      À½ÉÊ¥³¡¼¥É
-    *   @return array $ret              À½ÉÊ¥³¡¼¥É¤ËÂĞ¤¹¤ëºÇ¿·¤Î¥ì¥³¡¼¥É
+    *   @param string $productCode      è£½å“ã‚³ãƒ¼ãƒ‰
+    *   @return array $ret              è£½å“ã‚³ãƒ¼ãƒ‰ã«å¯¾ã™ã‚‹æœ€æ–°ã®ãƒ¬ã‚³ãƒ¼ãƒ‰
     *   
     */
     public function getCurrentRecordForProductCode($productCode) {
@@ -213,12 +213,12 @@ class estimateDB extends clsDB {
     }
 
     /**
-    *	DB¤Ç¤Î¸¡º÷·ë²Ì¤ò¼èÆÀ¤¹¤ë
+    *	DBã§ã®æ¤œç´¢çµæœã‚’å–å¾—ã™ã‚‹
     *	
-    *   @param string $table            ¸¡º÷¤¹¤ë¥Æ¡¼¥Ö¥ëÌ¾
-    *   @param string $searchColumn     ¸¡º÷¤ò¹Ô¤¦Îó
-    *   @param scalar $searchValue      ¸¡º÷¾ò·ï
-    *   @return array $record           ¼èÆÀ¤·¤¿¥ì¥³¡¼¥É
+    *   @param string $table            æ¤œç´¢ã™ã‚‹ãƒ†ãƒ¼ãƒ–ãƒ«å
+    *   @param string $searchColumn     æ¤œç´¢ã‚’è¡Œã†åˆ—
+    *   @param scalar $searchValue      æ¤œç´¢æ¡ä»¶
+    *   @return array $record           å–å¾—ã—ãŸãƒ¬ã‚³ãƒ¼ãƒ‰
     *   
     */
     public function getRecordValue($table, $searchColumn, $searchValue) {
@@ -246,7 +246,7 @@ class estimateDB extends clsDB {
 
     }
 
-    // Çä¾åÊ¬Îà¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤Î¼èÆÀ
+    // å£²ä¸Šåˆ†é¡ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     public function getDivisionCodeList($areaCode = null) {
         if (!$this->isOpen()) {
             return false;
@@ -260,19 +260,19 @@ class estimateDB extends clsDB {
                 $strQuery .= " WHERE mscdl.lngestimateareaclassno = ". $areaCode;
             }
             
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
 
             for ($i = 0; $i < $queryResult[1]; ++$i) {
                 $result = pg_fetch_array($queryResult[0], $i, PGSQL_ASSOC);
-                $divisionCode = $result['lngsalesdivisioncode']; // »ÅÆş²ÊÌÜ¥³¡¼¥É
-                $classCode = $result['lngsalesclasscode']; // »ÅÆşÉôÉÊ¥³¡¼¥É
+                $divisionCode = $result['lngsalesdivisioncode']; // ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
+                $classCode = $result['lngsalesclasscode']; // ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰
                 if (!isset($areaCode)) {
-                    // ÂĞ¾İ¥¨¥ê¥¢¤Î»ØÄê¤¬¤Ê¤¤¾ì¹ç¤Ï¥¨¥ê¥¢¥³¡¼¥ÉÊÌ¤ÎÇÛÎó¤òÀ¸À®¤¹¤ë
+                    // å¯¾è±¡ã‚¨ãƒªã‚¢ã®æŒ‡å®šãŒãªã„å ´åˆã¯ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰åˆ¥ã®é…åˆ—ã‚’ç”Ÿæˆã™ã‚‹
                     $targetArea = $result['lngestimateareaclassno'];
                     $divisionCodeList[$targetArea][$divisionCode][$classCode] = true;
                 } else {
-                    // Çä¾åÊ¬Îà¥³¡¼¥É¤Î²¼¤ËÇä¾å¶èÊ¬¥³¡¼¥É¤ÎÇÛÎó¤òÀ¸À®¤¹¤ë
-                    // ÇÛÎó¥¤¥á¡¼¥¸¡¡$divisionCodeList = array(divisionCodeA => array(classCode1, classCode2, ...), divisionCodeB => array[(classCode1, classCode2, ...), ...)
+                    // å£²ä¸Šåˆ†é¡ã‚³ãƒ¼ãƒ‰ã®ä¸‹ã«å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰ã®é…åˆ—ã‚’ç”Ÿæˆã™ã‚‹
+                    // é…åˆ—ã‚¤ãƒ¡ãƒ¼ã‚¸ã€€$divisionCodeList = array(divisionCodeA => array(classCode1, classCode2, ...), divisionCodeB => array[(classCode1, classCode2, ...), ...)
                     $divisionCodeList[$divisionCode][$classCode] = true;
                 }
             }
@@ -281,7 +281,7 @@ class estimateDB extends clsDB {
         }        
     }
 
-    // »ÅÆş²ÊÌÜ¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¤Î¼èÆÀ
+    // ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     public function getSubjectCodeList($areaCode = null) {
         if (!$this->isOpen()) {
             return false;
@@ -294,19 +294,19 @@ class estimateDB extends clsDB {
                 $strQuery .= " WHERE msi.lngestimateareaclassno = " .$areaCode;
             }            
 
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
 
             for ($i = 0; $i < $queryResult[1]; ++$i) {
                 $result = pg_fetch_array($queryResult[0], $i, PGSQL_ASSOC);
-                $classCode = $result['lngstockclasscode']; // »ÅÆş¶èÊ¬¥³¡¼¥É
-                $subjectCode = $result['lngstocksubjectcode']; // »ÅÆş²ÊÌÜ¥³¡¼¥É
-                $itemCode = $result['lngstockitemcode']; // »ÅÆşÉôÉÊ¥³¡¼¥É
+                $classCode = $result['lngstockclasscode']; // ä»•å…¥åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+                $subjectCode = $result['lngstocksubjectcode']; // ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
+                $itemCode = $result['lngstockitemcode']; // ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰
                 if (!isset($areaCode)) {
-                    // ÂĞ¾İ¥¨¥ê¥¢¤Î»ØÄê¤¬¤Ê¤¤¾ì¹ç¤Ï¥¨¥ê¥¢¥³¡¼¥ÉÊÌ¤ÎÇÛÎó¤òÀ¸À®¤¹¤ë
+                    // å¯¾è±¡ã‚¨ãƒªã‚¢ã®æŒ‡å®šãŒãªã„å ´åˆã¯ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰åˆ¥ã®é…åˆ—ã‚’ç”Ÿæˆã™ã‚‹
                     $targetArea = $result['lngestimateareaclassno'];
                     $subjectCodeList[$targetArea][$classCode][$subjectCode][$itemCode] = true; 
                 } else {
-                    // »ÅÆş²ÊÌÜ¥³¡¼¥É¤Î²¼¤Ë»ÅÆşÉôÉÊ¥³¡¼¥É¤ÎÇÛÎó¤òÀ¸À®¤¹¤ë
+                    // ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰ã®ä¸‹ã«ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰ã®é…åˆ—ã‚’ç”Ÿæˆã™ã‚‹
                     $subjectCodeList[$classCode][$subjectCode][$itemCode] = true; 
                 }
             }
@@ -315,7 +315,7 @@ class estimateDB extends clsDB {
         }
     }
 
-    // ¥°¥ë¡¼¥×¥³¡¼¥É¤Ë¤è¤ë¸¡º÷
+    // ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹æ¤œç´¢
     public function getGroupRecordForDisplay($groupDisplayCode) {
         if (!$this->isOpen()) {
             return false;
@@ -335,14 +335,14 @@ class estimateDB extends clsDB {
         return $result;
     }
 
-    // ¥æ¡¼¥¶¡¼¥³¡¼¥É¤Ë¤è¤ë¸¡º÷
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹æ¤œç´¢
     public function getUserRecordForDisplay ($userDisplayCode) {
         if (!$this->isOpen()) {
             return false;
         } else {
             $strQuery = "SELECT * FROM m_user WHERE struserid = '". $userDisplayCode. "'";
         }
-        list($resultID, $resultNumber) = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
+        list($resultID, $resultNumber) = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
         if (0 < $resultNumber) {
             $result = pg_fetch_object($resultID, 0);
         } else {
@@ -352,7 +352,7 @@ class estimateDB extends clsDB {
         return $result;
     }
 
-    // ¥æ¡¼¥¶¡¼¥³¡¼¥É¤¬³ºÅö±Ä¶ÈÉô½ğ¤Ë½êÂ°¤·¤Æ¤¤¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒè©²å½“å–¶æ¥­éƒ¨ç½²ã«æ‰€å±ã—ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     public function userCodeAffiliateCheck($userCode, $groupDisplayCode) {
         if (!$this->isOpen()) {
             return false;
@@ -363,8 +363,8 @@ class estimateDB extends clsDB {
             $strQuery .= " WHERE mg.strgroupdisplaycode = '". $groupDisplayCode. "' and mgr.lngusercode = ". $userCode;
             $strQuery .= " AND mu.bytinvalidflag = false";
             
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
-            // ¸¡º÷·ë²Ì¤¬¤¢¤ì¤Ğtrue¤òÊÖ¤¹
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
+            // æ¤œç´¢çµæœãŒã‚ã‚Œã°trueã‚’è¿”ã™
             if (0 < $queryResult[1]) {
                 $result =  true;
             } else {
@@ -375,7 +375,7 @@ class estimateDB extends clsDB {
         }        
     }
 
-    // ¥æ¡¼¥¶¡¼É½¼¨¥³¡¼¥É¤¬³ºÅö±Ä¶ÈÉô½ğ¤Ë½êÂ°¤·¤Æ¤¤¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤ºã‚³ãƒ¼ãƒ‰ãŒè©²å½“å–¶æ¥­éƒ¨ç½²ã«æ‰€å±ã—ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     public function userDisplayCodeAffiliateCheck($userDisplayCode, $groupDisplayCode) {
         if (!$this->isOpen()) {
             return false;
@@ -386,8 +386,8 @@ class estimateDB extends clsDB {
             $strQuery .= " WHERE mg.strgroupdisplaycode = '". $groupDisplayCode. "' and mu.struserdisplaycode = '". $userDisplayCode."'";
             $strQuery .= " AND mu.bytinvalidflag = false";
             
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
-            // ¸¡º÷·ë²Ì¤¬¤¢¤ì¤Ğtrue¤òÊÖ¤¹
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
+            // æ¤œç´¢çµæœãŒã‚ã‚Œã°trueã‚’è¿”ã™
             if (0 < $queryResult[1]) {
                 $result =  true;
             } else {
@@ -399,7 +399,7 @@ class estimateDB extends clsDB {
     }
 
 
-    // À½ÉÊ¥Ş¥¹¥¿¤ÎÉô½ğ¤È¥ï¡¼¥¯¥·¡¼¥È¤Î±Ä¶ÈÉô½ğ¤¬°ìÃ×¤¹¤ë¤«³ÎÇ§¤¹¤ë
+    // è£½å“ãƒã‚¹ã‚¿ã®éƒ¨ç½²ã¨ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®å–¶æ¥­éƒ¨ç½²ãŒä¸€è‡´ã™ã‚‹ã‹ç¢ºèªã™ã‚‹
     public function checkConsistencyGroup($productCode, $groupDisplayCode) {
         if (!$this->isOpen()) {
             return false;
@@ -408,8 +408,8 @@ class estimateDB extends clsDB {
             $strQuery .= " WHERE lnginchargegroupcode = ". $productCode;
             $strQuery .= " AND bytinvalidflag = false";
             
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
-            // ¸¡º÷·ë²Ì¤¬¤¢¤ì¤Ğtrue¤òÊÖ¤¹
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
+            // æ¤œç´¢çµæœãŒã‚ã‚Œã°trueã‚’è¿”ã™
             if (0 < $queryResult[1]) {
                 $result =  true;
             } else {
@@ -420,13 +420,13 @@ class estimateDB extends clsDB {
         }        
     }
 
-    // À½ÉÊ¥³¡¼¥É¤ÎÂ¸ºß¤ò³ÎÇ§¤·¡¢¥ê¥Ğ¥¤¥¹¥³¡¼¥É¤òÊÖ¤¹
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã®å­˜åœ¨ã‚’ç¢ºèªã—ã€ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’è¿”ã™
     public function getReviseCode($productCode) {
         if (!$this->isOpen()) {
             return false;
         } else {
             $strQuery = "SELECT max(strrevisecode) FROM m_product WHERE strproductcode = '". $productCode. "'";
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
             $result = pg_fetch_array($queryResult[0], 0, PGSQL_ASSOC);
             if (!$result) {
                 $revise = false;
@@ -438,7 +438,7 @@ class estimateDB extends clsDB {
         return $revise;
     }
 
-    // ¥°¥ë¡¼¥×¡ÊÉô½ğ¡Ë¤È¥æ¡¼¥¶¡¼¤Î½êÂ°´Ø·¸¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+    // ã‚°ãƒ«ãƒ¼ãƒ—ï¼ˆéƒ¨ç½²ï¼‰ã¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®æ‰€å±é–¢ä¿‚ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     public function checkRelationGroupAndUser($groupCode, $userCode) {
         if (!$this->isOpen()) {
             return false;
@@ -461,14 +461,14 @@ class estimateDB extends clsDB {
             }
             $strQuery .= " AND mu.bytinvalidflag = false";
 
-            $queryResult = fncQuery($strQuery, $this); // [0]:·ë²ÌID [1]:¼èÆÀ¹Ô¿ô
+            $queryResult = fncQuery($strQuery, $this); // [0]:çµæœID [1]:å–å¾—è¡Œæ•°
 
             if ($queryResult[1] == 2) {
                 return true;
             } else if ($queryResult[1] == 1) {
                     $result = pg_fetch_array($queryResult[0], $i, PGSQL_ASSOC);
-                    $userId = $result['struserid']; // ¥æ¡¼¥¶¡¼ID
-                    $groupCode = $result['strgroupdisplaycode']; // É½¼¨ÍÑ¥°¥ë¡¼¥×¥³¡¼¥É         
+                    $userId = $result['struserid']; // ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
+                    $groupCode = $result['strgroupdisplaycode']; // è¡¨ç¤ºç”¨ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰         
                 return false;
             } else {
                 return false;
@@ -477,11 +477,11 @@ class estimateDB extends clsDB {
     }
 
     /**
-    * É¸½à³ä¹ç¼èÆÀ´Ø¿ô
+    * æ¨™æº–å‰²åˆå–å¾—é–¢æ•°
     *
-    *	É¸½à³ä¹ç¥Ç¡¼¥¿¥¯¥¨¥ê´Ø¿ô
+    *	æ¨™æº–å‰²åˆãƒ‡ãƒ¼ã‚¿ã‚¯ã‚¨ãƒªé–¢æ•°
     *
-    *	@return Integer $curStandardRate É¸½à³ä¹ç
+    *	@return Integer $curStandardRate æ¨™æº–å‰²åˆ
     *	@access public
     */
     public function getEstimateStandardRate() {
@@ -491,7 +491,7 @@ class estimateDB extends clsDB {
             list($resultID, $resultNumber) = fncQuery("SELECT curstandardrate FROM m_estimatestandardrate WHERE dtmApplyStartDate <= NOW() AND dtmApplyEndDate >= NOW()", $this);
 
             if ($resultNumber < 1) {
-                // ¤â¤·Åö·î¤ÎÉ¸½à³ä¹ç¤¬»²¾È¤Ç¤­¤Ê¤¤¾ì¹çºÇ¿·¤ÎÆüÉÕ¤ÎÉ¸½à³ä¹ç¤ò»²¾È
+                // ã‚‚ã—å½“æœˆã®æ¨™æº–å‰²åˆãŒå‚ç…§ã§ããªã„å ´åˆæœ€æ–°ã®æ—¥ä»˜ã®æ¨™æº–å‰²åˆã‚’å‚ç…§
                 list($resultMaxID, $resultMaxNumber) = fncQuery("SELECT curstandardrate FROM m_estimatestandardrate WHERE dtmapplyenddate = (SELECT max(dtmapplyenddate) FROM m_estimatestandardrate);", $this);
 
                 if ($resultMaxNumber < 1) {
@@ -514,12 +514,12 @@ class estimateDB extends clsDB {
 
     /**
     *
-    *	À½ÉÊ¥Ş¥¹¥¿¤«¤éÀ½ÉÊ¥³¡¼¥É¡¢¥ê¥Ğ¥¤¥¹¥³¡¼¥É¡¢¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤ËÉ³ÉÕ¤¯ºÇ¿·¤ÎÀ½ÉÊ¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    *	è£½å“ãƒã‚¹ã‚¿ã‹ã‚‰è£½å“ã‚³ãƒ¼ãƒ‰ã€ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ã€ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã«ç´ä»˜ãæœ€æ–°ã®è£½å“ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     *
-    *	@param string $productCode À½ÉÊ¥³¡¼¥É
-    *	@param string $reviseCode  ¥ê¥Ğ¥¤¥¹¥³¡¼¥É
+    *	@param string $productCode è£½å“ã‚³ãƒ¼ãƒ‰
+    *	@param string $reviseCode  ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰
     *
-    *	@return array $estimateDetail ¸«ÀÑ¸¶²ÁÌÀºÙ
+    *	@return array $estimateDetail è¦‹ç©åŸä¾¡æ˜ç´°
     *	@access public
     */
     public function getProduct($productCode, $reviseCode, $revisionNo = null) {
@@ -553,10 +553,10 @@ class estimateDB extends clsDB {
             $strQuery .= " AND strrevisecode = '". $reviseCode. "'";
             $strQuery .= " AND lngrevisionno";
             if ($revisionNo != null) {
-                // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤¬»ØÄê¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+                // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚‹å ´åˆ
                 $strQuery .= " = ". $revisionNo;
             } else {
-                // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤ÏºÇ¿·¤Î¥ì¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë
+                // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒæŒ‡å®šã•ã‚Œã¦ã„ãªã„å ´åˆã¯æœ€æ–°ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
                 $strQuery .= " IN (SELECT MAX(lngrevisionno) FROM m_product";
                 $strQuery .= " WHERE strproductcode = '". $productCode. "'";
                 $strQuery .= " AND strrevisecode = '". $reviseCode. "')";
@@ -578,12 +578,12 @@ class estimateDB extends clsDB {
 
     /**
     *
-    *	À½ÉÊ¥³¡¼¥É¡¢¥ê¥Ğ¥¤¥¹¥³¡¼¥É¡¢¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤ËÉ³ÉÕ¤¯¸«ÀÑ¸¶²ÁÌÀºÙ¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    *	è£½å“ã‚³ãƒ¼ãƒ‰ã€ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ã€ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã«ç´ä»˜ãè¦‹ç©åŸä¾¡æ˜ç´°ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     *
-    *	@param string $productCode À½ÉÊ¥³¡¼¥É
-    *	@param string $reviseCode  ¥ê¥Ğ¥¤¥¹¥³¡¼¥É
+    *	@param string $productCode è£½å“ã‚³ãƒ¼ãƒ‰
+    *	@param string $reviseCode  ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰
     *
-    *	@return array $estimateDetail ¸«ÀÑ¸¶²ÁÌÀºÙ
+    *	@return array $estimateDetail è¦‹ç©åŸä¾¡æ˜ç´°
     *	@access public
     */
     public function getEstimateDetail($estimateNo, $revisionNo = null) {
@@ -642,7 +642,7 @@ class estimateDB extends clsDB {
             $strQuery .= " AND me.strrevisecode = mp.strrevisecode";
             $strQuery .= " AND me.lngproductrevisionno = mp.lngrevisionno";
 
-            // ºÇ¾®¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤Î·ë¹ç
+            // æœ€å°ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã®çµåˆ
             $strQuery .= " LEFT OUTER JOIN";
             $strQuery .= " (";
             $strQuery .= "SELECT lngestimateno, min(lngrevisionno) as lngrevisionno";
@@ -651,7 +651,7 @@ class estimateDB extends clsDB {
             $strQuery .= ") minRev";
             $strQuery .= " ON minRev.lngestimateno = me.lngestimateno";
 
-            // È¯Ãí¾ğÊó¤Î·ë¹ç(t_orderdetail, m_order)
+            // ç™ºæ³¨æƒ…å ±ã®çµåˆ(t_orderdetail, m_order)
             $strQuery .= " LEFT OUTER JOIN t_orderdetail tod";
             $strQuery .= " ON ted.lngestimateno = tod.lngestimateno";
             $strQuery .= " AND ted.lngestimatedetailno = tod.lngestimatedetailno";
@@ -660,7 +660,7 @@ class estimateDB extends clsDB {
             $strQuery .= " ON tod.lngorderno = mo.lngorderno";
             $strQuery .= " AND tod.lngrevisionno = mo.lngrevisionno";
 
-            // ¼õÃí¾ğÊó¤Î·ë¹ç(t_receivedetail, m_receive)
+            // å—æ³¨æƒ…å ±ã®çµåˆ(t_receivedetail, m_receive)
             $strQuery .= " LEFT OUTER JOIN t_receivedetail trd";
             $strQuery .= " ON ted.lngestimateno = trd.lngestimateno";
             $strQuery .= " AND ted.lngestimatedetailno = trd.lngestimatedetailno";
@@ -696,7 +696,7 @@ class estimateDB extends clsDB {
         return $estimateDetail;
     }
 
-    // ¥æ¡¼¥¶¡¼¥³¡¼¥É¤«¤é¥æ¡¼¥¶¡¼¤ÎÉ½¼¨¾ğÊó¤ò¼èÆÀ¤¹¤ë
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®è¡¨ç¤ºæƒ…å ±ã‚’å–å¾—ã™ã‚‹
     public function getUserDisplayInfo($userCode) {
         if (!$this->isOpen()) {
             return false;
@@ -722,13 +722,13 @@ class estimateDB extends clsDB {
 
     /**
     *
-    *	¥Ş¥¹¥¿¡¼¤«¤é¼èÆÀ¤·¤¿ÃÍ¤ò¡¢»ØÄê¤·¤¿¥«¥é¥à¤ÎÃÍ¤ò¥­¡¼¤È¤¹¤ëÇÛÎó¤ÇÊÖµÑ¤¹¤ë
+    *	ãƒã‚¹ã‚¿ãƒ¼ã‹ã‚‰å–å¾—ã—ãŸå€¤ã‚’ã€æŒ‡å®šã—ãŸã‚«ãƒ©ãƒ ã®å€¤ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é…åˆ—ã§è¿”å´ã™ã‚‹
     *
-    *	@param string $table ¥Æ¡¼¥Ö¥ëÌ¾
-    *	@param $key ÇÛÎó¤Î¥­¡¼¤È¤·¤Æ»ÈÍÑ¤¹¤ë¥Æ¡¼¥Ö¥ë¤Î¥«¥é¥à
-    *	@param $columns ¼èÆÀ¤¹¤ë¥«¥é¥à¡ÊÊ£¿ô¤¢¤ë¾ì¹ç¤ÏÇÛÎó¤Ç»ØÄê¡Ë
+    *	@param string $table ãƒ†ãƒ¼ãƒ–ãƒ«å
+    *	@param $key é…åˆ—ã®ã‚­ãƒ¼ã¨ã—ã¦ä½¿ç”¨ã™ã‚‹ãƒ†ãƒ¼ãƒ–ãƒ«ã®ã‚«ãƒ©ãƒ 
+    *	@param $columns å–å¾—ã™ã‚‹ã‚«ãƒ©ãƒ ï¼ˆè¤‡æ•°ã‚ã‚‹å ´åˆã¯é…åˆ—ã§æŒ‡å®šï¼‰
     *
-    *	@return array $ret $keys(Ê£¿ô¤¢¤ë¾ì¹ç¤Ïkey¤Î¿ô¤À¤±³¬ÁØ¤ò»ı¤Ä¡Ë¤ò¥­¡¼¤È¤¹¤ë¸¡º÷·ë²Ì¤ÎÇÛÎó
+    *	@return array $ret $keys(è¤‡æ•°ã‚ã‚‹å ´åˆã¯keyã®æ•°ã ã‘éšå±¤ã‚’æŒã¤ï¼‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹æ¤œç´¢çµæœã®é…åˆ—
     *	@access public
     */
     public function getMasterToArray($table, $key, $columns) {
@@ -796,13 +796,13 @@ class estimateDB extends clsDB {
 
     /**
     *
-    *	Çä¾åÊ¬Îà¡Ê»ÅÆş²ÊÌÜ¡Ë¡¢Çä¾å¶èÊ¬¡Ê»ÅÆşÉôÉÊ¡Ë¤Î¥×¥ë¥À¥¦¥ó¥Ç¡¼¥¿¤òºîÀ®¤¹¤ë
+    *	å£²ä¸Šåˆ†é¡ï¼ˆä»•å…¥ç§‘ç›®ï¼‰ã€å£²ä¸ŠåŒºåˆ†ï¼ˆä»•å…¥éƒ¨å“ï¼‰ã®ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã™ã‚‹
     *
-    *	@param string $table ¥Æ¡¼¥Ö¥ëÌ¾
-    *	@param $key ¥­¡¼¤È¤·¤Æ»ÈÍÑ¤¹¤ë¥Æ¡¼¥Ö¥ë¤Î¥»¥ë
-    *	@param $columns ¼èÆÀ¤¹¤ë¥«¥é¥à¡ÊÊ£¿ô¤¢¤ë¾ì¹ç¤ÏÇÛÎó¤Ç»ØÄê¡Ë
+    *	@param string $table ãƒ†ãƒ¼ãƒ–ãƒ«å
+    *	@param $key ã‚­ãƒ¼ã¨ã—ã¦ä½¿ç”¨ã™ã‚‹ãƒ†ãƒ¼ãƒ–ãƒ«ã®ã‚»ãƒ«
+    *	@param $columns å–å¾—ã™ã‚‹ã‚«ãƒ©ãƒ ï¼ˆè¤‡æ•°ã‚ã‚‹å ´åˆã¯é…åˆ—ã§æŒ‡å®šï¼‰
     *
-    *	@return array $ret ¸¡º÷·ë²Ì¤Î¥ª¥Ö¥¸¥§¥¯¥È¤ò»ı¤ÄÇÛÎó
+    *	@return array $ret æ¤œç´¢çµæœã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’æŒã¤é…åˆ—
     *	@access public
     */
     public function getDropdownForDivSubAndClsItm() {
@@ -933,7 +933,7 @@ class estimateDB extends clsDB {
         return $ret;
     }
 
-    // ³«È¯Ã´Åö¼Ô¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¼èÆÀ¤¹¤ë
+    // é–‹ç™ºæ‹…å½“è€…ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
     public function getDropdownForDevelopUser() {
         if (!$this->isOpen()) {
             return false;
@@ -977,14 +977,14 @@ class estimateDB extends clsDB {
 
     /**
     *
-    *	ÇÓÂ¾À©¸æ¥Æ¡¼¥Ö¥ë¤Ë¥ì¥³¡¼¥É¤¬Â¸ºß¤¹¤ë¤«³ÎÇ§¤¹¤ë
+    *	æ’ä»–åˆ¶å¾¡ãƒ†ãƒ¼ãƒ–ãƒ«ã«ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã™ã‚‹ã‹ç¢ºèªã™ã‚‹
     *
-    *	@param integer $functionCode µ¡Ç½¥³¡¼¥É
-    *	@param string $key1 ÇÓÂ¾¥­¡¼1
-    *	@param string $key2 ÇÓÂ¾¥­¡¼2
-    *	@param string $key3 ÇÓÂ¾¥­¡¼3
+    *	@param integer $functionCode æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
+    *	@param string $key1 æ’ä»–ã‚­ãƒ¼1
+    *	@param string $key2 æ’ä»–ã‚­ãƒ¼2
+    *	@param string $key3 æ’ä»–ã‚­ãƒ¼3
     *
-    *	@return boolean Â¸ºß¤¹¤ë¾ì¹ç: false, Â¸ºß¤·¤Ê¤¤¾ì¹ç: true
+    *	@return boolean å­˜åœ¨ã™ã‚‹å ´åˆ: false, å­˜åœ¨ã—ãªã„å ´åˆ: true
     *	@access public
     */
     public function checkExclusiveStatus($functionCode, $key1, $key2 = null, $key3 = null) {
@@ -1016,7 +1016,7 @@ class estimateDB extends clsDB {
 
     /**
     *
-    *	±Ä¶ÈÉôÌç¡¢³«È¯ÉôÌç¤ËÂ°¤¹¤ë¥°¥ë¡¼¥×¤ª¤è¤Ó¥æ¡¼¥¶¤ò¼èÆÀ¤¹¤ë
+    *	å–¶æ¥­éƒ¨é–€ã€é–‹ç™ºéƒ¨é–€ã«å±ã™ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—ãŠã‚ˆã³ãƒ¦ãƒ¼ã‚¶ã‚’å–å¾—ã™ã‚‹
     *
     *	@access public
     */

@@ -1,18 +1,18 @@
 
 // ---------------------------------
-// -- ¥¯¥ê¥Ã¥¯»ş¤Î²èÌÌÁ«°ÜÀè¤òÀßÄê
+// -- ã‚¯ãƒªãƒƒã‚¯æ™‚ã®ç”»é¢é·ç§»å…ˆã‚’è¨­å®š
 // ---------------------------------
 (function(sessionId){
 
-	// ÀÁµá½ñÅĞÏ¿²èÌÌ
+	// è«‹æ±‚æ›¸ç™»éŒ²ç”»é¢
 	$('.function-buttons__regist').on('click', function(){
 		$(location).attr('href', '../regist/index.php?strSessionID=' + sessionId);
 	});
-	// ÀÁµá½ñ¸¡º÷²èÌÌ
+	// è«‹æ±‚æ›¸æ¤œç´¢ç”»é¢
 	$('.function-buttons__search').on('click', function(){
 		$(location).attr('href', '../search/index.php?strSessionID=' + sessionId);
 	});
-	// ÀÁµá½¸·×²èÌÌ
+	// è«‹æ±‚é›†è¨ˆç”»é¢
 	$('.function-buttons__total').on('click', function(){
 		$(location).attr('href', '../aggregate/index.php?strSessionID=' + sessionId);
 	});

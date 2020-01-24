@@ -1,47 +1,47 @@
 
 	// 
-	//	�ե����복�ס�(JavaScript�ե�����)
+	//	ファイル概要：(JavaScriptファイル)
 	//	
-	// �ǡ����Х���ɤε�ǽ�����Ѥ��ơ������ɤ���̾�Τ�������ޤ�
-	// ��masterlib��Edge�ޤ฽�ԤΥ����֥饦���ǥ��ݡ��Ȥ���Ƥ��ʤ��̿����������Ѥ��Ƥ��뤿�ᡢ
-	// ����Ū��Ajax�̿���ư���ؿ����򲼵��˿������Ѱդ�����
-	// ư���jQuery���ɤ߹��ޤ�Ƥ��뤳�Ȥ�����Ȥ���
+	// データバインドの機能を利用して、コードから名称を取得します
+	// 旧masterlibはEdge含む現行のモダンブラウザでサポートされていない通信方式を利用しているため、
+	// 一般的なAjax通信で動作する関数群を下記に新しく用意した。
+	// 動作はjQueryが読み込まれていることを前提とする
 
 	/*
-		�Բ��������
-		2019/05/23  ������Ԣ��
+		《改定履歴》
+		2019/05/23  中部　國枝
 	*/
 	
 	
-	var g_objLoadMasterInForm;								// input���줿���֥�������
-	var g_objLoadMasterOutForm   = new Array();   			// output �оݤΥ��֥�������
-	var g_aryLoadMasterErrorFlag = new Array(); 			// new Boolean(false);		// ���顼�ե饰
+	var g_objLoadMasterInForm;								// inputされたオブジェクト
+	var g_objLoadMasterOutForm   = new Array();   			// output 対象のオブジェクト
+	var g_aryLoadMasterErrorFlag = new Array(); 			// new Boolean(false);		// エラーフラグ
 	
-	var g_strLoadMasterLoading   = "Loading...";			// �ǡ������å���³��
-	var g_strLoadMasterNoData    = "(No Data)";				// �ǡ������å�0���
-	var g_blnLoadMasterDebugFlag = new Boolean(false);		// �ǥХå��ե饰
+	var g_strLoadMasterLoading   = "Loading...";			// データセット接続時
+	var g_strLoadMasterNoData    = "(No Data)";				// データセット0件時
+	var g_blnLoadMasterDebugFlag = new Boolean(false);		// デバックフラグ
 	
 	
 	
 	// ---------------------------------------------------------------------------
-	//	���ס�
-	//		subLoadMaster() �ƤӽФ����ƥ����ȥܥå���-���֥��������ѥ�åѡ�
-	//	������
-	//		strProcessID		-	����ID
-	//		objInForm			-	���ϥ��֥�������
-	//		objOutForm			-	������������ߥ��֥�������
-	//		arySearchValue		-	�������͡������͡�
-	//		objDataSource		-	DataSource���֥�������
-	//		lngObjNo			-	���Ѥ��륪�֥��������ֹ�
-	//		blnDebugFlag		-	�ǥХå��ե饰
-	//	���͡�
-	//							ʣ���Υǡ����Х���ɤ�onChange���Υ��٥�Ȥǰ��٤˻��Ѥ�����
-	//							�����ֹ����Ѥ���ʬ�̤���
-	//							���̵꤬������ 0
+	//	概要：
+	//		subLoadMaster() 呼び出し、テキストボックス-オブジェクト用ラッパー
+	//	引数：
+	//		strProcessID		-	処理ID
+	//		objInForm			-	入力オブジェクト
+	//		objOutForm			-	検索結果埋め込みオブジェクト
+	//		arySearchValue		-	検索元値（配列値）
+	//		objDataSource		-	DataSourceオブジェクト
+	//		lngObjNo			-	使用するオブジェクト番号
+	//		blnDebugFlag		-	デバックフラグ
+	//	備考：
+	//							複数のデータバインドをonChange等のイベントで一度に使用する場合
+	//							この番号を使用して分別する
+	//							指定が無い場合は 0
 	// ---------------------------------------------------------------------------
 	function subLoadMasterText(strProcessID, objInForm, objOutForm, arySearchValue, objDataSource, lngObjNo, blnDebugFlag )
 	{
-		// InForm, OutForm ���ͤ�����å�
+		// InForm, OutForm の値をチェック
 		if( typeof( objInForm ) == 'undefined' || 
 			typeof( objOutForm) == 'undefined' )
 		{
@@ -49,145 +49,145 @@
 			return false;
 		}
 
-		// ���֥�������No
+		// オブジェクトNo
 		if( isNaN(lngObjNo) )
-		{	// ���̵꤬������ 0
+		{	// 指定が無い場合は 0
 			lngObjNo = 0;
 		}
 		
-		// �ǥХå��ե饰����
+		// デバックフラグ設定
 		g_blnLoadMasterDebugFlag = blnDebugFlag;
 		
-		// ���ϥ��֥�������
+		// 入力オブジェクト
 		g_objLoadMasterInForm = objInForm;
 
-		// �������ͣ�����Ƭ��Ⱦ�ѥ��ڡ����������硢���
+		// 検索元値１、先頭に半角スペースがある場合、削除
 		strInFormVal = objInForm.value.replace(/^[\x20]+/, '');
 
-		// �������ͣ���̵�����
+		// 検索元値１が無い場合
 		if( strInFormVal == '' )
 		{
 			objOutForm.value = '';
 			return false;
 		}
 
-		// ������Υ��֥�������
+		// 設定先のオブジェクト
 		g_objLoadMasterOutForm[lngObjNo] = objOutForm;
 		
-		// �����ɤ���̾�Τ����
+		// コードから名称を取得
 		return subLoadMaster(strProcessID, arySearchValue, objDataSource );
 	}
 
 	// ---------------------------------------------------------------------------
-	//	���ס�
-	//		subLoadMaster() �ƤӽФ���Hidden-���֥��������ѥ�åѡ�
-	//	������
-	//		strProcessID		-	����ID
-	//		objInForm			-	���ϥ��֥�������
-	//		objOutForm			-	������������ߥ��֥�������
-	//		arySearchValue		-	�������͡������͡�
-	//		objDataSource		-	DataSource���֥�������
-	//		lngObjNo			-	���Ѥ��륪�֥��������ֹ�
-	//		blnDebugFlag		-	�ǥХå��ե饰
-	//	���͡�
-	//							ʣ���Υǡ����Х���ɤ�onChange���Υ��٥�Ȥǰ��٤˻��Ѥ�����
-	//							�����ֹ����Ѥ���ʬ�̤���
-	//							���̵꤬������ 0
+	//	概要：
+	//		subLoadMaster() 呼び出し、Hidden-オブジェクト用ラッパー
+	//	引数：
+	//		strProcessID		-	処理ID
+	//		objInForm			-	入力オブジェクト
+	//		objOutForm			-	検索結果埋め込みオブジェクト
+	//		arySearchValue		-	検索元値（配列値）
+	//		objDataSource		-	DataSourceオブジェクト
+	//		lngObjNo			-	使用するオブジェクト番号
+	//		blnDebugFlag		-	デバックフラグ
+	//	備考：
+	//							複数のデータバインドをonChange等のイベントで一度に使用する場合
+	//							この番号を使用して分別する
+	//							指定が無い場合は 0
 	// ---------------------------------------------------------------------------
 	function subLoadMasterHidden(strProcessID, objInForm, objOutForm, arySearchValue, objDataSource, lngObjNo, blnDebugFlag )
 	{
-		// InForm, OutForm ���ͤ�����å�
+		// InForm, OutForm の値をチェック
 		if(	typeof( objOutForm) == 'undefined' )
 		{
 			alert("WARNING!! miss match subLoadMasterText() arg object undefined");
 			return false;
 		}
 
-		// ���֥�������No
+		// オブジェクトNo
 		if( isNaN(lngObjNo) )
-		{	// ���̵꤬������ 0
+		{	// 指定が無い場合は 0
 			lngObjNo = 0;
 		}
 		
-		// �ǥХå��ե饰����
+		// デバックフラグ設定
 		g_blnLoadMasterDebugFlag = blnDebugFlag;
 		
-		// ������Υ��֥�������
+		// 設定先のオブジェクト
 		g_objLoadMasterOutForm[lngObjNo] = objOutForm;
 		
-		// �����ɤ���̾�Τ����
+		// コードから名称を取得
 		return subLoadMaster(strProcessID, arySearchValue, objDataSource );
 	}
 	
 	
 	// ---------------------------------------------------------------------------
 	// 
-	// ���ס�subLoadMasterText() �� objInForm ��¸�ߥ����å�̵����
+	// 概要：subLoadMasterText() の objInForm の存在チェック無し版
 	//
-	// ���͡����δؿ��ϡ�Script�⤫��θƤӽФ��˻��Ѥ��Ʋ�������
-	//       UI ����θƤӽФ��ˤ�Ŭ�Ѥ��ʤ�����
+	// 備考：この関数は、Script内からの呼び出しに使用して下さい。
+	//       UI からの呼び出しには適用しない事。
 	// ---------------------------------------------------------------------------
 	function subLoadMasterValue(strProcessID, objInForm, objOutForm, arySearchValue, objDataSource, lngObjNo, blnDebugFlag )
 	{
 		
-		// ���֥�������No
+		// オブジェクトNo
 		if( isNaN(lngObjNo) )
-		{	// ���̵꤬������ 0
+		{	// 指定が無い場合は 0
 			lngObjNo = 0;
 		}
 
-		// �ǥХå��ե饰����
+		// デバックフラグ設定
 		g_blnLoadMasterDebugFlag = blnDebugFlag;
 
-		// ������Υ��֥�������
+		// 設定先のオブジェクト
 		g_objLoadMasterOutForm[lngObjNo] = objOutForm;
 
-		// �����ɤ���̾�Τ����
+		// コードから名称を取得
 		return subLoadMaster(strProcessID, arySearchValue, objDataSource );
 	}
 	
 
 	// ---------------------------------------------------------------------------
-	//	���ס�
-	// 		subLoadMaster() �ƤӽФ������ץ����-���֥��������ѥ�åѡ�
-	//	������
-	//		strProcessID		-	����ID
-	//		objInForm			-	�������ͣ��ʥ����ɡ����ϥ��֥�������
-	//		objOutOption		-	������������ߥ��֥�������
-	//		arySearchValue		-	�������͡������͡�
-	//		objDataSource		-	DataSource���֥�������
-	//		lngObjNo			-	���Ѥ��륪�֥��������ֹ�
-	//		blnDebugFlag		-	�ǥХå��ե饰
-	//	���͡�
-	//							ʣ���Υǡ����Х���ɤ�onChange���Υ��٥�Ȥǰ��٤˻��Ѥ�����
-	//							�����ֹ����Ѥ���ʬ�̤���
-	//							���̵꤬������ 0
+	//	概要：
+	// 		subLoadMaster() 呼び出し、オプション-オブジェクト用ラッパー
+	//	引数：
+	//		strProcessID		-	処理ID
+	//		objInForm			-	検索元値１（コード）入力オブジェクト
+	//		objOutOption		-	検索結果埋め込みオブジェクト
+	//		arySearchValue		-	検索元値（配列値）
+	//		objDataSource		-	DataSourceオブジェクト
+	//		lngObjNo			-	使用するオブジェクト番号
+	//		blnDebugFlag		-	デバックフラグ
+	//	備考：
+	//							複数のデータバインドをonChange等のイベントで一度に使用する場合
+	//							この番号を使用して分別する
+	//							指定が無い場合は 0
 	// ---------------------------------------------------------------------------
 	function subLoadMasterOption(strProcessID, objInForm, objOutOption, arySearchValue, objDataSource, lngObjNo, blnDebugFlag )
 	{
-		// SELECT���֥������ȤǤ�̵�����
+		// SELECTオブジェクトでは無い場合
 		if( ( objOutOption.type != 'select-one' ) && ( objOutOption.type != 'select-multiple' ) )
 		{
 			alert("WARNING!! miss match subLoadMasterOption() arg object");
 			return false;
 		}
 		
-		// ���֥�������No
+		// オブジェクトNo
 		if( isNaN(lngObjNo) )
-		{	// ���̵꤬������ 0
+		{	// 指定が無い場合は 0
 			lngObjNo = 0;
 		}
 
-		// �ǥХå��ե饰����
+		// デバックフラグ設定
 		g_blnLoadMasterDebugFlag = blnDebugFlag;
 		
-		// ���ϥ��֥�������
+		// 入力オブジェクト
 		g_objLoadMasterInForm = objInForm;
 
-		// ������Υ��֥�������
+		// 設定先のオブジェクト
 		g_objLoadMasterOutForm[lngObjNo] = objOutOption;
 
-		// SELECT���֥������Ȥν����
+		// SELECTオブジェクトの初期化
 		oOption = objOutOption;
 		subLoadMasterOptionClear( oOption, true );
 		oOption = document.createElement("OPTION");
@@ -195,58 +195,58 @@
 		oOption.value = "";
 		objOutOption.add(oOption);
 		
-		// �����ɤ���̾�Τ����
+		// コードから名称を取得
 		return subLoadMaster(strProcessID, arySearchValue, objDataSource );
 	}
 
 
 	// ---------------------------------------------------------------------------
-	//	�����ɡ�̾�Ρ������ؿ�
+	//	コード＋名称　取得関数
 	//
-	//	������
-	//		strProcessID	-	����ID (/lib/sql ���ˤ��� .sql ��������ե�����̾
-	//		arySearchValue	-	�������͡������͡�
-	//		objDataSource	-	DataSource���֥�������
+	//	引数：
+	//		strProcessID	-	処理ID (/lib/sql 下にある .sql を除いたファイル名
+	//		arySearchValue	-	検索元値（配列値）
+	//		objDataSource	-	DataSourceオブジェクト
 	//
 	// ---------------------------------------------------------------------------
 	function subLoadMaster(strProcessID, arySearchValue, objDataSource )
 	{
 		
-		// ���顼̵��������
+		// エラー無しを設定
 		g_aryLoadMasterErrorFlag[0] = false;
 		
-		// ����ID�λ�����ǧ
+		// 処理IDの指定を確認
 		if( !strProcessID )
 		{
 			return false;
 		}
 		
-		// �ѿ������
-		strURL = "";	// URL�����Ǽ
-		strGet = "";	// Get�����Ǽ
+		// 変数初期化
+		strURL = "";	// URL情報格納
+		strGet = "";	// Get情報格納
 		
 		// --------------------------------------------
-		// �ǡ����������μ�����URL������
+		// データソースの取得先URLを設定
 		// 
-		// �ǡ����������Ȥʤ�URL������
+		// データソースとなるURLを設定
 		strURL = "/cmn/getmasterdataAjax.php";
 		strURL = strURL + "?lngProcessID=" + strProcessID;
 		
-		// ���������������ʬ���
+		// 検索の配列を指定数分結合
 		for( i = 0; i < arySearchValue.length; i++ )
 		{
 			strGet = strGet + "&strFormValue[" + String(i) + "]=" + arySearchValue[i];
 		}
 		
-		// �����ץ�������GET������
+		// 検索プログラムとGET部を結合
 		strURL = strURL + strGet;
 		
-		// �ǥХå�
+		// デバック
 		subLoadMasterDebug(location.protocol + '//' + location.hostname + strURL);
 		// --------------------------------------------
 
 		
-		// �ǡ��������������
+		// データソースを取得
 		var dfd = $.Deferred();
 		$.ajax({
 			type: 'json',
@@ -259,8 +259,8 @@
 	}
 
 	// ---------------------------------------------------------------------------
-	//	�ǥХå��Ѥδؿ�
-	//	������
+	//	デバック用の関数
+	//	引数：
 	//		strValue	-	URL
 	// ---------------------------------------------------------------------------
 	function subLoadMasterDebug(strValue)
@@ -285,34 +285,34 @@
 	}
 
 	// ---------------------------------------------------------------------------
-	//	�쥳���ɥ��åȤ�����ꥪ�֥��������ͤؤ�����
+	//	レコードセットから指定オブジェクト値への設定
 	//
-	//	������
-	// 		objRst		-	�쥳���ɥ��åȥ��֥�������
-	//		lngObjNo	-	���֥�������No
+	//	引数：
+	// 		objRst		-	レコードセットオブジェクト
+	//		lngObjNo	-	オブジェクトNo
 	//
 	// ---------------------------------------------------------------------------
 	function subLoadMasterSetting(objRst, lngObjNo)
 	{
 
-		// ���֥�������No
+		// オブジェクトNo
 		if( isNaN(lngObjNo) )
-		{	// ���̵꤬������ 0
+		{	// 指定が無い場合は 0
 			lngObjNo = 0;
 		}
 
-		// ���顼�ե饰������
+		// エラーフラグを設定
 		g_aryLoadMasterErrorFlag[lngObjNo] = true;
 
 		// ----------------------------------------------------
-		// �쥳���ɥ�����Ȥ�0�ʥǡ����������Ǥ��ʤ��ˤξ��
+		// レコードカウントが0（データが取得できない）の場合
 		// ----------------------------------------------------
 		if( objRst.length == 0 )
 		{
 			
 			if( g_objLoadMasterOutForm[lngObjNo].type == 'text' )
 			{
-				// �����ͤ�������֤ˤ�����������ͤ򥯥ꥢ����
+				// 入力値を選択状態にし、設定先の値をクリアする
 				if( g_objLoadMasterInForm.style.visibility != 'hidden' ) g_objLoadMasterInForm.select();
 				g_objLoadMasterOutForm[lngObjNo].value = "";
 			}
@@ -330,17 +330,17 @@
 				strOutFormName = g_objLoadMasterOutForm[lngObjNo].name;
 				switch( strOutFormName )
 				{
-					// ���ʽ�ʣ�����å��ξ��
+					// 製品重複チェックの場合
 					case 'productequalcheck':
-					// ����No.��ʣ�����å��ξ��
+					// 受注No.重複チェックの場合
 					case 'receivecodeequalcheck':
 					
-						// �ͤ�����
+						// 値を初期化
 						g_objLoadMasterOutForm[lngObjNo].value = 0;
 						break;
 					
 					default:
-						// �����å����顼���ѤǤ�����
+						// チェックアラート用である場合
 						if( strOutFormName.match(/^check_alert/) )
 						{
 							break;
@@ -355,23 +355,23 @@
 		}
 
 		// ----------------------------------------------------------------
-		// TEXT���֥������Ȥξ��
+		// TEXTオブジェクトの場合
 		// ----------------------------------------------------------------
 		if( g_objLoadMasterOutForm[lngObjNo].type == 'text' )
 		{
-			// name��ʬ�������������
+			// name部分を取得して設定
 			g_objLoadMasterOutForm[lngObjNo].value = objRst.Fields('name1');
 		}
 		
 		// ----------------------------------------------------------------
-		// SELECT���֥������Ȥξ��
+		// SELECTオブジェクトの場合
 		// ----------------------------------------------------------------
 		else if( ( g_objLoadMasterOutForm[lngObjNo].type == 'select-one' ) || ( g_objLoadMasterOutForm[lngObjNo].type == 'select-multiple' ) )
 		{
-			// �оݤ�SELECT���֥������Ȥ�����
+			// 対象のSELECTオブジェクトを初期化
 			subLoadMasterOptionClear( g_objLoadMasterOutForm[lngObjNo] );
 
-			// �쥳���ɥ��åȤ�¸�ߤ�����
+			// レコードセットが存在する場合
 			if (objRst.length > 0)
 			{
 				for(var i = 0; i < objRst.length; i++)
@@ -379,7 +379,7 @@
 					oOption = document.createElement("OPTION");
 					oOption.value = objRst[i]["id"];
 					oOption.text  = objRst[i]["name1"];
-					// ����̾̾�Ρ�name2 �����ˤ�¸�ߤ��ʤ���硢�ƥ����ȿ����ѹ����롣��name2��SQL��̤ˤ�ä����椷�Ƥ����
+					// 製品名名称（name2 カラム）が存在しない場合、テキスト色を変更する。（name2はSQL結果によって制御している）
 					if( objRst[i].length > 2 )
 					{
 						if( !objRst[i]["name2"] )
@@ -395,7 +395,7 @@
 		}
 		
 		// ----------------------------------------------------------------
-		// HIDDEN ���֥������Ȥξ��
+		// HIDDEN オブジェクトの場合
 		// ----------------------------------------------------------------
 		else if( g_objLoadMasterOutForm[lngObjNo].type == 'hidden' )
 		{
@@ -403,18 +403,18 @@
 			strOutFormName = g_objLoadMasterOutForm[lngObjNo].name;
 			switch( strOutFormName )
 			{
-				// ���ʽ�ʣ�����å��ξ��
+				// 製品重複チェックの場合
 				case 'productequalcheck':
-				// ����No.��ʣ�����å��ξ��
+				// 受注No.重複チェックの場合
 				case 'receivecodeequalcheck':
 
-					// �ͤ�����
+					// 値を初期化
 					g_objLoadMasterOutForm[lngObjNo].value = 0;
 						
-					// �쥳���ɥ��åȤ�¸�ߤ�����
+					// レコードセットが存在する場合
 					if (objRst.recordcount)
 					{
-						// �����SQL������̡ˤ�����
+						// 件数（SQL検索結果）を設定
 						objRst.MoveFirst();
 						g_objLoadMasterOutForm[lngObjNo].value = parseInt(objRst.fields("id").value);
 					}
@@ -422,16 +422,16 @@
 
 				default:
 					
-					// �����å����顼���ѤǤ����� "check_alert..." �˥ޥå�
+					// チェックアラート用である場合 "check_alert..." にマッチ
 					if( strOutFormName.match(/^check_alert/) )
 					{
-						// �ͤ�����
+						// 値を初期化
 						g_objLoadMasterOutForm[lngObjNo].value = "";
 						
-						// �쥳���ɥ��åȤ�¸�ߤ�����
+						// レコードセットが存在する場合
 						if (objRst.recordcount)
 						{
-							// �����SQL������̡ˤ�����
+							// 件数（SQL検索結果）を設定
 							objRst.MoveFirst();
 							g_objLoadMasterOutForm[lngObjNo].value = objRst.fields("name1").value;
 						}
@@ -446,7 +446,7 @@
 		}
 		
 		// ----------------------------------------------------------------
-		// �����褬Ƚ�곰�Υ��֥������Ȥξ��
+		// 出力先が判定外のオブジェクトの場合
 		// ----------------------------------------------------------------
 		else
 		{
@@ -455,7 +455,7 @@
 
 		}
 		
-		// ���顼̵��������
+		// エラー無しを設定
 		g_aryLoadMasterErrorFlag[lngObjNo] = false;
 		return true;
 		
@@ -463,11 +463,11 @@
 
 
 	// ---------------------------------------------------------------------------
-	//	���ץ���󥪥֥������Ȥ����Ƥ򥯥ꥢ
+	//	オプションオブジェクトの内容をクリア
 	//
-	//	������
-	// 		objOption		-	���ץ���󥪥֥�������
-	//		blnDisabled		-	�����ƥ��ֲ��ե饰
+	//	引数：
+	// 		objOption		-	オプションオブジェクト
+	//		blnDisabled		-	アクティブ化フラグ
 	//
 	// ---------------------------------------------------------------------------
 	function subLoadMasterOptionClear(objOption, blnDisabled)
@@ -484,32 +484,32 @@
 
 
 	// ---------------------------------------------------------------------------
-	//	�쥳���ɥ��åȤ�����ꥪ�֥��������ͤؤ�����
+	//	レコードセットから指定オブジェクト値への設定
 	//
-	//	������
-	// 		objRst		-	�쥳���ɥ��åȥ��֥�������
-	//		strSearchID	-	�����оݤ�ID��ʸ�����
+	//	引数：
+	// 		objRst		-	レコードセットオブジェクト
+	//		strSearchID	-	検索対象のID（文字列）
 	//
 	// ---------------------------------------------------------------------------
 	function subLoadMasterGetIdName(objRst, strSearchID)
 	{
 		aryMatch = false;
 		
-		// �쥳���ɥ��åȤ�¸�ߤ��ʤ����
+		// レコードセットが存在しない場合
 		if (!objRst.recordcount)
 		{
 			return false;
 		}
 
-		// ��Ƭ�쥳���ɤذ�ư
+		// 先頭レコードへ移動
 		objRst.MoveFirst();
 		
 		while (!objRst.EOF)
 		{
-			// ����ID��Ʊ���id��쥳���ɥ��åȤ��鸡��
+			// 検索IDと同一のidをレコードセットから検索
 			if( objRst.fields("id").value == strSearchID )
 			{
-				// ���פ�����硢������ֵ�
+				// 一致した場合、配列で返却
 				aryMatch = new Array();
 				aryMatch['id'] = objRst.fields("id").value;
 				if( objRst.fields("name2").value )
@@ -531,27 +531,27 @@
 
 
 	// ---------------------------------------------------------------------------
-	//	���֥������������ͤΥ��顼�����å�
+	//	オブジェクト設定値のエラーチェック
 	//
-	//	������
-	// 		objForm		-	�������ͣ��ʥ����ɡˤ����Ϥ������֥�������
+	//	引数：
+	// 		objForm		-	検索元値１（コード）を入力したオブジェクト
 	//
-	//  ̾�μ������˥��顼��ȯ���ʷ��0��ˤ�����硢�����͡ʥ����ɡˤ���������
-	//  [0]�Υ��顼���Ф��ƤΤߡ����顼Ƚ���Ԥ�������ϡ�³���� Setting()��ƤФ줿�ݤ�
-	//  ���顼�����������Ƥ��ޤ�������򤹤뤿��Ǥ���
+	//  名称取得時にエラーが発生（件数0件）した場合、入力値（コード）を初期化する
+	//  [0]のエラーに対してのみ、エラー判定を行う。これは、続けて Setting()を呼ばれた際に
+	//  エラーが初期化されてしまう事を回避するためです。
 	// ---------------------------------------------------------------------------
 	function subLoadMasterCheck(objForm)
 	{
-		// ���顼��ȯ�����Ƥ������
+		// エラーが発生していた場合
 		if( g_aryLoadMasterErrorFlag[0] == true )
 		{
-			// Ʊ�����ϥ��֥������Ȥξ��
+			// 同じ入力オブジェクトの場合
 			if( g_objLoadMasterInForm.name == objForm.name )
 			{
-				// �����ͤν����
+				// 入力値の初期化
 				objForm.value = "";
 				g_objLoadMasterInForm.value="";
-				// ���顼�ե饰�ν����
+				// エラーフラグの初期化
 				g_aryLoadMasterErrorFlag[0] = false;
 				return true;
 			}
@@ -559,13 +559,13 @@
 	}
 
 	// ---------------------------------------------------------------------------
-	//	���ס��ٹ��å�������ɽ�������롣
+	//	概要：警告メッセージを表示させる。
 	//
-	//	������
-	// 		objAlert	-	alert��å��������ݻ�����Ƥ���(hidden)���֥�������
+	//	引数：
+	// 		objAlert	-	alertメッセージが保持されている(hidden)オブジェクト
 	//
-	//  subLoadMasterText �ˤ� check_alert ���֥������Ȥ˥�å�����������
-	//  ��å����������� /lib/sql/*.sql �˳�Ǽ
+	//  subLoadMasterText にて check_alert オブジェクトにメッセージを代入
+	//  メッセージは全て /lib/sql/*.sql に格納
 	// ---------------------------------------------------------------------------
 	function subLoadMasterCheckAlert(objAlert)
 	{

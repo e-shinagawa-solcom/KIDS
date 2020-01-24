@@ -16,19 +16,19 @@ require_once(SRC_ROOT.'/mold/lib/UtilGroup.class.php');
 require_once(SRC_ROOT.'/mold/lib/UtilUser.class.php');
 
 /**
- * �ⷿ�˴ؤ��������Ԥ�
- * clsDB����Ѥ��Ƥ��뤬�������Դ����ʰ����դ��뤳��
- * TODO �ơ��֥뤬���ߤ��Ƥ���Τǥ��饹��ʬ�䤹��
+ * 金型に関する処理を行う
+ * clsDBを使用しているが処理が不完全な為注意すること
+ * TODO テーブルが混在しているのでクラスを分割する
  *
  * @see clsDB
  */
 class UtilMold extends WithQuery
 {
 	/**
-	 * �ⷿ�λ����층������������
+	 * 金型の仕入れ元情報を取得する
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @return ������Ϣ��������֤�
+	 * @param string $moldNo 金型NO
+	 * @return 下記の連想配列を返す
 	 * <pre>
 	 * {
 	 *     vendercode => value,
@@ -50,29 +50,29 @@ class UtilMold extends WithQuery
 		{
 			$queryMoldVender = file_get_contents($this->getQueryFileName("selectMoldVender"));
 
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$paramMoldVender = array(
 					"moldno" => $moldNo
 			);
 
-			// �ⷿ�λ����층������������
+			// 金型の仕入れ元情報を取得する
 			pg_prepare(static::$db->ConnectID, "", $queryMoldVender);
 			$pgResultMoldVender = pg_execute("", $paramMoldVender);
 
-			// �������䤤��碌�������������
+			// 検索の問い合わせに成功した場合
 			if ($pgResultMoldVender)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResultMoldVender))
 				{
-					// ������̤���Ƭ�Ԥ���С����������
+					// 検索結果の先頭行からバージョンを取得
 					$result = pg_fetch_array($pgResultMoldVender, 0, PGSQL_ASSOC);
 				}
-				// ���פ���Ԥ�¸�ߤ��ʤ����
+				// 一致する行が存在しない場合
 				else
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$queryMoldVender,
 							$paramMoldVender
 					);
@@ -81,7 +81,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$queryMoldVender,
 						$paramMoldVender
 				);
@@ -90,8 +90,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldNo)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldNo)."\n"
 			);
 		}
 
@@ -100,23 +100,23 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿĢɼ�ǡ���������������Ԥ���
+	 * 金型帳票データの挿入処理を行う。
 	 * </pre>
 	 *
-	 * @param array �ե�����ǡ���
-	 * @return INSERT����RETURNING�������
+	 * @param array フォームデータ
+	 * @return INSERT時のRETURNING結果配列
 	 */
 	public function insertMoldReport(array $formData)
 	{
 		$result = false;
 
-		// SendTo�������Ƥμ���(1���ܤζⷿ��������층���������)
-		// TO����(���������)�κ��� ����Ū�˺ǽ�ζⷿ�λ��������������
+		// SendTo項目内容の取得(1つ目の金型から仕入れ元を索引する)
+		// TO項目(仕入元会社)の索引 暫定的に最初の金型の仕入元を取得する
 		$venderInfo = $this->getVenderInfomation($formData[FormMoldReport::MoldNo."1"]);
 		$formData["SendTo"] = $venderInfo["vendercode"];
 
-		// ɽ�������ɤ򥭡�������(PK)���֤�������
-		// ������
+		// 表示コードをキーコード(PK)で置き換える
+		// 事業部
 		$formData[FormMoldReport::CustomerCode] =
 			fncGetMasterValue(
 				"m_company",
@@ -127,7 +127,7 @@ class UtilMold extends WithQuery
 				static::$db
 			);
 
-		// KWG����
+		// KWG部署
 		$formData[FormMoldReport::KuwagataGroupCode] =
 			fncGetMasterValue(
 				"m_group",
@@ -138,7 +138,7 @@ class UtilMold extends WithQuery
 				static::$db
 			);
 
-		// KWGô����
+		// KWG担当者
 		$formData[FormMoldReport::KuwagataUserCode] =
 			fncGetMasterValue(
 				"m_user",
@@ -149,14 +149,14 @@ class UtilMold extends WithQuery
 				static::$db
 			);
 
-		// Ģɼ��ʬ��SQL�ڤӥѥ�᡼�����ڤ��ؤ���
+		// 帳票区分でSQL及びパラメータを切り替える
 		switch ($formData[FormMoldReport::ReportCategory])
 		{
-			// ��ư��/�ֵ���
+			// 移動版/返却版
 			case "10":
 			case "20":
-				// ɽ�������ɤ򥭡�������(PK)���֤�������
-				// �ݴɹ���
+				// 表示コードをキーコード(PK)で置き換える
+				// 保管工場
 				$formData[FormMoldReport::SourceFactory] =
 					fncGetMasterValue(
 						"m_company",
@@ -167,7 +167,7 @@ class UtilMold extends WithQuery
 						static::$db
 					);
 
-				// ��ư�蹩��
+				// 移動先工場
 				$formData[FormMoldReport::DestinationFactory] =
 					fncGetMasterValue(
 						"m_company",
@@ -178,10 +178,10 @@ class UtilMold extends WithQuery
 						static::$db
 					);
 
-				// SQL�ե������ɤ߹���
+				// SQLファイル読み込み
 				$query = file_get_contents($this->getQueryFileName("insertMoldReportForMove"));
 
-				// �ѥ�᡼������
+				// パラメータ作成
 				$params = array(
 						TableMoldReport::ReportCategory => $formData[FormMoldReport::ReportCategory],
 						TableMoldReport::RequestDate => $formData[FormMoldReport::RequestDate],
@@ -207,12 +207,12 @@ class UtilMold extends WithQuery
 				);
 				break;
 
-			// �Ѵ���
+			// 廃棄版
 			case "30":
-				// SQL�ե������ɤ߹���
+				// SQLファイル読み込み
 				$query = file_get_contents($this->getQueryFileName("insertMoldReportForDispose"));
 
-				// �ѥ�᡼������
+				// パラメータ作成
 				$params = array(
 						TableMoldReport::ReportCategory => $formData[FormMoldReport::ReportCategory],
 						TableMoldReport::RequestDate => $formData[FormMoldReport::RequestDate],
@@ -233,28 +233,28 @@ class UtilMold extends WithQuery
 				);
 				break;
 
-			// ����ʳ�
+			// それ以外
 			default:
-				throw new KidsLogicException("Ģɼ��ʬ�����곰���ͤǤ���".[FormMoldReport::ReportCategory]);
+				throw new KidsLogicException("帳票区分が既定外の値です。".[FormMoldReport::ReportCategory]);
 				break;
 		}
 
-		// �����깽��
+		// クエリ構成
 		pg_prepare("", $query);
 
-		// ������¹Է�̤�����줿���
+		// クエリ実行結果が得られた場合
 		if ($pgResult = pg_execute("", $params))
 		{
-			// RETURNING��̤����
+			// RETURNING結果を取得
 			$result = pg_fetch_array($pgResult);
-			// ������������̾�Τ��ɲ�
+			// 結果配列に製品名称を追加
 			$result[FormMoldReport::ProductName] = $formData[FormMoldReport::ProductName];
 		}
-		// ������¹Է�̤������ʤ��ä����
+		// クエリ実行結果が得られなかった場合
 		else
 		{
 			throw new SQLException(
-					TableMoldReport::TABLE_NAME."�ؤ�INSERT�˼��Ԥ��ޤ�����",
+					TableMoldReport::TABLE_NAME."へのINSERTに失敗しました。",
 					$query,
 					$params
 			);
@@ -264,12 +264,12 @@ class UtilMold extends WithQuery
 	}
 
 	/**
-	 * �ⷿĢɼ�ܺ٥ǡ���������������Ԥ���
+	 * 金型帳票詳細データの挿入処理を行う。
 	 *
 	 * @param string id
 	 * @param string integer
-	 * @param array �ե�����ǡ���
-	 * @return INSERT���
+	 * @param array フォームデータ
+	 * @return INSERT件数
 	 */
 	public function insertMoldReportDetail($id, $revision, array $formData)
 	{
@@ -278,35 +278,35 @@ class UtilMold extends WithQuery
 		if (!is_string($id) && !is_integer($revision))
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1: ���Ԥ��뷿 string : �Ϥ��줿�� ".gettype($id)."\n".
-					"����2: ���Ԥ��뷿 integer : �Ϥ��줿�� ".gettype($revision)."\n"
+					"引数の型が不正です。".
+					"引数1: 期待する型 string : 渡された型 ".gettype($id)."\n".
+					"引数2: 期待する型 integer : 渡された型 ".gettype($revision)."\n"
 			);
 		}
 
-		// �ե�����ǡ�������ⷿNO/�ⷿ�������Ǥ����
+		// フォームデータから金型NO/金型説明要素を抽出
 		$listMoldNo =$this->extractArray($formData, FormMoldReport::MoldNo);
 		$listMoldDescription =$this->extractArray($formData, FormMoldReport::MoldDescription);
 
-		// �ⷿNO/�ⷿ���� ��з���Υ����å�
+		// 金型NO/金型説明 抽出件数のチェック
 		if (1 <= count($listMoldNo) && 1 <= count($listMoldDescription) &&
 				count($listMoldNo) !== count($listMoldDescription))
 		{
 			throw new KidsLogicException(
-					"�ⷿNO���϶ⷿ���������Ǥ������Ǥ���"."\n".
-					"�ⷿNO ��� :".count($listMoldNo)."\n".
-					"�ⷿ���� ��� :".count($listMoldDescription)."\n"
+					"金型NO又は金型説明の要素が不正です。"."\n".
+					"金型NO 件数 :".count($listMoldNo)."\n".
+					"金型説明 件数 :".count($listMoldDescription)."\n"
 			);
 		}
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 		pg_prepare("", $query);
 
-		// �ⷿNO���ʬ����
+		// 金型NO件数分走査
 		for ($i = 1; $i <= count($listMoldNo); $i++)
 		{
-			// �ѥ�᡼������
+			// パラメータ作成
 			$params = array(
 					TableMoldReportDetail::MoldReportId => $id,
 					TableMoldReportDetail::Revision => $revision,
@@ -317,41 +317,41 @@ class UtilMold extends WithQuery
 					TableMoldReport::UpdateBy => $this->getUserCode()
 			);
 
-			// ������¹Է�̤������ʤ��ä����
+			// クエリ実行結果が得られなかった場合
 			if (!$pgResult = pg_execute("", $params))
 			{
 				throw new SQLException(
-						TableMoldReportDetail::TABLE_NAME."�ؤ�INSERT�˼��Ԥ��ޤ�����",
+						TableMoldReportDetail::TABLE_NAME."へのINSERTに失敗しました。",
 						$query,
 						$params
 				);
 			}
 		}
 
-		// �������������
+		// 挿入件数の設定
 		$result = $i - 1;
 
 		return $result;
 	}
 
 	/**
-	 * �ⷿĢɼ��Ϣ�ǡ���������������Ԥ���
+	 * 金型帳票関連データの挿入処理を行う。
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @param integer $historyNo �����ֹ�
-	 * @param string $id �ⷿĢɼID
-	 * @param integer $revision ��ӥ����
-	 * @return INSERT���
+	 * @param string $moldNo 金型NO
+	 * @param integer $historyNo 履歴番号
+	 * @param string $id 金型帳票ID
+	 * @param integer $revision リビジョン
+	 * @return INSERT件数
 	 */
 	public function insertMoldReportRelation($moldNo, $historyNo, $id, $revision)
 	{
 		$result = false;
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 		pg_prepare("", $query);
 
-		// �ѥ�᡼������
+		// パラメータ作成
 		$params = array(
 			TableMoldReportRelation::MoldNo => $moldNo,
 			TableMoldReportRelation::HistoryNo => $historyNo,
@@ -361,16 +361,16 @@ class UtilMold extends WithQuery
 			TableMoldReportRelation::UpdateBy => $this->getUserCode()
 		);
 
-		// ������¹Է�̤������ʤ��ä����
+		// クエリ実行結果が得られなかった場合
 		if ($pgResult = pg_execute("", $params))
 		{
-			// RETURNING��̤����
+			// RETURNING結果を取得
 			$result = pg_fetch_array($pgResult);
 		}
 		else
 		{
 			throw new SQLException(
-					TableMoldReportRelation::TABLE_NAME."�ؤ�INSERT�˼��Ԥ��ޤ�����",
+					TableMoldReportRelation::TABLE_NAME."へのINSERTに失敗しました。",
 					$query,
 					$params
 					);
@@ -381,33 +381,33 @@ class UtilMold extends WithQuery
 
 
 	/**
-	 * �ե�����ǡ������˶ⷿ����إǡ���������������Ԥ���
+	 * フォームデータを基に金型履歴へデータの挿入処理を行う。
 	 *
-	 * @param array �ե�����ǡ���
-	 * @return INSERT���
+	 * @param array フォームデータ
+	 * @return INSERT件数
 	 */
 	public function insertMoldHistoryByFormData(array $formData)
 	{
 		$result = false;
 		$returning = array();
 
-		// �ե�����ǡ�������ⷿNO���Ǥ����
+		// フォームデータから金型NO要素を抽出
 		$listMoldNo =$this->extractArray($formData, FormMoldReport::MoldNo);
 
-		// �ⷿNO��з���Υ����å�
+		// 金型NO抽出件数のチェック
 		if (!count($listMoldNo))
 		{
 			throw new KidsLogicException(
-					"�ⷿNO���϶ⷿ���������Ǥ������Ǥ���"."\n".
-					"�ⷿNO ��� :".count($listMoldNo)."\n"
+					"金型NO又は金型説明の要素が不正です。"."\n".
+					"金型NO 件数 :".count($listMoldNo)."\n"
 			);
 		}
 
-		// ��ư�����ֵѤξ��
+		// 移動又は返却の場合
 		if ($formData[FormMoldHistory::Status] == "10" || $formData[FormMoldHistory::Status] == "20")
 		{
-			// ɽ�������ɤ򥭡�������(PK)���֤�������
-			// �ݴɹ���
+			// 表示コードをキーコード(PK)で置き換える
+			// 保管工場
 			$formData[FormMoldRegistBase::SourceFactory] =
 			fncGetMasterValue(
 					"m_company",
@@ -418,7 +418,7 @@ class UtilMold extends WithQuery
 					static::$db
 			);
 
-			// ��ư�蹩��
+			// 移動先工場
 			$formData[FormMoldRegistBase::DestinationFactory] =
 			fncGetMasterValue(
 					"m_company",
@@ -430,14 +430,14 @@ class UtilMold extends WithQuery
 			);
 		}
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName("insertMoldHistory"));
 		pg_prepare("", $query);
 
-		// �ⷿNO���ʬ����
+		// 金型NO件数分走査
 		for ($i = 1; $i <= count($listMoldNo); $i++)
 		{
-			// �ѥ�᡼������
+			// パラメータ作成
 			$params = array(
 				TableMoldHistory::MoldNo => $listMoldNo[FormMoldHistory::MoldNo.$i],
 				TableMoldHistory::Status => $formData[FormMoldHistory::Status],
@@ -456,16 +456,16 @@ class UtilMold extends WithQuery
 				TableMoldReport::UpdateBy => $this->getUserCode()
 			);
 
-			// ������¹Է�̤������ʤ��ä����
+			// クエリ実行結果が得られなかった場合
 			if ($pgResult = pg_execute("", $params))
 			{
-				// RETURNING��̤����
+				// RETURNING結果を取得
 				$returning[] = pg_fetch_array($pgResult);
 			}
 			else
 			{
 				throw new SQLException(
-						TableMoldHistory::TABLE_NAME."�ؤ�INSERT�˼��Ԥ��ޤ�����",
+						TableMoldHistory::TABLE_NAME."へのINSERTに失敗しました。",
 						$query,
 						$params
 						);
@@ -481,20 +481,20 @@ class UtilMold extends WithQuery
 	}
 
 	/**
-	 * �ⷿ����إǡ���������������Ԥ���
+	 * 金型履歴へデータの挿入処理を行う。
 	 *
-	 * @param array �ⷿ����쥳����
-	 * @return INSERT���
+	 * @param array 金型履歴レコード
+	 * @return INSERT件数
 	 */
 	public function insertMoldHistory(array $record)
 	{
 		$result = false;
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 		pg_prepare("", $query);
 
-		// �ѥ�᡼������
+		// パラメータ作成
 		$params = array(
 			TableMoldHistory::MoldNo => $record[TableMoldHistory::MoldNo],
 			TableMoldHistory::Status => $record[TableMoldHistory::Status],
@@ -513,16 +513,16 @@ class UtilMold extends WithQuery
 			TableMoldReport::UpdateBy => $this->getUserCode()
 		);
 
-		// ������¹Է�̤������ʤ��ä����
+		// クエリ実行結果が得られなかった場合
 		if ($pgResult = pg_execute("", $params))
 		{
-			// RETURNING��̤����
+			// RETURNING結果を取得
 			$result = pg_fetch_array($pgResult);
 		}
 		else
 		{
 			throw new SQLException(
-					TableMoldHistory::TABLE_NAME."�ؤ�INSERT�˼��Ԥ��ޤ�����",
+					TableMoldHistory::TABLE_NAME."へのINSERTに失敗しました。",
 					$query,
 					$params
 			);
@@ -533,21 +533,21 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �����ޥ����ڤӾܺ٥ơ��֥뤫��ⷿ�ޥ����򥤥�ݡ��Ȥ���
-	 * �����ߺѤߤǤʤ��ⷿNO���оݤˤ���
+	 * 仕入マスタ及び詳細テーブルから金型マスタをインポートする
+	 * 取り込み済みでない金型NOを対象にする
 	 * </pre>
 	 *
-	 * @return �����߷��
+	 * @return 取り込み件数
 	 */
 	public function importMoldFromStock()
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array();
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
@@ -558,7 +558,7 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -568,10 +568,10 @@ class UtilMold extends WithQuery
 	}
 
 	/**
-	 * �ⷿ����Υǡ����ι���������Ԥ���
+	 * 金型履歴のデータの更新処理を行う。
 	 *
-	 * @param array �ե�����ǡ���
-	 * @return UPDATE��̤�RETURNINGϢ������
+	 * @param array フォームデータ
+	 * @return UPDATE結果のRETURNING連想配列
 	 */
 	public function modifyMoldHistory(array $formData)
 	{
@@ -580,11 +580,11 @@ class UtilMold extends WithQuery
 
 		$status = $formData[FormMoldHistory::Status];
 
-		// ��ư�����ֵѤξ��
+		// 移動又は返却の場合
 		if ($status == "10" || $status == "20")
 		{
-			// ɽ�������ɤ򥭡�������(PK)���֤�������
-			// �ݴɹ���
+			// 表示コードをキーコード(PK)で置き換える
+			// 保管工場
 			$formData[FormMoldHistory::SourceFactory] =
 			fncGetMasterValue(
 					"m_company",
@@ -595,7 +595,7 @@ class UtilMold extends WithQuery
 					static::$db
 					);
 
-			// ��ư�蹩��
+			// 移動先工場
 			$formData[FormMoldHistory::DestinationFactory] =
 			fncGetMasterValue(
 					"m_company",
@@ -607,7 +607,7 @@ class UtilMold extends WithQuery
 					);
 		}
 
-		// �ѥ�᡼������
+		// パラメータ作成
 		$params = array(
 				// WHERE
 				TableMoldHistory::MoldNo => $formData[FormMoldHistory::MoldNo],
@@ -628,20 +628,20 @@ class UtilMold extends WithQuery
 				TableMoldReport::UpdateBy => $this->getUserCode()
 		);
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 		pg_prepare("", $query);
 		
-		// ������¹Է�̤������ʤ��ä����
+		// クエリ実行結果が得られなかった場合
 		if ($pgResult = pg_execute("", $params))
 		{
-			// RETURNING��̤����
+			// RETURNING結果を取得
 			$returning[] = pg_fetch_array($pgResult);
 		}
 		else
 		{
 			throw new SQLException(
-					TableMoldHistory::TABLE_NAME."�ؤ�UPDATE�˼��Ԥ��ޤ�����",
+					TableMoldHistory::TABLE_NAME."へのUPDATEに失敗しました。",
 					$query,
 					$params
 					);
@@ -657,11 +657,11 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿ���������
+	 * 金型を取得する
 	 * </pre>
 	 *
 	 * @param string $moldno
-	 * @return �������줿�ⷿ��Ϣ������
+	 * @return 索引された金型の連想配列
 	 */
 	public function selectMold($moldno)
 	{
@@ -670,18 +670,18 @@ class UtilMold extends WithQuery
 		if(is_string($moldno))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldno" => pg_escape_string($moldno)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = pg_fetch_array($pgResult, 0);
@@ -689,7 +689,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -698,7 +698,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -707,8 +707,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldno)
+					"引数の型が不正です。".
+					"引数1:".gettype($moldno)
 					);
 		}
 
@@ -717,13 +717,13 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿĢɼ���������
+	 * 金型帳票を取得する
 	 * </pre>
 	 *
-	 * @param string $moldReportId �ⷿĢɼID
-	 * @param $revision ��ӥ����
-	 * @param $version �С������
-	 * @return �������줿�ⷿĢɼ��Ϣ������
+	 * @param string $moldReportId 金型帳票ID
+	 * @param $revision リビジョン
+	 * @param $version バージョン
+	 * @return 索引された金型帳票の連想配列
 	 */
 	public function selectMoldReport($moldReportId, $revision, $version)
 	{
@@ -732,20 +732,20 @@ class UtilMold extends WithQuery
 		if(is_string($moldReportId))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldreportid" => pg_escape_string($moldReportId),
 					"revision" => pg_escape_string($revision),
 					"version" => pg_escape_string($version),
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = pg_fetch_array($pgResult, 0);
@@ -753,7 +753,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 					);
@@ -762,7 +762,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -771,8 +771,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldReportId)
+					"引数の型が不正です。".
+					"引数1:".gettype($moldReportId)
 					);
 		}
 
@@ -781,26 +781,26 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * ̤��λ�ζⷿĢɼ���������
+	 * 未完了の金型帳票を取得する
 	 * </pre>
 	 *
-	 * @return ̤��λ�ζⷿĢɼ��Ϣ������
+	 * @return 未完了の金型帳票の連想配列
 	 */
 	public function selectUnclosedMoldReport()
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array();
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$result = pg_fetch_all($pgResult);
@@ -809,7 +809,7 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -820,13 +820,13 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿ������������
+	 * 金型履歴を取得する
 	 * </pre>
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @param string $historyNo �ⷿ����
+	 * @param string $moldNo 金型NO
+	 * @param string $historyNo 金型履歴
 	 * @param integer $version
-	 * @return �������줿�ⷿ�����Ϣ������
+	 * @return 索引された金型履歴の連想配列
 	 */
 	public function selectMoldHistory($moldNo, $historyNo, $version)
 	{
@@ -835,20 +835,20 @@ class UtilMold extends WithQuery
 		if(is_string($moldNo))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldno" => pg_escape_string($moldNo),
 					"historyno" => pg_escape_string($historyNo),
 					"version" => pg_escape_string($version)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = pg_fetch_array($pgResult, 0);
@@ -856,7 +856,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -865,7 +865,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -874,8 +874,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldNo)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldNo)."\n"
 					);
 		}
 
@@ -884,13 +884,13 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿ������������
-	 * �������˥С�������ޤ�ʤ�
+	 * 金型履歴を取得する
+	 * 索引条件にバージョンを含めない
 	 * </pre>
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @param string $historyNo �ⷿ����
-	 * @return �������줿�ⷿ�����Ϣ������
+	 * @param string $moldNo 金型NO
+	 * @param string $historyNo 金型履歴
+	 * @return 索引された金型履歴の連想配列
 	 */
 	public function selectMoldHistoryWithoutVersion($moldNo, $historyNo)
 	{
@@ -899,19 +899,19 @@ class UtilMold extends WithQuery
 		if(is_string($moldNo))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldno" => pg_escape_string($moldNo),
 					"historyno" => pg_escape_string($historyNo)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = pg_fetch_array($pgResult, 0);
@@ -919,7 +919,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -928,7 +928,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -937,8 +937,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldNo)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldNo)."\n"
 					);
 		}
 
@@ -947,31 +947,31 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿĢɼ�ܺ٤��������
+	 * 金型帳票詳細を取得する
 	 * </pre>
 	 *
-	 * @param string $moldReportId �ⷿĢɼID
-	 * @param string $revision ��ӥ����
-	 * @return �������줿�ⷿĢɼ�ܺ٤�Ϣ������
+	 * @param string $moldReportId 金型帳票ID
+	 * @param string $revision リビジョン
+	 * @return 索引された金型帳票詳細の連想配列
 	 */
 	public function selectMoldReportDetail($moldReportId, $revision)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"moldreportid" => pg_escape_string($moldReportId),
 				"revision" => pg_escape_string($revision)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$result = pg_fetch_all($pgResult);
@@ -979,7 +979,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+						"検索条件に一致するレコードが存在しませんでした。",
 						$query,
 						$param
 						);
@@ -988,7 +988,7 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -999,13 +999,13 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿ���������˶ⷿĢɼ��Ϣ���������
+	 * 金型履歴情報を基に金型帳票関連を取得する
 	 * </pre>
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @param string $historyNo �ⷿ����
-	 * @param boolean $required �������ɬ�ܥե饰
-	 * @return �������줿�ⷿĢɼ��Ϣ��Ϣ������
+	 * @param string $moldNo 金型NO
+	 * @param string $historyNo 金型履歴
+	 * @param boolean $required 検索結果必須フラグ
+	 * @return 索引された金型帳票関連の連想配列
 	 */
 	public function selectMoldReportRelationByHistory($moldNo, $historyNo, $required = false)
 	{
@@ -1014,19 +1014,19 @@ class UtilMold extends WithQuery
 		if(is_string($moldNo))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldno" => pg_escape_string($moldNo),
 					"historyno" => pg_escape_string($historyNo),
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = pg_fetch_all($pgResult);
@@ -1036,7 +1036,7 @@ class UtilMold extends WithQuery
 					if ($required)
 					{
 						throw new SQLException(
-							"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"検索条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 						);
@@ -1046,7 +1046,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1055,8 +1055,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldNo)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldNo)."\n"
 					);
 		}
 
@@ -1065,13 +1065,13 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿĢɼ���˶ⷿĢɼ��Ϣ���������
+	 * 金型帳票を基に金型帳票関連を取得する
 	 * </pre>
 	 *
-	 * @param string $moldReportId �ⷿĢɼID
-	 * @param string $revision ��ӥ����
-	 * @param boolean $required �������ɬ�ܥե饰
-	 * @return �������줿�ⷿĢɼ��Ϣ��Ϣ������
+	 * @param string $moldReportId 金型帳票ID
+	 * @param string $revision リビジョン
+	 * @param boolean $required 検索結果必須フラグ
+	 * @return 索引された金型帳票関連の連想配列
 	 */
 	public function selectMoldReportRelationByReport($moldReportId, $revision, $required = false)
 	{
@@ -1080,19 +1080,19 @@ class UtilMold extends WithQuery
 		if(is_string($moldReportId))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldreportid" => pg_escape_string($moldReportId),
 					"revision" => pg_escape_string($revision),
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = pg_fetch_all($pgResult);
@@ -1102,7 +1102,7 @@ class UtilMold extends WithQuery
 					if ($required)
 					{
 						throw new SQLException(
-								"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+								"検索条件に一致するレコードが存在しませんでした。",
 								$query,
 								$param
 								);
@@ -1112,7 +1112,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1121,8 +1121,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldReportId)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldReportId)."\n"
 					);
 		}
 
@@ -1131,50 +1131,50 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿ�θ��ߤ��ݴɹ���(��ҥ�����)���������
+	 * 金型の現在の保管工場(会社コード)を取得する
 	 *
-	 * �ֶⷿNO�פ��鸽�߶ⷿ���ݴɤ���Ƥ���ֹ����(��ҥ�����)�����
+	 * 「金型NO」から現在金型が保管されている「工場」(会社コード)を取得
 	 *
-	 * ���Ѵ��ץ��ơ������ζⷿ�������Ķⷿ�Ͻ�������
-	 * �ּ»����פ�̤�����ζⷿ�������Ķⷿ�Ͻ�������
-	 * ��̤��λ�ץ��ơ������ζⷿĢɼ����Ķⷿ�Ͻ�������
+	 * 「廃棄」ステータスの金型履歴を持つ金型は除外する
+	 * 「実施日」が未来日の金型履歴を持つ金型は除外する
+	 * 「未完了」ステータスの金型帳票を持つ金型は除外する
 	 *
-	 * # ���߶ⷿ���ݴɤ���Ƥ���ֹ���� = �ǿ��ΰ�ư�蹩��
+	 * # 現在金型が保管されている「工場」 = 最新の移動先工場
 	 * </pre>
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @return ��ҥ�����
+	 * @param string $moldNo 金型NO
+	 * @return 会社コード
 	 */
 	public function selectCurrentStorageOfMold($moldNo)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"moldno" => pg_escape_string($moldNo)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ���ߤ��ݴɹ���(�ǿ��ΰ�ư�蹩��)�μ���
+				// 現在の保管工場(最新の移動先工場)の取得
 				$result = $record[TableMoldReport::DestinationFactory];
 			}
 
-			// �����Ǥ��ʤ��ä����Ϥ��Τޤ�false���֤�����
+			// 索引できなかった場合はそのままfalseを返させる
 		}
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -1185,46 +1185,46 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿ�θ��ߤ��ݴɹ���(��ҥ�����)���������
+	 * 金型の現在の保管工場(会社コード)を取得する
 	 *
-	 * �ֶⷿNO�פ��鸽�߶ⷿ���ݴɤ���Ƥ���ֹ����(��ҥ�����)�����
+	 * 「金型NO」から現在金型が保管されている「工場」(会社コード)を取得
 	 *
-	 * ���Ѵ��ץ��ơ������ζⷿ�������Ķⷿ�Ͻ�������
-	 * �ּ»����פ�̤�����ζⷿ�������Ķⷿ�Ͻ�������
+	 * 「廃棄」ステータスの金型履歴を持つ金型は除外する
+	 * 「実施日」が未来日の金型履歴を持つ金型は除外する
 	 *
-	 * # ���߶ⷿ���ݴɤ���Ƥ���ֹ���� = �ǿ��ΰ�ư�蹩��
+	 * # 現在金型が保管されている「工場」 = 最新の移動先工場
 	 * </pre>
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @return ��ҥ�����
+	 * @param string $moldNo 金型NO
+	 * @return 会社コード
 	 */
 	public function selectMoldVender($moldNo)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"moldno" => pg_escape_string($moldNo)
 		);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// ���ߤ��ݴɹ���(�ǿ��ΰ�ư�蹩��)�μ���
+				// 現在の保管工場(最新の移動先工場)の取得
 				$result = $record[TableMold::VenderCode];
 			}
 			else
 			{
 				throw new SQLException(
-						"�������˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+						"検索条件に一致するレコードが存在しませんでした。",
 						$query,
 						$param
 						);
@@ -1233,7 +1233,7 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -1243,45 +1243,45 @@ class UtilMold extends WithQuery
 	}
 
 	/**
-	 * �����������Ⱥ����Ѥζⷿ����쥳���ɤκ�����Ԥ�
+	 * ダイジェスト作成用の金型履歴レコードの索引を行う
 	 *
-	 * @param array $list_moldNo �ⷿNO�ꥹ��
-	 * @return �������Ϣ������
+	 * @param array $list_moldNo 金型NOリスト
+	 * @return 索引結果連想配列
 	 */
 	public function selectSummaryOfMoldHistory(array $list_moldno)
 	{
 		$result = false;
 
-		// �ץ졼���ۥ����
+		// プレースホルダ群
 		$placeholder = array();
-		// ������ѥ�᡼������(���ߡ�)
+		// クエリパラメータ作成(ダミー)
 		$param = array();
-		// ����ǥå���
+		// インデックス
 		$i = 1;
 
-		// �ⷿ�ꥹ�ȷ��ʬ����
+		// 金型リスト件数分走査
 		foreach ($list_moldno as $moldno)
 		{
 			$placeholder[] = "$".($i++).",";
 			$param[] = $moldno;
 		}
 
-		// ������;�ꥫ��ޤκ��
+		// 末尾の余剰カンマの削除
 		$placeholder[] = str_replace(",", "", array_pop($placeholder));
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 
-		// �ץ졼���ۥ�����ִ�
+		// プレースホルダの置換
 		$query = str_replace("_%moldno%_", implode("\n", $placeholder), $query);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$result = pg_fetch_all($pgResult);
@@ -1294,7 +1294,7 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -1304,45 +1304,45 @@ class UtilMold extends WithQuery
 	}
 
 	/**
-	 * �����������Ⱥ����ѤζⷿĢɼ/�ܺ٥쥳���ɤκ�����Ԥ�
+	 * ダイジェスト作成用の金型帳票/詳細レコードの索引を行う
 	 *
-	 * @param array $list_moldNo �ⷿNO�ꥹ��
-	 * @return �������Ϣ������
+	 * @param array $list_moldNo 金型NOリスト
+	 * @return 索引結果連想配列
 	 */
 	public function selectSummaryOfMoldReport(array $list_moldno)
 	{
 		$result = false;
 
-		// �ץ졼���ۥ����
+		// プレースホルダ群
 		$placeholder = array();
-		// ������ѥ�᡼������(���ߡ�)
+		// クエリパラメータ作成(ダミー)
 		$param = array();
-		// ����ǥå���
+		// インデックス
 		$i = 1;
 
-		// �ⷿ�ꥹ�ȷ��ʬ����
+		// 金型リスト件数分走査
 		foreach ($list_moldno as $moldno)
 		{
 			$placeholder[] = "$".($i++).",";
 			$param[] = $moldno;
 		}
 
-		// ������;�ꥫ��ޤκ��
+		// 末尾の余剰カンマの削除
 		$placeholder[] = str_replace(",", "", array_pop($placeholder));
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 
-		// �ץ졼���ۥ�����ִ�
+		// プレースホルダの置換
 		$query = str_replace("_%moldno%_", implode("\n", $placeholder), $query);
 
-		// ��̳�����ɤ��������������
+		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$result = pg_fetch_all($pgResult);
@@ -1355,7 +1355,7 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -1365,12 +1365,12 @@ class UtilMold extends WithQuery
 	}
 
 	/**
-	 * Ǥ�դ��������Ǥ������������Ǥ���Ф���
+	 * 任意の配列要素から指定条件で要素を抽出する
 	 *
-	 * @param array $anyArray Ǥ�դ�����
-	 * @param string $condition ��о��
-	 * @return �ⷿNO�ꥹ��(array)<br>
-	 *         �ⷿNO����ФǤ��ʤ��ä����϶�(Ĺ��0)��������֤�
+	 * @param array $anyArray 任意の配列
+	 * @param string $condition 抽出条件
+	 * @return 金型NOリスト(array)<br>
+	 *         金型NOを抽出できなかった場合は空(長さ0)の配列を返す
 	 */
 	public static function extractArray(array $anyArray, $condition)
 	{
@@ -1395,7 +1395,7 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿNO���ⷿ�ޥ������¸�ߤ��뤫��ǧ��Ԥ�
+	 * 金型NOが金型マスタ上に存在するか確認を行う
 	 * </pre>
 	 *
 	 * @param string $moldNo
@@ -1408,18 +1408,18 @@ class UtilMold extends WithQuery
 		if(is_string($moldNo))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldno" => pg_escape_string($moldNo)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -1428,7 +1428,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1437,8 +1437,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldNo)
+					"引数の型が不正です。".
+					"引数1:".gettype($moldNo)
 					);
 		}
 
@@ -1447,11 +1447,11 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿNO�����ꤵ�줿���ʥ����ɤ�ɳ�դ���Τ������å���Ԥ�
+	 * 金型NOが指定された製品コードと紐付くものかチェックを行う
 	 * </pre>
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @param string $productCode ���ʥ�����
+	 * @param string $moldNo 金型NO
+	 * @param string $productCode 製品コード
 	 * @return boolean
 	 */
 	public function existsMoldNoWithProductCode($moldNo, $productCode, $revisecode)
@@ -1461,20 +1461,20 @@ class UtilMold extends WithQuery
 		if(is_string($moldNo) && is_string($productCode) && is_string($revisecode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldno" => pg_escape_string($moldNo),
 					"productcode" => pg_escape_string($productCode),
 					"revisecode" => pg_escape_string($revisecode)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -1483,7 +1483,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1492,10 +1492,10 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldNo).
-					"����2:".gettype($productCode).
-					"����3:".gettype($revisecode)
+					"引数の型が不正です。".
+					"引数1:".gettype($moldNo).
+					"引数2:".gettype($productCode).
+					"引数3:".gettype($revisecode)
 					);
 		}
 
@@ -1504,7 +1504,7 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿĢɼID���ⷿĢɼ�ޥ������¸�ߤ��뤫��ǧ��Ԥ�
+	 * 金型帳票IDが金型帳票マスタ上に存在するか確認を行う
 	 * </pre>
 	 *
 	 * @param string $moldReportId
@@ -1517,18 +1517,18 @@ class UtilMold extends WithQuery
 		if(is_string($moldReportId))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldreportid" => pg_escape_string($moldReportId)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -1537,7 +1537,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1546,8 +1546,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldReportId)
+					"引数の型が不正です。".
+					"引数1:".gettype($moldReportId)
 					);
 		}
 
@@ -1556,10 +1556,10 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * Ģɼ������ǽ�ʶⷿNO�������å���Ԥ�
+	 * 帳票作成可能な金型NOかチェックを行う
 	 *
-	 * 1.�Ѵ����줿�ⷿNO��Ģɼ�����Բ�
-	 * 2.�»���������������̤�����ζⷿ�������ĶⷿNO�Ϥ�Ģɼ�����Բ�
+	 * 1.廃棄された金型NOは帳票作成不可
+	 * 2.実施日が現在日よりも未来日の金型履歴を持つ金型NOはは帳票作成不可
 	 * </pre>
 	 *
 	 * @param string $moldno
@@ -1572,18 +1572,18 @@ class UtilMold extends WithQuery
 		if(is_string($moldNo))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					TableMoldHistory::MoldNo => pg_escape_string($moldNo)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -1592,7 +1592,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�������䤤��碌�˼��Ԥ��ޤ�����",
+						"検索の問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1601,8 +1601,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldNo)
+					"引数の型が不正です。".
+					"引数1:".gettype($moldNo)
 					);
 		}
 
@@ -1611,13 +1611,13 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * ���ꤷ���ⷿĢɼ�쥳���ɤ�̵��������
+	 * 指定した金型帳票レコードを無効化する
 	 * </pre>
 	 *
-	 * @param string $moldReportId �ⷿĢɼID
-	 * @param string $revision ��ӥ����
-	 * @param integer $version �С������
-	 * @return �������
+	 * @param string $moldReportId 金型帳票ID
+	 * @param string $revision リビジョン
+	 * @param integer $version バージョン
+	 * @return 更新件数
 	 */
 	public function disableMoldReport($moldReportId, $revision, $version)
 	{
@@ -1626,20 +1626,20 @@ class UtilMold extends WithQuery
 		if(is_string($moldReportId))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldReportId" => pg_escape_string($moldReportId),
 					"revision" => pg_escape_string($revision),
 					"version" => pg_escape_string($version)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_affected_rows($pgResult))
 				{
 					$result = pg_affected_rows($pgResult);
@@ -1647,7 +1647,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"���˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -1656,7 +1656,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�䤤��碌�˼��Ԥ��ޤ�����",
+						"問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1665,8 +1665,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldReportId)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldReportId)."\n"
 					);
 		}
 
@@ -1675,12 +1675,12 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * ���ꤷ���ⷿĢɼ�ܺ٥쥳���ɤ�̵��������
+	 * 指定した金型帳票詳細レコードを無効化する
 	 * </pre>
 	 *
-	 * @param string $moldReportId �ⷿĢɼID
-	 * @param string $revision ��ӥ����
-	 * @return �������
+	 * @param string $moldReportId 金型帳票ID
+	 * @param string $revision リビジョン
+	 * @return 更新件数
 	 */
 	public function disableMoldReportDetail($moldReportId, $revision)
 	{
@@ -1689,19 +1689,19 @@ class UtilMold extends WithQuery
 		if(is_string($moldReportId))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldReportId" => pg_escape_string($moldReportId),
 					"revision" => pg_escape_string($revision)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_affected_rows($pgResult))
 				{
 					$result = pg_affected_rows($pgResult);
@@ -1709,7 +1709,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"���˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -1718,7 +1718,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�䤤��碌�˼��Ԥ��ޤ�����",
+						"問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1727,8 +1727,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldReportId)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldReportId)."\n"
 					);
 		}
 
@@ -1737,12 +1737,12 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * ���ꤷ���ⷿĢɼ��Ϣ�쥳���ɤ�̵��������
+	 * 指定した金型帳票関連レコードを無効化する
 	 * </pre>
 	 *
-	 * @param string $moldReportId �ⷿĢɼID
-	 * @param string $rivision ��ӥ����
-	 * @return �������
+	 * @param string $moldReportId 金型帳票ID
+	 * @param string $rivision リビジョン
+	 * @return 更新件数
 	 */
 	public function disableMoldReportRelationByReport($moldReportId, $revision)
 	{
@@ -1751,19 +1751,19 @@ class UtilMold extends WithQuery
 		if(is_string($moldReportId))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldReportId" => pg_escape_string($moldReportId),
 					"rivision" => pg_escape_string($revision)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_affected_rows($pgResult))
 				{
 					$result = pg_affected_rows($pgResult);
@@ -1771,7 +1771,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"���˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -1780,7 +1780,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�䤤��碌�˼��Ԥ��ޤ�����",
+						"問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1789,8 +1789,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldReportId)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldReportId)."\n"
 					);
 		}
 
@@ -1799,13 +1799,13 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * ���ꤷ���ⷿ����쥳���ɤ�̵��������
+	 * 指定した金型履歴レコードを無効化する
 	 * </pre>
 	 *
-	 * @param string $moldNo �ⷿNO
-	 * @param string $historyNo �ⷿ����
+	 * @param string $moldNo 金型NO
+	 * @param string $historyNo 金型履歴
 	 * @param integer $version
-	 * @return �������
+	 * @return 更新件数
 	 */
 	public function disableMoldHistory($moldNo, $historyNo, $version)
 	{
@@ -1814,20 +1814,20 @@ class UtilMold extends WithQuery
 		if(is_string($moldNo))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldno" => pg_escape_string($moldNo),
 					"historyno" => pg_escape_string($historyNo),
 					"version" => pg_escape_string($version)
 			);
 
-			// ��̳�����ɤ��������������
+			// 業務コードの説明を取得する
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_affected_rows($pgResult))
 				{
 					$result = pg_affected_rows($pgResult);
@@ -1835,7 +1835,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"���˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -1844,7 +1844,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�䤤��碌�˼��Ԥ��ޤ�����",
+						"問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1853,8 +1853,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldNo)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldNo)."\n"
 					);
 		}
 
@@ -1863,12 +1863,12 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * ���ꤷ���ⷿĢɼ�쥳���ɤΰ����ѥե饰������Ѥ�(true)�˹�������
+	 * 指定した金型帳票レコードの印刷済フラグを印刷済み(true)に更新する
 	 * </pre>
 	 *
-	 * @param string $moldReportId �ⷿĢɼID
-	 * @param string $revision ��ӥ����
-	 * @return �������
+	 * @param string $moldReportId 金型帳票ID
+	 * @param string $revision リビジョン
+	 * @return 更新件数
 	 */
 	public function updateAlredyPrintedReport($moldReportId, $revision)
 	{
@@ -1877,7 +1877,7 @@ class UtilMold extends WithQuery
 		if(is_string($moldReportId))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 					"moldReportId" => pg_escape_string($moldReportId),
 					"revision" => pg_escape_string($revision)
@@ -1888,7 +1888,7 @@ class UtilMold extends WithQuery
 
 			if ($pgResult)
 			{
-				// ���פ���Ԥ�¸�ߤ�����
+				// 一致する行が存在する場合
 				if (1 <= pg_affected_rows($pgResult))
 				{
 					$result = pg_affected_rows($pgResult);
@@ -1896,7 +1896,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-							"���˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+							"条件に一致するレコードが存在しませんでした。",
 							$query,
 							$param
 							);
@@ -1905,7 +1905,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"�䤤��碌�˼��Ԥ��ޤ�����",
+						"問い合わせに失敗しました。",
 						$query,
 						$param
 						);
@@ -1914,8 +1914,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"�����η��������Ǥ���".
-					"����1:".gettype($moldReportId)."\n"
+					"引数の型が不正です。".
+					"引数1:".gettype($moldReportId)."\n"
 					);
 		}
 
@@ -1924,12 +1924,12 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * ̤��λ�ζⷿĢɼ�쥳���ɤ�λ�ˤ���
+	 * 未完了の金型帳票レコードを完了にする
 	 * </pre>
 	 *
-	 * @param string $moldReportId �ⷿĢɼID
-	 * @param string $revision ��ӥ����
-	 * @return �������
+	 * @param string $moldReportId 金型帳票ID
+	 * @param string $revision リビジョン
+	 * @return 更新件数
 	 */
 	public function updateCloseMoldReport($moldReportId, $revision)
 	{
@@ -1938,7 +1938,7 @@ class UtilMold extends WithQuery
 		if(is_string($moldReportId))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ������ѥ�᡼������(SELECT)
+			// クエリパラメータ作成(SELECT)
 			$param = array(
 				"moldReportId" => pg_escape_string($moldReportId),
 				"revision" => pg_escape_string($revision)
@@ -1949,7 +1949,7 @@ class UtilMold extends WithQuery
 
 			if ($pgResult)
 			{
-				// �оݹԤ�¸�ߤ�����
+				// 対象行が存在する場合
 				if (1 <= pg_affected_rows($pgResult))
 				{
 					$result = pg_affected_rows($pgResult);
@@ -1957,7 +1957,7 @@ class UtilMold extends WithQuery
 				else
 				{
 					throw new SQLException(
-						"���˰��פ���쥳���ɤ�¸�ߤ��ޤ���Ǥ�����",
+						"条件に一致するレコードが存在しませんでした。",
 						$query,
 						$param
 					);
@@ -1966,7 +1966,7 @@ class UtilMold extends WithQuery
 			else
 			{
 				throw new SQLException(
-					"�䤤��碌�˼��Ԥ��ޤ�����",
+					"問い合わせに失敗しました。",
 					$query,
 					$param
 				);
@@ -1975,8 +1975,8 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-				"�����η��������Ǥ���".
-				"����1:".gettype($moldReportId)."\n"
+				"引数の型が不正です。".
+				"引数1:".gettype($moldReportId)."\n"
 			);
 		}
 
@@ -1985,23 +1985,23 @@ class UtilMold extends WithQuery
 
 	/**
 	 * <pre>
-	 * �ⷿĢɼ�ǡ����ν���������Ԥ���
+	 * 金型帳票データの修正処理を行う。
 	 * </pre>
 	 *
-	 * @param array �ե�����ǡ���
-	 * @return INSERT����RETURNING�������
+	 * @param array フォームデータ
+	 * @return INSERT時のRETURNING結果配列
 	 */
 	public function modifyMoldReport(array $formData)
 	{
 		$result = false;
 
-		// SendTo�������Ƥμ���(1���ܤζⷿ��������층���������)
-		// TO����(���������)�κ��� ����Ū�˺ǽ�ζⷿ�λ��������������
+		// SendTo項目内容の取得(1つ目の金型から仕入れ元を索引する)
+		// TO項目(仕入元会社)の索引 暫定的に最初の金型の仕入元を取得する
 		$venderInfo = $this->getVenderInfomation($formData[FormMoldReport::MoldNo."1"]);
 		$formData["SendTo"] = $venderInfo["vendercode"];
 
-		// ɽ�������ɤ򥭡�������(PK)���֤�������
-		// ������
+		// 表示コードをキーコード(PK)で置き換える
+		// 事業部
 		$formData[FormMoldReport::CustomerCode] =
 		fncGetMasterValue(
 				"m_company",
@@ -2012,7 +2012,7 @@ class UtilMold extends WithQuery
 				static::$db
 				);
 
-		// KWG����
+		// KWG部署
 		$formData[FormMoldReport::KuwagataGroupCode] =
 		fncGetMasterValue(
 				"m_group",
@@ -2023,7 +2023,7 @@ class UtilMold extends WithQuery
 				static::$db
 				);
 
-		// KWGô����
+		// KWG担当者
 		$formData[FormMoldReport::KuwagataUserCode] =
 		fncGetMasterValue(
 				"m_user",
@@ -2034,14 +2034,14 @@ class UtilMold extends WithQuery
 				static::$db
 				);
 
-		// Ģɼ��ʬ��SQL�ڤӥѥ�᡼�����ڤ��ؤ���
+		// 帳票区分でSQL及びパラメータを切り替える
 		switch ($formData[FormMoldReport::ReportCategory])
 		{
-			// ��ư��/�ֵ���
+			// 移動版/返却版
 			case "10":
 			case "20":
-				// ɽ�������ɤ򥭡�������(PK)���֤�������
-				// �ݴɹ���
+				// 表示コードをキーコード(PK)で置き換える
+				// 保管工場
 				$formData[FormMoldReport::SourceFactory] =
 				fncGetMasterValue(
 				"m_company",
@@ -2052,7 +2052,7 @@ class UtilMold extends WithQuery
 				static::$db
 				);
 
-				// ��ư�蹩��
+				// 移動先工場
 				$formData[FormMoldReport::DestinationFactory] =
 				fncGetMasterValue(
 						"m_company",
@@ -2063,10 +2063,10 @@ class UtilMold extends WithQuery
 						static::$db
 						);
 
-				// SQL�ե������ɤ߹���
+				// SQLファイル読み込み
 				$query = file_get_contents($this->getQueryFileName("modifyMoldReportForMove"));
 
-				// �ѥ�᡼������
+				// パラメータ作成
 				$params = array(
 						TableMoldReport::MoldReportId => $formData[FormMoldReport::MoldReportId],
 						TableMoldReport::ReportCategory => $formData[FormMoldReport::ReportCategory],
@@ -2093,12 +2093,12 @@ class UtilMold extends WithQuery
 				);
 				break;
 
-				// �Ѵ���
+				// 廃棄版
 			case "30":
-				// SQL�ե������ɤ߹���
+				// SQLファイル読み込み
 				$query = file_get_contents($this->getQueryFileName("modifyMoldReportForDispose"));
 
-				// �ѥ�᡼������
+				// パラメータ作成
 				$params = array(
 						TableMoldReport::MoldReportId => $formData[FormMoldReport::MoldReportId],
 						TableMoldReport::ReportCategory => $formData[FormMoldReport::ReportCategory],
@@ -2120,28 +2120,28 @@ class UtilMold extends WithQuery
 				);
 				break;
 
-				// ����ʳ�
+				// それ以外
 			default:
-				throw new KidsLogicException("Ģɼ��ʬ�����곰���ͤǤ���".[FormMoldReport::ReportCategory]);
+				throw new KidsLogicException("帳票区分が既定外の値です。".[FormMoldReport::ReportCategory]);
 				break;
 		}
 
-		// �����깽��
+		// クエリ構成
 		pg_prepare("", $query);
 
-		// ������¹Է�̤�����줿���
+		// クエリ実行結果が得られた場合
 		if ($pgResult = pg_execute("", $params))
 		{
-			// RETURNING��̤����
+			// RETURNING結果を取得
 			$result = pg_fetch_array($pgResult);
-			// ������������̾�Τ��ɲ�
+			// 結果配列に製品名称を追加
 			$result[FormMoldReport::ProductName] = $formData[FormMoldReport::ProductName];
 		}
-		// ������¹Է�̤������ʤ��ä����
+		// クエリ実行結果が得られなかった場合
 		else
 		{
 			throw new SQLException(
-					TableMoldReport::TABLE_NAME."�ؤ�INSERT�˼��Ԥ��ޤ�����",
+					TableMoldReport::TABLE_NAME."へのINSERTに失敗しました。",
 					$query,
 					$params
 					);
@@ -2151,30 +2151,30 @@ class UtilMold extends WithQuery
 	}
 
 	/**
-	 * ���ʥ����ɤ���ⷿNO�����
+	 * 製品コードから金型NOを取得
 	 *
-	 * @param $productCode ���ʥ�����
-	 * @return �������Ϣ������
+	 * @param $productCode 製品コード
+	 * @return 索引結果連想配列
 	 */
 	public function selectMoldSelectionList($productCode)
 	{
 		$result = false;
 
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"productcode" => pg_escape_string($productCode)
 		);
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 
-		// ������¹�
+		// クエリ実行
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$result = pg_fetch_all($pgResult);
@@ -2187,7 +2187,7 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);
@@ -2196,32 +2196,32 @@ class UtilMold extends WithQuery
 		return $result;
 	}
 	/**
-	 * ���ʥ����ɤ���ⷿNO�����
+	 * 製品コードから金型NOを取得
 	 *
-	 * @param $productCode ���ʥ�����
-	 * @return �������Ϣ������
+	 * @param $productCode 製品コード
+	 * @return 索引結果連想配列
 	 */
 	public function selectMoldSelectionListForModify($productCode, $reviseCode, $moldReportId)
 	{
 		$result = false;
 
-		// ������ѥ�᡼������(SELECT)
+		// クエリパラメータ作成(SELECT)
 		$param = array(
 				"productcode" => pg_escape_string($productCode),
 				"revisecode" => pg_escape_string($reviseCode),
 				"moldreportid" => pg_escape_string($moldReportId)
 		);
 
-		// SQL�ե������ɤ߹���
+		// SQLファイル読み込み
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 
-		// ������¹�
+		// クエリ実行
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// ���פ���Ԥ�¸�ߤ�����
+			// 一致する行が存在する場合
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$result = pg_fetch_all($pgResult);
@@ -2234,7 +2234,7 @@ class UtilMold extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"�������䤤��碌�˼��Ԥ��ޤ�����",
+					"検索の問い合わせに失敗しました。",
 					$query,
 					$param
 					);

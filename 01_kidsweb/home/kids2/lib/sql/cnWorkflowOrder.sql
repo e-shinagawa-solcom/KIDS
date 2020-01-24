@@ -1,7 +1,7 @@
 /*
-	���ס��֥���ե������롼�ץ����ɡפ���֥桼�����פ����
-	�оݡ��ޥ�������
-	������chiba
+	概要：「ワークフローグループコード」から「ユーザー」を取得
+	対象：マスタ管理
+	作成：chiba
 */
 SELECT u.lngUserCode, u.strUserDisplayName || ':' || ag.strAuthorityGroupName
 FROM m_User u, m_GroupRelation gr, m_AuthorityGroup ag

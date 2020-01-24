@@ -2,7 +2,7 @@
 
 // -----------------------------------------------------------
 //
-// �ⷿĢɼ������������
+// 金型帳票クローズ処理
 //
 // -----------------------------------------------------------
 
@@ -10,167 +10,167 @@ include( 'conf.inc' );
 require_once( LIB_FILE );
 require_once(SRC_ROOT.'/mold/lib/UtilMold.class.php');
 
-// �������ϻ��Υץ�ե��å���
+// ログ出力時のプレフィックス
 const LOG_PREFIX = "[KIDS-CloseMoldReport] ";
 
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 
-// DB�����ץ�
+// DBオープン
 $objDB->open("", "", "", "");
 
-// �ꥯ�����ȼ���
+// リクエスト取得
 $aryData = $_REQUEST;
 
-// �ȥ�󥶥�����󳫻�
+// トランザクション開始
 $objDB->transactionBegin();
 
-// Util���󥹥��󥹤μ���
+// Utilインスタンスの取得
 $utilMold = UtilMold::getInstance();
 
-// �ⷿ��Ϣ�ơ��֥�Υ��å�
+// 金型関連テーブルのロック
 pg_query("LOCK m_mold");
 pg_query("LOCK m_moldreport");
 pg_query("LOCK t_moldreportdetail");
 pg_query("LOCK t_moldreportrelation");
 pg_query("LOCK t_moldhistory");
 
-// ̤��λ���ơ������ζⷿĢɼ�쥳���ɤμ���
+// 未完了ステータスの金型帳票レコードの取得
 $reports = $utilMold->selectUnclosedMoldReport();
 
-// ̤��λĢɼ��0��Ǥ���Х�����Хå����ƴ�λ
+// 未完了帳票が0件であればロールバックして完了
 if (!$reports)
 {
-	// ������Хå�
+	// ロールバック
 	$objDB->transactionRollback();
-	syslog(LOG_INFO, LOG_PREFIX."���������оݤζⷿĢɼ�Ϥ���ޤ���Ǥ�����");
+	syslog(LOG_INFO, LOG_PREFIX."クローズ対象の金型帳票はありませんでした。");
 	exit;
 }
 
-syslog(LOG_INFO, LOG_PREFIX."�ⷿĢɼ����������������");
+syslog(LOG_INFO, LOG_PREFIX."金型帳票クローズ処理開始");
 
-// ̤��λ��Ģɼ���ʬ����
+// 未完了の帳票件数分走査
 foreach ($reports as $report_num => $report_row)
 {
-	// (�����Ԥ���)�桼��ID������
+	// (更新者から)ユーザIDを設定
 	$userCode = $report_row[TableMoldReport::UpdateBy];
 	$utilMold->setUserCode($userCode);
 
 	$id = $report_row[TableMoldReport::MoldReportId];
 	$revision = $report_row[TableMoldReport::Revision];
 
-	// ɳ�դ��ⷿĢɼ�ܺ٤μ���
+	// 紐付く金型帳票詳細の取得
 	$details = $utilMold->selectMoldReportDetail($id, $revision);
 
-	// �����ⷿ����쥳����
+	// 新規金型履歴レコード
 	$newHistory = array();
-	// ���̹�������
+	// 共通項目設定
 	$newHistory[TableMoldHistory::Status] = $report_row[TableMoldReport::ReportCategory];
 	$newHistory[TableMoldHistory::ActionDate] = $report_row[TableMoldReport::ActionRequestDate];
 	$newHistory[TableMoldHistory::SourceFactory] = $report_row[TableMoldReport::SourceFactory];
 	$newHistory[TableMoldHistory::DestinationFactory] = $report_row[TableMoldReport::DestinationFactory];
 
-	// �����ⷿĢɼ��Ϣ�쥳����
+	// 新規金型帳票関連レコード
 	$newRelation = array();
-	// ���̹�������
+	// 共通項目設定
 	$newRelation[TableMoldReportRelation::MoldReportId] = $id;
 	$newRelation[TableMoldReportRelation::Revision] = $revision;
 
-	// �ⷿĢɼ�ܺ٤η��ʬ����
+	// 金型帳票詳細の件数分走査
 	foreach ($details as $detail_num => $detail_row)
 	{
-		// �ⷿ�ֹ�
+		// 金型番号
 		$moldNo = $detail_row[TableMoldReportDetail::MoldNo];
 
-		// �ⷿ�ֹ������
+		// 金型番号の設定
 		$newHistory[TableMoldHistory::MoldNo] = $moldNo;
 		$newRelation[TableMoldReportRelation::MoldNo] = $moldNo;
 
-		// �ⷿ����ؤ�INSERT�η�̤������ʤ��ä����
+		// 金型履歴へのINSERTの結果が得られなかった場合
 		if (!$resultHistory = $utilMold->insertMoldHistory($newHistory))
 		{
-			// ������Хå�
+			// ロールバック
 			$objDB->transactionRollback();
-			// ��å���������
+			// メッセージ作成
 			$message = LOG_PREFIX.
-					"�ⷿ����κ����˼��Ԥ��ޤ�����"."\n".
+					"金型履歴の作成に失敗しました。"."\n".
 					"MoldReportId:".$id."\n".
 					"Revision:".$revision."\n".
 					"MoldNo:".$moldNo."\n";
 
-			// ���顼��������
+			// エラーログ出力
 			error_log($message, 0);
-			// ���顼�᡼������
+			// エラーメール送信
 			mb_send_mail(
 					ERROR_MAIL_TO,
 					"K.I.D.S. Error Message from " . TOP_URL,
 					$message,
 					"From: " . ERROR_MAIL_TO . "\nReturn-Path: " . ERROR_MAIL_TO . "\n" );
-			// �ⷿ����κ�������
+			// 金型履歴の作成失敗
 			syslog(LOG_INFO, $message);
 			exit;
 		}
 
-		// �ⷿ�����������̤��������ֹ�����
+		// 金型履歴の挿入結果から履歴番号を取得
 		$historyNo = $resultHistory[TableMoldHistory::HistoryNo];
 
-		// �ⷿĢɼ��Ϣ�ơ��֥�ؤ�INSERT
+		// 金型帳票関連テーブルへのINSERT
 		if (!$utilMold->insertMoldReportRelation($moldNo, $historyNo, $id, $revision))
 		{
-			// ������Хå�
+			// ロールバック
 			$objDB->transactionRollback();
-			// ��å���������
+			// メッセージ作成
 			$message = LOG_PREFIX.
-					"�ⷿĢɼ��Ϣ�κ����˼��Ԥ��ޤ�����"."\n".
+					"金型帳票関連の作成に失敗しました。"."\n".
 					"MoldReportId:".$id."\n".
 					"Revision:".$revision."\n".
 					"MoldNo:".$moldNo."\n".
 					"HistoryNo:".$historyNo."\n";
 
-			// ���顼��������
+			// エラーログ出力
 			error_log($message, 0);
-			// ���顼�᡼������
+			// エラーメール送信
 			mb_send_mail(
 					ERROR_MAIL_TO,
 					"K.I.D.S. Error Message from " . TOP_URL,
 					$message,
 					"From: " . ERROR_MAIL_TO . "\nReturn-Path: " . ERROR_MAIL_TO . "\n" );
 
-			// �ⷿĢɼ��Ϣ�κ�������
+			// 金型帳票関連の作成失敗
 			syslog(LOG_INFO, $message);
 			exit;
 		}
 	}
 
-	// �����оݤζⷿĢɼ�Υ��ơ�������λ(��������)���ڤ��ؤ�
+	// 処理対象の金型帳票のステータスを完了(クローズ)に切り替え
 	if (!$utilMold->updateCloseMoldReport($id, $revision))
 	{
-		// ������Хå�
+		// ロールバック
 		$objDB->transactionRollback();
 
-		// ��å���������
+		// メッセージ作成
 		$message = LOG_PREFIX.
-		"�ⷿĢɼ���ơ������ι����˼��Ԥ��ޤ�����"."\n".
+		"金型帳票ステータスの更新に失敗しました。"."\n".
 		"MoldReportId:".$id."\n".
 		"Revision:".$revision."\n";
 
-		// ���顼��������
+		// エラーログ出力
 		error_log($message, 0);
-		// ���顼�᡼������
+		// エラーメール送信
 		mb_send_mail(
 			ERROR_MAIL_TO,
 			"K.I.D.S. Error Message from " . TOP_URL,
 			$message,
 			"From: " . ERROR_MAIL_TO . "\nReturn-Path: " . ERROR_MAIL_TO . "\n" );
-		// �ⷿĢɼ���ơ������ι�������
+		// 金型帳票ステータスの更新失敗
 		syslog(LOG_INFO, $message);
 		exit;
 	}
 }
 
-// ���ߥå�
+// コミット
 $objDB->transactionCommit();
 
-syslog(LOG_INFO, LOG_PREFIX."�ⷿĢɼ��������������λ");
+syslog(LOG_INFO, LOG_PREFIX."金型帳票クローズ処理終了");
 
 return;

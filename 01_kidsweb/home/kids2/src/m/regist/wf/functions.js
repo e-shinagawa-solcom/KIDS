@@ -2,40 +2,40 @@
 
 
 //*******************************************************************
-//objOrderDataFrom     :ÁªÂò¸µSELECT¥ª¥Ö¥¸¥§¥¯¥È
-//objOrderDataTo       :ÁªÂòÀèSELECT¥ª¥Ö¥¸¥§¥¯¥È
-//objOrderData         :ÁªÂò¥æ¡¼¥¶¡¼¥³¡¼¥É¤È´ü¸Â(lngUserCode:lngLimitDate&)
-//lngLimitDate         :´ü¸Â
+//objOrderDataFrom     :é¸æŠå…ƒSELECTã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//objOrderDataTo       :é¸æŠå…ˆSELECTã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//objOrderData         :é¸æŠãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã¨æœŸé™(lngUserCode:lngLimitDate&)
+//lngLimitDate         :æœŸé™
 function fncAddGroupUser(objOrderDataFrom, objOrderDataTo, objOrderData, lngLimitDate )
 {
-	// ÁªÂò»èÂ¦¤ËÁªÂò»è¤¬¤¢¤ë¤«¤É¤¦¤«¤Î³ÎÇ§
+	// é¸æŠè‚¢å´ã«é¸æŠè‚¢ãŒã‚ã‚‹ã‹ã©ã†ã‹ã®ç¢ºèª
 	if ( objOrderDataFrom.selectedIndex < 0 )
 	{
-		alert('ÁªÂò¤·¤Æ¤¯¤À¤µ¤¤');
+		alert('é¸æŠã—ã¦ãã ã•ã„');
 		return '';
 	}
 	else if ( !isFinite( lngLimitDate ) || lngLimitDate < 1 )
 	{
-		alert('´ü¸Â¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤');
+		alert('æœŸé™ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„');
 		return '';
 	}
 	else if ( lngLimitDate > 999 )
 	{
-		alert('´ü¸ÂÆü¿ô¤¬¾å¸Â¤òÄ¶¤¨¤Æ¤¤¤Ş¤¹');
+		alert('æœŸé™æ—¥æ•°ãŒä¸Šé™ã‚’è¶…ãˆã¦ã„ã¾ã™');
 		return '';
 	}
 	else
 	{
-		// ¥ê¥¹¥È°ÜÆ°
+		// ãƒªã‚¹ãƒˆç§»å‹•
 		fncSelectList(objOrderDataFrom, objOrderDataTo, objOrderData, lngLimitDate);
 
-		// ÅĞÏ¿¤µ¤ì¤¿¤¹¤Ù¤Æ¤Î¥æ¡¼¥¶¡¼¥Ç¡¼¥¿¤È´ü¸Â¤òÊ¸»úÎó '&' ¤ÇÊ¬³ä
+		// ç™»éŒ²ã•ã‚ŒãŸã™ã¹ã¦ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ‡ãƒ¼ã‚¿ã¨æœŸé™ã‚’æ–‡å­—åˆ— '&' ã§åˆ†å‰²
 		aryData = objOrderData.value.split('&');
 
-		// ¥¯¥¨¥êÊ¸»úÎóÀë¸À
+		// ã‚¯ã‚¨ãƒªæ–‡å­—åˆ—å®£è¨€
 		var strQuery = '';
 
-		// Ê¸»úÎó '=' ¤ÇÊ¬³ä
+		// æ–‡å­—åˆ— '=' ã§åˆ†å‰²
 		for ( a = 0; a < aryData.length - 1; a++ )
 		{
 			aryUserCode = aryData[a].split('=');
@@ -49,29 +49,29 @@ function fncAddGroupUser(objOrderDataFrom, objOrderDataTo, objOrderData, lngLimi
 
 // -----------------------------------------------------------------------
 //
-// fncSelectList(select, add) ¥ê¥¹¥È¤ÎÁªÂò¤ª¤è¤Óºï½ü
+// fncSelectList(select, add) ãƒªã‚¹ãƒˆã®é¸æŠãŠã‚ˆã³å‰Šé™¤
 //
-//   select       - ÁªÂò»è<SELECT>¥ª¥Ö¥¸¥§¥¯¥È
-//   add          - ÁªÂò<SELECT>¥ª¥Ö¥¸¥§¥¯¥È
-//   hidden       - Á÷¿®ÍÑHIDDEN¥ª¥Ö¥¸¥§¥¯¥È
-//   lngLimitDate - ´ü¸ÂÆü¿ô
+//   select       - é¸æŠè‚¢<SELECT>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   add          - é¸æŠ<SELECT>ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   hidden       - é€ä¿¡ç”¨HIDDENã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   lngLimitDate - æœŸé™æ—¥æ•°
 // -----------------------------------------------------------------------
 function fncSelectList(select, add, hidden, lngLimitDate)
 {
-	// ÁªÂò»è¤Î¿ô
+	// é¸æŠè‚¢ã®æ•°
 	selectLength = select.length;
 
-	// ¹àÌÜÄÉ²Ã
+	// é …ç›®è¿½åŠ 
 	for ( i = 0; i < selectLength; i++ )
 	{
 		if ( select.options[i].selected == true )
 		{
-			// ÁªÂòÂ¦¤Î¥ê¥¹¥È¤òÄÉ²Ã
+			// é¸æŠå´ã®ãƒªã‚¹ãƒˆã‚’è¿½åŠ 
 			add.length++;
 
-			// ÁªÂòÂ¦¤Î¿ô
+			// é¸æŠå´ã®æ•°
 			valueLength = add.length - 1;
-			add.options[valueLength].text = add.length + '.' + select.options[i].text + ':' + lngLimitDate + 'Æü´Ö';
+			add.options[valueLength].text = add.length + '.' + select.options[i].text + ':' + lngLimitDate + 'æ—¥é–“';
 			add.options[valueLength].value = select.options[i].value;
 			hidden.value += select.options[i].value + '=' + lngLimitDate + '&';
 			//add.options[valueLength].selected = true;
@@ -79,11 +79,11 @@ function fncSelectList(select, add, hidden, lngLimitDate)
 	}
 
 	/*
-	// ¹àÌÜºï½ü
+	// é …ç›®å‰Šé™¤
 	j = 0;
 	for ( i = 0; i < selectLength; i++ )
 	{
-		// ¹àÌÜ¤ò¤º¤é¤¹½èÍı
+		// é …ç›®ã‚’ãšã‚‰ã™å‡¦ç†
 		if ( select.options[i].selected != true )
 		{
 			select.options[j].text = select.options[i].text;
@@ -126,17 +126,17 @@ function ListMatch( objSelect , strMatch )
 // -----------------------------------------------------------------------
 //
 // fncSelectListSet(fromCompany, fromGroup, toCompany, toGroup)
-// ´ë¶È¡¢¥°¥ë¡¼¥×¤òÁªÂò¾õÂÖ¤ª¤è¤Ó¥ê¥¹¥È¤ËÈ¿±Ç
+// ä¼æ¥­ã€ã‚°ãƒ«ãƒ¼ãƒ—ã‚’é¸æŠçŠ¶æ…‹ãŠã‚ˆã³ãƒªã‚¹ãƒˆã«åæ˜ 
 //
-//   objFromCompany - ¥Ç¡¼¥¿¸µ ´ë¶È     CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objFromGroup   - ¥Ç¡¼¥¿¸µ ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objToCompany   - È¿±ÇÀè   ´ë¶È     CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objToGroup     - È¿±ÇÀè   ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
-//   objTargetGroup - objToGroup¤ÎÁªÂò¤òÈ¿±Ç¤¹¤ë ¥°¥ë¡¼¥× CODE FORM TEXT ¥ª¥Ö¥¸¥§¥¯¥È
+//   objFromCompany - ãƒ‡ãƒ¼ã‚¿å…ƒ ä¼æ¥­     CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objFromGroup   - ãƒ‡ãƒ¼ã‚¿å…ƒ ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objToCompany   - åæ˜ å…ˆ   ä¼æ¥­     CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objToGroup     - åæ˜ å…ˆ   ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objTargetGroup - objToGroupã®é¸æŠã‚’åæ˜ ã™ã‚‹ ã‚°ãƒ«ãƒ¼ãƒ— CODE FORM TEXT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function fncSelectListSet(objFromCompany, objFromGroup, objToCompany, objToGroup, objTargetGroup)
 {
-	// ´ë¶ÈÁªÂò
+	// ä¼æ¥­é¸æŠ
 	for ( i = 0; i < objToCompany.length; i++ )
 	{
 		if ( objToCompany.options[i].value == objFromCompany.value )
@@ -145,13 +145,13 @@ function fncSelectListSet(objFromCompany, objFromGroup, objToCompany, objToGroup
 		}
 	}
 
-	// Ï¢·ë¥°¥ë¡¼¥×¥³¡¼¥ÉÊ¸»úÎó¼èÆÀ
+	// é€£çµã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰æ–‡å­—åˆ—å–å¾—
 	strGroupCode = objFromGroup.value;
 
-	// Ï¢·ëÊ¸»úÎó¤òÊ¬³ä¤·¡¢¥°¥ë¡¼¥×¥³¡¼¥É¤ÎÇÛÎó¤òÀ¸À®
+	// é€£çµæ–‡å­—åˆ—ã‚’åˆ†å‰²ã—ã€ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã®é…åˆ—ã‚’ç”Ÿæˆ
 	aryGroupCode = strGroupCode.split('=');
 
-	// »ØÄê¥°¥ë¡¼¥×¥³¡¼¥É¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+	// æŒ‡å®šã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 	for ( x = 1; x < aryGroupCode.length; x++ )
 	{
 		y = 0;
@@ -176,10 +176,10 @@ function fncSelectListSet(objFromCompany, objFromGroup, objToCompany, objToGroup
 // -----------------------------------------------------------------------
 //
 // fncSelectListDel(objFromGroup, objToGroup)
-// ´ë¶È¡¢¥°¥ë¡¼¥×¤òÁªÂò¾õÂÖ¤ª¤è¤Ó¥ê¥¹¥È¤ËÈ¿±Ç
+// ä¼æ¥­ã€ã‚°ãƒ«ãƒ¼ãƒ—ã‚’é¸æŠçŠ¶æ…‹ãŠã‚ˆã³ãƒªã‚¹ãƒˆã«åæ˜ 
 //
-//   objFromGroup - ¥Á¥§¥Ã¥¯¸µ¥Õ¥©¡¼¥à¥°¥ë¡¼¥× ¥ª¥Ö¥¸¥§¥¯¥È
-//   objToGroup   - È¿±ÇÀè¥Õ¥©¡¼¥à¥°¥ë¡¼¥× ¥ª¥Ö¥¸¥§¥¯¥È
+//   objFromGroup - ãƒã‚§ãƒƒã‚¯å…ƒãƒ•ã‚©ãƒ¼ãƒ ã‚°ãƒ«ãƒ¼ãƒ— ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//   objToGroup   - åæ˜ å…ˆãƒ•ã‚©ãƒ¼ãƒ ã‚°ãƒ«ãƒ¼ãƒ— ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function fncSelectListDel(objFromGroup, objToGroup)
 {
@@ -194,9 +194,9 @@ function fncSelectListDel(objFromGroup, objToGroup)
 // -----------------------------------------------------------------------
 //
 // fncSelectOptionDel(objFromGroup, objToGroup)
-// OPTION ¤Îºï½ü
+// OPTION ã®å‰Šé™¤
 //
-//   objFormSelect - FORM.SELECT ¥ª¥Ö¥¸¥§¥¯¥È
+//   objFormSelect - FORM.SELECT ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 // -----------------------------------------------------------------------
 function fncSelectOptionDel(objFormSelect)
 {

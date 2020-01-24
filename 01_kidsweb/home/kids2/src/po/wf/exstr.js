@@ -22,11 +22,11 @@ function fncChgEtoJ( lngLanguageCode )
 	else if ( lngLanguageCode == 1 )
 	{
 
-		Column0.innerText = '½ç½øÌ¾¾Î';
-		Column1.innerText = '½ç½ø¥°¥ë¡¼¥×Ì¾¾Î';
-		Column2.innerText = '½ç½ø';
-		Column3.innerText = 'Ã´Åö¼ÔÌ¾';
-		Column4.innerText = '´ü¸ÂÆü';
+		Column0.innerText = 'é †åºåç§°';
+		Column1.innerText = 'é †åºã‚°ãƒ«ãƒ¼ãƒ—åç§°';
+		Column2.innerText = 'é †åº';
+		Column3.innerText = 'æ‹…å½“è€…å';
+		Column4.innerText = 'æœŸé™æ—¥';
 
 	}
 

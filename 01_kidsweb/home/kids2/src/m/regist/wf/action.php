@@ -1,6 +1,6 @@
 <?
 /** 
-*	�ޥ������� ����ե�������ޥ��� ��λ����
+*	マスタ管理 ワークフロー順序マスタ 完了画面
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,7 +10,7 @@
 *	@version   1.00
 *
 */
-// �¹�
+// 実行
 // confirm.php -> strSessionID              -> action.php
 // confirm.php -> lngActionCode             -> action.php
 // confirm.php -> lngWorkflowOrderCode      -> action.php
@@ -19,30 +19,30 @@
 // confirm.php -> strOrderData              -> action.php
 
 
-// �����ɤ߹���
+// 設定読み込み
 include_once('conf.inc');
 
-// �饤�֥���ɤ߹���
+// ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DB��³
+// DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST�ǡ�������
+// POSTデータ取得
 $aryData = $_GET;
 
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ���³�ǧ
+// 権限確認
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 
@@ -61,20 +61,20 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE )
 }
 
 
-// ʸ��������å�
+// 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
 
 //////////////////////////////////////////////////////////////////////////
-// ������ͭ����������å�
+// 処理の有効性をチェック
 //////////////////////////////////////////////////////////////////////////
-// ��Ͽ ���� ���顼���ʤ� ��硢
-// ������Ͽ�����������å��¹�
+// 登録 かつ エラーがない 場合、
+// 新規登録、修正チェック実行
 if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult ) )
 {
-	// ���롼�ץǡ�������
+	// グループデータ取得
 	$strQuery = "SELECT * " .
                 "FROM m_GroupRelation gr, m_AuthorityGroup ag, m_User u " .
                 "WHERE gr.lngGroupCode = " . $aryData["lngWorkflowOrderGroupCode"] .
@@ -83,13 +83,13 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ��̷�����ʤ���硢���顼
+	// 結果件数がない場合、エラー
 	if ( $lngResultNum < 1 )
 	{
-		fncOutputError ( 9056, DEF_WARNING, "�桼���������ޤ���", TRUE, "", $objDB );
+		fncOutputError ( 9056, DEF_WARNING, "ユーザーがいません。", TRUE, "", $objDB );
 	}
 
-	// �桼���������ɤ򥭡��Ȥ���Ϣ������˥桼�������¥�٥�򥻥å�
+	// ユーザーコードをキーとする連想配列にユーザー権限レベルをセット
 	for ( $i = 0; $i < $lngResultNum; $i++ )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, $i );
@@ -99,35 +99,35 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 
 	$objDB->freeResult( $lngResultID );
 
-	// �桼�����ν��֤�ͭ�����ɤ����Υ����å�
-	// A.���롼�׽�°�����å�
-	// B.��ʣ�����å�
-	// C.�¤ӽ��ͭ����(���¥����å�)
+	// ユーザーの順番が有効かどうかのチェック
+	// A.グループ所属チェック
+	// B.重複チェック
+	// C.並び順の有効性(権限チェック)
 
-	// ������Ͽ�ǡ��� �� '&' ��ʬ��
+	// 順番登録データ を '&' で分解
 	$aryOrderData = explode ( "&", $aryData["strOrderData"] );
 	$lngOrderDataLength = count ( $aryOrderData ) - 1;
 
-	// '=' ��ʬ�򤷡��桼���������ɡ���������������˥��å�
+	// '=' で分解し、ユーザーコード、期限日数を配列にセット
 	for ( $i = 0; $i < $lngOrderDataLength; $i++ )
 	{
 		$aryOrderSubData = explode ( "=", $aryOrderData[$i] );
 
-		// A.���롼�׽�°�����å�
-		// ���Ϥ��줿�桼���������ɤ����롼�פ�°���Ƥ��ʤ��ä���票�顼
+		// A.グループ所属チェック
+		// 入力されたユーザーコードがグループに属していなかった場合エラー
 		if ( $aryAuthorityLevel[$aryOrderSubData[0]] == "" )
 		{
-			fncOutputError ( 9056, DEF_WARNING, "����桼�����ϻ��ꥰ�롼�פ˴ޤޤ�Ƥ��ޤ���", TRUE, "", $objDB );
+			fncOutputError ( 9056, DEF_WARNING, "指定ユーザーは指定グループに含まれていません。", TRUE, "", $objDB );
 		}
 
-		// B.��ʣ�����å�
-		// �������������ͤ�Ʊ���桼���������ɤ�¸�ߤ�������ʣ���顼
+		// B.重複チェック
+		// より以前の配列値に同じユーザーコードが存在した場合重複エラー
 		$count = count ( $aryUserCode );
 		for ( $j = 0; $j < $count; $j++ )
 		{
 			if ( $aryUserCode[$j] == $aryOrderSubData[0] )
 			{
-				fncOutputError ( 9056, DEF_WARNING, "�桼��������ʣ���Ƥ��ޤ���", TRUE, "", $objDB );
+				fncOutputError ( 9056, DEF_WARNING, "ユーザーが重複しています。", TRUE, "", $objDB );
 			}
 		}
 
@@ -135,30 +135,30 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 		$aryLimitDays[$i] = $aryOrderSubData[1];
 	}
 
-	// C.�¤ӽ��ͭ����(���¥����å�)
+	// C.並び順の有効性(権限チェック)
 	$count = count ( $aryUserCode ) - 1;
 	for ( $i = 0; $i < $count; $i++ )
 	{
 		if ( $aryAuthorityLevel[$aryUserCode[$i]] < $aryAuthorityLevel[$aryUserCode[$i + 1]] )
 		{
-			fncOutputError ( 9056, DEF_WARNING, "���¤��㤤�桼�������⤤�桼�����������˾�ǧ�ԤȤ�����Ͽ����Ƥ��ޤ���", TRUE, "", $objDB );
+			fncOutputError ( 9056, DEF_WARNING, "権限の低いユーザーが高いユーザーよりも前に承認者として登録されています。", TRUE, "", $objDB );
 		}
 	}
 
-	// ��Ͽ����(INSERT)
+	// 登録処理(INSERT)
 
 	$lngWorkflowOrderCode = fncGetSequence( "m_WorkflowOrder.lngWorkflowOrderCode", $objDB );
 
-	// ���֥����� �ǥե����1 ������
+	// 状態コード デフォルト1 に設定
 	$lngWorkflowStatusCode = 1;
 
-	// ��Ͽ�ο�����INSERT����������
+	// 登録の数だけINSERTクエリ生成
 	for ( $i = 0; $i < $lngOrderDataLength; $i++ )
 	{
-		// �桼���������ɡ����¤�ʬ��
+		// ユーザーコード、期限を分解
 		list ( $lngUserCode, $lngLimitDays ) = explode ( "=", $aryOrderData[$i] );
 
-		// �ǽ���ǧ�Ԥξ�硢���֥����ɤ�2������
+		// 最終承認者の場合、状態コードを2に設定
 		if ( $i == ( $lngOrderDataLength - 1 ) )
 		{
 			$lngWorkflowStatusCode = 2;
@@ -168,8 +168,8 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 	}
 }
 
-// ��� ���� ���顼���ʤ� ��硢
-// ��������å��¹�
+// 削除 かつ エラーがない 場合、
+// 削除チェック実行
 elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResult ) )
 {
 	$strQuery = "SELECT * " .
@@ -187,14 +187,14 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ��̤�1��Ǥ⤢�ä���硢����Բ�ǽ�Ȥ������顼����
+	// 結果が1件でもあった場合、削除不可能とし、エラー出力
 	if ( $lngResultNum > 0 )
 	{
 		$objDB->freeResult( $lngResultID );
-		fncOutputError ( 1201, DEF_WARNING, "�ޥ�����������", TRUE, "", $objDB );
+		fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
 	}
 
-	// �������(bytWorkflowDisplayFlag �� FALSE)
+	// 削除処理(bytWorkflowDisplayFlag を FALSE)
 	$aryQuery[] = "UPDATE m_WorkflowOrder SET bytWorkflowOrderDisplayFlag = FALSE WHERE lngWorkflowOrderCode = " . $aryData["lngWorkflowOrderCode"];
 }
 
@@ -202,7 +202,7 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 
 ////////////////////////////////////////////////////////////////////////////
-// ������¹�
+// クエリ実行
 ////////////////////////////////////////////////////////////////////////////
 $objDB->transactionBegin();
 
@@ -220,7 +220,7 @@ $objDB->close();
 
 
 //////////////////////////////////////////////////////////////////////////
-// ����
+// 出力
 //////////////////////////////////////////////////////////////////////////
 echo getArrayTable( $aryData, "HIDDEN" );
 echo "<script language=javascript>window.returnValue=true;window.close();</script>";

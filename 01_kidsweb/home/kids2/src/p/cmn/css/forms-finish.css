@@ -1,4 +1,4 @@
-/* ¥»¥ó¥¿¥ê¥ó¥° */
+/* ã‚»ãƒ³ã‚¿ãƒªãƒ³ã‚° */
 html, body, div.centering
 {
     height: 100%;
@@ -13,20 +13,20 @@ div.centering
 
 }
 
-/* Á´ÂÎÇØ·Ê */
+/* å…¨ä½“èƒŒæ™¯ */
 .finish-background
 {
     background-color: #D6D0B1;
     overflow-y: scroll;
 }
 
-/* div ¥Þ¡¼¥¸¥óÀßÄê */
+/* div ãƒžãƒ¼ã‚¸ãƒ³è¨­å®š */
 .finish-box
 {
     margin: 15px;
 }
 
-/* ´°Î»¥á¥Ã¥»¡¼¥¸ */
+/* å®Œäº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ */
 .finish-box__message
 {
     padding: 5px 50px;
@@ -37,7 +37,7 @@ div.centering
 }
 
 
-/* ´°Î»¥á¥Ã¥»¡¼¥¸ */
+/* å®Œäº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ */
 .finish-box__button
 {
     margin-left: -5px;
@@ -49,7 +49,7 @@ div.centering
 
 .SegColumn
 {
-    font-family : Arial , £Í£Ó¡¡£Ð¥´¥·¥Ã¥¯ ;
+    font-family : Arial , ï¼­ï¼³ã€€ï¼°ã‚´ã‚·ãƒƒã‚¯ ;
     font-weight: bold;
 	color : black ;
 	background-color : #e8f0f1 ;

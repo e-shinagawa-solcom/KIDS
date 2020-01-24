@@ -2,7 +2,7 @@
 // validation.js
 //
 jQuery(function($){
-    // datepickerÀßÄê
+    // datepickerè¨­å®š
     var datePickerTargets = [
         $('input[name$="From_dtmInsertDate"]'),
         $('input[name$="To_dtmInsertDate"]'),
@@ -17,30 +17,30 @@ jQuery(function($){
 
     $('input[name="Option_admin"]').prop('checked', false);
 
-    // ÅĞÏ¿¥Ü¥¿¥ó¥¤¥Ù¥ó¥È²£¼è¤ê
+    // ç™»éŒ²ãƒœã‚¿ãƒ³ã‚¤ãƒ™ãƒ³ãƒˆæ¨ªå–ã‚Š
     var events = $._data($('img.search').get(0), 'events');
     var originalHandler = [];
     for(var i = 0; i < events.click.length; i++){
         originalHandler[i] = events.click[i].handler;
     }
-    // ¸½ºß¤Î¥¤¥Ù¥ó¥È¤òÂÇ¤Á¾Ã¤¹
+    // ç¾åœ¨ã®ã‚¤ãƒ™ãƒ³ãƒˆã‚’æ‰“ã¡æ¶ˆã™
     $('img.search').off('click');
     $('img.search').on('click', {next:originalHandler}, function(event){
         if(!$('input.is-search:checked').length){
-            alert("¸¡º÷¾ò·ï¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£");
+            alert("æ¤œç´¢æ¡ä»¶ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚");
             return false;
         }
         if(!$('input.is-display:checked').length){
-            alert("É½¼¨¹àÌÜ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£");
+            alert("è¡¨ç¤ºé …ç›®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚");
             return false;
         }
 
-        // ÆşÎÏ¹àÌÜ¥Á¥§¥Ã¥¯
+        // å…¥åŠ›é …ç›®ãƒã‚§ãƒƒã‚¯
         if(!checkValues()){
             return false;
         }
 
-        // ÊİÎ±¤·¤Æ¤¤¤¿¥¤¥Ù¥ó¥È¤ò¼Â¹Ô
+        // ä¿ç•™ã—ã¦ã„ãŸã‚¤ãƒ™ãƒ³ãƒˆã‚’å®Ÿè¡Œ
         for(var i = 0; i < event.data.next.length; i++){
             event.data.next[i]();
         }
@@ -70,7 +70,7 @@ jQuery(function($){
                 }
             }
             if($(target).find($('input[name="lngInputUserCode"]')).length){
-                if(!checkValuePresent("ÆşÎÏ¼Ô", $('input[name="lngInputUserCode"]').val())){
+                if(!checkValuePresent("å…¥åŠ›è€…", $('input[name="lngInputUserCode"]').val())){
                     result = false;
                     return false;
                 }
@@ -88,31 +88,31 @@ jQuery(function($){
                 }
             }
             if($(target).find($('input[name="strProductName"]')).length){
-                if(!checkValuePresent("À½ÉÊÌ¾", $('input[name="strProductName"]').val())){
+                if(!checkValuePresent("è£½å“å", $('input[name="strProductName"]').val())){
                     result = false;
                     return false;
                 }
             }
             if($(target).find($('input[name="strProductEnglishName"]')).length){
-                if(!checkValuePresent("À½ÉÊÌ¾(±Ñ¸ì)", $('input[name="strProductEnglishName"]').val())){
+                if(!checkValuePresent("è£½å“å(è‹±èª)", $('input[name="strProductEnglishName"]').val())){
                     result = false;
                     return false;
                 }
             }
             if($(target).find($('input[name="lngInChargeGroupCode"]')).length){
-                if(!checkValuePresent("±Ä¶ÈÉô½ğ", $('input[name="lngInChargeGroupCode"]').val())){
+                if(!checkValuePresent("å–¶æ¥­éƒ¨ç½²", $('input[name="lngInChargeGroupCode"]').val())){
                     result = false;
                     return false;
                 }
             }
             if($(target).find($('input[name="lngInChargeUserCode"]')).length){
-                if(!checkValuePresent("³«È¯Ã´Åö¼Ô", $('input[name="lngInChargeUserCode"]').val())){
+                if(!checkValuePresent("é–‹ç™ºæ‹…å½“è€…", $('input[name="lngInChargeUserCode"]').val())){
                     result = false;
                     return false;
                 }
             }
             if($(target).find($('input[name="lngCustomerCode"]')).length){
-                if(!checkValuePresent("»ÅÆşÀè", $('input[name="lngCustomerCode"]').val())){
+                if(!checkValuePresent("ä»•å…¥å…ˆ", $('input[name="lngCustomerCode"]').val())){
                     result = false;
                     return false;
                 }
@@ -120,7 +120,7 @@ jQuery(function($){
             if($(target).find($('select[name="lngStockSubjectCode"]')).length){
                 var val = $('select[name="lngStockSubjectCode"]').find('option:selected').val();
                 if(val === "0"){
-                    alert("ÆşÎÏ²ÊÌÜ¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó");
+                    alert("å…¥åŠ›ç§‘ç›®ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“");
                     result = false;
                     return false;
                 }
@@ -128,14 +128,14 @@ jQuery(function($){
             if($(target).find($('select[name="lngStockItemCode"]')).length){
                 var val = $('select[name="lngStockItemCode"]').find('option:selected').val();
                 if(val === "1224-0"){
-                    alert("»ÅÆşÉôÉÊ¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó");
+                    alert("ä»•å…¥éƒ¨å“ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“");
                     result = false;
                     return false;
                 }
             }
             if($(target).find($('input[name="lngOrderStatusCode[]"]')).length){
                 if(!$(target).find('input:checked').length){
-                    alert("¾õÂÖ¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó");
+                    alert("çŠ¶æ…‹ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“");
                     result = false;
                     return false;
                 }
@@ -144,85 +144,85 @@ jQuery(function($){
 
         return result;
     }
-    // È¯ÃíÆü¥Á¥§¥Ã¥¯
+    // ç™ºæ³¨æ—¥ãƒã‚§ãƒƒã‚¯
     function checkValueInsertDate(parent){
         var from = $(parent).find($('input[name="From_dtmInsertDate"]')).val();
         var to = $(parent).find($('input[name="To_dtmInsertDate"]')).val();
-        return checkValueDate("ÅĞÏ¿Æü", from, to);
+        return checkValueDate("ç™»éŒ²æ—¥", from, to);
     }
-    // È¯ÃíÍ­¸ú´ü¸ÂÆü¥Á¥§¥Ã¥¯
+    // ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥ãƒã‚§ãƒƒã‚¯
     function checkValueExpirationDate(parent){
         var from = $(parent).find($('input[name="From_dtmExpirationDate"]')).val();
         var to = $(parent).find($('input[name="To_dtmExpirationDate"]')).val();
-        return checkValueDate("È¯ÃíÍ­¸ú´ü¸ÂÆü", from, to);
+        return checkValueDate("ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥", from, to);
     }
-    // Ç¼´ü¥Á¥§¥Ã¥¯
+    // ç´æœŸãƒã‚§ãƒƒã‚¯
     function checkValueDeliveryDate(parent){
         var from = $(parent).find($('input[name="From_dtmDeliveryDate"]')).val();
         var to = $(parent).find($('input[name="To_dtmDeliveryDate"]')).val();
-        return checkValueDate("Ç¼´ü", from, to);
+        return checkValueDate("ç´æœŸ", from, to);
     }
-    // ÆüÉÕ´ØÏ¢¥Á¥§¥Ã¥¯
+    // æ—¥ä»˜é–¢é€£ãƒã‚§ãƒƒã‚¯
     function checkValueDate(target, from, to){
         console.log(target);
         if(!from.length && !to.length){
-            alert(target + "¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó");
+            alert(target + "ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“");
             return false;
         }
         if(from.length){
             if(!isDateFormat(from)){
-                alert(target + "FROM¤Î½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹");
+                alert(target + "FROMã®æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™");
                 return false;
             }
             if(!isValidDate(from)){
-                alert(target + "FROM¤ËÂ¸ºß¤·¤Ê¤¤ÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿");
+                alert(target + "FROMã«å­˜åœ¨ã—ãªã„æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸ");
                 return false;
             }
         }
         if(to.length){
             if(!isDateFormat(to)){
-                alert(target + "TO¤Î½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹");
+                alert(target + "TOã®æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™");
                 return false;
             }
             if(!isValidDate(to)){
-                alert(target + "TO¤ËÂ¸ºß¤·¤Ê¤¤ÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿");
+                alert(target + "TOã«å­˜åœ¨ã—ãªã„æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸ");
                 return false;
             }
         }
         if(from.length && to.length){
             if(new Date(from) > new Date(to)){
-                alert(target + "FROM¤Ë" + target + "TO¤è¤êÌ¤Íè¤ÎÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿")
+                alert(target + "FROMã«" + target + "TOã‚ˆã‚Šæœªæ¥ã®æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸ")
                 return false;
             }
         }
-        if(target === "ÅĞÏ¿Æü"){
+        if(target === "ç™»éŒ²æ—¥"){
             if(new Date(from) > new Date()){
-                alert(target + "FROM¤ËÌ¤Íè¤ÎÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿");
+                alert(target + "FROMã«æœªæ¥ã®æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸ");
                 return false;
             }
         }
         return true;
     }
-    // È¯ÃíNO¥Á¥§¥Ã¥¯
+    // ç™ºæ³¨NOãƒã‚§ãƒƒã‚¯
     function checkValueOrderCode(parent){
         var result = true;
         var from = $(parent).find($('input[name="From_strOrderCode"]')).val();
         var to = $(parent).find($('input[name="To_strOrderCode"]')).val();
         if(!from.length && !to.length){
-            alert("È¯ÃíNO.¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó");
+            alert("ç™ºæ³¨NO.ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“");
             result = false;
             return false;
         }
         if(from.length){
             if(!from.match(/^\d{8}(_\d{2})?$/) && !from.match(/^\d{9}(_\d{2})?$/)){
-                alert("È¯ÃíNO.FROM¤Î½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹");
+                alert("ç™ºæ³¨NO.FROMã®æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™");
                 result = false;
                 return false;
             }
         }
         if(to.length){
             if(!to.match(/^\d{8}(_\d{2})?$/) && !to.match(/^\d{9}(_\d{2})?$/)){
-                alert("È¯ÃíNO.TO¤Î½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹");
+                alert("ç™ºæ³¨NO.TOã®æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™");
                 result = false;
                 return false;
             }
@@ -230,26 +230,26 @@ jQuery(function($){
 
         return result;
     }
-    // À½ÉÊ¥³¡¼¥É¥Á¥§¥Ã¥¯
+    // è£½å“ã‚³ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯
     function checkValueProductCode(parent){
         var result = true;
         var from = $(parent).find($('input[name="From_strProductCode"]')).val();
         var to = $(parent).find($('input[name="To_strProductCode"]')).val();
         if(!from.length && !to.length){
-            alert("À½ÉÊ¥³¡¼¥É¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó");
+            alert("è£½å“ã‚³ãƒ¼ãƒ‰ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“");
             result = false;
             return false;
         }
         if(from.length){
             if(!from.match(/^\d{5}(_\d{2})?$/)){
-                alert("À½ÉÊ¥³¡¼¥ÉFROM¤Î½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹");
+                alert("è£½å“ã‚³ãƒ¼ãƒ‰FROMã®æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™");
                 result = false;
                 return false;
             }
         }
         if(to.length){
             if(!to.match(/^\d{5}(_\d{2})?$/)){
-                alert("À½ÉÊ¥³¡¼¥É¤Î½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹");
+                alert("è£½å“ã‚³ãƒ¼ãƒ‰ã®æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™");
                 result = false;
                 return false;
             }
@@ -257,12 +257,12 @@ jQuery(function($){
 
         return result;
     }
-    // ³ÆÆşÎÏ¥Á¥§¥Ã¥¯
+    // å„å…¥åŠ›ãƒã‚§ãƒƒã‚¯
     function checkValuePresent(target, value){
         console.log(target);
         var result = true;
         if(!value.length){
-            alert(target + "¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó");
+            alert(target + "ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“");
             result = false;
             return false;
         }
@@ -334,8 +334,8 @@ function isValidDate(d){
 function fncCheckDate(e){
     var date = $(e).get(0).value;
     if(date && !isDate(date)){
-        console.log("ÆüÉÕ¥Á¥§¥Ã¥¯¥¨¥é¡¼¡§["  + date + "]");
+        console.log("æ—¥ä»˜ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼ï¼š["  + date + "]");
     } else {
-        console.log("ÆüÉÕ¥Á¥§¥Ã¥¯OK");
+        console.log("æ—¥ä»˜ãƒã‚§ãƒƒã‚¯OK");
     }
 }

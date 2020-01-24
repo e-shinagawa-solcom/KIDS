@@ -2,11 +2,11 @@ var pickupGroupCode = function(handleName){
     if( handleName == "KuwagataUserCode" ) {
         var groupCode = $('input[name="KuwagataGroupCode"]').val();
         var mswUserGroupCode = $($('.msw-inchargeuser')[0].contentWindow.document).find('.dammy-input-code');
-        // KWGÃ´ÅöÉô½ğ¥³¡¼¥É¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤ì¤ĞKWGÃ´Åö¼ÔMSW¤Ë¥»¥Ã¥È¤¹¤ë
+        // KWGæ‹…å½“éƒ¨ç½²ã‚³ãƒ¼ãƒ‰ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã‚Œã°KWGæ‹…å½“è€…MSWã«ã‚»ãƒƒãƒˆã™ã‚‹
         if( groupCode ){
             mswUserGroupCode.val(groupCode);
         } else {
-            // KWGÃ´ÅöÉô½ğ¥³¡¼¥É¤¬¶õ¤Ê¤émsw-user¤ÎÉô½ğ¥³¡¼¥ÉÍó¤ò¥¯¥ê¥¢
+            // KWGæ‹…å½“éƒ¨ç½²ã‚³ãƒ¼ãƒ‰ãŒç©ºãªã‚‰msw-userã®éƒ¨ç½²ã‚³ãƒ¼ãƒ‰æ¬„ã‚’ã‚¯ãƒªã‚¢
             mswUserGroupCode.val('');
         }
     }

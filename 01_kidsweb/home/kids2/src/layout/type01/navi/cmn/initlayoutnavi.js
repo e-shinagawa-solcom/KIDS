@@ -1,25 +1,25 @@
 
 
 //---------------------------------------------------------
-// Å¬ÍÑ :¡Ö¥¢¥Ã¥×¥í¡¼¥É¡×
+// é©ç”¨ :ã€Œã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã€
 //---------------------------------------------------------
-var uploadNaviJ1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, uploadJ2 );" onmouseout="fncChangeBtImg( this, uploadJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + uploadJ1 + '" width="151" height="25" border="0" alt="¥¢¥Ã¥×¥í¡¼¥É" tabindex="0"></a>';
+var uploadNaviJ1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, uploadJ2 );" onmouseout="fncChangeBtImg( this, uploadJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + uploadJ1 + '" width="151" height="25" border="0" alt="ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰" tabindex="0"></a>';
 var uploadNaviE1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, uploadE2 );" onmouseout="fncChangeBtImg( this, uploadE1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + uploadE1 + '" width="151" height="25" border="0" alt="UPLOAD" tabindex="0"></a>';
 
 
 
 ///// LIST OUTPUT NAVI BT IMAGE /////
-var listoutnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="ListOutJOn(this);" onmouseout="ListOutJOff(this);fncAlphaOff( this );" src="' + listoutJ1 + '" width="151" height="25" border="0" alt="Ä¢É¼½ĞÎÏ"></a>';
+var listoutnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="ListOutJOn(this);" onmouseout="ListOutJOff(this);fncAlphaOff( this );" src="' + listoutJ1 + '" width="151" height="25" border="0" alt="å¸³ç¥¨å‡ºåŠ›"></a>';
 var listoutnaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="ListOutEOn(this);" onmouseout="ListOutEOff(this);fncAlphaOff( this );" src="' + listoutE1 + '" width="151" height="25" border="0" alt="LIST OUTPUT"></a>';
 
 
 ///// DATA EXPORT NAVI BT IMAGE /////
-var dataexnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="DataExJOn(this);" onmouseout="DataExJOff(this);fncAlphaOff( this );" src="' + dataexJ1 + '" width="151" height="25" border="0" alt="¥Ç¡¼¥¿¥¨¥¯¥¹¥İ¡¼¥È"></a>';
+var dataexnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="DataExJOn(this);" onmouseout="DataExJOff(this);fncAlphaOff( this );" src="' + dataexJ1 + '" width="151" height="25" border="0" alt="ãƒ‡ãƒ¼ã‚¿ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ"></a>';
 var dataexnaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="DataExEOn(this);" onmouseout="DataExEOff(this);fncAlphaOff( this );" src="' + dataexE1 + '" width="151" height="25" border="0" alt="DATA EXPORT"></a>';
 
 
 ///// MASTER NAVI BT IMAGE /////
-var mstnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncMButton( \'onJ\' , this );" onmouseout="fncMButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncMButton( \'downJ\' , this );" onmouseup="fncMButton( \'offJ\' , this );" src="' + mstJ1 + '" width="151" height="25" border="0" alt="¥Ş¥¹¥¿"></a>';
+var mstnaviJ1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncMButton( \'onJ\' , this );" onmouseout="fncMButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncMButton( \'downJ\' , this );" onmouseup="fncMButton( \'offJ\' , this );" src="' + mstJ1 + '" width="151" height="25" border="0" alt="ãƒã‚¹ã‚¿"></a>';
 var mstnaviE1 = '<a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="fncMButton( \'onE\' , this );" onmouseout="fncMButton( \'offE\' , this );fncAlphaOff( this );" onmousedown="fncMButton( \'downE\' , this );" onmouseup="fncMButton( \'offE\' , this );" src="' + mstE1 + '" width="151" height="25" border="0" alt="MASTER"></a>';
 
 
@@ -117,7 +117,7 @@ function initLayoutNavigation()
 	}
 
 
-	// ¥á¥Ã¥»¡¼¥¸
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 	if( typeof(MessageBt1) != 'undefined' )
 	{
 		MessageBt1.innerHTML = messagenaviJ1;
@@ -129,7 +129,7 @@ function initLayoutNavigation()
 	}
 
 
-	// ¥µ¡¼¥Ğ
+	// ã‚µãƒ¼ãƒ
 	if( typeof(ServerBt1) != 'undefined' )
 	{
 		ServerBt1.innerHTML = servernaviJ1;
@@ -141,7 +141,7 @@ function initLayoutNavigation()
 	}
 
 
-	// ´ÉÍı¼Ô¥á¡¼¥ë
+	// ç®¡ç†è€…ãƒ¡ãƒ¼ãƒ«
 	if( typeof(EmailBt1) != 'undefined' )
 	{
 		EmailBt1.innerHTML = emailnaviJ1;
@@ -153,7 +153,7 @@ function initLayoutNavigation()
 	}
 
 
-	// ¥»¥Ã¥·¥ç¥ó
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³
 	if( typeof(SessionBt1) != 'undefined' )
 	{
 		SessionBt1.innerHTML = sessionnaviJ1;
@@ -165,7 +165,7 @@ function initLayoutNavigation()
 	}
 
 
-	// Äù¤á½èÍı
+	// ç· ã‚å‡¦ç†
 	if( typeof(ClosedBt1) != 'undefined' )
 	{
 		ClosedBt1.innerHTML = closednaviBtJ1;
@@ -173,7 +173,7 @@ function initLayoutNavigation()
 
 
 
-	// ¥¢¥Ã¥×¥í¡¼¥É
+	// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 	if (typeof(UploadNaviBt1)!='undefined')
 	{
 		UploadNaviBt1.innerHTML = uploadNaviJ1;
@@ -181,7 +181,7 @@ function initLayoutNavigation()
 
 
 
-	// ÅĞÏ¿2
+	// ç™»éŒ²2
 	if( typeof( RegistNaviBtA ) != 'undefined' )
 	{
 		RegistNaviBtA.innerHTML = reginaviJA;
@@ -191,7 +191,7 @@ function initLayoutNavigation()
 		RegistNaviBtC.innerHTML = reginaviJC;
 	}
 
-	// ¸¡º÷2
+	// æ¤œç´¢2
 	if( typeof( SearchNaviBtA ) != 'undefined' )
 	{
 		SearchNaviBtA.innerHTML = schnaviJA;
@@ -203,7 +203,7 @@ function initLayoutNavigation()
 
 
 
-	// ÅĞÏ¿3
+	// ç™»éŒ²3
 	if( typeof( RegistNaviBtAA ) != 'undefined' )
 	{
 		RegistNaviBtAA.innerHTML = reginaviJAA;
@@ -213,7 +213,7 @@ function initLayoutNavigation()
 		RegistNaviBtCC.innerHTML = reginaviJCC;
 	}
 
-	// ¸¡º÷3
+	// æ¤œç´¢3
 	if( typeof( SearchNaviBtAA ) != 'undefined' )
 	{
 		SearchNaviBtAA.innerHTML = schnaviJAA;
@@ -224,7 +224,7 @@ function initLayoutNavigation()
 	}
 
 
-	// ÅĞÏ¿4
+	// ç™»éŒ²4
 	if( typeof( RegistNaviBtAAA ) != 'undefined' )
 	{
 		RegistNaviBtAAA.innerHTML = reginaviJAAA;
@@ -234,7 +234,7 @@ function initLayoutNavigation()
 		RegistNaviBtCCC.innerHTML = reginaviJCCC;
 	}
 
-	// ¸¡º÷4
+	// æ¤œç´¢4
 	if( typeof( SearchNaviBtAAA ) != 'undefined' )
 	{
 		SearchNaviBtAAA.innerHTML = schnaviJAAA;
@@ -245,7 +245,7 @@ function initLayoutNavigation()
 	}
 
 
-	// ÅĞÏ¿5
+	// ç™»éŒ²5
 	if( typeof( RegistNaviBtAAAA ) != 'undefined' )
 	{
 		RegistNaviBtAAAA.innerHTML = reginaviJAAAA;
@@ -255,7 +255,7 @@ function initLayoutNavigation()
 		RegistNaviBtCCCC.innerHTML = reginaviJCCCC;
 	}
 
-	// ¸¡º÷5
+	// æ¤œç´¢5
 	if( typeof( SearchNaviBtAAAA ) != 'undefined' )
 	{
 		SearchNaviBtAAAA.innerHTML = schnaviJAAAA;

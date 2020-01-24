@@ -1,38 +1,38 @@
 
 
 //*******************************************************************
-// ¥Ş¥¹¥¿¡¼ÁªÂò¤Ë¤ÆÁªÂò¤µ¤ì¤¿¥Ş¥¹¥¿½èÍı¤Î¥Ú¡¼¥¸¤Ø¥ê¥¯¥¨¥¹¥È¤¹¤ë´Ø¿ô
-// strTableName: ¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ëÌ¾
+// ãƒã‚¹ã‚¿ãƒ¼é¸æŠã«ã¦é¸æŠã•ã‚ŒãŸãƒã‚¹ã‚¿å‡¦ç†ã®ãƒšãƒ¼ã‚¸ã¸ãƒªã‚¯ã‚¨ã‚¹ãƒˆã™ã‚‹é–¢æ•°
+// strTableName: ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«å
 // objForm     : FORM OBJECT
 function fncRequestSearchMasterEdit( strTableName, objForm )
 {
-	// ¶õÇò¤Î¾ì¹ç
+	// ç©ºç™½ã®å ´åˆ
 	if ( !strTableName )
 	{
 	}
 
-	// ²ñ¼Ò¥Ş¥¹¥¿¤Î¾ì¹ç
+	// ä¼šç¤¾ãƒã‚¹ã‚¿ã®å ´åˆ
 	else if ( strTableName == 'm_Company' )
 	{
 		objForm.action = '/m/search/co/search.php';
 		objForm.submit();
 	}
 
-	// ¥°¥ë¡¼¥×¥Ş¥¹¥¿¤Î¾ì¹ç
+	// ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿ã®å ´åˆ
 	else if  ( strTableName == 'm_Group' )
 	{
 		objForm.action = '/m/search/g/search.php';
 		objForm.submit();
 	}
 
-	// ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¤Î¾ì¹ç
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ã®å ´åˆ
 	else if  ( strTableName == 'm_MonetaryRate' )
 	{
 		objForm.action = '/m/search/r/search.php';
 		objForm.submit();
 	}
 
-	// ¤½¤ÎÂ¾¤Î¥Ş¥¹¥¿¤Î¾ì¹ç(¶¦ÄÌ¥Ş¥¹¥¿´ÉÍı¤Ø)
+	// ãã®ä»–ã®ãƒã‚¹ã‚¿ã®å ´åˆ(å…±é€šãƒã‚¹ã‚¿ç®¡ç†ã¸)
 	else if ( strTableName != '' )
 	{
 		objForm.action = '/m/list/c/index.php';
@@ -45,8 +45,8 @@ function fncRequestSearchMasterEdit( strTableName, objForm )
 
 
 //*******************************************************************
-// ¶¦ÄÌ¥Ş¥¹¥¿¡¼ÁªÂò¤Ë¤ÆÁªÂò¤µ¤ì¤¿¥Ş¥¹¥¿½èÍı¤Î¥Ú¡¼¥¸¤Ø¥ê¥¯¥¨¥¹¥È¤¹¤ë´Ø¿ô
-// strTableName: ¥Ş¥¹¥¿¥Æ¡¼¥Ö¥ëÌ¾
+// å…±é€šãƒã‚¹ã‚¿ãƒ¼é¸æŠã«ã¦é¸æŠã•ã‚ŒãŸãƒã‚¹ã‚¿å‡¦ç†ã®ãƒšãƒ¼ã‚¸ã¸ãƒªã‚¯ã‚¨ã‚¹ãƒˆã™ã‚‹é–¢æ•°
+// strTableName: ãƒã‚¹ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«å
 // objForm     : FORM OBJECT
 function fncRequestCommonMasterEdit( strTableName, objForm )
 {
@@ -64,14 +64,14 @@ function fncRequestCommonMasterEdit( strTableName, objForm )
 
 
 /*********************************************************************************/
-// objVars1 : [fncShowDialogCommonMaster]¤ÎÂè£±°ú¿ô
-// objVars2 : [fncShowDialogCommonMaster]¤ÎÂè£²°ú¿ô
+// objVars1 : [fncShowDialogCommonMaster]ã®ç¬¬ï¼‘å¼•æ•°
+// objVars2 : [fncShowDialogCommonMaster]ã®ç¬¬ï¼’å¼•æ•°
 
-////////// ¥À¥¤¥¢¥í¥°¸Æ½Ğ´Ø¿ô¥ê¥À¥¤¥ì¥¯¥ÈÍÑ´Ø¿ô //////////
+////////// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°å‘¼å‡ºé–¢æ•°ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆç”¨é–¢æ•° //////////
 function fncQueryDialog( objVars1 , objVars2 )
 {
 
-	// ¥À¥¤¥¢¥í¥°¸Æ½Ğ
+	// ãƒ€ã‚¤ã‚¢ãƒ­ã‚°å‘¼å‡º
 	fncShowDialogCommonMaster( objVars1 ,
 								window.Pwin.form1 ,
 								'ResultIframeCommonMaster' ,
@@ -87,19 +87,19 @@ function fncQueryDialog( objVars1 , objVars2 )
 
 
 /*********************************************************************************/
-// objInputArray : ÊÑ´¹¸µ¤ÎIDÍÑÇÛÎó
-// objStyleArray : ÊÑ´¹ÍÑ¤ÎIDÍÑÇÛÎó
+// objInputArray : å¤‰æ›å…ƒã®IDç”¨é…åˆ—
+// objStyleArray : å¤‰æ›ç”¨ã®IDç”¨é…åˆ—
 
-// ¾åµ­Æó¤Ä¤ÎÇÛÎóÆâ¤Î½çÈÖ¤Ï¤½¤ì¤¾¤ì£±ÂĞ£±¤Î´Ø·¸¤Ë¤¹¤ë¤³¤È¡£
-// Îã) fncChangeObjectIdModule( Array( 'ÊÑ´¹¸µID¤½¤Î£±' , 'ÊÑ´¹¸µID¤½¤Î£³' ) , Array( 'ÊÑ´¹ÍÑID¤½¤Î£±' , 'ÊÑ´¹ÍÑID¤½¤Î£³' ) )
+// ä¸Šè¨˜äºŒã¤ã®é…åˆ—å†…ã®é †ç•ªã¯ãã‚Œãã‚Œï¼‘å¯¾ï¼‘ã®é–¢ä¿‚ã«ã™ã‚‹ã“ã¨ã€‚
+// ä¾‹) fncChangeObjectIdModule( Array( 'å¤‰æ›å…ƒIDãã®ï¼‘' , 'å¤‰æ›å…ƒIDãã®ï¼“' ) , Array( 'å¤‰æ›ç”¨IDãã®ï¼‘' , 'å¤‰æ›ç”¨IDãã®ï¼“' ) )
 
-////////// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎIDÊÑ´¹ÍÑ¥â¥¸¥å¡¼¥ë //////////
+////////// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®IDå¤‰æ›ç”¨ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« //////////
 function fncChangeObjectIdModule( objInputArray , objStyleArray )
 {
 
 	for( i = 0; i < objInputArray.length; i ++ )
 	{
-		// ID¤ÎÆşÂØ¤¨
+		// IDã®å…¥æ›¿ãˆ
 		document.all( objInputArray[i] ).id = objStyleArray[i];
 	}
 
@@ -108,22 +108,22 @@ function fncChangeObjectIdModule( objInputArray , objStyleArray )
 
 
 
-////////// [ÄÉ²Ã][½¤Àµ]ÍÑ¡¢¥ª¥Ö¥¸¥§¥¯¥È¤Î¼«Æ°¥ì¥¤¥¢¥¦¥ÈÍÑ¥â¥¸¥å¡¼¥ë //////////
+////////// [è¿½åŠ ][ä¿®æ­£]ç”¨ã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è‡ªå‹•ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆç”¨ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ« //////////
 function fncInitLayoutObjectModule( obj1 , obj2 , lngXpos1 , lngXpos2 )
 {
 	Backs.style.background = '#f1f1f1'; //d6d0b1
 
 
-	var initYpos1 = 30;  //TOPºÂÉ¸¡¦¥«¥é¥à½é´üÃÍ
-	var initYpos2 = 30;  //TOPºÂÉ¸¡¦¥Õ¥©¡¼¥àÍ×ÁÇ½é´üÃÍ
+	var initYpos1 = 30;  //TOPåº§æ¨™ãƒ»ã‚«ãƒ©ãƒ åˆæœŸå€¤
+	var initYpos2 = 30;  //TOPåº§æ¨™ãƒ»ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ åˆæœŸå€¤
 
-	var moveYpos  = 31;  //TOPºÂÉ¸¡¦°ÜÆ°ÃÍ
+	var moveYpos  = 31;  //TOPåº§æ¨™ãƒ»ç§»å‹•å€¤
 
-	var segsXpos  = lngXpos1; //LEFTºÂÉ¸¡¦¥«¥é¥à¸ÇÄêÃÍ
-	var varsXpos  = lngXpos2; //LEFTºÂÉ¸¡¦¥Õ¥©¡¼¥àÍ×ÁÇ¸ÇÄêÃÍ
+	var segsXpos  = lngXpos1; //LEFTåº§æ¨™ãƒ»ã‚«ãƒ©ãƒ å›ºå®šå€¤
+	var varsXpos  = lngXpos2; //LEFTåº§æ¨™ãƒ»ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ å›ºå®šå€¤
 
 
-	var segsWidth = 165; //¥«¥é¥àÉı¸ÇÄêÃÍ
+	var segsWidth = 165; //ã‚«ãƒ©ãƒ å¹…å›ºå®šå€¤
 
 	var FontColors    = '#666666'
 	var BackColors1   = '#e8f0f1';
@@ -132,14 +132,14 @@ function fncInitLayoutObjectModule( obj1 , obj2 , lngXpos1 , lngXpos2 )
 	var BorderColors2 = '#798787 #798787 #798787 #e8f0f1';
 
 
-	var lay1 = obj1.children; //¥«¥é¥à
-	var lay2 = obj2.children; //¥Õ¥©¡¼¥àÍ×ÁÇ
+	var lay1 = obj1.children; //ã‚«ãƒ©ãƒ 
+	var lay2 = obj2.children; //ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ 
 
 
-	var lngtabindex = 1; //TAB INDEX ½é´üÃÍ
+	var lngtabindex = 1; //TAB INDEX åˆæœŸå€¤
 
 
-	///// ¥«¥é¥àÅ¸³« /////
+	///// ã‚«ãƒ©ãƒ å±•é–‹ /////
 	if ( obj1 != '' )
 	{
 		for (i = 0; i < lay1.length; i++)
@@ -153,7 +153,7 @@ function fncInitLayoutObjectModule( obj1 , obj2 , lngXpos1 , lngXpos2 )
 		}
 	}
 
-	///// ¥Õ¥©¡¼¥àÍ×ÁÇÅ¸³« /////
+	///// ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ å±•é–‹ /////
 	if ( obj2 != '' )
 	{
 		for (i = 0; i < lay2.length; i++)
@@ -166,7 +166,7 @@ function fncInitLayoutObjectModule( obj1 , obj2 , lngXpos1 , lngXpos2 )
 	}
 
 
-	///// TAB INDEX Å¸³« /////
+	///// TAB INDEX å±•é–‹ /////
 	for (i = 0; i < window.PS.elements.length; i++)
 	{
 		window.PS.elements[i].tabindex = lngtabindex + 1;
@@ -241,39 +241,39 @@ function fncStopHeader2( ObjID1 , ObjID2 , ObjID3 )
 
 
 /************************************************************/
-var g_clickID;                  // Á°²ó¤Î¥¯¥ê¥Ã¥¯¹Ô
-var g_lngTrNum;                 // Á°²ó¤ÎTR¤Î¿ô
-var g_DefaultColor = '';        // Á°²ó¤Î¥¯¥ê¥Ã¥¯¹Ô¤Î¿§
-var g_SelectColor  = '#bbbbbb'; // ÁªÂò¤·¤¿¤È¤­¤Î¿§
-var trClickFlg     = "on";      // ¥¯¥ê¥Ã¥¯¥«¥¦¥ó¥È¥Õ¥é¥°
+var g_clickID;                  // å‰å›ã®ã‚¯ãƒªãƒƒã‚¯è¡Œ
+var g_lngTrNum;                 // å‰å›ã®TRã®æ•°
+var g_DefaultColor = '';        // å‰å›ã®ã‚¯ãƒªãƒƒã‚¯è¡Œã®è‰²
+var g_SelectColor  = '#bbbbbb'; // é¸æŠã—ãŸã¨ãã®è‰²
+var trClickFlg     = "on";      // ã‚¯ãƒªãƒƒã‚¯ã‚«ã‚¦ãƒ³ãƒˆãƒ•ãƒ©ã‚°
 
 /************************************************************/
-// objID : 		¥¯¥ê¥Ã¥¯¹Ô¤Î¥ª¥Ö¥¸¥§¥¯¥È
+// objID : 		ã‚¯ãƒªãƒƒã‚¯è¡Œã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-////////// TRÁªÂò¹Ô¤ÎÇØ·Ê¿§ÊÑ¹¹´Ø¿ô //////////
+////////// TRé¸æŠè¡Œã®èƒŒæ™¯è‰²å¤‰æ›´é–¢æ•° //////////
 function fncSelectTrColor( objID )
 {
 
-	//trClickFlg¤¬off¤Î¤È¤­¤Ï½èÍı¤ò½ªÎ»
+	//trClickFlgãŒoffã®ã¨ãã¯å‡¦ç†ã‚’çµ‚äº†
 	if( trClickFlg == "off" ) return false;
 
-	// ÁªÂò¹Ô¤¹¤Ç¤Ë¤¢¤ë¾ì¹ç¤Ë¡¢°ÊÁ°¤Î¿§¤ËÌá¤¹
+	// é¸æŠè¡Œã™ã§ã«ã‚ã‚‹å ´åˆã«ã€ä»¥å‰ã®è‰²ã«æˆ»ã™
 	if( g_DefaultColor != '')
 	{
 		g_clickID.style.background = g_DefaultColor;
 	}
 
-	// °ÊÁ°¤ÈÆ±¤¸ÁªÂò¹Ô¤òÁªÂò¤·¤¿¾ì¹ç¤Ë¡¢½é´ü²½
+	// ä»¥å‰ã¨åŒã˜é¸æŠè¡Œã‚’é¸æŠã—ãŸå ´åˆã«ã€åˆæœŸåŒ–
 	if(g_clickID == objID){
 		g_clickID      = '';
 		g_DefaultColor = '';
 	}
-	// ÁªÂò¹Ô¤Î¿§¤È¾ì½ê¤òÊİÂ¸¤·¡¢È¿Å¾
+	// é¸æŠè¡Œã®è‰²ã¨å ´æ‰€ã‚’ä¿å­˜ã—ã€åè»¢
 	else
 	{
 		g_clickID      = objID;
 		g_DefaultColor = objID.style.background;
-		//ÁªÂò¹Ô¤òÈ¿Å¾
+		//é¸æŠè¡Œã‚’åè»¢
 		objID.style.background = g_SelectColor;
 	}
 
@@ -282,19 +282,19 @@ function fncSelectTrColor( objID )
 
 
 /************************************************************/
-// objID : 		¥¯¥ê¥Ã¥¯¹Ô¤Î¥ª¥Ö¥¸¥§¥¯¥È
-// strIdName : 	TR¤Î¿ôÃÍÉôÊ¬¤Ï½ü¤¯IDÌ¾( tda0 ¢ª 'tda' )
-// lngTrNum : 	£±¥ì¥³¡¼¥É¤Ë»ÈÍÑ¤·¤Æ¤¤¤ëTR¤Î¿ô( rowspan¤Î¿ô )
+// objID : 		ã‚¯ãƒªãƒƒã‚¯è¡Œã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+// strIdName : 	TRã®æ•°å€¤éƒ¨åˆ†ã¯é™¤ãIDå( tda0 â†’ 'tda' )
+// lngTrNum : 	ï¼‘ãƒ¬ã‚³ãƒ¼ãƒ‰ã«ä½¿ç”¨ã—ã¦ã„ã‚‹TRã®æ•°( rowspanã®æ•° )
 
-////////// TRÁªÂò¹Ô¤ÎÇØ·Ê¿§ÊÑ¹¹´Ø¿ô[Ê£¿ô¹ÔÂĞ±şÈÇ] //////////
+////////// TRé¸æŠè¡Œã®èƒŒæ™¯è‰²å¤‰æ›´é–¢æ•°[è¤‡æ•°è¡Œå¯¾å¿œç‰ˆ] //////////
 function fncSelectSomeTrColor( objID , strIdName , lngTrNum )
 {
 
-	//trClickFlg¤¬off¤Î¤È¤­¤Ï½èÍı¤ò½ªÎ»
+	//trClickFlgãŒoffã®ã¨ãã¯å‡¦ç†ã‚’çµ‚äº†
 	if( trClickFlg == "off" ) return false;
 
 
-	// ÁªÂò¹Ô¤¹¤Ç¤Ë¤¢¤ë¾ì¹ç¤Ë¡¢°ÊÁ°¤Î¿§¤ËÌá¤¹
+	// é¸æŠè¡Œã™ã§ã«ã‚ã‚‹å ´åˆã«ã€ä»¥å‰ã®è‰²ã«æˆ»ã™
 	if( g_DefaultColor != '')
 	{
 		for ( i = 0; i < g_lngTrNum; i++ )
@@ -303,7 +303,7 @@ function fncSelectSomeTrColor( objID , strIdName , lngTrNum )
 		}
 	}
 
-	// °ÊÁ°¤ÈÆ±¤¸ÁªÂò¹Ô¤òÁªÂò¤·¤¿¾ì¹ç¤Ë¡¢½é´ü²½
+	// ä»¥å‰ã¨åŒã˜é¸æŠè¡Œã‚’é¸æŠã—ãŸå ´åˆã«ã€åˆæœŸåŒ–
 	if( g_clickID == strIdName )
 	{
 		g_clickID      = '';
@@ -311,7 +311,7 @@ function fncSelectSomeTrColor( objID , strIdName , lngTrNum )
 		g_DefaultColor = '';
 	}
 
-	// ÁªÂò¹Ô¤Î¿§¤È¾ì½ê¤òÊİÂ¸¤·¡¢È¿Å¾
+	// é¸æŠè¡Œã®è‰²ã¨å ´æ‰€ã‚’ä¿å­˜ã—ã€åè»¢
 	else
 	{
 		g_clickID      = strIdName;
@@ -381,7 +381,7 @@ function SortOff( obj )
 
 
 //----------------------------------------------------------
-// ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿¤Ç¤ÎÃ´Åö¼ÔÄÉ²Ã¥Ü¥¿¥ó½èÍı
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿ã§ã®æ‹…å½“è€…è¿½åŠ ãƒœã‚¿ãƒ³å‡¦ç†
 //----------------------------------------------------------
 function fncWhiteAddButton( strMode , obj )
 {

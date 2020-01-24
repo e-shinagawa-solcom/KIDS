@@ -2,25 +2,25 @@
 
 
 //------------------------------------------------------------
-// ���� : ���ܸ졦�Ѹ����شؿ�
+// 解説 : 日本語・英語切替関数
 //------------------------------------------------------------
 function ChgEtoJ( lngSelfCode )
 {
 
-	// �Ѹ�
+	// 英語
 	if ( lngSelfCode == 0 )
 	{
-		// �ܥ���񤭽Ф�
+		// ボタン書き出し
 		ProcessBt.innerHTML = blownProcessBtE1;
 		RivivalBt.innerHTML = blownRivivalBtE1;
 
 
 	}
 
-	// ���ܸ�
+	// 日本語
 	else if ( lngSelfCode == 1 )
 	{
-		// �ܥ���񤭽Ф�
+		// ボタン書き出し
 		ProcessBt.innerHTML = blownProcessBtJ1;
 		RivivalBt.innerHTML = blownRivivalBtJ1;
 

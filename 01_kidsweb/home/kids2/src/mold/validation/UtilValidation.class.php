@@ -9,13 +9,13 @@ require_once (SRC_ROOT.'/mold/lib/index/TableMoldReportDetail.class.php');
 require_once (SRC_ROOT.'/mold/lib/index/TableMoldReportRelation.class.php');
 
 /**
- * ÉôÉÊ²½¤µ¤ì¤¿¥Ğ¥ê¥Ç¡¼¥·¥ç¥óµ¡Ç½¤òÄó¶¡¤¹¤ë
+ * éƒ¨å“åŒ–ã•ã‚ŒãŸãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ©Ÿèƒ½ã‚’æä¾›ã™ã‚‹
  *
  */
 class UtilValidation extends WithQuery
 {
 	/**
-	 * yyyy/mm/dd·Á¼°¤ÎÆüÉÕ¸¡¾Ú¤ò¹Ô¤¦
+	 * yyyy/mm/ddå½¢å¼ã®æ—¥ä»˜æ¤œè¨¼ã‚’è¡Œã†
 	 * @param string $date
 	 * @return boolean
 	 */
@@ -23,10 +23,10 @@ class UtilValidation extends WithQuery
 	{
 		if (is_string($date))
 		{
-			// yyyy/mm/dd·Á¼°¤Ë¥Ş¥Ã¥Á¤¹¤ë¾ì¹ç
+			// yyyy/mm/ddå½¢å¼ã«ãƒãƒƒãƒã™ã‚‹å ´åˆ
 			if (preg_match("/(19[0-9]{2}|2[0-9]{3})\\/(0[1-9]|1[0-2])\\/([0-2][0-9]|3[0-1])/", $date))
 			{
-				// Í­¸úÆüÉÕ¤Î¸¡¾Ú
+				// æœ‰åŠ¹æ—¥ä»˜ã®æ¤œè¨¼
 				list($yyyy, $mm, $dd) = explode("/", $date);
 				return checkdate($mm, $dd, $yyyy);
 			}
@@ -38,14 +38,14 @@ class UtilValidation extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($date)
+					"å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($date)
 			);
 		}
 	}
 
 	/**
-	 * ÅÏ¤µ¤ì¤¿yyyy/mm/dd·Á¼°¤ÎÆüÉÕ¤¬¸½ºßÆü¤è¤ê¤âÌ¤ÍèÆü¤Ç¤¢¤ë¤«È½Äê¤¹¤ë
+	 * æ¸¡ã•ã‚ŒãŸyyyy/mm/ddå½¢å¼ã®æ—¥ä»˜ãŒç¾åœ¨æ—¥ã‚ˆã‚Šã‚‚æœªæ¥æ—¥ã§ã‚ã‚‹ã‹åˆ¤å®šã™ã‚‹
 	 * @param string $date
 	 * @return boolean
 	 */
@@ -65,8 +65,8 @@ class UtilValidation extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($date)
+					"å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($date)
 					);
 		}
 
@@ -74,7 +74,7 @@ class UtilValidation extends WithQuery
 	}
 
 	/**
-	 * ÅÏ¤µ¤ì¤¿yyyy/mm/dd·Á¼°¤ÎÆüÉÕ¤¬¸½ºßÆü¤ÈÆ±¤¸ÆüÉÕ¤Ç¤¢¤ë¤«È½Äê¤¹¤ë
+	 * æ¸¡ã•ã‚ŒãŸyyyy/mm/ddå½¢å¼ã®æ—¥ä»˜ãŒç¾åœ¨æ—¥ã¨åŒã˜æ—¥ä»˜ã§ã‚ã‚‹ã‹åˆ¤å®šã™ã‚‹
 	 * @param string $date
 	 * @return boolean
 	 */
@@ -94,8 +94,8 @@ class UtilValidation extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($date)
+					"å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($date)
 					);
 		}
 
@@ -103,7 +103,7 @@ class UtilValidation extends WithQuery
 	}
 
 	/**
-	 * ÅÏ¤µ¤ì¤¿yyyy/mm/dd·Á¼°¤ÎÆüÉÕ¤¬¸½ºßÆü¤è¤ê¤â²áµîÆü¤Ç¤¢¤ë¤«È½Äê¤¹¤ë
+	 * æ¸¡ã•ã‚ŒãŸyyyy/mm/ddå½¢å¼ã®æ—¥ä»˜ãŒç¾åœ¨æ—¥ã‚ˆã‚Šã‚‚éå»æ—¥ã§ã‚ã‚‹ã‹åˆ¤å®šã™ã‚‹
 	 * @param string $date
 	 * @return boolean
 	 */
@@ -123,8 +123,8 @@ class UtilValidation extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($date)
+					"å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($date)
 					);
 		}
 
@@ -133,7 +133,7 @@ class UtilValidation extends WithQuery
 
 	/**
 	 * <pre>
-	 * ÅÏ¤µ¤ì¤¿yyyy/mm/dd·Á¼°¤ÎÆüÉÕ¤¬2¤Ä¤ÎÆüÉÕÊ¸»úÎó¤òÈæ³Ó¤¹¤ë
+	 * æ¸¡ã•ã‚ŒãŸyyyy/mm/ddå½¢å¼ã®æ—¥ä»˜ãŒ2ã¤ã®æ—¥ä»˜æ–‡å­—åˆ—ã‚’æ¯”è¼ƒã™ã‚‹
 	 *
 	 * date2 < date1  : return 1
 	 * date1 == date2 : return 0
@@ -154,9 +154,9 @@ class UtilValidation extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($date1).
-					"°ú¿ô2:".gettype($date2)
+					"å¼•æ•°ã®å‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($date1).
+					"å¼•æ•°2:".gettype($date2)
 					);
 		}
 	}

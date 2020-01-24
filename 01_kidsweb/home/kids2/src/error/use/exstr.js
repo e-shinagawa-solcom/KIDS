@@ -7,7 +7,7 @@ function fncChgEtoJ( lngCode )
 	if ( lngCode == 0 )
 	{
 
-		// ½èÍıÍÑ¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// å‡¦ç†ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		fncProcessingOutputModule( 'use' , 0 );
 
 		strComments.innerHTML = 'Selected data is used in the following item.';
@@ -19,12 +19,12 @@ function fncChgEtoJ( lngCode )
 	else if ( lngCode == 1 )
 	{
 
-		// ½èÍıÍÑ¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// å‡¦ç†ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		fncProcessingOutputModule( 'use' , 1 );
 
-		strComments.innerHTML = 'ÁªÂò¤µ¤ì¤¿¥Ç¡¼¥¿¤Ï²¼µ­¤Î¹àÌÜ¤Ë¤Æ»ÈÍÑ¤µ¤ì¤Æ¤¤¤Ş¤¹¡£';
-		Column0.innerHTML     = '´ÉÍıÌ¾¾Î';
-		Column1.innerHTML     = '£Î£Ï.';
+		strComments.innerHTML = 'é¸æŠã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã¯ä¸‹è¨˜ã®é …ç›®ã«ã¦ä½¿ç”¨ã•ã‚Œã¦ã„ã¾ã™ã€‚';
+		Column0.innerHTML     = 'ç®¡ç†åç§°';
+		Column1.innerHTML     = 'ï¼®ï¼¯.';
 
 	}
 

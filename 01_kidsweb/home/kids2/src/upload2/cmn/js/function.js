@@ -1,31 +1,31 @@
 (function(){
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var workForm = $('form');
-    // Upload¥Ü¥¿¥ó
+    // Uploadãƒœã‚¿ãƒ³
     var btnUpload = $('img.upload');
 
-    // ¥Õ¥©¡¼¥à¥µ¥Ö¥ß¥Ã¥ÈÍŞ»ß
+    // ãƒ•ã‚©ãƒ¼ãƒ ã‚µãƒ–ãƒŸãƒƒãƒˆæŠ‘æ­¢
     $('document').on('submit', 'form', function(e){
         e.preventDefault();
         return false;
     });
 
-    // ¸¡º÷¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+    // æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnUpload.on('click', function(){
 
 		if( document.exc_upload.excel_file.value.length == 0 )
 		{
-			alert( '¥Õ¥¡¥¤¥ë¤ò»ØÄê¤·¤Æ¤¯¤À¤µ¤¤¡£' );
+			alert( 'ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚' );
 			return false;
 		} else if ( !document.exc_upload.excel_file.value.toUpperCase().match(/.*\.(XLSX)$/))
 		{
-			alert( '³ÈÄ¥»Ò¤¬xlsx¤Î¥Õ¥¡¥¤¥ë¤ò»ØÄê¤·¤Æ¤¯¤À¤µ¤¤' );
+			alert( 'æ‹¡å¼µå­ãŒxlsxã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æŒ‡å®šã—ã¦ãã ã•ã„' );
 			return false;
 		}
 	
 		var windowName = 'workSheetView';
 		
-        // »Ò¥¦¥£¥ó¥É¥¦¤ÎÉ½¼¨        
+        // å­ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º        
         if(workForm.length == 0){
 	        var IFrames = $('iframe');
 	        
@@ -39,7 +39,7 @@
 	        }
         }
         
-        // ¥Õ¥©¡¼¥àÀßÄê
+        // ãƒ•ã‚©ãƒ¼ãƒ è¨­å®š
         workForm.get(0).target = windowName;
         workForm.get(0).method = 'post';
         var baseURI = workForm.get(0).baseURI;
@@ -50,14 +50,14 @@
 			var inputSessionIDTag = '<input type="hidden" name="strSessionID" value="'+ getParam + '">';
 			workForm.append(inputSessionIDTag);
         	workForm.get(0).action = '/estimate/regist/select.php';
-        	// ¥µ¥Ö¥ß¥Ã¥È
+        	// ã‚µãƒ–ãƒŸãƒƒãƒˆ
 			workForm.submit();
 			// $(windowResult).load(function(){
-			// 	$('#messageArea', win.document).append("<div>openÄ¾¸å¤ËÀßÄê</div>");
+			// 	$('#messageArea', win.document).append("<div>openç›´å¾Œã«è¨­å®š</div>");
 			// });
         }
         else {
-			alert('URL¤¬ÉÔÀµ¤Ç¤¹');
+			alert('URLãŒä¸æ­£ã§ã™');
 			return false;
         }
 
@@ -65,10 +65,10 @@
 	});
 	
 	/**
-	 * URL¤Î¥²¥Ã¥È¥Ñ¥é¥á¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+	 * URLã®ã‚²ãƒƒãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
 	 *
-	 * @param  name {string} ¥Ñ¥é¥á¡¼¥¿¤Î¥­¡¼Ê¸»úÎó
-	 * @return  url {url} ÂĞ¾İ¤ÎURLÊ¸»úÎó¡ÊÇ¤°Õ¡Ë
+	 * @param  name {string} ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ã‚­ãƒ¼æ–‡å­—åˆ—
+	 * @return  url {url} å¯¾è±¡ã®URLæ–‡å­—åˆ—ï¼ˆä»»æ„ï¼‰
 	 */
 	function getURLGetParam(name, url) {
 		if (!url) url = window.location.href;
@@ -109,7 +109,7 @@ function fncUploadButton( strMode , obj )
 	}
 }
 
-// ¥¢¥Ã¥×¥í¡¼¥Égif
+// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰gif
 var uploadJ1 = '/img/type01/upload2/upbt_off.gif';
 var uploadJ2 = '/img/type01/upload2/upbt_on_off.gif';
 var uploadJ3 = '/img/type01/upload2/upbt_on.gif';

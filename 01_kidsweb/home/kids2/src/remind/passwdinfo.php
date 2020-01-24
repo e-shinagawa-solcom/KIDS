@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ñ¥¹¥ï¡¼¥É¥ê¥Þ¥¤¥ó¥É¡¡¥Ñ¥¹¥ï¡¼¥É¾ðÊó¤ÎÉ½¼¨¡¢ÀßÄê½èÍý
+*	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒªãƒžã‚¤ãƒ³ãƒ‰ã€€ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰æƒ…å ±ã®è¡¨ç¤ºã€è¨­å®šå‡¦ç†
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -9,19 +9,19 @@
 *	@access    public
 *	@version   1.00
 *
-*	½èÍý³µÍ×
-*	¥Ñ¥¹¥ï¡¼¥É¥ê¥Þ¥¤¥ó¥À¡¼½èÍý¤«¤éÁ÷¿®¤µ¤ì¤¿¥á¡¼¥ë¤è¤ê
-*	¤³¤Î¥×¥í¥°¥é¥à¤ò¸Æ¤Ó½Ð¤·¡¢¾ðÊó¤¬°Û¾ï¤Ç¤Ê¤±¤ì¤Ð
-*	¿·¤·¤¤¥Ñ¥¹¥ï¡¼¥É¤òÈ¯¹Ô¤¹¤ë
-*	¾ðÊó¤¬°Û¾ï¤Ç¤¢¤Ã¤¿¾ì¹ç¡¢°Û¾ïÆâÍÆ¤Ë¤è¤é¤ºÆ±¤¸¥á¥Ã¥»¡¼¥¸¤ò
-*	É½¼¨¤¹¤ë
+*	å‡¦ç†æ¦‚è¦
+*	ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒªãƒžã‚¤ãƒ³ãƒ€ãƒ¼å‡¦ç†ã‹ã‚‰é€ä¿¡ã•ã‚ŒãŸãƒ¡ãƒ¼ãƒ«ã‚ˆã‚Š
+*	ã“ã®ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚’å‘¼ã³å‡ºã—ã€æƒ…å ±ãŒç•°å¸¸ã§ãªã‘ã‚Œã°
+*	æ–°ã—ã„ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã‚’ç™ºè¡Œã™ã‚‹
+*	æƒ…å ±ãŒç•°å¸¸ã§ã‚ã£ãŸå ´åˆã€ç•°å¸¸å†…å®¹ã«ã‚ˆã‚‰ãšåŒã˜ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’
+*	è¡¨ç¤ºã™ã‚‹
 *
 */
 
-// ÀßÄê¤ÎÆÉ¤ß¹þ¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require ( LIB_FILE );
 require ( SRC_ROOT . "remind/reminder.php" );
 
@@ -29,55 +29,55 @@ $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// GET¥Ç¡¼¥¿¤Î¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 $aryBase = $_GET;
 
-// GET¥Ç¡¼¥¿¤Î³ÎÇ§
+// GETãƒ‡ãƒ¼ã‚¿ã®ç¢ºèª
 if ( isset($aryBase["strInfo"]) )
 {
 	$strSessionID = $aryBase["strInfo"];
-	// ¥»¥Ã¥·¥ç¥ó£É£Ä¤«¤é¥æ¡¼¥¶¡¼¾ðÊó¤Î¼èÆÀ
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ï¼©ï¼¤ã‹ã‚‰ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã®å–å¾—
 	$aryData = getSessionIDToInfo( $strSessionID, $objDB );
 	if ( !$aryData )
 	{
-		fncOutputError( 9052, DEF_ERROR, "¥Ñ¥¹¥ï¡¼¥ÉÈ¯¹Ô¤Ç¤­¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError( 9052, DEF_ERROR, "ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ç™ºè¡Œã§ãã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-	// ¿·¤·¤¤¥Ñ¥¹¥ï¡¼¥É¤ÎÀ¸À®
+	// æ–°ã—ã„ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®ç”Ÿæˆ
 	$strNewPassword = substr( md5( uniqid( rand(), 1 ) ), 0, 10);
 
-	// ¥Ñ¥¹¥ï¡¼¥É¤Î¹¹¿·
+	// ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã®æ›´æ–°
 	if ( !$aryData["lngUserCode"] )
 	{
-//		fncOutputError( 9051, DEF_ERROR, "¥æ¡¼¥¶¡¼¾ðÊó¤Î¹¹¿·¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£", TRUE, "", $objDB );
+//		fncOutputError( 9051, DEF_ERROR, "ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 	}
 
 	if ( !setNewPassword( $aryData["lngUserCode"], $strNewPassword, $objDB ) )
 	{
-		fncOutputError( 9051, DEF_ERROR, "¥æ¡¼¥¶¡¼¾ðÊó¤Î¹¹¿·¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError( 9051, DEF_ERROR, "ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 	}
 
-	// ¿·¤·¤¤¥Ñ¥¹¥ï¡¼¥É¾ðÊó²èÌÌ¤ÎÉ½¼¨
+	// æ–°ã—ã„ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰æƒ…å ±ç”»é¢ã®è¡¨ç¤º
 	$fp = fopen ( TMP_ROOT . "remind/passwdinfo.html", "r" );
 
 	while ( $strTemplLine = fgets ( $fp, 1000 ) )
 	{
 		$strTempl .= $strTemplLine;
 	}
-	// ÃÖ´¹
+	// ç½®æ›
 	$strTempl = preg_replace ( "/_%strNewPassword%_/i", $strNewPassword, $strTempl );
-	// ½ÐÎÏ
+	// å‡ºåŠ›
 	echo $strTempl;
 
-	// »ÈÍÑ¤·¤¿¥»¥Ã¥·¥ç¥ó¾ðÊó¤ÎÌµ¸ú²½
+	// ä½¿ç”¨ã—ãŸã‚»ãƒƒã‚·ãƒ§ãƒ³æƒ…å ±ã®ç„¡åŠ¹åŒ–
 	if ( !setSessionOff( $strSessionID, $objDB ) )
 	{
-		fncOutputError( 9052, DEF_ERROR, "¥»¥Ã¥·¥ç¥ó°Û¾ï¡£", TRUE, "", $objDB );
+		fncOutputError( 9052, DEF_ERROR, "ã‚»ãƒƒã‚·ãƒ§ãƒ³ç•°å¸¸ã€‚", TRUE, "", $objDB );
 	}
 }
 else
 {
-	fncOutputError( 9052, DEF_ERROR, "»ØÄê¤µ¤ì¤¿¥¢¥É¥ì¥¹¾ðÊó¤¬°Û¾ï¤Ç¤¹¡£", TRUE, "", $objDB );
+	fncOutputError( 9052, DEF_ERROR, "æŒ‡å®šã•ã‚ŒãŸã‚¢ãƒ‰ãƒ¬ã‚¹æƒ…å ±ãŒç•°å¸¸ã§ã™ã€‚", TRUE, "", $objDB );
 }
 
 $objDB->close();

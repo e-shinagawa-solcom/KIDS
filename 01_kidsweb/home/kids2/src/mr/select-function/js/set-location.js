@@ -1,14 +1,14 @@
 
 // ---------------------------------
-// -- ¥¯¥ê¥Ã¥¯»ş¤Î²èÌÌÁ«°ÜÀè¤òÀßÄê
+// -- ã‚¯ãƒªãƒƒã‚¯æ™‚ã®ç”»é¢é·ç§»å…ˆã‚’è¨­å®š
 // ---------------------------------
 (function(sessionId){
 
-	// ¶â·¿ÍúÎòÅĞÏ¿²èÌÌ
+	// é‡‘å‹å±¥æ­´ç™»éŒ²ç”»é¢
 	$('.function-buttons__regist').on('click', function(){
 		$(location).attr('href', '../regist/index.php?strSessionID=' + sessionId);
 	});
-	// ¶â·¿ÍúÎòÅĞÏ¿²èÌÌ
+	// é‡‘å‹å±¥æ­´ç™»éŒ²ç”»é¢
 	$('.function-buttons__search').on('click', function(){
 		$(location).attr('href', '../search/index.php?strSessionID=' + sessionId);
 	});

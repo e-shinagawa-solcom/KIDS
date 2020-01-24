@@ -2,64 +2,64 @@
 
 
 ///// ADD ROW BT IMAGE /////
-var addrowbtJ1 = '<a href="javascript:void(0);"><img onfocus="AddRJOn(this);" onblur="AddRJOff(this);" onmouseover="AddRJOn(this);" onmouseout="AddRJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + addrowJ1 + '" width="72" height="20" border="0" alt="¹ÔÄÉ²Ã" tabindex="' + AddRowNum + '"></a>';
+var addrowbtJ1 = '<a href="javascript:void(0);"><img onfocus="AddRJOn(this);" onblur="AddRJOff(this);" onmouseover="AddRJOn(this);" onmouseout="AddRJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + addrowJ1 + '" width="72" height="20" border="0" alt="è¡Œè¿½åŠ " tabindex="' + AddRowNum + '"></a>';
 var addrowbtE1 = '<a href="javascript:void(0);"><img onfocus="AddREOn(this);" onblur="AddREOff(this);" onmouseover="AddREOn(this);" onmouseout="AddREOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + addrowE1 + '" width="72" height="20" border="0" alt="ADD ROW" tabindex="' + AddRowNum + '"></a>';
 
 
 ///// DEL ROW BT IMAGE /////
-var delrowbtJ1 = '<a href="javascript:void(0);"><img onfocus="DelRJOn(this);" onblur="DelRJOff(this);" onmouseover="DelRJOn(this);" onmouseout="DelRJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + delrowJ1 + '" width="72" height="20" border="0" alt="¹Ôºï½ü"></a>';
+var delrowbtJ1 = '<a href="javascript:void(0);"><img onfocus="DelRJOn(this);" onblur="DelRJOff(this);" onmouseover="DelRJOn(this);" onmouseout="DelRJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + delrowJ1 + '" width="72" height="20" border="0" alt="è¡Œå‰Šé™¤"></a>';
 var delrowbtE1 = '<a href="javascript:void(0);"><img onfocus="DelREOn(this);" onblur="DelREOff(this);" onmouseover="DelREOn(this);" onmouseout="DelREOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + delrowE1 + '" width="72" height="20" border="0" alt="DEL ROW"></a>';
 
 
 ///// COMMIT BT IMAGE /////
-var commitbtJ1 = '<a href="javascript:void(0);"><img onfocus="CmtJOn(this);" onblur="CmtJOff(this);" onmouseover="CmtJOn(this);" onmouseout="CmtJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + commitJ1 + '" width="72" height="20" border="0" alt="¹Ô³ÎÄê"></a>';
+var commitbtJ1 = '<a href="javascript:void(0);"><img onfocus="CmtJOn(this);" onblur="CmtJOff(this);" onmouseover="CmtJOn(this);" onmouseout="CmtJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + commitJ1 + '" width="72" height="20" border="0" alt="è¡Œç¢ºå®š"></a>';
 var commitbtE1 = '<a href="javascript:void(0);"><img onfocus="CmtEOn(this);" onblur="CmtEOff(this);" onmouseover="CmtEOn(this);" onmouseout="CmtEOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + commitE1 + '" width="72" height="20" border="0" alt="COMMIT"></a>';
 
 
 
 ///// REGIST BT IMAGE /////
-var registbtJ1 = '<a href="#"><img name="RegistBtImg" onfocus="RegJOn(this);" onblur="RegJOff(this);" onmouseover="RegJOn(this);" onmouseout="RegJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + registJ1 + '" width="72" height="20" border="0" alt="ÅĞÏ¿" tabindex="' + RegistNum + '"></a>';
+var registbtJ1 = '<a href="#"><img name="RegistBtImg" onfocus="RegJOn(this);" onblur="RegJOff(this);" onmouseover="RegJOn(this);" onmouseout="RegJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + registJ1 + '" width="72" height="20" border="0" alt="ç™»éŒ²" tabindex="' + RegistNum + '"></a>';
 var registbtE1 = '<a href="#"><img name="RegistBtImg" onfocus="RegEOn(this);" onblur="RegEOff(this);" onmouseover="RegEOn(this);" onmouseout="RegEOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + registE1 + '" width="72" height="20" border="0" alt="REGIST" tabindex="' + RegistNum + '"></a>';
 
-var registbtJNotActive = '<img name="RegistBtImg" src="' + registJ1 + '" width="72" height="20" border="0" alt="ÅĞÏ¿" tabindex="' + RegistNum + '">';
+var registbtJNotActive = '<img name="RegistBtImg" src="' + registJ1 + '" width="72" height="20" border="0" alt="ç™»éŒ²" tabindex="' + RegistNum + '">';
 var registbtENotActive = '<img name="RegistBtImg" src="' + registE1 + '" width="72" height="20" border="0" alt="REGIST" tabindex="' + RegistNum + '">';
 
 
 
 
 ///// CLEAR BT IMAGE /////
-var clearbtAJ1 = '<a href="javascript:void(0);"><img onfocus="ClearJOn(this);" onblur="ClearJOff(this);" onmouseover="ClearJOn(this);" onmouseout="ClearJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearJ1 + '" width="72" height="20" border="0" alt="¥¯¥ê¥¢"></a>';
+var clearbtAJ1 = '<a href="javascript:void(0);"><img onfocus="ClearJOn(this);" onblur="ClearJOff(this);" onmouseover="ClearJOn(this);" onmouseout="ClearJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearJ1 + '" width="72" height="20" border="0" alt="ã‚¯ãƒªã‚¢"></a>';
 var clearbtAE1 = '<a href="javascript:void(0);"><img onfocus="ClearEOn(this);" onblur="ClearEOff(this);" onmouseover="ClearEOn(this);" onmouseout="ClearEOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearE1 + '" width="72" height="20" border="0" alt="CLEAR"></a>';
 
-var clearbtBJ1 = '<a href="javascript:void(0);"><img onfocus="ClearJOn(this);" onblur="ClearJOff(this);" onmouseover="ClearJOn(this);" onmouseout="ClearJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearJ1 + '" width="72" height="20" border="0" alt="¥¯¥ê¥¢"></a>';
+var clearbtBJ1 = '<a href="javascript:void(0);"><img onfocus="ClearJOn(this);" onblur="ClearJOff(this);" onmouseover="ClearJOn(this);" onmouseout="ClearJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearJ1 + '" width="72" height="20" border="0" alt="ã‚¯ãƒªã‚¢"></a>';
 var clearbtBE1 = '<a href="javascript:void(0);"><img onfocus="ClearEOn(this);" onblur="ClearEOff(this);" onmouseover="ClearEOn(this);" onmouseout="ClearEOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearE1 + '" width="72" height="20" border="0" alt="CLEAR"></a>';
 
 
 ///// SEARCH BT IMAGE /////
-var searchbtAJ1 = '<a href="javascript:void(0);"><img onfocus="SearchJOn(this);" onblur="SearchJOff(this);" onmouseover="SearchJOn(this);" onmouseout="SearchJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearJ1 + '" width="72" height="20" border="0" alt="¸¡º÷"></a>';
+var searchbtAJ1 = '<a href="javascript:void(0);"><img onfocus="SearchJOn(this);" onblur="SearchJOff(this);" onmouseover="SearchJOn(this);" onmouseout="SearchJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearJ1 + '" width="72" height="20" border="0" alt="æ¤œç´¢"></a>';
 var searchbtAE1 = '<a href="javascript:void(0);"><img onfocus="SearchEOn(this);" onblur="SearchEOff(this);" onmouseover="SearchEOn(this);" onmouseout="SearchEOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + clearE1 + '" width="72" height="20" border="0" alt="SEARCH"></a>';
 
 
 
 ///// SELECT BUTTON /////
-var selectbtJ1 = '<a href="#"><img onfocus="SelectJOn( this );" onblur="SelectJOff( this);" onmouseover="SelectJOn( this );" onmouseout="SelectJOff( this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + sltbtJ1 + '" width="72" height="20" border="0" alt="ÁªÂò"></a>';
-var selectbtJ3 = '<img src="' + sltbtJ3 + '" width="72" height="20" border="0" alt="ÁªÂò">';
+var selectbtJ1 = '<a href="#"><img onfocus="SelectJOn( this );" onblur="SelectJOff( this);" onmouseover="SelectJOn( this );" onmouseout="SelectJOff( this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + sltbtJ1 + '" width="72" height="20" border="0" alt="é¸æŠ"></a>';
+var selectbtJ3 = '<img src="' + sltbtJ3 + '" width="72" height="20" border="0" alt="é¸æŠ">';
 
 var selectbtE1 = '<a href="#"><img onfocus="SelectEOn( this );" onblur="SelectEOff( this);" onmouseover="SelectEOn( this );" onmouseout="SelectEOff( this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + sltbtE1 + '" width="72" height="20" border="0" alt="SELECT"></a>';
 var selectbtE3 = '<img src="' + sltbtE3 + '" width="72" height="20" border="0" alt="SELECT">';
 
 
 
-///// ³ÎÇ§¥Ü¥¿¥ó /////
-var confirmbtJ1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, confirmJ2 );" onblur="fncChangeBtImg( this, confirmJ1 );" onmouseover="fncChangeBtImg( this, confirmJ2 );" onmouseout="fncChangeBtImg( this, confirmJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + confirmJ1 + '" width="72" height="20" border="0" alt="³ÎÇ§" tabindex="' + AddRowNum + '"></a>';
+///// ç¢ºèªãƒœã‚¿ãƒ³ /////
+var confirmbtJ1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, confirmJ2 );" onblur="fncChangeBtImg( this, confirmJ1 );" onmouseover="fncChangeBtImg( this, confirmJ2 );" onmouseout="fncChangeBtImg( this, confirmJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + confirmJ1 + '" width="72" height="20" border="0" alt="ç¢ºèª" tabindex="' + AddRowNum + '"></a>';
 var confirmbtE1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, confirmE2 );" onblur="fncChangeBtImg( this, confirmE1 );" onmouseover="fncChangeBtImg( this, confirmE2 );" onmouseout="fncChangeBtImg( this, confirmE1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + confirmE1 + '" width="72" height="20" border="0" alt="CONFIRM" tabindex="' + AddRowNum + '"></a>';
 
-///// ²¾ÊİÂ¸¥Ü¥¿¥ó /////
-var presavebtJ1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, presaveJ2 );" onblur="fncChangeBtImg( this, presaveJ1 );" onmouseover="fncChangeBtImg( this, presaveJ2 );" onmouseout="fncChangeBtImg( this, presaveJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + presaveJ1 + '" width="72" height="20" border="0" alt="²¾ÊİÂ¸" tabindex="' + AddRowNum + '"></a>';
+///// ä»®ä¿å­˜ãƒœã‚¿ãƒ³ /////
+var presavebtJ1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, presaveJ2 );" onblur="fncChangeBtImg( this, presaveJ1 );" onmouseover="fncChangeBtImg( this, presaveJ2 );" onmouseout="fncChangeBtImg( this, presaveJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + presaveJ1 + '" width="72" height="20" border="0" alt="ä»®ä¿å­˜" tabindex="' + AddRowNum + '"></a>';
 var presavebtE1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, presaveE2 );" onblur="fncChangeBtImg( this, presaveE1 );" onmouseover="fncChangeBtImg( this, presaveE2 );" onmouseout="fncChangeBtImg( this, presaveE1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + presaveE1 + '" width="72" height="20" border="0" alt="PRE SAVE" tabindex="' + AddRowNum + '"></a>';
 
-///// ·èÄê¥Ü¥¿¥ó /////
-var decisionbtJ1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, decisionJ2 );" onblur="fncChangeBtImg( this, decisionJ1 );" onmouseover="fncChangeBtImg( this, decisionJ2 );" onmouseout="fncChangeBtImg( this, decisionJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + decisionJ1 + '" width="72" height="20" border="0" alt="·èÄê" tabindex="' + AddRowNum + '"></a>';
+///// æ±ºå®šãƒœã‚¿ãƒ³ /////
+var decisionbtJ1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, decisionJ2 );" onblur="fncChangeBtImg( this, decisionJ1 );" onmouseover="fncChangeBtImg( this, decisionJ2 );" onmouseout="fncChangeBtImg( this, decisionJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + decisionJ1 + '" width="72" height="20" border="0" alt="æ±ºå®š" tabindex="' + AddRowNum + '"></a>';
 var decisionbtE1 = '<a href="javascript:void(0);"><img onfocus="fncChangeBtImg( this, decisionE2 );" onblur="fncChangeBtImg( this, decisionE1 );" onmouseover="fncChangeBtImg( this, decisionE2 );" onmouseout="fncChangeBtImg( this, decisionE1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + decisionE1 + '" width="72" height="20" border="0" alt="DECISION" tabindex="' + AddRowNum + '"></a>';
 
 
@@ -99,10 +99,10 @@ function initLayoutQuery()
 
 		if( typeof(obj1) != 'undefined' )
 		{
-			// ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤ÎÈ½Äê -> ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤Ï¥Ü¥¿¥ó²¡²¼¶Ø»ß
+			// ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã®åˆ¤å®š -> ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã¯ãƒœã‚¿ãƒ³æŠ¼ä¸‹ç¦æ­¢
 			for( i=0; i < obj1.options.length; i++ )
 			{
-				if( obj1.options[i].text == '¾µÇ§¤Ê¤·' )
+				if( obj1.options[i].text == 'æ‰¿èªãªã—' )
 				{
 					if( i == 0 )
 					{
@@ -125,10 +125,10 @@ function initLayoutQuery()
 		if( typeof(obj2) != 'undefined' )
 		{
 
-			// ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤ÎÈ½Äê -> ¡Ö¾µÇ§¤Ê¤·¡×¤Î¾ì¹ç¤Ï¥Ü¥¿¥ó²¡²¼¶Ø»ß
+			// ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã®åˆ¤å®š -> ã€Œæ‰¿èªãªã—ã€ã®å ´åˆã¯ãƒœã‚¿ãƒ³æŠ¼ä¸‹ç¦æ­¢
 			for( i=0; i < obj2.options.length; i++ )
 			{
-				if( obj2.options[i].text == '¾µÇ§¤Ê¤·' )
+				if( obj2.options[i].text == 'æ‰¿èªãªã—' )
 				{
 					if( i == 0 )
 					{

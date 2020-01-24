@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    // datepickerÂĞ¾İÍ×ÁÇ
+    // datepickerå¯¾è±¡è¦ç´ 
     var ymElements = [
         $("#objectYm"),
         $("#openYm"),
         $("#shipYm")
     ];
 
-    // datepicker¤ÎÀßÄê
+    // datepickerã®è¨­å®š
     $.each(ymElements, function () {
         this.datepicker({
             dateFormat: 'yy/mm',
@@ -32,13 +32,13 @@ $(document).ready(function () {
         });
     });
     
-    // datepickerÂĞ¾İÍ×ÁÇ
+    // datepickerå¯¾è±¡è¦ç´ 
     var dateElements = [
         $("#startDate"),
         $("#endDate")
 
     ];
-    // datepicker¤ÎÀßÄê
+    // datepickerã®è¨­å®š
     $.each(dateElements, function(){
         this.datepicker({
             showButtonPanel: true,

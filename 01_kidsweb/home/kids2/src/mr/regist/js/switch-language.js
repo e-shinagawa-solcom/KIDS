@@ -1,50 +1,50 @@
 
 
-// English ¢Î ÆüËÜ¸ìÀÚ¤êÂØ¤¨¥Ü¥¿¥ó²¡²¼»ş
+// English â‡” æ—¥æœ¬èªåˆ‡ã‚Šæ›¿ãˆãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚
 $('.control-block__button-language').on('click', function(){
 
-	// COOKIE¤«¤é¸À¸ì¥³¡¼¥É¤ò¼èÆÀ
+	// COOKIEã‹ã‚‰è¨€èªã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 	var langCode = $.cookie('lngLanguageCode');
 
-	// ÀÚ¤êÂØ¤¨ÂĞ¾İÍ×ÁÇ¤Î¥­¥ã¥Ã¥·¥å
+	// åˆ‡ã‚Šæ›¿ãˆå¯¾è±¡è¦ç´ ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
 	var title = $('.base-header__title-image');
 
-	// ¸À¸ì¥³¡¼¥É¤¬ "0:±Ñ¸ì" ¤Î¾ì¹ç
+	// è¨€èªã‚³ãƒ¼ãƒ‰ãŒ "0:è‹±èª" ã®å ´åˆ
 	if (langCode == 0) {
-		// ¥¿¥¤¥È¥ë²èÁüÀßÄê
+		// ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒè¨­å®š
 		title.attr('src', '/img/type01/mr/title_ja.gif');
 
-		// ¸À¸ì¥³¡¼¥É¤ò1(ÆüËÜ¸ì)¤ËÀßÄê
+		// è¨€èªã‚³ãƒ¼ãƒ‰ã‚’1(æ—¥æœ¬èª)ã«è¨­å®š
 		$.removeCookie('lngLanguageCode', {path: '/'});
 		$.cookie('lngLanguageCode', 1, {path: '/'});
-		// ¸À¸ìÀÚ¤êÂØ¤¨¥Ü¥¿¥ó¤òÆüËÜ¸ì¤ËÊÑ¹¹
+		// è¨€èªåˆ‡ã‚Šæ›¿ãˆãƒœã‚¿ãƒ³ã‚’æ—¥æœ¬èªã«å¤‰æ›´
 		$(this).attr('src', '/img/type01/cmn/etoj/en_off_bt.gif');
 	}
-	// ¤½¤ì°Ê³°¤Î¾ì¹ç(ÌäÅúÌµÍÑ¤ÇÆüËÜ¸ì°·¤¤)
+	// ãã‚Œä»¥å¤–ã®å ´åˆ(å•ç­”ç„¡ç”¨ã§æ—¥æœ¬èªæ‰±ã„)
 	else {
-		// ¥¿¥¤¥È¥ë²èÁüÀßÄê
+		// ã‚¿ã‚¤ãƒˆãƒ«ç”»åƒè¨­å®š
 		title.attr('src', '/img/type01/mr/title_en.gif');
 
-		// ¸À¸ì¥³¡¼¥É¤ò0(±Ñ¸ì)¤ËÀßÄê
+		// è¨€èªã‚³ãƒ¼ãƒ‰ã‚’0(è‹±èª)ã«è¨­å®š
 		$.removeCookie('lngLanguageCode', {path: '/'});
 		$.cookie('lngLanguageCode', 0, {path: '/'});
-		// ¸À¸ìÀÚ¤êÂØ¤¨¥Ü¥¿¥ó¤ò±Ñ¸ì¤ËÊÑ¹¹
+		// è¨€èªåˆ‡ã‚Šæ›¿ãˆãƒœã‚¿ãƒ³ã‚’è‹±èªã«å¤‰æ›´
 		$(this).attr('src', '/img/type01/cmn/etoj/ja_off_bt.gif');
 	}
 });
 
-// ÆÉ¤ß¹ş¤ß»ş¤ËÀÚ¤êÂØ¤¨¼Â¹Ô
-// ¤½¤Î¤Ş¤Ş¼Â¹Ô¤¹¤ë¤È±ÑÆü¥¹¥¤¥Ã¥Á¤·¤Æ¤·¤Ş¤¦¤Î¤Ç
-// langCode¤òµÕ¤ËÀßÄê¤·¤Æ¤«¤ékick¤¹¤ë
+// èª­ã¿è¾¼ã¿æ™‚ã«åˆ‡ã‚Šæ›¿ãˆå®Ÿè¡Œ
+// ãã®ã¾ã¾å®Ÿè¡Œã™ã‚‹ã¨è‹±æ—¥ã‚¹ã‚¤ãƒƒãƒã—ã¦ã—ã¾ã†ã®ã§
+// langCodeã‚’é€†ã«è¨­å®šã—ã¦ã‹ã‚‰kickã™ã‚‹
 (function(langCode){
 	
-	// ¸À¸ì¥³¡¼¥ÉÈ¿Å¾
+	// è¨€èªã‚³ãƒ¼ãƒ‰åè»¢
 	langCode = (langCode == 1) ? 0 : 1;
-	// COOKIE¤ËÀßÄê
+	// COOKIEã«è¨­å®š
 	$.removeCookie('lngLanguageCode', {path: '/'});
 	$.cookie('lngLanguageCode', langCode, {path: '/'});
 
-	// ¸À¸ìÀÚ¤êÂØ¤¨¥Ü¥¿¥ó click¥¤¥Ù¥ó¥ÈÈ¯¹Ô
+	// è¨€èªåˆ‡ã‚Šæ›¿ãˆãƒœã‚¿ãƒ³ clickã‚¤ãƒ™ãƒ³ãƒˆç™ºè¡Œ
 	$('.control-block__button-language').trigger('click');
 
 })($.cookie('lngLanguageCode'));

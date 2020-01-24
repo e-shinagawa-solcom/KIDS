@@ -113,7 +113,7 @@ function ChgEtoJ()
 		MainTitle.innerHTML = maintitleJ;
 
 
-		strSelectFunctions.innerText = 'µ¡Ç½ÁªÂò';
+		strSelectFunctions.innerText = 'æ©Ÿèƒ½é¸æŠ';
 
 
 		///// USER INFOMATION /////

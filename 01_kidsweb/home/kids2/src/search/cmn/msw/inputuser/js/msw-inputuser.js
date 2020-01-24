@@ -5,10 +5,10 @@
     var displayFlagLimit = mswBox.find('.display-flag-limit');
     var btnSearch = mswBox.find('.search-btn img');
 
-    // TabKey¤ÎÀ©¸æ
+    // TabKeyã®åˆ¶å¾¡
     mswBox.on(
         'keydown', 'input.input-code', function(e){
-            // Tab + shift¤Çmsw¤ÎºÇ¸å¤ÎÍ×ÁÇ¤Ë¥Õ¥©¡¼¥«¥¹¤òÌá¤¹
+            // Tab + shiftã§mswã®æœ€å¾Œã®è¦ç´ ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’æˆ»ã™
             if(e.keyCode == 9 && e.shiftKey){
                 mswBox.find('img.apply').focus();
                 return false;
@@ -17,7 +17,7 @@
     );
     mswBox.on(
         'keydown', 'img.apply', function(e){
-            // Tab¤Î¤ß¤Çmsw¤ÎºÇ½é¤ÎÍ×ÁÇ¤Ë¥Õ¥©¡¼¥«¥¹¤òÌá¤¹
+            // Tabã®ã¿ã§mswã®æœ€åˆã®è¦ç´ ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’æˆ»ã™
             if(e.keyCode == 9 && !e.shiftKey){
                 mswBox.find('input.input-code').focus();
                 return false;
@@ -25,13 +25,13 @@
         }
     );
 
-    // ¸¡º÷·ë²Ì¥À¥Ö¥ë¥¯¥ê¥Ã¥¯¤ÇÅ¬ÍÑ¤¹¤ë
+    // æ¤œç´¢çµæœãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã§é©ç”¨ã™ã‚‹
     $(".result-select").on("dblclick",  function(){
         mswBox.find('img.apply').trigger('click');
         mswBox.find('img.msw-box__header__close-btn').trigger('click');
     });
 
-    // ¸¡º÷¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+    // æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnSearch.on({
         'click': function() {
             selectusers();
@@ -53,7 +53,7 @@
         }
         $('select').find('option').remove();
         switch (isEmpty(userCode.val()) + isEmpty(userName.val())) {
-            // ¤É¤Á¤é¤âÌ¤ÆşÎÏ
+            // ã©ã¡ã‚‰ã‚‚æœªå…¥åŠ›
             case '00':
                 var condition = {
                     data: {
@@ -65,7 +65,7 @@
                     }
                 };
                 break;
-            // À½ÉÊÌ¾¾Î¤Î¤ßÆşÎÏ
+            // è£½å“åç§°ã®ã¿å…¥åŠ›
             case '01':
                 var condition = {
                     data: {
@@ -78,7 +78,7 @@
                     }
                 };
                 break;
-            // À½ÉÊ¥³¡¼¥É¤Î¤ßÆşÎÏ
+            // è£½å“ã‚³ãƒ¼ãƒ‰ã®ã¿å…¥åŠ›
             case '10':
                 var condition = {
                     data: {
@@ -91,7 +91,7 @@
                     }
                 };
                 break;
-            // ¤É¤Á¤é¤âÆşÎÏ
+            // ã©ã¡ã‚‰ã‚‚å…¥åŠ›
             case '11':
                 var condition = {
                     data: {
@@ -108,11 +108,11 @@
             default:
                 break;
         }
-        // ¥Ş¥¹¥¿¡¼¸¡º÷¼Â¹Ô
+        // ãƒã‚¹ã‚¿ãƒ¼æ¤œç´¢å®Ÿè¡Œ
         queryMasterData(condition, setResult, setNodata);
     };
 
-    // ¿¿µ¶ÃÍ¤ÎÊ¸»úÎóÉ½¸½¤ò¼èÆÀ
+    // çœŸå½å€¤ã®æ–‡å­—åˆ—è¡¨ç¾ã‚’å–å¾—
     function isEmpty(val) {
         if (val) {
             return '1';
@@ -121,9 +121,9 @@
         }
     }
 
-    // ¸¡º÷·ë²Ì¤òselect¤ÎoptionÍ×ÁÇ¤Ë¥»¥Ã¥È
+    // æ¤œç´¢çµæœã‚’selectã®optionè¦ç´ ã«ã‚»ãƒƒãƒˆ
     function setResult(response) {
-        // ¸¡º÷·ï¿ô¤ò¥«¥¦¥ó¥¿¡¼¤Ë¥»¥Ã¥È
+        // æ¤œç´¢ä»¶æ•°ã‚’ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã«ã‚»ãƒƒãƒˆ
         $('.result-count .counter').val(response.length);
         $.each(response, function() {
             $('.result-select').append(
@@ -137,10 +137,10 @@
         });
     }
 
-    // ¸¡º÷·ë²Ì0·ï¤Î»şoption¤ËNoData¤ò¥»¥Ã¥È
+    // æ¤œç´¢çµæœ0ä»¶ã®æ™‚optionã«NoDataã‚’ã‚»ãƒƒãƒˆ
     function setNodata(response){
         console.log(response.responseText);
-        // ¸¡º÷·ï¿ô¥ê¥»¥Ã¥È
+        // æ¤œç´¢ä»¶æ•°ãƒªã‚»ãƒƒãƒˆ
         $('.result-count .counter').val('');
         $('.result-select').append(
             $('<option>')

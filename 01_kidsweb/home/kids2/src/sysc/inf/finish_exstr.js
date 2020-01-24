@@ -2,15 +2,15 @@
 
 
 //------------------------------------------------------------
-// ²òÀâ : ÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ´Ø¿ô
+// è§£èª¬ : æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿é–¢æ•°
 //------------------------------------------------------------
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( lngSelfCode == 0 )
 	{
-		// ¥í¥°¥Ü¥¿¥ó½ñ¤­½Ğ¤·
+		// ãƒ­ã‚°ãƒœã‚¿ãƒ³æ›¸ãå‡ºã—
 		BackBt.innerHTML = BackBtE1;
 
 		FinishRegist.innerText = 'REGISTRAITION COMPLETED';
@@ -19,16 +19,16 @@ function ChgEtoJ( lngSelfCode )
 		Column1.innerText = 'Message';
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( lngSelfCode == 1 )
 	{
-		// ¥í¥°¥Ü¥¿¥ó½ñ¤­½Ğ¤·
+		// ãƒ­ã‚°ãƒœã‚¿ãƒ³æ›¸ãå‡ºã—
 		BackBt.innerHTML = BackBtJ1;
 
-		FinishRegist.innerText = 'ÅĞÏ¿´°Î»';
+		FinishRegist.innerText = 'ç™»éŒ²å®Œäº†';
 
-		Column0.innerText = '¥¿¥¤¥È¥ë';
-		Column1.innerText = '¥á¥Ã¥»¡¼¥¸';
+		Column0.innerText = 'ã‚¿ã‚¤ãƒˆãƒ«';
+		Column1.innerText = 'ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸';
 	}
 
 	return false;

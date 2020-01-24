@@ -1,7 +1,7 @@
 <!--
 
 
-	// ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸ÄêµÁ
+	// ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸å®šç¾©
 	var headtitleAJ = '/img/type01/dataex/lc/header_title_ja.gif';
 	var headtitleAE = '/img/type01/dataex/lc/header_title_en.gif';
 

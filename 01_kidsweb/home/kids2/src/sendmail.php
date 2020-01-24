@@ -3,8 +3,8 @@ error_reporting(E_ALL);
 
 
 	$strTo = "kids@kuwagata.co.jp,kou@kuwagata.co.jp,japan060718@yahoo.co.jp";
-	$strSubject = "ºØÆ£¥Æ¥¹¥È";
-	$strMessage = "¥Æ¥¹¥È¤Ç¤¹¡£";
+	$strSubject = "æ–è—¤ãƒ†ã‚¹ãƒˆ";
+	$strMessage = "ãƒ†ã‚¹ãƒˆã§ã™ã€‚";
 	$strHeader = "From: kids@kuwagata.co.jp\n";
 	
 	//$strHeader .= 'Content-Type: text/plain; charset="iso-2022-jp"';
@@ -17,7 +17,7 @@ error_reporting(E_ALL);
 	
 	if( !$strRet )
 	{
-		echo "Á÷¿®¼ºÇÔ";
+		echo "é€ä¿¡å¤±æ•—";
 	}
 
 	$aryErr = error_get_last();

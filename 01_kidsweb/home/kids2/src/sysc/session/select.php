@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥·¥¹¥Æ¥à´ÉÍý ¥í¥°¥¤¥ó¥»¥Ã¥·¥ç¥ó±ÜÍ÷²èÌÌ
+*	ã‚·ã‚¹ãƒ†ãƒ ç®¡ç† ãƒ­ã‚°ã‚¤ãƒ³ã‚»ãƒƒã‚·ãƒ§ãƒ³é–²è¦§ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,79 +10,79 @@
 *	@version   1.00
 *
 */
-// ¥·¥¹¥Æ¥à´ÉÍý¼Ô¥í¥°¥¤¥ó¥»¥Ã¥·¥ç¥ó±ÜÍ÷²èÌÌ
+// ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…ãƒ­ã‚°ã‚¤ãƒ³ã‚»ãƒƒã‚·ãƒ§ãƒ³é–²è¦§ç”»é¢
 // index.php   -> strSessionID -> session.php
 //
-// ¥·¥¹¥Æ¥à´ÉÍý¼Ô¥í¥°²èÌÌ¤Ø
+// ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…ãƒ­ã‚°ç”»é¢ã¸
 // session.php -> strSessionID -> index.php
 
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 //require (SRC_ROOT . "sysc/cmn/lib_sys.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_SYS4, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 if ( join ( $aryCheckResult ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥·¥¹¥Æ¥à´ÉÍý¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 
 
-$arySuccessfulFlag = Array ( "t" => "À®¸ù", "f" => "¼ºÇÔ¡¦¥í¥°¥¢¥¦¥È" );
+$arySuccessfulFlag = Array ( "t" => "æˆåŠŸ", "f" => "å¤±æ•—ãƒ»ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ" );
 
-// ¥¿¥¤¥à¥¢¥¦¥È»þ´Ö¼èÆÀ
+// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“å–å¾—
 $lngTimeOut = fncGetCommonFunction( "timeout", "m_CommonFunction", $objDB );
 
-// ¥í¥°¥¤¥ó¥»¥Ã¥·¥ç¥ó¼èÆÀ
+// ãƒ­ã‚°ã‚¤ãƒ³ã‚»ãƒƒã‚·ãƒ§ãƒ³å–å¾—
 $strQuery = "SELECT * FROM t_LoginSession WHERE dtmLoginTime > ( now() - ( interval '$lngTimeOut min' ) ) AND bytSuccessfulFlag = TRUE ORDER BY dtmLoginTime DESC";
 
-// ¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼É½¼¨
+// ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤º
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-// ¥ì¥³¡¼¥ÉÉ½¼¨
+// ãƒ¬ã‚³ãƒ¼ãƒ‰è¡¨ç¤º
 for ( $i = 0; $i < $lngResultNum; $i++ )
 {
 	$objResult = $objDB->fetchObject( $lngResultID, $i );
 	$aryResult[$i] = "<tr class=\"Segs\"><td align=\"center\">" . ( $i + 1 ) . "</td><td align=\"center\">" . $objResult->strsessionid . "</td><td align=\"center\">" . $objResult->lngusercode . "</td><td align=\"center\">" . $objResult->strloginuserid . "</td><td align=\"center\">" . $objResult->strloginpassword . "</td><td align=\"center\">" . $objResult->dtmlogintime . "</td><td align=\"center\">" . $arySuccessfulFlag[$objResult->bytsuccessfulflag] . "</td></tr>\n";
 }
 
-// ·ë²Ì¥Æ¡¼¥Ö¥ëÀ¸À®
+// çµæžœãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 $aryParts["strRecordTable"] = join ( "", $aryResult );
 
 $aryParts["strSessionID"] =& $aryData["strSessionID"];
 //$aryParts["LOGIN"] =& $aryResult[0];
 //$aryParts["LOG"]   =& $aryResult[1];
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "sysc/session/session.tmpl" );
 $objTemplate->replace( $aryParts );

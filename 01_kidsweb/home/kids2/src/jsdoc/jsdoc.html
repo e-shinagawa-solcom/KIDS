@@ -1,7 +1,7 @@
 <html lang="ja">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=euc-jp">
-<title>JavaScript����</title>
+<title>JavaScript検索</title>
 </head>
 
 <Script language="JavaScript">
@@ -11,40 +11,40 @@ var main = "undefined";
 var menu = "undefined";
 var preId =0;
 
-//main�����򤵤줿�ؿ��֥��å������뤫�ɤ����Υե饰
+//mainで選択された関数ブロックがあるかどうかのフラグ
 var index = -1;
 
 function treeMenu(Id)
 {
-	//��¸������֥��å������ä����ˤϡ�ȿž����
+	//既存の選択ブロックがあった場合には、反転を解除
 	if (index != -1)
 	{
 		document.getElementById(index).style.backgroundColor = "#E5E5E5";
 	}
 
-	//�����Ƥ����˥�֥��å����Ĥ���
+	//開いているメニュブロックを閉じる
 	if( menu != "undefined")
 	{
 		menu.display="none";
 	}
 
-	//�����Ƥ���ᥤ��֥��å����Ĥ���
+	//開いているメインブロックを閉じる
 	if( main != "undefined")
 	{
 		main.display="none";
 		index = -1;
 	}
 
-	//�ȥåפ�����ʸ�򱣤�
+	//トップの説明文を隠す
 	if (document.getElementById("maintop").style.display == "block")
 	{
 		document.getElementById("maintop").style.display = "none";
 	}
 
-	//Ʊ����˥塼�ե���������򤷤����
+	//同じメニューファイルを選択した場合
 	if( preId == Id)
 	{
-		//�ѿ����������ƽ�λ
+		//変数を初期化して終了
 		preId  = 0;
 		return false;
 	}
@@ -76,18 +76,18 @@ function fncSentaku(linkNo)
 {
 	mainfnc = document.getElementById(linkNo).style;
 
-	//��¸������֥��å������ä����ˤϡ�ȿž����
+	//既存の選択ブロックがあった場合には、反転を解除
 	if (index != -1)
 	{
 		document.getElementById(index).style.backgroundColor = "#E5E5E5";
 	}
 
-	//����������֥��å���⤦���٥���å��������
+	//以前の選択ブロックをもう一度クリックした場合
 	if (index == linkNo)
 	{
 		index    = -1;
 	}
-	//�����Ȱ㤦����Ԥ򥯥�å��������
+	//以前と違う選択行をクリックした場合
 	else
 	{
 		index    = linkNo;
@@ -99,7 +99,7 @@ function fncSentaku(linkNo)
 function fncReadMe()
 {
 
-	//�����Ƥ���ᥤ��֥��å����Ĥ���
+	//開いているメインブロックを閉じる
 	if( main != "undefined" )
 	{
 		main.display="none";
@@ -107,14 +107,14 @@ function fncReadMe()
 		main  = "undefined";
 	}
 
-	//�����Ƥ����˥�֥��å����Ĥ���
+	//開いているメニュブロックを閉じる
 	if( menu != "undefined" )
 	{
 		menu.display = "none";
 		menu        != "undefined";
 	}
 
-	//�ȥåפ�����ʸ��ɽ������
+	//トップの説明文を表示する
 	document.getElementById("maintop").style.display = "block";
 }
 
@@ -177,7 +177,7 @@ a			{text-decoration:none;}
 </style>
 <body>
 
-<!--��˥�-->
+<!--メニュ-->
 <div class="menu">
 
 <div class="sub" align ="center">
@@ -187,69 +187,69 @@ a			{text-decoration:none;}
 <div class="sub" align ="center">
 <form name="form1" method="post" action="jsdoc.php">
 	<input type="text" name="jsdir" size="45" value="{rval searchkey}"><br>
-	<input type="submit" name ="submit" value="����">
+	<input type="submit" name ="submit" value="検索">
 </form>
 </div>
 
-<!--�ե������̥�˥塼-->
+<!--ファイル別メニュー-->
 	<!--{each jsfiles}--> 
 	{rval jsfiles}
 	<!--{/each}--> 
-<!--�ե������̥�˥塼�����ޤ�-->
+<!--ファイル別メニューここまで-->
 
 </div>
-<!--��˥彪���-->
+<!--メニュ終わり-->
 
-<!--��ʸ -->
+<!--本文 -->
 <div class="main">
 
-<!--�ȥåפ�����ʸ-->
+<!--トップの説明文-->
 <div id="maintop" style="display:block">
 <pre>
-��Javascript�ե�����κ������η�ޤꤴ��
-���ƥե��������Ƭ�˥ե�����γ��פ򵭽ҡʲ������㣱�򻲾ȡ�
-���ƴؿ��ο���˴ؿ��γ��פ򵭽ҡʲ������㣲�򻲾ȡ�
-	1.���ס��ؿ��ΰ����������ϡ�ɬ������
-	2.�ե�����κ����Ԥȡ��ؿ��κ����Ԥ��㤦���ˤϡ������Ԥε���
-	3.�����԰ʳ��οͤ������������ˤϡ������Ԥ򵭽�
-���ƴؿ���HELPʸ����Ƭ�ϡ���//@�פ򵭽�
-������򵭽Ҥ��Ƥʤ��ȴؿ��ؤ����򤬤Ǥ��ޤ���
-����function�פ�ɬ���Ԥ���Ƭ�˵���
+■Javascriptファイルの作成時の決まりごと
+・各ファイルの先頭にファイルの概要を記述（下記の例１を参照）
+・各関数の真上に関数の概要を記述（下記の例２を参照）
+	1.概要、関数の引数の説明は、必ず記述
+	2.ファイルの作成者と、関数の作成者が違う場合には、作成者の記述
+	3.作成者以外の人が修正した場合には、更新者を記述
+・各関数のHELP文の先頭は、「//@」を記述
+　これを記述してないと関数への選択ができません
+・「function」の必ず行の先頭に記述
 
 
-�㣱 : �ƥե��������Ƭ�˵��Ҥ���ե�����γ���
+例１ : 各ファイルの先頭に記述するファイルの概要
 //: ----------------------------------------------------------------------------
-//: �ե����복��: ���̴ؿ�
-//: ����        : 
-//: ������      : YYYY/MM/MM
-//: ������      : ** **
-//: ��������    : 
+//: ファイル概要: 共通関数
+//: 備考        : 
+//: 作成日      : YYYY/MM/MM
+//: 作成者      : ** **
+//: 修正履歴    : 
 //: ----------------------------------------------------------------------------
 
 
-�㣲 : �ƴؿ��ο���˵��Ҥ���ؿ��γ���
+例２ : 各関数の真上に記述する関数の概要
 //@*****************************************************************************
-// ����   : 
-// ����   : ����̾, ����
-// ����� : 
-// ������ : 
-// ������ : 
-// ����   : 
+// 概要   : 
+// 引数   : 引数名, 説明
+// 戻り値 : 
+// 作成者 : 
+// 更新者 : 
+// 備考   : 
 //******************************************************************************
 
 
 </pre>
 </div>
-<!--�ȥåפ�����ʸ�����ޤ�-->
+<!--トップの説明文ここまで-->
 
-<!--�ƥե����뤴�ȤΥ֥��å�-->
+<!--各ファイルごとのブロック-->
 <!--{each main}--> 
 	{rval main}
 <!--{/each}--> 
-<!--�ƥե����뤴�ȤΥ֥��å������ޤ�-->
+<!--各ファイルごとのブロックここまで-->
 
 </div>
-<!--��ʸ����� -->
+<!--本文終わり -->
 
 </body>
 </html>

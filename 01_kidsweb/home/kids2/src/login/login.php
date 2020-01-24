@@ -1,8 +1,8 @@
 <?php
 /** 
-*	¥í¥°¥¤¥óÉ½¼¨¡¡¥í¥°¥¤¥ó½èÍı
+*	ãƒ­ã‚°ã‚¤ãƒ³è¡¨ç¤ºã€€ãƒ­ã‚°ã‚¤ãƒ³å‡¦ç†
 *
-*	¥í¥°¥¤¥ó²èÌÌ¤ÎÉ½¼¨½èÍı
+*	ãƒ­ã‚°ã‚¤ãƒ³ç”»é¢ã®è¡¨ç¤ºå‡¦ç†
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -11,43 +11,43 @@
 *	@access    public
 *	@version   1.00
 *
-*	½èÍı³µÍ×
-*	¥í¥°¥¤¥ó²èÌÌ¤«¤é¤Î¥æ¡¼¥¶¡¼¾ğÊó¤è¤ê¥í¥°¥¤¥ó½èÍı¤ò¹Ô¤¦
+*	å‡¦ç†æ¦‚è¦
+*	ãƒ­ã‚°ã‚¤ãƒ³ç”»é¢ã‹ã‚‰ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±ã‚ˆã‚Šãƒ­ã‚°ã‚¤ãƒ³å‡¦ç†ã‚’è¡Œã†
 *
-*	¹¹¿·ÍúÎò
-*	2004.02.26	¥ê¥Õ¥¡¥é¡¼¤òÈ½ÃÇ¤·TOP¥Ú¡¼¥¸°Ê³°¤«¤é¤Î¥¢¥É¥ì¥¹¤òÄ¾»ØÄê¤ò¶Ø»ß¤¹¤ë
+*	æ›´æ–°å±¥æ­´
+*	2004.02.26	ãƒªãƒ•ã‚¡ãƒ©ãƒ¼ã‚’åˆ¤æ–­ã—TOPãƒšãƒ¼ã‚¸ä»¥å¤–ã‹ã‚‰ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ç›´æŒ‡å®šã‚’ç¦æ­¢ã™ã‚‹
 *
 */
 
-// ¥í¥°¥¤¥ó½èÍı
+// ãƒ­ã‚°ã‚¤ãƒ³å‡¦ç†
 
-// ÀßÄê¤ÎÆÉ¤ß¹ş¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require ( LIB_FILE );
 
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¤Î¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 $aryData = $_POST;
 
 if ( isset($aryData["strUserID"]) && isset($aryData["strPassword"]) )
 {
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strUserID"]      = "null:ascii(0,20)";
 	$aryCheck["strPassword"] 	= "null:ascii(0,20)";
 
-	// ÊÑ¿ôÌ¾¤È¤Ê¤ë¥­¡¼¤ò¼èÆÀ
+	// å¤‰æ•°åã¨ãªã‚‹ã‚­ãƒ¼ã‚’å–å¾—
 	$aryKey = array_keys( $aryCheck );
 	$flag = TRUE;
-	// ¥­¡¼¤Î¿ô¤À¤±¥Á¥§¥Ã¥¯
+	// ã‚­ãƒ¼ã®æ•°ã ã‘ãƒã‚§ãƒƒã‚¯
 	foreach ( $aryKey as $strKey )
 	{
-		// $aryData[$strKey]  : ¥Á¥§¥Ã¥¯ÂĞ¾İ¥Ç¡¼¥¿
-		// $aryCheck[$strKey] : ¥Á¥§¥Ã¥¯ÆâÍÆ(¿ôÃÍ¡¢±Ñ¿ô»ú¡¢¥¢¥¹¥­¡¼Åù)
+		// $aryData[$strKey]  : ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒ‡ãƒ¼ã‚¿
+		// $aryCheck[$strKey] : ãƒã‚§ãƒƒã‚¯å†…å®¹(æ•°å€¤ã€è‹±æ•°å­—ã€ã‚¢ã‚¹ã‚­ãƒ¼ç­‰)
 		$strResult = fncCheckString( $aryData[$strKey], $aryCheck[$strKey] );
 		if ( $strResult ) {
 			list ( $lngErrorNo, $strErrorMessage ) = explode ( ":", $strResult );
@@ -58,22 +58,22 @@ if ( isset($aryData["strUserID"]) && isset($aryData["strPassword"]) )
 
 	if ( $flag == FALSE )
 	{
-		fncOutputError ( 9052, DEF_ERROR, "¥í¥°¥¤¥ó¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_ERROR, "ãƒ­ã‚°ã‚¤ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 		exit;
 	}
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	if ( !$objAuth->isLogin( $aryData["strSessionID"], $objDB ) )
 	{
-		// Ç§¾Ú½èÍı
+		// èªè¨¼å‡¦ç†
 		if ( !$objAuth->login( $aryData["strUserID"], $aryData["strPassword"], $objDB ) )
 		{
-			fncOutputError( 9052, DEF_ERROR, "¥í¥°¥¤¥ó¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+			fncOutputError( 9052, DEF_ERROR, "ãƒ­ã‚°ã‚¤ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 			exit;
 		}
 	}
 
-	// HTML½ĞÎÏ¡Ê¥·¥¹¥Æ¥à¥á¥Ë¥å¡¼²èÌÌ¡Ë
+	// HTMLå‡ºåŠ›ï¼ˆã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ï¼‰
 	header ( "Location:  ../menu/menu.php?strSessionID=" . $objAuth->SessionID );
 
 }
@@ -82,12 +82,12 @@ else
 // 2004.02.26 suzukaze update start
 	if ( $_GET["value"] == "kids" )
 	{
-		// HTML½ĞÎÏ¡Ê¥í¥°¥¤¥ó²èÌÌ¡Ë
+		// HTMLå‡ºåŠ›ï¼ˆãƒ­ã‚°ã‚¤ãƒ³ç”»é¢ï¼‰
 		require ( TMP_ROOT . 'login/index.html' );
 	}
 	else
 	{
-		// HTML½ĞÎÏ¡ÊTOP¡Ë
+		// HTMLå‡ºåŠ›ï¼ˆTOPï¼‰
 		require ( SRC_ROOT . "index.html" );
 	}
 // 2004.02.26 suzukaze update end

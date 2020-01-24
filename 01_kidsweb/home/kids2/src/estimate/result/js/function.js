@@ -34,11 +34,11 @@ $(function () {
 	// 		dataType: "json",
 	// 		async: false,
 	// 		data: form.serialize(),
-	// 		timeout: 10000,  // Ã±°Ì¤Ï¥ß¥êÉÃ
+	// 		timeout: 10000,  // å˜ä½ã¯ãƒŸãƒªç§’
 
-	// 		// Á÷¿®Á°
+	// 		// é€ä¿¡å‰
 	// 		beforeSend: function(xhr, settings) {
-	// 			// ¥Ü¥¿¥ó¤òÌµ¸ú²½¤·¡¢Æó½ÅÁ÷¿®¤òËÉ»ß
+	// 			// ãƒœã‚¿ãƒ³ã‚’ç„¡åŠ¹åŒ–ã—ã€äºŒé‡é€ä¿¡ã‚’é˜²æ­¢
 	// 			$(this).attr('disabled', true);
 	// 		},
 
@@ -46,7 +46,7 @@ $(function () {
 
 
 	// 	}).fail(function (xhr,textStatus,errorThrown) {
-	// 		alert('DB¥¨¥é¡¼');
+	// 		alert('DBã‚¨ãƒ©ãƒ¼');
 
 	// 	}).always(function(jqXHR, textStatus) {
 	// 		$(this).attr('disabled', false);
@@ -66,7 +66,7 @@ $(function () {
 		});
 
 		if (value) {
-			// ¥Õ¥©¡¼¥à¤Ë½èÍı¥â¡¼¥É¤òÄÉ²Ã
+			// ãƒ•ã‚©ãƒ¼ãƒ ã«å‡¦ç†ãƒ¢ãƒ¼ãƒ‰ã‚’è¿½åŠ 
 			formData.append($("<input>", {
 				type: 'hidden',
 				name: 'revisionNo',
@@ -76,13 +76,13 @@ $(function () {
 
 		var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
 
-		// form¤ÎÄÉ²Ã
+		// formã®è¿½åŠ 
 		formData.appendTo($('body'));
 
-		// ¥µ¥Ö¥ß¥Ã¥È
+		// ã‚µãƒ–ãƒŸãƒƒãƒˆ
 		formData.submit();
 
-		// form¤Îºï½ü
+		// formã®å‰Šé™¤
 		formData.remove();
 
 	});
@@ -101,21 +101,21 @@ $(function () {
 			target: windowName
 		});
 
-		// ¸«ÀÑ¸¶²ÁÈÖ¹æ¤òÄÉ²Ã
+		// è¦‹ç©åŸä¾¡ç•ªå·ã‚’è¿½åŠ 
 		formData.append($("<input>", {
 			type: 'hidden',
 			name: 'strSessionID',
 			value: sessionID
 		}));
 
-		// ¸«ÀÑ¸¶²ÁÈÖ¹æ¤òÄÉ²Ã
+		// è¦‹ç©åŸä¾¡ç•ªå·ã‚’è¿½åŠ 
 		formData.append($("<input>", {
 			type: 'hidden',
 			name: 'estimateNo',
 			value: estimateNo
 		}));
 
-		// ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤òÄÉ²Ã
+		// ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã‚’è¿½åŠ 
 		formData.append($("<input>", {
 			type: 'hidden',
 			name: 'revisionNo',
@@ -124,13 +124,13 @@ $(function () {
 
 		var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
 
-		// form¤ÎÄÉ²Ã
+		// formã®è¿½åŠ 
 		formData.appendTo($('body'));
 
-		// ¥µ¥Ö¥ß¥Ã¥È
+		// ã‚µãƒ–ãƒŸãƒƒãƒˆ
 		formData.submit();
 
-		// form¤Îºï½ü
+		// formã®å‰Šé™¤
 		formData.remove();
 	});
 
@@ -149,7 +149,7 @@ $(function () {
 	});
 
 
-	// ÍúÎò¥Ü¥¿¥ó¤Î¥¤¥Ù¥ó¥È
+	// å±¥æ­´ãƒœã‚¿ãƒ³ã®ã‚¤ãƒ™ãƒ³ãƒˆ
 	$('img.history.button').on('click', function () {
 		var lngEstimateNo = $(this).attr('estimateNo');
 		var lngRevisionNo = $(this).attr('revisionNo');
@@ -159,7 +159,7 @@ $(function () {
 		if ($('tr[id^="' + lngEstimateNo + '_"]').length) {
 			$('tr[id^="' + lngEstimateNo + '_"]').remove();
 		} else {
-			// ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+			// ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
 			$.ajax({
 				url: '/estimate/result/searchHistoryPreview.php',
 				type: 'post',

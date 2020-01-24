@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ÁÛÄê¥ì¡¼¥È¥Ş¥¹¥¿ ¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë·ë²Ì°ìÍ÷²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† æƒ³å®šãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«çµæœä¸€è¦§ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.solcom.co.jp/ 
@@ -14,19 +14,19 @@
 // index.php -> lngmonetaryunitcode -> index.php
 // index.php -> now                 -> index.php
 //
-// ÅĞÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 //
-// ½¤Àµ²èÌÌ
+// ä¿®æ­£ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 // index.php -> lngmonetaryunitcode   -> edit.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
@@ -39,7 +39,7 @@ $objDB->open( "", "", "", "" );
 $aryData = $_POST;
 // $aryData = $_GET;
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]        = "null:numenglish(32,32)";
 $aryCheck["lngmonetaryunitcode"] = "number(0,2147483647)";
 $aryCheck["dtmapplystartdate"]   = "date(/)";
@@ -49,41 +49,41 @@ $aryCheck["dtmapplyenddate"]   = "date(/)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->strTableName = "m_TemporaryRate";
 
-// ¸¡º÷¥¯¥¨¥êÀ¸À®
+// æ¤œç´¢ã‚¯ã‚¨ãƒªç”Ÿæˆ
 $strQuery = "SELECT * FROM m_TemporaryRate";
 
-// ÄÌ²ßÃ±°Ì¥³¡¼¥É¾ò·ïÀ¸À®
+// é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰æ¡ä»¶ç”Ÿæˆ
 if ( $aryData["lngmonetaryunitcode"] )
 {
 	$aryWhereString[] = " lngmonetaryunitcode = " . $aryData["lngmonetaryunitcode"];
 }
 
-// Å¬ÍÑ³«»Ï·î¾ò·ïÀ¸À®
+// é©ç”¨é–‹å§‹æœˆæ¡ä»¶ç”Ÿæˆ
 if ( $aryData["dtmapplystartdate"] )
 {
 	$aryWhereString[] = " dtmapplystartdate >= " . $aryData["dtmapplystartdate"];
 }
 
-// Å¬ÍÑ½ªÎ»·î¾ò·ïÀ¸À®
+// é©ç”¨çµ‚äº†æœˆæ¡ä»¶ç”Ÿæˆ
 if ( $aryData["dtmapplyenddate"] )
 {
 	$aryWhereString[] = "dtmapplyenddate <= " . $aryData["dtmapplystartdate"];
 }
 
-// ¾ò·ïÊ¬¤òÀ¸À®¡¢¥¯¥¨¥ê¤ËÄÉ²Ã
+// æ¡ä»¶åˆ†ã‚’ç”Ÿæˆã€ã‚¯ã‚¨ãƒªã«è¿½åŠ 
 if ( $aryWhereString && count ( $aryWhereString ) )
 {
 	$strWhereString = join ( " AND", $aryWhereString );
@@ -92,43 +92,43 @@ if ( $aryWhereString && count ( $aryWhereString ) )
 
 $strQuery .= " ORDER BY lngmonetaryunitcode, dtmapplystartdate DESC";
 
-// ¥Ç¡¼¥¿¤Î¼èÆÀ¤È¥ª¥Ö¥¸¥§¥¯¥È¤Ø¤Î¥»¥Ã¥È
+// ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ã‚»ãƒƒãƒˆ
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-// ¥«¥é¥à´ØÏ¢¥Ç¡¼¥¿¤Î¼èÆÀ¤È¥»¥Ã¥È
+// ã‚«ãƒ©ãƒ é–¢é€£ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã¨ã‚»ãƒƒãƒˆ
 $lngColumnNum = $objDB->getFieldsCount ( $lngResultID );
 
 for ( $i = 0; $i < $lngColumnNum; $i++ )
 {
-	// ¥«¥é¥àÌ¾¤ÎÆÉ¤ß¹ş¤ß¤È¥»¥Ã¥È
+	// ã‚«ãƒ©ãƒ åã®èª­ã¿è¾¼ã¿ã¨ã‚»ãƒƒãƒˆ
 	$objMaster->aryColumnName[$i] = pg_field_name ( $lngResultID, $i);
 
-	// ·¿¤ÎÆÉ¤ß¹ş¤ß¤È¥»¥Ã¥È
+	// å‹ã®èª­ã¿è¾¼ã¿ã¨ã‚»ãƒƒãƒˆ
 	$objMaster->aryType[$i]       = pg_field_type ( $lngResultID, $i);
 }
 
 if ( $lngResultNum )
 {
-	// ¥Ç¡¼¥¿¤ÎÆÉ¤ß¹ş¤ß¤È¥»¥Ã¥È
+	// ãƒ‡ãƒ¼ã‚¿ã®èª­ã¿è¾¼ã¿ã¨ã‚»ãƒƒãƒˆ
 	$objMaster->aryData = pg_fetch_all ( $lngResultID );
 
 	///////////////////////////////////////////////////////////////////
-	// ¥Æ¡¼¥Ö¥ëÀ¸À®
+	// ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 	///////////////////////////////////////////////////////////////////
-	// ·ë²Ì¹ÔÉ½¼¨
+	// çµæœè¡Œè¡¨ç¤º
 	$count = 0;
 
-	// lngmonetaryunitcode ¤Î¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼(CODE+NAME)¼èÆÀ
+	// lngmonetaryunitcode ã®ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼(CODE+NAME)å–å¾—
 	$aryMonetaryUnitCode = fncGetMasterValue( "m_MonetaryUnit", "lngmonetaryunitcode", "strMonetaryUnitName || ':' || strMonetaryUnitSign", "Array", "", $objDB );
 
 	$dtmNowDate = date ( "Y-m-d" );
 
-	// ¥ì¥³¡¼¥ÉÉ½¼¨½èÍı
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰è¡¨ç¤ºå‡¦ç†
 	foreach ( $objMaster->aryData as $record )
 	{
 		$count++;
 
-		// ¸½ºß¤ÎÇ¯·îÆü¤¬´Ş¤Ş¤ì¤ë¥ì¥³¡¼¥É¤Î¾ì¹ç¡¢ÇØ·Ê¿§¤òÊÑ¤¨¤ÆÉ½¼¨
+		// ç¾åœ¨ã®å¹´æœˆæ—¥ãŒå«ã¾ã‚Œã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ã®å ´åˆã€èƒŒæ™¯è‰²ã‚’å¤‰ãˆã¦è¡¨ç¤º
 		if ( $record[$objMaster->aryColumnName[2]] <= $dtmNowDate && $record[$objMaster->aryColumnName[3]] >= $dtmNowDate )
 		{
 			$aryParts["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:#99CCff;\">\n";
@@ -137,30 +137,30 @@ if ( $lngResultNum )
 		{
 			$aryParts["strResultHtml"] .= "	<tr id=\"Mrecord$count\" class=\"Segs\" onclick=\"fncSelectTrColor( this );\" style=\"background:#ffffff;\">\n";
 		}
-		// ¥«¥é¥àÀ¸À®
+		// ã‚«ãƒ©ãƒ ç”Ÿæˆ
 		$aryParts["strResultHtml"] .= "		<th>$count</th>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $aryMonetaryUnitCode[$record["lngmonetaryunitcode"]] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["curconversionrate"] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["dtmapplystartdate"] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["dtmapplyenddate"] . "</td>\n";
 
-		// GET¤ÇÅÏ¤¹Ê¸»úÎóÀ¸À®
+		// GETã§æ¸¡ã™æ–‡å­—åˆ—ç”Ÿæˆ
 		$getUrl = "strSessionID=" .$aryData["strSessionID"]
 				. "&lngmonetaryunitcode=" . $record["lngmonetaryunitcode"]
 				. "&dtmapplystartdate=" . $record["dtmapplystartdate"];
 // echo $lngResultNum;
 // return;
 
-		// ²áµî¤Î¥ì¡¼¥È¤Î¾ì¹ç¡¢½¤Àµ¥Ü¥¿¥ó¤òÈóÉ½¼¨
+		// éå»ã®ãƒ¬ãƒ¼ãƒˆã®å ´åˆã€ä¿®æ­£ãƒœã‚¿ãƒ³ã‚’éè¡¨ç¤º
 		if ( $record[$objMaster->aryColumnName[3]] < $dtmNowDate )
 		{
-			// ½¤Àµ¥Ü¥¿¥óÈóÉ½¼¨
+			// ä¿®æ­£ãƒœã‚¿ãƒ³éè¡¨ç¤º
 			$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" nowrap></td>\n";
 		}
 
 		else
 		{
-			// ½¤Àµ¥Ü¥¿¥óÀ¸À®
+			// ä¿®æ­£ãƒœã‚¿ãƒ³ç”Ÿæˆ
 			// $aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/tr/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&$getUrl' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , $_COOKIE[lngLanguageCode] , 'fix' );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 			$aryParts["strResultHtml"] .= "		<td bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap><a href=\"/m/regist/tr/edit.php?lngActionCode=" . DEF_ACTION_UPDATE . "&" . $getUrl ."\" name=\"fix\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>\n";
 		}
@@ -171,10 +171,10 @@ if ( $lngResultNum )
 	}
 }
 
-// ·ë²Ì¤¬¤Ê¤«¤Ã¤¿¾ì¹ç¡¢·ë²ÌÌµ¤·¤ÎÉ½¼¨
+// çµæœãŒãªã‹ã£ãŸå ´åˆã€çµæœç„¡ã—ã®è¡¨ç¤º
 else
 {
-	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . 6 . ">·ë²ÌÌµ¤·¡£</th></tr>";
+	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . 6 . ">çµæœç„¡ã—ã€‚</th></tr>";
 }
 
 
@@ -191,7 +191,7 @@ $aryParts["dtmapplyenddate"]  = $aryData["dtmapplyenddate"];
 $aryParts["strTableName"]   = $objMaster->strTableName;
 $aryParts["strEditURL"]     = "/m/regist/tr/edit.php?lngActionCode=" . DEF_ACTION_INSERT . "&strSessionID=" . $aryData["strSessionID"];
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/result/tr/parts.tmpl" );
 $objTemplate->replace( $aryParts );

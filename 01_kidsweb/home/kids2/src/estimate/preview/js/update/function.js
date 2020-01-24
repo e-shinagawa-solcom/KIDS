@@ -33,7 +33,7 @@ function fncCloseButton( strMode , obj )
 	}
 }
 
-//  ƒ§∏§Îgif
+// Èñâ„Åò„Çãgif
 var closeJ1 = '/img/type01/estimate/regist/close/close_off_ja_bt.gif';
 var closeJ2 = '/img/type01/estimate/regist/close/close_off_on_ja_bt.gif';
 var closeJ3 = '/img/type01/estimate/regist/close/close_on_ja_bt.gif';

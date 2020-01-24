@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       È¯Ãí´ÉÍı  ¸¡º÷·ë²Ì¡¦¾ÜºÙ¡¦ºï½ü¡¦Ìµ¸ú²½ÍÑ¥«¥é¥à
+*       ç™ºæ³¨ç®¡ç†  æ¤œç´¢çµæœãƒ»è©³ç´°ãƒ»å‰Šé™¤ãƒ»ç„¡åŠ¹åŒ–ç”¨ã‚«ãƒ©ãƒ 
 *
 *
 *       @package    K.I.D.S.
@@ -13,69 +13,69 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦¸¡º÷·ë²Ì¡¦¾ÜºÙ¡¦ºï½ü¡¦Ìµ¸ú²½ÍÑ¥«¥é¥àÄêµÁ
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»æ¤œç´¢çµæœãƒ»è©³ç´°ãƒ»å‰Šé™¤ãƒ»ç„¡åŠ¹åŒ–ç”¨ã‚«ãƒ©ãƒ å®šç¾©
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// ¸¡º÷ÍÑÉ½¼¨¥¿¥¤¥È¥ë
+// æ¤œç´¢ç”¨è¡¨ç¤ºã‚¿ã‚¤ãƒˆãƒ«
 
-// ÆüËÜ¸ì¥³¡¼¥É
-$arySearchTableTytle["btnPreview"]				= "¥×¥ì¥Ó¥å¡¼";
-$arySearchTableTytle["btnEdit"]					= "½¤Àµ";
-$arySearchTableTytle["btnRecord"]				= "ÍúÎò";
-$arySearchTableTytle["btnDelete"]				= "ºï½üºÑ";
-$arySearchTableTytle["dtmInsertDate"]			= "ÅĞÏ¿Æü";
-$arySearchTableTytle["lngInputUserCode"]		= "ÆşÎÏ¼Ô";
-$arySearchTableTytle["dtmExpirationDate"]		= "È¯ÃíÍ­¸ú´ü¸ÂÆü";
-$arySearchTableTytle["strOrderCode"]			= "È¯Ãí£Î£Ï.";
-$arySearchTableTytle["strProductCode"]			= "À½ÉÊ¥³¡¼¥É";
-$arySearchTableTytle["strProductName"]          = "À½ÉÊÌ¾";
-$arySearchTableTytle["strProductEnglishName"]   = "À½ÉÊÌ¾(±Ñ¸ì)";
-$arySearchTableTytle["lngInChargeGroupCode"]	= "±Ä¶ÈÉô½ğ";
-$arySearchTableTytle["lngInChargeUserCode"]		= "³«È¯Ã´Åö¼Ô";
-$arySearchTableTytle["lngCustomerCode"]			= "»ÅÆşÀè";
-$arySearchTableTytle["lngDeliveryPlaceCode"]	= "Ç¼ÉÊ¾ì½ê";
-$arySearchTableTytle["lngMonetaryUnitCode"]		= "ÄÌ²ß";
-$arySearchTableTytle["lngMonetaryRateCode"]		= "ÄÌ²ß¥ì¡¼¥È";
-$arySearchTableTytle["lngPayConditionCode"]		= "»ÙÊ§¾ò·ï";
-$arySearchTableTytle["curTotalPrice"]			= "ÀÇÈ´¶â³Û";
-$arySearchTableTytle["strNote"]					= "È÷¹Í";
-$arySearchTableTytle["lngPrintCount"]			= "°õºş²ó¿ô";
+// æ—¥æœ¬èªã‚³ãƒ¼ãƒ‰
+$arySearchTableTytle["btnPreview"]				= "ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼";
+$arySearchTableTytle["btnEdit"]					= "ä¿®æ­£";
+$arySearchTableTytle["btnRecord"]				= "å±¥æ­´";
+$arySearchTableTytle["btnDelete"]				= "å‰Šé™¤æ¸ˆ";
+$arySearchTableTytle["dtmInsertDate"]			= "ç™»éŒ²æ—¥";
+$arySearchTableTytle["lngInputUserCode"]		= "å…¥åŠ›è€…";
+$arySearchTableTytle["dtmExpirationDate"]		= "ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥";
+$arySearchTableTytle["strOrderCode"]			= "ç™ºæ³¨ï¼®ï¼¯.";
+$arySearchTableTytle["strProductCode"]			= "è£½å“ã‚³ãƒ¼ãƒ‰";
+$arySearchTableTytle["strProductName"]          = "è£½å“å";
+$arySearchTableTytle["strProductEnglishName"]   = "è£½å“å(è‹±èª)";
+$arySearchTableTytle["lngInChargeGroupCode"]	= "å–¶æ¥­éƒ¨ç½²";
+$arySearchTableTytle["lngInChargeUserCode"]		= "é–‹ç™ºæ‹…å½“è€…";
+$arySearchTableTytle["lngCustomerCode"]			= "ä»•å…¥å…ˆ";
+$arySearchTableTytle["lngDeliveryPlaceCode"]	= "ç´å“å ´æ‰€";
+$arySearchTableTytle["lngMonetaryUnitCode"]		= "é€šè²¨";
+$arySearchTableTytle["lngMonetaryRateCode"]		= "é€šè²¨ãƒ¬ãƒ¼ãƒˆ";
+$arySearchTableTytle["lngPayConditionCode"]		= "æ”¯æ‰•æ¡ä»¶";
+$arySearchTableTytle["curTotalPrice"]			= "ç¨æŠœé‡‘é¡";
+$arySearchTableTytle["strNote"]					= "å‚™è€ƒ";
+$arySearchTableTytle["lngPrintCount"]			= "å°åˆ·å›æ•°";
 
-// $arySearchTableTytle["Resale"]					= "ºÆÈÎ";
-// $arySearchTableTytle["dtmOrderAppDate"]			= "·×¾åÆü";
-// $arySearchTableTytle["lngDeliveryPlaceCode"]	= "Ç¼ÉÊ¾ì½ê";
-// $arySearchTableTytle["lngMonetaryRateCode"]		= "¥ì¡¼¥È¥¿¥¤¥×";
-// $arySearchTableTytle["curConversionRate"]		= "´¹»»¥ì¡¼¥È";
-// $arySearchTableTytle["lngOrderStatusCode"]		= "¾õÂÖ";
-// $arySearchTableTytle["lngWorkflowStatusCode"]	= "¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ";
-// $arySearchTableTytle["lngRecordNo"]				= "ÌÀºÙ¹ÔÈÖ¹æ";
-// $arySearchTableTytle["strProductName"]			= "À½ÉÊÌ¾";
-// $arySearchTableTytle["strProductEnglishName"]	= "À½ÉÊÌ¾¾Î¡Ê±Ñ¸ì¡Ë";
-// $arySearchTableTytle["lngStockSubjectCode"]		= "»ÅÆş²ÊÌÜ";
-// $arySearchTableTytle["lngStockItemCode"]		= "»ÅÆşÉôÉÊ";
-// $arySearchTableTytle["strMoldNo"]				= "£Î£ï¡¥";
-// $arySearchTableTytle["strGoodsCode"]			= "¸ÜµÒÉÊÈÖ";
-// $arySearchTableTytle["lngDeliveryMethodCode"]	= "±¿ÈÂÊıË¡";
-// $arySearchTableTytle["dtmDeliveryDate"]			= "Ç¼´ü";
-// $arySearchTableTytle["curProductPrice"]			= "Ã±²Á";
-// $arySearchTableTytle["lngProductUnitCode"]		= "Ã±°Ì";
-// $arySearchTableTytle["lngProductQuantity"]		= "¿ôÎÌ";
-// $arySearchTableTytle["curSubTotalPrice"]		= "ÀÇÈ´¶â³Û";
-// $arySearchTableTytle["strDetailNote"]			= "ÌÀºÙÈ÷¹Í";
-// // $arySearchTableTytle["btnDelete"]				= "ºï½ü";
-// $arySearchTableTytle["btnDelete"]				= "³ÎÄê¼è¾Ã";
-// $arySearchTableTytle["btnInvalid"]				= "Ìµ¸ú";
-// $arySearchTableTytle["lngRevisionNo"]			= "¥ê¥Ó¥¸¥ç¥óÈÖ¹æ";
-// $arySearchTableTytle["lngWorkFlowStatusCode"]	= "¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ";
+// $arySearchTableTytle["Resale"]					= "å†è²©";
+// $arySearchTableTytle["dtmOrderAppDate"]			= "è¨ˆä¸Šæ—¥";
+// $arySearchTableTytle["lngDeliveryPlaceCode"]	= "ç´å“å ´æ‰€";
+// $arySearchTableTytle["lngMonetaryRateCode"]		= "ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—";
+// $arySearchTableTytle["curConversionRate"]		= "æ›ç®—ãƒ¬ãƒ¼ãƒˆ";
+// $arySearchTableTytle["lngOrderStatusCode"]		= "çŠ¶æ…‹";
+// $arySearchTableTytle["lngWorkflowStatusCode"]	= "ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹";
+// $arySearchTableTytle["lngRecordNo"]				= "æ˜ç´°è¡Œç•ªå·";
+// $arySearchTableTytle["strProductName"]			= "è£½å“å";
+// $arySearchTableTytle["strProductEnglishName"]	= "è£½å“åç§°ï¼ˆè‹±èªï¼‰";
+// $arySearchTableTytle["lngStockSubjectCode"]		= "ä»•å…¥ç§‘ç›®";
+// $arySearchTableTytle["lngStockItemCode"]		= "ä»•å…¥éƒ¨å“";
+// $arySearchTableTytle["strMoldNo"]				= "ï¼®ï½ï¼";
+// $arySearchTableTytle["strGoodsCode"]			= "é¡§å®¢å“ç•ª";
+// $arySearchTableTytle["lngDeliveryMethodCode"]	= "é‹æ¬æ–¹æ³•";
+// $arySearchTableTytle["dtmDeliveryDate"]			= "ç´æœŸ";
+// $arySearchTableTytle["curProductPrice"]			= "å˜ä¾¡";
+// $arySearchTableTytle["lngProductUnitCode"]		= "å˜ä½";
+// $arySearchTableTytle["lngProductQuantity"]		= "æ•°é‡";
+// $arySearchTableTytle["curSubTotalPrice"]		= "ç¨æŠœé‡‘é¡";
+// $arySearchTableTytle["strDetailNote"]			= "æ˜ç´°å‚™è€ƒ";
+// // $arySearchTableTytle["btnDelete"]				= "å‰Šé™¤";
+// $arySearchTableTytle["btnDelete"]				= "ç¢ºå®šå–æ¶ˆ";
+// $arySearchTableTytle["btnInvalid"]				= "ç„¡åŠ¹";
+// $arySearchTableTytle["lngRevisionNo"]			= "ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·";
+// $arySearchTableTytle["lngWorkFlowStatusCode"]	= "ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹";
 
-// ±Ñ¸ì¥³¡¼¥É
+// è‹±èªã‚³ãƒ¼ãƒ‰
 $arySearchTableTytleEng["btnDetail"]				= "Detail";
 $arySearchTableTytleEng["dtmInsertDate"]			= "Regist date";
 $arySearchTableTytleEng["dtmOrderAppDate"]			= "Date";
@@ -117,50 +117,50 @@ $arySearchTableTytleEng["lngRevisionNo"]			= "Revision No.";
 $arySearchTableTytleEng["lngWorkFlowStatusCode"]	= "Work flow status";
 
 
-// ÆüËÜ¸ì¥³¡¼¥É
-$aryTableTytle["btnDetail"]				= "¾ÜºÙ";
-$aryTableTytle["dtmInsertDate"]			= "ÅĞÏ¿Æü";
-$aryTableTytle["dtmOrderAppDate"]		= "·×¾åÆü";
-$aryTableTytle["strOrderCode"]			= "È¯Ãí£Î£Ï.";
-$aryTableTytle["lngInputUserCode"]		= "ÆşÎÏ¼Ô";
-$aryTableTytle["lngCustomerCode"]		= "»ÅÆşÀè";
-$aryTableTytle["lngInChargeGroupCode"]	= "ÉôÌç";
-$aryTableTytle["lngInChargeUserCode"]	= "Ã´Åö¼Ô";
-$aryTableTytle["lngDeliveryPlaceCode"]	= "Ç¼ÉÊ¾ì½ê";
-$aryTableTytle["lngMonetaryUnitCode"]	= "ÄÌ²ß";
-$aryTableTytle["lngMonetaryRateCode"]	= "ÄÌ²ß¥ì¡¼¥È";
-$aryTableTytle["curConversionRate"]		= "´¹»»¥ì¡¼¥È";
-$aryTableTytle["lngOrderStatusCode"]	= "¾õÂÖ";
-$aryTableTytle["lngWorkFlowStatusCode"]	= "¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ";
-$aryTableTytle["lngPayConditionCode"]	= "»ÙÊ§¾ò·ï";
-$aryTableTytle["dtmExpirationDate"]		= "È¯ÃíÍ­¸ú´ü¸ÂÆü";
-$aryTableTytle["strNote"]				= "È÷¹Í";
-$aryTableTytle["curTotalPrice"]			= "¹ç·×¶â³Û";
-$aryTableTytle["lngRecordNo"]			= "ÌÀºÙ¹ÔÈÖ¹æ";
-$aryTableTytle["strProductCode"]		= "À½ÉÊ¥³¡¼¥É¡¦Ì¾¾Î";
-$aryTableTytle["lngStockSubjectCode"]	= "»ÅÆş²ÊÌÜ";
-$aryTableTytle["lngStockItemCode"]		= "»ÅÆşÉôÉÊ";
-$aryTableTytle["strMoldNo"]				= "£Î£ï¡¥";
-$aryTableTytle["strGoodsCode"]			= "¸ÜµÒÉÊÈÖ";
-$aryTableTytle["lngDeliveryMethodCode"]	= "±¿ÈÂÊıË¡";
-$aryTableTytle["dtmDeliveryDate"]		= "Ç¼´ü";
-$aryTableTytle["curProductPrice"]		= "Ã±²Á";
-$aryTableTytle["lngProductUnitCode"]	= "Ã±°Ì";
-$aryTableTytle["lngProductQuantity"]	= "¿ôÎÌ";
-$aryTableTytle["curSubTotalPrice"]		= "ÀÇÈ´¶â³Û";
-$aryTableTytle["strDetailNote"]			= "ÌÀºÙÈ÷¹Í";
-$aryTableTytle["btnFix"]				= "½¤Àµ";
-$aryTableTytle["btnEdit"]				= "½¤Àµ";
-$aryTableTytle["btnRecord"]				= "ÍúÎò";
-$aryTableTytle["btnDelete"]				= "ºï½ü";
-$aryTableTytle["btnInvalid"]			= "Ìµ¸ú";
-$aryTableTytle["lngRevisionNo"]			= "¥ê¥Ó¥¸¥ç¥óÈÖ¹æ";
-$aryTableTytle["lngWorkFlowStatusCode"]	= "¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ";
-$aryTableTytle["strDeliveryPlaceName"]  = "Ç¼ÉÊ¾ì½ê";
-$aryTableTytle["lngPrintCount"]         = "°õºş²ó¿ô";
+// æ—¥æœ¬èªã‚³ãƒ¼ãƒ‰
+$aryTableTytle["btnDetail"]				= "è©³ç´°";
+$aryTableTytle["dtmInsertDate"]			= "ç™»éŒ²æ—¥";
+$aryTableTytle["dtmOrderAppDate"]		= "è¨ˆä¸Šæ—¥";
+$aryTableTytle["strOrderCode"]			= "ç™ºæ³¨ï¼®ï¼¯.";
+$aryTableTytle["lngInputUserCode"]		= "å…¥åŠ›è€…";
+$aryTableTytle["lngCustomerCode"]		= "ä»•å…¥å…ˆ";
+$aryTableTytle["lngInChargeGroupCode"]	= "éƒ¨é–€";
+$aryTableTytle["lngInChargeUserCode"]	= "æ‹…å½“è€…";
+$aryTableTytle["lngDeliveryPlaceCode"]	= "ç´å“å ´æ‰€";
+$aryTableTytle["lngMonetaryUnitCode"]	= "é€šè²¨";
+$aryTableTytle["lngMonetaryRateCode"]	= "é€šè²¨ãƒ¬ãƒ¼ãƒˆ";
+$aryTableTytle["curConversionRate"]		= "æ›ç®—ãƒ¬ãƒ¼ãƒˆ";
+$aryTableTytle["lngOrderStatusCode"]	= "çŠ¶æ…‹";
+$aryTableTytle["lngWorkFlowStatusCode"]	= "ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹";
+$aryTableTytle["lngPayConditionCode"]	= "æ”¯æ‰•æ¡ä»¶";
+$aryTableTytle["dtmExpirationDate"]		= "ç™ºæ³¨æœ‰åŠ¹æœŸé™æ—¥";
+$aryTableTytle["strNote"]				= "å‚™è€ƒ";
+$aryTableTytle["curTotalPrice"]			= "åˆè¨ˆé‡‘é¡";
+$aryTableTytle["lngRecordNo"]			= "æ˜ç´°è¡Œç•ªå·";
+$aryTableTytle["strProductCode"]		= "è£½å“ã‚³ãƒ¼ãƒ‰ãƒ»åç§°";
+$aryTableTytle["lngStockSubjectCode"]	= "ä»•å…¥ç§‘ç›®";
+$aryTableTytle["lngStockItemCode"]		= "ä»•å…¥éƒ¨å“";
+$aryTableTytle["strMoldNo"]				= "ï¼®ï½ï¼";
+$aryTableTytle["strGoodsCode"]			= "é¡§å®¢å“ç•ª";
+$aryTableTytle["lngDeliveryMethodCode"]	= "é‹æ¬æ–¹æ³•";
+$aryTableTytle["dtmDeliveryDate"]		= "ç´æœŸ";
+$aryTableTytle["curProductPrice"]		= "å˜ä¾¡";
+$aryTableTytle["lngProductUnitCode"]	= "å˜ä½";
+$aryTableTytle["lngProductQuantity"]	= "æ•°é‡";
+$aryTableTytle["curSubTotalPrice"]		= "ç¨æŠœé‡‘é¡";
+$aryTableTytle["strDetailNote"]			= "æ˜ç´°å‚™è€ƒ";
+$aryTableTytle["btnFix"]				= "ä¿®æ­£";
+$aryTableTytle["btnEdit"]				= "ä¿®æ­£";
+$aryTableTytle["btnRecord"]				= "å±¥æ­´";
+$aryTableTytle["btnDelete"]				= "å‰Šé™¤";
+$aryTableTytle["btnInvalid"]			= "ç„¡åŠ¹";
+$aryTableTytle["lngRevisionNo"]			= "ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·";
+$aryTableTytle["lngWorkFlowStatusCode"]	= "ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹";
+$aryTableTytle["strDeliveryPlaceName"]  = "ç´å“å ´æ‰€";
+$aryTableTytle["lngPrintCount"]         = "å°åˆ·å›æ•°";
 
 
-// ±Ñ¸ì¥³¡¼¥É
+// è‹±èªã‚³ãƒ¼ãƒ‰
 $aryTableTytleEng["btnDetail"]				= "Detail";
 $aryTableTytleEng["dtmInsertDate"]			= "Regist date";
 $aryTableTytleEng["dtmOrderAppDate"]		= "Date";
@@ -199,7 +199,7 @@ $aryTableTytleEng["lngRevisionNo"]			= "Revision No.";
 $aryTableTytleEng["lngWorkFlowStatusCode"]	= "Work flow status";
 
 
-// ¾ÜºÙÉ½¼¨ÍÑ¡¡É½¼¨¥«¥é¥à
+// è©³ç´°è¡¨ç¤ºç”¨ã€€è¡¨ç¤ºã‚«ãƒ©ãƒ 
 
 $aryTableViewHead[] = "dtmInsertDate";
 $aryTableViewHead[] = "dtmOrderAppDate";
@@ -237,7 +237,7 @@ $aryTableViewDetail[] = "strDeliveryPlaceName";
 $aryTableViewDetail[] = "lngPrintCount";
 
 
-// ÀßÄê¥«¥é¥àÌ¾¤È¥Ş¥¹¥¿Æâ¥«¥é¥àÌ¾¼èÆÀÍÑ
+// è¨­å®šã‚«ãƒ©ãƒ åã¨ãƒã‚¹ã‚¿å†…ã‚«ãƒ©ãƒ åå–å¾—ç”¨
 
 $aryTableViewName["dtmInsertDate"] 			= "dtmInsertDate";
 $aryTableViewName["dtmOrderAppDate"] 		= "dtmAppropriationDate";

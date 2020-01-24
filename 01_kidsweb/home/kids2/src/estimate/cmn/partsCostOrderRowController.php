@@ -5,20 +5,20 @@ require_once (SRC_ROOT. "/estimate/cmn/estimateRowController.php");
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
 class partsCostOrderRowController extends estimateRowController {
-    protected static $customerCompanyCodeMaster; // ¸ÜµÒÀè¡¢»ÅÆşÀè¥Ş¥¹¥¿¡¼
-    protected static $divisionSubjectCodeMaster; // Çä¾åÊ¬Îà¡¢»ÅÆş²ÊÌÜ¥Ş¥¹¥¿¡¼(Çä¾å¶èÊ¬¡¢»ÅÆşÉôÉÊ·ë¹çºÑ¤ß¡Ë
+    protected static $customerCompanyCodeMaster; // é¡§å®¢å…ˆã€ä»•å…¥å…ˆãƒã‚¹ã‚¿ãƒ¼
+    protected static $divisionSubjectCodeMaster; // å£²ä¸Šåˆ†é¡ã€ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ãƒ¼(å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥éƒ¨å“çµåˆæ¸ˆã¿ï¼‰
 
-    protected static $headerNameList; // ÂĞ¾İ¥¨¥ê¥¢¤Î¥Ø¥Ã¥À¡¼¤Î¥»¥ëÌ¾¾Î
-    protected static $resultNameList; // ÂĞ¾İ¥¨¥ê¥¢¤Î·×»»·ë²Ì¤Î¥»¥ëÌ¾¾Î(ÌÀºÙºÇ½ª¹Ô¤Î¼¡¤Î¹Ô)
+    protected static $headerNameList; // å¯¾è±¡ã‚¨ãƒªã‚¢ã®ãƒ˜ãƒƒãƒ€ãƒ¼ã®ã‚»ãƒ«åç§°
+    protected static $resultNameList; // å¯¾è±¡ã‚¨ãƒªã‚¢ã®è¨ˆç®—çµæœã®ã‚»ãƒ«åç§°(æ˜ç´°æœ€çµ‚è¡Œã®æ¬¡ã®è¡Œ)
 
-    // ¼è¤ê¹ş¤ßÃÍ
-    public $columnNumberList; // Îó¤ÎÈÖ¹æ¥ê¥¹¥È
-    protected $columnDisplayNameList; // Îó¤ÎÉ½¼¨Ì¾¥ê¥¹¥È
+    // å–ã‚Šè¾¼ã¿å€¤
+    public $columnNumberList; // åˆ—ã®ç•ªå·ãƒªã‚¹ãƒˆ
+    protected $columnDisplayNameList; // åˆ—ã®è¡¨ç¤ºåãƒªã‚¹ãƒˆ
 
-    protected $stockClassCode; // »ÅÆş¶èÊ¬
+    protected $stockClassCode; // ä»•å…¥åŒºåˆ†
 
     public function __construct($objDB) {
-        $this->areaCode = DEF_AREA_PARTS_COST_ORDER; // ¥¨¥ê¥¢¥³¡¼¥É¤Î¥»¥Ã¥È
+        $this->areaCode = DEF_AREA_PARTS_COST_ORDER; // ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã®ã‚»ãƒƒãƒˆ
         $this->stockClassCode = workSheetConst::AREA_ATTRIBUTE_TO_STOCK_CLASS_CODE[$this->areaCode];
         parent::__construct($objDB);
     }
@@ -32,7 +32,7 @@ class partsCostOrderRowController extends estimateRowController {
         }
     }
 
-    // Çä¾åÊ¬Îà¤Î¥Ş¥¹¥¿¡¼¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // å£²ä¸Šåˆ†é¡ã®ãƒã‚¹ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     protected function setDivisionSubjectCodeMaster() {
         if (!static::$divisionSubjectCodeMaster) {
             $areaCode = $this->areaCode;
@@ -48,12 +48,12 @@ class partsCostOrderRowController extends estimateRowController {
         }
     }
 
-    // ºÆ·×»»Á°¤Î½şµÑÈñ¤ÈÃ±²Á¤òÈæ³Ó¤·¡¢ºÆ·×»»Á°¤ÎÃÍ¤È°ìÃ×¤·¤¿¾ì¹ç¤ÏºÆ·×»»¸å¤Î½şµÑÈñ¤òÂåÆş¤¹¤ë
+    // å†è¨ˆç®—å‰ã®å„Ÿå´è²»ã¨å˜ä¾¡ã‚’æ¯”è¼ƒã—ã€å†è¨ˆç®—å‰ã®å€¤ã¨ä¸€è‡´ã—ãŸå ´åˆã¯å†è¨ˆç®—å¾Œã®å„Ÿå´è²»ã‚’ä»£å…¥ã™ã‚‹
     public function substitutePQForPrice($compare, $substitute) {
-        // Ã±²Á¤ò¼èÆÀ
+        // å˜ä¾¡ã‚’å–å¾—
         $price = $this->price;
 
-        // Ã±²Á¤ÈºÆ·×»»Á°¤ÎÃÍ¤¬°ìÃ×¤·¤¿¾ì¹ç¤Î¤ßºÆ·×»»·ë²Ì¤òÂåÆş¤¹¤ë¡£
+        // å˜ä¾¡ã¨å†è¨ˆç®—å‰ã®å€¤ãŒä¸€è‡´ã—ãŸå ´åˆã®ã¿å†è¨ˆç®—çµæœã‚’ä»£å…¥ã™ã‚‹ã€‚
         if ($price === $compare) {
             $this->price = $substitute;
             return true;

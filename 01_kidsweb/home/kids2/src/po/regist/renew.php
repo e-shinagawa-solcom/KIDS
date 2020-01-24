@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       È¯Ãí´ÉÍý  ½¤Àµ²èÌÌ
+*       ç™ºæ³¨ç®¡ç†  ä¿®æ­£ç”»é¢
 *
 *
 *       @package    K.I.D.S.
@@ -13,19 +13,19 @@
 *       @version    2.00
 *
 *
-*       ½èÍý³µÍ×
-*         ¡¦½¤Àµ»þÅÐÏ¿²èÌÌ¤òÉ½¼¨
-*         ¡¦ÆþÎÏ¥¨¥é¡¼¥Á¥§¥Ã¥¯
-*         ¡¦ÅÐÏ¿¥Ü¥¿¥ó²¡²¼¸å¡¢ÅÐÏ¿³ÎÇ§²èÌÌ¤Ø
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ä¿®æ­£æ™‚ç™»éŒ²ç”»é¢ã‚’è¡¨ç¤º
+*         ãƒ»å…¥åŠ›ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
+*         ãƒ»ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹å¾Œã€ç™»éŒ²ç¢ºèªç”»é¢ã¸
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-	// ÆÉ¤ß¹þ¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
 	require(LIB_FILE);
 	require(SRC_ROOT."po/cmn/lib_po.php");
@@ -62,41 +62,41 @@
 	
 	$objDB->open("", "", "", "");
 	
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"] = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 	
 	$lngUserCode = $objAuth->UserCode;
 	
 	
-	// 500	È¯Ãí´ÉÍý
+	// 500	ç™ºæ³¨ç®¡ç†
 	if ( !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 	
 	
-	// 512 È¯Ãí´ÉÍý¡ÊÈ¯Ãí½ñ½¤Àµ¡Ë
+	// 512 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨æ›¸ä¿®æ­£ï¼‰
 	if( !fncCheckAuthority( DEF_FUNCTION_PO12, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
 	// check
 	if( $_POST["strMode"] == "check" || $_POST["strMode"] == "renew" )
 	{
 		$objDB->transactionBegin();
-		// È¯Ãí½ñ¥Þ¥¹¥¿¹¹¿·
+		// ç™ºæ³¨æ›¸ãƒžã‚¹ã‚¿æ›´æ–°
 		if(!fncUpdatePurchaseOrder($aryData, $objDB, $objAuth)) { return false; }
-		// È¯Ãí½ñÌÀºÙ¹¹¿·
+		// ç™ºæ³¨æ›¸æ˜Žç´°æ›´æ–°
 		if(!fncUpdatePurchaseOrderDetail($aryData, $objDB)) { return false; }
 
-		// ¹¹¿·¸å¤Î¥Ç¡¼¥¿¤òºÆÅÙÆÉ¤ß¹þ¤à
+		// æ›´æ–°å¾Œã®ãƒ‡ãƒ¼ã‚¿ã‚’å†åº¦èª­ã¿è¾¼ã‚€
 		$updatedPurchaseOrder = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"], $objDB);
 
 		$strHtml = fncCreatePurchaseOrderUpdateHtml($updatedPurchaseOrder, $aryData["strSessionID"]);
@@ -105,28 +105,28 @@
 		// $objDB->transactionRollback();
 		$objDB->transactionCommit();
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 
 		header("Content-type: text/plain; charset=EUC-JP");
 		$objTemplate->getTemplate( "po/finish/parts.tmpl" );
 		
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryData );
 
-		// HTML½ÐÎÏ
+		// HTMLå‡ºåŠ›
 		echo $objTemplate->strTemplate;
 
 		return true;
 		
 	}
 
-	// È¯Ãí½ñ
+	// ç™ºæ³¨æ›¸
 	$aryResult = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"], $objDB);
 
 	if(!$aryResult) { return false; }
 
-	// ¥Ø¥Ã¥À
+	// ãƒ˜ãƒƒãƒ€
 	$aryNewResult["strOrderCode"]             = $aryResult[0]["strordercode"];
 	$aryNewResult["lngRevisionNo"]            = sprintf("%02d", $aryResult[0]["lngrevisionno"]);
 	$aryNewResult["dtmExpirationDate"]        = $aryResult[0]["dtmexpirationdate"];
@@ -157,7 +157,7 @@
 		$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "where lngPayConditionCode=" . (int)$aryResult[0]["lngpayconditioncode"], $objDB);
 	}
 
-	// ÌÀºÙ
+	// æ˜Žç´°
 	$aryNewResult["strPurchaseOrderDetail"] = fncGetPurchaseOrderDetailHtml($aryResult, $objDB);
 
 	$objDB->close();
@@ -166,18 +166,18 @@
 	$aryNewResult["strSessionID"] = $aryData["strSessionID"];
 	$aryNewResult["RENEW"] = TRUE;
 
-	// ¥Ø¥ë¥×ÂÐ±þ
+	// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 	$aryNewResult["lngFunctionCode"] = DEF_FUNCTION_PO5;
 	
-				// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+				// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/po/regist/renew.html");
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace($aryNewResult);
 $objTemplate->complete();
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 	// echo fncGetReplacedHtml( "po/regist/renew.tmpl", $aryNewResult ,$objAuth );

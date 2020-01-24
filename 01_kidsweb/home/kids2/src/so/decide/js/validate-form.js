@@ -1,29 +1,29 @@
 
 (function () {
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var form = $('form');
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥¯¥é¥¹Ì¾
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚¯ãƒ©ã‚¹å
     var classNameErrorIcon = 'error-icon';
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥ê¥½¡¼¥¹URL
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãƒªã‚½ãƒ¼ã‚¹URL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(É¬¿Ü¹àÌÜ)
-    var msgRequired = "ÆşÎÏÉ¬¿Ü¹àÌÜ¤Ç¤¹¡£";
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(ÆüÉÕ)
-    var msgDateFormat = "yyyy/mm/dd·Á¼°¤«¤ÄÍ­¸ú¤ÊÆüÉÕ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£";
-    // ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È yyyy/mm/dd·Á¼°
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(å¿…é ˆé …ç›®)
+    var msgRequired = "å…¥åŠ›å¿…é ˆé …ç›®ã§ã™ã€‚";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(æ—¥ä»˜)
+    var msgDateFormat = "yyyy/mm/ddå½¢å¼ã‹ã¤æœ‰åŠ¹ãªæ—¥ä»˜ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚";
+    // æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ yyyy/mm/ddå½¢å¼
     var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/;
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¡Ê½ñ¼°¸í¤ê¡Ë
-    var msgSpecialFormat = "½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹¡£"
-    var msgLessThanToday = "Ì¤Íè¤ÎÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿¡£";
-    var msgLessThantToDate = "FROM¤ËTO¤è¤êÌ¤Íè¤ÎÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿¡£";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ï¼ˆæ›¸å¼èª¤ã‚Šï¼‰
+    var msgSpecialFormat = "æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™ã€‚"
+    var msgLessThanToday = "æœªæ¥ã®æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸã€‚";
+    var msgLessThantToDate = "FROMã«TOã‚ˆã‚Šæœªæ¥ã®æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸã€‚";
 
-    // validation¥­¥Ã¥¯
+    // validationã‚­ãƒƒã‚¯
     $('.hasDatepicker').on({
         'change': function () {
             $(this).blur();
         }
     });
-¡¡¡¡// À½ÉÊ¥³¡¼¥É¤Î½ñ¼°¥Á¥§¥Ã¥¯
+ã€€ã€€// è£½å“ã‚³ãƒ¼ãƒ‰ã®æ›¸å¼ãƒã‚§ãƒƒã‚¯
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
@@ -35,7 +35,7 @@
         msgSpecialFormat
     );
 
-    // ÆüÉÕ¤¬yyyy/mm/dd·Á¼°¤Ë¥Ş¥Ã¥Á¤·¤Æ¤¤¤ë¤«,Í­¸ú¤ÊÆüÉÕ¤«
+    // æ—¥ä»˜ãŒyyyy/mm/ddå½¢å¼ã«ãƒãƒƒãƒã—ã¦ã„ã‚‹ã‹,æœ‰åŠ¹ãªæ—¥ä»˜ã‹
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
@@ -61,17 +61,17 @@
                     var d = '01';
                     value = y + "/" + m + "/" + d;
                 }
-                // yyyy/mm/dd·Á¼°¤«
+                // yyyy/mm/ddå½¢å¼ã‹
                 if (!(regDate.test(value))) {
                     return false;
                 }
-                // ÆüÉÕÊ¸»úÎó¤Î»ú¶çÊ¬²ò
+                // æ—¥ä»˜æ–‡å­—åˆ—ã®å­—å¥åˆ†è§£
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ÆüÉÕ¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+                // æ—¥ä»˜ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
                 } else {
@@ -82,12 +82,12 @@
         msgDateFormat
     );
 
-    // FROM_XXXX¤¬TO_XXXX¤è¤ê¾®¤µ¤¤¤«(Æ±ÆüÉÔ²Ä)
+    // FROM_XXXXãŒTO_XXXXã‚ˆã‚Šå°ã•ã„ã‹(åŒæ—¥ä¸å¯)
     $.validator.addMethod(
         "isGreaterThanFromDate",
         function (value, element, params) {
             if (params[0]) {
-                // FROM_XXXX¤¬ÆşÎÏ¤µ¤ì¤¿¾ì¹ç¡¢
+                // FROM_XXXXãŒå…¥åŠ›ã•ã‚ŒãŸå ´åˆã€
                 if ($(params[1]).val() != "") {
                     var regResult = regDate.exec($(params[1]).val());
                     var yyyy = regResult[1];
@@ -99,23 +99,23 @@
                     mm = regResult[2];
                     dd = regResult[3];
                     var di = new Date(yyyy, mm, dd);
-                    // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                    // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                     if (fromDate.getFullYear() > di.getFullYear()) {
                         return false;
-                        // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                        // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                     } else if (fromDate.getFullYear() < di.getFullYear()) {
                         return true;
-                        // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤ÈÆ±¤¸¾ì¹ç
+                        // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã¨åŒã˜å ´åˆ
                     } else if (fromDate.getFullYear() == di.getFullYear()) {
-                        // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                        // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                         if (fromDate.getMonth() > di.getMonth()) {
                             return false;
-                            // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                            // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                         } else if (fromDate.getMonth() < di.getMonth()) {
                             return true;
-                            // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤ÈÆ±¤¸¾ì¹ç
+                            // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã¨åŒã˜å ´åˆ
                         } else if (fromDate.getMonth() == di.getMonth()) {
-                            // ÆşÎÏ¤·¤¿Æü¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                            // å…¥åŠ›ã—ãŸæ—¥ãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                             if (fromDate.getDate() > di.getDate()) {
                                 return false;
                             } else {
@@ -131,23 +131,23 @@
     );
 
 
-    // ¸¡¾ÚÀßÄê
+    // æ¤œè¨¼è¨­å®š
     form.validate({
         // -----------------------------------------------
-        // ¥¨¥é¡¼É½¼¨½èÍı
+        // ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºå‡¦ç†
         // -----------------------------------------------
         errorPlacement: function (error, element) {
             invalidImg = $('<img>')
                 .attr('class', classNameErrorIcon)
                 .attr('src', urlErrorIcon)
-                // CSSÀßÄê(É½¼¨°ÌÃÖ)
+                // CSSè¨­å®š(è¡¨ç¤ºä½ç½®)
                 .css({
                     position: 'relative',
                     top: -1,
                     left: -2,
                     opacity: 'inherit'
                 })
-                // ¥Ä¡¼¥ë¥Á¥Ã¥×É½¼¨
+                // ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—è¡¨ç¤º
                 .tooltipster({
                     trigger: 'hover',
                     onlyone: false,
@@ -155,42 +155,42 @@
                     content: error.text()
                 });
 
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã—ãªã„å ´åˆ
             if ($(element).prev('img.' + classNameErrorIcon).length <= 0) {
-                // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤òÉ½¼¨
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤º
                 $(element).before(invalidImg);
             }
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤¹¤ë¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
             else {
-                // ´ûÂ¸¤Î¥¨¥é¡¼¥¢¥¤¥³¥ó¤Î¥Ä¡¼¥ë¥Á¥Ã¥×¥Æ¥­¥¹¥È¤ò¹¹¿·
+                // æ—¢å­˜ã®ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°
                 $(element).prev('img.' + classNameErrorIcon)
                     .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
-        // ¸¡¾ÚOK»ş¤Î½èÍı
+        // æ¤œè¨¼OKæ™‚ã®å‡¦ç†
         // -----------------------------------------------
         unhighlight: function (element) {
-            // ¥¨¥é¡¼¥¢¥¤¥³¥óºï½ü
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³å‰Šé™¤
             $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
-        // ¸¡¾Ú¥ë¡¼¥ë
+        // æ¤œè¨¼ãƒ«ãƒ¼ãƒ«
         // -----------------------------------------------
         rules: {
-            // ¼õÃíNo.            
+            // å—æ³¨No.            
             strReceiveCode: {
                 checkStrReceiveCode: true
             },
-            // À½ÉÊ¥³¡¼¥É            
+            // è£½å“ã‚³ãƒ¼ãƒ‰            
             strProductCode: {
                 checkStrProductCode: true
             },
-            // Ç¼´ü
+            // ç´æœŸ
             From_dtmDeliveryDate: {
                 checkDateFormat: true
             },
-            // Ç¼´ü
+            // ç´æœŸ
             To_dtmDeliveryDate: {
                 checkDateFormat: true,
                 isGreaterThanFromDate: function () {

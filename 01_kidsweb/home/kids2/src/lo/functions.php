@@ -1,14 +1,14 @@
 <?
 // 
-// ³µÍ×¡§¥Ç¡¼¥¿¥Ù¡¼¥¹¤ÎÃÍ¤ò´ğ¤Ë³Æ»ØÄêÍ×ÁÇ¤òÀ¸À®¤¹¤ë¡£SELECT¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®¡£
-// °ú¿ô¡§
-//		$objDB		¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È
-//		$strMark	_%...%_ ¤ÎÃÖ¤­´¹¤¨Í×ÁÇ
-//		$strSelectedKey	½é´üÁªÂò¾õÂÖ¤È¤¹¤ëValueÃÍ
+// æ¦‚è¦ï¼šãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®å€¤ã‚’åŸºã«å„æŒ‡å®šè¦ç´ ã‚’ç”Ÿæˆã™ã‚‹ã€‚SELECTã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã€‚
+// å¼•æ•°ï¼š
+//		$objDB		ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+//		$strMark	_%...%_ ã®ç½®ãæ›ãˆè¦ç´ 
+//		$strSelectedKey	åˆæœŸé¸æŠçŠ¶æ…‹ã¨ã™ã‚‹Valueå€¤
 // 
 function fncGetElements($objDB, $strMark, $strSelectedKey="")
 {
-	// <select name="????"> ¤ò·èÄê¤¹¤ë
+	// <select name="????"> ã‚’æ±ºå®šã™ã‚‹
 	$strSelectName = "";
 	
 	switch($strMark)
@@ -58,7 +58,7 @@ function fncGetElements($objDB, $strMark, $strSelectedKey="")
 			unset($arySelect);
 			$arySelect[] = "\n";
 			$arySelect[] = '<select name="'.$strSelectName.'">';
-			$arySelect[] = '<option value="0">ÁªÂò...</option>';
+			$arySelect[] = '<option value="0">é¸æŠ...</option>';
 			for( $iCnt = 0; $iCnt < count($aryQyeryData); $iCnt++ )
 			{
 				$strBuff = '<option value="' . $aryQyeryData[$iCnt][strtolower("lngGroupCode")] . '"_%selected%_>' . $aryQyeryData[$iCnt][strtolower("strGroupDisplayCode")] . " " . $aryQyeryData[$iCnt][strtolower("strGroupDisplayName")] . '</option>';
@@ -91,7 +91,7 @@ function fncGetElements($objDB, $strMark, $strSelectedKey="")
 			unset($arySelect);
 			$arySelect[] = "\n";
 			$arySelect[] = '<select name="'.$strSelectName.'">';
-			$arySelect[] = '<option value="0">ÁªÂò...¡ãÁ´¤Æ¡ä</option>';
+			$arySelect[] = '<option value="0">é¸æŠ...ï¼œå…¨ã¦ï¼</option>';
 			for( $iCnt = 0; $iCnt < count($aryQyeryData); $iCnt++ )
 			{
 				$strBuff = '<option value="' . $aryQyeryData[$iCnt][strtolower("lngUserCode")] . '"_%selected%_>' . $aryQyeryData[$iCnt][strtolower("strUserDisplayCode")] . " " . $aryQyeryData[$iCnt][strtolower("strUserDisplayName")] . '</option>';
@@ -114,16 +114,16 @@ function fncGetElements($objDB, $strMark, $strSelectedKey="")
 			unset($arySelect);
 			$arySelect[] = "\n";
 			$arySelect[] = '<select name="'.$strSelectName.'">';
-			$arySelect[] = '<option value="">ÁªÂò...</option>';
+			$arySelect[] = '<option value="">é¸æŠ...</option>';
 			for( $iCntY = 2004; $iCntY < 2010; $iCntY++ )
 			{
 				for( $iCntM = 1; $iCntM <= 12; $iCntM++ )
 				{
 					$strDateValue = date("Y-m-d",mktime(0,0,0,$iCntM,1,$iCntY));
-					$strBuff = '<option value="' . $strDateValue . '"_%selected%_>' . date("YÇ¯m·î",mktime(0,0,0,$iCntM,1,$iCntY)) . '</option>';
+					$strBuff = '<option value="' . $strDateValue . '"_%selected%_>' . date("Yå¹´mæœˆ",mktime(0,0,0,$iCntM,1,$iCntY)) . '</option>';
 					if( $strSelectedKey == "" )
 					{
-						// º£·î¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+						// ä»Šæœˆã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 						if( substr($strDateValue,0,7) == date("Y-m") )
 						{
 							$strBuff = preg_replace( "/_%selected%_/", "selected", $strBuff);
@@ -131,7 +131,7 @@ function fncGetElements($objDB, $strMark, $strSelectedKey="")
 					}
 					else
 					{
-						// »ØÄê¤Î¥Ç¡¼¥¿¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+						// æŒ‡å®šã®ãƒ‡ãƒ¼ã‚¿ã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 						if( $strSelectedKey == $strDateValue )
 						{
 							$strBuff = preg_replace( "/_%selected%_/", "selected", $strBuff);
@@ -153,16 +153,16 @@ function fncGetElements($objDB, $strMark, $strSelectedKey="")
 			unset($arySelect);
 			$arySelect[] = "\n";
 			$arySelect[] = '<select name="'.$strSelectName.'">';
-			$arySelect[] = '<option value="">ÁªÂò...</option>';
+			$arySelect[] = '<option value="">é¸æŠ...</option>';
 			for( $iCntY = 2004; $iCntY < 2010; $iCntY++ )
 			{
 				for( $iCntM = 1; $iCntM <= 12; $iCntM++ )
 				{
-					$strDateValue = date("Y-m-d",mktime(0,0,0,$iCntM+1,0,$iCntY)); // ¼¡·î¤Î0day¤ò¸«¤ë¤³¤È¤Ç¡¢ºÇ½ªÆü¤ò¼èÆÀ
-					$strBuff = '<option value="' . $strDateValue . '"_%selected%_>' . date("YÇ¯m·î",mktime(0,0,0,$iCntM+1,0,$iCntY)) . '</option>';
+					$strDateValue = date("Y-m-d",mktime(0,0,0,$iCntM+1,0,$iCntY)); // æ¬¡æœˆã®0dayã‚’è¦‹ã‚‹ã“ã¨ã§ã€æœ€çµ‚æ—¥ã‚’å–å¾—
+					$strBuff = '<option value="' . $strDateValue . '"_%selected%_>' . date("Yå¹´mæœˆ",mktime(0,0,0,$iCntM+1,0,$iCntY)) . '</option>';
 					if( $strSelectedKey == "" )
 					{
-						// º£·î¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+						// ä»Šæœˆã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 						if( substr($strDateValue,0,7) == date("Y-m") )
 						{
 							$strBuff = preg_replace( "/_%selected%_/", "selected", $strBuff);
@@ -170,7 +170,7 @@ function fncGetElements($objDB, $strMark, $strSelectedKey="")
 					}
 					else
 					{
-						// »ØÄê¤Î¥Ç¡¼¥¿¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+						// æŒ‡å®šã®ãƒ‡ãƒ¼ã‚¿ã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 						if( $strSelectedKey == $strDateValue )
 						{
 							$strBuff = preg_replace( "/_%selected%_/", "selected", $strBuff);
@@ -200,7 +200,7 @@ function fncGetElements($objDB, $strMark, $strSelectedKey="")
 			unset($arySelect);
 			$arySelect[] = "\n";
 			$arySelect[] = '<select name="'.$strSelectName.'">';
-			$arySelect[] = '<option value="0">ÁªÂò...¡ãÁ´¤Æ¡ä</option>';
+			$arySelect[] = '<option value="0">é¸æŠ...ï¼œå…¨ã¦ï¼</option>';
 			for( $iCnt = 0; $iCnt < count($aryQyeryData); $iCnt++ )
 			{
 				$strBuff = '<option value="' . $aryQyeryData[$iCnt][strtolower("lngOrderStatusCode")] . '"_%selected%_>' . $aryQyeryData[$iCnt][strtolower("lngOrderStatusCode")] . " " . $aryQyeryData[$iCnt][strtolower("strOrderStatusName")] . '</option>';
@@ -224,10 +224,10 @@ function fncGetElements($objDB, $strMark, $strSelectedKey="")
 }
 
 // 
-// ³µÍ×¡§»ØÄê¥Æ¥ó¥×¥ì¡¼¥È¤ò¼èÆÀ¤·ÊÖµÑ¤¹¤ë
-// °ú¿ô¡§
-//		$strMark	_%...%_ ¤ÎÃÖ¤­´¹¤¨Í×ÁÇ
-// 		$strErrMsg	¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+// æ¦‚è¦ï¼šæŒ‡å®šãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’å–å¾—ã—è¿”å´ã™ã‚‹
+// å¼•æ•°ï¼š
+//		$strMark	_%...%_ ã®ç½®ãæ›ãˆè¦ç´ 
+// 		$strErrMsg	ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 //
 function fncGetPages($strMark, $strErrMsg="")
 {

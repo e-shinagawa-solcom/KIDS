@@ -1,30 +1,30 @@
 (function () {
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var workForm = $('form');
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     var btnClear = $('img.clear');
-    // ÅĞÏ¿¥Ü¥¿¥ó
+    // ç™»éŒ²ãƒœã‚¿ãƒ³
     var btnSearch = $('img.search');
 
-    // ¥Õ¥©¡¼¥à¥µ¥Ö¥ß¥Ã¥ÈÍŞ»ß
+    // ãƒ•ã‚©ãƒ¼ãƒ ã‚µãƒ–ãƒŸãƒƒãƒˆæŠ‘æ­¢
     $('document').on('submit', 'form', function (e) {
         e.preventDefault();
         return false;
     });
 
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     btnClear.on('click', function () {
         window.location.reload();
     });
-// ¸¡º÷²èÌÌ¤Ë¤Æ¡¢É½¼¨¹àÌÜ¤Î¥Á¥§¥Ã¥¯¾õÂÖ¤òÊİÂ¸¤µ¤ì¤¿COOKIE¤«¤éÉü¸µ¤¹¤ë
+// æ¤œç´¢ç”»é¢ã«ã¦ã€è¡¨ç¤ºé …ç›®ã®ãƒã‚§ãƒƒã‚¯çŠ¶æ…‹ã‚’ä¿å­˜ã•ã‚ŒãŸCOOKIEã‹ã‚‰å¾©å…ƒã™ã‚‹
 function restoreCookieDispayItems1(form){
-    // ÊİÂ¸ÂĞ¾İ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹Í×ÁÇ¤Î¼èÆÀ
+    // ä¿å­˜å¯¾è±¡ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹è¦ç´ ã®å–å¾—
     var items = $(form).find();
     // COOKIE keyname
     var keyname = $(form).attr('name') + '_IsDisplay';
-    // É½¼¨¥Õ¥é¥°¤¿¤Á
+    // è¡¨ç¤ºãƒ•ãƒ©ã‚°ãŸã¡
     var flags = $.cookie(keyname);
-    // ¶èÀÚ¤êÊ¸»ú
+    // åŒºåˆ‡ã‚Šæ–‡å­—
     var delimiter = '&';
     var sepalator = ':';
 
@@ -52,7 +52,7 @@ function restoreCookieDispayItems1(form){
         });
     }
 }
-    // ¸¡º÷¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+    // æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnSearch.on('click', function () {
         if (workForm.valid()) {
             var windowName = 'searchResult';
@@ -61,18 +61,18 @@ function restoreCookieDispayItems1(form){
             workForm.attr('method', 'post');
             workForm.attr('target', windowName);
             workForm.submit();
-            // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Î¥­¥Ã¥¯
+            // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒƒã‚¯
             // workForm.find(':submit').click();
         }
         else {
-            // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Î¥­¥Ã¥¯
+            // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒƒã‚¯
             workForm.find(':submit').click();
         }
     });
 
-    // ²ñ¼Ò¥³¡¼¥ÉÊÑ¹¹¥¤¥Ù¥ó¥È
+    // ä¼šç¤¾ã‚³ãƒ¼ãƒ‰å¤‰æ›´ã‚¤ãƒ™ãƒ³ãƒˆ
     $('select[name="lngCompanyCode"]').on('change', function () {
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax({
             url: '/cmn/getmasterdata.php?lngProcessID=15&strFormValue[0]=' + $(this).val(),
             type: 'post',

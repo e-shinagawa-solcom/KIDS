@@ -1,35 +1,35 @@
 <?
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include 'conf.inc';
-//¥¯¥é¥¹¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹þ¤ß
+//ã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once '../lcModel/db_common.php';
 require_once '../lcModel/lcModelCommon.php';
 require_once '../lcModel/kidscore_common.php';
 require_once '../lcModel/report_common.php';
 require_once '../lcModel/lcreport.php';
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 
-//ÃÍ¤Î¼èÆÀ
+//å€¤ã®å–å¾—
 $postdata = file_get_contents("php://input");
 $data = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//·ÐÍý¥µ¥Ö¥·¥¹¥Æ¥àDBÀÜÂ³
+//çµŒç†ã‚µãƒ–ã‚·ã‚¹ãƒ†ãƒ DBæŽ¥ç¶š
 $lcModel = new lcModel();
 
-//ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤ÏÄÌ¾ï¤Î POST ¤Ç¼õ¤±¤ë
+//å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯é€šå¸¸ã® POST ã§å—ã‘ã‚‹
 if ($data == null) {
     $data = $_POST;
 }
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($data["sessionid"], $objAuth, $objDB);
 
-//¥æ¡¼¥¶¡¼ID¼èÆÀ(È¾³Ñ¥¹¥Ú¡¼¥¹¤¬¤¢¤ë¤¿¤á)
+//ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå–å¾—(åŠè§’ã‚¹ãƒšãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚)
 $usrId = trim($objAuth->UserID);
 
-//·ë²ÌÇÛÎó
+//çµæžœé…åˆ—
 $result = array();
 $result['report_6'] = array();
 $result['report_5'] = array();
@@ -40,24 +40,24 @@ $result['report_2'] = array();
 $result['report_1_open'] = array();
 $result['report_1_ship'] = array();
 
-// ¥Ñ¥é¥á¡¼¥¿¤Î¼èÆÀ
-// ÂÐ¾ÝÇ¯·î
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å–å¾—
+// å¯¾è±¡å¹´æœˆ
 $objectYm = $data["objectYm"];
 
-//ÄÌ²ß¶èÊ¬¥ê¥¹¥È¤Î¼èÆÀ
+//é€šè²¨åŒºåˆ†ãƒªã‚¹ãƒˆã®å–å¾—
 $currencyClassLst = fncGetCurrencyClassList($objDB);
-//ÄÌ²ß¶èÊ¬(Ì¤¾µÇ§´Þ¤à)¥ê¥¹¥È¤Î¼èÆÀ
+//é€šè²¨åŒºåˆ†(æœªæ‰¿èªå«ã‚€)ãƒªã‚¹ãƒˆã®å–å¾—
 $currencyClassAllLst = fncGetCurrencyClassListAll($objDB);
-// ¶ä¹Ô¥Þ¥¹¥¿¾ðÊó¤Î¼èÆÀ
+// éŠ€è¡Œãƒžã‚¹ã‚¿æƒ…å ±ã®å–å¾—
 $bankLst = fncGetValidBankInfo($objDB);
 
-// ½ÐÎÏ
+// å‡ºåŠ›
 if ($data["impletterChk"] == "true") {
     if ($currencyClassLst && count($currencyClassLst) > 0) {
         $num = 0;
         for ($i = 0; $i < count($currencyClassLst); $i++) {
             $currencyClass = $currencyClassLst[$i]["currencyclass"];
-            // Í¢Æþ¿®ÍÑ¾õÈ¯¹Ô¾ðÊó¤Î½ÐÎÏ
+            // è¼¸å…¥ä¿¡ç”¨çŠ¶ç™ºè¡Œæƒ…å ±ã®å‡ºåŠ›
             $report_6 = reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data);
             if (!empty($report_6)) {
                 $result['report_6'][$num]['report_header'] = $report_6['report_header'];
@@ -78,7 +78,7 @@ if ($data["setChk"] == "true") {
         $num_4_ship = 0;
         for ($i = 0; $i < count($currencyClassLst); $i++) {
             $currencyClass = $currencyClassLst[$i]["currencyclass"];
-            // LCOpen¾ðÊó(Beneficiary¡¦BKÊÌ¹ç·×)¡¼¥ª¡¼¥×¥ó·î¤Î½ÐÎÏ
+            // LCOpenæƒ…å ±(Beneficiaryãƒ»BKåˆ¥åˆè¨ˆ)ãƒ¼ã‚ªãƒ¼ãƒ—ãƒ³æœˆã®å‡ºåŠ›
             $report_1_open = reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $objectYm, 1);
             if (!empty($report_1_open)) {
                 $result['report_1_open'][$num_1_open]['report_header'] = $report_1_open['report_header'];
@@ -86,7 +86,7 @@ if ($data["setChk"] == "true") {
                 $num_1_open += 1;
             }
 
-            // LCOpen¾ðÊó(Beneficiary¡¦BKÊÌ¹ç·×)¡¼Á¥ÀÑ·î¤Î½ÐÎÏ
+            // LCOpenæƒ…å ±(Beneficiaryãƒ»BKåˆ¥åˆè¨ˆ)ãƒ¼èˆ¹ç©æœˆã®å‡ºåŠ›
             $report_1_ship = reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $objectYm, 2);
             if (!empty($report_1_ship)) {
                 $result['report_1_ship'][$num_1_ship]['report_header'] = $report_1_ship['report_header'];
@@ -94,28 +94,28 @@ if ($data["setChk"] == "true") {
                 $num_1_ship += 1;
             }
 
-            // L/C Open¾ðÊó(LCÊÌ¹ç·×¡Ë¤Î½ÐÎÏ
+            // L/C Openæƒ…å ±(LCåˆ¥åˆè¨ˆï¼‰ã®å‡ºåŠ›
             $report_2 = reportTwoOutput($objDB, $spreadsheet, $currencyClass, $objectYm);
             if (!empty($report_2)) {
                 $result['report_2'][$num_2]['report_header'] = $report_2['report_header'];
                 $result['report_2'][$num_2]['report_main'] = $report_2['report_main'];
                 $num_2 += 1;
             }
-            // L/C Open¾ðÊó(LCÊÌÌÀºÙ¡Ë¤Î½ÐÎÏ
+            // L/C Openæƒ…å ±(LCåˆ¥æ˜Žç´°ï¼‰ã®å‡ºåŠ›
             $report_3 = reportThreeOutput($objDB, $spreadsheet, $currencyClass, $objectYm);
             if (!empty($report_3)) {
                 $result['report_3'][$num_3]['report_header'] = $report_3['report_header'];
                 $result['report_3'][$num_3]['report_main'] = $report_3['report_main'];
                 $num_3 += 1;
             }
-            // L/C Open¾ðÊó¡ÊOpen·î¡¦BeneficiaryÊÌL/CÈ¯¹ÔÍ½Äê½¸·×É½¡Ë¤Î½ÐÎÏ
+            // L/C Openæƒ…å ±ï¼ˆOpenæœˆãƒ»Beneficiaryåˆ¥L/Cç™ºè¡Œäºˆå®šé›†è¨ˆè¡¨ï¼‰ã®å‡ºåŠ›
             $report_4_open = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 3);
             if (!empty($report_4_open)) {
                 $result['report_4_open'][$num_4_open]['report_header'] = $report_4_open['report_header'];
                 $result['report_4_open'][$num_4_open]['report_main'] = $report_4_open['report_main'];
                 $num_4_open += 1;
             }
-            // L/C Open¾ðÊó¡ÊÁ¥ÀÑ·î¡¦BeneficiaryÊÌL/CÈ¯¹ÔÍ½Äê½¸·×É½¡Ë¤Î½ÐÎÏ
+            // L/C Openæƒ…å ±ï¼ˆèˆ¹ç©æœˆãƒ»Beneficiaryåˆ¥L/Cç™ºè¡Œäºˆå®šé›†è¨ˆè¡¨ï¼‰ã®å‡ºåŠ›
             $report_4_ship = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 4);
             if (!empty($report_4_ship)) {
                 $result['report_4_ship'][$num_4_ship]['report_header'] = $report_4_ship['report_header'];
@@ -132,7 +132,7 @@ if ($data["unsetChk"] == "true") {
         $num_5 = 0;
         for ($i = 0; $i < count($currencyClassAllLst); $i++) {
             $currencyClass = $currencyClassAllLst[$i]["currencyclass"];
-            // L/C Ì¤·èºÑ¥ê¥¹¥È¤Î½ÐÎÏ
+            // L/C æœªæ±ºæ¸ˆãƒªã‚¹ãƒˆã®å‡ºåŠ›
             $report_5 = reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data);
             if (!empty($report_5)) {
                 $result['report_5'][$num_5]['report_header'] = $report_5['report_header'];

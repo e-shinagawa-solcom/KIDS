@@ -1,30 +1,30 @@
-// ¥Ç¡¼¥¿¤Î¼èÆÀ
+// ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 var script = $('#script').attr('data-param');
 var result = JSON.parse(script);
 $('#script').remove();
 
-// ¥·¡¼¥È¿ô¤Î¼èÆÀ
+// ã‚·ãƒ¼ãƒˆæ•°ã®å–å¾—
 var sheetNumber = Object.keys(result).length;
 console.log(result);
 
 var grid = [];
 var table = [];
 
-// É½¼¨ÍÑ¥Ç¡¼¥¿¤ÎºîÀ®
+// è¡¨ç¤ºç”¨ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
 for (var sheetNum = 0; sheetNum < sheetNumber; sheetNum++) {
   var sheetData = result[sheetNum];
-  // ³«»Ï¹ÔÎó¡¢½ªÎ»¹ÔÎó¤Î¼èÆÀ
+  // é–‹å§‹è¡Œåˆ—ã€çµ‚äº†è¡Œåˆ—ã®å–å¾—
   var startRow = sheetData['startRow'];
   var endRow = sheetData['endRow'];
   var startColumn = sheetData['startColumn'];
   var endColumn = sheetData['endColumn'];
 
-  // ¥»¥ë¤Î¥Ç¡¼¥¿¼èÆÀ
+  // ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿å–å¾—
   var cellData = sheetData['cellData'];
 
   var cellValue = [];
 
-  // ¥»¥ë¤Î¾ğÊó¤òÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+  // ã‚»ãƒ«ã®æƒ…å ±ã‚’é…åˆ—ã«æ ¼ç´ã™ã‚‹
   for (var i = startRow; i <= endRow; i++) {
     var rowValue = [];
     for (var j = startColumn; j <= endColumn; j++) {
@@ -33,23 +33,23 @@ for (var sheetNum = 0; sheetNum < sheetNumber; sheetNum++) {
     cellValue.push(rowValue);
   }
 
-  // ¥Ş¡¼¥¸¥»¥ë¤Î¼èÆÀ
+  // ãƒãƒ¼ã‚¸ã‚»ãƒ«ã®å–å¾—
   var merge = sheetData['mergedCellsList'];
-  // ¹Ô¤Î¹â¤µ¡¢Îó¤ÎÉı¤ò¼èÆÀ
+  // è¡Œã®é«˜ã•ã€åˆ—ã®å¹…ã‚’å–å¾—
   var rowHeight = sheetData['rowHeight'];
   var columnWidth = sheetData['columnWidth'];
 
-  // ¥»¥ë¤Î¥¯¥é¥¹¤ò¼èÆÀ
+  // ã‚»ãƒ«ã®ã‚¯ãƒ©ã‚¹ã‚’å–å¾—
   var cellClass = sheetData['cellClass'];
 
-  // ¥»¥ë¤Ë³ÊÇ¼¤¹¤ë¥Ñ¥é¥á¡¼¥¿¤ò¼èÆÀ
+  // ã‚»ãƒ«ã«æ ¼ç´ã™ã‚‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’å–å¾—
   var data = cellValue;
 
   var gridId = 'grid' + sheetNum;
 
   grid[sheetNum] = document.getElementById(gridId);
 
-  // Handsontable¤Ç¥¿¥°¤ËÉ½¤òËä¤á¹ş¤à
+  // Handsontableã§ã‚¿ã‚°ã«è¡¨ã‚’åŸ‹ã‚è¾¼ã‚€
   table[sheetNum] = new Handsontable(grid[sheetNum], {
     data: data,
     rowHeights: rowHeight,
@@ -65,7 +65,7 @@ for (var sheetNum = 0; sheetNum < sheetNumber; sheetNum++) {
   });
 }
 
-// Handsontable¤Îtd¥¿¥°CSS
+// Handsontableã®tdã‚¿ã‚°CSS
 function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
   Handsontable.renderers.TextRenderer.apply(this, arguments);
   var cellInfoData = cellData[row][col];

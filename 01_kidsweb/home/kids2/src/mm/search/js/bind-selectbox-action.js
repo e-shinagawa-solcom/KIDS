@@ -1,45 +1,45 @@
 
 (function(){
-    // ¶â·¿¥ê¥¹¥È
+    // é‡‘åž‹ãƒªã‚¹ãƒˆ
     var moldList = $('.mold-selection__list');
-    // ÁªÂòÃæ¤Î¶â·¿¥ê¥¹¥È
+    // é¸æŠžä¸­ã®é‡‘åž‹ãƒªã‚¹ãƒˆ
     var moldChoosenList = $('.mold-selection__choosen-list');
 
-    // ÄÉ²Ã¥Ü¥¿¥ó(¢ª)
+    // è¿½åŠ ãƒœã‚¿ãƒ³(â†’)
     $('.list-add').on({
         'click': function(){
-            // ¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹´Ö¤Î°ÜÆ°
+            // ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹é–“ã®ç§»å‹•
             selectBoxMoveTo(moldList, moldChoosenList);
-            // ÁªÂòÃæ¤Î¶â·¿¥ê¥¹¥È¤Î¥½¡¼¥È
+            // é¸æŠžä¸­ã®é‡‘åž‹ãƒªã‚¹ãƒˆã®ã‚½ãƒ¼ãƒˆ
             selectBoxCommand(moldChoosenList, 'sort');
         }
     });
 
-    // ºï½ü¥Ü¥¿¥ó(¢«)
+    // å‰Šé™¤ãƒœã‚¿ãƒ³(â†)
     $('.list-del').on({
         'click': function(){
-            // ¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹´Ö¤Î°ÜÆ°
+            // ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹é–“ã®ç§»å‹•
             selectBoxMoveTo(moldChoosenList, moldList);
-            // ¶â·¿¥ê¥¹¥È¤Î¥½¡¼¥È
+            // é‡‘åž‹ãƒªã‚¹ãƒˆã®ã‚½ãƒ¼ãƒˆ
             selectBoxCommand(moldList, 'sort');
         }
     });
 
-    // UP¥Ü¥¿¥ó
+    // UPãƒœã‚¿ãƒ³
     $('.list-up').on({
         'click': function(){
             selectBoxCommand(moldChoosenList, 'up');
         }
     });
 
-    // DOWN¥Ü¥¿¥ó
+    // DOWNãƒœã‚¿ãƒ³
     $('.list-down').on({
         'click': function(){
             selectBoxCommand(moldChoosenList, 'down');
         }
     });
 
-    // SELECT ALL¥Ü¥¿¥ó
+    // SELECT ALLãƒœã‚¿ãƒ³
     $('.mold-selection tr > td:nth-of-type(even) > img.list-sort').on({
         'click': function(){
             $(this).parent().prev().find('select').find('option').prop('selected', true);

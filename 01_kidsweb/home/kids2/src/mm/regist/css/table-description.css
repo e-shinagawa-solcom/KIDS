@@ -1,4 +1,4 @@
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« */
 .table-description
 {
     table-layout: fixed;
@@ -6,13 +6,13 @@
     border-collapse: collapse;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë thead */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« thead */
 .table-description thead
 {
     color: #ffffff;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë thead > tr */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« thead > tr */
 .table-description thead > tr
 {
     display: block;
@@ -21,7 +21,7 @@
     background-color: #799797;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë tbody */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« tbody */
 .table-description tbody
 {
     display: block;
@@ -37,13 +37,13 @@
     background-color: #f1f1f1;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë tbody > tr */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« tbody > tr */
 .table-description tbody > tr
 {
     height: 20px;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë ¹àÈÖ¥«¥é¥à */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« é …ç•ªã‚«ãƒ©ãƒ  */
 .table-description th:nth-of-type(1),
 .table-description td:nth-of-type(1)
 {
@@ -54,7 +54,7 @@
     border-color: #798787;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë ¶â·¿ÈÖ¹æ¥«¥é¥à */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« é‡‘åž‹ç•ªå·ã‚«ãƒ©ãƒ  */
 .table-description th:nth-of-type(2),
 .table-description td:nth-of-type(2)
 {
@@ -65,7 +65,7 @@
     border-color: #798787;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë ÀâÌÀ¥«¥é¥à */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« èª¬æ˜Žã‚«ãƒ©ãƒ  */
 .table-description th:nth-of-type(3),
 .table-description td:nth-of-type(3)
 {
@@ -76,13 +76,13 @@
     border-color: #798787;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë td */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« td */
 .table-description th,td
 {
     text-align: center;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë td(¶â·¿ÈÖ¹æ) > input */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« td(é‡‘åž‹ç•ªå·) > input */
 .table-description tbody td:nth-of-type(2) > input
 {
     width: 65px;
@@ -96,7 +96,7 @@
     background-color: transparent;
 }
 
-/* ÆþÎÏ¥Õ¥©¡¼¥à ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë td(¶â·¿ÀâÌÀ) > input */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  é‡‘åž‹èª¬æ˜Žãƒ†ãƒ¼ãƒ–ãƒ« td(é‡‘åž‹èª¬æ˜Ž) > input */
 .table-description tbody td:nth-of-type(3) > input
 {
     width: 99%;

@@ -1,24 +1,24 @@
 
 (function(){
-    // ÊÄ¤¸¤¿ºİ¤Î½èÍı
+    // é–‰ã˜ãŸéš›ã®å‡¦ç†
     $(window).on('beforeunload', function(){
         $(window.opener.opener.document).find('form').submit();
     });
 
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó²¡²¼»ş¤ÎµóÆ°
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®æŒ™å‹•
     $('img.close-action').on({
         'click' : function (){
             window.close();
         }
     });
-    // ºï½ü¥Ü¥¿¥ó²¡²¼»ş¤ÎµóÆ°
+    // å‰Šé™¤ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®æŒ™å‹•
     $('img.delete-action').on({
         'click' : function (){
             url = '/mr/delete/deleteMoldReport.php';
             sessionID = 'strSessionID=' + $.cookie('strSessionID');
             moldReportID = 'MoldReportId=' + $(this).attr('id');
             revision = 'Revision=' + $(this).attr('revision');
-            // ºï½ü¥ê¥¯¥¨¥¹¥È
+            // å‰Šé™¤ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
             window.location.href = url + '?' + sessionID + '&' + moldReportID + '&' + revision;
         }
     });

@@ -22,7 +22,7 @@ var NumDateTabB = '';
 
 
 
-// ÅĞÏ¿¥Ü¥¿¥ó
+// ç™»éŒ²ãƒœã‚¿ãƒ³
 var RegistNum = '';
 
 var AddRowNum = '';
@@ -56,20 +56,20 @@ function initLayoutSegs( obj1 , obj2 , obj5 , obj6 )
 	Backs.style.background = '#d6d0b1';
 
 
-	var initYpos1 = 50;  //TOPºÂÉ¸¡¦¾¦ÉÊ²½´ë²è½ñ¹àÌÜ½é´üÃÍ
-	var initYpos2 = 20; //TOPºÂÉ¸¡¦¾¦ÉÊ´ÉÍı¹àÌÜ½é´üÃÍ
+	var initYpos1 = 50;  //TOPåº§æ¨™ãƒ»å•†å“åŒ–ä¼ç”»æ›¸é …ç›®åˆæœŸå€¤
+	var initYpos2 = 20; //TOPåº§æ¨™ãƒ»å•†å“ç®¡ç†é …ç›®åˆæœŸå€¤
 
-	var moveYpos = 31;   //TOPºÂÉ¸¡¦°ÜÆ°ÃÍ
-
-
-	var check1Xpos = 10;  //LEFTºÂÉ¸¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹[É½¼¨]¸ÇÄêÃÍ
-	var check2Xpos = 58; //LEFTºÂÉ¸¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹[¸¡º÷]¸ÇÄêÃÍ
-
-	var segsXpos = 10;  //LEFTºÂÉ¸¡¦¥«¥é¥à¸ÇÄêÃÍ
-	var varsXpos = 166; //LEFTºÂÉ¸¡¦¥Õ¥©¡¼¥àÍ×ÁÇ¸ÇÄêÃÍ
+	var moveYpos = 31;   //TOPåº§æ¨™ãƒ»ç§»å‹•å€¤
 
 
-	var segsWidth = 157; //¥«¥é¥àÉı¸ÇÄêÃÍ
+	var check1Xpos = 10;  //LEFTåº§æ¨™ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹[è¡¨ç¤º]å›ºå®šå€¤
+	var check2Xpos = 58; //LEFTåº§æ¨™ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹[æ¤œç´¢]å›ºå®šå€¤
+
+	var segsXpos = 10;  //LEFTåº§æ¨™ãƒ»ã‚«ãƒ©ãƒ å›ºå®šå€¤
+	var varsXpos = 166; //LEFTåº§æ¨™ãƒ»ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ å›ºå®šå€¤
+
+
+	var segsWidth = 157; //ã‚«ãƒ©ãƒ å¹…å›ºå®šå€¤
 
 	var FontColors = '#666666'
 	var BackColors1 = '#e8f0f1';
@@ -78,20 +78,20 @@ function initLayoutSegs( obj1 , obj2 , obj5 , obj6 )
 	var BorderColors2 = '#798787 #798787 #798787 #e8f0f1';
 
 
-	var lay1 = obj1.children; //¾¦ÉÊ´ÉÍı¹àÌÜ¥«¥é¥à
-	var lay2 = obj2.children; //¾¦ÉÊ´ÉÍı¹àÌÜ¥Õ¥©¡¼¥àÍ×ÁÇ
-	//var lay3 = obj3.children; //¾¦ÉÊ²½´ë²è½ñ¹àÌÜ¥«¥é¥à
-	//var lay4 = obj4.children; //¾¦ÉÊ²½´ë²è½ñ¹àÌÜ¥Õ¥©¡¼¥àÍ×ÁÇ
-	var lay5 = obj5.children; //¾¦ÉÊ²½´ë²è½ñ¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹[É½¼¨]
-	var lay6 = obj6.children; //¾¦ÉÊ²½´ë²è½ñ¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹[¸¡º÷]
-	//var lay7 = obj7.children; //¾¦ÉÊ´ÉÍı¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹[É½¼¨]
-	//var lay8 = obj8.children; //¾¦ÉÊ´ÉÍı¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹[¸¡º÷]
+	var lay1 = obj1.children; //å•†å“ç®¡ç†é …ç›®ã‚«ãƒ©ãƒ 
+	var lay2 = obj2.children; //å•†å“ç®¡ç†é …ç›®ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ 
+	//var lay3 = obj3.children; //å•†å“åŒ–ä¼ç”»æ›¸é …ç›®ã‚«ãƒ©ãƒ 
+	//var lay4 = obj4.children; //å•†å“åŒ–ä¼ç”»æ›¸é …ç›®ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ 
+	var lay5 = obj5.children; //å•†å“åŒ–ä¼ç”»æ›¸ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹[è¡¨ç¤º]
+	var lay6 = obj6.children; //å•†å“åŒ–ä¼ç”»æ›¸ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹[æ¤œç´¢]
+	//var lay7 = obj7.children; //å•†å“ç®¡ç†ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹[è¡¨ç¤º]
+	//var lay8 = obj8.children; //å•†å“ç®¡ç†ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹[æ¤œç´¢]
 
 
-	var lngtabindex = 1; //TAB INDEX ½é´üÃÍ
+	var lngtabindex = 1; //TAB INDEX åˆæœŸå€¤
 
 
-	///// ¾¦ÉÊ´ÉÍı¹àÌÜ¥«¥é¥àÅ¸³« /////
+	///// å•†å“ç®¡ç†é …ç›®ã‚«ãƒ©ãƒ å±•é–‹ /////
 	if ( obj1 != '' )
 	{
 		for (i = 0; i < lay1.length; i++)
@@ -105,7 +105,7 @@ function initLayoutSegs( obj1 , obj2 , obj5 , obj6 )
 		}
 	}
 
-	///// ¾¦ÉÊ´ÉÍı¹àÌÜ¥Õ¥©¡¼¥àÍ×ÁÇÅ¸³« /////
+	///// å•†å“ç®¡ç†é …ç›®ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ å±•é–‹ /////
 	if ( obj2 != '' )
 	{
 		for (i = 0; i < lay2.length; i++)
@@ -117,7 +117,7 @@ function initLayoutSegs( obj1 , obj2 , obj5 , obj6 )
 		}
 	}
 
-	///// ¾¦ÉÊ²½´ë²è½ñ¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹[É½¼¨]Å¸³« /////
+	///// å•†å“åŒ–ä¼ç”»æ›¸ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹[è¡¨ç¤º]å±•é–‹ /////
 	if ( obj5 != '' )
 	{
 		for (i = 0; i < lay5.length; i++)
@@ -129,7 +129,7 @@ function initLayoutSegs( obj1 , obj2 , obj5 , obj6 )
 		}
 	}
 
-	///// ¾¦ÉÊ²½´ë²è½ñ¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹[¸¡º÷]Å¸³« /////
+	///// å•†å“åŒ–ä¼ç”»æ›¸ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹[æ¤œç´¢]å±•é–‹ /////
 	if ( obj6 != '' )
 	{
 		for (i = 0; i < lay6.length; i++)
@@ -142,7 +142,7 @@ function initLayoutSegs( obj1 , obj2 , obj5 , obj6 )
 	}
 
 
-	///// TAB INDEX Å¸³« /////
+	///// TAB INDEX å±•é–‹ /////
 	for (i = 0; i < window.form1.elements.length; i++)
 	{
 		window.form1.elements[i].tabindex = lngtabindex + 1;

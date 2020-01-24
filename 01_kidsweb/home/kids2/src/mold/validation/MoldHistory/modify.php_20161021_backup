@@ -1,7 +1,7 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
-*       ¶â·¿Ä¢É¼´ÉÍı  ÅĞÏ¿ ¥Õ¥©¡¼¥à¥Ç¡¼¥¿¸¡¾Ú
+*       é‡‘å‹å¸³ç¥¨ç®¡ç†  ç™»éŒ² ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿æ¤œè¨¼
 */
 // ----------------------------------------------------------------------------
 require_once('conf.inc');
@@ -16,34 +16,34 @@ require_once(SRC_ROOT.'/mold/lib/UtilUser.class.php');
 require_once(SRC_ROOT.'/mold/lib/UtilProduct.class.php');
 require_once(SRC_ROOT.'/mold/lib/UtilCompany.class.php');
 
-// ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 
-// DB¥ª¡¼¥×¥ó
+// DBã‚ªãƒ¼ãƒ—ãƒ³
 $objDB->open("", "", "", "");
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $_REQUEST["strSessionID"], $objAuth, $objDB );
 
-// 1800 ¶â·¿Ä¢É¼´ÉÍı
+// 1800 é‡‘å‹å¸³ç¥¨ç®¡ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// 1804 ¶â·¿´ÉÍı(½¤Àµ)
+// 1804 é‡‘å‹ç®¡ç†(ä¿®æ­£)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM4, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// Â¸ºß¥Á¥§¥Ã¥¯¥¨¥é¡¼¥ê¥¹¥È
+// å­˜åœ¨ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼ãƒªã‚¹ãƒˆ
 $errMstList = array();
-// °ÕÌ£¥Á¥§¥Ã¥¯¥¨¥é¡¼
+// æ„å‘³ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼
 $errSemanticList = array();
 
-// ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¥¯¥é¥¹¤Î¥¤¥ó¥¹¥¿¥ó¥¹¼èÆÀ
+// ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 $utilMold = UtilMold::getInstance();
 $utilValidation = UtilValidation::getInstance();
 $utilBussinesscode = UtilBussinesscode::getInstance();
@@ -52,183 +52,183 @@ $utilGroup = UtilGroup::getInstance();
 $utilUser = UtilUser::getInstance();
 $utilProduct = UtilProduct::getInstance();
 
-// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 $objDB->transactionBegin();
 
-// ¶â·¿´ØÏ¢¥Æ¡¼¥Ö¥ë¤Î¥í¥Ã¥¯
-// ½èÍı½ªÎ»»ş¤Î¥í¡¼¥ë¥Ğ¥Ã¥¯¤ò´üÂÔ¤¹¤ë
+// é‡‘å‹é–¢é€£ãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ­ãƒƒã‚¯
+// å‡¦ç†çµ‚äº†æ™‚ã®ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯ã‚’æœŸå¾…ã™ã‚‹
 pg_query("LOCK m_moldreport");
 pg_query("LOCK t_moldreportdetail");
 pg_query("LOCK t_moldreportrelation");
 pg_query("LOCK t_moldhistory");
 
 // ------------------------------------------------------------------------------
-// ¥Ş¥¹¥¿¥Á¥§¥Ã¥¯(ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È¥Á¥§¥Ã¥¯¤âÆ±»ş¤Ë¹Ô¤¦)
+// ãƒã‚¹ã‚¿ãƒã‚§ãƒƒã‚¯(æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒã‚§ãƒƒã‚¯ã‚‚åŒæ™‚ã«è¡Œã†)
 // ------------------------------------------------------------------------------
-// À½ÉÊ¥³¡¼¥É
+// è£½å“ã‚³ãƒ¼ãƒ‰
 if (!$utilProduct->existsProductCode($_REQUEST[FormMoldHistory::ProductCode]))
 {
 	$errMstList[FormMoldHistory::ProductCode] =
-		"[À½ÉÊ¥³¡¼¥É]->À½ÉÊ¥Ş¥¹¥¿¾å¤ËÂ¸ºß¤·¤Ê¤¤ÃÍ¤Ç¤¹¡£:".
+		"[è£½å“ã‚³ãƒ¼ãƒ‰]->è£½å“ãƒã‚¹ã‚¿ä¸Šã«å­˜åœ¨ã—ãªã„å€¤ã§ã™ã€‚:".
 		$_REQUEST[FormMoldHistory::ProductCode];
 }
 
-// ¶â·¿¥¹¥Æ¡¼¥¿¥¹ -> ¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿¸¡º÷
-if (!$utilBussinesscode->getDescription("¶â·¿¥¹¥Æ¡¼¥¿¥¹", $_REQUEST[FormMoldHistory::Status], true))
+// é‡‘å‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ -> æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿æ¤œç´¢
+if (!$utilBussinesscode->getDescription("é‡‘å‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹", $_REQUEST[FormMoldHistory::Status], true))
 {
 	$errMstList[FormMoldHistory::Status] =
-		"[¥¹¥Æ¡¼¥¿¥¹]->¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿¾å¤ËÂ¸ºß¤·¤Ê¤¤ÃÍ¤Ç¤¹¡£:".
+		"[ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹]->æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿ä¸Šã«å­˜åœ¨ã—ãªã„å€¤ã§ã™ã€‚:".
 		$_REQUEST[FormMoldHistory::Status];
 }
-// ¼Â»ÜÆü -> ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È¥Á¥§¥Ã¥¯
+// å®Ÿæ–½æ—¥ -> æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒã‚§ãƒƒã‚¯
 if (!$utilValidation::checkDateFormatYMD($_REQUEST[FormMoldHistory::ActionDate]))
 {
 	$errMstList[FormMoldHistory::ActionDate] =
-		"[¼Â»ÜÆü]->yyyy/mm/dd·Á¼°¤«¤ÄÍ­¸ú¤ÊÆüÉÕ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£:".
+		"[å®Ÿæ–½æ—¥]->yyyy/mm/ddå½¢å¼ã‹ã¤æœ‰åŠ¹ãªæ—¥ä»˜ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚:".
 		$_REQUEST[FormMoldHistory::ActionDate];
 }
-// ¶â·¿¥¹¥Æ¡¼¥¿¥¹¤¬¥¨¥é¡¼¤Ç¤Ê¤¯¡¢10:°ÜÆ°ÈÇËô¤Ï20:ÊÖµÑÈÇ¤Î¾ì¹ç
+// é‡‘å‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãŒã‚¨ãƒ©ãƒ¼ã§ãªãã€10:ç§»å‹•ç‰ˆåˆã¯20:è¿”å´ç‰ˆã®å ´åˆ
 if (!$errMstList[FormMoldHistory::Status] &&
 		($_REQUEST[FormMoldHistory::Status] == "10" || $_REQUEST[FormMoldHistory::Status] == "20"))
 {
-	// Êİ´É¸µ¹©¾ì -> ²ñ¼Ò¥Ş¥¹¥¿¸¡º÷ (É½¼¨²ñ¼Ò¥³¡¼¥É)
+	// ä¿ç®¡å…ƒå·¥å ´ -> ä¼šç¤¾ãƒã‚¹ã‚¿æ¤œç´¢ (è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰)
 	if (!$utilCompany->existsFactoryCode($_REQUEST[FormMoldHistory::SourceFactory]))
 	{
 		$errMstList[FormMoldHistory::SourceFactory] =
-			"[Êİ´É¸µ¹©¾ì]->²ñ¼Ò¥Ş¥¹¥¿¾å¤ËÂ¸ºß¤·¤Ê¤¤ÃÍ¤Ç¤¹¡£:".
+			"[ä¿ç®¡å…ƒå·¥å ´]->ä¼šç¤¾ãƒã‚¹ã‚¿ä¸Šã«å­˜åœ¨ã—ãªã„å€¤ã§ã™ã€‚:".
 			$_REQUEST[FormMoldHistory::SourceFactory];
 	}
 
-	// °ÜÆ°Àè¹©¾ì -> ²ñ¼Ò¥Ş¥¹¥¿¸¡º÷ (É½¼¨²ñ¼Ò¥³¡¼¥É)
+	// ç§»å‹•å…ˆå·¥å ´ -> ä¼šç¤¾ãƒã‚¹ã‚¿æ¤œç´¢ (è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰)
 	if (!$utilCompany->existsFactoryCode($_REQUEST[FormMoldHistory::DestinationFactory]))
 	{
 		$errMstList[FormMoldHistory::DestinationFactory] =
-			"[°ÜÆ°Àè¹©¾ì]->²ñ¼Ò¥Ş¥¹¥¿¾å¤ËÂ¸ºß¤·¤Ê¤¤ÃÍ¤Ç¤¹¡£:".
+			"[ç§»å‹•å…ˆå·¥å ´]->ä¼šç¤¾ãƒã‚¹ã‚¿ä¸Šã«å­˜åœ¨ã—ãªã„å€¤ã§ã™ã€‚:".
 			$_REQUEST[FormMoldHistory::DestinationFactory];
 	}
 }
 
-// ¶â·¿NO
+// é‡‘å‹NO
 $moldNo = $_REQUEST[FormMoldHistory::MoldNo];
 
-// ¶â·¿NO/¶â·¿ÀâÌÀ¤Î·ï¿ô¤¬0·ï¤Î¾ì¹ç
+// é‡‘å‹NO/é‡‘å‹èª¬æ˜ã®ä»¶æ•°ãŒ0ä»¶ã®å ´åˆ
 if (!$moldNo)
 {
 	$errMstList["MoldNo"] =
-			"[¶â·¿NO]->¶â·¿NO¤Î»ØÄê¤¬¤¢¤ê¤Ş¤»¤ó¡£¡£:".count($molds);
+			"[é‡‘å‹NO]->é‡‘å‹NOã®æŒ‡å®šãŒã‚ã‚Šã¾ã›ã‚“ã€‚ã€‚:".count($molds);
 }
-// ¶â·¿NO/¶â·¿ÀâÌÀ¤Î¸Ä¿ô¤¬Àµ¾ï¤Î¾ì¹ç
+// é‡‘å‹NO/é‡‘å‹èª¬æ˜ã®å€‹æ•°ãŒæ­£å¸¸ã®å ´åˆ
 else
 {
-	// ¶â·¿NO¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+	// é‡‘å‹NOã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 	if (!$utilMold->existsMoldNo($moldNo))
 	{
 		$errMstList[$index] =
-			"[".$index."]¶â·¿¥Ş¥¹¥¿¾å¤ËÂ¸ºß¤·¤Ê¤¤ÃÍ¤Ç¤¹¡£:".$moldNo;
+			"[".$index."]é‡‘å‹ãƒã‚¹ã‚¿ä¸Šã«å­˜åœ¨ã—ãªã„å€¤ã§ã™ã€‚:".$moldNo;
 	}
 }
 
 // ------------------------------------------------------------------------------
-// °ÕÌ£¥Á¥§¥Ã¥¯ (¥Ş¥¹¥¿¥Á¥§¥Ã¥¯¤¬ÄÌ¤Ã¤¿¾ì¹ç¤Ë¤Î¤ß¥Á¥§¥Ã¥¯¤ò¹Ô¤¦)
+// æ„å‘³ãƒã‚§ãƒƒã‚¯ (ãƒã‚¹ã‚¿ãƒã‚§ãƒƒã‚¯ãŒé€šã£ãŸå ´åˆã«ã®ã¿ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†)
 // ------------------------------------------------------------------------------
 if (!count($errMstList))
 {
-	// ÅĞÏ¿²ÄÇ½¤Ê¶â·¿ÈÖ¹æ¥ê¥¹¥È
+	// ç™»éŒ²å¯èƒ½ãªé‡‘å‹ç•ªå·ãƒªã‚¹ãƒˆ
 	$moldSelectionList = $utilMold->selectMoldSelectionList($_REQUEST[FormMoldHistory::ProductCode]);
-	// ¥Û¥ï¥¤¥È¥ê¥¹¥ÈºîÀ®
+	// ãƒ›ãƒ¯ã‚¤ãƒˆãƒªã‚¹ãƒˆä½œæˆ
 	foreach ($moldSelectionList as $row => $columns)
 	{
 		$moldNoList[] = $columns[TableMoldHistory::MoldNo];
 	}
 
-	// ¡Ö¶â·¿NO¡× <=> ¡ÖÀ½ÉÊ¥³¡¼¥É¡×´ØÏ¢¥Á¥§¥Ã¥¯
+	// ã€Œé‡‘å‹NOã€ <=> ã€Œè£½å“ã‚³ãƒ¼ãƒ‰ã€é–¢é€£ãƒã‚§ãƒƒã‚¯
 	if (!$utilMold->existsMoldNoWithProductCode($moldNo,
 			$_REQUEST[FormMoldHistory::ProductCode]))
 	{
-		$message = "[¶â·¿NO]À½ÉÊ¥³¡¼¥É(".$_REQUEST[FormMoldHistory::ProductCode].")¤È".
-				"¶â·¿NO(".$moldNo.")ÁÈ¹ç¤»¤¬ÉÔ°ìÃ×¤Ç¤¹¡£";
+		$message = "[é‡‘å‹NO]è£½å“ã‚³ãƒ¼ãƒ‰(".$_REQUEST[FormMoldHistory::ProductCode].")ã¨".
+				"é‡‘å‹NO(".$moldNo.")çµ„åˆã›ãŒä¸ä¸€è‡´ã§ã™ã€‚";
 
 		array_key_exists("MoldNo<->ProductCode", $errSemanticList) ?
 		$errSemanticList["MoldNo<->ProductCode"] = $message :
 		$errSemanticList["MoldNo<->ProductCode"] += $message;
 	}
-	// ÅĞÏ¿²ÄÇ½¤«¥Á¥§¥Ã¥¯
+	// ç™»éŒ²å¯èƒ½ã‹ãƒã‚§ãƒƒã‚¯
 	if(!in_array($moldNo, $moldNoList))
 	{
 		$usedMoldNoList[] = $moldNo;
 	}
 
-	// ¶â·¿¥¹¥Æ¡¼¥¿¥¹¤¬10:°ÜÆ°ÈÇËô¤Ï20:ÊÖµÑÈÇ¤Î¾ì¹ç
+	// é‡‘å‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãŒ10:ç§»å‹•ç‰ˆåˆã¯20:è¿”å´ç‰ˆã®å ´åˆ
 	if (($_REQUEST[FormMoldHistory::Status] == "10" ||
 		$_REQUEST[FormMoldHistory::Status] == "20"))
 	{
 
-        // ÅĞÏ¿ÉÔ²Ä¤Ê¶â·¿ÈÖ¹æ¤¬¸¡½Ğ¤µ¤ì¤¿¾ì¹ç
+        // ç™»éŒ²ä¸å¯ãªé‡‘å‹ç•ªå·ãŒæ¤œå‡ºã•ã‚ŒãŸå ´åˆ
     	if(count($usedMoldNoList))
     	{
     		$message = implode("\n ", $usedMoldNoList);
 
     		$errSemanticList[FormMoldHistory::MoldNo] =
-    			"¹àÌÜ:\n ".
-    			"¶â·¿NO\n".
-    			"ÂĞ¾İ:\n ".
+    			"é …ç›®:\n ".
+    			"é‡‘å‹NO\n".
+    			"å¯¾è±¡:\n ".
     			$message."\n".
     			"\n".
-    			"°Ê²¼¤Ë³ºÅö¤¹¤ë¶â·¿¤ÏÁªÂò¤Ç¤­¤Ş¤»¤ó¡£\n".
-    			"¡¦ÇÑ´ş¤µ¤ì¤¿¶â·¿\n".
-    			"¡¦Ì¤ÍèÆü¤Î¼Â»ÜÆü¤ò»ı¤Ä¶â·¿\n".
-    			"¡¦Ì¤´°Î»¤Î¶â·¿Ä¢É¼¤ËÉ³¤Å¤¯¶â·¿\n";
+    			"ä»¥ä¸‹ã«è©²å½“ã™ã‚‹é‡‘å‹ã¯é¸æŠã§ãã¾ã›ã‚“ã€‚\n".
+    			"ãƒ»å»ƒæ£„ã•ã‚ŒãŸé‡‘å‹\n".
+    			"ãƒ»æœªæ¥æ—¥ã®å®Ÿæ–½æ—¥ã‚’æŒã¤é‡‘å‹\n".
+    			"ãƒ»æœªå®Œäº†ã®é‡‘å‹å¸³ç¥¨ã«ç´ã¥ãé‡‘å‹\n";
     	}
 
-		// ´üÂÔ¤¹¤ë²ñ¼Ò¥³¡¼¥É
+		// æœŸå¾…ã™ã‚‹ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 		$expectedCompanyCode =
 		$utilCompany->selectCompanyCodeByDisplayCompanyCode($_REQUEST[FormMoldHistory::SourceFactory]);
 
-		// ¶â·¿ÍúÎò¤«¤éºÇ¿·¤Î°ÜÆ°Àè¹©¾ì¤ò¼èÆÀ
+		// é‡‘å‹å±¥æ­´ã‹ã‚‰æœ€æ–°ã®ç§»å‹•å…ˆå·¥å ´ã‚’å–å¾—
 		$currentFactory = $utilMold->selectCurrentStorageOfMold($moldNo);
 
-		// ¶â·¿ÍúÎò¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç(½é²ó)
+		// é‡‘å‹å±¥æ­´ãŒå­˜åœ¨ã—ãªã„å ´åˆ(åˆå›)
 		if (!$currentFactory)
 		{
-			// Í­¸ú¤Ê¶â·¿ÍúÎò¤¬Â¸ºß¤·¤Ê¤¤¶â·¿¤Ï»ÅÆş¤ì¸µ¤ò¸½ºß¤ÎÊİ´É¹©¾ì¤È¤·¤Æ°·¤¦
+			// æœ‰åŠ¹ãªé‡‘å‹å±¥æ­´ãŒå­˜åœ¨ã—ãªã„é‡‘å‹ã¯ä»•å…¥ã‚Œå…ƒã‚’ç¾åœ¨ã®ä¿ç®¡å·¥å ´ã¨ã—ã¦æ‰±ã†
 			$currentFactory = $utilMold->selectMoldVender($moldNo);
 		}
 
-		// ÂĞ¾İ¤Î¡Ö¶â·¿NO¡×¤ÎÁ´¤Æ¤ÎÊİ´É¹©¾ì¤¬ÆşÎÏ¤µ¤ì¤¿Êİ´É¸µ¹©¾ì¤ÈÆ±°ì¹©¾ì¤Ç¤¢¤ë¤³¤È
+		// å¯¾è±¡ã®ã€Œé‡‘å‹NOã€ã®å…¨ã¦ã®ä¿ç®¡å·¥å ´ãŒå…¥åŠ›ã•ã‚ŒãŸä¿ç®¡å…ƒå·¥å ´ã¨åŒä¸€å·¥å ´ã§ã‚ã‚‹ã“ã¨
 		if($expectedCompanyCode != $currentFactory)
 		{
-			$message = "[Êİ´É¸µ¹©¾ì]»ØÄê¤µ¤ì¤¿Êİ´É¹©¾ì¤È¶â·¿NO:".$moldNo."¤Î¸½ºß¤ÎÊİ´É¹©¾ì¤¬°ìÃ×¤·¤Ş¤»¤ó¤Ç¤·¤¿¡£\n";
+			$message = "[ä¿ç®¡å…ƒå·¥å ´]æŒ‡å®šã•ã‚ŒãŸä¿ç®¡å·¥å ´ã¨é‡‘å‹NO:".$moldNo."ã®ç¾åœ¨ã®ä¿ç®¡å·¥å ´ãŒä¸€è‡´ã—ã¾ã›ã‚“ã§ã—ãŸã€‚\n";
 			$errSemanticList[FormMoldReport::SourceFactory] = $message;
 		}
 
-		// Êİ´É¸µ¹©¾ì¤È°ÜÆ°Àè¹©¾ì¤¬Æ±°ì¹©¾ì¤Ç¤Ê¤¤¤³¤È
+		// ä¿ç®¡å…ƒå·¥å ´ã¨ç§»å‹•å…ˆå·¥å ´ãŒåŒä¸€å·¥å ´ã§ãªã„ã“ã¨
 		if ($_REQUEST[FormMoldHistory::SourceFactory] == $_REQUEST[FormMoldHistory::DestinationFactory])
 		{
 			$errSemanticList[FormMoldHistory::DestinationFactory] =
-			"[°ÜÆ°Àè¹©¾ì]Êİ´É¹©¾ì¤ÈÆ±°ì¤Î¹©¾ì¤Ï»ØÄê¤Ç¤­¤Ş¤»¤ó¡£";
+			"[ç§»å‹•å…ˆå·¥å ´]ä¿ç®¡å·¥å ´ã¨åŒä¸€ã®å·¥å ´ã¯æŒ‡å®šã§ãã¾ã›ã‚“ã€‚";
 		}
 	}
 }
 
-// ¸¡¾Ú¤¬OK¤Î¾ì¹ç
+// æ¤œè¨¼ãŒOKã®å ´åˆ
 if (!count($errMstList) && !count($errSemanticList))
 {
-	// Ä¢É¼¶èÊ¬ÊÌ¤ËÍ¾·×¤Ê¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤òºï½ü¤¹¤ë
+	// å¸³ç¥¨åŒºåˆ†åˆ¥ã«ä½™è¨ˆãªãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã™ã‚‹
 	switch ($_REQUEST[FormMoldHistory::Status])
 	{
-		case "10": // °ÜÆ°ÈÇ
-		case "20": // ÊÖµÑÈÇ
-			// ºï½üÍ×ÁÇ¤Ê¤·
+		case "10": // ç§»å‹•ç‰ˆ
+		case "20": // è¿”å´ç‰ˆ
+			// å‰Šé™¤è¦ç´ ãªã—
 			break;
-		default: // ¤½¤ì°Ê³°(ÇÑ´şÈÇ)
-			// Êİ´É¸µ¹©¾ì¤òºï½ü
+		default: // ãã‚Œä»¥å¤–(å»ƒæ£„ç‰ˆ)
+			// ä¿ç®¡å…ƒå·¥å ´ã‚’å‰Šé™¤
 			unset($_REQUEST[FormMoldHistory::SourceFactory]);
-			// °ÜÆ°Àè¹©¾ì¤òºï½ü
+			// ç§»å‹•å…ˆå·¥å ´ã‚’å‰Šé™¤
 			unset($_REQUEST[FormMoldHistory::DestinationFactory]);
 			break;
 	}
 
-	// Ê¸»úÎó¤ò¥µ¥Ë¥¿¥¤¥º
+	// æ–‡å­—åˆ—ã‚’ã‚µãƒ‹ã‚¿ã‚¤ã‚º
 	foreach ($_REQUEST as $key => $value)
 	{
 		if (is_string($value))
@@ -237,61 +237,61 @@ if (!count($errMstList) && !count($errSemanticList))
 		}
 	}
 
-	// ¥À¥¤¥¸¥§¥¹¥ÈÍÑ¤Ë¶â·¿NO¤òarray¤ËÊÑ´¹
+	// ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆç”¨ã«é‡‘å‹NOã‚’arrayã«å¤‰æ›
 	$molds = array();
 	$molds[] = $moldNo;
 
-	// ¶â·¿ÍúÎò¤Î¥À¥¤¥¸¥§¥¹¥ÈºîÀ®
+	// é‡‘å‹å±¥æ­´ã®ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆä½œæˆ
 	$summaryHistory = $utilMold->selectSummaryOfMoldHistory($molds);
 	$digestHistory = FormCache::hash_arrays($summaryHistory);
 	$_REQUEST["digest_history"] = $digestHistory;
 
-	// ¶â·¿Ä¢É¼¤Î¥À¥¤¥¸¥§¥¹¥ÈºîÀ®
+	// é‡‘å‹å¸³ç¥¨ã®ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆä½œæˆ
 	$summaryReport = $utilMold->selectSummaryOfMoldReport($molds);
 	$digestReport = FormCache::hash_arrays($summaryReport);
 	$_REQUEST["digest_report"] = $digestReport;
 
-	// ¶â·¿¥ê¥¹¥È¤ò¥ê¥¯¥¨¥¹¥È¤Ë³ÊÇ¼
+	// é‡‘å‹ãƒªã‚¹ãƒˆã‚’ãƒªã‚¯ã‚¨ã‚¹ãƒˆã«æ ¼ç´
 	$_REQUEST["list_moldno"] = $molds;
 
-	// ¥­¥ã¥Ã¥·¥å¥¤¥ó¥¹¥¿¥ó¥¹¤Î¼èÆÀ
+	// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—
 	$formCache = FormCache::getInstance();
-	// ¥æ¡¼¥¶¥³¡¼¥ÉÀßÄê
+	// ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰è¨­å®š
 	$formCache->setUserCode($objAuth->UserCode);
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
 	try
 	{
-		// ¥Õ¥©¡¼¥à¥­¥ã¥Ã¥·¥å¤Ë³ÊÇ¼
+		// ãƒ•ã‚©ãƒ¼ãƒ ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«æ ¼ç´
 		$resultHash["resultHash"] = $formCache::hash_arrays($_REQUEST);
 		$formCache->add($resultHash["resultHash"], $_REQUEST);
 	}
 	catch (Exception $e)
 	{
-		// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó ¥í¡¼¥ë¥Ğ¥Ã¥¯
+		// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯
 		$objDB->transactionRollback();
 		throw $e;
 	}
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó ¥³¥ß¥Ã¥È
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ ã‚³ãƒŸãƒƒãƒˆ
 	$objDB->transactionCommit();
 
-	// ¥ì¥¹¥İ¥ó¥¹¥Ø¥Ã¥ÀÀßÄê)(json)
+	// ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€è¨­å®š)(json)
 	header('Content-Type: application/json');
 	$json = json_encode($resultHash, JSON_PRETTY_PRINT);
 	echo $json;
 }
-// ¸¡¾Ú¤¬NG¤Î¾ì¹ç
+// æ¤œè¨¼ãŒNGã®å ´åˆ
 else
 {
-	// ¥¨¥é¡¼·ë²ÌÇÛÎó¤Î¥Ş¡¼¥¸
+	// ã‚¨ãƒ©ãƒ¼çµæœé…åˆ—ã®ãƒãƒ¼ã‚¸
 	$errors = array_merge($errMstList, $errSemanticList);
 
-	// jsonÊÑ´¹¤Î°Ù¡¢°ì»şÅª¤ËUTF-8¤ØÊÑ´¹
+	// jsonå¤‰æ›ã®ç‚ºã€ä¸€æ™‚çš„ã«UTF-8ã¸å¤‰æ›
 	mb_convert_variables('UTF-8', 'EUC-JP', $errors);
-	// ¥ì¥¹¥İ¥ó¥¹¥Ø¥Ã¥ÀÀßÄê)(json)
+	// ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€è¨­å®š)(json)
 	header('Content-Type: application/json');
 	$json = json_encode($errors, JSON_PRETTY_PRINT);
 	echo $json;

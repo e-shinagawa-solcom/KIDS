@@ -1,13 +1,13 @@
 <?php
 
-// phpspreadsheet¥Ñ¥Ã¥±¡¼¥¸¤ò¥¤¥ó¥İ¡¼¥È¤¹¤ë
+// phpspreadsheetãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹
 require PATH_HOME . "/vendor/autoload.php";
 
 use PhpOffice\PhpSpreadsheet\Writer\Xls as XlsWriter;
 
 
 /**
- * Ä¢É¼_1_L/C Open¾ğÊó(Beneficiary¡¦BKÊÌ¹ç·×)¥Æ¥ó¥×¥ì¡¼¥ÈÆâÍÆ¤ÎÀßÄê
+ * å¸³ç¥¨_1_L/C Openæƒ…å ±(Beneficiaryãƒ»BKåˆ¥åˆè¨ˆ)ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå†…å®¹ã®è¨­å®š
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -23,23 +23,23 @@ function fncSetReportOne($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
 
     if ($type == 1) {
-        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('L/C Open¾ğÊó¡ÊBeneficiary¡¦BkÊÌ¹ç·×¡ËOpen·î'));
-        $copysheetname = $sheetname . "_" . $currencyClass . "Open·î";
+        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('L/C Openæƒ…å ±ï¼ˆBeneficiaryãƒ»Bkåˆ¥åˆè¨ˆï¼‰Openæœˆ'));
+        $copysheetname = $sheetname . "_" . $currencyClass . "Openæœˆ";
     } else {
-        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('L/C Open¾ğÊó¡ÊBeneficiary¡¦BkÊÌ¹ç·×¡ËÁ¥ÀÑ·î'));
-        $copysheetname = $sheetname . "_" . $currencyClass . "Á¥ÀÑ·î";
+        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('L/C Openæƒ…å ±ï¼ˆBeneficiaryãƒ»Bkåˆ¥åˆè¨ˆï¼‰èˆ¹ç©æœˆ'));
+        $copysheetname = $sheetname . "_" . $currencyClass . "èˆ¹ç©æœˆ";
     }
     
     $clonedWorksheet->setTitle(convertEncoding($copysheetname));
     $spreadsheet->addSheet($clonedWorksheet);
-    //    $clonedWorksheet->getHeaderFooter()->setOddFooter('¡õP¡¿&N');
+    //    $clonedWorksheet->getHeaderFooter()->setOddFooter('ï¼†Pï¼&N');
     //    $clonedWorksheet->getPageSetup()
     //        ->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
     //    $clonedWorksheet->getPageSetup()
     //        ->setPaperSize(PageSetup::PAPERSIZE_A4);
 
-    $clonedWorksheet->setCellValue('A4', convertEncoding(sprintf('%dÇ¯%d·î', substr($objectYm, 0, 4), substr($objectYm, 4, 2))));
-    $clonedWorksheet->setCellValue('F5', convertEncoding(sprintf('ÄÌ²ß¶èÊ¬:%s', $currencyClass)));
+    $clonedWorksheet->setCellValue('A4', convertEncoding(sprintf('%då¹´%dæœˆ', substr($objectYm, 0, 4), substr($objectYm, 4, 2))));
+    $clonedWorksheet->setCellValue('F5', convertEncoding(sprintf('é€šè²¨åŒºåˆ†:%s', $currencyClass)));
     $clonedWorksheet->setCellValue('B7', convertEncoding($bankLst[0]["bankomitname"]));
     $clonedWorksheet->setCellValue('C7', convertEncoding($bankLst[1]["bankomitname"]));
     $clonedWorksheet->setCellValue('D7', convertEncoding($bankLst[2]["bankomitname"]));
@@ -64,7 +64,7 @@ function fncSetReportOne($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
 }
 
 /**
- * Ä¢É¼_2_L/C Open¾ğÊó(L/CÊÌ¹ç·×)¥Æ¥ó¥×¥ì¡¼¥ÈÆâÍÆ¤ÎÀßÄê
+ * å¸³ç¥¨_2_L/C Openæƒ…å ±(L/Cåˆ¥åˆè¨ˆ)ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå†…å®¹ã®è¨­å®š
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -79,8 +79,8 @@ function fncSetReportTwo($objDB, $spreadsheet, $sheetname, $currencyClass, $obje
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
     $clonedWorksheet->setTitle(convertEncoding($sheetname . "_" . $currencyClass));
     $spreadsheet->addSheet($clonedWorksheet);
-    $clonedWorksheet->setCellValue('A1', convertEncoding(sprintf('%dÇ¯%d·î', substr($objectYm, 0, 4), substr($objectYm, 5, 2))));
-    $clonedWorksheet->setCellValue('H2', convertEncoding(sprintf('ÄÌ²ß¶èÊ¬:%s', $currencyClass)));
+    $clonedWorksheet->setCellValue('A1', convertEncoding(sprintf('%då¹´%dæœˆ', substr($objectYm, 0, 4), substr($objectYm, 5, 2))));
+    $clonedWorksheet->setCellValue('H2', convertEncoding(sprintf('é€šè²¨åŒºåˆ†:%s', $currencyClass)));
 
     
     $numberFormat = getNumberFormat($currencyClass);
@@ -98,7 +98,7 @@ function fncSetReportTwo($objDB, $spreadsheet, $sheetname, $currencyClass, $obje
 }
 
 /**
- * Ä¢É¼_3_L/C Open¾ğÊó(L/CÊÌÌÀºÙ)¥Æ¥ó¥×¥ì¡¼¥ÈÆâÍÆ¤ÎÀßÄê
+ * å¸³ç¥¨_3_L/C Openæƒ…å ±(L/Cåˆ¥æ˜ç´°)ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå†…å®¹ã®è¨­å®š
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -114,8 +114,8 @@ function fncSetReportThree($objDB, $spreadsheet, $sheetname, $currencyClass, $ob
     $clonedWorksheet->setTitle(convertEncoding($sheetname . "_" . $currencyClass));
     $spreadsheet->addSheet($clonedWorksheet);
     
-    $clonedWorksheet->setCellValue('C1', convertEncoding(sprintf('%dÇ¯%d·î', substr($objectYm, 0, 4), substr($objectYm, 5, 2))));
-    $clonedWorksheet->setCellValue('Q1', convertEncoding(sprintf('ÄÌ²ß¶èÊ¬:%s', $currencyClass)));
+    $clonedWorksheet->setCellValue('C1', convertEncoding(sprintf('%då¹´%dæœˆ', substr($objectYm, 0, 4), substr($objectYm, 5, 2))));
+    $clonedWorksheet->setCellValue('Q1', convertEncoding(sprintf('é€šè²¨åŒºåˆ†:%s', $currencyClass)));
     
     $numberFormat = getNumberFormat($currencyClass);
     $clonedWorksheet->setCellValue('I1', $totalPrice);    
@@ -132,7 +132,7 @@ function fncSetReportThree($objDB, $spreadsheet, $sheetname, $currencyClass, $ob
 }
 
 /**
- * Ä¢É¼_4_L/C Open¾ğÊó¡ÊBeneficiaryÊÌL/CÈ¯¹ÔÍ½Äê½¸·×É½¡Ë¥Æ¥ó¥×¥ì¡¼¥ÈÆâÍÆ¤ÎÀßÄê
+ * å¸³ç¥¨_4_L/C Openæƒ…å ±ï¼ˆBeneficiaryåˆ¥L/Cç™ºè¡Œäºˆå®šé›†è¨ˆè¡¨ï¼‰ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå†…å®¹ã®è¨­å®š
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -147,28 +147,28 @@ function fncSetReportFour($objDB, $spreadsheet, $sheetname, $currencyClass, $obj
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
 
     if ($type == 3) {
-        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('Open·î¡¦BeneficiaryÊÌL/CÈ¯¹ÔÍ½Äê½¸·×É½'));
-        $copysheetname = $sheetname . "_" . $currencyClass . "Open·î";
+        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('Openæœˆãƒ»Beneficiaryåˆ¥L/Cç™ºè¡Œäºˆå®šé›†è¨ˆè¡¨'));
+        $copysheetname = $sheetname . "_" . $currencyClass . "Openæœˆ";
     } else if ($type == 4) {
-        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('Á¥ÀÑ·î¡¦BeneficiaryÊÌL/CÈ¯¹ÔÍ½Äê½¸·×É½'));
-        $copysheetname = $sheetname . "_" . $currencyClass . "Á¥ÀÑ·î";
+        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('èˆ¹ç©æœˆãƒ»Beneficiaryåˆ¥L/Cç™ºè¡Œäºˆå®šé›†è¨ˆè¡¨'));
+        $copysheetname = $sheetname . "_" . $currencyClass . "èˆ¹ç©æœˆ";
     }
 
     $clonedWorksheet->setTitle(convertEncoding($copysheetname));
     $spreadsheet->addSheet($clonedWorksheet);
-    $clonedWorksheet->setCellValue('M1', convertEncoding(sprintf('ÄÌ²ß¶èÊ¬:%s', $currencyClass)));    
+    $clonedWorksheet->setCellValue('M1', convertEncoding(sprintf('é€šè²¨åŒºåˆ†:%s', $currencyClass)));    
     $objectYm = str_replace("/", "-", $objectYm) . "-01";
-    $clonedWorksheet->setCellValue('B3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "-6 month"))));
-    $clonedWorksheet->setCellValue('C3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "-5 month"))));
-    $clonedWorksheet->setCellValue('D3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "-4 month"))));
-    $clonedWorksheet->setCellValue('E3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "-3 month"))));
-    $clonedWorksheet->setCellValue('F3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "-2 month"))));
-    $clonedWorksheet->setCellValue('G3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "-1 month"))));
-    $clonedWorksheet->setCellValue('H3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "0 month"))));
-    $clonedWorksheet->setCellValue('I3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "+1 month"))));
-    $clonedWorksheet->setCellValue('J3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "+2 month"))));
-    $clonedWorksheet->setCellValue('K3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "+3 month"))));
-    $clonedWorksheet->setCellValue('L3', convertEncoding(date("YÇ¯m·î", strtotime($objectYm . "+4 month"))));
+    $clonedWorksheet->setCellValue('B3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "-6 month"))));
+    $clonedWorksheet->setCellValue('C3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "-5 month"))));
+    $clonedWorksheet->setCellValue('D3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "-4 month"))));
+    $clonedWorksheet->setCellValue('E3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "-3 month"))));
+    $clonedWorksheet->setCellValue('F3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "-2 month"))));
+    $clonedWorksheet->setCellValue('G3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "-1 month"))));
+    $clonedWorksheet->setCellValue('H3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "0 month"))));
+    $clonedWorksheet->setCellValue('I3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "+1 month"))));
+    $clonedWorksheet->setCellValue('J3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "+2 month"))));
+    $clonedWorksheet->setCellValue('K3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "+3 month"))));
+    $clonedWorksheet->setCellValue('L3', convertEncoding(date("Yå¹´mæœˆ", strtotime($objectYm . "+4 month"))));
 
     $sumofBeneMonthCal = fncGetSumofBeneMonCal($objDB);
     $clonedWorksheet->setCellValue('B23', $sumofBeneMonthCal->sum_1);
@@ -198,7 +198,7 @@ function fncSetReportFour($objDB, $spreadsheet, $sheetname, $currencyClass, $obj
 
 
 /**
- * Ä¢É¼_5_Ì¤·èºÑ¥ê¥¹¥È¥Æ¥ó¥×¥ì¡¼¥ÈÆâÍÆ¤ÎÀßÄê
+ * å¸³ç¥¨_5_æœªæ±ºæ¸ˆãƒªã‚¹ãƒˆãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå†…å®¹ã®è¨­å®š
  *
  * @param [type] $objDB
  * @param [type] $spreadsheet
@@ -214,12 +214,12 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
 {
     // $reader = new XlsReader();
     // $filepath = REPORT_TMPDIR . REPORT_LC_TMPFILE;
-    // $spreadsheet = $reader->load($filepath); //template.xlsx ÆÉ¹ş
+    // $spreadsheet = $reader->load($filepath); //template.xlsx èª­è¾¼
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
     $clonedWorksheet->setTitle(convertEncoding($sheetname . "_" . $currencyClass));
     $spreadsheet->addSheet($clonedWorksheet);
 
-    $clonedWorksheet->setCellValue('M3', convertEncoding("ÄÌ²ß¶èÊ¬¡§" . $currencyClass));
+    $clonedWorksheet->setCellValue('M3', convertEncoding("é€šè²¨åŒºåˆ†ï¼š" . $currencyClass));
     $clonedWorksheet->setCellValue('B2', $startYmd);
     $clonedWorksheet->setCellValue('B3', $endYmd);
     $clonedWorksheet->setCellValue('B3', $endYmd);
@@ -258,8 +258,8 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
     // $writer = new XlsWriter($spreadsheet);
     // $writer->save(REPORT_TMPDIR . REPORT_LC_OUTPUTFILE);
 
-    //¥À¥¦¥ó¥í¡¼¥ÉÍÑ
-    // // Redirect output to a client¡Çs web browser (Xlsx)
+    //ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰ç”¨
+    // // Redirect output to a clientâ€™s web browser (Xlsx)
     // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     // header('Content-Disposition: attachment;filename="01simple.xls"');
     // header('Expires: 0'); // Date in the past
@@ -274,7 +274,7 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
 }
 
 /**
- * Ä¢É¼_6_Í¢Æş¿®ÍÑ¾õ¾ğÊó¥Æ¥ó¥×¥ì¡¼¥ÈÆâÍÆ¤ÎÀßÄê
+ * å¸³ç¥¨_6_è¼¸å…¥ä¿¡ç”¨çŠ¶æƒ…å ±ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå†…å®¹ã®è¨­å®š
  *
  * @param [object] $objDB
  * @param [sheet] $spreadsheet
@@ -290,20 +290,20 @@ function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     $clonedWorksheet->setTitle(convertEncoding($sheetname . "_" . $currencyClass));
     $spreadsheet->addSheet($clonedWorksheet);
 
-    if (strcmp($currencyClass, '±ß') == 0)
+    if (strcmp($currencyClass, 'å††') == 0)
     {
-        $clonedWorksheet->setCellValue('H10', convertEncoding("¶â³Û¡Ê¡ï¡Ë"));
+        $clonedWorksheet->setCellValue('H10', convertEncoding("é‡‘é¡ï¼ˆï¿¥ï¼‰"));
     }
-    $clonedWorksheet->setCellValue('P9', convertEncoding("ÄÌ²ß¶èÊ¬¡§" . $currencyClass));
-    $clonedWorksheet->setCellValue('B7', convertEncoding(sprintf('%dÇ¯%d·î', substr($data["openYm"], 0, 4), substr($data["openYm"], 4, 2))));
-    $clonedWorksheet->setCellValue('M8', convertEncoding(sprintf('%dÇ¯%d·î', substr($data["shipYm"], 0, 4), substr($data["shipYm"], 4, 2))));
+    $clonedWorksheet->setCellValue('P9', convertEncoding("é€šè²¨åŒºåˆ†ï¼š" . $currencyClass));
+    $clonedWorksheet->setCellValue('B7', convertEncoding(sprintf('%då¹´%dæœˆ', substr($data["openYm"], 0, 4), substr($data["openYm"], 4, 2))));
+    $clonedWorksheet->setCellValue('M8', convertEncoding(sprintf('%då¹´%dæœˆ', substr($data["shipYm"], 0, 4), substr($data["shipYm"], 4, 2))));
 
     $clonedWorksheet->setCellValue('D8', convertEncoding($data["payfName"]));
     $clonedWorksheet->setCellValue('H8', convertEncoding($data["bankname"]));
 
     if (strcmp($data["bankname"], 'ALL') == 0)
     {  
-        $clonedWorksheet->setCellValue('P10', convertEncoding("Í½Äê¶ä¹Ô"));
+        $clonedWorksheet->setCellValue('P10', convertEncoding("äºˆå®šéŠ€è¡Œ"));
     }
     $clonedWorksheet->setCellValue('L8', convertEncoding($data["lcopen"]));
     $clonedWorksheet->setCellValue('O8', convertEncoding($data["portplace"]));
@@ -345,14 +345,14 @@ function convertEncoding($str)
 }
 
 /**
- * ¿ô»ú¥Õ¥©¡¼¥Ş¥Ã¥È¤Î¼èÆÀ
+ * æ•°å­—ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®å–å¾—
  *
  * @param [string] $currencyClass
  * @return string
  */
 function getNumberFormat($currencyClass)
 {
-    if (strcmp($currencyClass, '±ß') == 0) {
+    if (strcmp($currencyClass, 'å††') == 0) {
         $numberFormat = '#,##0';
     } else {
         $numberFormat = '#,##0.00';
@@ -360,7 +360,7 @@ function getNumberFormat($currencyClass)
     return $numberFormat;
 }
 /**
- * ¶â³Û¥Õ¥©¡¼¥Ş¥Ã¥ÈÊÑ´¹
+ * é‡‘é¡ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå¤‰æ›
  *
  * @param [numeric] $money
  * @param [string] $currencyClass
@@ -368,7 +368,7 @@ function getNumberFormat($currencyClass)
  */
 function moneyFormat($money, $currencyClass)
 {
-    if ($currencyClass == "±ß") {
+    if ($currencyClass == "å††") {
         return number_format($money);
     } else {
         return number_format($money, 2, '.', ',');

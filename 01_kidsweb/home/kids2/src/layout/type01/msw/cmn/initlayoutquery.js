@@ -2,24 +2,24 @@
 
 
 ///// SEARCH BUTTON /////
-var searchbuttonAJ1 = '<a href="#"><img onfocus="SearchJOn(this);" onblur="SearchJOff(this);" onmouseover="SearchJOn(this);" onmouseout="SearchJOff(this);" src="' + schbtJ1 + '" width="64" height="21" border="0" alt="¸¡º÷" tabindex="3"></a>';
+var searchbuttonAJ1 = '<a href="#"><img onfocus="SearchJOn(this);" onblur="SearchJOff(this);" onmouseover="SearchJOn(this);" onmouseout="SearchJOff(this);" src="' + schbtJ1 + '" width="64" height="21" border="0" alt="æ¤œç´¢" tabindex="3"></a>';
 var searchbuttonAE1 = '<a href="#"><img onfocus="SearchEOn(this);" onblur="SearchEOff(this);" onmouseover="SearchEOn(this);" onmouseout="SearchEOff(this);" src="' + schbtE1 + '" width="64" height="21" border="0" alt="SEARCH" tabindex="3"></a>';
 
-var searchbuttonBJ1 = '<a href="#"><img onfocus="SearchJOn(this);" onblur="SearchJOff(this);" onmouseover="SearchJOn(this);" onmouseout="SearchJOff(this);" src="' + schbtJ1 + '" width="64" height="21" border="0" alt="¸¡º÷" tabindex="8"></a>';
+var searchbuttonBJ1 = '<a href="#"><img onfocus="SearchJOn(this);" onblur="SearchJOff(this);" onmouseover="SearchJOn(this);" onmouseout="SearchJOff(this);" src="' + schbtJ1 + '" width="64" height="21" border="0" alt="æ¤œç´¢" tabindex="8"></a>';
 var searchbuttonBE1 = '<a href="#"><img onfocus="SearchEOn(this);" onblur="SearchEOff(this);" onmouseover="SearchEOn(this);" onmouseout="SearchEOff(this);" src="' + schbtE1 + '" width="64" height="21" border="0" alt="SEARCH" tabindex="8"></a>';
 
 
 if( typeof(applyTabNum) != 'undefined' )
 {
 	///// APPLY BUTTON /////
-	var applybuttonJ1 = '<a href="#"><img name="AppBt" onfocus="ApplyJOn(this);" onblur="ApplyJOff(this);" onmouseover="ApplyJOn(this);" onmouseout="ApplyJOff(this);" src="' + aplybtJ1 + '" width="64" height="21" border="0" alt="Å¬ÍÑ" tabindex="' + applyTabNum + '"></a>';
+	var applybuttonJ1 = '<a href="#"><img name="AppBt" onfocus="ApplyJOn(this);" onblur="ApplyJOff(this);" onmouseover="ApplyJOn(this);" onmouseout="ApplyJOff(this);" src="' + aplybtJ1 + '" width="64" height="21" border="0" alt="é©ç”¨" tabindex="' + applyTabNum + '"></a>';
 	var applybuttonE1 = '<a href="#"><img name="AppBt" onfocus="ApplyEOn(this);" onblur="ApplyEOff(this);" onmouseover="ApplyEOn(this);" onmouseout="ApplyEOff(this);" src="' + aplybtE1 + '" width="64" height="21" border="0" alt="APPLY" tabindex="' + applyTabNum + '"></a>';
 }
 
 
 
 ///// CLEAR BUTTON /////
-var clearbuttonJ1 = '<a href="#"><img onmouseover="ClearJOn(this);" onmouseout="ClearJOff(this);" src="' + clrbtJ1 + '" width="64" height="21" border="0" alt="¥¯¥ê¥¢"></a>';
+var clearbuttonJ1 = '<a href="#"><img onmouseover="ClearJOn(this);" onmouseout="ClearJOff(this);" src="' + clrbtJ1 + '" width="64" height="21" border="0" alt="ã‚¯ãƒªã‚¢"></a>';
 var clearbuttonE1 = '<a href="#"><img onmouseover="ClearEOn(this);" onmouseout="ClearEOff(this);" src="' + clrbtE1 + '" width="64" height="21" border="0" alt="CLEAR"></a>';
 
 

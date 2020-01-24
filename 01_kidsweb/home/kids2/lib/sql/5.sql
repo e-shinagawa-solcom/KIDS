@@ -1,2 +1,2 @@
-// No5: À¸»º¹©¾ì¥³¡¼¥É			¢ª À¸»º¹©¾ìÌ¾(¾¦ÉÊÅĞÏ¿¡§watanabe)
+// No5: ç”Ÿç”£å·¥å ´ã‚³ãƒ¼ãƒ‰			â†’ ç”Ÿç”£å·¥å ´å(å•†å“ç™»éŒ²ï¼šwatanabe)
 SELECT c.strcompanydisplaycode, c.strcompanydisplayname FROM m_company c, m_attribute a, m_attributerelation al WHERE c.lngcompanycode = al.lngcompanycode AND al.lngattributecode = a.lngattributecode AND al.lngattributecode in (3,4) AND strcompanydisplaycode = '_%strFormValue0%_'

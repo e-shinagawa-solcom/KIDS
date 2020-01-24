@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Þ¥¹¥¿´ÉÍý ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Þ¥¹¥¿ ¥Ç¡¼¥¿ÆþÎÏ²èÌÌ
+*	ãƒžã‚¹ã‚¿ç®¡ç† ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒžã‚¹ã‚¿ ãƒ‡ãƒ¼ã‚¿å…¥åŠ›ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,11 +10,11 @@
 *	@version   1.00
 *
 */
-// ÅÐÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID  -> edit.php
 // index.php -> lngActionCode -> edit.php
 //
-// ³ÎÇ§²èÌÌ¤Ø
+// ç¢ºèªç”»é¢ã¸
 // edit.php -> strSessionID              -> confirm.php
 // edit.php -> lngActionCode             -> confirm.php
 // edit.php -> strWorkflowOrderName      -> confirm.php
@@ -22,30 +22,30 @@
 // edit.php -> strOrderData              -> confirm.php
 
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -53,38 +53,38 @@ $aryCheck["strSessionID"]  = "null:numenglish(32,32)";
 $aryCheck["lngActionCode"] = "null:number(" . DEF_ACTION_INSERT . "," . DEF_ACTION_INSERT . ")";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
-// ¥¨¥é¡¼¤¬¤Ê¤¤¾ì¹ç¡¢¥Þ¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®¡¢Ê¸»úÎó¥Á¥§¥Ã¥¯¼Â¹Ô
+// ã‚¨ãƒ©ãƒ¼ãŒãªã„å ´åˆã€ãƒžã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆã€æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( join ( $aryCheckResult ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥Þ¥¹¥¿´ÉÍý¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ãƒžã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 
-// ¥Þ¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒžã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->setMasterTable( "m_WorkflowOrder", "lngWorkflowOrderCode", "", "", $objDB );
 
 
 
-// ¥«¥é¥à¿ô¼èÆÀ
+// ã‚«ãƒ©ãƒ æ•°å–å¾—
 $lngColumnNum = count ( $objMaster->aryColumnName );
 
 //////////////////////////////////////////////////////////////////////////
-// ÆþÎÏÍóÉ½¼¨½èÍý
+// å…¥åŠ›æ¬„è¡¨ç¤ºå‡¦ç†
 //////////////////////////////////////////////////////////////////////////
-// ¥ï¡¼¥¯¥Õ¥í¡¼½ç½øÌ¾
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºå
 $aryParts["strWorkflowOrderName"] = fncHTMLSpecialChars( $aryData["strWorkflowOrderName"] );
 
-// ¥°¥ë¡¼¥×Ì¾
+// ã‚°ãƒ«ãƒ¼ãƒ—å
 $aryParts["strWorkflowOrderGroupCode"] = fncGetPulldown( "m_Group", "lngGroupCode", "strGroupDisplayCode || ':' || strGroupDisplayName", $aryData["lngWorkflowOrderGroupCode"], "", $objDB );
 
-// ´ü¸ÂÆþÎÏ
+// æœŸé™å…¥åŠ›
 
-// ½çÈÖ¥Ç¡¼¥¿ÁªÂò¸µ¥ê¥¹¥È
+// é †ç•ªãƒ‡ãƒ¼ã‚¿é¸æŠžå…ƒãƒªã‚¹ãƒˆ
 $aryParts["strOrderDataFrom"] = "";
 if ( $aryData["lngWorkflowOrderGroupCode"] > -1 )
 {
@@ -94,7 +94,7 @@ if ( $aryData["lngWorkflowOrderGroupCode"] > -1 )
 
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ÐÎÏ½èÍý
+// çµæžœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 //echo fncGetReplacedHtml( "m/regist/parts.tmpl", $aryData, $objAuth );
 
@@ -105,7 +105,7 @@ $aryParts["lngLanguageCode"] =1;
 $aryParts["strTableName"]    =& $objMaster->strTableName;
 $aryParts["lngActionCode"]   = DEF_ACTION_INSERT;
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/regist/wf/edit.tmpl" );
 $objTemplate->replace( $aryParts );
@@ -115,7 +115,7 @@ echo $objTemplate->strTemplate;
 
 /*
 ?>
-<!-- ¥Ç¡¼¥¿¥Ð¥¤¥ó¥ÉÍÑ¥ª¥Ö¥¸¥§¥¯¥È -->
+<!-- ãƒ‡ãƒ¼ã‚¿ãƒã‚¤ãƒ³ãƒ‰ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ -->
 <script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
 <script type="text/javascript" language="javascript" src="functions.js"></script>
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting" WIDTH="0" HEIGHT="0"></OBJECT>

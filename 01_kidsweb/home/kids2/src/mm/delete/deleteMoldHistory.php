@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- * �ⷿ������� �������
+ * 金型履歴管理 削除処理
  */
 // ----------------------------------------------------------------------------
 include('conf.inc');
@@ -25,33 +25,33 @@ $objDB->open ( "", "", "", "" );
 
 $aryData = $_REQUEST;
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession ( $aryData ["strSessionID"], $objAuth, $objDB);
 
-// 1800 �ⷿ�������
+// 1800 金型履歴管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 1805 �ⷿ�������(���)
+// 1805 金型履歴管理(削除)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM5, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// �ѥ�᡼������
+// パラメータ取得
 $moldNo = $_REQUEST["MoldNo"];
 $historyNo = $_REQUEST["HistoryNo"];
 $version = $_REQUEST["Version"];
 
 if (!$moldNo && !(0 <= $historyNo) && !(0 <= $version))
 {
-	// ����μ����˼��Ԥ��ޤ���
+	// 情報の取得に失敗しました
 	fncOutputError(9061, DEF_ERROR, "", TRUE, "", $objDB);
 }
 
-// �桼�ƥ���ƥ��Υ��󥹥��󥹼���
+// ユーティリティのインスタンス取得
 $utilMold = UtilMold::getInstance();
 $utilBussinesscode = UtilBussinesscode::getInstance();
 $utilCompany = UtilCompany::getInstance();
@@ -59,16 +59,16 @@ $utilGroup = UtilGroup::getInstance();
 $utilUser = UtilUser::getInstance();
 $utilProduct = UtilProduct::getInstance();
 
-// �ⷿ����κ���
+// 金型履歴の索引
 try
 {
-	// �ⷿ����
+	// 金型情報
 	$record = $utilMold->selectMoldHistory($moldNo, $historyNo, $version);
 	$infoMold = $utilMold->selectMold($moldNo);
 	$status = $record[TableMoldHistory::Status];
-	$descStatus = $utilBussinesscode->getDescription("�ⷿ���ơ�����", $status);
+	$descStatus = $utilBussinesscode->getDescription("金型ステータス", $status);
 
-	// ���ʥ�����/̾��
+	// 製品コード/名称
 	$productCode = $infoMold[TableMold::ProductCode];
 	$reviseCode = $infoMold[TableMold::ReviseCode];
 	$productName = $utilProduct->selectProductNameByProductCode($productCode, $reviseCode);
@@ -77,11 +77,11 @@ try
 	{
 		case "10":
 		case "20":
-			// �ݴɹ���
+			// 保管工場
 			$srcFactoryCode = $record[TableMoldHistory::SourceFactory];
 			$displaySrcFactoryCode = $utilCompany->selectDisplayCodeByCompanyCode($srcFactoryCode);
 			$displaySrcFactoryName = $utilCompany->selectDisplayNameByCompanyCode($srcFactoryCode);
-			// ��ư�蹩��
+			// 移動先工場
 			$dstFactoryCode = $record[TableMoldHistory::DestinationFactory];
 			$displayDstFactoryCode = $utilCompany->selectDisplayCodeByCompanyCode($dstFactoryCode);
 			$displayDstFactoryName = $utilCompany->selectDisplayNameByCompanyCode($dstFactoryCode);
@@ -92,21 +92,21 @@ try
 }
 catch (SQLException $e)
 {
-	// ����μ����˼��Ԥ��ޤ���
-	fncOutputError(9061, DEF_ERROR, "�����ʥǡ������оݤΥǡ������ѹ����줿��ǽ��������ޤ���", TRUE, "", $objDB);
+	// 情報の取得に失敗しました
+	fncOutputError(9061, DEF_ERROR, "不正なデータか対象のデータが変更された可能性があります。", TRUE, "", $objDB);
 }
 
-// �ⷿ����쥳���ɤ�̵����
+// 金型履歴レコードの無効化
 $affect_count = $utilMold->disableMoldHistory($moldNo, $historyNo, $version);
 
-// �ִ�ʸ���󷲤κ���
+// 置換文字列群の作成
 $replacement = $record;
 
-// �ƥ�ץ졼���ɤ߹���
+// テンプレート読み込み
 $objTemplate = new clsTemplate ();
 $objTemplate->getTemplate ("/mm/delete/mm_finish_delete.html");
 
-// �ץ졼���ۥ�����ִ�
+// プレースホルダー置換
 $objTemplate->replace($replacement);
 $objTemplate->complete();
 

@@ -1,6 +1,6 @@
 <?
 	/** 
-	*	¥ï¡¼¥¯¥Õ¥í¡¼ °Æ·ï°ìÍ÷É½¼¨²èÌÌ
+	*	ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ æ¡ˆä»¶ä¸€è¦§è¡¨ç¤ºç”»é¢
 	*
 	*	@package   KIDS
 	*	@license   http://www.wiseknot.co.jp/ 
@@ -11,10 +11,10 @@
 	*
 	*/
 	// -------------------------------------------------------------------------
-	// ¶¦ÄÌ¤·¤ÆÅê¤²¤ëÊÑ¿ô(ÅÏ¤¹»ş¤ÎURL¤ò lib_wf.php ¤«¤é fncGetURL($aryData) ¤Ç¼èÆÀ²Ä)
+	// å…±é€šã—ã¦æŠ•ã’ã‚‹å¤‰æ•°(æ¸¡ã™æ™‚ã®URLã‚’ lib_wf.php ã‹ã‚‰ fncGetURL($aryData) ã§å–å¾—å¯)
 	// *.php -> strSessionID          -> index.php
 
-	// ¤É¤Î¥Ú¡¼¥¸¤«¤é¤­¤¿¤Î¤«¤òÈ½ÊÌ¤¹¤ë¤¿¤á¤Îµ¡Ç½¥³¡¼¥É
+	// ã©ã®ãƒšãƒ¼ã‚¸ã‹ã‚‰ããŸã®ã‹ã‚’åˆ¤åˆ¥ã™ã‚‹ãŸã‚ã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
 	// *.php -> lngFunctionCode       -> index.php
 
 	// *.php -> lngWorkflowStatusCode        -> index.php
@@ -26,17 +26,17 @@
 	// *.php -> dtmEndDateTo                 -> index.php
 	// *.php -> lngInChargeCode              -> index.php
 
-	// É½¼¨¤¹¤ë°Æ·ï¤Îµ¡Ç½¥³¡¼¥É(DEF_FUNCTION)(½é´ü¤Ï500:È¯Ãí´ÉÍı¤Î¤ß)
+	// è¡¨ç¤ºã™ã‚‹æ¡ˆä»¶ã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰(DEF_FUNCTION)(åˆæœŸã¯500:ç™ºæ³¨ç®¡ç†ã®ã¿)
 	// *.php -> lngSelectFunctionCode -> index.php
 
 	// -------------------------------------------------------------------------
-	// °Æ·ï°ìÍ÷¤è¤ê
+	// æ¡ˆä»¶ä¸€è¦§ã‚ˆã‚Š
 	// /wf/list/index.php -> strSessionID                       -> index.php
 	// /wf/list/index.php -> lngFunctionCode                    -> index.php
 	// /wf/list/index.php -> ViewColumn[]                       -> index.php
 	// /wf/list/index.php -> SearchColumn[]                     -> index.php
 	//
-	// ¸¡º÷É½¼¨¹àÌÜ(ViewColumn[]¤ÎÃæ¿È)key¤Ï¿ôÃÍÏ¢ÈÖvalue¤Ï²¼µ­Ê¸»úÎó
+	// æ¤œç´¢è¡¨ç¤ºé …ç›®(ViewColumn[]ã®ä¸­èº«)keyã¯æ•°å€¤é€£ç•ªvalueã¯ä¸‹è¨˜æ–‡å­—åˆ—
 	// /wf/search/search.php -> lngWorkflowStatusCodeVisible       -> index.php
 	// /wf/search/search.php -> lngApplicantUserDisplayCodeVisible -> index.php
 	// /wf/search/search.php -> lngInputUserCodeVisible            -> index.php
@@ -45,7 +45,7 @@
 	// /wf/search/search.php -> lngInChargeCodeVisible             -> index.php
 	// /wf/search/search.php -> lngSelectFunctionCodeVisible       -> index.php
 
-	// ¸¡º÷¾ò·ï¹àÌÜ(SearchColumn[]¤ÎÃæ¿È)key¤Ï¿ôÃÍÏ¢ÈÖvalue¤Ï²¼µ­Ê¸»úÎó
+	// æ¤œç´¢æ¡ä»¶é …ç›®(SearchColumn[]ã®ä¸­èº«)keyã¯æ•°å€¤é€£ç•ªvalueã¯ä¸‹è¨˜æ–‡å­—åˆ—
 	// /wf/search/search.php -> lngWorkflowStatusCodeConditions   -> index.php
 	// /wf/search/search.php -> lngApplicantUserCodeConditions    -> index.php
 	// /wf/search/search.php -> lngInputUserDisplayCodeConditions -> index.php
@@ -55,54 +55,54 @@
 	// /wf/search/search.php -> lngSelectFunctionCodeConditions   -> index.php
 	//
 	// -------------------------------------------------------------------------
-	// °Æ·ï¸¡º÷¤è¤ê
-	// ¶¦ÄÌ¤·¤ÆÅê¤²¤ëÊÑ¿ô¡Ü
+	// æ¡ˆä»¶æ¤œç´¢ã‚ˆã‚Š
+	// å…±é€šã—ã¦æŠ•ã’ã‚‹å¤‰æ•°ï¼‹
 	// /wf/search/search.php -> ViewColumn[]                    -> index.php
 	// /wf/search/search.php -> SearchColumn[]                  -> index.php
 	// /wf/search/search.php -> lngDefaultNumBerofList          -> index.php
 	//
 	// -------------------------------------------------------------------------
-	// ¥Ú¡¼¥¸ÊÑ¹¹¤Ø
-	// ¶¦ÄÌ¤·¤ÆÅê¤²¤ëÊÑ¿ô¡Ü
+	// ãƒšãƒ¼ã‚¸å¤‰æ›´ã¸
+	// å…±é€šã—ã¦æŠ•ã’ã‚‹å¤‰æ•°ï¼‹
 	// index.php -> lngPage                -> index.php
 	// index.php -> strSort                -> index.php
 	// index.php -> lngDefaultNumBerofList -> index.php
 	//
 	// -------------------------------------------------------------------------
-	// ¥½¡¼¥È¤Ø
-	// ¶¦ÄÌ¤·¤ÆÅê¤²¤ëÊÑ¿ô¡Ü
+	// ã‚½ãƒ¼ãƒˆã¸
+	// å…±é€šã—ã¦æŠ•ã’ã‚‹å¤‰æ•°ï¼‹
 	// index.php -> lngPage                -> index.php
 	// index.php -> strSort                -> index.php
 	// index.php -> lngDefaultNumBerofList -> index.php
 	//
 	// -------------------------------------------------------------------------
-	// ¾ÜºÙÉ½¼¨¤Ø
-	// ¶¦ÄÌ¤·¤ÆÅê¤²¤ëÊÑ¿ô¡Ü
+	// è©³ç´°è¡¨ç¤ºã¸
+	// å…±é€šã—ã¦æŠ•ã’ã‚‹å¤‰æ•°ï¼‹
 	// index.php -> lngWorkflowCode       -> detail.php
 	//
 	// -------------------------------------------------------------------------
-	// ½èÍı¤Ø
-	// ¶¦ÄÌ¤·¤ÆÅê¤²¤ëÊÑ¿ô¡Ü
+	// å‡¦ç†ã¸
+	// å…±é€šã—ã¦æŠ•ã’ã‚‹å¤‰æ•°ï¼‹
 	// index.php -> lngWorkflowCode       -> edit.php
 
-	// lib_wf.php¤Ë¤ÆÆÉ¤ß¹ş¤à¥¯¥¨¥ê¤ò¶èÊÌ¤¹¤ë¤¿¤á¤Î½èÍı¥³¡¼¥É(´ğËÜ¤ÏDEF_FUNCTION_WF6)
+	// lib_wf.phpã«ã¦èª­ã¿è¾¼ã‚€ã‚¯ã‚¨ãƒªã‚’åŒºåˆ¥ã™ã‚‹ãŸã‚ã®å‡¦ç†ã‚³ãƒ¼ãƒ‰(åŸºæœ¬ã¯DEF_FUNCTION_WF6)
 	// index.php -> lngActionFunctionCode -> edit.php
 
-	// ÀßÄêÆÉ¤ß¹ş¤ß
+	// è¨­å®šèª­ã¿è¾¼ã¿
 	include_once('conf.inc');
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require (LIB_FILE);
 	require (SRC_ROOT . "wf/cmn/lib_wf.php");
 	require( LIB_DEBUGFILE );
 
-	// DBÀÜÂ³
+	// DBæ¥ç¶š
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
 	$objDB->open( "", "", "", "" );
 
 	//////////////////////////////////////////////////////////////////////////
-	// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+	// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 	//////////////////////////////////////////////////////////////////////////
 	if ( $_POST )
 	{
@@ -113,7 +113,7 @@
 		$aryData = $_GET;
 	}
 
-	// ¸¡º÷É½¼¨¹àÌÜ¼èÆÀ
+	// æ¤œç´¢è¡¨ç¤ºé …ç›®å–å¾—
 	if ( $lngArrayLength = count ( $aryData["ViewColumn"] ) )
 	{
 		$aryColumn = $aryData["ViewColumn"];
@@ -125,7 +125,7 @@
 		$aryColumn = "";
 	}
 
-	// ¸¡º÷¾ò·ï¹àÌÜ¼èÆÀ
+	// æ¤œç´¢æ¡ä»¶é …ç›®å–å¾—
 	if ( $lngArrayLength = count ( $aryData["SearchColumn"] ) )
 	{
 		$aryColumn = $aryData["SearchColumn"];
@@ -137,19 +137,19 @@
 		$aryColumn = "";
 	}
 	
-	// ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÇÅÏ¤µ¤ì¤¿WF¥¹¥Æ¡¼¥¿¥¹¤òÊ¸»úÎó¤ÇÀßÄê
+	// ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã§æ¸¡ã•ã‚ŒãŸWFã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚’æ–‡å­—åˆ—ã§è¨­å®š
 	$aryData["lngWorkflowStatusCode"] = fncGetArrayToWorkflowStatusCode($aryData["lngWorkflowStatusCode"]);
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¥»¥Ã¥·¥ç¥ó¡¢¸¢¸Â³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ã€æ¨©é™ç¢ºèª
 	//////////////////////////////////////////////////////////////////////////
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	if ( ( $aryData["lngFunctionCode"] != DEF_FUNCTION_WF1 && $aryData["lngFunctionCode"] != DEF_FUNCTION_WF2 && $aryData["lngFunctionCode"] != DEF_FUNCTION_WF3 ) || !fncCheckAuthority( $aryData["lngFunctionCode"], $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 	if ( $aryData["lngFunctionCode"] != DEF_FUNCTION_WF1 && fncCheckAuthority( DEF_FUNCTION_WF3, $objAuth ) )
 	{
@@ -158,7 +158,7 @@
 
 
 	//////////////////////////////////////////////////////////////////////////
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	//////////////////////////////////////////////////////////////////////////
 	$aryCheck["strSessionID"]           = "null:numenglish(32,32)";
 	$aryCheck["lngFunctionCode"]        = "null:number(" . DEF_FUNCTION_WF1 . "," . DEF_FUNCTION_WF3 . ")";
@@ -175,61 +175,61 @@
 	$aryCheck["lngSelectFunctionCode"]  = "number(0,32767)";
 	$aryCheck["lngDefaultNumBerofList"] = "number(0,100)";
 
-	// ¥Ú¡¼¥¸¿ô½é´ü²½
+	// ãƒšãƒ¼ã‚¸æ•°åˆæœŸåŒ–
 	if ( !$aryData["lngPage"] )
 	{
 		$aryData["lngPage"] = 0;
 	}
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryCheckResult, $objDB );
 
-	// ¥½¡¼¥È½é´ü²½
+	// ã‚½ãƒ¼ãƒˆåˆæœŸåŒ–
 	if ( !$aryData["strSort"] )
 	{
 		$aryData["strSort"] = "column_7_ASC";
 	}
 
-	// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ¤Î½é´ü²½(¥Ç¥Õ¥©¥ë¥È¡á¡Ö¿½ÀÁÃæ¡×°Æ·ï)
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹ã®åˆæœŸåŒ–(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼ã€Œç”³è«‹ä¸­ã€æ¡ˆä»¶)
 	if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_WF1 )
 	{
 		$aryData["lngWorkflowStatusCode"] = DEF_STATUS_ORDER;
 	}
 
-	// ¶¦ÄÌµ¡Ç½¥Ş¥¹¥¿¤«¤é¡ÖÉ½¼¨·ï¿ô¡×¤ò¼èÆÀ
+	// å…±é€šæ©Ÿèƒ½ãƒã‚¹ã‚¿ã‹ã‚‰ã€Œè¡¨ç¤ºä»¶æ•°ã€ã‚’å–å¾—
 	if ( $aryData["lngDefaultNumBerofList"] == "" )
 	{
 		$aryData["lngDefaultNumBerofList"] = fncGetCommonFunction( "defaultnumberoflist", "m_commonfunction", $objDB );
 	}
 
-	// ¡Ö½èÍı¥Ü¥¿¥ó¡×É½¼¨³ÎÇ§¤Î¤¿¤á¤Î
-	// ¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤Î¥ï¡¼¥¯¥Õ¥í¡¼¥³¡¼¥É¤ÈÈÖ¹æ¤ò¼èÆÀ
+	// ã€Œå‡¦ç†ãƒœã‚¿ãƒ³ã€è¡¨ç¤ºç¢ºèªã®ãŸã‚ã®
+	// ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã‚³ãƒ¼ãƒ‰ã¨ç•ªå·ã‚’å–å¾—
 	list ( $aryWorkflowOrderCode, $aryWorkflowOrderNo ) = fncGetArrayData( $objAuth->UserCode, 0, $objDB );
 
-	// ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍı
-	// °Æ·ïÆÉ¤ß¹ş¤ß¡¢¸¡º÷¡¢¾ÜºÙ¾ğÊó¼èÆÀ¥¯¥¨¥ê´Ø¿ô
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†
+	// æ¡ˆä»¶èª­ã¿è¾¼ã¿ã€æ¤œç´¢ã€è©³ç´°æƒ…å ±å–å¾—ã‚¯ã‚¨ãƒªé–¢æ•°
 	list ( $lngResultID, $lngResultNum, $baseData["strErrorMessage"] ) = getWorkflowQuery( $objAuth->UserCode, $aryData, $objDB );
 
-	// ¶¦ÄÌ¼õ¤±ÅÏ¤·URLÀ¸À®(¥»¥Ã¥·¥ç¥óID¡¢¥Ú¡¼¥¸¡¢³Æ¸¡º÷¾ò·ï)
+	// å…±é€šå—ã‘æ¸¡ã—URLç”Ÿæˆ(ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã€ãƒšãƒ¼ã‚¸ã€å„æ¤œç´¢æ¡ä»¶)
 	$strURL = fncGetURL( $aryData );
 
-	// ¥¯¥Ã¥­¡¼¤«¤é¸À¸ì¥³¡¼¥É¤ò¼èÆÀ
+	// ã‚¯ãƒƒã‚­ãƒ¼ã‹ã‚‰è¨€èªã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 	$partsData["lngLanguageCode"] = $baseData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
 	//////////////////////////////////////////////////////////////////////////
-	// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+	// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 	//////////////////////////////////////////////////////////////////////////
-	// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+	// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "wf/result/parts.tmpl" );
 	$strPartsTemplate = $objTemplate->strTemplate;
 
 
-	// ¥Ú¡¼¥¸¿ô½èÍı
+	// ãƒšãƒ¼ã‚¸æ•°å‡¦ç†
 	if ( $aryData["lngDefaultNumBerofList"] == 0 )
 	{
-		// Á´·ïÉ½¼¨
+		// å…¨ä»¶è¡¨ç¤º
 		$lngStartView = 0;
 		$lngEndView   = $lngResultNum;
 		$baseData["prev_visibility"] = "hidden";
@@ -237,7 +237,7 @@
 	}
 	else
 	{
-		// ¥Ú¡¼¥¸¿ô½èÍı
+		// ãƒšãƒ¼ã‚¸æ•°å‡¦ç†
 		$baseData["prev"]            = "index.php?$strURL&strSort=$aryData[strSort]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]&lngPage=" . ( $aryData["lngPage"] - 1 );
 		$baseData["prev_visibility"] = "visible";
 		if ( $lngResultNum )
@@ -247,7 +247,7 @@
 		$baseData["next"]            = "index.php?$strURL&strSort=$aryData[strSort]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]&lngPage=" . ( $aryData["lngPage"] + 1 );
 		$baseData["next_visibility"] = "visible";
 
-		// ¸¡º÷·ë²Ì¿ô¡¢É½¼¨¥Ú¡¼¥¸¡¢É½¼¨¿ô¤«¤é¡¢·ë²ÌÉ½¼¨ÎÎ°è¤òÀßÄê
+		// æ¤œç´¢çµæœæ•°ã€è¡¨ç¤ºãƒšãƒ¼ã‚¸ã€è¡¨ç¤ºæ•°ã‹ã‚‰ã€çµæœè¡¨ç¤ºé ˜åŸŸã‚’è¨­å®š
 		if ( $lngResultNum - $aryData["lngDefaultNumBerofList"] * $aryData["lngPage"] <= $aryData["lngDefaultNumBerofList"] )
 		{
 			$lngStartView = $aryData["lngPage"] * $aryData["lngDefaultNumBerofList"];
@@ -259,7 +259,7 @@
 			$lngStartView = $aryData["lngPage"] * $aryData["lngDefaultNumBerofList"];
 			$lngEndView   = ( $aryData["lngPage"] + 1 ) * $aryData["lngDefaultNumBerofList"];
 		}
-		// ºÇ½é¤Î¥Ú¡¼¥¸¤Î¾ì¹ç¡¢¡Öprev¡×¤òÉ½¼¨¤·¤Ê¤¤
+		// æœ€åˆã®ãƒšãƒ¼ã‚¸ã®å ´åˆã€ã€Œprevã€ã‚’è¡¨ç¤ºã—ãªã„
 		if ( !$aryData["lngPage"] )
 		{
 			$baseData["prev"] = "";
@@ -268,54 +268,54 @@
 	}
 
 
-	// ¥Æ¡¼¥Ö¥ë¤ÎÎóÌ¾¤È¥½¡¼¥È½èÍı
+	// ãƒ†ãƒ¼ãƒ–ãƒ«ã®åˆ—åã¨ã‚½ãƒ¼ãƒˆå‡¦ç†
 	if ( $aryData["lngSelectFunctionCodeVisible"] )
 	{
-		// ¼ïÊÌ
-		$baseData["column9"] = "<td id=\"WF11\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_9_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">¼ïÊÌ</a></td>";
+		// ç¨®åˆ¥
+		$baseData["column9"] = "<td id=\"WF11\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_9_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">ç¨®åˆ¥</a></td>";
 	}
 	if ( $aryData["dtmStartDateVisible"] )
 	{
-		// ¿½ÀÁÆü
-		$baseData["column1"] = "<td id=\"WF02\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_1_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">¿½ÀÁÆü</a></td>";
+		// ç”³è«‹æ—¥
+		$baseData["column1"] = "<td id=\"WF02\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_1_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">ç”³è«‹æ—¥</a></td>";
 	}
-	// °Æ·ï¾ğÊó
-	$baseData["column2"] = "<td id=\"WF03\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_2_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">°Æ·ï¾ğÊó</a></td>";
+	// æ¡ˆä»¶æƒ…å ±
+	$baseData["column2"] = "<td id=\"WF03\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_2_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">æ¡ˆä»¶æƒ…å ±</a></td>";
 
 	if ( $aryData["lngApplicantUserDisplayCodeVisible"] )
 	{
-		// ¿½ÀÁ¼Ô
-		$baseData["column3"] = "<td id=\"WF04\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_3_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">¿½ÀÁ¼Ô</a></td>";
+		// ç”³è«‹è€…
+		$baseData["column3"] = "<td id=\"WF04\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_3_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">ç”³è«‹è€…</a></td>";
 	}
 
 	if ( $aryData["lngInputUserDisplayCodeVisible"] )
 	{
-		// ÆşÎÏ¼Ô
-		$baseData["column4"] = "<td id=\"WF05\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_4_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">ÆşÎÏ¼Ô</a></td>";
+		// å…¥åŠ›è€…
+		$baseData["column4"] = "<td id=\"WF05\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_4_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">å…¥åŠ›è€…</a></td>";
 	}
 
 	if ( $aryData["lngInChargeCodeVisible"] )
 	{
-		// ¾µÇ§¼Ô
-		$baseData["column5"] = "<td id=\"WF06\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_5_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">¾µÇ§¼Ô</a></td>";
+		// æ‰¿èªè€…
+		$baseData["column5"] = "<td id=\"WF06\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_5_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">æ‰¿èªè€…</a></td>";
 	}
 
-	// ´ü¸Â
-	$baseData["column6"] = "<td id=\"WF07\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_6_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">´ü¸Â</a></td>";
+	// æœŸé™
+	$baseData["column6"] = "<td id=\"WF07\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_6_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">æœŸé™</a></td>";
 
 	if ( $aryData["dtmEndDateVisible"] )
 	{
-		// ´°Î»Æü
-		$baseData["column8"] = "<td id=\"WF10\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_8_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">´°Î»Æü</a></td>";
+		// å®Œäº†æ—¥
+		$baseData["column8"] = "<td id=\"WF10\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_8_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">å®Œäº†æ—¥</a></td>";
 	}
 
 	if ( $aryData["lngWorkflowStatusCodeVisible"] )
 	{
-		// ¾õÂÖ
-		$baseData["column7"] = "<td id=\"WF08\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_7_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">¾õÂÖ</a></td>";
+		// çŠ¶æ…‹
+		$baseData["column7"] = "<td id=\"WF08\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_7_ASC&lngPage=$aryData[lngPage]&lngDefaultNumBerofList=$aryData[lngDefaultNumBerofList]';\"><a href=\"#\">çŠ¶æ…‹</a></td>";
 	}
 
-	// Æ±¤¸¹àÌÜ¤Î¥½¡¼¥È¤ÏµÕ½ç¤Ë¤¹¤ë½èÍı
+	// åŒã˜é …ç›®ã®ã‚½ãƒ¼ãƒˆã¯é€†é †ã«ã™ã‚‹å‡¦ç†
 	list ( $column, $lngSort, $DESC ) = explode ( "_", $aryData["strSort"] );
 
 	if ( $DESC == 'ASC' )
@@ -323,36 +323,36 @@
 		$baseData["column" . $lngSort] = preg_replace ( "/ASC/", "DESC", $baseData["column" . $lngSort] );
 	}
 
-	// $lngStartView ¤«¤é $lngEndView ¤À¤±¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥È¤ËËä¤á¹ş¤ß
+	// $lngStartView ã‹ã‚‰ $lngEndView ã ã‘ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«åŸ‹ã‚è¾¼ã¿
 	//for ( $i = 0; $i < $lngResultNum; $i++ )
 	for ( $i = $lngStartView; $i < $lngEndView; $i++ )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, $i );
 
-		// Ï¢ÈÖ
+		// é€£ç•ª
 		$partsData["number"]            = $i + 1;
-		// ¾ÜºÙURL
+		// è©³ç´°URL
 		$partsData["detail"]            = "/wf/result/detail.php?$strURL&lngWorkflowCode=" . $objResult->lngworkflowcode;
-		// ¼ïÊÌ
+		// ç¨®åˆ¥
 		if ( $aryData["lngSelectFunctionCodeVisible"] )
 		{
 			$partsData["lngSelectFunctionCode"]  = "<td nowrap>" . $aryFunctionCode[$objResult->lngfunctioncode] . "</td>";
 		}
-		// ¿½ÀÁÆü
+		// ç”³è«‹æ—¥
 		if ( $aryData["dtmStartDateVisible"] )
 		{
 			$partsData["dtmStartDate"]  = "<td nowrap>" . $objResult->dtmstartdate . "</td>";
 		}
 	/*
 		//
-		// È¯Ãí¡¦¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+		// ç™ºæ³¨ãƒ»ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 		//
 		if( $objResult->lngfunctioncode == DEF_FUNCTION_PO1 )
 		{
-			// È¯Ãí¤Ë¤Æ»ØÄê¤·¤Æ¤¤¤ëÀ½ÉÊ¥³¡¼¥É¤Î¼èÆÀ½èÍı
+			// ç™ºæ³¨ã«ã¦æŒ‡å®šã—ã¦ã„ã‚‹è£½å“ã‚³ãƒ¼ãƒ‰ã®å–å¾—å‡¦ç†
 			$strProductCodeQuery = "SELECT od.strProductCode as strProductCode FROM t_OrderDetail od WHERE od.lngOrderNo = " . $objResult->strworkflowkeycode;
 
-			// ÃÍ¤ò¤È¤ë =====================================
+			// å€¤ã‚’ã¨ã‚‹ =====================================
 			$lngEstimateNo = "";
 			list ( $lngResultProductCodeID, $lngResultProductCodeNum ) = fncQuery( $strProductCodeQuery, $objDB );
 			if ( $lngResultProductCodeNum )
@@ -361,7 +361,7 @@
 				$strProductCode = $objProductCodeResult->strproductcode;
 
 
-				// ¸«ÀÑ¸¶²Á¥Ç¡¼¥¿¼èÆÀ
+				// è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿å–å¾—
 				$aryEstimateQuery[] = "SELECT e.lngEstimateNo ";
 				$aryEstimateQuery[] = "FROM m_Estimate e";
 				$aryEstimateQuery[] = "WHERE e.strProductCode = '" . $strProductCode . "'";
@@ -385,24 +385,24 @@
 			}
 			$objDB->freeResult( $lngResultProductCodeID );
 
-			// ´û¤Ë»ØÄê¤ÎÀ½ÉÊ¥³¡¼¥É¤ËÂĞ¤·¤Æ¸«ÀÑ¸¶²Á¾ğÊó¤¬Â¸ºß¤¹¤ì¤Ğ
+			// æ—¢ã«æŒ‡å®šã®è£½å“ã‚³ãƒ¼ãƒ‰ã«å¯¾ã—ã¦è¦‹ç©åŸä¾¡æƒ…å ±ãŒå­˜åœ¨ã™ã‚Œã°
 			if ( $lngEstimateNo != "" )
 			{
-				// È¯ÃíÆâÍÆ¤È¸«ÀÑ¸¶²ÁÁĞÊı¤Î¥¦¥£¥ó¥É¥¦¤ò³«¤¯½èÍı
+				// ç™ºæ³¨å†…å®¹ã¨è¦‹ç©åŸä¾¡åŒæ–¹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ãå‡¦ç†
 				$partsData["strWorkflowName"]   = "<td onClick=\"javascript:fncShowWfDialogCommon('/po/result/index2.php?strSessionID=" . $aryData["strSessionID"] . "&lngOrderNo=" . $objResult->strworkflowkeycode . "' , window.form1 , 'ResultIframeWf' , 'YES' , " . $_COOKIE["lngLanguageCode"] . " , 'detail', 505, 679, 6, 30 );\"><a class=wfA href=\"/estimate/result/detail.php?strSessionID=" . $aryData["strSessionID"] . "&lngEstimateNo=" . $lngEstimateNo . "\" target=_blank>" . $objResult->strworkflowname . "</a></td>";
 			}
 		}
 		//
-		// ¸«ÀÑ¸¶²Á¡¦¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+		// è¦‹ç©åŸä¾¡ãƒ»ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 		//
 		elseif( $objResult->lngfunctioncode == DEF_FUNCTION_E0 )
 		{
-			// ¸«ÀÑ¸¶²Á¾ğÊóÆâÍÆ¤Î¥¦¥£¥ó¥É¥¦¤ò³«¤¯½èÍı
+			// è¦‹ç©åŸä¾¡æƒ…å ±å†…å®¹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ãå‡¦ç†
 			$partsData["strWorkflowName"]   = "<td><a class=wfA href=\"/estimate/result/detail.php?strSessionID=" . $aryData["strSessionID"] . "&lngEstimateNo=" . $objResult->strworkflowkeycode . "\" target=_blank>" . $objResult->strworkflowname . "</a></td>";
 		}
 
 		//
-		// ¾åµ­¡¢È¯Ãí¡Ê¸«ÀÑ¸¶²Á¡¦Ê»ÍÑ¡Ë¡¢¸«ÀÑ¸¶²Á¡¢¤Ë³ºÅö¤·¤Ê¤¤¡¢Â¾¤Î¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+		// ä¸Šè¨˜ã€ç™ºæ³¨ï¼ˆè¦‹ç©åŸä¾¡ãƒ»ä½µç”¨ï¼‰ã€è¦‹ç©åŸä¾¡ã€ã«è©²å½“ã—ãªã„ã€ä»–ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 		//
 		if( empty($partsData["strWorkflowName"]) )
 		{
@@ -410,43 +410,43 @@
 		}
 	*/
 	
-		// °Æ·ï¾ğÊó¡Ê³Æ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ¤«¤éÀ¸À®¡Ë
+		// æ¡ˆä»¶æƒ…å ±ï¼ˆå„ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹ã‹ã‚‰ç”Ÿæˆï¼‰
 		$partsData["strWorkflowName"] = fncGetWorkflowNameLink( $objDB, $objResult, $aryData["strSessionID"]);
 
-		// ¿½ÀÁ¼Ô
+		// ç”³è«‹è€…
 		if ( $aryData["lngApplicantUserDisplayCodeVisible"] )
 		{
 			$partsData["strApplicantName"] = "<td nowrap>" . $objResult->strapplicantname . "</td>";
 		}
-		// ÆşÎÏ¼Ô
+		// å…¥åŠ›è€…
 		if ( $aryData["lngInputUserDisplayCodeVisible"] )
 		{
 			$partsData["strInputName"]     = "<td nowrap>" . $objResult->strinputname . "</td>";
 		}
-		// ¾µÇ§¼Ô
+		// æ‰¿èªè€…
 		if ( $aryData["lngInChargeCodeVisible"] )
 		{
 			$partsData["strRecognitionName"]      = "<td nowrap>" . $objResult->strrecognitionname . "</td>";
 		}
-		// ´ü¸Â
+		// æœŸé™
 		$partsData["dtmLimitDate"]  = "<td nowrap>" . $objResult->dtmlimitdate . "</td>";
 
-		// ´°Î»´üÆü
+		// å®Œäº†æœŸæ—¥
 		if ( $aryData["dtmEndDateVisible"] )
 		{
 			$partsData["dtmEndDate"]    = "<td nowrap>" . $objResult->dtmenddate . "</td>";
 		}
-		// ¾õÂÖ
+		// çŠ¶æ…‹
 		if ( $aryData["lngWorkflowStatusCodeVisible"] )
 		{
 			$partsData["status"]        = "<td id=\"W0_%statusCode%_\" nowrap>" . $aryWorkflowStatus[$objResult->tstatuscode] . "</td>";
 		}
 
-		// ½èÍıURL¡¢½èÍı¥Ü¥¿¥ó¤Î²Ä»ë¡¢ÉÔ²Ä»ë¥Õ¥é¥°½é´ü²½
+		// å‡¦ç†URLã€å‡¦ç†ãƒœã‚¿ãƒ³ã®å¯è¦–ã€ä¸å¯è¦–ãƒ•ãƒ©ã‚°åˆæœŸåŒ–
 		$bytTransactionFlag = 0;
 
-		// ½èÍıURL¡¢½èÍı¥Ü¥¿¥ó¤Î²Ä»ë¡¢ÉÔ²Ä»ëÀßÄê
-		// ¡Ö¿½ÀÁÃæ¡×¤«¤Ä¾µÇ§¼Ô¤Ş¤¿¤ÏÆşÎÏ¼Ô¤Î¾ì¹çÉ½¼¨
+		// å‡¦ç†URLã€å‡¦ç†ãƒœã‚¿ãƒ³ã®å¯è¦–ã€ä¸å¯è¦–è¨­å®š
+		// ã€Œç”³è«‹ä¸­ã€ã‹ã¤æ‰¿èªè€…ã¾ãŸã¯å…¥åŠ›è€…ã®å ´åˆè¡¨ç¤º
 		if ( $objResult->tstatuscode == DEF_STATUS_ORDER && ( $objResult->lnginchargecode == $objAuth->UserCode || $objResult->lnginputusercode == $objAuth->UserCode ) )
 		{
 			$bytTransactionFlag = 1;
@@ -454,8 +454,8 @@
 		}
 		elseif ( $objResult->tstatuscode == DEF_STATUS_ORDER && count ( $aryWorkflowOrderCode ) )
 		{
-			// ¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤Î¥ï¡¼¥¯¥Õ¥í¡¼½çÈÖÈÖ¹æ¤¬
-			// É½¼¨¤¹¤ë°Æ·ï¤ÎÈÖ¹æ¤è¤ê¾®¤µ¤¤¾ì¹ç
+			// ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †ç•ªç•ªå·ãŒ
+			// è¡¨ç¤ºã™ã‚‹æ¡ˆä»¶ã®ç•ªå·ã‚ˆã‚Šå°ã•ã„å ´åˆ
 			for ( $j = 0; $j < count ( $aryWorkflowOrderCode ); $j++ )
 			{
 				if ( $aryWorkflowOrderCode[$j] == $objResult->lngworkflowordercode && $aryWorkflowOrderNo[$j] < $objResult->lngworkfloworderno )
@@ -477,7 +477,7 @@
 			$partsData["edit"]            = "";
 		}
 
-		// ¾µÇ§´ü¸ÂÀÚ¤ì½èÍı(Ê¸»ú¤Î¿§¤òÊÑ¤¨¤ë)
+		// æ‰¿èªæœŸé™åˆ‡ã‚Œå‡¦ç†(æ–‡å­—ã®è‰²ã‚’å¤‰ãˆã‚‹)
 		$partsData["limitcolor"] = "";
 
 		if ( $objResult->lnglimitdate < 0 )
@@ -485,34 +485,34 @@
 			$partsData["limitcolor"] = " style=\"color:#ff0000;\"";
 		}
 
-		// ¥Æ¥ó¥×¥ì¡¼¥È¤ò¥³¥Ô¡¼¤·¡¢¥Ç¡¼¥¿Ï¢ÁÛÇÛÎó¤Î¥­¡¼¤òÇÛÎó¤Ë¼èÆÀ
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ã‚³ãƒ”ãƒ¼ã—ã€ãƒ‡ãƒ¼ã‚¿é€£æƒ³é…åˆ—ã®ã‚­ãƒ¼ã‚’é…åˆ—ã«å–å¾—
 		$strParts = $strPartsTemplate;
 		$partsDataKeys = array_keys( $partsData );
 
-		// ¥«¥é¥à¤Î¿ô¤À¤±ÃÖ¤­´¹¤¨
+		// ã‚«ãƒ©ãƒ ã®æ•°ã ã‘ç½®ãæ›ãˆ
 		foreach ( $partsDataKeys as $key )
 		{
 			$strParts = preg_replace ( "/_%" . $key . "%_/", "$partsData[$key]", $strParts );
 		}
 
 
-		// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$baseData["tabledata"] .= $strParts;
 	}
 
 	$objDB->freeResult( $lngResultID );
 
 	$baseData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+	// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate->getTemplate( "wf/result/base.tmpl" );
 
 	$baseData["HIDDEN"] = getArrayTable( $aryData, "HIDDEN" );
 
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $baseData );
 	$objTemplate->complete();
 
-	// HTML½ĞÎÏ
+	// HTMLå‡ºåŠ›
 	echo $objTemplate->strTemplate;
 
 	$objDB->close();

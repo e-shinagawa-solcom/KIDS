@@ -5,20 +5,20 @@ require_once (SRC_ROOT. "/estimate/cmn/estimateRowController.php");
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
 class fixedCostOrderRowController extends estimateRowController {
-    protected static $customerCompanyCodeMaster; // ¸ÜµÒÀè¡¢»ÅÆþÀè¥Þ¥¹¥¿¡¼
-    protected static $divisionSubjectCodeMaster; // Çä¾åÊ¬Îà¡¢»ÅÆþ²ÊÌÜ¥Þ¥¹¥¿¡¼(Çä¾å¶èÊ¬¡¢»ÅÆþÉôÉÊ·ë¹çºÑ¤ß¡Ë
+    protected static $customerCompanyCodeMaster; // é¡§å®¢å…ˆã€ä»•å…¥å…ˆãƒžã‚¹ã‚¿ãƒ¼
+    protected static $divisionSubjectCodeMaster; // å£²ä¸Šåˆ†é¡žã€ä»•å…¥ç§‘ç›®ãƒžã‚¹ã‚¿ãƒ¼(å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥éƒ¨å“çµåˆæ¸ˆã¿ï¼‰
 
-    protected static $headerNameList; // ÂÐ¾Ý¥¨¥ê¥¢¤Î¥Ø¥Ã¥À¡¼¤Î¥»¥ëÌ¾¾Î
-    protected static $resultNameList; // ÂÐ¾Ý¥¨¥ê¥¢¤Î·×»»·ë²Ì¤Î¥»¥ëÌ¾¾Î(ÌÀºÙºÇ½ª¹Ô¤Î¼¡¤Î¹Ô)
+    protected static $headerNameList; // å¯¾è±¡ã‚¨ãƒªã‚¢ã®ãƒ˜ãƒƒãƒ€ãƒ¼ã®ã‚»ãƒ«åç§°
+    protected static $resultNameList; // å¯¾è±¡ã‚¨ãƒªã‚¢ã®è¨ˆç®—çµæžœã®ã‚»ãƒ«åç§°(æ˜Žç´°æœ€çµ‚è¡Œã®æ¬¡ã®è¡Œ)
 
-    // ¼è¤ê¹þ¤ßÃÍ
-    public $columnNumberList; // Îó¤ÎÈÖ¹æ¥ê¥¹¥È
-    protected $columnDisplayNameList; // Îó¤ÎÉ½¼¨Ì¾¥ê¥¹¥È
+    // å–ã‚Šè¾¼ã¿å€¤
+    public $columnNumberList; // åˆ—ã®ç•ªå·ãƒªã‚¹ãƒˆ
+    protected $columnDisplayNameList; // åˆ—ã®è¡¨ç¤ºåãƒªã‚¹ãƒˆ
 
-    protected $stockClassCode; // »ÅÆþ¶èÊ¬
+    protected $stockClassCode; // ä»•å…¥åŒºåˆ†
 
     public function __construct($objDB) {
-        $this->areaCode = DEF_AREA_FIXED_COST_ORDER; // ¥¨¥ê¥¢¥³¡¼¥É¤Î¥»¥Ã¥È
+        $this->areaCode = DEF_AREA_FIXED_COST_ORDER; // ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã®ã‚»ãƒƒãƒˆ
         $this->stockClassCode = workSheetConst::AREA_ATTRIBUTE_TO_STOCK_CLASS_CODE[$this->areaCode];
         parent::__construct($objDB);
     }
@@ -32,7 +32,7 @@ class fixedCostOrderRowController extends estimateRowController {
         }
     }
 
-    // Çä¾åÊ¬Îà¤Î¥Þ¥¹¥¿¡¼¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // å£²ä¸Šåˆ†é¡žã®ãƒžã‚¹ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     protected function setDivisionSubjectCodeMaster() {
         if (!static::$divisionSubjectCodeMaster) {
             $areaCode = $this->areaCode;

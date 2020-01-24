@@ -56,7 +56,7 @@ FROM
                   AND m.deleteflag = false
               ),
 
-              'º÷°ú¥¨¥é¡¼'
+              'ç´¢å¼•ã‚¨ãƒ©ãƒ¼'
           ) companydisplaycode
     FROM
         m_mold mm

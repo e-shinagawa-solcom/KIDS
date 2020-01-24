@@ -57,8 +57,8 @@ function Msw2ChgEtoJ( MswCount )
 		ResultHeader01.innerHTML = resultheader01J;
 
 		///// SEGMENTS /////
-		SegA01_1.innerText = 'ÉôÌç¥³¡¼¥É';
-		SegA01_2.innerText = 'ÉôÌçÌ¾¾Î';
+		SegA01_1.innerText = 'éƒ¨é–€ã‚³ãƒ¼ãƒ‰';
+		SegA01_2.innerText = 'éƒ¨é–€åç§°';
 
 		///// SEARCH BUTTON /////
 		SearchButton01.innerHTML = searchbuttonAJ1;
@@ -71,8 +71,8 @@ function Msw2ChgEtoJ( MswCount )
 		ResultHeader01b.innerHTML = resultheader01bJ;
 
 		///// SEGMENTS /////
-		SegC01_1.innerText = 'Ã´Åö¼Ô¥³¡¼¥É';
-		SegC01_2.innerText = 'Ã´Åö¼ÔÌ¾¾Î';
+		SegC01_1.innerText = 'æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰';
+		SegC01_2.innerText = 'æ‹…å½“è€…åç§°';
 
 		///// SEARCH BUTTON /////
 		SearchButton02.innerHTML = searchbuttonBJ1;

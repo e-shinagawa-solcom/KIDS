@@ -1,10 +1,10 @@
-/* Ëä¤á¹ş¤ß¥Ñ¥é¥á¡¼¥¿ */
+/* åŸ‹ã‚è¾¼ã¿ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ */
 input.finish-hidden
 {
     display: none;
 }
 
-/* ¥»¥ó¥¿¥ê¥ó¥° */
+/* ã‚»ãƒ³ã‚¿ãƒªãƒ³ã‚° */
 html, body, div.centering
 {
     height: 100%;
@@ -18,20 +18,20 @@ div.centering
 
 }
 
-/* Á´ÂÎÇØ·Ê */
+/* å…¨ä½“èƒŒæ™¯ */
 .finish-background
 {
     background-color: #D6D0B1;
     overflow-y: scroll;
 }
 
-/* div ¥Ş¡¼¥¸¥óÀßÄê */
+/* div ãƒãƒ¼ã‚¸ãƒ³è¨­å®š */
 .finish-background div
 {
     margin: 15px;
 }
 
-/* ´°Î»¥á¥Ã¥»¡¼¥¸ */
+/* å®Œäº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ */
 .finish-box__message
 {
     padding: 5px 50px;
@@ -42,7 +42,7 @@ div.centering
 }
 
 
-/* ´°Î»¥á¥Ã¥»¡¼¥¸ */
+/* å®Œäº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ */
 .finish-box__button
 {
     width: 100px;

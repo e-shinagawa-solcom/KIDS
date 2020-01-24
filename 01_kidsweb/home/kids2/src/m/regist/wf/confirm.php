@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿ ³ÎÇ§²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿ ç¢ºèªç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,19 +10,19 @@
 *	@version   1.00
 *
 */
-// ¿·µ¬ÅĞÏ¿
+// æ–°è¦ç™»éŒ²
 // edit.php -> strSessionID              -> confirm.php
 // edit.php -> lngActionCode             -> confirm.php
 // edit.php -> strWorkflowOrderName      -> confirm.php
 // edit.php -> lngWorkflowOrderGroupCode -> confirm.php
 // edit.php -> strOrderData              -> confirm.php
 //
-// ºï½ü
+// å‰Šé™¤
 // index.php -> strSessionID         -> confirm.php
 // index.php -> lngActionCode        -> confirm.php
 // index.php -> lngWorkflowOrderCode -> confirm.php
 //
-// ¼Â¹Ô
+// å®Ÿè¡Œ
 // confirm.php -> strSessionID              -> action.php
 // confirm.php -> lngActionCode             -> action.php
 // confirm.php -> lngWorkflowOrderCode      -> action.php
@@ -31,31 +31,31 @@
 // confirm.php -> strOrderData              -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -73,20 +73,20 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE )
 	$aryCheck["lngWorkflowOrderCode"]      = "null:number(0,2147483647)";
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 //fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½èÍı¤ÎÍ­¸úÀ­¤ò¥Á¥§¥Ã¥¯
+// å‡¦ç†ã®æœ‰åŠ¹æ€§ã‚’ãƒã‚§ãƒƒã‚¯
 //////////////////////////////////////////////////////////////////////////
-// ÅĞÏ¿ ¤«¤Ä ¥¨¥é¡¼¤¬¤Ê¤¤ ¾ì¹ç¡¢
-// ¿·µ¬ÅĞÏ¿¡¢½¤Àµ¥Á¥§¥Ã¥¯¼Â¹Ô
+// ç™»éŒ² ã‹ã¤ ã‚¨ãƒ©ãƒ¼ãŒãªã„ å ´åˆã€
+// æ–°è¦ç™»éŒ²ã€ä¿®æ­£ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult ) )
 {
-	// ¥°¥ë¡¼¥×¥Ç¡¼¥¿¼èÆÀ
+	// ã‚°ãƒ«ãƒ¼ãƒ—ãƒ‡ãƒ¼ã‚¿å–å¾—
 	$strQuery = "SELECT * " .
                 "FROM m_GroupRelation gr, m_AuthorityGroup ag, m_User u " .
                 "WHERE gr.lngGroupCode = " . $aryData["lngWorkflowOrderGroupCode"] .
@@ -95,13 +95,13 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ·ë²Ì·ï¿ô¤¬¤Ê¤¤¾ì¹ç¡¢¥¨¥é¡¼
+	// çµæœä»¶æ•°ãŒãªã„å ´åˆã€ã‚¨ãƒ©ãƒ¼
 	if ( $lngResultNum < 1 )
 	{
-		fncOutputError ( 9056, DEF_WARNING, "¥æ¡¼¥¶¡¼¤¬¤¤¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9056, DEF_WARNING, "ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒã„ã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤Ë¥æ¡¼¥¶¡¼¸¢¸Â¥ì¥Ù¥ë¤ò¥»¥Ã¥È
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã«ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™ãƒ¬ãƒ™ãƒ«ã‚’ã‚»ãƒƒãƒˆ
 	for ( $i = 0; $i < $lngResultNum; $i++ )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, $i );
@@ -111,35 +111,35 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 
 	$objDB->freeResult( $lngResultID );
 
-	// ¥æ¡¼¥¶¡¼¤Î½çÈÖ¤¬Í­¸ú¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
-	// A.¥°¥ë¡¼¥×½êÂ°¥Á¥§¥Ã¥¯
-	// B.½ÅÊ£¥Á¥§¥Ã¥¯
-	// C.ÊÂ¤Ó½ç¤ÎÍ­¸úÀ­(¸¢¸Â¥Á¥§¥Ã¥¯)
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®é †ç•ªãŒæœ‰åŠ¹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
+	// A.ã‚°ãƒ«ãƒ¼ãƒ—æ‰€å±ãƒã‚§ãƒƒã‚¯
+	// B.é‡è¤‡ãƒã‚§ãƒƒã‚¯
+	// C.ä¸¦ã³é †ã®æœ‰åŠ¹æ€§(æ¨©é™ãƒã‚§ãƒƒã‚¯)
 
-	// ½çÈÖÅĞÏ¿¥Ç¡¼¥¿ ¤ò '&' ¤ÇÊ¬²ò
+	// é †ç•ªç™»éŒ²ãƒ‡ãƒ¼ã‚¿ ã‚’ '&' ã§åˆ†è§£
 	$aryOrderData = explode ( "&", $aryData["strOrderData"] );
 	$lngOrderDataLength = count ( $aryOrderData ) - 1;
 
-	// '=' ¤ÇÊ¬²ò¤·¡¢¥æ¡¼¥¶¡¼¥³¡¼¥É¡¢´ü¸ÂÆü¿ô¤òÇÛÎó¤Ë¥»¥Ã¥È
+	// '=' ã§åˆ†è§£ã—ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã€æœŸé™æ—¥æ•°ã‚’é…åˆ—ã«ã‚»ãƒƒãƒˆ
 	for ( $i = 0; $i < $lngOrderDataLength; $i++ )
 	{
 		$aryOrderSubData = explode ( "=", $aryOrderData[$i] );
 
-		// A.¥°¥ë¡¼¥×½êÂ°¥Á¥§¥Ã¥¯
-		// ÆşÎÏ¤µ¤ì¤¿¥æ¡¼¥¶¡¼¥³¡¼¥É¤¬¥°¥ë¡¼¥×¤ËÂ°¤·¤Æ¤¤¤Ê¤«¤Ã¤¿¾ì¹ç¥¨¥é¡¼
+		// A.ã‚°ãƒ«ãƒ¼ãƒ—æ‰€å±ãƒã‚§ãƒƒã‚¯
+		// å…¥åŠ›ã•ã‚ŒãŸãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒã‚°ãƒ«ãƒ¼ãƒ—ã«å±ã—ã¦ã„ãªã‹ã£ãŸå ´åˆã‚¨ãƒ©ãƒ¼
 		if ( $aryAuthorityLevel[$aryOrderSubData[0]] == "" )
 		{
-			fncOutputError ( 9056, DEF_WARNING, "»ØÄê¥æ¡¼¥¶¡¼¤Ï»ØÄê¥°¥ë¡¼¥×¤Ë´Ş¤Ş¤ì¤Æ¤¤¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+			fncOutputError ( 9056, DEF_WARNING, "æŒ‡å®šãƒ¦ãƒ¼ã‚¶ãƒ¼ã¯æŒ‡å®šã‚°ãƒ«ãƒ¼ãƒ—ã«å«ã¾ã‚Œã¦ã„ã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 		}
 
-		// B.½ÅÊ£¥Á¥§¥Ã¥¯
-		// ¤è¤ê°ÊÁ°¤ÎÇÛÎóÃÍ¤ËÆ±¤¸¥æ¡¼¥¶¡¼¥³¡¼¥É¤¬Â¸ºß¤·¤¿¾ì¹ç½ÅÊ£¥¨¥é¡¼
+		// B.é‡è¤‡ãƒã‚§ãƒƒã‚¯
+		// ã‚ˆã‚Šä»¥å‰ã®é…åˆ—å€¤ã«åŒã˜ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ãŸå ´åˆé‡è¤‡ã‚¨ãƒ©ãƒ¼
 		$count = count ( $aryUserCode );
 		for ( $j = 0; $j < $count; $j++ )
 		{
 			if ( $aryUserCode[$j] == $aryOrderSubData[0] )
 			{
-				fncOutputError ( 9056, DEF_WARNING, "¥æ¡¼¥¶¡¼¤¬½ÅÊ£¤·¤Æ¤¤¤Ş¤¹¡£", TRUE, "", $objDB );
+				fncOutputError ( 9056, DEF_WARNING, "ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒé‡è¤‡ã—ã¦ã„ã¾ã™ã€‚", TRUE, "", $objDB );
 			}
 		}
 
@@ -147,19 +147,19 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && !join ( $aryCheckResult )
 		$aryLimitDays[$i] = $aryOrderSubData[1];
 	}
 
-	// C.ÊÂ¤Ó½ç¤ÎÍ­¸úÀ­(¸¢¸Â¥Á¥§¥Ã¥¯)
+	// C.ä¸¦ã³é †ã®æœ‰åŠ¹æ€§(æ¨©é™ãƒã‚§ãƒƒã‚¯)
 	$count = count ( $aryUserCode ) - 1;
 	for ( $i = 0; $i < $count; $i++ )
 	{
 		if ( $aryAuthorityLevel[$aryUserCode[$i]] < $aryAuthorityLevel[$aryUserCode[$i + 1]] )
 		{
-			fncOutputError ( 9056, DEF_WARNING, "¸¢¸Â¤ÎÄã¤¤¥æ¡¼¥¶¡¼¤¬¹â¤¤¥æ¡¼¥¶¡¼¤è¤ê¤âÁ°¤Ë¾µÇ§¼Ô¤È¤·¤ÆÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ş¤¹¡£", TRUE, "", $objDB );
+			fncOutputError ( 9056, DEF_WARNING, "æ¨©é™ã®ä½ã„ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒé«˜ã„ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚ˆã‚Šã‚‚å‰ã«æ‰¿èªè€…ã¨ã—ã¦ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã™ã€‚", TRUE, "", $objDB );
 		}
 	}
 }
 
-// ºï½ü ¤«¤Ä ¥¨¥é¡¼¤¬¤Ê¤¤ ¾ì¹ç¡¢
-// ºï½ü¥Á¥§¥Ã¥¯¼Â¹Ô
+// å‰Šé™¤ ã‹ã¤ ã‚¨ãƒ©ãƒ¼ãŒãªã„ å ´åˆã€
+// å‰Šé™¤ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResult ) )
 {
 	$strQuery = "SELECT * " .
@@ -178,14 +178,14 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ·ë²Ì¤¬1·ï¤Ç¤â¤¢¤Ã¤¿¾ì¹ç¡¢ºï½üÉÔ²ÄÇ½¤È¤·¡¢¥¨¥é¡¼½ĞÎÏ
+	// çµæœãŒ1ä»¶ã§ã‚‚ã‚ã£ãŸå ´åˆã€å‰Šé™¤ä¸å¯èƒ½ã¨ã—ã€ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 	if ( $lngResultNum > 0 )
 	{
 		$objDB->freeResult( $lngResultID );
-		fncOutputError ( 1201, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+		fncOutputError ( 1201, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 	}
 
-	// ºï½üÂĞ¾İÉ½¼¨¤Î¤¿¤á¤Î¥Ç¡¼¥¿¤ò¼èÆÀ
+	// å‰Šé™¤å¯¾è±¡è¡¨ç¤ºã®ãŸã‚ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 	$strQuery = "SELECT * " .
                 "FROM m_WorkflowOrder wo, m_User u " .
                 "WHERE wo.lngWorkflowOrderCode = " . $aryData["lngWorkflowOrderCode"] .
@@ -195,10 +195,10 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 	$objMaster = new clsMaster();
 	$objMaster->setMasterTableData( $strQuery, $objDB );
 
-	// ¥ï¡¼¥¯¥Õ¥í¡¼½çÈÖÌ¾¼èÆÀ
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †ç•ªåå–å¾—
 	$aryData["strWorkflowOrderName"] = $objMaster->aryData[0]["strworkflowordername"];
 
-	// ¥ï¡¼¥¯¥Õ¥í¡¼¥°¥ë¡¼¥×¥³¡¼¥É¼èÆÀ
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰å–å¾—
 	$aryData["lngWorkflowOrderGroupCode"] = $objMaster->aryData[0]["lngworkflowordergroupcode"];
 
 	$count = count ( $objMaster->aryData );
@@ -211,17 +211,17 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 	$objMaster = new clsMaster();
 
-	// ½çÈÖÅĞÏ¿¥Ç¡¼¥¿ ¤ò '&' ¤ÇÊ¬²ò
+	// é †ç•ªç™»éŒ²ãƒ‡ãƒ¼ã‚¿ ã‚’ '&' ã§åˆ†è§£
 	$aryOrderData = explode ( "&", $aryData["strOrderData"] );
 	$lngOrderDataLength = count ( $aryOrderData ) - 1;
 }
 
-// ¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍı
+// ã‚¨ãƒ©ãƒ¼é …ç›®è¡¨ç¤ºå‡¦ç†
 list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB );
 
 
 //////////////////////////////////////////////////////////////////////////
-// ½ĞÎÏ
+// å‡ºåŠ›
 //////////////////////////////////////////////////////////////////////////
 $aryParts["lngLanguageCode"] =1;
 $aryParts["lngActionCode"]   =& $aryData["lngActionCode"];
@@ -231,7 +231,7 @@ $aryParts["lngKeyCode"]      =& $aryData["lngWorkflowOrderCode"];
 $aryParts["strSessionID"]    =& $aryData["strSessionID"];
 
 
-// lngWorkflowOrderGroupCode ¤Î(CODE+NAME)¼èÆÀ
+// lngWorkflowOrderGroupCode ã®(CODE+NAME)å–å¾—
 $aryGroupCode = fncGetMasterValue( "m_Group", "lngGroupCode", "strGroupDisplayCode || ':' || strGroupDisplayName", "Array", "", $objDB );
 
 list ( $lngUserCode, $lngLimitDays ) = explode ( "=", $aryOrderData[0] );
@@ -247,7 +247,7 @@ for ( $i = 0; $i < $lngOrderDataLength; $i++ )
 {
 	list ( $lngUserCode, $lngLimitDays ) = explode ( "=", $aryOrderData[$i] );
 
-	$aryParts["MASTER"] .= "				<tr><td class=\"SegColumn\">" . ( $i + 1 ) . "</td><td class=\"Segs\" align=\"left\">$aryUserName[$lngUserCode] : $lngLimitDays Æü´Ö</td></tr>\n";
+	$aryParts["MASTER"] .= "				<tr><td class=\"SegColumn\">" . ( $i + 1 ) . "</td><td class=\"Segs\" align=\"left\">$aryUserName[$lngUserCode] : $lngLimitDays æ—¥é–“</td></tr>\n";
 }
 
 $aryParts["HIDDEN"] .= "<input type=\"hidden\" name=\"strOrderData\" value=\"" . $aryData["strOrderData"] . "\">\n";

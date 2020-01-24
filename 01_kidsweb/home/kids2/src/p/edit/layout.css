@@ -29,7 +29,7 @@
 #strImages
 {
 	position : absolute ;
-	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯ ;
+	font-family : Arial , ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯ ;
 	font-style : normal ;
 	font-weight : bold ;
 	color : #666666 ;/*d1a893*/
@@ -40,7 +40,7 @@
 	padding : 8px 0px 0px 0px;
 }
 
-/* ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸ */
+/* ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ */
 #EditHeader
 {
 	/* position : absolute ;
@@ -50,7 +50,7 @@
 	border-style : none ; */
 	text-align: center;
 }
-/* ¥Ü¥Ç¥£¥¤¥á¡¼¥¸ */
+/* ãƒœãƒ‡ã‚£ã‚¤ãƒ¡ãƒ¼ã‚¸ */
 #EditBody
 {
 	position : relative ;
@@ -61,7 +61,7 @@
 	text-align: center;
 }
 
-/* ¥Õ¥Ã¥¿¡¼¥¤¥á¡¼¥¸ */
+/* ãƒ•ãƒƒã‚¿ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ */
 #EditFooter
 {
 	/* position : absolute ; */
@@ -74,7 +74,7 @@
 
 table
 {
-	font-family : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-family : ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯, Osaka ;
 	font-style : normal ;
 	font-weight : normal ;
 	font-size : 12px ;

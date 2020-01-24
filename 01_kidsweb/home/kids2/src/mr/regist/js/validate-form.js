@@ -1,57 +1,57 @@
 
 (function(){
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var form = $('form[name="RegistMoldReport"]');
-    // ¥Ø¥Ã¥À¥¿¥Ö
+    // ãƒ˜ãƒƒãƒ€ã‚¿ãƒ–
     var header = $('div.regist-tab-header');
-    // ¾ÜºÙ¥¿¥Ö
+    // è©³ç´°ã‚¿ãƒ–
     var detail = $('div.regist-tab-detail');
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥¯¥é¥¹Ì¾
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚¯ãƒ©ã‚¹å
     var classNameErrorIcon = 'error-icon';
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥ê¥½¡¼¥¹URL
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãƒªã‚½ãƒ¼ã‚¹URL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
-    // ÁªÂòÃæ¤Î¶â·¿¥ê¥¹¥È¤Î¥é¥Ù¥ë
+    // é¸æŠä¸­ã®é‡‘å‹ãƒªã‚¹ãƒˆã®ãƒ©ãƒ™ãƒ«
     var labelChoosenMoldList = $('table.mold-selection')
                                     .find('tr:nth-of-type(1)')
                                     .find('th:nth-of-type(3)');
 
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(É¬¿Ü¹àÌÜ)
-    var msgRequired = "ÆşÎÏÉ¬¿Ü¹àÌÜ¤Ç¤¹¡£";
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(ÆüÉÕ)
-    var msgDateFormat = "yyyy/mm/dd·Á¼°¤«¤ÄÍ­¸ú¤ÊÆüÉÕ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£";
-    var msgGreaterThanToday = "¸½ºß¤è¤êÀè¤ÎÆüÉÕ¤·¤«ÆşÎÏ¤Ç¤­¤Ş¤»¤ó¡£";
-    var msgGreaterThanRequestDate = "´õË¾Æü¤è¤êÀè¤ÎÆüÉÕ¤·¤«ÆşÎÏ¤Ç¤­¤Ş¤»¤ó¡£";
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(°ÜÆ°Àè¤¬Êİ´É¸µ¤ÈÆ±°ì¹©¾ì)
-    var msgSameFactory = "°ÜÆ°Àè¹©¾ì¤ËÊİ´É¸µ¹©¾ì¤ÈÆ±¤¸¹©¾ì¤ò»ØÄê¤¹¤ë¤³¤È¤Ï¤Ç¤­¤Ş¤»¤ó¡£";
-    // Ä¢É¼¤½¤ÎÂ¾Íó¤ÎºÇÂçÆşÎÏ²ÄÇ½Ê¸»ú¿ô
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(å¿…é ˆé …ç›®)
+    var msgRequired = "å…¥åŠ›å¿…é ˆé …ç›®ã§ã™ã€‚";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(æ—¥ä»˜)
+    var msgDateFormat = "yyyy/mm/ddå½¢å¼ã‹ã¤æœ‰åŠ¹ãªæ—¥ä»˜ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚";
+    var msgGreaterThanToday = "ç¾åœ¨ã‚ˆã‚Šå…ˆã®æ—¥ä»˜ã—ã‹å…¥åŠ›ã§ãã¾ã›ã‚“ã€‚";
+    var msgGreaterThanRequestDate = "å¸Œæœ›æ—¥ã‚ˆã‚Šå…ˆã®æ—¥ä»˜ã—ã‹å…¥åŠ›ã§ãã¾ã›ã‚“ã€‚";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(ç§»å‹•å…ˆãŒä¿ç®¡å…ƒã¨åŒä¸€å·¥å ´)
+    var msgSameFactory = "ç§»å‹•å…ˆå·¥å ´ã«ä¿ç®¡å…ƒå·¥å ´ã¨åŒã˜å·¥å ´ã‚’æŒ‡å®šã™ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚";
+    // å¸³ç¥¨ãã®ä»–æ¬„ã®æœ€å¤§å…¥åŠ›å¯èƒ½æ–‡å­—æ•°
     var noteMaxLen = 38;
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(¤½¤ÎÂ¾¤ÎºÇÂçÊ¸»ú¿ô¤Ş¤Ç)
-    var msgNote = noteMaxLen + "Ê¸»ú¤Ş¤Ç¤·¤«ÆşÎÏ¤Ç¤­¤Ş¤»¤ó¡£"
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(ãã®ä»–ã®æœ€å¤§æ–‡å­—æ•°ã¾ã§)
+    var msgNote = noteMaxLen + "æ–‡å­—ã¾ã§ã—ã‹å…¥åŠ›ã§ãã¾ã›ã‚“ã€‚"
 
     var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/;
 
-    // validation¥­¥Ã¥¯
+    // validationã‚­ãƒƒã‚¯
     $('.hasDatepicker').on({
         'change': function(){
             $(this).blur();
         }
     })
 
-    // ´õË¾ÆüÊÑ¹¹»ş¡¢ÊÖµÑÍ½ÄêÆü¤Îvalidation¥­¥Ã¥¯
+    // å¸Œæœ›æ—¥å¤‰æ›´æ™‚ã€è¿”å´äºˆå®šæ—¥ã®validationã‚­ãƒƒã‚¯
     $('input[name="ActionRequestDate"]').on({
         'blur': function(){
             $('input[name="ReturnSchedule"]').blur();
         }
     })
 
-    // À¸»º¸å¤Î½èÍıÊÑ¹¹»ş¡¢¥¨¥é¡¼¥¢¥¤¥³¥óºï½ü
+    // ç”Ÿç”£å¾Œã®å‡¦ç†å¤‰æ›´æ™‚ã€ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³å‰Šé™¤
     $('select[name="FinalKeep"]').on({
         'change': function(){
             $('input[name="ReturnSchedule"]').prev('img.error-icon').remove();
         }
     })
 
-    // Êİ´É¹©¾ì¤È°ÜÆ°Àè¹©¾ì¤¬ÉÔ°ìÃ×¤«¤É¤¦¤«
+    // ä¿ç®¡å·¥å ´ã¨ç§»å‹•å…ˆå·¥å ´ãŒä¸ä¸€è‡´ã‹ã©ã†ã‹
     $.validator.addMethod(
         "difFactory",
         function(value, element, params) {
@@ -60,19 +60,19 @@
         msgSameFactory
     );
 
-    // ÆüÉÕ¤¬yyyy/mm/dd·Á¼°¤Ë¥Ş¥Ã¥Á¤·¤Æ¤¤¤ë¤«,Í­¸ú¤ÊÆüÉÕ¤«
+    // æ—¥ä»˜ãŒyyyy/mm/ddå½¢å¼ã«ãƒãƒƒãƒã—ã¦ã„ã‚‹ã‹,æœ‰åŠ¹ãªæ—¥ä»˜ã‹
     $.validator.addMethod(
         "checkDateFormat",
         function(value, element, params) {
-            // ¥Á¥§¥Ã¥¯¹àÌÜ¤¬ÊÖµÑÍ½ÄêÆü¤Î¾ì¹ç
+            // ãƒã‚§ãƒƒã‚¯é …ç›®ãŒè¿”å´äºˆå®šæ—¥ã®å ´åˆ
             if(element.name == "ReturnSchedule"){
-                // À¸»º¸å¤Î½èÍı¤ÎÃÍ¤¬[20:ÊÖµÑ]°Ê³°¤Ê¤é¸¡¾Ú¤·¤Ê¤¤
+                // ç”Ÿç”£å¾Œã®å‡¦ç†ã®å€¤ãŒ[20:è¿”å´]ä»¥å¤–ãªã‚‰æ¤œè¨¼ã—ãªã„
                 if(($('select[name="FinalKeep"]')).val() != 20){
                     return true;
                 }
             }
             if(params){
-                // yyyy/mm/dd·Á¼°¤«
+                // yyyy/mm/ddå½¢å¼ã‹
                 if (!(regDate.test(value))) {
                     return false;
                 }
@@ -82,7 +82,7 @@
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ÆüÉÕ¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+                // æ—¥ä»˜ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
                 } else {
@@ -94,13 +94,13 @@
         msgDateFormat
     );
 
-    // ÆüÉÕ¤¬²áµî¤Ç¤Ê¤¤¤« ÅöÆüÉÔ²Ä
+    // æ—¥ä»˜ãŒéå»ã§ãªã„ã‹ å½“æ—¥ä¸å¯
     $.validator.addMethod(
         "isGreaterThanToday",
         function(value, element, params) {
-            // ¥Á¥§¥Ã¥¯¹àÌÜ¤¬ÊÖµÑÍ½ÄêÆü¤Î¾ì¹ç
+            // ãƒã‚§ãƒƒã‚¯é …ç›®ãŒè¿”å´äºˆå®šæ—¥ã®å ´åˆ
             if(element.name == "ReturnSchedule"){
-                // À¸»º¸å¤Î½èÍı¤ÎÃÍ¤¬[20:ÊÖµÑ]°Ê³°¤Ê¤é¸¡¾Ú¤·¤Ê¤¤
+                // ç”Ÿç”£å¾Œã®å‡¦ç†ã®å€¤ãŒ[20:è¿”å´]ä»¥å¤–ãªã‚‰æ¤œè¨¼ã—ãªã„
                 if(($('select[name="FinalKeep"]')).val() != 20){
                     return true;
                 }
@@ -111,25 +111,25 @@
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ¸½ºß¤ÎÆü»ş¤ÈÈæ³Ó
+                // ç¾åœ¨ã®æ—¥æ™‚ã¨æ¯”è¼ƒ
                 var nowDi = new Date();
-                // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                 if (nowDi.getFullYear() > di.getFullYear()){
                     return false;
-                // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                 } else if (nowDi.getFullYear() < di.getFullYear()) {
                     return true;
-                // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤ÈÆ±¤¸¾ì¹ç
+                // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã¨åŒã˜å ´åˆ
                 } else if (nowDi.getFullYear() == di.getFullYear()) {
-                    // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                    // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                     if (nowDi.getMonth() > di.getMonth()){
                         return false;
-                    // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                    // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                     } else if (nowDi.getMonth() < di.getMonth()){
                         return true;
-                    // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤ÈÆ±¤¸¾ì¹ç
+                    // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã¨åŒã˜å ´åˆ
                     } else if (nowDi.getMonth() == di.getMonth()){
-                        // ÆşÎÏ¤·¤¿Æü¤¬¸½ºß¤ÈÆ±¤¸¤«¤½¤ì¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                        // å…¥åŠ›ã—ãŸæ—¥ãŒç¾åœ¨ã¨åŒã˜ã‹ãã‚Œã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                         if (nowDi.getDate() >= di.getDate()) {
                             return false;
                         }
@@ -142,13 +142,13 @@
         msgGreaterThanToday
     );
 
-    // ÊÖµÑÍ½ÄêÆü¤¬´õË¾Æü¤è¤êÂç¤­¤¤¤«(Æ±ÆüÉÔ²Ä)
+    // è¿”å´äºˆå®šæ—¥ãŒå¸Œæœ›æ—¥ã‚ˆã‚Šå¤§ãã„ã‹(åŒæ—¥ä¸å¯)
     $.validator.addMethod(
         "isGreaterThanRequestDate",
         function (value, element, params) {
-            // À¸»º¸å¤Î½èÍı¤¬20¤Î¾ì¹ç¥Á¥§¥Ã¥¯
+            // ç”Ÿç”£å¾Œã®å‡¦ç†ãŒ20ã®å ´åˆãƒã‚§ãƒƒã‚¯
             if(($('select[name="FinalKeep"]').val() == 20)){
-                // ´õË¾Æü¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¥Á¥§¥Ã¥¯
+                // å¸Œæœ›æ—¥ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆãƒã‚§ãƒƒã‚¯
                 if ($('input[name="ActionRequestDate"]').val() != "") {
                     var actionRequestDate = $('input[name="ActionRequestDate"]').val();
                     var regResult = regDate.exec(actionRequestDate);
@@ -162,24 +162,24 @@
                     mm = regResult[2];
                     dd = regResult[3];
                     var di = new Date(yyyy, mm - 1, dd);
-                    // ´õË¾Æü¤ÎÆü»ş¤ÈÈæ³Ó
-                    // ÆşÎÏ¤·¤¿Ç¯¤¬´õË¾Æü¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                    // å¸Œæœ›æ—¥ã®æ—¥æ™‚ã¨æ¯”è¼ƒ
+                    // å…¥åŠ›ã—ãŸå¹´ãŒå¸Œæœ›æ—¥ã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                     if (RequestDate.getFullYear() > di.getFullYear()) {
                         return false;
-                        // ÆşÎÏ¤·¤¿Ç¯¤¬´õË¾Æü¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                        // å…¥åŠ›ã—ãŸå¹´ãŒå¸Œæœ›æ—¥ã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                     } else if (RequestDate.getFullYear() < di.getFullYear()) {
                         return true;
-                        // ÆşÎÏ¤·¤¿Ç¯¤¬´õË¾Æü¤ÈÆ±¤¸¾ì¹ç
+                        // å…¥åŠ›ã—ãŸå¹´ãŒå¸Œæœ›æ—¥ã¨åŒã˜å ´åˆ
                     } else if (RequestDate.getFullYear() == di.getFullYear()) {
-                        // ÆşÎÏ¤·¤¿·î¤¬´õË¾Æü¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                        // å…¥åŠ›ã—ãŸæœˆãŒå¸Œæœ›æ—¥ã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                         if (RequestDate.getMonth() > di.getMonth()){
                             return false;
-                        // ÆşÎÏ¤·¤¿·î¤¬´õË¾Æü¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                        // å…¥åŠ›ã—ãŸæœˆãŒå¸Œæœ›æ—¥ã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                         } else if (RequestDate.getMonth() < di.getMonth()){
                             return true;
-                        // ÆşÎÏ¤·¤¿·î¤¬´õË¾Æü¤ÈÆ±¤¸¾ì¹ç
+                        // å…¥åŠ›ã—ãŸæœˆãŒå¸Œæœ›æ—¥ã¨åŒã˜å ´åˆ
                         } else if (RequestDate.getMonth() == di.getMonth()){
-                            // ÆşÎÏ¤·¤¿Æü¤¬´õË¾Æü¤ÈÆ±¤¸¤«¤½¤ì¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                            // å…¥åŠ›ã—ãŸæ—¥ãŒå¸Œæœ›æ—¥ã¨åŒã˜ã‹ãã‚Œã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                             if (RequestDate.getDate() >= di.getDate()) {
                                 return false;
                             }
@@ -196,39 +196,39 @@
     $.validator.addMethod(
         "maxlength",
         function (value, element, params) {
-            // Ì¤ÆşÎÏ¤Î¾ì¹ç¥Á¥§¥Ã¥¯¤·¤Ê¤¤
+            // æœªå…¥åŠ›ã®å ´åˆãƒã‚§ãƒƒã‚¯ã—ãªã„
             return !value ? true : (value.length <= params) ? true : false;
         },
         msgNote
     );
 
-    // ÊÖµÑÍ½ÄêÆü¤ò¥Á¥§¥Ã¥¯¤¹¤ë¤«¤Î¾ò·ï
+    // è¿”å´äºˆå®šæ—¥ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã‹ã®æ¡ä»¶
     $.validator.addMethod(
         "requiredWhenFinalKeepIsReturn",
         function (value, element, params) {
-            // À¸»º¸å¤Î½èÍı¤¬[20:ÊÖµÑ]¤Î¾ì¹çÉ¬¿Ü
+            // ç”Ÿç”£å¾Œã®å‡¦ç†ãŒ[20:è¿”å´]ã®å ´åˆå¿…é ˆ
             return (($('select[name="FinalKeep"]')).val() != 20) ? true : value ? true : false;
         },
         msgRequired
     );
 
-    // ¸¡¾ÚÀßÄê
+    // æ¤œè¨¼è¨­å®š
     form.validate({
         // -----------------------------------------------
-        // ¥¨¥é¡¼É½¼¨½èÍı
+        // ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºå‡¦ç†
         // -----------------------------------------------
         errorPlacement: function (error, element){
             invalidImg = $('<img>')
                             .attr('class', classNameErrorIcon)
                             .attr('src', urlErrorIcon)
-                            // CSSÀßÄê(É½¼¨°ÌÃÖ)
+                            // CSSè¨­å®š(è¡¨ç¤ºä½ç½®)
                             .css({
                                 position: 'absolute',
                                 top: $(element).position().top,
                                 left: $(element).position().left - 20,
                                 opacity: 'inherit'
                             })
-                            // ¥Ä¡¼¥ë¥Á¥Ã¥×É½¼¨
+                            // ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—è¡¨ç¤º
                             .tooltipster({
                                 trigger: 'hover',
                                 onlyone: false,
@@ -236,170 +236,170 @@
                                 content: error.text()
                             });
 
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã—ãªã„å ´åˆ
             if ($(element).prev('img.' + classNameErrorIcon).length <= 0){
-                // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤òÉ½¼¨
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤º
                 $(element).before(invalidImg);
             }
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤¹¤ë¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
             else {
-                // ´ûÂ¸¤Î¥¨¥é¡¼¥¢¥¤¥³¥ó¤Î¥Ä¡¼¥ë¥Á¥Ã¥×¥Æ¥­¥¹¥È¤ò¹¹¿·
+                // æ—¢å­˜ã®ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°
                 $(element).prev('img.' + classNameErrorIcon)
                             .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
-        // ¸¡¾ÚOK»ş¤Î½èÍı
+        // æ¤œè¨¼OKæ™‚ã®å‡¦ç†
         // -----------------------------------------------
         unhighlight: function(element){
-                // ¥¨¥é¡¼¥¢¥¤¥³¥óºï½ü
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³å‰Šé™¤
                 $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
-        // ¸¡¾Ú¥ë¡¼¥ë
+        // æ¤œè¨¼ãƒ«ãƒ¼ãƒ«
         // -----------------------------------------------
         rules:{
-            // À½ÉÊ¥³¡¼¥É
+            // è£½å“ã‚³ãƒ¼ãƒ‰
             ProductCode: {
                 required: true
             },
-            // ¸ÜµÒÉÊÈÖ
+            // é¡§å®¢å“ç•ª
             GoodsCode: {
                 required: true
             },
-            // Ä¢É¼¶èÊ¬
+            // å¸³ç¥¨åŒºåˆ†
             ReportCategory: {
                 required: true
             },
-            // °ÍÍêÆü
+            // ä¾é ¼æ—¥
             RequestDate: {
                 checkDateFormat: true,
                 required: true
             },
-            // °ÍÍê¶èÊ¬
+            // ä¾é ¼åŒºåˆ†
             RequestCategory: {
                 required: true
             },
-            // ´õË¾Æü
+            // å¸Œæœ›æ—¥
             ActionRequestDate: {
                 checkDateFormat: true,
                 isGreaterThanToday: true,
                 required: true
             },
-            // °ÜÆ°ÊıË¡
+            // ç§»å‹•æ–¹æ³•
             TransferMethod: {
                 required: true
             },
-            // »Ø¼¨¶èÊ¬
+            // æŒ‡ç¤ºåŒºåˆ†
             InstructionCategory: {
                 required: true
             },
-            // »ö¶ÈÉô(¸ÜµÒ)
+            // äº‹æ¥­éƒ¨(é¡§å®¢)
             CustomerCode: {
                 required: true
             },
-            // KWGÃ´ÅöÉô½ğ
+            // KWGæ‹…å½“éƒ¨ç½²
             KuwagataGroupCode: {
                 required: true
             },
-            // KWGÃ´Åö¼Ô
+            // KWGæ‹…å½“è€…
             KuwagataUserCode: {
                 required: true
             },
-            // À¸»º¸å¤Î½èÍı
+            // ç”Ÿç”£å¾Œã®å‡¦ç†
             FinalKeep: {
                 required: true
             },
-            // ÊÖµÑÍ½ÄêÆü À¸»º¸å¤Î½èÍı¤¬ÊÖµÑ¤Î¾ì¹ç
+            // è¿”å´äºˆå®šæ—¥ ç”Ÿç”£å¾Œã®å‡¦ç†ãŒè¿”å´ã®å ´åˆ
             ReturnSchedule: {
                 requiredWhenFinalKeepIsReturn: true,
                 checkDateFormat: true,
                 isGreaterThanToday: true,
                 isGreaterThanRequestDate: true
             },
-            // ¤½¤ÎÂ¾
+            // ãã®ä»–
             Note: {
                 maxlength: noteMaxLen
             },
-            // ÁªÂòºÑ¤ß¤Î¶â·¿¥ê¥¹¥È
+            // é¸æŠæ¸ˆã¿ã®é‡‘å‹ãƒªã‚¹ãƒˆ
             // ChoosenMoldList: {
             //    required: true
             //},
-            // Êİ´É¹©¾ì
+            // ä¿ç®¡å·¥å ´
             SourceFactory: {
                 required: true
             },
-            // °ÜÆ°Àè¹©¾ì
+            // ç§»å‹•å…ˆå·¥å ´
             DestinationFactory: {
                 required: true,
                 difFactory: $('input[name="SourceFactory"]')
             }
         },
         // -----------------------------------------------
-        // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+        // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
         // -----------------------------------------------
         messages: {
-            // À½ÉÊ¥³¡¼¥É
+            // è£½å“ã‚³ãƒ¼ãƒ‰
             ProductCode: {
                 required: msgRequired
             },
-            // ¸ÜµÒÉÊÈÖ
+            // é¡§å®¢å“ç•ª
             GoodsCode: {
                 required: msgRequired
             },
-            // Ä¢É¼¶èÊ¬
+            // å¸³ç¥¨åŒºåˆ†
             ReportCategory: {
                 required: msgRequired
             },
-            // °ÍÍêÆü
+            // ä¾é ¼æ—¥
             RequestDate: {
                 required: msgRequired
             },
-            // °ÍÍê¶èÊ¬
+            // ä¾é ¼åŒºåˆ†
             RequestCategory: {
                 required: msgRequired
             },
-            // ´õË¾Æü
+            // å¸Œæœ›æ—¥
             ActionRequestDate: {
                 required: msgRequired
             },
-            // °ÜÆ°ÊıË¡
+            // ç§»å‹•æ–¹æ³•
             TransferMethod: {
                 required: msgRequired
             },
-            // »Ø¼¨¶èÊ¬
+            // æŒ‡ç¤ºåŒºåˆ†
             InstructionCategory: {
                 required: msgRequired
             },
-            // »ö¶ÈÉô(¸ÜµÒ)
+            // äº‹æ¥­éƒ¨(é¡§å®¢)
             CustomerCode: {
                 required: msgRequired
             },
-            // KWGÃ´ÅöÉô½ğ
+            // KWGæ‹…å½“éƒ¨ç½²
             KuwagataGroupCode: {
                 required: msgRequired
             },
-            // KWGÃ´Åö¼Ô
+            // KWGæ‹…å½“è€…
             KuwagataUserCode: {
                 required: msgRequired
             },
-            // À¸»º¸å¤Î½èÍı
+            // ç”Ÿç”£å¾Œã®å‡¦ç†
             FinalKeep: {
                 required: msgRequired
             },
-            // ÊÖµÑÍ½ÄêÆü À¸»º¸å¤Î½èÍı¤¬ÊÖµÑ¤Î¾ì¹ç
+            // è¿”å´äºˆå®šæ—¥ ç”Ÿç”£å¾Œã®å‡¦ç†ãŒè¿”å´ã®å ´åˆ
             ReturnSchedule: {
                 required: msgRequired
             },
-            // ÁªÂòºÑ¤ß¤Î¶â·¿¥ê¥¹¥È
+            // é¸æŠæ¸ˆã¿ã®é‡‘å‹ãƒªã‚¹ãƒˆ
             // ChoosenMoldList: {
             //    required: true
             //},
-            // Êİ´É¹©¾ì
+            // ä¿ç®¡å·¥å ´
             SourceFactory: {
                 required: msgRequired
             },
-            // °ÜÆ°Àè¹©¾ì
+            // ç§»å‹•å…ˆå·¥å ´
             DestinationFactory: {
                 required: msgRequired
             }

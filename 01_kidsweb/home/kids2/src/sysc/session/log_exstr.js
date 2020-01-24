@@ -2,15 +2,15 @@
 
 
 //------------------------------------------------------------
-// ²òÀâ : ÆüËÜ¸ì¡¦±Ñ¸ìÀÚÂØ´Ø¿ô
+// è§£èª¬ : æ—¥æœ¬èªãƒ»è‹±èªåˆ‡æ›¿é–¢æ•°
 //------------------------------------------------------------
 function ChgEtoJ( lngSelfCode )
 {
 
-	// ¥í¥°¥Ü¥¿¥ó½ñ¤­½Ğ¤·
+	// ãƒ­ã‚°ãƒœã‚¿ãƒ³æ›¸ãå‡ºã—
 	BackBt.innerHTML = backsmallBt;
 
-	// ±Ñ¸ì
+	// è‹±èª
 	if ( lngSelfCode == 0 )
 	{
 
@@ -25,18 +25,18 @@ function ChgEtoJ( lngSelfCode )
 
 	}
 
-	// ÆüËÜ¸ì
+	// æ—¥æœ¬èª
 	else if ( lngSelfCode == 1 )
 	{
 
-		ControlTitle.innerText = '¥í¥°';
+		ControlTitle.innerText = 'ãƒ­ã‚°';
 		Column0.innerText      = 'No';
-		Column1.innerText      = '¥»¥Ã¥·¥ç¥ó£É£Ä';
-		Column2.innerText      = '¥æ¡¼¥¶¡¼¥³¡¼¥É';
-		Column3.innerText      = '¥æ¡¼¥¶¡¼£É£Ä';
-		Column4.innerText      = '¥Ñ¥¹¥ï¡¼¥É';
-		Column5.innerText      = '¥í¥°¥¤¥óÆü»ş';
-		Column6.innerText      = '¾õÂÖ';
+		Column1.innerText      = 'ã‚»ãƒƒã‚·ãƒ§ãƒ³ï¼©ï¼¤';
+		Column2.innerText      = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰';
+		Column3.innerText      = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ï¼©ï¼¤';
+		Column4.innerText      = 'ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰';
+		Column5.innerText      = 'ãƒ­ã‚°ã‚¤ãƒ³æ—¥æ™‚';
+		Column6.innerText      = 'çŠ¶æ…‹';
 
 	}
 

@@ -1,8 +1,8 @@
 /*
-	³µÍ×¡§ÉôÌç¸¡º÷
-	ÂĞ¾İ¡§¶¦ÄÌ¥µ¥Ö¥¦¥£¥ó¥É¥¦
-	ºîÀ®¡§ºØÆ£ÏÂ»Ö
-	È÷¹Í¡§ÉôÌç¥³¡¼¥É¡ÜÌ¾¾Î¤«¤é°ìÃ×¤¹¤ë¡Ö¥³¡¼¥É¡ÜÌ¾¾Î¡×°ìÍ÷¤òÀ¸À®
+	æ¦‚è¦ï¼šéƒ¨é–€æ¤œç´¢
+	å¯¾è±¡ï¼šå…±é€šã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+	ä½œæˆï¼šæ–è—¤å’Œå¿—
+	å‚™è€ƒï¼šéƒ¨é–€ã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã‹ã‚‰ä¸€è‡´ã™ã‚‹ã€Œã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã€ä¸€è¦§ã‚’ç”Ÿæˆ
 */
 SELECT DISTINCT mg.strgroupdisplaycode,(mg.strgroupdisplaycode || ' ' || mg.strgroupdisplayname) AS strgroupdisplaycodename, mg.strgroupdisplayname
 FROM m_group mg, m_attributerelation mar

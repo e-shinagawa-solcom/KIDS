@@ -1,12 +1,12 @@
 /*
-	³µÍ×¡§¡ÖÀ½ÉÊ¥³¡¼¥É¡×¤«¤é¡ÖÀ½ÉÊ¾ðÊó¡×¤ò¼èÆÀ
-	ÂÐ¾Ý¡§È¯Ãí´ÉÍý¡¢»ÅÆþ´ÉÍý¡¢¼õÃí´ÉÍý¡¢Çä¾å´ÉÍý
-	ºîÀ®¡§ºØÆ£ÏÂ»Ö
-	¹¹¿·¡§
-	È÷¹Í¡§
+	æ¦‚è¦ï¼šã€Œè£½å“ã‚³ãƒ¼ãƒ‰ã€ã‹ã‚‰ã€Œè£½å“æƒ…å ±ã€ã‚’å–å¾—
+	å¯¾è±¡ï¼šç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã€å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†
+	ä½œæˆï¼šæ–Žè—¤å’Œå¿—
+	æ›´æ–°ï¼š
+	å‚™è€ƒï¼š
 
-		_%strFormValue0%_¡§À½ÉÊ¥³¡¼¥É
-		_%strFormValue1%_¡§ÆþÎÏ¼Ô¥³¡¼¥É¡Ê¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¡Ë
+		_%strFormValue0%_ï¼šè£½å“ã‚³ãƒ¼ãƒ‰
+		_%strFormValue1%_ï¼šå…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰ï¼ˆãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ï¼‰
 
 */
 SELECT distinct
@@ -33,7 +33,7 @@ FROM
 WHERE
 	mp.bytinvalidflag = false
 	AND mp.strproductcode = '_%strFormValue0%_'
-	/* À½ÉÊÃ´Åö¼Ô¤ËÂÐ¤·¡¢ÆþÎÏ¼Ô ¤È ¤½¤ÎÆþÎÏ¼Ô¤¬Â°¤¹¤ë¥°¥ë¡¼¥×¤Î¥Þ¥Í¡¼¥¸¥ã¡¼°Ê¾å¤¬°ìÃ× */
+	/* è£½å“æ‹…å½“è€…ã«å¯¾ã—ã€å…¥åŠ›è€… ã¨ ãã®å…¥åŠ›è€…ãŒå±žã™ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—ã®ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ä»¥ä¸ŠãŒä¸€è‡´ */
 	and _%strFormValue1%_ in
 	(
 		select
@@ -54,7 +54,7 @@ WHERE
 					left join m_group mg
 						on mg.lnggroupcode = mgr.lnggroupcode
 			where
-			mu.lngusercode = mp.lnginchargeusercode /* À½ÉÊÃ´Åö¼Ô */
+			mu.lngusercode = mp.lnginchargeusercode /* è£½å“æ‹…å½“è€… */
 		) as mst1
 		where
 			mgr1.lnggroupcode = mst1.lnggroupcode
@@ -64,9 +64,9 @@ WHERE
 /*			and (mu1.lngauthoritygroupcode <= 4 or mu1.lngusercode = mst1.lngUserCode)
 */
 /*
-39´ü»öÌ³3¿ÍÂÐ±þ¤Î¤¿¤á
+39æœŸäº‹å‹™3äººå¯¾å¿œã®ãŸã‚
 */
 			and (mu1.lngauthoritygroupcode <= 4 or mu1.lngusercode = mst1.lngUserCode or mu1.lngusercode in ('15','29','242','343'))
 
 	)
-	and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WF¿½ÀÁÃæ */
+	and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WFç”³è«‹ä¸­ */

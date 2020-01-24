@@ -3,7 +3,7 @@
 class Singleton
 {
 	/**
-	 * ¥³¥ó¥¹¥È¥é¥¯¥¿³°Éô¸Æ½Ğ¤·ÉÔ²Ä
+	 * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿å¤–éƒ¨å‘¼å‡ºã—ä¸å¯
 	 *
 	 * @return void
 	 */
@@ -13,7 +13,7 @@ class Singleton
 	}
 
 	/**
-	 * ¥¯¥í¡¼¥ó¼Â¹ÔÍŞ»ß
+	 * ã‚¯ãƒ­ãƒ¼ãƒ³å®Ÿè¡ŒæŠ‘æ­¢
 	 */
 	private function __clone()
 	{
@@ -21,7 +21,7 @@ class Singleton
 	}
 
 	/**
-	 * ¥¢¥ó¥·¥ê¥¢¥é¥¤¥º¼Â¹ÔÍŞ»ß
+	 * ã‚¢ãƒ³ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚ºå®Ÿè¡ŒæŠ‘æ­¢
 	 */
 	private function __wakeup()
 	{
@@ -29,7 +29,7 @@ class Singleton
 	}
 
 	/**
-	 * @return Singleton¥¯¥é¥¹ ¥¤¥ó¥¹¥¿¥ó¥¹
+	 * @return Singletonã‚¯ãƒ©ã‚¹ ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	 */
 	public static function getInstance()
 	{

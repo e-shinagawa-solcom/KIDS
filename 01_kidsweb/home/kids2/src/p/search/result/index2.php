@@ -1,148 +1,148 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
- *       ¾¦ÉÊ¸¡º÷ ÍúÎò¼èÆÀ¥¤¥Ù¥ó¥È
+ *       å•†å“æ¤œç´¢ å±¥æ­´å–å¾—ã‚¤ãƒ™ãƒ³ãƒˆ
  *
- *       ½èÍı³µÍ×
- *         ¡¦¾¦ÉÊ¥³¡¼¥É¡¢¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤Ë¤è¤ê¾¦ÉÊÍúÎò¾ğÊó¤ò¼èÆÀ¤¹¤ë
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»å•†å“ã‚³ãƒ¼ãƒ‰ã€ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã«ã‚ˆã‚Šå•†å“å±¥æ­´æƒ…å ±ã‚’å–å¾—ã™ã‚‹
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
-// ÆÉ¤ß¹ş¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
 require LIB_FILE;
 include 'JSON.php';
 require SRC_ROOT . "p/cmn/lib_p.php";
 
-//ÃÍ¤Î¼èÆÀ
+//å€¤ã®å–å¾—
 $postdata = file_get_contents("php://input");
 $aryData = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
+//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 $s = new Services_JSON();
-//ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤ÏÄÌ¾ï¤Î POST ¤Ç¼õ¤±¤ë
+//å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯é€šå¸¸ã® POST ã§å—ã‘ã‚‹
 if ($aryData == null) {
     $aryData = $_POST;
 }
 
 $displayColumns = array();
-// É½¼¨¹àÌÜ¤ÎÃê½Ğ
+// è¡¨ç¤ºé …ç›®ã®æŠ½å‡º
 foreach ($aryData["displayColumns"] as $key) {
     $displayColumns[$key] = $key;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
-// ¸¡º÷¹àÌÜ¤«¤é°ìÃ×¤¹¤ëºÇ¿·¤Î»ÅÆş¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®´Ø¿ô
+// æ¤œç´¢é …ç›®ã‹ã‚‰ä¸€è‡´ã™ã‚‹æœ€æ–°ã®ä»•å…¥ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆé–¢æ•°
 $strQuery = fncGetProductsByStrProductCodeSQL($aryData["strProductCode"], $aryData["lngRevisionNo"]);
 
-// ÃÍ¤ò¤È¤ë =====================================
+// å€¤ã‚’ã¨ã‚‹ =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
-// »ØÄê¿ô°ÊÆâ¤Ç¤¢¤ì¤ĞÄÌ¾ï½èÍı
+// æŒ‡å®šæ•°ä»¥å†…ã§ã‚ã‚Œã°é€šå¸¸å‡¦ç†
 for ($i = 0; $i < $lngResultNum; $i++) {
     $records = pg_fetch_all($lngResultID);
 }
 
 $objDB->freeResult($lngResultID);
 
-// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ëÀ¸À®¤Î°ÙDOMDocument¤ò»ÈÍÑ
+// æ¤œç´¢çµæœãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆã®ç‚ºDOMDocumentã‚’ä½¿ç”¨
 $doc = new DOMDocument();
 
-// ¥­¡¼Ê¸»úÎó¤ò¾®Ê¸»ú¤ËÊÑ´¹
+// ã‚­ãƒ¼æ–‡å­—åˆ—ã‚’å°æ–‡å­—ã«å¤‰æ›
 $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 
 // -------------------------------------------------------
-// ³Æ¼ï¥Ü¥¿¥óÉ½¼¨¥Á¥§¥Ã¥¯/¸¢¸Â¥Á¥§¥Ã¥¯
+// å„ç¨®ãƒœã‚¿ãƒ³è¡¨ç¤ºãƒã‚§ãƒƒã‚¯/æ¨©é™ãƒã‚§ãƒƒã‚¯
 // -------------------------------------------------------
-// ¾ÜºÙ¥«¥é¥à¤òÉ½¼¨
+// è©³ç´°ã‚«ãƒ©ãƒ ã‚’è¡¨ç¤º
 $existsDetail = array_key_exists("btndetail", $displayColumns);
-// ÍúÎò¥«¥é¥à¤òÉ½¼¨
+// å±¥æ­´ã‚«ãƒ©ãƒ ã‚’è¡¨ç¤º
 $existsHistory = array_key_exists("btnhistory", $displayColumns);
-// ¾ÜºÙ¥Ü¥¿¥ó¤òÉ½¼¨
+// è©³ç´°ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤º
 $allowedDetail = fncCheckAuthority(DEF_FUNCTION_P4, $objAuth);
 
-// ¾ÜºÙÉ½¼¨¡¡ºï½ü¥Ç¡¼¥¿¤ÎÉ½¼¨
+// è©³ç´°è¡¨ç¤ºã€€å‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã®è¡¨ç¤º
 $allowedDetailDelete = fncCheckAuthority(DEF_FUNCTION_P5, $objAuth);
 
 $aryTableHeaderName = array();
-$aryTableHeaderName["dtminsertdate"] = "ºîÀ®Æü";
-$aryTableHeaderName["lnggoodsplanprogresscode"] = "´ë²è¿Ê¹Ô¾õ¶·";
-$aryTableHeaderName["dtmupdatedate"] = "²şÄûÆü»ş";
-$aryTableHeaderName["strproductcode"] = "À½ÉÊ¥³¡¼¥É";
-$aryTableHeaderName["lngrevisionno"] = "¥ê¥Ó¥¸¥ç¥óÈÖ¹æ";
-$aryTableHeaderName["strproductname"] = "À½ÉÊÌ¾";
-$aryTableHeaderName["strproductenglishname"] = "À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë";
-$aryTableHeaderName["lnginputusercode"] = "ÆşÎÏ¼Ô";
-$aryTableHeaderName["lnginchargegroupcode"] = "±Ä¶ÈÉô½ğ";
-$aryTableHeaderName["lnginchargeusercode"] = "Ã´Åö¼Ô";
-$aryTableHeaderName["lngdevelopusercode"] = "³«È¯Ã´Åö¼Ô";
-$aryTableHeaderName["lngcategorycode"] = "¥«¥Æ¥´¥ê";
-$aryTableHeaderName["strgoodscode"] = "¸ÜµÒÉÊÈÖ";
-$aryTableHeaderName["strgoodsname"] = "¾¦ÉÊÌ¾¾Î";
-$aryTableHeaderName["lngcustomercompanycode"] = "¸ÜµÒ";
-$aryTableHeaderName["lngcustomerusercode"] = "¸ÜµÒÃ´Åö¼Ô";
-$aryTableHeaderName["lngpackingunitcode"] = "²Ù»ÑÃ±°Ì";
-$aryTableHeaderName["lngproductunitcode"] = "À½ÉÊÃ±°Ì";
-$aryTableHeaderName["lngproductformcode"] = "¾¦ÉÊ·ÁÂÖ";
-$aryTableHeaderName["lngboxquantity"] = "ÆâÈ¢¡ÊÂŞ¡ËÆş¿ô";
-$aryTableHeaderName["lngcartonquantity"] = "¥«¡¼¥È¥óÆş¿ô";
-$aryTableHeaderName["lngproductionquantity"] = "À¸»ºÍ½Äê¿ô";
-$aryTableHeaderName["lngfirstdeliveryquantity"] = "½é²óÇ¼ÉÊ¿ô";
-$aryTableHeaderName["lngfactorycode"] = "À¸»º¹©¾ì";
-$aryTableHeaderName["lngassemblyfactorycode"] = "¥¢¥Ã¥»¥ó¥Ö¥ê¹©¾ì";
-$aryTableHeaderName["lngdeliveryplacecode"] = "Ç¼ÉÊ¾ì½ê";
-$aryTableHeaderName["dtmdeliverylimitdate"] = "Ç¼´ü";
-$aryTableHeaderName["curproductprice"] = "Ç¼²Á";
-$aryTableHeaderName["curretailprice"] = "¾åÂå";
-$aryTableHeaderName["lngtargetagecode"] = "ÂĞ¾İÇ¯Îğ";
-$aryTableHeaderName["lngroyalty"] = "¥í¥¤¥ä¥ê¥Æ¥£";
-$aryTableHeaderName["lngcertificateclasscode"] = "¾Ú»æ";
-$aryTableHeaderName["lngcopyrightcode"] = "ÈÇ¸¢¸µ";
-$aryTableHeaderName["strcopyrightnote"] = "ÈÇ¸¢¸µÈ÷¹Í";
-$aryTableHeaderName["strcopyrightdisplaystamp"] = "ÈÇ¸¢É½¼¨¡Ê¹ï°õ¡Ë";
-$aryTableHeaderName["strcopyrightdisplayprint"] = "ÈÇ¸¢É½¼¨¡Ê°õºşÊª¡Ë";
-$aryTableHeaderName["strproductcomposition"] = "À½ÉÊ¹½À®";
-$aryTableHeaderName["strassemblycontents"] = "¥¢¥Ã¥»¥ó¥Ö¥êÆâÍÆ";
-$aryTableHeaderName["strspecificationdetails"] = "»ÅÍÍ¾ÜºÙ";
+$aryTableHeaderName["dtminsertdate"] = "ä½œæˆæ—¥";
+$aryTableHeaderName["lnggoodsplanprogresscode"] = "ä¼ç”»é€²è¡ŒçŠ¶æ³";
+$aryTableHeaderName["dtmupdatedate"] = "æ”¹è¨‚æ—¥æ™‚";
+$aryTableHeaderName["strproductcode"] = "è£½å“ã‚³ãƒ¼ãƒ‰";
+$aryTableHeaderName["lngrevisionno"] = "ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·";
+$aryTableHeaderName["strproductname"] = "è£½å“å";
+$aryTableHeaderName["strproductenglishname"] = "è£½å“åï¼ˆè‹±èªï¼‰";
+$aryTableHeaderName["lnginputusercode"] = "å…¥åŠ›è€…";
+$aryTableHeaderName["lnginchargegroupcode"] = "å–¶æ¥­éƒ¨ç½²";
+$aryTableHeaderName["lnginchargeusercode"] = "æ‹…å½“è€…";
+$aryTableHeaderName["lngdevelopusercode"] = "é–‹ç™ºæ‹…å½“è€…";
+$aryTableHeaderName["lngcategorycode"] = "ã‚«ãƒ†ã‚´ãƒª";
+$aryTableHeaderName["strgoodscode"] = "é¡§å®¢å“ç•ª";
+$aryTableHeaderName["strgoodsname"] = "å•†å“åç§°";
+$aryTableHeaderName["lngcustomercompanycode"] = "é¡§å®¢";
+$aryTableHeaderName["lngcustomerusercode"] = "é¡§å®¢æ‹…å½“è€…";
+$aryTableHeaderName["lngpackingunitcode"] = "è·å§¿å˜ä½";
+$aryTableHeaderName["lngproductunitcode"] = "è£½å“å˜ä½";
+$aryTableHeaderName["lngproductformcode"] = "å•†å“å½¢æ…‹";
+$aryTableHeaderName["lngboxquantity"] = "å†…ç®±ï¼ˆè¢‹ï¼‰å…¥æ•°";
+$aryTableHeaderName["lngcartonquantity"] = "ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°";
+$aryTableHeaderName["lngproductionquantity"] = "ç”Ÿç”£äºˆå®šæ•°";
+$aryTableHeaderName["lngfirstdeliveryquantity"] = "åˆå›ç´å“æ•°";
+$aryTableHeaderName["lngfactorycode"] = "ç”Ÿç”£å·¥å ´";
+$aryTableHeaderName["lngassemblyfactorycode"] = "ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå·¥å ´";
+$aryTableHeaderName["lngdeliveryplacecode"] = "ç´å“å ´æ‰€";
+$aryTableHeaderName["dtmdeliverylimitdate"] = "ç´æœŸ";
+$aryTableHeaderName["curproductprice"] = "ç´ä¾¡";
+$aryTableHeaderName["curretailprice"] = "ä¸Šä»£";
+$aryTableHeaderName["lngtargetagecode"] = "å¯¾è±¡å¹´é½¢";
+$aryTableHeaderName["lngroyalty"] = "ãƒ­ã‚¤ãƒ¤ãƒªãƒ†ã‚£";
+$aryTableHeaderName["lngcertificateclasscode"] = "è¨¼ç´™";
+$aryTableHeaderName["lngcopyrightcode"] = "ç‰ˆæ¨©å…ƒ";
+$aryTableHeaderName["strcopyrightnote"] = "ç‰ˆæ¨©å…ƒå‚™è€ƒ";
+$aryTableHeaderName["strcopyrightdisplaystamp"] = "ç‰ˆæ¨©è¡¨ç¤ºï¼ˆåˆ»å°ï¼‰";
+$aryTableHeaderName["strcopyrightdisplayprint"] = "ç‰ˆæ¨©è¡¨ç¤ºï¼ˆå°åˆ·ç‰©ï¼‰";
+$aryTableHeaderName["strproductcomposition"] = "è£½å“æ§‹æˆ";
+$aryTableHeaderName["strassemblycontents"] = "ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå†…å®¹";
+$aryTableHeaderName["strspecificationdetails"] = "ä»•æ§˜è©³ç´°";
 // -------------------------------------------------------
-// ¥Æ¡¼¥Ö¥ë¥»¥ëºîÀ®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒ«ä½œæˆ
 // -------------------------------------------------------
 $index = 0;
-// ¸¡º÷·ë²Ì·ï¿ôÊ¬Áöºº
+// æ¤œç´¢çµæœä»¶æ•°åˆ†èµ°æŸ»
 foreach ($records as $i => $record) {
-    // ÇØ·Ê¿§ÀßÄê
+    // èƒŒæ™¯è‰²è¨­å®š
     if ($record["strgroupdisplaycolor"]) {
         $bgcolor = "background-color: " . $record["strgroupdisplaycolor"] . ";";
     } else {
         $bgcolor = "background-color: #FFFFFF;";
     }
 
-    // tbody > trÍ×ÁÇºîÀ®
+    // tbody > trè¦ç´ ä½œæˆ
     $trBody = $doc->createElement("tr");
     $trBody->setAttribute("id", $record["strproductcode"]. "_" . $record["lngrevisionno"] );
     
-    // ¹àÈÖ
+    // é …ç•ª
     $index +=1;
     $tdIndex = $doc->createElement("td", $aryData["rownum"]. "." . $index);
     $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
 
-    // ¾ÜºÙ¤òÉ½¼¨
+    // è©³ç´°ã‚’è¡¨ç¤º
     if ($existsDetail) {
-        // ¾ÜºÙ¥»¥ë
+        // è©³ç´°ã‚»ãƒ«
         $tdDetail = $doc->createElement("td");
         $tdDetail->setAttribute("class", $exclude);
         $tdDetail->setAttribute("style", $bgcolor . "text-align: center;");
 
-        // ¾ÜºÙ¥Ü¥¿¥ó¤ÎÉ½¼¨
+        // è©³ç´°ãƒœã‚¿ãƒ³ã®è¡¨ç¤º
         if (($allowedDetailDelete) or ($allowedDetail and $record["lngrevisionno"] >= 0)) {
-            // ¾ÜºÙ¥Ü¥¿¥ó
+            // è©³ç´°ãƒœã‚¿ãƒ³
             $imgDetail = $doc->createElement("img");
             $imgDetail->setAttribute("src", "/img/type01/so/detail_off_bt.gif");
             $imgDetail->setAttribute("id", $record["lngproductno"]);
@@ -156,9 +156,9 @@ foreach ($records as $i => $record) {
         $trBody->appendChild($tdDetail);
     }
 
-    // ÍúÎò¹àÌÜ¤òÉ½¼¨
+    // å±¥æ­´é …ç›®ã‚’è¡¨ç¤º
     if ($existsHistory) {
-        // ÍúÎò¥»¥ë
+        // å±¥æ­´ã‚»ãƒ«
         $tdHistory = $doc->createElement("td");
         $tdHistory->setAttribute("class", $exclude);
         $tdHistory->setAttribute("style", $bgcolor . "text-align: center;");
@@ -166,57 +166,57 @@ foreach ($records as $i => $record) {
         $trBody->appendChild($tdHistory);
     }
 
-    // TODO Í×¥ê¥Õ¥¡¥¯¥¿¥ê¥ó¥°
-    // »ØÄê¤µ¤ì¤¿¥Æ¡¼¥Ö¥ë¹àÌÜ¤Î¥»¥ë¤òºîÀ®¤¹¤ë
+    // TODO è¦ãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°
+    // æŒ‡å®šã•ã‚ŒãŸãƒ†ãƒ¼ãƒ–ãƒ«é …ç›®ã®ã‚»ãƒ«ã‚’ä½œæˆã™ã‚‹
     foreach ($aryTableHeaderName as $key => $value) {
-        // É½¼¨ÂĞ¾İ¤Î¥«¥é¥à¤Î¾ì¹ç
+        // è¡¨ç¤ºå¯¾è±¡ã®ã‚«ãƒ©ãƒ ã®å ´åˆ
         if (array_key_exists($key, $displayColumns)) {
-            // ¹àÌÜÊÌ¤ËÉ½¼¨¥Æ¥­¥¹¥È¤òÀßÄê
+            // é …ç›®åˆ¥ã«è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®š
             switch ($key) {
-                // ºîÀ®Æü
+                // ä½œæˆæ—¥
                 case "dtminsertdate":
                     $td = $doc->createElement("td", $record["dtminsertdate"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ´ë²è¿Ê¹Ô¾õ¶·
+                // ä¼ç”»é€²è¡ŒçŠ¶æ³
                 case "lnggoodsplanprogresscode":
                     $td = $doc->createElement("td", $record["strgoodsplanprogressname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ²şÄûÆü»ş
+                // æ”¹è¨‚æ—¥æ™‚
                 case "dtmupdatedate":
                     $td = $doc->createElement("td", $record["dtmupdatedate"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À½ÉÊ¥³¡¼¥É
+                // è£½å“ã‚³ãƒ¼ãƒ‰
                 case "strproductcode":
                     $td = $doc->createElement("td", $record["strproductcode"] . "_" . $record["strrevisecode"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+                // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
                 case "lngrevisionno":
                     $td = $doc->createElement("td", $record["lngrevisionno"]);
                     $td->setAttribute("style", $bgcolor);
                     $td->setAttribute("rowspan", $rowspan);
                     $trBody->appendChild($td);
                     break;
-                // À½ÉÊÌ¾
+                // è£½å“å
                 case "strproductname":
                     $td = $doc->createElement("td", $record["strproductname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
+                // è£½å“åï¼ˆè‹±èªï¼‰
                 case "strproductenglishname":
                     $td = $doc->createElement("td", $record["strproductenglishname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÆşÎÏ¼Ô
+                // å…¥åŠ›è€…
                 case "lnginputusercode":
                     if ($record["strinputuserdisplaycode"] != "") {
                         $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];
@@ -227,7 +227,7 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ±Ä¶ÈÉô½ğ
+                // å–¶æ¥­éƒ¨ç½²
                 case "lnginchargegroupcode":
                     if ($record["strinchargegroupdisplaycode"] != "") {
                         $textContent = "[" . $record["strinchargegroupdisplaycode"] . "]" . " " . $record["strinchargegroupdisplayname"];
@@ -238,7 +238,7 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // [Ã´Åö¼ÔÉ½¼¨¥³¡¼¥É] Ã´Åö¼ÔÉ½¼¨Ì¾
+                // [æ‹…å½“è€…è¡¨ç¤ºã‚³ãƒ¼ãƒ‰] æ‹…å½“è€…è¡¨ç¤ºå
                 case "lnginchargeusercode":
                     if ($record["strinchargeuserdisplaycode"] != "") {
                         $textContent = "[" . $record["strinchargeuserdisplaycode"] . "]" . " " . $record["strinchargeuserdisplayname"];
@@ -249,7 +249,7 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // [³«È¯Ã´Åö¼ÔÉ½¼¨¥³¡¼¥É] ³«È¯Ã´Åö¼ÔÉ½¼¨Ì¾
+                // [é–‹ç™ºæ‹…å½“è€…è¡¨ç¤ºã‚³ãƒ¼ãƒ‰] é–‹ç™ºæ‹…å½“è€…è¡¨ç¤ºå
                 case "lngdevelopusercode":
                     if ($record["strdevelopuserdisplaycode"] != "") {
                         $textContent = "[" . $record["strdevelopuserdisplaycode"] . "]" . " " . $record["strdevelopuserdisplayname"];
@@ -260,25 +260,25 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¥«¥Æ¥´¥ê
+                // ã‚«ãƒ†ã‚´ãƒª
                 case "lngcategorycode":
                     $td = $doc->createElement("td", $record["strcategoryname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¸ÜµÒÉÊÈÖ
+                // é¡§å®¢å“ç•ª
                 case "strgoodscode":
                     $td = $doc->createElement("td", $record["strgoodscode"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¾¦ÉÊÌ¾¾Î
+                // å•†å“åç§°
                 case "strgoodsname":
                     $td = $doc->createElement("td", $record["strgoodsname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¸ÜµÒ
+                // é¡§å®¢
                 case "lngcustomercompanycode":
                     if ($record["strcustomercompanycode"] != "") {
                         $textContent = "[" . $record["strcustomercompanycode"] . "]" . " " . $record["strcustomercompanyname"];
@@ -289,7 +289,7 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¸ÜµÒÃ´Åö¼Ô
+                // é¡§å®¢æ‹…å½“è€…
                 case "lngcustomerusercode":
                     if ($record["strcustomerusercode"] != "") {
                         $textContent = "[" . $record["strcustomerusercode"] . "]" . " " . $record["strcustomerusername"];
@@ -300,49 +300,49 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ²Ù»ÑÃ±°Ì
+                // è·å§¿å˜ä½
                 case "lngpackingunitcode":
                     $td = $doc->createElement("td", $record["strpackingunitname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À½ÉÊÃ±°Ì
+                // è£½å“å˜ä½
                 case "lngproductunitcode":
                     $td = $doc->createElement("td", $record["strproductunitname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¾¦ÉÊ·ÁÂÖ
+                // å•†å“å½¢æ…‹
                 case "lngproductformcode":
                     $td = $doc->createElement("td", $record["strproductformname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÆâÈ¢¡ÊÂŞ¡ËÆş¿ô
+                // å†…ç®±ï¼ˆè¢‹ï¼‰å…¥æ•°
                 case "lngboxquantity":
                     $td = $doc->createElement("td", $record["lngboxquantity"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¥«¡¼¥È¥óÆş¿ô
+                // ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
                 case "lngcartonquantity":
                     $td = $doc->createElement("td", $record["lngcartonquantity"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À¸»ºÍ½Äê¿ô
+                // ç”Ÿç”£äºˆå®šæ•°
                 case "lngproductionquantity":
                     $td = $doc->createElement("td", $record["lngproductionquantity"] . " " . $record["strproductionunitname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ½é²óÇ¼ÉÊ¿ô
+                // åˆå›ç´å“æ•°
                 case "lngfirstdeliveryquantity":
                     $td = $doc->createElement("td", $record["lngfirstdeliveryquantity"] . " " . $record["strfirstdeliveryunitname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À¸»º¹©¾ì
+                // ç”Ÿç”£å·¥å ´
                 case "lngfactorycode":
                     if ($record["strfactorycode"] != "") {
                         $textContent = "[" . $record["strfactorycode"] . "]" . " " . $record["strfactoryname"];
@@ -353,7 +353,7 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¥¢¥Ã¥»¥ó¥Ö¥ê¹©¾ì
+                // ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå·¥å ´
                 case "lngassemblyfactorycode":
                     if ($record["strassemblyfactorycode"] != "") {
                         $textContent = "[" . $record["strassemblyfactorycode"] . "]" . " " . $record["strassemblyfactoryname"];
@@ -364,7 +364,7 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // Ç¼ÉÊ¾ì½ê
+                // ç´å“å ´æ‰€
                 case "lngdeliveryplacecode":
                     if ($record["strdeliveryplacecode"] != "") {
                         $textContent = "[" . $record["strdeliveryplacecode"] . "]" . " " . $record["strdeliveryplacename"];
@@ -375,13 +375,13 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // Ç¼´ü
+                // ç´æœŸ
                 case "dtmdeliverylimitdate":
                     $td = $doc->createElement("td", $record["dtmdeliverylimitdate"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // Ç¼²Á
+                // ç´ä¾¡
                 case "curproductprice":
                     if ($record["curproductprice"] != "") {
                         $textContent = "&yen;" . " " . $record["curproductprice"];
@@ -392,7 +392,7 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¾åÂå
+                // ä¸Šä»£
                 case "curretailprice":    
                     if ($record["curretailprice"] != "") {
                         $textContent = "&yen;" . " " . $record["curretailprice"];
@@ -403,61 +403,61 @@ foreach ($records as $i => $record) {
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÂĞ¾İÇ¯Îğ
+                // å¯¾è±¡å¹´é½¢
                 case "lngtargetagecode":
                     $td = $doc->createElement("td", $record["strtargetagename"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¥í¥¤¥ä¥ê¥Æ¥£
+                // ãƒ­ã‚¤ãƒ¤ãƒªãƒ†ã‚£
                 case "lngroyalty":
                     $td = $doc->createElement("td", $record["lngroyalty"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¾Ú»æ
+                // è¨¼ç´™
                 case "lngcertificateclasscode":
                     $td = $doc->createElement("td", $record["strcertificateclassname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÈÇ¸¢¸µ
+                // ç‰ˆæ¨©å…ƒ
                 case "lngcopyrightcode":
                     $td = $doc->createElement("td", $record["strcopyrightname"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÈÇ¸¢¸µÈ÷¹Í
+                // ç‰ˆæ¨©å…ƒå‚™è€ƒ
                 case "strcopyrightnote":
                     $td = $doc->createElement("td", $record["strcopyrightnote"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÈÇ¸¢É½¼¨¡Ê¹ï°õ¡Ë
+                // ç‰ˆæ¨©è¡¨ç¤ºï¼ˆåˆ»å°ï¼‰
                 case "strcopyrightdisplaystamp":
                     $td = $doc->createElement("td", $record["strcopyrightdisplaystamp"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ÈÇ¸¢É½¼¨¡Ê°õºşÊª¡Ë
+                // ç‰ˆæ¨©è¡¨ç¤ºï¼ˆå°åˆ·ç‰©ï¼‰
                 case "strcopyrightdisplayprint":
                     $td = $doc->createElement("td", $record["strcopyrightdisplayprint"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // À½ÉÊ¹½À®
+                // è£½å“æ§‹æˆ
                 case "strproductcomposition":
-                    $td = $doc->createElement("td", "Á´" . $record["strproductcomposition"] . "¼ï¥¢¥Ã¥»¥ó¥Ö¥ê");
+                    $td = $doc->createElement("td", "å…¨" . $record["strproductcomposition"] . "ç¨®ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒª");
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // ¥¢¥Ã¥»¥ó¥Ö¥êÆâÍÆ
+                // ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå†…å®¹
                 case "strassemblycontents":
                     $td = $doc->createElement("td", $record["strassemblycontents"]);
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
-                // »ÅÍÍ¾ÜºÙ
+                // ä»•æ§˜è©³ç´°
                 case "strspecificationdetails":
                     $td = $doc->createElement("td", $record["strspecificationdetails"]);
                     $td->setAttribute("style", $bgcolor . "white-space: pre; ");
@@ -473,5 +473,5 @@ foreach ($records as $i => $record) {
 
 }
 
-// // HTML½ĞÎÏ
+// // HTMLå‡ºåŠ›
 echo $strHtml;

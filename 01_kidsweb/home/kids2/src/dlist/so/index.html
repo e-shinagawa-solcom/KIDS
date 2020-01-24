@@ -3,7 +3,7 @@
 <head>
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=euc-jp">
-<!-- ¼õÃí¡¦Çä¾å ÌÀºÙ¹Ô¥¨¥ê¥¢ÍÑ¥Æ¥ó¥×¥ì¡¼¥È -->
+<!-- å—æ³¨ãƒ»å£²ä¸Š æ˜ç´°è¡Œã‚¨ãƒªã‚¢ç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ -->
 
 
 <!-- START COMMON FILES -->
@@ -46,38 +46,38 @@
 <Script for="objDataSourceSetting3" event="ondatasetcomplete">subLoadMasterSetting(this.recordset,3);
 </Script>
 
-<!--input Çä¾å¶èÊ¬ output Ã±²Á¥ê¥¹¥È-->
+<!--input å£²ä¸ŠåŒºåˆ† output å˜ä¾¡ãƒªã‚¹ãƒˆ-->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting11" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting11" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,11);
 
-	<!--²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­Ã±²Á¥ê¥¹¥È¤òÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë-->
+	<!--è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ãå˜ä¾¡ãƒªã‚¹ãƒˆã‚’é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹-->
 	if (window.parent.DSO.lngConversionClassCode[1].checked)
 	{
 		window.parent.DSO.lngGoodsPriceCode.disabled = true;
 	}
 
-	<!--Ã±²Á¥ê¥¹¥È¤Îselected¤ò¡¢À½ÉÊÃ±²Á¤ËÈ¿±Ç-->
+	<!--å˜ä¾¡ãƒªã‚¹ãƒˆã®selectedã‚’ã€è£½å“å˜ä¾¡ã«åæ˜ -->
 	fncDtGoodsPriceToProductPrice();
 </Script>
 
-<!--ÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¤È¤­¤ÎÃ±²Á¥ê¥¹¥È-->
+<!--æ˜ç´°è¡Œã‚’é¸æŠã—ãŸã¨ãã®å˜ä¾¡ãƒªã‚¹ãƒˆ-->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting12" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting12" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,12);
 
-	<!--Ã±²Á¥ê¥¹¥È¤Îselected¤òÀßÄê-->
+	<!--å˜ä¾¡ãƒªã‚¹ãƒˆã®selectedã‚’è¨­å®š-->
 	window.parent.DSO.lngGoodsPriceCode.value = saveRecord[g_lngSelIndex][1];
 
-	<!--²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­Ã±²Á¥ê¥¹¥È¤òÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë-->
+	<!--è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ãå˜ä¾¡ãƒªã‚¹ãƒˆã‚’é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹-->
 	if (saveRecord[g_lngSelIndex][6] == "ps")
 	{
 		window.parent.DSO.lngGoodsPriceCode.disabled = true;
 	}
 </Script>
 
-<!--ÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¤È¤­¡¢¥«¡¼¥È¥óÆş¿ô¤ò·èÄê¤·¡¢²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­[À½ÉÊ¿ôÎÌ]¤Ë[¥«¡¼¥È¥ó¿ô]¡ß[²Ù»Ñ¿ôÎÌ]¤òÈ¿±Ç-->
-<!-- objDataSourceSettingProductInfo ¤Ë½¸Ìó¤·¤¿°Ù¡¢¥³¥á¥ó¥È¥¢¥¦¥È
+<!--æ˜ç´°è¡Œã‚’é¸æŠã—ãŸã¨ãã€ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’æ±ºå®šã—ã€è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ã[è£½å“æ•°é‡]ã«[ã‚«ãƒ¼ãƒˆãƒ³æ•°]Ã—[è·å§¿æ•°é‡]ã‚’åæ˜ -->
+<!-- objDataSourceSettingProductInfo ã«é›†ç´„ã—ãŸç‚ºã€ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting13" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting13" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,13);
@@ -88,13 +88,13 @@
 		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 		var GoodsQuantity_gs = window.parent.fncCheckNumberValue( CartonQuantity * GoodsQuantity , 0 , false );
 		window.parent.DSO.lngGoodsQuantity_gs.value = GoodsQuantity_gs;
-		// [À½ÉÊÃ±²Á]¤Ë[²Ù»ÑÃ±²Á]¡à[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È
+		// [è£½å“å˜ä¾¡]ã«[è·å§¿å˜ä¾¡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆ
 		fncDtPSProductPrice();
 	}
 </Script>
 -->
 
-<!--¥«¡¼¥È¥óÆş¿ô¤ò·èÄê¤·¡¢²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­[À½ÉÊ¿ôÎÌ]¤Ë[¥«¡¼¥È¥ó¿ô]¡ß[²Ù»Ñ¿ôÎÌ]¤òÈ¿±Ç-->
+<!--ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’æ±ºå®šã—ã€è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ã[è£½å“æ•°é‡]ã«[ã‚«ãƒ¼ãƒˆãƒ³æ•°]Ã—[è·å§¿æ•°é‡]ã‚’åæ˜ -->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting15" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting15" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,15);
@@ -108,55 +108,55 @@
 	}
 </Script>
 
-<!--detail¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Î½èÍı(»ÅÆş´ÉÍı,Çä¾å´ÉÍı¤Î¤ß)-->
+<!--detailã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã®å‡¦ç†(ä»•å…¥ç®¡ç†,å£²ä¸Šç®¡ç†ã®ã¿)-->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSetting14" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSetting14" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,14);
 
-	// <!--»ÅÆş´ÉÍı,Çä¾å´ÉÍı¤Î¾ì¹ç¤Î½èÍı-->
+	// <!--ä»•å…¥ç®¡ç†,å£²ä¸Šç®¡ç†ã®å ´åˆã®å‡¦ç†-->
 	fncDtHtmlForPC();
 </Script>
 
-<!-- ¾¦ÉÊ¾ğÊó¼èÆÀÍÑ -->
+<!-- å•†å“æƒ…å ±å–å¾—ç”¨ -->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingProductInfo" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSettingProductInfo" event="ondatasetcomplete">
 	subLoadMasterSettings(this.recordset,1, window.parent.DSO);
 
-	// <!--ÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¤È¤­¡¢¥«¡¼¥È¥óÆş¿ô¤ò·èÄê¤·¡¢²Ù»ÑÃ±°Ì·×¾å¤Î¤È¤­[À½ÉÊ¿ôÎÌ]¤Ë[¥«¡¼¥È¥ó¿ô]¡ß[²Ù»Ñ¿ôÎÌ]¤òÈ¿±Ç-->
+	// <!--æ˜ç´°è¡Œã‚’é¸æŠã—ãŸã¨ãã€ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’æ±ºå®šã—ã€è·å§¿å˜ä½è¨ˆä¸Šã®ã¨ã[è£½å“æ•°é‡]ã«[ã‚«ãƒ¼ãƒˆãƒ³æ•°]Ã—[è·å§¿æ•°é‡]ã‚’åæ˜ -->
 	if( saveRecord[g_lngSelIndex][6] == "ps" )
 	{
 		GoodsQuantity        = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
 		var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 		var GoodsQuantity_gs = window.parent.fncCheckNumberValue( CartonQuantity * GoodsQuantity , 0 , false );
 		window.parent.DSO.lngGoodsQuantity_gs.value = GoodsQuantity_gs;
-		// [À½ÉÊÃ±²Á]¤Ë[²Ù»ÑÃ±²Á]¡à[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È
+		// [è£½å“å˜ä¾¡]ã«[è·å§¿å˜ä¾¡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆ
 		fncDtPSProductPrice();
 	}
 </Script>
 
 
-<!-- ¼õÃí¤ËÂĞ¤¹¤ëÇä¾å¿ô¤ò¼èÆÀ -->
+<!-- å—æ³¨ã«å¯¾ã™ã‚‹å£²ä¸Šæ•°ã‚’å–å¾— -->
 <OBJECT CLASSID="clsid:333C7BC4-460F-11D0-BC04-0080C7055A83" ID="objDataSourceSettingSalesInReceiveAll" WIDTH="0" HEIGHT="0"></OBJECT>
 <Script for="objDataSourceSettingSalesInReceiveAll" event="ondatasetcomplete">
 	subLoadMasterSetting(this.recordset,10);
 
-	// ½èÍıÁ°¤ÎÁªÂò¹Ô¤ò»ØÄê
+	// å‡¦ç†å‰ã®é¸æŠè¡Œã‚’æŒ‡å®š
 	lngSelIndex = parseFloat(document.all.check_value_salesproductquantity_selindex.value);
 
 
-	// ¥ì¥³¡¼¥É¤¬¤¢¤Ã¤¿¾ì¹ç
-	// ¼õÃí¤ËÂĞ¤¹¤ëÇä¾å¤¬Â¸ºß¤¹¤ë¡¢¤ÈÈ½ÃÇ¤¹¤ë
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒã‚ã£ãŸå ´åˆ
+	// å—æ³¨ã«å¯¾ã™ã‚‹å£²ä¸ŠãŒå­˜åœ¨ã™ã‚‹ã€ã¨åˆ¤æ–­ã™ã‚‹
 	if( this.recordset.recordcount)
 	{
 		saveRecord[lngSelIndex][22] = '1';
-		// ºÇ¿·¤ÎÇä¾å¿ôÎÌ¤òÊİ»ı¡Êlib/sql/caCheckSalesProductQuantityAll.sql ¤ò»²¾È¤Î¤³¤È¡Ë
+		// æœ€æ–°ã®å£²ä¸Šæ•°é‡ã‚’ä¿æŒï¼ˆlib/sql/caCheckSalesProductQuantityAll.sql ã‚’å‚ç…§ã®ã“ã¨ï¼‰
 		saveRecord[lngSelIndex][23] = parseFloat(this.recordset.Fields('name1').value);
 	}
-	// ¼õÃí¤ËÂĞ¤¹¤ëÇä¾å¥Ç¡¼¥¿Â¸ºßÌµ¤·¡¢¤ÈÈ½ÃÇ¤¹¤ë
+	// å—æ³¨ã«å¯¾ã™ã‚‹å£²ä¸Šãƒ‡ãƒ¼ã‚¿å­˜åœ¨ç„¡ã—ã€ã¨åˆ¤æ–­ã™ã‚‹
 	else
 	{
-		saveRecord[lngSelIndex][22] = '';	// record.js:fncDtNewAryForReturn()¡¢fncDtNewAry() Æâ¤Ç¥»¥Ã¥È¤·¤¿ÃÍ¤ò¥¯¥ê¥¢
-		saveRecord[lngSelIndex][23] = 0;	// ¼õÃí¤ËÂĞ¤¹¤ëÇä¾å¿ô¤Ï0
+		saveRecord[lngSelIndex][22] = '';	// record.js:fncDtNewAryForReturn()ã€fncDtNewAry() å†…ã§ã‚»ãƒƒãƒˆã—ãŸå€¤ã‚’ã‚¯ãƒªã‚¢
+		saveRecord[lngSelIndex][23] = 0;	// å—æ³¨ã«å¯¾ã™ã‚‹å£²ä¸Šæ•°ã¯0
 	}
 
 </Script>
@@ -166,14 +166,14 @@
 <table width="910" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f818">
 	<tr class="TrSegs">
 		<td>&nbsp;</td>
-		<td id="ExStrDL02">À½ÉÊ</td>
-		<td id="ExStrDL01">Çä¾å¶èÊ¬</td>
-		<td id="ExStrDL03">Ã±²Á</td>
-		<td id="ExStrDL04">Ã±°Ì</td>
-		<td id="ExStrDL05">¿ôÎÌ</td>
-		<td id="ExStrDL06">ÀÇÈ´¶â³Û</td>
-		<td id="ExStrDL07">Ç¼´ü</td>
-		<td id="ExStrDL08">È÷¹Í</td>
+		<td id="ExStrDL02">è£½å“</td>
+		<td id="ExStrDL01">å£²ä¸ŠåŒºåˆ†</td>
+		<td id="ExStrDL03">å˜ä¾¡</td>
+		<td id="ExStrDL04">å˜ä½</td>
+		<td id="ExStrDL05">æ•°é‡</td>
+		<td id="ExStrDL06">ç¨æŠœé‡‘é¡</td>
+		<td id="ExStrDL07">ç´æœŸ</td>
+		<td id="ExStrDL08">å‚™è€ƒ</td>
 	</tr>
 </table>
 </span>

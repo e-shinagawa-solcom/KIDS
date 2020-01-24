@@ -1,25 +1,25 @@
 ': -----------------------------------------------------------------------------
-': ¥Õ¥¡¥¤¥ë³µÍ×¡§
-':               VBScript ¶¦ÄÌ¥¯¥é¥¹
-': È÷¹Í¡§
-':       ¶¦ÄÌ¤Ç»ÈÍÑ¤¹¤ë¥¯¥é¥¹·²
+': ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ï¼š
+':               VBScript å…±é€šã‚¯ãƒ©ã‚¹
+': å‚™è€ƒï¼š
+':       å…±é€šã§ä½¿ç”¨ã™ã‚‹ã‚¯ãƒ©ã‚¹ç¾¤
 ':
-': ºîÀ®Æü¡§2003/10/09
-': ºîÀ®¼Ô¡§Kazushi Saito
-': ½¤ÀµÍúÎò¡§
+': ä½œæˆæ—¥ï¼š2003/10/09
+': ä½œæˆè€…ï¼šKazushi Saito
+': ä¿®æ­£å±¥æ­´ï¼š
 ':
 ': -----------------------------------------------------------------------------
 
 
 ' ------------------------------------------
-' ¥°¥í¡¼¥Ğ¥ëÊÑ¿ôÄêµÁ
+' ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°å®šç¾©
 ' ------------------------------------------
-Public Const c_lngAfterDecimal = 4	'½èÍıÂĞ¾İ¤Î¾®¿ôÅÀ°Ê²¼¤Î·å¿ô¡Ê´İ¤á½èÍı¡Ë
+Public Const c_lngAfterDecimal = 4	'å‡¦ç†å¯¾è±¡ã®å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°ï¼ˆä¸¸ã‚å‡¦ç†ï¼‰
 
 
 ' ------------------------------------------
-' ³µÍ×¡§¥Á¥§¥Ã¥¯¥¯¥é¥¹
-' È÷¹Í¡§¿ôÃÍ¡¢ÆüÉÕ¡¢¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤Ê¤¦
+' æ¦‚è¦ï¼šãƒã‚§ãƒƒã‚¯ã‚¯ãƒ©ã‚¹
+' å‚™è€ƒï¼šæ•°å€¤ã€æ—¥ä»˜ã€ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œãªã†
 ' ------------------------------------------
 Class clsCheck
 
@@ -36,26 +36,26 @@ Class clsCheck
 	
 	
 	
-	Private m_strNumberCurrencySign		'ÄÌ²ßµ­¹æ
-	Private m_strNumberConnectionChar	'ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
-	Private m_lngNumberAfterDecimal		'¾®¿ôÅÀ°Ê²¼¤Î·å
-	Private m_lngStringMaxLength		'Ê¸»úÎó¤ÎºÇÂç¿ô
+	Private m_strNumberCurrencySign		'é€šè²¨è¨˜å·
+	Private m_strNumberConnectionChar	'é€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
+	Private m_lngNumberAfterDecimal		'å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡
+	Private m_lngStringMaxLength		'æ–‡å­—åˆ—ã®æœ€å¤§æ•°
 	
-	Private m_strFormatNumberValue		'fncComFormatNumberValue() ¤Ë¤è¤ê¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ì¤¿Ä¾¸å¤ÎÃÍ
+	Private m_strFormatNumberValue		'fncComFormatNumberValue() ã«ã‚ˆã‚Šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸç›´å¾Œã®å€¤
 	
 	' ------------------------------------------
 	' ------------------------------------------
 	Private Sub Class_Initialize()
 	
 	
-		'¿ôÃÍ½èÍı¤Ë¤Æ¾®¿ôÅÀ°Ê²¼¤Î·å¿ô¤ò²¿·å¤Ë¤·¤Æ½èÍı¤¹¤ë¤«¤ò½é´üÀßÄê
+		'æ•°å€¤å‡¦ç†ã«ã¦å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°ã‚’ä½•æ¡ã«ã—ã¦å‡¦ç†ã™ã‚‹ã‹ã‚’åˆæœŸè¨­å®š
 		NumberAfterDecimal = c_lngAfterDecimal
 	
 	End Sub
 
 	' ------------------------------------------
-	' ³µÍ×¡§ÄÌ²ßµ­¹æ
-	' °ú¿ô¡§strValue ÃÍ
+	' æ¦‚è¦ï¼šé€šè²¨è¨˜å·
+	' å¼•æ•°ï¼šstrValue å€¤
 	' ------------------------------------------
 	Public Property Let NumberCurrencySign(strValue)
 		m_strNumberCurrencySign = strValue
@@ -66,8 +66,8 @@ Class clsCheck
 	End Property
 
 	' ------------------------------------------
-	' ³µÍ×¡§ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
-	' °ú¿ô¡§strValue ÃÍ
+	' æ¦‚è¦ï¼šé€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
+	' å¼•æ•°ï¼šstrValue å€¤
 	' ------------------------------------------
 	Public Property Let NumberConnectionChar(strValue)
 		m_strNumberConnectionChar = strValue
@@ -78,8 +78,8 @@ Class clsCheck
 	End Property
 
 	' ------------------------------------------
-	' ³µÍ×¡§¾®¿ôÅÀ°Ê²¼¤Î·×»»¤ò²¿·å¤Ë¤¹¤ë¤«
-	' °ú¿ô¡§lngValue ÃÍ
+	' æ¦‚è¦ï¼šå°æ•°ç‚¹ä»¥ä¸‹ã®è¨ˆç®—ã‚’ä½•æ¡ã«ã™ã‚‹ã‹
+	' å¼•æ•°ï¼šlngValue å€¤
 	' ------------------------------------------
 	Public Property Let NumberAfterDecimal(lngValue)
 		m_lngNumberAfterDecimal = lngValue
@@ -91,8 +91,8 @@ Class clsCheck
 
 
 	' ------------------------------------------
-	' ³µÍ×¡§Ê¸»úÎó¤ÎºÇÂç¿ô
-	' °ú¿ô¡§lngValue ÃÍ
+	' æ¦‚è¦ï¼šæ–‡å­—åˆ—ã®æœ€å¤§æ•°
+	' å¼•æ•°ï¼šlngValue å€¤
 	' ------------------------------------------
 	Public Property Let StringMaxLength(lngValue)
 		m_lngStringMaxLength = lngValue
@@ -104,8 +104,8 @@ Class clsCheck
 	
 
 	' ------------------------------------------
-	' ³µÍ×¡§ÄÌ²ßµ­¹æ
-	' °ú¿ô¡§strValue ÃÍ
+	' æ¦‚è¦ï¼šé€šè²¨è¨˜å·
+	' å¼•æ•°ï¼šstrValue å€¤
 	' ------------------------------------------
 	Public Property Let FormatNumberValue(strValue)
 		m_strFormatNumberValue = strValue
@@ -117,139 +117,139 @@ Class clsCheck
 
 
 	' ------------------------------------------
-	' ³µÍ×¡§¿ôÃÍ¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
-	' °ú¿ô¡§TextBox¥ª¥Ö¥¸¥§¥¯¥È
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
+	' æ¦‚è¦ï¼šæ•°å€¤ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+	' å¼•æ•°ï¼šTextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
 	' ------------------------------------------
 '	Public Function fncComFormatNumber( objText )
 '		On Error Resume Next
 '
-'		Dim lngValue		'¥Æ¥­¥¹¥ÈÃÍ
-'		Dim aryValue		'¥Æ¥­¥¹¥ÈÃÍ¡ÊÄÌ²ßµ­¹æ¡Ü¶â³Û¡Ë
-'		Dim strCurrencySign	'ÄÌ²ßµ­¹æ
-'		Dim curAmount 		'¶â³Û money
+'		Dim lngValue		'ãƒ†ã‚­ã‚¹ãƒˆå€¤
+'		Dim aryValue		'ãƒ†ã‚­ã‚¹ãƒˆå€¤ï¼ˆé€šè²¨è¨˜å·ï¼‹é‡‘é¡ï¼‰
+'		Dim strCurrencySign	'é€šè²¨è¨˜å·
+'		Dim curAmount 		'é‡‘é¡ money
 '		
 '
-'		'´Ø¿ô¤ÎÌá¤êÃÍ¤ò½é´ü²½
+'		'é–¢æ•°ã®æˆ»ã‚Šå€¤ã‚’åˆæœŸåŒ–
 '		fncComFormatNumber = False
 '
-'		'¥ª¥Ö¥¸¥§¥¯¥È¤ÎÂ¸ºß¤ò³ÎÇ§¡£¼èÆÀÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¼ºÇÔ¤ÇÊÖµÑ
+'		'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­˜åœ¨ã‚’ç¢ºèªã€‚å–å¾—ä¸å¯èƒ½ãªå ´åˆã€å¤±æ•—ã§è¿”å´
 '		If IsEmpty( objText.value ) Then Exit Function
 '
 '		
-'		'¥¨¥é¡¼È½Äê
+'		'ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 '		If Len(Trim(objText.value)) = 0 Then
-'			'´Ø¿ô¤òÀ®¸ù¤ÇÊÖµÑ
+'			'é–¢æ•°ã‚’æˆåŠŸã§è¿”å´
 '			fncComFormatNumber = True
 '			Exit Function
 '		End If
 '		
-'		' ÀÜÂ³Ê¸»ú¤¬¤¢¤ë¾ì¹ç
-'		'¥×¥í¥Ñ¥Æ¥£»ØÄêÄÌ²ßµ­¹æ¤ÈÆ±¤¸ÄÌ²ßµ­¹æ¤Î¾ì¹ç¡¢¥ª¥Ö¥¸¥§¥¯¥È¤ÎÃÍ¤òÊÑ¿ô¤ËÂåÆş
+'		' æ¥ç¶šæ–‡å­—ãŒã‚ã‚‹å ´åˆ
+'		'ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£æŒ‡å®šé€šè²¨è¨˜å·ã¨åŒã˜é€šè²¨è¨˜å·ã®å ´åˆã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å¤‰æ•°ã«ä»£å…¥
 '		If( (Instr(objText.value, NumberConnectionChar) > 0) AND (NumberConnectionChar <> "") ) Then
 '			
-'			'ÄÌ²ßµ­¹æ¤Î½èÍı
+'			'é€šè²¨è¨˜å·ã®å‡¦ç†
 '			aryValue = Split(objText.value, NumberConnectionChar)
 '			strCurrencySign = aryValue(0)
 '			curAmount = aryValue(1)
 '			lngValue = curAmount
 '			
-'		'ÀÜÂ³Ê¸»ú¤¬Ìµ¤¤¾ì¹ç
+'		'æ¥ç¶šæ–‡å­—ãŒç„¡ã„å ´åˆ
 '		Else
-'			'ÄÌ²ßµ­¹æ¤¬¤¢¤Ã¤¿¾ì¹ç¡¢ºï½ü
+'			'é€šè²¨è¨˜å·ãŒã‚ã£ãŸå ´åˆã€å‰Šé™¤
 '			lngValue = Replace( objText.value, NumberCurrencySign, "" )
 '		End If
 '
-'		'¿ôÃÍ¤Ø¤ÎÊÑ´¹¤¬²ÄÇ½¤«¤òÄ´¤Ù¤ë
+'		'æ•°å€¤ã¸ã®å¤‰æ›ãŒå¯èƒ½ã‹ã‚’èª¿ã¹ã‚‹
 ''		If Not IsNumeric( lngValue ) Then
-'			'´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+'			'é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 '			Exit Function
 '		End If
 '		
-'		'ÄÌ²ß·¿¤ËÊÑ´¹
+'		'é€šè²¨å‹ã«å¤‰æ›
 '		lngValue = CCur(lngValue)
-'		'¿ôÃÍ·Á¼°¤Ë¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤Æ¡¢¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+'		'æ•°å€¤å½¢å¼ã«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ã¦ã€å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 '		objText.value = NumberCurrencySign & NumberConnectionChar & FormatNumber(lngValue, NumberAfterDecimal, True, False)
 '		'objText.value = Round(lngValue, 4)
 '		
 '		
-'		'À®¸ù¤òÊÖµÑ
+'		'æˆåŠŸã‚’è¿”å´
 '		fncComFormatNumber = True
 '
-'		'¤â¤·¥¨¥é¡¼¤¬µ¯¤­¤Æ¤¤¤¿¾ì¹ç
+'		'ã‚‚ã—ã‚¨ãƒ©ãƒ¼ãŒèµ·ãã¦ã„ãŸå ´åˆ
 '		If( Err.number > 0 ) Then
 '			'fncComFormatNumber = False
 '		End If
 '	End Function
 
 	' ------------------------------------------
-	' ³µÍ×¡§¿ôÃÍ¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¡Ê¼Â¿ôÃÍÈÇ¡Ë
-	' °ú¿ô¡§strValue			ÃÍ¡ÊString¡Ë
-	'		blnCurrencyEscape	ÄÌ²ßµ­¹æ¤Î¥¨¥¹¥±¡¼¥×¡Ê\¥Ş¡¼¥¯¡Ë
-	' Ìá¤êÃÍ¡§¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ì¤¿ÃÍ
-	' È÷¹Í¡§
+	' æ¦‚è¦ï¼šæ•°å€¤ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆå®Ÿæ•°å€¤ç‰ˆï¼‰
+	' å¼•æ•°ï¼šstrValue			å€¤ï¼ˆStringï¼‰
+	'		blnCurrencyEscape	é€šè²¨è¨˜å·ã®ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ï¼ˆ\ãƒãƒ¼ã‚¯ï¼‰
+	' æˆ»ã‚Šå€¤ï¼šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸå€¤
+	' å‚™è€ƒï¼š
 	' ------------------------------------------
 	Public Function fncComFormatNumberValue( strValue, blnCurrencyEscape )
 		On Error Resume Next
 
-		Dim lngValue		'¥Æ¥­¥¹¥ÈÃÍ
-		Dim aryValue		'¥Æ¥­¥¹¥ÈÃÍ¡ÊÄÌ²ßµ­¹æ¡Ü¶â³Û¡Ë
-		Dim strCurrencySign	'ÄÌ²ßµ­¹æ
-		Dim curAmount 		'¶â³Û money
+		Dim lngValue		'ãƒ†ã‚­ã‚¹ãƒˆå€¤
+		Dim aryValue		'ãƒ†ã‚­ã‚¹ãƒˆå€¤ï¼ˆé€šè²¨è¨˜å·ï¼‹é‡‘é¡ï¼‰
+		Dim strCurrencySign	'é€šè²¨è¨˜å·
+		Dim curAmount 		'é‡‘é¡ money
 
 
-		'´Ø¿ô¤ÎÌá¤êÃÍ¤ò½é´ü²½
+		'é–¢æ•°ã®æˆ»ã‚Šå€¤ã‚’åˆæœŸåŒ–
 		fncComFormatNumberValue = False
 
-		' Â¸ºß¤ò³ÎÇ§¡£¼èÆÀÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¼ºÇÔ¤ÇÊÖµÑ
+		' å­˜åœ¨ã‚’ç¢ºèªã€‚å–å¾—ä¸å¯èƒ½ãªå ´åˆã€å¤±æ•—ã§è¿”å´
 		If IsEmpty( strValue ) Then Exit Function
 
-		'¥¨¥é¡¼È½Äê
+		'ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 		If Len(Trim(strValue)) = 0 Then
-			'´Ø¿ô¤òÀ®¸ù¤ÇÊÖµÑ
+			'é–¢æ•°ã‚’æˆåŠŸã§è¿”å´
 			fncComFormatNumberValue = True
 			Exit Function
 		End If
 
-		' ÀÜÂ³Ê¸»ú¤¬¤¢¤ë¾ì¹ç
-		'¥×¥í¥Ñ¥Æ¥£»ØÄêÄÌ²ßµ­¹æ¤ÈÆ±¤¸ÄÌ²ßµ­¹æ¤Î¾ì¹ç¡¢¥ª¥Ö¥¸¥§¥¯¥È¤ÎÃÍ¤òÊÑ¿ô¤ËÂåÆş
+		' æ¥ç¶šæ–‡å­—ãŒã‚ã‚‹å ´åˆ
+		'ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£æŒ‡å®šé€šè²¨è¨˜å·ã¨åŒã˜é€šè²¨è¨˜å·ã®å ´åˆã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å¤‰æ•°ã«ä»£å…¥
 		If( (Instr(strValue, NumberConnectionChar) > 0) AND (NumberConnectionChar <> "") ) Then
 			
-			'ÄÌ²ßµ­¹æ¤Î½èÍı
+			'é€šè²¨è¨˜å·ã®å‡¦ç†
 			aryValue = Split(strValue, NumberConnectionChar)
 			strCurrencySign = aryValue(0)
 			curAmount = aryValue(1)
 			lngValue = curAmount
 			
-		'ÀÜÂ³Ê¸»ú¤¬Ìµ¤¤¾ì¹ç
+		'æ¥ç¶šæ–‡å­—ãŒç„¡ã„å ´åˆ
 		Else
-			'ÄÌ²ßµ­¹æ¤¬¤¢¤Ã¤¿¾ì¹ç¡¢ºï½ü
+			'é€šè²¨è¨˜å·ãŒã‚ã£ãŸå ´åˆã€å‰Šé™¤
 			lngValue = Replace( strValue, NumberCurrencySign, "" )
 		End If
 
-		'¿ôÃÍ¤Ø¤ÎÊÑ´¹¤¬²ÄÇ½¤«¤òÄ´¤Ù¤ë
+		'æ•°å€¤ã¸ã®å¤‰æ›ãŒå¯èƒ½ã‹ã‚’èª¿ã¹ã‚‹
 		If Not IsNumeric( lngValue ) Then
-			'´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+			'é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 			Exit Function
 		End If
 
-		'ÄÌ²ß·¿¤ËÊÑ´¹
+		'é€šè²¨å‹ã«å¤‰æ›
 		lngValue = CCur(lngValue)
-		'¿ôÃÍ·Á¼°¤Ë¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤Æ¡¢¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+		'æ•°å€¤å½¢å¼ã«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ã¦ã€å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 		strValue = NumberCurrencySign & NumberConnectionChar & FormatNumber(lngValue, NumberAfterDecimal, True, False)
 		
-		'ÃÍÊİ»ı¡¡\ ¤¬¥¨¥¹¥±¡¼¥×¤µ¤ì¤Æ¤·¤Ş¤¦¤¿¤á¡¢\\ ¤ËÊÑ´¹
+		'å€¤ä¿æŒã€€\ ãŒã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã•ã‚Œã¦ã—ã¾ã†ãŸã‚ã€\\ ã«å¤‰æ›
 		If blnCurrencyEscape Then
 			FormatNumberValue = Replace(strValue, "\", "\\")
 		Else
 			FormatNumberValue = strValue
 		End If
 		
-		'À®¸ù¤òÊÖµÑ
+		'æˆåŠŸã‚’è¿”å´
 		fncComFormatNumberValue = True
 
-		'¤â¤·¥¨¥é¡¼¤¬µ¯¤­¤Æ¤¤¤¿¾ì¹ç
+		'ã‚‚ã—ã‚¨ãƒ©ãƒ¼ãŒèµ·ãã¦ã„ãŸå ´åˆ
 		If( Err.number > 0 ) Then
 			FormatNumberValue = "(Error)"
 		End If
@@ -258,24 +258,24 @@ Class clsCheck
 
 
 	' ------------------------------------------
-	' ³µÍ×¡§Ê¸»úÎó¤«¤éÆüÉÕ¤ÎºîÀ®
-	' °ú¿ô¡§Ê¸»úÎó
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§Ê¸»úÎó¤«¤éÆüÉÕ¤¬À¸À®ÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢ËÜÆüÆüÉÕ¤òÀßÄê
+	' æ¦‚è¦ï¼šæ–‡å­—åˆ—ã‹ã‚‰æ—¥ä»˜ã®ä½œæˆ
+	' å¼•æ•°ï¼šæ–‡å­—åˆ—
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼šæ–‡å­—åˆ—ã‹ã‚‰æ—¥ä»˜ãŒç”Ÿæˆä¸å¯èƒ½ãªå ´åˆã€æœ¬æ—¥æ—¥ä»˜ã‚’è¨­å®š
 	' ------------------------------------------
 	Public Function fncComTextToDate( ByRef strValue )
 		
-		Dim strDate		'Ê¸»úÎóÆüÉÕ
+		Dim strDate		'æ–‡å­—åˆ—æ—¥ä»˜
 		fncComTextToDate = False
 	
-		'Ê¸»úÎóÊ¬¥ë¡¼¥×½èÍı
+		'æ–‡å­—åˆ—åˆ†ãƒ«ãƒ¼ãƒ—å‡¦ç†
 		For lngCnt = 1 To LenB(strValue)
-			'°ìÊ¸»ú¤À¤±¼èÆÀ
+			'ä¸€æ–‡å­—ã ã‘å–å¾—
 			strBuff = Mid( strValue, lngCnt, 1)
-			'¿ôÃÍ¤«¤É¤¦¤«¤ÎÈ½Äê
+			'æ•°å€¤ã‹ã©ã†ã‹ã®åˆ¤å®š
 			If IsNumeric( strBuff ) Then
 				strDate = strDate & strBuff
-				'4,6Ê¸»úÌÜ¤Ë/¤òÀßÄê
+				'4,6æ–‡å­—ç›®ã«/ã‚’è¨­å®š
 				Select Case lngCnt
 					Case 4,6
 						strDate = strDate & "/"
@@ -284,92 +284,92 @@ Class clsCheck
 			End If
 		Next
 		
-		'2003/ ¤Î·Á¼°¤Î¾ì¹ç
+		'2003/ ã®å½¢å¼ã®å ´åˆ
 		If LenB(strDate) = 5 Then
 			strDate = strDate & "01/01"
 		End If
-		'2003/10/ ¤Î·Á¼°¤Î¾ì¹ç
+		'2003/10/ ã®å½¢å¼ã®å ´åˆ
 		If LenB(strDate) = 8 Then
 			strDate = strDate & "01"
 		End If
-		'ÆüÉÕ¤ËÊÑ´¹ÉÔ²ÄÇ½¤Ê¾ì¹ç
+		'æ—¥ä»˜ã«å¤‰æ›ä¸å¯èƒ½ãªå ´åˆ
 		If Not IsDate(strDate) Then
 			strDate = Date
 		End If
-		'°ú¿ôÃÍ¤ØÀßÄê
+		'å¼•æ•°å€¤ã¸è¨­å®š
 		strValue = strDate
 		
-		'À®¸ù¤òÊÖµÑ
+		'æˆåŠŸã‚’è¿”å´
 		fncComTextToDate = True
 	End Function
 
 	' ------------------------------------------
-	' ³µÍ×¡§Æü»ş¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
-	' °ú¿ô¡§TextBox¥ª¥Ö¥¸¥§¥¯¥È
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
+	' æ¦‚è¦ï¼šæ—¥æ™‚ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+	' å¼•æ•°ï¼šTextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
 	' ------------------------------------------
 	Public Function fncComFormatDateTime( ByRef objText )
 
-		Dim dtmValue	'¥Æ¥­¥¹¥ÈÃÍ
+		Dim dtmValue	'ãƒ†ã‚­ã‚¹ãƒˆå€¤
 
-		'´Ø¿ô¤ÎÌá¤êÃÍ¤ò½é´ü²½
+		'é–¢æ•°ã®æˆ»ã‚Šå€¤ã‚’åˆæœŸåŒ–
 		fncComFormatDateTime = False
 
-		'¥ª¥Ö¥¸¥§¥¯¥È¤ÎÂ¸ºß¤ò³ÎÇ§¡£¼èÆÀÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¼ºÇÔ¤ÇÊÖµÑ
+		'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­˜åœ¨ã‚’ç¢ºèªã€‚å–å¾—ä¸å¯èƒ½ãªå ´åˆã€å¤±æ•—ã§è¿”å´
 		If IsEmpty( objText.value ) Then Exit Function
-		'¥ª¥Ö¥¸¥§¥¯¥È¤ÎÃÍ¤òÊÑ¿ô¤ËÂåÆş
+		'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å¤‰æ•°ã«ä»£å…¥
 		dtmValue = objText.value
 
-		'¥¨¥é¡¼È½Äê
+		'ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 		If Len(Trim(dtmValue)) = 0 Then
-			'´Ø¿ô¤òÀ®¸ù¤ÇÊÖµÑ
+			'é–¢æ•°ã‚’æˆåŠŸã§è¿”å´
 			fncComFormatDateTime = True
 			Exit Function
 		End If
 		
-		'¥¨¥é¡¼È½Äê
+		'ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 		If Len(dtmValue) < 4 Then
 			objText.Value = Date
 			objText.select()
-			'´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+			'é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 			Exit Function
 		End If
 
-		'Æü»ş¤Ø¤ÎÊÑ´¹¤¬²ÄÇ½¤«¤òÄ´¤Ù¤ë
+		'æ—¥æ™‚ã¸ã®å¤‰æ›ãŒå¯èƒ½ã‹ã‚’èª¿ã¹ã‚‹
 		If Not IsDate( dtmValue ) Then
-			'¥Æ¥­¥¹¥È¤«¤éÆüÉÕ·Á¼°¤ØÊÑ´¹¤òÄ©Àï
+			'ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰æ—¥ä»˜å½¢å¼ã¸å¤‰æ›ã‚’æŒ‘æˆ¦
 			If Not fncComTextToDate( dtmValue ) Then
-				'¿ôÃÍ¤Ø¤ÎÊÑ´¹¤¬ÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¸½ºßÆüÉÕ¤ò¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+				'æ•°å€¤ã¸ã®å¤‰æ›ãŒä¸å¯èƒ½ãªå ´åˆã€ç¾åœ¨æ—¥ä»˜ã‚’å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 				objText.Value = Date
 				objText.select()
-				'´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+				'é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 				Exit Function
 			End If
 		End If
 
-		'ÆüÉÕ·¿¤ËÊÑ´¹
+		'æ—¥ä»˜å‹ã«å¤‰æ›
 		dtmValue = CDate(dtmValue)
 
-		'WebÍÑ¤Î¥Á¥§¥Ã¥¯ 1600Ç¯°Ê²¼¤Î¾ì¹çÌµ¸ú
+		'Webç”¨ã®ãƒã‚§ãƒƒã‚¯ 1600å¹´ä»¥ä¸‹ã®å ´åˆç„¡åŠ¹
 		if( DatePart("yyyy", dtmValue) <= 1600 ) Then
 			dtmValue = Date
 		End If
 
-		'¿ôÃÍ·Á¼°¤Ë¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤Æ¡¢¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+		'æ•°å€¤å½¢å¼ã«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ã¦ã€å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 		objText.Value = FormatDateTime(dtmValue, vbShortDate)
 
-		'À®¸ù¤òÊÖµÑ
+		'æˆåŠŸã‚’è¿”å´
 		fncComFormatDateTime = True
 
 	End Function
 	
 	
 	' ------------------------------------------
-	' ³µÍ×¡§Ê¸»úÎó¤Î¸¡ºº
-	' °ú¿ô¡§TextBox or Textarea¥ª¥Ö¥¸¥§¥¯¥È
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
+	' æ¦‚è¦ï¼šæ–‡å­—åˆ—ã®æ¤œæŸ»
+	' å¼•æ•°ï¼šTextBox or Textareaã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
 	' ------------------------------------------
 	Public Function fncComInspectionString( ByRef objText )
 	
@@ -381,41 +381,41 @@ Class clsCheck
 	End Function
 
 	' ------------------------------------------
-	' ³µÍ×¡§¥ª¥Ö¥¸¥§¥¯¥È¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
-	' °ú¿ô¡§
-	'       objObject	- TextBox¥ª¥Ö¥¸¥§¥¯¥È
-	'       lngCheckID	- ¥Á¥§¥Ã¥¯ID
-	'                      1:¿ôÃÍ½èÍı
-	'                      2:ÆüÉÕ½èÍı
+	' æ¦‚è¦ï¼šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+	' å¼•æ•°ï¼š
+	'       objObject	- TextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	'       lngCheckID	- ãƒã‚§ãƒƒã‚¯ID
+	'                      1:æ•°å€¤å‡¦ç†
+	'                      2:æ—¥ä»˜å‡¦ç†
 	'
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
-	'       ¤³¤Î´Ø¿ô¤Ï¡¢¿ÆWindow¤ÎJavaScript´Ø¿ô fncErrorMessage() ¤ò¸Æ¤Ó½Ğ¤·¤Ş¤¹¡£
-	'       Æ±»ş¤Ë¼ÂÁõ¤¹¤ëÉ¬Í×¤¬¤¢¤ê¤Ş¤¹¡£
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
+	'       ã“ã®é–¢æ•°ã¯ã€è¦ªWindowã®JavaScripté–¢æ•° fncErrorMessage() ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
+	'       åŒæ™‚ã«å®Ÿè£…ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 	' ------------------------------------------
 	Public Function fncCheckObjectValue( objObject, lngCheckID )
 		On Error Resume Next
 		
-		'´Ø¿ô¤ÎÌá¤êÃÍ¤ò½é´ü²½
+		'é–¢æ•°ã®æˆ»ã‚Šå€¤ã‚’åˆæœŸåŒ–
 		fncCheckObjectValue = True
 		
 		Select Case lngCheckID
-			' ¿ôÃÍ½èÍı
+			' æ•°å€¤å‡¦ç†
 			Case 1
 				If( fncComFormatNumberValue( objObject.value, False ) ) Then
-					' ¥Õ¥©¡¼¥Ş¥Ã¥ÈÀ®¸ù¤Î¾ì¹ç¡¢¥ª¥Ö¥¸¥§¥¯¥È¤ÎValue¤ØÄ¾ÀÜ»ØÄê
+					' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæˆåŠŸã®å ´åˆã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®Valueã¸ç›´æ¥æŒ‡å®š
 					objObject.value = FormatNumberValue
 					Exit Function
 				End If
-			' ÆüÉÕ½èÍı
+			' æ—¥ä»˜å‡¦ç†
 			Case 2
 				If( fncComFormatDateTime( objObject ) ) Then Exit Function
-			' Ê¸»úÎó½èÍı
+			' æ–‡å­—åˆ—å‡¦ç†
 			case 3
 				If( fncComInspectionString( objObject ) ) Then Exit Function
 		End Select
 		
-		'¼ºÇÔ¤òÊÖµÑ
+		'å¤±æ•—ã‚’è¿”å´
 		fncCheckObjectValue = False
 
 	End Function

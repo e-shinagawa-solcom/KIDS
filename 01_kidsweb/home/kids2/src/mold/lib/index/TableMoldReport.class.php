@@ -3,21 +3,21 @@
 require_once(SRC_ROOT.'/mold/lib/index/TableMetaData.class.php');
 
 /**
- * ¶â·¿Ä¢É¼¥Ş¥¹¥¿¤Î¥Æ¡¼¥Ö¥ëÌ¾¤ä¥«¥é¥àÌ¾¤òÄó¶¡¤¹¤ë
+ * é‡‘å‹å¸³ç¥¨ãƒã‚¹ã‚¿ã®ãƒ†ãƒ¼ãƒ–ãƒ«åã‚„ã‚«ãƒ©ãƒ åã‚’æä¾›ã™ã‚‹
  */
 class TableMoldReport extends TableMetaData
 {
 	/**
-	 * ¥Æ¡¼¥Ö¥ëÌ¾: ¶â·¿Ä¢É¼¥Ş¥¹¥¿
+	 * ãƒ†ãƒ¼ãƒ–ãƒ«å: é‡‘å‹å¸³ç¥¨ãƒã‚¹ã‚¿
 	 * @var string
 	 */
 	const TABLE_NAME = "M_MoldReport";
 
 	/**
 	 * <pre>
-	 * ¶â·¿Ä¢É¼ID
+	 * é‡‘å‹å¸³ç¥¨ID
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string
@@ -26,9 +26,9 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¥ê¥Ó¥¸¥ç¥ó
+	 * ãƒªãƒ“ã‚¸ãƒ§ãƒ³
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 * </pre>
 	 *
 	 * @var string
@@ -37,11 +37,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * Ä¢É¼¶èÊ¬
+	 * å¸³ç¥¨åŒºåˆ†
 	 *
-	 * ·¿(postgresql): char
+	 * å‹(postgresql): char
 	 *
-	 * ´ØÏ¢: ¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿.¶ÈÌ³¥³¡¼¥É
+	 * é–¢é€£: æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿.æ¥­å‹™ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -50,11 +50,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¥¹¥Æ¡¼¥¿¥¹
+	 * ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 	 *
-	 * ·¿(postgresql): char
+	 * å‹(postgresql): char
 	 *
-	 * ´ØÏ¢: ¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿.¶ÈÌ³¥³¡¼¥É
+	 * é–¢é€£: æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿.æ¥­å‹™ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -63,9 +63,9 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * °ÍÍêÆü
+	 * ä¾é ¼æ—¥
 	 *
-	 * ·¿(postgresql): date
+	 * å‹(postgresql): date
 	 * </pre>
 	 *
 	 * @var string
@@ -76,9 +76,9 @@ class TableMoldReport extends TableMetaData
 	 * <pre>
 	 * TO
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -89,9 +89,9 @@ class TableMoldReport extends TableMetaData
 	 * <pre>
 	 * ATTN
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -102,9 +102,9 @@ class TableMoldReport extends TableMetaData
 	 * <pre>
 	 * CC
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -113,11 +113,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * À½ÉÊ¥³¡¼¥É
+	 * è£½å“ã‚³ãƒ¼ãƒ‰
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 *
-	 * ´ØÏ¢: ¶â·¿¥Ş¥¹¥¿.À½ÉÊ¥³¡¼¥É
+	 * é–¢é€£: é‡‘å‹ãƒã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -126,23 +126,23 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ºÆÈÎ¥³¡¼¥É
+	 * å†è²©ã‚³ãƒ¼ãƒ‰
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
-	 * ´ØÏ¢: »ÅÆş¾ÜºÙ.ºÆÈÎ¥³¡¼¥É
+	 * é–¢é€£: ä»•å…¥è©³ç´°.å†è²©ã‚³ãƒ¼ãƒ‰
 	 * @var string
 	 */
 	const ReviseCode = "strrevisecode";
 
 	/**
 	 * <pre>
-	 * ¸ÜµÒÉÊÈÖ(¾¦ÉÊ¥³¡¼¥É)
+	 * é¡§å®¢å“ç•ª(å•†å“ã‚³ãƒ¼ãƒ‰)
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 *
-	 * ´ØÏ¢: À½ÉÊ¥Ş¥¹¥¿.¸ÜµÒÉÊÈÖ
+	 * é–¢é€£: è£½å“ãƒã‚¹ã‚¿.é¡§å®¢å“ç•ª
 	 * </pre>
 	 *
 	 * @var string
@@ -151,11 +151,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * °ÍÍê¶èÊ¬
+	 * ä¾é ¼åŒºåˆ†
 	 *
-	 * ·¿(postgresql): char
+	 * å‹(postgresql): char
 	 *
-	 * ´ØÏ¢: ¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿.¶ÈÌ³¥³¡¼¥É
+	 * é–¢é€£: æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿.æ¥­å‹™ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -164,9 +164,9 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ´õË¾Æü
+	 * å¸Œæœ›æ—¥
 	 *
-	 * ·¿(postgresql): date
+	 * å‹(postgresql): date
 	 * </pre>
 	 *
 	 * @var string
@@ -175,9 +175,9 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¼Â»ÜÆü
+	 * å®Ÿæ–½æ—¥
 	 *
-	 * ·¿(postgresql): date
+	 * å‹(postgresql): date
 	 * </pre>
 	 *
 	 * @var string
@@ -186,11 +186,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * °ÜÆ°ÊıË¡
+	 * ç§»å‹•æ–¹æ³•
 	 *
-	 * ·¿(postgresql): char
+	 * å‹(postgresql): char
 	 *
-	 * ´ØÏ¢: ¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿.¶ÈÌ³¥³¡¼¥É
+	 * é–¢é€£: æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿.æ¥­å‹™ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -199,11 +199,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * Êİ´É¸µ¹©¾ì
+	 * ä¿ç®¡å…ƒå·¥å ´
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -212,11 +212,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * °ÜÆ°Àè¹©¾ì
+	 * ç§»å‹•å…ˆå·¥å ´
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -225,11 +225,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * »Ø¼¨¶èÊ¬
+	 * æŒ‡ç¤ºåŒºåˆ†
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 *
-	 * ´ØÏ¢: ¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿.¶ÈÌ³¥³¡¼¥É
+	 * é–¢é€£: æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿.æ¥­å‹™ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -238,11 +238,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * »ö¶ÈÉô(¸ÜµÒ)
+	 * äº‹æ¥­éƒ¨(é¡§å®¢)
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ²ñ¼Ò¥Ş¥¹¥¿.²ñ¼Ò¥³¡¼¥É
+	 * é–¢é€£: ä¼šç¤¾ãƒã‚¹ã‚¿.ä¼šç¤¾ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -251,11 +251,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * KWGÉô½ğ
+	 * KWGéƒ¨ç½²
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ¥°¥ë¡¼¥×¥Ş¥¹¥¿.¥°¥ë¡¼¥×¥³¡¼¥É
+	 * é–¢é€£: ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿.ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -264,11 +264,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * KWGÃ´Åö¼Ô
+	 * KWGæ‹…å½“è€…
 	 *
-	 * ·¿(postgresql): integer
+	 * å‹(postgresql): integer
 	 *
-	 * ´ØÏ¢: ¥æ¡¼¥¶¥Ş¥¹¥¿.¥æ¡¼¥¶¥³¡¼¥É
+	 * é–¢é€£: ãƒ¦ãƒ¼ã‚¶ãƒã‚¹ã‚¿.ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -277,9 +277,9 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ¤½¤ÎÂ¾
+	 * ãã®ä»–
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string
@@ -288,11 +288,11 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * À¸»º¸å¤Î½èÍı
+	 * ç”Ÿç”£å¾Œã®å‡¦ç†
 	 *
-	 * ·¿(postgresql): char
+	 * å‹(postgresql): char
 	 *
-	 * ´ØÏ¢: ¶ÈÌ³¥³¡¼¥É¥Ş¥¹¥¿.¶ÈÌ³¥³¡¼¥É
+	 * é–¢é€£: æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒã‚¹ã‚¿.æ¥­å‹™ã‚³ãƒ¼ãƒ‰
 	 * </pre>
 	 *
 	 * @var string
@@ -301,9 +301,9 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * ÊÖµÑÍ½ÄêÆü
+	 * è¿”å´äºˆå®šæ—¥
 	 *
-	 * ·¿(postgresql): date
+	 * å‹(postgresql): date
 	 * </pre>
 	 *
 	 * @var string
@@ -312,9 +312,9 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * Íó³°È÷¹Í
+	 * æ¬„å¤–å‚™è€ƒ
 	 *
-	 * ·¿(postgresql): text
+	 * å‹(postgresql): text
 	 * </pre>
 	 *
 	 * @var string
@@ -323,9 +323,9 @@ class TableMoldReport extends TableMetaData
 
 	/**
 	 * <pre>
-	 * °õºşºÑ¥Õ¥é¥°
+	 * å°åˆ·æ¸ˆãƒ•ãƒ©ã‚°
 	 *
-	 * ·¿(postgresql): boolean
+	 * å‹(postgresql): boolean
 	 * </pre>
 	 *
 	 * @var string

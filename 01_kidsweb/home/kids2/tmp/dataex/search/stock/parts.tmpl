@@ -46,7 +46,7 @@
 <div class="form-box__contents">
 	<div class="regist-line">
 		<span class="form-line">
-			<span class="Column">�����׾���</span>
+			<span class="Column">仕入計上日</span>
 			<span class="VarText" id="VarsA01">
 				<span class="VarLabel">FROM</span>
 				<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="">
@@ -57,7 +57,7 @@
 	</div>
 	<div class="regist-line">
 		<span class="form-line">
-			<span class="Column">�������ܡ���������</span>
+			<span class="Column">仕入科目・仕入先別</span>
 			<span class="VarText" id="VarsA02">
 				<input class="RadioStyle01" type="radio" name="lngExportConditions" value="1" tabindex="" checked>
 			</span>
@@ -65,7 +65,7 @@
 	</div>
 	<div class="regist-line">
 		<span class="form-line">
-			<span class="Column">�������ܡ����硦������</span>
+			<span class="Column">仕入科目・部門・製品別</span>
 			<span class="VarText" id="VarsA03">
 			<input class="RadioStyle01" type="radio" name="lngExportConditions" value="2" tabindex="" >
 			</span>
@@ -74,19 +74,19 @@
 	<div class="Spacer">
 	</div>
 	<div class="QuerySet">
-		<span class="Column">���ֶ��ڤ�ե����롧</span>
-		<!-- �ץ�ӥ塼�ܥ��� -->
+		<span class="Column">タブ区切りファイル：</span>
+		<!-- プレビューボタン -->
 		<span class="QueryBt" id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/index.html' );return false;"></span>
-		<!-- �������ݡ��ȥܥ��� -->
+		<!-- エクスポートボタン -->
 		<span class="QueryBt" id="ExportBt" onclick="document.PS.lngActionCode.value=2;PS.action='/dataex/result/index.php';PS.submit();"></span>
 	</div>
 	<div class="Spacer">
 	</div>
 	<div class="QuerySet">
-		<span class="Column">Excel�ե����롧</span>
-		<!-- �ץ�ӥ塼�ܥ��� -->
+		<span class="Column">Excelファイル：</span>
+		<!-- プレビューボタン -->
 		<span class="QueryBt" id="PreviewBt2" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/stat.html' );return false;"></span>
-		<!-- �������ݡ��ȥܥ��� -->
+		<!-- エクスポートボタン -->
 		<span class="QueryBt" id="ExportBt2" onclick="document.PS.lngActionCode.value=2;PS.action='/dataex/result/stat.php';PS.submit();"></span>
 	</div>
 </div>

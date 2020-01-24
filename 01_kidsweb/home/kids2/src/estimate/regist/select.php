@@ -1,20 +1,20 @@
 <?php
 
-require ( 'conf.inc' );										// ¿ﬂƒÍ∆…§ﬂπ˛§ﬂ
-require ( LIB_DEBUGFILE );									// Debug•‚•∏•Â°º•Î
+require ( 'conf.inc' );										// Ë®≠ÂÆöË™≠„ÅøËæº„Åø
+require ( LIB_DEBUGFILE );									// Debug„É¢„Ç∏„É•„Éº„É´
 
-require ( LIB_ROOT . "mapping/conf_mapping_common.inc" );	// •ﬁ•√•‘•Û•∞¿ﬂƒÍ - ∂¶ƒÃ
-require ( LIB_ROOT . "mapping/conf_mapping_estimate.inc" );	// •ﬁ•√•‘•Û•∞¿ﬂƒÍ - ∏´¿—∏∂≤¡¥…Õ˝
+require ( LIB_ROOT . "mapping/conf_mapping_common.inc" );	// „Éû„ÉÉ„Éî„É≥„Ç∞Ë®≠ÂÆö - ÂÖ±ÈÄö
+require ( LIB_ROOT . "mapping/conf_mapping_estimate.inc" );	// „Éû„ÉÉ„Éî„É≥„Ç∞Ë®≠ÂÆö - Ë¶ãÁ©çÂéü‰æ°ÁÆ°ÁêÜ
 
-require ( LIB_FILE );										// •È•§•÷•È•Í∆…§ﬂπ˛§ﬂ
+require ( LIB_FILE );										// „É©„Ç§„Éñ„É©„É™Ë™≠„ÅøËæº„Åø
 
 require ( SRC_ROOT . "estimate/cmn/estimateSheetController.php" );
 require ( SRC_ROOT . "estimate/cmn/makeHTML.php" );
 
-// ƒÍøÙ•’•°•§•Î§Œ∆…§ﬂπ˛§ﬂ
+// ÂÆöÊï∞„Éï„Ç°„Ç§„É´„ÅÆË™≠„ÅøËæº„Åø
 require_once ( SRC_ROOT . "/estimate/cmn/const/workSheetConst.php");
 
-// π‘•Ø•È•π•’•°•§•Î§Œ∆…§ﬂπ˛§ﬂ
+// Ë°å„ÇØ„É©„Çπ„Éï„Ç°„Ç§„É´„ÅÆË™≠„ÅøËæº„Åø
 require_once (SRC_ROOT. "/estimate/cmn/productSalesRowController.php");
 require_once (SRC_ROOT. "/estimate/cmn/fixedCostSalesRowController.php");
 require_once (SRC_ROOT. "/estimate/cmn/fixedCostOrderRowController.php");
@@ -30,45 +30,45 @@ use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 
 $objDB			= new estimateDB();
 $objAuth		= new clsAuth();
-$objTemplate	= new clsTemplate();								// •∆•Û•◊•Ï°º•»•™•÷•∏•ß•Ø•»¿∏¿Æ
-$objReader      = new XlsxReader();                                 // phpSpreadSheet§ŒReader
+$objTemplate	= new clsTemplate();								// „ÉÜ„É≥„Éó„É¨„Éº„Éà„Ç™„Éñ„Ç∏„Çß„ÇØ„ÉàÁîüÊàê
+$objReader      = new XlsxReader();                                 // phpSpreadSheet„ÅÆReader
 
 //-------------------------------------------------------------------------
-// DB•™°º•◊•Û
+// DB„Ç™„Éº„Éó„É≥
 //-------------------------------------------------------------------------
 $objDB->open( "", "", "", "" );
 
 
 //-------------------------------------------------------------------------
-// •—•È•·°º•øºË∆¿
+// „Éë„É©„É°„Éº„ÇøÂèñÂæó
 //-------------------------------------------------------------------------
 
-$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// ∏¿∏Ï•≥°º•…
-$aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// ¥…Õ˝•≥°º•…° ∏´¿—∏∂≤¡°À
+$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// Ë®ÄË™û„Ç≥„Éº„Éâ
+$aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// ÁÆ°ÁêÜ„Ç≥„Éº„ÉâÔºàË¶ãÁ©çÂéü‰æ°Ôºâ
 $aryData["strSessionID"]        = $_POST["strSessionID"];
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 //-------------------------------------------------------------------------
-// ∆˛Œœ ∏ª˙ŒÛ√Õ°¶•ª•√•∑•Á•Û°¶∏¢∏¬•¡•ß•√•Ø
+// ÂÖ•ÂäõÊñáÂ≠óÂàóÂÄ§„Éª„Çª„ÉÉ„Ç∑„Éß„É≥„ÉªÊ®©Èôê„ÉÅ„Çß„ÉÉ„ÇØ
 //-------------------------------------------------------------------------
-//  ∏ª˙ŒÛ•¡•ß•√•Ø
+// ÊñáÂ≠óÂàó„ÉÅ„Çß„ÉÉ„ÇØ
 $aryCheck["strSessionID"]	= "null:numenglish(32,32)";
 $aryResult	= fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// •ª•√•∑•Á•Û≥Œ«ß
+// „Çª„ÉÉ„Ç∑„Éß„É≥Á¢∫Ë™ç
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// •Ê°º•∂°º•≥°º•…ºË∆¿
+// „É¶„Éº„Ç∂„Éº„Ç≥„Éº„ÉâÂèñÂæó
 $lngUserCode = $objAuth->UserCode;
 
-// ∏¢∏¬≥Œ«ß
+// Ê®©ÈôêÁ¢∫Ë™ç
 if( !fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 {
-    fncOutputError ( 9052, DEF_WARNING, "•¢•Ø•ª•π∏¢∏¬§¨§¢§Í§ﬁ§ª§Û°£", TRUE, "", $objDB );
+    fncOutputError ( 9052, DEF_WARNING, "„Ç¢„ÇØ„Çª„ÇπÊ®©Èôê„Åå„ÅÇ„Çä„Åæ„Åõ„Çì„ÄÇ", TRUE, "", $objDB );
 }
 
-// ∏¢∏¬•∞•Î°º•◊•≥°º•…§ŒºË∆¿
+// Ê®©Èôê„Ç∞„É´„Éº„Éó„Ç≥„Éº„Éâ„ÅÆÂèñÂæó
 $lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
 
 
@@ -82,51 +82,51 @@ if( $_FILES )
 		$str = $file["exc_error"];
 	    $strMessage = fncOutputError(DEF_MESSAGE_CODE_FILE_UPLOAD_ERROR, DEF_WARNING, $str, FALSE, '', $objDB);
 	} else {
-		// •’•°•§•Îæ Û§ŒºË∆¿
+		// „Éï„Ç°„Ç§„É´ÊÉÖÂ†±„ÅÆÂèñÂæó
 		$file["exc_name"] = $_FILES['excel_file']['name'];
 		$file["exc_type"] = $_FILES['excel_file']['type'];
 		$file["exc_size"] = $_FILES['excel_file']['size'];
 		
-		// •∆•Û•›•È•Í•’•°•§•Î∫Ó¿Æ°¢•’•°•§•ÎÃæºË∆¿
+		// „ÉÜ„É≥„Éù„É©„É™„Éï„Ç°„Ç§„É´‰ΩúÊàê„ÄÅ„Éï„Ç°„Ç§„É´ÂêçÂèñÂæó
 		$strTmpFileName	= getTempFileName($_FILES['excel_file']['tmp_name'] );
 		$file["exc_tmp_name"] = $strTmpFileName;
 	
-		$file["lngRegistConfirm"] = 1;	// ≥Œ«ß≤ËÃÃ…Ωº®•’•È•∞
+		$file["lngRegistConfirm"] = 1;	// Á¢∫Ë™çÁîªÈù¢Ë°®Á§∫„Éï„É©„Ç∞
 	}
 }
 
 if ($file["exc_tmp_name"]) {
-	// •’•°•§•Î•¡•ß•√•Ø
+	// „Éï„Ç°„Ç§„É´„ÉÅ„Çß„ÉÉ„ÇØ
 	$fileCheckResult = estimateSheetController::checkFileFormat($file);
 
-	// DB§´§ÈƒÃ≤ﬂ§Œ…Ωº®ÃæºË∆¿
+	// DB„Åã„ÇâÈÄöË≤®„ÅÆË°®Á§∫ÂêçÂèñÂæó
 	$monetaryUnitList = $objDB->getMonetaryUnitList();
 
-	// DB§´§È…∏Ω‡≥‰πÁ§ÚºË∆¿
+	// DB„Åã„ÇâÊ®ôÊ∫ñÂâ≤Âêà„ÇíÂèñÂæó
 	$standardRateMaster = $objDB->getEstimateStandardRate();
 
-	// •®•Ø•ª•Î•’•°•§•Î§Œ•Ì°º•…
+	// „Ç®„ÇØ„Çª„É´„Éï„Ç°„Ç§„É´„ÅÆ„É≠„Éº„Éâ
 	if ($fileCheckResult) {
-		// •÷•√•Ø§Œ•«°º•ø§ÚphpSpreadSheet•™•÷•∏•ß•Ø•»§À≈∏≥´
+		// „Éñ„ÉÉ„ÇØ„ÅÆ„Éá„Éº„Çø„ÇíphpSpreadSheet„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà„Å´Â±ïÈñã
 		$spreadSheet = $objReader->load($fileCheckResult);
 
-		// …¨Õ◊§ ƒÍøÙ§ÚºË∆¿§π§Î
+		// ÂøÖË¶Å„Å™ÂÆöÊï∞„ÇíÂèñÂæó„Åô„Çã
 		$nameList = workSheetConst::getAllNameList();	
 		$rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
 		$targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
 
-		// phpSpreadSheet•™•÷•∏•ß•Ø•»§´§È•∑°º•»§Œæ Û§ÚºË∆¿
+		// phpSpreadSheet„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà„Åã„Çâ„Ç∑„Éº„Éà„ÅÆÊÉÖÂ†±„ÇíÂèñÂæó
 		$allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
 
 		$sheetExistFlag = false;
 
 		if ($allSheetInfo) {
-			// •∑°º•»»÷πÊ§ŒΩÈ¥¸√Õ§Ú0§À¿ﬂƒÍ§π§Î
+			// „Ç∑„Éº„ÉàÁï™Âè∑„ÅÆÂàùÊúüÂÄ§„Çí0„Å´Ë®≠ÂÆö„Åô„Çã
 			$sheetNumber = 0;
-			// •®•È°º•¡•ß•√•Ø≈˘
+			// „Ç®„É©„Éº„ÉÅ„Çß„ÉÉ„ÇØÁ≠â
 			foreach ($allSheetInfo as $sheetName => $sheetInfo) {
 				$objSheet = null;
-				$outputMessage = array(); // Ω–Œœ•·•√•ª°º•∏
+				$outputMessage = array(); // Âá∫Âäõ„É°„ÉÉ„Çª„Éº„Ç∏
 
 				$difference = array();
 				$hiddenList = array();
@@ -136,33 +136,33 @@ if ($file["exc_tmp_name"]) {
 				} else {
 					$sheetExistFlag = true;
 
-					// Õ¢∆˛»ÒÕ—∑◊ªªÕ— —øÙ° ¥ÿ¿«§ŒæÆ∑◊§ŒπÁ∑◊°À
+					// Ëº∏ÂÖ•Ë≤ªÁî®Ë®àÁÆóÁî®Â§âÊï∞ÔºàÈñ¢Á®é„ÅÆÂ∞èË®à„ÅÆÂêàË®àÔºâ
 					$tariffTotal = 0;
 					
-					// •∑°º•»§¨…Ωº®Ãµ∏˙§«§ §§æÏπÁ§œ•Ô°º•Ø•∑°º•»ΩËÕ˝•™•÷•∏•ß•Ø•»§Œ•§•Û•π•ø•Û•π¿∏¿Æ
+					// „Ç∑„Éº„Éà„ÅåË°®Á§∫ÁÑ°Âäπ„Åß„Å™„ÅÑÂ†¥Âêà„ÅØ„ÉØ„Éº„ÇØ„Ç∑„Éº„ÉàÂá¶ÁêÜ„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà„ÅÆ„Ç§„É≥„Çπ„Çø„É≥„ÇπÁîüÊàê
 					$objSheet = new estimateSheetController();
 
-					// •™•÷•∏•ß•Ø•»§À•«°º•ø§Ú•ª•√•»§π§Î
+					// „Ç™„Éñ„Ç∏„Çß„ÇØ„Éà„Å´„Éá„Éº„Çø„Çí„Çª„ÉÉ„Éà„Åô„Çã
 					$objSheet->dataInitialize($sheetInfo, $objDB);
 
-					// phpSpreadSheet§«¿∏¿Æ§∑§ø•∑°º•»•™•÷•∏•ß•Ø•»§Ú•∞•Ì°º•–•Îª≤æ»Õ—§À•ª•√•»§π§Î
+					// phpSpreadSheet„ÅßÁîüÊàê„Åó„Åü„Ç∑„Éº„Éà„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà„Çí„Ç∞„É≠„Éº„Éê„É´ÂèÇÁÖßÁî®„Å´„Çª„ÉÉ„Éà„Åô„Çã
 					$sheet = $objSheet->sheet;
 
 					$cellAddressList = $sheetInfo['cellAddress'];
 
-					// ¬–æ›•®•Í•¢§Œ»œ∞œ§ÚºË∆¿§π§Î
+					// ÂØæË±°„Ç®„É™„Ç¢„ÅÆÁØÑÂõ≤„ÇíÂèñÂæó„Åô„Çã
 					$targetAreaRows = $objSheet->outputTargetAreaRows();
-					$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // Ã¿∫Ÿ§Œ≥´ªœπ‘
-					$endRowOfDetail = $targetAreaRows[DEF_AREA_OTHER_COST_ORDER]['lastRow']; // Ã¿∫Ÿ§ŒΩ™Œªπ‘
+					$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // ÊòéÁ¥∞„ÅÆÈñãÂßãË°å
+					$endRowOfDetail = $targetAreaRows[DEF_AREA_OTHER_COST_ORDER]['lastRow']; // ÊòéÁ¥∞„ÅÆÁµÇ‰∫ÜË°å
 				
 					for ($row = $startRowOfDetail; $row <= $endRowOfDetail; ++$row) {
 
 						$objRow = null;
-						// ∏Ω∫ﬂ§Œπ‘§¨§…§Œ¬–æ›•®•Í•¢§À¬∞§π§Î§´»ΩƒÍ§Úπ‘§¶
+						// ÁèæÂú®„ÅÆË°å„Åå„Å©„ÅÆÂØæË±°„Ç®„É™„Ç¢„Å´Â±û„Åô„Çã„ÅãÂà§ÂÆö„ÇíË°å„ÅÜ
 						$rowAttribute = $objSheet->checkAttributeRow($row);
 						
 						if ($rowAttribute) {
-							// ¬–æ›•®•Í•¢§À§Ë§√§∆•§•Û•π•ø•Û•π∫Ó¿Æª˛§Œ•Ø•È•π§ÚªÿƒÍ§π§Î
+							// ÂØæË±°„Ç®„É™„Ç¢„Å´„Çà„Å£„Å¶„Ç§„É≥„Çπ„Çø„É≥„Çπ‰ΩúÊàêÊôÇ„ÅÆ„ÇØ„É©„Çπ„ÇíÊåáÂÆö„Åô„Çã
 							switch ($rowAttribute) {
 								case DEF_AREA_PRODUCT_SALES:
 									$objRow = new productSalesRowController($objDB);
@@ -194,23 +194,23 @@ if ($file["exc_tmp_name"]) {
 						}
 					}
 
-					// π‘•™•÷•∏•ß•Ø•»§Ú¥§À§∑§øΩËÕ˝
+					// Ë°å„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà„ÇíÂü∫„Å´„Åó„ÅüÂá¶ÁêÜ
 					foreach ($objRowList as $row => $objRow) {
 						$columnList = $objRow->columnNumberList;
 						
-						// •·•√•ª°º•∏•≥°º•…§ŒºË∆¿
+						// „É°„ÉÉ„Çª„Éº„Ç∏„Ç≥„Éº„Éâ„ÅÆÂèñÂæó
 						$messageOfConversionRate = $objRow->messageCode['conversionRate'];
 
-						// •÷•√•Ø§Œ≈¨Õ—•Ï°º•»§¨DB§ŒƒÃ≤ﬂ•Ï°º•»§»∞€§ §ÎæÏπÁ°¢§ﬁ§ø§œ•÷•√•Ø§ŒæÆ∑◊§¨∑◊ªª∑Î≤Ã§»∞€§ §ÎæÏπÁ
+						// „Éñ„ÉÉ„ÇØ„ÅÆÈÅ©Áî®„É¨„Éº„Éà„ÅåDB„ÅÆÈÄöË≤®„É¨„Éº„Éà„Å®Áï∞„Å™„ÇãÂ†¥Âêà„ÄÅ„Åæ„Åü„ÅØ„Éñ„ÉÉ„ÇØ„ÅÆÂ∞èË®à„ÅåË®àÁÆóÁµêÊûú„Å®Áï∞„Å™„ÇãÂ†¥Âêà
 						if ($messageOfConversionRate) {
-						// •÷•√•Ø§Œ≈¨Õ—•Ï°º•»§¨DB§ŒƒÃ≤ﬂ•Ï°º•»§»∞€§ §ÎæÏπÁ§œ∫π ¨…Ω§Œ•«°º•ø§Ú∫Ó¿Æ§π§Î
+						// „Éñ„ÉÉ„ÇØ„ÅÆÈÅ©Áî®„É¨„Éº„Éà„ÅåDB„ÅÆÈÄöË≤®„É¨„Éº„Éà„Å®Áï∞„Å™„ÇãÂ†¥Âêà„ÅØÂ∑ÆÂàÜË°®„ÅÆ„Éá„Éº„Çø„Çí‰ΩúÊàê„Åô„Çã
 							$delivery = $objRow->delivery;
 							$monetary = $objRow->monetary;
 							$acquiredRate = $objRow->acquiredRate;
 							$conversionRate = $objRow->conversionRate;
 							$monetaryUnit = $monetaryUnitList[$monetary];
 							if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
-								// ƒÃ≤ﬂ•Ï°º•»∫π ¨…Ω§Œ•«°º•ø¿∏¿Æ
+								// ÈÄöË≤®„É¨„Éº„ÉàÂ∑ÆÂàÜË°®„ÅÆ„Éá„Éº„ÇøÁîüÊàê
 								$difference[] = array(
 									'delivery' => $delivery,
 									'monetary' => $monetaryUnit,
@@ -227,7 +227,7 @@ if ($file["exc_tmp_name"]) {
 						}
 					}
 
-					// …∏Ω‡≥‰πÁ§Œ•¡•ß•√•Ø
+					// Ê®ôÊ∫ñÂâ≤Âêà„ÅÆ„ÉÅ„Çß„ÉÉ„ÇØ
 					$standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
 					$standardRate = $objSheet->sheet->getCell($standardRateCell)->getCalculatedValue();
 					if ($standardRateMaster != $standardRate) {
@@ -235,13 +235,13 @@ if ($file["exc_tmp_name"]) {
 						$sheetRate = $standardRate ? number_format(($standardRate * 100), 2, '.', ''). "%" : '-';
 						$difference[] = array(
 							'delivery' => '-',
-							'monetary' => '…∏Ω‡≥‰πÁ',
+							'monetary' => 'Ê®ôÊ∫ñÂâ≤Âêà',
 							'temporaryRate' => $companyLocalRate,
 							'sheetRate' => $sheetRate
 						);
 					}
 					
-					// Ω≈ £§π§Î•«°º•ø§Ú∫ÔΩ¸§π§Î
+					// ÈáçË§á„Åô„Çã„Éá„Éº„Çø„ÇíÂâäÈô§„Åô„Çã
 					if ($difference) {
 						$difference = array_unique($difference, SORT_REGULAR);
 						$differenceMessage = fncOutputError ( DEF_MESSAGE_CODE_RATE_DIFFER, DEF_WARNING, "", false, "", $objDB );
@@ -252,13 +252,13 @@ if ($file["exc_tmp_name"]) {
 						$notFoundMessage = fncOutputError ( DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING, DEF_WARNING, "", false, "", $objDB );
 					}
 				
-					// »Û…Ωº®•Í•π•»° Ãµ∏˙•Í•π•»°À§Úƒ…≤√§π§Î
+					// ÈùûË°®Á§∫„É™„Çπ„ÉàÔºàÁÑ°Âäπ„É™„Çπ„ÉàÔºâ„ÇíËøΩÂä†„Åô„Çã
 					$objSheet->setHiddenRowList($hiddenList);
 
-					// •Ô°º•Ø•∑°º•»…Ωº®Õ—§Œ•«°º•ø§ÚΩ–Œœ§π§Î
+					// „ÉØ„Éº„ÇØ„Ç∑„Éº„ÉàË°®Á§∫Áî®„ÅÆ„Éá„Éº„Çø„ÇíÂá∫Âäõ„Åô„Çã
 					$viewData = $objSheet->makeDataOfSheet();
 
-					// •Ô°º•Ø•∑°º•»Ãæ§Ú'EUC-JP'§À•®•Û•≥°º•…§π§Î
+					// „ÉØ„Éº„ÇØ„Ç∑„Éº„ÉàÂêç„Çí'EUC-JP'„Å´„Ç®„É≥„Ç≥„Éº„Éâ„Åô„Çã
 					$strWSName = mb_convert_encoding($sheetName, "EUC-JP", "UTF-8");
 
 					$strExcel       .= "<div class=\"sheetHeader\" id=\"sheet". $sheetNumber. "\">";
@@ -268,10 +268,10 @@ if ($file["exc_tmp_name"]) {
 					$strExcel       .= "<br>";
 					// $strExcel       .= makeHTML::makeWarningHTML($outputMessage);
 					$strExcel       .= "<br>";
-					$strExcel		.= makeHTML::getWorkSheet2HTML($strWSName, $sheetNumber, "select"); // •ÿ•√•¿°º
+					$strExcel		.= makeHTML::getWorkSheet2HTML($strWSName, $sheetNumber, "select"); // „Éò„ÉÉ„ÉÄ„Éº
 					$strExcel       .= "</div>";
 
-					$strExcel		.= makeHTML::getGridTable($sheetNumber); // •«°º•ø¡ﬁ∆˛•ø•∞
+					$strExcel		.= makeHTML::getGridTable($sheetNumber); // „Éá„Éº„ÇøÊåøÂÖ•„Çø„Ç∞
 
 					$css_rowstyle .= '.rowstyle'. $sheetNumber.' { display:none;}'."\n";
 				}
@@ -291,7 +291,7 @@ if ($file["exc_tmp_name"]) {
 	}
 }
 
-// Õ≠∏˙§ •∑°º•»§¨¬∏∫ﬂ§∑§ §§æÏπÁ§œ•®•È°º•·•√•ª°º•∏§Ú…Ωº®§π§Î
+// ÊúâÂäπ„Å™„Ç∑„Éº„Éà„ÅåÂ≠òÂú®„Åó„Å™„ÅÑÂ†¥Âêà„ÅØ„Ç®„É©„Éº„É°„ÉÉ„Çª„Éº„Ç∏„ÇíË°®Á§∫„Åô„Çã
 if ($sheetExistFlag === false) {
 	$strMessage = fncOutputError ( DEF_MESSAGE_CODE_VALID_SHEET_ABSENT_ERROR, DEF_WARNING, "", false, "", $objDB );
 }
@@ -305,52 +305,52 @@ $objDB->freeResult( $lngResultID );
 
 if ($strMessage) {
 
-	// [lngLanguageCode]ΩÒ§≠Ω–§∑
+	// [lngLanguageCode]Êõ∏„ÅçÂá∫„Åó
 	$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
 
-	// [strErrorMessage]ΩÒ§≠Ω–§∑
+	// [strErrorMessage]Êõ∏„ÅçÂá∫„Åó
 	$aryHtml["strErrorMessage"] = $strMessage;
 
-	// •∆•Û•◊•Ï°º•»∆…§ﬂπ˛§ﬂ
+	// „ÉÜ„É≥„Éó„É¨„Éº„ÉàË™≠„ÅøËæº„Åø
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "/result/error/parts.tmpl" );
 	
-	// •∆•Û•◊•Ï°º•»¿∏¿Æ
+	// „ÉÜ„É≥„Éó„É¨„Éº„ÉàÁîüÊàê
 	$objTemplate->replace( $aryHtml );
 	$objTemplate->complete();
 
-	// HTMLΩ–Œœ
+	// HTMLÂá∫Âäõ
 	echo $objTemplate->strTemplate;
 
 	exit;
 }
 
-// data§ÚJSON§À —¥π
+// data„ÇíJSON„Å´Â§âÊèõ
 $json = json_encode($viewDataList, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 $json = htmlspecialchars($json, ENT_QUOTES, 'UTF-8');
 
-// •ª•Ï•Ø•»•‹•√•Ø•π§Œ√Õ§ÚºË∆¿
+// „Çª„É¨„ÇØ„Éà„Éú„ÉÉ„ÇØ„Çπ„ÅÆÂÄ§„ÇíÂèñÂæó
 $select = makeHTML::getOptionsList($sheetNameList);
 
-// ¡˜øÆÕ—FORM•«°º•ø∫Ó¿Æ
+// ÈÄÅ‰ø°Áî®FORM„Éá„Éº„Çø‰ΩúÊàê
 $form = makeHTML::getHiddenFileData($file);
 $form .= makeHTML::getHiddenData($aryData);
 
 //
-$aryData["WORKSHEET"]	= $select; // •Ô°º•Ø•∑°º•»¡™¬ÚªË
+$aryData["WORKSHEET"]	= $select; // „ÉØ„Éº„ÇØ„Ç∑„Éº„ÉàÈÅ∏ÊäûËÇ¢
 $aryData["EXCEL"]		= $strExcel; // index
 $aryData["TABLEDATA"]	= $json;
 $aryData["FORM_NAME"]	= FORM_NAME;
 $aryData["FORM"]	    = $form;
 
-// •∆•Û•◊•Ï°º•»∆…§ﬂπ˛§ﬂ
+// „ÉÜ„É≥„Éó„É¨„Éº„ÉàË™≠„ÅøËæº„Åø
 $objTemplate->getTemplate( "estimate/regist/select.tmpl" );
 
-// •∆•Û•◊•Ï°º•»¿∏¿Æ
+// „ÉÜ„É≥„Éó„É¨„Éº„ÉàÁîüÊàê
 $objTemplate->replace( $aryData );
 $objTemplate->complete();
 
-// HTMLΩ–Œœ
+// HTMLÂá∫Âäõ
 echo $objTemplate->strTemplate;
 return;
 ?>

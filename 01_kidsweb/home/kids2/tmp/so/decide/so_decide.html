@@ -2,18 +2,18 @@
 <html lang="ja">
 
 <head>
-	<!-- ¸ß´¹É½¼¨OFF¤ò¶¯À©¤µ¤»¤ë -->
+	<!-- äº’æ›è¡¨ç¤ºOFFã‚’å¼·åˆ¶ã•ã›ã‚‹ -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<!--
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    php dom¥Ñ¡¼¥¹ÍÑ¥á¥¿Í×ÁÇ ¥³¥á¥ó¥È¥¢¥¦¥È¤·¤Æ¤¤¤Æ¤âphp¤ÎdomElement->loadHTML¤ÇÇ§¼±¤µ¤ì¤ë
+    php domãƒ‘ãƒ¼ã‚¹ç”¨ãƒ¡ã‚¿è¦ç´  ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ã„ã¦ã‚‚phpã®domElement->loadHTMLã§èªè­˜ã•ã‚Œã‚‹
     -->
 	<meta charset="euc-jp">
 
 	<title>K.I.D.S.</title>
 	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
 
-	<!-- ¥¹¥¿¥¤¥ë½é´ü²½ & ³Æ¼ï¥³¥ó¥È¥í¡¼¥ë¥¹¥¿¥¤¥ë -->
+	<!-- ã‚¹ã‚¿ã‚¤ãƒ«åˆæœŸåŒ– & å„ç¨®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚¹ã‚¿ã‚¤ãƒ« -->
 
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms-confirm.css">
@@ -25,7 +25,7 @@
 	<!-- <script src="/so/decide/js/functions.js" defer></script> -->
 	<script src="/so/decide/js/decide-confirm.js" defer></script>
 	<link rel="stylesheet" href="/so/decide/css/forms-finish.css">
-	<!-- ¥Ü¥¿¥ó²èÁü¤Î¶¦ÄÌ¤Î¿¶¤ëÉñ¤¤ CSS -->
+	<!-- ãƒœã‚¿ãƒ³ç”»åƒã®å…±é€šã®æŒ¯ã‚‹èˆã„ CSS -->
 	<link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table.css">
@@ -38,20 +38,20 @@
 
 <body class="background">
 
-	<!-- ÆşÎÏ¥Õ¥©¡¼¥à -->
+	<!-- å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  -->
 	<div class="form-box">
-		<!-- ¥Õ¥©¡¼¥à¥Ø¥Ã¥À -->
+		<!-- ãƒ•ã‚©ãƒ¼ãƒ ãƒ˜ãƒƒãƒ€ -->
 		<div class="form-box__header">
-			<p class="form-box__header__title">¼õÃí³ÎÄê</p>
+			<p class="form-box__header__title">å—æ³¨ç¢ºå®š</p>
 		</div>
-		<!-- ¥Õ¥©¡¼¥à¥³¥ó¥Æ¥ó¥Ä -->
+		<!-- ãƒ•ã‚©ãƒ¼ãƒ ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ -->
 		<div class="form-box__contents">
 			<form name="decideReceive" action="javascript:void(0);" method="post">
 				<input type="submit">
 				<div class="regist-tab-header">
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__text">À½ÉÊ¥³¡¼¥É</span>
+							<span class="regist-label__text">è£½å“ã‚³ãƒ¼ãƒ‰</span>
 							<input class="disTxt05L" name="strProductCode" readonly value="_%strProductCode%_">
 							<input class="disTxt46L" name="strProductName" readonly value="_%strProductName%_">
 							<input type="hidden" name="lngProductNo" value="_%lngProductNo%_">
@@ -59,27 +59,27 @@
 							<input type="hidden" name="strReviseCode" value="_%strReviseCode%_">
 						</span>
 						<span class="regist-label">
-							<span class="regist-label__text">¸ÜµÒÉÊÈÖ</span>
+							<span class="regist-label__text">é¡§å®¢å“ç•ª</span>
 							<input class="TxtStyle05L" name="strGoodsCode" value="_%strGoodsCode%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__text">±Ä¶ÈÉô½ğ</span>
+							<span class="regist-label__text">å–¶æ¥­éƒ¨ç½²</span>
 							<input class="disTxt05L" name="lngInChargeGroupCode" readonly value="_%lngInChargeGroupCode%_">
 							<input class="disTxt46L" name="strInChargeGroupName" readonly value="_%strInChargeGroupName%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__text">Ã´Åö¼Ô</span>
+							<span class="regist-label__text">æ‹…å½“è€…</span>
 							<input class="disTxt05L" name="lngInChargeUserCode" readonly value="_%lngInChargeUserCode%_">
 							<input class="disTxt46L" name="strInChargeUserName" readonly value="_%strInChargeUserName%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__text">³«È¯Ã´Åö¼Ô</span>
+							<span class="regist-label__text">é–‹ç™ºæ‹…å½“è€…</span>
 							<input class="disTxt05L" name="lngDevelopUserCode" readonly value="_%lngDevelopUserCode%_">
 							<input class="disTxt46L" name="strDevelopUserName" readonly value="_%strDevelopUserName%_">
 						</span>
@@ -92,36 +92,36 @@
 										<table class="table-fix">
 											<thead id="tbl_detail_chkbox_head">
 												<tr>
-													<th>ÁªÂò
+													<th>é¸æŠ
 														<br>
 														<input name="allSel" type="checkbox" style="width: 10px;">
 													</th>
 												</tr>
 											</thead>
-											<!-- ¸ÇÄê¥Ø¥Ã¥À -->
+											<!-- å›ºå®šãƒ˜ãƒƒãƒ€ -->
 										</table>
 										<div id="header_h">
 											<table class="table-decide-description" name="T" id="tbl_detail_head">
 												<thead>
-													<!-- ¿åÊ¿¥Ø¥Ã¥À -->
+													<!-- æ°´å¹³ãƒ˜ãƒƒãƒ€ -->
 													<tr>
 														<th>No.</th>
-														<th>ÌÀºÙ<br>¹ÔÈÖ¹æ</th>
-														<th>¡ı¸ÜµÒ¼õÃíÈÖ¹æ</th>
-														<th>¸ÜµÒ</th>
-														<th>Ç¼´ü</th>
-														<th>Çä¾åÊ¬Îà</th>
-														<th>Çä¾å¶èÊ¬</th>
-														<th>Ã±²Á</th>
-														<th>Ã±°Ì</th>
-														<th>Æş¿ô</th>
-														<th>¿ôÎÌ</th>
-														<th>¾®·×</th>
-														<th>ÌÀºÙÈ÷¹Í</th>
-														<th style="display:none">¼õÃíÈÖ¹æ</th>
-														<th style="display:none">¥ê¥Ó¥¸¥ç¥óÈÖ¹æ</th>
-														<th style="display:none">¥«¡¼¥È¥óÆş¿ô</th>
-														<th style="display:none">À½ÉÊ¿ôÎÌ</th>
+														<th>æ˜ç´°<br>è¡Œç•ªå·</th>
+														<th>â—é¡§å®¢å—æ³¨ç•ªå·</th>
+														<th>é¡§å®¢</th>
+														<th>ç´æœŸ</th>
+														<th>å£²ä¸Šåˆ†é¡</th>
+														<th>å£²ä¸ŠåŒºåˆ†</th>
+														<th>å˜ä¾¡</th>
+														<th>å˜ä½</th>
+														<th>å…¥æ•°</th>
+														<th>æ•°é‡</th>
+														<th>å°è¨ˆ</th>
+														<th>æ˜ç´°å‚™è€ƒ</th>
+														<th style="display:none">å—æ³¨ç•ªå·</th>
+														<th style="display:none">ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·</th>
+														<th style="display:none">ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°</th>
+														<th style="display:none">è£½å“æ•°é‡</th>
 													</tr>
 												</thead>
 											</table>
@@ -163,30 +163,30 @@
 													<th>No.</th>
 												</tr>
 											</thead>
-											<!-- ¸ÇÄê¥Ø¥Ã¥À -->
+											<!-- å›ºå®šãƒ˜ãƒƒãƒ€ -->
 										</table>
 										<div id="header_decide_h">
 											<table class="table-decide-description" name="DECIDE_T">
 												<thead>
 													<tr>
 														<th style="display:none">No.</th>
-														<th>ÌÀºÙ
-															<br>¹ÔÈÖ¹æ</th>
-														<th>¡ı¸ÜµÒ¼õÃíÈÖ¹æ</th>
-														<th>¸ÜµÒ</th>
-														<th>Ç¼´ü</th>
-														<th>Çä¾åÊ¬Îà</th>
-														<th>Çä¾å¶èÊ¬</th>
-														<th>Ã±²Á</th>
-														<th>Ã±°Ì</th>
-														<th>Æş¿ô</th>
-														<th>¿ôÎÌ</th>
-														<th>¾®·×</th>
-														<th>ÌÀºÙÈ÷¹Í</th>
-														<th style="display:none">¼õÃíÈÖ¹æ</th>
-														<th style="display:none">¥ê¥Ó¥¸¥ç¥óÈÖ¹æ</th>
-														<th style="display:none">¥«¡¼¥È¥óÆş¿ô</th>
-														<th style="display:none">À½ÉÊ¿ôÎÌ</th>
+														<th>æ˜ç´°
+															<br>è¡Œç•ªå·</th>
+														<th>â—é¡§å®¢å—æ³¨ç•ªå·</th>
+														<th>é¡§å®¢</th>
+														<th>ç´æœŸ</th>
+														<th>å£²ä¸Šåˆ†é¡</th>
+														<th>å£²ä¸ŠåŒºåˆ†</th>
+														<th>å˜ä¾¡</th>
+														<th>å˜ä½</th>
+														<th>å…¥æ•°</th>
+														<th>æ•°é‡</th>
+														<th>å°è¨ˆ</th>
+														<th>æ˜ç´°å‚™è€ƒ</th>
+														<th style="display:none">å—æ³¨ç•ªå·</th>
+														<th style="display:none">ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·</th>
+														<th style="display:none">ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°</th>
+														<th style="display:none">è£½å“æ•°é‡</th>
 													</tr>
 												</thead>
 											</table>
@@ -239,22 +239,22 @@
 		</div>
 	</div>
 
-	<!-- ¥Õ¥©¡¼¥à ¥Ü¥¿¥ó -->
+	<!-- ãƒ•ã‚©ãƒ¼ãƒ  ãƒœã‚¿ãƒ³ -->
 	<div class="form-buttons">
 		<img class="decideRegist button" src="/img/type01/so/reg_off_ja_bt.gif" alt="form decideRegist">
 	</div>
 	<script type="text/javascript">
 		function $E(name) { return document.getElementById(name); }
 		function scroll() {
-			$E("header_h").scrollLeft = $E("data").scrollLeft;// ¥Ç¡¼¥¿Éô¤Î¥¹¥¯¥í¡¼¥ë¤ò¥Ø¥Ã¥À¤ËÈ¿±Ç
-			$E("header_v").scrollTop = $E("data").scrollTop;// ¥Ç¡¼¥¿Éô¤Î¥¹¥¯¥í¡¼¥ë¤ò¥Ø¥Ã¥À¤ËÈ¿±Ç
+			$E("header_h").scrollLeft = $E("data").scrollLeft;// ãƒ‡ãƒ¼ã‚¿éƒ¨ã®ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’ãƒ˜ãƒƒãƒ€ã«åæ˜ 
+			$E("header_v").scrollTop = $E("data").scrollTop;// ãƒ‡ãƒ¼ã‚¿éƒ¨ã®ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’ãƒ˜ãƒƒãƒ€ã«åæ˜ 
 		}
 		$E("data").onscroll = scroll;
 
 
 		function decide_scroll() {
-			$E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// ¥Ç¡¼¥¿Éô¤Î¥¹¥¯¥í¡¼¥ë¤ò¥Ø¥Ã¥À¤ËÈ¿±Ç
-			$E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// ¥Ç¡¼¥¿Éô¤Î¥¹¥¯¥í¡¼¥ë¤ò¥Ø¥Ã¥À¤ËÈ¿±Ç
+			$E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// ãƒ‡ãƒ¼ã‚¿éƒ¨ã®ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’ãƒ˜ãƒƒãƒ€ã«åæ˜ 
+			$E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// ãƒ‡ãƒ¼ã‚¿éƒ¨ã®ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’ãƒ˜ãƒƒãƒ€ã«åæ˜ 
 		}
 		$E("decide_data").onscroll = decide_scroll;
 	</script>

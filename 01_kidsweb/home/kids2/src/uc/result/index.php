@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥æ¡¼¥¶¡¼´ÉÍı ¸¡º÷·ë²ÌÉ½¼¨²èÌÌ
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç† æ¤œç´¢çµæœè¡¨ç¤ºç”»é¢
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -56,24 +56,24 @@
 // search.php -> lngAccessIPAddressCodeVisible -> index.php
 // search.php -> strNoteVisible                -> index.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
 require_once(SRC_ROOT.'/mold/lib/UtilSearchForm.class.php');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "uc/cmn/lib_uc.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
-// ¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤«¤é³Æ¥«¥Æ¥´¥ê¤Î¿¶¤êÊ¬¤±¤ò¹Ô¤¦
+// ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å„ã‚«ãƒ†ã‚´ãƒªã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
 $options = UtilSearchForm::extractArrayByOption($_REQUEST);
 $isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
 $isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
@@ -88,10 +88,10 @@ foreach($searchValue as $key=> $item){
 	$aryData[$key]=$item;
 }
 
-// ¥¯¥Ã¥­¡¼¤«¤é¸À¸ì¥³¡¼¥É¤ò¼èÆÀ
+// ã‚¯ãƒƒã‚­ãƒ¼ã‹ã‚‰è¨€èªã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 $aryData["lngLanguageCode"] = 1;
 
-// ¸¡º÷É½¼¨¹àÌÜ¼èÆÀ
+// æ¤œç´¢è¡¨ç¤ºé …ç›®å–å¾—
 if ( is_array($aryData["ViewColumn"]) &&  $lngArrayLength = count ( $aryData["ViewColumn"] ) )
 {
 	$aryColumn = $aryData["ViewColumn"];
@@ -103,7 +103,7 @@ if ( is_array($aryData["ViewColumn"]) &&  $lngArrayLength = count ( $aryData["Vi
 	$aryColumn = "";
 }
 
-// ¸¡º÷¾ò·ï¹àÌÜ¼èÆÀ
+// æ¤œç´¢æ¡ä»¶é …ç›®å–å¾—
 if ( is_array($aryData["SearchColumn"]) && $lngArrayLength = count ( $aryData["SearchColumn"] ) )
 {
 	$aryColumn = $aryData["SearchColumn"];
@@ -118,36 +118,36 @@ if ( is_array($aryData["SearchColumn"]) && $lngArrayLength = count ( $aryData["S
 $aryData = fncToHTMLString( $aryData );
 
 //////////////////////////////////////////////////////////////////////////
-// ¥»¥Ã¥·¥ç¥ó¡¢¸¢¸Â³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ã€æ¨©é™ç¢ºèª
 //////////////////////////////////////////////////////////////////////////
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( $aryData["lngFunctionCode"] != DEF_FUNCTION_UC3 || !fncCheckAuthority( $aryData["lngFunctionCode"], $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥í¥°¥¤¥óµö²Ä¥Õ¥é¥°¤¬NULL¤Î¾ì¹ç¤ÎÀßÄê
+// ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯ãƒ•ãƒ©ã‚°ãŒNULLã®å ´åˆã®è¨­å®š
 if ( !$aryData["bytInvalidFlag"] )
 {
 	$aryData["bytInvalidFlag"] = "TRUE";
 }
 
-// ¥á¡¼¥ëÇÛ¿®µö²Ä¥Õ¥é¥°¤¬NULL¤Î¾ì¹ç¤ÎÀßÄê
+// ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯ãƒ•ãƒ©ã‚°ãŒNULLã®å ´åˆã®è¨­å®š
 if ( !$aryData["bytMailTransmitFlag"] )
 {
 	$aryData["bytMailTransmitFlag"] = "FALSE";
 }
 
-// ¥æ¡¼¥¶¡¼É½¼¨¥Õ¥é¥°¤¬NULL¤Î¾ì¹ç¤ÎÀßÄê
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤ºãƒ•ãƒ©ã‚°ãŒNULLã®å ´åˆã®è¨­å®š
 if ( !$aryData["bytUserDisplayFlag"] )
 {
 	$aryData["bytUserDisplayFlag"] = "FALSE";
 }
 
-// ¸¡º÷·ë²Ì¤Î¥«¥é¥àÉ½µ­¤Î¸À¸ìÀßÄê
+// æ¤œç´¢çµæœã®ã‚«ãƒ©ãƒ è¡¨è¨˜ã®è¨€èªè¨­å®š
 if ( !$aryData["lngLanguageCode"] )
 {
 	$aryColumnLang = Array (
@@ -172,28 +172,28 @@ if ( !$aryData["lngLanguageCode"] )
 else
 {
 	$aryColumnLang = Array (
-		"detail"                 => "¾ÜºÙ",
-		"bytInvalidFlag"         => "¥í¥°¥¤¥óµö²Ä",
-		"lngUserCode"            => "¥æ¡¼¥¶¡¼¥³¡¼¥É",
-		"strUserID"              => "¥æ¡¼¥¶¡¼ID",
-		"bytMailTransmitFlag"    => "¥á¡¼¥ëÇÛ¿®µö²Ä",
-		"strMailAddress"         => "¥á¡¼¥ë¥¢¥É¥ì¥¹",
-		"bytUserDisplayFlag"     => "¥æ¡¼¥¶¡¼É½¼¨",
-		"strUserDisplayCode"     => "É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É",
-		"strUserDisplayName"     => "É½¼¨¥æ¡¼¥¶¡¼Ì¾",
-		"strUserFullName"        => "¥Õ¥ë¥Í¡¼¥à",
-		"lngCompanyCode"         => "²ñ¼Ò",
-		"lngGroupCode"           => "¥°¥ë¡¼¥×",
-		"lngAuthorityGroupCode"  => "¸¢¸Â¥°¥ë¡¼¥×",
-		"lngAccessIPAddressCode" => "¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹",
-		"strNote"                => "È÷¹Í",
-		"update"                 => "½¤Àµ"
+		"detail"                 => "è©³ç´°",
+		"bytInvalidFlag"         => "ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯",
+		"lngUserCode"            => "ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰",
+		"strUserID"              => "ãƒ¦ãƒ¼ã‚¶ãƒ¼ID",
+		"bytMailTransmitFlag"    => "ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯",
+		"strMailAddress"         => "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹",
+		"bytUserDisplayFlag"     => "ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤º",
+		"strUserDisplayCode"     => "è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰",
+		"strUserDisplayName"     => "è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å",
+		"strUserFullName"        => "ãƒ•ãƒ«ãƒãƒ¼ãƒ ",
+		"lngCompanyCode"         => "ä¼šç¤¾",
+		"lngGroupCode"           => "ã‚°ãƒ«ãƒ¼ãƒ—",
+		"lngAuthorityGroupCode"  => "æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—",
+		"lngAccessIPAddressCode" => "ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹",
+		"strNote"                => "å‚™è€ƒ",
+		"update"                 => "ä¿®æ­£"
 	);
 }
 
 
 //////////////////////////////////////////////////////////////////////////
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 //////////////////////////////////////////////////////////////////////////
 $aryCheck["strSessionID"]           = "null:numenglish(32,32)";
 $aryCheck["lngFunctionCode"]        = "null:number(" . DEF_FUNCTION_UC1 . "," . DEF_FUNCTION_UC3 . ")";
@@ -211,150 +211,150 @@ $aryCheck["lngAccessIPAddressCode"] = "number(0,32767)";
 $aryCheck["strNote"]                = "length(0,1000)";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
 
-$aryInvalidFlag      = Array ("t" => "ÉÔµö²Ä", "f" => "µö²Ä" );
-$aryMailTransmitFlag = Array ("t" => "µö²Ä",   "f" => "ÉÔµö²Ä" );
-$aryUserDisplayFlag  = Array ("t" => "É½¼¨",   "f" => "ÈóÉ½¼¨" );
+$aryInvalidFlag      = Array ("t" => "ä¸è¨±å¯", "f" => "è¨±å¯" );
+$aryMailTransmitFlag = Array ("t" => "è¨±å¯",   "f" => "ä¸è¨±å¯" );
+$aryUserDisplayFlag  = Array ("t" => "è¡¨ç¤º",   "f" => "éè¡¨ç¤º" );
 
 
-// ¥æ¡¼¥¶¡¼´ÉÍı
-// ¥Ç¡¼¥¿ÆÉ¤ß¹ş¤ß¡¢¸¡º÷¡¢¾ÜºÙ¾ğÊó¼èÆÀ¥¯¥¨¥ê´Ø¿ô
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†
+// ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿ã€æ¤œç´¢ã€è©³ç´°æƒ…å ±å–å¾—ã‚¯ã‚¨ãƒªé–¢æ•°
 list ( $lngResultID, $lngResultNum, $baseData["strErrorMessage"] ) = getUserQuery( $objAuth->UserCode, $aryData, $objDB );
 
-// ¶¦ÄÌ¼õ¤±ÅÏ¤·URLÀ¸À®(¥»¥Ã¥·¥ç¥óID¡¢¥Ú¡¼¥¸¡¢³Æ¸¡º÷¾ò·ï)
+// å…±é€šå—ã‘æ¸¡ã—URLç”Ÿæˆ(ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã€ãƒšãƒ¼ã‚¸ã€å„æ¤œç´¢æ¡ä»¶)
 $strURL = fncGetURL( $aryData );
 //echo $strURL;exit;
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
-// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "uc/result/parts.tmpl" );
 
 
 
 
-// ¥Æ¡¼¥Ö¥ë¤ÎÎóÌ¾¤È¥½¡¼¥È½èÍı
+// ãƒ†ãƒ¼ãƒ–ãƒ«ã®åˆ—åã¨ã‚½ãƒ¼ãƒˆå‡¦ç†
 if ( $aryData["detailVisible"] )
 {
-	// ¾ÜºÙ
+	// è©³ç´°
 	$baseData["detail"] = "<td nowarp>" . $aryColumnLang["detail"] . "</td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["bytInvalidFlagVisible"] )
 {
-	// ¥í¥°¥¤¥óµö²Ä¥Õ¥é¥°
+	// ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯ãƒ•ãƒ©ã‚°
 	$baseData["column1"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_1_ASC';\"><a href=\"#\">" . $aryColumnLang["bytInvalidFlag"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["lngUserCodeVisible"] )
 {
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 	$baseData["column2"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_2_ASC';\"><a href=\"#\">" . $aryColumnLang["lngUserCode"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["strUserIDVisible"] )
 {
-	// ¥æ¡¼¥¶¡¼ID
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
 	$baseData["column3"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_3_ASC';\"><a href=\"#\">" . $aryColumnLang["strUserID"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["strMailAddressVisible"] )
 {
-	// ¥á¡¼¥ë¥¢¥É¥ì¥¹
+	// ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
 	$baseData["column4"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_4_ASC';\"><a href=\"#\">" . $aryColumnLang["strMailAddress"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["bytMailTransmitFlagVisible"] )
 {
-	// ¥á¡¼¥ëÇÛ¿®µö²Ä
+	// ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯
 	$baseData["column5"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_5_ASC';\"><a href=\"#\">" . $aryColumnLang["bytMailTransmitFlag"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["bytUserDisplayFlagVisible"] )
 {
-	// É½¼¨¥æ¡¼¥¶¡¼¥Õ¥é¥°
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ•ãƒ©ã‚°
 	$baseData["column6"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_6_ASC';\"><a href=\"#\">" . $aryColumnLang["bytUserDisplayFlag"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["strUserDisplayCodeVisible"] )
 {
-	// É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 	$baseData["column7"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_7_ASC';\"><a href=\"#\">" . $aryColumnLang["strUserDisplayCode"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["strUserDisplayNameVisible"] )
 {
-	// É½¼¨¥æ¡¼¥¶¡¼Ì¾
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å
 	$baseData["column8"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_8_ASC';\"><a href=\"#\">" . $aryColumnLang["strUserDisplayName"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["strUserFullNameVisible"] )
 {
-	// ¥Õ¥ë¥Í¡¼¥à
+	// ãƒ•ãƒ«ãƒãƒ¼ãƒ 
 	$baseData["column9"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_9_ASC';\"><a href=\"#\">" . $aryColumnLang["strUserFullName"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["lngCompanyCodeVisible"] )
 {
-	// ²ñ¼Ò
+	// ä¼šç¤¾
 	$baseData["column10"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_10_ASC';\"><a href=\"#\">" . $aryColumnLang["lngCompanyCode"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["lngGroupCodeVisible"] )
 {
-	// ¥°¥ë¡¼¥×
+	// ã‚°ãƒ«ãƒ¼ãƒ—
 	$baseData["column11"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_11_ASC';\"><a href=\"#\">" . $aryColumnLang["lngGroupCode"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["lngAuthorityGroupCodeVisible"] )
 {
-	// ¸¢¸Â¥°¥ë¡¼¥×
+	// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—
 	$baseData["column12"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_12_ASC';\"><a href=\"#\">" . $aryColumnLang["lngAuthorityGroupCode"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["lngAccessIPAddressCodeVisible"] )
 {
-	// ¥¢¥¯¥»¥¹IP
+	// ã‚¢ã‚¯ã‚»ã‚¹IP
 	$baseData["column13"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_13_ASC';\"><a href=\"#\">" . $aryColumnLang["lngAccessIPAddressCode"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["strNoteVisible"] )
 {
-	// È÷¹Í
+	// å‚™è€ƒ
 	$baseData["column14"] = "<td id=\"Columns\" nowrap onmouseover=\"SortOn( this );\" onmouseout=\"SortOff( this );\" onclick=\"location.href='index.php?$strURL&strSort=column_14_ASC';\"><a href=\"#\">" . $aryColumnLang["strNote"] . "</a></td>";
 	$lngColumnNum++;
 }
 
 if ( $aryData["updateVisible"] )
 {
-	// ½¤Àµ
+	// ä¿®æ­£
 	$baseData["update"] = "<td nowarp>" . $aryColumnLang["update"] . "</td>";
 	$lngColumnNum++;
 }
 
 
-// Æ±¤¸¹àÌÜ¤Î¥½¡¼¥È¤ÏµÕ½ç¤Ë¤¹¤ë½èÍı
+// åŒã˜é …ç›®ã®ã‚½ãƒ¼ãƒˆã¯é€†é †ã«ã™ã‚‹å‡¦ç†
 list ( $column, $lngSort, $DESC ) = explode ( "_", $aryData["strSort"] );
 
 if ( $DESC == 'ASC' )
@@ -364,118 +364,118 @@ if ( $DESC == 'ASC' )
 
 
 
-// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥È¥³¥Ô¡¼
+// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚³ãƒ”ãƒ¼
 $strTemplate = $objTemplate->strTemplate;
 
 $baseData["lngColumnNum"] =& $lngColumnNum;
 
-// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥È¤ËËä¤á¹ş¤ß
+// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«åŸ‹ã‚è¾¼ã¿
 for ( $i = 0; $i < $lngResultNum; $i++ )
 {
 	$objResult = $objDB->fetchObject( $lngResultID, $i );
 
-	// Ï¢ÈÖ
+	// é€£ç•ª
 	$partsData["number"] = $i + 1;
-	// ¾ÜºÙURL
+	// è©³ç´°URL
 	if ( $aryData["detailVisible"] )
 	{
 		$partsData["detail"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogCommon('/uc/result/detail.php?strSessionID=" .$aryData["strSessionID"] ."&lngUserCode=" . $objResult->lngusercode . "&lngFunctionCode=" . DEF_FUNCTION_UC4 . "&lngUserCodeCondition=1' , window.form1 , 'ResultIframeCommon' , 'YES' , " . $aryData["lngLanguageCode"] . " , 'detail' );\"><img onmouseover=\"DetailOn(this);\" onmouseout=\"DetailOff(this);\" src=\"/img/type01/wf/result/detail_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DETAIL\"></a></td>";
 	}
-	// ¥í¥°¥¤¥óµö²Ä
+	// ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯
 	if ( $aryData["bytInvalidFlagVisible"] )
 	{
 		$partsData["bytInvalidFlag"] = "<td nowrap>" . $aryInvalidFlag[$objResult->bytinvalidflag] . "</td>";
 	}
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["lngUserCodeVisible"] )
 	{
 		$partsData["lngUserCode"] = "<td nowrap>" . $objResult->lngusercode . "</td>";
 	}
-	// ¥æ¡¼¥¶¡¼ID
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
 	if ( $aryData["strUserIDVisible"] )
 	{
 		$partsData["strUserID"] = "<td nowrap>" . $objResult->struserid . "</td>";
 	}
-	// ¥á¡¼¥ë¥¢¥É¥ì¥¹
+	// ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
 	if ( $aryData["strMailAddressVisible"] )
 	{
 		$partsData["strMailAddress"] = "<td nowrap>" . $objResult->strmailaddress . "</td>";
 	}
-	// ¥á¡¼¥ëÇÛ¿®µö²Ä
+	// ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯
 	if ( $aryData["bytMailTransmitFlagVisible"] )
 	{
 		$partsData["bytMailTransmitFlag"] = "<td nowrap>" . $aryMailTransmitFlag[$objResult->bytmailtransmitflag] . "</td>";
 	}
-	// É½¼¨¥æ¡¼¥¶¡¼¥Õ¥é¥°
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ•ãƒ©ã‚°
 	if ( $aryData["bytUserDisplayFlagVisible"] )
 	{
 		$partsData["bytUserDisplayFlag"] = "<td nowrap>" . $aryUserDisplayFlag[$objResult->bytuserdisplayflag] . "</td>";
 	}
-	// É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["strUserDisplayCodeVisible"] )
 	{
 		$partsData["strUserDisplayCode"] = "<td nowrap>" . $objResult->struserdisplaycode . "</td>";
 	}
-	// É½¼¨¥æ¡¼¥¶¡¼Ì¾
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å
 	if ( $aryData["strUserDisplayNameVisible"] )
 	{
 		$partsData["strUserDisplayName"] = "<td nowrap>" . $objResult->struserdisplayname . "</td>";
 	}
-	// ¥Õ¥ë¥Í¡¼¥à
+	// ãƒ•ãƒ«ãƒãƒ¼ãƒ 
 	if ( $aryData["strUserFullNameVisible"] )
 	{
 		$partsData["strUserFullName"] = "<td nowrap>" . $objResult->struserfullname . "</td>";
 	}
-	// ²ñ¼Ò
+	// ä¼šç¤¾
 	if ( $aryData["lngCompanyCodeVisible"] )
 	{
 		$partsData["strCompanyName"] = "<td nowrap>" . $objResult->strcompanyname . "</td>";
 	}
-	// ¥°¥ë¡¼¥×
+	// ã‚°ãƒ«ãƒ¼ãƒ—
 	if ( $aryData["lngGroupCodeVisible"] )
 	{
 		$partsData["strGroupName"] = "<td nowrap>" . $objResult->strgroupname . "</td>";
 	}
-	// ¸¢¸Â¥°¥ë¡¼¥×
+	// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—
 	if ( $aryData["lngAuthorityGroupCodeVisible"] )
 	{
 		$partsData["strAuthorityGroupName"] = "<td nowrap>" . $objResult->strauthoritygroupname . "</td>";
 	}
-	// ¥¢¥¯¥»¥¹IP
+	// ã‚¢ã‚¯ã‚»ã‚¹IP
 	if ( $aryData["lngAccessIPAddressCodeVisible"] )
 	{
 		$partsData["strAccessIPAddress"] = "<td nowrap>" . $objResult->straccessipaddress . "</td>";
 	}
-	// È÷¹Í
+	// å‚™è€ƒ
 	if ( $aryData["strNoteVisible"] )
 	{
 		$partsData["strNote"] = "<td nowrap>" . $objResult->strnote . "</td>";
 	}
-	// ½¤Àµ
+	// ä¿®æ­£
 	if ( $aryData["updateVisible"] )
 	{
 		$partsData["update"] = "<td bgcolor=\"#FFFFFF\" align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\"><a class=\"cells\" href=\"javascript:fncShowDialogRenew('/uc/regist/edit.php?strSessionID=" .$aryData["strSessionID"] ."&lngUserCode=" . $objResult->lngusercode . "&lngFunctionCode=" . DEF_FUNCTION_UC5 . "&lngUserCodeCondition=1' , window.form1 , 'ResultIframeRenew' , 'NO' , " . $aryData["lngLanguageCode"] . " );\"><img onmouseover=\"RenewOn(this);\" onmouseout=\"RenewOff(this);\" src=\"/img/type01/cmn/seg/renew_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"RENEW\"></a></td>";
 	}
 
-	// ¥°¥ë¡¼¥×¥«¥é¡¼
+	// ã‚°ãƒ«ãƒ¼ãƒ—ã‚«ãƒ©ãƒ¼
 	$partsData["color"] = $objResult->strgroupdisplaycolor;
 
-	// ¥Ç¡¼¥¿Ï¢ÁÛÇÛÎó¤Î¥­¡¼¤òÇÛÎó¤Ë¼èÆÀ
+	// ãƒ‡ãƒ¼ã‚¿é€£æƒ³é…åˆ—ã®ã‚­ãƒ¼ã‚’é…åˆ—ã«å–å¾—
 	$objTemplate->replace( $partsData );
 
-	// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$baseData["tabledata"] .= $objTemplate->strTemplate;
-	// ¥Æ¥ó¥×¥ì¡¼¥È¤ò½é´ü¤Î¥Æ¥ó¥×¥ì¡¼¥È¾õÂÖ¤ËÌá¤¹
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’åˆæœŸã®ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆçŠ¶æ…‹ã«æˆ»ã™
 	$objTemplate->strTemplate = $strTemplate;
 }
 
 $objDB->freeResult( $lngResultID );
 
-//¥»¥Ã¥·¥ç¥ó¤Î¾ğÊó¤òhidden¤Ç»ı¤Ä
+//ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®æƒ…å ±ã‚’hiddenã§æŒã¤
 $baseData["strSessionID"] = $aryData["strSessionID"];
 
-/////////¥Æ¥¹¥È¤³¤³¤«¤é
-// POST¤µ¤ì¤¿¥Ç¡¼¥¿¤òHidden¤Ë¤ÆÀßÄê¤¹¤ë
+/////////ãƒ†ã‚¹ãƒˆã“ã“ã‹ã‚‰
+// POSTã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’Hiddenã«ã¦è¨­å®šã™ã‚‹
 unset($ary_keys);
 $ary_Keys = array_keys( $aryData );
 while ( list ($strKeys, $strValues ) = each ( $ary_Keys ) )
@@ -502,7 +502,7 @@ while ( list ($strKeys, $strValues ) = each ( $ary_Keys ) )
 	}
 	elseif( $strValues == "strSort" || $strValues == "strSortOrder" )
 	{
-		//²¿¤â¤·¤Ê¤¤
+		//ä½•ã‚‚ã—ãªã„
 	} 
 	else
 	{
@@ -515,19 +515,19 @@ $aryHidden[] = "<input type='hidden' name='strSortOrder'>";
 $strHidden = implode ("\n", $aryHidden );
 
 $baseData["strHidden"] = $strHidden;
-/////////¥Æ¥¹¥È¤³¤³¤Ş¤Ç
+/////////ãƒ†ã‚¹ãƒˆã“ã“ã¾ã§
 
 
 
 
-// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate->getTemplate( "uc/result/base.tmpl" );
 
-// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $baseData );
 $objTemplate->complete();
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 $objDB->close();

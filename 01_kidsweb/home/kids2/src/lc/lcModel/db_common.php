@@ -3,35 +3,35 @@
 class lcConnect
 {
     /**
-     *    ÀÜÂ³ID
+     *    æŽ¥ç¶šID
      *    @var string
      */
     public $ConnectID;
     /**
-     *    ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥Õ¥é¥°(TRUE:SQL¥¨¥é¡¼»þROLLBACK¤ò¼Â¹Ô)
+     *    ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ãƒ•ãƒ©ã‚°(TRUE:SQLã‚¨ãƒ©ãƒ¼æ™‚ROLLBACKã‚’å®Ÿè¡Œ)
      *    @var boolean
      */
     public $Transaction;
 
     /**
-     *    ¥³¥ó¥¹¥È¥é¥¯¥¿
-     *    ¥¯¥é¥¹Æâ¤Î½é´ü²½¤ò¹Ô¤¦
+     *    ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+     *    ã‚¯ãƒ©ã‚¹å†…ã®åˆæœŸåŒ–ã‚’è¡Œã†
      *
      *    @return void
      *    @access public
      */
     public function __construct()
     {
-        // ÀÜÂ³ID¤Î½é´ü²½
+        // æŽ¥ç¶šIDã®åˆæœŸåŒ–
         $this->ConnectID = false;
 
-        // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥Õ¥é¥°¤Î½é´ü²½
+        // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ãƒ•ãƒ©ã‚°ã®åˆæœŸåŒ–
         $this->Transaction = false;
 
     }
 
     /**
-     *    ÀÜÂ³Ãæ¤«¤É¤¦¤«¤Î¼èÆÀ
+     *    æŽ¥ç¶šä¸­ã‹ã©ã†ã‹ã®å–å¾—
      *    @return boolean TRUE,FALSE
      *    @access public
      */
@@ -46,13 +46,13 @@ class lcConnect
     }
 
     /**
-     *    DB¤«¤éÀÚÃÇ
+     *    DBã‹ã‚‰åˆ‡æ–­
      *    @return boolean TRUE,FALSE
      *    @access public
      */
     public function close()
     {
-        // ÀÜÂ³¥Á¥§¥Ã¥¯
+        // æŽ¥ç¶šãƒã‚§ãƒƒã‚¯
         if (!$this->isOpen()) {
             return false;
         } else {
@@ -63,10 +63,10 @@ class lcConnect
     }
 
     /**
-     * ¥Ç¡¼¥¿¥Ù¡¼¥¹¤ËÀÜÂ³¤¹¤ë´Ø¿ô
+     * ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã«æŽ¥ç¶šã™ã‚‹é–¢æ•°
      *
-     * @param [string] $query queryÊ¸
-     * @param [array] $params ¥Ñ¥é¥á¡¼¥¿
+     * @param [string] $query queryæ–‡
+     * @param [array] $params ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
      * @return void
      */
     public function open()
@@ -78,14 +78,14 @@ class lcConnect
                 . " password=" . LC_DB_LOGIN_PASSWORD;
             $link = pg_connect($conn);
             if (!$link) {
-                die('ÀÜÂ³¼ºÇÔ¤Ç¤¹¡£' . pg_last_error());
+                die('æŽ¥ç¶šå¤±æ•—ã§ã™ã€‚' . pg_last_error());
             }
 
             pg_set_client_encoding($link, "EUC_JP");
 
             $this->ConnectID = $link;
 
-            //¥Ð¥¤¥ó¥ÉÇÛÎó¤ÎÊ¸»ú¥¨¥ó¥³¡¼¥ÉÊÑ¹¹
+            //ãƒã‚¤ãƒ³ãƒ‰é…åˆ—ã®æ–‡å­—ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰å¤‰æ›´
             // mb_convert_variables('EUC-JP', 'UTF-8', $params);
         } catch (Exception $e) {
             die($e->getMessage());
@@ -95,7 +95,7 @@ class lcConnect
     }
 
     /**
-     * SELECTÊ¸¤Î»þ¤Ë»ÈÍÑ¤¹¤ë´Ø¿ô(¥ì¥¹¥Ý¥ó¥¹¤¬Ê£¿ô·ïÁÛÄê¤µ¤ì¤ë¾ì¹ç)
+     * SELECTæ–‡ã®æ™‚ã«ä½¿ç”¨ã™ã‚‹é–¢æ•°(ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒè¤‡æ•°ä»¶æƒ³å®šã•ã‚Œã‚‹å ´åˆ)
      *
      * @param [string] $query
      * @param [array] $params
@@ -123,7 +123,7 @@ class lcConnect
     }
 
     /**
-     * SELECTÊ¸¤Î»þ¤Ë»ÈÍÑ¤¹¤ë´Ø¿ô(¥ì¥¹¥Ý¥ó¥¹¤¬Ã±°ì¤Î¾ì¹ç)
+     * SELECTæ–‡ã®æ™‚ã«ä½¿ç”¨ã™ã‚‹é–¢æ•°(ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãŒå˜ä¸€ã®å ´åˆ)
      *
      * @param [string] $query
      * @param [array] $params
@@ -147,7 +147,7 @@ class lcConnect
     }
 
     /**
-     * SELECTÊ¸°Ê³°¤Î»þ¤Ë»ÈÍÑ¤¹¤ë´Ø¿ô
+     * SELECTæ–‡ä»¥å¤–ã®æ™‚ã«ä½¿ç”¨ã™ã‚‹é–¢æ•°
      *
      * @param [string] $query
      * @param [array] $params
@@ -171,18 +171,18 @@ class lcConnect
     }
 
     /**
-     *    ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï(BEGIN)
+     *    ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹(BEGIN)
      *    @return boolean TRUE,FALSE
      *    @access public
      */
     public function transactionBegin()
     {
-        // ÀÜÂ³¥Á¥§¥Ã¥¯
+        // æŽ¥ç¶šãƒã‚§ãƒƒã‚¯
         if (!$this->isOpen()) {
             return false;
         }
 
-        // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥¹¥¿¡¼¥È
+        // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¹ã‚¿ãƒ¼ãƒˆ
         if (!$this->execute("BEGIN")) {
             return false;
         }
@@ -192,18 +192,18 @@ class lcConnect
     }
 
     /**
-     *    ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó´°Î»(COMMIT)
+     *    ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³å®Œäº†(COMMIT)
      *    @return boolean TRUE,FALSE
      *    @access public
      */
     public function transactionCommit()
     {
-        // ÀÜÂ³¥Á¥§¥Ã¥¯
+        // æŽ¥ç¶šãƒã‚§ãƒƒã‚¯
         if (!$this->isOpen()) {
             return false;
         }
 
-        // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥³¥ß¥Ã¥È
+        // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚³ãƒŸãƒƒãƒˆ
         if (!$this->execute("COMMIT")) {
             return false;
         }
@@ -213,24 +213,24 @@ class lcConnect
     }
 
     /**
-     *    SQL¤Î¼Â¹Ô
-     *    @param  string  $strQuery  ¼Â¹Ô¤¹¤ëSQLÊ¸
-     *    @return long    ·ë²Ì¥Ð¥Ã¥Õ¥¡ID
+     *    SQLã®å®Ÿè¡Œ
+     *    @param  string  $strQuery  å®Ÿè¡Œã™ã‚‹SQLæ–‡
+     *    @return long    çµæžœãƒãƒƒãƒ•ã‚¡ID
      *            boolean FALSE
      *    @access public
      */
     public function execute($strQuery)
     {
-        // ÀÜÂ³¥Á¥§¥Ã¥¯
+        // æŽ¥ç¶šãƒã‚§ãƒƒã‚¯
         if (!$this->isOpen()) {
             return false;
         }
 
         $lngResultID = false;
 
-        // ¥¯¥¨¥ê¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         if (!$lngResultID = pg_query($this->ConnectID, $strQuery)) {
-            // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥Õ¥é¥°¤Î³ÎÇ§
+            // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ãƒ•ãƒ©ã‚°ã®ç¢ºèª
             if ($this->Trasaction) {
                 if (!pg_query($this->ConnectID, "ROLLBACK")) {
                     return false;

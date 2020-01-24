@@ -5,7 +5,7 @@ require_once ( LIB_FILE );
 
 require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
 
-// ÅÐÏ¿ÍÑ¥Ç¡¼¥¿ºîÀ®¥¯¥é¥¹
+// ç™»éŒ²ç”¨ãƒ‡ãƒ¼ã‚¿ä½œæˆã‚¯ãƒ©ã‚¹
 class estimateInsertData {
     protected $headerData;
     protected $rowDataList;
@@ -32,49 +32,49 @@ class estimateInsertData {
 
     }
 
-    // ¸«ÀÑ¸¶²Á·×»»½ñ¤ËÆþÎÏ¤µ¤ì¤¿¥Ç¡¼¥¿¤ò¥»¥Ã¥È¤¹¤ë
+    // è¦‹ç©åŽŸä¾¡è¨ˆç®—æ›¸ã«å…¥åŠ›ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     protected function setParam($input, $inputUserCode, $objDB) {
-        // ÅÐÏ¿ÍÑ¤Î¥Ñ¥é¥á¡¼¥¿¤ò¥»¥Ã¥È
+        // ç™»éŒ²ç”¨ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆ
         $this->headerData = $input['headerData'];
         $this->rowDataList = $input['rowDataList'];
         $this->calculatedData = $input['calculatedData'];
 
-        // ÆþÎÏ¼Ô¤Î¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¥»¥Ã¥È
+        // å…¥åŠ›è€…ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
         $this->inputUserCode = $inputUserCode;
 
-        // DB¥¯¥é¥¹¤Î¥»¥Ã¥È
+        // DBã‚¯ãƒ©ã‚¹ã®ã‚»ãƒƒãƒˆ
         $this->objDB = $objDB;
 
         return;
     }
 
-    // À½ÉÊ¥³¡¼¥É¤ò½ÐÎÏ¤¹¤ë
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã‚’å‡ºåŠ›ã™ã‚‹
     public function getProductCode() {
         return $this->productCode;
     }
 
-    // ¥ê¥Ð¥¤¥¹¥³¡¼¥É¤ò½ÐÎÏ¤¹¤ë
+    // ãƒªãƒã‚¤ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’å‡ºåŠ›ã™ã‚‹
     public function getReviseCode() {
         return $this->reviseCode;
     }
 
-    // ¸«ÀÑ¸¶²ÁÈÖ¹æ¤ò½ÐÎÏ¤¹¤ë
+    // è¦‹ç©åŽŸä¾¡ç•ªå·ã‚’å‡ºåŠ›ã™ã‚‹
     public function getEstimateNo() {
         return $this->estimateNo;
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	ÅÐÏ¿ÍÑ¤ÎINSERTÊ¸¤òÀ¸À®¤¹¤ë
+    *	ç™»éŒ²ç”¨ã®INSERTæ–‡ã‚’ç”Ÿæˆã™ã‚‹
     *   
-    *   @param array $array ÅÐÏ¿¥Ç¡¼¥¿¡Ê¥­¡¼¤Ë¥«¥é¥àÌ¾¤ò»ý¤Ä¥Ç¡¼¥¿ÇÛÎó¡Ë
+    *   @param array $array ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ï¼ˆã‚­ãƒ¼ã«ã‚«ãƒ©ãƒ åã‚’æŒã¤ãƒ‡ãƒ¼ã‚¿é…åˆ—ï¼‰
     *	@return boolean
     *	@access protected
     */
     protected function makeInsertQuery($table, $array) {
         foreach ($array as $key => $value) {
-            // Îó¾ðÊó¤Î¥»¥Ã¥È
+            // åˆ—æƒ…å ±ã®ã‚»ãƒƒãƒˆ
             if (!isset($columns)) {
                 $columns = $key;
             } else {
@@ -97,22 +97,22 @@ class estimateInsertData {
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	ÅÐÏ¿ÍÑ¤ÎINSERTÊ¸¤òÀ¸À®¤¹¤ë
+    *	ç™»éŒ²ç”¨ã®INSERTæ–‡ã‚’ç”Ÿæˆã™ã‚‹
     *   
-    *   @param array $array ÅÐÏ¿¥Ç¡¼¥¿¡Ê¥­¡¼¤Ë¥«¥é¥àÌ¾¤ò»ý¤Ä¥Ç¡¼¥¿ÇÛÎó¡Ë
-    *   @param string $condition ¸¡º÷¾ò·ï
-    *   @param $returning ÊÖµÑ¤¹¤ë¥«¥é¥à
+    *   @param array $array ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ï¼ˆã‚­ãƒ¼ã«ã‚«ãƒ©ãƒ åã‚’æŒã¤ãƒ‡ãƒ¼ã‚¿é…åˆ—ï¼‰
+    *   @param string $condition æ¤œç´¢æ¡ä»¶
+    *   @param $returning è¿”å´ã™ã‚‹ã‚«ãƒ©ãƒ 
     *
     *	@return boolean
     *	@access protected
     */
     protected function makeInsertSelectQuery($table, $array, $condition = null, $returning = null) {
 
-        if ($condition) { // ¸¡º÷¾ò·ï¤¬»ØÄê¤µ¤ì¤Æ¤¤¤ë¤È¤­
+        if ($condition) { // æ¤œç´¢æ¡ä»¶ãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚‹ã¨ã
             foreach ($array as $key => $value) {
-                // Îó¾ðÊó¤Î¥»¥Ã¥È
+                // åˆ—æƒ…å ±ã®ã‚»ãƒƒãƒˆ
                 if (!isset($columns)) {
                     $columns = $key;
                 } else {
@@ -174,12 +174,12 @@ class estimateInsertData {
 
     
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¼õÃí¥Þ¥¹¥¿¤Ø¤Îºï½üÂÐ¾Ý¤Î¼õÃí¾ðÊó¤ò¹¹¿·¤¹¤ë
+    *	å—æ³¨ãƒžã‚¹ã‚¿ã¸ã®å‰Šé™¤å¯¾è±¡ã®å—æ³¨æƒ…å ±ã‚’æ›´æ–°ã™ã‚‹
     *
-    *   @param string $receiveNo ¼õÃíÈÖ¹æ
-    *   @param string $revisionNo ¼õÃí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    *   @param string $receiveNo å—æ³¨ç•ªå·
+    *   @param string $revisionNo å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     *   
     *	@return true
     */
@@ -188,7 +188,7 @@ class estimateInsertData {
         $strQuery = "UPDATE m_receive SET strreceivecode = '*' || strreceivecode || '*'";
         $strQuery .= " WHERE lngreceiveno = ". $receiveNo;
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -199,25 +199,25 @@ class estimateInsertData {
 
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¼õÃí¥Þ¥¹¥¿¤Ø¤Îºï½ü¥ì¥³¡¼¥É¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	å—æ³¨ãƒžã‚¹ã‚¿ã¸ã®å‰Šé™¤ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ç™»éŒ²ã‚’è¡Œã†
     *
-    *   @param string $receiveNo ¼õÃíÈÖ¹æ
-    *   @param string $revisionNo ¥³¥Ô¡¼¸µ¤Î¼õÃí¥ê¥Ó¥¸¥ç¥óÈÖ¹æ(´ðËÜÅª¤Ë¤ÏºÇ¿·¥ê¥Ó¥¸¥ç¥ó)
+    *   @param string $receiveNo å—æ³¨ç•ªå·
+    *   @param string $revisionNo ã‚³ãƒ”ãƒ¼å…ƒã®å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·(åŸºæœ¬çš„ã«ã¯æœ€æ–°ãƒªãƒ“ã‚¸ãƒ§ãƒ³)
     *   
     *	@return true
     */
     protected function insertDeleteRecordForReceive($receiveNo, $revisionNo) {
-        // ¥Æ¡¼¥Ö¥ë¤ÎÀßÄê 
+        // ãƒ†ãƒ¼ãƒ–ãƒ«ã®è¨­å®š 
         $table = 'm_receive';
 
         if (!strlen($receiveNo) || !strlen($revisionNo)) {
-            // ¼õÃíÈÖ¹æ¤È¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤¬¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤Ê¤¤¤Þ¤¿¤Ï¶õÊ¸»ú¤Î¾ì¹ç¤Ï½èÍý¤·¤Ê¤¤
+            // å—æ³¨ç•ªå·ã¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ãªã„ã¾ãŸã¯ç©ºæ–‡å­—ã®å ´åˆã¯å‡¦ç†ã—ãªã„
             return false;
         }
 
-        // ÅÐÏ¿¥Ç¡¼¥¿¤ÎºîÀ®
+        // ç™»éŒ²ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ
         $data = array(
             'lngreceiveno' => $receiveNo,
             'lngrevisionno' => -1,
@@ -231,9 +231,9 @@ class estimateInsertData {
         $condition = "WHERE lngreceiveNo = ". $receiveNo;
         $condition .= " AND lngrevisionno = ". $revisionNo;
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertSelectQuery($table, $data, $condition);
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -242,21 +242,21 @@ class estimateInsertData {
     }
 
     /**
-    * DBÅÐÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	È¯Ãí¥Þ¥¹¥¿¤Ø¤Îºï½ü¥ì¥³¡¼¥É¤ÎÅÐÏ¿¤ò¹Ô¤¦
+    *	ç™ºæ³¨ãƒžã‚¹ã‚¿ã¸ã®å‰Šé™¤ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ç™»éŒ²ã‚’è¡Œã†
     *
-    *   @param array $rowData ¹Ô¤Î¥Ç¡¼¥¿
-    *   @param string $orderCode È¯Ãí¥³¡¼¥É
+    *   @param array $rowData è¡Œã®ãƒ‡ãƒ¼ã‚¿
+    *   @param string $orderCode ç™ºæ³¨ã‚³ãƒ¼ãƒ‰
     *   
     *	@return true
     */
     protected function insertDeleteRecordForOrder($orderNo, $revisionNo) {
-        // ¥Æ¡¼¥Ö¥ë¤ÎÀßÄê
+        // ãƒ†ãƒ¼ãƒ–ãƒ«ã®è¨­å®š
         $table = 'm_order';
 
         if (!strlen($orderNo) || !strlen($revisionNo)) {
-            // ¼õÃíÈÖ¹æ¤È¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤¬¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤Ê¤¤¤Þ¤¿¤Ï¶õÊ¸»ú¤Î¾ì¹ç¤Ï½èÍý¤·¤Ê¤¤
+            // å—æ³¨ç•ªå·ã¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ãªã„ã¾ãŸã¯ç©ºæ–‡å­—ã®å ´åˆã¯å‡¦ç†ã—ãªã„
             return false;
         }
 
@@ -272,10 +272,10 @@ class estimateInsertData {
         $condition = "WHERE lngorderno = ". $orderNo;
         $condition .= " AND lngrevisionno = ".$revisionNo;
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertSelectQuery($table, $data, $condition);
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);

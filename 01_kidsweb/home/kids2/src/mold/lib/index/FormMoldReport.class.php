@@ -3,126 +3,126 @@
 require_once(SRC_ROOT.'/mold/lib/index/FormMoldRegistBase.class.php');
 
 /**
- * ¶â·¿Ä¢É¼½èÍı¤Ç¤Î¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤Ë¥¢¥¯¥»¥¹¤¹¤ë°Ù¤Î¥­¡¼¤òÄó¶¡¤¹¤ë
+ * é‡‘å‹å¸³ç¥¨å‡¦ç†ã§ã®ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã«ã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹ç‚ºã®ã‚­ãƒ¼ã‚’æä¾›ã™ã‚‹
  */
 class FormMoldReport extends FormMoldRegistBase
 {
 	/**
-	 * ¶â·¿Ä¢É¼ID
+	 * é‡‘å‹å¸³ç¥¨ID
 	 * @var string
 	 */
 	const MoldReportId = "MoldReportId";
 
 	/**
-	 * ¥ê¥Ó¥¸¥ç¥ó
+	 * ãƒªãƒ“ã‚¸ãƒ§ãƒ³
 	 * @var string
 	 */
 	const Revision = "Revision";
 
 	/**
-	 * Ä¢É¼¶èÊ¬
+	 * å¸³ç¥¨åŒºåˆ†
 	 * @var string
 	 */
 	const ReportCategory = "ReportCategory";
 
 	/**
-	 * °ÍÍêÆü
+	 * ä¾é ¼æ—¥
 	 * @var string
 	 */
 	const RequestDate = "RequestDate";
 
 	/**
-	 * °ÍÍê¶èÊ¬
+	 * ä¾é ¼åŒºåˆ†
 	 * @var string
 	 */
 	const RequestCategory = "RequestCategory";
 
 	/**
-	 * ´õË¾Æü
+	 * å¸Œæœ›æ—¥
 	 * @var string
 	 */
 	const ActionRequestDate = "ActionRequestDate";
 
 	/**
-	 * °ÜÆ°ÊıË¡
+	 * ç§»å‹•æ–¹æ³•
 	 * @var string
 	 */
 	const TransferMethod = "TransferMethod";
 
 	/**
-	 * ¶â·¿ÀâÌÀ
+	 * é‡‘å‹èª¬æ˜
 	 * @var string
 	 */
 	const MoldDescription = "MoldDescription";
 
 	/**
-	 * »Ø¼¨¶èÊ¬
+	 * æŒ‡ç¤ºåŒºåˆ†
 	 * @var string
 	 */
 	const InstructionCategory = "InstructionCategory";
 
 	/**
-	 * »ö¶ÈÉô(¸ÜµÒ:É½¼¨²ñ¼Ò¥³¡¼¥É)
+	 * äº‹æ¥­éƒ¨(é¡§å®¢:è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰)
 	 * @var string
 	 */
 	const CustomerCode = "CustomerCode";
 
 	/**
-	 * »ö¶ÈÉô(¸ÜµÒ:É½¼¨²ñ¼ÒÌ¾)
+	 * äº‹æ¥­éƒ¨(é¡§å®¢:è¡¨ç¤ºä¼šç¤¾å)
 	 * @var string
 	 */
 	const CustomerName = "CustomerName";
 
 	/**
-	 * Ã´Åö¥°¥ë¡¼¥×¥³¡¼¥É
+	 * æ‹…å½“ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
 	 * @var string
 	 */
 	const KuwagataGroupCode = "KuwagataGroupCode";
 
 	/**
-	 * Ã´Åö¥°¥ë¡¼¥×É½¼¨Ì¾
+	 * æ‹…å½“ã‚°ãƒ«ãƒ¼ãƒ—è¡¨ç¤ºå
 	 * @var string
 	 */
 	const KuwagataGroupName = "KuwagataGroupName";
 
 	/**
-	 * Ã´Åö¼Ô(¥æ¡¼¥¶¥³¡¼¥É)
+	 * æ‹…å½“è€…(ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰)
 	 * @var string
 	 */
 	const KuwagataUserCode = "KuwagataUserCode";
 
 	/**
-	 * Ã´Åö¼ÔÌ¾(¥æ¡¼¥¶É½¼¨Ì¾)
+	 * æ‹…å½“è€…å(ãƒ¦ãƒ¼ã‚¶è¡¨ç¤ºå)
 	 * @var string
 	 */
 	const KuwagataUserName = "KuwagataUserName";
 
 	/**
-	 * À¸»º¸å¤Î½èÍı
+	 * ç”Ÿç”£å¾Œã®å‡¦ç†
 	 * @var string
 	 */
 	const FinalKeep = "FinalKeep";
 
 	/**
-	 * ÊÖµÑÍ½ÄêÆü
+	 * è¿”å´äºˆå®šæ—¥
 	 * @var string
 	 */
 	const ReturnSchedule = "ReturnSchedule";
 
 	/**
-	 * È÷¹Í
+	 * å‚™è€ƒ
 	 * @var string
 	 */
 	const Note = "Note";
 
 	/**
-	 * Íó³°È÷¹Í
+	 * æ¬„å¤–å‚™è€ƒ
 	 * @var string
 	 */
 	const MarginalNote = "MarginalNote";
 
 	/**
-	 * ¥Ğ¡¼¥¸¥ç¥ó
+	 * ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 	 * @var string
 	 */
 	const Version = "Version";

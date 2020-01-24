@@ -1,6 +1,6 @@
 <?
 /**
- *    Ä¢É¼½ÐÎÏ ¾¦ÉÊ´ë²è½ñ °õºþ¥×¥ì¥Ó¥å¡¼²èÌÌ(FARAMESET)
+ *    å¸³ç¥¨å‡ºåŠ› å•†å“ä¼ç”»æ›¸ å°åˆ·ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢(FARAMESET)
  *
  *    @package   KIDS
  *    @license   http://www.wiseknot.co.jp/
@@ -10,32 +10,32 @@
  *    @version   1.00
  *
  */
-// ¸¡º÷·ë²Ì²èÌÌ¤è¤ê
+// æ¤œç´¢çµæžœç”»é¢ã‚ˆã‚Š
 // index.php -> strSessionID       -> frameset.php
 // index.php -> lngReportClassCode -> frameset.php
 // index.php -> strReportKeyCode   -> frameset.php
 // index.php -> lngReportCode      -> frameset.php
 
-// È¯Ãí¾ÜºÙ¤«¤é
+// ç™ºæ³¨è©³ç´°ã‹ã‚‰
 // frameset.php -> strSessionID     -> listoutput.php
 // frameset.php -> lngReportKeyCode -> listoutput.php
 // frameset.php -> bytCopyFlag      -> listoutput.php
 
-// ¥×¥ì¥Ó¥å¡¼²èÌÌ¤Ø
+// ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢ã¸
 // frameset.php -> strSessionID       -> action.php
 // frameset.php -> strReportKeyCode   -> action.php
 // frameset.php -> lngReportCode      -> action.php
 
-// °õºþ¥Ü¥¿¥ó½ÐÎÏ²èÌÌ¤Ø
+// å°åˆ·ãƒœã‚¿ãƒ³å‡ºåŠ›ç”»é¢ã¸
 // frameset.php -> strSessionID       -> action.php
 // frameset.php -> strReportClassCode -> action.php
 // frameset.php -> strReportKeyCode   -> action.php
 // frameset.php -> lngReportCode      -> action.php
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require SRC_ROOT . "list/cmn/lib_lo.php";
 
@@ -44,22 +44,22 @@ $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// ¥Ç¡¼¥¿¼èÆÀ
+// ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 $aryData = $_GET;
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUNCTION_PO0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">

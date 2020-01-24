@@ -1,16 +1,16 @@
 <?php
 
 /**
- * SQL¤Ë´Ø¤¹¤ëÎã³°
- * TODO ¥±¡¼¥¹ÊÌ¤ËÇÉÀ¸¥¯¥é¥¹¤òºîÀ®
+ * SQLã«é–¢ã™ã‚‹ä¾‹å¤–
+ * TODO ã‚±ãƒ¼ã‚¹åˆ¥ã«æ´¾ç”Ÿã‚¯ãƒ©ã‚¹ã‚’ä½œæˆ
  */
 class SQLException extends RuntimeException
 {
 	public function __construct($message, $query = "", $param = array())
 	{
 		$message = $message."\n".
-					"¥¯¥¨¥ê:".$query."\n".
-					"¥Ñ¥é¥á¡¼¥¿:".var_export($param, true)."\n";
+					"ã‚¯ã‚¨ãƒª:".$query."\n".
+					"ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿:".var_export($param, true)."\n";
 
 		parent::__construct($message);
 	}

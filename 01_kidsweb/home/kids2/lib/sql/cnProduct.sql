@@ -1,15 +1,15 @@
 /*
-	³µÍ×¡§¡ÖÀ½ÉÊ¥³¡¼¥É¡×¤«¤é¡ÖÀ½ÉÊÌ¾¾Î¡×¤ò¼èÆÀ
-	ÂĞ¾İ¡§È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¡¢¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı
-	ºîÀ®¡§watanabe
-	¹¹¿·¡§ºØÆ£ÏÂ»Ö
-	È÷¹Í¡§¡Ö¥³¡¼¥É¡×¤«¤é°ìÃ×¤¹¤ë¡ÖÌ¾¾Î¡×¤ò¼èÆÀ
+	æ¦‚è¦ï¼šã€Œè£½å“ã‚³ãƒ¼ãƒ‰ã€ã‹ã‚‰ã€Œè£½å“åç§°ã€ã‚’å–å¾—
+	å¯¾è±¡ï¼šç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã€å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†
+	ä½œæˆï¼šwatanabe
+	æ›´æ–°ï¼šæ–è—¤å’Œå¿—
+	å‚™è€ƒï¼šã€Œã‚³ãƒ¼ãƒ‰ã€ã‹ã‚‰ä¸€è‡´ã™ã‚‹ã€Œåç§°ã€ã‚’å–å¾—
 */
 SELECT mp.lngproductno,
-	CASE WHEN mp.strproductname IS NULL THEN '¡ÊÀ½ÉÊÌ¾¾Î¤¬¶õ¤Ç¤¹¡Ë'
+	CASE WHEN mp.strproductname IS NULL THEN 'ï¼ˆè£½å“åç§°ãŒç©ºã§ã™ï¼‰'
 		ELSE mp.strproductname
 	END
 FROM m_product mp
 WHERE mp.bytinvalidflag = false
 	AND mp.strproductcode = '_%strFormValue0%_'
-	and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WF¿½ÀÁÃæ */
+	and ( mp.lngproductstatuscode = 0 or mp.lngproductstatuscode is null) /* WFç”³è«‹ä¸­ */

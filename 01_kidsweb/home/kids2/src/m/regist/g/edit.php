@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ¥°¥ë¡¼¥×¥Ş¥¹¥¿ ¥Ç¡¼¥¿ÆşÎÏ²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿ ãƒ‡ãƒ¼ã‚¿å…¥åŠ›ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,16 +10,16 @@
 *	@version   1.00
 *
 */
-// ÅĞÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID        -> edit.php
 // index.php -> lngActionCode       -> edit.php
 //
-// ½¤Àµ²èÌÌ
+// ä¿®æ­£ç”»é¢
 // index.php -> strSessionID        -> edit.php
 // index.php -> lngActionCode       -> edit.php
 // index.php -> lnggroupcode        -> edit.php
 //
-// ³ÎÇ§²èÌÌ¤Ø
+// ç¢ºèªç”»é¢ã¸
 // edit.php -> strSessionID         -> confirm.php
 // edit.php -> lngActionCode        -> confirm.php
 // edit.php -> lnggroupcode         -> confirm.php
@@ -31,30 +31,30 @@
 // edit.php -> strgroupdisplaycolor -> confirm.php
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -62,34 +62,34 @@ $aryCheck["strSessionID"]        = "null:numenglish(32,32)";
 $aryCheck["lngActionCode"]       = "null:number(" . DEF_ACTION_INSERT . "," . DEF_ACTION_DELETE . ")";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
-// ¥¨¥é¡¼¤¬¤Ê¤¤¾ì¹ç¡¢¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®¡¢Ê¸»úÎó¥Á¥§¥Ã¥¯¼Â¹Ô
+// ã‚¨ãƒ©ãƒ¼ãŒãªã„å ´åˆã€ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆã€æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯å®Ÿè¡Œ
 if ( join ( $aryCheckResult ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥Ş¥¹¥¿´ÉÍı¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ãƒã‚¹ã‚¿ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->setMasterTable( "m_Group", "lnggroupcode", $aryData["lnggroupcode"], "", $objDB );
 $objMaster->setAryMasterInfo( $aryData["lnggroupcode"], "" );
 
 
 
-// ¥«¥é¥à¿ô¼èÆÀ
+// ã‚«ãƒ©ãƒ æ•°å–å¾—
 $lngColumnNum = count ( $objMaster->aryColumnName );
 
 //////////////////////////////////////////////////////////////////////////
-// ÆşÎÏÍóÉ½¼¨½èÍı
+// å…¥åŠ›æ¬„è¡¨ç¤ºå‡¦ç†
 //////////////////////////////////////////////////////////////////////////
-// ¿·µ¬¤Î¾ì¹ç¡¢¥­¡¼ÆşÎÏ¹àÌÜÀ¸À®
+// æ–°è¦ã®å ´åˆã€ã‚­ãƒ¼å…¥åŠ›é …ç›®ç”Ÿæˆ
 if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 {
-	// ¥Ç¡¼¥¿½é´ü²½
+	// ãƒ‡ãƒ¼ã‚¿åˆæœŸåŒ–
 	$objMaster->aryData[0] = Array ();
 
 	if ( !$aryData[$objMaster->aryColumnName[0]] )
@@ -98,35 +98,35 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 	}
 	//$seq = fncIsSequence( $objMaster->strTableName . "." . $objMaster->aryColumnName[0], $objDB );
 
-	// ¥¤¥ó¥¯¥ê¥á¥ó¥È¸å¤Î¥·¡¼¥±¥ó¥¹¤¬9999¤À¤Ã¤¿¾ì¹ç¤µ¤é¤Ë1Â­¤·¤¿¿ô»ú¤ò¼èÆÀ
+	// ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆå¾Œã®ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ãŒ9999ã ã£ãŸå ´åˆã•ã‚‰ã«1è¶³ã—ãŸæ•°å­—ã‚’å–å¾—
 	//if ( ( $seq + 1 ) == 9999 )
 	//{
 	//	$seq = fncGetSequence( $objMaster->strTableName . "." . $objMaster->aryColumnName[0], $objDB );
 	//}
 
-	// ¥°¥ë¡¼¥×¥³¡¼¥É¤Î¥»¥Ã¥È
+	// ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã®ã‚»ãƒƒãƒˆ
 	$objMaster->aryData[0][$objMaster->aryColumnName[0]] =& $aryData[$objMaster->aryColumnName[0]];
 
-	// ²ñ¼Ò¥³¡¼¥É¤Î¥»¥Ã¥È
+	// ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã®ã‚»ãƒƒãƒˆ
 	$objMaster->aryData[0][$objMaster->aryColumnName[1]] =& $aryData[$objMaster->aryColumnName[1]];
 
-	// ¥°¥ë¡¼¥×Ì¾
+	// ã‚°ãƒ«ãƒ¼ãƒ—å
 	$objMaster->aryData[0][$objMaster->aryColumnName[2]] =& $aryData[$objMaster->aryColumnName[2]];
 
-	// É½¼¨¥°¥ë¡¼¥×¥Õ¥é¥°
+	// è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ãƒ•ãƒ©ã‚°
 	$objMaster->aryData[0][$objMaster->aryColumnName[3]] =& $aryData[$objMaster->aryColumnName[3]];
 
-	// É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É
+	// è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
 	$objMaster->aryData[0][$objMaster->aryColumnName[4]] =& $aryData[$objMaster->aryColumnName[4]];
 
-	// É½¼¨¥°¥ë¡¼¥×Ì¾¾Î
+	// è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—åç§°
 	$objMaster->aryData[0][$objMaster->aryColumnName[5]] =& $aryData[$objMaster->aryColumnName[5]];
 
-	// ¥°¥ë¡¼¥×É½¼¨¿§
+	// ã‚°ãƒ«ãƒ¼ãƒ—è¡¨ç¤ºè‰²
 	$objMaster->aryData[0][$objMaster->aryColumnName[6]] =& $aryData[$objMaster->aryColumnName[6]];
 }
 
-// ¥°¥ë¡¼¥×
+// ã‚°ãƒ«ãƒ¼ãƒ—
 if ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE )
 {
 	$lngOutputGroupCode =& $objMaster->aryData[0][$objMaster->aryColumnName[0]];
@@ -135,18 +135,18 @@ $aryParts["MASTER"][0]  = "<span class=\"InputSegs\"><input type=\"text\" id=\"I
 
 $aryData["HIDDEN"]  = "<input type=\"hidden\" name=\"" . $objMaster->aryColumnName[0] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[0]] . "\">\n";
 
-// ½¤Àµ¤Î¾ì¹ç¡¢¥¹¥â¡¼¥¯¤ò¤«¤±¤ë
+// ä¿®æ­£ã®å ´åˆã€ã‚¹ãƒ¢ãƒ¼ã‚¯ã‚’ã‹ã‘ã‚‹
 if ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE )
 {
 	$strQuery = "SELECT * FROM m_GroupRelation WHERE lngGroupCode = " . $aryData["lnggroupcode"];
 
-	// ²ñ¼ÒÌ¾(½¤Àµ»ş)
+	// ä¼šç¤¾å(ä¿®æ­£æ™‚)
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 	if ( $lngResultNum > 0 )
 	{
 		$objDB->freeResult( $lngResultID );
 
-		// ²ñ¼ÒÌ¾(¤¹¤Ç¤ËÂ°¼Ô¤¬¤¤¤ë¾ì¹ç¡¢¥¹¥â¡¼¥¯¤ò³İ¤±¤ë)
+		// ä¼šç¤¾å(ã™ã§ã«å±è€…ãŒã„ã‚‹å ´åˆã€ã‚¹ãƒ¢ãƒ¼ã‚¯ã‚’æ›ã‘ã‚‹)
 		$aryParts["MASTER"][1]  = "<span class=\"InputSegs\"><select id=\"Input1\" disabled>\n";
 		$aryParts["MASTER"][1] .= fncGetPulldown( "m_Company", "lngCompanyCode", "strCompanyName",  $objMaster->aryData[0][$objMaster->aryColumnName[1]], "WHERE bytCompanyDisplayFlag = TRUE", $objDB );
 		$aryParts["MASTER"][1] .= "</select></span>\n";
@@ -157,39 +157,39 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE )
 	}
 }
 
-// ²ñ¼ÒÌ¾ÆşÎÏÍó¤òÉ½¼¨¤·¤Æ¤¤¤Ê¤¤¾ì¹ç¡¢É½¼¨
+// ä¼šç¤¾åå…¥åŠ›æ¬„ã‚’è¡¨ç¤ºã—ã¦ã„ãªã„å ´åˆã€è¡¨ç¤º
 if ( !$flag )
 {
-	// ²ñ¼ÒÌ¾
+	// ä¼šç¤¾å
 	$aryParts["MASTER"][1]  = "<span class=\"InputSegs\"><select id=\"Input1\" name=\"" . $objMaster->aryColumnName[1] . "\">\n";
 	$aryParts["MASTER"][1] .= fncGetPulldown( "m_Company", "lngCompanyCode", "strCompanyName",  $objMaster->aryData[0][$objMaster->aryColumnName[1]], "WHERE bytCompanyDisplayFlag = TRUE", $objDB );
 	$aryParts["MASTER"][1] .= "</select></span>\n";
 }
 $flag = "";
 
-// ¥°¥ë¡¼¥×Ì¾
+// ã‚°ãƒ«ãƒ¼ãƒ—å
 $aryParts["MASTER"][2] = "<span class=\"InputSegs\"><input id=\"Input2\" type=\"text\" name=\"" . $objMaster->aryColumnName[2] . "\" value=\"" . fncHTMLSpecialChars( $objMaster->aryData[0][$objMaster->aryColumnName[2]] ) . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// É½¼¨¥°¥ë¡¼¥×¥Õ¥é¥°
+// è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ãƒ•ãƒ©ã‚°
 if ( $objMaster->aryData[0][$objMaster->aryColumnName[3]] == "t" || $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 {
 	$flag = " checked";
 }
 $aryParts["MASTER"][3] = "<span class=\"InputSegs\"><input id=\"Input3\" type=\"checkbox\" name=\"" . $objMaster->aryColumnName[3] . "\" value=\"t\"$flag></span>\n";
-// É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É
+// è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
 $aryParts["MASTER"][4] = "<span class=\"InputSegs\"><input id=\"Input4\" type=\"text\" name=\"" . $objMaster->aryColumnName[4] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[4]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"3\"></span>\n";
 
-// É½¼¨¥°¥ë¡¼¥×Ì¾¾Î
+// è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—åç§°
 $aryParts["MASTER"][5] = "<span class=\"InputSegs\"><input id=\"Input5\" type=\"text\" name=\"" . $objMaster->aryColumnName[5] . "\" value=\"" . fncHTMLSpecialChars( $objMaster->aryData[0][$objMaster->aryColumnName[5]] ) . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"100\"></span>\n";
 
-// ¥°¥ë¡¼¥×É½¼¨¿§
+// ã‚°ãƒ«ãƒ¼ãƒ—è¡¨ç¤ºè‰²
 $aryParts["MASTER"][6] = "<span class=\"InputSegs\"><input id=\"Input6\" type=\"text\" name=\"" . $objMaster->aryColumnName[6] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[6]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"7\"></span>\n";
 
 
 
 
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 //echo fncGetReplacedHtml( "m/regist/parts.tmpl", $aryData, $objAuth );
 $count = count ( $aryParts["MASTER"] );
@@ -197,7 +197,7 @@ for ( $i = 0; $i < $count; $i++ )
 {
 	$aryData["MASTER"] .= $aryParts["MASTER"][$i];
 
-	// ¥«¥é¥àÉ½¼¨
+	// ã‚«ãƒ©ãƒ è¡¨ç¤º
 	$aryData["COLUMN"] .= "<span id=\"Column$i\" class=\"ColumnSegs\"></span>\n";
 }
 
@@ -208,7 +208,7 @@ $aryData["lngLanguageCode"] = 1;
 $aryData["strTableName"]    = $objMaster->strTableName;
 
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/regist/c/edit.tmpl" );
 $objTemplate->replace( $aryData );

@@ -2,17 +2,17 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¶â·¿Ä¢É¼´ÉÍý  ¸¡º÷²èÌÌ
+*       é‡‘åž‹å¸³ç¥¨ç®¡ç†  æ¤œç´¢ç”»é¢
 *
-*       ½èÍý³µÍ×
-*         ¡¦¸¡º÷²èÌÌÉ½¼¨½èÍý
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»æ¤œç´¢ç”»é¢è¡¨ç¤ºå‡¦ç†
 */
 // ----------------------------------------------------------------------------
 
-// ÀßÄê¤ÎÆÉ¤ß¹þ¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require ( LIB_FILE );
 
 $objDB   = new clsDB();
@@ -20,28 +20,28 @@ $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 $aryData = $_REQUEST;
 
 setcookie("strSessionID", $aryData["strSessionID"]);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// 1800 ¶â·¿ÍúÎò´ÉÍý
+// 1800 é‡‘åž‹å±¥æ­´ç®¡ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// 1802 ¶â·¿ÍúÎò´ÉÍý¡Ê¸¡º÷¡Ë
+// 1802 é‡‘åž‹å±¥æ­´ç®¡ç†ï¼ˆæ¤œç´¢ï¼‰
 if ( !fncCheckAuthority( DEF_FUNCTION_MM2, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// TODO ¸¢¸Â¥Á¥§¥Ã¥¯¤ÈÆ±»þ¤Ë¸¢¸Â¤Î¤Ê¤¤¥æ¡¼¥¶¡¼¤Ë¤Ï½¤Àµ/ºï½ü²èÌÌ¤ÎÍ×ÁÇ¤òºï¤Ã¤ÆÉ½¼¨¤µ¤»¤ë
+// TODO æ¨©é™ãƒã‚§ãƒƒã‚¯ã¨åŒæ™‚ã«æ¨©é™ã®ãªã„ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«ã¯ä¿®æ­£/å‰Šé™¤ç”»é¢ã®è¦ç´ ã‚’å‰Šã£ã¦è¡¨ç¤ºã•ã›ã‚‹
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 echo fncGetReplacedHtmlWithBase("base_mold.html", "mm/search/mm_search.tmpl", $aryData ,$objAuth );

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¶â·¿ÍúÎò´ÉÍý  ¸¡º÷½èÍý
+*       é‡‘åž‹å±¥æ­´ç®¡ç†  æ¤œç´¢å‡¦ç†
 */
 // ----------------------------------------------------------------------------
 include( 'conf.inc' );
@@ -23,28 +23,28 @@ require_once(SRC_ROOT.'/mold/lib/index/TableMoldReportDetail.class.php');
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 
-// DB¥ª¡¼¥×¥ó
+// DBã‚ªãƒ¼ãƒ—ãƒ³
 $objDB->open("", "", "", "");
 
-// ¸À¸ì¥³¡¼¥É¤ò¼èÆÀ(0->false: ±Ñ¸ì, 1->true: ÆüËÜ¸ì)
+// è¨€èªžã‚³ãƒ¼ãƒ‰ã‚’å–å¾—(0->false: è‹±èªž, 1->true: æ—¥æœ¬èªž)
 $lngLanguageCode = 1;
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $_REQUEST["strSessionID"], $objAuth, $objDB );
 
-// 1800 ¶â·¿ÍúÎò´ÉÍý
+// 1800 é‡‘åž‹å±¥æ­´ç®¡ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// 1802 ¶â·¿ÍúÎò´ÉÍý(¸¡º÷)
+// 1802 é‡‘åž‹å±¥æ­´ç®¡ç†(æ¤œç´¢)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM2, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤«¤é³Æ¥«¥Æ¥´¥ê¤Î¿¶¤êÊ¬¤±¤ò¹Ô¤¦
+// ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å„ã‚«ãƒ†ã‚´ãƒªã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
 $options = UtilSearchForm::extractArrayByOption($_REQUEST);
 $isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
 $isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
@@ -52,13 +52,13 @@ $from = UtilSearchForm::extractArrayByFrom($_REQUEST);
 $to = UtilSearchForm::extractArrayByTo($_REQUEST);
 $searchValue = $_REQUEST;
 
-// ¥¯¥¨¥ê¤ÎÁÈÎ©¤Ë»ÈÍÑ¤¹¤ë¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤òÃê½Ð
+// ã‚¯ã‚¨ãƒªã®çµ„ç«‹ã«ä½¿ç”¨ã™ã‚‹ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’æŠ½å‡º
 $optionColumns = array();
 $searchColumns = array();
 $displayColumns = array();
 $conditions = array();
 
-// ¥ª¥×¥·¥ç¥ó¹àÌÜ¤ÎÃê½Ð
+// ã‚ªãƒ—ã‚·ãƒ§ãƒ³é …ç›®ã®æŠ½å‡º
 foreach ($options as $key => $flag)
 {
 	if ($flag == "on")
@@ -67,7 +67,7 @@ foreach ($options as $key => $flag)
 	}
 }
 
-// É½¼¨¹àÌÜ¤ÎÃê½Ð
+// è¡¨ç¤ºé …ç›®ã®æŠ½å‡º
 foreach($isDisplay as $key => $flag)
 {
 	if ($flag == "on")
@@ -76,7 +76,7 @@ foreach($isDisplay as $key => $flag)
 	}
 }
 
-// ¸¡º÷¹àÌÜ¤ÎÃê½Ð
+// æ¤œç´¢é …ç›®ã®æŠ½å‡º
 foreach($isSearch as $key => $flag)
 {
 	if ($flag == "on")
@@ -85,27 +85,27 @@ foreach($isSearch as $key => $flag)
 	}
 }
 
-// ¥¯¥¨¥ê¤ÎÁÈÎ©¤Æ
+// ã‚¯ã‚¨ãƒªã®çµ„ç«‹ã¦
 $query = array();
 $query[] = "SELECT";
 $query[] = "      tmrr.moldreportid";
 $query[] = "    , tmrr.revision";
-$query[] = "    , ms.dtmappropriationdate";   // »ÅÆþ¥Þ¥¹¥¿.»ÅÆþ·×¾åÆü
-$query[] = "    , mo.strOrderCode AS strOrderCode";   // È¯Ãí¥Þ¥¹¥¿.È¯Ãí¥³¡¼¥É
-$query[] = "    , '[' || mc.strCompanyDisplayCode || ']' || mc.strCompanyDisplayname AS strCompanyDisplayCode";   // [²ñ¼Ò¥Þ¥¹¥¿.É½¼¨²ñ¼Ò¥³¡¼¥É] ²ñ¼Ò¥Þ¥¹¥¿.É½¼¨²ñ¼ÒÌ¾¾Î
-$query[] = "    , mp.strproductcode || '_' || mp.strrevisecode as strproductcode";            // À½ÉÊ¥Þ¥¹¥¿.À½ÉÊ¥³¡¼¥É
-$query[] = "    , mp.strrevisecode";            // À½ÉÊ¥Þ¥¹¥¿.À½ÉÊ¥³¡¼¥É
-$query[] = "    , mp.strproductname";            // À½ÉÊ¥Þ¥¹¥¿.À½ÉÊ¥³¡¼¥É(ÆüËÜ¸ì)
-$query[] = "    , mp.strproductenglishname";     // À½ÉÊ¥Þ¥¹¥¿.À½ÉÊÌ¾¾Î(±Ñ¸ì)
-$query[] = "    , mp.strgoodscode";              // À½ÉÊ¥Þ¥¹¥¿.¸ÜµÒÉÊÈÖ
-$query[] = "    , '[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname as strgroupdisplaycode";   // [¥°¥ë¡¼¥×¥Þ¥¹¥¿.É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É] ¥°¥ë¡¼¥×¥Þ¥¹¥¿.É½¼¨¥°¥ë¡¼¥×Ì¾
-$query[] = "    , '[' || mu.struserdisplaycode || ']' || mu.struserdisplayname as struserdisplaycode";   // [¥æ¡¼¥¶¥Þ¥¹¥¿.É½¼¨¥æ¡¼¥¶¥³¡¼¥É] ¥æ¡¼¥¶¥Þ¥¹¥¿.É½¼¨¥æ¡¼¥¶Ì¾
-$query[] = "    , tmh.moldno";                // ¶â·¿ÍúÎò.¶â·¿NO
-$query[] = "    , tmh.historyno";             // ¶â·¿ÍúÎò.ÍúÎòÈÖ¹æ
-$query[] = "    , ms.lngProductQuantity";    // »ÅÆþ¾ÜºÙ.¿ôÎÌ
-$query[] = "    , mou.strMonetaryUnitSign || ms.curSubTotalPrice as strMonetaryUnitSign"; // ÄÌ²ßÃ±°Ì¥Þ¥¹¥¿.ÄÌ²ßÃ±°Ì || »ÅÆþ¾ÜºÙ.¥µ¥Ö¥È¡¼¥¿¥ë²Á³Ê
-$query[] = "    , tmh.status";                // ¶â·¿ÍúÎò.¶â·¿¥¹¥Æ¡¼¥¿¥¹
-$query[] = "    , tmh.actiondate";            // ¶â·¿ÍúÎò.¼Â»ÜÆü
+$query[] = "    , ms.dtmappropriationdate";   // ä»•å…¥ãƒžã‚¹ã‚¿.ä»•å…¥è¨ˆä¸Šæ—¥
+$query[] = "    , mo.strOrderCode AS strOrderCode";   // ç™ºæ³¨ãƒžã‚¹ã‚¿.ç™ºæ³¨ã‚³ãƒ¼ãƒ‰
+$query[] = "    , '[' || mc.strCompanyDisplayCode || ']' || mc.strCompanyDisplayname AS strCompanyDisplayCode";   // [ä¼šç¤¾ãƒžã‚¹ã‚¿.è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰] ä¼šç¤¾ãƒžã‚¹ã‚¿.è¡¨ç¤ºä¼šç¤¾åç§°
+$query[] = "    , mp.strproductcode || '_' || mp.strrevisecode as strproductcode";            // è£½å“ãƒžã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰
+$query[] = "    , mp.strrevisecode";            // è£½å“ãƒžã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰
+$query[] = "    , mp.strproductname";            // è£½å“ãƒžã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰(æ—¥æœ¬èªž)
+$query[] = "    , mp.strproductenglishname";     // è£½å“ãƒžã‚¹ã‚¿.è£½å“åç§°(è‹±èªž)
+$query[] = "    , mp.strgoodscode";              // è£½å“ãƒžã‚¹ã‚¿.é¡§å®¢å“ç•ª
+$query[] = "    , '[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname as strgroupdisplaycode";   // [ã‚°ãƒ«ãƒ¼ãƒ—ãƒžã‚¹ã‚¿.è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰] ã‚°ãƒ«ãƒ¼ãƒ—ãƒžã‚¹ã‚¿.è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—å
+$query[] = "    , '[' || mu.struserdisplaycode || ']' || mu.struserdisplayname as struserdisplaycode";   // [ãƒ¦ãƒ¼ã‚¶ãƒžã‚¹ã‚¿.è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰] ãƒ¦ãƒ¼ã‚¶ãƒžã‚¹ã‚¿.è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶å
+$query[] = "    , tmh.moldno";                // é‡‘åž‹å±¥æ­´.é‡‘åž‹NO
+$query[] = "    , tmh.historyno";             // é‡‘åž‹å±¥æ­´.å±¥æ­´ç•ªå·
+$query[] = "    , ms.lngProductQuantity";    // ä»•å…¥è©³ç´°.æ•°é‡
+$query[] = "    , mou.strMonetaryUnitSign || ms.curSubTotalPrice as strMonetaryUnitSign"; // é€šè²¨å˜ä½ãƒžã‚¹ã‚¿.é€šè²¨å˜ä½ || ä»•å…¥è©³ç´°.ã‚µãƒ–ãƒˆãƒ¼ã‚¿ãƒ«ä¾¡æ ¼
+$query[] = "    , tmh.status";                // é‡‘åž‹å±¥æ­´.é‡‘åž‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
+$query[] = "    , tmh.actiondate";            // é‡‘åž‹å±¥æ­´.å®Ÿæ–½æ—¥
 $query[] = "  , mc_sf.strcompanydisplaycode as strsourfacdisplaycode";
 $query[] = "  , mc_sf.strcompanydisplayname as strsourfacdisplayname";
 $query[] = "  , tmh.sourcefactory";
@@ -120,8 +120,8 @@ $query[] = "  , tmh.updated ::date";
 $query[] = "  , tmh.updateby";
 $query[] = "  , mu_u.struserdisplaycode as strupdateuserdisplaycode";
 $query[] = "  , mu_u.struserdisplayname as strupdateuserdisplayname";
-$query[] = "    , tmh.version";               // ¶â·¿ÍúÎò.¥Ð¡¼¥¸¥ç¥ó
-$query[] = "    , tmh.deleteflag";            // ¶â·¿ÍúÎò.ºï½ü¥Õ¥é¥°
+$query[] = "    , tmh.version";               // é‡‘åž‹å±¥æ­´.ãƒãƒ¼ã‚¸ãƒ§ãƒ³
+$query[] = "    , tmh.deleteflag";            // é‡‘åž‹å±¥æ­´.å‰Šé™¤ãƒ•ãƒ©ã‚°
 $query[] = "FROM";
 $query[] = "    t_moldhistory tmh";
 $query[] = "INNER JOIN";
@@ -134,7 +134,7 @@ $query[] = "  ON";
 $query[] = "        tmh.moldno = tmrr.moldno";
 $query[] = "    AND tmh.historyno = tmrr.historyno";
 // $query[] = "----------------------------------------------";
-// $query[] = "--  »ÅÆþ¾ÜºÙ - ÀÇ ¢Î À½ÉÊ - ¥°¥ë¡¼¥× - ¥æ¡¼¥¶";
+// $query[] = "--  ä»•å…¥è©³ç´° - ç¨Ž â‡” è£½å“ - ã‚°ãƒ«ãƒ¼ãƒ— - ãƒ¦ãƒ¼ã‚¶";
 // $query[] = "----------------------------------------------";
 $query[] = "  LEFT OUTER JOIN ( ";
 $query[] = "    select";
@@ -244,28 +244,28 @@ $query[] = "  LEFT JOIN m_Company mc_df";
 $query[] = "    ON tmh.destinationfactory = mc_df.lngCompanyCode ";
 $query[] = "  LEFT JOIN m_MonetaryUnit mou ";
 $query[] = "    ON ms.lngMonetaryUnitCode = mou.lngMonetaryUnitCode ";
-$query[] = "WHERE";// ÍúÎò¤ÎÁ´·ï½ÐÎÏ
+$query[] = "WHERE";// å±¥æ­´ã®å…¨ä»¶å‡ºåŠ›
 if (!array_key_exists("IsDetail", $optionColumns))
 {
 $query[] = "    tmh.deleteflag = false";
 }
 $query[] = "AND mm.deleteflag = false";
 
-// ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¤Î¥¤¥ó¥¹¥¿¥ó¥¹¼èÆÀ
+// ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 $utilBussinesscode = UtilBussinesscode::getInstance();
 $utilMold = UtilMold::getInstance();
 $utilCompany = UtilCompany::getInstance();
 $utilGroup = UtilGroup::getInstance();
 $utilUser = UtilUser::getInstance();
 
-// ¸¡º÷¹àÌÜ¤Î¥­¡¼¤ò¾®Ê¸»ú¤ËÊÑ´¹
+// æ¤œç´¢é …ç›®ã®ã‚­ãƒ¼ã‚’å°æ–‡å­—ã«å¤‰æ›
 $searchColumns = array_change_key_case($searchColumns, CASE_LOWER);
-// ¸¡º÷ÃÍ¤Î¥­¡¼¤ò¾®Ê¸»ú¤ËÊÑ´¹
+// æ¤œç´¢å€¤ã®ã‚­ãƒ¼ã‚’å°æ–‡å­—ã«å¤‰æ›
 $searchValue = array_change_key_case($searchValue, CASE_LOWER);
 $from = array_change_key_case($from, CASE_LOWER);
 $to = array_change_key_case($to, CASE_LOWER);
 
-// ¶â·¿Ä¢É¼ID
+// é‡‘åž‹å¸³ç¥¨ID
 if (array_key_exists(TableMoldReport::MoldReportId, $searchColumns) &&
 	array_key_exists(TableMoldReport::MoldReportId, $from) &&
 	array_key_exists(TableMoldReport::MoldReportId, $to))
@@ -275,7 +275,7 @@ if (array_key_exists(TableMoldReport::MoldReportId, $searchColumns) &&
 			" AND "."'".pg_escape_string($to[TableMoldReport::MoldReportId])."'";
 }
 
-// ·×¾åÆü
+// è¨ˆä¸Šæ—¥
 if (array_key_exists("dtmappropriationdate", $searchColumns) &&
 	array_key_exists("dtmappropriationdate", $from) &&
 	array_key_exists("dtmappropriationdate", $to) &&
@@ -287,7 +287,7 @@ if (array_key_exists("dtmappropriationdate", $searchColumns) &&
 				" AND "."'".pg_escape_string($to["dtmappropriationdate"])."'";
 }
 
-// È¯Ãí¥³¡¼¥É
+// ç™ºæ³¨ã‚³ãƒ¼ãƒ‰
 if (array_key_exists("strordercode", $searchColumns) &&
 	array_key_exists("strordercode", $from) &&
 	array_key_exists("strordercode", $to))
@@ -297,14 +297,14 @@ if (array_key_exists("strordercode", $searchColumns) &&
 				" AND "."'".pg_escape_string($to["strordercode"])."'";
 }
 
-// »ÅÆþÀè
+// ä»•å…¥å…ˆ
 if (array_key_exists("strcompanydisplaycode", $searchColumns) &&
 	array_key_exists("strcompanydisplaycode", $searchValue))
 {
 	$query[] = "AND mc.strcompanydisplaycode = '".pg_escape_string($searchValue["strcompanydisplaycode"])."'";
 }
 
-// À½ÉÊ¥³¡¼¥É
+// è£½å“ã‚³ãƒ¼ãƒ‰
 if (array_key_exists("strproductcode", $searchColumns) &&
 	array_key_exists("strproductcode", $from) &&
 	array_key_exists("strproductcode", $to))
@@ -313,41 +313,41 @@ if (array_key_exists("strproductcode", $searchColumns) &&
 				" between '".pg_escape_string($from["strproductcode"])."'".
 				" AND "."'".pg_escape_string($to["strproductcode"])."'";
 }
-// À½ÉÊÌ¾¾Î
+// è£½å“åç§°
 if (array_key_exists("strproductname", $searchColumns) &&
 	array_key_exists("strproductname", $searchValue))
 {
 	$query[] = "AND mp.strproductname like '%".pg_escape_string($searchValue["strproductname"])."%'";
 }
-// À½ÉÊÌ¾¾Î(±Ñ¸ì)
+// è£½å“åç§°(è‹±èªž)
 if (array_key_exists("strproductenglishname", $searchColumns) &&
 	array_key_exists("strproductenglishname", $searchValue))
 {
 	$query[] = "AND mp.strproductenglishname like '%".pg_escape_string($searchValue["strproductenglishname"])."%'";
 }
 
-// ¸ÜµÒÉÊÈÖ
+// é¡§å®¢å“ç•ª
 if (array_key_exists("strgoodscode", $searchColumns) &&
 	array_key_exists("strgoodscode", $searchValue))
 {
 	$query[] = "AND mp.strgoodscode = '".pg_escape_string($searchValue["strgoodscode"])."'";
 }
 
-// Ã´ÅöÉô½ð
+// æ‹…å½“éƒ¨ç½²
 if (array_key_exists("strgroupdisplaycode", $searchColumns) &&
 	array_key_exists("strgroupdisplaycode", $searchValue))
 {
 	$query[] = "AND mg.strgroupdisplaycode = '".pg_escape_string($searchValue["strgroupdisplaycode"])."'";
 }
 
-// Ã´Åö¼Ô
+// æ‹…å½“è€…
 if (array_key_exists("struserdisplaycode", $searchColumns) &&
 	array_key_exists("struserdisplaycode", $searchValue))
 {
 	$query[] = "AND mu.struserdisplaycode = '".pg_escape_string($searchValue["struserdisplaycode"])."'";
 }
 
-// ¶â·¿NO
+// é‡‘åž‹NO
 if (array_key_exists("moldno", $searchColumns) &&
 	array_key_exists("choosenmoldlist", $searchValue) &&
 	count($searchValue["choosenmoldlist"]))
@@ -355,29 +355,29 @@ if (array_key_exists("moldno", $searchColumns) &&
 	$query[] = "AND tmh.moldno in";
 	$query[] = "    (";
 
-	// ¶â·¿·ï¿ôÊ¬Áöºº
+	// é‡‘åž‹ä»¶æ•°åˆ†èµ°æŸ»
 	foreach ($searchValue["choosenmoldlist"] as $index => $moldno)
 	{
 		$query[] = "        '".pg_escape_string($moldno)."',";
 	}
 
-	// ËöÈø¤Î¥«¥ó¥Þ¤òºï½ü
+	// æœ«å°¾ã®ã‚«ãƒ³ãƒžã‚’å‰Šé™¤
 	$query[] = rtrim(array_pop($query), ',');
 	$query[] = "    )";
 }
 
-// ¶â·¿¥¹¥Æ¡¼¥¿¥¹
+// é‡‘åž‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 if (array_key_exists(TableMoldHistory::Status, $searchColumns) &&
 	array_key_exists(TableMoldHistory::Status, $searchValue))
 {
-	// ¶ÈÌ³¥³¡¼¥É¥Þ¥¹¥¿¾å¤ËÂ¸ºß¤¹¤ëÃÍ¤Î¾ì¹ç
-	if($utilBussinesscode->getDescription('¶â·¿¥¹¥Æ¡¼¥¿¥¹', $searchValue[TableMoldHistory::Status], true))
+	// æ¥­å‹™ã‚³ãƒ¼ãƒ‰ãƒžã‚¹ã‚¿ä¸Šã«å­˜åœ¨ã™ã‚‹å€¤ã®å ´åˆ
+	if($utilBussinesscode->getDescription('é‡‘åž‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹', $searchValue[TableMoldHistory::Status], true))
 	{
 		$query[] = "AND tmh.status = '".$searchValue[TableMoldHistory::Status]."'";
 	}
 }
 
-// ¼Â»ÜÆü
+// å®Ÿæ–½æ—¥
 if (array_key_exists(TableMoldHistory::ActionDate, $searchColumns) &&
 	array_key_exists(TableMoldHistory::ActionDate, $from) &&
 	array_key_exists(TableMoldHistory::ActionDate, $to) &&
@@ -389,29 +389,29 @@ if (array_key_exists(TableMoldHistory::ActionDate, $searchColumns) &&
 				" AND "."'".$to[TableMoldHistory::ActionDate]."'";
 }
 
-// ÊÝ´É¹©¾ì
+// ä¿ç®¡å·¥å ´
 if (array_key_exists(TableMoldHistory::SourceFactory, $searchColumns) &&
 	array_key_exists(TableMoldHistory::SourceFactory, $searchValue))
 {
-	// É½¼¨²ñ¼Ò¥³¡¼¥É¤ò´ð¤Ë²ñ¼Ò¥³¡¼¥É¤òº÷°ú
+	// è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’åŸºã«ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’ç´¢å¼•
 	if ($companyCode = $utilCompany->selectCompanyCodeByDisplayCompanyCode($searchValue[TableMoldHistory::SourceFactory], false))
 	{
 		$query[] = "AND tmh.sourcefactory = '".$companyCode."'";
 	}
 }
 
-// °ÜÆ°Àè¹©¾ì
+// ç§»å‹•å…ˆå·¥å ´
 if (array_key_exists(TableMoldHistory::DestinationFactory, $searchColumns) &&
 	array_key_exists(TableMoldHistory::DestinationFactory, $searchValue))
 {
-	// É½¼¨²ñ¼Ò¥³¡¼¥É¤ò´ð¤Ë²ñ¼Ò¥³¡¼¥É¤òº÷°ú
+	// è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’åŸºã«ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’ç´¢å¼•
 	if ($companyCode = $utilCompany->selectCompanyCodeByDisplayCompanyCode($searchValue[TableMoldHistory::DestinationFactory], false))
 	{
 		$query[] = "AND tmh.destinationfactory = '".$companyCode."'";
 	}
 }
 
-// ÅÐÏ¿Æü
+// ç™»éŒ²æ—¥
 if (array_key_exists(TableMoldHistory::Created, $searchColumns) &&
 	array_key_exists(TableMoldHistory::Created, $from) &&
 	array_key_exists(TableMoldHistory::Created, $to) &&
@@ -423,18 +423,18 @@ if (array_key_exists(TableMoldHistory::Created, $searchColumns) &&
 				" AND "."'".$to[TableMoldHistory::Created]." 23:59:59.99999'";
 }
 
-// ÅÐÏ¿¼Ô
+// ç™»éŒ²è€…
 if (array_key_exists(TableMoldHistory::CreateBy, $searchColumns) &&
 	array_key_exists(TableMoldHistory::CreateBy, $searchValue))
 {
-	// É½¼¨²ñ¼Ò¥³¡¼¥É¤ò´ð¤Ë²ñ¼Ò¥³¡¼¥É¤òº÷°ú
+	// è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’åŸºã«ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’ç´¢å¼•
 	if ($userCode = $utilUser->selectUserCodeByDisplayUserCode($searchValue[TableMoldHistory::CreateBy], false))
 	{
 		$query[] = "AND tmh.createby = '".$userCode."'";
 	}
 }
 
-// ¹¹¿·Æü
+// æ›´æ–°æ—¥
 if (array_key_exists(TableMoldHistory::Updated, $searchColumns) &&
 	array_key_exists(TableMoldHistory::Updated, $from) &&
 	array_key_exists(TableMoldHistory::Updated, $to) &&
@@ -446,11 +446,11 @@ if (array_key_exists(TableMoldHistory::Updated, $searchColumns) &&
 				" AND "."'".$to[TableMoldHistory::Updated]." 23:59:59.99999'";
 }
 
-// ¹¹¿·¼Ô
+// æ›´æ–°è€…
 if (array_key_exists(TableMoldHistory::UpdateBy, $searchColumns) &&
 	array_key_exists(TableMoldHistory::UpdateBy, $searchValue))
 {
-	// É½¼¨²ñ¼Ò¥³¡¼¥É¤ò´ð¤Ë²ñ¼Ò¥³¡¼¥É¤òº÷°ú
+	// è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’åŸºã«ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‚’ç´¢å¼•
 	if ($userCode = $utilUser->selectUserCodeByDisplayUserCode($searchValue[TableMoldHistory::UpdateBy], false))
 	{
 		$query[] = "AND tmh.updateby = '".$userCode."'";
@@ -464,17 +464,17 @@ $query[] = "    , tmh.historyno desc";
 $query[] = "    , tmh.moldno";
 $query[] = ";";
 
-// ¥¯¥¨¥ê¤òÊ¿°×¤ÊÊ¸»úÎó¤ËÊÑ´¹
+// ã‚¯ã‚¨ãƒªã‚’å¹³æ˜“ãªæ–‡å­—åˆ—ã«å¤‰æ›
 $query = implode("\n",$query);
 
-// ¥¯¥¨¥ê¼Â¹Ô
+// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 $lngResultID = pg_query($query);
 
 $lngResultNum = pg_num_rows($lngResultID);
 
-// ¸¡º÷·ï¿ô¤¬¤¢¤ê¤Î¾ì¹ç
+// æ¤œç´¢ä»¶æ•°ãŒã‚ã‚Šã®å ´åˆ
 if ($lngResultNum > 0) {
-    // »ØÄê¿ô°Ê¾å¤Î¾ì¹ç¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤¹¤ë
+    // æŒ‡å®šæ•°ä»¥ä¸Šã®å ´åˆã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹
     // if ($lngResultNum > DEF_SEARCH_MAX) {
     //     $errorFlag = true;
     //     $lngErrorCode = 9068;
@@ -486,300 +486,300 @@ if ($lngResultNum > 0) {
     $aryErrorMessage = "";
 }
 if ($errorFlag) {
-    // ¥¨¥é¡¼²èÌÌ¤ÎÌá¤êÀè
+    // ã‚¨ãƒ©ãƒ¼ç”»é¢ã®æˆ»ã‚Šå…ˆ
     $strReturnPath = "../mm/search/index.php?strSessionID=" . $aryData["strSessionID"];
 
     $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, $strReturnPath, $objDB);
 
-    // [strErrorMessage]½ñ¤­½Ð¤·
+    // [strErrorMessage]æ›¸ãå‡ºã—
     $aryHtml["strErrorMessage"] = $strMessage;
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
     $objTemplate->replace($aryHtml);
     $objTemplate->complete();
 
-    // HTML½ÐÎÏ
+    // HTMLå‡ºåŠ›
     echo $objTemplate->strTemplate;
 
     exit;
 }
 
-// ¸¡º÷·ë²ÌÏ¢ÁÛÇÛÎó¤ò¼èÆÀ
+// æ¤œç´¢çµæžœé€£æƒ³é…åˆ—ã‚’å–å¾—
 $records = pg_fetch_all($lngResultID);
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate ();
 $objTemplate->getTemplate ( "/mm/search/mm_search_result.html" );
 
-// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ëÀ¸À®¤Î°ÙDOMDocument¤ò»ÈÍÑ
+// æ¤œç´¢çµæžœãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆã®ç‚ºDOMDocumentã‚’ä½¿ç”¨
 $doc = new DOMDocument();
-// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍÞÀ©
+// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶
 libxml_use_internal_errors(true);
-// DOM¥Ñ¡¼¥¹
+// DOMãƒ‘ãƒ¼ã‚¹
 $doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
-// ¥Ñ¡¼¥¹¥¨¥é¡¼¥¯¥ê¥¢
+// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼ã‚¯ãƒªã‚¢
 libxml_clear_errors();
-// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍÞÀ©²ò½ü
+// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶è§£é™¤
 libxml_use_internal_errors(false);
 
-// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ë¤Î¼èÆÀ
+// æ¤œç´¢çµæžœãƒ†ãƒ¼ãƒ–ãƒ«ã®å–å¾—
 $table = $doc->getElementById("result");
 $thead = $table->getElementsByTagName("thead")->item(0);
 $tbody = $table->getElementsByTagName("tbody")->item(0);
 
-// ¥­¡¼Ê¸»úÎó¤ò¾®Ê¸»ú¤ËÊÑ´¹
+// ã‚­ãƒ¼æ–‡å­—åˆ—ã‚’å°æ–‡å­—ã«å¤‰æ›
 $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 
-// ¥«¥é¥à¤ÎÉ½¼¨½ç¤ò¼¨¤¹ÇÛÎó¤ò¼èÆÀ
+// ã‚«ãƒ©ãƒ ã®è¡¨ç¤ºé †ã‚’ç¤ºã™é…åˆ—ã‚’å–å¾—
 $columnOrder = UtilSearchForm::getColumnOrderForMoldHistory();
 
 // -------------------------------------------------------
-// ³Æ¼ï¥Ü¥¿¥óÉ½¼¨¥Á¥§¥Ã¥¯/¸¢¸Â¥Á¥§¥Ã¥¯
+// å„ç¨®ãƒœã‚¿ãƒ³è¡¨ç¤ºãƒã‚§ãƒƒã‚¯/æ¨©é™ãƒã‚§ãƒƒã‚¯
 // -------------------------------------------------------
-// ¾ÜºÙ¥«¥é¥à¤òÉ½¼¨
+// è©³ç´°ã‚«ãƒ©ãƒ ã‚’è¡¨ç¤º
 $existsDetail = array_key_exists("detail", $displayColumns);
-// ½¤Àµ¥«¥é¥à¤òÉ½¼¨
+// ä¿®æ­£ã‚«ãƒ©ãƒ ã‚’è¡¨ç¤º
 $existsModify = array_key_exists("modify", $displayColumns);
-// ¥×¥ì¥Ó¥å¡¼¤òÉ½¼¨
+// ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã‚’è¡¨ç¤º
 $existsPreview = array_key_exists("preview", $displayColumns);
-// ºï½ü¥«¥é¥à¤òÉ½¼¨
+// å‰Šé™¤ã‚«ãƒ©ãƒ ã‚’è¡¨ç¤º
 $existsDelete = array_key_exists("delete", $displayColumns);
 
-// ¾ÜºÙ¥Ü¥¿¥ó¤òÉ½¼¨
+// è©³ç´°ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤º
 $allowedDetail = fncCheckAuthority( DEF_FUNCTION_MM3, $objAuth );
-// ½¤Àµ¥Ü¥¿¥ó¤òÉ½¼¨
+// ä¿®æ­£ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤º
 $allowedModify = fncCheckAuthority( DEF_FUNCTION_MM4, $objAuth );
-// ºï½ü¥«¥é¥à¤òÉ½¼¨
+// å‰Šé™¤ã‚«ãƒ©ãƒ ã‚’è¡¨ç¤º
 $allowedDelete = fncCheckAuthority( DEF_FUNCTION_MM5, $objAuth );
 
 // -------------------------------------------------------
-// ¥Æ¡¼¥Ö¥ë¥Ø¥Ã¥ÀºîÀ®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ˜ãƒƒãƒ€ä½œæˆ
 // -------------------------------------------------------
-// thead > trÍ×ÁÇºîÀ®
+// thead > trè¦ç´ ä½œæˆ
 $trHead = $doc->createElement("tr");
 
-// ¥¯¥ê¥Ã¥×¥Ü¡¼¥É½ü³°ÂÐ¾Ý¥¯¥é¥¹
+// ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰é™¤å¤–å¯¾è±¡ã‚¯ãƒ©ã‚¹
 $exclude = "exclude-in-clip-board-target";
 
-// ¹àÈÖ¥«¥é¥à
+// é …ç•ªã‚«ãƒ©ãƒ 
 $thIndex = $doc->createElement("th");
 $thIndex->setAttribute("class", $exclude);
-// ¥³¥Ô¡¼¥Ü¥¿¥ó
+// ã‚³ãƒ”ãƒ¼ãƒœã‚¿ãƒ³
 $imgCopy = $doc->createElement("img");
 $imgCopy->setAttribute("src", "/mold/img/copy_off_bt.gif");
 $imgCopy->setAttribute("class", "copy button");
-// ¹àÈÖ¥«¥é¥à > ¥³¥Ô¡¼¥Ü¥¿¥ó
+// é …ç•ªã‚«ãƒ©ãƒ  > ã‚³ãƒ”ãƒ¼ãƒœã‚¿ãƒ³
 $thIndex->appendChild($imgCopy);
-// ¥Ø¥Ã¥À¤ËÄÉ²Ã
+// ãƒ˜ãƒƒãƒ€ã«è¿½åŠ 
 $trHead->appendChild($thIndex);
 
-// ¾ÜºÙ¤òÉ½¼¨
+// è©³ç´°ã‚’è¡¨ç¤º
 if($existsDetail)
 {
-	// ¾ÜºÙ¥«¥é¥à
-	$thDetail = $doc->createElement("th", toUTF8("¾ÜºÙ"));
+	// è©³ç´°ã‚«ãƒ©ãƒ 
+	$thDetail = $doc->createElement("th", toUTF8("è©³ç´°"));
 	$thDetail->setAttribute("class", $exclude);
-	// ¥Ø¥Ã¥À¤ËÄÉ²Ã
+	// ãƒ˜ãƒƒãƒ€ã«è¿½åŠ 
 	$trHead->appendChild($thDetail);
 }
 
-// ½¤Àµ¹àÌÜ¤òÉ½¼¨
+// ä¿®æ­£é …ç›®ã‚’è¡¨ç¤º
 if($existsModify)
 {
-	// ½¤Àµ¥«¥é¥à
-	$thModify = $doc->createElement("th", toUTF8("½¤Àµ"));
+	// ä¿®æ­£ã‚«ãƒ©ãƒ 
+	$thModify = $doc->createElement("th", toUTF8("ä¿®æ­£"));
 	$thModify->setAttribute("class", $exclude);
-	// ¥Ø¥Ã¥À¤ËÄÉ²Ã
+	// ãƒ˜ãƒƒãƒ€ã«è¿½åŠ 
 	$trHead->appendChild($thModify);
 }
 
-// COPY/¥×¥ì¥Ó¥å¡¼¹àÌÜ¤òÉ½¼¨
+// COPY/ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼é …ç›®ã‚’è¡¨ç¤º
 if ($existsPreview)
 {
-	// ¥×¥ì¥Ó¥å¡¼¥«¥é¥à
-	$thPreview = $doc->createElement("th", toUTF8("¥×¥ì¥Ó¥å¡¼"));
+	// ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã‚«ãƒ©ãƒ 
+	$thPreview = $doc->createElement("th", toUTF8("ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼"));
 	$thPreview->setAttribute("class", $exclude);
-	// ¥Ø¥Ã¥À¤ËÄÉ²Ã
+	// ãƒ˜ãƒƒãƒ€ã«è¿½åŠ 
 	$trHead->appendChild($thPreview);
 }
 
-// TODO Í×¥ê¥Õ¥¡¥¯¥¿¥ê¥ó¥°
-// »ØÄê¤µ¤ì¤¿¥Æ¡¼¥Ö¥ë¹àÌÜ¤Î¥«¥é¥à¤òºîÀ®¤¹¤ë
+// TODO è¦ãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°
+// æŒ‡å®šã•ã‚ŒãŸãƒ†ãƒ¼ãƒ–ãƒ«é …ç›®ã®ã‚«ãƒ©ãƒ ã‚’ä½œæˆã™ã‚‹
 foreach($columnOrder as $columnName)
 {
-	// É½¼¨ÂÐ¾Ý¤Î¥«¥é¥à¤Î¾ì¹ç
+	// è¡¨ç¤ºå¯¾è±¡ã®ã‚«ãƒ©ãƒ ã®å ´åˆ
 	if (array_key_exists($columnName, $displayColumns))
 	{
-		// ¹àÌÜÊÌ¤ËÉ½¼¨¥Æ¥­¥¹¥È¤òÀßÄê
+		// é …ç›®åˆ¥ã«è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®š
 		switch ($columnName)
 		{
-			// ¶â·¿Ä¢É¼´ØÏ¢.¶â·¿Ä¢É¼ID
+			// é‡‘åž‹å¸³ç¥¨é–¢é€£.é‡‘åž‹å¸³ç¥¨ID
 			case TableMoldReport::MoldReportId:
-				$th = $doc->createElement("th", toUTF8("¶â·¿Ä¢É¼ID"));
+				$th = $doc->createElement("th", toUTF8("é‡‘åž‹å¸³ç¥¨ID"));
 				$trHead->appendChild($th);
 				break;
-			// »ÅÆþ¥Þ¥¹¥¿.»ÅÆþ·×¾åÆü
+			// ä»•å…¥ãƒžã‚¹ã‚¿.ä»•å…¥è¨ˆä¸Šæ—¥
 			case "dtmappropriationdate":
-				$th = $doc->createElement("th", toUTF8("·×¾åÆü"));
+				$th = $doc->createElement("th", toUTF8("è¨ˆä¸Šæ—¥"));
 				$trHead->appendChild($th);
 				break;
-			// È¯Ãí¥Þ¥¹¥¿.È¯Ãí¥³¡¼¥É-È¯Ãí¥Þ¥¹¥¿.½¤Àµ¥³¡¼¥É
+			// ç™ºæ³¨ãƒžã‚¹ã‚¿.ç™ºæ³¨ã‚³ãƒ¼ãƒ‰-ç™ºæ³¨ãƒžã‚¹ã‚¿.ä¿®æ­£ã‚³ãƒ¼ãƒ‰
 			case "strordercode":
-				$th = $doc->createElement("th", toUTF8("È¯Ãí¥³¡¼¥É"));
+				$th = $doc->createElement("th", toUTF8("ç™ºæ³¨ã‚³ãƒ¼ãƒ‰"));
 				$trHead->appendChild($th);
 				break;
-			// [²ñ¼Ò¥Þ¥¹¥¿.É½¼¨²ñ¼Ò¥³¡¼¥É] ²ñ¼Ò¥Þ¥¹¥¿.É½¼¨²ñ¼ÒÌ¾¾Î
+			// [ä¼šç¤¾ãƒžã‚¹ã‚¿.è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰] ä¼šç¤¾ãƒžã‚¹ã‚¿.è¡¨ç¤ºä¼šç¤¾åç§°
 			case "strcompanydisplaycode":
-				$th = $doc->createElement("th", toUTF8("»ÅÆþÀè"));
+				$th = $doc->createElement("th", toUTF8("ä»•å…¥å…ˆ"));
 				$trHead->appendChild($th);
 				break;
-			// À½ÉÊ¥Þ¥¹¥¿.À½ÉÊ¥³¡¼¥É
+			// è£½å“ãƒžã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰
 			case "strproductcode":
-				$th = $doc->createElement("th", toUTF8("À½ÉÊ¥³¡¼¥É"));
+				$th = $doc->createElement("th", toUTF8("è£½å“ã‚³ãƒ¼ãƒ‰"));
 				$trHead->appendChild($th);
 				break;
-			// À½ÉÊ¥Þ¥¹¥¿.À½ÉÊ¥³¡¼¥É(ÆüËÜ¸ì)
+			// è£½å“ãƒžã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰(æ—¥æœ¬èªž)
 			case "strproductname":
-				$th = $doc->createElement("th", toUTF8("À½ÉÊÌ¾¾Î"));
+				$th = $doc->createElement("th", toUTF8("è£½å“åç§°"));
 				$trHead->appendChild($th);
 				break;
-			// À½ÉÊ¥Þ¥¹¥¿.À½ÉÊÌ¾¾Î(±Ñ¸ì)
+			// è£½å“ãƒžã‚¹ã‚¿.è£½å“åç§°(è‹±èªž)
 			case "strproductenglishname":
-				$th = $doc->createElement("th", toUTF8("À½ÉÊÌ¾¾Î(±Ñ¸ì)"));
+				$th = $doc->createElement("th", toUTF8("è£½å“åç§°(è‹±èªž)"));
 				$trHead->appendChild($th);
 				break;
-			// À½ÉÊ¥Þ¥¹¥¿.¸ÜµÒÉÊÈÖ
+			// è£½å“ãƒžã‚¹ã‚¿.é¡§å®¢å“ç•ª
 			case "strgoodscode":
-				$th = $doc->createElement("th", toUTF8("¸ÜµÒÉÊÈÖ"));
+				$th = $doc->createElement("th", toUTF8("é¡§å®¢å“ç•ª"));
 				$trHead->appendChild($th);
 				break;
-			// [¥°¥ë¡¼¥×¥Þ¥¹¥¿.É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É] ¥°¥ë¡¼¥×¥Þ¥¹¥¿.É½¼¨¥°¥ë¡¼¥×Ì¾
+			// [ã‚°ãƒ«ãƒ¼ãƒ—ãƒžã‚¹ã‚¿.è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰] ã‚°ãƒ«ãƒ¼ãƒ—ãƒžã‚¹ã‚¿.è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—å
 			case "strgroupdisplaycode":
-				$th = $doc->createElement("th", toUTF8("Ã´ÅöÉô½ð"));
+				$th = $doc->createElement("th", toUTF8("æ‹…å½“éƒ¨ç½²"));
 				$trHead->appendChild($th);
 				break;
-			// [¥æ¡¼¥¶¥Þ¥¹¥¿.É½¼¨¥æ¡¼¥¶¥³¡¼¥É] ¥æ¡¼¥¶¥Þ¥¹¥¿.É½¼¨¥æ¡¼¥¶Ì¾
+			// [ãƒ¦ãƒ¼ã‚¶ãƒžã‚¹ã‚¿.è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰] ãƒ¦ãƒ¼ã‚¶ãƒžã‚¹ã‚¿.è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶å
 			case "struserdisplaycode":
-				$th = $doc->createElement("th", toUTF8("Ã´Åö¼Ô"));
+				$th = $doc->createElement("th", toUTF8("æ‹…å½“è€…"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.¶â·¿NO
+			// é‡‘åž‹å±¥æ­´.é‡‘åž‹NO
 			case TableMoldHistory::MoldNo:
-				$th = $doc->createElement("th", toUTF8("¶â·¿NO"));
+				$th = $doc->createElement("th", toUTF8("é‡‘åž‹NO"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.ÍúÎòÈÖ¹æ
+			// é‡‘åž‹å±¥æ­´.å±¥æ­´ç•ªå·
 			case TableMoldHistory::HistoryNo:
-				$th = $doc->createElement("th", toUTF8("ÍúÎòÈÖ¹æ"));
+				$th = $doc->createElement("th", toUTF8("å±¥æ­´ç•ªå·"));
 				$trHead->appendChild($th);
 				break;
-			// »ÅÆþ¾ÜºÙ.À½ÉÊ¿ôÎÌ
+			// ä»•å…¥è©³ç´°.è£½å“æ•°é‡
 			case "lngproductquantity":
-				$th = $doc->createElement("th", toUTF8("¿ôÎÌ"));
+				$th = $doc->createElement("th", toUTF8("æ•°é‡"));
 				$trHead->appendChild($th);
 				break;
-			// ÄÌ²ßÃ±°Ì¥Þ¥¹¥¿.ÄÌ²ßÃ±°Ì || »ÅÆþ¾ÜºÙ.ÀÇÈ´¶â³Û
+			// é€šè²¨å˜ä½ãƒžã‚¹ã‚¿.é€šè²¨å˜ä½ || ä»•å…¥è©³ç´°.ç¨ŽæŠœé‡‘é¡
 			case "strmonetaryunitsign":
-				$th = $doc->createElement("th", toUTF8("ÀÇÈ´¶â³Û"));
+				$th = $doc->createElement("th", toUTF8("ç¨ŽæŠœé‡‘é¡"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.¶â·¿¥¹¥Æ¡¼¥¿¥¹
+			// é‡‘åž‹å±¥æ­´.é‡‘åž‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 			case TableMoldHistory::Status:
-				$th = $doc->createElement("th", toUTF8("¶â·¿¥¹¥Æ¡¼¥¿¥¹"));
+				$th = $doc->createElement("th", toUTF8("é‡‘åž‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.¼Â»ÜÆü
+			// é‡‘åž‹å±¥æ­´.å®Ÿæ–½æ—¥
 			case TableMoldHistory::ActionDate:
-				$th = $doc->createElement("th", toUTF8("¼Â»ÜÆü"));
+				$th = $doc->createElement("th", toUTF8("å®Ÿæ–½æ—¥"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.ÊÝ´É¹©¾ì
+			// é‡‘åž‹å±¥æ­´.ä¿ç®¡å·¥å ´
 			case TableMoldHistory::SourceFactory:
-				$th = $doc->createElement("th", toUTF8("ÊÝ´É¸µ¹©¾ì"));
+				$th = $doc->createElement("th", toUTF8("ä¿ç®¡å…ƒå·¥å ´"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.°ÜÆ°Àè¹©¾ì
+			// é‡‘åž‹å±¥æ­´.ç§»å‹•å…ˆå·¥å ´
 			case TableMoldHistory::DestinationFactory:
-				$th = $doc->createElement("th", toUTF8("°ÜÆ°Àè¹©¾ì"));
+				$th = $doc->createElement("th", toUTF8("ç§»å‹•å…ˆå·¥å ´"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.ÅÐÏ¿Æü»þ
+			// é‡‘åž‹å±¥æ­´.ç™»éŒ²æ—¥æ™‚
 			case TableMoldHistory::Created :
-				$th = $doc->createElement("th", toUTF8("ÅÐÏ¿Æü"));
+				$th = $doc->createElement("th", toUTF8("ç™»éŒ²æ—¥"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.ÅÐÏ¿¼Ô
+			// é‡‘åž‹å±¥æ­´.ç™»éŒ²è€…
 			case TableMoldHistory::CreateBy :
-				$th = $doc->createElement("th", toUTF8("ÅÐÏ¿¼Ô"));
+				$th = $doc->createElement("th", toUTF8("ç™»éŒ²è€…"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.¹¹¿·Æü»þ
+			// é‡‘åž‹å±¥æ­´.æ›´æ–°æ—¥æ™‚
 			case TableMoldHistory::Updated :
-				$th = $doc->createElement("th", toUTF8("¹¹¿·Æü"));
+				$th = $doc->createElement("th", toUTF8("æ›´æ–°æ—¥"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.¹¹¿·¼Ô
+			// é‡‘åž‹å±¥æ­´.æ›´æ–°è€…
 			case TableMoldHistory::UpdateBy :
-				$th = $doc->createElement("th", toUTF8("¹¹¿·¼Ô"));
+				$th = $doc->createElement("th", toUTF8("æ›´æ–°è€…"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.¥Ð¡¼¥¸¥ç¥ó
+			// é‡‘åž‹å±¥æ­´.ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 			case TableMoldHistory::Version :
-				$th = $doc->createElement("th", toUTF8("¥Ð¡¼¥¸¥ç¥ó"));
+				$th = $doc->createElement("th", toUTF8("ãƒãƒ¼ã‚¸ãƒ§ãƒ³"));
 				$trHead->appendChild($th);
 				break;
-			// ¶â·¿ÍúÎò.ºï½ü¥Õ¥é¥°
+			// é‡‘åž‹å±¥æ­´.å‰Šé™¤ãƒ•ãƒ©ã‚°
 			case TableMoldHistory::DeleteFlag :
-				$th = $doc->createElement("th", toUTF8("ºï½ü¥Õ¥é¥°"));
+				$th = $doc->createElement("th", toUTF8("å‰Šé™¤ãƒ•ãƒ©ã‚°"));
 				$trHead->appendChild($th);
 				break;
 		}
 	}
 }
 
-// ºï½ü¹àÌÜ¤òÉ½¼¨
+// å‰Šé™¤é …ç›®ã‚’è¡¨ç¤º
 if($existsDelete)
 {
-	// ºï½ü¥«¥é¥à
-	$thDelete = $doc->createElement("th", toUTF8("ºï½ü"));
+	// å‰Šé™¤ã‚«ãƒ©ãƒ 
+	$thDelete = $doc->createElement("th", toUTF8("å‰Šé™¤"));
 	$thDelete->setAttribute("class", $exclude);
-	// ¥Ø¥Ã¥À¤ËÄÉ²Ã
+	// ãƒ˜ãƒƒãƒ€ã«è¿½åŠ 
 	$trHead->appendChild($thDelete);
 }
 
 // thead > tr
 $thead->appendChild($trHead);
 // -------------------------------------------------------
-// ¥Æ¡¼¥Ö¥ë¥»¥ëºîÀ®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒ«ä½œæˆ
 // -------------------------------------------------------
-// ¸¡º÷·ë²Ì·ï¿ôÊ¬Áöºº
+// æ¤œç´¢çµæžœä»¶æ•°åˆ†èµ°æŸ»
 foreach ($records as $i => $record)
 {
 	$index = $i + 1;
 
-	// tbody > trÍ×ÁÇºîÀ®
+	// tbody > trè¦ç´ ä½œæˆ
 	$trBody = $doc->createElement("tr");
 
-	// ¹àÈÖ
+	// é …ç•ª
 	$tdIndex = $doc->createElement("td", $index);
 	$tdIndex->setAttribute("class", $exclude);
 	$trBody->appendChild($tdIndex);
 
-	// ¾ÜºÙ¤òÉ½¼¨
+	// è©³ç´°ã‚’è¡¨ç¤º
 	if($existsDetail)
 	{
-		// ¾ÜºÙ¥»¥ë
+		// è©³ç´°ã‚»ãƒ«
 		$tdDetail = $doc->createElement("td");
 		$tdDetail->setAttribute("class", $exclude);
 
-		// ¾ÜºÙ¥Ü¥¿¥ó¤ÎÉ½¼¨
+		// è©³ç´°ãƒœã‚¿ãƒ³ã®è¡¨ç¤º
 		if ($allowedDetail)
 		{
-			// ¾ÜºÙ¥Ü¥¿¥ó
+			// è©³ç´°ãƒœã‚¿ãƒ³
 			$imgDetail = $doc->createElement("img");
 			$imgDetail->setAttribute("src", "/mold/img/detail_off_bt.gif");
 			$imgDetail->setAttribute("id", $record[TableMoldHistory::MoldNo]);
@@ -793,17 +793,17 @@ foreach ($records as $i => $record)
 		$trBody->appendChild($tdDetail);
 	}
 
-	// ½¤Àµ¹àÌÜ¤òÉ½¼¨
+	// ä¿®æ­£é …ç›®ã‚’è¡¨ç¤º
 	if($existsModify)
 	{
-		// ½¤Àµ¥»¥ë
+		// ä¿®æ­£ã‚»ãƒ«
 		$tdModify = $doc->createElement("td");
 		$tdModify->setAttribute("class", $exclude);
 
-		// ½¤Àµ¥Ü¥¿¥ó¤ÎÉ½¼¨
+		// ä¿®æ­£ãƒœã‚¿ãƒ³ã®è¡¨ç¤º
 		if ($allowedModify)
 		{
-			// ½¤Àµ¥Ü¥¿¥ó
+			// ä¿®æ­£ãƒœã‚¿ãƒ³
 			$imgModify = $doc->createElement("img");
 			$imgModify->setAttribute("src", "/mold/img/renew_off_bt.gif");
 			$imgModify->setAttribute("id", $record[TableMoldHistory::MoldNo]);
@@ -816,32 +816,32 @@ foreach ($records as $i => $record)
 		// tr > td
 		$trBody->appendChild($tdModify);
 	}
-	// ¥×¥ì¥Ó¥å¡¼¹àÌÜ¤òÉ½¼¨(ÍúÎò¤Ï¥³¥Ô¡¼·óÍÑ)
+	// ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼é …ç›®ã‚’è¡¨ç¤º(å±¥æ­´ã¯ã‚³ãƒ”ãƒ¼å…¼ç”¨)
 	if ($existsPreview)
 	{
-		// ¥×¥ì¥Ó¥å¡¼¥»¥ë
+		// ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ã‚»ãƒ«
 		$tdPreview = $doc->createElement("td");
 		$tdPreview->setAttribute("class", $exclude);
 
-		// ¶â·¿Ä¢É¼´ØÏ¢¤¬¼èÆÀ¤Ç¤­¤¿¾ì¹ç¥Á¥§¥Ã¥¯
+		// é‡‘åž‹å¸³ç¥¨é–¢é€£ãŒå–å¾—ã§ããŸå ´åˆãƒã‚§ãƒƒã‚¯
 		if($relation = $utilMold->selectMoldReportRelationByHistory($record[TableMoldHistory::MoldNo], $record[TableMoldHistory::HistoryNo]))
 		{
-			// ¥×¥ì¥Ó¥å¡¼¥Ü¥¿¥ó¤òÉ½¼¨
+			// ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤º
 			$imgPreview = $doc->createElement("img");
 			$imgPreview->setAttribute("src", "/mold/img/preview_off_bt.gif");
 			$imgPreview->setAttribute("id", $relation[0][TableMoldReportRelation::MoldReportId]);
 			$imgPreview->setAttribute("revision", $relation[0][TableMoldReportRelation::Revision]);
 			$imgPreview->setAttribute("version", $relation[0]["report_version"]);
 
-			// ¸¶ËÜ°õºþºÑ¤Î¾ì¹ç
+			// åŽŸæœ¬å°åˆ·æ¸ˆã®å ´åˆ
 			if ($relation[0][TableMoldReport::Printed] == "t")
 			{
-				// COPYÄ¢É¼¤ò½ÐÎÏ
+				// COPYå¸³ç¥¨ã‚’å‡ºåŠ›
 				$imgPreview->setAttribute("class", "copy-preview button");
 			}
 			else
 			{
-				// ¸¶ËÜÄ¢É¼¤ò½ÐÎÏ
+				// åŽŸæœ¬å¸³ç¥¨ã‚’å‡ºåŠ›
 				$imgPreview->setAttribute("class", "preview button");
 			}
 
@@ -853,99 +853,99 @@ foreach ($records as $i => $record)
 		$trBody->appendChild($tdPreview);
 	}
 
-	// TODO Í×¥ê¥Õ¥¡¥¯¥¿¥ê¥ó¥°
-	// »ØÄê¤µ¤ì¤¿¥Æ¡¼¥Ö¥ë¹àÌÜ¤Î¥»¥ë¤òºîÀ®¤¹¤ë
+	// TODO è¦ãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°
+	// æŒ‡å®šã•ã‚ŒãŸãƒ†ãƒ¼ãƒ–ãƒ«é …ç›®ã®ã‚»ãƒ«ã‚’ä½œæˆã™ã‚‹
 	foreach($columnOrder as $columnName)
 	{
-		// É½¼¨ÂÐ¾Ý¤Î¥«¥é¥à¤Î¾ì¹ç
+		// è¡¨ç¤ºå¯¾è±¡ã®ã‚«ãƒ©ãƒ ã®å ´åˆ
 		if (array_key_exists($columnName, $displayColumns))
 		{
-			// ¹àÌÜÊÌ¤ËÉ½¼¨¥Æ¥­¥¹¥È¤òÀßÄê
+			// é …ç›®åˆ¥ã«è¡¨ç¤ºãƒ†ã‚­ã‚¹ãƒˆã‚’è¨­å®š
 			switch ($columnName)
 			{
-				// ¶â·¿Ä¢É¼´ØÏ¢.¶â·¿Ä¢É¼ID
-				case TableMoldReport::MoldReportId : // ¶â·¿Ä¢É¼ID
+				// é‡‘åž‹å¸³ç¥¨é–¢é€£.é‡‘åž‹å¸³ç¥¨ID
+				case TableMoldReport::MoldReportId : // é‡‘åž‹å¸³ç¥¨ID
 					$td = $doc->createElement("td", $record[TableMoldReport::MoldReportId]);
 					$trBody->appendChild($td);
 					break;
-				// »ÅÆþ¥Þ¥¹¥¿.»ÅÆþ·×¾åÆü
+				// ä»•å…¥ãƒžã‚¹ã‚¿.ä»•å…¥è¨ˆä¸Šæ—¥
 				case "dtmappropriationdate":
 					$td = $doc->createElement("td", $record["dtmappropriationdate"]);
 					$trBody->appendChild($td);
 					break;
-				// È¯Ãí¥Þ¥¹¥¿.È¯Ãí¥³¡¼¥É-È¯Ãí¥Þ¥¹¥¿.½¤Àµ¥³¡¼¥É
+				// ç™ºæ³¨ãƒžã‚¹ã‚¿.ç™ºæ³¨ã‚³ãƒ¼ãƒ‰-ç™ºæ³¨ãƒžã‚¹ã‚¿.ä¿®æ­£ã‚³ãƒ¼ãƒ‰
 				case "strordercode":
 					$td = $doc->createElement("td", $record["strordercode"]);
 					$trBody->appendChild($td);
 					break;
-				// [²ñ¼Ò¥Þ¥¹¥¿.É½¼¨²ñ¼Ò¥³¡¼¥É] ²ñ¼Ò¥Þ¥¹¥¿.É½¼¨²ñ¼ÒÌ¾¾Î
+				// [ä¼šç¤¾ãƒžã‚¹ã‚¿.è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰] ä¼šç¤¾ãƒžã‚¹ã‚¿.è¡¨ç¤ºä¼šç¤¾åç§°
 				case "strcompanydisplaycode":
 					$td = $doc->createElement("td", toUTF8($record["strcompanydisplaycode"]));
 					$trBody->appendChild($td);
 					break;
-				// À½ÉÊ¥Þ¥¹¥¿.À½ÉÊ¥³¡¼¥É
+				// è£½å“ãƒžã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰
 				case "strproductcode":
 					$td = $doc->createElement("td", $record["strproductcode"]);
 					$trBody->appendChild($td);
 					break;
-				// À½ÉÊ¥Þ¥¹¥¿.À½ÉÊ¥³¡¼¥É(ÆüËÜ¸ì)
+				// è£½å“ãƒžã‚¹ã‚¿.è£½å“ã‚³ãƒ¼ãƒ‰(æ—¥æœ¬èªž)
 				case "strproductname":
 					$td = $doc->createElement("td", toUTF8($record["strproductname"]));
 					$trBody->appendChild($td);
 					break;
-				// À½ÉÊ¥Þ¥¹¥¿.À½ÉÊÌ¾¾Î(±Ñ¸ì)
+				// è£½å“ãƒžã‚¹ã‚¿.è£½å“åç§°(è‹±èªž)
 				case "strproductenglishname":
 					$td = $doc->createElement("td", toUTF8($record["strproductenglishname"]));
 					$trBody->appendChild($td);
 					break;
-				// À½ÉÊ¥Þ¥¹¥¿.¸ÜµÒÉÊÈÖ
+				// è£½å“ãƒžã‚¹ã‚¿.é¡§å®¢å“ç•ª
 				case "strgoodscode":
 					$td = $doc->createElement("td", toUTF8($record["strgoodscode"]));
 					$trBody->appendChild($td);
 					break;
-				// [¥°¥ë¡¼¥×¥Þ¥¹¥¿.É½¼¨¥°¥ë¡¼¥×¥³¡¼¥É] ¥°¥ë¡¼¥×¥Þ¥¹¥¿.É½¼¨¥°¥ë¡¼¥×Ì¾
+				// [ã‚°ãƒ«ãƒ¼ãƒ—ãƒžã‚¹ã‚¿.è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰] ã‚°ãƒ«ãƒ¼ãƒ—ãƒžã‚¹ã‚¿.è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—å
 				case "strgroupdisplaycode":
 					$td = $doc->createElement("td", toUTF8($record["strgroupdisplaycode"]));
 					$trBody->appendChild($td);
 					break;
-				// [¥æ¡¼¥¶¥Þ¥¹¥¿.É½¼¨¥æ¡¼¥¶¥³¡¼¥É] ¥æ¡¼¥¶¥Þ¥¹¥¿.É½¼¨¥æ¡¼¥¶Ì¾
+				// [ãƒ¦ãƒ¼ã‚¶ãƒžã‚¹ã‚¿.è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰] ãƒ¦ãƒ¼ã‚¶ãƒžã‚¹ã‚¿.è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶å
 				case "struserdisplaycode":
 					$td = $doc->createElement("td", toUTF8($record["struserdisplaycode"]));
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.¶â·¿NO
+				// é‡‘åž‹å±¥æ­´.é‡‘åž‹NO
 				case TableMoldHistory::MoldNo:
 					$td = $doc->createElement("td", $record[TableMoldHistory::MoldNo]);
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.ÍúÎòÈÖ¹æ
+				// é‡‘åž‹å±¥æ­´.å±¥æ­´ç•ªå·
 				case TableMoldHistory::HistoryNo:
 					$td = $doc->createElement("td", $record[TableMoldHistory::HistoryNo]);
 					$trBody->appendChild($td);
 					break;
-				// »ÅÆþ¾ÜºÙ.À½ÉÊ¿ôÎÌ
+				// ä»•å…¥è©³ç´°.è£½å“æ•°é‡
 				case "lngproductquantity":
 					$td = $doc->createElement("td", $record["lngproductquantity"]);
 					$trBody->appendChild($td);
 					break;
-				// ÄÌ²ßÃ±°Ì¥Þ¥¹¥¿.ÄÌ²ßÃ±°Ì || »ÅÆþ¾ÜºÙ.ÀÇÈ´¶â³Û
+				// é€šè²¨å˜ä½ãƒžã‚¹ã‚¿.é€šè²¨å˜ä½ || ä»•å…¥è©³ç´°.ç¨ŽæŠœé‡‘é¡
 				case "strmonetaryunitsign":
 					$td = $doc->createElement("td", toUTF8($record["strmonetaryunitsign"]));
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.¶â·¿¥¹¥Æ¡¼¥¿¥¹
+				// é‡‘åž‹å±¥æ­´.é‡‘åž‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
 				case TableMoldHistory::Status:
 					$record[TableMoldHistory::Status] ?
-						  $td = $doc->createElement("td", toUTF8($utilBussinesscode->getDescription("¶â·¿¥¹¥Æ¡¼¥¿¥¹", $record[TableMoldHistory::Status])))
+						  $td = $doc->createElement("td", toUTF8($utilBussinesscode->getDescription("é‡‘åž‹ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹", $record[TableMoldHistory::Status])))
 						: $td = $doc->createElement("td");
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.¼Â»ÜÆü
+				// é‡‘åž‹å±¥æ­´.å®Ÿæ–½æ—¥
 				case TableMoldHistory::ActionDate:
 					$td = $doc->createElement("td", $record[TableMoldHistory::ActionDate]);
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.ÊÝ´É¹©¾ì
+				// é‡‘åž‹å±¥æ­´.ä¿ç®¡å·¥å ´
 				case TableMoldHistory::SourceFactory:
 					if ($record[TableMoldHistory::SourceFactory] || $record[TableMoldHistory::DestinationFactory] === "0")
 					{
@@ -958,7 +958,7 @@ foreach ($records as $i => $record)
 					}
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.°ÜÆ°Àè¹©¾ì
+				// é‡‘åž‹å±¥æ­´.ç§»å‹•å…ˆå·¥å ´
 				case TableMoldHistory::DestinationFactory:
 					if ($record[TableMoldHistory::DestinationFactory] || $record[TableMoldHistory::DestinationFactory] === "0")
 					{
@@ -971,12 +971,12 @@ foreach ($records as $i => $record)
 					}
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.ÅÐÏ¿Æü»þ
+				// é‡‘åž‹å±¥æ­´.ç™»éŒ²æ—¥æ™‚
 				case TableMoldHistory::Created :
 					$td = $doc->createElement("td", $record[TableMoldHistory::Created]);
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.ÅÐÏ¿¼Ô
+				// é‡‘åž‹å±¥æ­´.ç™»éŒ²è€…
 				case TableMoldHistory::CreateBy :
 					if ($record[TableMoldHistory::CreateBy])
 					{
@@ -989,12 +989,12 @@ foreach ($records as $i => $record)
 					}
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.¹¹¿·Æü»þ
+				// é‡‘åž‹å±¥æ­´.æ›´æ–°æ—¥æ™‚
 				case TableMoldHistory::Updated :
 					$td = $doc->createElement("td", $record[TableMoldHistory::Updated]);
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.¹¹¿·¼Ô
+				// é‡‘åž‹å±¥æ­´.æ›´æ–°è€…
 				case TableMoldHistory::UpdateBy :
 					if ($record[TableMoldHistory::UpdateBy])
 					{
@@ -1007,12 +1007,12 @@ foreach ($records as $i => $record)
 					}
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.¥Ð¡¼¥¸¥ç¥ó
+				// é‡‘åž‹å±¥æ­´.ãƒãƒ¼ã‚¸ãƒ§ãƒ³
 				case TableMoldHistory::Version :
 					$td = $doc->createElement("td", $record[TableMoldHistory::Version]);
 					$trBody->appendChild($td);
 					break;
-				// ¶â·¿ÍúÎò.ºï½ü¥Õ¥é¥°
+				// é‡‘åž‹å±¥æ­´.å‰Šé™¤ãƒ•ãƒ©ã‚°
 				case TableMoldHistory::DeleteFlag :
 					$td = $doc->createElement("td", $record[TableMoldHistory::DeleteFlag]);
 					$trBody->appendChild($td);
@@ -1021,17 +1021,17 @@ foreach ($records as $i => $record)
 		}
 	}
 
-	// ºï½ü¹àÌÜ¤òÉ½¼¨
+	// å‰Šé™¤é …ç›®ã‚’è¡¨ç¤º
 	if($existsDelete)
 	{
-		// ºï½ü¥»¥ë
+		// å‰Šé™¤ã‚»ãƒ«
 		$tdDelete = $doc->createElement("td");
 		$tdDelete->setAttribute("class", $exclude);
 
-		// ºï½ü¥Ü¥¿¥ó¤ÎÉ½¼¨
+		// å‰Šé™¤ãƒœã‚¿ãƒ³ã®è¡¨ç¤º
 		if ($allowedDelete)
 		{
-			// ºï½ü¥Ü¥¿¥ó
+			// å‰Šé™¤ãƒœã‚¿ãƒ³
 			$imgDelete = $doc->createElement("img");
 			$imgDelete->setAttribute("src", "/mold/img/remove_off_bt.gif");
 			$imgDelete->setAttribute("id", $record[TableMoldHistory::MoldNo]);
@@ -1049,6 +1049,6 @@ foreach ($records as $i => $record)
 	$tbody->appendChild($trBody);
 }
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $doc->saveHTML();
 

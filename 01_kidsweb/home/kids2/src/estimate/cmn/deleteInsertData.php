@@ -6,7 +6,7 @@ require_once ( LIB_FILE );
 require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
 require_once ( SRC_ROOT . "estimate/cmn/estimateInsertData.php");
 
-// ÅĞÏ¿ÍÑ¥Ç¡¼¥¿ºîÀ®¥¯¥é¥¹
+// ç™»éŒ²ç”¨ãƒ‡ãƒ¼ã‚¿ä½œæˆã‚¯ãƒ©ã‚¹
 class deleteInsertData extends estimateInsertData {
     
     public function __construct() {
@@ -14,7 +14,7 @@ class deleteInsertData extends estimateInsertData {
     }
     
 
-    // É¬Í×¤Ê¥Ñ¥é¥á¡¼¥¿¤ò¥¯¥é¥¹¤Ë¥»¥Ã¥È¤¹¤ë
+    // å¿…è¦ãªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’ã‚¯ãƒ©ã‚¹ã«ã‚»ãƒƒãƒˆã™ã‚‹
     public function setDeleteParam($estimateNo, $revisionNo, $inputUserCode, $objDB) {
 
         $this->inputUserCode = $inputUserCode;
@@ -30,9 +30,9 @@ class deleteInsertData extends estimateInsertData {
 
 
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¸«ÀÑ¸¶²Á¤Îºï½ü¤ò¹Ô¤¦
+    *	è¦‹ç©åŸä¾¡ã®å‰Šé™¤ã‚’è¡Œã†
     *
     *	@return true
     */
@@ -48,17 +48,17 @@ class deleteInsertData extends estimateInsertData {
             
             $firstRecord = $estimateDetail[0];
 
-            // ¥ê¥Ó¥¸¥ç¥ó¥Á¥§¥Ã¥¯
+            // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯
             if ($firstRecord->lngrevisionno !== $revisionNo) {
                 return fncOutputError ( DEF_MESSAGE_CODE_CURRENT_REVISION_ERROR, DEF_WARNING, "", FALSE, "", $this->objDB );
             }
 
-            // ºï½üºÑ¤ß¥Á¥§¥Ã¥¯
+            // å‰Šé™¤æ¸ˆã¿ãƒã‚§ãƒƒã‚¯
             if ((int)$firstRecord->minrevisionno === -1) {
                 return fncOutputError ( DEF_MESSAGE_CODE_DELETED_ERROR, DEF_WARNING, "", FALSE, "", $this->objDB );
             }
 
-            // ¥¹¥Æ¡¼¥¿¥¹¥Á¥§¥Ã¥¯
+            // ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒã‚§ãƒƒã‚¯
             foreach ($estimateDetail as $record) {
                 if (isset($record->lngreceivestatuscode)) {
                     $status = (int)$record->lngreceivestatuscode;
@@ -73,22 +73,22 @@ class deleteInsertData extends estimateInsertData {
                 }
             }
 
-            // ¸«ÀÑ¸¶²Á½¤Àµ¤Îµ¡Ç½¥³¡¼¥É¼èÆÀ
+            // è¦‹ç©åŸä¾¡ä¿®æ­£ã®æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰å–å¾—
             $editFunctionCode = DEF_FUNCTION_E3;
 
             $productCode = $firstRecord->strproductcode;
             $reviseCode = $firstRecord->strrevisecode;
 
-            // ÇÓÂ¾¥Æ¡¼¥Ö¥ë¥Á¥§¥Ã¥¯¡Ê¸«ÀÑ¸¶²Á½¤ÀµÃæ¤Ç¤Ê¤¤¤³¤È¤ò³ÎÇ§)
+            // æ’ä»–ãƒ†ãƒ¼ãƒ–ãƒ«ãƒã‚§ãƒƒã‚¯ï¼ˆè¦‹ç©åŸä¾¡ä¿®æ­£ä¸­ã§ãªã„ã“ã¨ã‚’ç¢ºèª)
             $check = $this->objDB->checkExclusiveStatus($editFunctionCode, $productCode, $reviseCode);
-            if ($check !== false) { // ÇÓÂ¾À©¸æ¤¬Í­¸ú¤Ê¾ì¹ç
+            if ($check !== false) { // æ’ä»–åˆ¶å¾¡ãŒæœ‰åŠ¹ãªå ´åˆ
                 return fncOutputError ( DEF_MESSAGE_CODE_EXCLUSIVE_CHECK_ERROR, DEF_WARNING, $check->struserdisplayname, FALSE, "", $this->objDB );
             }
 
-            // ¸«ÀÑ¸¶²Á¥Ş¥¹¥¿ºï½ü
+            // è¦‹ç©åŸä¾¡ãƒã‚¹ã‚¿å‰Šé™¤
             $this->deteleMasterEstimate();
 
-            // ¼õÃí¥Ş¥¹¥¿¡¢È¯Ãí¥Ş¥¹¥¿¤Îºï½ü
+            // å—æ³¨ãƒã‚¹ã‚¿ã€ç™ºæ³¨ãƒã‚¹ã‚¿ã®å‰Šé™¤
             foreach ($estimateDetail as $record) {
                 if (isset($record->lngreceiveno)) {
 
@@ -105,7 +105,7 @@ class deleteInsertData extends estimateInsertData {
             $this->reviseCode = $reviseCode;
             $this->productRevisionNo = $firstRecord->lngproductrevisionno;
 
-            // À½ÉÊ¥Ş¥¹¥¿¤Îºï½ü
+            // è£½å“ãƒã‚¹ã‚¿ã®å‰Šé™¤
             $this->deleteMasterProduct();
         }
 
@@ -113,9 +113,9 @@ class deleteInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	À½ÉÊ¥Ş¥¹¥¿Æâ¤Îºï½ü½èÍı¤ò¹Ô¤¦
+    *	è£½å“ãƒã‚¹ã‚¿å†…ã®å‰Šé™¤å‡¦ç†ã‚’è¡Œã†
     *
     *	@return
     */
@@ -126,9 +126,9 @@ class deleteInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	À½ÉÊ¥Ş¥¹¥¿¤Îºï½üÂĞ¾İ¤ÎÀ½ÉÊ¤Î¾ğÊó¤ò¹¹¿·¤¹¤ë
+    *	è£½å“ãƒã‚¹ã‚¿ã®å‰Šé™¤å¯¾è±¡ã®è£½å“ã®æƒ…å ±ã‚’æ›´æ–°ã™ã‚‹
     *
     *	@return true
     */
@@ -138,7 +138,7 @@ class deleteInsertData extends estimateInsertData {
         $strQuery .= " WHERE lngproductno = ". $this->productNo;
         $strQuery .= " AND strrevisecode = '". $this->reviseCode. "'";
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -148,9 +148,9 @@ class deleteInsertData extends estimateInsertData {
 
 
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	À½ÉÊ¥Ş¥¹¥¿¤Îºï½ü¥ì¥³¡¼¥É¤ÎÅĞÏ¿¤ò¹Ô¤¦
+    *	è£½å“ãƒã‚¹ã‚¿ã®å‰Šé™¤ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ç™»éŒ²ã‚’è¡Œã†
     *
     *	@return true
     */
@@ -172,10 +172,10 @@ class deleteInsertData extends estimateInsertData {
         $condition .= " AND lngrevisionno = ". $this->productRevisionNo;
         $condition .= " AND strrevisecode = '" . $this->reviseCode."'";
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertSelectQuery($table, $data, $condition);
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -184,9 +184,9 @@ class deleteInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¸«ÀÑ¸¶²Á¥Ş¥¹¥¿Æâ¤Îºï½ü½èÍı¤ò¹Ô¤¦
+    *	è¦‹ç©åŸä¾¡ãƒã‚¹ã‚¿å†…ã®å‰Šé™¤å‡¦ç†ã‚’è¡Œã†
     *   
     *	@return true
     */
@@ -196,9 +196,9 @@ class deleteInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¸«ÀÑ¸¶²Á¥Ş¥¹¥¿¤Îºï½üÂĞ¾İ¤Î¸«ÀÑ¸¶²Á¤Î¾ğÊó¤ò¹¹¿·¤¹¤ë
+    *	è¦‹ç©åŸä¾¡ãƒã‚¹ã‚¿ã®å‰Šé™¤å¯¾è±¡ã®è¦‹ç©åŸä¾¡ã®æƒ…å ±ã‚’æ›´æ–°ã™ã‚‹
     *
     *	@return true
     */
@@ -207,7 +207,7 @@ class deleteInsertData extends estimateInsertData {
         $strQuery = "UPDATE m_estimate SET strproductcode = strproductcode || '_del'";
         $strQuery .= " WHERE lngestimateno = ". $this->estimateNo;
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -216,9 +216,9 @@ class deleteInsertData extends estimateInsertData {
     }
     
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¸«ÀÑ¸¶²Á¥Ş¥¹¥¿¤Ø¤Îºï½ü¥ì¥³¡¼¥É¤ÎÅĞÏ¿¤ò¹Ô¤¦
+    *	è¦‹ç©åŸä¾¡ãƒã‚¹ã‚¿ã¸ã®å‰Šé™¤ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ç™»éŒ²ã‚’è¡Œã†
     *   
     *	@return true
     */
@@ -238,10 +238,10 @@ class deleteInsertData extends estimateInsertData {
         $condition = "WHERE lngestimateno = ". $this->estimateNo;
         $condition .= " AND lngrevisionno = ". $this->revisionNo;
 
-        // ¥¯¥¨¥ê¤ÎÀ¸À®
+        // ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $strQuery = $this->makeInsertSelectQuery($table, $data, $condition);
 
-        // ¥¯¥¨¥ê¤Î¼Â¹Ô
+        // ã‚¯ã‚¨ãƒªã®å®Ÿè¡Œ
         list($resultID, $resultNumber) = fncQuery($strQuery, $this->objDB);
 
         $this->objDB->freeResult($resultID);
@@ -250,11 +250,11 @@ class deleteInsertData extends estimateInsertData {
     }
 
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	¼õÃí¥Ş¥¹¥¿Æâ¤Îºï½ü½èÍı¤ò¹Ô¤¦
+    *	å—æ³¨ãƒã‚¹ã‚¿å†…ã®å‰Šé™¤å‡¦ç†ã‚’è¡Œã†
     *
-    *   @param object $record ÌÀºÙ¹Ô¤Î¸¡º÷·ë²Ì
+    *   @param object $record æ˜ç´°è¡Œã®æ¤œç´¢çµæœ
     *   
     *	@return
     */
@@ -270,11 +270,11 @@ class deleteInsertData extends estimateInsertData {
 
 
     /**
-    * DBÅĞÏ¿ÍÑ´Ø¿ô
+    * DBç™»éŒ²ç”¨é–¢æ•°
     *
-    *	È¯Ãí¥Ş¥¹¥¿¤ØÆâ¤Îºï½ü½èÍı¤ò¹Ô¤¦
+    *	ç™ºæ³¨ãƒã‚¹ã‚¿ã¸å†…ã®å‰Šé™¤å‡¦ç†ã‚’è¡Œã†
     *
-    *   @param object $record ÌÀºÙ¹Ô¤Î¸¡º÷·ë²Ì
+    *   @param object $record æ˜ç´°è¡Œã®æ¤œç´¢çµæœ
     *   
     *	@return
     */

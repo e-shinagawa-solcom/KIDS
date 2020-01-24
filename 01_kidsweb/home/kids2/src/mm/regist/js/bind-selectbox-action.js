@@ -1,80 +1,80 @@
 
 (function(){
-    // ¶â·¿¥ê¥¹¥È
+    // é‡‘å‹ãƒªã‚¹ãƒˆ
     var moldList = $('.mold-selection__list');
-    // ÁªÂòÃæ¤Î¶â·¿¥ê¥¹¥È
+    // é¸æŠä¸­ã®é‡‘å‹ãƒªã‚¹ãƒˆ
     var moldChoosenList = $('.mold-selection__choosen-list');
-    // Êİ´É¸µ¹©¾ì
+    // ä¿ç®¡å…ƒå·¥å ´
     var sourceFactory = $('input[name="SourceFactory"]');
-    // ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë
+    // é‡‘å‹èª¬æ˜ãƒ†ãƒ¼ãƒ–ãƒ«
     var tableMoldDescription = $('.table-description');
 
-    // ÄÉ²Ã¥Ü¥¿¥ó(¢ª)
+    // è¿½åŠ ãƒœã‚¿ãƒ³(â†’)
     $('.list-add').on({
         'click': function(){
-            // ¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹´Ö¤Î°ÜÆ°
+            // ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹é–“ã®ç§»å‹•
             selectBoxMoveTo(moldList, moldChoosenList);
-            // ¸½ºß¤ÎÊİ´É¸µ(ºÇ¿·¤Î°ÜÆ°Àè)¤¬º®ºß¤·¤Æ¤¤¤Ê¤¤¤«¥Á¥§¥Ã¥¯
+            // ç¾åœ¨ã®ä¿ç®¡å…ƒ(æœ€æ–°ã®ç§»å‹•å…ˆ)ãŒæ··åœ¨ã—ã¦ã„ãªã„ã‹ãƒã‚§ãƒƒã‚¯
             checkUniqueSourceFactory(moldChoosenList.find('option'));
-            // Êİ´É¸µ¹©¾ì¹àÌÜ¤Ø¤ÎÆşÎÏÊä½õ
+            // ä¿ç®¡å…ƒå·¥å ´é …ç›®ã¸ã®å…¥åŠ›è£œåŠ©
             propSourceFactory(moldChoosenList);
-            // ÁªÂòÃæ¤Î¶â·¿¥ê¥¹¥È¤Î¥½¡¼¥È
+            // é¸æŠä¸­ã®é‡‘å‹ãƒªã‚¹ãƒˆã®ã‚½ãƒ¼ãƒˆ
             selectBoxCommand(moldChoosenList, 'sort');
         }
     });
 
-    // ºï½ü¥Ü¥¿¥ó(¢«)
+    // å‰Šé™¤ãƒœã‚¿ãƒ³(â†)
     $('.list-del').on({
         'click': function(){
-            // ¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹´Ö¤Î°ÜÆ°
+            // ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹é–“ã®ç§»å‹•
             selectBoxMoveTo(moldChoosenList, moldList);
-            // Êİ´É¸µ¹©¾ì¹àÌÜ¤Ø¤ÎÆşÎÏÊä½õ
+            // ä¿ç®¡å…ƒå·¥å ´é …ç›®ã¸ã®å…¥åŠ›è£œåŠ©
             propSourceFactory(moldChoosenList);
-            // ¶â·¿¥ê¥¹¥È¤Î¥½¡¼¥È
+            // é‡‘å‹ãƒªã‚¹ãƒˆã®ã‚½ãƒ¼ãƒˆ
             selectBoxCommand(moldList, 'sort');
         }
     });
 
-    // UP¥Ü¥¿¥ó
+    // UPãƒœã‚¿ãƒ³
     $('.list-up').on({
         'click': function(){
             selectBoxCommand(moldChoosenList, 'up');
-            // Êİ´É¸µ¹©¾ì¹àÌÜ¤Ø¤ÎÆşÎÏÊä½õ
+            // ä¿ç®¡å…ƒå·¥å ´é …ç›®ã¸ã®å…¥åŠ›è£œåŠ©
             propSourceFactory(moldChoosenList);
-            // ¶â·¿ÀâÌÀÆşÎÏÍó¤ÎºîÀ®
+            // é‡‘å‹èª¬æ˜å…¥åŠ›æ¬„ã®ä½œæˆ
             createFormMoldDescription(moldChoosenList.find('option'));
         }
     });
 
-    // DOWN¥Ü¥¿¥ó
+    // DOWNãƒœã‚¿ãƒ³
     $('.list-down').on({
         'click': function(){
             selectBoxCommand(moldChoosenList, 'down');
-            // Êİ´É¸µ¹©¾ì¹àÌÜ¤Ø¤ÎÆşÎÏÊä½õ
+            // ä¿ç®¡å…ƒå·¥å ´é …ç›®ã¸ã®å…¥åŠ›è£œåŠ©
             propSourceFactory(moldChoosenList);
-            // ¶â·¿ÀâÌÀÆşÎÏÍó¤ÎºîÀ®
+            // é‡‘å‹èª¬æ˜å…¥åŠ›æ¬„ã®ä½œæˆ
             createFormMoldDescription(moldChoosenList.find('option'));
         }
     });
 
-    // SELECT ALL¥Ü¥¿¥ó
+    // SELECT ALLãƒœã‚¿ãƒ³
     $('.mold-selection tr > td:nth-of-type(even) > img.list-sort').on({
         'click': function(){
             $(this).parent().prev().find('select').find('option').prop('selected', true);
         }
     });
 
-    // Êİ´É¸µ¹©¾ì¹àÌÜ¤Ø¤ÎÆşÎÏÊä½õ
+    // ä¿ç®¡å…ƒå·¥å ´é …ç›®ã¸ã®å…¥åŠ›è£œåŠ©
     var propSourceFactory = function(selectBox){
         sourceFactory.val(selectBox.find('option').first().attr('displaycode'));
         sourceFactory.trigger('change');
     };
 
-    // ¶â·¿ÀâÌÀÆşÎÏÍó¤ÎºîÀ®
+    // é‡‘å‹èª¬æ˜å…¥åŠ›æ¬„ã®ä½œæˆ
     var createFormMoldDescription = function(options){
-        // ¥Ç¡¼¥¿Éô¥ê¥»¥Ã¥È
+        // ãƒ‡ãƒ¼ã‚¿éƒ¨ãƒªã‚»ãƒƒãƒˆ
         tableMoldDescription.find('tbody').empty();
-        // OPTIONÍ×ÁÇ¿ôÊ¬Áöºº
+        // OPTIONè¦ç´ æ•°åˆ†èµ°æŸ»
         options.each(function(index){
             var nameMoldNo = 'MoldNo' + (index + 1);
             var nameMoldDescription = 'MoldDescription' + (index + 1);
@@ -97,43 +97,43 @@
         });
     };
 
-    // ¸½ºß¤ÎÊİ´É¸µ(ºÇ¿·¤Î°ÜÆ°Àè)¤¬º®ºß¤·¤Æ¤¤¤Ê¤¤¤«¥Á¥§¥Ã¥¯
+    // ç¾åœ¨ã®ä¿ç®¡å…ƒ(æœ€æ–°ã®ç§»å‹•å…ˆ)ãŒæ··åœ¨ã—ã¦ã„ãªã„ã‹ãƒã‚§ãƒƒã‚¯
     var checkUniqueSourceFactory = function(options){
-        // OPTIONÍ×ÁÇ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+        // OPTIONè¦ç´ ãŒå­˜åœ¨ã—ãªã„å ´åˆ
         if (options.length <= 0) {return;}
 
-        // ½ü³°¤¹¤ëÉ½¼¨²ñ¼Ò¥³¡¼¥É¥ê¥¹¥È
+        // é™¤å¤–ã™ã‚‹è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ãƒªã‚¹ãƒˆ
         var excludeDisplayCompanyCode = new Array();
 
-        // É½¼¨²ñ¼Ò¥³¡¼¥É¥ê¥¹¥È¤ÎÃê½Ğ
+        // è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ãƒªã‚¹ãƒˆã®æŠ½å‡º
         options.each(function(index){
             excludeDisplayCompanyCode.push($(this).attr('displaycode'));
         });
 
-        // ÃÍ¤¬½ÅÊ£¤·¤Æ¤¤¤ëÍ×ÁÇ¤òºï½ü
+        // å€¤ãŒé‡è¤‡ã—ã¦ã„ã‚‹è¦ç´ ã‚’å‰Šé™¤
         excludeDisplayCompanyCode = $.unique(excludeDisplayCompanyCode);
 
-        // ¥æ¥Ë¡¼¥¯¤ÊÉ½¼¨²ñ¼Ò¥³¡¼¥É¤¬1¤Ä¤Î¾ì¹ç
+        // ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªè¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ãŒ1ã¤ã®å ´åˆ
         if (excludeDisplayCompanyCode.length === 1){return;}
 
-        // ÀèÆ¬¤ÎÉ½¼¨²ñ¼Ò¥³¡¼¥É(Í¥Àè)¤ò¼èÆÀ
+        // å…ˆé ­ã®è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰(å„ªå…ˆ)ã‚’å–å¾—
         var ignoreCode = excludeDisplayCompanyCode[0];
         options.each(function(i, option){
-            // ½ü³°ÂĞ¾İ¤ÎOPTION¤òSELECTED¤ËÀÚ¤êÂØ¤¨¤ë
+            // é™¤å¤–å¯¾è±¡ã®OPTIONã‚’SELECTEDã«åˆ‡ã‚Šæ›¿ãˆã‚‹
             $.each(excludeDisplayCompanyCode, function(j, value){
-                // ÀèÆ¬Í×ÁÇ(½ü³°ÂĞ¾İ³°)¤Î¾ì¹ç
+                // å…ˆé ­è¦ç´ (é™¤å¤–å¯¾è±¡å¤–)ã®å ´åˆ
                 if ($(option).attr('displaycode') === ignoreCode){
                     $(option).prop('selected', false);
                 }
-                // ¤½¤ì°Ê³°(½ü³°ÂĞ¾İ)
+                // ãã‚Œä»¥å¤–(é™¤å¤–å¯¾è±¡)
                 else if ($(option).attr('displaycode') === value){
                     $(option).prop('selected', true);
                 }
             });
         });
-        // ¥á¥Ã¥»¡¼¥¸½ĞÎÏ
-        alert('Êİ´É¸µ¹©¾ì¤¬°Û¤Ê¤ë¶â·¿¤òÆ±»ş¤ËÅĞÏ¿¤¹¤ë¤³¤È¤Ï¤Ç¤­¤Ş¤»¤ó¡£');
-        // ½ü³°ÂĞ¾İ¤ÎOPTIONÍ×ÁÇ¤òÌá¤¹
+        // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›
+        alert('ä¿ç®¡å…ƒå·¥å ´ãŒç•°ãªã‚‹é‡‘å‹ã‚’åŒæ™‚ã«ç™»éŒ²ã™ã‚‹ã“ã¨ã¯ã§ãã¾ã›ã‚“ã€‚');
+        // é™¤å¤–å¯¾è±¡ã®OPTIONè¦ç´ ã‚’æˆ»ã™
         $('.list-del').trigger('click');
     };
 })();

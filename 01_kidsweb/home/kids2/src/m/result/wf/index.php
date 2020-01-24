@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥Ş¥¹¥¿´ÉÍı ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥Ş¥¹¥¿ ¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë·ë²Ì°ìÍ÷²èÌÌ
+*	ãƒã‚¹ã‚¿ç®¡ç† ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºãƒã‚¹ã‚¿ ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«çµæœä¸€è¦§ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -15,20 +15,20 @@
 // index.php -> lngWorkflowOrderGroupCode -> index.php
 // index.php -> lngInChargeCode           -> index.php
 //
-// ÅĞÏ¿²èÌÌ
+// ç™»éŒ²ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 //
-// ½¤Àµ²èÌÌ
+// ä¿®æ­£ç”»é¢
 // index.php -> strSessionID          -> edit.php
 // index.php -> lngActionCode         -> edit.php
 // index.php -> lngmonetaryratecode   -> edit.php
 // index.php -> lngmonetaryunitcode   -> edit.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
@@ -40,7 +40,7 @@ $objDB->open( "", "", "", "" );
 
 $aryData = $_POST;
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]              = "null:numenglish(32,32)";
 $aryCheck["lngWorkflowOrderCode"]      = "number(0,2147483647)";
 $aryCheck["lngWorkflowOrderGroupCode"] = "number(0,2147483647)";
@@ -49,111 +49,111 @@ $aryCheck["lngInChargeCode"]           = "number(0,2147483647)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ş¥¹¥¿¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ãƒã‚¹ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objMaster = new clsMaster();
 $objMaster->strTableName = "m_WorkflowOrder";
 
-// ¸¡º÷¥¯¥¨¥êÀ¸À®
+// æ¤œç´¢ã‚¯ã‚¨ãƒªç”Ÿæˆ
 $strQuery = "SELECT * FROM m_WorkflowOrder o, m_User u, m_Group g";
 
-// ¥ï¡¼¥¯¥Õ¥í¡¼½çÈÖ¥³¡¼¥É¾ò·ïÀ¸À®
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †ç•ªã‚³ãƒ¼ãƒ‰æ¡ä»¶ç”Ÿæˆ
 if ( $aryData["lngWorkflowOrderCode"] )
 {
 	$aryWhereString[] = " o.lngWorkflowOrderCode = " . $aryData["lngWorkflowOrderCode"];
 }
 
-// ¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥°¥ë¡¼¥×¥³¡¼¥É¾ò·ïÀ¸À®
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰æ¡ä»¶ç”Ÿæˆ
 if ( $aryData["lngWorkflowOrderGroupCode"] )
 {
 	$aryWhereString[] = " o.lngWorkflowOrderGroupCode = " . $aryData["lngWorkflowOrderGroupCode"];
 }
 
-// Ã´Åö¼Ô¥³¡¼¥É¾ò·ïÀ¸À®
+// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰æ¡ä»¶ç”Ÿæˆ
 if ( $aryData["lngInChargeCode"] )
 {
 	$aryWhereString[] = " o.lngWorkflowOrderCode = ( SELECT o2.lngWorkflowOrderCode FROM m_WorkflowOrder o2 WHERE o2.lngInChargeCode = " . $aryData["lngInChargeCode"] . " AND o.lngWorkflowOrderCode = o2.lngWorkflowOrderCode )";
 }
 
-// É½¼¨¥Õ¥é¥°¤¬TRUE¤Î¤â¤Î¤À¤±É½¼¨
+// è¡¨ç¤ºãƒ•ãƒ©ã‚°ãŒTRUEã®ã‚‚ã®ã ã‘è¡¨ç¤º
 $aryWhereString[] = " o.bytWorkflowOrderDisplayFlag = TRUE";
 
-// Â°À­¥Æ¡¼¥Ö¥ë¤È¤Î·ë¹ç
+// å±æ€§ãƒ†ãƒ¼ãƒ–ãƒ«ã¨ã®çµåˆ
 $aryWhereString[] = " o.lngInChargeCode = u.lngUserCode";
 $aryWhereString[] = " o.lngWorkflowOrderGroupCode = g.lngGroupCode";
 
-// ¾ò·ïÊ¬¤òÀ¸À®¡¢¥¯¥¨¥ê¤ËÄÉ²Ã
+// æ¡ä»¶åˆ†ã‚’ç”Ÿæˆã€ã‚¯ã‚¨ãƒªã«è¿½åŠ 
 $strWhereString = join ( " AND", $aryWhereString );
 $strQuery .= " WHERE " . $strWhereString . " ORDER BY o.lngWorkflowOrderCode, o.lngWorkflowOrderNo";
 
 
-// ¥Ç¡¼¥¿¤Î¼èÆÀ¤È¥ª¥Ö¥¸¥§¥¯¥È¤Ø¤Î¥»¥Ã¥È
+// ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ã‚»ãƒƒãƒˆ
 $lngResultNum = $objMaster->setMasterTableData( $strQuery, $objDB );
 
 if ( $lngResultNum )
 {
 	///////////////////////////////////////////////////////////////////
-	// ¥Æ¡¼¥Ö¥ëÀ¸À®
+	// ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
 	///////////////////////////////////////////////////////////////////
-	// ·ë²Ì¹ÔÉ½¼¨
+	// çµæœè¡Œè¡¨ç¤º
 	$count = 0;
 
-	// bytGroupDisplayFlag ¼èÆÀ
-	$aryGroupDisplayFlag = Array ( "t" => "É½¼¨", "f" => "ÈóÉ½¼¨" );
+	// bytGroupDisplayFlag å–å¾—
+	$aryGroupDisplayFlag = Array ( "t" => "è¡¨ç¤º", "f" => "éè¡¨ç¤º" );
 
 
-	// lngWorkflowOrderCode ¿ô¡¢½é´ü²½
+	// lngWorkflowOrderCode æ•°ã€åˆæœŸåŒ–
 	$codeCount = -1;
 
-	// ¥ì¥³¡¼¥ÉÉ½¼¨½èÍı
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰è¡¨ç¤ºå‡¦ç†
 	foreach ( $objMaster->aryData as $record )
 	{
-		// lngWorkflowOrderNo ¿ô(¤Ş¤È¤á¤ë¹Ô¿ô)¡¢¥¤¥ó¥¯¥ê¥á¥ó¥È
+		// lngWorkflowOrderNo æ•°(ã¾ã¨ã‚ã‚‹è¡Œæ•°)ã€ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		$noCount++;
 
-		// ºÇ½é¤Î¥ï¡¼¥¯¥Õ¥í¡¼½ç½øÈÖ¹æ¤Î¾ì¹ç¡¢¥ï¡¼¥¯¥Õ¥í¡¼Ì¾¤È¥°¥ë¡¼¥×Ì¾¤òÉ½¼¨
+		// æœ€åˆã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºç•ªå·ã®å ´åˆã€ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼åã¨ã‚°ãƒ«ãƒ¼ãƒ—åã‚’è¡¨ç¤º
 		if ( $record["lngworkfloworderno"] == 1 )
 		{
-			// lngWorkflowOrderCode ¿ô¡¢¥¤¥ó¥¯¥ê¥á¥ó¥È
+			// lngWorkflowOrderCode æ•°ã€ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 			$codeCount++;
 
-			// lngWorkflowOrderNo ¿ô(¤Ş¤È¤á¤ë¹Ô¿ô)¡¢½é´ü²½
+			// lngWorkflowOrderNo æ•°(ã¾ã¨ã‚ã‚‹è¡Œæ•°)ã€åˆæœŸåŒ–
 			$noCount = 0;
 
 			 $aryParts["strResultHtml"] .= "	<tr id=\"TD" . $codeCount . "_" . $noCount . "\" class=\"Segs\" onclick=\"fncSelectSomeTrColor( this , 'TD" . $codeCount . "_' , _%count" . $record["lngworkflowordercode"] . "%_ );\" style=\"background:" . $record["strgroupdisplaycolor"] . ";\">\n";
 
-			// ¥«¥é¥àÀ¸À®
+			// ã‚«ãƒ©ãƒ ç”Ÿæˆ
 			$aryParts["strResultHtml"] .= "<th nowrap rowspan=_%count" . $record["lngworkflowordercode"] . "%_>" . ( $codeCount + 1 ) . "</th>\n";
 			$aryParts["strResultHtml"] .= "		<td nowrap rowspan=_%count" . $record["lngworkflowordercode"] . "%_>" . fncHTMLSpecialChars( $record["strworkflowordername"] ) . "</td>\n";
 			$aryParts["strResultHtml"] .= "		<td nowrap rowspan=_%count" . $record["lngworkflowordercode"] . "%_>" . fncHTMLSpecialChars( $record["strgroupdisplayname"] ) . "</td>\n";
 		}
 
-		// ¤½¤ì°Ê³°¤Î¾ì¹ç¡¢<tr>¤Î¤ß¤òÉ½¼¨
+		// ãã‚Œä»¥å¤–ã®å ´åˆã€<tr>ã®ã¿ã‚’è¡¨ç¤º
 		else
 		{
 			 $aryParts["strResultHtml"] .= "	<tr id=\"TD" . $codeCount . "_" . $noCount . "\" class=\"Segs\" onclick=\"fncSelectSomeTrColor( this , 'TD" . $codeCount . "_' , _%count" . $record["lngworkflowordercode"] . "%_ );\" style=\"background:" . $record["strgroupdisplaycolor"] . ";\">\n";
 		}
 
-		// ¥«¥é¥à¤ÎÉ½¼¨
+		// ã‚«ãƒ©ãƒ ã®è¡¨ç¤º
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["lngworkfloworderno"] . "</td>\n";
 		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["struserdisplayname"] . "</td>\n";
-		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["lnglimitdays"] . "Æü´Ö</td>\n";
+		$aryParts["strResultHtml"] .= "		<td nowrap>" . $record["lnglimitdays"] . "æ—¥é–“</td>\n";
 
-		// ºÇ½é¤Î¥ï¡¼¥¯¥Õ¥í¡¼½ç½øÈÖ¹æ¤Î¾ì¹ç¡¢ºï½ü¥Ü¥¿¥ó¤ÎÉ½¼¨
+		// æœ€åˆã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºç•ªå·ã®å ´åˆã€å‰Šé™¤ãƒœã‚¿ãƒ³ã®è¡¨ç¤º
 		if ( $record["lngworkfloworderno"] == 1 )
 		{
-			// GET¤ÇÅÏ¤¹Ê¸»úÎóÀ¸À®
+			// GETã§æ¸¡ã™æ–‡å­—åˆ—ç”Ÿæˆ
 			$getUrl = "strSessionID=" .$aryData["strSessionID"]. "&lngWorkflowOrderCode=" . $record["lngworkflowordercode"] . "&lngActionCode=" . DEF_ACTION_DELETE;
 
-			// ºï½ü¥Ü¥¿¥óÀ¸À®
+			// å‰Šé™¤ãƒœã‚¿ãƒ³ç”Ÿæˆ
 			$aryParts["strResultHtml"] .= "		<th bgcolor=\"#ffffff\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncSelectSomeTrColor( this, 'TD" . $lngResultNum . "_',1 );\" nowrap rowspan=_%count" . $record["lngworkflowordercode"] . "%_><a href=\"javascript:fncShowDialogCommonMaster('/m/regist/wf/confirm.php?$getUrl' , window.form1 , 'ResultIframeCommonMaster' , 'NO' , $_COOKIE[lngLanguageCode] , 'delete' );\"><img onmouseover=\"RemoveOn(this);\" onmouseout=\"RemoveOff(this);\" src=\"/img/type01/cmn/seg/remove_off_bt.gif\" width=\"15\" height=\"15\" border=\"0\" alt=\"DELETE\"></a></th>\n";
 		}
 
@@ -164,7 +164,7 @@ if ( $lngResultNum )
 
 	$aryKeys = array_keys ( $aryCount );
 
-	// ROWSPAN Ëä¤á¹ş¤ß
+	// ROWSPAN åŸ‹ã‚è¾¼ã¿
 	foreach ( $aryKeys as $lngworkflowordercode )
 	{
 		$aryParts["strResultHtml"] = preg_replace ( "/_%count$lngworkflowordercode%_/", $aryCount[$lngworkflowordercode], $aryParts["strResultHtml"] );
@@ -173,11 +173,11 @@ if ( $lngResultNum )
 }
 else
 {
-	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . ( count ( $objMaster->aryColumnName ) + 1 ) . ">·ë²ÌÌµ¤·¡£</th></tr>";
+	$aryParts["strResultHtml"] = "<tr bgcolor=#ffffff><th colspan=" . ( count ( $objMaster->aryColumnName ) + 1 ) . ">çµæœç„¡ã—ã€‚</th></tr>";
 }
 
 
-// ¥«¥é¥à¹ÔHTML¼èÆÀ
+// ã‚«ãƒ©ãƒ è¡ŒHTMLå–å¾—
 $aryParts["strColumnHtml"] = $objMaster->getColumnHtmlTable( 5 );
 
 
@@ -194,7 +194,7 @@ $aryParts["strTableName"]    = $objMaster->strTableName;
 $aryParts["lngColumnNum"]    = 5;
 $aryParts["strEditURL"]      = "/m/regist/wf/edit.php?lngActionCode=" . DEF_ACTION_INSERT . "&strSessionID=" . $aryData["strSessionID"];
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 //echo getArrayTable( $aryParts, "TABLE" );exit;
 $objTemplate->getTemplate( "m/result/parts.tmpl" );

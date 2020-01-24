@@ -1,75 +1,75 @@
 <?php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include ("conf.inc");
 require_once (LIB_FILE);
 require_once (SRC_ROOT.'/cmn/exception/SQLException.class.php');
 
-// sql¥Õ¥¡¥¤¥ëÃÖ¤­¾ì
+// sqlãƒ•ã‚¡ã‚¤ãƒ«ç½®ãå ´
 define("QUERY_PATH", SRC_ROOT . "cmn/sql/");
 define("QUERY_FILE_SUFFIX", ".sql");
 
-// DB¥ª¡¼¥×¥ó
+// DBã‚ªãƒ¼ãƒ—ãƒ³
 $objDB   = new clsDB();
 $objDB->open("", "", "", "");
 
-// ¥»¥Ã¥·¥ç¥ó¤¬Í­¸ú¤Ê¾ì¹ç
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ãŒæœ‰åŠ¹ãªå ´åˆ
 if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
 {
 	$queryFileName = $_POST["QueryName"];
 	$queryFilePath = QUERY_PATH . $queryFileName . QUERY_FILE_SUFFIX;
-	// Í­¸ú¤Ê¥¯¥¨¥ê¥Õ¥¡¥¤¥ë¤Î¾ì¹ç
+	// æœ‰åŠ¹ãªã‚¯ã‚¨ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®å ´åˆ
 	if($queryFileName && is_readable ($queryFilePath))
 	{
-		// ¥¯¥¨¥ê¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+		// ã‚¯ã‚¨ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 		$query = file_get_contents($queryFilePath);
 		$prepare = pg_prepare($objDB->ConnectID, "", $query);
-		// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿
+		// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 		$params = array();
 
-		// ¸¡º÷¾ò·ï¤ò´Ş¤ó¤Ç¤¤¤ë¾ì¹ç
+		// æ¤œç´¢æ¡ä»¶ã‚’å«ã‚“ã§ã„ã‚‹å ´åˆ
 		if(array_key_exists("Conditions", $_POST) && count($_POST["Conditions"]))
 		{
-			// EUC-JP¤ØÊÑ´¹
+			// EUC-JPã¸å¤‰æ›
 			mb_convert_variables('eucjp-win', 'UTF-8', $_POST["Conditions"]);
 
-			// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿¤ÎºîÀ®
+			// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ä½œæˆ
 			foreach ($_POST["Conditions"] as $key=>$condition)
 			{
 				$params[] = pg_escape_string($condition);
 			}
 
-			// ¥¯¥¨¥ê¼Â¹Ô
+			// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 			$result = pg_execute("", $params);
 		}
-		// ¸¡º÷¾ò·ï¤ò´Ş¤ó¤Ç¤¤¤Ê¤¤¾ì¹ç
+		// æ¤œç´¢æ¡ä»¶ã‚’å«ã‚“ã§ã„ãªã„å ´åˆ
 		else
 		{
 			$result = pg_execute("", $params);
 		}
-		// ·ë²Ì¤¬ÆÀ¤é¤ì¤¿¾ì¹ç
+		// çµæœãŒå¾—ã‚‰ã‚ŒãŸå ´åˆ
 		if ($result)
 		{
-			// ·ë²Ì·ï¿ô¤ò¼èÆÀ
+			// çµæœä»¶æ•°ã‚’å–å¾—
 			$recordCount = pg_num_rows($result);
 			$fieldCount = pg_num_fields($result);
-			// Í­¸ú¤Ê·ï¿ô¤¬ÆÀ¤é¤ì¤¿¾ì¹ç
+			// æœ‰åŠ¹ãªä»¶æ•°ãŒå¾—ã‚‰ã‚ŒãŸå ´åˆ
 			if ($recordCount)
 			{
-				// ¸¡º÷·ë²Ì¥Ç¡¼¥¿¥»¥Ã¥È
+				// æ¤œç´¢çµæœãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆ
 				$resultDataSet = array();
                 $json = array();
 
 				$args = array();
-				// ¥ì¥³¡¼¥É·ï¿ôÊ¬Áöºº
+				// ãƒ¬ã‚³ãƒ¼ãƒ‰ä»¶æ•°åˆ†èµ°æŸ»
 				for ($i = 0; $i < $recordCount; $i++)
 				{
-					// ¸¡º÷·ë²Ì¥ì¥³¡¼¥É¼èÆÀ
+					// æ¤œç´¢çµæœãƒ¬ã‚³ãƒ¼ãƒ‰å–å¾—
 					$resultDataSet[] = pg_fetch_array($result, $i, PGSQL_ASSOC);
 				}
-				// ¥ì¥¹¥İ¥ó¥¹¥Ø¥Ã¥ÀÀßÄê
+				// ãƒ¬ã‚¹ãƒãƒ³ã‚¹ãƒ˜ãƒƒãƒ€è¨­å®š
 				header('Content-Type: application/json');
-				// jsonÊÑ´¹¤Î°Ù¡¢°ì»şÅª¤ËUTF-8¤ØÊÑ´¹
+				// jsonå¤‰æ›ã®ç‚ºã€ä¸€æ™‚çš„ã«UTF-8ã¸å¤‰æ›
 				mb_convert_variables('UTF-8', 'eucjp-win', $resultDataSet);
 
                 for ($i = 0; $i < $recordCount; $i++)
@@ -90,29 +90,29 @@ if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
 			}
 			else
 			{
-				echo "³ºÅö¤¹¤ë¥ì¥³¡¼¥É¤¬¸«¤Ä¤«¤ê¤Ş¤»¤ó¤Ç¤·¤¿";
+				echo "è©²å½“ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ";
 			}
 		}
-		// ·ë²Ì¤¬ÆÀ¤é¤ì¤Ê¤«¤Ã¤¿(¥¯¥¨¥ê¤Ë¼ºÇÔ¤·¤¿)¾ì¹ç
+		// çµæœãŒå¾—ã‚‰ã‚Œãªã‹ã£ãŸ(ã‚¯ã‚¨ãƒªã«å¤±æ•—ã—ãŸ)å ´åˆ
 		else
 		{
 			throw new SQLException(
-					"Ìä¤¤¹ç¤ï¤»¤Ë¼ºÇÔ¤·¤Ş¤·¤¿",
+					"å•ã„åˆã‚ã›ã«å¤±æ•—ã—ã¾ã—ãŸ",
 					$query,
 					$params);
 		}
 	}
-	// Ìµ¸ú¤Ê¥¯¥¨¥ê¥Õ¥¡¥¤¥ë¤Î¾ì¹ç
+	// ç„¡åŠ¹ãªã‚¯ã‚¨ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®å ´åˆ
 	else
 	{
-		echo $queryFilePath ."Ìµ¸ú¤Ê¥¯¥¨¥êÌ¾»ØÄê";
+		echo $queryFilePath ."ç„¡åŠ¹ãªã‚¯ã‚¨ãƒªåæŒ‡å®š";
 	}
 }
-// ¥»¥Ã¥·¥ç¥ó¤¬Ìµ¸ú¤Ê¾ì¹ç
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ãŒç„¡åŠ¹ãªå ´åˆ
 else
 {
-	echo "Ìµ¸ú¤Ê¥»¥Ã¥·¥ç¥ó";
+	echo "ç„¡åŠ¹ãªã‚»ãƒƒã‚·ãƒ§ãƒ³";
 }
 
-//DB¥¯¥í¡¼¥º
+//DBã‚¯ãƒ­ãƒ¼ã‚º
 $objDB->close();

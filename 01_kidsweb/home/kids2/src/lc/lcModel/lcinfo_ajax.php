@@ -1,78 +1,78 @@
 <?php
 
-// �ɤ߹���
+// 読み込み
 include 'conf.inc';
-//���饹�ե�������ɤ߹���
+//クラスファイルの読み込み
 require_once 'db_common.php';
-//���̥ե������ɤ߹���
+//共通ファイル読み込み
 require_once './lcModelCommon.php';
-//DB��³�ե�������ɤ߹���
+//DB接続ファイルの読み込み
 require_once './db_common.php';
 require_once './kidscore_common.php';
 require LIB_FILE;
-//PHPɸ���JSON�Ѵ��᥽�åɤϥ��顼�ˤʤ�Τǳ����Υ饤�֥��(���餯���󥳡��ɤ�����)
+//PHP標準のJSON変換メソッドはエラーになるので外部のライブラリ(恐らくエンコードの問題)
 require_once 'JSON.php';
 
 require_once(LIB_DEBUGFILE);
 
-//�ͤμ���
+//値の取得
 $postdata = file_get_contents("php://input");
 $data = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//�������֥����ƥ�DB��³
+//経理サブシステムDB接続
 $lcModel = new lcModel();
 
-//JSON���饹���󥹥��󥹲�
+//JSONクラスインスタンス化
 $s = new Services_JSON();
 
-//�ͤ�¸�ߤ��ʤ������̾�� POST �Ǽ�����
+//値が存在しない場合は通常の POST で受ける
 if ($data == null) {
     $data = $_POST;
 }
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession($data["sessionid"], $objAuth, $objDB);
 
-//�桼����ID����(Ⱦ�ѥ��ڡ��������뤿��)
+//ユーザーID取得(半角スペースがあるため)
 $usrId = trim($objAuth->UserID);
 
-//�������
+//結果配列
 $result = array();
 
-//��������ʬ��
+//処理振り分け
 switch ($data['method']) {
-    //���������Ƚ���
+    //ログアウト処理
     case 'logoutState':
-        //�����ƤӽФ�
+        //処理呼び出し
         $result = logoutState($lcModel, $data);
         break;
-    //L/C�������С����ǡ�����ͭ���ǡ�������PONO�����ȥ��٥��
+    //L/C情報の抽出・全データ・有効データあ・PONOソートイベント
     case 'getLcInfo':
         $result = getLcInfo($objDB, $data);
-        //�оݥǡ�����¿����JSON�Ѵ����˥��ꥪ���С��ˤʤ뤿�ᡢ2000��Ǿ�ʬ�����Ѵ�����
+        //対象データが多いとJSON変換時にメモリオーバーになるため、2000件で小分けに変換する
         ini_set('memory_limit', '512M');
         break;
-    // ���ߥ�졼�ȥ��٥��
+    // シミュレートイベント
     case 'getSimulateLcInfo':
-        // ���ߥ�졼�Ƚ���
+        // シミュレート処理
         $result = getSimulateLcInfo($objDB, $data);
-        //�оݥǡ�����¿����JSON�Ѵ����˥��ꥪ���С��ˤʤ뤿�ᡢ2000��Ǿ�ʬ�����Ѵ�����
+        //対象データが多いとJSON変換時にメモリオーバーになるため、2000件で小分けに変換する
         ini_set('memory_limit', '512M');
         break;
-    // ȿ�ǥ��٥��
+    // 反映イベント
     case 'reflectLcInfo':
         $result = reflectLcInfo($objDB, $lcModel, $usrId);
         break;
-    // Ģɼ���Ͻ��ɽ�����٥��
+    // 帳票出力初期表示イベント
     case 'getSelLcReport':
-        //�����ƤӽФ�
+        //処理呼び出し
         $result = getSelLcReport();
         break;
-    // Ģɼ���Ϥΰ������٥��
+    // 帳票出力の印刷イベント
     case 'exportLcReport':
-        //�����ƤӽФ�
+        //処理呼び出し
         $result = exportLcReport($data);
         break;
 }
@@ -80,11 +80,11 @@ switch ($data['method']) {
 $objDB->close();
 $lcModel->close();
 
-//��̽���
+//結果出力
 mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);
 
-// ���������Ƚ���
+// ログアウト処理
 function logoutState($lcModel, $data)
 {
     $result = $lcModel->loginStateLogout($data);
@@ -92,7 +92,7 @@ function logoutState($lcModel, $data)
 }
 
 /**
- * LC�������
+ * LC情報取得
  *
  * @param [object] $objDB
  * @param [array] $data
@@ -105,7 +105,7 @@ function getLcInfo($objDB, $data)
 }
 
 /**
- * ���ߥ�졼�Ƚ���
+ * シミュレート処理
  *
  * @param [object] $objDB
  * @param [array] $data
@@ -113,13 +113,13 @@ function getLcInfo($objDB, $data)
  */
 function getSimulateLcInfo($objDB, $data)
 {
-    // ��ԥޥ�������μ���
+    // 銀行マスタ情報の取得
     $bankArry = fncGetValidBankInfo($objDB);
 
-    // �̲߶�ʬ����μ���
+    // 通貨区分配列の取得
     $currencyClassArry = fncGetCurrencyClassList($objDB);
 
-    // ���ѿ��ν����
+    // 各変数の初期化
     $shipym = $data["to"];
     $sumOfMoneypriceByPonoArry = array();
     $mCurTtlMoney = 0;
@@ -127,40 +127,40 @@ function getSimulateLcInfo($objDB, $data)
 
     if (count($currencyClassArry) > 0) {
         foreach ($currencyClassArry as $currencyClass) {
-            // �̲���PO�ֹ��̹�׶������
+            // 通貨別PO番号別合計金額配列
             $sumOfMoneypriceByPonoArry = fncGetSumOfMoneypriceByPono($objDB, $shipym, $currencyClass);
             //
             if (count($sumOfMoneypriceByPonoArry) > 0) {
-                // �̲��̹�׶������
+                // 通貨別合計金額配列
                 $mCurTtlMoney = fncGetSumOfMoneyprice($objDB, $shipym, $currencyClass);
-                // �̲��̶���̤ι�׶�ۼ���
+                // 通貨別銀行別の合計金額取得
                 $sumOfMoneypriceByBanknameArry = fncGetSumOfMoneypriceByBankname($objDB, $shipym, $currencyClass);
 
                 $bankdivMoney = array();
-                // ��Գ俶����
+                // 銀行割振処理
                 for ($i = 0; $i <= count($bankArry) - 1; $i++) {
-                    // ����̳俶���� = �̲��̹�׶�� * ����̳俶Ψ����ʬ.�俶��Ψ
+                    // 銀行別割振り金額 = 通貨別合計金額 * 銀行別割振率配列分.割振り率
                     $bankdivMoney[$i] = $mCurTtlMoney * $bankArry[$i]->bankdivrate;
-                    // �̲���PO�ֹ��̹�׶������ʬ
+                    // 通貨別PO番号別合計金額配列分
                     foreach ($sumOfMoneypriceByBanknameArry as $sumOfMoneypriceByBankname) {
-                        // ����̳俶Ψ����.���̾��ά̾�� = �̲��̶���̹�׶������.ȯ�Զ��̾�ξ��
+                        // 銀行別割振率配列.銀行名省略名称 = 通貨別銀行別合計金額配列.発行銀行名の場合
                         if ($bankArry[$i]->bankomitname == $sumOfMoneypriceByBankname->bankname) {
-                            // ����̳俶���� = ����̳俶���ۡ�- �̲��̶���̹�׶������.��׶��
+                            // 銀行別割振り金額 = 銀行別割振り金額　- 通貨別銀行別合計金額配列.合計金額
                             $bankdivMoney[$i] = $bankdivMoney[$i] - $sumOfMoneypriceByBankname->totalmoneyprice;
                         }
                     }
                 }
 
-                // �̲���PO�ֹ��̹�׶������ʬ
+                // 通貨別PO番号別合計金額配列分
                 foreach ($sumOfMoneypriceByPonoArry as $sumOfMoneypriceByPono) {
                     $curMoney = $sumOfMoneypriceByPono->totalmoneyprice;
                     $blnBkSetFlg = false;
                     for ($i = 0; $i <= count($bankArry) - 1; $i++) {
-                        // ����̳俶���� - �̲���PO�ֹ��̹�׶������.��׶�ۡ�>= 0�ξ��
+                        // 銀行別割振り金額 - 通貨別PO番号別合計金額配列.合計金額　>= 0の場合
                         if (($bankdivMoney[$i] - $curMoney) >= 0) {
-                            // ����̳俶���� = ����̳俶���� - �̲���PO�ֹ��̹�׶������.��׶��
+                            // 銀行別割振り金額 = 銀行別割振り金額 - 通貨別PO番号別合計金額配列.合計金額
                             $bankdivMoney[$i] = $bankdivMoney[$i] - $sumOfMoneypriceByPono->totalmoneypric;
-                            // t_lcinfo�򹹿�
+                            // t_lcinfoを更新
                             fncUpdateBankname($objDB, $bankArry[$i]->bankcd, $bankArry[$i]->bankomitname, $currencyClass, $sumOfMoneypriceByPono->pono);
 
                             $blnBkSetFlg = true;
@@ -182,7 +182,7 @@ function getSimulateLcInfo($objDB, $data)
                         }
                         $bankdivMoney[$intBkNum] = $bankdivMoney[$intBkNum] - $curMoney;
 
-                        // t_lcinfo�򹹿�
+                        // t_lcinfoを更新
                         fncUpdateBankname($objDB, $bankArry[$intBkNum]->bankcd, $bankArry[$intBkNum]->bankomitname, $currencyClass, $sumOfMoneypriceByPono->pono);
 
                     }
@@ -193,14 +193,14 @@ function getSimulateLcInfo($objDB, $data)
 
     }
 
-    // L/C����ǡ��������
+    // L/C情報データの抽出
     $result = fncGetLcInfoData($objDB, $data);
     return $result;
 
 }
 
 /**
- * L/C�����ackids��ȿ��
+ * L/C情報をackidsに反映
  *
  * @param [object] $objDB
  * @param [object] $lcModel
@@ -209,14 +209,14 @@ function getSimulateLcInfo($objDB, $data)
  */
 function reflectLcInfo($objDB, $lcModel, $usrId)
 {
-    // t_lcinfo���L/C������������
+    // t_lcinfoよりL/C情報を取得する
     $lcInfoArry = fncGetLcInfoData($objDB, $data);
     if (count($lcInfoArry) > 0) {
         foreach ($lcInfoArry as $lcInfo) {
             $lcInfo["updateuser"] = $usrId;
             $lcInfo["updatedate"] = date("Ymd");
             $lcInfo["updatetime"] = date("H:i:s");
-            // t_aclcinfo�˥ǡ�����ȿ�Ǥ���
+            // t_aclcinfoにデータを反映する
             $lcModel->updateAcLcInfo($lcInfo);
         }
     }
@@ -224,7 +224,7 @@ function reflectLcInfo($objDB, $lcModel, $usrId)
 
 }
 
-// LCĢɼ���ϲ���-���쥯�ȥܥå����������
+// LC帳票出力画面-セレクトボックス情報取得
 function getSelLcReport($objDB, $lcModel)
 {
     $result["unloading_areas"] = fncGetPortplace($objDB);
@@ -232,23 +232,23 @@ function getSelLcReport($objDB, $lcModel)
     return $result;
 }
 
-// LCĢɼ���ϲ���-��������
+// LC帳票出力画面-印刷処理
 function exportLcReport($objDB, $lcModel, $data)
 {
-    //�̲߶�ʬ�ꥹ�Ȥμ���
+    //通貨区分リストの取得
     $currency_class_list = fncGetCurrencyClassList($objDB);
-    //�̲߶�ʬ(̤��ǧ�ޤ�)�ꥹ�Ȥμ���
+    //通貨区分(未承認含む)リストの取得
     $currency_class_list_all = fncGetCurrencyClassListAll($objDB);
-    //��ԥꥹ�Ȥμ���
+    //銀行リストの取得
     $bank_info = $lcModel->getBankList();
-    //���ϥե�����ξ���
-    //$data ��������ˤ���ޤ���
+    //入力フォームの情報
+    //$data ←この中にあります。
     /*
-    �ʲ�Ģɼ���Ϥν�����̤�����Ǥ���
-    ���ߤ�Ajax�̿������������¹Ԥ���ޤ�����
-    �ե��������Ϥ���Τ�Ʊ���̿��Ǥʤ���Ф����ʤ����⤷��ޤ���
-    ���ξ��ϲ���������ϥե������<form>�����ǳ�ꡢ
-    JS¦�����ϥ����å����SUBMIT��¹Ԥ���ή��ˤ���ɬ�פ�����ޤ���
+    以下帳票出力の処理は未実装です。
+    現在はAjax通信で当処理が実行されますが、
+    ファイルを出力するので同期通信でなければいけないかもしれません。
+    その場合は画面内の入力フォームを<form>タグで括り、
+    JS側の入力チェック後にSUBMITを実行する流れにする必要があります。
      */
     return true;
 }

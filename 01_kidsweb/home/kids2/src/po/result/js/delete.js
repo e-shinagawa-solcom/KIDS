@@ -6,10 +6,10 @@ jQuery(function($){
     // events
     $('img#btnClose').on('click', function(){
         window.open('about:blank','_self').close();
-        //alert("йд╓╦╓К╔э╔©╔С╔╞╔Й╔ц╔╞");
+        //alert("И√┴Ц│≤Ц┌▀Ц┐°Ц┌©Ц┐ЁЦ┌╞Ц┐╙Ц┐┐Ц┌╞");
     });
     $('img#btnDelete').on('click', function(){
         $('#deleteForm').submit();
-        //alert("╨О╫Э╔э╔©╔С╔╞╔Й╔ц╔╞");
+        //alert("Е┴┼И≥╓Ц┐°Ц┌©Ц┐ЁЦ┌╞Ц┐╙Ц┐┐Ц┌╞");
     });
 });

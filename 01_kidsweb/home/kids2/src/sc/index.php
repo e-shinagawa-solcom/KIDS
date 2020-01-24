@@ -2,20 +2,20 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       Çä¾å´ÉÍı  ¥á¥Ë¥å¡¼²èÌÌ
+*       å£²ä¸Šç®¡ç†  ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦¥á¥Ë¥å¡¼²èÌÌ¤òÉ½¼¨
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã‚’è¡¨ç¤º
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-	// ÆÉ¤ß¹ş¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
 	require (LIB_FILE);
 	
@@ -27,39 +27,39 @@
 	$aryData["strSessionID"] = $_POST["strSessionID"];
 
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 	
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $_POST["strSessionID"], $objAuth, $objDB );
 
-	// 600 Çä¾å´ÉÍı
+	// 600 å£²ä¸Šç®¡ç†
 	if ( !fncCheckAuthority( DEF_FUNCTION_SC0, $objAuth ) )
 	{
-	        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-	// 601 Çä¾å´ÉÍı¡Ê Çä¾åÅĞÏ¿¡Ë
+	// 601 å£²ä¸Šç®¡ç†ï¼ˆ å£²ä¸Šç™»éŒ²ï¼‰
 	if ( fncCheckAuthority( DEF_FUNCTION_SC1, $objAuth ) )
 	{
 		$aryData["strRegistURL"]   = "regist2/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 	
-	// 602 Çä¾å´ÉÍı¡Ê Çä¾å¸¡º÷¡Ë
+	// 602 å£²ä¸Šç®¡ç†ï¼ˆ å£²ä¸Šæ¤œç´¢ï¼‰
 	if ( fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 	{
 		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 
-	// 602 Çä¾å´ÉÍı¡Ê Ç¼ÉÊ½ñ¸¡º÷¡Ë
+	// 602 å£²ä¸Šç®¡ç†ï¼ˆ ç´å“æ›¸æ¤œç´¢ï¼‰
 	if ( fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 	{
 		$aryData["strSearch2URL"]   = "search2/index.php?strSessionID=" . $aryData["strSessionID"];
 	}
 
-	// ¥Ø¥ë¥×ÂĞ±ş
+	// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_SC0;
 
 	echo fncGetReplacedHtml( "sc/parts.tmpl", $aryData ,$objAuth );

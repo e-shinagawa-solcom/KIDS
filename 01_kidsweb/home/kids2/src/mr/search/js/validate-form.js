@@ -1,39 +1,39 @@
 
 (function(){
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var form = $('form');
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥¯¥é¥¹Ì¾
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚¯ãƒ©ã‚¹å
     var classNameErrorIcon = 'error-icon';
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥ê¥½¡¼¥¹URL
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãƒªã‚½ãƒ¼ã‚¹URL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(ÆüÉÕ)
-    var msgDateFormat = "yyyy/mm/dd·Á¼°¤«¤ÄÍ­¸ú¤ÊÆüÉÕ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£";
-    // ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È yyyy/mm/dd·Á¼°
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(æ—¥ä»˜)
+    var msgDateFormat = "yyyy/mm/ddå½¢å¼ã‹ã¤æœ‰åŠ¹ãªæ—¥ä»˜ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚";
+    // æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ yyyy/mm/ddå½¢å¼
     var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/;
 
-    // validation¥­¥Ã¥¯
+    // validationã‚­ãƒƒã‚¯
     $('.hasDatepicker').on({
         'change': function(){
             $(this).blur();
         }
     });
 
-    // ÆüÉÕ¤¬yyyy/mm/dd·Á¼°¤Ë¥Ş¥Ã¥Á¤·¤Æ¤¤¤ë¤«,Í­¸ú¤ÊÆüÉÕ¤«
+    // æ—¥ä»˜ãŒyyyy/mm/ddå½¢å¼ã«ãƒãƒƒãƒã—ã¦ã„ã‚‹ã‹,æœ‰åŠ¹ãªæ—¥ä»˜ã‹
     $.validator.addMethod(
         "checkDateFormat",
         function(value, element, params) {
             if(params){
-                // yyyy/mm/dd·Á¼°¤«
+                // yyyy/mm/ddå½¢å¼ã‹
                 if (!(regDate.test(value))) {
                     return false;
                 }
-                // ÆüÉÕÊ¸»úÎó¤Î»ú¶çÊ¬²ò
+                // æ—¥ä»˜æ–‡å­—åˆ—ã®å­—å¥åˆ†è§£
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ÆüÉÕ¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+                // æ—¥ä»˜ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
                 } else {
@@ -44,23 +44,23 @@
         msgDateFormat
     );
 
-    // ¸¡¾ÚÀßÄê
+    // æ¤œè¨¼è¨­å®š
     form.validate({
         // -----------------------------------------------
-        // ¥¨¥é¡¼É½¼¨½èÍı
+        // ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºå‡¦ç†
         // -----------------------------------------------
         errorPlacement: function (error, element){
             invalidImg = $('<img>')
                             .attr('class', classNameErrorIcon)
                             .attr('src', urlErrorIcon)
-                            // CSSÀßÄê(É½¼¨°ÌÃÖ)
+                            // CSSè¨­å®š(è¡¨ç¤ºä½ç½®)
                             .css({
                                 position: 'relative',
                                 top: -1,
                                 left: -2,
                                 opacity: 'inherit'
                             })
-                            // ¥Ä¡¼¥ë¥Á¥Ã¥×É½¼¨
+                            // ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—è¡¨ç¤º
                             .tooltipster({
                                 trigger: 'hover',
                                 onlyone: false,
@@ -68,30 +68,30 @@
                                 content: error.text()
                             });
 
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã—ãªã„å ´åˆ
             if ($(element).prev('img.' + classNameErrorIcon).length <= 0){
-                // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤òÉ½¼¨
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤º
                 $(element).before(invalidImg);
             }
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤¹¤ë¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
             else {
-                // ´ûÂ¸¤Î¥¨¥é¡¼¥¢¥¤¥³¥ó¤Î¥Ä¡¼¥ë¥Á¥Ã¥×¥Æ¥­¥¹¥È¤ò¹¹¿·
+                // æ—¢å­˜ã®ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°
                 $(element).prev('img.' + classNameErrorIcon)
                             .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
-        // ¸¡¾ÚOK»ş¤Î½èÍı
+        // æ¤œè¨¼OKæ™‚ã®å‡¦ç†
         // -----------------------------------------------
         unhighlight: function(element){
-                // ¥¨¥é¡¼¥¢¥¤¥³¥óºï½ü
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³å‰Šé™¤
                 $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
-        // ¸¡¾Ú¥ë¡¼¥ë
+        // æ¤œè¨¼ãƒ«ãƒ¼ãƒ«
         // -----------------------------------------------
         rules:{
-            // °ÍÍêÆü
+            // ä¾é ¼æ—¥
             From_RequestDate: {
                 checkDateFormat: function(){
                     return $('input[name="IsSearch_RequestDate"]').get(0).checked;
@@ -102,7 +102,7 @@
                     return $('input[name="IsSearch_RequestDate"]').get(0).checked;
                 }
             },
-            // ´õË¾Æü
+            // å¸Œæœ›æ—¥
             From_ActionRequestDate: {
                 checkDateFormat: function(){
                     return $('input[name="IsSearch_ActionRequestDate"]').get(0).checked;
@@ -113,7 +113,7 @@
                     return $('input[name="IsSearch_ActionRequestDate"]').get(0).checked;
                 }
             },
-            // ÊÖµÑÍ½ÄêÆü
+            // è¿”å´äºˆå®šæ—¥
             From_ReturnSchedule: {
                 checkDateFormat: function(){
                     return $('input[name="IsSearch_ReturnSchedule"]').get(0).checked;
@@ -124,7 +124,7 @@
                     return $('input[name="IsSearch_ReturnSchedule"]').get(0).checked;
                 }
             },
-            // ÅĞÏ¿Æü
+            // ç™»éŒ²æ—¥
             From_Created: {
                 checkDateFormat: function(){
                     return $('input[name="IsSearch_Created"]').get(0).checked;
@@ -135,7 +135,7 @@
                     return $('input[name="IsSearch_Created"]').get(0).checked;
                 }
             },
-            // ¹¹¿·Æü
+            // æ›´æ–°æ—¥
             From_Updated: {
                 checkDateFormat: function(){
                     return $('input[name="IsSearch_Updated"]').get(0).checked;

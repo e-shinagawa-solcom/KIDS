@@ -1,6 +1,6 @@
 <?
 /**
- *    Ä¢É¼½ĞÎÏ ¾¦ÉÊ´ë²è½ñ °õºş¥Ü¥¿¥ó½ĞÎÏ²èÌÌ
+ *    å¸³ç¥¨å‡ºåŠ› å•†å“ä¼ç”»æ›¸ å°åˆ·ãƒœã‚¿ãƒ³å‡ºåŠ›ç”»é¢
  *
  *    @package   KIDS
  *    @license   http://www.wiseknot.co.jp/
@@ -10,16 +10,16 @@
  *    @version   1.00
  *
  */
-// °õºş¥×¥ì¥Ó¥å¡¼²èÌÌ(FARAMESET)¤è¤ê
+// å°åˆ·ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢(FARAMESET)ã‚ˆã‚Š
 // frameset.php -> strSessionID       -> action.php
 // frameset.php -> strReportClassCode -> action.php
 // frameset.php -> strReportKeyCode   -> action.php
 // frameset.php -> lngReportCode      -> action.php
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require SRC_ROOT . "list/cmn/lib_lo.php";
 
@@ -28,22 +28,22 @@ $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// ¥Ç¡¼¥¿¼èÆÀ
+// ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 $aryData = $_GET;
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUNCTION_PO0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
 if ($aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] == "slip") {
@@ -82,7 +82,7 @@ if ($aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] == "slip") {
 	<img onmouseover="fncPrintButton( 'on' , this );" onmouseout="fncPrintButton( 'off' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/list/print_off_bt.gif" width="72" height="20" border="0" alt="PRINT"></a>
 </div>
 <div align="right" style="width: 45%;font-size: 9pt;display: none" id="rePrint">
-	<input id="rePrintChk" type="checkbox">ºÆ°õºş¤òÈ÷¹Í¤Ë°õ»ú¤¹¤ë
+	<input id="rePrintChk" type="checkbox">å†å°åˆ·ã‚’å‚™è€ƒã«å°å­—ã™ã‚‹
 </div>
 </div>
 

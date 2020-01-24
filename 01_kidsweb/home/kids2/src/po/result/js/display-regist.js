@@ -10,7 +10,7 @@
         var revisionNo = '&revisionNo=' + $(this).attr('revisionno');
         sessionID = '&strSessionID=' + getUrlVars()["strSessionID"];
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + lngorderno + estimateNo + revisionNo + sessionID, 'display-regist', 'width=996, height=689, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

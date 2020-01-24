@@ -1,6 +1,6 @@
 <?
 /** 
-*	����ե��� �Ʒ��������
+*	ワークフロー 案件処理画面
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -9,9 +9,9 @@
 *	@access    public
 *	@version   1.00
 *
-*	��������
-*	2004.04.20	�����оݤΰƷ郎���Ĥ���ʤ��ä����Υ�å��������ѹ�
-*				���Ĥ���ʤ�������¾�Υ桼������������Ԥä�
+*	更新履歴
+*	2004.04.20	処理対象の案件が見つからなかった場合のメッセージを変更
+*				見つからない状況＝他のユーザーが処理を行った
 *
 */
 // index.php -> strSessionID          -> edit.php
@@ -26,13 +26,13 @@
 // index.php -> lngInChargeCode       -> edit.php
 // index.php -> lngWorkflowCode       -> edit.php
 //
-// ɽ������Ʒ�ε�ǽ������(DEF_FUNCTION)(�����500:ȯ�������Τ�)
+// 表示する案件の機能コード(DEF_FUNCTION)(初期は500:発注管理のみ)
 // index.php -> lngSelectFunctionCode -> edit.php
 //
-// lib_wf.php�ˤ��ɤ߹��९�������̤��뤿��ν���������(���ܤ�DEF_FUNCTION_WF6)
+// lib_wf.phpにて読み込むクエリを区別するための処理コード(基本はDEF_FUNCTION_WF6)
 // index.php -> lngActionFunctionCode -> edit.php
 //
-// �Ʒ�����¹Ԥ�
+// 案件処理実行へ
 // edit.php -> strSessionID          -> confirm.php
 // edit.php -> lngFunctionCode       -> confirm.php
 // edit.php -> lngWorkflowStatusCode -> confirm.php
@@ -45,32 +45,32 @@
 // edit.php -> lngInChargeCode       -> confirm.php
 // edit.php -> lngWorkflowCode       -> confirm.php
 //
-// ɽ������Ʒ�ε�ǽ������(DEF_FUNCTION)(�����500:ȯ�������Τ�)
+// 表示する案件の機能コード(DEF_FUNCTION)(初期は500:発注管理のみ)
 // edit.php -> lngSelectFunctionCode -> confirm.php
 //
-// lib_wf.php�ˤ��ɤ߹��९�������̤��뤿��ν���������(���ܤ�DEF_FUNCTION_WF6)
+// lib_wf.phpにて読み込むクエリを区別するための処理コード(基本はDEF_FUNCTION_WF6)
 // edit.php -> lngActionFunctionCode -> confirm.php
 //
-// �������ܥ���(DEF_STATUS_ORDER, DEF_STATUS_DENIAL, DEF_STATUS_CANCELL)
+// 押したボタン(DEF_STATUS_ORDER, DEF_STATUS_DENIAL, DEF_STATUS_CANCELL)
 // edit.php -> lngTransactionCode    -> confirm.php
 
-// �����ɤ߹���
+// 設定読み込み
 include_once('conf.inc');
 
-// �饤�֥���ɤ߹���
+// ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "wf/cmn/lib_wf.php");
 require( LIB_DEBUGFILE );
 
-// DB��³
+// DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// GET�ǡ�������
+// GETデータ取得
 $aryData = $_GET;
 
-// ������ΰƷ�Τ߽�������ǽ�ʤ��ᡢ���ֿ֡�����פ򸡺����Ȥ��ƶ���
+// 申請中の案件のみ処理が可能なため、状態「申請中」を検索条件として強制
 $aryData["lngWorkflowStatusCodeConditions"] =1;
 $aryData["lngWorkflowStatusCode"] = DEF_STATUS_ORDER;
 
@@ -88,34 +88,34 @@ $aryCheck["lngActionFunctionCode"] = "number(0,32767)";
 $aryCheck["lngSelectFunctionCode"] = "number(0,32767)";
 
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ���³�ǧ
+// 権限確認
 if ( !fncCheckAuthority( DEF_FUNCTION_WF6, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 
-// ʸ��������å�
+// 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
-// ���̼����Ϥ�URL����(���å����ID���ڡ������Ƹ������)
+// 共通受け渡しURL生成(セッションID、ページ、各検索条件)
 $strURL = fncGetURL( $aryData );
 
-$aryParts["comment"] = "���������򤷤Ƥ���������";
+$aryParts["comment"] = "処理を選択してください。";
 
-// ����ե�������
-// �Ʒ��ɤ߹��ߡ��������ܺپ������������ؿ�
+// ワークフロー管理
+// 案件読み込み、検索、詳細情報取得クエリ関数
 list ( $lngResultID, $lngResultNum, $strErrorMessage ) = getWorkflowQuery( $objAuth->UserCode, $aryData, $objDB );
 
 if ( !$lngResultNum )
 {
 // 2004.04.20 suzukaze update start
-// ���ξ��֤��оݰƷ郎���Ĥ���ʤ�������¾�Υ桼������������¹Ԥ���
-// ��¾�Υ桼�����ν����ˤ�ꡢ�оݰƷ�ϡֿ�����פǤϤʤ��ʤ�ޤ������פΥ�å�������ɽ������
+// この状態で対象案件が見つからない状況＝他のユーザーが処理を実行した
+// 「他のユーザーの処理により、対象案件は「申請中」ではなくなりました。」のメッセージを表示する
 	fncOutputError ( 803, DEF_WARNING, "", TRUE, "", $objDB );
 // 2004.04.20 suzukaze update end
 }
@@ -133,14 +133,14 @@ $aryParts["lngStatusCode"]      = $aryWorkflowStatus[$objResult->tstatuscode];
 
 /*
 //
-// ȯ��������ե����ξ��
+// 発注・ワークフローの場合
 //
 if( $objResult->lngfunctioncode == DEF_FUNCTION_PO1 )
 {
-	// ȯ���ˤƻ��ꤷ�Ƥ������ʥ����ɤμ�������
+	// 発注にて指定している製品コードの取得処理
 	$strProductCodeQuery = "SELECT od.strProductCode as strProductCode FROM t_OrderDetail od WHERE od.lngOrderNo = " . $aryParts["strWorkflowKeyCode"];
 
-	// �ͤ�Ȥ� =====================================
+	// 値をとる =====================================
 	$lngEstimateNo = "";
 	list ( $lngResultProductCodeID, $lngResultProductCodeNum ) = fncQuery( $strProductCodeQuery, $objDB );
 	if ( $lngResultProductCodeNum )
@@ -148,7 +148,7 @@ if( $objResult->lngfunctioncode == DEF_FUNCTION_PO1 )
 		$objProductCodeResult = $objDB->fetchObject( $lngResultProductCodeID, 0 );
 		$strProductCode = $objProductCodeResult->strproductcode;
 
-		// ���Ѹ����ǡ�������
+		// 見積原価データ取得
 		$aryEstimateQuery[] = "SELECT e.lngEstimateNo ";
 		$aryEstimateQuery[] = "FROM m_Estimate e";
 		$aryEstimateQuery[] = "WHERE e.strProductCode = '" . $strProductCode . "'";
@@ -171,24 +171,24 @@ if( $objResult->lngfunctioncode == DEF_FUNCTION_PO1 )
 	}
 	$objDB->freeResult( $lngResultProductCodeID );
 
-	// ���˻�������ʥ����ɤ��Ф��Ƹ��Ѹ�������¸�ߤ����
+	// 既に指定の製品コードに対して見積原価情報が存在すれば
 	if ( $lngEstimateNo != "" )
 	{
-		// ȯ�����Ƥȸ��Ѹ��������Υ�����ɥ��򳫤�����
+		// 発注内容と見積原価双方のウィンドウを開く処理
 		$aryParts["strWorkflowName"]   = "<td class=\"Segs\" onClick=\"javascript:fncShowWfDialogCommon('/po/result/index2.php?strSessionID=" . $aryData["strSessionID"] . "&lngOrderNo=" . $aryParts["strWorkflowKeyCode"] . "' , window.form1 , 'ResultIframeWf' , 'YES' , " . $_COOKIE["lngLanguageCode"] . " , 'detail', 505, 679, 6, 30 );\"><a class=wfA href=\"/estimate/result/detail.php?strSessionID=" . $aryData["strSessionID"] . "&lngEstimateNo=" . $lngEstimateNo . "\" target=_blank>" . $aryParts["strWorkflowName"] . "</a></td>";
 	}
 }
 //
-// ���Ѹ����Υ���ե����ξ��
+// 見積原価のワークフローの場合
 //
 elseif( $objResult->lngfunctioncode == DEF_FUNCTION_E1 )
 {
-	// ���Ѹ����Υ���ե����ξ�硢���Ѹ����������ƤΥ�����ɥ��򳫤�����
+	// 見積原価のワークフローの場合、見積原価情報内容のウィンドウを開く処理
 	$aryParts["strWorkflowName"]   = "<td class=\"Segs\"><a class=wfA href=\"/estimate/result/detail.php?strSessionID=" . $aryData["strSessionID"] . "&lngEstimateNo=" . $aryParts["strWorkflowKeyCode"] . "\" target=_blank>" . $aryParts["strWorkflowName"] . "</a></td>";
 }
 
 //
-// �嵭��ȯ���ʸ��Ѹ�����ʻ�ѡˡ����Ѹ������˳������ʤ���¾�Υ���ե����ξ��
+// 上記、発注（見積原価・併用）、見積原価、に該当しない、他のワークフローの場合
 //
 if( empty($aryParts["strWorkflowName"]) )
 {
@@ -196,22 +196,22 @@ if( empty($aryParts["strWorkflowName"]) )
 }
 */
 
-// �Ʒ����ʳƥ���ե������֤���������
+// 案件情報（各ワークフロー状態から生成）
 $aryParts["strWorkflowName"] = fncGetWorkflowNameLink( $objDB, $objResult, $aryData["strSessionID"]);
 
 
 
 
 //////////////////////////////////////////////////////////////////////////
-// �桼�����̥ܥ���ɽ������
+// ユーザー別ボタン表示処理
 //////////////////////////////////////////////////////////////////////////
 
-// �����ܥ���(��ǧ����ǧ���������ä�)ɽ����ǧ�Τ����
-// ��������桼�����Υ���ե��������ɤ��ֹ�����
+// 処理ボタン(承認・否認・申請取り消し)表示確認のための
+// ログインユーザーのワークフローコードと番号を取得
 list ( $aryWorkflowOrderCode, $aryWorkflowOrderNo ) = fncGetArrayData( $objAuth->UserCode, 0, $objDB );
 
-// ������ ����
-// ��ǧ�Ԥ���������桼������Ʊ�����ϡ־�ǧ�ס���ǧ�פ�ɽ��
+// 申請中 かつ
+// 承認者がログインユーザーと同じ場合は「承認」「否認」を表示
 if ( $objResult->tstatuscode == DEF_STATUS_ORDER && $objResult->lnginchargecode == $objAuth->UserCode )
 {
 	$aryParts["strRecognAction"] = "confirm.php?$strURL&lngWorkflowCode=$aryData[lngWorkflowCode]&lngActionFunctionCode=" . DEF_FUNCTION_WF6 . "&lngTransactionCode=" . DEF_STATUS_ORDER;
@@ -219,21 +219,21 @@ if ( $objResult->tstatuscode == DEF_STATUS_ORDER && $objResult->lnginchargecode 
 }
 
 
-// ������ ����
-// ���ϼԤ���������桼������Ʊ��
-// ���ϡֿ������ä��פ�ɽ��
+// 申請中 かつ
+// 入力者がログインユーザーと同じ
+// 場合は「申請取り消し」を表示
 elseif ( $objResult->tstatuscode == DEF_STATUS_ORDER && $objResult->lnginputusercode == $objAuth->UserCode )
 {
 	$flgPutButton = TRUE;
 }
 
-// ������ ����
-// ��������桼�����ν��֡㸽�ߤν��֤Ǥ���
-// ���ϡֿ������ä��פ�ɽ��
+// 申請中 かつ
+// ログインユーザーの順番＜現在の順番である
+// 場合は「申請取り消し」を表示
 elseif ( $objResult->tstatuscode == DEF_STATUS_ORDER )
 {
-	// ��������桼�����Υ���ե��������ֹ椬
-	// ɽ������Ʒ���ֹ��꾮�������
+	// ログインユーザーのワークフロー順番番号が
+	// 表示する案件の番号より小さい場合
 	for ( $j = 0; $j < count ( $aryWorkflowOrderCode ); $j++ )
 	{
 		if ( $aryWorkflowOrderCode[$j] == $objResult->lngworkflowordercode && $aryWorkflowOrderNo[$j] < $objResult->lngworkfloworderno )
@@ -251,9 +251,9 @@ if ( $flgPutButton )
 
 
 //////////////////////////////////////////////////////////////////////////
-// ��̼��������Ͻ���
+// 結果取得、出力処理
 //////////////////////////////////////////////////////////////////////////
-//$aryParts["close"] = "<h3><a href=\"javascript:window.close();\">�Ĥ���</a></h3>\n";
+//$aryParts["close"] = "<h3><a href=\"javascript:window.close();\">閉じる</a></h3>\n";
 
 /*
 foreach ( $aryParts as $strKey )
@@ -262,7 +262,7 @@ foreach ( $aryParts as $strKey )
 }
 */
 
-// HTML����
+// HTML出力
 //$aryData["RENEW"] = TRUE;
 //echo fncGetReplacedHtml( "p/regist/parts.tmpl", $aryData, $objAuth );
 
@@ -278,7 +278,7 @@ $aryParts["strSessionID"] =& $aryData["strSessionID"];
 
 $objTemplate = new clsTemplate();
 
-// �ƥ�ץ졼���ɤ߹���
+// テンプレート読み込み
 if( $lngFunctionCode == DEF_FUNCTION_E1 )
 {
 	$objTemplate->getTemplate( "wf/regist/confirm_estimate.tmpl" );

@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥·¥¹¥Æ¥à´ÉÍý ¥á¡¼¥ëÀßÄê²èÌÌ
+*	ã‚·ã‚¹ãƒ†ãƒ ç®¡ç† ãƒ¡ãƒ¼ãƒ«è¨­å®šç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,55 +10,55 @@
 *	@version   1.00
 *
 */
-// ¥·¥¹¥Æ¥à´ÉÍý¥á¥Ë¥å¡¼²èÌÌ
+// ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 // index.php -> strSessionID -> index.php
 //
-// ¥·¥¹¥Æ¥à¥á¡¼¥ëÀßÄê´°Î»²èÌÌ¤Ø
+// ã‚·ã‚¹ãƒ†ãƒ ãƒ¡ãƒ¼ãƒ«è¨­å®šå®Œäº†ç”»é¢ã¸
 // index.php -> strSessionID        -> action.php
 // index.php -> strAdminMailAddress -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 //require (SRC_ROOT . "sysc/cmn/lib_sys.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_SYS3, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
 $aryCheck["strSessionID"]  = "null:numenglish(32,32)";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 if ( join ( $aryCheckResult ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥·¥¹¥Æ¥à´ÉÍý¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 
 
-// ¸½ºß¤Î´ÉÍý¼Ô¥á¡¼¥ë¥¢¥É¥ì¥¹¼èÆÀ
+// ç¾åœ¨ã®ç®¡ç†è€…ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹å–å¾—
 $strQuery = "SELECT strValue AS adminmailaddress FROM m_AdminFunction WHERE strClass = 'adminmailaddress'";
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum > 0 )
@@ -72,7 +72,7 @@ else
 
 $aryData["strAdminMailAddress"] = $objResult->adminmailaddress;
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "sysc/mail/mail.tmpl" );
 $objTemplate->replace( $aryData );

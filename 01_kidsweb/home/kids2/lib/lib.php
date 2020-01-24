@@ -1,7 +1,7 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
-*       ´Ø¿ô¥é¥¤¥Ö¥é¥ê
+*       é–¢æ•°ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
 *
 *       @package    K.I.D.S.
@@ -12,23 +12,23 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
+*       å‡¦ç†æ¦‚è¦
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// ¥¯¥é¥¹¤ÎÆÉ¤ß¹ş¤ß
+// ã‚¯ãƒ©ã‚¹ã®èª­ã¿è¾¼ã¿
 require ( CLS_DB_FILE );
 require ( CLS_AUTH_FILE );
 require ( CLS_TEMPLATE_FILE );
 
-// Êó¹ğ¥¨¥é¡¼¼ïÎà
+// å ±å‘Šã‚¨ãƒ©ãƒ¼ç¨®é¡
 error_reporting ( E_ERROR | E_WARNING | E_PARSE | E_CORE_ERROR | E_CORE_WARNING );
-// ¥¨¥é¡¼´Ø¿ô¤ÎÀë¸À
+// ã‚¨ãƒ©ãƒ¼é–¢æ•°ã®å®£è¨€
 set_error_handler ( "fncError" );
 
 $strBaseTemplate = "base.tmpl";
@@ -38,45 +38,45 @@ $aryConfigName = array ( "bodyonload", "header1", "header2", "header3" );
 
 // -----------------------------------------------------------------
 /**
-*	ÊÑ¿ô¥Á¥§¥Ã¥¯´Ø¿ô
+*	å¤‰æ•°ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	µ¡¼ï°ÍÂ¸Ê¸»ú¡¢Ê¸»úÎó¥Á¥§¥Ã¥¯
-*	Îã:ÆüÉÕ      Boolean = fncCheckString( "2003/01/01", "null:date" )
-*	Îã:¿ôÃÍ0°Ê¾å Boolean = fncCheckString( 1920, "null:number(0,)" )
+*	æ©Ÿç¨®ä¾å­˜æ–‡å­—ã€æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
+*	ä¾‹:æ—¥ä»˜      Boolean = fncCheckString( "2003/01/01", "null:date" )
+*	ä¾‹:æ•°å€¤0ä»¥ä¸Š Boolean = fncCheckString( 1920, "null:number(0,)" )
 *
-*	@param  String  $str          ÊÑ´¹ÂĞ¾İ¤È¤Ê¤ë¥Ç¡¼¥¿
-*	@param  String  $strCheckMode ¥Á¥§¥Ã¥¯¥â¡¼¥É[(À©¸Â)]
-*	                              number(min,max)    : ¿ôÃÍ
-*	                              english(minlength,maxlength)    : ±Ñ»ú
-*	                              numenglish(minlength,maxlength) : ±Ñ¿ô»ú
-*	                              ascii(minlength,maxlength)      : ±Ñ¿ô»úµ­¹æ
+*	@param  String  $str          å¤‰æ›å¯¾è±¡ã¨ãªã‚‹ãƒ‡ãƒ¼ã‚¿
+*	@param  String  $strCheckMode ãƒã‚§ãƒƒã‚¯ãƒ¢ãƒ¼ãƒ‰[(åˆ¶é™)]
+*	                              number(min,max)    : æ•°å€¤
+*	                              english(minlength,maxlength)    : è‹±å­—
+*	                              numenglish(minlength,maxlength) : è‹±æ•°å­—
+*	                              ascii(minlength,maxlength)      : è‹±æ•°å­—è¨˜å·
 *	                              ID(minlength,maxlength)         : ID
-*	                              password(minlength,maxlength)   : ¥Ñ¥¹¥ï¡¼¥É
-*	                              email(minlength,maxlength)      : ¥á¡¼¥ë
+*	                              password(minlength,maxlength)   : ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+*	                              email(minlength,maxlength)      : ãƒ¡ãƒ¼ãƒ«
 *	                              date(string)                    : YYYY/MM/DD
-*	                              file(minlength,maxlength)       : ¥Õ¥¡¥¤¥ë
-*	                              length(minlength,maxlength)     : Ê¸»ú¿ô
-*	                              money(min,max)                  : ¶â³Û
-*	                              IP(min,max,plural,asterisk)     : IP¥¢¥É¥ì¥¹
-*	                              color                           : ¿§
-*                                 intstring(degit)                : ¿ô»úÊ¸»úÎó
-*	@return String                ¥¨¥é¡¼¾ğÊó
-*	        Boolean               FALSE ¥¨¥é¡¼Ìµ¤·
+*	                              file(minlength,maxlength)       : ãƒ•ã‚¡ã‚¤ãƒ«
+*	                              length(minlength,maxlength)     : æ–‡å­—æ•°
+*	                              money(min,max)                  : é‡‘é¡
+*	                              IP(min,max,plural,asterisk)     : IPã‚¢ãƒ‰ãƒ¬ã‚¹
+*	                              color                           : è‰²
+*                                 intstring(degit)                : æ•°å­—æ–‡å­—åˆ—
+*	@return String                ã‚¨ãƒ©ãƒ¼æƒ…å ±
+*	        Boolean               FALSE ã‚¨ãƒ©ãƒ¼ç„¡ã—
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncCheckString( $str, $strCheckMode )
 {
-	// È¾³Ñ¥«¥Ê -> Á´³Ñ¥«¥Ê
+	// åŠè§’ã‚«ãƒŠ -> å…¨è§’ã‚«ãƒŠ
 	//$str = mb_convert_kana ( $str, "K" );
 
-	// Á°¸å¤Î¶õÇò¤òºï½ü
-	//$str = mb_ereg_replace ( "^[¡¡\s]+", "", $str );
-	//$str = mb_ereg_replace ( "[¡¡\s]+$", "", $str );
+	// å‰å¾Œã®ç©ºç™½ã‚’å‰Šé™¤
+	//$str = mb_ereg_replace ( "^[ã€€\s]+", "", $str );
+	//$str = mb_ereg_replace ( "[ã€€\s]+$", "", $str );
 
-	// ÉÔÀµµ­¹æ¥Á¥§¥Ã¥¯( ¶¦ÄÌ¥Á¥§¥Ã¥¯¹àÌÜ )
+	// ä¸æ­£è¨˜å·ãƒã‚§ãƒƒã‚¯( å…±é€šãƒã‚§ãƒƒã‚¯é …ç›® )
 	//if ( mb_ereg ( "[!\"\$&\'()*<>?\[\]\\\\]", $str ) ) {
-	//	errorExit ( "ÉÔÀµµ­¹æ¤ò»ÈÍÑ¤·¤Æ¤¤¤Ş¤¹¡£ÌäÂê¤Î¤¢¤ëÊ¸»úÎó \"$str\"" );
+	//	errorExit ( "ä¸æ­£è¨˜å·ã‚’ä½¿ç”¨ã—ã¦ã„ã¾ã™ã€‚å•é¡Œã®ã‚ã‚‹æ–‡å­—åˆ— \"$str\"" );
 	//}
 
 	$aryCheck = explode ( ":", $strCheckMode );
@@ -84,7 +84,7 @@ function fncCheckString( $str, $strCheckMode )
 	{
 		$lngRange[1] = "";
 		$lngRange[2] = "";
-		// É¬¿Ü¥Á¥§¥Ã¥¯
+		// å¿…é ˆãƒã‚§ãƒƒã‚¯
 //		if ( $strCheckType == "null" && $str == "" && $str != 0 )
 		if ( $strCheckType == "null" && ( $str === "" || !isset ( $str ) ) )
 		{
@@ -92,7 +92,7 @@ function fncCheckString( $str, $strCheckMode )
 		}
 
 /*
-		// À©¸æÊ¸»ú¡¢µ¡¼ï°ÍÂ¸Ê¸»ú¥Á¥§¥Ã¥¯( ¶¦ÄÌ¥Á¥§¥Ã¥¯¹àÌÜ )
+		// åˆ¶å¾¡æ–‡å­—ã€æ©Ÿç¨®ä¾å­˜æ–‡å­—ãƒã‚§ãƒƒã‚¯( å…±é€šãƒã‚§ãƒƒã‚¯é …ç›® )
 		if ( mb_ereg ( "(ad[a1-fc]|[00-1f])", bin2hex ( $str ) ) )
 		{
 			for ( $i = 0; $i < mb_strlen ( $str, "EUC" ); $i++ )
@@ -108,26 +108,26 @@ function fncCheckString( $str, $strCheckMode )
 			}
 		}
 
-		// ¿ô»ú¥Á¥§¥Ã¥¯
+		// æ•°å­—ãƒã‚§ãƒƒã‚¯
 		if ( ereg ( "^number", $strCheckType ) && $str != "" )
 		{
-			// ¥¹¥Ú¡¼¥¹½üµî
+			// ã‚¹ãƒšãƒ¼ã‚¹é™¤å»
 			$str = mb_ereg_replace ( "\s", "", $str );
 
-			// ºÇÂçºÇ¾®»ØÄê¤Î¼èÆÀ
+			// æœ€å¤§æœ€å°æŒ‡å®šã®å–å¾—
 			preg_match ( "/\((-?[0-9]*\.?[0-9]*),(-?[0-9]*\.?[0-9]*)\)/", $strCheckType , $lngRange );
 
-			// ¿ôÃÍ¥Á¥§¥Ã¥¯
+			// æ•°å€¤ãƒã‚§ãƒƒã‚¯
 			if ( !ereg ( "^-?[0-9]*\.?[0-9]+$", $str ) || ereg ( "^(\.|-\.)", $str ) ) {
 				return "9003:$str";
 			}
 
-			// ºÇ¾®ÃÍ¥Á¥§¥Ã¥¯
+			// æœ€å°å€¤ãƒã‚§ãƒƒã‚¯
 			if ( $lngRange[1] != "" && $str < $lngRange[1] ) {
 				return "9004:$str";
 			}
 
-			// ºÇÂçÃÍ¥Á¥§¥Ã¥¯
+			// æœ€å¤§å€¤ãƒã‚§ãƒƒã‚¯
 			if ( $lngRange[2] != "" && $str > $lngRange[2] ) {
 				return "9005:$str";
 			}
@@ -135,16 +135,16 @@ function fncCheckString( $str, $strCheckMode )
 		}
 */
 
-		// ¿ô»ú¥Á¥§¥Ã¥¯(¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸»ØÄê²ÄÇ½¥Á¥§¥Ã¥¯¥Æ¥¹¥È±¿ÍÑ)
+		// æ•°å­—ãƒã‚§ãƒƒã‚¯(ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æŒ‡å®šå¯èƒ½ãƒã‚§ãƒƒã‚¯ãƒ†ã‚¹ãƒˆé‹ç”¨)
 		if ( preg_match ( "/^number/", $strCheckType ) && $str != "" )
 		{
-			// ¥¹¥Ú¡¼¥¹½üµî
+			// ã‚¹ãƒšãƒ¼ã‚¹é™¤å»
 			$str = mb_ereg_replace ( "[\s,]", "", $str );
 
-			// ºÇÂçºÇ¾®»ØÄê¡¢¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Î¼èÆÀ
+			// æœ€å¤§æœ€å°æŒ‡å®šã€ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å–å¾—
 			preg_match ( "/\((-?[0-9]*\.?[0-9]*),(-?[0-9]*\.?[0-9]*),?(.*?)?\)/", $strCheckType , $lngRange );
 
-			// Âè3°ú¿ô¤¬¤¢¤Ã¤¿¾ì¹ç¡¢¤½¤ì¤ò¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤È¤¹¤ë
+			// ç¬¬3å¼•æ•°ãŒã‚ã£ãŸå ´åˆã€ãã‚Œã‚’ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¨ã™ã‚‹
 			if ( $lngRange[3] )
 			{
 				$lngRange[3] = "ORIGINAL" . $lngRange[3];
@@ -154,122 +154,122 @@ function fncCheckString( $str, $strCheckMode )
 				$lngRange[3] = $str;
 			}
 
-			// ¿ôÃÍ¥Á¥§¥Ã¥¯
+			// æ•°å€¤ãƒã‚§ãƒƒã‚¯
 			if ( !preg_match ( "/^-?[0-9]*\.?[0-9]+$/", $str ) || preg_match ( "/^(\.|-\.)/", $str ) ) {
 				return "9003:$lngRange[3]";
 			}
 
-			// ¿ôÃÍ·¿¤È¤¹¤ë
+			// æ•°å€¤å‹ã¨ã™ã‚‹
 			settype ( $str, "float" );
 
-			// ºÇ¾®ÃÍ¥Á¥§¥Ã¥¯
+			// æœ€å°å€¤ãƒã‚§ãƒƒã‚¯
 			if ( $lngRange[1] != "" && $str < $lngRange[1] ) {
 				return "9004:$lngRange[3]";
 			}
 
-			// ºÇÂçÃÍ¥Á¥§¥Ã¥¯
+			// æœ€å¤§å€¤ãƒã‚§ãƒƒã‚¯
 			if ( $lngRange[2] != "" && $str > $lngRange[2] ) {
 				return "9005:$lngRange[3]";
 			}
 
 		}
-		// ±Ñ»ú¥Á¥§¥Ã¥¯
+		// è‹±å­—ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^english/", $strCheckType ) && $str != "" )
 		{
-			// ¥¹¥Ú¡¼¥¹½üµî
+			// ã‚¹ãƒšãƒ¼ã‚¹é™¤å»
 			$str = mb_ereg_replace ( "\s", "", $str );
 
-			// Ê¸»úÎó¥Á¥§¥Ã¥¯
+			// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 			if ( !mb_ereg ( "^[a-zA-Z]+$", $str ) )
 			{
 				return "9008:$str";
 			}
 
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( $strCheckType, $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// ±Ñ¿ô»ú¥Á¥§¥Ã¥¯
+		// è‹±æ•°å­—ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^numenglish/", $strCheckType ) && $str != "" )
 		{
-			// ¥¹¥Ú¡¼¥¹½üµî
+			// ã‚¹ãƒšãƒ¼ã‚¹é™¤å»
 			$str = mb_ereg_replace ( "\s", "", $str );
 
-			// Ê¸»úÎó¥Á¥§¥Ã¥¯
+			// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 			if ( !mb_ereg ( "^[a-zA-Z0-9]+$", $str ) )
 			{
 				return "9009:$str";
 			}
 
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( $strCheckType, $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// ±Ñ¿ô»úµ­¹æ¥Á¥§¥Ã¥¯
+		// è‹±æ•°å­—è¨˜å·ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^ascii/", $strCheckType ) && $str != "" )
 		{
-			// ¥¹¥Ú¡¼¥¹½üµî
+			// ã‚¹ãƒšãƒ¼ã‚¹é™¤å»
 			$str = mb_ereg_replace ( "\s", "", $str );
 			if ( !mb_ereg ( "^[0-9a-zA-Z\"#%&\+-\/=^_`\{\}\|~@\.:]+$", $str ) ) {
 				return "9010:$str";
 			}
 
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( $strCheckType, $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// ID¥Á¥§¥Ã¥¯
+		// IDãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^ID/", $strCheckType ) && $str != "" )
 		{
 			if ( !mb_ereg ( "^[0-9a-zA-Z\"#%\+-\/=^_`\{\}\|~@\.]+$", $str ) || strlen ( $str ) < 3 || strlen ( $str ) > 64 ) {
 				return "9011:$str";
 			}
 
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( $strCheckType, $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// ¥Ñ¥¹¥ï¡¼¥É¥Á¥§¥Ã¥¯
+		// ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^password/", $strCheckType ) && $str != "" )
 		{
 			if ( !mb_ereg ( "^[0-9a-zA-Z]+$", $str ) || strlen ( $str ) > 64 ) {
 				return "9012:$str";
 			}
 
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( $strCheckType, $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// ¥á¡¼¥ë¥¢¥É¥ì¥¹¥Á¥§¥Ã¥¯
+		// ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^e?mail/", $strCheckType ) && $str != "" )
 		{
 			if ( !mb_ereg ( "^[0-9a-zA-Z!\"#\$%&\'\(\)\=\~\|\`\{\+\*\}\<\>\?\_\-\^\@\[\;\:\]\,\.\/\\\\]+$", $str ) || !mb_ereg ( "^[^@.\-][^@]*@[^@.\-][^@]*\..+[a-z]$", $str ) ) {
 				return "9013:$str";
 			}
 
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( $strCheckType, $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// ÆüÉÕ¥Á¥§¥Ã¥¯
+		// æ—¥ä»˜ãƒã‚§ãƒƒã‚¯
 		if ( preg_match ( "/^date/", $strCheckType ) && $str != "" )
 		{
 			if ( !preg_match ( "/^[0-9\-\/]+$/", $str ) )
@@ -279,84 +279,84 @@ function fncCheckString( $str, $strCheckMode )
 
 			list ( $year, $mon, $date ) = explode ( "[-\/]", $str );
 
-			// Æü¤¬Ì¤µ­Æş¤Ê¾ì¹ç¡¢1Æü¤Ë¶¯À©ÀßÄê
+			// æ—¥ãŒæœªè¨˜å…¥ãªå ´åˆã€1æ—¥ã«å¼·åˆ¶è¨­å®š
 			if ( !$date )
 			{
 				$date = 1;
 			}
 
-			// ·î¤¬Ì¤µ­Æş¤Ê¾ì¹ç¡¢1·î¤Ë¶¯À©ÀßÄê
+			// æœˆãŒæœªè¨˜å…¥ãªå ´åˆã€1æœˆã«å¼·åˆ¶è¨­å®š
 			if ( !$mon )
 			{
 				$mon = 1;
 			}
 
-			// ÆüÉÕ¥Á¥§¥Ã¥¯
+			// æ—¥ä»˜ãƒã‚§ãƒƒã‚¯
 			if ( !checkdate ( $mon, $date, $year) || $year < 1601 ) {
 				return "9014:$str";
 			}
 		}
-		// ¥Õ¥¡¥¤¥ë
+		// ãƒ•ã‚¡ã‚¤ãƒ«
 		elseif ( preg_match ( "/^file/", $strCheckType ) && $str != "" )
 		{
 			if ( mb_ereg ( "^\.\.", $str ) || !mb_ereg ( "^[0-9a-zA-Z\"#%\+-\/=^_`\{\}\|~@\.:]+$", $str ) ) {
 				return "9016:$str";
 			}
 
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( $strCheckType, $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+		// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^length/", $strCheckType ) && $str != "" )
 		{
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( $strCheckType, $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// ¶â³Û¥Á¥§¥Ã¥¯
+		// é‡‘é¡ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^money/", $strCheckType ) && $str != "" )
 		{
-			// ¥¹¥Ú¡¼¥¹¤È¥«¥ó¥Ş¡¢\¡¢$ ½üµî
+			// ã‚¹ãƒšãƒ¼ã‚¹ã¨ã‚«ãƒ³ãƒã€\ã€$ é™¤å»
 			$str = mb_ereg_replace ( "[\s,]", "", $str );
 			$str = mb_ereg_replace ( "^[\\\\$]", "", $str );
 
-			// ºÇÂçºÇ¾®»ØÄê¤Î¼èÆÀ
+			// æœ€å¤§æœ€å°æŒ‡å®šã®å–å¾—
 			preg_match ( "/\((-?[0-9]*\.?[0-9]*),(-?[0-9]*\.?[0-9]*)\)/", $strCheckType , $lngRange );
 
-			// ¿ôÃÍ¥Á¥§¥Ã¥¯
+			// æ•°å€¤ãƒã‚§ãƒƒã‚¯
 			if ( !preg_match ( "/^-?[0-9]*\.?[0-9]+$/", $str ) || preg_match ( "/^(\.|-\.)/", $str ) ) {
 				return "9017:$str";
 			}
 
-			// ºÇ¾®ÃÍ¥Á¥§¥Ã¥¯
+			// æœ€å°å€¤ãƒã‚§ãƒƒã‚¯
 			if ( $lngRange[1] != "" && $str < $lngRange[1] ) {
 				return "9018:$str";
 			}
 
-			// ºÇÂçÃÍ¥Á¥§¥Ã¥¯
+			// æœ€å¤§å€¤ãƒã‚§ãƒƒã‚¯
 			if ( $lngRange[2] != "" && $str > $lngRange[2] ) {
 				return "9019:$str";
 			}
 
 		}
-		// IP¥¢¥É¥ì¥¹¥Á¥§¥Ã¥¯
+		// IPã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^IP/", $strCheckType ) && $str != "" )
 		{
-			// ¥¹¥Ú¡¼¥¹½üµî
+			// ã‚¹ãƒšãƒ¼ã‚¹é™¤å»
 			$str = mb_ereg_replace ( " ", "", $str );
 
-			// ºÇÂçºÇ¾®¡¢Ê£¿ô»ØÄêµö²Ä¡¢¥¢¥¹¥¿¥ê¥¹¥¯µö²Ä»ØÄê¤Î¼èÆÀ
+			// æœ€å¤§æœ€å°ã€è¤‡æ•°æŒ‡å®šè¨±å¯ã€ã‚¢ã‚¹ã‚¿ãƒªã‚¹ã‚¯è¨±å¯æŒ‡å®šã®å–å¾—
 			preg_match ( "/\((-?[0-9]*\.?[0-9]*),(-?[0-9]*\.?[0-9]*),(\'.?\')/", $strCheckType , $lngRange );
 			$strCheckType = "length($lngRange[1],$lngRange[2])";
 
-			// Ê£¿ôÀ©Äê¤òµö²Ä¤·¤Æ¤¤¤ë¾ì¹ç¡¢IP¥¢¥É¥ì¥¹¤òÊ¬²ò¤¹¤ë
+			// è¤‡æ•°åˆ¶å®šã‚’è¨±å¯ã—ã¦ã„ã‚‹å ´åˆã€IPã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’åˆ†è§£ã™ã‚‹
 			if ( $lngRange[3] != "''" )
 			{
 				$lngRange[3] = str_replace ( "'", "", $lngRange[3] );
@@ -367,7 +367,7 @@ function fncCheckString( $str, $strCheckMode )
 				$aryStr[0] = $str;
 			}
 
-			// ¥Á¥§¥Ã¥¯
+			// ãƒã‚§ãƒƒã‚¯
 			$count = count ( $aryStr );
 			for ( $i = 0; $i < $count; $i++ )
 			{
@@ -377,14 +377,14 @@ function fncCheckString( $str, $strCheckMode )
 				}
 			}
 
-			// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+			// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 			$strError = fncCheckStringLength( "($lngRange[1],$lngRange[2])", $str );
 			if ( $strError )
 			{
 				return $strError;
 			}
 		}
-		// ¿§»ØÄê¥Á¥§¥Ã¥¯
+		// è‰²æŒ‡å®šãƒã‚§ãƒƒã‚¯
 		elseif ( $strCheckType == "color" && $str != "" )
 		{
 			if ( !preg_match ( "/^#[0-9a-fA-F]{6}$/", $str ) )
@@ -392,10 +392,10 @@ function fncCheckString( $str, $strCheckMode )
 				return "9010:$str";
 			}
 		}
-		// Ê¸»úÎó·¿¤Î¿ô»ú¥Á¥§¥Ã¥¯
+		// æ–‡å­—åˆ—å‹ã®æ•°å­—ãƒã‚§ãƒƒã‚¯
 		elseif ( preg_match ( "/^intstring/", $strCheckType ) && $str != "" ) 
 		{
-			// Ê¸»ú¿ô»ØÄê¤Î¼èÆÀ
+			// æ–‡å­—æ•°æŒ‡å®šã®å–å¾—
 			preg_match ( "/\((\d+)\)/", $strCheckType , $lngRange );
 
 			$pattern = '/^\d{'. $lngRange[1].'}$/';
@@ -413,26 +413,26 @@ function fncCheckString( $str, $strCheckMode )
 
 // -----------------------------------------------------------------
 /**
-*	Ï¢ÁÛÇÛÎó¤ÇÅÏ¤µ¤ì¤¿¥Ç¡¼¥¿¤ò¤¹¤Ù¤Æ¥Á¥§¥Ã¥¯¤¹¤ë´Ø¿ô
+*	é€£æƒ³é…åˆ—ã§æ¸¡ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’ã™ã¹ã¦ãƒã‚§ãƒƒã‚¯ã™ã‚‹é–¢æ•°
 *
-*	ÊÑ¿ô¤Î¥Á¥§¥Ã¥¯¤ò¼Â¹Ô¤¹¤ë
+*	å¤‰æ•°ã®ãƒã‚§ãƒƒã‚¯ã‚’å®Ÿè¡Œã™ã‚‹
 *
-*	@param  Array $aryData   ¥Á¥§¥Ã¥¯ÂĞ¾İ¥Ç¡¼¥¿(ÊÑ¿ôÌ¾¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó)
-*	@param  Array $aryCheck  ¥Á¥§¥Ã¥¯ÆâÍÆ(ÊÑ¿ôÌ¾¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó)
-*	@return Array $aryResult ¥Á¥§¥Ã¥¯¿¿µ¶(ÊÑ¿ôÌ¾¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó)
+*	@param  Array $aryData   ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒ‡ãƒ¼ã‚¿(å¤‰æ•°åã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—)
+*	@param  Array $aryCheck  ãƒã‚§ãƒƒã‚¯å†…å®¹(å¤‰æ•°åã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—)
+*	@return Array $aryResult ãƒã‚§ãƒƒã‚¯çœŸå½(å¤‰æ•°åã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—)
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncAllCheck( $aryData, $aryCheck )
 {
-	// ÊÑ¿ôÌ¾¤È¤Ê¤ë¥­¡¼¤ò¼èÆÀ
+	// å¤‰æ•°åã¨ãªã‚‹ã‚­ãƒ¼ã‚’å–å¾—
 	$aryKey = array_keys( $aryCheck );
 
-	// ¥­¡¼¤Î¿ô¤À¤±¥Á¥§¥Ã¥¯
+	// ã‚­ãƒ¼ã®æ•°ã ã‘ãƒã‚§ãƒƒã‚¯
 	foreach ( $aryKey as $strKey )
 	{
-		// $aryData[$strKey]  : ¥Á¥§¥Ã¥¯ÂĞ¾İ¥Ç¡¼¥¿
-		// $aryCheck[$strKey] : ¥Á¥§¥Ã¥¯ÆâÍÆ(¿ôÃÍ¡¢±Ñ¿ô»ú¡¢¥¢¥¹¥­¡¼Åù)
+		// $aryData[$strKey]  : ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒ‡ãƒ¼ã‚¿
+		// $aryCheck[$strKey] : ãƒã‚§ãƒƒã‚¯å†…å®¹(æ•°å€¤ã€è‹±æ•°å­—ã€ã‚¢ã‚¹ã‚­ãƒ¼ç­‰)
 		$aryResult[$strKey . "_Error"] = fncCheckString( $aryData[$strKey], $aryCheck[$strKey] );
 	}
 	return $aryResult;
@@ -442,25 +442,25 @@ function fncAllCheck( $aryData, $aryCheck )
 
 // -----------------------------------------------------------------
 /**
-*	Ê¸»úÎóÄ¹¥Á¥§¥Ã¥¯´Ø¿ô
+*	æ–‡å­—åˆ—é•·ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	Ê¸»úÎó¤ÎÄ¹¤µ¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+*	æ–‡å­—åˆ—ã®é•·ã•ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 *
-*	@param  String $strCheckType ¥Á¥§¥Ã¥¯ÆâÍÆ
-*	@param  Atring $str          ¥Á¥§¥Ã¥¯Ê¸»úÎó
+*	@param  String $strCheckType ãƒã‚§ãƒƒã‚¯å†…å®¹
+*	@param  Atring $str          ãƒã‚§ãƒƒã‚¯æ–‡å­—åˆ—
 *	@return Boolean
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncCheckStringLength( $strCheckType, $str )
 {
-	// Ê¸»ú¿ô¤Î¼èÆÀ
+	// æ–‡å­—æ•°ã®å–å¾—
 	if ( !preg_match ( "/\(([0-9]*),([0-9]*)\)/", $strCheckType , $lngRange ) )
 	{
 		return FALSE;
 	}
 
-	// Ê¸»ú¿ô¥Á¥§¥Ã¥¯
+	// æ–‡å­—æ•°ãƒã‚§ãƒƒã‚¯
 	if ( $lngRange[1] != "" && mb_strlen ( $str ) < $lngRange[1] )
 	{
 		return "9006:$str";
@@ -476,13 +476,13 @@ function fncCheckStringLength( $strCheckType, $str )
 
 // -----------------------------------------------------------------
 /**
-*	Ê¸»úÎó¥Á¥§¥Ã¥¯¥¨¥é¡¼½ĞÎÏ´Ø¿ô
+*	æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼å‡ºåŠ›é–¢æ•°
 *
-*	Ï¢ÁÛÇÛÎó¤ÇÅÏ¤µ¤ì¤¿¥Ç¡¼¥¿¤ò¤¹¤Ù¤Æ¥Á¥§¥Ã¥¯¤¹¤ë´Ø¿ô¤Ç¼èÆÀ¤·¤¿·ë²Ì¤«¤é
-*	Ê¸»úÎó¥Á¥§¥Ã¥¯¥¨¥é¡¼¤ò½ĞÎÏ¤¹¤ë
+*	é€£æƒ³é…åˆ—ã§æ¸¡ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’ã™ã¹ã¦ãƒã‚§ãƒƒã‚¯ã™ã‚‹é–¢æ•°ã§å–å¾—ã—ãŸçµæœã‹ã‚‰
+*	æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼ã‚’å‡ºåŠ›ã™ã‚‹
 *
-*	@param  Array  $aryResult Ê¸»úÎó¥Á¥§¥Ã¥¯¥¨¥é¡¼·ë²Ì
-*	@param  Object $objDB     DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  Array  $aryResult æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼çµæœ
+*	@param  Object $objDB     DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@return Boolean
 *	@access public
 */
@@ -509,14 +509,14 @@ function fncPutStringCheckError( $aryResult, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¥¯¥¨¥ê¼Â¹Ô´Ø¿ô
+*	ã‚¯ã‚¨ãƒªå®Ÿè¡Œé–¢æ•°
 *
-*	¥¯¥¨¥ê¼Â¹Ô¤¹¤ë
+*	ã‚¯ã‚¨ãƒªå®Ÿè¡Œã™ã‚‹
 *
-*	@param  String $strQuery ¥¯¥¨¥ê
-*	@param  Object $objDB    DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $lngResultID     ·ë²ÌID
-*	        $lngResultNum    ¹Ô¿ô
+*	@param  String $strQuery ã‚¯ã‚¨ãƒª
+*	@param  Object $objDB    DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $lngResultID     çµæœID
+*	        $lngResultNum    è¡Œæ•°
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -539,13 +539,13 @@ function fncQuery( $strQuery, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¶¦ÄÌµ¡Ç½¥Ş¥¹¥¿¥Ç¡¼¥¿¼èÆÀ´Ø¿ô
+*	å…±é€šæ©Ÿèƒ½ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°
 *
-*	¶¦ÄÌµ¡Ç½¥Ş¥¹¥¿¤«¤é»ØÄê¤µ¤ì¤¿¼ïÎà¤ÎÃÍ¤ò¼èÆÀ¤¹¤ë
+*	å…±é€šæ©Ÿèƒ½ãƒã‚¹ã‚¿ã‹ã‚‰æŒ‡å®šã•ã‚ŒãŸç¨®é¡ã®å€¤ã‚’å–å¾—ã™ã‚‹
 *
-*	@param  String $strClass ¼ïÎà
-*	@param  Object $objDB    DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $strVAlue        ÃÍ
+*	@param  String $strClass ç¨®é¡
+*	@param  Object $objDB    DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $strVAlue        å€¤
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -558,7 +558,7 @@ function fncGetCommonFunction( $strClass, $strTable, $objDB )
 
 	if ( !$lngResultNum )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "¶¦ÄÌµ¡Ç½¥Ş¥¹¥¿", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "å…±é€šæ©Ÿèƒ½ãƒã‚¹ã‚¿", TRUE, "", $objDB );
 	}
 
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
@@ -573,13 +573,13 @@ function fncGetCommonFunction( $strClass, $strTable, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	´ÉÍı¼Ôµ¡Ç½¥Ş¥¹¥¿¥Ç¡¼¥¿¼èÆÀ´Ø¿ô
+*	ç®¡ç†è€…æ©Ÿèƒ½ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°
 *
-*	´ÉÍı¼Ôµ¡Ç½¥Ş¥¹¥¿¤«¤é»ØÄê¤µ¤ì¤¿¼ïÎà¤ÎÃÍ¤ò¼èÆÀ¤¹¤ë
+*	ç®¡ç†è€…æ©Ÿèƒ½ãƒã‚¹ã‚¿ã‹ã‚‰æŒ‡å®šã•ã‚ŒãŸç¨®é¡ã®å€¤ã‚’å–å¾—ã™ã‚‹
 *
-*	@param  String $strClass ¼ïÎà
-*	@param  Object $objDB    DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $strVAlue        ÃÍ
+*	@param  String $strClass ç¨®é¡
+*	@param  Object $objDB    DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $strVAlue        å€¤
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -592,7 +592,7 @@ function fncGetAdminFunction( $strClass, $objDB )
 
 	if ( !$lngResultNum )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "´ÉÍı¼Ôµ¡Ç½¥Ş¥¹¥¿", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "ç®¡ç†è€…æ©Ÿèƒ½ãƒã‚¹ã‚¿", TRUE, "", $objDB );
 	}
 
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
@@ -607,26 +607,26 @@ function fncGetAdminFunction( $strClass, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¥·¡¼¥±¥ó¥¹´Ø¿ô
+*	ã‚·ãƒ¼ã‚±ãƒ³ã‚¹é–¢æ•°
 *
-*	¸½ºß¤Î¥·¡¼¥±¥ó¥¹¤Î¼èÆÀ(¥¤¥ó¥¯¥ê¥á¥ó¥È¡¢UPDATEÌµ¤·)
+*	ç¾åœ¨ã®ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã®å–å¾—(ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã€UPDATEç„¡ã—)
 *
-*	@param  String $strSequenceName ¼ïÎà
-*	@param  Object $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Long   $lngSequence     ÈÖ¹æ
+*	@param  String $strSequenceName ç¨®é¡
+*	@param  Object $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Long   $lngSequence     ç•ªå·
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncIsSequence( $strSequenceName, $objDB )
 {
-	// ¥·¡¼¥±¥ó¥¹ÈÖ¹æ¼èÆÀ
+	// ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç•ªå·å–å¾—
 	$strQuery = "SELECT lngSequence FROM t_Sequence WHERE lower ( ltrim( strSequenceName, ' ' ) ) = lower ( '$strSequenceName' )";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( !$lngResultNum = pg_Num_Rows ( $lngResultID ) )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "¥·¡¼¥±¥ó¥¹¥Æ¡¼¥Ö¥ë", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ãƒ†ãƒ¼ãƒ–ãƒ«", TRUE, "", $objDB );
 	}
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
@@ -641,27 +641,27 @@ function fncIsSequence( $strSequenceName, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¥·¡¼¥±¥ó¥¹´Ø¿ô
+*	ã‚·ãƒ¼ã‚±ãƒ³ã‚¹é–¢æ•°
 *
-*	¥·¡¼¥±¥ó¥¹¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È¤ª¤è¤Ó¼èÆÀ
+*	ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆãŠã‚ˆã³å–å¾—
 *
-*	@param  String $strSequenceName ¼ïÎà
-*	@param  Object $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Long   $lngSequence     ÈÖ¹æ
+*	@param  String $strSequenceName ç¨®é¡
+*	@param  Object $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Long   $lngSequence     ç•ªå·
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetSequence( $strSequenceName, $objDB )
 {
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	//$objDB->transactionBegin();
 
-	// ¥í¥Ã¥¯³«»Ï
+	// ãƒ­ãƒƒã‚¯é–‹å§‹
 	//$strQuery = "LOCK TABLE t_Sequence IN EXCLUSIVE MODE";
 	//list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¥·¡¼¥±¥ó¥¹ÈÖ¹æ¼èÆÀ
+	// ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç•ªå·å–å¾—
 	$strQuery = "SELECT lngSequence FROM t_Sequence WHERE lower ( ltrim( strSequenceName, ' ' ) ) = lower ( '$strSequenceName' ) FOR UPDATE";
 	//$strQuery = "SELECT lngSequence FROM t_Sequence WHERE ltrim( strSequenceName, ' ' ) = '$strSequenceName' FOR UPDATE";
 	//$strQuery = "SELECT lngSequence FROM t_Sequence WHERE ltrim( strSequenceName, ' ' ) = '$strSequenceName'";
@@ -670,11 +670,11 @@ function fncGetSequence( $strSequenceName, $objDB )
 
 	if ( !$lngResultNum = pg_Num_Rows ( $lngResultID ) )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "¥·¡¼¥±¥ó¥¹¥Æ¡¼¥Ö¥ë", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ãƒ†ãƒ¼ãƒ–ãƒ«", TRUE, "", $objDB );
 	}
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
-	// ¥¤¥ó¥¯¥ê¥á¥ó¥È
+	// ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 	$lngSequence = $objResult->lngsequence + 1;
 
 	$objDB->freeResult( $lngResultID );
@@ -692,66 +692,66 @@ function fncGetSequence( $strSequenceName, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	ÆüÉÕ¥·¡¼¥±¥ó¥¹´Ø¿ô
+*	æ—¥ä»˜ã‚·ãƒ¼ã‚±ãƒ³ã‚¹é–¢æ•°
 *
-*	ÆüÉÕ¥·¡¼¥±¥ó¥¹¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È¤ª¤è¤Ó¼èÆÀ
+*	æ—¥ä»˜ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆãŠã‚ˆã³å–å¾—
 *
-*	@param  String $year            Ç¯
-*	@param  String $month           ·î
-*	@param  String $strSequenceName ¼ïÎà
-*	@param  Object $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Long   $lngSequence     ÈÖ¹æ(9999Ä¶¤¨¤ÇFALSE)
+*	@param  String $year            å¹´
+*	@param  String $month           æœˆ
+*	@param  String $strSequenceName ç¨®é¡
+*	@param  Object $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Long   $lngSequence     ç•ªå·(9999è¶…ãˆã§FALSE)
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetDateSequence( $year, $month, $strSequenceName, $objDB )
 {
-	// Ç¯¿ô½èÍı(1000Ç¯°Ê¾å¤À¤Ã¤¿¤é²¼2·å¤ËÀ®·Á)
+	// å¹´æ•°å‡¦ç†(1000å¹´ä»¥ä¸Šã ã£ãŸã‚‰ä¸‹2æ¡ã«æˆå½¢)
 	if ( $year > 999 )
 	{
 		$year %= 100;
 	}
-	// Ç¯¿ô¥Á¥§¥Ã¥¯
+	// å¹´æ•°ãƒã‚§ãƒƒã‚¯
 	if ( $year < 0 || $year > 99 || $month > 12 || $month < 1 )
 	{
-		fncOutputError ( 9051, DEF_ERROR, "ÆüÉÕ¥·¡¼¥±¥ó¥¹¤ÎÇ¯·îÀßÄê¤ËÌäÂê¤¬¤¢¤ê¤Ş¤¹¡£", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "æ—¥ä»˜ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã®å¹´æœˆè¨­å®šã«å•é¡ŒãŒã‚ã‚Šã¾ã™ã€‚", TRUE, "", $objDB );
 	}
 
-	// ¥·¡¼¥±¥ó¥¹Ì¾¤ÎÀ¸À®(YYMMXXX)
+	// ã‚·ãƒ¼ã‚±ãƒ³ã‚¹åã®ç”Ÿæˆ(YYMMXXX)
 	$strSequenceName = sprintf( "$strSequenceName.%02d%02d", $year, $month );
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	//$objDB->transactionBegin();
 
-	// ¥í¥Ã¥¯³«»Ï
+	// ãƒ­ãƒƒã‚¯é–‹å§‹
 	//$strQuery = "LOCK TABLE t_Sequence IN EXCLUSIVE MODE";
 	//list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¥·¡¼¥±¥ó¥¹ÈÖ¹æ¼èÆÀ
+	// ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç•ªå·å–å¾—
 	$strQuery = "SELECT lngSequence FROM t_Sequence WHERE ltrim( strSequenceName, ' ' ) = lower('$strSequenceName') FOR UPDATE";
 	//$strQuery = "SELECT lngSequence FROM t_Sequence WHERE ltrim( strSequenceName, ' ' ) = '$strSequenceName'";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¥ì¥³¡¼¥É¤¬¤Ê¤±¤ì¤Ğ»ØÄê¥·¡¼¥±¥ó¥¹Ì¾¤Ë¤Æ¥ì¥³¡¼¥ÉÄÉ²Ã
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒãªã‘ã‚Œã°æŒ‡å®šã‚·ãƒ¼ã‚±ãƒ³ã‚¹åã«ã¦ãƒ¬ã‚³ãƒ¼ãƒ‰è¿½åŠ 
 	if ( !$lngResultNum )
 	{
 		$strQuery = "INSERT INTO t_Sequence VALUES ( lower('$strSequenceName'), 1 )";
 
 		if ( !$objDB->execute( $strQuery ) )
 		{
-			fncOutputError ( 9051, DEF_ERROR, "¥·¡¼¥±¥ó¥¹¥Æ¡¼¥Ö¥ë", TRUE, "", $objDB );
+			fncOutputError ( 9051, DEF_ERROR, "ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ãƒ†ãƒ¼ãƒ–ãƒ«", TRUE, "", $objDB );
 		}
 
 		$lngSequence = 1;
 	}
 
-	// ¥ì¥³¡¼¥É¤¬¤¢¤ì¤Ğ»ØÄê¥·¡¼¥±¥ó¥¹¤ò¥¤¥ó¥¯¥ê¥á¥ó¥È
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒã‚ã‚Œã°æŒ‡å®šã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 	else
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
-		// ¥¤¥ó¥¯¥ê¥á¥ó¥È
+		// ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		$lngSequence = $objResult->lngsequence + 1;
 		if ( $lngSequence > 9999 )
 		{
@@ -773,24 +773,24 @@ function fncGetDateSequence( $year, $month, $strSequenceName, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¶â·¿ÈÖ¹æ¼èÆÀ´Ø¿ô
+*	é‡‘å‹ç•ªå·å–å¾—é–¢æ•°
 *
-*	¶â·¿ÈÖ¹æ('À½ÉÊ¥³¡¼¥É'-dd)¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È¤ª¤è¤Ó¼èÆÀ
+*	é‡‘å‹ç•ªå·('è£½å“ã‚³ãƒ¼ãƒ‰'-dd)ã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆãŠã‚ˆã³å–å¾—
 *
-*	@param  String $strProductCode      À½ÉÊ¥³¡¼¥É
-*	@param  String $lngStockSubjectCode »ÅÆş²ÊÌÜ¥³¡¼¥É
-*	@param  String $lngStockItemCode    »ÅÆşÉôÉÊ¥³¡¼¥É
-*	@param  Object $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Long   $strNoldNo           ¶â·¿ÈÖ¹æ('À½ÉÊ¥³¡¼¥É'-dd)
+*	@param  String $strProductCode      è£½å“ã‚³ãƒ¼ãƒ‰
+*	@param  String $lngStockSubjectCode ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
+*	@param  String $lngStockItemCode    ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰
+*	@param  Object $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Long   $strNoldNo           é‡‘å‹ç•ªå·('è£½å“ã‚³ãƒ¼ãƒ‰'-dd)
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetMoldNo( $strProductCode, $strReviseCode, $lngStockSubjectCode, $lngStockItemCode, $objDB )
 {
 // 2004.05.31 suzukaze update start
-	// »ÅÆş²ÊÌÜ¥³¡¼¥É != 433 ¤Ş¤¿¤Ï »ÅÆşÉôÉÊ¥³¡¼¥É != 1
-	// »ÅÆş²ÊÌÜ¥³¡¼¥É != 431 ¤Ş¤¿¤Ï »ÅÆşÉôÉÊ¥³¡¼¥É != 8
-	// ¤Ş¤¿¤Ï À½ÉÊ¥³¡¼¥É > 99999 ¤Î¾ì¹ç¡¢return FALSE
+	// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰ != 433 ã¾ãŸã¯ ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰ != 1
+	// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰ != 431 ã¾ãŸã¯ ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰ != 8
+	// ã¾ãŸã¯ è£½å“ã‚³ãƒ¼ãƒ‰ > 99999 ã®å ´åˆã€return FALSE
 	$bytFlag = 0;
 	if ( $lngStockSubjectCode == 433 and $lngStockItemCode == 1 )
 	{
@@ -812,43 +812,43 @@ function fncGetMoldNo( $strProductCode, $strReviseCode, $lngStockSubjectCode, $l
 	}
 // 2004.05.31 suzukaze update end
 
-	// ¥·¡¼¥±¥ó¥¹Ì¾¤ÎÀ¸À®(YYMMXXX)
+	// ã‚·ãƒ¼ã‚±ãƒ³ã‚¹åã®ç”Ÿæˆ(YYMMXXX)
 	$strSequenceName = sprintf( "m_OrderDetail.strMoldNo.%05d_%02d", $strProductCode, $strReviseCode );
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	//$objDB->transactionBegin();
 
-	// ¥í¥Ã¥¯³«»Ï
+	// ãƒ­ãƒƒã‚¯é–‹å§‹
 	//$strQuery = "LOCK TABLE t_Sequence IN EXCLUSIVE MODE";
 	//list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¥·¡¼¥±¥ó¥¹ÈÖ¹æ¼èÆÀ
+	// ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç•ªå·å–å¾—
 	$strQuery = "SELECT lngSequence FROM t_Sequence WHERE ltrim( strSequenceName, ' ' ) = '$strSequenceName' FOR UPDATE";
 	//$strQuery = "SELECT lngSequence FROM t_Sequence WHERE ltrim( strSequenceName, ' ' ) = '$strSequenceName'";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¥ì¥³¡¼¥É¤¬¤Ê¤±¤ì¤Ğ»ØÄê¥·¡¼¥±¥ó¥¹Ì¾¤Ë¤Æ¥ì¥³¡¼¥ÉÄÉ²Ã
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒãªã‘ã‚Œã°æŒ‡å®šã‚·ãƒ¼ã‚±ãƒ³ã‚¹åã«ã¦ãƒ¬ã‚³ãƒ¼ãƒ‰è¿½åŠ 
 	if ( !$lngResultNum )
 	{
 		$strQuery = "INSERT INTO t_Sequence VALUES ( '$strSequenceName', 1 )";
 
 		if ( !$objDB->execute( $strQuery ) )
 		{
-			fncOutputError ( 9051, DEF_ERROR, "¥·¡¼¥±¥ó¥¹¥Æ¡¼¥Ö¥ë", TRUE, "", $objDB );
+			fncOutputError ( 9051, DEF_ERROR, "ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ãƒ†ãƒ¼ãƒ–ãƒ«", TRUE, "", $objDB );
 		}
 
 		$lngSequence = 1;
 	}
 
-	// ¥ì¥³¡¼¥É¤¬¤¢¤ì¤Ğ»ØÄê¥·¡¼¥±¥ó¥¹¤ò¥¤¥ó¥¯¥ê¥á¥ó¥È
+	// ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒã‚ã‚Œã°æŒ‡å®šã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 	else
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
-		// ¥¤¥ó¥¯¥ê¥á¥ó¥È
+		// ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		$lngSequence = $objResult->lngsequence + 1;
 
-		// 195(FF)¤òÄ¶¤¨¤¿¤é¥¨¥é¡¼
+		// 195(FF)ã‚’è¶…ãˆãŸã‚‰ã‚¨ãƒ©ãƒ¼
 		if ( $lngSequence > 195 )
 		{
 			return FALSE;
@@ -862,13 +862,13 @@ function fncGetMoldNo( $strProductCode, $strReviseCode, $lngStockSubjectCode, $l
 
 	//$objDB->transactionCommit();
 
-	// 100¤òÄ¶¤¨¤Æ¤¤¤¿¾ì¹ç¡¢16¿ÊÊÑ´¹(100='a0'¤È¤¹¤ë)
+	// 100ã‚’è¶…ãˆã¦ã„ãŸå ´åˆã€16é€²å¤‰æ›(100='a0'ã¨ã™ã‚‹)
 	if ( $lngSequence > 99 )
 	{
 		$lngSequence = sprintf ( "%05d_%02d", $strProductCode, $strReviseCode ) . "-" . dechex ( $lngSequence + 60 );
 	}
 
-	// 100Ì¤Ëş¤Î¾ì¹ç¡¢0Ëä2·å¥Õ¥©¡¼¥Ş¥Ã¥È
+	// 100æœªæº€ã®å ´åˆã€0åŸ‹2æ¡ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	else
 	{
 		$lngSequence = sprintf ( "%05d_%02d-%02d", $strProductCode, $strReviseCode, $lngSequence );
@@ -880,51 +880,51 @@ function fncGetMoldNo( $strProductCode, $strReviseCode, $lngStockSubjectCode, $l
 
 
 ////////////////////////////////////////////////////////////////////
-// HTML½ĞÎÏ´Ø¿ô
+// HTMLå‡ºåŠ›é–¢æ•°
 ////////////////////////////////////////////////////////////////////
 // -----------------------------------------------------------------
 /**
-*	¥Ş¥¹¥¿¡¼¡¦¥×¥ë¥À¥¦¥ó¥ê¥¹¥ÈÀ¸À®´Ø¿ô
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ»ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆç”Ÿæˆé–¢æ•°
 *
-*	¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë¤«¤é¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ºîÀ®
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã‹ã‚‰ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ä½œæˆ
 *
-*	@param  String $strTable            ¥Æ¡¼¥Ö¥ëÌ¾
-*	@param  String $strValueFieldName   value¤ËÆş¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  String $strDisplayFieldName É½¼¨¤µ¤ì¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  Long $lngDefaultValue       ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼¤Î½é´üÁªÂòÃÍ
-*	@param  String $strQueryWhere       ¾ò·ï(SQL)WHERE¤«¤é½ñ¤­»Ï¤á
-*	@param  Object $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $strHtml                    ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼HTML
+*	@param  String $strTable            ãƒ†ãƒ¼ãƒ–ãƒ«å
+*	@param  String $strValueFieldName   valueã«å…¥ã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  String $strDisplayFieldName è¡¨ç¤ºã•ã‚Œã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  Long $lngDefaultValue       ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆæœŸé¸æŠå€¤
+*	@param  String $strQueryWhere       æ¡ä»¶(SQL)WHEREã‹ã‚‰æ›¸ãå§‹ã‚
+*	@param  Object $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $strHtml                    ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼HTML
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetPulldown( $strTable, $strValueFieldName, $strDisplayFieldName, $lngDefaultValue, $strQueryWhere, $objDB )
 {
-	// Á´¥Ú¡¼¥¸ID¤Î¥ê¥¹¥È¤ò¼èÆÀ
+	// å…¨ãƒšãƒ¼ã‚¸IDã®ãƒªã‚¹ãƒˆã‚’å–å¾—
 	$strQuery = "SELECT $strValueFieldName, $strDisplayFieldName FROM $strTable $strQueryWhere ORDER BY $strValueFieldName";
 
 	return fncGetPulldownQueryExec($strQuery, $lngDefaultValue, $objDB);
 }
 // -----------------------------------------------------------------
 /**
-*	¥Ş¥¹¥¿¡¼¡¦¥×¥ë¥À¥¦¥ó¥ê¥¹¥ÈÀ¸À®´Ø¿ô¡Ê¥½¡¼¥È¥­¡¼»ØÄêÈÇ¡Ë
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ»ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆç”Ÿæˆé–¢æ•°ï¼ˆã‚½ãƒ¼ãƒˆã‚­ãƒ¼æŒ‡å®šç‰ˆï¼‰
 *
-*	¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë¤«¤é¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ºîÀ®
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã‹ã‚‰ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ä½œæˆ
 *
-*	@param  String $strTable            ¥Æ¡¼¥Ö¥ëÌ¾
-*	@param  String $strValueFieldName   value¤ËÆş¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  String $strDisplayFieldName É½¼¨¤µ¤ì¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  Long $lngDefaultValue       ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼¤Î½é´üÁªÂòÃÍ
-*	@param  String $strQueryWhere       ¾ò·ï(SQL)WHERE¤«¤é½ñ¤­»Ï¤á
-*	@param	Long   $lngSortKey			¥½¡¼¥È¥­¡¼
-*	@param  Object $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $strHtml                    ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼HTML
+*	@param  String $strTable            ãƒ†ãƒ¼ãƒ–ãƒ«å
+*	@param  String $strValueFieldName   valueã«å…¥ã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  String $strDisplayFieldName è¡¨ç¤ºã•ã‚Œã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  Long $lngDefaultValue       ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆæœŸé¸æŠå€¤
+*	@param  String $strQueryWhere       æ¡ä»¶(SQL)WHEREã‹ã‚‰æ›¸ãå§‹ã‚
+*	@param	Long   $lngSortKey			ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
+*	@param  Object $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $strHtml                    ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼HTML
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetPulldownSort( $strTable, $strValueFieldName, $strDisplayFieldName, $lngDefaultValue, $strQueryWhere, $lngSortKey, $objDB )
 {
-	// Á´¥Ú¡¼¥¸ID¤Î¥ê¥¹¥È¤ò¼èÆÀ
+	// å…¨ãƒšãƒ¼ã‚¸IDã®ãƒªã‚¹ãƒˆã‚’å–å¾—
 	$strQuery = "SELECT $strValueFieldName, $strDisplayFieldName FROM $strTable $strQueryWhere ORDER BY $lngSortKey";
 
 	return fncGetPulldownQueryExec($strQuery, $lngDefaultValue, $objDB);
@@ -933,9 +933,9 @@ function fncGetPulldownSort( $strTable, $strValueFieldName, $strDisplayFieldName
 
 // -----------------------------------------------------------------
 /**
-*	¥Ş¥¹¥¿¡¼¡¦¥×¥ë¥À¥¦¥ó¥ê¥¹¥ÈÀ¸À®´Ø¿ô¡Ê½¸Ìó¡Ë
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ»ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆç”Ÿæˆé–¢æ•°ï¼ˆé›†ç´„ï¼‰
 *
-*	@lngMaxFieldsCount ¥«¥é¥à¤ÎºÇÂç¿ô¤ò»ØÄê
+*	@lngMaxFieldsCount ã‚«ãƒ©ãƒ ã®æœ€å¤§æ•°ã‚’æŒ‡å®š
 */
 // -----------------------------------------------------------------
 function fncGetPulldownQueryExec($strQuery, $lngDefaultValue, $objDB, $lngMaxFieldsCount=false)
@@ -954,7 +954,7 @@ function fncGetPulldownQueryExec($strQuery, $lngDefaultValue, $objDB, $lngMaxFie
 		if($lngFieldsCount > $lngMaxFieldsCount) $lngFieldsCount = $lngMaxFieldsCount;
 	}
 
-	// <OPTION>À¸À®
+	// <OPTION>ç”Ÿæˆ
 	for ( $count = 0; $count < $lngResultNum; $count++ ) {
 		$aryResult = $objDB->fetchArray( $lngResultID, $count );
 
@@ -964,7 +964,7 @@ function fncGetPulldownQueryExec($strQuery, $lngDefaultValue, $objDB, $lngMaxFie
 			$strDisplayValue .= fncHTMLSpecialChars( $aryResult[$i] ) . "\t";
 		}
 
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		if ( $lngDefaultValue == $aryResult[0] )
 		{
 			$strHtml .= "<OPTION VALUE=\"$aryResult[0]\" SELECTED>$strDisplayValue</OPTION>\n";
@@ -982,23 +982,23 @@ function fncGetPulldownQueryExec($strQuery, $lngDefaultValue, $objDB, $lngMaxFie
 // 2004.04.14 suzukaze update start
 // -----------------------------------------------------------------
 /**
-*	¥Ş¥¹¥¿¡¼¡¦¥Ş¥ë¥Á¥×¥ë¥ê¥¹¥ÈÀ¸À®´Ø¿ô
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ»ãƒãƒ«ãƒãƒ—ãƒ«ãƒªã‚¹ãƒˆç”Ÿæˆé–¢æ•°
 *
-*	¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë¤«¤é¥Ş¥ë¥Á¥×¥ë¥ê¥¹¥È¥á¥Ë¥å¡¼ºîÀ®
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã‹ã‚‰ãƒãƒ«ãƒãƒ—ãƒ«ãƒªã‚¹ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ä½œæˆ
 *
-*	@param  String $strTable            ¥Æ¡¼¥Ö¥ëÌ¾
-*	@param  String $strValueFieldName   value¤ËÆş¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  String $strDisplayFieldName É½¼¨¤µ¤ì¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  Long $lngDefaultValue       ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼¤Î½é´üÁªÂòÃÍ
-*	@param  String $strQueryWhere       ¾ò·ï(SQL)WHERE¤«¤é½ñ¤­»Ï¤á
-*	@param  Object $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $strHtml                    ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼HTML
+*	@param  String $strTable            ãƒ†ãƒ¼ãƒ–ãƒ«å
+*	@param  String $strValueFieldName   valueã«å…¥ã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  String $strDisplayFieldName è¡¨ç¤ºã•ã‚Œã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  Long $lngDefaultValue       ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®åˆæœŸé¸æŠå€¤
+*	@param  String $strQueryWhere       æ¡ä»¶(SQL)WHEREã‹ã‚‰æ›¸ãå§‹ã‚
+*	@param  Object $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $strHtml                    ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼HTML
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetMultiplePulldown( $strTable, $strValueFieldName, $strDisplayFieldName, $lngDefaultValue, $strQueryWhere, $objDB )
 {
-	// Á´¥Ú¡¼¥¸ID¤Î¥ê¥¹¥È¤ò¼èÆÀ
+	// å…¨ãƒšãƒ¼ã‚¸IDã®ãƒªã‚¹ãƒˆã‚’å–å¾—
 	$strQuery = "SELECT $strValueFieldName, $strDisplayFieldName FROM $strTable $strQueryWhere ORDER BY $strValueFieldName";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -1009,7 +1009,7 @@ function fncGetMultiplePulldown( $strTable, $strValueFieldName, $strDisplayField
 	}
 
 	$lngFieldsCount = $objDB->getFieldsCount( $lngResultID );
-	// <OPTION>À¸À®
+	// <OPTION>ç”Ÿæˆ
 	for ( $count = 0; $count < $lngResultNum; $count++ ) {
 		$aryResult = $objDB->fetchArray( $lngResultID, $count );
 
@@ -1019,7 +1019,7 @@ function fncGetMultiplePulldown( $strTable, $strValueFieldName, $strDisplayField
 			$strDisplayValue .= fncHTMLSpecialChars( $aryResult[$i] ) . "\t";
 		}
 
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$strHtml = "<OPTION VALUE=\"$aryResult[0]\">$strDisplayValue</OPTION>\n";
 	}
 
@@ -1031,23 +1031,23 @@ function fncGetMultiplePulldown( $strTable, $strValueFieldName, $strDisplayField
 
 // -----------------------------------------------------------------
 /**
-*	¥Ş¥¹¥¿¡¼¡¦¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹À¸À®´Ø¿ô
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ»ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ç”Ÿæˆé–¢æ•°
 *
-*	¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë¤«¤é¥Ş¥ë¥Á¥×¥ë¥ê¥¹¥È¥á¥Ë¥å¡¼ºîÀ®
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã‹ã‚‰ãƒãƒ«ãƒãƒ—ãƒ«ãƒªã‚¹ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼ä½œæˆ
 *
-*	@param  String	$strTable            ¥Æ¡¼¥Ö¥ëÌ¾
-*	@param  String	$strValueFieldName   value¤ËÆş¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  String	$strDisplayFieldName É½¼¨¤µ¤ì¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  Long	$strObjectName       ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¥ª¥Ö¥¸¥§¥¯¥È¤ÎÌ¾Á°
-*	@param  String	$strQueryWhere       ¾ò·ï(SQL)WHERE¤«¤é½ñ¤­»Ï¤á
-*	@param  Object	$objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $strHtml                    ¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼HTML
+*	@param  String	$strTable            ãƒ†ãƒ¼ãƒ–ãƒ«å
+*	@param  String	$strValueFieldName   valueã«å…¥ã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  String	$strDisplayFieldName è¡¨ç¤ºã•ã‚Œã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  Long	$strObjectName       ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åå‰
+*	@param  String	$strQueryWhere       æ¡ä»¶(SQL)WHEREã‹ã‚‰æ›¸ãå§‹ã‚
+*	@param  Object	$objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $strHtml                    ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼HTML
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetCheckBoxObject( $strTable, $strValueFieldName, $strDisplayFieldName, $strObjectName, $strQueryWhere, $objDB )
 {
-	// Á´¥Ú¡¼¥¸ID¤Î¥ê¥¹¥È¤ò¼èÆÀ
+	// å…¨ãƒšãƒ¼ã‚¸IDã®ãƒªã‚¹ãƒˆã‚’å–å¾—
 	$strQuery = "SELECT $strValueFieldName, $strDisplayFieldName FROM $strTable $strQueryWhere ORDER BY $strValueFieldName";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
@@ -1058,17 +1058,17 @@ function fncGetCheckBoxObject( $strTable, $strValueFieldName, $strDisplayFieldNa
 	}
 
 	$lngFieldsCount = $objDB->getFieldsCount( $lngResultID );
-	// <OPTION>À¸À®
+	// <OPTION>ç”Ÿæˆ
 	for ( $count = 0; $count < $lngResultNum; $count++ ) {
 		$aryResult = $objDB->fetchArray( $lngResultID, $count );
 
 		$strDisplayValue = "";
 		for ( $i = 1; $i < $lngFieldsCount; $i++ )
 		{
-			$strDisplayValue .= fncHTMLSpecialChars( $aryResult[$i] ) . "¡¡";
+			$strDisplayValue .= fncHTMLSpecialChars( $aryResult[$i] ) . "ã€€";
 		}
 
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$strHtml .= '<input class="CheckBox14" type="checkbox" name="'.$strObjectName.'" value="'.$aryResult[0].'">'
 		.$strDisplayValue."\n";
 	}
@@ -1080,33 +1080,33 @@ function fncGetCheckBoxObject( $strTable, $strValueFieldName, $strDisplayFieldNa
 
 // -----------------------------------------------------------------
 /**
-*	¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿¼èÆÀ´Ø¿ô
+*	ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°
 *
-*	¥Ş¥¹¥¿¡¼¤«¤éÃÍ¼èÆÀ
+*	ãƒã‚¹ã‚¿ãƒ¼ã‹ã‚‰å€¤å–å¾—
 *
-*	@param  String $strTable            ¥Æ¡¼¥Ö¥ëÌ¾
-*	@param  String $strValueFieldName   value¤ËÆş¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  String $strDisplayFieldName É½¼¨¤µ¤ì¤ë¥Õ¥£¡¼¥ë¥ÉÌ¾
-*	@param  mixed  $defaultValue        ÁªÂòÃÍ('Array'¤Î¾ì¹ç¡¢¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤òÊÖ¤¹ÆÃÊÌ»ÅÍÍ)
-*	@param  String $strQueryWhere       ¾ò·ï(value¤ËÆş¤ëÃÍ¤ÈÆ±¤¸)
-*	@param  Object $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $aryResult[0]               ¥Ş¥¹¥¿¡¼¥Ç¡¼¥¿
+*	@param  String $strTable            ãƒ†ãƒ¼ãƒ–ãƒ«å
+*	@param  String $strValueFieldName   valueã«å…¥ã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  String $strDisplayFieldName è¡¨ç¤ºã•ã‚Œã‚‹ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
+*	@param  mixed  $defaultValue        é¸æŠå€¤('Array'ã®å ´åˆã€ã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã‚’è¿”ã™ç‰¹åˆ¥ä»•æ§˜)
+*	@param  String $strQueryWhere       æ¡ä»¶(valueã«å…¥ã‚‹å€¤ã¨åŒã˜)
+*	@param  Object $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $aryResult[0]               ãƒã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetMasterValue( $strTable, $strKeyFieldName, $strDisplayFieldName, $defaultValue, $strQueryWhere, $objDB )
 {
-	// WHERE¶çÆâ¤Î¥«¥é¥à¤¬Ê¸»ú·¿¤À¤Ã¤¿¾ì¹ç¤Î½èÍı(¡Ö:str¡×¤¬¤¢¤Ã¤¿¾ì¹ç''¤Ç°Ï¤à)
+	// WHEREå¥å†…ã®ã‚«ãƒ©ãƒ ãŒæ–‡å­—å‹ã ã£ãŸå ´åˆã®å‡¦ç†(ã€Œ:strã€ãŒã‚ã£ãŸå ´åˆ''ã§å›²ã‚€)
 	list ( $defaultValue, $type ) = explode ( ":", $defaultValue );
 	if ( $type == 'str' )
 	{
 		$defaultValue = "'$defaultValue'";
 	}
 
-	// Á´¥Ú¡¼¥¸ID¤Î¥ê¥¹¥È¤ò¼èÆÀ
+	// å…¨ãƒšãƒ¼ã‚¸IDã®ãƒªã‚¹ãƒˆã‚’å–å¾—
 	$strQuery = "SELECT $strKeyFieldName, $strDisplayFieldName FROM $strTable";
 
-	// ÇÛÎó¼èÆÀ¤¬ÌÜÅª¤Ç¤Ê¤¤¾ì¹ç¡¢¥­¡¼¤ÈÃÍ¤ò»ØÄê
+	// é…åˆ—å–å¾—ãŒç›®çš„ã§ãªã„å ´åˆã€ã‚­ãƒ¼ã¨å€¤ã‚’æŒ‡å®š
 	if ( $defaultValue != "Array" )
 	{
 		$strQuery .= " WHERE $strKeyFieldName = $defaultValue";
@@ -1133,13 +1133,13 @@ function fncGetMasterValue( $strTable, $strKeyFieldName, $strDisplayFieldName, $
 
 	$objDB->freeResult( $lngResultID );
 
-	// ÇÛÎó¼èÆÀ¤¬ÌÜÅª¤Ç¤Ê¤¤¾ì¹ç¡¢ÃÍ¤òÊÖ¤¹
+	// é…åˆ—å–å¾—ãŒç›®çš„ã§ãªã„å ´åˆã€å€¤ã‚’è¿”ã™
 	if ( $defaultValue != "Array" )
 	{
 		return fncHTMLSpecialChars( $aryResult[1] );
 	}
 
-	// ÇÛÎó¼èÆÀ¤¬ÌÜÅª¤Î¾ì¹ç¡¢¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎó¤òÊÖ¤¹
+	// é…åˆ—å–å¾—ãŒç›®çš„ã®å ´åˆã€ã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ã‚’è¿”ã™
 	else
 	{
 		return $aryResultValue;
@@ -1149,43 +1149,43 @@ function fncGetMasterValue( $strTable, $strKeyFieldName, $strDisplayFieldName, $
 
 // -----------------------------------------------------------------
 /**
-*	¥á¡¼¥ëÊ¸ÌÌ¼èÆÀ¡¦À¸À®´Ø¿ô
+*	ãƒ¡ãƒ¼ãƒ«æ–‡é¢å–å¾—ãƒ»ç”Ÿæˆé–¢æ•°
 *
-*	¥Ş¥¹¥¿¡¼¤«¤é¿÷·¿¼èÆÀ¡¢°ú¿ô¤Ë¤è¤ëÃÖ¤­´¹¤¨
+*	ãƒã‚¹ã‚¿ãƒ¼ã‹ã‚‰é››å‹å–å¾—ã€å¼•æ•°ã«ã‚ˆã‚‹ç½®ãæ›ãˆ
 *
-*	@param  Long $lngFunctionCode µ¡Ç½¥³¡¼¥É
-*	@param  Array  $aryData       ÃÖ¤­´¹¤¨Ê¸»úÎó
-*	@param  Object $objDB         DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return String $strSubject    ¥á¡¼¥ë¥¿¥¤¥È¥ë
-*	        String $strBody       ¥á¡¼¥ëËÜÊ¸
+*	@param  Long $lngFunctionCode æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
+*	@param  Array  $aryData       ç½®ãæ›ãˆæ–‡å­—åˆ—
+*	@param  Object $objDB         DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return String $strSubject    ãƒ¡ãƒ¼ãƒ«ã‚¿ã‚¤ãƒˆãƒ«
+*	        String $strBody       ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncGetMailMessage( $lngFunctionCode, $aryData, $objDB )
 {
-	// ¥á¡¼¥ë¿÷·¿¼èÆÀ
+	// ãƒ¡ãƒ¼ãƒ«é››å‹å–å¾—
 	$strQuery = "SELECT strSubject, strBody FROM m_Mailform WHERE lngFunctionCode = $lngFunctionCode AND bytInvalidFlag = FALSE";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( !$lngResultNum )
 	{
-		fncOutputError ( 9051, DEF_WARNING, "»ØÄê¤Î¥á¡¼¥ë¥Æ¥ó¥×¥ì¡¼¥È¤¬¤¢¤ê¤Ş¤»¤ó¤Ç¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_WARNING, "æŒ‡å®šã®ãƒ¡ãƒ¼ãƒ«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãŒã‚ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚", TRUE, "", $objDB );
 	}
 
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
 
 	$objDB->freeResult( $lngResultID );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥È¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	$objTemplate = new clsTemplate();
 	$objTemplate->strTemplate = $objResult->strbody;
 
-	// ÃÖ¤­´¹¤¨
+	// ç½®ãæ›ãˆ
 	$objTemplate->replace( $aryData );
 	$objTemplate->complete();
 
-	// Ê¸»ú¥³¡¼¥ÉÊÑ´¹(EUC->JIS)
+	// æ–‡å­—ã‚³ãƒ¼ãƒ‰å¤‰æ›(EUC->JIS)
 	$objTemplate->strTemplate = mb_convert_encoding( $objTemplate->strTemplate, "JIS", "EUC-JP" );
 	$objResult->strsubject    = mb_convert_encoding( $objResult->strsubject, "JIS", "EUC-JP" );
 //	$objResult->strsubject    = mb_encode_mimeheader ( $objResult->strsubject , "iso-2022-jp", "B" );
@@ -1197,14 +1197,14 @@ function fncGetMailMessage( $lngFunctionCode, $aryData, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¥Æ¥ó¥×¥ì¡¼¥È´Ø¿ô
+*	ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆé–¢æ•°
 *
-*	¥Æ¥ó¥×¥ì¡¼¥È¤«¤éHTML¤òÀ¸À®¤¹¤ë
+*	ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‹ã‚‰HTMLã‚’ç”Ÿæˆã™ã‚‹
 *
-*	@param  String $strTemplatePath ¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¥Ñ¥¹
-*	@param  Array  $aryPost         POST¥Ç¡¼¥¿
-*	@param  Object $objAuth         Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È
-*	@return $strTemplate            ·ë²ÌHTML
+*	@param  String $strTemplatePath ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+*	@param  Array  $aryPost         POSTãƒ‡ãƒ¼ã‚¿
+*	@param  Object $objAuth         èªè¨¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return $strTemplate            çµæœHTML
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -1212,14 +1212,14 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 {
 	global $strBaseTemplate, $aryConfigName;
 
-	// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objContentsTemplate = new clsTemplate();
 	$objContentsTemplate->getTemplate( $strTemplatePath );
 
-	// ÆÃ¼ì¥¿¥°¥Ç¡¼¥¿¼èÆÀ
+	// ç‰¹æ®Šã‚¿ã‚°ãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryBaseInsert = $objContentsTemplate->getConfig( $aryConfigName );
 
-	// ¥æ¡¼¥¶¡¼¥Ç¡¼¥¿¼èÆÀ
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryBaseInsert["strUserID"]             = $objAuth->UserID;
 	$aryBaseInsert["strUserFullName"]       = $objAuth->UserFullName;
 	$aryBaseInsert["strGroupDisplayCode"]   = $objAuth->GroupDisplayCode;
@@ -1231,7 +1231,7 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 	$aryBaseInsert["strUserID"] = trim( $aryBaseInsert["strUserID"] );
 
 
-	// ¥Ú¡¼¥¸¥Ç¡¼¥¿¼èÆÀ
+	// ãƒšãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryBaseInsert["lngFunctionCode"]       = $aryPost["lngFunctionCode"];
 
 	if ( $objAuth->UserImageFileName )
@@ -1243,7 +1243,7 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 		$aryBaseInsert["strUserImageFileName"] = USER_IMAGE_URL . "default.gif";
 	}
 
-	// ÊÔ½¸²èÌÌ¤ÎÀßÄê(½¤Àµ²èÌÌ¤À¤Ã¤¿¾ì¹ç¤Î¤ßÆÃ¼ì½èÍı)
+	// ç·¨é›†ç”»é¢ã®è¨­å®š(ä¿®æ­£ç”»é¢ã ã£ãŸå ´åˆã®ã¿ç‰¹æ®Šå‡¦ç†)
 	if ( $aryPost["RENEW"] == TRUE )
 	{
 		$aryPost["strBaseVisibilityName"] = "hidden";
@@ -1264,7 +1264,7 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 	}
 	$aryPost["RENEW"] = "";
 
-	// ¥¯¥Ã¥­¡¼¤«¤é¸À¸ì¥³¡¼¥É¤ò¼èÆÀ¤·¡¢ÃÖ¤­´¹¤¨¤ë
+	// ã‚¯ãƒƒã‚­ãƒ¼ã‹ã‚‰è¨€èªã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã—ã€ç½®ãæ›ãˆã‚‹
 	if ( !$_COOKIE["lngLanguageCode"] )
 	{
 		$_COOKIE["lngLanguageCode"] = "0";
@@ -1288,13 +1288,13 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 	
 	$aryBaseInsert["BODY"] = $objContentsTemplate->strTemplate;
 
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥È¼èÆÀ
+	// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå–å¾—
 	$objBaseTemplate = new clsTemplate();
 	$objBaseTemplate->getTemplate( $strBaseTemplate );
 
-	// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸Ëä¤á¹ş¤ß
+	// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸åŸ‹ã‚è¾¼ã¿
 	$aryBaseInsert["strErrorMessage"] = $aryPost["strErrorMessage"];
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨
+	// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆ
 	$objBaseTemplate->replace( $aryBaseInsert );
 
 	$objBaseTemplate->complete();
@@ -1311,15 +1311,15 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 
 // -----------------------------------------------------------------
 /**
- *	¥Æ¥ó¥×¥ì¡¼¥È´Ø¿ô
+ *	ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆé–¢æ•°
  *
- *	¥Æ¥ó¥×¥ì¡¼¥È¤«¤éHTML¤òÀ¸À®¤¹¤ë
+ *	ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‹ã‚‰HTMLã‚’ç”Ÿæˆã™ã‚‹
  *
- *	@param  String $strBaseTemplatePath ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¥Ñ¥¹
- *	@param  String $strTemplatePath ¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¥Ñ¥¹
- *	@param  Array  $aryPost         POST¥Ç¡¼¥¿
- *	@param  Object $objAuth         Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È
- *	@return $strTemplate            ·ë²ÌHTML
+ *	@param  String $strBaseTemplatePath ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+ *	@param  String $strTemplatePath ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+ *	@param  Array  $aryPost         POSTãƒ‡ãƒ¼ã‚¿
+ *	@param  Object $objAuth         èªè¨¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *	@return $strTemplate            çµæœHTML
  *	@access public
  */
 // -----------------------------------------------------------------
@@ -1327,14 +1327,14 @@ function fncGetReplacedHtmlWithBase($strBaseTemplate, $strTemplatePath, $aryPost
 {
 	global $aryConfigName;
 
-	// ¥Ñ¡¼¥Ä¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ‘ãƒ¼ãƒ„ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objContentsTemplate = new clsTemplate();
 	$objContentsTemplate->getTemplate( $strTemplatePath );
 
-	// ÆÃ¼ì¥¿¥°¥Ç¡¼¥¿¼èÆÀ
+	// ç‰¹æ®Šã‚¿ã‚°ãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryBaseInsert = $objContentsTemplate->getConfig( $aryConfigName );
 
-	// ¥æ¡¼¥¶¡¼¥Ç¡¼¥¿¼èÆÀ
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryBaseInsert["strUserID"]             = $objAuth->UserID;
 	$aryBaseInsert["strUserFullName"]       = $objAuth->UserFullName;
 	$aryBaseInsert["strGroupDisplayCode"]   = $objAuth->GroupDisplayCode;
@@ -1346,7 +1346,7 @@ function fncGetReplacedHtmlWithBase($strBaseTemplate, $strTemplatePath, $aryPost
 	
 	$aryBaseInsert["HeaderTitleImage"] = '/img/type01/'.explode('/',$strTemplatePath)[0].'/title_ja.gif';
 
-	// ¥Ú¡¼¥¸¥Ç¡¼¥¿¼èÆÀ
+	// ãƒšãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryBaseInsert["lngFunctionCode"]       = $aryPost["lngFunctionCode"];
 
 	if ( $objAuth->UserImageFileName )
@@ -1358,7 +1358,7 @@ function fncGetReplacedHtmlWithBase($strBaseTemplate, $strTemplatePath, $aryPost
 		$aryBaseInsert["strUserImageFileName"] = USER_IMAGE_URL . "default.gif";
 	}
 
-	// ÊÔ½¸²èÌÌ¤ÎÀßÄê(½¤Àµ²èÌÌ¤À¤Ã¤¿¾ì¹ç¤Î¤ßÆÃ¼ì½èÍı)
+	// ç·¨é›†ç”»é¢ã®è¨­å®š(ä¿®æ­£ç”»é¢ã ã£ãŸå ´åˆã®ã¿ç‰¹æ®Šå‡¦ç†)
 	if ( $aryPost["RENEW"] == TRUE )
 	{
 		$aryPost["strBaseVisibilityName"] = "hidden";
@@ -1379,7 +1379,7 @@ function fncGetReplacedHtmlWithBase($strBaseTemplate, $strTemplatePath, $aryPost
 	}
 	$aryPost["RENEW"] = "";
 
-	// ¥¯¥Ã¥­¡¼¤«¤é¸À¸ì¥³¡¼¥É¤ò¼èÆÀ¤·¡¢ÃÖ¤­´¹¤¨¤ë
+	// ã‚¯ãƒƒã‚­ãƒ¼ã‹ã‚‰è¨€èªã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã—ã€ç½®ãæ›ãˆã‚‹
 	if ( !$_COOKIE["lngLanguageCode"] )
 	{
 		$_COOKIE["lngLanguageCode"] = "0";
@@ -1391,14 +1391,14 @@ function fncGetReplacedHtmlWithBase($strBaseTemplate, $strTemplatePath, $aryPost
 	}
 	$aryBaseInsert["BODY"] = $objContentsTemplate->strTemplate;
 
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥È¼èÆÀ
+	// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå–å¾—
 	$objBaseTemplate = new clsTemplate();
 	$objBaseTemplate->getTemplate( $strBaseTemplate );
 
-	// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸Ëä¤á¹ş¤ß
+	// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸åŸ‹ã‚è¾¼ã¿
 	$aryBaseInsert["strErrorMessage"] = $aryPost["strErrorMessage"];
 
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨
+	// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆ
 	$objBaseTemplate->replaceForMold($aryBaseInsert);
 
 	$objBaseTemplate->complete();
@@ -1409,12 +1409,12 @@ function fncGetReplacedHtmlWithBase($strBaseTemplate, $strTemplatePath, $aryPost
 
 // -----------------------------------------------------------------
 /**
-*	HTMLÉ½¼¨¤ËÌäÂê¤Î¤Ê¤¤Ê¸»úÎó¤òÊÖ¤¹´Ø¿ô
+*	HTMLè¡¨ç¤ºã«å•é¡Œã®ãªã„æ–‡å­—åˆ—ã‚’è¿”ã™é–¢æ•°
 *
-*	HTMLÉ½¼¨¤ËÌäÂê¤Î¤Ê¤¤Ê¸»úÎó¤òÊÖ¤¹
+*	HTMLè¡¨ç¤ºã«å•é¡Œã®ãªã„æ–‡å­—åˆ—ã‚’è¿”ã™
 *
-*	@param  String $strValue ÊÑ´¹¤¹¤ëÊ¸»úÎó
-*	@return String $strValue ÊÑ´¹¤µ¤ì¤¿Ê¸»úÎó
+*	@param  String $strValue å¤‰æ›ã™ã‚‹æ–‡å­—åˆ—
+*	@return String $strValue å¤‰æ›ã•ã‚ŒãŸæ–‡å­—åˆ—
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -1431,12 +1431,12 @@ function fncHTMLSpecialChars( $strValue )
 
 // -----------------------------------------------------------------
 /**
-*	HTMLÉ½¼¨¤ËÌäÂê¤Î¤Ê¤¤Ê¸»úÎó¤òÇÛÎó¤ÇÊÖ¤¹´Ø¿ô
+*	HTMLè¡¨ç¤ºã«å•é¡Œã®ãªã„æ–‡å­—åˆ—ã‚’é…åˆ—ã§è¿”ã™é–¢æ•°
 *
-*	HTMLÉ½¼¨¤ËÌäÂê¤Î¤Ê¤¤Ê¸»úÎó¤òÇÛÎó¤ÇÊÖ¤¹
+*	HTMLè¡¨ç¤ºã«å•é¡Œã®ãªã„æ–‡å­—åˆ—ã‚’é…åˆ—ã§è¿”ã™
 *
-*	@param  Array $aryData ÊÑ´¹¤¹¤ëÏ¢ÁÛÇÛÎó
-*	@return Array $aryData ÊÑ´¹¤µ¤ì¤¿Ï¢ÁÛÇÛÎó
+*	@param  Array $aryData å¤‰æ›ã™ã‚‹é€£æƒ³é…åˆ—
+*	@return Array $aryData å¤‰æ›ã•ã‚ŒãŸé€£æƒ³é…åˆ—
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -1454,14 +1454,14 @@ function fncToHTMLString( $aryData )
 
 // -----------------------------------------------------------------
 /**
-*	ÇÛÎó½ĞÎÏ´Ø¿ô
+*	é…åˆ—å‡ºåŠ›é–¢æ•°
 *
-*	ÇÛÎó¤Î¥­¡¼¤ÈÃÍ¤Î¥Æ¡¼¥Ö¥ë¤Ş¤¿¤Ï¥Õ¥©¡¼¥à(HIDDEN)À¸À®
+*	é…åˆ—ã®ã‚­ãƒ¼ã¨å€¤ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã¾ãŸã¯ãƒ•ã‚©ãƒ¼ãƒ (HIDDEN)ç”Ÿæˆ
 *
-*	@param  Array  $aryData        Ä´¤Ù¤¿¤¤¥Ç¡¼¥¿ÇÛÎó
-*	@param  String $strExpressMode TABLE  : ¥Æ¡¼¥Ö¥ë¤Î¤ß
-*                                  HIDDEN : HIDDEN¤Î¤ß
-*	                               MIX    : Î¾Êı
+*	@param  Array  $aryData        èª¿ã¹ãŸã„ãƒ‡ãƒ¼ã‚¿é…åˆ—
+*	@param  String $strExpressMode TABLE  : ãƒ†ãƒ¼ãƒ–ãƒ«ã®ã¿
+*                                  HIDDEN : HIDDENã®ã¿
+*	                               MIX    : ä¸¡æ–¹
 *	@return String $strHtmlTable   HTML TABLE
 *	@access public
 */
@@ -1470,7 +1470,7 @@ function getArrayTable( $aryData, $strExpressMode )
 {
 	$strTable = "<table border>\n";
 
-	// ÇÛÎó¤Î¿ô¤À¤±¥ë¡¼¥×
+	// é…åˆ—ã®æ•°ã ã‘ãƒ«ãƒ¼ãƒ—
 	$keys = array_keys ( $aryData );
 	foreach ( $keys as $key )
 	{
@@ -1497,32 +1497,32 @@ function getArrayTable( $aryData, $strExpressMode )
 
 // -----------------------------------------------------------------
 /**
-*	¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍı´Ø¿ô
+*	ã‚¨ãƒ©ãƒ¼é …ç›®è¡¨ç¤ºå‡¦ç†é–¢æ•°
 *
-*	¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍı(visibility:visible; or hidden ¤òÊÖ¤¹)
+*	ã‚¨ãƒ©ãƒ¼é …ç›®è¡¨ç¤ºå‡¦ç†(visibility:visible; or hidden ã‚’è¿”ã™)
 *
-*	@param  Array   $aryData        Ä´¤Ù¤¿¤¤¥Ç¡¼¥¿ÇÛÎó
-*	@param  Array   $aryCheckResult ¥¨¥é¡¼ÇÛÎó
-*	@param  Object  $objDB          DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  Array   $aryData        èª¿ã¹ãŸã„ãƒ‡ãƒ¼ã‚¿é…åˆ—
+*	@param  Array   $aryCheckResult ã‚¨ãƒ©ãƒ¼é…åˆ—
+*	@param  Object  $objDB          DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@return Array   $aryData        HTML TABLE
-*	        boolean $bytErrorFlag   ¥¨¥é¡¼¤ÎÂ¸ºß¥Õ¥é¥°
+*	        boolean $bytErrorFlag   ã‚¨ãƒ©ãƒ¼ã®å­˜åœ¨ãƒ•ãƒ©ã‚°
 *	@access public
 */
 // -----------------------------------------------------------------
 function getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB )
 {
-	// ¸À¸ìÈ½Äê(¼èÆÀ¤¹¤ë¥«¥é¥à¤ÎÀßÄê)
+	// è¨€èªåˆ¤å®š(å–å¾—ã™ã‚‹ã‚«ãƒ©ãƒ ã®è¨­å®š)
 	$value = "strmessagecontentenglish";
 	if ( $_COOKIE["lngLanguageCode"] == 1 )
 	{
 		$value = "strmessagecontent";
 	}
 
-	// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¼èÆÀ¥¯¥¨¥êÀ¸À®
+	// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
 	$strQuery = "SELECT lngMessageCode, $value FROM m_Message";
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ¥¨¥é¡¼¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ëÏ¢ÁÛÇÛÎóÀ¸À®
+	// ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€£æƒ³é…åˆ—ç”Ÿæˆ
 	for ( $i = 0; $i < $lngResultNum; $i++ )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, $i );
@@ -1531,16 +1531,16 @@ function getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥¨¥é¡¼È½Äê
+	// ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 	$aryCheckResultKeys = array_keys ( $aryCheckResult );
 	foreach ( $aryCheckResultKeys as $key )
 	{
-		// ¥Á¥§¥Ã¥¯·ë²Ì¤ËÃÍ¤¬Â¸ºß¤·¤¿¾ì¹ç¡¢¥¨¥é¡¼É½¼¨Ê¸»úÎóÀßÄê
+		// ãƒã‚§ãƒƒã‚¯çµæœã«å€¤ãŒå­˜åœ¨ã—ãŸå ´åˆã€ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºæ–‡å­—åˆ—è¨­å®š
 		if ( $aryCheckResult[$key] )
 		{
 			list ( $lngErrorCode, $strErrorMessage ) = explode ( ":", $aryCheckResult[$key] );
-			// ÀèÆ¬¤ËÊ¸»úÎó¡ÖORIGINAL¡×¤¬¤¢¤Ã¤¿¾ì¹ç¡¢¤½¤ÎÀè¤Ë¤¢¤ëÊ¸»úÎó¤ò
-			// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤È¤¹¤ë
+			// å…ˆé ­ã«æ–‡å­—åˆ—ã€ŒORIGINALã€ãŒã‚ã£ãŸå ´åˆã€ãã®å…ˆã«ã‚ã‚‹æ–‡å­—åˆ—ã‚’
+			// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¨ã™ã‚‹
 			if ( preg_match ( "/^ORIGINAL/", $strErrorMessage ) )
 			{
 				$aryMessage[$lngErrorCode] = preg_replace ( "/^ORIGINAL/", "", $strErrorMessage );
@@ -1561,18 +1561,18 @@ function getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB )
 
 
 ////////////////////////////////////////////////////////////////////
-// Ç§¾Ú¡¦¥»¥Ã¥·¥ç¥ó´Ø¿ô
+// èªè¨¼ãƒ»ã‚»ãƒƒã‚·ãƒ§ãƒ³é–¢æ•°
 ////////////////////////////////////////////////////////////////////
 // -----------------------------------------------------------------
 /**
-*	¥»¥Ã¥·¥ç¥ó´Ø¿ô(³ÎÇ§)
+*	ã‚»ãƒƒã‚·ãƒ§ãƒ³é–¢æ•°(ç¢ºèª)
 *
-*	¥»¥Ã¥·¥ç¥ó¤Î³ÎÇ§
+*	ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®ç¢ºèª
 *
-*	@param  String  $strSessionID   ¥»¥Ã¥·¥ç¥óID
-*	@param  Object  $objAuth        Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È
-*	@param  Object  $objDB          DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Object  $objAuth          Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  String  $strSessionID   ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+*	@param  Object  $objAuth        èªè¨¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@param  Object  $objDB          DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Object  $objAuth          èªè¨¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -1580,16 +1580,16 @@ function fncIsSession( $strSessionID, $objAuth, $objDB )
 {
 	if ( !$strSessionID )
 	{
-		fncOutputError ( 9052, DEF_ERROR, "¥»¥Ã¥·¥ç¥ó¾ğÊó¤¬ÅÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_ERROR, "ã‚»ãƒƒã‚·ãƒ§ãƒ³æƒ…å ±ãŒæ¸¡ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	if ( !$objAuth->isLogin( $strSessionID, $objDB ) )
 	{
         $objDB->transactionBegin();
 	    unlockExclusiveBySessionID($strSessionID, $objDB);
         $objDB->transactionCommit();
-		fncOutputError ( 9052, DEF_WARNING, "¥¿¥¤¥à¥¢¥¦¥È¤Ë¤Ê¤ê¤Ş¤·¤¿¡£ºÆ¥í¥°¥¤¥ó¤·¤Æ²¼¤µ¤¤¡£", TRUE, "/login/login.php", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã«ãªã‚Šã¾ã—ãŸã€‚å†ãƒ­ã‚°ã‚¤ãƒ³ã—ã¦ä¸‹ã•ã„ã€‚", TRUE, "/login/login.php", $objDB );
 	}
 	return $objAuth;
 }
@@ -1598,19 +1598,19 @@ function fncIsSession( $strSessionID, $objAuth, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¸¢¸Â¥Á¥§¥Ã¥¯´Ø¿ô
+*	æ¨©é™ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	¸¢¸Â¤Î³ÎÇ§
+*	æ¨©é™ã®ç¢ºèª
 *
-*	@param  Long $lngFunctionCode  µ¡Ç½¥³¡¼¥É
-*	@param  Object $objAuth        Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Boolean                ¸¢¸Â¤ÎÍ­Ìµ
+*	@param  Long $lngFunctionCode  æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
+*	@param  Object $objAuth        èªè¨¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Boolean                æ¨©é™ã®æœ‰ç„¡
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncCheckAuthority( $lngFunctionCode, $objAuth )
 {
-	// ¸¢¸Â¥Á¥§¥Ã¥¯
+	// æ¨©é™ãƒã‚§ãƒƒã‚¯
 	if ( $objAuth->FunctionCode[$lngFunctionCode] )
 	{
 		return TRUE;
@@ -1623,24 +1623,24 @@ function fncCheckAuthority( $lngFunctionCode, $objAuth )
 
 // -----------------------------------------------------------------
 /**
-*	¥í¥°¥¤¥ó´Ø¿ô
+*	ãƒ­ã‚°ã‚¤ãƒ³é–¢æ•°
 *
-*	¥í¥°¥¤¥ó½èÍı
+*	ãƒ­ã‚°ã‚¤ãƒ³å‡¦ç†
 *
 *	@param  String $strUserID       ID
-*	@param  String $strPasswordHash ¥Ñ¥¹¥ï¡¼¥É
-*	@param  Object $objAuth        Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È
-*	@param  Object $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Object  $objDB          Ç§¾Ú¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  String $strPasswordHash ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+*	@param  Object $objAuth        èªè¨¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@param  Object $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Object  $objDB          èªè¨¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncLogin( $strUserID, $strPasswordHash, $objAuth, $objDB )
 {
-	// Ç§¾Ú¥Á¥§¥Ã¥¯
+	// èªè¨¼ãƒã‚§ãƒƒã‚¯
 	if ( !$objAuth->login( $strUserID, $strPasswordHash, $objDB ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "ID¤Ş¤¿¤Ï¥Ñ¥¹¥ï¡¼¥É¤¬´Ö°ã¤Ã¤Æ¤¤¤Ş¤¹¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "IDã¾ãŸã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé–“é•ã£ã¦ã„ã¾ã™ã€‚", TRUE, "", $objDB );
 	}
 	return $objAuth;
 }
@@ -1649,13 +1649,13 @@ function fncLogin( $strUserID, $strPasswordHash, $objAuth, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¥í¥°¥¢¥¦¥È´Ø¿ô
+*	ãƒ­ã‚°ã‚¢ã‚¦ãƒˆé–¢æ•°
 *
-*	¥í¥°¥¢¥¦¥È½èÍı
+*	ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†
 *
-*	@param  String $SessionID ¥»¥Ã¥·¥ç¥óID
-*	@param  Object $objDB     DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Boolean           ¥í¥°¥¢¥¦¥È¤ÎÀ®Èİ
+*	@param  String $SessionID ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+*	@param  Object $objDB     DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Boolean           ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã®æˆå¦
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -1664,7 +1664,7 @@ function fncLogout( $strSessionID, $objDB )
 	$objAuth = new clsAuth();
 	if ( !$objAuth->logout( $strSessionID, $objDB ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥í¥°¥¢¥¦¥È¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 	}
 	return TRUE;
 }
@@ -1672,18 +1672,18 @@ function fncLogout( $strSessionID, $objDB )
 
 
 ////////////////////////////////////////////////////////////////////
-// ¤½¤ÎÂ¾¤Î´Ø¿ô
+// ãã®ä»–ã®é–¢æ•°
 ////////////////////////////////////////////////////////////////////
 // -----------------------------------------------------------------
 /**
-*	ÇÛÎóÀ¸À®´Ø¿ô
+*	é…åˆ—ç”Ÿæˆé–¢æ•°
 *
-*	ÆÃÄê¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¤Ç1¹Ô¤ËÊİÂ¸¤µ¤ì¤¿Ê¸»úÎó¤òÏ¢ÁÛÇÛÎó¤ËÀ®·Á¤·¤ÆÊÖ¤¹
+*	ç‰¹å®šã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã§1è¡Œã«ä¿å­˜ã•ã‚ŒãŸæ–‡å­—åˆ—ã‚’é€£æƒ³é…åˆ—ã«æˆå½¢ã—ã¦è¿”ã™
 *
-*	@param  String $strData      Ê¬³ä¸µÊ¸»úÎó
-*	@param  String $strAmpersand ¥Ç¡¼¥¿Ê¬³äÊ¸»úÎó
-*	@param  String $strEqual     ¥­¡¼¤ÈÃÍ¤ÎÊ¬³äÊ¸»ú
-*	@return Array  $aryData      Ê¬³ä¸åÇÛÎó
+*	@param  String $strData      åˆ†å‰²å…ƒæ–‡å­—åˆ—
+*	@param  String $strAmpersand ãƒ‡ãƒ¼ã‚¿åˆ†å‰²æ–‡å­—åˆ—
+*	@param  String $strEqual     ã‚­ãƒ¼ã¨å€¤ã®åˆ†å‰²æ–‡å­—
+*	@return Array  $aryData      åˆ†å‰²å¾Œé…åˆ—
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -1703,18 +1703,18 @@ function fncStringToArray ( $strData, $strAmpersand, $strEqual )
 
 
 ////////////////////////////////////////////////////////////////////
-// ¥¨¥é¡¼½ĞÎÏ´Ø¿ô
+// ã‚¨ãƒ©ãƒ¼å‡ºåŠ›é–¢æ•°
 ////////////////////////////////////////////////////////////////////
 // -----------------------------------------------------------------
 /**
-*	¥·¥¹¥Æ¥à¥¨¥é¡¼´Ø¿ô
+*	ã‚·ã‚¹ãƒ†ãƒ ã‚¨ãƒ©ãƒ¼é–¢æ•°
 *
-*	¥·¥¹¥Æ¥à¥¨¥é¡¼½ĞÎÏ
+*	ã‚·ã‚¹ãƒ†ãƒ ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 *
-*	@param  Long $errno     ¥¨¥é¡¼ÈÖ¹æ
-*	@param  String $errstr  ¥¨¥é¡¼Ê¸
-*	@param  String $errfile ¥Õ¥¡¥¤¥ëÌ¾
-*	@param  Long $errline   ¥¨¥é¡¼¹Ô
+*	@param  Long $errno     ã‚¨ãƒ©ãƒ¼ç•ªå·
+*	@param  String $errstr  ã‚¨ãƒ©ãƒ¼æ–‡
+*	@param  String $errfile ãƒ•ã‚¡ã‚¤ãƒ«å
+*	@param  Long $errline   ã‚¨ãƒ©ãƒ¼è¡Œ
 *	@access public
 */
 // -----------------------------------------------------------------
@@ -1768,36 +1768,36 @@ echo $errstr;
 
 // -----------------------------------------------------------------
 /**
-*	¥¨¥é¡¼½ĞÎÏ´Ø¿ô
+*	ã‚¨ãƒ©ãƒ¼å‡ºåŠ›é–¢æ•°
 *
-*	¥¨¥é¡¼½ĞÎÏ
+*	ã‚¨ãƒ©ãƒ¼å‡ºåŠ›
 *
-*	@param  Long  $lngErrorCode     ¥¨¥é¡¼¥³¡¼¥É¡Êm_Message¥Ş¥¹¥¿¤Î¥á¥Ã¥»¡¼¥¸¥³¡¼¥É¡Ë
-*	@param  Long  $lngErrorClass    ¥¨¥é¡¼¼ïÎà¡¡conf.inc¤Ë¤ÆÄêµÁ¤Î¤¢¤ë¥¨¥é¡¼¥ì¥Ù¥ë
-*										DEF_ANNOUNCE	¥·¥¹¥Æ¥à¥¢¥Ê¥¦¥ó¥¹
-*										DEF_WARNING	Ãí°Õ¥ì¥Ù¥ë¡ÊÆşÎÏ¥ß¥¹¤Ê¤É¡Ë
-*										DEF_ERROR	¥¨¥é¡¼¥ì¥Ù¥ë
-*										DEF_FATAL	¥·¥¹¥Æ¥à¥¨¥é¡¼¥ì¥Ù¥ë
-*	@param  Array $aryErrorMessage  ¥¨¥é¡¼ÃÖ´¹Ê¸»ú¡ÊÇÛÎó¡Ë
-*	@param  Boolean $bytOutputFlag  ½ĞÎÏ¥Õ¥é¥°
-*							FALSE¡¦¡¦¡¦´Ø¿ô¤ÎÌá¤êÃÍ¤ÎString¤Ë¤Æ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÊÖ¤¹
-*							TRUE¡¦¡¦¡¦¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸²èÌÌ¤ÎÉ½¼¨
-*	@param  Long  $strReturnPath    ¡ÖÌá¤ë¡×¥Ü¥¿¥ó¤ÎURL(Á°¥Ú¡¼¥¸¤Î¾ì¹ç¤ÏÉÔÍ×)
-*	@param  Object  $objDB          DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return String $strErrorMessage ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+*	@param  Long  $lngErrorCode     ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ï¼ˆm_Messageãƒã‚¹ã‚¿ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚³ãƒ¼ãƒ‰ï¼‰
+*	@param  Long  $lngErrorClass    ã‚¨ãƒ©ãƒ¼ç¨®é¡ã€€conf.incã«ã¦å®šç¾©ã®ã‚ã‚‹ã‚¨ãƒ©ãƒ¼ãƒ¬ãƒ™ãƒ«
+*										DEF_ANNOUNCE	ã‚·ã‚¹ãƒ†ãƒ ã‚¢ãƒŠã‚¦ãƒ³ã‚¹
+*										DEF_WARNING	æ³¨æ„ãƒ¬ãƒ™ãƒ«ï¼ˆå…¥åŠ›ãƒŸã‚¹ãªã©ï¼‰
+*										DEF_ERROR	ã‚¨ãƒ©ãƒ¼ãƒ¬ãƒ™ãƒ«
+*										DEF_FATAL	ã‚·ã‚¹ãƒ†ãƒ ã‚¨ãƒ©ãƒ¼ãƒ¬ãƒ™ãƒ«
+*	@param  Array $aryErrorMessage  ã‚¨ãƒ©ãƒ¼ç½®æ›æ–‡å­—ï¼ˆé…åˆ—ï¼‰
+*	@param  Boolean $bytOutputFlag  å‡ºåŠ›ãƒ•ãƒ©ã‚°
+*							FALSEãƒ»ãƒ»ãƒ»é–¢æ•°ã®æˆ»ã‚Šå€¤ã®Stringã«ã¦ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¿”ã™
+*							TRUEãƒ»ãƒ»ãƒ»ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç”»é¢ã®è¡¨ç¤º
+*	@param  Long  $strReturnPath    ã€Œæˆ»ã‚‹ã€ãƒœã‚¿ãƒ³ã®URL(å‰ãƒšãƒ¼ã‚¸ã®å ´åˆã¯ä¸è¦)
+*	@param  Object  $objDB          DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return String $strErrorMessage ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 *	@access public
 */
 // -----------------------------------------------------------------
 function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytOutputFlag, $strReturnPath, $objDB )
 {
-	// DB¤ÎÀÜÂ³¾õÂÖ¤Î¥Á¥§¥Ã¥¯
+	// DBã®æ¥ç¶šçŠ¶æ…‹ã®ãƒã‚§ãƒƒã‚¯
 	if ( !$objDB->isOpen() )
 	{
-		$strErrorMessage = "DBÀÜÂ³¥¨¥é¡¼";
+		$strErrorMessage = "DBæ¥ç¶šã‚¨ãƒ©ãƒ¼";
 		return $strErrorMessage;
 	}
 
-	// ¥á¥Ã¥»¡¼¥¸¤Î¼èÆÀ
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å–å¾—
 	$strQuery = "SELECT strMessageContent from m_Message WHERE lngMessageCode = " . $lngErrorCode;
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
@@ -1812,13 +1812,13 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 
     
 
-	// ¥á¥Ã¥»¡¼¥¸Ê¸»úÎó¤ÎÃÖ´¹
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æ–‡å­—åˆ—ã®ç½®æ›
 	if (!is_array($aryErrorMessage))
 	{
-		// Ê¸»ú¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤ò¸¡½Ğ¤¹¤ë
+		// æ–‡å­—ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã‚’æ¤œå‡ºã™ã‚‹
 		$encodeType = mb_detect_encoding($aryErrorMessage);
 		
-		//¡¡DB¤È¤È¥¨¥é¡¼ÃÖ´¹Ê¸»ú¤Î¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤¬°Û¤Ê¤ë¾ì¹ç¤Ï¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤ò¹Ô¤¦
+		//ã€€DBã¨ã¨ã‚¨ãƒ©ãƒ¼ç½®æ›æ–‡å­—ã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãŒç•°ãªã‚‹å ´åˆã¯ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã‚’è¡Œã†
 		if ($encodeType != $objDB->InputEncoding) {
 			$aryErrorMessage = mb_convert_encoding($aryErrorMessage, $objDB->InputEncoding);
 		}		
@@ -1831,10 +1831,10 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 
 		for ( $i = 0; $i < count($aryErrorMessage); $i++ )
 		{
-			// Ê¸»ú¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤ò¸¡½Ğ¤¹¤ë
+			// æ–‡å­—ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã‚’æ¤œå‡ºã™ã‚‹
 			$encodeType = mb_detect_encoding($aryErrorMessage[$i]);
 
-			//¡¡DB¤È¤È¥¨¥é¡¼ÃÖ´¹Ê¸»ú¤Î¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤¬°Û¤Ê¤ë¾ì¹ç¤Ï¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤ò¹Ô¤¦
+			//ã€€DBã¨ã¨ã‚¨ãƒ©ãƒ¼ç½®æ›æ–‡å­—ã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ãŒç•°ãªã‚‹å ´åˆã¯ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã‚’è¡Œã†
 			if ($encodeType != $objDB->InputEncoding) {
 			    $aryErrorMessage[$i] = mb_convert_encoding($aryErrorMessage[$i], $objDB->InputEncoding);
 			}
@@ -1843,10 +1843,10 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 			$strErrorMessage = preg_replace ( "/_%" . $strExchange . "%_/i", $aryErrorMessage[$i], $strErrorMessage );
 		}
 	}
-	// ÃÖ´¹¤µ¤ì¤Ê¤«¤Ã¤¿ÃÖ¤­´¹¤¨Ê¸»úÎó¤òºï½ü
+	// ç½®æ›ã•ã‚Œãªã‹ã£ãŸç½®ãæ›ãˆæ–‡å­—åˆ—ã‚’å‰Šé™¤
 	$strErrorMessage = preg_replace ( "/_%.+?%_/", "", $strErrorMessage );
 
-	// ¥á¥Ã¥»¡¼¥¸¼ïÎà¤ò¥á¥Ã¥»¡¼¥¸¤ËÄÉ²Ã
+	// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç¨®é¡ã‚’ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã«è¿½åŠ 
 	switch ( $lngErrorClass )
 	{
 		case DEF_WARNING:
@@ -1864,12 +1864,12 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 	}
 
 
-	// ¥¨¥é¡¼²èÌÌ½ĞÎÏÀ©¸æ
+	// ã‚¨ãƒ©ãƒ¼ç”»é¢å‡ºåŠ›åˆ¶å¾¡
 	if ( $bytOutputFlag )
 	{
 
 
-		// ¥¨¥é¡¼²èÌÌ¤Î½ĞÎÏÀ©¸æ¤Ë¤Ä¤¤¤Æ¤Ï¥Ç¥Ğ¥Ã¥°¥â¡¼¥É¤Ë¤è¤êÀÚ¤êÂØ¤¨¤ë
+		// ã‚¨ãƒ©ãƒ¼ç”»é¢ã®å‡ºåŠ›åˆ¶å¾¡ã«ã¤ã„ã¦ã¯ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã«ã‚ˆã‚Šåˆ‡ã‚Šæ›¿ãˆã‚‹
 		if ( DEF_DEBUG_MODE == 1 )
 		{
 
@@ -1881,7 +1881,7 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 			$strEcho .= '<meta http-equiv="content-type" content="text/html; charset='.$objDB->InputEncoding.'">';
 			$strEcho .= '</head><body>';
 			$strEcho .= '&nbsp;';
-			// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò²èÌÌ¤ËÉ½¼¨¤¹¤ë
+			// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ç”»é¢ã«è¡¨ç¤ºã™ã‚‹
 			$strEcho .= $strErrorMessage . "<BR>";
 			$strEcho .= '</body></html>';
 
@@ -1893,10 +1893,10 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 		else
 		{
 
-		 	// /error/index.php ¤Ç¼è¤ê°·¤¦¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤ØÊÑ´¹¤¹¤ë
+		 	// /error/index.php ã§å–ã‚Šæ‰±ã†ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã¸å¤‰æ›ã™ã‚‹
 			$strErrorMessage = mb_convert_encoding($strErrorMessage, 'euc-jp', $objDB->InputEncoding);
 
-			// ¥¨¥é¡¼²èÌÌ¤Ø¤Î¥ê¥À¥¤¥ì¥¯¥È
+			// ã‚¨ãƒ©ãƒ¼ç”»é¢ã¸ã®ãƒªãƒ€ã‚¤ãƒ¬ã‚¯ãƒˆ
 			$strTopUrl = TOP_URL;
 			$strRedirectHTML = "
 			<script language=javascript>
@@ -1926,13 +1926,13 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 
 // -----------------------------------------------------------------
 /**
-*	¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É¥Á¥§¥Ã¥¯´Ø¿ô
+*	ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É¤ò¥Á¥§¥Ã¥¯¤·¡¢NULL(¤Ş¤¿¤Ï¶õÍó) ¤Î¾ì¹ç¡Ö0¡×¤òÊÖµÑ
+*	ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€NULL(ã¾ãŸã¯ç©ºæ¬„) ã®å ´åˆã€Œ0ã€ã‚’è¿”å´
 *
-*	@param  Long  $status         ¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É
+*	@param  Long  $status         ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰
 
-*	@return Long  $lngStatusCode  ¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É
+*	@return Long  $lngStatusCode  ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰
 *
 *	@access public
 */
@@ -1941,7 +1941,7 @@ function fncCheckNullStatus( $status )
 {
 	$lngStatusCode = $status;
 
-	// ¾õÂÖ¥³¡¼¥É¤¬¡Ö null / "" ¡×¤Î¾ì¹ç¡¢¡Ö0¡×¤òºÆÀßÄê
+	// çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ãŒã€Œ null / "" ã€ã®å ´åˆã€ã€Œ0ã€ã‚’å†è¨­å®š
 	$lngStatusCode = ( $lngStatusCode == "" || $lngStatusCode == "null" ) ? 0 : $lngStatusCode;
 
 	return $lngStatusCode;
@@ -1950,13 +1950,13 @@ function fncCheckNullStatus( $status )
 
 // -----------------------------------------------------------------
 /**
-*	¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É¥Á¥§¥Ã¥¯´Ø¿ô
+*	ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É¤ò¥Á¥§¥Ã¥¯¤·¡¢¡Ö0¡× ¤Î¾ì¹ç¡Ö1¡×¤òÊÖµÑ
+*	ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€ã€Œ0ã€ ã®å ´åˆã€Œ1ã€ã‚’è¿”å´
 *
-*	@param  Long  $status         ¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É
+*	@param  Long  $status         ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰
 
-*	@return Long  $lngStatusCode  ¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É
+*	@return Long  $lngStatusCode  ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰
 *
 *	@access public
 */
@@ -1965,7 +1965,7 @@ function fncCheckZeroStatus( $status )
 {
 	$lngStatusCode = $status;
 
-	// ¾õÂÖ¥³¡¼¥É¤¬¡Ö0¡×¤Î¾ì¹ç¡¢¡Ö1¡×¤òºÆÀßÄê
+	// çŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ãŒã€Œ0ã€ã®å ´åˆã€ã€Œ1ã€ã‚’å†è¨­å®š
 	$lngStatusCode = ( $lngStatusCode == 0 ) ? 1 : $lngStatusCode;
 
 	return $lngStatusCode;
@@ -1977,13 +1977,13 @@ function fncCheckZeroStatus( $status )
 
 // -----------------------------------------------------------------
 /**
-*	¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¼èÆÀ´Ø¿ô
+*	æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰å–å¾—é–¢æ•°
 *
-*	¥æ¡¼¥¶¡¼¤Î¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¤ò¼èÆÀ
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 *
-*	@param  Long     $lngusercode  ¥æ¡¼¥¶¡¼¥³¡¼¥É
-*	@param  String   $sessionid    ¥»¥Ã¥·¥ç¥óID
-	@param  Object   $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  Long     $lngusercode  ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+*	@param  String   $sessionid    ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+	@param  Object   $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 *	@return Boolean  $blnRoot
 *
@@ -2011,7 +2011,7 @@ function fncGetUserAuthorityGroupCode( $lngusercode, $sessionid, $objDB )
 		$objDB->freeResult( $lngResultID );
 	}
 
-	// ¥¯¥¨¥ê¼Â¹Ô
+	// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 	list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if( $lngResultNum )
@@ -2021,8 +2021,8 @@ function fncGetUserAuthorityGroupCode( $lngusercode, $sessionid, $objDB )
 	}
 	else
 	{
-		// ¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¼èÆÀ¼ºÇÔ
-		fncOutputError ( 9052, DEF_WARNING, "¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¼èÆÀ¼ºÇÔ", TRUE, "menu/menu.php?strSessionID=" . $sessionid, $objDB );
+		// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰å–å¾—å¤±æ•—
+		fncOutputError ( 9052, DEF_WARNING, "æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰å–å¾—å¤±æ•—", TRUE, "menu/menu.php?strSessionID=" . $sessionid, $objDB );
 	}
 
 
@@ -2035,15 +2035,15 @@ function fncGetUserAuthorityGroupCode( $lngusercode, $sessionid, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¥Á¥§¥Ã¥¯´Ø¿ô
+*	æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	¥æ¡¼¥¶¡¼¤Î¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¤ò¥Á¥§¥Ã¥¯¤·¡¢
-*	¡Ö¥æ¡¼¥¶¡¼¡×°Ê²¼¤Î¾ì¹ç¡ÖTRUE¡×¡¢
-*	¤½¤ì°Ê³°¤Î¾ì¹ç¡ÖFALSE¡×¤òÊÖµÑ
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€
+*	ã€Œãƒ¦ãƒ¼ã‚¶ãƒ¼ã€ä»¥ä¸‹ã®å ´åˆã€ŒTRUEã€ã€
+*	ãã‚Œä»¥å¤–ã®å ´åˆã€ŒFALSEã€ã‚’è¿”å´
 *
-*	@param  Long     $lngusercode  ¥æ¡¼¥¶¡¼¥³¡¼¥É
-*	@param  String   $sessionid    ¥»¥Ã¥·¥ç¥óID
-	@param  Object   $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  Long     $lngusercode  ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+*	@param  String   $sessionid    ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+	@param  Object   $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 *	@return Boolean  $blnRoot
 *
@@ -2071,7 +2071,7 @@ function fncCheckUserAuthorityGroupCode( $lngusercode, $sessionid, $objDB )
 		$objDB->freeResult( $lngResultID );
 	}
 
-	// ¥¯¥¨¥ê¼Â¹Ô
+	// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 	list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if( $lngResultNum )
@@ -2081,12 +2081,12 @@ function fncCheckUserAuthorityGroupCode( $lngusercode, $sessionid, $objDB )
 	}
 	else
 	{
-		// ¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¼èÆÀ¼ºÇÔ
-		fncOutputError ( 9052, DEF_WARNING, "¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¼èÆÀ¼ºÇÔ", TRUE, "menu/menu.php?strSessionID=" . $sessionid, $objDB );
+		// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰å–å¾—å¤±æ•—
+		fncOutputError ( 9052, DEF_WARNING, "æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰å–å¾—å¤±æ•—", TRUE, "menu/menu.php?strSessionID=" . $sessionid, $objDB );
 	}
 
 
-	// ¸¢¸Â¥°¥ë¡¼¥×¤¬¡Ö¥æ¡¼¥¶¡¼¡×°Ê²¼¤Î¾ì¹ç¡ÖTRUE¡×
+	// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ãŒã€Œãƒ¦ãƒ¼ã‚¶ãƒ¼ã€ä»¥ä¸‹ã®å ´åˆã€ŒTRUEã€
 	$blnRoot = ( $lngauthoritygroupcode >= 5 ) ? true : false;
 
 	return $blnRoot;
@@ -2095,22 +2095,22 @@ function fncCheckUserAuthorityGroupCode( $lngusercode, $sessionid, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	¾µÇ§¥ë¡¼¥È¥Á¥§¥Ã¥¯´Ø¿ô
+*	æ‰¿èªãƒ«ãƒ¼ãƒˆãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	¥æ¡¼¥¶¡¼¤Î¾µÇ§¥ë¡¼¥È¤ò¥Á¥§¥Ã¥¯¤·¡¢
-*	Â¸ºß¤¹¤ë¾ì¹ç¡ÖTRUE¡×¡¢
-*	Â¸ºß¤·¤Ê¤¤¾ì¹ç¡ÖFALSE¡×¤òÊÖµÑ
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®æ‰¿èªãƒ«ãƒ¼ãƒˆã‚’ãƒã‚§ãƒƒã‚¯ã—ã€
+*	å­˜åœ¨ã™ã‚‹å ´åˆã€ŒTRUEã€ã€
+*	å­˜åœ¨ã—ãªã„å ´åˆã€ŒFALSEã€ã‚’è¿”å´
 *
-*	@param  Long     $lngusercode  ¥æ¡¼¥¶¡¼¥³¡¼¥É
-*	@param  String   $sessionid    ¥»¥Ã¥·¥ç¥óID
-	@param  Object   $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  Long     $lngusercode  ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+*	@param  String   $sessionid    ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+	@param  Object   $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 *	@return Boolean  $blnRoot
 *
 *	@access public
 */
 // -----------------------------------------------------------------
-// ¾µÇ§¥ë¡¼¥ÈÂ¸ºß¥Á¥§¥Ã¥¯
+// æ‰¿èªãƒ«ãƒ¼ãƒˆå­˜åœ¨ãƒã‚§ãƒƒã‚¯
 function fncCheckWorkFlowRoot( $lngusercode, $sessionid, $objDB )
 {
 	$blnRoot  = false;
@@ -2153,20 +2153,20 @@ function fncCheckWorkFlowRoot( $lngusercode, $sessionid, $objDB )
 
 	$strQuery = implode( "\n", $aryQuery );
 
-	// ¥¯¥¨¥ê¼Â¹Ô
+	// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 	$lngResultID = $objDB->execute( $strQuery );
 
 
 	if( !$lngResultID )
 	{
-		fncOutputError( 3, "DEF_FATAL", "¥¯¥¨¥ê¡¼¼Â¹Ô¥¨¥é¡¼" ,TRUE, "menu/menu.php?strSessionID=" . $sessionid, $objDB );
+		fncOutputError( 3, "DEF_FATAL", "ã‚¯ã‚¨ãƒªãƒ¼å®Ÿè¡Œã‚¨ãƒ©ãƒ¼" ,TRUE, "menu/menu.php?strSessionID=" . $sessionid, $objDB );
 	}
 
-	// ¥«¥¦¥ó¥È¼èÆÀ
+	// ã‚«ã‚¦ãƒ³ãƒˆå–å¾—
 	$lngCount = pg_num_rows( $lngResultID );
 
 
-	// Ìá¤êÃÍÀßÄê
+	// æˆ»ã‚Šå€¤è¨­å®š
 	$blnRoot = ( $lngCount == 0 ) ? false : true;
 
 	return $blnRoot;
@@ -2176,16 +2176,16 @@ function fncCheckWorkFlowRoot( $lngusercode, $sessionid, $objDB )
 
 // -----------------------------------------------------------------
 /**
-*	À½ÉÊÃ´Åö¾õ¶·¥Á¥§¥Ã¥¯´Ø¿ô
+*	è£½å“æ‹…å½“çŠ¶æ³ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤ÎÀ½ÉÊÃ´Åö¾õ¶·¤ò¥Á¥§¥Ã¥¯¤·¡¢
-*	Â°¤¹¤ë¾ì¹ç¡ÖTRUE¡×¡¢
-*	Â°¤µ¤Ê¤¤¾ì¹ç¡ÖFALSE¡×¤òÊÖµÑ
+*	ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®è£½å“æ‹…å½“çŠ¶æ³ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€
+*	å±ã™ã‚‹å ´åˆã€ŒTRUEã€ã€
+*	å±ã•ãªã„å ´åˆã€ŒFALSEã€ã‚’è¿”å´
 *
-*	@param  Long     $lngTargetNo        ÂĞ¾İÆâÉô¥³¡¼¥É
-*	@param  Long     $lngInputUserCode   ¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¥³¡¼¥É
-*	@param  String   $strFncFlag         µ¡Ç½¥Õ¥é¥°
-	@param  Object   $objDB              DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  Long     $lngTargetNo        å¯¾è±¡å†…éƒ¨ã‚³ãƒ¼ãƒ‰
+*	@param  Long     $lngInputUserCode   ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+*	@param  String   $strFncFlag         æ©Ÿèƒ½ãƒ•ãƒ©ã‚°
+	@param  Object   $objDB              DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 *	@return Boolean  $blnCheck
 *
@@ -2206,7 +2206,7 @@ function fncCheckInChargeProduct( $lngTargetNo, $lngInputUserCode, $strFncFlag, 
 	$strWhereQuery  = "";
 
 
-	// ³Æ¥¯¥¨¥ê¡¼¶ç¤ÎÀ¸À®
+	// å„ã‚¯ã‚¨ãƒªãƒ¼å¥ã®ç”Ÿæˆ
 	switch( $strFncFlag )
 	{
 		case "P":
@@ -2284,9 +2284,9 @@ function fncCheckInChargeProduct( $lngTargetNo, $lngInputUserCode, $strFncFlag, 
 	$aryQuery[] = "		) as mst1";
 	$aryQuery[] = "		where";
 	$aryQuery[] = "			mgr1.lnggroupcode = mst1.lnggroupcode";
-	$aryQuery[] = "			and mu1.bytinvalidflag = false";	/* À½ÉÊÃ´Åö¼Ô¤ËÂĞ¤·¡¢ÆşÎÏ¼Ô ¤È ¤½¤ÎÆşÎÏ¼Ô¤¬Â°¤¹¤ë¥°¥ë¡¼¥×¤Î¥Ş¥Í¡¼¥¸¥ã¡¼°Ê¾å¤¬°ìÃ× */
+	$aryQuery[] = "			and mu1.bytinvalidflag = false";	/* è£½å“æ‹…å½“è€…ã«å¯¾ã—ã€å…¥åŠ›è€… ã¨ ãã®å…¥åŠ›è€…ãŒå±ã™ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—ã®ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ä»¥ä¸ŠãŒä¸€è‡´ */
 	$aryQuery[] = "			and mu1.lngusercode = mgr1.lngusercode";
-//39´ü»öÌ³3¿ÍÂĞ±ş¤Î¤¿¤á
+//39æœŸäº‹å‹™3äººå¯¾å¿œã®ãŸã‚
 	$aryQuery[] = "			and (mu1.lngauthoritygroupcode <= 4 or mu1.lngusercode = mst1.lngUserCode or mu1.lngusercode in ('15','29','242','343'))";
 	$aryQuery[] = "	) as blnAuthFlag";
 
@@ -2298,7 +2298,7 @@ function fncCheckInChargeProduct( $lngTargetNo, $lngInputUserCode, $strFncFlag, 
 
 	$strQuery = implode( "\n", $aryQuery );
 
-	// ¥¯¥¨¥ê¡¼¼Â¹Ô
+	// ã‚¯ã‚¨ãƒªãƒ¼å®Ÿè¡Œ
 	list( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if( $lngResultNum >= 1 )
@@ -2324,13 +2324,13 @@ function fncCheckInChargeProduct( $lngTargetNo, $lngInputUserCode, $strFncFlag, 
 
 // -----------------------------------------------------------------
 /**
-*	¥á¡¼¥ëÁ÷¿®´Ø¿ô
+*	ãƒ¡ãƒ¼ãƒ«é€ä¿¡é–¢æ•°
 *
 *
-*	@param  Long     $strTo			To¥¢¥É¥ì¥¹
-*	@param  Long     $strSubject	·ïÌ¾
-*	@param  String   $strMessage	ËÜÊ¸
-	@param  Object   $strHeader		¥Ø¥Ã¥À¡¼¾ğÊó
+*	@param  Long     $strTo			Toã‚¢ãƒ‰ãƒ¬ã‚¹
+*	@param  Long     $strSubject	ä»¶å
+*	@param  String   $strMessage	æœ¬æ–‡
+	@param  Object   $strHeader		ãƒ˜ãƒƒãƒ€ãƒ¼æƒ…å ±
 
 *	@return Boolean  $blnCheck
 *
@@ -2339,22 +2339,22 @@ function fncCheckInChargeProduct( $lngTargetNo, $lngInputUserCode, $strFncFlag, 
 // -----------------------------------------------------------------
 function fncSendMail($strTo, $strSubject, $strMessage, $strHeader="")
 {
-	// ¥á¡¼¥ëÁ÷¿®¥Õ¥é¥°¤¬ false ¤Î¡Ê¥á¡¼¥ëÁ÷¿®¤ò¤·¤Æ¤Ï¤¤¤±¤Ê¤¤¡Ë¾ì¹ç¤ÏÈ´¤±¤ë
+	// ãƒ¡ãƒ¼ãƒ«é€ä¿¡ãƒ•ãƒ©ã‚°ãŒ false ã®ï¼ˆãƒ¡ãƒ¼ãƒ«é€ä¿¡ã‚’ã—ã¦ã¯ã„ã‘ãªã„ï¼‰å ´åˆã¯æŠœã‘ã‚‹
 	if( SEND_MAIL_FLAG == false )
 	{
 		return true;
 	}
-	// ³«È¯´Ä¶­¤Î¾ì¹ç
+	// é–‹ç™ºç’°å¢ƒã®å ´åˆ
 	if( $_SERVER["HTTP_HOST"] == EXECUTE_HOST_NAME_DEV  || $_SERVER["HTTP_HOST"] == EXECUTE_HOST_NAME_KWG_BACK )
 	{
 		$strSubject .= " ".$strTo;
 		$strTo = ERROR_MAIL_TO;
 	}
 
-	// ¸À¸ìÀßÄê
+	// è¨€èªè¨­å®š
 	mb_language("Japanese");
 
-	// ¥á¡¼¥ëÁ÷¿®
+	// ãƒ¡ãƒ¼ãƒ«é€ä¿¡
 	return mb_send_mail( $strTo, $strSubject, $strMessage, $strHeader );
 }
 
@@ -2364,10 +2364,10 @@ function fncSendMail($strTo, $strSubject, $strMessage, $strHeader="")
 
 // -----------------------------------------------------------------
 /**
-*	¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ëÊİÂ¸¡¢¥Õ¥¡¥¤¥ëÌ¾ÊÖµÑ
+*	ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜ã€ãƒ•ã‚¡ã‚¤ãƒ«åè¿”å´
 *
 *
-*	@param  String   $strTmpFile	¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ëÌ¾
+*	@param  String   $strTmpFile	ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«å
 *
 *	@return String  $strTmpFileName
 *
@@ -2376,10 +2376,10 @@ function fncSendMail($strTo, $strSubject, $strMessage, $strHeader="")
 // -----------------------------------------------------------------
 function getTempFileName( $strTmpFile )
 {
-	// ¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ë¤ÎºîÀ®
+	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®ä½œæˆ
 	$strTmpFileName	= MD5( microtime() ) . ".tmp";
 
-	// ¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ë¤Î°ÜÆ°
+	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®ç§»å‹•
 	if( !move_uploaded_file( $strTmpFile, FILE_UPLOAD_TMPDIR . $strTmpFileName ) )
 	{
 		fncOutputError( 1106, DEF_FATAL, "", TRUE, "", $objDB );
@@ -2390,10 +2390,10 @@ function getTempFileName( $strTmpFile )
 }
 // -----------------------------------------------------------------
 /**
-*	¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ëºï½ü
+*	ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«å‰Šé™¤
 *
 *
-*	@param  String   $strTmpFile	¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ëÌ¾
+*	@param  String   $strTmpFile	ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«å
 *
 *
 *	@access public
@@ -2401,7 +2401,7 @@ function getTempFileName( $strTmpFile )
 // -----------------------------------------------------------------
 function deleteTempFile( $strTmpFile )
 {
-	// ¥Æ¥ó¥İ¥é¥ê¥Õ¥¡¥¤¥ë¤Îºï½ü
+	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«ã®å‰Šé™¤
 	if( !unlink( FILE_UPLOAD_TMPDIR . $strTmpFile ) )
 	{
 		fncOutputError( 1106, DEF_FATAL, "", TRUE, "", $objDB );
@@ -2429,33 +2429,33 @@ function toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $price)
     }
 }
 
-// À¾Îñ¢ªÏÂÎñÊÑ´¹
-function convert_jpdt($str,$fmt='Ç¯n·îjÆü',$kanji=true) {
+// è¥¿æš¦â†’å’Œæš¦å¤‰æ›
+function convert_jpdt($str,$fmt='å¹´næœˆjæ—¥',$kanji=true) {
     $date = (int)date('Ymd',  strtotime($str));
     $year = (int)date('Y',  strtotime($str));	
 
-	if ($date >= 20190501) {        //ÎáÏÂ¸µÇ¯¡Ê2019Ç¯5·î1Æü°Ê¹ß¡Ë
-		$name = "  RÎáÏÂ";
+	if ($date >= 20190501) {        //ä»¤å’Œå…ƒå¹´ï¼ˆ2019å¹´5æœˆ1æ—¥ä»¥é™ï¼‰
+		$name = "  Rä»¤å’Œ";
 		$year -= 2018;
-	} else if ($date >= 19890108) { //Ê¿À®¸µÇ¯¡Ê1989Ç¯1·î8Æü°Ê¹ß¡Ë
-		$name = "  HÊ¿À®";
+	} else if ($date >= 19890108) { //å¹³æˆå…ƒå¹´ï¼ˆ1989å¹´1æœˆ8æ—¥ä»¥é™ï¼‰
+		$name = "  Hå¹³æˆ";
 		$year -= 1988;
-	} else if ($date >= 19261225) { //¾¼ÏÂ¸µÇ¯¡Ê1926Ç¯12·î25Æü°Ê¹ß¡Ë
-		$name = "  S¾¼ÏÂ";
+	} else if ($date >= 19261225) { //æ˜­å’Œå…ƒå¹´ï¼ˆ1926å¹´12æœˆ25æ—¥ä»¥é™ï¼‰
+		$name = "  Sæ˜­å’Œ";
 		$year -= 1925;
-	} else if ($date >= 19120730) { //ÂçÀµ¸µÇ¯¡Ê1912Ç¯7·î30Æü°Ê¹ß¡Ë
-		$name = "  TÂçÀµ";
+	} else if ($date >= 19120730) { //å¤§æ­£å…ƒå¹´ï¼ˆ1912å¹´7æœˆ30æ—¥ä»¥é™ï¼‰
+		$name = "  Tå¤§æ­£";
 		$year -= 1911;
-	} else if ($date >= 18680125) { //ÌÀ¼£¸µÇ¯¡Ê1868Ç¯1·î25Æü°Ê¹ß¡Ë
-		$name = "  MÌÀ¼£";
+	} else if ($date >= 18680125) { //æ˜æ²»å…ƒå¹´ï¼ˆ1868å¹´1æœˆ25æ—¥ä»¥é™ï¼‰
+		$name = "  Mæ˜æ²»";
 		$year -= 1867;
 	} else {
-		$name = 'AD À¾Îñ';
+		$name = 'AD è¥¿æš¦';
 	}
 
 	if ($kanji) {
 		$name = substr($name,3);
-		if ($year==1) $year = '¸µ';
+		if ($year==1) $year = 'å…ƒ';
 	} else {
 		$name = ltrim(substr($name,0,3));
 	}
@@ -2463,7 +2463,7 @@ function convert_jpdt($str,$fmt='Ç¯n·îjÆü',$kanji=true) {
 	return $name.$year.date($fmt,strtotime($str));
 }
 
-// ÇÓÂ¾À©¸æ¥Æ¡¼¥Ö¥ë¤Î²ò½ü
+// æ’ä»–åˆ¶å¾¡ãƒ†ãƒ¼ãƒ–ãƒ«ã®è§£é™¤
 function unlockExclusiveBySessionID($sessionID, $objDB){
     $strQuery = "LOCK TABLE t_exclusivecontrol IN EXCLUSIVE MODE";
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );

@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       Ǽ�ʽ����
+ *       納品書一覧
  *
  *
  *       @package    K.I.D.S.
@@ -13,20 +13,20 @@
  *       @version    2.00
  *
  *
- *       ��������
- *         ��Ǽ�ʽ�ǡ���������̲���ɽ������
+ *       処理概要
+ *         ・納品書データ検索結果画面表示処理
  *
- *       ��������
+ *       更新履歴
  *
  */
 // ----------------------------------------------------------------------------
 
-// �����ɤ߹���
+// 設定読み込み
 include_once 'conf.inc';
 
 require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 
-// �饤�֥���ɤ߹���
+// ライブラリ読み込み
 require LIB_FILE;
 require LIB_ROOT . "clscache.php";
 require SRC_ROOT . "sc/cmn/lib_scd.php";
@@ -34,16 +34,16 @@ require SRC_ROOT . "sc/cmn/lib_scd.php";
 require SRC_ROOT . "search/cmn/lib_search.php";
 require LIB_DEBUGFILE;
 
-// DB��³
+// DB接続
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objCache = new clsCache();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// POST(����GET)�ǡ�������
+// POST(一部GET)データ取得
 //////////////////////////////////////////////////////////////////////////
-// �ե�����ǡ�������ƥ��ƥ���ο���ʬ����Ԥ�
+// フォームデータから各カテゴリの振り分けを行う
 $options = UtilSearchForm::extractArrayByOption($_REQUEST);
 $isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
 $from = UtilSearchForm::extractArrayByFrom($_REQUEST);
@@ -52,7 +52,7 @@ $searchValue = $_REQUEST;
 
 $optionColumns = array();
 
-// ���ץ������ܤ����
+// オプション項目の抽出
 foreach ($options as $key => $flag) {
     if ($flag == "on") {
         $optionColumns[$key] = $key;
@@ -71,32 +71,32 @@ foreach ($searchValue as $key => $item) {
     $aryData[$key] = $item;
 }
 
-// ���������ܼ���
-// ������� $arySearchColumn�˳�Ǽ
+// 検索条件項目取得
+// 検索条件 $arySearchColumnに格納
 if (empty($isSearch)) {
-    //    fncOutputError( 502, DEF_WARNING, "�����оݹ��ܤ������å�����Ƥ��ޤ���",TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+    //    fncOutputError( 502, DEF_WARNING, "検索対象項目がチェックされていません",TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
     $bytSearchFlag = true;
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ���å���󡢸��³�ǧ
+// セッション、権限確認
 //////////////////////////////////////////////////////////////////////////
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ��������桼���������ɤμ���
+// ログインユーザーコードの取得
 $lngInputUserCode = $objAuth->UserCode;
 
-// ���³�ǧ
-// 602 ����������帡����
+// 権限確認
+// 602 売上管理（売上検索）
 if (!fncCheckAuthority(DEF_FUNCTION_SC2, $objAuth)) {
-    fncOutputError(9060, DEF_WARNING, "�����������¤�����ޤ���", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
-// 602 ����������帡����
+// 602 売上管理（売上検索）
 if (!fncCheckAuthority(DEF_FUNCTION_SC2, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "�����������¤�����ޤ���", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
-// ��������  $arySearchColumn�˳�Ǽ
+// 検索項目  $arySearchColumnに格納
 $arySearchColumn = $isSearch;
 
 if (!$bytSearchFlag) {
@@ -104,58 +104,58 @@ if (!$bytSearchFlag) {
 }
 reset($aryData);
 
-// ����SQL��¹Ԥ������ʥҥåȡ˷�����������
+// 検索SQLを実行し検索（ヒット）件数を取得する
 $strQuery = fncGetSearchSlipSQL($arySearchColumn, $aryData, $objDB, "", 0, $aryData["strSessionID"]);
 fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum) {
-    // ���������������ʾ�ξ�票�顼��å�������ɽ������
+    // 検索件数が指定数以上の場合エラーメッセージを表示する
     if ($lngResultNum > DEF_SEARCH_MAX) {
         $strMessage = fncOutputError(9057, DEF_WARNING, DEF_SEARCH_MAX, false, "../sc/search2/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 
-        // [lngLanguageCode]�񤭽Ф�
+        // [lngLanguageCode]書き出し
         $aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
 
-        // [strErrorMessage]�񤭽Ф�
+        // [strErrorMessage]書き出し
         $aryHtml["strErrorMessage"] = $strMessage;
 
-        // �ƥ�ץ졼���ɤ߹���
+        // テンプレート読み込み
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-        // �ƥ�ץ졼������
+        // テンプレート生成
         $objTemplate->replace($aryHtml);
         $objTemplate->complete();
 
-        // HTML����
+        // HTML出力
         echo $objTemplate->strTemplate;
 
         exit;
     }
 
-    // ���������Ǥ�����̾����
+    // 指定数以内であれば通常処理
     for ($i = 0; $i < $lngResultNum; $i++) {
         $records[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
     $strMessage = fncOutputError(603, DEF_WARNING, "", false, "../sc/search2/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 
-    // [lngLanguageCode]�񤭽Ф�
+    // [lngLanguageCode]書き出し
     $aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
 
-    // [strErrorMessage]�񤭽Ф�
+    // [strErrorMessage]書き出し
     $aryHtml["strErrorMessage"] = $strMessage;
 
-    // �ƥ�ץ졼���ɤ߹���
+    // テンプレート読み込み
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-    // �ƥ�ץ졼������
+    // テンプレート生成
     $objTemplate->replace($aryHtml);
     $objTemplate->complete();
 
-    // HTML����
+    // HTML出力
     echo $objTemplate->strTemplate;
 
     exit;
@@ -163,25 +163,25 @@ if ($lngResultNum) {
 
 $objDB->freeResult($lngResultID);
 
-// �ƥ�ץ졼���ɤ߹���
+// テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/sc/result2/sc_search_result.html");
 
-// // �ƥ�ץ졼������
+// // テンプレート生成
 // $objTemplate->replace($aryResult);
 
-// ������̥ơ��֥������ΰ�DOMDocument�����
+// 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
-// �ѡ������顼����
+// パースエラー抑制
 libxml_use_internal_errors(true);
-// DOM�ѡ���
+// DOMパース
 $doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
-// �ѡ������顼���ꥢ
+// パースエラークリア
 libxml_clear_errors();
-// �ѡ������顼�������
+// パースエラー抑制解除
 libxml_use_internal_errors(false);
 
-// ������̥ơ��֥�μ���
+// 検索結果テーブルの取得
 $table = $doc->getElementById("result");
 $thead = $table->getElementsByTagName("thead")->item(0);
 $tbody = $table->getElementsByTagName("tbody")->item(0);
@@ -189,23 +189,23 @@ $tbody = $table->getElementsByTagName("tbody")->item(0);
 
 
 // -------------------------------------------------------
-// �Ƽ�ܥ���ɽ�������å�/���¥����å�
+// 各種ボタン表示チェック/権限チェック
 // -------------------------------------------------------
 $aryAuthority = fncGetAryAuthority('slip', $objAuth);
 
-// �����ԥ⡼�ɥ����å�
+// 管理者モードチェック
 $isadmin = array_key_exists("admin", $optionColumns);
 
-// �ơ��֥�إå�����
+// テーブルヘッダ作成
 // -------------------------------------------------------
-// thead > tr���Ǻ���
+// thead > tr要素作成
 $trHead = $doc->createElement("tr");
 fncSetTheadData($doc, $trHead, $aryTableHeadBtnName_SLIP, $aryTableBackBtnName_SLIP, $aryTableHeaderName_SLIP, $aryTableDetailHeaderName_SLIP, null);
 $thead->appendChild($trHead);
 // -------------------------------------------------------
-// �ơ��֥륻�����
+// テーブルセル作成
 // -------------------------------------------------------
-// ������̷��ʬ����
+// 検索結果件数分走査
 foreach ($records as $i => $record) {
     $index = $index + 1;
 
@@ -214,30 +214,30 @@ foreach ($records as $i => $record) {
     $detailData = array();
     $rowspan == 0;
 
-    // �ܺ٥ǡ������������
+    // 詳細データを取得する
     $detailData = fncGetDetailData('slip', $record["lngslipno"], $record["lngrevisionno"], $objDB);
     $rowspan = count($detailData);
 
     if ($rowspan == 0) {
         $rowspan = 1;
     }
-    // tbody > tr���Ǻ���
+    // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 
     $trBody->setAttribute("id", $record["lngslipno"]);
 
     $maxdetailno = $detailData[$rowspan - 1]["lngslipdetailno"];
 
-    // ��Ƭ�ܥ�������
+    // 先頭ボタン設定
     fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName_SLIP, null, $record, $aryAuthority, true, $isadmin, $index, 'slip', $maxdetailno);
 
-    // �إå������ǡ�������
+    // ヘッダー部データ設定
     fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_SLIP, null, $record, true);
 
-    // �������ǡ�������
+    // 明細部データ設定
     fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_SLIP, null, $record, $detailData, true, true);
     
-    // �եå����ܥ���ɽ��
+    // フッターボタン表示
     fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName_SLIP, null, $record, $aryAuthority, true, $isadmin, 'slip');
 
     // tbody > tr
@@ -245,5 +245,5 @@ foreach ($records as $i => $record) {
 
 }
 
-// HTML����
+// HTML出力
 echo $doc->saveHTML();

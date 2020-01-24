@@ -4,9 +4,9 @@ function fncSheetSelector() {
   var trans = document.getElementById('transition');
   var num = trans.value;
   var id = 'sheet' + num;
-  var element = document.getElementById(id); // °ÜÆ°¤µ¤»¤¿¤¤°ÌÃÖ¤ÎÍ×ÁÇ¤ò¼èÆÀ
+  var element = document.getElementById(id); // ç§»å‹•ã•ã›ãŸã„ä½ç½®ã®è¦ç´ ã‚’å–å¾—
   var rect = element.getBoundingClientRect();
-  var position = rect.top;    // °ìÈÖ¾å¤«¤é¤Î°ÌÃÖ¤ò¼èÆÀ
+  var position = rect.top;    // ä¸€ç•ªä¸Šã‹ã‚‰ã®ä½ç½®ã‚’å–å¾—
   scrollTo(0, position);
 }
 
@@ -15,9 +15,9 @@ function scrollTop() {
 }
 
 function fncWindowClose() {
-  var res = confirm("¤³¤Î²èÌÌ¤òÊÄ¤¸¤Æ¸«ÀÑ¸¶²Á·×»»½ñ¥¢¥Ã¥×¥í¡¼¥É¤òÃæ»ß¤·¤Ş¤¹¡£\n¤è¤í¤·¤¤¤Ç¤¹¤«¡©");
+  var res = confirm("ã“ã®ç”»é¢ã‚’é–‰ã˜ã¦è¦‹ç©åŸä¾¡è¨ˆç®—æ›¸ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã‚’ä¸­æ­¢ã—ã¾ã™ã€‚\nã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ");
   if( res == true ) {
-      // OK¤Ê¤é°ÜÆ°       
+      // OKãªã‚‰ç§»å‹•       
       window.close();
   }
 }

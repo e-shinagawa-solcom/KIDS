@@ -98,31 +98,31 @@
 		top: 520px;
 		left: 822px;
 	}
-	/* ¸¡º÷¾ò·ïÆşÎÏ¥Ü¥¿¥ó */
+	/* æ¤œç´¢æ¡ä»¶å…¥åŠ›ãƒœã‚¿ãƒ³ */
 	#SearchBt{
 		position: absolute;
 		top: 200px;
 		left: 830px;
 	}
-	/* ÄÉ²Ã¥Ü¥¿¥ó */
+	/* è¿½åŠ ãƒœã‚¿ãƒ³ */
 	#AddBt{
 		position: absolute;
 		top: 260px;
 		left: 830px;
 	}
-	/* ºï½ü¥Ü¥¿¥ó */
+	/* å‰Šé™¤ãƒœã‚¿ãƒ³ */
 	#DeleteBt{
 		position: absolute;
 		top: 350px;
 		left: 830px;
 	}
-	/* Á´ºï½ü¥Ü¥¿¥ó */
+	/* å…¨å‰Šé™¤ãƒœã‚¿ãƒ³ */
 	#AllDeleteBt{
 		position: absolute;
 		top: 420px;
 		left: 830px;
 	}
-	/* ¥×¥ì¥Ó¥å¡¼¥Ü¥¿¥ó */
+	/* ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ */
 	#PreviewBt {
 		position: absolute;
 		top: 475px;
@@ -381,7 +381,7 @@
 /* END BOTTOM */
 
 
-/* µ¯É¼¼Ô */
+/* èµ·ç¥¨è€… */
 #SegADrafter {
 	font-weight : bold ;
 	color : #666666 ;
@@ -408,7 +408,7 @@
 	background-color: #e8f0f1 ;
 	padding : 3px 0px 0px 8px ;
 }
-/* µ¯É¼¼ÔÁªÂò¥Ü¥¿¥ó */
+/* èµ·ç¥¨è€…é¸æŠãƒœã‚¿ãƒ³ */
 #MSWBtDrafter {
 	position : absolute ;
 	left : 205px ;
@@ -420,7 +420,7 @@
 	background-color : #ffffff ;
 }
 
-/* Ç¼ÉÊÆü */
+/* ç´å“æ—¥ */
 #SegADeliveryDate {
 	font-weight : bold ;
 	color : #666666 ;
@@ -447,7 +447,7 @@
 	background-color: #e8f0f1 ;
 	padding : 3px 0px 0px 8px ;
 }
-/* Ç¼ÉÊÆüÁªÂò¥Ü¥¿¥ó */
+/* ç´å“æ—¥é¸æŠãƒœã‚¿ãƒ³ */
 #DateBtB {
 	position : absolute ;
 	left : 154px ;
@@ -459,7 +459,7 @@
 	background-color : #ffffff ;
 }
 
-/* ¸ÜµÒ */
+/* é¡§å®¢ */
 #SegACustomer {
 	font-weight : bold ;
 	position : absolute ;
@@ -486,7 +486,7 @@
 	padding : 3px 0px 0px 10px ;
 }
 
-/* ¸ÜµÒÂ¦Ã´Åö¼Ô */
+/* é¡§å®¢å´æ‹…å½“è€… */
 #SegACustomerUserName {
 	font-weight : bold ;
 	position : absolute ;
@@ -513,7 +513,7 @@
 	background-color: #e8f0f1 ;
 	padding : 3px 0px 0px 0px ;
 }
-/* ¸ÜµÒÁªÂò¥Ü¥¿¥ó */
+/* é¡§å®¢é¸æŠãƒœã‚¿ãƒ³ */
 #MSWBtCustomerName {
 	position : absolute ;
 	left : 513px ;
@@ -526,7 +526,7 @@
 }
 
 
-/* Ç¼ÉÊÀè */
+/* ç´å“å…ˆ */
 #SegADeliveryPlaceName {
 	font-weight : bold ;
 	position : absolute ;
@@ -552,7 +552,7 @@
 	background-color: #e8f0f1 ;
 	padding : 3px 0px 0px 10px ;
 }
-/* Ç¼ÉÊÀèÁªÂò¥Ü¥¿¥ó */
+/* ç´å“å…ˆé¸æŠãƒœã‚¿ãƒ³ */
 #MSWBtDeliveryPlaceName {
 	position : absolute ;
 	left : 563px ;
@@ -564,7 +564,7 @@
 	background-color : #ffffff ;
 }
 
-/* Ç¼ÉÊÀèÃ´Åö¼Ô */
+/* ç´å“å…ˆæ‹…å½“è€… */
 #SegADeliveryPlaceUserName {
 	font-weight : bold ;
 	position : absolute ;
@@ -592,7 +592,7 @@
 	padding : 3px 0px 0px 0px ;
 }
 
-/* È÷¹Í */ 
+/* å‚™è€ƒ */ 
 #SegANote {
 	font-weight : bold ;
 	position : absolute ;
@@ -626,7 +626,7 @@
 	resize:none;
 }
 
-/* ¾ÃÈñÀÇ¶èÊ¬ */
+/* æ¶ˆè²»ç¨åŒºåˆ† */
 #SegATaxClass {
 	font-weight : bold ;
 	position : absolute ;
@@ -653,7 +653,7 @@
 	padding : 3px 0px 0px 0px ;
 }
 
-/* ¾ÃÈñÀÇÎ¨ */
+/* æ¶ˆè²»ç¨ç‡ */
 #SegATaxRate {
 	font-weight : bold ;
 	position : absolute ;
@@ -680,7 +680,7 @@
 	padding : 3px 0px 0px 0px ;
 }
 
-/* ¾ÃÈñÀÇ³Û */
+/* æ¶ˆè²»ç¨é¡ */
 #SegATaxAmount {
 	font-weight : bold ;
 	position : absolute ;
@@ -708,7 +708,7 @@
 }
 
 
-/* »ÙÊ§´ü¸Â */
+/* æ”¯æ‰•æœŸé™ */
 #SegAPaymentLimit {
 	font-weight : bold ;
 	position : absolute ;
@@ -734,7 +734,7 @@
 	background-color: #e8f0f1 ;
 	padding : 3px 20px 0px 0px ;
 }
-/* »ÙÊ§´ü¸ÂÁªÂò¥Ü¥¿¥ó */
+/* æ”¯æ‰•æœŸé™é¸æŠãƒœã‚¿ãƒ³ */
 #DateBtC {
 	position : absolute ;
 	left : 475px ;
@@ -746,7 +746,7 @@
 	background-color : #ffffff ;
 }
 
-/* »ÙÊ§ÊıË¡ */
+/* æ”¯æ‰•æ–¹æ³• */
 #SegAPaymentMethod {
 	font-weight : bold ;
 	position : absolute ;
@@ -773,7 +773,7 @@
 	padding : 3px 0px 0px 0px ;
 }
 
-/* ¹ç·×¶â³Û */
+/* åˆè¨ˆé‡‘é¡ */
 #SegATotalAmount {
 	font-weight : bold ;
 	position : absolute ;

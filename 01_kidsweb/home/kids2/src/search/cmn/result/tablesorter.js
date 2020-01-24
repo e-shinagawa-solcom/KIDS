@@ -19,13 +19,13 @@ $(document).ready(function () {
   window.resetTable = function () {    
     var widthArry = [];
     var colnum = $("#result thead tr").eq(0).find("th").length;
-    // ¥Ø¥Ã¥À¡¼Éô¤Î³ÆÎó¤ÎÉı¤òÇÛÎó¤ËÊİÂ¸¤¹¤ë
+    // ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨ã®å„åˆ—ã®å¹…ã‚’é…åˆ—ã«ä¿å­˜ã™ã‚‹
     for (var i = 1; i <= colnum; i++) {
       var width = $("#result thead tr th:nth-child(" + (i) + ")").eq(0).width();
       widthArry.push(Math.round(width));
     }
 
-    // ÌÀºÙÉô¤Î³ÆÎó¤ÎºÇÂçÉı¤ò¼èÆÀ¤·ÇÛÎó¤ËÊİÂ¸¤¹¤ë
+    // æ˜ç´°éƒ¨ã®å„åˆ—ã®æœ€å¤§å¹…ã‚’å–å¾—ã—é…åˆ—ã«ä¿å­˜ã™ã‚‹
     var childwidthArray = [];
     var tablechildcount = $(".tablesorter-child thead").length;
     console.log(tablechildcount);
@@ -41,7 +41,7 @@ $(document).ready(function () {
       childwidthArray.push(width);
     }
 
-    // ÌÀºÙÉô¤Î³ÆÎó¤ÎÉı¤ò¥ê¥»¥Ã¥È¤¹¤ë
+    // æ˜ç´°éƒ¨ã®å„åˆ—ã®å¹…ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
     var width = 0;
     var endindex = 0;
     $(".tablesorter-child thead").eq(0).find("tr:first th").each(function (i, e) {
@@ -65,7 +65,7 @@ $(document).ready(function () {
       }
     });
 
-    // ¥Æ¡¼¥Ö¥ë¤ÎÉı¤ò¥ê¥»¥Ã¥È¤¹¤ë
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã®å¹…ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
     var parent_width = 0;
     for (var i = 0; i < widthArry.length; i++) {
       $("#result thead tr th:nth-child(" + (i + 1) + ")").eq(0).width(widthArry[i]);
@@ -73,14 +73,14 @@ $(document).ready(function () {
     }
     $("#result").width(parent_width);
 
-    // ÌÀºÙÉô³Æ¥Æ¡¼¥Ö¥ë¤Î¥Ø¥Ã¥À¡¼¤òÈóÉ½¼¨¤ËÀßÄê¤¹¤ë
+    // æ˜ç´°éƒ¨å„ãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ˜ãƒƒãƒ€ãƒ¼ã‚’éè¡¨ç¤ºã«è¨­å®šã™ã‚‹
     $(".tablesorter-child thead").css('display', 'none');
-    // ¥Æ¡¼¥Ö¥ë¤Î¥ì¥¤¥¢¥¦¥È¤ò¸ÇÄê¤¹¤ë
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚’å›ºå®šã™ã‚‹
     $(".tablesorter-child").css('table-layout', 'fixed');
     $("#result").css('table-layout', 'fixed');
   }
 
-  // ¥Æ¡¼¥Ö¥ë¥ê¥»¥Ã¥È¤Î¸Æ¤Ó½Ğ¤·
+  // ãƒ†ãƒ¼ãƒ–ãƒ«ãƒªã‚»ãƒƒãƒˆã®å‘¼ã³å‡ºã—
   resetTable();
 
   $("#result thead tr").eq(0).find("th").on('click', function () {
@@ -96,9 +96,9 @@ $(document).ready(function () {
       r.trigger('sorton', [[[(sortkey - 1), sortval]]]);
     }
 
-    // ¥³¥Ô¡¼¥Ü¥¿¥ó¤Î¥¤¥Ù¥ó¥È
+    // ã‚³ãƒ”ãƒ¼ãƒœã‚¿ãƒ³ã®ã‚¤ãƒ™ãƒ³ãƒˆ
     if ($(this)[0].cellIndex == 0) {
-        // ¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤ËÃÍ¤òÈ¿±Ç
+        // ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«å€¤ã‚’åæ˜ 
         if (window.getSelection) {
             var selection = getSelection();
             console.log(selection);
@@ -110,9 +110,9 @@ $(document).ready(function () {
             selection.addRange(range);
             document.execCommand('copy');
             selection.removeAllRanges();
-            alert('¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤Ë¥³¥Ô¡¼¤·¤Ş¤·¤¿¡£');
+            alert('ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ã—ã¾ã—ãŸã€‚');
         } else {
-            alert("¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤Ø¤Î¥³¥Ô¡¼¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£");
+            alert("ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã¸ã®ã‚³ãƒ”ãƒ¼ã«å¤±æ•—ã—ã¾ã—ãŸã€‚");
         }
     }
   });

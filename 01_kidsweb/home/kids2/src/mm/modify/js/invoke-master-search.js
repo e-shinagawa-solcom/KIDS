@@ -1,7 +1,7 @@
 
 (function(){
 
-    // ¥Ş¥¹¥¿¸¡º÷¶¦ÄÌ
+    // ãƒã‚¹ã‚¿æ¤œç´¢å…±é€š
     var searchMaster = {
                     url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),
                     type: 'post',
@@ -9,32 +9,32 @@
                 };
 
     // --------------------------------------------------------------------------
-    // ¥¤¥Ù¥ó¥ÈÅĞÏ¿
+    // ã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²
     // --------------------------------------------------------------------------
-    // Êİ´É¸µ¹©¾ì/°ÜÆ°Àè¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É ¥¤¥Ù¥ó¥ÈÅĞÏ¿
+    // ä¿ç®¡å…ƒå·¥å ´/ç§»å‹•å…ˆå·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ ã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²
     $('input[name="SourceFactory"], input[name="DestinationFactory"]').on({
         'change': function(){
-            // É½¼¨Ì¾¤òº÷°ú
+            // è¡¨ç¤ºåã‚’ç´¢å¼•
             selectFactoryName($(this));
-            // JQuery Validation Plugin¤Ç¸¡ÃÎ¤µ¤»¤ë°Ù¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+            // JQuery Validation Pluginã§æ¤œçŸ¥ã•ã›ã‚‹ç‚ºã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
             $(this).trigger('blur');
-            // ¥Õ¥©¡¼¥«¥¹¤òÉ½¼¨²ñ¼ÒÌ¾¤Ë¹ç¤ï¤»¤ë
+            // ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’è¡¨ç¤ºä¼šç¤¾åã«åˆã‚ã›ã‚‹
             $(this).next('input').focus();
         }
     });
 
     // --------------------------------------------------------------------------
-    // ¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É¤Ë¤è¤ë¥Ç¡¼¥¿º÷°ú
+    // å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚‹ãƒ‡ãƒ¼ã‚¿ç´¢å¼•
     // --------------------------------------------------------------------------
-    // ¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É¤«¤éÉ½¼¨Ì¾¤òº÷°ú
+    // å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã‹ã‚‰è¡¨ç¤ºåã‚’ç´¢å¼•
     var selectFactoryName =  function(invoker){
-        console.log("¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É->É½¼¨Ì¾ change");
-        // º÷°ú·ë²Ì¤Î¥»¥Ã¥ÈÀèCSS¥»¥ì¥¯¥¿¤ÎºîÀ®
+        console.log("å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå change");
+        // ç´¢å¼•çµæœã®ã‚»ãƒƒãƒˆå…ˆCSSã‚»ãƒ¬ã‚¯ã‚¿ã®ä½œæˆ
         var targetCssSelector = 'input[name="' + $(invoker).attr('name') + 'Name"]';
-        // º÷°ú·ë²Ì0·ï¤Î»ş¤Î¥³¡¼¥ÉÍó¤ÎCSS¥»¥ì¥¯¥¿¤ÎºîÀ®
+        // ç´¢å¼•çµæœ0ä»¶ã®æ™‚ã®ã‚³ãƒ¼ãƒ‰æ¬„ã®CSSã‚»ãƒ¬ã‚¯ã‚¿ã®ä½œæˆ
         var targetCodeCssSelector = 'input[name="' + $(invoker).attr('name') +'"]';
 
-        // ¸¡º÷¾ò·ï
+        // æ¤œç´¢æ¡ä»¶
         var condition = {
             data: {
                 QueryName: 'selectFactoryName',
@@ -44,18 +44,18 @@
             }
         };
 
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax($.extend({}, searchMaster, condition))
         .done(function(response){
-            console.log("¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É->É½¼¨Ì¾ done");
-            // ¹©¾ì-É½¼¨Ì¾¤ËÃÍ¤ò¥»¥Ã¥È
+            console.log("å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå done");
+            // å·¥å ´-è¡¨ç¤ºåã«å€¤ã‚’ã‚»ãƒƒãƒˆ
             $(targetCssSelector).val(response[0].companydisplayname);
             if ($(invoker).attr('name')=="SourceFactory") {
                 $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
             }
         })
         .fail(function(response){
-            console.log("¹©¾ì-É½¼¨²ñ¼Ò¥³¡¼¥É->É½¼¨Ì¾ fail");
+            console.log("å·¥å ´-è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰->è¡¨ç¤ºå fail");
             console.log(response.responseText);            
             var listlength = $('.mold-selection__choosen-list').find('option').length;
             if ($(invoker).attr('name')=="SourceFactory") {
@@ -65,7 +65,7 @@
                     $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
                 }
             }
-            // ¹©¾ì-¥³¡¼¥É¡¢É½¼¨Ì¾¤ÎÃÍ¤ò¥ê¥»¥Ã¥È¤·¡¢¥³¡¼¥ÉÍó¤Ë¥Õ¥©¡¼¥«¥¹
+            // å·¥å ´-ã‚³ãƒ¼ãƒ‰ã€è¡¨ç¤ºåã®å€¤ã‚’ãƒªã‚»ãƒƒãƒˆã—ã€ã‚³ãƒ¼ãƒ‰æ¬„ã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹
             $(targetCssSelector).val('');
             $(targetCodeCssSelector).val('').focus();
         });

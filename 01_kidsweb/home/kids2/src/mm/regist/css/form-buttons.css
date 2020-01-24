@@ -1,5 +1,5 @@
 
-/* ¥Õ¥©¡¼¥à ¥Ü¥¿¥ó */
+/* ãƒ•ã‚©ãƒ¼ãƒ  ãƒœã‚¿ãƒ³ */
 .form-buttons
 {
     position: relative;
@@ -9,13 +9,13 @@
     width: 927px;
 }
 
-/* ¥¯¥ê¥¢¥Ü¥¿¥ó */
+/* ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³ */
 .form-buttons__clear
 {
     margin-left: 20px;
 }
 
-/* ÅÐÏ¿¥Ü¥¿¥ó */
+/* ç™»éŒ²ãƒœã‚¿ãƒ³ */
 .form-buttons__regist
 {
     float: right;

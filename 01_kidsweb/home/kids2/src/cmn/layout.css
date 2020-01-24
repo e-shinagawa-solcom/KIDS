@@ -21,7 +21,7 @@
 
 
 
-/* ¦ÂÈÇÉ½µ­ÍÑ */
+/* Î²ç‰ˆè¡¨è¨˜ç”¨ */
 #Beta 
 {
 	position : absolute ;
@@ -40,10 +40,10 @@
 }
 
 
-/* ¥Ç¥£¥¹¥×¥ì¥¤¥µ¥¤¥º¥¨¥é¡¼ */
+/* ãƒ‡ã‚£ã‚¹ãƒ—ãƒ¬ã‚¤ã‚µã‚¤ã‚ºã‚¨ãƒ©ãƒ¼ */
 #MessageDisp
 {
-	font-family : Arial , £Í£Ó £Ð¥´¥·¥Ã¥¯ ;
+	font-family : Arial , ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯ ;
 	font-weight : normal ;
 	font-size : 12px ;
 	color : #eeeeee ;
@@ -61,7 +61,7 @@
 #Comments
 {
 	position : absolute ;
-	font-family : £Í£Ó £Ð¥´¥·¥Ã¥¯, Osaka ;
+	font-family : ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯, Osaka ;
 	font-style : normal ;
 	font-weight : normal ;
 	color : #666666 ;

@@ -1,12 +1,12 @@
 
 (function(){
-    // FROM¤ÎinputÍ×ÁÇ¤ÎÃÍ¤òTO¤Îinput¤ËÈ¿±Ç¤µ¤»¤ë
+    // FROMã®inputè¦ç´ ã®å€¤ã‚’TOã®inputã«åæ˜ ã•ã›ã‚‹
     $('input[name^="From_"]').on({
         'change': function(){
             var toElement = $(this).parent().find('input[name^="To_"]');
-            // FROM¤ÎÃÍ¤òTO¤ËÈ¿±Ç
+            // FROMã®å€¤ã‚’TOã«åæ˜ 
             toElement.val($(this).val());
-            // ¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+            // ã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
             toElement.change();
             toElement.blur();
         }

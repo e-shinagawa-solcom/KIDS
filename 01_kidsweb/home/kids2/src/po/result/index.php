@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       È¯Ãí´ÉÍý  ¸¡º÷
+ *       ç™ºæ³¨ç®¡ç†  æ¤œç´¢
  *
  *
  *       @package    K.I.D.S.
@@ -13,20 +13,20 @@
  *       @version    2.00
  *
  *
- *       ½èÍý³µÍ×
- *         ¡¦¸¡º÷·ë²Ì²èÌÌÉ½¼¨½èÍý
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æ¤œç´¢çµæžœç”»é¢è¡¨ç¤ºå‡¦ç†
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once 'conf.inc';
 
 require_once SRC_ROOT . '/mold/lib/UtilSearchForm.class.php';
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 require LIB_ROOT . "clscache.php";
 require SRC_ROOT . "po/cmn/lib_pos.php";
@@ -34,7 +34,7 @@ require SRC_ROOT . "search/cmn/lib_search.php";
 require SRC_ROOT . "po/cmn/column.php";
 require LIB_DEBUGFILE;
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objCache = new clsCache();
@@ -42,9 +42,9 @@ $objDB->open("", "", "", "");
 
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
-// ¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤«¤é³Æ¥«¥Æ¥´¥ê¤Î¿¶¤êÊ¬¤±¤ò¹Ô¤¦
+// ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰å„ã‚«ãƒ†ã‚´ãƒªã®æŒ¯ã‚Šåˆ†ã‘ã‚’è¡Œã†
 $options = UtilSearchForm::extractArrayByOption($_REQUEST);
 $isDisplay = UtilSearchForm::extractArrayByIsDisplay($_REQUEST);
 $isSearch = UtilSearchForm::extractArrayByIsSearch($_REQUEST);
@@ -53,26 +53,26 @@ $to = UtilSearchForm::extractArrayByTo($_REQUEST);
 $searchValue = $_REQUEST;
 $errorFlag = false;
 
-// ¥¯¥¨¥ê¤ÎÁÈÎ©¤Ë»ÈÍÑ¤¹¤ë¥Õ¥©¡¼¥à¥Ç¡¼¥¿¤òÃê½Ð
+// ã‚¯ã‚¨ãƒªã®çµ„ç«‹ã«ä½¿ç”¨ã™ã‚‹ãƒ•ã‚©ãƒ¼ãƒ ãƒ‡ãƒ¼ã‚¿ã‚’æŠ½å‡º
 $optionColumns = array();
 $searchColumns = array();
 $displayColumns = array();
 $conditions = array();
 
-// ¥ª¥×¥·¥ç¥ó¹àÌÜ¤ÎÃê½Ð
+// ã‚ªãƒ—ã‚·ãƒ§ãƒ³é …ç›®ã®æŠ½å‡º
 foreach ($options as $key => $flag) {
     if ($flag == "on") {
         $optionColumns[$key] = $key;
     }
 }
-// É½¼¨¹àÌÜ¤ÎÃê½Ð
+// è¡¨ç¤ºé …ç›®ã®æŠ½å‡º
 foreach ($isDisplay as $key => $flag) {
     if ($flag == "on") {
         $displayColumns[$key] = $key;
     }
 }
 
-// ¸¡º÷¹àÌÜ¤ÎÃê½Ð
+// æ¤œç´¢é …ç›®ã®æŠ½å‡º
 foreach ($isSearch as $key => $flag) {
     if ($flag == "on") {
         $searchColumns[$key] = $key;
@@ -80,40 +80,40 @@ foreach ($isSearch as $key => $flag) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ¥»¥Ã¥·¥ç¥ó¡¢¸¢¸Â³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ã€æ¨©é™ç¢ºèª
 //////////////////////////////////////////////////////////////////////////
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â³ÎÇ§
-// 502 È¯Ãí´ÉÍý¡ÊÈ¯Ãí¸¡º÷¡Ë
+// æ¨©é™ç¢ºèª
+// 502 ç™ºæ³¨ç®¡ç†ï¼ˆç™ºæ³¨æ¤œç´¢ï¼‰
 if (!fncCheckAuthority(DEF_FUNCTION_PO2, $objAuth)) {
-    fncOutputError(9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
-// ¸¡º÷¾ò·ï¤Ë°ìÃ×¤¹¤ëÈ¯Ãí¥³¡¼¥É¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®
+// æ¤œç´¢æ¡ä»¶ã«ä¸€è‡´ã™ã‚‹ç™ºæ³¨ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆ
 $strQuery = fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
 
-// ÃÍ¤ò¤È¤ë =====================================
+// å€¤ã‚’ã¨ã‚‹ =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum) {
-    // ¸¡º÷·ï¿ô¤¬»ØÄê¿ô°Ê¾å¤Î¾ì¹ç¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÉ½¼¨¤¹¤ë
+    // æ¤œç´¢ä»¶æ•°ãŒæŒ‡å®šæ•°ä»¥ä¸Šã®å ´åˆã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤ºã™ã‚‹
     if ($lngResultNum > DEF_SEARCH_MAX) {
         $strMessage = fncOutputError(9057, DEF_WARNING, DEF_SEARCH_MAX, false, "../po/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 
-        // [strErrorMessage]½ñ¤­½Ð¤·
+        // [strErrorMessage]æ›¸ãå‡ºã—
         $aryHtml["strErrorMessage"] = $strMessage;
 
-        // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-        // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
         $objTemplate->replace($aryHtml);
         $objTemplate->complete();
 
-        // HTML½ÐÎÏ
+        // HTMLå‡ºåŠ›
         echo $objTemplate->strTemplate;
 
         exit;
@@ -126,18 +126,18 @@ if ($lngResultNum) {
 } else {
     $strMessage = fncOutputError(503, DEF_WARNING, "", false, "../po/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 
-    // [strErrorMessage]½ñ¤­½Ð¤·
+    // [strErrorMessage]æ›¸ãå‡ºã—
     $aryHtml["strErrorMessage"] = $strMessage;
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("/result/error/parts.tmpl");
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
     $objTemplate->replace($aryHtml);
     $objTemplate->complete();
 
-    // HTML½ÐÎÏ
+    // HTMLå‡ºåŠ›
     echo $objTemplate->strTemplate;
 
     exit;
@@ -145,73 +145,73 @@ if ($lngResultNum) {
 
 $objDB->freeResult($lngResultID);
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/po/result/po_search_result.html");
 
 $aryResult["displayColumns"] = implode(",", $displayColumns);
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace($aryResult);
 
-// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ëÀ¸À®¤Î°ÙDOMDocument¤ò»ÈÍÑ
+// æ¤œç´¢çµæžœãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆã®ç‚ºDOMDocumentã‚’ä½¿ç”¨
 $doc = new DOMDocument();
-// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍÞÀ©
+// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶
 libxml_use_internal_errors(true);
-// DOM¥Ñ¡¼¥¹
+// DOMãƒ‘ãƒ¼ã‚¹
 $doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
-// ¥Ñ¡¼¥¹¥¨¥é¡¼¥¯¥ê¥¢
+// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼ã‚¯ãƒªã‚¢
 libxml_clear_errors();
-// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍÞÀ©²ò½ü
+// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶è§£é™¤
 libxml_use_internal_errors(false);
 
-// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ë¤Î¼èÆÀ
+// æ¤œç´¢çµæžœãƒ†ãƒ¼ãƒ–ãƒ«ã®å–å¾—
 $table = $doc->getElementById("result");
 $thead = $table->getElementsByTagName("thead")->item(0);
 $tbody = $table->getElementsByTagName("tbody")->item(0);
 
-// ¥­¡¼Ê¸»úÎó¤ò¾®Ê¸»ú¤ËÊÑ´¹
+// ã‚­ãƒ¼æ–‡å­—åˆ—ã‚’å°æ–‡å­—ã«å¤‰æ›
 $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 // -------------------------------------------------------
-// ³Æ¼ï¥Ü¥¿¥óÉ½¼¨¥Á¥§¥Ã¥¯/¸¢¸Â¥Á¥§¥Ã¥¯
+// å„ç¨®ãƒœã‚¿ãƒ³è¡¨ç¤ºãƒã‚§ãƒƒã‚¯/æ¨©é™ãƒã‚§ãƒƒã‚¯
 // -------------------------------------------------------
 $aryAuthority = fncGetAryAuthority('po', $objAuth);
 
-// ´ÉÍý¼Ô¥â¡¼¥É¥Á¥§¥Ã¥¯
+// ç®¡ç†è€…ãƒ¢ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯
 $isadmin = array_key_exists("admin", $optionColumns);
 
 // -------------------------------------------------------
-// ¥Æ¡¼¥Ö¥ë¥Ø¥Ã¥ÀºîÀ®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ˜ãƒƒãƒ€ä½œæˆ
 // -------------------------------------------------------
-// thead > trÍ×ÁÇºîÀ®
+// thead > trè¦ç´ ä½œæˆ
 // -------------------------------------------------------
-// ¥Æ¡¼¥Ö¥ë¥Ø¥Ã¥ÀºîÀ®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ˜ãƒƒãƒ€ä½œæˆ
 // -------------------------------------------------------
-// thead > trÍ×ÁÇºîÀ®
+// thead > trè¦ç´ ä½œæˆ
 $trHead = $doc->createElement("tr");
 fncSetTheadData($doc, $trHead, $aryTableHeadBtnName, $aryTableBackBtnName, $aryTableHeaderName_PO, null, $displayColumns);
 $thead->appendChild($trHead);
 // return;
 // -------------------------------------------------------
-// ¥Æ¡¼¥Ö¥ë¥»¥ëºîÀ®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒ«ä½œæˆ
 // -------------------------------------------------------
-// ¸¡º÷·ë²Ì·ï¿ôÊ¬Áöºº
+// æ¤œç´¢çµæžœä»¶æ•°åˆ†èµ°æŸ»
 foreach ($records as $i => $record) {
     $index = $index + 1;
 
     $bgcolor = fncSetBgColor('po', $record["strordercode"], true, $objDB);
 
-    // tbody > trÍ×ÁÇºîÀ®
+    // tbody > trè¦ç´ ä½œæˆ
     $trBody = $doc->createElement("tr");
 
     $trBody->setAttribute("id", $record["strordercode"] . "_" . $record["lngorderdetailno"]);
 
-    // ÀèÆ¬¥Ü¥¿¥óÀßÄê
+    // å…ˆé ­ãƒœã‚¿ãƒ³è¨­å®š
     fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, $index, 'po', null);
 
-    // ¥Ø¥Ã¥À¡¼Éô¥Ç¡¼¥¿ÀßÄê
+    // ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨ãƒ‡ãƒ¼ã‚¿è¨­å®š
     fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PO, $displayColumns, $record, true);
 
-    // ¥Õ¥Ã¥¿¡¼¥Ü¥¿¥óÉ½¼¨
+    // ãƒ•ãƒƒã‚¿ãƒ¼ãƒœã‚¿ãƒ³è¡¨ç¤º
     fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, 'po');
 
     // tbody > tr
@@ -219,5 +219,5 @@ foreach ($records as $i => $record) {
 
 }
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $doc->saveHTML();

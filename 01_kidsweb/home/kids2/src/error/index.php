@@ -1,8 +1,8 @@
 <?php
 /** 
-*	•®•È°º≤ËÃÃ…Ωº®°°ΩËÕ˝
+*	„Ç®„É©„ÉºÁîªÈù¢Ë°®Á§∫„ÄÄÂá¶ÁêÜ
 *
-*	•®•È°º≤ËÃÃ§Œ…Ωº®ΩËÕ˝
+*	„Ç®„É©„ÉºÁîªÈù¢„ÅÆË°®Á§∫Âá¶ÁêÜ
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -11,31 +11,31 @@
 *	@access    public
 *	@version   1.00
 *
-*	ΩËÕ˝≥µÕ◊
-*	•∑•π•∆•‡≈™•®•È°º§ŒæÏπÁ§À•®•È°º≤ËÃÃ§Ú…Ωº®§µ§ª§Î
+*	Âá¶ÁêÜÊ¶ÇË¶Å
+*	„Ç∑„Çπ„ÉÜ„É†ÁöÑ„Ç®„É©„Éº„ÅÆÂ†¥Âêà„Å´„Ç®„É©„ÉºÁîªÈù¢„ÇíË°®Á§∫„Åï„Åõ„Çã
 *
-*	ππø∑Õ˙ŒÚ
+*	Êõ¥Êñ∞Â±•Ê≠¥
 *
-*	2004.02.26	•®•È°º»Ø¿∏ª˛§ŒÃ·§Í§Œ•¢•…•Ï•π§Ú°°LOGIN_URL°°§Úª»Õ—§∑§ §§§Ë§¶§ÀΩ§¿µ
+*	2004.02.26	„Ç®„É©„ÉºÁô∫ÁîüÊôÇ„ÅÆÊàª„Çä„ÅÆ„Ç¢„Éâ„É¨„Çπ„Çí„ÄÄLOGIN_URL„ÄÄ„Çí‰ΩøÁî®„Åó„Å™„ÅÑ„Çà„ÅÜ„Å´‰øÆÊ≠£
 *
 *
 *
 */
 
-// •®•È°º≤ËÃÃ…Ωº®ΩËÕ˝
+// „Ç®„É©„ÉºÁîªÈù¢Ë°®Á§∫Âá¶ÁêÜ
 
-// ¿ﬂƒÍ§Œ∆…§ﬂπ˛§ﬂ
+// Ë®≠ÂÆö„ÅÆË™≠„ÅøËæº„Åø
 include_once ( "conf.inc" );
 
-// •È•§•÷•È•Í∆…§ﬂπ˛§ﬂ
+// „É©„Ç§„Éñ„É©„É™Ë™≠„ÅøËæº„Åø
 require ( LIB_FILE );
 
-// GET•«°º•ø§ŒºË∆¿
+// GET„Éá„Éº„Çø„ÅÆÂèñÂæó
 $aryData["ref"]				= $_GET["ref"];
 $aryData["path"]			= $_GET["path"];
 $aryData["strMessage"]		= $_GET["strMessage"];
 
-// •∆•Û•◊•Ï°º•»•™•÷•∏•ß•Ø•»¿∏¿Æ
+// „ÉÜ„É≥„Éó„É¨„Éº„Éà„Ç™„Éñ„Ç∏„Çß„ÇØ„ÉàÁîüÊàê
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "error/index.html" );
 
@@ -49,17 +49,17 @@ if ( $aryData["ref"] == TOP_URL )
 	{
 		$aryData["strEvent"] = TOP_URL . "login/login.php?value=kids";
 	}
-	$aryData["strEventText"] = "Ã·§Î";
+	$aryData["strEventText"] = "Êàª„Çã";
 	$aryData["lngEventCode"] = DEF_ERROR_BACK;
 }
 else
 {
 	$aryData["strEvent"]     = "close";
-	$aryData["strEventText"] = " ƒ§∏§Î";
+	$aryData["strEventText"] = "Èñâ„Åò„Çã";
 	$aryData["lngEventCode"] = DEF_ERROR_CLOSE;
 }
 
-// √÷§≠¥π§®
+// ÁΩÆ„ÅçÊèõ„Åà
 $objTemplate->replace( $aryData );
 $objTemplate->complete();
 
@@ -72,7 +72,7 @@ echo $objTemplate->strTemplate;
 
 function fncShowHidePreload( strMode )
 {
-	// …Ωº®
+	// Ë°®Á§∫
 	if( strMode == 0 )
 	{
 		if( typeof(parent.Preload) != 'undefined' )
@@ -81,7 +81,7 @@ function fncShowHidePreload( strMode )
 		}
 	}
 
-	// »Û…Ωº®
+	// ÈùûË°®Á§∫
 	else if( strMode == 1 )
 	{
 		if( typeof(parent.Preload) != 'undefined' )

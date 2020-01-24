@@ -5,15 +5,15 @@
 *	@charset	: EUC-JP
 */
 
-	require ( 'conf.inc' );										// ÀßÄêÆÉ¤ß¹ş¤ß
-	require ( LIB_DEBUGFILE );									// Debug¥â¥¸¥å¡¼¥ë
+	require ( 'conf.inc' );										// è¨­å®šèª­ã¿è¾¼ã¿
+	require ( LIB_DEBUGFILE );									// Debugãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 
-	require ( LIB_FILE );										// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+	require ( LIB_FILE );										// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
     
     require ( SRC_ROOT . "estimate/cmn/estimateSheetController.php" );
 	require ( SRC_ROOT . "estimate/cmn/makeHTML.php" );
 
-	// ¹Ô¥¯¥é¥¹¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+	// è¡Œã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 	require_once (SRC_ROOT. "/estimate/cmn/productSalesRowController.php");
 	require_once (SRC_ROOT. "/estimate/cmn/fixedCostSalesRowController.php");
 	require_once (SRC_ROOT. "/estimate/cmn/fixedCostOrderRowController.php");
@@ -30,7 +30,7 @@
 
 	$objDB			= new estimateDB();
 	$objAuth		= new clsAuth();
-	$objTemplate	= new clsTemplate();								// ¥Æ¥ó¥×¥ì¡¼¥È¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+	$objTemplate	= new clsTemplate();								// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 
 	$charset = 'EUC-JP';
     
@@ -38,48 +38,48 @@
 
 
 	//-------------------------------------------------------------------------
-	// DB¥ª¡¼¥×¥ó
+	// DBã‚ªãƒ¼ãƒ—ãƒ³
 	//-------------------------------------------------------------------------
-	$objDB->InputEncoding = 'UTF-8'; // phpSpreadSheet¤ËÂåÆş¤¹¤ëÊ¸»ú¥³¡¼¥É¤òUTF-8¤Ç°·¤¦¤¿¤áDB¤ÎÊ¸»ú¥³¡¼¥É¤ò¥»¥Ã¥È¤¹¤ë
+	$objDB->InputEncoding = 'UTF-8'; // phpSpreadSheetã«ä»£å…¥ã™ã‚‹æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’UTF-8ã§æ‰±ã†ãŸã‚DBã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	$objDB->open( "", "", "", "" );
 
 	//-------------------------------------------------------------------------
-	// ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+	// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 	//-------------------------------------------------------------------------
 	$aryData	= array();
 	$aryData	= $_REQUEST;
 
-	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// ¸À¸ì¥³¡¼¥É
+	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// è¨€èªã‚³ãƒ¼ãƒ‰
 
-    // ¥·¡¼¥ÈÌ¾¼èÆÀ
+    // ã‚·ãƒ¼ãƒˆåå–å¾—
     $sheetName = mb_convert_encoding($aryData['sheetname'], 'UTF-8', 'EUC-JP');
 
 	//-------------------------------------------------------------------------
-	// ÆşÎÏÊ¸»úÎóÃÍ¡¦¥»¥Ã¥·¥ç¥ó¡¦¸¢¸Â¥Á¥§¥Ã¥¯
+	// å…¥åŠ›æ–‡å­—åˆ—å€¤ãƒ»ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ»æ¨©é™ãƒã‚§ãƒƒã‚¯
 	//-------------------------------------------------------------------------
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]	= "null:numenglish(32,32)";
 	$aryResult	= fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É¼èÆÀ
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—
 	$lngUserCode = $objAuth->UserCode;
 
 	
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	if( !fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-	// ¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É¤Î¼èÆÀ
+	// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã®å–å¾—
 	$lngAuthorityGroupCode = fncGetUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
     
-    // ¥Õ¥¡¥¤¥ë¾ğÊó¼èÆÀ
+    // ãƒ•ã‚¡ã‚¤ãƒ«æƒ…å ±å–å¾—
     $file = array (
         'exc_name' => $aryData["exc_name"],
         'exc_type' => $aryData["exc_type"],
@@ -88,57 +88,57 @@
         'exc_size' => $aryData["exc_size"]
     );
 
-    // ¥Ö¥Ã¥¯¤Î¥Õ¥¡¥¤¥ë·Á¼°¥Á¥§¥Ã¥¯
+    // ãƒ–ãƒƒã‚¯ã®ãƒ•ã‚¡ã‚¤ãƒ«å½¢å¼ãƒã‚§ãƒƒã‚¯
 	$fileCheckResult = estimateSheetController::checkFileFormat($file);
 
-	// DB¤«¤éÉ¸½à³ä¹ç¤ò¼èÆÀ
+	// DBã‹ã‚‰æ¨™æº–å‰²åˆã‚’å–å¾—
 	$standardRateMaster = $objDB->getEstimateStandardRate();
     
 	if ($fileCheckResult) {
-        // ¥Ö¥Ã¥¯¤Î¥í¡¼¥É(phpSpreadSheet¥ª¥Ö¥¸¥§¥¯¥È¤Ë¥Ö¥Ã¥¯¤Î¾ğÊó¤ò¥»¥Ã¥È¤¹¤ë)
+        // ãƒ–ãƒƒã‚¯ã®ãƒ­ãƒ¼ãƒ‰(phpSpreadSheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ–ãƒƒã‚¯ã®æƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹)
 		$spreadSheet = $objReader->load($fileCheckResult);
 
-		// É¬Í×¤ÊÄê¿ô¤ò¼èÆÀ¤¹¤ë
+		// å¿…è¦ãªå®šæ•°ã‚’å–å¾—ã™ã‚‹
 		$nameList = workSheetConst::getAllNameList();	
 		$rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
 		$targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
 
-		// phpSpreadSheet¥ª¥Ö¥¸¥§¥¯¥È¤«¤é¥·¡¼¥È¤Î¾ğÊó¤ò¼èÆÀ
+		// phpSpreadSheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‹ã‚‰ã‚·ãƒ¼ãƒˆã®æƒ…å ±ã‚’å–å¾—
 		$allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
 
 		$sheetInfo = $allSheetInfo[$sheetName];
 
 		$objSheet = null;
-		$outputMessage = array(); // ½ĞÎÏ¥á¥Ã¥»¡¼¥¸
+		$outputMessage = array(); // å‡ºåŠ›ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 
 		$difference = array();
 		$hiddenList = array();
 
-		// ¥ï¡¼¥¯¥·¡¼¥È½èÍı¥ª¥Ö¥¸¥§¥¯¥È¤Î¥¤¥ó¥¹¥¿¥ó¥¹À¸À®
+		// ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå‡¦ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 		$objSheet = new estimateSheetController();
 
-		// ¥ª¥Ö¥¸¥§¥¯¥È¤Ë¥Ç¡¼¥¿¤ò¥»¥Ã¥È¤¹¤ë
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ‡ãƒ¼ã‚¿ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		$objSheet->dataInitialize($sheetInfo, $objDB);
 
-		// ¥·¡¼¥È¾ğÊó¤ò¼èÆÀ¤¹¤ë
+		// ã‚·ãƒ¼ãƒˆæƒ…å ±ã‚’å–å¾—ã™ã‚‹
 		$sheet = $sheetInfo['sheet'];
 		$cellAddressList = $sheetInfo['cellAddress'];
 
-		// ¥Ø¥Ã¥ÀÉô¤Î¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤ò¹Ô¤¦
+		// ãƒ˜ãƒƒãƒ€éƒ¨ã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã†
 		$objHeader = new registHeaderController($objDB);
 		$objHeader->initialize($sheetInfo['cellAddress'], $lngUserCode, $sheet);
 		$errorMessage = $objHeader->validate();
 
-		// ¥Ø¥Ã¥ÀÉô¤ÎÃÍ¤ò½ĞÎÏ¤¹¤ë
+		// ãƒ˜ãƒƒãƒ€éƒ¨ã®å€¤ã‚’å‡ºåŠ›ã™ã‚‹
 		$param = $objHeader->outputRegistData();
 		$beforeProductionQuantity = $param[workSheetConst::PRODUCTION_QUANTITY];
 
-		// ÂĞ¾İ¥¨¥ê¥¢¤ÎÈÏ°Ï¤ò¼èÆÀ¤¹¤ë
+		// å¯¾è±¡ã‚¨ãƒªã‚¢ã®ç¯„å›²ã‚’å–å¾—ã™ã‚‹
 		$targetAreaRows = $objSheet->outputTargetAreaRows();
-		$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // ÌÀºÙ¤Î³«»Ï¹Ô
-		$endRowOfDetail = $targetAreaRows[DEF_AREA_OTHER_COST_ORDER]['lastRow']; // ÌÀºÙ¤Î½ªÎ»¹Ô
+		$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // æ˜ç´°ã®é–‹å§‹è¡Œ
+		$endRowOfDetail = $targetAreaRows[DEF_AREA_OTHER_COST_ORDER]['lastRow']; // æ˜ç´°ã®çµ‚äº†è¡Œ
 
-		// Í¢ÆşÈñÍÑ¤È´ØÀÇ¤Î¹Ô¤òÊİÂ¸¤¹¤ë¥ê¥¹¥È¤òÀ¸À®¤¹¤ë¡Ê¥¯¥é¥¹Æâ¤«¤é¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤È¤·¤Æ»ÈÍÑ¡Ë
+		// è¼¸å…¥è²»ç”¨ã¨é–¢ç¨ã®è¡Œã‚’ä¿å­˜ã™ã‚‹ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆã™ã‚‹ï¼ˆã‚¯ãƒ©ã‚¹å†…ã‹ã‚‰ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã¨ã—ã¦ä½¿ç”¨ï¼‰
 		$importCostRow = array();
 		$tariffRow = array();
 		
@@ -151,11 +151,11 @@
 		for ($row = $startRowOfDetail; $row <= $endRowOfDetail; ++$row) {
 
 			$objRow = null;
-			// ¸½ºß¤Î¹Ô¤¬¤É¤ÎÂĞ¾İ¥¨¥ê¥¢¤ËÂ°¤¹¤ë¤«È½Äê¤ò¹Ô¤¦
+			// ç¾åœ¨ã®è¡ŒãŒã©ã®å¯¾è±¡ã‚¨ãƒªã‚¢ã«å±ã™ã‚‹ã‹åˆ¤å®šã‚’è¡Œã†
 			$rowAttribute = $objSheet->checkAttributeRow($row);
 			
 			if ($rowAttribute) {
-				// ÂĞ¾İ¥¨¥ê¥¢¤Ë¤è¤Ã¤Æ¥¤¥ó¥¹¥¿¥ó¥¹ºîÀ®»ş¤Î¥¯¥é¥¹¤ò»ØÄê¤¹¤ë
+				// å¯¾è±¡ã‚¨ãƒªã‚¢ã«ã‚ˆã£ã¦ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ä½œæˆæ™‚ã®ã‚¯ãƒ©ã‚¹ã‚’æŒ‡å®šã™ã‚‹
 				switch ($rowAttribute) {
 					case DEF_AREA_PRODUCT_SALES:
 						$objRow = new productSalesRowController($objDB);
@@ -179,24 +179,24 @@
 				if ($objRow) {
 					$objRow->initialize($sheetInfo['cellAddress'], $row);
 
-					// °Ê²¼¤Î½èÍı¤ò¹Ô¤¦°Ù¡¢ÉôºàÈñµÚ¤Ó¤½¤ÎÂ¾ÈñÍÑ¤Î¹Ô¤Î½èÍı¤ÏÀ½Â¤ÈñÍÑ¤Î¹Ô¤Î½èÍı¤Î¸å¤Ë¹Ô¤¦
+					// ä»¥ä¸‹ã®å‡¦ç†ã‚’è¡Œã†ç‚ºã€éƒ¨æè²»åŠã³ãã®ä»–è²»ç”¨ã®è¡Œã®å‡¦ç†ã¯è£½é€ è²»ç”¨ã®è¡Œã®å‡¦ç†ã®å¾Œã«è¡Œã†
 					if ($rowAttribute === DEF_AREA_PARTS_COST_ORDER
 					    || $rowAttribute === DEF_AREA_OTHER_COST_ORDER) {
 
 						$calcProductionQuantity = productSalesRowController::outputProductionQuantity();
 						$result = $objRow->substitutePQForPrice($beforeProductionQuantity, $calcProductionQuantity);
 
-						if ($result === true) { // ¿ôÎÌ¤ÎÂåÆş¤¬¹Ô¤ï¤ì¤¿¾ì¹ç¤Ï¥Ö¥Ã¥¯¤ÎÃÍ¤ò½ñ¤­´¹¤¨¤ë
+						if ($result === true) { // æ•°é‡ã®ä»£å…¥ãŒè¡Œã‚ã‚ŒãŸå ´åˆã¯ãƒ–ãƒƒã‚¯ã®å€¤ã‚’æ›¸ãæ›ãˆã‚‹
 							
 							$quantityColumn =  $objRow->columnNumberList['quantity'];
 							$quantityCell =  $quantityColumn. $row;
 	
-							// ÂåÆş¸å¤Î¿ôÎÌ¤òsheet¥ª¥Ö¥¸¥§¥¯¥È¤ËÁŞÆş
+							// ä»£å…¥å¾Œã®æ•°é‡ã‚’sheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«æŒ¿å…¥
 							$objSheet->sheet->getCell($quantityCell)->setValue($calcProductionQuantity);
 						}
 					}
 
-					// ¹Ô¤Î¥Á¥§¥Ã¥¯¡¢ºÆ·×»»¤ò¹Ô¤¦
+					// è¡Œã®ãƒã‚§ãƒƒã‚¯ã€å†è¨ˆç®—ã‚’è¡Œã†
 					$objRow->workSheetRegistCheck();
 
 					$divisionSubjectCode = $objRow->divisionSubjectCode;
@@ -207,7 +207,7 @@
 						case DEF_STOCK_SUBJECT_CODE_OVERSEA_MOLD_DEPRECIATION:
 						    $tariff = $tariff + $objRow->calculatedSubtotalJP;
 					}
-					// Í¢ÆşÈñÍÑ¡¢´ØÀÇ¤Ë¤Ä¤¤¤Æ¤Ï¸ÄÊÌ½èÍı¤ò¹Ô¤¦°Ù¡¢ÂĞ¾İ¤Î¹ÔÈÖ¹æ¤òÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+					// è¼¸å…¥è²»ç”¨ã€é–¢ç¨ã«ã¤ã„ã¦ã¯å€‹åˆ¥å‡¦ç†ã‚’è¡Œã†ç‚ºã€å¯¾è±¡ã®è¡Œç•ªå·ã‚’é…åˆ—ã«æ ¼ç´ã™ã‚‹
 					if ($objRow->invalidFlag === false) {
 						if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_CHARGE) {
 							if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_IMPORT_COST) {
@@ -226,17 +226,17 @@
 			}
 		}
 
-		// Í¢ÆşÈñÍÑ·×»»ÍÑÊÑ¿ô¤Ë´ØÀÇ·×»»ÍÑÊÑ¿ô¤òÂåÆş
+		// è¼¸å…¥è²»ç”¨è¨ˆç®—ç”¨å¤‰æ•°ã«é–¢ç¨è¨ˆç®—ç”¨å¤‰æ•°ã‚’ä»£å…¥
 		$importCost = $tariff;
 
-		// ´ØÀÇ¤Î½èÍı
+		// é–¢ç¨ã®å‡¦ç†
 		if ($tariffRowList) {
 			foreach ($tariffRowList as $rowIndex) {
 				$tariffObjRow = &$objRowList[$rowIndex];
 				$tariffObjRow->chargeCalculate($tariff);
 	
 				if ($tariffObjRow->invalidFlag === false) {
-					// Ã±²Á½ĞÎÏ
+					// å˜ä¾¡å‡ºåŠ›
 					$price = $tariffObjRow->price;
 					$priceColumn = $tariffObjRow->columnNumberList['price'];
 					$priceCell =  $priceColumn. $rowIndex;
@@ -247,25 +247,25 @@
 					$deliveryColumn = $tariffObjRow->columnNumberList['delivery'];
 					$deliveryCell = $deliveryColumn. $rowIndex;
 	
-					// ·×»»¸å¤ÎÃ±²Á¡¢¾®·×¤òsheet¥ª¥Ö¥¸¥§¥¯¥È¤ËÁŞÆş
+					// è¨ˆç®—å¾Œã®å˜ä¾¡ã€å°è¨ˆã‚’sheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«æŒ¿å…¥
 					$objSheet->sheet->getCell($priceCell)->setValue($price);
 					$objSheet->sheet->getCell($subtotalCell)->setValue($tariffObjRow->calculatedSubtotalJP);
 	
-					// Í¢ÆşÈñÍÑ·×»»ÍÑÊÑ¿ô¤Ë·×»»·ë²Ì¤ò²Ã»»
+					// è¼¸å…¥è²»ç”¨è¨ˆç®—ç”¨å¤‰æ•°ã«è¨ˆç®—çµæœã‚’åŠ ç®—
 					$importCost += $tariffObjRow->calculatedSubtotalJP;
 				}
 			}
 		}
 
 
-		// Í¢ÆşÈñÍÑ¤Î½èÍı
+		// è¼¸å…¥è²»ç”¨ã®å‡¦ç†
 		if ($importCostRowList) {
 			foreach ($importCostRowList as $rowIndex) {
 				$importCostObjRow = &$objRowList[$rowIndex];
 				$importCostObjRow->chargeCalculate($importCost);
 	
 				if ($importCostObjRow->invalidFlag === false) {
-					// Ã±²Á½ĞÎÏ
+					// å˜ä¾¡å‡ºåŠ›
 					$price = $importCostObjRow->price;
 	
 					$priceColumn =  $importCostObjRow->columnNumberList['price'];
@@ -277,7 +277,7 @@
 					$deliveryColumn = $importCostObjRow->columnNumberList['delivery'];
 					$deliveryCell = $deliveryColumn. $rowIndex;
 	
-					// ·×»»¸å¤ÎÃ±²Á¤òsheet¥ª¥Ö¥¸¥§¥¯¥È¤ËÁŞÆş
+					// è¨ˆç®—å¾Œã®å˜ä¾¡ã‚’sheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«æŒ¿å…¥
 					$objSheet->sheet->getCell($priceCell)->setValue($price);
 					$objSheet->sheet->getCell($subtotalCell)->setValue($importCostObjRow->calculatedSubtotalJP);
 				}
@@ -285,7 +285,7 @@
 		}
 
 
-		// // É¸½à³ä¹ç¤Î¥Á¥§¥Ã¥¯
+		// // æ¨™æº–å‰²åˆã®ãƒã‚§ãƒƒã‚¯
 		// $standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
 		// $standardRate = $objSheet->sheet->getCell($standardRateCell)->getCalculatedValue();
 		// if ($standardRateMaster != $standardRate) {
@@ -293,29 +293,29 @@
 		// 	$sheetRate = $standardRate ? number_format(($standardRate * 100), 2, '.', ''). "%" : '-';
 		// 	$difference[] = array(
 		// 		'delivery' => '-',
-		// 		'monetary' => 'É¸½à³ä¹ç',
+		// 		'monetary' => 'æ¨™æº–å‰²åˆ',
 		// 		'temporaryRate' => $companyLocalRate,
 		// 		'sheetRate' => $sheetRate
 		// 	);
 		// }
 
-		// ¹Ô¥ª¥Ö¥¸¥§¥¯¥È¤ò´ğ¤Ë¤·¤¿½èÍı
+		// è¡Œã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’åŸºã«ã—ãŸå‡¦ç†
 		foreach ($objRowList as $row => $objRow) {
 			$columnList = $objRow->columnNumberList;
 			
-			// // ¥á¥Ã¥»¡¼¥¸¥³¡¼¥É¤Î¼èÆÀ
+			// // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚³ãƒ¼ãƒ‰ã®å–å¾—
 			// $messageOfConversionRate = $objRow->messageCode['conversionRate'];
 
-			// ¥Ö¥Ã¥¯¤ÎÅ¬ÍÑ¥ì¡¼¥È¤¬DB¤ÎÄÌ²ß¥ì¡¼¥È¤È°Û¤Ê¤ë¾ì¹ç
+			// ãƒ–ãƒƒã‚¯ã®é©ç”¨ãƒ¬ãƒ¼ãƒˆãŒDBã®é€šè²¨ãƒ¬ãƒ¼ãƒˆã¨ç•°ãªã‚‹å ´åˆ
 			// if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
-			// 	// ¥Ö¥Ã¥¯¥ª¥Ö¥¸¥§¥¯¥È¤ÎÄÌ²ß¥ì¡¼¥È¤ÎÃÖ´¹
+			// 	// ãƒ–ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é€šè²¨ãƒ¬ãƒ¼ãƒˆã®ç½®æ›
 			// 	$column = $columnList['conversionRate'];
 			// 	$convarsionRateCell = $column.$row;
 			// 	$acquiredRate = $objRow->acquiredRate;
 			// 	$objSheet->sheet->getCell($convarsionRateCell)->setValue($acquiredRate);
 			// }
 
-			// ¥Ö¥Ã¥¯¥ª¥Ö¥¸¥§¥¯¥È¤Î¾®·×¤ÎÃÖ´¹
+			// ãƒ–ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å°è¨ˆã®ç½®æ›
 			$column = $columnList['subtotal'];
 			$subtotalCell = $column.$row;
 			$calculatedSubtotalJP = $objRow->calculatedSubtotalJP;
@@ -323,20 +323,20 @@
 			$objSheet->sheet->getCell($subtotalCell)->setValue($calculatedSubtotalJP);
 			
 			if ($objRow->percentInputFlag !== true) {
-				// DB¤Î¾ğÊó¤ËÃÖ´¹¸å¡Ê»ÅÆş¤Î¶õÍó¤Ï¤½¤ÎÂ¾¡Ë¤Î¸ÜµÒÀè¡¢»ÅÆşÀè¾ğÊó¤ò¥»¥Ã¥È¤¹¤ë
+				// DBã®æƒ…å ±ã«ç½®æ›å¾Œï¼ˆä»•å…¥ã®ç©ºæ¬„ã¯ãã®ä»–ï¼‰ã®é¡§å®¢å…ˆã€ä»•å…¥å…ˆæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 				$column = $columnList['customerCompany'];
 				$customerCompany = $objRow->customerCompany;
 				$companyCell = $column.$row;
 				$objSheet->sheet->getCell($companyCell)->setValue($customerCompany);
 			} else {
-				// ¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ï±¦´ó¤»¤Ë¤¹¤ë
+				// ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯å³å¯„ã›ã«ã™ã‚‹
 				$objSheet->setHorizontalRight($companyCell);
 			}
 		}
 
-		// ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤¿¾ì¹ç¤Ï¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸½ĞÎÏ²èÌÌ¤ËÁ«°Ü¤¹¤ë
+		// ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸå ´åˆã¯ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡ºåŠ›ç”»é¢ã«é·ç§»ã™ã‚‹
 		if ($errorMessage) {
-			mb_convert_variables('EUC-JP', 'UTF-8', $errorMessage); // DB¤ÎÊ¸»ú¥³¡¼¥É¤òUTF-8¤ËÊÑ´¹¤·¤¿¤¿¤á¡¢²èÌÌ½ĞÎÏÊ¸»ú¤òEUC-JP¤ËÊÑ´¹
+			mb_convert_variables('EUC-JP', 'UTF-8', $errorMessage); // DBã®æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’UTF-8ã«å¤‰æ›ã—ãŸãŸã‚ã€ç”»é¢å‡ºåŠ›æ–‡å­—ã‚’EUC-JPã«å¤‰æ›
 			makeHTML::outputErrorWindow($errorMessage);
 		}
 
@@ -349,15 +349,15 @@
 			$objSheet->sheet->getCell($cellAddress)->setValue($value);
 		}
 
-		// ÈóÉ½¼¨¥ê¥¹¥È¡ÊÌµ¸ú¥ê¥¹¥È¡Ë¤òÄÉ²Ã¤¹¤ë
+		// éè¡¨ç¤ºãƒªã‚¹ãƒˆï¼ˆç„¡åŠ¹ãƒªã‚¹ãƒˆï¼‰ã‚’è¿½åŠ ã™ã‚‹
 		$objSheet->setHiddenRowList($hiddenList);
 
-		// É½¼¨ÍÑ¤Î¥Ø¥Ã¥ÀÉô¤ÎÃÍ¤ò½ĞÎÏ¤¹¤ë¡ÊÉ½¼¨Ì¾¤ò¥Ç¡¼¥¿¥Ù¡¼¥¹¤ÎÌ¾¾Î¤ËÃÖ´¹¡Ë
+		// è¡¨ç¤ºç”¨ã®ãƒ˜ãƒƒãƒ€éƒ¨ã®å€¤ã‚’å‡ºåŠ›ã™ã‚‹ï¼ˆè¡¨ç¤ºåã‚’ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®åç§°ã«ç½®æ›ï¼‰
 		$replace = $objHeader->outputDisplayData();
-		// É½¼¨ÍÑ¥Ø¥Ã¥ÀÉô¤ÎÃÍ¤ò¥ï¡¼¥¯¥·¡¼¥È¤ËÁŞÆş¤¹¤ë
+		// è¡¨ç¤ºç”¨ãƒ˜ãƒƒãƒ€éƒ¨ã®å€¤ã‚’ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã«æŒ¿å…¥ã™ã‚‹
 		$objSheet->cellValueReplace($replace);
 
-		// webÉ½¼¨ÍÑ¤Î¥Ç¡¼¥¿¤ò½ĞÎÏ¤¹¤ë
+		// webè¡¨ç¤ºç”¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹
 		$viewData = $objSheet->makeDataOfSheet();
 
 		$viewData = $objSheet->deleteInvalidRow($viewData);
@@ -366,14 +366,14 @@
 
 		$ws_num = 0;
 
-		// É½¼¨ÍÑ¥Ç¡¼¥¿¤òJSON¤ËÊÑ´¹
+		// è¡¨ç¤ºç”¨ãƒ‡ãƒ¼ã‚¿ã‚’JSONã«å¤‰æ›
 		$json = json_encode($viewDataList, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
 		$json = htmlspecialchars($json, ENT_QUOTES, 'UTF-8');
 
-		// ÅĞÏ¿ÍÑ¥Ç¡¼¥¿¤Î¼èÆÀ
-		// ¥Ø¥Ã¥ÀÉô
+		// ç™»éŒ²ç”¨ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+		// ãƒ˜ãƒƒãƒ€éƒ¨
 		$headerData = $objHeader->outputRegistData();
-		// ¹Ô¥Ç¡¼¥¿
+		// è¡Œãƒ‡ãƒ¼ã‚¿
 		$index = 0;
 		foreach ($objRowList as $objRow) {
 			if ($objRow->invalidFlag === false) {
@@ -383,66 +383,66 @@
 			}
 		}
 	
-		// ÅĞÏ¿ÍÑ¥Ç¡¼¥¿¤ÎÀ°·Á
+		// ç™»éŒ²ç”¨ãƒ‡ãƒ¼ã‚¿ã®æ•´å½¢
 		$registData = array(
 			'headerData' => $headerData,
 			'rowDataList' => $rowDataList,
 			'calculatedData' => $calcData
 		);
 
-		// JSON¤ËÊÑ´¹
+		// JSONã«å¤‰æ›
 		$registJson = json_encode($registData, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
-		// ¥À¥Ö¥ë¥¯¥©¡¼¥Æ¡¼¥·¥ç¥ó¤òÃÖ´¹¤¹¤ë¡ÊHTML·ĞÍ³¤Ç¥Ç¡¼¥¿¤òÅÏ¤¹ºİ¤Ë ":¥À¥Ö¥ë¥¯¥©¡¼¥Æ¡¼¥·¥ç¥ó ¤Î½ÅÊ£¤Ë¤è¤Ã¤Æ¥Ç¡¼¥¿¤¬ÅÏ¤»¤Ê¤¤¤³¤È¤òËÉ¤°¤¿¤á)
+		// ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç½®æ›ã™ã‚‹ï¼ˆHTMLçµŒç”±ã§ãƒ‡ãƒ¼ã‚¿ã‚’æ¸¡ã™éš›ã« ":ãƒ€ãƒ–ãƒ«ã‚¯ã‚©ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ ã®é‡è¤‡ã«ã‚ˆã£ã¦ãƒ‡ãƒ¼ã‚¿ãŒæ¸¡ã›ãªã„ã“ã¨ã‚’é˜²ããŸã‚)
 		$registJson = str_replace('"', '/quot/', $registJson);
 
 		$registJson = htmlspecialchars($registJson, ENT_QUOTES, 'UTF-8');
 
-		// POSTÍÑ¥Ç¡¼¥¿¤Ë¥»¥Ã¥È
+		// POSTç”¨ãƒ‡ãƒ¼ã‚¿ã«ã‚»ãƒƒãƒˆ
 		$aryData['registJson'] = $registJson;
 
-		// Excel¥ï¡¼¥¯¥·¡¼¥ÈHTML¼èÆÀ
+		// Excelãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆHTMLå–å¾—
 		$strExcel       .= "<div class=\"sheetHeaderConfirm\" id=\"sheet". $ws_num. "\">";
 		$strExcel       .= "<br>";
-		$strExcel		.= makeHTML::getWorkSheet2HTML($aryData['sheetname'], $ws_num, "confirm", $data); // ¥Ø¥Ã¥À¡¼
+		$strExcel		.= makeHTML::getWorkSheet2HTML($aryData['sheetname'], $ws_num, "confirm", $data); // ãƒ˜ãƒƒãƒ€ãƒ¼
 		$strExcel       .= "</div>";
-		$strExcel		.= makeHTML::getGridTable($ws_num); // ¥Ç¡¼¥¿ÁŞÆş¥¿¥°
+		$strExcel		.= makeHTML::getGridTable($ws_num); // ãƒ‡ãƒ¼ã‚¿æŒ¿å…¥ã‚¿ã‚°
 
 		$css_rowstyle .= '.rowstyle'.$ws_num.' { display:none;}'."\n";
 
 		$strExcel = str_replace('_%css_rowstyle%_', $css_rowstyle, $strCSS). $strExcel;
 
-		// Á÷¿®ÍÑFORM¥Ç¡¼¥¿ºîÀ®
+		// é€ä¿¡ç”¨FORMãƒ‡ãƒ¼ã‚¿ä½œæˆ
 		$form = makeHTML::getHiddenFileData($file);
 		
 		$form .= makeHTML::getHiddenData($aryData);
 
-		// ºÆÈÎ¥Õ¥é¥°¤Î¼èÆÀ
+		// å†è²©ãƒ•ãƒ©ã‚°ã®å–å¾—
 		$reviseFlag = $objHeader->outputReviseFlag();
 
-		// ÅĞÏ¿¥á¥Ã¥»¡¼¥¸¤ÎºîÀ®
+		// ç™»éŒ²ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ä½œæˆ
 		if ($reviseFlag === true) {
-			$registType = "ºÆÈÎ";
+			$registType = "å†è²©";
 			$registClass = "reviseRegist";
 		} else {
-			$registType = "¿·µ¬";
+			$registType = "æ–°è¦";
 			$registClass = "newRegist";
 		}
 
-		$aryData["WORKSHEET"]	 = $select; // ¥ï¡¼¥¯¥·¡¼¥ÈÁªÂò»è
+		$aryData["WORKSHEET"]	 = $select; // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆé¸æŠè‚¢
 		$aryData["EXCEL"]		 = $strExcel; // index
 		$aryData["TABLEDATA"]	 = $json;
 		$aryData["FORM"]	     = $form;
 		$aryData["REGIST_TYPE"]  = $registType;
 		$aryData["REGIST_CLASS"] = $registClass;
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate->getTemplate( "estimate/regist/confirm.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryData );
 		$objTemplate->complete();
 
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		echo $objTemplate->strTemplate;
 		return;
 	}

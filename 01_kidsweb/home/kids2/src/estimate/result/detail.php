@@ -1,6 +1,6 @@
 <?
 /** 
-*	¸«ÀÑ¸¶²Á´ÉÍý ¾ÜºÙÉ½¼¨²èÌÌ
+*	è¦‹ç©åŽŸä¾¡ç®¡ç† è©³ç´°è¡¨ç¤ºç”»é¢
 *
 *	@package   KIDS
 *	@copyright Copyright (c) 2004, kuwagata 
@@ -13,11 +13,11 @@
 // index.php -> strSessionID	 -> ditail.php
 // index.php -> lngEstimateNo	 -> ditail.php
 
-	// ÀßÄêÆÉ¤ß¹þ¤ß
+	// è¨­å®šèª­ã¿è¾¼ã¿
 	require ('conf.inc');
 	require ( LIB_DEBUGFILE );
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require (LIB_FILE);
 	require (SRC_ROOT . "estimate/cmn/lib_e.php");
 
@@ -26,12 +26,12 @@
 
 
 
-	// DBÀÜÂ³
+	// DBæŽ¥ç¶š
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
 	$objDB->open( "", "", "", "" );
 
-	// GET¥Ç¡¼¥¿¼èÆÀ
+	// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryData = $_GET;
 
 	fncDebug( 'estimate_result_detail_01.txt', $aryData, __FILE__, __LINE__);
@@ -39,24 +39,24 @@
 
 	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-	// ¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¥³¡¼¥É¤Î¼èÆÀ
+	// ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å–å¾—
 	$lngInputUserCode = $objAuth->UserCode;
 
 
-	// ¸¢¸Â³ÎÇ§
+	// æ¨©é™ç¢ºèª
 	if ( !fncCheckAuthority( DEF_FUNCTION_E4, $objAuth ) )
 	{
-		fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
 
 
 
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]	 = "null:numenglish(32,32)";
 	$aryCheck["lngEstimateNo"]	 = "null:number(0,2147483647)";
 
@@ -68,7 +68,7 @@
 		fncOutputError ( 1502, DEF_WARNING, "", TRUE, "", $objDB );
 	}
 
-	// ¶¦ÄÌ¼õ¤±ÅÏ¤·URLÀ¸À®(¥»¥Ã¥·¥ç¥óID¡¢¥Ú¡¼¥¸¡¢³Æ¸¡º÷¾ò·ï)
+	// å…±é€šå—ã‘æ¸¡ã—URLç”Ÿæˆ(ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã€ãƒšãƒ¼ã‚¸ã€å„æ¤œç´¢æ¡ä»¶)
 	$strURL = fncGetURL( $aryData );
 
 
@@ -76,24 +76,24 @@
 
 
 
-	// ÄÌ²ß¥ì¡¼¥ÈÇÛÎóÀ¸À®
+	// é€šè²¨ãƒ¬ãƒ¼ãƒˆé…åˆ—ç”Ÿæˆ
 	$aryRate = fncGetMonetaryRate( $objDB );
 	$aryRate[DEF_MONETARY_YEN] = 1;
 
 
-	// ¸«ÀÑ¸¶²ÁHTML½ÐÎÏ¥Ç¡¼¥¿¼èÆÀ
+	// è¦‹ç©åŽŸä¾¡HTMLå‡ºåŠ›ãƒ‡ãƒ¼ã‚¿å–å¾—
 	$aryEstimateData = fncGetEstimate( $aryData["lngEstimateNo"], $objDB );
 
 
 	//fncDebug( 'es_detail.txt', $aryEstimateData, __FILE__, __LINE__);
 
 
-	// ¾õÂÖ¤¬¡Ö¿½ÀÁÃæ¡×¤Î¾ì¹ç
+	// çŠ¶æ…‹ãŒã€Œç”³è«‹ä¸­ã€ã®å ´åˆ
 	if( $aryEstimateData["lngEstimateStatusCode"] == DEF_ESTIMATE_APPLICATE )
 	{
 		//fncOutputError( 1509, DEF_WARNING, "", TRUE, "", $objDB );
 	}
-	// ¾õÂÖ¤¬¡ÖÈÝÇ§¡×¤Î¾ì¹ç
+	// çŠ¶æ…‹ãŒã€Œå¦èªã€ã®å ´åˆ
 	if( $aryEstimateData["lngEstimateStatusCode"] == DEF_ESTIMATE_DENIAL )
 	{
 		fncOutputError( 1510, DEF_WARNING, "", TRUE, "", $objDB );
@@ -110,20 +110,20 @@ fncDebug( 'estimate_result_detail.txt', $aryDetail, __FILE__, __LINE__);
 	list ( $aryEstimateDetail, $aryCalculated, $aryHiddenString ) = fncGetEstimateDetailHtml( $aryDetail, "estimate/regist/plan_detail.tmpl", $objDB );
 
 	// added start k.saito 2005.1.28
-	// ¸ÇÄêÈñ¾®·×¤¬¼èÆÀ¤µ¤ì¤Æ¤¤¤Ê¤¤°Ù¡¢¶ÛµÞÂÐºö¤ÇÀßÄê
+	// å›ºå®šè²»å°è¨ˆãŒå–å¾—ã•ã‚Œã¦ã„ãªã„ç‚ºã€ç·Šæ€¥å¯¾ç­–ã§è¨­å®š
 	//$aryEstimateData["curFixedCostSubtotal"] = $aryCalculated["curFixedCostSubtotal"];
 	// added end
 
 fncDebug( 'estimate_result_detail.txt', $aryDetail, __FILE__, __LINE__);
 
-	// ·×»»·ë²Ì¤ò¸«ÀÑ¸¶²ÁÇÛÎó¤ËÁÈ¤ß¹þ¤à
+	// è¨ˆç®—çµæžœã‚’è¦‹ç©åŽŸä¾¡é…åˆ—ã«çµ„ã¿è¾¼ã‚€
 	$aryEstimateData = array_merge ( $aryEstimateData, $aryCalculated );
 
-	// ÌÀºÙ¡ÊÇä¾å¡Ë¤ÎÀ¸À®
+	// æ˜Žç´°ï¼ˆå£²ä¸Šï¼‰ã®ç”Ÿæˆ
 	list($aryEstimateDetailSales, $curFixedCostSales) = fncGetEstimateDetail_Sales_Html( $aryDetail, "estimate/regist/plan_detail_sales.tmpl", $objDB );
 
 	$aryEstimateDetail = array_merge ( $aryEstimateDetail, $aryEstimateDetailSales );
-	$aryEstimateData["curFixedCostSales"]	= $curFixedCostSales;	// 1:¸ÇÄêÈñÇä¾å¤Î¹ç·×
+	$aryEstimateData["curFixedCostSales"]	= $curFixedCostSales;	// 1:å›ºå®šè²»å£²ä¸Šã®åˆè¨ˆ
 
 //		$aryHiddenString = array_merge ( $aryHiddenString, $aryHiddenStringSales );
 
@@ -135,56 +135,56 @@ fncDebug( 'estimate_result_detail_sales.txt', $aryEstimateDetailSales, __FILE__,
 
 
 
-	// ¥Æ¥ó¥Ý¥é¥ê¥Õ¥é¥°Í­¸ú
+	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ãƒ©ã‚°æœ‰åŠ¹
 	if( $aryEstimateData["blnTempFlag"] )
 	{
-		// É¸½à³ä¹ç¼èÆÀ
+		// æ¨™æº–å‰²åˆå–å¾—
 		$aryEstimateData["curStandardRate"]		= fncGetEstimateDefault( $objDB );
 
-		// ¼ÒÆâUS¥É¥ë¥ì¡¼¥È¼èÆÀ
+		// ç¤¾å†…USãƒ‰ãƒ«ãƒ¬ãƒ¼ãƒˆå–å¾—
 		$aryEstimateData["curConversionRate"]	= fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
 
-		// ExcelÉ¸½à³ä¹ç¼èÆÀ
+		// Excelæ¨™æº–å‰²åˆå–å¾—
 //		$aryEstimateData["curStandardRate"]		= $aryEstimateData["curStandardRate"];
-		// Excel¼ÒÆâUS¥É¥ë¥ì¡¼¥È¼èÆÀ
+		// Excelç¤¾å†…USãƒ‰ãƒ«ãƒ¬ãƒ¼ãƒˆå–å¾—
 //		$aryEstimateData["curConversionRate"]	= $aryEstimateData["curConversionRate"];
 	}
 	else
 	{
-		// É¸½à³ä¹ç¼èÆÀ
+		// æ¨™æº–å‰²åˆå–å¾—
 		$aryEstimateData["curStandardRate"]		= fncGetEstimateDefault( $objDB );
 
-		// ¼ÒÆâUS¥É¥ë¥ì¡¼¥È¼èÆÀ
+		// ç¤¾å†…USãƒ‰ãƒ«ãƒ¬ãƒ¼ãƒˆå–å¾—
 		$aryEstimateData["curConversionRate"]	= fncGetUSConversionRate( $aryEstimateData["dtmInsertDate"], $objDB );
 	}
 
 
 
-	// ·×»»·ë²Ì¤ò¼èÆÀ
+	// è¨ˆç®—çµæžœã‚’å–å¾—
 	$aryEstimateData = fncGetEstimateCalculate( $aryEstimateData );
 
-	// ¥«¥ó¥Þ½èÍý
+	// ã‚«ãƒ³ãƒžå‡¦ç†
 	$aryEstimateData	= fncGetCommaNumber( $aryEstimateData );
 
 
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+	// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "estimate/regist/plan_base.tmpl" );
 
 	$aryData["strMessageJs"] = "<script type=\"text/javascript\" language=\"javascript\" src=\"/estimate/regist/detail_exstr.js\"></script>";
 
 
-		// ¥³¥á¥ó¥È
+		// ã‚³ãƒ¡ãƒ³ãƒˆ
 		$aryData["strRemarkDisp"]	= nl2br($aryEstimateData["strRemark"]);
 
 
-	// ¥Ù¡¼¥¹¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ™ãƒ¼ã‚¹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryData );
 	$objTemplate->replace( $aryEstimateData );
 	$objTemplate->replace( $aryEstimateDetail );
 	$objTemplate->complete();
 
-	// HTML½ÐÎÏ
+	// HTMLå‡ºåŠ›
 	echo $objTemplate->strTemplate;
 	//echo getArrayTable( $baseData, "TABLE" )
 

@@ -2,7 +2,7 @@
 
     $('input[type="checkbox"][name="IsDisplay_strStockCode"]').prop('checked', true);
 
-    // À½ÉÊÌ¾¾Î¡¢»ÅÆş²ÊÌÜ¡¢»ÅÆşÉôÉÊ¡¢¸ÜµÒÉÊÈÖ¡¢±¿ÈÂÊıË¡¡¢Ã±²Á¡¢Ã±°Ì¡¢¿ôÎÌ¡¢ÀÇÈ´¶â³Û¡¢ÌÀºÙÈ÷¹Í
+    // è£½å“åç§°ã€ä»•å…¥ç§‘ç›®ã€ä»•å…¥éƒ¨å“ã€é¡§å®¢å“ç•ªã€é‹æ¬æ–¹æ³•ã€å˜ä¾¡ã€å˜ä½ã€æ•°é‡ã€ç¨æŠœé‡‘é¡ã€æ˜ç´°å‚™è€ƒ
     var chkboxElements = [
         $('input[type="checkbox"][name="IsDisplay_lngRecordNo"]')
         , $('input[type="checkbox"][name="IsDisplay_strProductName"]')
@@ -24,11 +24,11 @@
         , $('input[type="checkbox"][name="IsDisplay_strDetailNote"]')
     ];
 
-    // ´ÉÍı¼Ô¥â¡¼¥É¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¥¯¥ê¥Ã¥¯¤¹¤ë»ş
+    // ç®¡ç†è€…ãƒ¢ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’ã‚¯ãƒªãƒƒã‚¯ã™ã‚‹æ™‚
     $('input[name="Option_admin"]').on('click', function () {
-        // ¥Á¥§¥Ã¥¯ºÑ¤ß¤Î¾ì¹ç
+        // ãƒã‚§ãƒƒã‚¯æ¸ˆã¿ã®å ´åˆ
         if (this.checked) {
-            // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÎÀßÄê
+            // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®è¨­å®š
             $.each(chkboxElements, function () {
                 this.prop('checked', false);
                 this.prop('disabled', true);
@@ -36,9 +36,9 @@
             $('input[type="checkbox"][name="IsDisplay_btnInvalid"]').prop('checked', true);
             $('input[type="checkbox"][name="IsDisplay_btnInvalid"]').prop('disabled', false);
         }
-        // Ì¤¥Á¥§¥Ã¥¯¤Î¾ì¹ç
+        // æœªãƒã‚§ãƒƒã‚¯ã®å ´åˆ
         else {
-            // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ÎÀßÄê
+            // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®è¨­å®š
             $.each(chkboxElements, function () {
                 this.prop('disabled', false);
             });

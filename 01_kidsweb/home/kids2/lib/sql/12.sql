@@ -1,9 +1,9 @@
 /*
-	���ס���ɽ���桼���������ɡפ���֥桼���������ɡפ����
-	�оݡ�����ե�������
-	������chiba
-	��������ƣ
-	���͡��֥����ɡפ�����פ���֥����ɡפ����
+	概要：「表示ユーザーコード」から「ユーザーコード」を取得
+	対象：ワークフロー管理
+	作成：chiba
+	更新：斎藤
+	備考：「コード」から一致する「コード」を取得
 */
 SELECT mu.lngUserCode, mu.lngUserCode
 FROM m_user mu

@@ -1,15 +1,15 @@
 <?php
 
-// ÆÉ¤ß¹ş¤Ş¤ì¤Æ¤¤¤Ê¤±¤ì¤ĞÉ¬Í×¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤à
+// èª­ã¿è¾¼ã¾ã‚Œã¦ã„ãªã‘ã‚Œã°å¿…è¦ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 require_once ('conf.inc');
 
-// Composer¤Î¥ª¡¼¥È¥í¡¼¥É¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+// Composerã®ã‚ªãƒ¼ãƒˆãƒ­ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 require_once ( VENDOR_AUTOLOAD_FILE );
 
-// Äê¿ô¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+// å®šæ•°ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once ( SRC_ROOT . "/estimate/cmn/const/workSheetConst.php");
 
-// phpSpreadSheet¤Î¥¯¥é¥¹ÆÉ¤ß¹ş¤ß
+// phpSpreadSheetã®ã‚¯ãƒ©ã‚¹èª­ã¿è¾¼ã¿
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 use PhpOffice\PhpSpreadsheet\Shared\Drawing as XlsxDrawing;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
@@ -23,9 +23,9 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 
 /**
- * excel¥Ç¡¼¥¿¼è¤ê¹ş¤ß¡¦ÊÑ´¹¥¯¥é¥¹
+ * excelãƒ‡ãƒ¼ã‚¿å–ã‚Šè¾¼ã¿ãƒ»å¤‰æ›ã‚¯ãƒ©ã‚¹
  * 
- * PHPSpreadSheet¥é¥¤¥Ö¥é¥ê¤ò»ÈÍÑ¤·¤Æexcel¥Õ¥¡¥¤¥ë¤«¤éÉ¬Í×¤Ê¥Ç¡¼¥¿¤ò½ĞÎÏ¤¹¤ë
+ * PHPSpreadSheetãƒ©ã‚¤ãƒ–ãƒ©ãƒªã‚’ä½¿ç”¨ã—ã¦excelãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å¿…è¦ãªãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹
  *
  */
 class estimateSheetController {
@@ -51,9 +51,9 @@ class estimateSheetController {
     public $difference;
     
 
-    // »ÅÆş²ÊÌÜ 1224:¥Á¥ã¡¼¥¸·×»»ÍÑÊÑ¿ô
-    protected $overSeasMoldDepreciation;       // »ÅÆş²ÊÌÜ 403:³¤³°¶â·¿½şµÑ¤Î¹ç·×
-    protected $importPartsCosts;               // »ÅÆş²ÊÌÜ 402:Í¢Æş¥Ñ¡¼¥Ä»ÅÆş¹â¤Î¹ç·×
+    // ä»•å…¥ç§‘ç›® 1224:ãƒãƒ£ãƒ¼ã‚¸è¨ˆç®—ç”¨å¤‰æ•°
+    protected $overSeasMoldDepreciation;       // ä»•å…¥ç§‘ç›® 403:æµ·å¤–é‡‘å‹å„Ÿå´ã®åˆè¨ˆ
+    protected $importPartsCosts;               // ä»•å…¥ç§‘ç›® 402:è¼¸å…¥ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜ã®åˆè¨ˆ
     protected $tariff;
 
     public function __construct() {
@@ -66,19 +66,19 @@ class estimateSheetController {
         $this->setRowRangeOfTargetArea();
     }
     
-    // ¥Ç¡¼¥¿½ĞÎÏ------------------------------------------------------------------------
+    // ãƒ‡ãƒ¼ã‚¿å‡ºåŠ›------------------------------------------------------------------------
 
-    // ¥·¡¼¥È¥ª¥Ö¥¸¥§¥¯¥È
+    // ã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
     public function outputSheet() {
         return $this->sheet;
     }
 
-    // ÂĞ¾İ¥¨¥ê¥¢¤Î³«»Ï¹Ô¤È½ªÎ»¹Ô
+    // å¯¾è±¡ã‚¨ãƒªã‚¢ã®é–‹å§‹è¡Œã¨çµ‚äº†è¡Œ
     public function outputTargetAreaRows() {
         return $this->targetAreaRows;
     }
 
-    // ¥»¥ëÌ¾¾Î¤ËÂĞ±ş¤·¤¿¥»¥ë°ÌÃÖ¥ê¥¹¥È
+    // ã‚»ãƒ«åç§°ã«å¯¾å¿œã—ãŸã‚»ãƒ«ä½ç½®ãƒªã‚¹ãƒˆ
     public function outputCellAddressList() {
         return $cellAddressList;
     }    
@@ -86,45 +86,45 @@ class estimateSheetController {
     //-----------------------------------------------------------------------------------
 
 
-    // ¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È¤ò¥»¥Ã¥È¤¹¤ë
+    // ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     protected function setObjectDatabase($objDB) {
         $this->objDB = $objDB;
         return true;
     }
 
-    // ÊÔ½¸ÉÔ²ÄÇ½¥Õ¥é¥°¤ò¥»¥Ã¥È¤¹¤ë
+    // ç·¨é›†ä¸å¯èƒ½ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     public function setUneditableFlag($flag) {
         $this->uneditableFlag = $flag;
         return true;
     }
 
     /**
-    *	³µÍ×	: Excel¥Õ¥¡¥¤¥ë¥Õ¥©¡¼¥Ş¥Ã¥È¥Á¥§¥Ã¥¯
+    *	æ¦‚è¦	: Excelãƒ•ã‚¡ã‚¤ãƒ«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒã‚§ãƒƒã‚¯
     *
     *
-    *	²òÀâ	: ¥¢¥Ã¥×¥í¡¼¥É¤µ¤ì¤¿Excel¥Õ¥¡¥¤¥ë¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¤¬Àµ¾ï¤«¥Á¥§¥Ã¥¯¤¹¤ë
+    *	è§£èª¬	: ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã•ã‚ŒãŸExcelãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãŒæ­£å¸¸ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
     *
-    *	ÂĞ¾İ	: ·ë²ÌÍÑ¥Æ¥ó¥×¥ì¡¼¥È
+    *	å¯¾è±¡	: çµæœç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
     *
-    *	@param	[$exc]		: [Object]	. ExcelParser Object¡Ê»²¾ÈÅÏ¤·¡Ë
-    *	@param	[$aryData]	: [Array]	. $_REQUEST ¤è¤ê¼èÆÀ¤·¤¿ÃÍ
+    *	@param	[$exc]		: [Object]	. ExcelParser Objectï¼ˆå‚ç…§æ¸¡ã—ï¼‰
+    *	@param	[$aryData]	: [Array]	. $_REQUEST ã‚ˆã‚Šå–å¾—ã—ãŸå€¤
     *
-    *	@return	[$aryErr]	: [Array]	. ¥¨¥é¡¼¥Á¥§¥Ã¥¯ÇÛÎó
+    *	@return	[$aryErr]	: [Array]	. ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯é…åˆ—
     */
     public static function checkFileFormat( &$file )
     {
         $error = true;
-        $checkResult¡¡= '';	// ¥Á¥§¥Ã¥¯·ë²Ì
+        $checkResultã€€= '';	// ãƒã‚§ãƒƒã‚¯çµæœ
 
-        // ³ÈÄ¥»Ò¤Ë¤è¤ëÈ½Äê
+        // æ‹¡å¼µå­ã«ã‚ˆã‚‹åˆ¤å®š
         if(!empty($file['exc_type']) || strtolower($file['exc_type']) == workSheetConst::APP_EXCEL_TYPE ) {
-            // ³ÈÄ¥»Ò¤¬xlsx¤Ê¤é¥Õ¥¡¥¤¥ë¤ò³«¤¤¤Æ³ÎÇ§¤¹¤ë
+            // æ‹¡å¼µå­ãŒxlsxãªã‚‰ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã„ã¦ç¢ºèªã™ã‚‹
             $excel_file	= FILE_UPLOAD_TMPDIR . $file["exc_tmp_name"];
             $finfo  = finfo_open(FILEINFO_MIME_TYPE);
             $mime_type = finfo_file($finfo, $excel_file);
             finfo_close($finfo);
 
-            // MIME_TYPE¤Ë¤è¤ëÈ½Äê
+            // MIME_TYPEã«ã‚ˆã‚‹åˆ¤å®š
             if (!empty($mime_type) && $mime_type == workSheetConst::APP_EXCEL_TYPE) {
                 if (!empty($file['exc_name'])) {
                     $error = false;
@@ -140,14 +140,14 @@ class estimateSheetController {
     }
 
 
-    // »ØÄê¤·¤¿¹Ô¤¬¤É¤ÎÂĞ¾İ¥¨¥ê¥¢¤ËÂ°¤¹¤ë¤«¤òÈ½Äê¤¹¤ë
+    // æŒ‡å®šã—ãŸè¡ŒãŒã©ã®å¯¾è±¡ã‚¨ãƒªã‚¢ã«å±ã™ã‚‹ã‹ã‚’åˆ¤å®šã™ã‚‹
     public function checkAttributeRow($row) {
         $rowAttribute = null;
 
-        // ÂĞ¾İ¥¨¥ê¥¢¤Î³«»Ï¹Ô¤È½ªÎ»¹Ô¤ò¼èÆÀ
+        // å¯¾è±¡ã‚¨ãƒªã‚¢ã®é–‹å§‹è¡Œã¨çµ‚äº†è¡Œã‚’å–å¾—
         $targetAreaRows = $this->targetAreaRows;
 
-        // ÂĞ¾İ¥¨¥ê¥¢Ì¾¤ò¼èÆÀ
+        // å¯¾è±¡ã‚¨ãƒªã‚¢åã‚’å–å¾—
         $targetAreaNameList = workSheetConst::TARGET_AREA_NAME;
 
         foreach ($targetAreaNameList as $areaCode => $areaDisplayName) {
@@ -161,7 +161,7 @@ class estimateSheetController {
 
 
     
-    // ¥ï¡¼¥¯¥·¡¼¥È¤È¥»¥ëÌ¾¾Î¥ê¥¹¥È¤Î¾ğÊó¤ò¥¤¥ó¥¹¥¿¥ó¥¹¤Ë¥»¥Ã¥È¤¹¤ë
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã¨ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆã®æƒ…å ±ã‚’ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã«ã‚»ãƒƒãƒˆã™ã‚‹
     public function setSheetInfo($sheetInfo) {
         $sheet = $sheetInfo['sheet'];
         $displayInvalid = $sheetInfo['displayInvalid'];
@@ -185,39 +185,39 @@ class estimateSheetController {
     }
 
     /**
-     * ¥Ö¥Ã¥¯¤«¤é¥·¡¼¥È¤Î¾ğÊó¤ò¼èÆÀ¤·¡¢¥»¥ëÌ¾¾Î¤ËÂĞ±ş¤¹¤ë¥»¥ë°ÌÃÖ¤ò¼èÆÀ¤¹¤ë¡£
+     * ãƒ–ãƒƒã‚¯ã‹ã‚‰ã‚·ãƒ¼ãƒˆã®æƒ…å ±ã‚’å–å¾—ã—ã€ã‚»ãƒ«åç§°ã«å¯¾å¿œã™ã‚‹ã‚»ãƒ«ä½ç½®ã‚’å–å¾—ã™ã‚‹ã€‚
      *
-     * @param array $spreadSheet ¥Ö¥Ã¥¯¤ÎphpSpreadSheet¥ª¥Ö¥¸¥§¥¯¥È
+     * @param array $spreadSheet ãƒ–ãƒƒã‚¯ã®phpSpreadSheetã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *
-     * @return array $sheetInfo ¥·¡¼¥È¾ğÊó
+     * @return array $sheetInfo ã‚·ãƒ¼ãƒˆæƒ…å ±
      */
     public static function getSheetInfo($spreadSheet, $nameList, $rowCheckNameList) {
         $cellAddressList = array();
         $separate = array();
-        // ¥·¡¼¥È¿ô¼èÆÀ
+        // ã‚·ãƒ¼ãƒˆæ•°å–å¾—
         $sheetCount = $spreadSheet->getSheetCount();
 
         $sheetInfo = [];
         
         for ($count = 0; $count < $sheetCount; ++$count) {
-            $displayInvalid = false; // É½¼¨Ìµ¸ú¥Õ¥é¥°
+            $displayInvalid = false; // è¡¨ç¤ºç„¡åŠ¹ãƒ•ãƒ©ã‚°
 
             $sheet = $spreadSheet->getSheet($count);
             $sheetName = $sheet->getTitle();
             if ($sheet->getSheetState() === 'visible') {
                 foreach($nameList as $val) {
                     $namedRange = null;
-                    // ¥·¡¼¥ÈÆâ¤Ë¥»¥ëÌ¾¾Î¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¤«¸¡º÷¤¹¤ë
+                    // ã‚·ãƒ¼ãƒˆå†…ã«ã‚»ãƒ«åç§°ãŒè¨­å®šã•ã‚Œã¦ã„ã‚‹ã‹æ¤œç´¢ã™ã‚‹
                     $namedRange = $spreadSheet->getNamedRange($val, $sheet);
 
                     if ($namedRange && $namedRange->getWorkSheet()->getTitle() === $sheetName) {
-                        // ¼èÆÀ¤·¤¿·ë²ÌÆâ¤Î¥·¡¼¥ÈÌ¾¤È¸¡º÷»ş¤Ë»ØÄê¤·¤¿¥·¡¼¥ÈÌ¾¤¬°ìÃ×¤·¤¿¾ì¹ç¤Î¤ß¥»¥ëÌ¾¾Î¤ËÂĞ¤¹¤ë¥»¥ë°ÌÃÖ¤ÎÇÛÎó¤òÀ¸À®¤¹¤ë
-                        // ÂĞ¾İ¥·¡¼¥È¤ÇÄêµÁ¤Ç¤­¤Ê¤«¤Ã¤¿¾ì¹ç¡¢¥Ö¥Ã¥¯¤ËÀßÄê¤µ¤ì¤¿¥Ç¡¼¥¿¤ò¼èÆÀ¤·¤Ê¤¤¤è¤¦¤¹¤ë¤¿¤á¤ÎÂĞºö
+                        // å–å¾—ã—ãŸçµæœå†…ã®ã‚·ãƒ¼ãƒˆåã¨æ¤œç´¢æ™‚ã«æŒ‡å®šã—ãŸã‚·ãƒ¼ãƒˆåãŒä¸€è‡´ã—ãŸå ´åˆã®ã¿ã‚»ãƒ«åç§°ã«å¯¾ã™ã‚‹ã‚»ãƒ«ä½ç½®ã®é…åˆ—ã‚’ç”Ÿæˆã™ã‚‹
+                        // å¯¾è±¡ã‚·ãƒ¼ãƒˆã§å®šç¾©ã§ããªã‹ã£ãŸå ´åˆã€ãƒ–ãƒƒã‚¯ã«è¨­å®šã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ãªã„ã‚ˆã†ã™ã‚‹ãŸã‚ã®å¯¾ç­–
                         $cellAddress = $namedRange->getRange();
                         $cellAddressList[$val] = $cellAddress;
                         $separate[$val] = self::separateRowAndColumn($cellAddress);
                     } else {
-                        // ¥·¡¼¥ÈÆâ¤Ç¸«¤Ä¤«¤é¤Ê¤¤¥»¥ëÌ¾¾Î¤¬¤¢¤Ã¤¿¾ì¹ç¤Ï½èÍı¤òÃæÃÇ¤·¡¢É½¼¨Ìµ¸ú¥Õ¥é¥°¤òÎ©¤Æ¤ë
+                        // ã‚·ãƒ¼ãƒˆå†…ã§è¦‹ã¤ã‹ã‚‰ãªã„ã‚»ãƒ«åç§°ãŒã‚ã£ãŸå ´åˆã¯å‡¦ç†ã‚’ä¸­æ–­ã—ã€è¡¨ç¤ºç„¡åŠ¹ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
                         $cellAddressList = array();
                         $displayInvalid = true;
                         break;
@@ -234,10 +234,10 @@ class estimateSheetController {
             $endColumn = self::getIndexForColumnAlphabet($separate['top_right']['column']);
             $columnValue = $endColumn - $startColumn + 1;
                 if ($columnValue !== workSheetConst::WORK_SHEET_COLUMN_NUMBER) {
-                // Îó¿ô¤¬»ØÄê¿ô¤Ç¤Ê¤¤¾ì¹ç¤Ïºï½ü¥Õ¥é¥°¤òÎ©¤Æ¤ë
+                // åˆ—æ•°ãŒæŒ‡å®šæ•°ã§ãªã„å ´åˆã¯å‰Šé™¤ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
                     $displayInvalid = true;
                 } else {
-                    // ³ÆÆşÎÏ¥Õ¥©¡¼¥à¤Î¥Ø¥Ã¥À¡¼¤¬Æ±¤¸¹Ô¤ËÌµ¤¤¤È¤­¤Ï¡¢¥Ç¡¼¥¿ºï½ü¥Õ¥é¥°¤òÎ©¤Æ¤ë
+                    // å„å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ ã®ãƒ˜ãƒƒãƒ€ãƒ¼ãŒåŒã˜è¡Œã«ç„¡ã„ã¨ãã¯ã€ãƒ‡ãƒ¼ã‚¿å‰Šé™¤ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
                     foreach($rowCheckNameList as $array) {
                         if (!self::rowCheck($separate, $array)) {
                             $displayInvalid = true;
@@ -247,14 +247,14 @@ class estimateSheetController {
                 }
             }
             $sheetInfo[$sheetName] = array(
-                'sheet' => $sheet,                   // phpSpreadSheet¤ÇÀ¸À®¤·¤¿¥·¡¼¥È¥ª¥Ö¥¸¥§¥¯¥È
-                'displayInvalid' => $displayInvalid, // É½¼¨Ìµ¸ú¥Õ¥é¥°
-                'cellAddress' => $cellAddressList,   // ¥»¥ëÌ¾¾Î¤ÈÂĞ±ş¤¹¤ë¥»¥ë°ÌÃÖ¤Î¥ê¥¹¥È
-                'startRow' => $startRow,             // ³«»Ï¹Ô
-                'endRow' => $endRow,                 // ½ªÎ»¹Ô
-                'startColumn' => $startColumn,       // ³«»ÏÎó
-                'endColumn' => $endColumn,           // ½ªÎ»Îó
-                'nameList' => $nameList              // ¸¡º÷¤Ë»ÈÍÑ¤·¤¿¥»¥ëÌ¾¾Î¤Î¥ê¥¹¥È
+                'sheet' => $sheet,                   // phpSpreadSheetã§ç”Ÿæˆã—ãŸã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+                'displayInvalid' => $displayInvalid, // è¡¨ç¤ºç„¡åŠ¹ãƒ•ãƒ©ã‚°
+                'cellAddress' => $cellAddressList,   // ã‚»ãƒ«åç§°ã¨å¯¾å¿œã™ã‚‹ã‚»ãƒ«ä½ç½®ã®ãƒªã‚¹ãƒˆ
+                'startRow' => $startRow,             // é–‹å§‹è¡Œ
+                'endRow' => $endRow,                 // çµ‚äº†è¡Œ
+                'startColumn' => $startColumn,       // é–‹å§‹åˆ—
+                'endColumn' => $endColumn,           // çµ‚äº†åˆ—
+                'nameList' => $nameList              // æ¤œç´¢ã«ä½¿ç”¨ã—ãŸã‚»ãƒ«åç§°ã®ãƒªã‚¹ãƒˆ
             );
         }        
         return $sheetInfo;
@@ -268,109 +268,109 @@ class estimateSheetController {
     }
 
     /**
-     * ¥·¡¼¥È¤Î¥Ç¡¼¥¿¤òÀ¸À®¤¹¤ë
+     * ã‚·ãƒ¼ãƒˆã®ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆã™ã‚‹
      *
-     * @return array $viewData ½ĞÎÏ¥Ç¡¼¥¿ÇÛÎó
+     * @return array $viewData å‡ºåŠ›ãƒ‡ãƒ¼ã‚¿é…åˆ—
      */
     public function makeDataOfSheet() {
         $sheet = $this->sheet;
 
         $areaNameList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
 
-        // ¥¨¥ê¥¢¤´¤È¤ËÎó¤ÎÆşÎÏ¹àÌÜ¤ò¼èÆÀ¤¹¤ë¡ÊÇä¾åÊ¬Îà¤Ï¤É¤ÎÎó¤Ë¤¢¤ë¤«Åù¡Ë
+        // ã‚¨ãƒªã‚¢ã”ã¨ã«åˆ—ã®å…¥åŠ›é …ç›®ã‚’å–å¾—ã™ã‚‹ï¼ˆå£²ä¸Šåˆ†é¡ã¯ã©ã®åˆ—ã«ã‚ã‚‹ã‹ç­‰ï¼‰
         foreach($areaNameList as $areaCode => $name) {
             $columnNumberList[$areaCode] = $this->getColumnNumberList($areaCode);
         }
 
-        // É¸½à¤Î¥Õ¥©¥ó¥È¤ò¼èÆÀ
+        // æ¨™æº–ã®ãƒ•ã‚©ãƒ³ãƒˆã‚’å–å¾—
         $defaultFont = $sheet->getParent()->getDefaultStyle()->getFont();
 
-        // ¥·¡¼¥ÈÌ¾¤ò¼èÆÀ
+        // ã‚·ãƒ¼ãƒˆåã‚’å–å¾—
         $sheetName = $sheet->getTitle();
 
-        // ¥ï¡¼¥¯¥·¡¼¥È¤Î³«»Ï¹ÔÎó¡¢½ªÎ»¹ÔÎó¤ò¥»¥Ã¥È¤¹¤ë(Îó¤Ï¿ôÃÍ¤ËÊÑ´¹¤¹¤ë)
+        // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®é–‹å§‹è¡Œåˆ—ã€çµ‚äº†è¡Œåˆ—ã‚’ã‚»ãƒƒãƒˆã™ã‚‹(åˆ—ã¯æ•°å€¤ã«å¤‰æ›ã™ã‚‹)
         $startRow = $this->startRow;
         $endRow = $this->endRow;
         $startColumn = $this->startColumn;
         $endColumn = $this->endColumn;
 
-        // ¥ï¡¼¥¯¥·¡¼¥È¤Î¹Ô¹â¤µ¤ÈÎóÉı¤Î¾ğÊó¤ò¼èÆÀ¤¹¤ë
-        // ¹Ô¹â¤µ
+        // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®è¡Œé«˜ã•ã¨åˆ—å¹…ã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹
+        // è¡Œé«˜ã•
         $rowHeight = $this->getRowHeight();
-        // ÎóÉı
+        // åˆ—å¹…
         $columnWidth = $this->getColumnWidth();
 
-        // HandsontableÍÑ¤Ë³«»Ï¹Ô¡¢³«»ÏÎó(¥Ç¥Õ¥©¥ë¥È¤Ï(0,0))¤òÀßÄê¤¹¤ë
-        // É½¼¨ÍÑ¤Î¥Ç¡¼¥¿¤òºî¤ë¤È¤­¤Î¤ß¡¢ÊäÀµ¤·¤¿³«»Ï¹Ô¡¢³«»ÏÎó¤ò»ÈÍÑ¤¹¤ë
-        //¡ÊExcel¤«¤é¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë¾ì¹ç¤Ë»ÈÍÑ¤¹¤ë¤È»²¾È¥»¥ë¤¬¤º¤ì¤Ş¤¹)
+        // Handsontableç”¨ã«é–‹å§‹è¡Œã€é–‹å§‹åˆ—(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã¯(0,0))ã‚’è¨­å®šã™ã‚‹
+        // è¡¨ç¤ºç”¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’ä½œã‚‹ã¨ãã®ã¿ã€è£œæ­£ã—ãŸé–‹å§‹è¡Œã€é–‹å§‹åˆ—ã‚’ä½¿ç”¨ã™ã‚‹
+        //ï¼ˆExcelã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹å ´åˆã«ä½¿ç”¨ã™ã‚‹ã¨å‚ç…§ã‚»ãƒ«ãŒãšã‚Œã¾ã™)
         $tableStartRow = 0;
         $tableStartColumn = 0;
 
-        // ¥ï¡¼¥¯¥·¡¼¥È¤ÈHandsontable¤Î³«»Ï¹Ô¡¢³«»ÏÎó¤òÈæ³Ó¤·¤Æ¥·¥Õ¥ÈÎÌ¤ò»»½Ğ¤¹¤ë¡ÊÊäÀµÍÑ¡Ë
-        $rowShiftValue = $startRow - $tableStartRow; // Row¤Î¥·¥Õ¥ÈÎÌ
-        $tableEndRow = $endRow - $rowShiftValue;     // ¥·¥Õ¥ÈÊ¬¤òÊäÀµ¤·¡¢Handsontable¤Î½ªÎ»¹Ô¤ò»»½Ğ
-        $columnShiftValue = $startColumn - $tableStartColumn; // Column¤Î¥·¥Õ¥ÈÎÌ
-        $tableEndColumn = $endColumn - $columnShiftValue;  // ¥·¥Õ¥ÈÊ¬¤òÊäÀµ¤·¡¢Handsontable¤Î½ªÎ»Îó¤ò»»½Ğ
+        // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã¨Handsontableã®é–‹å§‹è¡Œã€é–‹å§‹åˆ—ã‚’æ¯”è¼ƒã—ã¦ã‚·ãƒ•ãƒˆé‡ã‚’ç®—å‡ºã™ã‚‹ï¼ˆè£œæ­£ç”¨ï¼‰
+        $rowShiftValue = $startRow - $tableStartRow; // Rowã®ã‚·ãƒ•ãƒˆé‡
+        $tableEndRow = $endRow - $rowShiftValue;     // ã‚·ãƒ•ãƒˆåˆ†ã‚’è£œæ­£ã—ã€Handsontableã®çµ‚äº†è¡Œã‚’ç®—å‡º
+        $columnShiftValue = $startColumn - $tableStartColumn; // Columnã®ã‚·ãƒ•ãƒˆé‡
+        $tableEndColumn = $endColumn - $columnShiftValue;  // ã‚·ãƒ•ãƒˆåˆ†ã‚’è£œæ­£ã—ã€Handsontableã®çµ‚äº†åˆ—ã‚’ç®—å‡º
 
-        // ¥Ş¡¼¥¸¤µ¤ì¤¿¥»¥ë¤Î¥ê¥¹¥È¤ò¼èÆÀ¤¹¤ë
+        // ãƒãƒ¼ã‚¸ã•ã‚ŒãŸã‚»ãƒ«ã®ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
         $mergedCellsList = $this->getMergedCellsList();
-        // ¥Ş¡¼¥¸¥»¥ë¥ê¥¹¥È¤òHandsontableÍÑ¤ËÊäÀµ¤¹¤ë
+        // ãƒãƒ¼ã‚¸ã‚»ãƒ«ãƒªã‚¹ãƒˆã‚’Handsontableç”¨ã«è£œæ­£ã™ã‚‹
         $shiftResult = $this->shiftMergedCellsList($mergedCellsList, $rowShiftValue, $columnShiftValue); 
 
-        // ¥ï¡¼¥¯¥·¡¼¥È¾å¤ÎÈóÉ½¼¨¹Ô¤Î¼èÆÀ
+        // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆä¸Šã®éè¡¨ç¤ºè¡Œã®å–å¾—
         $hiddenRowList = $this->hiddenRowList;
 
-        // ¥»¥ë°ÌÃÖ¤«¤é¥»¥ëÌ¾¾Î¤ò¼èÆÀ¤¹¤ëÇÛÎó¤òÀ¸À®
+        // ã‚»ãƒ«ä½ç½®ã‹ã‚‰ã‚»ãƒ«åç§°ã‚’å–å¾—ã™ã‚‹é…åˆ—ã‚’ç”Ÿæˆ
         $nameListForCellAddress = array_flip($this->cellAddressList);
 
-        // DB¤«¤é¤ÎÆşÎÏ¥Ç¡¼¥¿¤Î¼èÆÀ
+        // DBã‹ã‚‰ã®å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
         if ($this->inputData) $inputData = $this->inputData;
 
-        // ¥Ñ¥é¥á¡¼¥¿¤ÎÀßÄê
+        // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
         for ($tableRow = $tableStartRow; $tableRow <= $tableEndRow; ++$tableRow) {
 
-            $workSheetRow = $tableRow + $rowShiftValue; // ¥ï¡¼¥¯¥·¡¼¥È¤Î¹ÔÈÖ¹æ
+            $workSheetRow = $tableRow + $rowShiftValue; // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®è¡Œç•ªå·
 
-            // ¥¨¥ê¥¢¥³¡¼¥É¤ò¼èÆÀ
+            // ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
             $areaCode = $this->checkAttributeRow($workSheetRow);
 
-            // ÎóÈÖ¹æ¥ê¥¹¥È¤Î¼èÆÀ
+            // åˆ—ç•ªå·ãƒªã‚¹ãƒˆã®å–å¾—
             if ($areaCode) {
                 $columnNumberList = $this->getColumnNumberList($areaCode);
             }
 
-            // ¾ğÊóÉ½¼¨²¡²¼»ş¤Î¥»¥ë¹â¤µ¥ê¥¹¥ÈºîÀ®
+            // æƒ…å ±è¡¨ç¤ºæŠ¼ä¸‹æ™‚ã®ã‚»ãƒ«é«˜ã•ãƒªã‚¹ãƒˆä½œæˆ
             if ($hiddenRowList[$workSheetRow] !== true) {
-                // ¥»¥ë¤ÎÇØ·Ê¿§¤ò¼èÆÀ¤¹¤ë
+                // ã‚»ãƒ«ã®èƒŒæ™¯è‰²ã‚’å–å¾—ã™ã‚‹
                 $hiddenRowHeight[$tableRow] = $rowHeight[$tableRow];
             } else {
                 $hiddenRowHeight[$tableRow] = 0.1;
             }
 
-            // readOnly¹Ô¤Î¥»¥Ã¥È
-            if ($inputData) { // DB¤«¤é¸«ÀÑ¸¶²ÁÌÀºÙ¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤·¤Æ¤¤¤ë¾ì¹ç
-                // ¼õÈ¯Ãí¤ÎÊ¬Îà¤ò¼èÆÀ(¼õÃí or È¯Ãí)
+            // readOnlyè¡Œã®ã‚»ãƒƒãƒˆ
+            if ($inputData) { // DBã‹ã‚‰è¦‹ç©åŸä¾¡æ˜ç´°ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦ã„ã‚‹å ´åˆ
+                // å—ç™ºæ³¨ã®åˆ†é¡ã‚’å–å¾—(å—æ³¨ or ç™ºæ³¨)
                 $receiveAreaCodeList = workSheetConst::RECEIVE_AREA_CODE;
                 $orderAreaCodeList = workSheetConst::ORDER_AREA_CODE;
                 if ($areaCode) {
-                    $data = $inputData[$workSheetRow]['data']; // ¹Ô¥Ç¡¼¥¿¤Î¼èÆÀ
-                    $status = $data['statusCode']; // ¥¹¥Æ¡¼¥¿¥¹¥³¡¼¥É¤Î¼èÆÀ
-                    $estimateDetailNo = is_numeric($data['estimateDetailNo']) ? (int)$data['estimateDetailNo'] : $data['estimateDetailNo']; // ¸«ÀÑ¸¶²ÁÌÀºÙÈÖ¹æ
+                    $data = $inputData[$workSheetRow]['data']; // è¡Œãƒ‡ãƒ¼ã‚¿ã®å–å¾—
+                    $status = $data['statusCode']; // ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã‚³ãƒ¼ãƒ‰ã®å–å¾—
+                    $estimateDetailNo = is_numeric($data['estimateDetailNo']) ? (int)$data['estimateDetailNo'] : $data['estimateDetailNo']; // è¦‹ç©åŸä¾¡æ˜ç´°ç•ªå·
 
                     $detailNoList[] = array(
                         'row' => $tableRow,
                         'estimateDetailNo' => $estimateDetailNo
                     );
 
-                    if ($receiveAreaCodeList[$areaCode] === true) { // ¼õÃí¤Î¾ì¹ç
+                    if ($receiveAreaCodeList[$areaCode] === true) { // å—æ³¨ã®å ´åˆ
 
-                        if ($status == DEF_RECEIVE_ORDER || $status == DEF_RECEIVE_END) { // ¼õÃí³ÎÄê¤Ê¤¤¤·Ç¼ÉÊºÑ¤Î¾ì¹ç
+                        if ($status == DEF_RECEIVE_ORDER || $status == DEF_RECEIVE_END) { // å—æ³¨ç¢ºå®šãªã„ã—ç´å“æ¸ˆã®å ´åˆ
                             $readOnlyDetailRow[] = $tableRow;
                         }
     
-                    } else if ($orderAreaCodeList[$areaCode] === true) { // È¯Ãí¤Î¾ì¹ç
+                    } else if ($orderAreaCodeList[$areaCode] === true) { // ç™ºæ³¨ã®å ´åˆ
 
-                        if ($status == DEF_ORDER_ORDER || $status == DEF_ORDER_END) { // È¯Ãí³ÎÄê¤Ê¤¤¤·Ç¼ÉÊºÑ¤Î¾ì¹ç
+                        if ($status == DEF_ORDER_ORDER || $status == DEF_ORDER_END) { // ç™ºæ³¨ç¢ºå®šãªã„ã—ç´å“æ¸ˆã®å ´åˆ
                             $readOnlyDetailRow[] = $tableRow;
                         }
 
@@ -380,49 +380,49 @@ class estimateSheetController {
             }
            
             for ($tableColumn = $tableStartColumn; $tableColumn <= $tableEndColumn; ++$tableColumn) {
-                // ½é´ü²½
+                // åˆæœŸåŒ–
                 $cellAddress = null;
                 $style = null;
-                $workSheetColumn = $tableColumn + $startColumn; // ¥ï¡¼¥¯¥·¡¼¥È¤ÎÎóÈÖ¹æ
-                // ¥»¥ë°ÌÃÖ¤òÉü¸µ¤¹¤ë
+                $workSheetColumn = $tableColumn + $startColumn; // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®åˆ—ç•ªå·
+                // ã‚»ãƒ«ä½ç½®ã‚’å¾©å…ƒã™ã‚‹
                 $cellAddress = self::combineRowAndColumnIndex($workSheetRow, self::getAlphabetForColumnIndex($workSheetColumn));
 
-                // ÎóÈÖ¹æ¤ò¿ô»ú¤«¤é¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È¤ËÊÑ´¹
+                // åˆ—ç•ªå·ã‚’æ•°å­—ã‹ã‚‰ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã«å¤‰æ›
                 $colAlphabet = $this->getAlphabetForColumnIndex($workSheetColumn);
 
 
-                $setFormatFlag = true; // ¥Õ¥©¡¼¥Ş¥Ã¥È¥»¥Ã¥È¥Õ¥é¥°
+                $setFormatFlag = true; // ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚»ãƒƒãƒˆãƒ•ãƒ©ã‚°
 
-                // ÊÔ½¸¥â¡¼¥É»ş¤Î½ñ¼°¤ÎÀßÄê
+                // ç·¨é›†ãƒ¢ãƒ¼ãƒ‰æ™‚ã®æ›¸å¼ã®è¨­å®š
                 if ($this->mode === workSheetConst::MODE_ESTIMATE_EDIT) {
                     if ($areaCode) {
-                        // ³ÆÆşÎÏ¹àÌÜ¤Î¥Ø¥Ã¥À¤ËÂĞ¤¹¤ëÎóÈÖ¹æ¥ê¥¹¥È¤Î¼èÆÀ
+                        // å„å…¥åŠ›é …ç›®ã®ãƒ˜ãƒƒãƒ€ã«å¯¾ã™ã‚‹åˆ—ç•ªå·ãƒªã‚¹ãƒˆã®å–å¾—
                         $columnNoList = $this->getColumnNumberList($areaCode);
                         if ($columnNoList['quantity'] == $colAlphabet
                         || $columnNoList['price'] == $colAlphabet
-                        || $columnNoList['conversionRate'] == $colAlphabet) { // ¿ôÎÌËô¤ÏÃ±²Á¤Î¾ì¹ç
+                        || $columnNoList['conversionRate'] == $colAlphabet) { // æ•°é‡åˆã¯å˜ä¾¡ã®å ´åˆ
                             $setFormatFlag = false;
                         }
 
                         if ($areaCode == DEF_AREA_OTHER_COST_ORDER) {
-                            if ($columnNoList['customerCompany'] == $colAlphabet) { // ¤½¤ÎÂ¾ÈñÍÑ¤Î¸ÜµÒÀè¡Ê¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ)
+                            if ($columnNoList['customerCompany'] == $colAlphabet) { // ãã®ä»–è²»ç”¨ã®é¡§å®¢å…ˆï¼ˆãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›)
                                 $setFormatFlag = 'percent';
                             }
                         }
                     } else {
                         $targetCells= workSheetConst::QUANTITY_OR_PRICE_CELLS;
-                        if ($targetCells[$nameListForCellAddress[$cellAddress]] === true) { // ÌÀºÙ°Ê³°¤Î¿ôÎÌËô¤ÏÃ±²Á¤Î¾ì¹ç
+                        if ($targetCells[$nameListForCellAddress[$cellAddress]] === true) { // æ˜ç´°ä»¥å¤–ã®æ•°é‡åˆã¯å˜ä¾¡ã®å ´åˆ
                             $setFormatFlag = false;
                         }
                     }
                 }
 
-                // ¥»¥ë¤ÎÃÍ¤ò¼èÆÀ¤¹¤ë
+                // ã‚»ãƒ«ã®å€¤ã‚’å–å¾—ã™ã‚‹
                 $getValue = $sheet->getCell($cellAddress)->getCalculatedValue();
                 if (isset($getValue)) {
                     if ($setFormatFlag === true) {
                         $cellValue = trim($sheet->getCell($cellAddress)->getFormattedValue());
-                    } else { // ¥Õ¥©¡¼¥Ş¥Ã¥È¥»¥Ã¥È¥Õ¥é¥°¤¬false¤Î»ş¤Ï·×»»ÃÍ¤òÄ¾ÀÜÍ¿¤¨¤ë¡ÊÆşÎÏ²ÄÇ½¥»¥ë¤Î°ìÉô¤Ë¤Ä¤¤¤ÆÆşÎÏ¸å¤Ë¤â¥»¥ë¤Î½ñ¼°¤òÈ¿±Ç¤µ¤»¤ë¤¿¤á¡¢½ñ¼°¤òHandsontable¤ÇÀßÄê¤¹¤ë¤¿¤á¤ÎÂĞ±ş¡Ë
+                    } else { // ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚»ãƒƒãƒˆãƒ•ãƒ©ã‚°ãŒfalseã®æ™‚ã¯è¨ˆç®—å€¤ã‚’ç›´æ¥ä¸ãˆã‚‹ï¼ˆå…¥åŠ›å¯èƒ½ã‚»ãƒ«ã®ä¸€éƒ¨ã«ã¤ã„ã¦å…¥åŠ›å¾Œã«ã‚‚ã‚»ãƒ«ã®æ›¸å¼ã‚’åæ˜ ã•ã›ã‚‹ãŸã‚ã€æ›¸å¼ã‚’Handsontableã§è¨­å®šã™ã‚‹ãŸã‚ã®å¯¾å¿œï¼‰
                         $cellValue =  $getValue;
                         if ($setFormatFlag === 'percent' && $cellValue) {
                             $cellValue = $cellValue * 100;
@@ -432,24 +432,24 @@ class estimateSheetController {
                     $cellValue = '';
                 }
 
-                // ¥»¥ë¤Î¥Õ¥©¥ó¥È¾ğÊó¤ò¼èÆÀ¤¹¤ë
+                // ã‚»ãƒ«ã®ãƒ•ã‚©ãƒ³ãƒˆæƒ…å ±ã‚’å–å¾—ã™ã‚‹
                 $fontInfo = $this->getFontInfo($cellAddress);
       
-                // ¥»¥ë¤ÎÇØ·Ê¿§¤ò¼èÆÀ¤¹¤ë
+                // ã‚»ãƒ«ã®èƒŒæ™¯è‰²ã‚’å–å¾—ã™ã‚‹
                 if ($hiddenRowList[$workSheetRow] !== true) {
                     $backgroundColor = $this->sheet->getStyle($cellAddress)->getFill()->getStartColor()->getRGB();
                 } else {
                     $backgroundColor = 'CCCCCC';
                 }
 
-                // ¥»¥ë¤Î·ÓÀş¾ğÊó¤ò¼èÆÀ¤¹¤ë
+                // ã‚»ãƒ«ã®ç½«ç·šæƒ…å ±ã‚’å–å¾—ã™ã‚‹
                 $border = $this->getBorderInfo($cellAddress);
 
-                // ¥»¥ë¤ÎÇÛÃÖ¾ğÊó¤ò¼èÆÀ¤¹¤ë
+                // ã‚»ãƒ«ã®é…ç½®æƒ…å ±ã‚’å–å¾—ã™ã‚‹
                 $verticalPosition = $this->getVerticalPosition($cellAddress);
                 $horizontalPosition = $this->getHorizontalPosition($cellAddress);
 
-                // ¥»¥ë¾ğÊó¤ÎÇÛÎó¤Ë¼èÆÀ¤·¤¿¥Ñ¥é¥á¡¼¥¿¤ò³ÊÇ¼¤¹¤ë
+                // ã‚»ãƒ«æƒ…å ±ã®é…åˆ—ã«å–å¾—ã—ãŸãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‚’æ ¼ç´ã™ã‚‹
                 $cellData[$tableRow][$tableColumn] = array(
                     'value' => (array_search($cellValue, $this->excelErrorList)) ? '#ERROR!' : $cellValue,
                     'fontFamily' => $fontInfo['fontFamily'],
@@ -462,7 +462,7 @@ class estimateSheetController {
                     'emphasis' => $fontInfo['emphasis']
                 );
 
-                // HtmlÉÁ²è»ş¤ËÀş¤¬½ÅÊ£¤·¤ÆÉ½¼¨¤µ¤ì¤Ê¤¤¤è¤¦·ÓÀş¾ğÊó¤òÊäÀµ¤¹¤ë
+                // Htmlæç”»æ™‚ã«ç·šãŒé‡è¤‡ã—ã¦è¡¨ç¤ºã•ã‚Œãªã„ã‚ˆã†ç½«ç·šæƒ…å ±ã‚’è£œæ­£ã™ã‚‹
                 if ($tableRow > $tableStartRow) {
                     $beforeRow = $tableRow -1;
                     $this->setAvailableBorderInfo($cellData[$tableRow][$tableColumn]['border']['top'], $cellData[$beforeRow][$tableColumn]['border']['bottom']);
@@ -472,20 +472,20 @@ class estimateSheetController {
                     $this->setAvailableBorderInfo($cellData[$tableRow][$tableColumn]['border']['left'], $cellData[$tableRow][$beforeColumn]['border']['right']);
                 }
 
-                // ¾ğÊóÉ½¼¨²¡²¼»ş¤Î¥Ç¡¼¥¿¤òºîÀ®¤¹¤ë
+                // æƒ…å ±è¡¨ç¤ºæŠ¼ä¸‹æ™‚ã®ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã™ã‚‹
                 if ($hiddenRowList[$workSheetRow] !== true) {
                     $hiddenCellValue[$tableRow][$tableColumn] = $cellData[$tableRow][$tableColumn]['value'];
                 } else {
                     $hiddenCellValue[$tableRow][$tableColumn] = null;
                 }
 
-                // ¥¯¥é¥¹Ì¾¤Î½é´ü²½
+                // ã‚¯ãƒ©ã‚¹åã®åˆæœŸåŒ–
                 $className = null;
 
-                // ¥¯¥é¥¹Ì¾¤Î¥»¥Ã¥È
+                // ã‚¯ãƒ©ã‚¹åã®ã‚»ãƒƒãƒˆ
                 if ($areaCode) {
                     $className = workSheetConst::DETAIL_CLASS_STRING. ' '. workSheetConst::AREA_CLASS_STRING. $areaCode;
-                    // ³ÆÆşÎÏ¹àÌÜ¤Î¥Ø¥Ã¥À¤ËÂĞ¤¹¤ëÎóÈÖ¹æ¥ê¥¹¥È¤Î¼èÆÀ
+                    // å„å…¥åŠ›é …ç›®ã®ãƒ˜ãƒƒãƒ€ã«å¯¾ã™ã‚‹åˆ—ç•ªå·ãƒªã‚¹ãƒˆã®å–å¾—
                     $columnNoList = $this->getColumnNumberList($areaCode);
 
                     foreach($columnNoList as $key => $columnNo) {
@@ -496,19 +496,19 @@ class estimateSheetController {
                         }
                     }
                 } else if ($nameListForCellAddress[$cellAddress]) {
-                    // ¥»¥ë¤Ë¥»¥ëÌ¾¾Î¤¬Â¸ºß¤¹¤ë¾ì¹ç¤Ï¥»¥ëÌ¾¾Î¤ò¥¯¥é¥¹¤Ë¥»¥Ã¥È¤¹¤ë
+                    // ã‚»ãƒ«ã«ã‚»ãƒ«åç§°ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯ã‚»ãƒ«åç§°ã‚’ã‚¯ãƒ©ã‚¹ã«ã‚»ãƒƒãƒˆã™ã‚‹
                     $className = $nameListForCellAddress[$cellAddress];
                 }
 
                 if ($className) {
-                    // ¥¯¥é¥¹¾ğÊó¤Ë¥¯¥é¥¹Ì¾¤òÄÉ²Ã¤¹¤ë
+                    // ã‚¯ãƒ©ã‚¹æƒ…å ±ã«ã‚¯ãƒ©ã‚¹åã‚’è¿½åŠ ã™ã‚‹
                     $cellClass[] = $this->setCellClass($tableRow, $tableColumn, $className);
                 }
 
-                // readOnly¥»¥ë¤ÎÀßÄê
+                // readOnlyã‚»ãƒ«ã®è¨­å®š
                 if ($this->mode === workSheetConst::MODE_ESTIMATE_EDIT) {                    
                     if ($areaCode) {
-                        // ÎóÈÖ¹æ¤ò¿ô»ú¤«¤é¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È¤ËÊÑ´¹
+                        // åˆ—ç•ªå·ã‚’æ•°å­—ã‹ã‚‰ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã«å¤‰æ›
                         // $colAlphabet = $this->getAlphabetForColumnIndex($workSheetColumn);
                         // foreach($columnNoList as $key => $columnNo) {
                         //     if ($columnNo === $colAlphabet) {
@@ -516,14 +516,14 @@ class estimateSheetController {
                         //     }
                         // }
 
-                        // ÂĞ¾İ¥¨¥ê¥¢¤Ë±ş¤¸¤¿ÊÔ½¸²ÄÇ½¤Ê¥»¥ë¤Î¥ê¥¹¥È¤ò¼èÆÀ 
+                        // å¯¾è±¡ã‚¨ãƒªã‚¢ã«å¿œã˜ãŸç·¨é›†å¯èƒ½ãªã‚»ãƒ«ã®ãƒªã‚¹ãƒˆã‚’å–å¾— 
                         $editableKeys = workSheetConst::getEditableKeys($areaCode);
 
                     } else if ($nameListForCellAddress[$cellAddress]) {
                         $key = $nameListForCellAddress[$cellAddress];
                         $editableKeys = workSheetConst::EDITABLE_KEY_EXPECT_FOR_TARGET_AREA;
                     }
-                    // readOnly¤ò¥»¥Ã¥È¤¹¤ë
+                    // readOnlyã‚’ã‚»ãƒƒãƒˆã™ã‚‹
                     if ($editableKeys[$key] === true) {
                         $cellData[$tableRow][$tableColumn]['readOnly'] = false;
                     } else {
@@ -533,11 +533,11 @@ class estimateSheetController {
             }
         }
 
-        // ·ë¹ç¥»¥ë¤¬¤¢¤ë¾ì¹ç¡¢·ë¹ç¸µ¤Î¥»¥ë¤Ë·ÓÀş¾ğÊó¤òÉÕÍ¿¤¹¤ë
-        //¡ÊHandsontableÂĞ±ş¡¢·ë¹ç¥»¥ë¤ÎºÇ¤âº¸¾å¤Î·ÓÀş¾ğÊó¤ò¼èÆÀ¤·¤ÆÉÁ²è¤¹¤ë°Ù¡Ë
+        // çµåˆã‚»ãƒ«ãŒã‚ã‚‹å ´åˆã€çµåˆå…ƒã®ã‚»ãƒ«ã«ç½«ç·šæƒ…å ±ã‚’ä»˜ä¸ã™ã‚‹
+        //ï¼ˆHandsontableå¯¾å¿œã€çµåˆã‚»ãƒ«ã®æœ€ã‚‚å·¦ä¸Šã®ç½«ç·šæƒ…å ±ã‚’å–å¾—ã—ã¦æç”»ã™ã‚‹ç‚ºï¼‰
         $resultSetBorder = $this->setBorderInfoForMergedCell($mergedCellsList, $cellData);
         
-        // ·ÓÀş¾ğÊó¤òCSS¤Îborder-style¤ËÂĞ±ş¤µ¤»¤ë
+        // ç½«ç·šæƒ…å ±ã‚’CSSã®border-styleã«å¯¾å¿œã•ã›ã‚‹
         for ($tableRow = $tableStartRow; $tableRow <= $tableEndRow; $tableRow++) {
             $workSheetRow = $tableRow + $startRow;
             for ($tableColumn = $tableStartColumn; $tableColumn <= $tableEndColumn; ++$tableColumn) {
@@ -547,7 +547,7 @@ class estimateSheetController {
             }
         }
 
-        // Row¤Î¥·¥Õ¥ÈÎÌ¤òÈóÉ½¼¨¹Ô¤ËÈ¿±Ç¤µ¤»¤ë
+        // Rowã®ã‚·ãƒ•ãƒˆé‡ã‚’éè¡¨ç¤ºè¡Œã«åæ˜ ã•ã›ã‚‹
         if ($hiddenRowList) {
             foreach ($hiddenRowList as $key => $val) {
                 $viewKey = $key - $rowShiftValue;
@@ -555,17 +555,17 @@ class estimateSheetController {
             }
         }
 
-        // preview¤Î¾ì¹ç
+        // previewã®å ´åˆ
         if ($this->mode === workSheetConst::MODE_ESTIMATE_PREVIEW) {
 
-            // È¯Ãí¾õÂÖ¥Ş¥¹¥¿¤Î¼èÆÀ
+            // ç™ºæ³¨çŠ¶æ…‹ãƒã‚¹ã‚¿ã®å–å¾—
             $receiveStatusMaster = $this->objDB->getMasterToArray('m_receivestatus', 'lngreceivestatuscode', 'strreceivestatusname');
-            // ¼õÃí¾õÂÖ¥Ş¥¹¥¿¤Î¼èÆÀ
+            // å—æ³¨çŠ¶æ…‹ãƒã‚¹ã‚¿ã®å–å¾—
             $orderStatusMaster = $this->objDB->getMasterToArray('m_orderstatus', 'lngorderstatuscode', 'strorderstatusname');
 
-            // ÄÉ²ÃÎó¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+            // è¿½åŠ åˆ—ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
             $defaultCellData = workSheetConst::WORK_SHEET_CELL_DEFAULT;
-            mb_convert_variables('UTF-8', 'EUC-JP', $defaultCellData); // UTF-8¤ËÊÑ´¹
+            mb_convert_variables('UTF-8', 'EUC-JP', $defaultCellData); // UTF-8ã«å¤‰æ›
 
             $targetAreaRows = $this->targetAreaRows;
 
@@ -573,30 +573,30 @@ class estimateSheetController {
                 if ($areaCode === DEF_AREA_OTHER_COST_ORDER) {
                     continue;
                 }
-                // ¥¿¥¤¥È¥ë¹Ô¤Î¼èÆÀ(ÂĞ¾İ¥¨¥ê¥¢³«»Ï¹Ô¤Î1¤ÄÁ°¤Î¹Ô)
+                // ã‚¿ã‚¤ãƒˆãƒ«è¡Œã®å–å¾—(å¯¾è±¡ã‚¨ãƒªã‚¢é–‹å§‹è¡Œã®1ã¤å‰ã®è¡Œ)
                 $titleRow = $workSheetRows['firstRow'] - 1;
-                // ¥¿¥¤¥È¥ë¹Ô¤¬¤É¤ÎÂĞ¾İ¥¨¥ê¥¢¤ËÂ°¤¹¤ë¤«¤òÈ½Äê¤¹¤ëÇÛÎó¤ÎÀ¸À®
+                // ã‚¿ã‚¤ãƒˆãƒ«è¡ŒãŒã©ã®å¯¾è±¡ã‚¨ãƒªã‚¢ã«å±ã™ã‚‹ã‹ã‚’åˆ¤å®šã™ã‚‹é…åˆ—ã®ç”Ÿæˆ
                 $titleRowAttribute[$titleRow] = $areaCode;
             }
             
 
-            // Îó¤ÎÁŞÆş½èÍı
-            $shiftResult = $this->shiftMergedCellsList($mergedCellsList, 0, -3); // ¥»¥ë°ÌÃÖÊäÀµ
+            // åˆ—ã®æŒ¿å…¥å‡¦ç†
+            $shiftResult = $this->shiftMergedCellsList($mergedCellsList, 0, -3); // ã‚»ãƒ«ä½ç½®è£œæ­£
             array_unshift($columnWidth, 30, 25, 40);
             $tableEndColumn += 3;
 
-            // ¥¯¥é¥¹¾ğÊó¤Î¹¹¿·
+            // ã‚¯ãƒ©ã‚¹æƒ…å ±ã®æ›´æ–°
             foreach ($cellClass as &$classData) {
                 $classData['col'] += 3;
             }
 
-            // ¼õÃí³ÎÄê¡¢È¯Ãí³ÎÄê¡¢È¯Ãí¼è¾Ã¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¡¢¥Ü¥¿¥ó¤Î¥»¥Ã¥È
-            $receiveConfirm = mb_convert_encoding('³ÎÄê', 'UTF-8', 'EUC-JP');
-            $orderConfirm = mb_convert_encoding('³Î', 'UTF-8', 'EUC-JP');
-            $orderCancel = mb_convert_encoding('¾Ã', 'UTF-8', 'EUC-JP');
+            // å—æ³¨ç¢ºå®šã€ç™ºæ³¨ç¢ºå®šã€ç™ºæ³¨å–æ¶ˆã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã€ãƒœã‚¿ãƒ³ã®ã‚»ãƒƒãƒˆ
+            $receiveConfirm = mb_convert_encoding('ç¢ºå®š', 'UTF-8', 'EUC-JP');
+            $orderConfirm = mb_convert_encoding('ç¢º', 'UTF-8', 'EUC-JP');
+            $orderCancel = mb_convert_encoding('æ¶ˆ', 'UTF-8', 'EUC-JP');
 
             foreach ($cellData as $tableRow => $rowData) {
-                $workSheetRow = $tableRow + $rowShiftValue; // ¥ï¡¼¥¯¥·¡¼¥È¤Î¹ÔÈÖ¹æ
+                $workSheetRow = $tableRow + $rowShiftValue; // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®è¡Œç•ªå·
 
                 $ColumnData1 = $defaultCellData;
                 $ColumnData2 = $defaultCellData;
@@ -604,21 +604,21 @@ class estimateSheetController {
 
                 $areaCode = $this->checkAttributeRow($workSheetRow);
 
-                // ÊÔ½¸²ÄÇ½¤Ê¾ì¹ç¤Î¤ß¥Ü¥¿¥ó¤òÀ¸À®¤¹¤ë
+                // ç·¨é›†å¯èƒ½ãªå ´åˆã®ã¿ãƒœã‚¿ãƒ³ã‚’ç”Ÿæˆã™ã‚‹
                 if ($this->uneditableFlag === false) {
 
 
-                    // ¥Ü¥¿¥óÀ¸À®½èÍı
+                    // ãƒœã‚¿ãƒ³ç”Ÿæˆå‡¦ç†
                     if ($receiveAreaCodeList[$areaCode]) {
-                        // ¼õÃí¤Î¾ì¹ç
-                        $data = $inputData[$workSheetRow]['data']; // ¹Ô¥Ç¡¼¥¿¤Î¼èÆÀ
+                        // å—æ³¨ã®å ´åˆ
+                        $data = $inputData[$workSheetRow]['data']; // è¡Œãƒ‡ãƒ¼ã‚¿ã®å–å¾—
                         $statusCode = $data['statusCode'];
                         $receiveNo = $data['receiveNo'];
                        
                         preg_match('/\A(\d{4})\:/', $data['customerCompany'], $customerCompany);
                         
                         if (isset($customerCompany)) {
-                            $companyCode = $customerCompany[1]; // ²ñ¼Ò¥³¡¼¥É¤Î¼èÆÀ
+                            $companyCode = $customerCompany[1]; // ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã®å–å¾—
                         } else {
                             $companyCode = '';
                         }
@@ -669,7 +669,7 @@ class estimateSheetController {
                                 break;
                         }                
                     } else if ($orderAreaCodeList[$areaCode]) {
-                        // È¯Ãí¤Î¾ì¹ç
+                        // ç™ºæ³¨ã®å ´åˆ
                         $data = $inputData[$workSheetRow]['data'];
                         $statusCode = $data['statusCode'];
                         $orderNo = $data['orderNo'];
@@ -677,7 +677,7 @@ class estimateSheetController {
                         preg_match('/\A(\d{4})\:/', $data['customerCompany'], $customerCompany);
                         
                         if (isset($customerCompany)) {
-                            $companyCode = $customerCompany[1]; // ²ñ¼Ò¥³¡¼¥É¤Î¼èÆÀ
+                            $companyCode = $customerCompany[1]; // ä¼šç¤¾ã‚³ãƒ¼ãƒ‰ã®å–å¾—
                         } else {
                             $companyCode = '';
                         }
@@ -726,10 +726,10 @@ class estimateSheetController {
                         }
         
                     } else if ($titleRowAttribute[$workSheetRow]) {
-                        // ³ÎÄê¡¢¼è¾Ã¥Ü¥¿¥ó¤ÎÀ¸À®
+                        // ç¢ºå®šã€å–æ¶ˆãƒœã‚¿ãƒ³ã®ç”Ÿæˆ
                         $areaCode = $titleRowAttribute[$workSheetRow];
                         if ($receiveAreaCodeList[$areaCode]) {
-                            // ¼õÃí¥¨¥ê¥¢¤Î¾ì¹ç
+                            // å—æ³¨ã‚¨ãƒªã‚¢ã®å ´åˆ
                             $confirmValue = "confirm". $areaCode;
                             $htmlValue1 = "<div>";
                             $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm_receive\" value=\"". $confirmValue. "\">". $receiveConfirm. "</button>";
@@ -744,7 +744,7 @@ class estimateSheetController {
                         } else if ($orderAreaCodeList[$areaCode]) {
                             $confirmValue = "confirm". $areaCode;
                             $cancelValue = "cancel". $areaCode;
-                            // È¯Ãí¥¨¥ê¥¢¤Î¾ì¹ç
+                            // ç™ºæ³¨ã‚¨ãƒªã‚¢ã®å ´åˆ
                             $htmlValue1 = "<div>";
                             $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm_order\" value=\"". $confirmValue. "\">". $orderConfirm. "</button>";
                             $htmlValue1 .= "</div>";
@@ -761,29 +761,29 @@ class estimateSheetController {
             }
         }
 
-        // ¥Ç¡¼¥¿¤òÇÛÎó¤Ë¥»¥Ã¥È¤¹¤ë
+        // ãƒ‡ãƒ¼ã‚¿ã‚’é…åˆ—ã«ã‚»ãƒƒãƒˆã™ã‚‹
         $viewData = array(
-            'sheetName' => $sheetName,              // ¥·¡¼¥ÈÌ¾
-            'mergedCellsList' => $mergedCellsList,  // ¥Ş¡¼¥¸¤µ¤ì¤¿¥»¥ë¤Î¥ê¥¹¥È
-            'startRow' => $tableStartRow,           // ³«»Ï¹Ô
-            'endRow' => $tableEndRow,               // ½ªÎ»¹Ô
-            'startColumn' => $tableStartColumn,     // ³«»ÏÎó
-            'endColumn' => $tableEndColumn,         // ½ªÎ»Îó
-            'rowHeight' => $rowHeight,              // ¹Ô¹â¤µ
-            'columnWidth' => $columnWidth,          // ÎóÉı
-            'cellData' => $cellData,                // ¥»¥ë¤Î¥Ç¡¼¥¿(ÃÍ¡¢Ê¸»ú¥Õ¥©¥ó¥È¡¢·ÓÀş¡¢ÇØ·Ê¿§)
+            'sheetName' => $sheetName,              // ã‚·ãƒ¼ãƒˆå
+            'mergedCellsList' => $mergedCellsList,  // ãƒãƒ¼ã‚¸ã•ã‚ŒãŸã‚»ãƒ«ã®ãƒªã‚¹ãƒˆ
+            'startRow' => $tableStartRow,           // é–‹å§‹è¡Œ
+            'endRow' => $tableEndRow,               // çµ‚äº†è¡Œ
+            'startColumn' => $tableStartColumn,     // é–‹å§‹åˆ—
+            'endColumn' => $tableEndColumn,         // çµ‚äº†åˆ—
+            'rowHeight' => $rowHeight,              // è¡Œé«˜ã•
+            'columnWidth' => $columnWidth,          // åˆ—å¹…
+            'cellData' => $cellData,                // ã‚»ãƒ«ã®ãƒ‡ãƒ¼ã‚¿(å€¤ã€æ–‡å­—ãƒ•ã‚©ãƒ³ãƒˆã€ç½«ç·šã€èƒŒæ™¯è‰²)
             'cellClass' => $cellClass,
             'hiddenList' => $viewHiddenRowList,
-            'hiddenRowHeight' => $hiddenRowHeight,  // ¾ğÊóÉ½¼¨²¡²¼»şÍÑ¹Ô¹â¤µ
-            'hiddenCellValue' => $hiddenCellValue     // ¾ğÊóÉ½¼¨²¡²¼»şÍÑ¥»¥ëÆşÎÏÃÍ
+            'hiddenRowHeight' => $hiddenRowHeight,  // æƒ…å ±è¡¨ç¤ºæŠ¼ä¸‹æ™‚ç”¨è¡Œé«˜ã•
+            'hiddenCellValue' => $hiddenCellValue     // æƒ…å ±è¡¨ç¤ºæŠ¼ä¸‹æ™‚ç”¨ã‚»ãƒ«å…¥åŠ›å€¤
         );
 
-        // readOnly¤ÎÌÀºÙ¹Ô¾ğÊó¤¬Â¸ºß¤¹¤ë¾ì¹ç¤Ï¥»¥Ã¥È¤¹¤ë
+        // readOnlyã®æ˜ç´°è¡Œæƒ…å ±ãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯ã‚»ãƒƒãƒˆã™ã‚‹
         if ($readOnlyDetailRow) {
             $viewData['readOnlyDetailRow'] = $readOnlyDetailRow;
         }
 
-        // ¸«ÀÑ¸¶²ÁÌÀºÙÈÖ¹æ¥ê¥¹¥È¤¬Â¸ºß¤¹¤ë¾ì¹ç¤Ï¥»¥Ã¥È¤¹¤ë
+        // è¦‹ç©åŸä¾¡æ˜ç´°ç•ªå·ãƒªã‚¹ãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯ã‚»ãƒƒãƒˆã™ã‚‹
         if ($detailNoList) {
             $viewData['detailNoList'] = $detailNoList;
         }
@@ -791,7 +791,7 @@ class estimateSheetController {
         return $viewData;
     }
 
-    // Ìµ¸ú¹Ô¤òºï½ü¤¹¤ë
+    // ç„¡åŠ¹è¡Œã‚’å‰Šé™¤ã™ã‚‹
     public function deleteInvalidRow($viewData) {
         $hiddenList = $viewData['hiddenList'];
         $cellData = $viewData['cellData'];
@@ -803,23 +803,23 @@ class estimateSheetController {
 
         $newMergeCellsList = array();
 
-        // ¥Ş¡¼¥¸¥»¥ë¤Î¾ğÊó¤ò³«»Ï¹Ô¤ò¥­¡¼¤Ë»ı¤ÄÇÛÎó¤Ë³ÊÇ¼¤¹¤ë
+        // ãƒãƒ¼ã‚¸ã‚»ãƒ«ã®æƒ…å ±ã‚’é–‹å§‹è¡Œã‚’ã‚­ãƒ¼ã«æŒã¤é…åˆ—ã«æ ¼ç´ã™ã‚‹
         foreach ($mergedCellsList as $mergeInfo) {
             $key = $mergeInfo['row'];
             $newMergeCellsList[$key][] = $mergeInfo;
         }
 
-        // ¥Ş¡¼¥¸¥»¥ë¤Î¤Ê¤¤¹Ô¤ò¶õÇÛÎó¤ÇËä¤á¤ë
+        // ãƒãƒ¼ã‚¸ã‚»ãƒ«ã®ãªã„è¡Œã‚’ç©ºé…åˆ—ã§åŸ‹ã‚ã‚‹
         for ($i = $startRow; $i <= $endRow; ++$i) {
             if (!$newMergeCellsList[$i]) {
                 $newMergeCellsList[$i] = array();
             }            
         }
 
-        // ¥­¡¼¡Ê¹ÔÈÖ¹æ¡Ë¤Î¾º½ç¥½¡¼¥È
+        // ã‚­ãƒ¼ï¼ˆè¡Œç•ªå·ï¼‰ã®æ˜‡é †ã‚½ãƒ¼ãƒˆ
         ksort($newMergeCellsList);
 
-        // Ìµ¸ú¹Ô¤òºï½ü¤¹¤ë
+        // ç„¡åŠ¹è¡Œã‚’å‰Šé™¤ã™ã‚‹
         foreach ($hiddenList as $row => $bool) {
             if ($bool === true) {
                 unset($cellData[$row]);
@@ -829,18 +829,18 @@ class estimateSheetController {
             }
         }
 
-        // ÇÛÎó¤òÁ°¤ËµÍ¤á¤ë¡Ê¥­¡¼¡§¹ÔÈÖ¹æ¤ËÁêÅö¡¡¤òÏ¢ÈÖ¤Ë¤¹¤ë)
+        // é…åˆ—ã‚’å‰ã«è©°ã‚ã‚‹ï¼ˆã‚­ãƒ¼ï¼šè¡Œç•ªå·ã«ç›¸å½“ã€€ã‚’é€£ç•ªã«ã™ã‚‹)
         $cellData = array_merge($cellData);
         $rowHeight = array_merge($rowHeight);
         $newMergeCellsList = array_merge($newMergeCellsList);
 
         unset($mergedCellsList);
 
-        // ¥Ş¡¼¥¸¥»¥ë¾ğÊó¤ÎÇÛÎó¤òÉü¸µ¤¹¤ë
+        // ãƒãƒ¼ã‚¸ã‚»ãƒ«æƒ…å ±ã®é…åˆ—ã‚’å¾©å…ƒã™ã‚‹
         foreach ($newMergeCellsList as $newRow => $mergeInfoList) {
             if ($mergeInfoList) {
                 foreach ($mergeInfoList as $mergeInfo) {
-                    // ÊäÀµ¸å¤Î¹Ô¤òÆş¤ì¤ë¡Ê¥Ş¡¼¥¸¥»¥ë¾ğÊó¤Î³«»Ï¹Ô¤Ï½èÍıÁ°¤Î¤Ş¤Ş¤Ê¤Î¤ÇÃÖ´¹½èÍı¤ò¹Ô¤¦¡Ë
+                    // è£œæ­£å¾Œã®è¡Œã‚’å…¥ã‚Œã‚‹ï¼ˆãƒãƒ¼ã‚¸ã‚»ãƒ«æƒ…å ±ã®é–‹å§‹è¡Œã¯å‡¦ç†å‰ã®ã¾ã¾ãªã®ã§ç½®æ›å‡¦ç†ã‚’è¡Œã†ï¼‰
                     $mergeInfo['row'] = $newRow;
 
                     $mergedCellsList[] = $mergeInfo;
@@ -848,7 +848,7 @@ class estimateSheetController {
             }
         }
 
-        $endRow -= $deleteCount; // ¹Ô¤òºï½ü¤·¤¿¿ô¤À¤±½ªÎ»¹Ô¤ò·«¤ê¾å¤²¤ë
+        $endRow -= $deleteCount; // è¡Œã‚’å‰Šé™¤ã—ãŸæ•°ã ã‘çµ‚äº†è¡Œã‚’ç¹°ã‚Šä¸Šã’ã‚‹
         
         $viewData['cellData'] = $cellData;
         $viewData['rowHeight'] = $rowHeight;
@@ -859,8 +859,8 @@ class estimateSheetController {
     }
 
     /**
-     * Excel¤Î·ÓÀş¤ÎÍ¥ÀèÅÙ¤òÀßÄê¤¹¤ë
-     * ¡ÊÍ¥ÀèÅÙ¤Î¹â¤¤½ç¤ËÀßÄê¡Ë
+     * Excelã®ç½«ç·šã®å„ªå…ˆåº¦ã‚’è¨­å®šã™ã‚‹
+     * ï¼ˆå„ªå…ˆåº¦ã®é«˜ã„é †ã«è¨­å®šï¼‰
      *
      * @return array $linePriority
      */
@@ -885,25 +885,25 @@ class estimateSheetController {
     }
 
     /**
-     * »ØÄê¤Î¥»¥ëÌ¾¾Î¤¬Æ±¤¸¹Ô¤ËÂ¸ºß¤¹¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+     * æŒ‡å®šã®ã‚»ãƒ«åç§°ãŒåŒã˜è¡Œã«å­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
      *
-     * @param array $cellAddressList ¥»¥ëÌ¾¾Î¤ÈÉ³ÉÕ¤¯¥»¥ë°ÌÃÖ¤Î¥ê¥¹¥È
-     * @param array $array Æ±¤¸¹Ô¤ËÂ¸ºß¤¹¤ëÉ¬Í×¤Î¤¢¤ë¥»¥ëÌ¾¾Î¥ê¥¹¥È
+     * @param array $cellAddressList ã‚»ãƒ«åç§°ã¨ç´ä»˜ãã‚»ãƒ«ä½ç½®ã®ãƒªã‚¹ãƒˆ
+     * @param array $array åŒã˜è¡Œã«å­˜åœ¨ã™ã‚‹å¿…è¦ã®ã‚ã‚‹ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
      *
-     * @return boolean $result ¥Á¥§¥Ã¥¯·ë²Ì
+     * @return boolean $result ãƒã‚§ãƒƒã‚¯çµæœ
      */
     protected static function rowCheck($cellAddressList, $array) {
         $param = null;
         $result = false;
         foreach($array as $value) {
-            // 1²óÌÜ¤Î¥ë¡¼¥×¤Ç¤ÏÎóÈÖ¹æ¤ò$param¤Ë¥»¥Ã¥È¤¹¤ë
+            // 1å›ç›®ã®ãƒ«ãƒ¼ãƒ—ã§ã¯åˆ—ç•ªå·ã‚’$paramã«ã‚»ãƒƒãƒˆã™ã‚‹
             if (!$param) {
                 $param = $cellAddressList[$value]['row'];
             } else {
                 if ($param == $cellAddressList[$value]['row']) {
                     $result = true;
                 } else {
-                    // 1¤Ä¤Ç¤âÆ±¤¸¹Ô¤Ë¥»¥ë¤¬Â¸ºß¤·¤Ê¤«¤Ã¤¿¾ì¹ç¤Ï¥Á¥§¥Ã¥¯NG¤È¤·¤Æ½èÍı¤òÃæÃÇ¤¹¤ë
+                    // 1ã¤ã§ã‚‚åŒã˜è¡Œã«ã‚»ãƒ«ãŒå­˜åœ¨ã—ãªã‹ã£ãŸå ´åˆã¯ãƒã‚§ãƒƒã‚¯NGã¨ã—ã¦å‡¦ç†ã‚’ä¸­æ–­ã™ã‚‹
                     $result = false;
                     break;
                 }
@@ -913,13 +913,13 @@ class estimateSheetController {
     }
 
     /**
-     * ¥Ş¡¼¥¸¤µ¤ì¤¿¥»¥ë¤Î¥ê¥¹¥È¤ò¼èÆÀ¤¹¤ë
+     * ãƒãƒ¼ã‚¸ã•ã‚ŒãŸã‚»ãƒ«ã®ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
      *
-     * @return array $mergedCellsRowAndColumnInfo ¥Ş¡¼¥¸¤µ¤ì¤¿¥»¥ë¥ê¥¹¥È
+     * @return array $mergedCellsRowAndColumnInfo ãƒãƒ¼ã‚¸ã•ã‚ŒãŸã‚»ãƒ«ãƒªã‚¹ãƒˆ
      */
     protected function getMergedCellsList() {
         $sheet = $this->sheet;
-        // ¥ï¡¼¥¯¥·¡¼¥È¤Î³«»Ï¹ÔÎó¡¢½ªÎ»¹ÔÎó¡ÊÍ­¸úÈÏ°Ï¡Ë
+        // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®é–‹å§‹è¡Œåˆ—ã€çµ‚äº†è¡Œåˆ—ï¼ˆæœ‰åŠ¹ç¯„å›²ï¼‰
         $areaStartRow = $this->startRow;
         $areaEndRow = $this->endRow;
         $areaStartColumn = $this->startColumn;
@@ -929,12 +929,12 @@ class estimateSheetController {
         $address = array();
         foreach($mergedCellsList as $value) {
             $address = $this->getRowAndColumnStartToEnd($value);
-            // ¥Ş¡¼¥¸¥»¥ë¤Î³«»Ï¹ÔÎó¤È½ªÎ»¹ÔÎó
+            // ãƒãƒ¼ã‚¸ã‚»ãƒ«ã®é–‹å§‹è¡Œåˆ—ã¨çµ‚äº†è¡Œåˆ—
             $startRow = intval($address['start']['row']);
             $endRow = intval($address['end']['row']);
             $startColumn = self::getIndexForColumnAlphabet($address['start']['column']);
             $endColumn = self::getIndexForColumnAlphabet($address['end']['column']);
-            // ¥Ş¡¼¥¸¤µ¤ì¤¿¥»¥ë¤¬»ØÄê¤ÎÈÏ°Ï³°¤Ë¤¢¤ë¤È¤­¤Ï¥ê¥¹¥È¤ËÄÉ²Ã¤·¤Ê¤¤
+            // ãƒãƒ¼ã‚¸ã•ã‚ŒãŸã‚»ãƒ«ãŒæŒ‡å®šã®ç¯„å›²å¤–ã«ã‚ã‚‹ã¨ãã¯ãƒªã‚¹ãƒˆã«è¿½åŠ ã—ãªã„
             if ($startRow < $areaStartRow
                 || $endRow > $areaEndRow
                 || $startColumn < $areaStartColumn
@@ -952,22 +952,22 @@ class estimateSheetController {
         return $mergedCellsRowAndColumnInfo;
     }
 
-    // ¥»¥ë¾ğÊó¤ò¼èÆÀ¤¹¤ë
+    // ã‚»ãƒ«æƒ…å ±ã‚’å–å¾—ã™ã‚‹
     function getCellInfo($sheet, $address) {
         $cellInfo = $sheet->getCell($address);
         return $cellInfo;
     }
 
-    // ¥»¥ë¾ğÊó¤«¤é¥»¥ë¤ÎÃÍ¤ò¼èÆÀ¤¹¤ë
+    // ã‚»ãƒ«æƒ…å ±ã‹ã‚‰ã‚»ãƒ«ã®å€¤ã‚’å–å¾—ã™ã‚‹
     function getCellValue($cellInfo) {
         $value = $cellInfo->getFormattedValue();
         return $value;
     }
 
     /**
-     * ¥·¡¼¥È¤Î¹Ô¹â¤µ¤ò¼èÆÀ¤¹¤ë
+     * ã‚·ãƒ¼ãƒˆã®è¡Œé«˜ã•ã‚’å–å¾—ã™ã‚‹
      *
-     * @return array $rowHeightPixel ³Æ¹Ô¤Î¹â¤µ
+     * @return array $rowHeightPixel å„è¡Œã®é«˜ã•
      */
     protected function getRowHeight() {
         $sheet = $this->sheet;
@@ -977,7 +977,7 @@ class estimateSheetController {
             if ($startRow <= $endRow) {
                 for ($i = $startRow; $i <= $endRow; $i++) {
                     $rowHeight = $sheet->getRowDimension($i)->getRowHeight();
-                    // ¥Ô¥¯¥»¥ë¤ËÊÑ´¹
+                    // ãƒ”ã‚¯ã‚»ãƒ«ã«å¤‰æ›
                     $rowHeightPixel[] = XlsxDrawing::pointsToPixels($rowHeight);
                 }
                 return $rowHeightPixel;
@@ -988,21 +988,21 @@ class estimateSheetController {
 
 
     /**
-     * ¥·¡¼¥È¤ÎÎóÉı¤ò¼èÆÀ¤¹¤ë
+     * ã‚·ãƒ¼ãƒˆã®åˆ—å¹…ã‚’å–å¾—ã™ã‚‹
      *
-     * @return array $columnWidthPixel ³ÆÎó¤ÎÉı
+     * @return array $columnWidthPixel å„åˆ—ã®å¹…
      */
     protected function getColumnWidth() {
         $sheet = $this->sheet;
         $startColumn = $this->startColumn;
         $endColumn = $this->endColumn;
-        // É¸½à¤Î¥Õ¥©¥ó¥È¤ò¼èÆÀ
+        // æ¨™æº–ã®ãƒ•ã‚©ãƒ³ãƒˆã‚’å–å¾—
         $defaultFont = $sheet->getParent()->getDefaultStyle()->getFont();
         if ($startColumn <= $endColumn) {
             for ($i = $startColumn; $i <= $endColumn; $i++) {
                 $column = self::getAlphabetForColumnIndex($i);
                 $columnWidth = $sheet->getColumnDimension($column)->getWidth();
-                // ¥Ô¥¯¥»¥ë¤ËÊÑ´¹
+                // ãƒ”ã‚¯ã‚»ãƒ«ã«å¤‰æ›
                 $columnWidthPixel[$i] = XlsxDrawing::cellDimensionToPixels($columnWidth, $defaultFont);
             }
             return $columnWidthPixel;
@@ -1011,11 +1011,11 @@ class estimateSheetController {
     }
 
     /**
-     * »ØÄê¤·¤¿¥»¥ëÈÏ°Ï¤ÎºÇ½éµÚ¤ÓºÇ¸å¤Î¹Ô¤ÈÎó¤ò¼èÆÀ¤¹¤ë
+     * æŒ‡å®šã—ãŸã‚»ãƒ«ç¯„å›²ã®æœ€åˆåŠã³æœ€å¾Œã®è¡Œã¨åˆ—ã‚’å–å¾—ã™ã‚‹
      *
-     * @param string $printArea "³«»Ï¥»¥ë°ÌÃÖ:½ªÎ»¥»¥ë°ÌÃÖ"·Á¼°¤Îstring
+     * @param string $printArea "é–‹å§‹ã‚»ãƒ«ä½ç½®:çµ‚äº†ã‚»ãƒ«ä½ç½®"å½¢å¼ã®string
      *
-     * @return array $cellAddress ³«»Ï¥»¥ëµÚ¤Ó½ªÎ»¥»¥ë¤Î¹ÔÈÖ¹æ¤ÈÎóÈÖ¹æ
+     * @return array $cellAddress é–‹å§‹ã‚»ãƒ«åŠã³çµ‚äº†ã‚»ãƒ«ã®è¡Œç•ªå·ã¨åˆ—ç•ªå·
      */
     protected function getRowAndColumnStartToEnd($area) {
         $cell = array();
@@ -1026,34 +1026,34 @@ class estimateSheetController {
     }
 
     /**
-     * ¥»¥ë°ÌÃÖ¤«¤é¹ÔÈÖ¹æ¤ÈÎóÈÖ¹æ¤òÃê½Ğ¤¹¤ë
+     * ã‚»ãƒ«ä½ç½®ã‹ã‚‰è¡Œç•ªå·ã¨åˆ—ç•ªå·ã‚’æŠ½å‡ºã™ã‚‹
      *
-     * @param $cell ¹ÔÈÖ¹æ¤ÈÎóÈÖ¹æ¤òÃê½Ğ¤¹¤ë¥»¥ë°ÌÃÖ
+     * @param $cell è¡Œç•ªå·ã¨åˆ—ç•ªå·ã‚’æŠ½å‡ºã™ã‚‹ã‚»ãƒ«ä½ç½®
      *
-     * @return array $cellAddress ¥»¥ë°ÌÃÖ¤ËÂĞ±ş¤¹¤ë¹ÔÈÖ¹æ¤ÈÎóÈÖ¹æ
+     * @return array $cellAddress ã‚»ãƒ«ä½ç½®ã«å¯¾å¿œã™ã‚‹è¡Œç•ªå·ã¨åˆ—ç•ªå·
      */
     public static function separateRowAndColumn($cell) {
         $cellAddress = array();
         if (is_array($cell)) {
             foreach ($cell as $key => $value) {
-                $cellAddress[$key]['row'] = preg_replace('/[^0-9]/', '', $value);    // ¹ÔÈÖ¹æ¤Î¼èÆÀ
-                $cellAddress[$key]['column'] = preg_replace('/[^A-Z]/', '', $value); // ÎóÈÖ¹æ¤Î¼èÆÀ
+                $cellAddress[$key]['row'] = preg_replace('/[^0-9]/', '', $value);    // è¡Œç•ªå·ã®å–å¾—
+                $cellAddress[$key]['column'] = preg_replace('/[^A-Z]/', '', $value); // åˆ—ç•ªå·ã®å–å¾—
             }
         } else {
-            $cellAddress['row'] = preg_replace('/[^0-9]/', '', $cell);      // ¹ÔÈÖ¹æ¤Î¼èÆÀ
-            $cellAddress['column'] = preg_replace('/[^A-Z]/', '', $cell);   // ÎóÈÖ¹æ¤Î¼èÆÀ
+            $cellAddress['row'] = preg_replace('/[^0-9]/', '', $cell);      // è¡Œç•ªå·ã®å–å¾—
+            $cellAddress['column'] = preg_replace('/[^A-Z]/', '', $cell);   // åˆ—ç•ªå·ã®å–å¾—
         }
         return $cellAddress;
     }
     
     
     /**
-     * ¹ÔÈÖ¹æ¤ÈÎóÈÖ¹æ¤ò·ë¹ç¤¹¤ë
+     * è¡Œç•ªå·ã¨åˆ—ç•ªå·ã‚’çµåˆã™ã‚‹
      *
-     * @param $row ¹ÔÈÖ¹æ
-     * @param $column ÎóÈÖ¹æ
+     * @param $row è¡Œç•ªå·
+     * @param $column åˆ—ç•ªå·
      *
-     * @return array $cell ¥»¥ë°ÌÃÖ
+     * @return array $cell ã‚»ãƒ«ä½ç½®
      */
     protected static function combineRowAndColumnIndex($row, $column) {
         if (!preg_match('/[A-Z]+/', $column)) {
@@ -1068,13 +1068,13 @@ class estimateSheetController {
     }
 
     /**
-     * »ØÄê¤·¤¿¹Ô¿ô¤ÈÎó¿ô¤ò°ÜÆ°¤·¤¿¥»¥ë°ÌÃÖ¤òÊÖµÑ¤¹¤ë
+     * æŒ‡å®šã—ãŸè¡Œæ•°ã¨åˆ—æ•°ã‚’ç§»å‹•ã—ãŸã‚»ãƒ«ä½ç½®ã‚’è¿”å´ã™ã‚‹
      *
-     * @param $cell °ÜÆ°Á°¤Î¥»¥ë°ÌÃÖ
-     * @param $rowMove °ÜÆ°¤¹¤ë¹Ô¿ô¡Ê²¼Êı¸ş¤¬¡Ü¡Ë
-     * @param $colMove °ÜÆ°¤¹¤ëÎó¿ô¡Ê±¦Êı¸ş¤¬¡Ü¡Ë
+     * @param $cell ç§»å‹•å‰ã®ã‚»ãƒ«ä½ç½®
+     * @param $rowMove ç§»å‹•ã™ã‚‹è¡Œæ•°ï¼ˆä¸‹æ–¹å‘ãŒï¼‹ï¼‰
+     * @param $colMove ç§»å‹•ã™ã‚‹åˆ—æ•°ï¼ˆå³æ–¹å‘ãŒï¼‹ï¼‰
      *
-     * @return $movedCell °ÜÆ°¸å¤Î¥»¥ë°ÌÃÖ
+     * @return $movedCell ç§»å‹•å¾Œã®ã‚»ãƒ«ä½ç½®
      */
     public static function getMoveCell($cell, $rowMove, $colMove) {
         $separate = self::separateRowAndColumn($cell);
@@ -1088,11 +1088,11 @@ class estimateSheetController {
     }
 
     /**
-     * ¥¹¥¿¥¤¥ë¾ğÊó¤ò¼èÆÀ¤¹¤ë
+     * ã‚¹ã‚¿ã‚¤ãƒ«æƒ…å ±ã‚’å–å¾—ã™ã‚‹
      *
-     * @param $sheet ÂĞ¾İ¤Î¥ï¡¼¥¯¥·¡¼¥È
+     * @param $sheet å¯¾è±¡ã®ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆ
      *
-     * @return array $styles ¥»¥ë¤Î¥¹¥¿¥¤¥ë¾ğÊó
+     * @return array $styles ã‚»ãƒ«ã®ã‚¹ã‚¿ã‚¤ãƒ«æƒ…å ±
      */
     function getStyleInfo($sheet, $address) {
         $styleInfoData = $sheet->getStyle($address);
@@ -1101,48 +1101,48 @@ class estimateSheetController {
 
 
     /**
-     * ·ÓÀş¾ğÊó¤ò¼èÆÀ¤¹¤ë
+     * ç½«ç·šæƒ…å ±ã‚’å–å¾—ã™ã‚‹
      *
-     * @param $cellAddress ¹ÔÈÖ¹æ¤ÈÎóÈÖ¹æ¤òÃê½Ğ¤¹¤ë¥»¥ë°ÌÃÖ
+     * @param $cellAddress è¡Œç•ªå·ã¨åˆ—ç•ªå·ã‚’æŠ½å‡ºã™ã‚‹ã‚»ãƒ«ä½ç½®
      *
-     * @return array $borders ¥»¥ë¤Î·ÓÀş¾ğÊó
+     * @return array $borders ã‚»ãƒ«ã®ç½«ç·šæƒ…å ±
      */
     protected function getBorderInfo($cellAddress) {
         $borderInfoData = $this->sheet->getStyle($cellAddress)->getBorders();
-        // ·ÓÀş¾ğÊó¤ÎÃæ¤«¤éÉô°ÌÊÌ¤Î¾ğÊó¤ò¼èÆÀ¤¹¤ë
+        // ç½«ç·šæƒ…å ±ã®ä¸­ã‹ã‚‰éƒ¨ä½åˆ¥ã®æƒ…å ±ã‚’å–å¾—ã™ã‚‹
         $border = array();
         $border['left'] = $borderInfoData->getLeft();
         $border['right'] = $borderInfoData->getRight();
         $border['top'] = $borderInfoData->getTop();
         $border['bottom'] = $borderInfoData->getBottom();
 
-        // ·ÓÀş¾ğÊó¤«¤éÀş¤Î¾ğÊó¤ò¼èÆÀ¤··ë¹ç
+        // ç½«ç·šæƒ…å ±ã‹ã‚‰ç·šã®æƒ…å ±ã‚’å–å¾—ã—çµåˆ
         $borders = array();
         foreach ($border as $key => $value) {
-            $borders[$key]['color'] = $value->getColor()->getRGB(); // ·ÓÀş¤Î¿§
+            $borders[$key]['color'] = $value->getColor()->getRGB(); // ç½«ç·šã®è‰²
             $borders[$key]['excelStyle'] = $value->getBorderStyle();
         }
         return $borders;
     }
 
 
-    // ¥Æ¥­¥¹¥È¤Î¿åÊ¿Êı¸ş¤ÎÇÛÃÖ¤ò¼èÆÀ¤¹¤ë
+    // ãƒ†ã‚­ã‚¹ãƒˆã®æ°´å¹³æ–¹å‘ã®é…ç½®ã‚’å–å¾—ã™ã‚‹
     protected function getHorizontalPosition ($cellAddress) {
         $horizontalPosition = $this->sheet->getStyle($cellAddress)->getAlignment()->getHorizontal();
         return $horizontalPosition;
     }
 
-    // ¥Æ¥­¥¹¥È¤Î¿âÄ¾Êı¸ş¤ÎÇÛÃÖ¤ò¼èÆÀ¤¹¤ë
+    // ãƒ†ã‚­ã‚¹ãƒˆã®å‚ç›´æ–¹å‘ã®é…ç½®ã‚’å–å¾—ã™ã‚‹
     protected function getVerticalPosition ($cellAddress) {
         $verticalPosition = $this->sheet->getStyle($cellAddress)->getAlignment()->getVertical();
-        //center¤Î¾ì¹ç¤ÏcssÍÑ¤Ëmiddle¤ËÃÖ´¹¤¹¤ë
+        //centerã®å ´åˆã¯cssç”¨ã«middleã«ç½®æ›ã™ã‚‹
         if ($verticalPosition == 'center') {
             $verticalPosition = 'middle';
         }
         return $verticalPosition;
     }
 
-    // ¥»¥ë¤Î¥Õ¥©¥ó¥È¾ğÊó¤ò¼èÆÀ¤¹¤ë
+    // ã‚»ãƒ«ã®ãƒ•ã‚©ãƒ³ãƒˆæƒ…å ±ã‚’å–å¾—ã™ã‚‹
     protected function getFontInfo($cellAddress) {
         $font = $this->sheet->getStyle($cellAddress)->getFont();
         $fontFamily = $font->getName();
@@ -1160,7 +1160,7 @@ class estimateSheetController {
         return $fontInfo;
     }
 
-    // ¥»¥ë¤ÎÂÀ»ú¡¢¼ĞÂÎ¾ğÊó¤ò¼èÆÀ¤¹¤ë
+    // ã‚»ãƒ«ã®å¤ªå­—ã€æ–œä½“æƒ…å ±ã‚’å–å¾—ã™ã‚‹
     protected function getEmphasizedStyle($font) {
         $bold = $font->getBold();
         $italic = $font->getItalic();
@@ -1172,7 +1172,7 @@ class estimateSheetController {
     }
 
     /**
-     * ¿ôÃÍ²½¤µ¤ì¤¿ÎóÈÖ¹æ¤ò¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È¤ËÊÑ´¹¤¹¤ë
+     * æ•°å€¤åŒ–ã•ã‚ŒãŸåˆ—ç•ªå·ã‚’ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã«å¤‰æ›ã™ã‚‹
      * 
      * @param $columnIndex
      * 
@@ -1182,15 +1182,15 @@ class estimateSheetController {
         if (!is_integer($columnIndex)) {
             return false;
         }
-        // ¥­¡¼¤Î¿ôÃÍ¤Ë¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È¤òÂĞ±ş¤µ¤»¤¿ÇÛÎó¤òÀ¸À®¤¹¤ë
+        // ã‚­ãƒ¼ã®æ•°å€¤ã«ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã‚’å¯¾å¿œã•ã›ãŸé…åˆ—ã‚’ç”Ÿæˆã™ã‚‹
         for ($i = 0; $i < 26; $i++) {
             $alphabet[] = chr(ord('A') + $i);
         }
-        // °ì¤Î°Ì¤Î½èÍı
+        // ä¸€ã®ä½ã®å‡¦ç†
         $number = fmod($columnIndex, 26);
         $column = $alphabet[$number];
         $carry = ($columnIndex - $number) / 26;
-        // ¤½¤ì°Ê¾å¤Î°Ì¤¬¤¢¤ë¾ì¹ç¤Ï°Ê²¼½èÍı
+        // ãã‚Œä»¥ä¸Šã®ä½ãŒã‚ã‚‹å ´åˆã¯ä»¥ä¸‹å‡¦ç†
         while ($carry > 0) {
             $carry = $carry -1;
             $number = fmod($carry, 26);
@@ -1202,7 +1202,7 @@ class estimateSheetController {
 
 
     /**
-     * Excel¤ÎÎóÌ¾¤ò¿ôÃÍ¤ËÊÑ´¹¤¹¤ë
+     * Excelã®åˆ—åã‚’æ•°å€¤ã«å¤‰æ›ã™ã‚‹
      * 
      * @param $column
      * 
@@ -1212,28 +1212,28 @@ class estimateSheetController {
         $error = !preg_match('/[A-Z]+/', $column);
         if (!$error) {
             $columnIndex = 0;
-            //Ê¸»úÎó¤òÈ¿Å¾¤¹¤ë
+            //æ–‡å­—åˆ—ã‚’åè»¢ã™ã‚‹
             $column = strrev($column);
-            //1Ê¸»ú¤º¤ÄÀÚ¤Ã¤¿¤â¤Î¤òÇÛÎó¤Ë³ÊÇ¼
+            //1æ–‡å­—ãšã¤åˆ‡ã£ãŸã‚‚ã®ã‚’é…åˆ—ã«æ ¼ç´
             $columnDigit = str_split($column);
             for($i = 0; $i < count($columnDigit); $i++) {
-            //ord´Ø¿ô¤ò»È¤¤¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È¤ò¿ôÃÍ(ASCIIÃÍ¡Ë¤Ë¤·¡¢-64¤¹¤ë¤³¤È¤ÇA = 1 ¤«¤é»Ï¤Ş¤ëÈÖ¹æ¤Ë¤Ê¤ë
-            //¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È¤¬Áı¤¨¤ë¤´¤È¤Ë26¤ÎÎß¾è·å¤òÁı¤ä¤¹
+            //ordé–¢æ•°ã‚’ä½¿ã„ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã‚’æ•°å€¤(ASCIIå€¤ï¼‰ã«ã—ã€-64ã™ã‚‹ã“ã¨ã§A = 1 ã‹ã‚‰å§‹ã¾ã‚‹ç•ªå·ã«ãªã‚‹
+            //ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆãŒå¢—ãˆã‚‹ã”ã¨ã«26ã®ç´¯ä¹—æ¡ã‚’å¢—ã‚„ã™
             $columnIndex += (ord($columnDigit[$i]) -64) * pow(26, $i);
             }
-            $columnIndex = $columnIndex -1; // A = 0¤«¤é»Ï¤Ş¤ë¤è¤¦¤Ë1¤ò°ú¤¯
+            $columnIndex = $columnIndex -1; // A = 0ã‹ã‚‰å§‹ã¾ã‚‹ã‚ˆã†ã«1ã‚’å¼•ã
             return $columnIndex;
         }
     }
 
     /**
-     * ¥¯¥é¥¹¾ğÊó¤ò¥»¥Ã¥È¤¹¤ë
+     * ã‚¯ãƒ©ã‚¹æƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
      * 
-     * @param integer $row ¥¯¥é¥¹¤ò¥»¥Ã¥È¤¹¤ë¹Ô
-     * @param integer $col ¥¯¥é¥¹¤ò¥»¥Ã¥È¤¹¤ëÎó
-     * @param string  $className ¥¯¥é¥¹Ì¾
+     * @param integer $row ã‚¯ãƒ©ã‚¹ã‚’ã‚»ãƒƒãƒˆã™ã‚‹è¡Œ
+     * @param integer $col ã‚¯ãƒ©ã‚¹ã‚’ã‚»ãƒƒãƒˆã™ã‚‹åˆ—
+     * @param string  $className ã‚¯ãƒ©ã‚¹å
      * 
-     * @return ¥¯¥é¥¹¾ğÊó¤ÎÇÛÎó
+     * @return ã‚¯ãƒ©ã‚¹æƒ…å ±ã®é…åˆ—
      */
     protected function setCellClass($row, $col, $className) {
         $cellClass = array(
@@ -1244,7 +1244,7 @@ class estimateSheetController {
         return $cellClass;
     }
 
-    // ·ÓÀş¾ğÊó¤òCSSÍÑ¤ËÊÑ´¹¤¹¤ë
+    // ç½«ç·šæƒ…å ±ã‚’CSSç”¨ã«å¤‰æ›ã™ã‚‹
     protected function setBorderForCss($borderStyle) {
         switch($borderStyle) {
             case 'none':
@@ -1298,44 +1298,44 @@ class estimateSheetController {
     }
 
     /**
-     * ÎÙÀÜ¤¹¤ë¥»¥ë´Ö¤ÎÍ­¸ú¤Ê·ÓÀş¾ğÊó¤ò¼èÆÀ¤¹¤ë
-     * (Excel¤Ç¤ÏÎÙÀÜÉô°Ì¤ËÈóÉ½¼¨¤Î·ÓÀş¾ğÊó¤ò»ı¤Ã¤Æ¤¤¤ë¾ì¹ç¤¬¤¢¤ê¡¢¤½¤Î¤Ş¤ŞÉÁ²è¤¹¤ë¤Èhtml¤Ç¤Ï2½Å¤ËÉ½¼¨¤µ¤ì¤ë¤¿¤á)
+     * éš£æ¥ã™ã‚‹ã‚»ãƒ«é–“ã®æœ‰åŠ¹ãªç½«ç·šæƒ…å ±ã‚’å–å¾—ã™ã‚‹
+     * (Excelã§ã¯éš£æ¥éƒ¨ä½ã«éè¡¨ç¤ºã®ç½«ç·šæƒ…å ±ã‚’æŒã£ã¦ã„ã‚‹å ´åˆãŒã‚ã‚Šã€ãã®ã¾ã¾æç”»ã™ã‚‹ã¨htmlã§ã¯2é‡ã«è¡¨ç¤ºã•ã‚Œã‚‹ãŸã‚)
      * 
-     * @param array   $high ÎóÈÖ¹æËô¤Ï¹ÔÈÖ¹æ¤¬Âç¤­¤¤Êı¤Î¥»¥ë
-     * @param array   $low  ÎóÈÖ¹æËô¤Ï¹ÔÈÖ¹æ¤¬¾®¤µ¤¤Êı¤Î¥»¥ë
+     * @param array   $high åˆ—ç•ªå·åˆã¯è¡Œç•ªå·ãŒå¤§ãã„æ–¹ã®ã‚»ãƒ«
+     * @param array   $low  åˆ—ç•ªå·åˆã¯è¡Œç•ªå·ãŒå°ã•ã„æ–¹ã®ã‚»ãƒ«
      * 
      */
     protected function setAvailableBorderInfo(&$high, &$low ) {
-        // ¾®¤µ¤¤Â¦¤Î·ÓÀş¤¬¤¢¤ë¾ì¹ç¤Î¤ßÍ­¸ú¤Ê·ÓÀş¾ğÊó¤ÎÊÑ´¹¤ò¹Ô¤¦
+        // å°ã•ã„å´ã®ç½«ç·šãŒã‚ã‚‹å ´åˆã®ã¿æœ‰åŠ¹ãªç½«ç·šæƒ…å ±ã®å¤‰æ›ã‚’è¡Œã†
         if ($high['excelStyle'] !== "none") {
             if ($high['excelStyle'] === $low['excelStyle']) {
-                // ·ÓÀş¤Î½ñ¼°¤¬Æ±¤¸¤Ç¿§¤¬°Û¤Ê¤ë¾ì¹ç¤Ï¹õ¤Ë¤¹¤ë(¿§¤Ë¤è¤ëÍ¥Àè½ç°Ì¤ÎÈ½ÊÌ¤Ï¹Ô¤ï¤Ê¤¤)
+                // ç½«ç·šã®æ›¸å¼ãŒåŒã˜ã§è‰²ãŒç•°ãªã‚‹å ´åˆã¯é»’ã«ã™ã‚‹(è‰²ã«ã‚ˆã‚‹å„ªå…ˆé †ä½ã®åˆ¤åˆ¥ã¯è¡Œã‚ãªã„)
                 if ($high['color'] !== $low['color']) {
                     $low['color'] = "000000";
                 }
             }
-            // ·ÓÀş¤Î¼ïÎà¤¬°Û¤Ê¤ë¾ì¹ç¤ÏÍ¥Àè½ç°ÌÊÌ¤Ë»ØÄê¤¹¤ë
+            // ç½«ç·šã®ç¨®é¡ãŒç•°ãªã‚‹å ´åˆã¯å„ªå…ˆé †ä½åˆ¥ã«æŒ‡å®šã™ã‚‹
             else {
-                // Í¥Àè½ç°ÌÇÛÎó¤ò¼èÆÀ
+                // å„ªå…ˆé †ä½é…åˆ—ã‚’å–å¾—
                 $linePriority = $this->makeLinePriority();
                 $lowPriorityKey = array_keys($linePriority, $low['excelStyle']);
                 $highPriorityKey = array_keys($linePriority, $high['excelStyle']);
                 if ($lowPriorityKey > $highPriorityKey) {
-                    // $high¤Î·ÓÀş¤ÎÍ¥Àè½ç°Ì¤¬¹â¤¤¾ì¹ç¤Ï$low¤ËÂåÆş¤¹¤ë
+                    // $highã®ç½«ç·šã®å„ªå…ˆé †ä½ãŒé«˜ã„å ´åˆã¯$lowã«ä»£å…¥ã™ã‚‹
                     $low = $high;
                 }
             }
-            // Âç¤­¤¤Â¦¤Î·ÓÀş¾ğÊó¤òºï½ü¤¹¤ë
+            // å¤§ãã„å´ã®ç½«ç·šæƒ…å ±ã‚’å‰Šé™¤ã™ã‚‹
             $high['excelStyle'] = "none";
         }
     }
 
      /**
-     * ·ë¹ç¥»¥ë¤Î¾ğÊó¤ò¥·¥Õ¥È¤µ¤»¤ë
+     * çµåˆã‚»ãƒ«ã®æƒ…å ±ã‚’ã‚·ãƒ•ãƒˆã•ã›ã‚‹
      * 
-     * @param array   $mergedCellsList ·ë¹ç¥»¥ë¤Î¥ê¥¹¥È
-     * @param string  $rowShift ¹Ô¤Î¥·¥Õ¥ÈÎÌ
-     * @param string  $columnShift  Îó¤Î¥·¥Õ¥ÈÎÌ
+     * @param array   $mergedCellsList çµåˆã‚»ãƒ«ã®ãƒªã‚¹ãƒˆ
+     * @param string  $rowShift è¡Œã®ã‚·ãƒ•ãƒˆé‡
+     * @param string  $columnShift  åˆ—ã®ã‚·ãƒ•ãƒˆé‡
      * 
      */
     protected function shiftMergedCellsList(&$mergedCellsList, $rowShift, $columnShift) {
@@ -1348,11 +1348,11 @@ class estimateSheetController {
 
 
     /**
-    * ·ë¹ç¥»¥ë¤¬¤¢¤ë¾ì¹ç¡¢·ë¹ç¸µ¤Î¥»¥ë¤Ë·ÓÀş¾ğÊó¤òÉÕÍ¿¤¹¤ë
-    *¡ÊHandsontableÂĞ±ş¡¢·ë¹ç¥»¥ë¤ÎºÇ¤âº¸¾å¤Î·ÓÀş¾ğÊó¤ò¼èÆÀ¤·¤ÆÉÁ²è¤¹¤ë°Ù¡Ë
+    * çµåˆã‚»ãƒ«ãŒã‚ã‚‹å ´åˆã€çµåˆå…ƒã®ã‚»ãƒ«ã«ç½«ç·šæƒ…å ±ã‚’ä»˜ä¸ã™ã‚‹
+    *ï¼ˆHandsontableå¯¾å¿œã€çµåˆã‚»ãƒ«ã®æœ€ã‚‚å·¦ä¸Šã®ç½«ç·šæƒ…å ±ã‚’å–å¾—ã—ã¦æç”»ã™ã‚‹ç‚ºï¼‰
     * 
-    * @param array   $mergedCellsList ¥Ş¡¼¥¸¤µ¤ì¤¿¥»¥ë¤Î¾ğÊó(row¡§³«»Ï¹Ô¡¢column¡§³«»ÏÎó¡¢rowspan¡§·ë¹ç¹Ô¿ô¡¢colspan¡§·ë¹çÎó¿ô¤ÎÇÛÎó)
-    * @param array   $cellData  ¥»¥ë¤Î¾ğÊó¡Êborder¡§·ÓÀş¤Î¾ğÊó¤ò´Ş¤à¡Ë
+    * @param array   $mergedCellsList ãƒãƒ¼ã‚¸ã•ã‚ŒãŸã‚»ãƒ«ã®æƒ…å ±(rowï¼šé–‹å§‹è¡Œã€columnï¼šé–‹å§‹åˆ—ã€rowspanï¼šçµåˆè¡Œæ•°ã€colspanï¼šçµåˆåˆ—æ•°ã®é…åˆ—)
+    * @param array   $cellData  ã‚»ãƒ«ã®æƒ…å ±ï¼ˆborderï¼šç½«ç·šã®æƒ…å ±ã‚’å«ã‚€ï¼‰
     * 
     * @return boolean
     */
@@ -1361,9 +1361,9 @@ class estimateSheetController {
             foreach($mergedCellsList as $value) {
                 $endMergedRow = $value['row'] + $value['rowspan'] -1;
                 $endMergedColumn = $value['col'] + $value['colspan'] -1;
-                // ·ë¹ç¥»¥ë¤Î°ìÈÖº¸¤Î·ÓÀş¾ğÊó¤Ë¡¢·ë¹ç¥»¥ë¤Î°ìÈÖ±¦¤Î·ÓÀş¾ğÊó¤òÆş¤ì¤ë
+                // çµåˆã‚»ãƒ«ã®ä¸€ç•ªå·¦ã®ç½«ç·šæƒ…å ±ã«ã€çµåˆã‚»ãƒ«ã®ä¸€ç•ªå³ã®ç½«ç·šæƒ…å ±ã‚’å…¥ã‚Œã‚‹
                 $cellData[$value['row']][$value['col']]['border']['right'] = $cellData[$value['row']][$endMergedColumn]['border']['right'];
-                // ·ë¹ç¥»¥ë¤Î°ìÈÖ¾å¤Î·ÓÀş¾ğÊó¤Ë¡¢·ë¹ç¥»¥ë¤Î°ìÈÖ²¼¤Î·ÓÀş¾ğÊó¤òÆş¤ì¤ë
+                // çµåˆã‚»ãƒ«ã®ä¸€ç•ªä¸Šã®ç½«ç·šæƒ…å ±ã«ã€çµåˆã‚»ãƒ«ã®ä¸€ç•ªä¸‹ã®ç½«ç·šæƒ…å ±ã‚’å…¥ã‚Œã‚‹
                 $cellData[$value['row']][$value['col']]['border']['bottom'] = $cellData[$endMergedRow][$value['col']]['border']['bottom'];
             } 
         }
@@ -1371,7 +1371,7 @@ class estimateSheetController {
     }
 
     /**
-    * ¥¨¥¯¥»¥ë¤Ç½ĞÎÏ¤µ¤ì¤ë¥¨¥é¡¼¥ê¥¹¥È¤ÎÀ¸À®
+    * ã‚¨ã‚¯ã‚»ãƒ«ã§å‡ºåŠ›ã•ã‚Œã‚‹ã‚¨ãƒ©ãƒ¼ãƒªã‚¹ãƒˆã®ç”Ÿæˆ
     * 
     */
     public function setExcelErrorList() {
@@ -1390,7 +1390,7 @@ class estimateSheetController {
     }
 
     /**
-    * ÂĞ¾İ¥¨¥ê¥¢¤Î³«»Ï¹Ô¤È½ªÎ»¹Ô¤ò¥»¥Ã¥È¤¹¤ë
+    * å¯¾è±¡ã‚¨ãƒªã‚¢ã®é–‹å§‹è¡Œã¨çµ‚äº†è¡Œã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     * 
     */
     protected function setRowRangeOfTargetArea() {
@@ -1401,11 +1401,11 @@ class estimateSheetController {
             }           
         }
 
-        // ÉôºàÈñ¥¨¥ê¥¢¤Î³«»Ï¹Ô¤È½ªÎ»¹Ô¤ò¥»¥Ã¥È¤¹¤ë
+        // éƒ¨æè²»ã‚¨ãƒªã‚¢ã®é–‹å§‹è¡Œã¨çµ‚äº†è¡Œã‚’ã‚»ãƒƒãƒˆã™ã‚‹
         $firstRow = $rows[DEF_AREA_PARTS_COST_ORDER]['firstRow'];
         $lastRow = $rows[DEF_AREA_PARTS_COST_ORDER]['lastRow'];
 
-        // ÉôºàÈñ¥¨¥ê¥¢¤Î»ÅÆş²ÊÌÜ¤ÎÎóÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
+        // éƒ¨æè²»ã‚¨ãƒªã‚¢ã®ä»•å…¥ç§‘ç›®ã®åˆ—ç•ªå·ã‚’å–å¾—ã™ã‚‹
         $subjectCellName = workSheetConst::ORDER_ELEMENTS_COST_STOCK_SUBJECT_CODE;
         $cellAddress = $this->cellAddressList[$subjectCellName];
         if (!$cellAddress) {
@@ -1414,18 +1414,18 @@ class estimateSheetController {
         $ret = self::separateRowAndColumn($cellAddress);
         $column = $ret['column'];
         
-        // ¤½¤ÎÂ¾ÈñÍÑ¥¨¥ê¥¢¤Î³«»Ï¹Ô¤È½ªÎ»¹Ô¤ò¥»¥Ã¥È¤¹¤ë¡ÊÉôºàÈñ¤Î½ªÎ»¹Ô¤âºÆ¥»¥Ã¥È¤¹¤ë¡Ë
+        // ãã®ä»–è²»ç”¨ã‚¨ãƒªã‚¢ã®é–‹å§‹è¡Œã¨çµ‚äº†è¡Œã‚’ã‚»ãƒƒãƒˆã™ã‚‹ï¼ˆéƒ¨æè²»ã®çµ‚äº†è¡Œã‚‚å†ã‚»ãƒƒãƒˆã™ã‚‹ï¼‰
         for ($row = $firstRow; $row <= $lastRow; ++$row) {
             $cell = $column. $row;
             $backgroundColor = $this->sheet->getStyle($cell)->getFill()->getStartColor()->getRGB();
             if (isset($color)) {
                 if ($backgroundColor !== $color) {
-                    // ¿§¤ÎÊÑ²½¤¬¤¢¤Ã¤¿¹Ô¤ò¤½¤ÎÂ¾ÈñÍÑ¥¨¥ê¥¢¤Î³«»Ï¹Ô¤È¤¹¤ë
+                    // è‰²ã®å¤‰åŒ–ãŒã‚ã£ãŸè¡Œã‚’ãã®ä»–è²»ç”¨ã‚¨ãƒªã‚¢ã®é–‹å§‹è¡Œã¨ã™ã‚‹
                     $rows[DEF_AREA_OTHER_COST_ORDER] = array(
                         'firstRow' => $row,
                         'lastRow' => $lastRow
                     );
-                    // ÉôºàÈñ¥¨¥ê¥¢¤Î½ªÎ»¹Ô¤òºÆ¥»¥Ã¥È¤¹¤ë
+                    // éƒ¨æè²»ã‚¨ãƒªã‚¢ã®çµ‚äº†è¡Œã‚’å†ã‚»ãƒƒãƒˆã™ã‚‹
                     $rows[DEF_AREA_PARTS_COST_ORDER]['lastRow'] = $row - 1;
                     break;
                 }
@@ -1440,19 +1440,19 @@ class estimateSheetController {
 
 
     /**
-    * ÂĞ¾İ¥¨¥ê¥¢¤Î¹ÔÈÏ°Ï¤ò¼èÆÀ¤¹¤ë(³«»Ï¹Ô¤È½ªÎ»¹Ô)
-    * @param integer   $areaCode  ¥¨¥ê¥¢¶èÊ¬ÈÖ¹æ
+    * å¯¾è±¡ã‚¨ãƒªã‚¢ã®è¡Œç¯„å›²ã‚’å–å¾—ã™ã‚‹(é–‹å§‹è¡Œã¨çµ‚äº†è¡Œ)
+    * @param integer   $areaCode  ã‚¨ãƒªã‚¢åŒºåˆ†ç•ªå·
     * 
     */
     protected function getRowRangeOfTargetArea($areaCode) {
-        // ÂĞ¾İ¥¨¥ê¥¢¤Î¥»¥ëÌ¾¾Î¼èÆÀ
+        // å¯¾è±¡ã‚¨ãƒªã‚¢ã®ã‚»ãƒ«åç§°å–å¾—
         $cellNameList = workSheetConst::getCellNameOfTargetArea($areaCode);
         $cellAddressList = $this->cellAddressList;
-        // ¥Ø¥Ã¥À¡¼¤ª¤è¤Ó¥Õ¥Ã¥¿¡¼¡Ê·×»»·ë²Ì¡Ë¤Î¥»¥ëÌ¾¾Î¤ò1¤Ä¥»¥Ã¥È¤¹¤ë
+        // ãƒ˜ãƒƒãƒ€ãƒ¼ãŠã‚ˆã³ãƒ•ãƒƒã‚¿ãƒ¼ï¼ˆè¨ˆç®—çµæœï¼‰ã®ã‚»ãƒ«åç§°ã‚’1ã¤ã‚»ãƒƒãƒˆã™ã‚‹
         $upperCellName = self::getFirstElement($cellNameList['headerList']);
         $belowCellName = self::getFirstElement($cellNameList['resultList']);
 
-        // ¥»¥ëÌ¾¾Î¤«¤é¹ÔÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
+        // ã‚»ãƒ«åç§°ã‹ã‚‰è¡Œç•ªå·ã‚’å–å¾—ã™ã‚‹
         $firstRow = $this->getRowNumberFromCellName($upperCellName) + 1;
         $lastRow = $this->getRowNumberFromCellName($belowCellName) - 1;
         $rows = array(
@@ -1463,20 +1463,20 @@ class estimateSheetController {
     }
 
     /**
-    * ÇÛÎó¤ÎºÇ½é¤ÎÍ×ÁÇ¤ò¼èÆÀ¤¹¤ë
-    * @param array   $array  Í×ÁÇ¤ò¼èÆÀ¤·¤¿¤¤ÇÛÎó
+    * é…åˆ—ã®æœ€åˆã®è¦ç´ ã‚’å–å¾—ã™ã‚‹
+    * @param array   $array  è¦ç´ ã‚’å–å¾—ã—ãŸã„é…åˆ—
     * 
-    * @return array  ÇÛÎó¤ÎºÇ½é¤ÎÍ×ÁÇ
+    * @return array  é…åˆ—ã®æœ€åˆã®è¦ç´ 
     */
     public static function getFirstElement($array){
         return current($array);
     }
 
     /**
-    * ¥»¥ëÌ¾¾Î¤«¤é¹ÔÈÖ¹æ¡¢ÎóÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
-    * @param string   $cellName  ¥»¥ëÌ¾¾Î
+    * ã‚»ãƒ«åç§°ã‹ã‚‰è¡Œç•ªå·ã€åˆ—ç•ªå·ã‚’å–å¾—ã™ã‚‹
+    * @param string   $cellName  ã‚»ãƒ«åç§°
     *
-    * @return array  ¹ÔÈÖ¹æ¤ÈÎóÈÖ¹æ¤Î¾ğÊó
+    * @return array  è¡Œç•ªå·ã¨åˆ—ç•ªå·ã®æƒ…å ±
     */
     protected function getRowAndColumnFromCellName($cellName) {
         $cellAddressList = $this->cellAddressList;
@@ -1489,10 +1489,10 @@ class estimateSheetController {
     }
 
     /**
-    * ¥»¥ëÌ¾¾Î¤«¤é¹ÔÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
-    * @param string   $cellName  ¥»¥ëÌ¾¾Î
+    * ã‚»ãƒ«åç§°ã‹ã‚‰è¡Œç•ªå·ã‚’å–å¾—ã™ã‚‹
+    * @param string   $cellName  ã‚»ãƒ«åç§°
     *
-    * @return string  ¹ÔÈÖ¹æ
+    * @return string  è¡Œç•ªå·
     */
     protected function getRowNumberFromCellName($cellName) {
         $rowAndColumn = $this->getRowAndColumnFromCellName($cellName);
@@ -1500,10 +1500,10 @@ class estimateSheetController {
     }
 
     /**
-    * ¥»¥ëÌ¾¾Î¤«¤éÎóÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
-    * @param string   $cellName  ¥»¥ëÌ¾¾Î
+    * ã‚»ãƒ«åç§°ã‹ã‚‰åˆ—ç•ªå·ã‚’å–å¾—ã™ã‚‹
+    * @param string   $cellName  ã‚»ãƒ«åç§°
     *
-    * @return string  ÎóÈÖ¹æ¡Ê¥¢¥ë¥Õ¥¡¥Ù¥Ã¥È)
+    * @return string  åˆ—ç•ªå·ï¼ˆã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆ)
     */
     protected function getColumnNumberFromCellName($cellName) {
         $rowAndColumn = $this->getRowAndColumnFromCellName($cellName);
@@ -1511,9 +1511,9 @@ class estimateSheetController {
     }
 
     /**
-    * ¥·¡¼¥È¤Ë¸«ÀÑ¸¶²Á¾ğÊó¤ò¥»¥Ã¥È¤¹¤ë
-    * @param string   $productData  À½ÉÊ¾ğÊó
-    * @param string   $estimateData  ¸«ÀÑ¸¶²Á¾ğÊó
+    * ã‚·ãƒ¼ãƒˆã«è¦‹ç©åŸä¾¡æƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
+    * @param string   $productData  è£½å“æƒ…å ±
+    * @param string   $estimateData  è¦‹ç©åŸä¾¡æƒ…å ±
     *
     */
     public function setDBEstimateData($productData, $estimateData, $mode = null) {
@@ -1521,18 +1521,18 @@ class estimateSheetController {
             $this->mode = $mode;
         }
 
-        $this->templateAdjust($estimateData); // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ°·Á
-        $this->paramAssignForHiddenCells(); // ¸¡º÷¤ËÉ¬Í×¤ÊÃÍ¤Î¥»¥Ã¥È
-        $this->inputHeaderData($productData); // À½ÉÊ¾ğÊó¤Î¥»¥Ã¥È¡Ê¥Ø¥Ã¥ÀÉô¡Ë
-        $this->inputStandardRate(); // É¸½à³ä¹ç¤Î¥»¥Ã¥È
-        $this->inputEstimateDetailData($estimateData); // ¸«ÀÑ¸¶²ÁÌÀºÙ¤Î¥»¥Ã¥È
+        $this->templateAdjust($estimateData); // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆæ•´å½¢
+        $this->paramAssignForHiddenCells(); // æ¤œç´¢ã«å¿…è¦ãªå€¤ã®ã‚»ãƒƒãƒˆ
+        $this->inputHeaderData($productData); // è£½å“æƒ…å ±ã®ã‚»ãƒƒãƒˆï¼ˆãƒ˜ãƒƒãƒ€éƒ¨ï¼‰
+        $this->inputStandardRate(); // æ¨™æº–å‰²åˆã®ã‚»ãƒƒãƒˆ
+        $this->inputEstimateDetailData($estimateData); // è¦‹ç©åŸä¾¡æ˜ç´°ã®ã‚»ãƒƒãƒˆ
 
         if ($mode === workSheetConst::MODE_ESTIMATE_DOWNLOAD) {
             $this->inputDropdownList();
         }
     }
 
-    // ¥Ø¥Ã¥ÀÉô¤ËÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+    // ãƒ˜ãƒƒãƒ€éƒ¨ã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     public function inputHeaderData($productData) {
         $cellAddressList = $this->cellAddressList;
         foreach ($productData as $key => $param) {
@@ -1543,9 +1543,9 @@ class estimateSheetController {
         }
     }
 
-    // ¥ï¡¼¥¯¥·¡¼¥È¤ËÉ¸½à³ä¹ç¤ò¥»¥Ã¥È¤¹¤ë
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã«æ¨™æº–å‰²åˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     public function inputStandardRate() {
-        // DB¤«¤éÉ¸½à³ä¹ç¤ò¼èÆÀ
+        // DBã‹ã‚‰æ¨™æº–å‰²åˆã‚’å–å¾—
 	    $standardRate = $this->objDB->getEstimateStandardRate();
         $cellAddressList = $this->cellAddressList;
         $cell = $cellAddressList[workSheetConst::STANDARD_RATE];
@@ -1553,7 +1553,7 @@ class estimateSheetController {
         return;
     }
 
-    // ÌÀºÙÉô¤ËÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+    // æ˜ç´°éƒ¨ã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     public function inputEstimateDetailData($estimateData) {
         $targetAreaRows = $this->targetAreaRows;
         foreach ($estimateData as $areaCode => $data) {
@@ -1563,7 +1563,7 @@ class estimateSheetController {
     }
 
 
-    // ÂĞ¾İ¥¨¥ê¥¢¤Ë¸«ÀÑ¸¶²ÁÌÀºÙ¾ğÊó¤ò¥»¥Ã¥È¤¹¤ë
+    // å¯¾è±¡ã‚¨ãƒªã‚¢ã«è¦‹ç©åŸä¾¡æ˜ç´°æƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     protected function inputEstimateDetailToTargetArea($areaCode, $datas) {
         $targetAreaRows = $this->targetAreaRows;
         $columnNumber = $this->getColumnNumberList($areaCode);
@@ -1583,13 +1583,13 @@ class estimateSheetController {
                 if (isset($row) && isset($column)) {
                     $cell = $column. $row;
                     $this->sheet->getCell($cell)->setValue($value);
-                    // ¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¤Î¾ì¹ç¡¢½ñ¼°¤òÊÑ¹¹¤¹¤ë
+                    // ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã®å ´åˆã€æ›¸å¼ã‚’å¤‰æ›´ã™ã‚‹
                     if ($name == 'customerCompany' && is_numeric($value)) {
                         $style = $this->sheet->getStyle($cell);
                         $style->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_PERCENTAGE_00);
                         $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
                     }
-                    // ¥Ç¡¼¥¿½ñ¤­¹ş¤ß¾ğÊó¤ÎºîÀ®
+                    // ãƒ‡ãƒ¼ã‚¿æ›¸ãè¾¼ã¿æƒ…å ±ã®ä½œæˆ
                     $inputData[$row] = array(
                         'areaCode' => $areaCode,
                         'sortKey' => $sorKey,
@@ -1600,7 +1600,7 @@ class estimateSheetController {
             ++$row;
         }
 
-        // ¥ï¡¼¥¯¥·¡¼¥È¤Ø¤Î¥Ç¡¼¥¿½ñ¤­¹ş¤ß¾ğÊó¤òÊİ»ı
+        // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã¸ã®ãƒ‡ãƒ¼ã‚¿æ›¸ãè¾¼ã¿æƒ…å ±ã‚’ä¿æŒ
         if ($this->inputData) {
             $this->inputData += $inputData;
         } else {
@@ -1611,22 +1611,22 @@ class estimateSheetController {
     }
 
 
-    // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥ï¡¼¥¯¥·¡¼¥È¥ª¥Ö¥¸¥§¥¯¥ÈÆâ¤Î¥»¥ë¤ËÆşÎÏ¤¹¤ë
+    // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå†…ã®ã‚»ãƒ«ã«å…¥åŠ›ã™ã‚‹
     protected function inputDropdownList() {
-        // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¸µ¥Ç¡¼¥¿¤òDB¤è¤ê¼èÆÀ¤¹¤ë
+        // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®å…ƒãƒ‡ãƒ¼ã‚¿ã‚’DBã‚ˆã‚Šå–å¾—ã™ã‚‹
         $this->setDropdownList();
 
-        // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ÎÀ¸À®
+        // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ç”Ÿæˆ
 
-        $this->inputInchargeDropdownList(); // ±Ä¶ÈÉô½ğ¡¢Ã´Åö
+        $this->inputInchargeDropdownList(); // å–¶æ¥­éƒ¨ç½²ã€æ‹…å½“
 
-        $this->inputDevelopDropdownList(); // ³«È¯Ã´Åö¼Ô
+        $this->inputDevelopDropdownList(); // é–‹ç™ºæ‹…å½“è€…
 
-        $this->inputDetailDropdownList(); // ÌÀºÙ¹Ô(Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ¡¢Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¡¢¸ÜµÒÀè or »ÅÆşÀè)
+        $this->inputDetailDropdownList(); // æ˜ç´°è¡Œ(å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®ã€å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã€é¡§å®¢å…ˆ or ä»•å…¥å…ˆ)
 
     }
 
-    // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥ª¥Ö¥¸¥§¥¯¥È¤Ë¥»¥Ã¥È¤¹¤ë
+    // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚»ãƒƒãƒˆã™ã‚‹
     protected function setDropdownList() {
         if (!$this->dropdownDSCI) {
             $this->setDropdownForDivSubAndClsItm();
@@ -1646,11 +1646,11 @@ class estimateSheetController {
     protected function setDropdownForDivSubAndClsItm() {
         $dropdown = $this->objDB->getDropdownForDivSubAndClsItm();
 
-        // Çä¾åÊ¬Îà(or»ÅÆş²ÊÌÜ)¡¢Çä¾å¶èÊ¬(or»ÅÆşÉôÉÊ)¤Ë¤Ä¤¤¤Æ¥ê¥ì¡¼¥·¥ç¥ó¤ò°İ»ı¤·¤ÆÀÚ¤êÊ¬¤±¤ë
+        // å£²ä¸Šåˆ†é¡(orä»•å…¥ç§‘ç›®)ã€å£²ä¸ŠåŒºåˆ†(orä»•å…¥éƒ¨å“)ã«ã¤ã„ã¦ãƒªãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç¶­æŒã—ã¦åˆ‡ã‚Šåˆ†ã‘ã‚‹
         foreach ($dropdown as $list) {
             $areaCode = $list->areacode;
         
-            // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥¨¥ê¥¢¶èÊ¬¡¢Çä¾åÊ¬Îà¤´¤È¤ËÀ°Íı
+            // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚¨ãƒªã‚¢åŒºåˆ†ã€å£²ä¸Šåˆ†é¡ã”ã¨ã«æ•´ç†
             $newList[$areaCode][$list->divisionsubject][] = $list->classitem;
         }
 
@@ -1661,7 +1661,7 @@ class estimateSheetController {
     protected function setDropdownForCompany() {
         $dropdown = $this->objDB->getDropdownForCompany();
 
-        // ²ñ¼Ò¤ò¸ÜµÒÀè¤È»ÅÆşÀè/¹©¾ì¤ËÊ¬Îà¤¹¤ë
+        // ä¼šç¤¾ã‚’é¡§å®¢å…ˆã¨ä»•å…¥å…ˆ/å·¥å ´ã«åˆ†é¡ã™ã‚‹
         foreach ($dropdown as $list) {
             $companyAttribute = $list->lngattributecode;
             $newCompanyList[$companyAttribute][] = $list->customercompany;
@@ -1681,12 +1681,12 @@ class estimateSheetController {
         return;
     }
 
-    // ±Ä¶ÈÉô½ğµÚ¤ÓÃ´Åö¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥Ö¥Ã¥¯¤Ë¥»¥Ã¥È¤¹¤ë
+    // å–¶æ¥­éƒ¨ç½²åŠã³æ‹…å½“ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ãƒ–ãƒƒã‚¯ã«ã‚»ãƒƒãƒˆã™ã‚‹
     protected function inputInchargeDropdownList() {
 
         $dropdownGU = $this->dropdownGU;
 
-        // ¥æ¡¼¥¶¡¼¤òÉô½ğ¤´¤È¤ËÀÚ¤êÊ¬¤±¤ë
+        // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚’éƒ¨ç½²ã”ã¨ã«åˆ‡ã‚Šåˆ†ã‘ã‚‹
         foreach ($dropdownGU as $list) {
             $groupCode = $list->groupcode;
             $newInchargeList[$groupCode][] = $list->usercode;
@@ -1694,14 +1694,14 @@ class estimateSheetController {
 
         $cellAddressList = $this->cellAddressList;
 
-        // ¥É¥í¥Ã¥×¥À¥¦¥ó¤Î¥ê¥¹¥È¤ò½ñ¤­¹ş¤à¥»¥ë¤Î¾ğÊó¼èÆÀ
-        $inchargeGroupListCellName = workSheetConst::INCHARGE_GROUP_DROPDOWN; // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥»¥Ã¥È¤¹¤ë¤¿¤á¤Î¥»¥ëÌ¾¾Î(±Ä¶ÈÉô½ğ)
+        // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ã®ãƒªã‚¹ãƒˆã‚’æ›¸ãè¾¼ã‚€ã‚»ãƒ«ã®æƒ…å ±å–å¾—
+        $inchargeGroupListCellName = workSheetConst::INCHARGE_GROUP_DROPDOWN; // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã®ã‚»ãƒ«åç§°(å–¶æ¥­éƒ¨ç½²)
         $IGLCellAddress = $cellAddressList[$inchargeGroupListCellName];
         $IGLSeparate = self::separateRowAndColumn($IGLCellAddress);
         $IGLHeaderRow = $IGLSeparate['row'];
         $IGLCol = $IGLSeparate['column'];
 
-        $inchargeUserListCellName = workSheetConst::INCHARGE_USER_DROPDOWN; // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥»¥Ã¥È¤¹¤ë¤¿¤á¤Î¥»¥ëÌ¾¾Î(Ã´Åö)
+        $inchargeUserListCellName = workSheetConst::INCHARGE_USER_DROPDOWN; // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã®ã‚»ãƒ«åç§°(æ‹…å½“)
         $IULCellAddress = $cellAddressList[$inchargeUserListCellName];
         $IULSeparate = self::separateRowAndColumn($IULCellAddress);
         $IULHeaderRow = $IULSeparate['row'];
@@ -1710,10 +1710,10 @@ class estimateSheetController {
         $IGLRow = $IGLHeaderRow + 1;
         $IULRow = $IULHeaderRow + 1;
 
-        // Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ÎºÇ½é¤Î¥»¥ë
+        // å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®æœ€åˆã®ã‚»ãƒ«
         $startIGLCell = '$'. $IGLCol. '$'. $IGLRow;
 
-        // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤òÀ¸À®¤·¡¢¥Ö¥Ã¥¯¤Ë¥»¥Ã¥È¤¹¤ë
+        // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆã—ã€ãƒ–ãƒƒã‚¯ã«ã‚»ãƒƒãƒˆã™ã‚‹
         foreach ($newInchargeList as $groupCode => $userCodeList) {
             ++$IGLRow;
             $inputIGLCell = $IGLCol.$IGLRow;
@@ -1734,17 +1734,17 @@ class estimateSheetController {
             ++$IULRow;
         }
 
-        $blankCell = '$'. $IULCol. '$'. $IULRow;  // ¥Ö¥é¥ó¥¯¥»¥ë¤ÎÀßÄê
+        $blankCell = '$'. $IULCol. '$'. $IULRow;  // ãƒ–ãƒ©ãƒ³ã‚¯ã‚»ãƒ«ã®è¨­å®š
         
-        $endIGLCell = '$'. $IGLCol. '$'. $IGLRow;  // ±Ä¶ÈÉô½ğ¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ÎºÇ¸å¤Î¥»¥ë
+        $endIGLCell = '$'. $IGLCol. '$'. $IGLRow;  // å–¶æ¥­éƒ¨ç½²ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®æœ€å¾Œã®ã‚»ãƒ«
 
-        $IGLFomula = '='. $startIGLCell. ':'. $endIGLCell; // ±Ä¶ÈÉô½ğ¤ËÂåÆş¤¹¤ë¼°
+        $IGLFomula = '='. $startIGLCell. ':'. $endIGLCell; // å–¶æ¥­éƒ¨ç½²ã«ä»£å…¥ã™ã‚‹å¼
 
-        // Ã´Åö¤ËÂåÆş¤¹¤ë¼°¤òÀ¸À®¤¹¤ë
+        // æ‹…å½“ã«ä»£å…¥ã™ã‚‹å¼ã‚’ç”Ÿæˆã™ã‚‹
         $IULFomula = '=';
         $branch = 0;
 
-        $inchargeGroupCell = $cellAddressList[workSheetConst::INCHARGE_GROUP_CODE]; // ±Ä¶ÈÉô½ğ¤Î¥»¥ë
+        $inchargeGroupCell = $cellAddressList[workSheetConst::INCHARGE_GROUP_CODE]; // å–¶æ¥­éƒ¨ç½²ã®ã‚»ãƒ«
 
         foreach ($inchargeDropdownList as $fixedIGL => $userCodeCells) {
             $start = $userCodeCells['start'];
@@ -1754,26 +1754,26 @@ class estimateSheetController {
             ++$branch;
         }
 
-        $IULFomula .= $blankCell; // ¤¹¤Ù¤Æ¤Î¾ò·ï¤Ë¹çÃ×¤·¤Ê¤«¤Ã¤¿¾ì¹ç¤Ï¥Ö¥é¥ó¥¯¥»¥ë¤Î¤ß¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¤òÉ½¼¨
-        $IULFomula .= str_repeat(')', $branch); // ¾ò·ïÊ¬´ô¤Î¿ô¤À¤±ÊÄ¤¸³ç¸Ì¤òÄÉ²Ã
+        $IULFomula .= $blankCell; // ã™ã¹ã¦ã®æ¡ä»¶ã«åˆè‡´ã—ãªã‹ã£ãŸå ´åˆã¯ãƒ–ãƒ©ãƒ³ã‚¯ã‚»ãƒ«ã®ã¿ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ã‚’è¡¨ç¤º
+        $IULFomula .= str_repeat(')', $branch); // æ¡ä»¶åˆ†å²ã®æ•°ã ã‘é–‰ã˜æ‹¬å¼§ã‚’è¿½åŠ 
 
-        $inchargeUserCell = $cellAddressList[workSheetConst::INCHARGE_USER_CODE]; // Ã´Åö¤Î¥»¥ë
+        $inchargeUserCell = $cellAddressList[workSheetConst::INCHARGE_USER_CODE]; // æ‹…å½“ã®ã‚»ãƒ«
 
-        // ÆşÎÏµ¬Â§¤ÎÀßÄê(¥É¥í¥Ã¥×¥À¥¦¥óÀ¸À®)
-        $this->setDataValidationForCell($inchargeGroupCell, $IGLFomula); // ±Ä¶ÈÉô½ğ
-        $this->setDataValidationForCell($inchargeUserCell, $IULFomula);  // Ã´Åö
+        // å…¥åŠ›è¦å‰‡ã®è¨­å®š(ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ç”Ÿæˆ)
+        $this->setDataValidationForCell($inchargeGroupCell, $IGLFomula); // å–¶æ¥­éƒ¨ç½²
+        $this->setDataValidationForCell($inchargeUserCell, $IULFomula);  // æ‹…å½“
 
         return;
     }
 
-    // ³«È¯Ã´Åö¼Ô¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥Ö¥Ã¥¯¤Ë¥»¥Ã¥È¤¹¤ë
+    // é–‹ç™ºæ‹…å½“è€…ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ãƒ–ãƒƒã‚¯ã«ã‚»ãƒƒãƒˆã™ã‚‹
     protected function inputDevelopDropdownList() {
         $dropdownDevUser = $this->dropdownDevUser;
 
         $cellAddressList = $this->cellAddressList;
 
-        // ¥É¥í¥Ã¥×¥À¥¦¥ó¤Î¥ê¥¹¥È¤ò½ñ¤­¹ş¤à¥»¥ë¤Î¾ğÊó¼èÆÀ
-        $developUserListCellName = workSheetConst::DEVELOP_USER_DROPDOWN; // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥»¥Ã¥È¤¹¤ë¤¿¤á¤Î¥»¥ëÌ¾¾Î(³«È¯Ã´Åö)
+        // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ã®ãƒªã‚¹ãƒˆã‚’æ›¸ãè¾¼ã‚€ã‚»ãƒ«ã®æƒ…å ±å–å¾—
+        $developUserListCellName = workSheetConst::DEVELOP_USER_DROPDOWN; // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã®ã‚»ãƒ«åç§°(é–‹ç™ºæ‹…å½“)
         $DULCellAddress = $cellAddressList[$developUserListCellName];
         $DULSeparate = self::separateRowAndColumn($DULCellAddress);
         $DULHeaderRow = $DULSeparate['row'];
@@ -1782,7 +1782,7 @@ class estimateSheetController {
         $DULRow = $DULHeaderRow + 1;
 
 
-        $startDULCell = '$'. $DULCol. '$'. $DULRow;  // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ÎºÇ½é¤Î¥»¥ë
+        $startDULCell = '$'. $DULCol. '$'. $DULRow;  // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®æœ€åˆã®ã‚»ãƒ«
 
         foreach ($dropdownDevUser as $data) {
             ++$DULRow;
@@ -1790,22 +1790,22 @@ class estimateSheetController {
             $this->sheet->getCell($inputDULCell)->setValue($data->usercode);
         }
 
-        $endDULCell = '$'. $DULCol. '$'. $DULRow;  // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ÎºÇ¸å¤Î¥»¥ë
+        $endDULCell = '$'. $DULCol. '$'. $DULRow;  // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®æœ€å¾Œã®ã‚»ãƒ«
 
         $fomula = $startDULCell. ':'. $endDULCell;
 
-        $developUserCell = $cellAddressList[workSheetConst::DEVELOP_USER_CODE]; // Ã´Åö¤Î¥»¥ë
+        $developUserCell = $cellAddressList[workSheetConst::DEVELOP_USER_CODE]; // æ‹…å½“ã®ã‚»ãƒ«
 
-        // ÆşÎÏµ¬Â§¤ÎÀßÄê(¥É¥í¥Ã¥×¥À¥¦¥óÀ¸À®)
+        // å…¥åŠ›è¦å‰‡ã®è¨­å®š(ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ç”Ÿæˆ)
         $this->setDataValidationForCell($developUserCell, $fomula);
 
         return;
     }
 
-    // ÌÀºÙ¹Ô¤Ë¥»¥Ã¥È¤¹¤ë¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤òÀ¸À®¤·¡¢¥Ö¥Ã¥¯¤Ë¥»¥Ã¥È¤¹¤ë
+    // æ˜ç´°è¡Œã«ã‚»ãƒƒãƒˆã™ã‚‹ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆã—ã€ãƒ–ãƒƒã‚¯ã«ã‚»ãƒƒãƒˆã™ã‚‹
     protected function inputDetailDropdownList() {
 
-        // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¼èÆÀ¤¹¤ë
+        // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
         $dropdownDSCI = $this->dropdownDSCI;
         $dropdownCompany = $this->dropdownCompany;
     
@@ -1814,13 +1814,13 @@ class estimateSheetController {
         $divSubDropdownCellList = workSheetConst::DIVISION_SUBJECT_DROPDOWN_CELL_NAME;
         $clsItmDropdownCellList = workSheetConst::CLASS_ITEM_DROPDOWN_CELL_NAME;
 
-        // ÌÀºÙ¤Ë¥»¥Ã¥È¤¹¤ë¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È
-        // ¸ÜµÒÀè¤Ş¤¿¤Ï»ÅÆşÀè
+        // æ˜ç´°ã«ã‚»ãƒƒãƒˆã™ã‚‹ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆ
+        // é¡§å®¢å…ˆã¾ãŸã¯ä»•å…¥å…ˆ
         foreach ($dropdownCompany as $attribute => $companyList) {
             if ($attribute === DEF_ATTRIBUTE_CLIENT) {
-                $cellName = workSheetConst::CLIENT_DROPDOWN; // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥»¥Ã¥È¤¹¤ë¤¿¤á¤Î¥»¥ëÌ¾¾Î
+                $cellName = workSheetConst::CLIENT_DROPDOWN; // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã®ã‚»ãƒ«åç§°
             } else if ($attribute === DEF_ATTRIBUTE_SUPPLIER) {
-                $cellName = workSheetConst::SUPPLIER_DROPDOWN; // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥»¥Ã¥È¤¹¤ë¤¿¤á¤Î¥»¥ëÌ¾¾Î
+                $cellName = workSheetConst::SUPPLIER_DROPDOWN; // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã®ã‚»ãƒ«åç§°
             }
 
             $cellAddress = $cellAddressList[$cellName];
@@ -1841,18 +1841,18 @@ class estimateSheetController {
             $endCompanyCellList[$attribute] = '$'. $col. '$'. $row;
         }
 
-        // ¥¨¥ê¥¢¶èÊ¬¤Î¼èÆÀ
+        // ã‚¨ãƒªã‚¢åŒºåˆ†ã®å–å¾—
         $areaNameList = workSheetConst::TARGET_AREA_NAME;
 
-        // Çä¾åÊ¬Îà¡Ê»ÅÆş²ÊÌÜ¡Ë¡¢Çä¾å¶èÊ¬¡Ê»ÅÆşÉôÉÊ¡Ë
+        // å£²ä¸Šåˆ†é¡ï¼ˆä»•å…¥ç§‘ç›®ï¼‰ã€å£²ä¸ŠåŒºåˆ†ï¼ˆä»•å…¥éƒ¨å“ï¼‰
         foreach($areaNameList as $areaCode => $areaName) {
-            $divSubCellName = $divSubDropdownCellList[$areaCode]; // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥»¥Ã¥È¤¹¤ë¤¿¤á¤Î¥»¥ëÌ¾¾Î
+            $divSubCellName = $divSubDropdownCellList[$areaCode]; // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã®ã‚»ãƒ«åç§°
             $divSubCellAddress = $cellAddressList[$divSubCellName];
             $divSubSeparate = self::separateRowAndColumn($divSubCellAddress);
             $divSubHeaderRow = $divSubSeparate['row'];
             $divSubCol = $divSubSeparate['column'];
 
-            $clsItmCellName = $clsItmDropdownCellList[$areaCode]; // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥»¥Ã¥È¤¹¤ë¤¿¤á¤Î¥»¥ëÌ¾¾Î
+            $clsItmCellName = $clsItmDropdownCellList[$areaCode]; // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹ãŸã‚ã®ã‚»ãƒ«åç§°
             $clsItmCellAddress = $cellAddressList[$clsItmCellName];
             $clsItmseparate = self::separateRowAndColumn($clsItmCellAddress);
             $clsItmHeaderRow = $clsItmseparate['row'];
@@ -1861,10 +1861,10 @@ class estimateSheetController {
             $divSubRow = $divSubHeaderRow + 1;
             $clsItmRow = $clsItmHeaderRow + 1;
 
-            // Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ÎºÇ½é¤Î¥»¥ë
+            // å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®æœ€åˆã®ã‚»ãƒ«
             $startDivSubCell = '$'. $divSubCol. '$'. $divSubRow;
 
-            // ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ò¥¨¥ê¥¢¤´¤È¤Ë½é´ü²½
+            // ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã‚’ã‚¨ãƒªã‚¢ã”ã¨ã«åˆæœŸåŒ–
             $dropDownList = array();
 
             foreach ($dropdownDSCI[$areaCode] as $divSub => $clsItmList) {
@@ -1887,22 +1887,22 @@ class estimateSheetController {
                 ++$clsItmRow;
             }
 
-            // ¥Ö¥é¥ó¥¯¥»¥ë¤ÎÀßÄê
+            // ãƒ–ãƒ©ãƒ³ã‚¯ã‚»ãƒ«ã®è¨­å®š
             $blankCell = '$'. $clsItmCol. '$'. $clsItmRow;
 
-            // Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤ÎºÇ¸å¤Î¥»¥ë
+            // å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®æœ€å¾Œã®ã‚»ãƒ«
             $endDivSubCell = '$'. $divSubCol. '$'. $divSubRow;
 
-            $divSubFomula = '='.$startDivSubCell. ':'. $endDivSubCell; // Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ¤ËÂåÆş¤¹¤ë¼°
+            $divSubFomula = '='.$startDivSubCell. ':'. $endDivSubCell; // å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®ã«ä»£å…¥ã™ã‚‹å¼
 
 
-            // Çä¾å¶èÊ¬ or »ÅÆş²ÊÌÜ¤ËÂåÆş¤¹¤ë¼°¤òÀ¸À®¤¹¤ë
-            $clsItmFomula = '='; // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤ÎÆşÎÏµ¬Â§¤Î¼°
+            // å£²ä¸ŠåŒºåˆ† or ä»•å…¥ç§‘ç›®ã«ä»£å…¥ã™ã‚‹å¼ã‚’ç”Ÿæˆã™ã‚‹
+            $clsItmFomula = '='; // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã®å…¥åŠ›è¦å‰‡ã®å¼
             $branch = 0;
             $divSubPattern = '_%DIVISIONSUBJECT%_';
             $clsItmPattern = '_%CLASSITEM%_';
             $clsItmCheckFomula = '';
-            $clsItmCheckFomula = '=IFERROR(IF('. $clsItmPattern. '<>0'; // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤ÎÆşÎÏµ¬Â§¤Î¼°
+            $clsItmCheckFomula = '=IFERROR(IF('. $clsItmPattern. '<>0'; // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã®å…¥åŠ›è¦å‰‡ã®å¼
 
             foreach ($dropDownList as $divSubCell => $clsItmCells) {
                 $start = $clsItmCells['start'];
@@ -1923,7 +1923,7 @@ class estimateSheetController {
             $orderAttribute = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA;
 
 
-            // ¸ÜµÒÀè¤Ş¤¿¤Ï»ÅÆşÀè¤Î»²¾È¥»¥ë¤ò¼èÆÀ
+            // é¡§å®¢å…ˆã¾ãŸã¯ä»•å…¥å…ˆã®å‚ç…§ã‚»ãƒ«ã‚’å–å¾—
             if ($orderAttribute[DEF_ATTRIBUTE_CLIENT][$areaCode] === true) {
                 $startCompanyCell = $startCompanyCellList[DEF_ATTRIBUTE_CLIENT];
                 $endCompanyCell = $endCompanyCellList[DEF_ATTRIBUTE_CLIENT];
@@ -1941,7 +1941,7 @@ class estimateSheetController {
                 $companyFomula = null;
             }
 
-            // ¥»¥ëÌ¾¾Î¤ËÂĞ±ş¤¹¤ëÎóÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
+            // ã‚»ãƒ«åç§°ã«å¯¾å¿œã™ã‚‹åˆ—ç•ªå·ã‚’å–å¾—ã™ã‚‹
             $columnNumber = $this->getColumnNumberList($areaCode);
 
             $targetAreaRows = $this->targetAreaRows;
@@ -1949,13 +1949,13 @@ class estimateSheetController {
             $firstRow = $targetAreaRows[$areaCode]['firstRow'];
             $lastRow = $targetAreaRows[$areaCode]['lastRow'];
 
-            $detailDivSubCol = $columnNumber['divisionSubject'];  // Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ¤ÎÎóÈÖ¹æ
-            $detailClsItmCol = $columnNumber['classItem'];        // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤ÎÎóÈÖ¹æ
-            $detailCompanyCol = $columnNumber['customerCompany']; // ¸ÜµÒÀè or »ÅÆşÀè¤ÎÎóÈÖ¹æ
-            $detailCheckCol = $columnNumber['classItemCheck']; // ¥Á¥§¥Ã¥¯Îó¤ÎÎóÈÖ¹æ
-            $detailNoteCol = $columnNumber['note']; // ¥Á¥§¥Ã¥¯Îó¤ÎÎóÈÖ¹æ
+            $detailDivSubCol = $columnNumber['divisionSubject'];  // å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®ã®åˆ—ç•ªå·
+            $detailClsItmCol = $columnNumber['classItem'];        // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã®åˆ—ç•ªå·
+            $detailCompanyCol = $columnNumber['customerCompany']; // é¡§å®¢å…ˆ or ä»•å…¥å…ˆã®åˆ—ç•ªå·
+            $detailCheckCol = $columnNumber['classItemCheck']; // ãƒã‚§ãƒƒã‚¯åˆ—ã®åˆ—ç•ªå·
+            $detailNoteCol = $columnNumber['note']; // ãƒã‚§ãƒƒã‚¯åˆ—ã®åˆ—ç•ªå·
 
-            // ÌÀºÙ¹Ô¤ËÆşÎÏµ¬Â§¤òÅ¬ÍÑ
+            // æ˜ç´°è¡Œã«å…¥åŠ›è¦å‰‡ã‚’é©ç”¨
             for ($row = $firstRow; $row <= $lastRow; ++$row) {
                 $detailDivSubCell = $detailDivSubCol. $row;
                 $detailClsItmCell = $detailClsItmCol. $row;
@@ -1963,23 +1963,23 @@ class estimateSheetController {
                 $clsItmCheckCell = $detailCheckCol. $row;
                 $noteCell = $detailCheckCol. $row;
 
-                $this->setDataValidationForCell($detailDivSubCell, $divSubFomula);  // Çä¾åÊ¬Îà or »ÅÆş²ÊÌÜ
+                $this->setDataValidationForCell($detailDivSubCell, $divSubFomula);  // å£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›®
 
-                // ÃÖ´¹Ê¸»úÎó¤òÇä¾åÊ¬Îàor»ÅÆş²ÊÌÜ¤Î¥»¥ë¤ËÃÖ´¹
+                // ç½®æ›æ–‡å­—åˆ—ã‚’å£²ä¸Šåˆ†é¡orä»•å…¥ç§‘ç›®ã®ã‚»ãƒ«ã«ç½®æ›
                 $inputClsItmFomula = str_replace($divSubPattern, $detailDivSubCell, $clsItmFomula);
 
-                $this->setDataValidationForCell($detailClsItmCell, $inputClsItmFomula);  // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ
+                $this->setDataValidationForCell($detailClsItmCell, $inputClsItmFomula);  // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“
 
-                // ÃÖ´¹Ê¸»úÎó¤òÇä¾åÊ¬Îàor»ÅÆş²ÊÌÜ¤Î¥»¥ë¤ËÃÖ´¹
+                // ç½®æ›æ–‡å­—åˆ—ã‚’å£²ä¸Šåˆ†é¡orä»•å…¥ç§‘ç›®ã®ã‚»ãƒ«ã«ç½®æ›
                 $inputClsItmCheckFomula = str_replace($divSubPattern, $detailDivSubCell, $clsItmCheckFomula);
-                // ÃÖ´¹Ê¸»úÎó¤òÇä¾å¶èÊ¬or»ÅÆşÉôÉÊ¤Î¥»¥ë¤ËÃÖ´¹
+                // ç½®æ›æ–‡å­—åˆ—ã‚’å£²ä¸ŠåŒºåˆ†orä»•å…¥éƒ¨å“ã®ã‚»ãƒ«ã«ç½®æ›
                 $inputClsItmCheckFomula = str_replace($clsItmPattern, $detailClsItmCell, $inputClsItmCheckFomula);
 
-                // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¥Á¥§¥Ã¥¯ÍÑ¥»¥ë¤Ë·×»»¼°¤ò¥»¥Ã¥È¤¹¤ë
+                // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ãƒã‚§ãƒƒã‚¯ç”¨ã‚»ãƒ«ã«è¨ˆç®—å¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
                 $this->sheet->getCell($clsItmCheckCell)->setValue($inputClsItmCheckFomula);
 
                 if ($companyFomula) {
-                    $this->setDataValidationForCell($detailCompanyCell, $companyFomula);  // ¸ÜµÒÀè or »ÅÆşÀè
+                    $this->setDataValidationForCell($detailCompanyCell, $companyFomula);  // é¡§å®¢å…ˆ or ä»•å…¥å…ˆ
                 }
             }
 
@@ -1993,12 +1993,12 @@ class estimateSheetController {
         return;
     }
 
-    // ¥Ç¡¼¥¿¤ÎÆşÎÏµ¬Â§¤ò¼°¤Ç»ØÄê¤·¡¢¥»¥ë¤Ë¥É¥í¥Ã¥×¥À¥¦¥ó¤òÀßÄê¤¹¤ë
+    // ãƒ‡ãƒ¼ã‚¿ã®å…¥åŠ›è¦å‰‡ã‚’å¼ã§æŒ‡å®šã—ã€ã‚»ãƒ«ã«ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ã‚’è¨­å®šã™ã‚‹
     protected function setDataValidationForCell($cell, $fomula) {
-        // ÂĞ¾İ¥»¥ë¤ÎÆşÎÏµ¬Â§¤ò¼èÆÀ
+        // å¯¾è±¡ã‚»ãƒ«ã®å…¥åŠ›è¦å‰‡ã‚’å–å¾—
         $validation = $this->sheet->getCell($cell)->getDataValidation();
 
-        // ¥Ñ¥é¥á¡¼¥¿¤Î¥»¥Ã¥È
+        // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
         $validation->setType(DataValidation::TYPE_LIST);
         $validation->setAllowBlank(true);
         $validation->setShowDropDown(true);
@@ -2007,21 +2007,21 @@ class estimateSheetController {
         return;
     }
 
-    // ±£¤·¥»¥ë¤ËÉ¬Í×¤ÊÃÍ¤òÂåÆş¤¹¤ë
+    // éš ã—ã‚»ãƒ«ã«å¿…è¦ãªå€¤ã‚’ä»£å…¥ã™ã‚‹
     protected function paramAssignForHiddenCells() {
-        // Á´¥¨¥ê¥¢¥³¡¼¥É¤ò¼èÆÀ
+        // å…¨ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
         $areaCodeList = workSheetConst::TARGET_AREA_NAME;
 
-        // Çä¾åÊ¬Îà¡¢Çä¾å¶èÊ¬¡Ê»ÅÆş²ÊÌÜ¡¢»ÅÆşÉôÉÊ)¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥Ç¡¼¥¿¤ò¼èÆÀ
+        // å£²ä¸Šåˆ†é¡ã€å£²ä¸ŠåŒºåˆ†ï¼ˆä»•å…¥ç§‘ç›®ã€ä»•å…¥éƒ¨å“)ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
         if (!$this->dropdownDSCI) {
             $this->setDropdownForDivSubAndClsItm();
         }
         $dropdownDSCI = $this->dropdownDSCI; 
 
-        // ¥»¥ëÌ¾¾Î¤ËÂĞ±ş¤¹¤ë¥»¥ë¤Î¥ê¥¹¥È¤ò¼èÆÀ
+        // ã‚»ãƒ«åç§°ã«å¯¾å¿œã™ã‚‹ã‚»ãƒ«ã®ãƒªã‚¹ãƒˆã‚’å–å¾—
         $cellAddressList = $this->cellAddressList;
 
-        // ÂåÆş¥»¥ë¤ÈÂåÆş¾ò·ï¤Î¥ê¥¹¥È¤ò¼èÆÀ
+        // ä»£å…¥ã‚»ãƒ«ã¨ä»£å…¥æ¡ä»¶ã®ãƒªã‚¹ãƒˆã‚’å–å¾—
         $assignList = workSheetConst::ASSIGN_FOR_HIDDEN;
 
         foreach ($areaCodeList as $areaCode => $areaName) {            
@@ -2033,28 +2033,28 @@ class estimateSheetController {
                     $searchDivSub = $info['divisionSubject'];
 
                     foreach ($dropdownForArea as $divSubDisplay => $clsItmList) {
-                        preg_match('/\A(\d+)\:/', $divSubDisplay, $divSubMatch); // ¿ô»úÉôÊ¬¤òÃê½Ğ
+                        preg_match('/\A(\d+)\:/', $divSubDisplay, $divSubMatch); // æ•°å­—éƒ¨åˆ†ã‚’æŠ½å‡º
                         
                         $divSubNumber = (int)$divSubMatch[1];
                         
                         if ($divSubNumber === $searchDivSub) {
                             if ($info['classItem']) {
-                                // ÂåÆş¤Î¾ò·ï¤ËÇä¾å¶èÊ¬¤Ş¤¿¤Ï»ÅÆşÉôÉÊ¤¬¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+                                // ä»£å…¥ã®æ¡ä»¶ã«å£²ä¸ŠåŒºåˆ†ã¾ãŸã¯ä»•å…¥éƒ¨å“ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹å ´åˆ
                                 $searchClsItm = $info['classItem'];
 
                                 foreach($clsItmList as $clsItmDisplay) {
-                                    preg_match('/\A(\d+)\:/', $clsItmDisplay, $clsItmMatch); // ¿ô»úÉôÊ¬¤òÃê½Ğ
+                                    preg_match('/\A(\d+)\:/', $clsItmDisplay, $clsItmMatch); // æ•°å­—éƒ¨åˆ†ã‚’æŠ½å‡º
 
                                     $clsItmNumber = (int)$clsItmMatch[1];
 
                                     if ($clsItmNumber === $searchClsItm) {
-                                        // ÂåÆş¤¹¤ë¾ò·ï¤ÎÇä¾å¶èÊ¬Ëô¤Ï»ÅÆşÉôÉÊ¤È°ìÃ×¤·¤¿¾ì¹ç
+                                        // ä»£å…¥ã™ã‚‹æ¡ä»¶ã®å£²ä¸ŠåŒºåˆ†åˆã¯ä»•å…¥éƒ¨å“ã¨ä¸€è‡´ã—ãŸå ´åˆ
                                         $param = $clsItmDisplay;
                                     }
                                 }
 
                             } else {
-                                // ÂåÆş¤Î¾ò·ï¤ËÇä¾å¶èÊ¬¤Ş¤¿¤Ï»ÅÆşÉôÉÊ¤¬¥»¥Ã¥È¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤ÏÉ½¼¨ÍÑ¤ÎÇä¾åÊ¬ÎàËô¤Ï»ÅÆş²ÊÌÜ¤ÎÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+                                // ä»£å…¥ã®æ¡ä»¶ã«å£²ä¸ŠåŒºåˆ†ã¾ãŸã¯ä»•å…¥éƒ¨å“ãŒã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ãªã„å ´åˆã¯è¡¨ç¤ºç”¨ã®å£²ä¸Šåˆ†é¡åˆã¯ä»•å…¥ç§‘ç›®ã®å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
                                 $param = $divSubDisplay;
                             }
                         } else {
@@ -2062,7 +2062,7 @@ class estimateSheetController {
                         }
                     }
 
-                    // ¥»¥Ã¥È¤·¤¿ÃÍ¤òÂåÆş¤¹¤ë
+                    // ã‚»ãƒƒãƒˆã—ãŸå€¤ã‚’ä»£å…¥ã™ã‚‹
                     $this->sheet->getCell($cellAddressList[$cellName])->setValue($param);
                 }
             } else {
@@ -2073,7 +2073,7 @@ class estimateSheetController {
     
 
 
-    // ³Æ¹àÌÜ¤ÎÎóÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
+    // å„é …ç›®ã®åˆ—ç•ªå·ã‚’å–å¾—ã™ã‚‹
     protected function getColumnNumberList($areaCode) {
         
         $cellNameList = workSheetConst::getCellNameOfTargetArea($areaCode);
@@ -2081,7 +2081,7 @@ class estimateSheetController {
         $cellAddressList = $this->cellAddressList;
         foreach ($headerNameList as $key => $name) {
             if (preg_match("/\A[A-Z]+[1-9][0-9]*\z/", $cellAddressList[$name])) {
-                // ¥»¥ë°ÌÃÖ¤Î¿ôÃÍÉôÊ¬¤ò½üµî¤¹¤ë
+                // ã‚»ãƒ«ä½ç½®ã®æ•°å€¤éƒ¨åˆ†ã‚’é™¤å»ã™ã‚‹
                 $columnNumber[$key] = preg_replace("/[1-9][0-9]*/", '', $cellAddressList[$name]);
             } else {
                 return false;
@@ -2090,12 +2090,12 @@ class estimateSheetController {
         return $columnNumber;
     }
 
-    // ¥»¥ë¤ò±¦´ó¤»¤Ë¤¹¤ë
+    // ã‚»ãƒ«ã‚’å³å¯„ã›ã«ã™ã‚‹
     public function setHorizontalRight($cellAddress) {
         $this->sheet->getStyle($cellAddress)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
     }
 
-    // ¥ï¡¼¥¯¥·¡¼¥È¥Ø¥Ã¥ÀÉô¤ÎÉ½¼¨Ì¾¤òÃÖ´¹¤¹¤ë
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ˜ãƒƒãƒ€éƒ¨ã®è¡¨ç¤ºåã‚’ç½®æ›ã™ã‚‹
     public function cellValueReplace($replace) {
         $cellAddressList = $this->cellAddressList;
         
@@ -2108,11 +2108,11 @@ class estimateSheetController {
     }
 
     /**
-    * ÁªÂò¤·¤¿¹Ô¤ÎÄ¾Á°¤Ë»ØÄê¤·¤¿¿ô¤Î¹Ô¤ò¥³¥Ô¡¼¤·¤ÆÁŞÆş¤¹¤ë
+    * é¸æŠã—ãŸè¡Œã®ç›´å‰ã«æŒ‡å®šã—ãŸæ•°ã®è¡Œã‚’ã‚³ãƒ”ãƒ¼ã—ã¦æŒ¿å…¥ã™ã‚‹
     * 
-    * @param string  $selectedRow ÁªÂò¹Ô
-    * @param string  $rowNum  ÁŞÆş¤¹¤ë¹Ô¿ô
-    * @param string  $colNum  ¥³¥Ô¡¼¤¹¤ëÎó¿ô
+    * @param string  $selectedRow é¸æŠè¡Œ
+    * @param string  $rowNum  æŒ¿å…¥ã™ã‚‹è¡Œæ•°
+    * @param string  $colNum  ã‚³ãƒ”ãƒ¼ã™ã‚‹åˆ—æ•°
     * 
     * @return boolean
     */
@@ -2122,14 +2122,14 @@ class estimateSheetController {
 
         $sheet->insertNewRowBefore($selectedRow, $rowNum);
     
-        // ¥³¥Ô¡¼¸µ¤Î¹ÔÈÖ¹æ¤ÏÁŞÆş¤µ¤ì¤¿¹Ô¤Î¿ô¤À¤±Áı¤¨¤ë
+        // ã‚³ãƒ”ãƒ¼å…ƒã®è¡Œç•ªå·ã¯æŒ¿å…¥ã•ã‚ŒãŸè¡Œã®æ•°ã ã‘å¢—ãˆã‚‹
         $copyRow = $selectedRow + $rowNum;
     
         for ($row = 0; $row < $rowNum; ++$row) {
 
-            $newRow = $selectedRow + $row; // ÁŞÆş¤µ¤ì¤¿¹Ô¤ÎÈÖ¹æ
+            $newRow = $selectedRow + $row; // æŒ¿å…¥ã•ã‚ŒãŸè¡Œã®ç•ªå·
 
-            // ¥»¥ë¤Î½ñ¼°¤ÈÃÍ¤ÎÊ£À½
+            // ã‚»ãƒ«ã®æ›¸å¼ã¨å€¤ã®è¤‡è£½
             for ($col = 1; $col <= $colNum; ++$col) {
                 
                 $alphaCol = Coordinate::stringFromColumnIndex($col);
@@ -2149,12 +2149,12 @@ class estimateSheetController {
                 $sheet->duplicateStyle($copyStyle, $newAddress);
             }
     
-            // ¹Ô¤Î¹â¤µÊ£À½
+            // è¡Œã®é«˜ã•è¤‡è£½
             $height = $sheet->getRowDimension($copyRow)->getRowHeight();
             $sheet->getRowDimension($newRow)->setRowHeight($height);
         }
     
-        // ¥»¥ë·ë¹ç¤ÎÊ£À½
+        // ã‚»ãƒ«çµåˆã®è¤‡è£½
         foreach ($sheet->getMergeCells() as $mergeCell) {
             list($startCell, $endCell) = explode(":", $mergeCell);
             $colStart = preg_replace("/[0-9]*/", "", $startCell);
@@ -2162,7 +2162,7 @@ class estimateSheetController {
             $rowStart = ((int)preg_replace("/[A-Z]*/", "", $startCell));
             $rowEnd = ((int)preg_replace("/[A-Z]*/", "", $endCell));
     
-            // ³«»Ï¹Ô¤È½ªÎ»¹Ô¤¬°ìÃ×¡Ê¹ÔÆâ¤Î¥»¥ë·ë¹ç)¤«¤Ä¹ÔÈÖ¹æ¤¬¥³¥Ô¡¼¸µ¤Î¹Ô¤È°ìÃ×¤¹¤ë¾ì¹ç¤Ï·ë¹ç¾ğÊó¤òÄÉ²Ã¤¹¤ë
+            // é–‹å§‹è¡Œã¨çµ‚äº†è¡ŒãŒä¸€è‡´ï¼ˆè¡Œå†…ã®ã‚»ãƒ«çµåˆ)ã‹ã¤è¡Œç•ªå·ãŒã‚³ãƒ”ãƒ¼å…ƒã®è¡Œã¨ä¸€è‡´ã™ã‚‹å ´åˆã¯çµåˆæƒ…å ±ã‚’è¿½åŠ ã™ã‚‹
             if ($rowStart === $rowEnd) {
                 if ($rowStart === $copyRow) {
                     for ($row = 0; $row < $rowNum; $row++) {
@@ -2178,29 +2178,29 @@ class estimateSheetController {
     }
 
     /**
-    * ¥Æ¥ó¥×¥ì¡¼¥È¤ÎÀ°·Á¤ò¹Ô¤¦¡Ê¹Ô¿ôÉÔÂ­ÂĞºö¡Ë
+    * ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®æ•´å½¢ã‚’è¡Œã†ï¼ˆè¡Œæ•°ä¸è¶³å¯¾ç­–ï¼‰
     * 
-    * @param object  $spreadSheet ÁªÂò¹Ô
-    * @param string  $rowNum  ÁŞÆş¤¹¤ë¹Ô¿ô
-    * @param string  $colNum  ¥³¥Ô¡¼¤¹¤ëÎó¿ô
+    * @param object  $spreadSheet é¸æŠè¡Œ
+    * @param string  $rowNum  æŒ¿å…¥ã™ã‚‹è¡Œæ•°
+    * @param string  $colNum  ã‚³ãƒ”ãƒ¼ã™ã‚‹åˆ—æ•°
     * 
     * @return boolean
     */
     protected function templateAdjust($estimateData) {
 
-        $this->insertDeficiencyRow($estimateData); // ÉÔÂ­¹Ô¤ÎÁŞÆş
+        $this->insertDeficiencyRow($estimateData); // ä¸è¶³è¡Œã®æŒ¿å…¥
 
-        $this->resettingCellAddressList(); // ¥»¥ëÌ¾¾Î¥ê¥¹¥È¤ÎºÆÀßÄê
+        $this->resettingCellAddressList(); // ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆã®å†è¨­å®š
 
         return;
     }
 
     /**
-    * ¸«ÀÑ¸¶²ÁÌÀºÙ¹Ô¤Î¥Ç¡¼¥¿ÂåÆş»ş¤ËÉÔÂ­¤¹¤ë¹Ô¤òÁŞÆş¤¹¤ë
+    * è¦‹ç©åŸä¾¡æ˜ç´°è¡Œã®ãƒ‡ãƒ¼ã‚¿ä»£å…¥æ™‚ã«ä¸è¶³ã™ã‚‹è¡Œã‚’æŒ¿å…¥ã™ã‚‹
     * 
-    * @param string  $selectedRow ÁªÂò¹Ô
-    * @param string  $rowNum  ÁŞÆş¤¹¤ë¹Ô¿ô
-    * @param string  $colNum  ¥³¥Ô¡¼¤¹¤ëÎó¿ô
+    * @param string  $selectedRow é¸æŠè¡Œ
+    * @param string  $rowNum  æŒ¿å…¥ã™ã‚‹è¡Œæ•°
+    * @param string  $colNum  ã‚³ãƒ”ãƒ¼ã™ã‚‹åˆ—æ•°
     * 
     * @return boolean
     */
@@ -2212,9 +2212,9 @@ class estimateSheetController {
         $difTotal = 0;
 
         if ($this->mode === workSheetConst::MODE_ESTIMATE_EDIT) {
-            $marginCell = 1; // ÁŞÆş¤¹¤ë¶õ¹Ô¿ô
+            $marginCell = 1; // æŒ¿å…¥ã™ã‚‹ç©ºè¡Œæ•°
         } else {
-            $marginCell = 0; // ÁŞÆş¤¹¤ë¶õ¹Ô¿ô
+            $marginCell = 0; // æŒ¿å…¥ã™ã‚‹ç©ºè¡Œæ•°
         }
 
         foreach ($estimateData as $areaCode => $data) {
@@ -2230,9 +2230,9 @@ class estimateSheetController {
     
                 $difference = $inputRowCount + $marginCell - $linage;
     
-                $selectedRow = $lastRow - 1; // ºÇ½ª¹Ô¤Î1¹ÔÁ°¤Ë(»ØÄê¤·¤¿¹Ô¿ô¤ò)ÁŞÆş¤¹¤ë
+                $selectedRow = $lastRow - 1; // æœ€çµ‚è¡Œã®1è¡Œå‰ã«(æŒ‡å®šã—ãŸè¡Œæ•°ã‚’)æŒ¿å…¥ã™ã‚‹
     
-                $this->insertCopyRowBefore($selectedRow, $difference); // ¹ÔÁŞÆş¼Â¹Ô
+                $this->insertCopyRowBefore($selectedRow, $difference); // è¡ŒæŒ¿å…¥å®Ÿè¡Œ
 
                 foreach ($targetAreaRows as $key => $code) {
                     if ($key > $areaCode) {
@@ -2253,7 +2253,7 @@ class estimateSheetController {
         return true;
     }
 
-    // ¥»¥ëÌ¾¾Î¥ê¥¹¥È¤ÎºÆÀßÄê¡Ê¹ÔÁŞÆş¸åÅù¡¢¥»¥ëÌ¾¾Î¤Î°ÌÃÖ¤òºÆ¼èÆÀ¤¹¤ëÉ¬Í×¤¬¤¢¤ë¾ì¹ç¤Ë»ÈÍÑ¡Ë
+    // ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆã®å†è¨­å®šï¼ˆè¡ŒæŒ¿å…¥å¾Œç­‰ã€ã‚»ãƒ«åç§°ã®ä½ç½®ã‚’å†å–å¾—ã™ã‚‹å¿…è¦ãŒã‚ã‚‹å ´åˆã«ä½¿ç”¨ï¼‰
     protected function resettingCellAddressList() {
 
         $spreadSheet = $this->sheet->getParent();
@@ -2268,7 +2268,7 @@ class estimateSheetController {
         $this->setRowRangeOfTargetArea();
     }
 
-    // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤Ë¾ò·ïÉÕ¤­½ñ¼°¤òÀßÄê¤¹¤ë¡ÊÇä¾åÊ¬Îà or »ÅÆş²ÊÌÜ ¢Î Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤Î´Ø·¸¥Á¥§¥Ã¥¯ÍÑ¡Ë
+    // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã«æ¡ä»¶ä»˜ãæ›¸å¼ã‚’è¨­å®šã™ã‚‹ï¼ˆå£²ä¸Šåˆ†é¡ or ä»•å…¥ç§‘ç›® â‡” å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã®é–¢ä¿‚ãƒã‚§ãƒƒã‚¯ç”¨ï¼‰
     protected function setConditionsForClassItemCell($areaCode) {
 
         $columnNumber = $this->getColumnNumberList($areaCode);
@@ -2282,8 +2282,8 @@ class estimateSheetController {
         $firstRow = $targetAreaRows[$areaCode]['firstRow'];
         $lastRow = $targetAreaRows[$areaCode]['lastRow'];
 
-        $clsItmCol = $columnNumber['classItem'];        // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤ÎÎóÈÖ¹æ
-        $checkCol = $columnNumber['classItemCheck'];    // ¥Á¥§¥Ã¥¯Îó¤ÎÎóÈÖ¹æ
+        $clsItmCol = $columnNumber['classItem'];        // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã®åˆ—ç•ªå·
+        $checkCol = $columnNumber['classItemCheck'];    // ãƒã‚§ãƒƒã‚¯åˆ—ã®åˆ—ç•ªå·
 
         $firstClsItmCell = $clsItmCol. $firstRow;
         $lastClsItmCell = $clsItmCol. $lastRow;
@@ -2295,30 +2295,30 @@ class estimateSheetController {
         $conditional = new Conditional();
         $conditional->setConditionType(Conditional::CONDITION_CELLIS);
 
-        // ½èÍıÆâÍÆ¤Î¥»¥Ã¥È¡ÊÅù¤·¤¯¤Ê¤¤¡Ë
+        // å‡¦ç†å†…å®¹ã®ã‚»ãƒƒãƒˆï¼ˆç­‰ã—ããªã„ï¼‰
         $conditional->setOperatorType(Conditional::OPERATOR_NOTEQUAL);
 
-        // Èæ³Ó¥»¥ë¤ÎÀßÄê
+        // æ¯”è¼ƒã‚»ãƒ«ã®è¨­å®š
         $conditional->addCondition($compareCell);
 
-        // ½ñ¼°¤ÎÀßÄê
-        $conditional->getStyle()->getFont()->getColor()->setARGB(Color::COLOR_RED); // Ê¸»ú¿§
-        $conditional->getStyle()->getFont()->setBold(true); // ÂÀ»ú
-        $conditional->getStyle()->getFont()->setItalic(true); // ¼ĞÂÎ
-        $conditional->getStyle()->getFont()->setUnderline(true); // ²¼Àş
-        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB(Color::COLOR_YELLOW); // ÇØ·Ê¿§
+        // æ›¸å¼ã®è¨­å®š
+        $conditional->getStyle()->getFont()->getColor()->setARGB(Color::COLOR_RED); // æ–‡å­—è‰²
+        $conditional->getStyle()->getFont()->setBold(true); // å¤ªå­—
+        $conditional->getStyle()->getFont()->setItalic(true); // æ–œä½“
+        $conditional->getStyle()->getFont()->setUnderline(true); // ä¸‹ç·š
+        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB(Color::COLOR_YELLOW); // èƒŒæ™¯è‰²
 
         $conditionalStyles[] = $conditional;
 
-        // ¾ò·ïÉÕ¤­½ñ¼°¤ò¥»¥ë¤Ë¥»¥Ã¥È¤¹¤ë
+        // æ¡ä»¶ä»˜ãæ›¸å¼ã‚’ã‚»ãƒ«ã«ã‚»ãƒƒãƒˆã™ã‚‹
         $this->sheet->getStyle($clsItmCellRange)->setConditionalStyles($conditionalStyles);
 
         return;
     }
 
-    // ¸ÇÄêÈñÇä¾å¤ÎÇä¾å¶èÊ¬¡¢¸ÜµÒÀè¤Ë¾ò·ïÉÕ¤­½ñ¼°¤ò¥»¥Ã¥È¤¹¤ë¡Ê´ØÀÇÁªÂò»ş¤ËÅ¬ÍÑ¡Ë
+    // å›ºå®šè²»å£²ä¸Šã®å£²ä¸ŠåŒºåˆ†ã€é¡§å®¢å…ˆã«æ¡ä»¶ä»˜ãæ›¸å¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ï¼ˆé–¢ç¨é¸æŠæ™‚ã«é©ç”¨ï¼‰
     protected function setConditionsForFixedCostSalesClassAndCustomer() {
-        $areaCode = DEF_AREA_FIXED_COST_SALES; // ¸ÇÄêÈñÇä¾å
+        $areaCode = DEF_AREA_FIXED_COST_SALES; // å›ºå®šè²»å£²ä¸Š
         
         $targetAreaRows = $this->targetAreaRows;
 
@@ -2327,10 +2327,10 @@ class estimateSheetController {
 
         $columnNumber = $this->getColumnNumberList($areaCode);
 
-        $clsItmCol = $columnNumber['classItem'];        // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤ÎÎóÈÖ¹æ
-        $customerCompanyCol = $columnNumber['customerCompany'];        // »ÅÆşÀè¡Ê¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¥»¥ë¡Ë¤ÎÎóÈÖ¹æ
+        $clsItmCol = $columnNumber['classItem'];        // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã®åˆ—ç•ªå·
+        $customerCompanyCol = $columnNumber['customerCompany'];        // ä»•å…¥å…ˆï¼ˆãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã‚»ãƒ«ï¼‰ã®åˆ—ç•ªå·
 
-        $compareCell = '$'. $clsItmCol. $firstRow; // Èæ³ÓÍÑ¤Î¥»¥ë
+        $compareCell = '$'. $clsItmCol. $firstRow; // æ¯”è¼ƒç”¨ã®ã‚»ãƒ«
 
         $firstCell = $clsItmCol. $firstRow;
         $lastCell = $customerCompanyCol. $lastRow;
@@ -2342,23 +2342,23 @@ class estimateSheetController {
 
         $fomula = '='. $compareCell.'='. workSheetConst::HIDDEN_TARIFF_SALES;
 
-        // Èæ³Ó¾ò·ï¤ÎÀßÄê
+        // æ¯”è¼ƒæ¡ä»¶ã®è¨­å®š
         $conditional->addCondition($fomula);
 
-        // ½ñ¼°¤ÎÀßÄê
-        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB('FFFFCC99'); // ÇØ·Ê¿§
+        // æ›¸å¼ã®è¨­å®š
+        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB('FFFFCC99'); // èƒŒæ™¯è‰²
 
         $conditionalStyles[] = $conditional;
 
-        // ¾ò·ïÉÕ¤­½ñ¼°¤ò¥»¥ë¤Ë¥»¥Ã¥È¤¹¤ë
+        // æ¡ä»¶ä»˜ãæ›¸å¼ã‚’ã‚»ãƒ«ã«ã‚»ãƒƒãƒˆã™ã‚‹
         $this->sheet->getStyle($range)->setConditionalStyles($conditionalStyles);
         
     }
 
-    // ·ĞÈñ¥¨¥ê¥¢¤Î»ÅÆşÀè¡Ê¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¥»¥ë¡Ë¤Ë¾ò·ïÉÕ¤­½ñ¼°¤ò¥»¥Ã¥È¤¹¤ë
+    // çµŒè²»ã‚¨ãƒªã‚¢ã®ä»•å…¥å…ˆï¼ˆãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã‚»ãƒ«ï¼‰ã«æ¡ä»¶ä»˜ãæ›¸å¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
     protected function setConditionsForExpensePercentCell() {
 
-        $areaCode = DEF_AREA_OTHER_COST_ORDER; // ·ĞÈñ
+        $areaCode = DEF_AREA_OTHER_COST_ORDER; // çµŒè²»
         
         $targetAreaRows = $this->targetAreaRows;
 
@@ -2367,8 +2367,8 @@ class estimateSheetController {
 
         $columnNumber = $this->getColumnNumberList($areaCode);
 
-        $clsItmCol = $columnNumber['classItem'];        // Çä¾å¶èÊ¬ or »ÅÆşÉôÉÊ¤ÎÎóÈÖ¹æ
-        $customerCompanyCol = $columnNumber['customerCompany'];        // »ÅÆşÀè¡Ê¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¥»¥ë¡Ë¤ÎÎóÈÖ¹æ
+        $clsItmCol = $columnNumber['classItem'];        // å£²ä¸ŠåŒºåˆ† or ä»•å…¥éƒ¨å“ã®åˆ—ç•ªå·
+        $customerCompanyCol = $columnNumber['customerCompany'];        // ä»•å…¥å…ˆï¼ˆãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ã‚»ãƒ«ï¼‰ã®åˆ—ç•ªå·
 
         $clsItmCell = $clsItmCol. $firstRow;
         $firstCell = $customerCompanyCol. $firstRow;
@@ -2381,15 +2381,15 @@ class estimateSheetController {
 
         $fomula = '=OR('. $clsItmCell.'='. workSheetConst::HIDDEN_IMPORT_COST.','. $clsItmCell.'='. workSheetConst::HIDDEN_TARIFF.')';
 
-        // Èæ³Ó¾ò·ï¤ÎÀßÄê
+        // æ¯”è¼ƒæ¡ä»¶ã®è¨­å®š
         $conditional->addCondition($fomula);
 
-        // ½ñ¼°¤ÎÀßÄê
-        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB(Color::COLOR_WHITE); // ÇØ·Ê¿§
+        // æ›¸å¼ã®è¨­å®š
+        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB(Color::COLOR_WHITE); // èƒŒæ™¯è‰²
 
         $conditionalStyles[] = $conditional;
 
-        // ¾ò·ïÉÕ¤­½ñ¼°¤ò¥»¥ë¤Ë¥»¥Ã¥È¤¹¤ë
+        // æ¡ä»¶ä»˜ãæ›¸å¼ã‚’ã‚»ãƒ«ã«ã‚»ãƒƒãƒˆã™ã‚‹
         $this->sheet->getStyle($range)->setConditionalStyles($conditionalStyles);
     }
 }

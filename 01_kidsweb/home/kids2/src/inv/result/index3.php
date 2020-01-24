@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       ÀÁµá´ÉÍý  ÀÁµá½ñºï½ü²èÌÌ
+ *       è«‹æ±‚ç®¡ç†  è«‹æ±‚æ›¸å‰Šé™¤ç”»é¢
  *
  *
  *       @package    K.I.D.S.
@@ -13,33 +13,33 @@
  *       @version    2.00
  *
  *
- *       ½èÍý³µÍ×
- *         ¡¦ÀÁµá½ñºï½ü²èÌÌ¤òÉ½¼¨
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»è«‹æ±‚æ›¸å‰Šé™¤ç”»é¢ã‚’è¡¨ç¤º
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
 
-    // ÀßÄêÆÉ¤ß¹þ¤ß
+    // è¨­å®šèª­ã¿è¾¼ã¿
     include_once('conf.inc');
 
-    // ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+    // ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
     require (LIB_FILE);
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
     require (SRC_ROOT . "inv/cmn/column.php");
     require (LIB_EXCLUSIVEFILE);
 
-    // ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+    // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
     $objDB   = new clsDB();
     $objAuth = new clsAuth();
 
-    // DB¥ª¡¼¥×¥ó
+    // DBã‚ªãƒ¼ãƒ—ãƒ³
     $objDB->open("", "", "", "");
 
-    // ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+    // ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
     if ( $_POST )
     {
         $aryData = $_POST;
@@ -51,41 +51,41 @@
 
     if ( !$aryData["lngInvoiceNo"] )
     {
-        fncOutputError ( 9061, DEF_ERROR, "¥Ç¡¼¥¿°Û¾ï¤Ç¤¹¡£", TRUE, "", $objDB );
+        fncOutputError ( 9061, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ç•°å¸¸ã§ã™ã€‚", TRUE, "", $objDB );
     }
 
-    // Ê¸»úÎó¥Á¥§¥Ã¥¯
+    // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
     $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 //     $aryCheck["lngInvoiceNo"] = "null:number(0,10)";
 
-    // ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+    // ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
     $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-    // cookie¤ËSET
+    // cookieã«SET
     if( !empty($aryData["strSessionID"]) )
         setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-    // 2200 ÀÁµá´ÉÍý
+    // 2200 è«‹æ±‚ç®¡ç†
     if ( !fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
     }
 
-    // 2202 ÀÁµá½ñ¸¡º÷
+    // 2202 è«‹æ±‚æ›¸æ¤œç´¢
     if ( !fncCheckAuthority( DEF_FUNCTION_INV2, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+        fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
     }
 
 
-    // ºï½üÂÐ¾Ý¤ÎÀÁµá½ñÈÖ¹æ¤Î¥Þ¥¹¥¿¥Ç¡¼¥¿³ÎÇ§
+    // å‰Šé™¤å¯¾è±¡ã®è«‹æ±‚æ›¸ç•ªå·ã®ãƒžã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ç¢ºèª
     $lngInvoiceNo = $aryData["lngInvoiceNo"];
     $lngRevisionNo = $aryData["lngRevisionNo"];
 
-    // »ØÄêÀÁµá½ñÈÖ¹æ¤ÎÀÁµá½ñ¥Þ¥¹¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+    // æŒ‡å®šè«‹æ±‚æ›¸ç•ªå·ã®è«‹æ±‚æ›¸ãƒžã‚¹ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
     $strQuery = fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo );
 
-    // ¾ÜºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+    // è©³ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
     if ( $lngResultNum == 1 )
@@ -94,78 +94,78 @@
     }
     else
     {
-        MoveToErrorPage( "¥Ç¡¼¥¿¤Ïºï½üºÑ¤ß¤Ç¤¹" );
+        MoveToErrorPage( "ãƒ‡ãƒ¼ã‚¿ã¯å‰Šé™¤æ¸ˆã¿ã§ã™" );
     }
 
 
     $objDB->freeResult( $lngResultID );
 
     // *****************************************************
-    //   ºï½ü½èÍý¼Â¹Ô¡ÊSubmit»þ¡Ë
+    //   å‰Šé™¤å‡¦ç†å®Ÿè¡Œï¼ˆSubmitæ™‚ï¼‰
     // *****************************************************
     if( $aryData["strSubmit"] )
     {
         // --------------------------------
-        //    ºï½ü²ÄÇ½¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
+        //    å‰Šé™¤å¯èƒ½ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
         // --------------------------------
 
-        // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+        // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
         $objDB->transactionBegin();
 
         if( !lockInvoice($lngInvoiceNo, $objDB) )
         {
-            MoveToErrorPage("ÀÁµá½ñ¥Ç¡¼¥¿¤Î¥í¥Ã¥¯¤Ë¼ºÇÔ¤·¤Þ¤·¤¿");
+            MoveToErrorPage("è«‹æ±‚æ›¸ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯ã«å¤±æ•—ã—ã¾ã—ãŸ");
         }
 
         if( isInvoiceModified($lngInvoiceNo, $lngRevisionNo, $objDB) )
         {
-            MoveToErrorPage("ÀÁµá½ñ¥Ç¡¼¥¿¤¬¹¹¿·¤Þ¤¿¤Ïºï½ü¤µ¤ì¤Æ¤¤¤Þ¤¹");
+            MoveToErrorPage("è«‹æ±‚æ›¸ãƒ‡ãƒ¼ã‚¿ãŒæ›´æ–°ã¾ãŸã¯å‰Šé™¤ã•ã‚Œã¦ã„ã¾ã™");
         }
         
-        // ÀÁµá½ñÌÀºÙ¤ËÉ³¤ÅÇä¾å¥Þ¥¹¥¿¤ÎÇä¾å¥¹¥Æ¡¼¥¿¥¹¤¬ÄùºÑ¤ß¤Ïºï½üÉÔ²Ä
+        // è«‹æ±‚æ›¸æ˜Žç´°ã«ç´ã¥å£²ä¸Šãƒžã‚¹ã‚¿ã®å£²ä¸Šã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãŒç· æ¸ˆã¿ã¯å‰Šé™¤ä¸å¯
         if (fncSalesStatusIsClosed($lngInvoiceNo, $objDB))
         {
-            MoveToErrorPage("ÄùºÑ¤ß¤Î¤¿¤á¡¢ºï½ü¤Ç¤­¤Þ¤»¤ó");
+            MoveToErrorPage("ç· æ¸ˆã¿ã®ãŸã‚ã€å‰Šé™¤ã§ãã¾ã›ã‚“");
         }
 
         // --------------------------------
-        //    ºï½ü½èÍý
+        //    å‰Šé™¤å‡¦ç†
         // --------------------------------
-        // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+        // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
         $objDB->transactionBegin();
 
-        // ÀÁµá½ñ¥Þ¥¹¥¿¤òºï½ü
+        // è«‹æ±‚æ›¸ãƒžã‚¹ã‚¿ã‚’å‰Šé™¤
         if (!fncDeleteInvoice($lngInvoiceNo, $lngRevisionNo, $objDB, $objAuth))
         {
-           fncOutputError ( 9051, DEF_FATAL, "ºï½ü½èÍý¤ËÈ¼¤¦ÀÁµá½ñ¥Þ¥¹¥¿½èÍý¼ºÇÔ", TRUE, "", $objDB );
+           fncOutputError ( 9051, DEF_FATAL, "å‰Šé™¤å‡¦ç†ã«ä¼´ã†è«‹æ±‚æ›¸ãƒžã‚¹ã‚¿å‡¦ç†å¤±æ•—", TRUE, "", $objDB );
         }
 
-        // ÀÁµá½ñÈÖ¹æ¤ËÉ³¤Å¤¤¤Æ¤¤¤ëÇä¾å¥Þ¥¹¥¿¤ÎÀÁµá½ñÈÖ¹æ¤ò¶õ¤Ë¤¹¤ë
+        // è«‹æ±‚æ›¸ç•ªå·ã«ç´ã¥ã„ã¦ã„ã‚‹å£²ä¸Šãƒžã‚¹ã‚¿ã®è«‹æ±‚æ›¸ç•ªå·ã‚’ç©ºã«ã™ã‚‹
         if (!fncUpdateInvoicenoToMSales($lngInvoiceNo, $objDB))
         {
-            fncOutputError ( 9051, DEF_FATAL, "ºï½ü½èÍý¤ËÈ¼¤¦Çä¾å¥Þ¥¹¥¿¥Æ¡¼¥Ö¥ë½èÍý¼ºÇÔ", TRUE, "", $objDB );
+            fncOutputError ( 9051, DEF_FATAL, "å‰Šé™¤å‡¦ç†ã«ä¼´ã†å£²ä¸Šãƒžã‚¹ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«å‡¦ç†å¤±æ•—", TRUE, "", $objDB );
         }
 
-        // ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥³¥ß¥Ã¥È
+        // ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚³ãƒŸãƒƒãƒˆ
         $objDB->transactionCommit();
 
-        // ºï½ü´°Î»²èÌÌ¤ÎÉ½¼¨
+        // å‰Šé™¤å®Œäº†ç”»é¢ã®è¡¨ç¤º
         $aryDeleteData = $aryHeadResult;
         $aryDeleteData["strAction"] = "/inv/search/index.php?strSessionID=";
         $aryDeleteData["strSessionID"] = $aryData["strSessionID"];
 
-        // ¸À¸ì¥³¡¼¥É¡§ÆüËÜ¸ì
+        // è¨€èªžã‚³ãƒ¼ãƒ‰ï¼šæ—¥æœ¬èªž
         $aryDeleteData["lngLanguageCode"] = 1;
 
-        // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate( "inv/result/delete_result.tmpl" );
 
-        // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
         $objTemplate->replace( $aryDeleteData );
         $objTemplate->complete();
 
-        // HTML½ÐÎÏ
+        // HTMLå‡ºåŠ›
         echo $objTemplate->strTemplate;
 
         $objDB->close();
@@ -173,21 +173,21 @@
         return true;
     }
 
-    // ¼èÆÀ¥Ç¡¼¥¿¤òÉ½¼¨ÍÑ¤ËÀ°·Á
-    // ¸ÜµÒÌ¾¡¦¸ÜµÒ¼ÒÌ¾¡¦¸ÜµÒ¥³¡¼¥É
+    // å–å¾—ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºç”¨ã«æ•´å½¢
+    // é¡§å®¢åãƒ»é¡§å®¢ç¤¾åãƒ»é¡§å®¢ã‚³ãƒ¼ãƒ‰
     list ($aryResult['printCustomerName'], $aryResult['printCompanyName'], $aryResult['lngCustomerCodeForCompaany']) = fncGetCompanyPrintName( $aryResult['strcustomercode'] ,$objDB);
 
     $aryNewResult = fncSetInvoiceHeadTableData ( $aryResult );
 
-    // ¥Ø¥Ã¥ÀÉô¤Î¥«¥é¥àÌ¾¤ÎÀßÄê¡Ê¥­¡¼¤ÎÆ¬¤Ë"CN"¤òÉÕÍ¿¤¹¤ë¡Ë
+    // ãƒ˜ãƒƒãƒ€éƒ¨ã®ã‚«ãƒ©ãƒ åã®è¨­å®šï¼ˆã‚­ãƒ¼ã®é ­ã«"CN"ã‚’ä»˜ä¸Žã™ã‚‹ï¼‰
     $aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
-    // ÌÀºÙÉô¤Î¥«¥é¥àÌ¾¤ÎÀßÄê¡Ê¥­¡¼¤ÎÆ¬¤Ë"CN"¤òÉÕÍ¿¤¹¤ë¡Ë
+    // æ˜Žç´°éƒ¨ã®ã‚«ãƒ©ãƒ åã®è¨­å®šï¼ˆã‚­ãƒ¼ã®é ­ã«"CN"ã‚’ä»˜ä¸Žã™ã‚‹ï¼‰
     $aryDetailColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryDetailColumnNames );
 
-    // ÀÁµá½ñÌÀºÙ¥Ç¡¼¥¿¼èÆÀ
+    // è«‹æ±‚æ›¸æ˜Žç´°ãƒ‡ãƒ¼ã‚¿å–å¾—
     $strQuery = fncGetSearchInvoiceDetailSQL($lngInvoiceNo , $aryResult['lngrevisionno']);
 
-    // ÌÀºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+    // æ˜Žç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
     if ( $lngResultNum )
@@ -199,7 +199,7 @@
     }
     else
     {
-        $strMessage = fncOutputError( 603, DEF_WARNING, "ÀÁµá½ñÈÖ¹æ¤ËÂÐ¤¹¤ëÌÀºÙ¾ðÊó¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó¡£", FALSE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+        $strMessage = fncOutputError( 603, DEF_WARNING, "è«‹æ±‚æ›¸ç•ªå·ã«å¯¾ã™ã‚‹æ˜Žç´°æƒ…å ±ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚", FALSE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
     }
 
     $objDB->freeResult( $lngResultID );
@@ -208,29 +208,29 @@
     {
         $aryNewDetailResult[$i] = fncSetInvoiceDetailTableData ( $aryDetailResult[$i], $aryNewResult );
 
-        // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate( "inv/result/parts_detail.tmpl" );
 
-        // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
         $objTemplate->replace( $aryDetailColumnNames_CN );
         $objTemplate->replace( $aryNewDetailResult[$i] );
         $objTemplate->complete();
 
-        // HTML½ÐÎÏ
+        // HTMLå‡ºåŠ›
         $aryDetailTable[] = $objTemplate->strTemplate;
     }
 
     $aryNewResult["strDetailTable"] = implode ("\n", $aryDetailTable );
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate( "inv/result/parts3.tmpl" );
 //     $objTemplate->getTemplate( "sc/result2/parts_detail.tmpl" );
 
-    // ²èÌÌ¥¿¥¤¥È¥ë
-    $aryNewResult['Title'] = "ºï½ü³ÎÇ§";
-    // ÌÀºÙËç¿ô
+    // ç”»é¢ã‚¿ã‚¤ãƒˆãƒ«
+    $aryNewResult['Title'] = "å‰Šé™¤ç¢ºèª";
+    // æ˜Žç´°æžšæ•°
     $aryNewResult['detailCount'] = count($aryDetailResult);
 
     $aryNewResult["strSessionID"] = $aryData["strSessionID"];
@@ -238,12 +238,12 @@
     $aryNewResult["strSubmit"]    = "submit";
     $aryNewResult["strMode"] = "delete";
 
-    // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+    // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
     $objTemplate->replace( $aryNewResult );
     $objTemplate->replace( $aryHeadColumnNames_CN );
     $objTemplate->complete();
 
-    // HTML½ÐÎÏ
+    // HTMLå‡ºåŠ›
     echo $objTemplate->strTemplate;
 
     $objDB->close();
@@ -251,24 +251,24 @@
     return true;
 
 
-    // ¥¨¥é¡¼²èÌÌ¤Ø¤ÎÁ«°Ü
+    // ã‚¨ãƒ©ãƒ¼ç”»é¢ã¸ã®é·ç§»
     function MoveToErrorPage($strMessage){
 
-        // ¸À¸ì¥³¡¼¥É¡§ÆüËÜ¸ì
+        // è¨€èªžã‚³ãƒ¼ãƒ‰ï¼šæ—¥æœ¬èªž
         $aryHtml["lngLanguageCode"] = 1;
 
-        // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ÎÀßÄê
+        // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®è¨­å®š
         $aryHtml["strErrorMessage"] = $strMessage;
 
-        // ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate( "/result/error/parts.tmpl" );
 
-        // ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+        // ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
         $objTemplate->replace( $aryHtml );
         $objTemplate->complete();
 
-        // HTML½ÐÎÏ
+        // HTMLå‡ºåŠ›
         echo $objTemplate->strTemplate;
 
         exit;

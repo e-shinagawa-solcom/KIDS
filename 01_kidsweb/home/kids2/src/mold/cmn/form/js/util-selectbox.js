@@ -1,5 +1,5 @@
 
-// SELECTÍ×ÁÇ´Ö¤ÎÁªÂòºÑ¤ßÍ×ÁÇ¤ò°ÜÆ°¤¹¤ë
+// SELECTè¦ç´ é–“ã®é¸æŠæ¸ˆã¿è¦ç´ ã‚’ç§»å‹•ã™ã‚‹
 function selectBoxMoveTo(src, dst)
 {
     if (isSelectElement(src) && isSelectElement(dst))
@@ -8,9 +8,9 @@ function selectBoxMoveTo(src, dst)
 
         if (0 < selected.length)
         {
-            // OPTIONÍ×ÁÇ¤Î°ÜÆ°
+            // OPTIONè¦ç´ ã®ç§»å‹•
             $(dst).append(selected);
-            // ÂĞ¾İSELECTÍ×ÁÇ¤Î¥¤¥Ù¥ó¥ÈÃå²Ğ
+            // å¯¾è±¡SELECTè¦ç´ ã®ã‚¤ãƒ™ãƒ³ãƒˆç€ç«
             $(src).trigger('change');
             $(dst).trigger('change');
         }
@@ -29,28 +29,28 @@ function selectBoxCommand(selectbox, commandName)
             switch (commandName.toLowerCase())
             {
                 case 'up':
-                    // SELECTÍ×ÁÇÆâ¤ÎÁªÂòºÑ¤ßÍ×ÁÇ¤Î½çÈÖ¤ò¾å¤²¤ë
+                    // SELECTè¦ç´ å†…ã®é¸æŠæ¸ˆã¿è¦ç´ ã®é †ç•ªã‚’ä¸Šã’ã‚‹
                     selected.first().prev().before(selected);
                     break;
                 case 'down':
-                    // SELECTÍ×ÁÇÆâ¤ÎÁªÂòºÑ¤ßÍ×ÁÇ¤Î½çÈÖ¤ò²¼¤²¤ë
+                    // SELECTè¦ç´ å†…ã®é¸æŠæ¸ˆã¿è¦ç´ ã®é †ç•ªã‚’ä¸‹ã’ã‚‹
                     selected.last().next().after(selected);
                     break;
                 case 'sort':
-                    // valueÂ°À­¤ò´ğ¤ËÊ¸»úÎó¥½¡¼¥È¤ò¤«¤±¤ë
+                    // valueå±æ€§ã‚’åŸºã«æ–‡å­—åˆ—ã‚½ãƒ¼ãƒˆã‚’ã‹ã‘ã‚‹
                     var sortedOptions = selectbox.find('option').sort(function(a, b){
                         if (a.value < b.value) return -1;
                         if (b.value < a.value) return 1;
                         return 0;
                     });
-                    // ¥½¡¼¥È·ë²Ì¤òÈ¿±Ç
+                    // ã‚½ãƒ¼ãƒˆçµæœã‚’åæ˜ 
                     selectbox.append(sortedOptions);
                     break;
                 default:
                     break
             }
 
-            // ÂĞ¾İSELECTÍ×ÁÇ¤Î¥¤¥Ù¥ó¥ÈÃå²Ğ
+            // å¯¾è±¡SELECTè¦ç´ ã®ã‚¤ãƒ™ãƒ³ãƒˆç€ç«
             $(selectbox).trigger('change');
         }
     }

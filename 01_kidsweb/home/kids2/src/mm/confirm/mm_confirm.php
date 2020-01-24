@@ -2,10 +2,10 @@
 
 // ----------------------------------------------------------------------------
 /**
- * �ⷿ������� ��Ͽ��ǧ����*
+ * 金型履歴管理 登録確認画面*
  *
- * ��������
- * ����Ͽ������̤�ɽ��
+ * 処理概要
+ * ・登録履歴画面を表示
  */
 // ----------------------------------------------------------------------------
 include('conf.inc');
@@ -21,104 +21,104 @@ $objDB->open ( "", "", "", "" );
 
 $replacement = $_REQUEST;
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession ( $replacement ["strSessionID"], $objAuth, $objDB);
 
-// 1800 �ⷿ�������
+// 1800 金型履歴管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 1801 �ⷿ�������(��Ͽ)
+// 1801 金型履歴管理(登録)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM1, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// ����å��奤�󥹥��󥹤μ���
+// キャッシュインスタンスの取得
 $formCache = FormCache::getInstance();
 
-// ����å���(�ե�����)�ǡ����μ��Ф�
+// キャッシュ(フォーム)データの取り出し
 $resultFormCache = $formCache->get($replacement["resultHash"]);
 
-// ����å���(�ե�����)�ǡ��������Ф������
+// キャッシュ(フォーム)データが取り出せた場合
 if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 {
-	// ����å���쥳���ɼ���
+	// キャッシュレコード取得
 	$workCache = pg_fetch_array($resultFormCache, 0, PGSQL_ASSOC);
 
-	// �ǥ��ꥢ�饤��
+	// デシリアライズ
 	$workFormData = FormCache::deserialize($workCache["serializeddata"]);
 
-	// �桼�ƥ���ƥ����󥹥��󥹤μ���
+	// ユーティリティインスタンスの取得
 	$utilBussinesscode = UtilBussinesscode::getInstance();
 	$utilMold = UtilMold::getInstance();
 
-	// ��̳�����ɤ��饳�������������
-	$replacement["StatusDesc"] = $utilBussinesscode->getDescription('�ⷿ���ơ�����',  $workFormData[FormMoldHistory::Status]);
+	// 業務コードからコード説明を索引
+	$replacement["StatusDesc"] = $utilBussinesscode->getDescription('金型ステータス',  $workFormData[FormMoldHistory::Status]);
 
-	// �ƥ�ץ졼���ɤ߹���
+	// テンプレート読み込み
 	$objTemplate = new clsTemplate ();
 	$objTemplate->getTemplate ( "/mm/confirm/mm_confirm.html" );
 
-	// �ǥ��ꥢ�饤������UTF-8�ˤ�����Τ�EUC-JP���᤹
+	// デシリアライズ時にUTF-8にしたものをEUC-JPに戻す
 	mb_convert_variables("eucjp-win", "utf-8", $workFormData);
 
-	// �ץ졼���ۥ�����ִ�
+	// プレースホルダー置換
 	$objTemplate->replace(array_merge($replacement, $workFormData));
 	$objTemplate->complete();
 
-	// �ⷿNO�����
+	// 金型NOの抽出
 	$listMoldNo = UtilMold::extractArray($workFormData, FormMoldReport::MoldNo);
 
-	// �ⷿ�ơ��֥������ΰ�DOMDocument�����
+	// 金型テーブル生成の為DOMDocumentを使用
 	$doc = new DOMDocument();
 
-	// �ѡ������顼����
+	// パースエラー抑制
 	libxml_use_internal_errors(true);
-	// DOM�ѡ���
+	// DOMパース
 	$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
-	// �ѡ������顼���ꥢ
+	// パースエラークリア
 	libxml_clear_errors();
-	// �ѡ������顼�������
+	// パースエラー抑制解除
 	libxml_use_internal_errors(false);
 
-	// �ⷿ�ơ��֥�μ���
+	// 金型テーブルの取得
 	$moldTable = $doc->getElementById("MoldTable");
 
-	// �ⷿNO�η��ʬ����
+	// 金型NOの件数分走査
 	for($i = 1; $i <= count($listMoldNo); $i++)
 	{
-		// �ⷿ�ơ��֥��tr����
+		// 金型テーブルのtr作成
 		$elmTableRacord = $doc->createElement("tr");
 
-		// �ⷿ�ơ��֥��td���Ǻ���
+		// 金型テーブルのtd要素作成
 		$elmTableCellIndex = $doc->createElement("td");
 		$elmTableCellMoldNo = $doc->createElement("td");
 
-		// td������Υƥ���������
+		// td要素内のテキスト設定
 		$elmTableCellIndex->appendChild($doc->createTextNode($i));
 		$elmTableCellMoldNo->appendChild($doc->createTextNode(toUTF8($listMoldNo[FormMoldReport::MoldNo.$i])));
 
-		// td���Ǥ�tr���Ǥ��ɲ�
+		// td要素をtr要素に追加
 		$elmTableRacord->appendChild($elmTableCellIndex);
 		$elmTableRacord->appendChild($elmTableCellMoldNo);
 
-		// �ⷿ�ơ��֥��tr���Ǥ��ɲ�
+		// 金型テーブルへtr要素を追加
 		$moldTable->appendChild($elmTableRacord);
 	}
 
-	// cookie���å�
+	// cookieセット
 	setcookie("strSessionID", $_REQUEST["strSessionID"]);
 	setcookie("resultHash", $_REQUEST["resultHash"]);
 
-	// html����
+	// html出力
 	echo $doc->saveHTML();
 }
-// ����å���(�ե�����)�ǡ��������Ф��ʤ��ä����
+// キャッシュ(フォーム)データが取り出せなかった場合
 else
 {
-	// ����å�����Ф�����
+	// キャッシュ取り出し失敗
 	fncOutputError(9065, DEF_ERROR, "", TRUE, "", $objDB);
 }

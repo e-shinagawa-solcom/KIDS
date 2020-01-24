@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥æ¡¼¥¶¡¼´ÉÍı ¸¡º÷¾ò·ïÆşÎÏ²èÌÌ
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç† æ¤œç´¢æ¡ä»¶å…¥åŠ›ç”»é¢
 *
 *	@package   KIDS
 *	@copyright Copyright (c) 2004, kuwagata 
@@ -16,14 +16,14 @@
 
 echo "TEST";
 exit;
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 //require (SRC_ROOT . "wf/cmn/lib_wf.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
@@ -35,23 +35,23 @@ $aryParts = fncStringToArray ( $_COOKIE["UserSearch"], "&", ":" );
 //$aryParts = array_merge ( $_GET, $_COOKIE );
 
 /*
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_UC3, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", FALSE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", FALSE, "", $objDB );
 }
 */
 
 
-// HIDDEN¥¿¥°À¸À®
+// HIDDENã‚¿ã‚°ç”Ÿæˆ
 $aryParts["strHiddenForm"] = "
 <input type=\"hidden\" name=\"strSessionID\" value=\"" . $aryData["strSessionID"] . "\">
 <input type=\"hidden\" name=\"lngFunctionCode\" value=\"" . DEF_FUNCTION_UC3 . "\">
@@ -59,32 +59,32 @@ $aryParts["strHiddenForm"] = "
 
 
 
-// lngWorkflowStatusCode SELECT¥¿¥°À¸À®
+// lngWorkflowStatusCode SELECTã‚¿ã‚°ç”Ÿæˆ
 $aryParts["workflowStatusCodeMenu"] = "
 <option value=\"\"></option>
-<option value=\"" . DEF_STATUS_ORDER . "\">¿½ÀÁÃæ</option>
-<option value=\"" . DEF_STATUS_APPROVE . "\">¾µÇ§</option>
-<option value=\"" . DEF_STATUS_DENIAL . "\">ÈİÇ§</option>
+<option value=\"" . DEF_STATUS_ORDER . "\">ç”³è«‹ä¸­</option>
+<option value=\"" . DEF_STATUS_APPROVE . "\">æ‰¿èª</option>
+<option value=\"" . DEF_STATUS_DENIAL . "\">å¦èª</option>
 ";
 
 if ( $bytCancellFlag )
 {
-	$aryParts["workflowStatusCodeMenu"] .= "<option value=\"" . DEF_STATUS_CANCELL . "\">¿½ÀÁ¼è¾Ã</option>\n";
+	$aryParts["workflowStatusCodeMenu"] .= "<option value=\"" . DEF_STATUS_CANCELL . "\">ç”³è«‹å–æ¶ˆ</option>\n";
 }
 
-// lngCompanyCode SELECT¥¿¥°À¸À®
+// lngCompanyCode SELECTã‚¿ã‚°ç”Ÿæˆ
 $aryParts["lngCompanyCode"] = fncGetPulldown( "m_Company", "lngcompanyCode", "strCompanyDisplayCode || ' ' || strCompanyDisplayName", "", "WHERE bytCompanyDisplayFlag = TRUE", $objDB );
 
-// lngAuthorityGroupCode SELECT¥¿¥°À¸À®
+// lngAuthorityGroupCode SELECTã‚¿ã‚°ç”Ÿæˆ
 $aryParts["lngAuthorityGroupCode"] = fncGetPulldown( "m_AuthorityGroup", "lngAuthorityGroupCode", "strAuthorityGroupName", "", "", $objDB );
 
-// lngAccessIPAddressCode SELECT¥¿¥°À¸À®
+// lngAccessIPAddressCode SELECTã‚¿ã‚°ç”Ÿæˆ
 $aryParts["lngAccessIPAddressCode"] = fncGetPulldown( "m_AccessIPAddress", "lngAccessIPAddressCode", "strAccessIPAddress || ' ' || strNote", "", "", $objDB );
 
 $aryParts["strSessionID"]    = &$aryData["strSessionID"];
 $aryParts["lngFunctionCode"] = DEF_FUNCTION_UC3;
 
-// HTML½ĞÎÏ
+// HTMLå‡ºåŠ›
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "estimate/search/search.tmpl" );
 $objTemplate->replace( $aryParts );

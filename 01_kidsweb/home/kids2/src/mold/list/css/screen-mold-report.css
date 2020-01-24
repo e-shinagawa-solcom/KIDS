@@ -1,10 +1,10 @@
-/* °õºş¥ì¥¤¥¢¥¦¥È¥º¥ìÂĞ±ş */
+/* å°åˆ·ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã‚ºãƒ¬å¯¾å¿œ */
 body
 {
     margin: 0;
 }
 
-/* Ä¢É¼É½¼¨ÀÚ¤êÂØ¤¨¥Ñ¥Í¥ë */
+/* å¸³ç¥¨è¡¨ç¤ºåˆ‡ã‚Šæ›¿ãˆãƒ‘ãƒãƒ« */
 div#report-control-panel
 {
     z-index: 1;
@@ -26,20 +26,20 @@ div#report-control-panel *
     vertical-align: middle;
 }
 
-/* ¶â·¿Ä¢É¼ 1¥Ú¡¼¥¸ÁêÅö */
+/* é‡‘å‹å¸³ç¥¨ 1ãƒšãƒ¼ã‚¸ç›¸å½“ */
 div.mold-report-page
 {
     display: none;
 }
 
-/* É½¼¨¥Ú¡¼¥¸ */
+/* è¡¨ç¤ºãƒšãƒ¼ã‚¸ */
 div.show-page
 {
     -ms-transition: display 0.3s ease-in;
     display: block;
 }
 
-/* COPY ¥ª¡¼¥Ğ¡¼¥ì¥¤ */
+/* COPY ã‚ªãƒ¼ãƒãƒ¼ãƒ¬ã‚¤ */
 div.copy-overlay
 {
     display: none;

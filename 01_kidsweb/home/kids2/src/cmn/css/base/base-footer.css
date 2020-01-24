@@ -45,7 +45,7 @@
     font-weight: bold;
 }
 
-/* ¥á¥¤¥ó¥á¥Ë¥å¡¼¥Ü¥¿¥ó */
+/* ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ */
 .control-block__buttan-main-menu
 {
     position: absolute;
@@ -54,7 +54,7 @@
 }
 
 
-/* ¥í¥°¥¢¥¦¥È¥Ü¥¿¥ó */
+/* ãƒ­ã‚°ã‚¢ã‚¦ãƒˆãƒœã‚¿ãƒ³ */
 .control-block__button-logout
 {
 	position: absolute;
@@ -62,7 +62,7 @@
 	right: 50px;
 }
 
-/* ¥Ø¥ë¥×¥Ü¥¿¥ó */
+/* ãƒ˜ãƒ«ãƒ—ãƒœã‚¿ãƒ³ */
 .control-block__button-help
 {
 	position: absolute;

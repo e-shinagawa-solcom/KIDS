@@ -1,8 +1,8 @@
 <?php
 /** 
-*	¥í¥°¥¢¥¦¥È¡¡½èÍı
+*	ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã€€å‡¦ç†
 *
-*	¥í¥°¥¢¥¦¥È²èÌÌ¤ÎÉ½¼¨¡¢¥í¥°¥¢¥¦¥È½èÍı
+*	ãƒ­ã‚°ã‚¢ã‚¦ãƒˆç”»é¢ã®è¡¨ç¤ºã€ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -11,18 +11,18 @@
 *	@access    public
 *	@version   1.00
 *
-*	½èÍı³µÍ×
-*	¥á¥¤¥ó¥á¥Ë¥å¡¼¤è¤ê¥í¥°¥¢¥¦¥È¥Ü¥¿¥ó¤¬²¡¤µ¤ì¤¿ºİ¤Ë¼Â¹Ô
-*	¼Â¹ÔOK¤Ç¤¢¤ì¤Ğ¥í¥°¥¢¥¦¥È½èÍı¤ò¹Ô¤¦
+*	å‡¦ç†æ¦‚è¦
+*	ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚ˆã‚Šãƒ­ã‚°ã‚¢ã‚¦ãƒˆãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸéš›ã«å®Ÿè¡Œ
+*	å®Ÿè¡ŒOKã§ã‚ã‚Œã°ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†ã‚’è¡Œã†
 *
 */
 
-// ¥í¥°¥¢¥¦¥È½èÍı
+// ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†
 
-// ÀßÄê¤ÎÆÉ¤ß¹ş¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once ( "conf.inc" );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require ( LIB_FILE );
 
 $objDB   = new clsDB();
@@ -30,7 +30,7 @@ $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_POST )
 {
@@ -41,24 +41,24 @@ elseif ( $_GET )
 	$aryData = $_GET;
 }
 
-// ¥í¥°¥¢¥¦¥È¼Â¹Ô½èÍı¤Ê¤Î¤«¡¢¥í¥°¥¢¥¦¥È³ÎÇ§½èÍı¤Ê¤Î¤«È½ÃÇ
+// ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå®Ÿè¡Œå‡¦ç†ãªã®ã‹ã€ãƒ­ã‚°ã‚¢ã‚¦ãƒˆç¢ºèªå‡¦ç†ãªã®ã‹åˆ¤æ–­
 if ( !$aryData["bytLogoutFlag"] )
 {
-	// ¥í¥°¥¢¥¦¥È³ÎÇ§½èÍı¤Î¾ì¹ç
+	// ãƒ­ã‚°ã‚¢ã‚¦ãƒˆç¢ºèªå‡¦ç†ã®å ´åˆ
 	if ( isset( $aryData["strSessionID"] ) )
 	{
-		// Ê¸»úÎó¥Á¥§¥Ã¥¯
+		// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 		$aryCheck["strSessionID"]   = "null:numenglish(32,32)";
 		$aryResult = fncAllCheck( $aryData, $aryCheck );
 		fncPutStringCheckError( $aryResult, $objDB );
 
-		// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+		// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 		$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-		// LanguageCode¼èÆÀ
+		// LanguageCodeå–å¾—
 		$aryData["lngLanguageCode"] = 1;
 
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$fp = fopen ( TMP_ROOT . "login/logout.html", "r" );
 
 		while ( $strTemplLine = fgets ( $fp, 1000 ) )
@@ -70,38 +70,38 @@ if ( !$aryData["bytLogoutFlag"] )
 		$strTempl = preg_replace ( "/_%lngLanguageCode%_/i", $aryData["lngLanguageCode"], $strTempl );
 		$strTempl = preg_replace ( "/_%bytLogoutFlag%_/i", TRUE, $strTempl );
 
-		// ÃÖ´¹¤µ¤ì¤Ê¤«¤Ã¤¿ÃÖ¤­´¹¤¨Ê¸»úÎó¤òºï½ü
+		// ç½®æ›ã•ã‚Œãªã‹ã£ãŸç½®ãæ›ãˆæ–‡å­—åˆ—ã‚’å‰Šé™¤
 		$strTempl = preg_replace ( "/_%.+?%_/", "", $strTempl );
 
 		echo $strTempl;
 	}
 	else
 	{
-		fncOutputError ( 9052, DEF_ERROR, "¥»¥Ã¥·¥ç¥ó¤¬°Û¾ï¤Ç¤¹¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_ERROR, "ã‚»ãƒƒã‚·ãƒ§ãƒ³ãŒç•°å¸¸ã§ã™ã€‚", TRUE, "", $objDB );
 	}
 }
 else
 {
-	// ¥í¥°¥¢¥¦¥È¼Â¹Ô½èÍı¤Î¾ì¹ç
+	// ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå®Ÿè¡Œå‡¦ç†ã®å ´åˆ
 	if ( isset( $aryData["strSessionID"] ) )
 	{
-		// Ê¸»úÎó¥Á¥§¥Ã¥¯
+		// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 		$aryCheck["strSessionID"]   = "null:numenglish(32,32)";
 		$aryResult = fncAllCheck( $aryData, $aryCheck );
 		fncPutStringCheckError( $aryResult, $objDB );
 
-		// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+		// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 		$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-		// ¥í¥°¥¢¥¦¥È¼Â¹Ô½èÍı
+		// ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå®Ÿè¡Œå‡¦ç†
 		fncLogout( $aryData["strSessionID"], $objDB );
 
-		// HTML½ĞÎÏ¡Ê¥í¥°¥¤¥ó²èÌÌ¡Ë
+		// HTMLå‡ºåŠ›ï¼ˆãƒ­ã‚°ã‚¤ãƒ³ç”»é¢ï¼‰
 		require ( TMP_ROOT . 'login/index.html' );
 	}
 	else
 	{
-		fncOutputError ( 9052, DEF_ERROR, "¥»¥Ã¥·¥ç¥ó¤¬°Û¾ï¤Ç¤¹¡£", TRUE, "", $objDB );
+		fncOutputError ( 9052, DEF_ERROR, "ã‚»ãƒƒã‚·ãƒ§ãƒ³ãŒç•°å¸¸ã§ã™ã€‚", TRUE, "", $objDB );
 	}
 }
 

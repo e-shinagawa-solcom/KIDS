@@ -1,2 +1,2 @@
-// No8: ¸ÜµÒ¥³¡¼¥É				¢ª °ìÃ×¤¹¤ë¡Ö¥³¡¼¥É¡ÜÌ¾¾Î¡×°ìÍ÷(¶¦ÄÌSubWindow¡§saito)
+// No8: é¡§å®¢ã‚³ãƒ¼ãƒ‰				â†’ ä¸€è‡´ã™ã‚‹ã€Œã‚³ãƒ¼ãƒ‰ï¼‹åç§°ã€ä¸€è¦§(å…±é€šSubWindowï¼šsaito)
 SELECT c.strcompanydisplaycode,(c.strcompanydisplaycode || ' ' || c.strcompanydisplayname) AS strcompanydisplayname FROM m_company c, m_attribute a, m_attributerelation al WHERE c.lngcompanycode = al.lngcompanycode AND al.lngattributecode = a.lngattributecode AND al.lngattributecode = 2 AND strcompanydisplaycode LIKE '%_%strFormValue0%_%' ORDER BY c.strcompanydisplaycode

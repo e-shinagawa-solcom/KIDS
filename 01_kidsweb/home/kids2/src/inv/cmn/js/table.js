@@ -1,65 +1,65 @@
 $(function () {
-  // response ¥Ç¥£¡¼¥×¥³¥Ô¡¼ÍÑÇÛÎó
+  // response ãƒ‡ã‚£ãƒ¼ãƒ—ã‚³ãƒ”ãƒ¼ç”¨é…åˆ—
   var data = [];
 
-  // dom ½é´ü²½ÍÑ¶õÇÛÎó
+  // dom åˆæœŸåŒ–ç”¨ç©ºé…åˆ—
   var dataEmpty = new Array(20).fill('');
 
-  // ¥Æ¡¼¥Ö¥ëA Ê£À½dom³ÊÇ¼ÍÑÇÛÎó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A è¤‡è£½domæ ¼ç´ç”¨é…åˆ—
   var domA = [];
 
-  // ¥Æ¡¼¥Ö¥ëB Ê£À½dom³ÊÇ¼ÍÑÇÛÎó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B è¤‡è£½domæ ¼ç´ç”¨é…åˆ—
   var domB = [];
 
-  // ¥Ç¡¼¥¿°ì»şÊİ´É ¡öÁ÷¿®Á°¤Î¥Ç¡¼¥¿³ÊÇ¼ÍÑÇÛÎó
+  // ãƒ‡ãƒ¼ã‚¿ä¸€æ™‚ä¿ç®¡ ï¼Šé€ä¿¡å‰ã®ãƒ‡ãƒ¼ã‚¿æ ¼ç´ç”¨é…åˆ—
   var temp = [];
 
-  // ÁªÂò¹Ô¥¤¥ó¥Ç¥Ã¥¯¥¹³ÊÇ¼ÍÑÇÛÎó
+  // é¸æŠè¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹æ ¼ç´ç”¨é…åˆ—
   var selectedRowIndexes = [];
 
-  // ¥µ¥Ö¥¯¥¨¥ê¥­¥ã¥Ã¥·¥å
+  // ã‚µãƒ–ã‚¯ã‚¨ãƒªã‚­ãƒ£ãƒƒã‚·ãƒ¥
   $tableA = $('#tableA');
   $tableB = $('#tableB');
 
-  // ¥Æ¡¼¥Ö¥ëA <tbody>, <tr>
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A <tbody>, <tr>
   $tableA_tbody = $('tbody', $tableA);
   $tableA_row = $('tr', $tableA_tbody);
 
-  // ¥Æ¡¼¥Ö¥ëB <tbody>, <tr>
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B <tbody>, <tr>
   $tableB_tbody = $('tbody', $tableB);
   $tableB_row = $('tr', $tableB_tbody);
 
-  // Ê£À½¸µ¤Î $tableA_row ¤òºï½ü
+  // è¤‡è£½å…ƒã® $tableA_row ã‚’å‰Šé™¤
   $tableA_row.remove();
 
-  // Ê£À½¸µ¤Î $tableB_row ¤òºï½ü
+  // è¤‡è£½å…ƒã® $tableB_row ã‚’å‰Šé™¤
   $tableB_row.remove();
 
 
-  // ³«»ÏÆü»ş¥Õ¥©¡¼¥«¥¹¤ò¼º¤Ã¤¿¤È¤­¤Î½èÍı
+  // é–‹å§‹æ—¥æ™‚ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã‚’å¤±ã£ãŸã¨ãã®å‡¦ç†
   $('input[name="curlastmonthbalance"]').on('blur', function () {
     var val = $(this).val();
     var thisMonthAmount = Number($('input[name="curthismonthamount"]').val().replace(/,/g, ''));
     var taxPrice = Number($('input[name="curtaxprice"]').val().replace(/,/g, ''));
     var curLastMonthBalance = Number(val);
-    // º¹°ú¹ç·×³Û
-    // Á°·îÀÁµá»Ä³Û + Åö·îÀÁµá³Û + ¾ÃÈñÀÇ
+    // å·®å¼•åˆè¨ˆé¡
+    // å‰æœˆè«‹æ±‚æ®‹é¡ + å½“æœˆè«‹æ±‚é¡ + æ¶ˆè²»ç¨
     var noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice;
     $('input[name="notaxcurthismonthamount"]').val(convertNumber(Math.round(noTaxMonthAmount))).change();
     $(this).val(convertNumber(val));
   });
   /**
    * ----------------------------------------------------------------------------------------------------
-   * ´Ø¿ô·²
+   * é–¢æ•°ç¾¤
    * ----------------------------------------------------------------------------------------------------
    */
 
   /**
-  * @method createSkeletonTable ¥Æ¡¼¥Ö¥ëÀ¸À®
-  * @param data {Array} ´ğ¤È¤Ê¤ë¥Ç¡¼¥¿ÇÛÎó
-  * @param clone {Object} Ê£À½¸µ¥»¥ì¥¯¥¿¡¼
-  * @param dom {Array} Ê£À½dom³ÊÇ¼ÍÑÇÛÎó
-  * @param target {Object} ½ĞÎÏÀè¥¿¡¼¥²¥Ã¥È¥»¥ì¥¯¥¿¡¼
+  * @method createSkeletonTable ãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆ
+  * @param data {Array} åŸºã¨ãªã‚‹ãƒ‡ãƒ¼ã‚¿é…åˆ—
+  * @param clone {Object} è¤‡è£½å…ƒã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼
+  * @param dom {Array} è¤‡è£½domæ ¼ç´ç”¨é…åˆ—
+  * @param target {Object} å‡ºåŠ›å…ˆã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼
   */
   $.createSkeletonTable = function (data, clone, dom, target) {
     dom = [];
@@ -73,7 +73,7 @@ $(function () {
   };
 
   /**
-   * @method addDataTableA ¥Æ¡¼¥Ö¥ëA¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+   * @method addDataTableA ãƒ†ãƒ¼ãƒ–ãƒ«Aã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
    */
   $.addDataTableA = function () {
     if (data[0] === '') return;
@@ -94,7 +94,7 @@ $(function () {
       var id = v.strslipcode;
       var strnote = v.strnote;
 
-      // html ½ĞÎÏ
+      // html å‡ºåŠ›
       $target_row.attr('data-id', id);
       $target_row.attr('slipno', slipno);
       $target_row.attr('revisionno', revisionno);
@@ -105,14 +105,14 @@ $(function () {
       $('.price', $target_row).html(convertNumber(curtotalprice));
       $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + '] ');
       $('.taxclass .taxclassname', $target_row).html(taxclassname);
-      $('.tax', $target_row).html(tax * 100 + '¡ó');
+      $('.tax', $target_row).html(tax * 100 + 'ï¼…');
       $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
       $('.remarks', $target_row).html(strnote);
     });
   };
 
   /**
-   * @method addDataTableB ¥Æ¡¼¥Ö¥ëB¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+   * @method addDataTableB ãƒ†ãƒ¼ãƒ–ãƒ«Bã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
    */
   $.addDataTableB = function () {
     $.each(temp, function (i, v) {
@@ -132,7 +132,7 @@ $(function () {
       var revisionno = v.lngrevisionno;
       var strnote = v.strnote;
 
-      // html ½ĞÎÏ
+      // html å‡ºåŠ›
       $target_row.attr('data-id', id);
       $target_row.attr('slipno', slipno);
       $target_row.attr('revisionno', revisionno);
@@ -143,31 +143,31 @@ $(function () {
       $('.price', $target_row).html(convertNumber(curtotalprice));
       $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + '] ');
       $('.taxclass .taxclassname', $target_row).html(taxclassname);
-      $('.tax', $target_row).html(tax * 100 + '¡ó');
+      $('.tax', $target_row).html(tax * 100 + 'ï¼…');
       $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
       $('.remarks', $target_row).html(strnote);
     });
   };
 
   /**
-   * @method scanAllCheckbox ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+   * @method scanAllCheckbox ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
    */
   $.scanAllCheckbox = function () {
     var $all_rows = $('tbody tr', $tableA);
     var $all_checkbox = $all_rows.find('input[type="checkbox"]');
 
-    // Í­¸ú <tr> ¡öÁªÂò²ÄÇ½¹Ô
+    // æœ‰åŠ¹ <tr> ï¼Šé¸æŠå¯èƒ½è¡Œ
     var count_checked = 0;
     var count_disabled = 0;
 
-    // data ¤¬¤Ê¤¤¾ì¹ç¡¢Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¿²¤«¤»¤ÆÌµ¸ú²½
+    // data ãŒãªã„å ´åˆã€å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å¯ã‹ã›ã¦ç„¡åŠ¹åŒ–
     if (!data.length) {
       $('#allChecked').prop({ 'checked': false, 'disabled': true });
     } else {
       $('#allChecked').prop('disabled', false);
     }
 
-    // <tr> ¤Ë data-id Â°À­¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢³ºÅö¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤òÌµ¸ú²½
+    // <tr> ã« data-id å±æ€§ãŒå­˜åœ¨ã—ãªã„å ´åˆã€è©²å½“ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’ç„¡åŠ¹åŒ–
     $.each($all_rows, function () {
       if (!$(this).data('id')) {
         $all_checkbox.prop({ 'checked': false, 'disabled': true });
@@ -175,12 +175,12 @@ $(function () {
     });
 
     $.each($all_checkbox, function (i) {
-      // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬¤Ò¤È¤Ä¤Ç¤â³°¤ì¤Æ¤¤¤ë¾ì¹ç¡¢Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¿²¤«¤¹
+      // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒã²ã¨ã¤ã§ã‚‚å¤–ã‚Œã¦ã„ã‚‹å ´åˆã€å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å¯ã‹ã™
       if (!$(this).closest('tr').hasClass('selected')) {
         $('#allChecked').prop('checked', false);
       }
 
-      // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬¤¹¤Ù¤Æ¥Á¥§¥Ã¥¯¤µ¤ì¤¿¾ì¹ç¡¢Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤òÎ©¤Æ¤ë
+      // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒã™ã¹ã¦ãƒã‚§ãƒƒã‚¯ã•ã‚ŒãŸå ´åˆã€å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’ç«‹ã¦ã‚‹
       if ($(this).closest('tr').hasClass('selected')) {
         ++count_checked;
       }
@@ -188,7 +188,7 @@ $(function () {
         $('#allChecked').prop('checked', true);
       }
 
-      // ¤¹¤Ù¤Æ¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬Ìµ¸ú²½¤µ¤ì¤¿¾ì¹ç¡¢Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤ò¿²¤«¤»¤ÆÌµ¸ú²½
+      // ã™ã¹ã¦ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒç„¡åŠ¹åŒ–ã•ã‚ŒãŸå ´åˆã€å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã‚’å¯ã‹ã›ã¦ç„¡åŠ¹åŒ–
       if ($(this).prop('disabled')) {
         ++count_disabled;
       }
@@ -199,17 +199,17 @@ $(function () {
   };
 
   /**
-   * @method initTableA ¥Æ¡¼¥Ö¥ëA ½é´ü²½
+   * @method initTableA ãƒ†ãƒ¼ãƒ–ãƒ«A åˆæœŸåŒ–
    */
   $.initTableA = function () {
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
     data = [];
     $.createSkeletonTable(dataEmpty, $tableA_row, domA, $tableA_tbody);
   };
 
   /**
-   * @method setTableSorter ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+   * @method setTableSorter ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
    */
   $.setTableSorter = function () {
     $('#tableA, #tableB').trigger('destroy');
@@ -228,49 +228,49 @@ $(function () {
 
   /**
    * ----------------------------------------------------------------------------------------------------
-   * ½é´üÉ½¼¨
+   * åˆæœŸè¡¨ç¤º
    * ----------------------------------------------------------------------------------------------------
    */
 
-  // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+  // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
   $.scanAllCheckbox();
 
   $.createTable = function (response) {
     data = (response === undefined || response && !response.length) ? dataEmpty : Array.from(new Set(response));
 
-    // ¥Æ¡¼¥Ö¥ëAÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«Aç”Ÿæˆ
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
     $.addDataTableA();
 
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
   };
 
   $.createTableRenew = function (response) {
     data = (response === undefined || response && !response.length) ? dataEmpty : Array.from(new Set(response));
 
-    // ¥Æ¡¼¥Ö¥ëBÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«Bç”Ÿæˆ
     $.createSkeletonTable(data, $tableB_row, domB, $tableB_tbody);
     $.each(data, function (i) {
       temp.push(data[i]);
     });
     $.addDataTableB();
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
   };
 
   /**
    * ----------------------------------------------------------------------------------------------------
-   * ¥¤¥Ù¥ó¥ÈÀßÄê
+   * ã‚¤ãƒ™ãƒ³ãƒˆè¨­å®š
    * ----------------------------------------------------------------------------------------------------
    */
 
-  // ¥Æ¡¼¥Ö¥ëA Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
   $(document).on('change', '#allChecked', function (e) {
     e.preventDefault();
 
@@ -286,7 +286,7 @@ $(function () {
     }
   });
 
-  // ¥Æ¡¼¥Ö¥ëA ÄÉ²Ã¥Ü¥¿¥ó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A è¿½åŠ ãƒœã‚¿ãƒ³
   $('#btnAdd').on('click', function (e) {
     e.preventDefault();
 
@@ -299,47 +299,47 @@ $(function () {
       checked.push($isChecked);
     });
 
-    // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬¤Ò¤È¤Ä¤âÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¡¢return
+    // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒã²ã¨ã¤ã‚‚é¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆã€return
     if ($.inArray(true, checked) === -1) return;
 
-    // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î³ºÅö¥Ç¡¼¥¿¤ò¤¹¤Ù¤Æ temp ¤Ë³ÊÇ¼
+    // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®è©²å½“ãƒ‡ãƒ¼ã‚¿ã‚’ã™ã¹ã¦ temp ã«æ ¼ç´
     $.each($all_checkbox, function () {
       if ($(this).prop('checked')) {
         var $data_id = $(this).closest('tr').data('id');
         var data_index = data.findIndex(function (value) { return value.strslipcode == $data_id });
         if (data_index !== -1) {
-          // id½ÅÊ£¥Á¥§¥Ã¥¯
+          // idé‡è¤‡ãƒã‚§ãƒƒã‚¯
           let sameId = false;
           $.each(temp, function (i, v) {
             if (v.strslipcode == data[data_index].strslipcode) { sameId = true; }
           });
           if (sameId == true) { return; }
           temp.push(data[data_index]);
-          // ³ºÅö¥Ç¡¼¥¿¤ò data ¤«¤éºï½ü
+          // è©²å½“ãƒ‡ãƒ¼ã‚¿ã‚’ data ã‹ã‚‰å‰Šé™¤
           //data.splice(data_index, 1);
         }
       }
     });
 
-    // ¥Æ¡¼¥Ö¥ëB¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+    // ãƒ†ãƒ¼ãƒ–ãƒ«Bã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
     $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
     $.addDataTableB();
 
-    // ¥Æ¡¼¥Ö¥ëA ºÆÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A å†ç”Ÿæˆ
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
     $.addDataTableA();
 
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
 
-    // ¶â³Û·×»»
+    // é‡‘é¡è¨ˆç®—
     billingAmount();
   });
 
-  // ¥Æ¡¼¥Ö¥ëB ºï½ü¥Ü¥¿¥ó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B å‰Šé™¤ãƒœã‚¿ãƒ³
   $('#btnDelete').on('click', function (e) {
     e.preventDefault();
 
@@ -351,27 +351,27 @@ $(function () {
       var $data_id = $(this).data('id');
       var temp_index = temp.findIndex(function (value) { return value.strslipcode == $data_id });
 
-      // ³ºÅö¥Ç¡¼¥¿¤ò temp ¤«¤éºï½ü
+      // è©²å½“ãƒ‡ãƒ¼ã‚¿ã‚’ temp ã‹ã‚‰å‰Šé™¤
       if (temp_index !== -1) {
         temp.splice(temp_index, 1);
       }
     });
 
-    // ¥Æ¡¼¥Ö¥ëB ºÆÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«B å†ç”Ÿæˆ
     $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
     $.addDataTableB();
 
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
     
-    // ¶â³Û·×»»
+    // é‡‘é¡è¨ˆç®—
     billingAmount();
   });
 
-  // ¥Æ¡¼¥Ö¥ëB Á´ºï½ü¥Ü¥¿¥ó
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B å…¨å‰Šé™¤ãƒœã‚¿ãƒ³
   $('#btnAllDelete').on('click', function (e) {
     e.preventDefault();
 
@@ -389,68 +389,68 @@ $(function () {
     temp = [];
     domB = [];
 
-    // ¥Æ¡¼¥Ö¥ëA ºÆÀ¸À®
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A å†ç”Ÿæˆ
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
     $.addDataTableA();
 
-    // ¥Æ¡¼¥Ö¥ëB ½é´ü²½
+    // ãƒ†ãƒ¼ãƒ–ãƒ«B åˆæœŸåŒ–
     $tableB_tbody.empty();
 
-    // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+    // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
     $.setTableSorter();
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
     
-    // ¶â³Û·×»»
+    // é‡‘é¡è¨ˆç®—
     billingAmount();
   });
 
-  // ¸¡º÷¾ò·ïÆşÎÏ¥Ü¥¿¥ó
+  // æ¤œç´¢æ¡ä»¶å…¥åŠ›ãƒœã‚¿ãƒ³
   $('#btnSearchCondition').on('click', function (e) {
     e.preventDefault();
 
-    // selectedRowIndexes ½é´ü²½
+    // selectedRowIndexes åˆæœŸåŒ–
     selectedRowIndexes = [];
 
     var $all_rows = $('tbody tr', $tableA);
     var $all_checkbox = $all_rows.find('input[type="checkbox"]');
 
-    // ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥Á¥§¥Ã¥¯¤ò¤¹¤Ù¤Æ²ò½ü
+    // ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒã‚§ãƒƒã‚¯ã‚’ã™ã¹ã¦è§£é™¤
     $.each($all_checkbox, function () {
       if ($(this).prop('checked')) {
         $(this).prop('checked', false);
       }
     });
 
-    // ¤¹¤Ù¤Æ¤Î current ¤òºï½ü
+    // ã™ã¹ã¦ã® current ã‚’å‰Šé™¤
     $.each($all_rows, function () {
       $(this).children('td').removeClass('current');
     });
 
-    // Á´ÁªÂò¡¿²ò½ü¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥Á¥§¥Ã¥¯¤ò²ò½ü
+    // å…¨é¸æŠï¼è§£é™¤ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒã‚§ãƒƒã‚¯ã‚’è§£é™¤
     if ($('#allChecked').prop('checked')) {
       $('#allChecked').prop('checked', false);
     }
 
     url = $('input[name="invConditionUrl"]').val();
-    // Ç¼ÉÊ½ñ¸¡º÷¥¦¥£¥ó¥É¥¦¤ò¥İ¥Ã¥×¥¢¥Ã¥×É½¼¨
+    // ç´å“æ›¸æ¤œç´¢ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—è¡¨ç¤º
     sub_win = window.open(url, 'winSearch', "width=800,height=500,scrollbars=yes");
-    // ÀÁµá½ñ¸¡º÷¥¦¥£¥ó¥É¥¦¤ò¥İ¥Ã¥×¥¢¥Ã¥×É½¼¨
+    // è«‹æ±‚æ›¸æ¤œç´¢ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—è¡¨ç¤º
   });
 
   /**
    * ----------------------------------------------------------------------------------------------------
-   * ÆÃ¼ì¥­¡¼ + click ¥¤¥Ù¥ó¥È½èÍı
+   * ç‰¹æ®Šã‚­ãƒ¼ + click ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†
    * ----------------------------------------------------------------------------------------------------
    */
 
-  // ctrl + º¸ click ¥³¥ó¥Æ¥¯¥¹¥È¥á¥Ë¥å¡¼ÈóÉ½¼¨
+  // ctrl + å·¦ click ã‚³ãƒ³ãƒ†ã‚¯ã‚¹ãƒˆãƒ¡ãƒ‹ãƒ¥ãƒ¼éè¡¨ç¤º
   $(document).on('contextmenu', function (e) {
     if (e.which === 1) return false;
   });
 
-  // ctrl, shift ¥­¡¼¥¤¥Ù¥ó¥È¤ò document ¤ËÀßÄê
+  // ctrl, shift ã‚­ãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆã‚’ document ã«è¨­å®š
   var isCtrlKey = false;
   var isShiftKey = false;
 
@@ -465,45 +465,45 @@ $(function () {
     }
   });
 
-  // ¥Æ¡¼¥Ö¥ëA ¥¤¥Ù¥ó¥È½èÍı
+  // ãƒ†ãƒ¼ãƒ–ãƒ«A ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†
   $(document).on('mousedown', '#tableA tbody tr', function (e) {
     e.preventDefault();
 
     var $tableA_rows = $('#tableA tbody tr');
     var $tableA_rows_length = $tableA_rows.length;
 
-    // ¥Æ¡¼¥Ö¥ëA <tr> ctrl + click -> ¥Æ¡¼¥Ö¥ëB¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A <tr> ctrl + click -> ãƒ†ãƒ¼ãƒ–ãƒ«Bã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
     if (isCtrlKey && e.which === 1) {
       var $data_id = $(this).data('id');
       var data_index = data.findIndex(function (value) { return value.strslipcode == $data_id });
       if (data_index !== -1) {
         temp.push(data[data_index]);
-        // ³ºÅö¥Ç¡¼¥¿¤ò data ¤«¤éºï½ü
+        // è©²å½“ãƒ‡ãƒ¼ã‚¿ã‚’ data ã‹ã‚‰å‰Šé™¤
         data.splice(data_index, 1);
       }
 
-      // ¥Æ¡¼¥Ö¥ëB¤Ë¥Ç¡¼¥¿¤òÄÉ²Ã
+      // ãƒ†ãƒ¼ãƒ–ãƒ«Bã«ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ 
       $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
       $.addDataTableB();
 
-      // ¥Æ¡¼¥Ö¥ëA ºÆÀ¸À®
+      // ãƒ†ãƒ¼ãƒ–ãƒ«A å†ç”Ÿæˆ
       $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
       $.addDataTableA();
 
-      // ¥Æ¡¼¥Ö¥ë¥½¡¼¥Èµ¡Ç½ÀßÄê
+      // ãƒ†ãƒ¼ãƒ–ãƒ«ã‚½ãƒ¼ãƒˆæ©Ÿèƒ½è¨­å®š
       $.setTableSorter();
 
     }
 
-    // ¥Æ¡¼¥Ö¥ëA <input type="checkbox">
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A <input type="checkbox">
     if (e.target.nodeName === 'INPUT') {
       if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
         var $row_index = $(this).index();
 
-        // ÁªÂò¤µ¤ì¤¿¹Ô¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò selectedRowIndexes ¤Ë³ÊÇ¼
+        // é¸æŠã•ã‚ŒãŸè¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ selectedRowIndexes ã«æ ¼ç´
         selectedRowIndexes.push($row_index);
 
-        // ¾º½ç¥½¡¼¥È
+        // æ˜‡é †ã‚½ãƒ¼ãƒˆ
         selectedRowIndexes.sort(function (a, b) { return a - b });
 
         var min = selectedRowIndexes[0] + 1;
@@ -513,7 +513,7 @@ $(function () {
           array_range.push(i);
         }
 
-        // Ê£¿ôÁªÂò
+        // è¤‡æ•°é¸æŠ
         if (!e.target.checked) {
           $(this).addClass('selected').children('td').addClass('current');
 
@@ -522,7 +522,7 @@ $(function () {
             $tableA_rows.eq(v).find('input[type="checkbox"]').prop('checked', true);
           });
         }
-        // Ê£¿ôÁªÂò²ò½ü
+        // è¤‡æ•°é¸æŠè§£é™¤
         else {
           $(this).removeClass('selected').children('td').removeClass('current');
 
@@ -532,7 +532,7 @@ $(function () {
           });
         }
 
-        // selectedRowIndexes ½é´ü²½
+        // selectedRowIndexes åˆæœŸåŒ–
         if (selectedRowIndexes.length >= 2) selectedRowIndexes = [];
       } else {
         if (!e.target.checked) {
@@ -543,17 +543,17 @@ $(function () {
       }
     }
 
-    // ¥Æ¡¼¥Ö¥ëA <tr> shift + click -> Ê£¿ôÁªÂò¡¿²ò½ü
+    // ãƒ†ãƒ¼ãƒ–ãƒ«A <tr> shift + click -> è¤‡æ•°é¸æŠï¼è§£é™¤
     else if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
       var $row_index = $(this).index();
 
-      // ÁªÂò¤µ¤ì¤¿¹Ô¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò selectedRowIndexes ¤Ë³ÊÇ¼
+      // é¸æŠã•ã‚ŒãŸè¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ selectedRowIndexes ã«æ ¼ç´
       selectedRowIndexes.push($row_index);
 
-      // ¾º½ç¥½¡¼¥È
+      // æ˜‡é †ã‚½ãƒ¼ãƒˆ
       selectedRowIndexes.sort(function (a, b) { return a - b });
 
-      // Ê£¿ôÁªÂò
+      // è¤‡æ•°é¸æŠ
       if (!$(this).hasClass('selected')) {
         $(this).addClass('selected').children('td').addClass('current');
         $(this).find('input[type="checkbox"]').prop('checked', true);
@@ -565,7 +565,7 @@ $(function () {
           ++i;
         }
       }
-      // Ê£¿ôÁªÂò²ò½ü
+      // è¤‡æ•°é¸æŠè§£é™¤
       else {
         $(this).removeClass('selected').children('td').removeClass('current');
         $(this).find('input[type="checkbox"]').prop('checked', false);
@@ -578,35 +578,35 @@ $(function () {
         }
       }
 
-      // selectedRowIndexes ½é´ü²½
+      // selectedRowIndexes åˆæœŸåŒ–
       if (selectedRowIndexes.length >= 2) selectedRowIndexes = [];
     }
 
-    // selectedRowIndexes ½é´ü²½
+    // selectedRowIndexes åˆæœŸåŒ–
     if ($tableA_rows_length === 1) selectedRowIndexes = [];
 
-    // ¥¹¥­¥ã¥ó¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹
+    // ã‚¹ã‚­ãƒ£ãƒ³ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹
     $.scanAllCheckbox();
   });
 
-  // ¥Æ¡¼¥Ö¥ëB <tr> ÆÃ¼ì¥­¡¼ + click ¥¤¥Ù¥ó¥È½èÍı
+  // ãƒ†ãƒ¼ãƒ–ãƒ«B <tr> ç‰¹æ®Šã‚­ãƒ¼ + click ã‚¤ãƒ™ãƒ³ãƒˆå‡¦ç†
   $(document).on('mousedown', '#tableB tbody tr', function (e) {
     e.preventDefault();
 
     var $tableB_rows = $('#tableB tbody tr');
     var $tableB_rows_length = $tableB_rows.length;
 
-    // ¥Æ¡¼¥Ö¥ëB <tr> shift + click -> Ê£¿ôÁªÂò¡¿²ò½ü
+    // ãƒ†ãƒ¼ãƒ–ãƒ«B <tr> shift + click -> è¤‡æ•°é¸æŠï¼è§£é™¤
     if ($tableB_rows_length !== 1 && isShiftKey && e.which === 1) {
       var $row_index = $(this).index();
 
-      // ÁªÂò¤µ¤ì¤¿¹Ô¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò selectedRowIndexes ¤Ë³ÊÇ¼
+      // é¸æŠã•ã‚ŒãŸè¡Œã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ selectedRowIndexes ã«æ ¼ç´
       selectedRowIndexes.push($row_index);
 
-      // ¾º½ç¥½¡¼¥È
+      // æ˜‡é †ã‚½ãƒ¼ãƒˆ
       selectedRowIndexes.sort(function (a, b) { return a - b });
 
-      // Ê£¿ôÁªÂò
+      // è¤‡æ•°é¸æŠ
       if (!$(this).hasClass('selected')) {
         $(this).addClass('selected').children('td').addClass('current');
 
@@ -616,7 +616,7 @@ $(function () {
           ++i;
         }
       }
-      // Ê£¿ôÁªÂò²ò½ü
+      // è¤‡æ•°é¸æŠè§£é™¤
       else {
         $(this).removeClass('selected').children('td').removeClass('current');
 
@@ -627,7 +627,7 @@ $(function () {
         }
       }
 
-      // selectedRowIndexes ½é´ü²½
+      // selectedRowIndexes åˆæœŸåŒ–
       if (i === selectedRowIndexes[1] + 1) selectedRowIndexes = [];
     }
     else {
@@ -651,22 +651,22 @@ $(function () {
   }
 
 
-  // ¶â³Û·×»»
+  // é‡‘é¡è¨ˆç®—
   function billingAmount() {
 
-    // ½ĞÎÏÌÀºÙ°ìÍ÷¼èÆÀ
+    // å‡ºåŠ›æ˜ç´°ä¸€è¦§å–å¾—
     tableB = $('#tableB');
     tableB_tbody = $('tbody', $tableB);
     tableB_row = $('tbody tr', $tableB);
 
-    // ½ĞÎÏÌÀºÙ°ìÍ÷¥¨¥ê¥¢¤Î1¹ÔÌÜ¤Î¾ÃÈñÀÇÎ¨¤ò¼èÆÀ¤¹¤ë
+    // å‡ºåŠ›æ˜ç´°ä¸€è¦§ã‚¨ãƒªã‚¢ã®1è¡Œç›®ã®æ¶ˆè²»ç¨ç‡ã‚’å–å¾—ã™ã‚‹
     let tax = false;
     for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
       if (tax !== false) continue;
       for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
         if (tax !== false || !tableB_row[i].cells[j]) continue;
         if (tableB_row[i].cells[j].className == 'tax right') {
-          // ¾ÃÈñÀÇÎ¨
+          // æ¶ˆè²»ç¨ç‡
           console.log(tableB_row[i].cells[j].innerText);
           strtax = tableB_row[i].cells[j].innerText.replace(/[^0-9]/g, '');
           tax = Number(strtax) / 100;
@@ -674,28 +674,28 @@ $(function () {
       }
     }
 
-    // Á°·îÀÁµá»Ä³Û
-    // Ç¼ÉÊÆü¤¬¡Ö¼«¡×°ÊÁ°¤Ç¤¢¤ëÌÀºÙ¤ÎÀÇÈ´¶â³Û¤Î¹ç·×+¤½¤Î¹ç·×¤ËÂĞ¤·¤Æ²İÀÇ¶èÊ¬¤Ë±ş¤¸¤Æ·×»»¤µ¤ì¤¿¾ÃÈñÀÇ
+    // å‰æœˆè«‹æ±‚æ®‹é¡
+    // ç´å“æ—¥ãŒã€Œè‡ªã€ä»¥å‰ã§ã‚ã‚‹æ˜ç´°ã®ç¨æŠœé‡‘é¡ã®åˆè¨ˆ+ãã®åˆè¨ˆã«å¯¾ã—ã¦èª²ç¨åŒºåˆ†ã«å¿œã˜ã¦è¨ˆç®—ã•ã‚ŒãŸæ¶ˆè²»ç¨
     let lastMonthBalance = 0;
     let curLastMonthBalance = 0;
-    // Åö·îÀÁµá³Û
-    // Ç¼ÉÊÆü¤¬¡Ö¼«¡×°Ê¹ß¤Ç¤¢¤ëÌÀºÙ¤ÎÀÇÈ´¶â³Û¤Î¹ç·×
+    // å½“æœˆè«‹æ±‚é¡
+    // ç´å“æ—¥ãŒã€Œè‡ªã€ä»¥é™ã§ã‚ã‚‹æ˜ç´°ã®ç¨æŠœé‡‘é¡ã®åˆè¨ˆ
     let thisMonthAmount = 0;
-    // ¾ÃÈñÀÇ
-    // Åö·îÀÁµá³Û¤ËÂĞ¤·¤Æ²İÀÇ¶èÊ¬¤Ë±ş¤¸¤Æ·×»»
+    // æ¶ˆè²»ç¨
+    // å½“æœˆè«‹æ±‚é¡ã«å¯¾ã—ã¦èª²ç¨åŒºåˆ†ã«å¿œã˜ã¦è¨ˆç®—
     let taxPrice = 0;
-    // º¹°ú¹ç·×³Û
-    // Á°·îÀÁµá»Ä³Û + Åö·îÀÁµá³Û + ¾ÃÈñÀÇ"
+    // å·®å¼•åˆè¨ˆé¡
+    // å‰æœˆè«‹æ±‚æ®‹é¡ + å½“æœˆè«‹æ±‚é¡ + æ¶ˆè²»ç¨"
     let noTaxMonthAmount = 0;
 
-    // ¡Ö¼«¡×¡Ö»ê¡×¤ò·×»»¤¹¤ë
+    // ã€Œè‡ªã€ã€Œè‡³ã€ã‚’è¨ˆç®—ã™ã‚‹
     // selectClosedDay();
 
     var chargetern = function () {
-      // ¡Ö¼«¡×¼èÆÀ
+      // ã€Œè‡ªã€å–å¾—
       let chargeternstart = $('input[name="dtmchargeternstart"]').val();
       let cs = isEmpty(chargeternstart);
-      // ¡Ö»ê¡×¼èÆÀ
+      // ã€Œè‡³ã€å–å¾—
       let chargeternend = $('input[name="dtmchargeternend"]').val();
       let ce = isEmpty(chargeternend);
 
@@ -712,13 +712,13 @@ $(function () {
         for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
           if (!tableB_row[i].cells[j].innerText) continue;
           if (tableB_row[i].cells[j].className == 'deliverydate') {
-            // Ç¼ÉÊÆü
+            // ç´å“æ—¥
             deliverydate = tableB_row[i].cells[j].innerText;
           }
           if (tableB_row[i].cells[j].className == 'price right') {
 
             console.log(tableB_row[i].cells[j].innerText);
-            // ÀÇÈ´¶â
+            // ç¨æŠœé‡‘
             price = tableB_row[i].cells[j].innerText.replace(/,/g, '');
           }
         }
@@ -728,10 +728,10 @@ $(function () {
         deliverydateStamp = new Date(deliverydate);
 
         if (deliverydateStamp <= startStamp) {
-          // Á°·îÀÁµá»Ä³Û
+          // å‰æœˆè«‹æ±‚æ®‹é¡
           // lastMonthBalance += Number(price);
         } else {
-          // Åö·îÀÁµá³Û
+          // å½“æœˆè«‹æ±‚é¡
 //          thisMonthAmount += Number(price);
         }
         thisMonthAmount += Number(price);
@@ -739,16 +739,16 @@ $(function () {
 
       // console.log(lastMonthBalance);
       console.log(tax);
-      // Á°·îÀÁµá»Ä³Û(¾ÃÈñÀÇ¹ş¤ß)
+      // å‰æœˆè«‹æ±‚æ®‹é¡(æ¶ˆè²»ç¨è¾¼ã¿)
       // curLastMonthBalance = lastMonthBalance + (lastMonthBalance * (tax * 100)) / 100;
       curLastMonthBalance = Number($('input[name="curlastmonthbalance"]').val().replace(/,/g, ''));
-      // ¾ÃÈñÀÇ·×»»
-      // Åö·îÀÁµá³Û¤ËÂĞ¤·¤Æ²İÀÇ¶èÊ¬¤Ë±ş¤¸¤Æ·×»»
+      // æ¶ˆè²»ç¨è¨ˆç®—
+      // å½“æœˆè«‹æ±‚é¡ã«å¯¾ã—ã¦èª²ç¨åŒºåˆ†ã«å¿œã˜ã¦è¨ˆç®—
       taxPrice = (thisMonthAmount * (tax * 100)) / 100;
-      // º¹°ú¹ç·×³Û
-      // Á°·îÀÁµá»Ä³Û + Åö·îÀÁµá³Û + ¾ÃÈñÀÇ
+      // å·®å¼•åˆè¨ˆé¡
+      // å‰æœˆè«‹æ±‚æ®‹é¡ + å½“æœˆè«‹æ±‚é¡ + æ¶ˆè²»ç¨
       noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice;
-      // ·ë²Ì¤òÈË±É
+      // çµæœã‚’ç¹æ „
       // $('input[name="curlastmonthbalance"]').val(convertNumber(Math.round(curLastMonthBalance))).change();
       $('input[name="curthismonthamount"]').val(convertNumber(thisMonthAmount)).change();
       $('input[name="curtaxprice"]').val(convertNumber(Math.round(taxPrice))).change();
@@ -758,7 +758,7 @@ $(function () {
 
   }
 
-  // ¿¿µ¶ÃÍ¤ÎÊ¸»úÎóÉ½¸½¤ò¼èÆÀ
+  // çœŸå½å€¤ã®æ–‡å­—åˆ—è¡¨ç¾ã‚’å–å¾—
   function isEmpty(val) {
     if (val) {
       return '1';
@@ -767,24 +767,24 @@ $(function () {
     }
   }
 
-  // ÀÁµáÆü¤ÎÆüÉÕ¤ò¥Á¥§¥Ã¥¯¤·¤ÆÀµ¤·¤±¤ì¤Ğ¡Ö/¡×¤ÇÊ¬³ä
+  // è«‹æ±‚æ—¥ã®æ—¥ä»˜ã‚’ãƒã‚§ãƒƒã‚¯ã—ã¦æ­£ã—ã‘ã‚Œã°ã€Œ/ã€ã§åˆ†å‰²
   function splitDate(str) {
 
-    // ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È yyyy/mm(m)/dd(d)·Á¼°
+    // æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ yyyy/mm(m)/dd(d)å½¢å¼
     var regDate = /(\d{4})\/(\d{1,2})\/(\d{1,2})/;
 
-    // yyyy/mm/dd·Á¼°¤«
+    // yyyy/mm/ddå½¢å¼ã‹
     if (!(regDate.test(str))) {
       return false;
     }
 
-    // ÆüÉÕÊ¸»úÎó¤Î»ú¶çÊ¬²ò
+    // æ—¥ä»˜æ–‡å­—åˆ—ã®å­—å¥åˆ†è§£
     var regResult = regDate.exec(str);
     var yyyy = regResult[1];
     var mm = regResult[2];
     var dd = regResult[3];
     var di = new Date(yyyy, mm - 1, dd);
-    // ÆüÉÕ¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+    // æ—¥ä»˜ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
     if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
       return regResult;
     }

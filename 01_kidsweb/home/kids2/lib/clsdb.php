@@ -1,7 +1,7 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
-*       ¥Ç¡¼¥¿¥Ù¡¼¥¹½èÍı¥¯¥é¥¹
+*       ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹å‡¦ç†ã‚¯ãƒ©ã‚¹
 *
 *
 *       @package    K.I.D.S.
@@ -12,21 +12,21 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*		isOpen             ÀÜÂ³Ãæ¤«¤É¤¦¤«¤Î¼èÆÀ
-*		open               DB¤ØÀÜÂ³
-*		close              DB¤«¤éÀÚÃÇ
-*		execute            SQL¤Î¼Â¹Ô
-*		transactionBegin   ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï(BEGIN)
-*		transactionCommit  ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó´°Î»(COMMIT)
-*		fetchArray         ·ë²ÌÇÛÎó¤Î»ØÄê¹Ô¤òÏ¢ÁÛÇÛÎó¤Ë¼èÆÀ¤¹¤ë
-*		freeResult         ·ë²ÌID¡Ê·ë²Ì¡Ë¤ò²òÊü¤¹¤ë
-*		getFieldsCount     ·ë²Ì¤Î¥Õ¥£¡¼¥ë¥É¿ô¤ò¼èÆÀ¤¹¤ë
-*		getFieldName       ·ë²Ì¤Î¥Õ¥£¡¼¥ë¥ÉÌ¾¤ò¼èÆÀ¤¹¤ë
-*		fetchObject        ·ë²ÌÇÛÎó¤Î»ØÄê¹Ô¤ò¥ª¥Ö¥¸¥§¥¯¥È¤Ç¼èÆÀ¤¹¤ë
-*		replaceLineFeed    ÂĞ¾İÊ¸»úÎó¤Î²ş¹Ô¥³¡¼¥É¤ò<LF>¤ËÅı°ì¤¹¤ë
+*       å‡¦ç†æ¦‚è¦
+*		isOpen             æ¥ç¶šä¸­ã‹ã©ã†ã‹ã®å–å¾—
+*		open               DBã¸æ¥ç¶š
+*		close              DBã‹ã‚‰åˆ‡æ–­
+*		execute            SQLã®å®Ÿè¡Œ
+*		transactionBegin   ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹(BEGIN)
+*		transactionCommit  ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³å®Œäº†(COMMIT)
+*		fetchArray         çµæœé…åˆ—ã®æŒ‡å®šè¡Œã‚’é€£æƒ³é…åˆ—ã«å–å¾—ã™ã‚‹
+*		freeResult         çµæœIDï¼ˆçµæœï¼‰ã‚’è§£æ”¾ã™ã‚‹
+*		getFieldsCount     çµæœã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æ•°ã‚’å–å¾—ã™ã‚‹
+*		getFieldName       çµæœã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’å–å¾—ã™ã‚‹
+*		fetchObject        çµæœé…åˆ—ã®æŒ‡å®šè¡Œã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§å–å¾—ã™ã‚‹
+*		replaceLineFeed    å¯¾è±¡æ–‡å­—åˆ—ã®æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã‚’<LF>ã«çµ±ä¸€ã™ã‚‹
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
@@ -34,27 +34,27 @@
 class clsDB
 {
 	/**
-	*	ÀÜÂ³ID
+	*	æ¥ç¶šID
 	*	@var string
 	*/
 	var $ConnectID;
 	/**
-	*	¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥Õ¥é¥°(TRUE:SQL¥¨¥é¡¼»şROLLBACK¤ò¼Â¹Ô)
+	*	ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ãƒ•ãƒ©ã‚°(TRUE:SQLã‚¨ãƒ©ãƒ¼æ™‚ROLLBACKã‚’å®Ÿè¡Œ)
 	*	@var boolean
 	*/
 	var $Transaction;
 
 	/*
-		ÆşÎÏ¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤òÊİ»ı 
-		¥Ç¥Õ¥©¥ë¥È EUC_JP ¡Ê2009Ç¯4·î¸½ºß¡Ë
+		å…¥åŠ›ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã‚’ä¿æŒ 
+		ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ EUC_JP ï¼ˆ2009å¹´4æœˆç¾åœ¨ï¼‰
 	*/
 	var $InputEncoding = "EUC_JP";
 	
 
 	// ---------------------------------------------------------------
 	/**
-	*	¥³¥ó¥¹¥È¥é¥¯¥¿
-	*	¥¯¥é¥¹Æâ¤Î½é´ü²½¤ò¹Ô¤¦
+	*	ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	*	ã‚¯ãƒ©ã‚¹å†…ã®åˆæœŸåŒ–ã‚’è¡Œã†
 	*	
 	*	@return void
 	*	@access public
@@ -62,17 +62,17 @@ class clsDB
 	// ---------------------------------------------------------------
 	function __construct()
 	{
-		// ÀÜÂ³ID¤Î½é´ü²½
+		// æ¥ç¶šIDã®åˆæœŸåŒ–
 		$this->ConnectID   = FALSE;
 
-		// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥Õ¥é¥°¤Î½é´ü²½
+		// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ãƒ•ãƒ©ã‚°ã®åˆæœŸåŒ–
 		$this->Transaction = FALSE;
 
 	}
 
 	// ---------------------------------------------------------------
 	/**
-	*	ÀÜÂ³Ãæ¤«¤É¤¦¤«¤Î¼èÆÀ
+	*	æ¥ç¶šä¸­ã‹ã©ã†ã‹ã®å–å¾—
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
@@ -92,7 +92,7 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	 *	¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¤¬³«»Ï¤µ¤ì¤Æ¤¤¤ë¤«¿¿µ¶¤òÊÖ¤¹
+	 *	ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ãŒé–‹å§‹ã•ã‚Œã¦ã„ã‚‹ã‹çœŸå½ã‚’è¿”ã™
 	 *	@return boolean TRUE,FALSE
 	 *	@access public
 	 */
@@ -104,11 +104,11 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	DB¤ØÀÜÂ³
-	*	@param  string  $strUserID  ¥æ¡¼¥¶¡¼ID
-	*	@param  string  $strPasswd  ¥Ñ¥¹¥ï¡¼¥É
-	*	@param  string  $strDBName  ¥Ç¡¼¥¿¥Ù¡¼¥¹Ì¾
-	*	@param  string  $strOptions ¥Ç¡¼¥¿¥Ù¡¼¥¹ÀÜÂ³¥ª¥×¥·¥ç¥ó¥Ñ¥é¥á¡¼¥¿
+	*	DBã¸æ¥ç¶š
+	*	@param  string  $strUserID  ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
+	*	@param  string  $strPasswd  ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰
+	*	@param  string  $strDBName  ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹å
+	*	@param  string  $strOptions ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æ¥ç¶šã‚ªãƒ—ã‚·ãƒ§ãƒ³ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
@@ -117,7 +117,7 @@ class clsDB
 	{
 		$lngConID = 0;
 
-		// »ØÄê¤¬¤Ê¤±¤ì¤Ğ¥Ç¥Õ¥©¥ë¥È¤ËÀßÄê
+		// æŒ‡å®šãŒãªã‘ã‚Œã°ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã«è¨­å®š
 		//if ( trim($strOptions["POSTGRESQL_HOSTNAME"]) == "" )
 		//{
 		//	$strOptions["POSTGRESQL_HOSTNAME"] = POSTGRESQL_HOSTNAME;
@@ -145,7 +145,7 @@ class clsDB
 			$strDBName = DB_NAME;
 		}
 
-		// ÀÜÂ³ÀßÄê
+		// æ¥ç¶šè¨­å®š
 		$strConnectionConfig = "";
 		if ( $strOptions["POSTGRESQL_HOSTNAME"] )
 		{
@@ -168,7 +168,7 @@ class clsDB
 			$strConnectionConfig .= " dbname=" . $strDBName;
 		}
 
-		// »ıÂ³ÀÜÂ³¤ÎÈ½ÊÌ
+		// æŒç¶šæ¥ç¶šã®åˆ¤åˆ¥
 		//if ( ENABLE_COUNTINUE_OPEN )
 		//{
 		//	$lngConID = pg_pconnect( "$strConnectionConfig" );
@@ -178,7 +178,7 @@ class clsDB
 			$lngConID = pg_connect( "$strConnectionConfig" );
 		//}
 
-		// Àµ¾ï½ªÎ»¤Ê¤éÀÜÂ³ID¤ò¼èÆÀ
+		// æ­£å¸¸çµ‚äº†ãªã‚‰æ¥ç¶šIDã‚’å–å¾—
 		if ( $lngConID != FALSE )
 		{
 			$this->ConnectID = $lngConID;
@@ -189,7 +189,7 @@ class clsDB
 			$ret = FALSE;
 		}
 
-		// Encoding ¤ò»ØÄê¡ÊUnicodeÂĞ±ş¡Ë
+		// Encoding ã‚’æŒ‡å®šï¼ˆUnicodeå¯¾å¿œï¼‰
 		pg_set_client_encoding($lngConID, $this->InputEncoding);
 
 		return $ret;
@@ -197,7 +197,7 @@ class clsDB
 	
 	// ---------------------------------------------------------------
 	/**
-	*	DB¤«¤é¤ÎÆşÎÏ¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°¤òÀßÄê
+	*	DBã‹ã‚‰ã®å…¥åŠ›ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã‚’è¨­å®š
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
@@ -209,14 +209,14 @@ class clsDB
 	
 	// ---------------------------------------------------------------
 	/**
-	*	DB¤«¤éÀÚÃÇ
+	*	DBã‹ã‚‰åˆ‡æ–­
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function close()
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() )
 		{
 			$res = FALSE;
@@ -232,16 +232,16 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	SQL¤Î¼Â¹Ô
-	*	@param  string  $strQuery  ¼Â¹Ô¤¹¤ëSQLÊ¸
-	*	@return long    ·ë²Ì¥Ğ¥Ã¥Õ¥¡ID
+	*	SQLã®å®Ÿè¡Œ
+	*	@param  string  $strQuery  å®Ÿè¡Œã™ã‚‹SQLæ–‡
+	*	@return long    çµæœãƒãƒƒãƒ•ã‚¡ID
 	*	        boolean FALSE
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function execute( $strQuery )
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() ){
 			return FALSE;
 		}
@@ -250,15 +250,15 @@ class clsDB
 		// OutputDebugString($SQL . "<br>\n");
 
 		// 2001/10/16 Added by saito
-		// ²ş¹Ô¥³¡¼¥É¤ÎÅı°ì¡¢¥¯¥©¡¼¥È½èÍı
+		// æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã®çµ±ä¸€ã€ã‚¯ã‚©ãƒ¼ãƒˆå‡¦ç†
 		$strQuery = $this->replaceLineFeed( $strQuery );
 		//$strQuery    = fncGetSafeSQLString($strQuery);
 
-		// ¥¯¥¨¥ê¼Â¹Ô
+		// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 		if ( !$lngResultID = pg_query( $this->ConnectID, $strQuery ) )
 		{
-			// SQL¥¨¥é¡¼
-			// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥Õ¥é¥°¤Î³ÎÇ§
+			// SQLã‚¨ãƒ©ãƒ¼
+			// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ãƒ•ãƒ©ã‚°ã®ç¢ºèª
 			if ( $this->Transaction )
 			{
 				if ( !pg_query( $this->ConnectID, "ROLLBACK" ) )
@@ -268,7 +268,7 @@ class clsDB
 				$this->Transaction = FALSE;
 			}
 
-			// ¼Â¹Ô»ş¥¨¥é¡¼¤ÎSQL¤ÈErrorÊ¸¤ò¥á¡¼¥ë¤Ë¤ÆÁ÷¿®
+			// å®Ÿè¡Œæ™‚ã‚¨ãƒ©ãƒ¼ã®SQLã¨Erroræ–‡ã‚’ãƒ¡ãƒ¼ãƒ«ã«ã¦é€ä¿¡
 			// timestamp for the error entry
 			$dt = date ( "Y-m-d H:i:s (T)" );
 			$strMailMessage = "DATE $dt\n";
@@ -286,20 +286,20 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï(BEGIN)
+	*	ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹(BEGIN)
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function transactionBegin()
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() )
 		{
 			return FALSE;
 		}
 
-		// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥¹¥¿¡¼¥È
+		// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚¹ã‚¿ãƒ¼ãƒˆ
 		if ( !$this->execute( "BEGIN" ) )
 		{
 			return FALSE;
@@ -311,20 +311,20 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	¥È¥é¥ó¥¶¥¯¥·¥ç¥ó´°Î»(COMMIT)
+	*	ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³å®Œäº†(COMMIT)
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function transactionCommit()
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() )
 		{
 			return FALSE;
 		}
 
-		// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥³¥ß¥Ã¥È
+		// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚³ãƒŸãƒƒãƒˆ
 		if ( !$this->execute( "COMMIT" ) )
 		{
 			return FALSE;
@@ -336,20 +336,20 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	 *	¥È¥é¥ó¥¶¥¯¥·¥ç¥ó ¥í¡¼¥ë¥Ğ¥Ã¥¯(ROLLBACK)
+	 *	ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯(ROLLBACK)
 	 *	@return boolean TRUE,FALSE
 	 *	@access public
 	 */
 	// ---------------------------------------------------------------
 	function transactionRollback()
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() )
 		{
 			return FALSE;
 		}
 
-		// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó¥³¥ß¥Ã¥È
+		// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚³ãƒŸãƒƒãƒˆ
 		if (!$this->execute("ROLLBACK"))
 		{
 			return FALSE;
@@ -362,22 +362,22 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	·ë²ÌÇÛÎó¤Î»ØÄê¹Ô¤òÏ¢ÁÛÇÛÎó¤Ë¼èÆÀ¤¹¤ë
-	*	@param  string  $lngResultID ·ë²ÌID
-	*	@param  long    $lngResLine  ¼èÆÀ¤¹¤ë·ë²Ì¹Ô
-	*	@return array   ¼èÆÀ¥Ç¡¼¥¿ÇÛÎó
+	*	çµæœé…åˆ—ã®æŒ‡å®šè¡Œã‚’é€£æƒ³é…åˆ—ã«å–å¾—ã™ã‚‹
+	*	@param  string  $lngResultID çµæœID
+	*	@param  long    $lngResLine  å–å¾—ã™ã‚‹çµæœè¡Œ
+	*	@return array   å–å¾—ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function fetchArray( $lngResultID, $lngResLine )
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() ) {
 			// OutputDebugString("CDatabase::fetchArray::isOpen Failed");
 			return FALSE;
 		}
 
-		// ·ë²ÌID¥Á¥§¥Ã¥¯
+		// çµæœIDãƒã‚§ãƒƒã‚¯
 		if ( $lngResultID == 0 ) {
 			// OutputDebugString("CDatabase::fetchArray::ResId Failed");
 			return FALSE;
@@ -388,22 +388,22 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	·ë²ÌÇÛÎó¤Î¥«¥é¥àÌ¾¤òÇÛÎó¤Ë¼èÆÀ¤¹¤ë
-	*	@param  string  $lngResultID ·ë²ÌID
-	*	@param  long    $lngFieldNum ¥Õ¥£¡¼¥ë¥É¿ô
-	*	@return array   $aryColumns  ¼èÆÀ¥Ç¡¼¥¿ÇÛÎó
+	*	çµæœé…åˆ—ã®ã‚«ãƒ©ãƒ åã‚’é…åˆ—ã«å–å¾—ã™ã‚‹
+	*	@param  string  $lngResultID çµæœID
+	*	@param  long    $lngFieldNum ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æ•°
+	*	@return array   $aryColumns  å–å¾—ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function fncColumnsArray( $lngResultID, $lngFieldNum )
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() ) {
 			// OutputDebugString("CDatabase::fncColumnsArray::isOpen Failed");
 			return FALSE;
 		}
 
-		// ·ë²ÌID¥Á¥§¥Ã¥¯
+		// çµæœIDãƒã‚§ãƒƒã‚¯
 		if ( $lngResultID == 0 ) {
 			// OutputDebugString("CDatabase::fncColumnsArray::ResId Failed");
 			return FALSE;
@@ -411,7 +411,7 @@ class clsDB
 
 		$aryColumns = Array();
 
-		// ¥Õ¥£¡¼¥ë¥ÉÌ¾¤ò¼èÆÀ
+		// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’å–å¾—
 		for ( $i = 0; $i < $lngFieldNum; $i++ )
 		{
 			$aryColumns[$i] = pg_field_name ( $lngResultID, $i );
@@ -422,21 +422,21 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	·ë²ÌID¡Ê·ë²Ì¡Ë¤ò²òÊü¤¹¤ë
-	*	@param  string  $lngResultID ·ë²ÌID
+	*	çµæœIDï¼ˆçµæœï¼‰ã‚’è§£æ”¾ã™ã‚‹
+	*	@param  string  $lngResultID çµæœID
 	*	@return boolean TRUE,FALSE
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function freeResult($lngResultID)
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() )
 		{
 			return FALSE;
 		}
 
-		// ·ë²ÌID¥Á¥§¥Ã¥¯
+		// çµæœIDãƒã‚§ãƒƒã‚¯
 		if ( $lngResultID == 0)
 		{
 			return FALSE;
@@ -451,22 +451,22 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	·ë²Ì¤Î¥Õ¥£¡¼¥ë¥É¿ô¤ò¼èÆÀ¤¹¤ë
-	*	@param  string  $lngResultID ·ë²ÌID
-	*	@return long ¥Õ¥£¡¼¥ë¥É¿ô
+	*	çµæœã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æ•°ã‚’å–å¾—ã™ã‚‹
+	*	@param  string  $lngResultID çµæœID
+	*	@return long ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰æ•°
 	*	        boolean FALSE
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function getFieldsCount($lngResultID)
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() )
 		{
 			return FALSE;
 		}
 
-		// ·ë²ÌID¥Á¥§¥Ã¥¯
+		// çµæœIDãƒã‚§ãƒƒã‚¯
 		if ( $lngResultID == 0 )
 		{
 			return FALSE;
@@ -481,23 +481,23 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	·ë²Ì¤Î¥Õ¥£¡¼¥ë¥ÉÌ¾¤ò¼èÆÀ¤¹¤ë
-	*	@param  string  $lngResultID ·ë²ÌID
-	*	@param  string  $lngResultID ¥Õ¥£¡¼¥ë¥ÉID(0¤«¤é»Ï¤Ş¤ë¥¤¥ó¥Ç¥Ã¥¯¥¹)
-	*	@return array   $ret         ¥Õ¥£¡¼¥ë¥ÉÌ¾
+	*	çµæœã®ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’å–å¾—ã™ã‚‹
+	*	@param  string  $lngResultID çµæœID
+	*	@param  string  $lngResultID ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ID(0ã‹ã‚‰å§‹ã¾ã‚‹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹)
+	*	@return array   $ret         ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
 	*	        boolean FALSE
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function getFieldName( $lngResultID, $lngFieldNum )
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() )
 		{
 			return FALSE;
 		}
 
-		// ·ë²ÌID¥Á¥§¥Ã¥¯
+		// çµæœIDãƒã‚§ãƒƒã‚¯
 		if ( $lngResultID == 0 )
 		{
 			return FALSE;
@@ -512,22 +512,22 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	·ë²ÌÇÛÎó¤Î»ØÄê¹Ô¤ò¥ª¥Ö¥¸¥§¥¯¥È¤Ç¼èÆÀ¤¹¤ë
-	*	@param  string $lngResultID ·ë²ÌID
-	*	@param  long   $lngResLine  ¼èÆÀ¤¹¤ë·ë²Ì¹Ô
-	*	@return object              ¥Õ¥£¡¼¥ë¥ÉÌ¾
+	*	çµæœé…åˆ—ã®æŒ‡å®šè¡Œã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§å–å¾—ã™ã‚‹
+	*	@param  string $lngResultID çµæœID
+	*	@param  long   $lngResLine  å–å¾—ã™ã‚‹çµæœè¡Œ
+	*	@return object              ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
 	function fetchObject( $lngResultID, $lngResLine )
 	{
-		// ÀÜÂ³¥Á¥§¥Ã¥¯
+		// æ¥ç¶šãƒã‚§ãƒƒã‚¯
 		if ( !$this->isOpen() ) {
 			// OutputDebugString("CDatabase::fetchArray::isOpen Failed");
 			return FALSE;
 		}
 
-		// ·ë²ÌID¥Á¥§¥Ã¥¯
+		// çµæœIDãƒã‚§ãƒƒã‚¯
 		if ( $lngResultID == 0 ) {
 			// OutputDebugString("CDatabase::fetchArray::ResId Failed");
 			return FALSE;
@@ -538,9 +538,9 @@ class clsDB
 
 	// ---------------------------------------------------------------
 	/**
-	*	ÂĞ¾İÊ¸»úÎó¤Î²ş¹Ô¥³¡¼¥É¤ò<LF>¤ËÅı°ì¤¹¤ë
-	*	@param  string $strTarget ÂĞ¾İÊ¸»úÎó
-	*	@return string $strTarget ½èÍıºÑ¤ßÊ¸»úÎó
+	*	å¯¾è±¡æ–‡å­—åˆ—ã®æ”¹è¡Œã‚³ãƒ¼ãƒ‰ã‚’<LF>ã«çµ±ä¸€ã™ã‚‹
+	*	@param  string $strTarget å¯¾è±¡æ–‡å­—åˆ—
+	*	@return string $strTarget å‡¦ç†æ¸ˆã¿æ–‡å­—åˆ—
 	*	@access public
 	*/
 	// ---------------------------------------------------------------
@@ -554,57 +554,57 @@ class clsDB
 
 // ---------------------------------------------------------------
 //
-// clsDBLock ¥¯¥é¥¹
+// clsDBLock ã‚¯ãƒ©ã‚¹
 //
-// DB¤ò»È¤Ã¤¿¥í¥Ã¥¯À©¸æÍÑ¥¯¥é¥¹
+// DBã‚’ä½¿ã£ãŸãƒ­ãƒƒã‚¯åˆ¶å¾¡ç”¨ã‚¯ãƒ©ã‚¹
 //
 // ---------------------------------------------------------------
 class clsDBLock {
-	var $LockKey;         // ¥í¥Ã¥¯¤Ë»ÈÍÑ¤¹¤ë¥»¥Ã¥·¥ç¥óID
-	var $ServerTimeout;   // ¥µ¡¼¥Ğ¡¼Â¦¥í¥Ã¥¯¼ºÇÔ¤Î¥¿¥¤¥à¥¢¥¦¥È¡ÊÉÃ¡Ë
-	var $ClientTimeout;   // ¥¯¥é¥¤¥¢¥ó¥ÈÂ¦¥í¥Ã¥¯¼ºÇÔ¤Î¥¿¥¤¥à¥¢¥¦¥È¡ÊÉÃ¡Ë
-	var $ServerCheckSpan; // ¥µ¡¼¥Ğ¡¼Â¦¥í¥Ã¥¯ºÆ»î¹Ô´Ö³Ö¡Ê¥ß¥êÉÃ¡Ë
+	var $LockKey;         // ãƒ­ãƒƒã‚¯ã«ä½¿ç”¨ã™ã‚‹ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+	var $ServerTimeout;   // ã‚µãƒ¼ãƒãƒ¼å´ãƒ­ãƒƒã‚¯å¤±æ•—ã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆï¼ˆç§’ï¼‰
+	var $ClientTimeout;   // ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ãƒ­ãƒƒã‚¯å¤±æ•—ã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆï¼ˆç§’ï¼‰
+	var $ServerCheckSpan; // ã‚µãƒ¼ãƒãƒ¼å´ãƒ­ãƒƒã‚¯å†è©¦è¡Œé–“éš”ï¼ˆãƒŸãƒªç§’ï¼‰
 
-	// ¥³¥ó¥¹¥È¥é¥¯¥¿
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	function __construct()
 	{
 		global $SERVER_NAME;
 		global $REMOTE_ADDR;
-		// ¥»¥Ã¥·¥ç¥óID¤ÎÀ¸À®
+		// ã‚»ãƒƒã‚·ãƒ§ãƒ³IDã®ç”Ÿæˆ
 		$this->LockKey = fncGetSafeSQLString(uniqid($SERVER_NAME . $REMOTE_ADDR . ((string)rand())));
-		// ¥µ¡¼¥Ğ¡¼Â¦¥¿¥¤¥à¥¢¥¦¥È»ş´Ö¤ÎÀßÄê(20ÉÃ)
+		// ã‚µãƒ¼ãƒãƒ¼å´ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã®è¨­å®š(20ç§’)
 		$this->ServerTimeout = 20;
-		// ¥¯¥é¥¤¥¢¥ó¥ÈÂ¦¥¿¥¤¥à¥¢¥¦¥È»ş´Ö¤ÎÀßÄê(5ÉÃ)
+		// ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆå´ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã®è¨­å®š(5ç§’)
 		$this->ClientTimeout = 5;
-		// ¥µ¡¼¥Ğ¡¼Â¦¥í¥Ã¥¯ºÆ»î¹Ô´Ö³Ö¡Ê¥ß¥êÉÃ¡Ë
+		// ã‚µãƒ¼ãƒãƒ¼å´ãƒ­ãƒƒã‚¯å†è©¦è¡Œé–“éš”ï¼ˆãƒŸãƒªç§’ï¼‰
 		$this->ServerCheckSpan = 100;
 	}
 
 	// ---------------------------------------------------------------
-	// ´Ø¿ôÌ¾: fncLock
+	// é–¢æ•°å: fncLock
 	//
-	// ³µÍ×:   ¥í¥Ã¥¯¤¹¤ë
+	// æ¦‚è¦:   ãƒ­ãƒƒã‚¯ã™ã‚‹
 	//
-	// °ú¿ô:
-	//         &$dbconn   DBÀÜÂ³¥ª¥Ö¥¸¥§¥¯¥È(OpenºÑ¤ß¤Ç¤¢¤ë¤³¤È)
-	//         $locktable ¥í¥Ã¥¯¥Æ¡¼¥Ö¥ë
-	//         $lockid    ¥í¥Ã¥¯ID¥Õ¥£¡¼¥ë¥É
-	//         $lockkey   ¥í¥Ã¥¯¥­¡¼¥Õ¥£¡¼¥ë¥É
-	//         $locktime  ¥í¥Ã¥¯»ş´Ö¥Õ¥£¡¼¥ë¥É
-	//         $lockidval ¥í¥Ã¥¯IDÃÍ
+	// å¼•æ•°:
+	//         &$dbconn   DBæ¥ç¶šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(Openæ¸ˆã¿ã§ã‚ã‚‹ã“ã¨)
+	//         $locktable ãƒ­ãƒƒã‚¯ãƒ†ãƒ¼ãƒ–ãƒ«
+	//         $lockid    ãƒ­ãƒƒã‚¯IDãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
+	//         $lockkey   ãƒ­ãƒƒã‚¯ã‚­ãƒ¼ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
+	//         $locktime  ãƒ­ãƒƒã‚¯æ™‚é–“ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
+	//         $lockidval ãƒ­ãƒƒã‚¯IDå€¤
 	//
-	// Ìá¤êÃÍ:
-	//         TRUE       ¥í¥Ã¥¯´°Î»
-	//         FALSE      ¥í¥Ã¥¯¼ºÇÔ
+	// æˆ»ã‚Šå€¤:
+	//         TRUE       ãƒ­ãƒƒã‚¯å®Œäº†
+	//         FALSE      ãƒ­ãƒƒã‚¯å¤±æ•—
 	// ---------------------------------------------------------------
 	function fncLock(&$dbconn, $locktable, $lockid, $lockkey, $locktime, $lockidval = 1)
 	{
-		// ¥¿¥¤¥à¥¢¥¦¥È»ş´Ö¤Î¼èÆÀ
+		// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã®å–å¾—
 		$timeout = time() + $this->ClientTimeout;
 		while(1) {
-			// ¥¿¥¤¥à¥¢¥¦¥È¤ÎÈ½Äê
+			// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã®åˆ¤å®š
 			if ( $timeout < time()) break;
-			// ¤¢¤¤¤Æ¤¤¤¿¤é¡¢¤â¤·¤¯¤Ï¥¿¥¤¥à¥¢¥¦¥È¸å¤Ê¤é¥í¥Ã¥¯¥­¡¼¤ò½ñ¤­¹ş¤à
+			// ã‚ã„ã¦ã„ãŸã‚‰ã€ã‚‚ã—ãã¯ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå¾Œãªã‚‰ãƒ­ãƒƒã‚¯ã‚­ãƒ¼ã‚’æ›¸ãè¾¼ã‚€
 			$SQL = "UPDATE $locktable SET ";
 			$SQL = $SQL . "$lockkey = '" . $this->LockKey . "', ";
 			$SQL = $SQL . "$locktime=(SYSDATE + (" . $this->ServerTimeout . " / 86400)) ";
@@ -614,7 +614,7 @@ class clsDBLock {
 				break;
 			}
 			$dbconn->freeResult($resid);
-			// ¥í¥Ã¥¯¤¬´°Î»¤·¤¿¤«³ÎÇ§¤¹¤ë
+			// ãƒ­ãƒƒã‚¯ãŒå®Œäº†ã—ãŸã‹ç¢ºèªã™ã‚‹
 			$SQL = "SELECT $lockkey as KEYVALUE ";
 			$SQL = $SQL . "FROM $locktable ";
 			$SQL = $SQL . "WHERE $lockid = $lockidval";
@@ -625,10 +625,10 @@ class clsDBLock {
 			if ( !$dbconn->fetchArray($resid, $ResCount, 0)) {
 				break;
 			}
-			// ·ë²ÌID¤òÊÄ¤¸¤ë
+			// çµæœIDã‚’é–‰ã˜ã‚‹
 			$dbconn->freeResult($resid);
 			if ( $ResCount["KEYVALUE"] == $this->LockKey) return TRUE;
-			// ¤Á¤ç¤Ã¤ÈÂÔ¤Ä
+			// ã¡ã‚‡ã£ã¨å¾…ã¤
 			usleep($this->ServerCheckSpan);
 		};
 
@@ -636,27 +636,27 @@ class clsDBLock {
 	}
 
 	// ---------------------------------------------------------------
-	// ´Ø¿ôÌ¾: fncUnlock
+	// é–¢æ•°å: fncUnlock
 	//
-	// ³µÍ×:   ¥í¥Ã¥¯²ò½ü¤¹¤ë
+	// æ¦‚è¦:   ãƒ­ãƒƒã‚¯è§£é™¤ã™ã‚‹
 	//
-	// °ú¿ô:
-	//         &$dbconn   DBÀÜÂ³¥ª¥Ö¥¸¥§¥¯¥È(OpenºÑ¤ß¤Ç¤¢¤ë¤³¤È)
-	//         $locktable ¥í¥Ã¥¯¥Æ¡¼¥Ö¥ë
-	//         $lockid    ¥í¥Ã¥¯ID¥Õ¥£¡¼¥ë¥É
-	//         $lockkey   ¥í¥Ã¥¯¥­¡¼¥Õ¥£¡¼¥ë¥É
-	//         $lockidval ¥í¥Ã¥¯IDÃÍ
+	// å¼•æ•°:
+	//         &$dbconn   DBæ¥ç¶šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(Openæ¸ˆã¿ã§ã‚ã‚‹ã“ã¨)
+	//         $locktable ãƒ­ãƒƒã‚¯ãƒ†ãƒ¼ãƒ–ãƒ«
+	//         $lockid    ãƒ­ãƒƒã‚¯IDãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
+	//         $lockkey   ãƒ­ãƒƒã‚¯ã‚­ãƒ¼ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰
+	//         $lockidval ãƒ­ãƒƒã‚¯IDå€¤
 	//
-	// Ìá¤êÃÍ:
-	//         TRUE       ¥í¥Ã¥¯´°Î»
-	//         FALSE      ¥í¥Ã¥¯¼ºÇÔ
+	// æˆ»ã‚Šå€¤:
+	//         TRUE       ãƒ­ãƒƒã‚¯å®Œäº†
+	//         FALSE      ãƒ­ãƒƒã‚¯å¤±æ•—
 	// ---------------------------------------------------------------
 	function fncUnlock(&$dbconn, $locktable, $lockid, $lockkey, $lockidval = 1)
 	{
-		// ¥¿¥¤¥à¥¢¥¦¥È»ş´Ö¤Î¼èÆÀ
+		// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆæ™‚é–“ã®å–å¾—
 		$timeout = time() + $this->ClientTimeout;
 		do {
-			// ¥í¥Ã¥¯¥­¡¼¤ò¶õÇò¤Ë¤¹¤ë
+			// ãƒ­ãƒƒã‚¯ã‚­ãƒ¼ã‚’ç©ºç™½ã«ã™ã‚‹
 			$SQL = "UPDATE $locktable SET ";
 			$SQL = $SQL . "$lockkey = NULL ";
 			$SQL = $SQL . "WHERE $lockkey = '" . $this->LockKey . "' and $lockid = $lockidval";
@@ -664,7 +664,7 @@ class clsDBLock {
 			if ( $resid == FALSE) {
 				break;
 			}
-			// ½ªÎ»
+			// çµ‚äº†
 			return TRUE;
 		} while(0);
 
@@ -675,15 +675,15 @@ class clsDBLock {
 }
 
 	// ---------------------------------------------------------------
-	// ´Ø¿ôÌ¾: fncGetSafeSQLString
+	// é–¢æ•°å: fncGetSafeSQLString
 	//
-	// ³µÍ×:   SQLÊ¸¤Ç»ÈÍÑ¤Ç¤­¤ëÊ¸»úÎó¤ËÊÑ´¹
+	// æ¦‚è¦:   SQLæ–‡ã§ä½¿ç”¨ã§ãã‚‹æ–‡å­—åˆ—ã«å¤‰æ›
 	//
-	// °ú¿ô:
-	//         $strVal Ê¸»úÎó
+	// å¼•æ•°:
+	//         $strVal æ–‡å­—åˆ—
 	//
-	// Ìá¤êÃÍ:
-	//         ÊÑ´¹¸å¤ÎÊ¸»úÎó
+	// æˆ»ã‚Šå€¤:
+	//         å¤‰æ›å¾Œã®æ–‡å­—åˆ—
 	// ---------------------------------------------------------------
 	function fncGetSafeSQLString( $strVal )
 	{

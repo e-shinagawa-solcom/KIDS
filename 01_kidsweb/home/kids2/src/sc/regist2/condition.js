@@ -3,23 +3,23 @@
 //
 jQuery(function($){
     
-    // ¿Æ²èÌÌ¤«¤é°ú¤­·Ñ¤¤¤À¸ÜµÒ¥³¡¼¥É¤ò¥»¥Ã¥È
+    // è¦ªç”»é¢ã‹ã‚‰å¼•ãç¶™ã„ã é¡§å®¢ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
     var strDefaultCompanyDisplayCode = $('#strDefaultCompanyDisplayCode').val();
     if ( 0 < strDefaultCompanyDisplayCode.length){
-        // ¸ÜµÒ¥³¡¼¥É¤ò¥»¥Ã¥È
+        // é¡§å®¢ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
         $('input[name="lngCustomerCode"]').val(strDefaultCompanyDisplayCode);
-        // ¸ÜµÒÌ¾¤ÎÉ½¼¨¤Î¤¿¤áchange¥¤¥Ù¥ó¥È¤ò¼êÆ°È¯À¸
+        // é¡§å®¢åã®è¡¨ç¤ºã®ãŸã‚changeã‚¤ãƒ™ãƒ³ãƒˆã‚’æ‰‹å‹•ç™ºç”Ÿ
         $('input[name="lngCustomerCode"]').trigger('change');
     }
     
     // ------------------------------------
     //  events
     // ------------------------------------
-    // OK¥Ü¥¿¥ó
+    // OKãƒœã‚¿ãƒ³
     $('#OkBt').on('click', function(){
         
         // ---------------------------
-        //  ÆşÎÏÃÍ¡Ê¸¡º÷¾ò·ï¡Ë¤Î¼ı½¸
+        //  å…¥åŠ›å€¤ï¼ˆæ¤œç´¢æ¡ä»¶ï¼‰ã®åé›†
         // ---------------------------
         var search_condition = {
             strCompanyDisplayCode: $('input[name="lngCustomerCode"]').val(),
@@ -38,50 +38,50 @@ jQuery(function($){
         };
 
         // --------------------------------------------------------------
-        //   ÆşÎÏÃÍ¤Î¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó
+        //   å…¥åŠ›å€¤ã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³
         // --------------------------------------------------------------
         if (!validateCondition(search_condition)){
             return false;
         }
 
         // --------------------------------------------------------------
-        //   ¸ÜµÒ¥³¡¼¥É¤Ş¤¿¤ÏÇä¾å¶èÊ¬¤¬½é´üÃÍ¤È°Û¤Ê¤ë¾ì¹ç¤Î¥Á¥§¥Ã¥¯
+        //   é¡§å®¢ã‚³ãƒ¼ãƒ‰ã¾ãŸã¯å£²ä¸ŠåŒºåˆ†ãŒåˆæœŸå€¤ã¨ç•°ãªã‚‹å ´åˆã®ãƒã‚§ãƒƒã‚¯
         // --------------------------------------------------------------
-        // ½é´üÃÍ¤Î¼èÆÀ
+        // åˆæœŸå€¤ã®å–å¾—
         var strDefaultCompanyDisplayCode = $('#strDefaultCompanyDisplayCode').val();
         var lngDefaultSalesClassCode = $('#lngDefaultSalesClassCode').val();
         
-        // ¥Á¥§¥Ã¥¯¤òÉ¬Í×¤È¤¹¤ë¾ò·ï¤òËş¤¿¤·¤Æ¤¤¤ë¤«¤É¤¦¤«
+        // ãƒã‚§ãƒƒã‚¯ã‚’å¿…è¦ã¨ã™ã‚‹æ¡ä»¶ã‚’æº€ãŸã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
         var needConfirm = ((0 < strDefaultCompanyDisplayCode.length) 
                            && (strDefaultCompanyDisplayCode != search_condition.strCompanyDisplayCode))
                           ||
                           ((0 < lngDefaultSalesClassCode.length) 
                            && (lngDefaultSalesClassCode != search_condition.lngSalesClassCode));
 
-        // ¥æ¡¼¥¶¡¼¤Ë³ÎÇ§
+        // ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«ç¢ºèª
         if (needConfirm){
-            if (confirm("ÁªÂò¤µ¤ì¤¿ÌÀºÙ¤òÁ´¤Æ¥¯¥ê¥¢¤·¤Ş¤¹¤¬¡¢¤è¤í¤·¤¤¤Ç¤¹¤«¡©")){
-                // ¿Æ²èÌÌ¤ÎÁªÂòÌÀºÙ¤òÁ´¤Æ¥¯¥ê¥¢
+            if (confirm("é¸æŠã•ã‚ŒãŸæ˜ç´°ã‚’å…¨ã¦ã‚¯ãƒªã‚¢ã—ã¾ã™ãŒã€ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ")){
+                // è¦ªç”»é¢ã®é¸æŠæ˜ç´°ã‚’å…¨ã¦ã‚¯ãƒªã‚¢
                 window.opener.ClearAllEditDetail();
             }else{
-                //¡Ö¥­¥ã¥ó¥»¥ë¡×¤¬²¡²¼¤µ¤ì¤¿¾ì¹ç¤Ï²¿¤â½èÍı¤·¤Ê¤¤
+                //ã€Œã‚­ãƒ£ãƒ³ã‚»ãƒ«ã€ãŒæŠ¼ä¸‹ã•ã‚ŒãŸå ´åˆã¯ä½•ã‚‚å‡¦ç†ã—ãªã„
                 return false;
             }
         }
 
         // --------------------------------------------------------------
-        //   ¿Æ²èÌÌ¤Ë»Ò²èÌÌ¤ÎÃÍ¤ò°ú¤­·Ñ¤¤¤ÇÌÀºÙ¸¡º÷¤ò¼Â¹Ô
+        //   è¦ªç”»é¢ã«å­ç”»é¢ã®å€¤ã‚’å¼•ãç¶™ã„ã§æ˜ç´°æ¤œç´¢ã‚’å®Ÿè¡Œ
         // --------------------------------------------------------------
-        // ¸¡º÷¾ò·ïÃÍÀßÄê
+        // æ¤œç´¢æ¡ä»¶å€¤è¨­å®š
         window.opener.SetSearchConditionWindowValue(search_condition);
-        // ÌÀºÙ¸¡º÷¼Â¹Ô
+        // æ˜ç´°æ¤œç´¢å®Ÿè¡Œ
         window.opener.SearchReceiveDetail(search_condition);
-        // ËÜ²èÌÌ¤òÊÄ¤¸¤ë
+        // æœ¬ç”»é¢ã‚’é–‰ã˜ã‚‹
         window.close();
 
     });
 
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³
     $('#CancelBt').on('click', function(){
         window.close();
     });
@@ -89,39 +89,39 @@ jQuery(function($){
     // ------------------------------------
     //  functions
     // ------------------------------------
-    // ÆşÎÏ¤µ¤ì¤¿¸¡º÷¾ò·ï¤Î¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó
+    // å…¥åŠ›ã•ã‚ŒãŸæ¤œç´¢æ¡ä»¶ã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³
     function validateCondition(cnd){
 
-        // ¸ÜµÒ¥³¡¼¥ÉÉ¬¿Ü¥Á¥§¥Ã¥¯
+        // é¡§å®¢ã‚³ãƒ¼ãƒ‰å¿…é ˆãƒã‚§ãƒƒã‚¯
         if(!cnd.strCompanyDisplayCode && !cnd.strCustomerReceiveCode){
-            alert("¸ÜµÒ¥³¡¼¥É¡¢¸ÜµÒ¼õÃíÈÖ¹æ¤Î¤¤¤º¤ì¤«¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£");
+            alert("é¡§å®¢ã‚³ãƒ¼ãƒ‰ã€é¡§å®¢å—æ³¨ç•ªå·ã®ã„ãšã‚Œã‹ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚");
             return false;
         }
 
         
-        // FROMÇ¼´ü¤¬ÉÔÀµ
+        // FROMç´æœŸãŒä¸æ­£
         if (cnd.From_dtmDeliveryDate){
             if (!isValidDate(cnd.From_dtmDeliveryDate)){
-                alert("Ç¼´ü¡ÊFROM¡Ë¤ÎÆşÎÏ·Á¼°¤¬ÉÔÀµ¤Ç¤¹");
+                alert("ç´æœŸï¼ˆFROMï¼‰ã®å…¥åŠ›å½¢å¼ãŒä¸æ­£ã§ã™");
                 return false;
             }
         }
 
-        // TOÇ¼´ü¤¬ÉÔÀµ
+        // TOç´æœŸãŒä¸æ­£
         if (cnd.To_dtmDeliveryDate){
             if (!isValidDate(cnd.To_dtmDeliveryDate)){
-                alert("Ç¼´ü¡ÊTO¡Ë¤ÎÆşÎÏ·Á¼°¤¬ÉÔÀµ¤Ç¤¹");
+                alert("ç´æœŸï¼ˆTOï¼‰ã®å…¥åŠ›å½¢å¼ãŒä¸æ­£ã§ã™");
                 return false;
             }
         }
 
-        // FROMÇ¼´ü¡äTOÇ¼´ü
+        // FROMç´æœŸï¼TOç´æœŸ
         if (cnd.From_dtmDeliveryDate && cnd.To_dtmDeliveryDate){
             var from = new Date(cnd.From_dtmDeliveryDate);
             var to = new Date(cnd.To_dtmDeliveryDate);
 
             if (from.getTime() > to.getTime()){
-                alert("Ç¼´ü¡ÊTO¡Ë¤¬Ç¼´ü¡ÊFROM¡Ë¤è¤ê²áµî¤ÎÆü¤Ç¤¹");
+                alert("ç´æœŸï¼ˆTOï¼‰ãŒç´æœŸï¼ˆFROMï¼‰ã‚ˆã‚Šéå»ã®æ—¥ã§ã™");
                 return false;
             }
         }
@@ -130,7 +130,7 @@ jQuery(function($){
                 
     };
 
-    // ÆüÉÕ½ñ¼°¥Á¥§¥Ã¥¯
+    // æ—¥ä»˜æ›¸å¼ãƒã‚§ãƒƒã‚¯
     function isValidDate(text) {
         if (!/^\d{1,4}(\/|-)\d{1,2}\1\d{1,2}$/.test(text)) {
           return false;

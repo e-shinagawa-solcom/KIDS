@@ -1,12 +1,12 @@
 /*
-	���ס�������ݡ���塢��Ϣ�����å�
-	�оݡ�����
-	��������ƣ�»�
-	���͡��������ٹԤ��Ф������˰������ƺѤߤ���夬¸�ߤ��뤫������å�����
+	概要：受注＜−＞売上、関連チェック
+	対象：受注
+	作成：斎藤和志
+	備考：受注明細行に対し、既に引き当て済みの売上が存在するかをチェックする
 */
 
 select COUNT(*),
-		CASE WHEN COUNT(*) >= 1 THEN '���򤵤줿�����Σ�.��'|| '_%strFormValue2%_' ||'�פ����١�'|| '_%strFormValue3%_' ||'�פϴ��������Ͽ����Ƥ���١�������Ԥ��ޤ���' || '(_%strFormValue0%_/_%strFormValue1%_)'
+		CASE WHEN COUNT(*) >= 1 THEN '選択された受注ＮＯ.「'|| '_%strFormValue2%_' ||'」の明細「'|| '_%strFormValue3%_' ||'」は既に売上登録されている為、削除が行えません。' || '(_%strFormValue0%_/_%strFormValue1%_)'
 			ELSE ''
 		END  as alert
 from

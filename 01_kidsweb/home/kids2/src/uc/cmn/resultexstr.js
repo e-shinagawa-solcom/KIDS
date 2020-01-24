@@ -1,9 +1,9 @@
 
 
-// ½èÍı¥â¡¼¥ÉÃÍ¼èÆÀ
+// å‡¦ç†ãƒ¢ãƒ¼ãƒ‰å€¤å–å¾—
 var g_strMode = parent.g_aryArgs[0][4];
 
-// [lngLanguageCode]ÃÍ¼èÆÀ
+// [lngLanguageCode]å€¤å–å¾—
 // var g_lngCode = parent.lngLanguageCode.value;
 var g_lngCode = 1;
 
@@ -13,18 +13,18 @@ var g_lngCode = 1;
 
 
 
-// ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·¥â¥¸¥å¡¼¥ë
+// ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 function fncTitleOutput( lngCode )
 {
 
-	// ºï½ü³ÎÇ§ÍÑ¥Æ¡¼¥Ö¥ë¥»¥Ã¥È(ÆüËÜ¸ì)
-	var deleteTableJ = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>ºï½ü¤·¤Ş¤¹¤«¡©</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="window.close();"><img onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();window.returnValue=true;window.close();"><img onmouseover="DeleteJOn( this );" onmouseout="DeleteJOff( this );" src="/img/type01/cmn/seg/delete_off_ja_bt.gif" width="72" height="20" border="0" alt="DELETE"><a></td></tr></table>';
-	// ºï½ü³ÎÇ§ÍÑ¥Æ¡¼¥Ö¥ë¥»¥Ã¥È(±Ñ¸ì)
+	// å‰Šé™¤ç¢ºèªç”¨ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒƒãƒˆ(æ—¥æœ¬èª)
+	var deleteTableJ = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="window.close();"><img onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();window.returnValue=true;window.close();"><img onmouseover="DeleteJOn( this );" onmouseout="DeleteJOff( this );" src="/img/type01/cmn/seg/delete_off_ja_bt.gif" width="72" height="20" border="0" alt="DELETE"><a></td></tr></table>';
+	// å‰Šé™¤ç¢ºèªç”¨ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒƒãƒˆ(è‹±èª)
 	var deleteTableE = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr class="SegColumn"><td>Does it delete?</td></tr><tr><td bgcolor="#f1f1f1"><a href="#" onclick="window.close();"><img onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a>&nbsp;&nbsp;<a href="#" onclick="window.form1.submit();window.returnValue=true;window.close();"><img onmouseover="DeleteEOn( this );" onmouseout="DeleteEOff( this );" src="/img/type01/cmn/seg/delete_off_en_bt.gif" width="72" height="20" border="0" alt="DELETE"><a></td></tr></table>';
 
-	// ¾ÜºÙ³ÎÇ§ÍÑ¥Æ¡¼¥Ö¥ë¥»¥Ã¥È(ÆüËÜ¸ì)
+	// è©³ç´°ç¢ºèªç”¨ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒƒãƒˆ(æ—¥æœ¬èª)
 	var detailTableJ = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr><td bgcolor="#f1f1f1"><a href="#" onclick="alert("test");window.close();"><img onclick="window.close();" onmouseover="CloseJOn( this );" onmouseout="CloseJOff( this );" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a></td></tr></table>';
-	// ¾ÜºÙ³ÎÇ§ÍÑ¥Æ¡¼¥Ö¥ë¥»¥Ã¥È(±Ñ¸ì)
+	// è©³ç´°ç¢ºèªç”¨ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒƒãƒˆ(è‹±èª)
 	var detailTableE = '<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center"><tr><td bgcolor="#f1f1f1"><a href="#" onclick="window.close();"><img onmouseover="CloseEOn( this );" onmouseout="CloseEOff( this );" src="/img/type01/cmn/seg/close_off_en_bt.gif" width="72" height="20" border="0" alt="CLOSE"></a></td></tr></table>';
 
 
@@ -37,7 +37,7 @@ function fncTitleOutput( lngCode )
 		}
 		else if( lngCode == 1 )
 		{
-			ControlTitle.innerText = '¾ÜºÙ³ÎÇ§';
+			ControlTitle.innerText = 'è©³ç´°ç¢ºèª';
 			objQuery.innerHTML = detailTableJ;
 		}
 	}
@@ -50,7 +50,7 @@ function fncTitleOutput( lngCode )
 		}
 		else if( lngCode == 1 )
 		{
-			ControlTitle.innerText = 'ºï½ü³ÎÇ§';
+			ControlTitle.innerText = 'å‰Šé™¤ç¢ºèª';
 			objQuery.innerHTML = deleteTableJ;
 		}
 	}
@@ -62,18 +62,18 @@ function fncTitleOutput( lngCode )
 
 
 
-// ÆüËÜ¸ì±Ñ¸ìÀÚÂØ
+// æ—¥æœ¬èªè‹±èªåˆ‡æ›¿
 function fncChgEtoJ( strMode )
 {
 
-	// ±Ñ¸ìÀÚÂØ
+	// è‹±èªåˆ‡æ›¿
 	if( g_lngCode == 0 )
 	{
 
-		// ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		//fncTitleOutput( 0 );
 
-		// ½èÍıÍÑ¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// å‡¦ç†ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		fncProcessingOutputModule( strMode , 0 );
 
 		bytInvalidFlag.innerText        = 'Login permission';
@@ -104,40 +104,40 @@ function fncChgEtoJ( strMode )
 
 	}
 
-	// ÆüËÜ¸ìÀÚÂØ
+	// æ—¥æœ¬èªåˆ‡æ›¿
 	else if( g_lngCode == 1 )
 	{
 
-		// ¥¯¥¨¥ê¡¼¥Ü¥¿¥ó¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// ã‚¯ã‚¨ãƒªãƒ¼ãƒœã‚¿ãƒ³ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		//fncTitleOutput( 1 );
 
-		// ½èÍıÍÑ¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// å‡¦ç†ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		fncProcessingOutputModule( strMode , 1 );
 
-		bytInvalidFlag.innerText        = '¥í¥°¥¤¥óµö²Ä';
-		lngUserCode.innerText           = '¥æ¡¼¥¶¡¼¥³¡¼¥É';
-		strUserID.innerText             = '¥æ¡¼¥¶¡¼ID';
-		bytMailTransmitFlag.innerText   = '¥á¡¼¥ëÇÛ¿®µö²Ä';
-		strMailAddress.innerText        = '¥á¡¼¥ë¥¢¥É¥ì¥¹';
-		bytUserDisplayFlag.innerText    = '¥æ¡¼¥¶¡¼É½¼¨';
-		strUserDisplayCode.innerText    = 'É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É';
-		strUserDisplayName.innerText    = 'É½¼¨¥æ¡¼¥¶¡¼Ì¾';
-		strUserFullName.innerText       = '¥Õ¥ë¥Í¡¼¥à';
-		lngCompanyCode.innerText        = '²ñ¼Ò';
-		aryGroup.innerText              = '¥°¥ë¡¼¥×';
-		strAuthorityGroupName.innerText = '¸¢¸Â¥°¥ë¡¼¥×';
-		strAccessIPAddress.innerText    = '¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹';
-		strUserImageFileName.innerHTML  = '¥æ¡¼¥¶¡¼¥¤¥á¡¼¥¸';
-		strNote.innerText               = 'È÷¹Í';
+		bytInvalidFlag.innerText        = 'ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯';
+		lngUserCode.innerText           = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰';
+		strUserID.innerText             = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ID';
+		bytMailTransmitFlag.innerText   = 'ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯';
+		strMailAddress.innerText        = 'ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹';
+		bytUserDisplayFlag.innerText    = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤º';
+		strUserDisplayCode.innerText    = 'è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰';
+		strUserDisplayName.innerText    = 'è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å';
+		strUserFullName.innerText       = 'ãƒ•ãƒ«ãƒãƒ¼ãƒ ';
+		lngCompanyCode.innerText        = 'ä¼šç¤¾';
+		aryGroup.innerText              = 'ã‚°ãƒ«ãƒ¼ãƒ—';
+		strAuthorityGroupName.innerText = 'æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—';
+		strAccessIPAddress.innerText    = 'ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹';
+		strUserImageFileName.innerHTML  = 'ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸';
+		strNote.innerText               = 'å‚™è€ƒ';
 
 		if( typeof(strPasswd) != 'undefined' )
 		{
-			strPasswd.innerHTML = '¥Ñ¥¹¥ï¡¼¥É';
+			strPasswd.innerHTML = 'ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰';
 		}
 
 		if( typeof(strMyPageInfo) != 'undefined' )
 		{
-			strMyPageInfo.innerHTML = '¥Ş¥¤¥Ú¡¼¥¸¾ğÊó';
+			strMyPageInfo.innerHTML = 'ãƒã‚¤ãƒšãƒ¼ã‚¸æƒ…å ±';
 		}
 
 	}

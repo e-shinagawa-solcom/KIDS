@@ -1,16 +1,16 @@
 /*
 ' -----------------------------------------------------------------------------
-' ¥Õ¥¡¥¤¥ë³µÍ×¡§
-'               VBScript ¶¦ÄÌ¥¯¥é¥¹
-' È÷¹Í¡§
-'       ¶¦ÄÌ¤Ç»ÈÍÑ¤¹¤ë¥¯¥é¥¹·²
+' ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ï¼š
+'               VBScript å…±é€šã‚¯ãƒ©ã‚¹
+' å‚™è€ƒï¼š
+'       å…±é€šã§ä½¿ç”¨ã™ã‚‹ã‚¯ãƒ©ã‚¹ç¾¤
 '
-' ºîÀ®Æü¡§2003/10/09
-' ºîÀ®¼Ô¡§Kazushi Saito
-' ½¤ÀµÍúÎò¡§
+' ä½œæˆæ—¥ï¼š2003/10/09
+' ä½œæˆè€…ï¼šKazushi Saito
+' ä¿®æ­£å±¥æ­´ï¼š
 '	2004/03/29 K.S
-'		fncComFormatNumberValue() ¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ½èÍı¤ÎÄÉ²Ã
-'		fncComDecimalCut() ¥á¥½¥Ã¥É¤ÎÄÉ²Ã
+'		fncComFormatNumberValue() å°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦å‡¦ç†ã®è¿½åŠ 
+'		fncComDecimalCut() ãƒ¡ã‚½ãƒƒãƒ‰ã®è¿½åŠ 
 '
 '
 '
@@ -19,17 +19,17 @@
 
 /*
 ' ------------------------------------------
-' ¥°¥í¡¼¥Ğ¥ëÊÑ¿ôÄêµÁ
+' ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°å®šç¾©
 ' ------------------------------------------
 */
-const var c_lngAfterDecimal     	= 4;			// ½èÍıÂĞ¾İ¤Î¾®¿ôÅÀ°Ê²¼¤Î·å¿ô¡Ê´İ¤á½èÍı¡Ë
-const var c_strFormatNumberErr  	= "(Error)";	// fncComFormatNumberValue() ¥¨¥é¡¼»ş¤ÎÊ¸»úÎó
-const var c_strDecimalPointChar 	= ".";		'// ¾®¿ôÅÀ°ÌÃÖ¤ÎÊ¸»ú
+const var c_lngAfterDecimal     	= 4;			// å‡¦ç†å¯¾è±¡ã®å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°ï¼ˆä¸¸ã‚å‡¦ç†ï¼‰
+const var c_strFormatNumberErr  	= "(Error)";	// fncComFormatNumberValue() ã‚¨ãƒ©ãƒ¼æ™‚ã®æ–‡å­—åˆ—
+const var c_strDecimalPointChar 	= ".";		'// å°æ•°ç‚¹ä½ç½®ã®æ–‡å­—
 
 /*
 ' ------------------------------------------
-' ³µÍ×¡§¥Á¥§¥Ã¥¯¥¯¥é¥¹
-' È÷¹Í¡§¿ôÃÍ¡¢ÆüÉÕ¡¢¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤Ê¤¦
+' æ¦‚è¦ï¼šãƒã‚§ãƒƒã‚¯ã‚¯ãƒ©ã‚¹
+' å‚™è€ƒï¼šæ•°å€¤ã€æ—¥ä»˜ã€ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œãªã†
 ' ------------------------------------------
 */
 class clsCheck{
@@ -38,30 +38,30 @@ class clsCheck{
 		Class_Initialize();
 	}
 	
-	var m_strNumberCurrencySign		// ÄÌ²ßµ­¹æ
-	var m_strNumberConnectionChar	// ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
-	var m_lngNumberAfterDecimal		// ¾®¿ôÅÀ°Ê²¼¤Î·å
-	var m_lngStringMaxLength		// Ê¸»úÎó¤ÎºÇÂç¿ô
-	var m_lngDateFormatNo			// ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È¡Ê0=YYYY/MM/DD or 1=YYYY/MM¡Ë
+	var m_strNumberCurrencySign		// é€šè²¨è¨˜å·
+	var m_strNumberConnectionChar	// é€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
+	var m_lngNumberAfterDecimal		// å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡
+	var m_lngStringMaxLength		// æ–‡å­—åˆ—ã®æœ€å¤§æ•°
+	var m_lngDateFormatNo			// æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆ0=YYYY/MM/DD or 1=YYYY/MMï¼‰
 	
-	var m_strFormatNumberValue		// fncComFormatNumberValue() ¤Ë¤è¤ê¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ì¤¿Ä¾¸å¤ÎÃÍ
-	var m_lngDecimalCutPoint		// ¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ°ÌÃÖ
-	var m_lngCalcClass				// ·×»»ÊıË¡¼ïÊÌ
+	var m_strFormatNumberValue		// fncComFormatNumberValue() ã«ã‚ˆã‚Šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸç›´å¾Œã®å€¤
+	var m_lngDecimalCutPoint		// å°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦ä½ç½®
+	var m_lngCalcClass				// è¨ˆç®—æ–¹æ³•ç¨®åˆ¥
 	
 	/*
 	// ------------------------------------------
 	// ------------------------------------------
 	*/
 	Class_Initialize(){
-		//¿ôÃÍ½èÍı¤Ë¤Æ¾®¿ôÅÀ°Ê²¼¤Î·å¿ô¤ò²¿·å¤Ë¤·¤Æ½èÍı¤¹¤ë¤«¤ò½é´üÀßÄê
+		//æ•°å€¤å‡¦ç†ã«ã¦å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°ã‚’ä½•æ¡ã«ã—ã¦å‡¦ç†ã™ã‚‹ã‹ã‚’åˆæœŸè¨­å®š
 		this.NumberAfterDecimal = c_lngAfterDecimal
 	
 	}
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§ÄÌ²ßµ­¹æ
-	// °ú¿ô¡§strValue ÃÍ
+	// æ¦‚è¦ï¼šé€šè²¨è¨˜å·
+	// å¼•æ•°ï¼šstrValue å€¤
 	// ------------------------------------------
 	*/
 	set NumberCurrencySign(strValue){
@@ -74,8 +74,8 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
-	// °ú¿ô¡§strValue ÃÍ
+	// æ¦‚è¦ï¼šé€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
+	// å¼•æ•°ï¼šstrValue å€¤
 	// ------------------------------------------
 	*/
 	set NumberConnectionChar(strValue){
@@ -88,8 +88,8 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§¾®¿ôÅÀ°Ê²¼¤Î·×»»¤ò²¿·å¤Ë¤¹¤ë¤«
-	// °ú¿ô¡§lngValue ÃÍ
+	// æ¦‚è¦ï¼šå°æ•°ç‚¹ä»¥ä¸‹ã®è¨ˆç®—ã‚’ä½•æ¡ã«ã™ã‚‹ã‹
+	// å¼•æ•°ï¼šlngValue å€¤
 	// ------------------------------------------
 	*/
 	set NumberAfterDecimal(lngValue){
@@ -102,8 +102,8 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§Ê¸»úÎó¤ÎºÇÂç¿ô
-	// °ú¿ô¡§lngValue ÃÍ
+	// æ¦‚è¦ï¼šæ–‡å­—åˆ—ã®æœ€å¤§æ•°
+	// å¼•æ•°ï¼šlngValue å€¤
 	// ------------------------------------------
 	*/
 	set StringMaxLength(lngValue){
@@ -116,8 +116,8 @@ class clsCheck{
 	
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§ÄÌ²ßµ­¹æ
-	// °ú¿ô¡§strValue ÃÍ
+	// æ¦‚è¦ï¼šé€šè²¨è¨˜å·
+	// å¼•æ•°ï¼šstrValue å€¤
 	// ------------------------------------------
 	*/
 	set FormatNumberValue(strValue){
@@ -130,8 +130,8 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥ÈNo
-	// °ú¿ô¡§lngValue ÃÍ
+	// æ¦‚è¦ï¼šæ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆNo
+	// å¼•æ•°ï¼šlngValue å€¤
 	// ------------------------------------------
 	*/
 	set DateFormatNo(lngValue){
@@ -144,8 +144,8 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ°ÌÃÖ
-	// °ú¿ô¡§lngValue ÃÍ
+	// æ¦‚è¦ï¼šå°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦ä½ç½®
+	// å¼•æ•°ï¼šlngValue å€¤
 	// ------------------------------------------
 	*/
 	set DecimalCutPoint(lngValue){
@@ -158,8 +158,8 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§·×»»ÊıË¡¼ïÊÌ
-	// °ú¿ô¡§lngValue ÃÍ
+	// æ¦‚è¦ï¼šè¨ˆç®—æ–¹æ³•ç¨®åˆ¥
+	// å¼•æ•°ï¼šlngValue å€¤
 	// ------------------------------------------
 	*/
 	set CalcClass(lngValue){
@@ -173,69 +173,69 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§¿ôÃÍ¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¡Ê¼Â¿ôÃÍÈÇ¡Ë
-	// °ú¿ô¡§strValue			ÃÍ¡ÊString¡Ë
-	//		blnCurrencyEscape	ÄÌ²ßµ­¹æ¤Î¥¨¥¹¥±¡¼¥×²ÄÈİ¡Ê\¥Ş¡¼¥¯¡Ë
+	// æ¦‚è¦ï¼šæ•°å€¤ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆå®Ÿæ•°å€¤ç‰ˆï¼‰
+	// å¼•æ•°ï¼šstrValue			å€¤ï¼ˆStringï¼‰
+	//		blnCurrencyEscape	é€šè²¨è¨˜å·ã®ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—å¯å¦ï¼ˆ\ãƒãƒ¼ã‚¯ï¼‰
 	//
-	// Ìá¤êÃÍ¡§¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ì¤¿ÃÍ
-	// È÷¹Í¡§
+	// æˆ»ã‚Šå€¤ï¼šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸå€¤
+	// å‚™è€ƒï¼š
 	// ------------------------------------------
 	*/
 	function fncComFormatNumberValue( strValue, blnCurrencyEscape ){
 		try{
 
-			var lngValue;		// ¥Æ¥­¥¹¥ÈÃÍ
-			var curValue;		// ÊÑ´¹¸å¤Î¿ôÃÍ
-			var aryValue;		// ¥Æ¥­¥¹¥ÈÃÍ¡ÊÄÌ²ßµ­¹æ¡Ü¶â³Û¡Ë
-			var strAfValue;		// ¥Õ¥©¡¼¥Ş¥Ã¥È¸å¤ÎÃÍ
-			var strCurrencySign;	// ÄÌ²ßµ­¹æ
-			var curAmount; 		// ¶â³Û money
+			var lngValue;		// ãƒ†ã‚­ã‚¹ãƒˆå€¤
+			var curValue;		// å¤‰æ›å¾Œã®æ•°å€¤
+			var aryValue;		// ãƒ†ã‚­ã‚¹ãƒˆå€¤ï¼ˆé€šè²¨è¨˜å·ï¼‹é‡‘é¡ï¼‰
+			var strAfValue;		// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå¾Œã®å€¤
+			var strCurrencySign;	// é€šè²¨è¨˜å·
+			var curAmount; 		// é‡‘é¡ money
 
 
-			// Â¸ºß¤ò³ÎÇ§¡£¼èÆÀÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¼ºÇÔ¤ÇÊÖµÑ
+			// å­˜åœ¨ã‚’ç¢ºèªã€‚å–å¾—ä¸å¯èƒ½ãªå ´åˆã€å¤±æ•—ã§è¿”å´
 			if (!strValue || strValue.length === 0) {
 				return false;
 			}
 
-			//¥¨¥é¡¼È½Äê
+			//ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 			If (strValue.trim().length === 0) {
-				//´Ø¿ô¤òÀ®¸ù¤ÇÊÖµÑ
+				//é–¢æ•°ã‚’æˆåŠŸã§è¿”å´
 				return true;
 			}
 
-			// ÀÜÂ³Ê¸»ú¤¬¤¢¤ë¾ì¹ç
-			//¥×¥í¥Ñ¥Æ¥£»ØÄêÄÌ²ßµ­¹æ¤ÈÆ±¤¸ÄÌ²ßµ­¹æ¤Î¾ì¹ç¡¢¥ª¥Ö¥¸¥§¥¯¥È¤ÎÃÍ¤òÊÑ¿ô¤ËÂåÆş
+			// æ¥ç¶šæ–‡å­—ãŒã‚ã‚‹å ´åˆ
+			//ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£æŒ‡å®šé€šè²¨è¨˜å·ã¨åŒã˜é€šè²¨è¨˜å·ã®å ´åˆã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å¤‰æ•°ã«ä»£å…¥
 			If( indexof(NumberConnectionChar) > 0) && NumberConnectionChar != "" ) {
 				
-				//ÄÌ²ßµ­¹æ¤Î½èÍı
+				//é€šè²¨è¨˜å·ã®å‡¦ç†
 				aryValue = strValue.split(NumberConnectionChar);
 				strCurrencySign = aryValue[0];
 				curAmount = aryValue[1];
 				lngValue = curAmount;
 				
-			//ÀÜÂ³Ê¸»ú¤¬Ìµ¤¤¾ì¹ç
+			//æ¥ç¶šæ–‡å­—ãŒç„¡ã„å ´åˆ
 			}else {
-				//ÄÌ²ßµ­¹æ¤¬¤¢¤Ã¤¿¾ì¹ç¡¢ºï½ü
+				//é€šè²¨è¨˜å·ãŒã‚ã£ãŸå ´åˆã€å‰Šé™¤
 				lngValue = strValue.replace( NumberCurrencySign, "" );
 			}
 	
-			//¿ôÃÍ¤Ø¤ÎÊÑ´¹¤¬²ÄÇ½¤«¤òÄ´¤Ù¤ë
+			//æ•°å€¤ã¸ã®å¤‰æ›ãŒå¯èƒ½ã‹ã‚’èª¿ã¹ã‚‹
 			if (isNan(lngValue ) ) {
-				//´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+				//é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 				return false;
 			}
 
 //			lngValue = Left(CStr(lngValue), NumberAfterDecimal)
-			//msgbox "½èÍıÂĞ¾İ¡§" & curValue & vbcrlf & "¿ôÃÍ½èÍı¡§" & CalcClass & vbcrlf & "ÀÚ¼Î¤Æ°ÌÃÖ¡§" & DecimalCutPoint & vbcrlf & "¥Õ¥©¡¼¥Ş¥Ã¥È°ÌÃÖ¡§" & NumberAfterDecimal
+			//msgbox "å‡¦ç†å¯¾è±¡ï¼š" & curValue & vbcrlf & "æ•°å€¤å‡¦ç†ï¼š" & CalcClass & vbcrlf & "åˆ‡æ¨ã¦ä½ç½®ï¼š" & DecimalCutPoint & vbcrlf & "ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆä½ç½®ï¼š" & NumberAfterDecimal
 
-			//¿ôÃÍ¤ËÊÑ´¹
+			//æ•°å€¤ã«å¤‰æ›
 			curValue = new number(lngValue);
 	
 			switch(CalcClass){
-				// ¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ½èÍı
+				// å°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦å‡¦ç†
 				case 1:
 					curValue = fncComDecimalCut( curValue, DecimalCutPoint , NumberAfterDecimal );
-				// ¾®¿ôÅÀ°Ê²¼ÀÚ¾å¤²½èÍı
+				// å°æ•°ç‚¹ä»¥ä¸‹åˆ‡ä¸Šã’å‡¦ç†
 				case 2:
 					curValue = fncComDecimalUp( curValue, DecimalCutPoint , NumberAfterDecimal );
 				default:
@@ -245,22 +245,22 @@ class clsCheck{
 			strCalcValue = FormatNumber(curValue, NumberAfterDecimal, True, False);
 
 
-			//¿ôÃÍ·Á¼°¤Ë¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤Æ¡¢¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+			//æ•°å€¤å½¢å¼ã«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ã¦ã€å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 			strAfValue = new string(NumberCurrencySign) +  new string(NumberConnectionChar) + new string(strCalcValue);
 
 
-			//ÃÍÊİ»ı¡¡\ ¤¬¥¨¥¹¥±¡¼¥×¤µ¤ì¤Æ¤·¤Ş¤¦¤¿¤á¡¢\\ ¤ËÊÑ´¹
+			//å€¤ä¿æŒã€€\ ãŒã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã•ã‚Œã¦ã—ã¾ã†ãŸã‚ã€\\ ã«å¤‰æ›
 			if ( blnCurrencyEscape ) {
 				FormatNumberValue = strAfValue.replace( "\", "\\");
 			} else {
 				FormatNumberValue = strAfValue
 			}
 
-			//À®¸ù¤òÊÖµÑ
+			//æˆåŠŸã‚’è¿”å´
 			return true
 		}
 		catch( exception ) {
-			//¤â¤·¥¨¥é¡¼¤¬µ¯¤­¤Æ¤¤¤¿¾ì¹ç
+			//ã‚‚ã—ã‚¨ãƒ©ãƒ¼ãŒèµ·ãã¦ã„ãŸå ´åˆ
 			return  c_strFormatNumberErr;
 		}
 
@@ -268,30 +268,30 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§¿ôÃÍ¤ÎÀÚ¼Î¤Æ½èÍı
-	// °ú¿ô¡§
-	//		curValue		-	ÀÚ¼Î¤ÆÂĞ¾İ¤Î¿ôÃÍ
-	//		lngPoint		-	ÀÚ¼Î¤ÆÂĞ¾İ¤Î¾®¿ôÅÀ¤«¤é¤Î°ÌÃÖ
-	//		lngAfterDecimal	-	ÀÚ¼Î¤Æ¸å¤Î¿ôÃÍ¤Î¾®¿ôÅÀ°Ê²¼¤ò²¿Ê¸»ú0¤ÇËä¤á¤ë¤«
+	// æ¦‚è¦ï¼šæ•°å€¤ã®åˆ‡æ¨ã¦å‡¦ç†
+	// å¼•æ•°ï¼š
+	//		curValue		-	åˆ‡æ¨ã¦å¯¾è±¡ã®æ•°å€¤
+	//		lngPoint		-	åˆ‡æ¨ã¦å¯¾è±¡ã®å°æ•°ç‚¹ã‹ã‚‰ã®ä½ç½®
+	//		lngAfterDecimal	-	åˆ‡æ¨ã¦å¾Œã®æ•°å€¤ã®å°æ•°ç‚¹ä»¥ä¸‹ã‚’ä½•æ–‡å­—0ã§åŸ‹ã‚ã‚‹ã‹
 	//
-	// Ìá¤êÃÍ¡§ÀÚ¼Î¤Æ¤¿¿ôÃÍ¡¿¥¨¥é¡¼¤Î¾ì¹ç 0
-	// È÷¹Í¡§¾®¿ôÅÀ°Ê²¼¤Î¤ß¤ËÂĞ±ş¡£À°¿ôÉô¤ÎÀÚ¼Î¤Æ½èÍı¤Ë¤ÏÌ¤ÂĞ±ş¡£
+	// æˆ»ã‚Šå€¤ï¼šåˆ‡æ¨ã¦ãŸæ•°å€¤ï¼ã‚¨ãƒ©ãƒ¼ã®å ´åˆ 0
+	// å‚™è€ƒï¼šå°æ•°ç‚¹ä»¥ä¸‹ã®ã¿ã«å¯¾å¿œã€‚æ•´æ•°éƒ¨ã®åˆ‡æ¨ã¦å‡¦ç†ã«ã¯æœªå¯¾å¿œã€‚
 	// ------------------------------------------
 	*/
 	function fncComDecimalCut( curValue , lngPoint, lngAfterDecimal ){
 
-		var strValue;		// ÀÚ¤ê¼Î¤ÆÂĞ¾İ¤Î¿ôÃÍ¤òÊ¸»úÎóÊÑ´¹¤·¤¿¤â¤Î
+		var strValue;		// åˆ‡ã‚Šæ¨ã¦å¯¾è±¡ã®æ•°å€¤ã‚’æ–‡å­—åˆ—å¤‰æ›ã—ãŸã‚‚ã®
 		var aryValue;
 		var strNumber;
 		var strDecimal;
-		var curAfValue;		// ÀÚ¼Î¤Æ¸å¤Î¿ôÃÍ
-		var strZeroFormat;	// 0Ëä¤á½èÍıÍÑ
+		var curAfValue;		// åˆ‡æ¨ã¦å¾Œã®æ•°å€¤
+		var strZeroFormat;	// 0åŸ‹ã‚å‡¦ç†ç”¨
 
-		//Ê¸»úÎó¤ØÊÑ´¹
+		//æ–‡å­—åˆ—ã¸å¤‰æ›
 		strValue = new string(curValue);
 		
 		If (strValue.indexof(c_strDecimalPointChar) > 0) {
-			//ÄÌ²ßµ­¹æ¤Î½èÍı
+			//é€šè²¨è¨˜å·ã®å‡¦ç†
 			aryValue = strValue.split(c_strDecimalPointChar);
 			strNumber  = aryValue[0];
 			strDecimal = aryValue[1];
@@ -300,11 +300,11 @@ class clsCheck{
 			strDecimal = "0".repeat(lngAfterDecimal);
 		}
 
-		// ÀÚ¼Î¤ÆÂĞ¾İ¤Î¾®¿ôÅÀ°ÌÃÖ¤Ë¤è¤ê¥Õ¥©¡¼¥Ş¥Ã¥È
+		// åˆ‡æ¨ã¦å¯¾è±¡ã®å°æ•°ç‚¹ä½ç½®ã«ã‚ˆã‚Šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		if (lngPoint == 0 ) {
 			curAfValue = new string(strNumber) +  new string(c_strDecimalPointChar) + "0".repeat(lngAfterDecimal);
 		} else if (lngPoint > 0 ) {
-			// ¥Õ¥©¡¼¥Ş¥Ã¥È°ÌÃÖ¤ÎÊı¤¬ÀÚ¼Î¤Æ°ÌÃÖ¤è¤êÂç¤­¤¤¾ì¹ç¤Î¤ß0Ëä¤á
+			// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆä½ç½®ã®æ–¹ãŒåˆ‡æ¨ã¦ä½ç½®ã‚ˆã‚Šå¤§ãã„å ´åˆã®ã¿0åŸ‹ã‚
 			if( lngAfterDecimal > lngPoint ) {
 				strZeroFormat = "0".repeat(lngAfterDecimal - lngPoint);
 			}
@@ -313,38 +313,38 @@ class clsCheck{
 			curAfValue = strValue;
 		}
 
-		// ¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤¿¿ôÃÍ¤òÊÖµÑ
+		// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ãŸæ•°å€¤ã‚’è¿”å´
 		fncComDecimalCut = new number(curAfValue);
 
 	}
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§¿ôÃÍ¤ÎÀÚ¾å¤²½èÍı
-	// °ú¿ô¡§
-	//		curValue		-	ÀÚ¾å¤²ÂĞ¾İ¤Î¿ôÃÍ
-	//		lngPoint		-	ÀÚ¾å¤²ÂĞ¾İ¤Î¾®¿ôÅÀ¤«¤é¤Î°ÌÃÖ
-	//		lngAfterDecimal	-	ÀÚ¾å¤²¸å¤Î¿ôÃÍ¤Î¾®¿ôÅÀ°Ê²¼¤ò²¿Ê¸»ú0¤ÇËä¤á¤ë¤«
+	// æ¦‚è¦ï¼šæ•°å€¤ã®åˆ‡ä¸Šã’å‡¦ç†
+	// å¼•æ•°ï¼š
+	//		curValue		-	åˆ‡ä¸Šã’å¯¾è±¡ã®æ•°å€¤
+	//		lngPoint		-	åˆ‡ä¸Šã’å¯¾è±¡ã®å°æ•°ç‚¹ã‹ã‚‰ã®ä½ç½®
+	//		lngAfterDecimal	-	åˆ‡ä¸Šã’å¾Œã®æ•°å€¤ã®å°æ•°ç‚¹ä»¥ä¸‹ã‚’ä½•æ–‡å­—0ã§åŸ‹ã‚ã‚‹ã‹
 	//
-	// Ìá¤êÃÍ¡§ÀÚ¼Î¤Æ¤¿¿ôÃÍ¡¿¥¨¥é¡¼¤Î¾ì¹ç 0
-	// È÷¹Í¡§¾®¿ôÅÀ°Ê²¼¤Î¤ß¤ËÂĞ±ş¡£À°¿ôÉô¤ÎÀÚ¾å¤²½èÍı¤Ë¤ÏÌ¤ÂĞ±ş¡£
+	// æˆ»ã‚Šå€¤ï¼šåˆ‡æ¨ã¦ãŸæ•°å€¤ï¼ã‚¨ãƒ©ãƒ¼ã®å ´åˆ 0
+	// å‚™è€ƒï¼šå°æ•°ç‚¹ä»¥ä¸‹ã®ã¿ã«å¯¾å¿œã€‚æ•´æ•°éƒ¨ã®åˆ‡ä¸Šã’å‡¦ç†ã«ã¯æœªå¯¾å¿œã€‚
 	// ------------------------------------------
 	*/
 	function fncComDecimalUp( curValue , lngPoint, lngAfterDecimal ){
 
-		var strValue;		// ÀÚ¤ê¼Î¤ÆÂĞ¾İ¤Î¿ôÃÍ¤òÊ¸»úÎóÊÑ´¹¤·¤¿¤â¤Î
+		var strValue;		// åˆ‡ã‚Šæ¨ã¦å¯¾è±¡ã®æ•°å€¤ã‚’æ–‡å­—åˆ—å¤‰æ›ã—ãŸã‚‚ã®
 		var aryValue;
 		var strNumber;
 		var strDecimal;
-		var curAfValue;		// ÀÚ¼Î¤Æ¸å¤Î¿ôÃÍ
-		var strZeroFormat;	// 0Ëä¤á½èÍıÍÑ
+		var curAfValue;		// åˆ‡æ¨ã¦å¾Œã®æ•°å€¤
+		var strZeroFormat;	// 0åŸ‹ã‚å‡¦ç†ç”¨
 		
-		//Ê¸»úÎó¤ØÊÑ´¹
+		//æ–‡å­—åˆ—ã¸å¤‰æ›
 		strValue = new string(curValue);
 		
 		
 		if (strValue.indexof(c_strDecimalPointChar) > 0) {
-			//ÄÌ²ßµ­¹æ¤Î½èÍı
+			//é€šè²¨è¨˜å·ã®å‡¦ç†
 			aryValue = strValue.split( c_strDecimalPointChar);
 			strNumber  = aryValue[0];
 			strDecimal = aryValue[1];
@@ -353,20 +353,20 @@ class clsCheck{
 			strDecimal = "0".repeat(lngAfterDecimal);
 		}
 
-		// ÀÚ¼Î¤ÆÂĞ¾İ¤Î¾®¿ôÅÀ°ÌÃÖ¤Ë¤è¤ê¥Õ¥©¡¼¥Ş¥Ã¥È
+		// åˆ‡æ¨ã¦å¯¾è±¡ã®å°æ•°ç‚¹ä½ç½®ã«ã‚ˆã‚Šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		if (lngPoint == 0 ) {
-			// ÀÚ¼Î¤Æ°Ê²¼¤¬ 0 ¤Ç¤ÏÌµ¤¤¾ì¹ç¡¢strNumber ¤òÀÚ¾å¤²
+			// åˆ‡æ¨ã¦ä»¥ä¸‹ãŒ 0 ã§ã¯ç„¡ã„å ´åˆã€strNumber ã‚’åˆ‡ä¸Šã’
 			if( new number(strDecimal) != 0 ) {
 				strNumber = new string(new number(strNumber) + 1);
 			}
-			// ¥Õ¥©¡¼¥Ş¥Ã¥È¡Êex: 12345.00¡Ë
+			// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆex: 12345.00ï¼‰
 			curAfValue = new string(strNumber) + new string(c_strDecimalPointChar) + "0".repeat(lngAfterDecimal);
 		} else if (lngPoint > 0 ) {
-			// ÀÚ¼Î¤Æ°Ê²¼¡ÊstrDecimal¤ÎPOINT±¦ÊÕ¡Ë¤¬ 0 ¤Ç¤ÏÌµ¤¤¾ì¹ç¡¢strDecimal¡ÊPOINTº¸ÊÕ¡Ë¤òÀÚ¾å¤²
+			// åˆ‡æ¨ã¦ä»¥ä¸‹ï¼ˆstrDecimalã®POINTå³è¾ºï¼‰ãŒ 0 ã§ã¯ç„¡ã„å ´åˆã€strDecimalï¼ˆPOINTå·¦è¾ºï¼‰ã‚’åˆ‡ä¸Šã’
 			if( new number( strDecimal.substr(lngPoint) ) <> 0 ) {
 				strDecimal = new string(new number(strDecimal.substring(0, lngPoint)) + 1);
 			}
-			// ¥Õ¥©¡¼¥Ş¥Ã¥È°ÌÃÖ¤ÎÊı¤¬ÀÚ¼Î¤Æ°ÌÃÖ¤è¤êÂç¤­¤¤¾ì¹ç¤Î¤ß0Ëä¤á
+			// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆä½ç½®ã®æ–¹ãŒåˆ‡æ¨ã¦ä½ç½®ã‚ˆã‚Šå¤§ãã„å ´åˆã®ã¿0åŸ‹ã‚
 			if( lngAfterDecimal > lngPoint ) {
 				strZeroFormat = "0".repeat(lngAfterDecimal - lngPoint);
 			}
@@ -375,7 +375,7 @@ class clsCheck{
 			curAfValue = strValue;
 		}
 
-		// ¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤¿¿ôÃÍ¤òÊÖµÑ
+		// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ãŸæ•°å€¤ã‚’è¿”å´
 		return new number(curAfValue);
 
 	}
@@ -383,26 +383,26 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§Ê¸»úÎó¤«¤éÆüÉÕ¤ÎºîÀ®
-	// °ú¿ô¡§Ê¸»úÎó
-	// Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	// È÷¹Í¡§Ê¸»úÎó¤«¤éÆüÉÕ¤¬À¸À®ÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢ËÜÆüÆüÉÕ¤òÀßÄê
+	// æ¦‚è¦ï¼šæ–‡å­—åˆ—ã‹ã‚‰æ—¥ä»˜ã®ä½œæˆ
+	// å¼•æ•°ï¼šæ–‡å­—åˆ—
+	// æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	// å‚™è€ƒï¼šæ–‡å­—åˆ—ã‹ã‚‰æ—¥ä»˜ãŒç”Ÿæˆä¸å¯èƒ½ãªå ´åˆã€æœ¬æ—¥æ—¥ä»˜ã‚’è¨­å®š
 	// ------------------------------------------
 	*/
-	// javascript¤Ï»²¾ÈÅÏ¤·°ú¿ô¤Ëstring¤ò»È¤¨¤Ê¤¤¤¿¤á¡¢array¤ËÊÑ¹¹
+	// javascriptã¯å‚ç…§æ¸¡ã—å¼•æ•°ã«stringã‚’ä½¿ãˆãªã„ãŸã‚ã€arrayã«å¤‰æ›´
 	function fncComTextToDate( arrayValue )
 		
-		var strDate = "";		//Ê¸»úÎóÆüÉÕ
+		var strDate = "";		//æ–‡å­—åˆ—æ—¥ä»˜
 	
 	
-		//Ê¸»úÎóÊ¬¥ë¡¼¥×½èÍı
+		//æ–‡å­—åˆ—åˆ†ãƒ«ãƒ¼ãƒ—å‡¦ç†
 		for (lngCnt = 0; lngCnt < arrayValue[0].length; lngCnt++){
-			//°ìÊ¸»ú¤À¤±¼èÆÀ
+			//ä¸€æ–‡å­—ã ã‘å–å¾—
 			strBuff = arrayValue[0].substring(lngCnt, 1);
-			//¿ôÃÍ¤«¤É¤¦¤«¤ÎÈ½Äê
+			//æ•°å€¤ã‹ã©ã†ã‹ã®åˆ¤å®š
 			if ( !IsNan( strBuff ) ) {
 				strDate = strDate + strBuff
-				//4,6Ê¸»úÌÜ¤Ë/¤òÀßÄê
+				//4,6æ–‡å­—ç›®ã«/ã‚’è¨­å®š
 				switch( lngCnt ) {
 					case 3:
 					case 5:
@@ -412,18 +412,18 @@ class clsCheck{
 			}
 		}
 		
-		//2003/ ¤Î·Á¼°¤Î¾ì¹ç¡¢01/01¤òÄÉ²Ã
+		//2003/ ã®å½¢å¼ã®å ´åˆã€01/01ã‚’è¿½åŠ 
 		if ( strDate.length == 5 ) {
 			strDate = strDate + "01/01";
 		}
-		//2003/10/ ¤Î·Á¼°¤Î¾ì¹ç¡¢01¤òÄÉ²Ã
+		//2003/10/ ã®å½¢å¼ã®å ´åˆã€01ã‚’è¿½åŠ 
 		if ( strDate.length == 8 ) {
 			strDate = strDate + "01";
 		}
 		
 
-	    // javascript¤Înew Date¤¬ÉÔÀµ¤ÊÃÍ¤òÊäÀµ¤·¤Æ¤·¤Ş¤¤¡¢¥Á¥§¥Ã¥¯¤Ç¤­¤Ê¤¤¤¿¤á¡¢
-	    // ÊÑ´¹ÉÔ²ÄÇ½¥Á¥§¥Ã¥¯¤ÎÊı¼°¤òÊÑ¹¹¤¹¤ë¡£
+	    // javascriptã®new DateãŒä¸æ­£ãªå€¤ã‚’è£œæ­£ã—ã¦ã—ã¾ã„ã€ãƒã‚§ãƒƒã‚¯ã§ããªã„ãŸã‚ã€
+	    // å¤‰æ›ä¸å¯èƒ½ãƒã‚§ãƒƒã‚¯ã®æ–¹å¼ã‚’å¤‰æ›´ã™ã‚‹ã€‚
 		var strArray = strDate.split("/");
 		var tempDate = new Date(strArray[0],strArray[1]-1,strArray[2]);
 		if( strArray[0] !== string(tempDate.getFullYear()) || 
@@ -432,69 +432,69 @@ class clsCheck{
 		    return false;
 		}
 		/*
-		//ÆüÉÕ¤ËÊÑ´¹ÉÔ²ÄÇ½¤Ê¾ì¹ç
+		//æ—¥ä»˜ã«å¤‰æ›ä¸å¯èƒ½ãªå ´åˆ
 		If Not IsDate(strDate) Then
 			fncComTextToDate = False;
 			Exit Function
 		End If
 		*/
-		//°ú¿ôÃÍ¤ØÀßÄê
+		//å¼•æ•°å€¤ã¸è¨­å®š
 		arrayValue[0] = strDate;
 		
-		//À®¸ù¤òÊÖµÑ
+		//æˆåŠŸã‚’è¿”å´
 		return true;
 	}
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§Æü»ş¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
-	// °ú¿ô¡§TextBox¥ª¥Ö¥¸¥§¥¯¥È
-	// Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	// È÷¹Í¡§
+	// æ¦‚è¦ï¼šæ—¥æ™‚ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+	// å¼•æ•°ï¼šTextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	// æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	// å‚™è€ƒï¼š
 	// ------------------------------------------
 	*/
 	function fncComFormatDateTime( objText ){
 
-		var dtmValue;	//¥Æ¥­¥¹¥ÈÃÍ
+		var dtmValue;	//ãƒ†ã‚­ã‚¹ãƒˆå€¤
 
-		//¥ª¥Ö¥¸¥§¥¯¥È¤ÎÂ¸ºß¤ò³ÎÇ§¡£¼èÆÀÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¼ºÇÔ¤ÇÊÖµÑ
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­˜åœ¨ã‚’ç¢ºèªã€‚å–å¾—ä¸å¯èƒ½ãªå ´åˆã€å¤±æ•—ã§è¿”å´
 		If ( !objText.value ) {
 		     return false;
 		}
-		//¥ª¥Ö¥¸¥§¥¯¥È¤ÎÃÍ¤òÊÑ¿ô¤ËÂåÆş
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å¤‰æ•°ã«ä»£å…¥
 		dtmValue = new array({objText.value});
 
-		//¥¨¥é¡¼È½Äê
+		//ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 		if (dtmValue[0].trim().length == 0 ){
-			//´Ø¿ô¤òÀ®¸ù¤ÇÊÖµÑ
+			//é–¢æ•°ã‚’æˆåŠŸã§è¿”å´
 			return true;
 		}
 		
-		//¥¨¥é¡¼È½Äê
+		//ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 		if ( dtmValue[0].length < 4 ) {
 			// objText.Value = fncComDate(Date, DateFormatNo )
 			objText.focus();
-			//´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+			//é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 			return false:
 		}
 
-		//Æü»ş¤Ø¤ÎÊÑ´¹¤¬²ÄÇ½¤«¤òÄ´¤Ù¤ë
+		//æ—¥æ™‚ã¸ã®å¤‰æ›ãŒå¯èƒ½ã‹ã‚’èª¿ã¹ã‚‹
 		//If Not IsDate( dtmValue[0] ) Then
-			//¥Æ¥­¥¹¥È¤«¤éÆüÉÕ·Á¼°¤ØÊÑ´¹¤òÄ©Àï
+			//ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰æ—¥ä»˜å½¢å¼ã¸å¤‰æ›ã‚’æŒ‘æˆ¦
 			if ( !fncComTextToDate( dtmValue ) {
-				//¿ôÃÍ¤Ø¤ÎÊÑ´¹¤¬ÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¸½ºßÆüÉÕ¤ò¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+				//æ•°å€¤ã¸ã®å¤‰æ›ãŒä¸å¯èƒ½ãªå ´åˆã€ç¾åœ¨æ—¥ä»˜ã‚’å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 				// objText.Value = fncComDate(Date, DateFormatNo )
 				objText.focus();
-				//´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+				//é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 				return false;
 			}
 		//End If
 
-        // fncComTextToDate¤ÇÊÑ´¹¤·¤¿°ÕÌ£¤¬¤Ê¤¯¤Ê¤ë¤¿¤áºï½ü
-		//ÆüÉÕ·¿¤ËÊÑ´¹
+        // fncComTextToDateã§å¤‰æ›ã—ãŸæ„å‘³ãŒãªããªã‚‹ãŸã‚å‰Šé™¤
+		//æ—¥ä»˜å‹ã«å¤‰æ›
 		//dtmValue[0] = CDate(dtmValue)
 
-		//WebÍÑ¤Î¥Á¥§¥Ã¥¯ 1600Ç¯°Ê²¼¤Î¾ì¹çÌµ¸ú
+		//Webç”¨ã®ãƒã‚§ãƒƒã‚¯ 1600å¹´ä»¥ä¸‹ã®å ´åˆç„¡åŠ¹
 		if( number(dtmValue[0].substr(0,4)) <= 1600 ) {
 			var today = new Date();
 			var y = today.getFullYear();
@@ -504,26 +504,26 @@ class clsCheck{
 			dtmValue[0] = result;
 		}
 
-		//¿ôÃÍ·Á¼°¤Ë¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤Æ¡¢¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+		//æ•°å€¤å½¢å¼ã«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ã¦ã€å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 		objText.Value = fncComDate(dtmValue[0], DateFormatNo );
 		
-		//À®¸ù¤òÊÖµÑ
+		//æˆåŠŸã‚’è¿”å´
 		return true;
 
 	}
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§ÆüÉÕ¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¡ÊOS°ÍÂ¸¤Ê¤·ÈÇ¡Ë
-	// °ú¿ô¡§dtmValue	ÆüÉÕÃÍ
-	//		lngFormatNo YYYY/MM¤Î¾ì¹ç 1
-	//					YYYY/MM/DD ¤Ï¤½¤ÎÂ¾
-	// Ìá¤êÃÍ¡§¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ì¤¿ÆüÉÕÊ¸»úÎó
-	// È÷¹Í¡§
+	// æ¦‚è¦ï¼šæ—¥ä»˜ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆOSä¾å­˜ãªã—ç‰ˆï¼‰
+	// å¼•æ•°ï¼šdtmValue	æ—¥ä»˜å€¤
+	//		lngFormatNo YYYY/MMã®å ´åˆ 1
+	//					YYYY/MM/DD ã¯ãã®ä»–
+	// æˆ»ã‚Šå€¤ï¼šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸæ—¥ä»˜æ–‡å­—åˆ—
+	// å‚™è€ƒï¼š
 	// ------------------------------------------
 	*/
 	function fncComDate( dtmValue, lngFormatNo ){
-		// ÊÑ´¹ºÑ¤ß¤ÎÃÍ¤òºÆÊÑ´¹¤¹¤ë¤Ê¤É¡¢ÌµÂÌ¤Ê½èÍı¤¬Â¿¤¹¤®¤ë¤¿¤áÁ´ÌÌ½¤Àµ
+		// å¤‰æ›æ¸ˆã¿ã®å€¤ã‚’å†å¤‰æ›ã™ã‚‹ãªã©ã€ç„¡é§„ãªå‡¦ç†ãŒå¤šã™ãã‚‹ãŸã‚å…¨é¢ä¿®æ­£
 		var varlist = dtmvalue.split("/");
 		var result;
 		if( lngFormatNo == 1 )
@@ -544,7 +544,7 @@ class clsCheck{
  		strMonth = Month(dtmDate)
  		strDay   = Day(dtmDate)
 
-		// ·î¤ÈÆü¤Î¤ß¡¢°ì·å¥Á¥§¥Ã¥¯¡£°ì·å¤Î¾ì¹ç¤ÏÀèÆ¬¤Ë 0 ¤òÉÕ²Ã¤¹¤ë¡£
+		// æœˆã¨æ—¥ã®ã¿ã€ä¸€æ¡ãƒã‚§ãƒƒã‚¯ã€‚ä¸€æ¡ã®å ´åˆã¯å…ˆé ­ã« 0 ã‚’ä»˜åŠ ã™ã‚‹ã€‚
 		If Len(strMonth) = 1 Then
 			strMonth = "0" & strMonth
 		End If
@@ -553,7 +553,7 @@ class clsCheck{
 			strDay = "0" & strDay
 		End If
 
-		// ¥Õ¥©¡¼¥Ş¥Ã¥È¥Õ¥é¥°¤¬£±¤Î¾ì¹ç YYYY/MM ¥Õ¥©¡¼¥Ş¥Ã¥È
+		// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒ•ãƒ©ã‚°ãŒï¼‘ã®å ´åˆ YYYY/MM ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		If lngFormatNo = 1 Then
 			strDate = strYear & "/" & strMonth
 		Else
@@ -566,13 +566,13 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§Ê¸»úÎó¤Î¸¡ºº
-	// °ú¿ô¡§TextBox or Textarea¥ª¥Ö¥¸¥§¥¯¥È
-	// Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	// È÷¹Í¡§
+	// æ¦‚è¦ï¼šæ–‡å­—åˆ—ã®æ¤œæŸ»
+	// å¼•æ•°ï¼šTextBox or Textareaã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	// æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	// å‚™è€ƒï¼š
 	// ------------------------------------------
 	*/
-	/* ÍøÍÑ¼Ô¤Ê¤·¤Î¤¿¤áºï½ü
+	/* åˆ©ç”¨è€…ãªã—ã®ãŸã‚å‰Šé™¤
 	function fncComInspectionString( ByRef objText ){
 	
 		strString = objText.value //StrConv(objText.value, 1)
@@ -585,76 +585,76 @@ class clsCheck{
 
 	/*
 	// ------------------------------------------
-	// ³µÍ×¡§¥ª¥Ö¥¸¥§¥¯¥È¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
-	// °ú¿ô¡§
-	//       objObject	- TextBox¥ª¥Ö¥¸¥§¥¯¥È
-	//       lngCheckID	- ¥Á¥§¥Ã¥¯ID
-	//                      1:¿ôÃÍ½èÍı
-	//                      2:ÆüÉÕ½èÍı
+	// æ¦‚è¦ï¼šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+	// å¼•æ•°ï¼š
+	//       objObject	- TextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//       lngCheckID	- ãƒã‚§ãƒƒã‚¯ID
+	//                      1:æ•°å€¤å‡¦ç†
+	//                      2:æ—¥ä»˜å‡¦ç†
 	//
-	// Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	// È÷¹Í¡§
-	//       ¤³¤Î´Ø¿ô¤Ï¡¢¿ÆWindow¤ÎJavaScript´Ø¿ô fncErrorMessage() ¤ò¸Æ¤Ó½Ğ¤·¤Ş¤¹¡£
-	//       Æ±»ş¤Ë¼ÂÁõ¤¹¤ëÉ¬Í×¤¬¤¢¤ê¤Ş¤¹¡£
+	// æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	// å‚™è€ƒï¼š
+	//       ã“ã®é–¢æ•°ã¯ã€è¦ªWindowã®JavaScripté–¢æ•° fncErrorMessage() ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
+	//       åŒæ™‚ã«å®Ÿè£…ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 	// ------------------------------------------
 	*/
 	function fncCheckObjectValue( objObject, lngCheckID ){
 		//On Error Resume Next
 				
 		switch(lngCheckID){
-			// ¿ôÃÍ½èÍı
+			// æ•°å€¤å‡¦ç†
 			case 1:
 				if( fncComFormatNumberValue( objObject.value, false ) ) {
-					// ¥Õ¥©¡¼¥Ş¥Ã¥ÈÀ®¸ù¤Î¾ì¹ç¡¢¥ª¥Ö¥¸¥§¥¯¥È¤ÎValue¤ØÄ¾ÀÜ»ØÄê
+					// ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæˆåŠŸã®å ´åˆã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®Valueã¸ç›´æ¥æŒ‡å®š
 					objObject.value = FormatNumberValue
 					return true;
 				}
-			// ÆüÉÕ½èÍı
+			// æ—¥ä»˜å‡¦ç†
 			case 2:
 				if( fncComFormatDateTime( objObject ) ){
 					return true;
 				}
-			// Ê¸»úÎó½èÍı
+			// æ–‡å­—åˆ—å‡¦ç†
 			case 3:
 				if( fncComInspectionString( objObject ) ) {
 					return true;
 				}
 		}
 		
-		//¼ºÇÔ¤òÊÖµÑ
+		//å¤±æ•—ã‚’è¿”å´
 		return  false
 
 	}
 
 }
 
-/* Á´¥³¡¼¥ÉJavaScript¤Ë´¹Áõ¤¹¤ë¤¿¤á¡¢¥³¥á¥ó¥È¥¢¥¦¥È
+/* å…¨ã‚³ãƒ¼ãƒ‰JavaScriptã«æ›è£…ã™ã‚‹ãŸã‚ã€ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
 'Class clsCheck
 '	
 '	
-'	Private m_strNumberCurrencySign		' ÄÌ²ßµ­¹æ
-'	Private m_strNumberConnectionChar	' ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
-'	Private m_lngNumberAfterDecimal		' ¾®¿ôÅÀ°Ê²¼¤Î·å
-'	Private m_lngStringMaxLength		' Ê¸»úÎó¤ÎºÇÂç¿ô
-'	Private m_lngDateFormatNo			' ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È¡Ê0=YYYY/MM/DD or 1=YYYY/MM¡Ë
+'	Private m_strNumberCurrencySign		' é€šè²¨è¨˜å·
+'	Private m_strNumberConnectionChar	' é€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
+'	Private m_lngNumberAfterDecimal		' å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡
+'	Private m_lngStringMaxLength		' æ–‡å­—åˆ—ã®æœ€å¤§æ•°
+'	Private m_lngDateFormatNo			' æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆ0=YYYY/MM/DD or 1=YYYY/MMï¼‰
 '	
-'	Private m_strFormatNumberValue		' fncComFormatNumberValue() ¤Ë¤è¤ê¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ì¤¿Ä¾¸å¤ÎÃÍ
-'	Private m_lngDecimalCutPoint		' ¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ°ÌÃÖ
-'	Private m_lngCalcClass				' ·×»»ÊıË¡¼ïÊÌ
+'	Private m_strFormatNumberValue		' fncComFormatNumberValue() ã«ã‚ˆã‚Šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸç›´å¾Œã®å€¤
+'	Private m_lngDecimalCutPoint		' å°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦ä½ç½®
+'	Private m_lngCalcClass				' è¨ˆç®—æ–¹æ³•ç¨®åˆ¥
 '	
 '	' ------------------------------------------
 '	' ------------------------------------------
 '	Private Sub Class_Initialize()
 '	
 '	
-'		'¿ôÃÍ½èÍı¤Ë¤Æ¾®¿ôÅÀ°Ê²¼¤Î·å¿ô¤ò²¿·å¤Ë¤·¤Æ½èÍı¤¹¤ë¤«¤ò½é´üÀßÄê
+'		'æ•°å€¤å‡¦ç†ã«ã¦å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°ã‚’ä½•æ¡ã«ã—ã¦å‡¦ç†ã™ã‚‹ã‹ã‚’åˆæœŸè¨­å®š
 '		NumberAfterDecimal = c_lngAfterDecimal
 '	
 '	End Sub
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§ÄÌ²ßµ­¹æ
-'	' °ú¿ô¡§strValue ÃÍ
+'	' æ¦‚è¦ï¼šé€šè²¨è¨˜å·
+'	' å¼•æ•°ï¼šstrValue å€¤
 '	' ------------------------------------------
 '	Public Property Let NumberCurrencySign(strValue)
 '		m_strNumberCurrencySign = strValue
@@ -665,8 +665,8 @@ class clsCheck{
 '	End Property
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
-'	' °ú¿ô¡§strValue ÃÍ
+'	' æ¦‚è¦ï¼šé€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
+'	' å¼•æ•°ï¼šstrValue å€¤
 '	' ------------------------------------------
 '	Public Property Let NumberConnectionChar(strValue)
 '		m_strNumberConnectionChar = strValue
@@ -677,8 +677,8 @@ class clsCheck{
 '	End Property
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§¾®¿ôÅÀ°Ê²¼¤Î·×»»¤ò²¿·å¤Ë¤¹¤ë¤«
-'	' °ú¿ô¡§lngValue ÃÍ
+'	' æ¦‚è¦ï¼šå°æ•°ç‚¹ä»¥ä¸‹ã®è¨ˆç®—ã‚’ä½•æ¡ã«ã™ã‚‹ã‹
+'	' å¼•æ•°ï¼šlngValue å€¤
 '	' ------------------------------------------
 '	Public Property Let NumberAfterDecimal(lngValue)
 '		m_lngNumberAfterDecimal = lngValue
@@ -689,8 +689,8 @@ class clsCheck{
 '	End Property
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§Ê¸»úÎó¤ÎºÇÂç¿ô
-'	' °ú¿ô¡§lngValue ÃÍ
+'	' æ¦‚è¦ï¼šæ–‡å­—åˆ—ã®æœ€å¤§æ•°
+'	' å¼•æ•°ï¼šlngValue å€¤
 '	' ------------------------------------------
 '	Public Property Let StringMaxLength(lngValue)
 '		m_lngStringMaxLength = lngValue
@@ -701,8 +701,8 @@ class clsCheck{
 '	End Property
 '	
 '	' ------------------------------------------
-'	' ³µÍ×¡§ÄÌ²ßµ­¹æ
-'	' °ú¿ô¡§strValue ÃÍ
+'	' æ¦‚è¦ï¼šé€šè²¨è¨˜å·
+'	' å¼•æ•°ï¼šstrValue å€¤
 '	' ------------------------------------------
 '	Public Property Let FormatNumberValue(strValue)
 '		m_strFormatNumberValue = strValue
@@ -713,8 +713,8 @@ class clsCheck{
 '	End Property
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥ÈNo
-'	' °ú¿ô¡§lngValue ÃÍ
+'	' æ¦‚è¦ï¼šæ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆNo
+'	' å¼•æ•°ï¼šlngValue å€¤
 '	' ------------------------------------------
 '	Public Property Let DateFormatNo(lngValue)
 '		m_lngDateFormatNo = lngValue
@@ -725,8 +725,8 @@ class clsCheck{
 '	End Property
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ°ÌÃÖ
-'	' °ú¿ô¡§lngValue ÃÍ
+'	' æ¦‚è¦ï¼šå°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦ä½ç½®
+'	' å¼•æ•°ï¼šlngValue å€¤
 '	' ------------------------------------------
 '	Public Property Let DecimalCutPoint(lngValue)
 '		m_lngDecimalCutPoint = lngValue
@@ -737,8 +737,8 @@ class clsCheck{
 '	End Property
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§·×»»ÊıË¡¼ïÊÌ
-'	' °ú¿ô¡§lngValue ÃÍ
+'	' æ¦‚è¦ï¼šè¨ˆç®—æ–¹æ³•ç¨®åˆ¥
+'	' å¼•æ•°ï¼šlngValue å€¤
 '	' ------------------------------------------
 '	Public Property Let CalcClass(lngValue)
 '		m_lngCalcClass = lngValue
@@ -750,70 +750,70 @@ class clsCheck{
 '
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§¿ôÃÍ¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¡Ê¼Â¿ôÃÍÈÇ¡Ë
-'	' °ú¿ô¡§strValue			ÃÍ¡ÊString¡Ë
-'	'		blnCurrencyEscape	ÄÌ²ßµ­¹æ¤Î¥¨¥¹¥±¡¼¥×²ÄÈİ¡Ê\¥Ş¡¼¥¯¡Ë
+'	' æ¦‚è¦ï¼šæ•°å€¤ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆå®Ÿæ•°å€¤ç‰ˆï¼‰
+'	' å¼•æ•°ï¼šstrValue			å€¤ï¼ˆStringï¼‰
+'	'		blnCurrencyEscape	é€šè²¨è¨˜å·ã®ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—å¯å¦ï¼ˆ\ãƒãƒ¼ã‚¯ï¼‰
 '	'
-'	' Ìá¤êÃÍ¡§¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ì¤¿ÃÍ
-'	' È÷¹Í¡§
+'	' æˆ»ã‚Šå€¤ï¼šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸå€¤
+'	' å‚™è€ƒï¼š
 '	' ------------------------------------------
 '	Public Function fncComFormatNumberValue( strValue, blnCurrencyEscape )
 '		On Error Resume Next
 '
-'		Dim lngValue		' ¥Æ¥­¥¹¥ÈÃÍ
-'		Dim curValue		' ÊÑ´¹¸å¤Î¿ôÃÍ
-'		Dim aryValue		' ¥Æ¥­¥¹¥ÈÃÍ¡ÊÄÌ²ßµ­¹æ¡Ü¶â³Û¡Ë
-'		Dim strAfValue		' ¥Õ¥©¡¼¥Ş¥Ã¥È¸å¤ÎÃÍ
-'		Dim strCurrencySign	' ÄÌ²ßµ­¹æ
-'		Dim curAmount 		' ¶â³Û money
+'		Dim lngValue		' ãƒ†ã‚­ã‚¹ãƒˆå€¤
+'		Dim curValue		' å¤‰æ›å¾Œã®æ•°å€¤
+'		Dim aryValue		' ãƒ†ã‚­ã‚¹ãƒˆå€¤ï¼ˆé€šè²¨è¨˜å·ï¼‹é‡‘é¡ï¼‰
+'		Dim strAfValue		' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå¾Œã®å€¤
+'		Dim strCurrencySign	' é€šè²¨è¨˜å·
+'		Dim curAmount 		' é‡‘é¡ money
 '
 '
-'		'´Ø¿ô¤ÎÌá¤êÃÍ¤ò½é´ü²½
+'		'é–¢æ•°ã®æˆ»ã‚Šå€¤ã‚’åˆæœŸåŒ–
 '		fncComFormatNumberValue = False
 '
-'		' Â¸ºß¤ò³ÎÇ§¡£¼èÆÀÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¼ºÇÔ¤ÇÊÖµÑ
+'		' å­˜åœ¨ã‚’ç¢ºèªã€‚å–å¾—ä¸å¯èƒ½ãªå ´åˆã€å¤±æ•—ã§è¿”å´
 '		If IsEmpty( strValue ) Then Exit Function
 '
-'		'¥¨¥é¡¼È½Äê
+'		'ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 '		If Len(Trim(strValue)) = 0 Then
-'			'´Ø¿ô¤òÀ®¸ù¤ÇÊÖµÑ
+'			'é–¢æ•°ã‚’æˆåŠŸã§è¿”å´
 '			fncComFormatNumberValue = True
 '			Exit Function
 '		End If
 '
-'		' ÀÜÂ³Ê¸»ú¤¬¤¢¤ë¾ì¹ç
-'		'¥×¥í¥Ñ¥Æ¥£»ØÄêÄÌ²ßµ­¹æ¤ÈÆ±¤¸ÄÌ²ßµ­¹æ¤Î¾ì¹ç¡¢¥ª¥Ö¥¸¥§¥¯¥È¤ÎÃÍ¤òÊÑ¿ô¤ËÂåÆş
+'		' æ¥ç¶šæ–‡å­—ãŒã‚ã‚‹å ´åˆ
+'		'ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£æŒ‡å®šé€šè²¨è¨˜å·ã¨åŒã˜é€šè²¨è¨˜å·ã®å ´åˆã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å¤‰æ•°ã«ä»£å…¥
 '		If( (Instr(strValue, NumberConnectionChar) > 0) AND (NumberConnectionChar <> "") ) Then
 '			
-'			'ÄÌ²ßµ­¹æ¤Î½èÍı
+'			'é€šè²¨è¨˜å·ã®å‡¦ç†
 '			aryValue = Split(strValue, NumberConnectionChar)
 '			strCurrencySign = aryValue(0)
 '			curAmount = aryValue(1)
 '			lngValue = curAmount
 '			
-'		'ÀÜÂ³Ê¸»ú¤¬Ìµ¤¤¾ì¹ç
+'		'æ¥ç¶šæ–‡å­—ãŒç„¡ã„å ´åˆ
 '		Else
-'			'ÄÌ²ßµ­¹æ¤¬¤¢¤Ã¤¿¾ì¹ç¡¢ºï½ü
+'			'é€šè²¨è¨˜å·ãŒã‚ã£ãŸå ´åˆã€å‰Šé™¤
 '			lngValue = Replace( strValue, NumberCurrencySign, "" )
 '		End If
 '
-'		'¿ôÃÍ¤Ø¤ÎÊÑ´¹¤¬²ÄÇ½¤«¤òÄ´¤Ù¤ë
+'		'æ•°å€¤ã¸ã®å¤‰æ›ãŒå¯èƒ½ã‹ã‚’èª¿ã¹ã‚‹
 '		If Not IsNumeric( lngValue ) Then
-'			'´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+'			'é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 '			Exit Function
 '		End If
 '
 ''		lngValue = Left(CStr(lngValue), NumberAfterDecimal)
-'		'msgbox "½èÍıÂĞ¾İ¡§" & curValue & vbcrlf & "¿ôÃÍ½èÍı¡§" & CalcClass & vbcrlf & "ÀÚ¼Î¤Æ°ÌÃÖ¡§" & DecimalCutPoint & vbcrlf & "¥Õ¥©¡¼¥Ş¥Ã¥È°ÌÃÖ¡§" & NumberAfterDecimal
+'		'msgbox "å‡¦ç†å¯¾è±¡ï¼š" & curValue & vbcrlf & "æ•°å€¤å‡¦ç†ï¼š" & CalcClass & vbcrlf & "åˆ‡æ¨ã¦ä½ç½®ï¼š" & DecimalCutPoint & vbcrlf & "ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆä½ç½®ï¼š" & NumberAfterDecimal
 '
-'		'ÇÜÀºÅÙÉâÆ°¾®¿ôÅÀ¿ô·¿ (Double) ¤ËÊÑ´¹
+'		'å€ç²¾åº¦æµ®å‹•å°æ•°ç‚¹æ•°å‹ (Double) ã«å¤‰æ›
 '		curValue = CDbl(lngValue)
 '
 '		Select Case CalcClass
-'			' ¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ½èÍı
+'			' å°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦å‡¦ç†
 '			Case 1
 '				curValue = fncComDecimalCut( curValue, DecimalCutPoint , NumberAfterDecimal )
-'			' ¾®¿ôÅÀ°Ê²¼ÀÚ¾å¤²½èÍı
+'			' å°æ•°ç‚¹ä»¥ä¸‹åˆ‡ä¸Šã’å‡¦ç†
 '			Case 2
 '				curValue = fncComDecimalUp( curValue, DecimalCutPoint , NumberAfterDecimal )
 '			Case Else
@@ -823,21 +823,21 @@ class clsCheck{
 '		strCalcValue = FormatNumber(curValue, NumberAfterDecimal, True, False)
 '
 '
-'		'¿ôÃÍ·Á¼°¤Ë¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤Æ¡¢¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+'		'æ•°å€¤å½¢å¼ã«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ã¦ã€å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 '		strAfValue = NumberCurrencySign & NumberConnectionChar & strCalcValue
 '
 '
-'		'ÃÍÊİ»ı¡¡\ ¤¬¥¨¥¹¥±¡¼¥×¤µ¤ì¤Æ¤·¤Ş¤¦¤¿¤á¡¢\\ ¤ËÊÑ´¹
+'		'å€¤ä¿æŒã€€\ ãŒã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã•ã‚Œã¦ã—ã¾ã†ãŸã‚ã€\\ ã«å¤‰æ›
 '		If blnCurrencyEscape Then
 '			FormatNumberValue = Replace(strAfValue, "\", "\\")
 ''		Else
 '			FormatNumberValue = strAfValue
 '		End If
 '
-'		'À®¸ù¤òÊÖµÑ
+'		'æˆåŠŸã‚’è¿”å´
 '		fncComFormatNumberValue = True
 '
-'		'¤â¤·¥¨¥é¡¼¤¬µ¯¤­¤Æ¤¤¤¿¾ì¹ç
+'		'ã‚‚ã—ã‚¨ãƒ©ãƒ¼ãŒèµ·ãã¦ã„ãŸå ´åˆ
 '		If( Err.number > 0 ) Then
 '			FormatNumberValue = c_strFormatNumberErr
 '		End If
@@ -845,29 +845,29 @@ class clsCheck{
 '	End Function
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§¿ôÃÍ¤ÎÀÚ¼Î¤Æ½èÍı
-'	' °ú¿ô¡§
-'	'		curValue		-	ÀÚ¼Î¤ÆÂĞ¾İ¤Î¿ôÃÍ
-'	'		lngPoint		-	ÀÚ¼Î¤ÆÂĞ¾İ¤Î¾®¿ôÅÀ¤«¤é¤Î°ÌÃÖ
-'	'		lngAfterDecimal	-	ÀÚ¼Î¤Æ¸å¤Î¿ôÃÍ¤Î¾®¿ôÅÀ°Ê²¼¤ò²¿Ê¸»ú0¤ÇËä¤á¤ë¤«
+'	' æ¦‚è¦ï¼šæ•°å€¤ã®åˆ‡æ¨ã¦å‡¦ç†
+'	' å¼•æ•°ï¼š
+'	'		curValue		-	åˆ‡æ¨ã¦å¯¾è±¡ã®æ•°å€¤
+'	'		lngPoint		-	åˆ‡æ¨ã¦å¯¾è±¡ã®å°æ•°ç‚¹ã‹ã‚‰ã®ä½ç½®
+'	'		lngAfterDecimal	-	åˆ‡æ¨ã¦å¾Œã®æ•°å€¤ã®å°æ•°ç‚¹ä»¥ä¸‹ã‚’ä½•æ–‡å­—0ã§åŸ‹ã‚ã‚‹ã‹
 '	'
-'	' Ìá¤êÃÍ¡§ÀÚ¼Î¤Æ¤¿¿ôÃÍ¡¿¥¨¥é¡¼¤Î¾ì¹ç 0
-'	' È÷¹Í¡§¾®¿ôÅÀ°Ê²¼¤Î¤ß¤ËÂĞ±ş¡£À°¿ôÉô¤ÎÀÚ¼Î¤Æ½èÍı¤Ë¤ÏÌ¤ÂĞ±ş¡£
+'	' æˆ»ã‚Šå€¤ï¼šåˆ‡æ¨ã¦ãŸæ•°å€¤ï¼ã‚¨ãƒ©ãƒ¼ã®å ´åˆ 0
+'	' å‚™è€ƒï¼šå°æ•°ç‚¹ä»¥ä¸‹ã®ã¿ã«å¯¾å¿œã€‚æ•´æ•°éƒ¨ã®åˆ‡æ¨ã¦å‡¦ç†ã«ã¯æœªå¯¾å¿œã€‚
 '	' ------------------------------------------
 '	Public Function fncComDecimalCut( curValue , lngPoint, lngAfterDecimal )
 '
-'		Dim strValue		' ÀÚ¤ê¼Î¤ÆÂĞ¾İ¤Î¿ôÃÍ¤òÊ¸»úÎóÊÑ´¹¤·¤¿¤â¤Î
+'		Dim strValue		' åˆ‡ã‚Šæ¨ã¦å¯¾è±¡ã®æ•°å€¤ã‚’æ–‡å­—åˆ—å¤‰æ›ã—ãŸã‚‚ã®
 '		Dim aryValue
 '		Dim strNumber
 '		Dim strDecimal
-'		Dim curAfValue		' ÀÚ¼Î¤Æ¸å¤Î¿ôÃÍ
-'		Dim strZeroFormat	' 0Ëä¤á½èÍıÍÑ
+'		Dim curAfValue		' åˆ‡æ¨ã¦å¾Œã®æ•°å€¤
+'		Dim strZeroFormat	' 0åŸ‹ã‚å‡¦ç†ç”¨
 '
-'		'Ê¸»úÎó¤ØÊÑ´¹
+'		'æ–‡å­—åˆ—ã¸å¤‰æ›
 '		strValue = CStr(curValue)
 '		
 '		If (InStr(strValue, c_strDecimalPointChar) > 0) Then
-'			'ÄÌ²ßµ­¹æ¤Î½èÍı
+'			'é€šè²¨è¨˜å·ã®å‡¦ç†
 '			aryValue = Split(strValue, c_strDecimalPointChar)
 '			strNumber  = aryValue(0)
 '			strDecimal = aryValue(1)
@@ -876,11 +876,11 @@ class clsCheck{
 '			strDecimal = String( lngAfterDecimal, "0")
 '		End If
 '
-'		' ÀÚ¼Î¤ÆÂĞ¾İ¤Î¾®¿ôÅÀ°ÌÃÖ¤Ë¤è¤ê¥Õ¥©¡¼¥Ş¥Ã¥È
+'		' åˆ‡æ¨ã¦å¯¾è±¡ã®å°æ•°ç‚¹ä½ç½®ã«ã‚ˆã‚Šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 '		If (lngPoint = 0 ) Then
 '			curAfValue = strNumber & c_strDecimalPointChar & String( lngAfterDecimal, "0")
 '		ElseIf (lngPoint > 0 ) Then
-'			' ¥Õ¥©¡¼¥Ş¥Ã¥È°ÌÃÖ¤ÎÊı¤¬ÀÚ¼Î¤Æ°ÌÃÖ¤è¤êÂç¤­¤¤¾ì¹ç¤Î¤ß0Ëä¤á
+'			' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆä½ç½®ã®æ–¹ãŒåˆ‡æ¨ã¦ä½ç½®ã‚ˆã‚Šå¤§ãã„å ´åˆã®ã¿0åŸ‹ã‚
 '			If( lngAfterDecimal > lngPoint ) Then
 '				strZeroFormat = String( lngAfterDecimal - lngPoint, "0")
 '			End If
@@ -889,36 +889,36 @@ class clsCheck{
 '			curAfValue = strValue
 '		End If
 '
-'		' ¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤¿¿ôÃÍ¤òÊÖµÑ
+'		' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ãŸæ•°å€¤ã‚’è¿”å´
 '		fncComDecimalCut = (curAfValue)
 '
 '	End Function
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§¿ôÃÍ¤ÎÀÚ¾å¤²½èÍı
-'	' °ú¿ô¡§
-'	'		curValue		-	ÀÚ¾å¤²ÂĞ¾İ¤Î¿ôÃÍ
-'	'		lngPoint		-	ÀÚ¾å¤²ÂĞ¾İ¤Î¾®¿ôÅÀ¤«¤é¤Î°ÌÃÖ
-'	'		lngAfterDecimal	-	ÀÚ¾å¤²¸å¤Î¿ôÃÍ¤Î¾®¿ôÅÀ°Ê²¼¤ò²¿Ê¸»ú0¤ÇËä¤á¤ë¤«
+'	' æ¦‚è¦ï¼šæ•°å€¤ã®åˆ‡ä¸Šã’å‡¦ç†
+'	' å¼•æ•°ï¼š
+'	'		curValue		-	åˆ‡ä¸Šã’å¯¾è±¡ã®æ•°å€¤
+'	'		lngPoint		-	åˆ‡ä¸Šã’å¯¾è±¡ã®å°æ•°ç‚¹ã‹ã‚‰ã®ä½ç½®
+'	'		lngAfterDecimal	-	åˆ‡ä¸Šã’å¾Œã®æ•°å€¤ã®å°æ•°ç‚¹ä»¥ä¸‹ã‚’ä½•æ–‡å­—0ã§åŸ‹ã‚ã‚‹ã‹
 '	'
-'	' Ìá¤êÃÍ¡§ÀÚ¼Î¤Æ¤¿¿ôÃÍ¡¿¥¨¥é¡¼¤Î¾ì¹ç 0
-'	' È÷¹Í¡§¾®¿ôÅÀ°Ê²¼¤Î¤ß¤ËÂĞ±ş¡£À°¿ôÉô¤ÎÀÚ¾å¤²½èÍı¤Ë¤ÏÌ¤ÂĞ±ş¡£
+'	' æˆ»ã‚Šå€¤ï¼šåˆ‡æ¨ã¦ãŸæ•°å€¤ï¼ã‚¨ãƒ©ãƒ¼ã®å ´åˆ 0
+'	' å‚™è€ƒï¼šå°æ•°ç‚¹ä»¥ä¸‹ã®ã¿ã«å¯¾å¿œã€‚æ•´æ•°éƒ¨ã®åˆ‡ä¸Šã’å‡¦ç†ã«ã¯æœªå¯¾å¿œã€‚
 '	' ------------------------------------------]
 '	Public Function fncComDecimalUp( curValue , lngPoint, lngAfterDecimal )
 '
-'		Dim strValue		' ÀÚ¤ê¼Î¤ÆÂĞ¾İ¤Î¿ôÃÍ¤òÊ¸»úÎóÊÑ´¹¤·¤¿¤â¤Î
+'		Dim strValue		' åˆ‡ã‚Šæ¨ã¦å¯¾è±¡ã®æ•°å€¤ã‚’æ–‡å­—åˆ—å¤‰æ›ã—ãŸã‚‚ã®
 '		Dim aryValue
 '		Dim strNumber
 '		Dim strDecimal
-'		Dim curAfValue		' ÀÚ¼Î¤Æ¸å¤Î¿ôÃÍ
-'		Dim strZeroFormat	' 0Ëä¤á½èÍıÍÑ
+'		Dim curAfValue		' åˆ‡æ¨ã¦å¾Œã®æ•°å€¤
+'		Dim strZeroFormat	' 0åŸ‹ã‚å‡¦ç†ç”¨
 '		
-'		'Ê¸»úÎó¤ØÊÑ´¹
+'		'æ–‡å­—åˆ—ã¸å¤‰æ›
 '		strValue = CStr(curValue)
 '		
 '		
 '		If (Instr(strValue, c_strDecimalPointChar) > 0) Then
-'			'ÄÌ²ßµ­¹æ¤Î½èÍı
+'			'é€šè²¨è¨˜å·ã®å‡¦ç†
 '			aryValue = Split(strValue, c_strDecimalPointChar)
 '			strNumber  = aryValue(0)
 '			strDecimal = aryValue(1)
@@ -927,20 +927,20 @@ class clsCheck{
 '			strDecimal = String( lngAfterDecimal, "0")
 '		End If
 '
-'		' ÀÚ¼Î¤ÆÂĞ¾İ¤Î¾®¿ôÅÀ°ÌÃÖ¤Ë¤è¤ê¥Õ¥©¡¼¥Ş¥Ã¥È
+'		' åˆ‡æ¨ã¦å¯¾è±¡ã®å°æ•°ç‚¹ä½ç½®ã«ã‚ˆã‚Šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 '		If (lngPoint = 0 ) Then
-'			' ÀÚ¼Î¤Æ°Ê²¼¤¬ 0 ¤Ç¤ÏÌµ¤¤¾ì¹ç¡¢strNumber ¤òÀÚ¾å¤²
+'			' åˆ‡æ¨ã¦ä»¥ä¸‹ãŒ 0 ã§ã¯ç„¡ã„å ´åˆã€strNumber ã‚’åˆ‡ä¸Šã’
 '			If(  CInt(strDecimal) <> 0 ) Then
 '				strNumber = CStr(CInt(strNumber) + 1)
 '			End If
-'			' ¥Õ¥©¡¼¥Ş¥Ã¥È¡Êex: 12345.00¡Ë
+'			' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆex: 12345.00ï¼‰
 '			curAfValue = strNumber & c_strDecimalPointChar & String( lngAfterDecimal, "0")
 '		ElseIf (lngPoint > 0 ) Then
-'			' ÀÚ¼Î¤Æ°Ê²¼¡ÊstrDecimal¤ÎPOINT±¦ÊÕ¡Ë¤¬ 0 ¤Ç¤ÏÌµ¤¤¾ì¹ç¡¢strDecimal¡ÊPOINTº¸ÊÕ¡Ë¤òÀÚ¾å¤²
+'			' åˆ‡æ¨ã¦ä»¥ä¸‹ï¼ˆstrDecimalã®POINTå³è¾ºï¼‰ãŒ 0 ã§ã¯ç„¡ã„å ´åˆã€strDecimalï¼ˆPOINTå·¦è¾ºï¼‰ã‚’åˆ‡ä¸Šã’
 '			If(  CInt(Mid(strDecimal, lngPoint)) <> 0 ) Then
 '				strDecimal = CStr(CInt(Left(strDecimal, lngPoint)) + 1)
 '			End If
-'			' ¥Õ¥©¡¼¥Ş¥Ã¥È°ÌÃÖ¤ÎÊı¤¬ÀÚ¼Î¤Æ°ÌÃÖ¤è¤êÂç¤­¤¤¾ì¹ç¤Î¤ß0Ëä¤á
+'			' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆä½ç½®ã®æ–¹ãŒåˆ‡æ¨ã¦ä½ç½®ã‚ˆã‚Šå¤§ãã„å ´åˆã®ã¿0åŸ‹ã‚
 '			If( lngAfterDecimal > lngPoint ) Then
 '				strZeroFormat = String( lngAfterDecimal - lngPoint, "0")
 '			End If
@@ -949,31 +949,31 @@ class clsCheck{
 '			curAfValue = strValue
 '		End If
 '
-'		' ¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤¿¿ôÃÍ¤òÊÖµÑ
+'		' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ãŸæ•°å€¤ã‚’è¿”å´
 '		fncComDecimalUp = (curAfValue)
 '
 '	End Function
 '
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§Ê¸»úÎó¤«¤éÆüÉÕ¤ÎºîÀ®
-'	' °ú¿ô¡§Ê¸»úÎó
-'	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-'	' È÷¹Í¡§Ê¸»úÎó¤«¤éÆüÉÕ¤¬À¸À®ÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢ËÜÆüÆüÉÕ¤òÀßÄê
+'	' æ¦‚è¦ï¼šæ–‡å­—åˆ—ã‹ã‚‰æ—¥ä»˜ã®ä½œæˆ
+'	' å¼•æ•°ï¼šæ–‡å­—åˆ—
+'	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+'	' å‚™è€ƒï¼šæ–‡å­—åˆ—ã‹ã‚‰æ—¥ä»˜ãŒç”Ÿæˆä¸å¯èƒ½ãªå ´åˆã€æœ¬æ—¥æ—¥ä»˜ã‚’è¨­å®š
 '	' ------------------------------------------
 '	Public Function fncComTextToDate( ByRef strValue )
 '		
-'		Dim strDate		'Ê¸»úÎóÆüÉÕ
+'		Dim strDate		'æ–‡å­—åˆ—æ—¥ä»˜
 '		fncComTextToDate = False
 '	
-'		'Ê¸»úÎóÊ¬¥ë¡¼¥×½èÍı
+'		'æ–‡å­—åˆ—åˆ†ãƒ«ãƒ¼ãƒ—å‡¦ç†
 '		For lngCnt = 1 To Len(strValue)
-'			'°ìÊ¸»ú¤À¤±¼èÆÀ
+'			'ä¸€æ–‡å­—ã ã‘å–å¾—
 '			strBuff = Mid( strValue, lngCnt, 1)
-'			'¿ôÃÍ¤«¤É¤¦¤«¤ÎÈ½Äê
+'			'æ•°å€¤ã‹ã©ã†ã‹ã®åˆ¤å®š
 '			If IsNumeric( strBuff ) Then
 '				strDate = strDate & strBuff
-'				'4,6Ê¸»úÌÜ¤Ë/¤òÀßÄê
+'				'4,6æ–‡å­—ç›®ã«/ã‚’è¨­å®š
 '				Select Case lngCnt
 '					Case 4,6
 '						strDate = strDate & "/"
@@ -982,95 +982,95 @@ class clsCheck{
 '			End If
 '		Next
 '		
-'		'2003/ ¤Î·Á¼°¤Î¾ì¹ç
+'		'2003/ ã®å½¢å¼ã®å ´åˆ
 '		If Len(strDate) = 5 Then
 '			strDate = strDate & "01/01"
 '		End If
-'		'2003/10/ ¤Î·Á¼°¤Î¾ì¹ç
+'		'2003/10/ ã®å½¢å¼ã®å ´åˆ
 '		If Len(strDate) = 8 Then
 '			strDate = strDate & "01"
 '		End If
 '
-'		'ÆüÉÕ¤ËÊÑ´¹ÉÔ²ÄÇ½¤Ê¾ì¹ç
+'		'æ—¥ä»˜ã«å¤‰æ›ä¸å¯èƒ½ãªå ´åˆ
 '		If Not IsDate(strDate) Then
 '			fncComTextToDate = False
 '			Exit Function
 '		End If
-'		'°ú¿ôÃÍ¤ØÀßÄê
+'		'å¼•æ•°å€¤ã¸è¨­å®š
 '		strValue = strDate
 '		
-'		'À®¸ù¤òÊÖµÑ
+'		'æˆåŠŸã‚’è¿”å´
 '		fncComTextToDate = True
 '	End Function
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§Æü»ş¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
-'	' °ú¿ô¡§TextBox¥ª¥Ö¥¸¥§¥¯¥È
-'	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-'	' È÷¹Í¡§
+'	' æ¦‚è¦ï¼šæ—¥æ™‚ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+'	' å¼•æ•°ï¼šTextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+'	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+'	' å‚™è€ƒï¼š
 '	' ------------------------------------------
 '	Public Function fncComFormatDateTime( ByRef objText )
 '
-'		Dim dtmValue	'¥Æ¥­¥¹¥ÈÃÍ
+'		Dim dtmValue	'ãƒ†ã‚­ã‚¹ãƒˆå€¤
 '
-'		'´Ø¿ô¤ÎÌá¤êÃÍ¤ò½é´ü²½
+'		'é–¢æ•°ã®æˆ»ã‚Šå€¤ã‚’åˆæœŸåŒ–
 '		fncComFormatDateTime = False
 '
-'		'¥ª¥Ö¥¸¥§¥¯¥È¤ÎÂ¸ºß¤ò³ÎÇ§¡£¼èÆÀÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¼ºÇÔ¤ÇÊÖµÑ
+'		'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­˜åœ¨ã‚’ç¢ºèªã€‚å–å¾—ä¸å¯èƒ½ãªå ´åˆã€å¤±æ•—ã§è¿”å´
 '		If IsEmpty( objText.value ) Then Exit Function
-'		'¥ª¥Ö¥¸¥§¥¯¥È¤ÎÃÍ¤òÊÑ¿ô¤ËÂåÆş
+'		'ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’å¤‰æ•°ã«ä»£å…¥
 '		dtmValue = objText.value
 '
-'		'¥¨¥é¡¼È½Äê
+'		'ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 '		If Len(Trim(dtmValue)) = 0 Then
-'			'´Ø¿ô¤òÀ®¸ù¤ÇÊÖµÑ
+'			'é–¢æ•°ã‚’æˆåŠŸã§è¿”å´
 '			fncComFormatDateTime = True
 '			Exit Function
 '		End If
 '		
-'		'¥¨¥é¡¼È½Äê
+'		'ã‚¨ãƒ©ãƒ¼åˆ¤å®š
 '		If Len(dtmValue) < 4 Then
 '			' objText.Value = fncComDate(Date, DateFormatNo )
 '			objText.select()
-'			'´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+'			'é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 '			Exit Function
 '		End If
 '
-'		'Æü»ş¤Ø¤ÎÊÑ´¹¤¬²ÄÇ½¤«¤òÄ´¤Ù¤ë
+'		'æ—¥æ™‚ã¸ã®å¤‰æ›ãŒå¯èƒ½ã‹ã‚’èª¿ã¹ã‚‹
 '		If Not IsDate( dtmValue ) Then
-'			'¥Æ¥­¥¹¥È¤«¤éÆüÉÕ·Á¼°¤ØÊÑ´¹¤òÄ©Àï
+'			'ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰æ—¥ä»˜å½¢å¼ã¸å¤‰æ›ã‚’æŒ‘æˆ¦
 '			If Not fncComTextToDate( dtmValue ) Then
-'				'¿ôÃÍ¤Ø¤ÎÊÑ´¹¤¬ÉÔ²ÄÇ½¤Ê¾ì¹ç¡¢¸½ºßÆüÉÕ¤ò¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+'				'æ•°å€¤ã¸ã®å¤‰æ›ãŒä¸å¯èƒ½ãªå ´åˆã€ç¾åœ¨æ—¥ä»˜ã‚’å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 '				' objText.Value = fncComDate(Date, DateFormatNo )
 '				objText.select()
-'				'´Ø¿ô¤ò¼ºÇÔ¤ÇÊÖµÑ
+'				'é–¢æ•°ã‚’å¤±æ•—ã§è¿”å´
 '				Exit Function
 '			End If
 '		End If
 '
-'		'ÆüÉÕ·¿¤ËÊÑ´¹
+'		'æ—¥ä»˜å‹ã«å¤‰æ›
 '		dtmValue = CDate(dtmValue)
 '
-'		'WebÍÑ¤Î¥Á¥§¥Ã¥¯ 1600Ç¯°Ê²¼¤Î¾ì¹çÌµ¸ú
+'		'Webç”¨ã®ãƒã‚§ãƒƒã‚¯ 1600å¹´ä»¥ä¸‹ã®å ´åˆç„¡åŠ¹
 '		if( DatePart("yyyy", dtmValue) <= 1600 ) Then
 '			dtmValue = fncComDate(Date, DateFormatNo )
 '		End If
 '
-'		'¿ôÃÍ·Á¼°¤Ë¥Õ¥©¡¼¥Ş¥Ã¥È¤·¤Æ¡¢¸µ¤Î¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹¤ØÀßÄê
+'		'æ•°å€¤å½¢å¼ã«ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã—ã¦ã€å…ƒã®ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ã¸è¨­å®š
 '		objText.Value = fncComDate(dtmValue, DateFormatNo )
 '		
-'		'À®¸ù¤òÊÖµÑ
+'		'æˆåŠŸã‚’è¿”å´
 '		fncComFormatDateTime = True
 '
 '	End Function
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§ÆüÉÕ¤Î¥Õ¥©¡¼¥Ş¥Ã¥È¡ÊOS°ÍÂ¸¤Ê¤·ÈÇ¡Ë
-'	' °ú¿ô¡§dtmValue	ÆüÉÕÃÍ
-'	'		lngFormatNo YYYY/MM¤Î¾ì¹ç 1
-'	'					YYYY/MM/DD ¤Ï¤½¤ÎÂ¾
-'	' Ìá¤êÃÍ¡§¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ì¤¿ÆüÉÕÊ¸»úÎó
-'	' È÷¹Í¡§
+'	' æ¦‚è¦ï¼šæ—¥ä»˜ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼ˆOSä¾å­˜ãªã—ç‰ˆï¼‰
+'	' å¼•æ•°ï¼šdtmValue	æ—¥ä»˜å€¤
+'	'		lngFormatNo YYYY/MMã®å ´åˆ 1
+'	'					YYYY/MM/DD ã¯ãã®ä»–
+'	' æˆ»ã‚Šå€¤ï¼šãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚ŒãŸæ—¥ä»˜æ–‡å­—åˆ—
+'	' å‚™è€ƒï¼š
 '	' ------------------------------------------
 '	Public Function fncComDate( dtmValue, lngFormatNo )
 '
@@ -1079,7 +1079,7 @@ class clsCheck{
 '		strMonth = Month(dtmDate)
 '		strDay   = Day(dtmDate)
 '
-'		' ·î¤ÈÆü¤Î¤ß¡¢°ì·å¥Á¥§¥Ã¥¯¡£°ì·å¤Î¾ì¹ç¤ÏÀèÆ¬¤Ë 0 ¤òÉÕ²Ã¤¹¤ë¡£
+'		' æœˆã¨æ—¥ã®ã¿ã€ä¸€æ¡ãƒã‚§ãƒƒã‚¯ã€‚ä¸€æ¡ã®å ´åˆã¯å…ˆé ­ã« 0 ã‚’ä»˜åŠ ã™ã‚‹ã€‚
 '		If Len(strMonth) = 1 Then
 '			strMonth = "0" & strMonth
 '		End If
@@ -1088,7 +1088,7 @@ class clsCheck{
 '			strDay = "0" & strDay
 '		End If
 '
-'		' ¥Õ¥©¡¼¥Ş¥Ã¥È¥Õ¥é¥°¤¬£±¤Î¾ì¹ç YYYY/MM ¥Õ¥©¡¼¥Ş¥Ã¥È
+'		' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒ•ãƒ©ã‚°ãŒï¼‘ã®å ´åˆ YYYY/MM ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 '		If lngFormatNo = 1 Then
 '			strDate = strYear & "/" & strMonth
 '		Else
@@ -1100,10 +1100,10 @@ class clsCheck{
 '	End Function
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§Ê¸»úÎó¤Î¸¡ºº
-'	' °ú¿ô¡§TextBox or Textarea¥ª¥Ö¥¸¥§¥¯¥È
-'	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-'	' È÷¹Í¡§
+'	' æ¦‚è¦ï¼šæ–‡å­—åˆ—ã®æ¤œæŸ»
+'	' å¼•æ•°ï¼šTextBox or Textareaã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+'	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+'	' å‚™è€ƒï¼š
 '	' ------------------------------------------
 '	Public Function fncComInspectionString( ByRef objText )
 '	
@@ -1115,41 +1115,41 @@ class clsCheck{
 '	End Function
 '
 '	' ------------------------------------------
-'	' ³µÍ×¡§¥ª¥Ö¥¸¥§¥¯¥È¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
-'	' °ú¿ô¡§
-'	'       objObject	- TextBox¥ª¥Ö¥¸¥§¥¯¥È
-'	'       lngCheckID	- ¥Á¥§¥Ã¥¯ID
-'	'                      1:¿ôÃÍ½èÍı
-'	'                      2:ÆüÉÕ½èÍı
+'	' æ¦‚è¦ï¼šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
+'	' å¼•æ•°ï¼š
+'	'       objObject	- TextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+'	'       lngCheckID	- ãƒã‚§ãƒƒã‚¯ID
+'	'                      1:æ•°å€¤å‡¦ç†
+'	'                      2:æ—¥ä»˜å‡¦ç†
 '	'
-'	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-'	' È÷¹Í¡§
-'	'       ¤³¤Î´Ø¿ô¤Ï¡¢¿ÆWindow¤ÎJavaScript´Ø¿ô fncErrorMessage() ¤ò¸Æ¤Ó½Ğ¤·¤Ş¤¹¡£
-'	'       Æ±»ş¤Ë¼ÂÁõ¤¹¤ëÉ¬Í×¤¬¤¢¤ê¤Ş¤¹¡£
+'	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+'	' å‚™è€ƒï¼š
+'	'       ã“ã®é–¢æ•°ã¯ã€è¦ªWindowã®JavaScripté–¢æ•° fncErrorMessage() ã‚’å‘¼ã³å‡ºã—ã¾ã™ã€‚
+'	'       åŒæ™‚ã«å®Ÿè£…ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™ã€‚
 '	' ------------------------------------------
 '	Public Function fncCheckObjectValue( objObject, lngCheckID )
 '		On Error Resume Next
 '		
-'		'´Ø¿ô¤ÎÌá¤êÃÍ¤ò½é´ü²½
+'		'é–¢æ•°ã®æˆ»ã‚Šå€¤ã‚’åˆæœŸåŒ–
 '		fncCheckObjectValue = True
 '		
 '		Select Case lngCheckID
-'			' ¿ôÃÍ½èÍı
+'			' æ•°å€¤å‡¦ç†
 '			Case 1
 '				If( fncComFormatNumberValue( objObject.value, False ) ) Then
-'					' ¥Õ¥©¡¼¥Ş¥Ã¥ÈÀ®¸ù¤Î¾ì¹ç¡¢¥ª¥Ö¥¸¥§¥¯¥È¤ÎValue¤ØÄ¾ÀÜ»ØÄê
+'					' ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆæˆåŠŸã®å ´åˆã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®Valueã¸ç›´æ¥æŒ‡å®š
 '					objObject.value = FormatNumberValue
 '					Exit Function
 '				End If
-'			' ÆüÉÕ½èÍı
+'			' æ—¥ä»˜å‡¦ç†
 '			Case 2
 '				If( fncComFormatDateTime( objObject ) ) Then Exit Function
-'			' Ê¸»úÎó½èÍı
+'			' æ–‡å­—åˆ—å‡¦ç†
 '			case 3
 '				If( fncComInspectionString( objObject ) ) Then Exit Function
 '		End Select
 '		
-'		'¼ºÇÔ¤òÊÖµÑ
+'		'å¤±æ•—ã‚’è¿”å´
 '		fncCheckObjectValue = False
 '
 '	End Function

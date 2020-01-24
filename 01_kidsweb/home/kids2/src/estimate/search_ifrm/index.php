@@ -1,6 +1,6 @@
 <?php
 /** 
-*	¸«ÀÑ¸¶²Á´ÉÍý ¸¡º÷¾ò·ïÆþÎÏ²èÌÌ
+*	è¦‹ç©åŽŸä¾¡ç®¡ç† æ¤œç´¢æ¡ä»¶å…¥åŠ›ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -14,14 +14,14 @@
 // index.php -> lngFunctionCode -> index.php
 //
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 //require (SRC_ROOT . "wf/cmn/lib_wf.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
@@ -32,18 +32,18 @@ $aryParts = fncStringToArray ( $_COOKIE["UserSearch"], "&", ":" );
 
 //$aryParts = array_merge ( $_GET, $_COOKIE );
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_E2, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", FALSE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", FALSE, "", $objDB );
 }
 
 
@@ -52,7 +52,7 @@ $aryParts["strSessionID"] = &$aryData["strSessionID"];
 
 
 
-// ¥¯¥Ã¥­¡¼¤ÎÀßÄê
+// ã‚¯ãƒƒã‚­ãƒ¼ã®è¨­å®š
 if( $_COOKIE["EstimateSearch"] )
 {
 	$aryCookie = fncStringToArray ( $_COOKIE["EstimateSearch"], "&", ":" );
@@ -63,20 +63,20 @@ if( $_COOKIE["EstimateSearch"] )
 }
 
 
-// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ
+// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹
 $aryParts["lngWorkFlowStatusCode"] 	= fncGetCheckBoxObject( "m_estimatestatus", "lngestimatestatuscode", "strestimatestatusname", "lngWorkFlowStatusCode[]", '', $objDB );
 
 
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "estimate/search_ifrm/parts.tmpl" );
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $aryParts );
 $objTemplate->complete();
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 $objDB->close();

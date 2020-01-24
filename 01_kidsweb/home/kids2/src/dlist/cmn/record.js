@@ -1,6 +1,6 @@
 
 /**
-* ÌÀºÙÏÈ¤òÁàºî¤¹¤ë´Ø¿ô·²
+* æ˜ç´°æ ã‚’æ“ä½œã™ã‚‹é–¢æ•°ç¾¤
 *
 * @package k.i.d.s.
 * @license http://www.wiseknot.co.jp/
@@ -8,80 +8,80 @@
 * @author tetsuka takafumi
 * @version 0.1
 *
-* ¹¹¿·ÍúÎò
-* 2004.03.02 »ÅÆş´ÉÍı¡¡Ç¼´ü¹àÌÜ¤òÉ¬¿Ü¤«¤éºï½ü
-* 2004.03.02 ¼õÃí¡¢È¯Ãí¡¢Çä¾å¡¢»ÅÆş¤Î³ÆÅĞÏ¿¤Ë¤ÆÌÀºÙ¹Ô¤Ë¤ÆÃ±²Á£°±ßÅĞÏ¿¤ò²ÄÇ½¤ËÊÑ¹¹
-* 2004.03.03 Çä¾å´ÉÍı¡¡Ç¼´ü¹àÌÜ¤òÉ¬¿Ü¤«¤éºï½ü
+* æ›´æ–°å±¥æ­´
+* 2004.03.02 ä»•å…¥ç®¡ç†ã€€ç´æœŸé …ç›®ã‚’å¿…é ˆã‹ã‚‰å‰Šé™¤
+* 2004.03.02 å—æ³¨ã€ç™ºæ³¨ã€å£²ä¸Šã€ä»•å…¥ã®å„ç™»éŒ²ã«ã¦æ˜ç´°è¡Œã«ã¦å˜ä¾¡ï¼å††ç™»éŒ²ã‚’å¯èƒ½ã«å¤‰æ›´
+* 2004.03.03 å£²ä¸Šç®¡ç†ã€€ç´æœŸé …ç›®ã‚’å¿…é ˆã‹ã‚‰å‰Šé™¤
 * 2004.03.19 fncHdMonetaryUnitCode()
-*            »ÅÆş¡¢Çä¾å¡¢ÆüËÜ±ß°Ê³°¤Î¾ì¹ç¡¢ÀÇ¶èÊ¬¤ò¡ÖÈó²İÀÇ¡×¤Ë¤¹¤ë
-* 2004.03.26 ¼õÃí¡¢È¯Ãí´ÉÍı¤Îºİ¤Ë¤âÅÏ¤µ¤ì¤¿¹ÔÈÖ¹æ¤òµ­²±¤¹¤ë¤è¤¦¤ËÊÑ¹¹¡Ê½¤Àµ»şÂĞ±ş¡Ë
-* 2004.03.29 fncDtCalTotalPrice¡¢fncDtCalTaxPrice2()
-*			Çä¾å´ÉÍı¤ÇÆüËÜ±ß¤Î¾ì¹ç¡¢ÀÚ¼Î¤Æ½èÍı
-* 2004.03.29 fncDtCheck()¡¢fncDtNewAry()
-* 			È¯Ãí¡¢»ÅÆş¡¢¡ÖNo.¡×¤Ï¿·µ¬¹ÔºîÀ®»ş¤Ë·Ñ¾µ¤·¤Ê¤¤
+*            ä»•å…¥ã€å£²ä¸Šã€æ—¥æœ¬å††ä»¥å¤–ã®å ´åˆã€ç¨åŒºåˆ†ã‚’ã€Œéèª²ç¨ã€ã«ã™ã‚‹
+* 2004.03.26 å—æ³¨ã€ç™ºæ³¨ç®¡ç†ã®éš›ã«ã‚‚æ¸¡ã•ã‚ŒãŸè¡Œç•ªå·ã‚’è¨˜æ†¶ã™ã‚‹ã‚ˆã†ã«å¤‰æ›´ï¼ˆä¿®æ­£æ™‚å¯¾å¿œï¼‰
+* 2004.03.29 fncDtCalTotalPriceã€fncDtCalTaxPrice2()
+*			å£²ä¸Šç®¡ç†ã§æ—¥æœ¬å††ã®å ´åˆã€åˆ‡æ¨ã¦å‡¦ç†
+* 2004.03.29 fncDtCheck()ã€fncDtNewAry()
+* 			ç™ºæ³¨ã€ä»•å…¥ã€ã€ŒNo.ã€ã¯æ–°è¦è¡Œä½œæˆæ™‚ã«ç¶™æ‰¿ã—ãªã„
 * 2004.04.06 fncDtCalTotalPrice()
-*			¼õÃí´ÉÍı¤ÇÆüËÜ±ß¤Î¾ì¹ç¡¢ÀÚ¼Î¤Æ½èÍı
+*			å—æ³¨ç®¡ç†ã§æ—¥æœ¬å††ã®å ´åˆã€åˆ‡æ¨ã¦å‡¦ç†
 * 2004.04.08 
-*			·×»»ÊıË¡¼ïÊÌ¤ÎÄÉ²Ã
+*			è¨ˆç®—æ–¹æ³•ç¨®åˆ¥ã®è¿½åŠ 
 * 2004.04.19
-*			¥°¥í¡¼¥Ğ¥ëÊÑ¿ôÌ¾¤ÎÊÑ¹¹¡¢Â¾
+*			ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°åã®å¤‰æ›´ã€ä»–
 * 2004.04.22
-*			fncHdMonetaryRateCheck() ´Ø¿ô¤ÎÄÉ²Ã
+*			fncHdMonetaryRateCheck() é–¢æ•°ã®è¿½åŠ 
 * 2004.06.14
-*			fncDtReplaceInput() ´Ø¿ô¤Ë¤Æ»ÅÆş¡¢Çä¾å»ş¤ËÀÇÈ´¶â³Û¡¢¾ÃÈñÀÇ³ÛÅù¤òºÆ·×»»¤¹¤ë¤è¤¦¤Ë½¤Àµ
+*			fncDtReplaceInput() é–¢æ•°ã«ã¦ä»•å…¥ã€å£²ä¸Šæ™‚ã«ç¨æŠœé‡‘é¡ã€æ¶ˆè²»ç¨é¡ç­‰ã‚’å†è¨ˆç®—ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£
 *
 */
 
 
 //------------------------------------------------------------------------------
-// ¥°¥í¡¼¥Ğ¥ëÊÑ¿ôÄêµÁ
-//	Ãí°Õ¡§¤³¤ì¤é¤Î¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤Ï°Ê²¼¤Î¥¹¥¯¥ê¥×¥ÈÆâ¤Ç»ÈÍÑ¤µ¤ì¤Æ¤¤¤Ş¤¹
+// ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°å®šç¾©
+//	æ³¨æ„ï¼šã“ã‚Œã‚‰ã®ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã¯ä»¥ä¸‹ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆå†…ã§ä½¿ç”¨ã•ã‚Œã¦ã„ã¾ã™
 //	dlist/record.js
 //	dlist/po/index.html
 //	dlist/so/index.html
 //------------------------------------------------------------------------------
-var saveRecord				= new Array();	// ÌÀºÙ¹Ô¤òÃ±°Ì¤È¤¹¤ëÇÛÎó
-var g_lngSelIndex			= -1;			// ÁªÂò¹Ô¤ò³ÊÇ¼¤¹¤ëÊÑ¿ô
-var g_lngReturnFlg			= 1 ;			// Detail¤Î¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Ë¡¢ÅĞÏ¿¤ÎÌá¤ê¤¬¤¢¤Ã¤¿¤éÉ½¼¨
-var g_lngSentakufunouFlg	= 0;			// ÌÀºÙ¹ÔÁªÂò¤Î½èÍı¤¬½ª¤ï¤ë¤Ş¤Ç¤Û¤«¤ÎÁªÂò¤ò¤Ç¤­¤Ê¤¯¤¹¤ë
-var g_curTax				= 0;			// ÀÇÎ¨¡Ê·×¾åÆü¤ÎÀÇÎ¨¡¢Detail¤Î¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Ë½é´ü²½¡Ë
-var g_lngTaxCode			= 1;			// ÀÇ¥³¡¼¥É¡Ê0.05¤òÊİ»ı¤·¤Æ¤¤¤ëDB¾å¤Î¥³¡¼¥É¡Ë¡Ê·×¾åÆü¤ÎÀÇ¥³¡¼¥É¡¢Detail¤Î¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Ë½é´ü²½¡Ë
-var g_lngTaxClassCode		= 0;			// ÀÇ¶èÊ¬¥³¡¼¥É
-var g_lngDecimalCutPoint	= 2;			// ¾®¿ôÅÀ°Ê²¼¡¢·×»»½èÍı¥İ¥¤¥ó¥È¡Ê½é´üÃÍ¡§¾®¿ôÅÀ°Ê²¼2·å¤Ç½èÍı¡Ë
-var g_lngCalcCode			= 0;			// ·×»»ÊıË¡¼ïÊÌ¡Ê0:»Í¼Î¸ŞÆş¡Ë
+var saveRecord				= new Array();	// æ˜ç´°è¡Œã‚’å˜ä½ã¨ã™ã‚‹é…åˆ—
+var g_lngSelIndex			= -1;			// é¸æŠè¡Œã‚’æ ¼ç´ã™ã‚‹å¤‰æ•°
+var g_lngReturnFlg			= 1 ;			// Detailã®ã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã«ã€ç™»éŒ²ã®æˆ»ã‚ŠãŒã‚ã£ãŸã‚‰è¡¨ç¤º
+var g_lngSentakufunouFlg	= 0;			// æ˜ç´°è¡Œé¸æŠã®å‡¦ç†ãŒçµ‚ã‚ã‚‹ã¾ã§ã»ã‹ã®é¸æŠã‚’ã§ããªãã™ã‚‹
+var g_curTax				= 0;			// ç¨ç‡ï¼ˆè¨ˆä¸Šæ—¥ã®ç¨ç‡ã€Detailã®ã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã«åˆæœŸåŒ–ï¼‰
+var g_lngTaxCode			= 1;			// ç¨ã‚³ãƒ¼ãƒ‰ï¼ˆ0.05ã‚’ä¿æŒã—ã¦ã„ã‚‹DBä¸Šã®ã‚³ãƒ¼ãƒ‰ï¼‰ï¼ˆè¨ˆä¸Šæ—¥ã®ç¨ã‚³ãƒ¼ãƒ‰ã€Detailã®ã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã«åˆæœŸåŒ–ï¼‰
+var g_lngTaxClassCode		= 0;			// ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+var g_lngDecimalCutPoint	= 2;			// å°æ•°ç‚¹ä»¥ä¸‹ã€è¨ˆç®—å‡¦ç†ãƒã‚¤ãƒ³ãƒˆï¼ˆåˆæœŸå€¤ï¼šå°æ•°ç‚¹ä»¥ä¸‹2æ¡ã§å‡¦ç†ï¼‰
+var g_lngCalcCode			= 0;			// è¨ˆç®—æ–¹æ³•ç¨®åˆ¥ï¼ˆ0:å››æ¨äº”å…¥ï¼‰
 
-var g_strJpnCurrencySign    = "\\";			// ÆüËÜ±ßÄÌ²ßµ­¹æ
-var g_strFreeTaxClass       = "1";			// ÀÇ¶èÊ¬¡§Èó²İÀÇ
-var g_strOutTaxClass        = "2";			// ÀÇ¶èÊ¬¡§³°ÀÇ
-var g_strInTaxClass         = "3";			// ÀÇ¶èÊ¬¡§ÆâÀÇ
-var g_strNoneMonetaryRate   = "0";			// ¥ì¡¼¥È¥¿¥¤¥×¡§-
-var g_strTtmMonetaryRate    = "1";			// ¥ì¡¼¥È¥¿¥¤¥×¡§TTM
-var g_strDefMonetaryRate    = "2";			// ¥ì¡¼¥È¥¿¥¤¥×¡§¼ÒÆâ
+var g_strJpnCurrencySign    = "\\";			// æ—¥æœ¬å††é€šè²¨è¨˜å·
+var g_strFreeTaxClass       = "1";			// ç¨åŒºåˆ†ï¼šéèª²ç¨
+var g_strOutTaxClass        = "2";			// ç¨åŒºåˆ†ï¼šå¤–ç¨
+var g_strInTaxClass         = "3";			// ç¨åŒºåˆ†ï¼šå†…ç¨
+var g_strNoneMonetaryRate   = "0";			// ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—ï¼š-
+var g_strTtmMonetaryRate    = "1";			// ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—ï¼šTTM
+var g_strDefMonetaryRate    = "2";			// ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—ï¼šç¤¾å†…
 
-var g_strSOKindOfManagement = "SO";			// ¼õÃí´ÉÍı
-var g_strSCKindOfManagement = "SC";			// Çä¾å´ÉÍı
-var g_strPOKindOfManagement = "PO";			// È¯Ãí´ÉÍı
-var g_strPCKindOfManagement = "PC";			// »ÅÆş´ÉÍı
+var g_strSOKindOfManagement = "SO";			// å—æ³¨ç®¡ç†
+var g_strSCKindOfManagement = "SC";			// å£²ä¸Šç®¡ç†
+var g_strPOKindOfManagement = "PO";			// ç™ºæ³¨ç®¡ç†
+var g_strPCKindOfManagement = "PC";			// ä»•å…¥ç®¡ç†
 
-var g_bytDefaultCheckedFlag = 1;			// ¹ÔÄÉ²Ã»şÂĞ¾İ¥Á¥§¥Ã¥¯¾õÂÖ¥Õ¥é¥°  0: ¤Ê¤·  1: ¤¢¤ê
-var g_bytDebugFlag          = 0;			// ¥Ç¥Ğ¥Ã¥°ÍÑ¥Õ¥é¥°  0: ÄÌ¾ï  1: ¥Ç¥Ğ¥Ã¥°
+var g_bytDefaultCheckedFlag = 1;			// è¡Œè¿½åŠ æ™‚å¯¾è±¡ãƒã‚§ãƒƒã‚¯çŠ¶æ…‹ãƒ•ãƒ©ã‚°  0: ãªã—  1: ã‚ã‚Š
+var g_bytDebugFlag          = 0;			// ãƒ‡ãƒãƒƒã‚°ç”¨ãƒ•ãƒ©ã‚°  0: é€šå¸¸  1: ãƒ‡ãƒãƒƒã‚°
 
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×	: ÂĞ¾İÌÀºÙ¹Ô¤ËÂĞ¤¹¤ë¥Á¥§¥Ã¥¯
-* ÂĞ¾İ	: ¡Ö¼õÃí¡×
-* °ú¿ô	:	strFlag	¡ÊDtDel¡§¹Ôºï½ü»ş¡¢DtCommit¡§¹Ô³ÎÄê»ş¡Ë
-* È÷¹Í	:fncDtDelRecord()¡¢fncDtCommitRecord()¡¢¤Î½èÍıÄ¾Á°¤Ç¹Ô¤¦¡£
-* Ãí°Õ	:subLoadMasterValue()¤Ç½èÍı¤¹¤ë°Ù¡¢ÈóÆ±´ü½èÍı¤¬¹Ô¤ï¤ì¤ë¡£
-*		src/dlist/so/index.html ¤ò»²¾È¤Î¤³¤È¡£
+* æ¦‚è¦	: å¯¾è±¡æ˜ç´°è¡Œã«å¯¾ã™ã‚‹ãƒã‚§ãƒƒã‚¯
+* å¯¾è±¡	: ã€Œå—æ³¨ã€
+* å¼•æ•°	:	strFlag	ï¼ˆDtDelï¼šè¡Œå‰Šé™¤æ™‚ã€DtCommitï¼šè¡Œç¢ºå®šæ™‚ï¼‰
+* å‚™è€ƒ	:fncDtDelRecord()ã€fncDtCommitRecord()ã€ã®å‡¦ç†ç›´å‰ã§è¡Œã†ã€‚
+* æ³¨æ„	:subLoadMasterValue()ã§å‡¦ç†ã™ã‚‹ç‚ºã€éåŒæœŸå‡¦ç†ãŒè¡Œã‚ã‚Œã‚‹ã€‚
+*		src/dlist/so/index.html ã‚’å‚ç…§ã®ã“ã¨ã€‚
 */
 // ---------------------------------------------------------------
 function fncCheckRecord(strFlag)
 {
 
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤ÏÈ´¤±¤ë
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆã¯æŠœã‘ã‚‹
 	if( g_lngSelIndex == -1 )
 	{
 		return true;
@@ -94,10 +94,10 @@ function fncCheckRecord(strFlag)
 	var strCheckValue5 = '';
 	var strCheckValue6 = '';
 
-	// ¼õÃí¤Î¾ì¹ç
+	// å—æ³¨ã®å ´åˆ
 	if(typeof(window.parent.HSO.SOFlg) == "object")
 	{
-		// lngReceiveDetailNo ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤Ï¡¢¿·¤·¤¯¡ÖÄÉ²Ã¡×¤µ¤ì¤¿¹Ô¤Î°Ù¡¢½èÍı¤·¤Ê¤¤
+		// lngReceiveDetailNo ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯ã€æ–°ã—ãã€Œè¿½åŠ ã€ã•ã‚ŒãŸè¡Œã®ç‚ºã€å‡¦ç†ã—ãªã„
 		if( typeof(saveRecord[g_lngSelIndex][18]) == 'undefined' || window.parent.HSO.lngReceiveNo.value == '')
 		{
 			return true;
@@ -107,30 +107,30 @@ function fncCheckRecord(strFlag)
 		strCheckValue1 = window.parent.HSO.lngReceiveNo.value;		// lngReceiveNo
 		strCheckValue2 = saveRecord[g_lngSelIndex][18];				// lngReceiveDetailNo
 		strCheckValue3 = window.parent.HSO.strReceiveCode.value;	// strReceiveCode
-		strCheckValue4 = parseFloat(g_lngSelIndex)+1;				// ÁªÂò¹Ô
+		strCheckValue4 = parseFloat(g_lngSelIndex)+1;				// é¸æŠè¡Œ
 
 		if( window.parent.DSO.lngConversionClassCode[0].checked )
 		{
-			strCheckValue5 = fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value);       // À½ÉÊ¿ôÎÌ
+			strCheckValue5 = fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value);       // è£½å“æ•°é‡
 			strCheckValue6 = 1;	// lngConversionClassCode
 		}
 		else if(window.parent.DSO.lngConversionClassCode[1].checked )
 		{
-			strCheckValue5 = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);        // ²Ù»Ñ¿ôÎÌ
+			strCheckValue5 = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);        // è·å§¿æ•°é‡
 			strCheckValue6 = 2;	// lngConversionClassCode
 		}
 
-		// °ú¿ô¤Ë¤è¤ë½èÍı¤Î¿¶¤êÊ¬¤±
+		// å¼•æ•°ã«ã‚ˆã‚‹å‡¦ç†ã®æŒ¯ã‚Šåˆ†ã‘
 		switch(strFlag)
 		{
-			// ¹ÔÁªÂò
+			// è¡Œé¸æŠ
 			case 'DtSentaku':
-				// ¸½ºßÁªÂò¤µ¤ì¤Æ¤¤¤ë¹Ô¤òÊİ»ı
+				// ç¾åœ¨é¸æŠã•ã‚Œã¦ã„ã‚‹è¡Œã‚’ä¿æŒ
 				document.all.check_value_salesproductquantity_selindex.value = g_lngSelIndex;
 
 				if(strCheckValue1 != '' && strCheckValue2 != '')
 				{
-					// lngReceiveNo, ÁªÂò¹ÔÈÖ¹æ¡¡¤Ç³ºÅöÇä¾åÌÀºÙ¤Î¿ôÎÌ¤ò¡ÊÀ½ÉÊ¡¢Ëô¤Ï²Ù»Ñ¤ò»ØÄê¤·¤Æ¡Ë¼èÆÀ¤¹¤ë
+					// lngReceiveNo, é¸æŠè¡Œç•ªå·ã€€ã§è©²å½“å£²ä¸Šæ˜ç´°ã®æ•°é‡ã‚’ï¼ˆè£½å“ã€åˆã¯è·å§¿ã‚’æŒ‡å®šã—ã¦ï¼‰å–å¾—ã™ã‚‹
 					subLoadMasterValue('caCheckSalesProductQuantityAll', 0, document.all.check_alert_salesproductquantity
 										, Array(strCheckValue1, strCheckValue2, strCheckValue6)
 										, window.document.objDataSourceSettingSalesInReceiveAll
@@ -139,49 +139,49 @@ function fncCheckRecord(strFlag)
 
 				break;
 				
-			// ¹Ôºï½ü
+			// è¡Œå‰Šé™¤
 			case 'DtDel':
-				// ¼õÃí¤ËÂĞ¤¹¤ëÇä¾å¿ô¤¬0°Ê¾å¤¢¤ë¾ì¹ç
+				// å—æ³¨ã«å¯¾ã™ã‚‹å£²ä¸Šæ•°ãŒ0ä»¥ä¸Šã‚ã‚‹å ´åˆ
 				if(parseFloat(saveRecord[g_lngSelIndex][23]) > 0 )
 				{
-					strCheckMsg  = 'ÁªÂò¤µ¤ì¤¿¼õÃíNO.¡Ö'+strCheckValue3+'¡×¤ÎÌÀºÙ¡Ö'+strCheckValue4+'¡×¤Ï´û¤ËÇä¾åÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ş¤¹¡£'
-									+ "\n"+'ºï½ü¤¬¹Ô¤¨¤Ş¤»¤ó¡£'+'('+strCheckValue1+'/'+strCheckValue2+')';
+					strCheckMsg  = 'é¸æŠã•ã‚ŒãŸå—æ³¨NO.ã€Œ'+strCheckValue3+'ã€ã®æ˜ç´°ã€Œ'+strCheckValue4+'ã€ã¯æ—¢ã«å£²ä¸Šç™»éŒ²ã•ã‚Œã¦ã„ã¾ã™ã€‚'
+									+ "\n"+'å‰Šé™¤ãŒè¡Œãˆã¾ã›ã‚“ã€‚'+'('+strCheckValue1+'/'+strCheckValue2+')';
 					alert(strCheckMsg);
 					
 					return false;
 				}
 				break;
 				
-			// ¹Ô³ÎÄê
+			// è¡Œç¢ºå®š
 			case 'DtCommit':
-				// ¸½ºßÁªÂò¤µ¤ì¤Æ¤¤¤ë¹Ô¤òÊİ»ı
+				// ç¾åœ¨é¸æŠã•ã‚Œã¦ã„ã‚‹è¡Œã‚’ä¿æŒ
 				document.all.check_value_salesproductquantity_selindex.value = g_lngSelIndex;
 
-				// ¼õÃí¤ËÂĞ¤¹¤ëÇä¾å¤¬0¤Ç¤¢¤ì¤Ğ¡¢ÂĞ¾İ¤È¤Ê¤ëÇä¾å¤¬Â¸ºß¤·¤Ê¤¤¤¿¤á¡¢true¤ÇÊÖµÑ
+				// å—æ³¨ã«å¯¾ã™ã‚‹å£²ä¸ŠãŒ0ã§ã‚ã‚Œã°ã€å¯¾è±¡ã¨ãªã‚‹å£²ä¸ŠãŒå­˜åœ¨ã—ãªã„ãŸã‚ã€trueã§è¿”å´
 				if(saveRecord[g_lngSelIndex][23] == 0 )
 				{
 					return true;
 				}
 				
-				// ¼õÃí¿ô¤ËÂĞ¤¹¤ëÇä¾å¿ô¤ò¾å²ó¤Ã¤Æ»ØÄê¤·¤è¤¦¤È¤·¤¿¾ì¹ç
+				// å—æ³¨æ•°ã«å¯¾ã™ã‚‹å£²ä¸Šæ•°ã‚’ä¸Šå›ã£ã¦æŒ‡å®šã—ã‚ˆã†ã¨ã—ãŸå ´åˆ
 				if(parseFloat(strCheckValue5) < parseFloat(saveRecord[g_lngSelIndex][23]))
 				{
-					strCheckMsg  = 'ÁªÂò¤µ¤ì¤¿¼õÃíNO.¡Ö'+strCheckValue3+'¡×¤ÎÌÀºÙ¡Ö'+strCheckValue4+'¡×¤Ï´û¤ËÇä¾åÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ş¤¹¡£'
-									+ "\n"+'´û¤Ë¤¢¤ëÇä¾å¿ô¡Ö'+ fncAddKannma(parseFloat(saveRecord[g_lngSelIndex][23])) +'¡×°Ê²¼¤Ë¤ÏÊÑ¹¹¤¬¹Ô¤¨¤Ş¤»¤ó¡£'+'('+strCheckValue1+'/'+strCheckValue2+')';
+					strCheckMsg  = 'é¸æŠã•ã‚ŒãŸå—æ³¨NO.ã€Œ'+strCheckValue3+'ã€ã®æ˜ç´°ã€Œ'+strCheckValue4+'ã€ã¯æ—¢ã«å£²ä¸Šç™»éŒ²ã•ã‚Œã¦ã„ã¾ã™ã€‚'
+									+ "\n"+'æ—¢ã«ã‚ã‚‹å£²ä¸Šæ•°ã€Œ'+ fncAddKannma(parseFloat(saveRecord[g_lngSelIndex][23])) +'ã€ä»¥ä¸‹ã«ã¯å¤‰æ›´ãŒè¡Œãˆã¾ã›ã‚“ã€‚'+'('+strCheckValue1+'/'+strCheckValue2+')';
 					alert(strCheckMsg);
 					
-					// ÊÑ¹¹¤µ¤ì¤¿³Æ¼ï¿ôÎÌ¤ò¸µ¤ËÌá¤¹
+					// å¤‰æ›´ã•ã‚ŒãŸå„ç¨®æ•°é‡ã‚’å…ƒã«æˆ»ã™
 					if( window.parent.DSO.lngConversionClassCode[0].checked )
 					{
-						window.parent.DSO.lngGoodsQuantity_gs.value = saveRecord[g_lngSelIndex][10];       // À½ÉÊ¿ôÎÌ
+						window.parent.DSO.lngGoodsQuantity_gs.value = saveRecord[g_lngSelIndex][10];       // è£½å“æ•°é‡
 						window.parent.DSO.lngGoodsQuantity_gs.focus();
 					}
 					else if(window.parent.DSO.lngConversionClassCode[1].checked )
 					{
-						window.parent.DSO.lngGoodsQuantity_ps.value = saveRecord[g_lngSelIndex][10];        // ²Ù»Ñ¿ôÎÌ
+						window.parent.DSO.lngGoodsQuantity_ps.value = saveRecord[g_lngSelIndex][10];        // è·å§¿æ•°é‡
 						window.parent.DSO.lngGoodsQuantity_ps.focus();
 					}
-					window.parent.DSO.curTotalPrice.value = saveRecord[g_lngSelIndex][11]; //ÀÇÈ´¶â³Û
+					window.parent.DSO.curTotalPrice.value = saveRecord[g_lngSelIndex][11]; //ç¨æŠœé‡‘é¡
 
 					return false;
 				}
@@ -196,44 +196,44 @@ function fncCheckRecord(strFlag)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ¡ÖÌÀºÙÏÈ¡×¤Ë¡ÖÆşÎÏÏÈ¡×¤ÎÆâÍÆ¤òÄÉ²Ã
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* È÷¹Í   : ¡ÖÆşÎÏÏÈ¡×¤ÎÃÍ¤òÇÛÎó¡ÖaryRecord¡×¤Ë³ÊÇ¼¤·¡¢¤½¤ì¤òÇÛÎó¡ÖsaveRecord¡×¤Ë³ÊÇ¼¡£
-*           ¤³¤Î¤È¤­¡¢ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ì¤Ğ¡¢ÁªÂò¤µ¤ì¤¿ÇÛÎó¤Î¾å¤ËÄÉ²Ã¤·¡¢¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢
-*           ºÇ¸åÈø¤ËÄÉ²Ã¡£
-*           ¤½¤Î¸å¡¢´Ø¿ô¡ÖfncDtDisplay()¡×¤ò¸Æ¤Ó½Ğ¤·¡¢ÌÀºÙÏÈ¤òºÆÉ½¼¨¡£
+* æ¦‚è¦   : ã€Œæ˜ç´°æ ã€ã«ã€Œå…¥åŠ›æ ã€ã®å†…å®¹ã‚’è¿½åŠ 
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* å‚™è€ƒ   : ã€Œå…¥åŠ›æ ã€ã®å€¤ã‚’é…åˆ—ã€ŒaryRecordã€ã«æ ¼ç´ã—ã€ãã‚Œã‚’é…åˆ—ã€ŒsaveRecordã€ã«æ ¼ç´ã€‚
+*           ã“ã®ã¨ãã€æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚Œã°ã€é¸æŠã•ã‚ŒãŸé…åˆ—ã®ä¸Šã«è¿½åŠ ã—ã€ã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€
+*           æœ€å¾Œå°¾ã«è¿½åŠ ã€‚
+*           ãã®å¾Œã€é–¢æ•°ã€ŒfncDtDisplay()ã€ã‚’å‘¼ã³å‡ºã—ã€æ˜ç´°æ ã‚’å†è¡¨ç¤ºã€‚
 */
 // ---------------------------------------------------------------
 function fncDtAddRecord()
 {
-	// À½ÉÊ¥³¡¼¥ÉÁê°ã¥Á¥§¥Ã¥¯
+	// è£½å“ã‚³ãƒ¼ãƒ‰ç›¸é•ãƒã‚§ãƒƒã‚¯
 	if( !fncCheckDetailCode() )
 	{
 		return false;
 	}
 
-	//ÆşÎÏ¥Ç¡¼¥¿¤Î¥Á¥§¥Ã¥¯
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚§ãƒƒã‚¯
 	var addFlg = fncDtAddCheck();
 
 	if( addFlg == false ) return false;
 
-	//ÆşÎÏÏÈ¤ÎÃÍ¤ò¿·µ¬¤ÎÇÛÎó¤Ë³ÊÇ¼
+	//å…¥åŠ›æ ã®å€¤ã‚’æ–°è¦ã®é…åˆ—ã«æ ¼ç´
 	var aryRecord = fncDtNewAry();
 
 
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆ
 	if ( g_lngSelIndex == -1)
 	{
-		//¥°¥í¡¼¥Ğ¥ëÇÛÎó¤ÎºÇ¸å¤ËÄÉ²Ã
+		//ã‚°ãƒ­ãƒ¼ãƒãƒ«é…åˆ—ã®æœ€å¾Œã«è¿½åŠ 
 		saveRecord.push(aryRecord);
 
-		//¶õÇò¹Ô¤òÄÉ²Ã¤·¤¿¤È¤­¤Ë¶õÇò¹Ô¤òÁªÂò¤¹¤ë¤¿¤á¤Ë¤â¤È¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤òÊİ»ı¤¹¤ë
+		//ç©ºç™½è¡Œã‚’è¿½åŠ ã—ãŸã¨ãã«ç©ºç™½è¡Œã‚’é¸æŠã™ã‚‹ãŸã‚ã«ã‚‚ã¨ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ä¿æŒã™ã‚‹
 		var preindex = -1;
 	}
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆ
 	else
 	{
-		//ÁªÂò¤µ¤ì¤¿ÇÛÎó¤Î¾å¤Ë¡¢¿·µ¬¤ÎÇÛÎó¤òÄÉ²Ã¤¹¤ë
+		//é¸æŠã•ã‚ŒãŸé…åˆ—ã®ä¸Šã«ã€æ–°è¦ã®é…åˆ—ã‚’è¿½åŠ ã™ã‚‹
 		saveRecordLength = parseInt(saveRecord.length); 
 		saveRecordLeft  = saveRecord.slice(0,g_lngSelIndex);
 		saveRecordRigft = saveRecord.slice(g_lngSelIndex, saveRecordLength);
@@ -241,51 +241,51 @@ function fncDtAddRecord()
 		saveRecord.push(aryRecord);
 		saveRecord      = saveRecord.concat(saveRecordRigft);
 
-		//¶õÇò¹Ô¤òÄÉ²Ã¤·¤¿¤È¤­¤Ë¶õÇò¹Ô¤òÁªÂò¤¹¤ë¤¿¤á¤Ë¤â¤È¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤òÊİ»ı¤¹¤ë
+		//ç©ºç™½è¡Œã‚’è¿½åŠ ã—ãŸã¨ãã«ç©ºç™½è¡Œã‚’é¸æŠã™ã‚‹ãŸã‚ã«ã‚‚ã¨ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ä¿æŒã™ã‚‹
 		var preindex = g_lngSelIndex;
 
-		//¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò½é´ü²½
+		//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’åˆæœŸåŒ–
 		g_lngSelIndex      = -1;
 	}
 
 
-	//ÌÀºÙÏÈ¤òºÆÉ½¼¨
+	//æ˜ç´°æ ã‚’å†è¡¨ç¤º
 	fncDtDisplay( preindex );
 
-	//¥Ø¥Ã¥À¤Î[ÄÌ²ß]¤òÊÑ¹¹¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+	//ãƒ˜ãƒƒãƒ€ã®[é€šè²¨]ã‚’å¤‰æ›´ã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 	fncHdMonetaryUnitCheck();
 
-	//¶õ¹ÔÄÉ²Ã¤Î¾ì¹ç¤Ë¤Ï¡¢ÄÉ²Ã¤·¤¿¶õÇò¹Ô¤òÁªÂò
+	//ç©ºè¡Œè¿½åŠ ã®å ´åˆã«ã¯ã€è¿½åŠ ã—ãŸç©ºç™½è¡Œã‚’é¸æŠ
 	if( aryRecord[0] == "" )
 	{
-		//¥°¥í¡¼¥Ğ¥ëÇÛÎó¤ÎÄ¹¤µ
+		//ã‚°ãƒ­ãƒ¼ãƒãƒ«é…åˆ—ã®é•·ã•
 		saveRecordLength = saveRecord.length;
 
-		//¥¤¥ó¥Ç¥Ã¥¯¥¹¤ËÄÉ²Ã¤·¤¿¶õÇò¹Ô¤ÎÇÛÎóÈÖ¹æ¤ò¥»¥Ã¥È
-		//ÁªÂò¤µ¤ì¤¿¹Ô¤¬¤¢¤ë¾ì¹ç¡¢¤½¤Î¾å¤òÁªÂò
+		//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«è¿½åŠ ã—ãŸç©ºç™½è¡Œã®é…åˆ—ç•ªå·ã‚’ã‚»ãƒƒãƒˆ
+		//é¸æŠã•ã‚ŒãŸè¡ŒãŒã‚ã‚‹å ´åˆã€ãã®ä¸Šã‚’é¸æŠ
 		if( preindex != -1 )
 		{
 			g_lngSelIndex = preindex;
 		}
-		//ÁªÂò¤µ¤ì¤¿¹Ô¤¬¤Ê¤¤¾ì¹ç¡¢ºÇ¸å¤òÁªÂò
+		//é¸æŠã•ã‚ŒãŸè¡ŒãŒãªã„å ´åˆã€æœ€å¾Œã‚’é¸æŠ
 		else
 		{
 			g_lngSelIndex = parseInt(saveRecordLength) - 1 ;
 		}
 
-		//ÄÉ²Ã¤·¤¿¶õÇò¹Ô¤òÈ¿Å¾¤µ¤»¤ë
+		//è¿½åŠ ã—ãŸç©ºç™½è¡Œã‚’åè»¢ã•ã›ã‚‹
 		document.getElementById("retsu" + g_lngSelIndex).style.backgroundColor="#bbbbbb";
 	}
 
 
-	//ÌÀºÙÏÈ¤ÎºÇ¸å¤Ë°ÜÆ°¤¹¤ë
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//æ˜ç´°æ ã®æœ€å¾Œã«ç§»å‹•ã™ã‚‹
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" ||
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		window.parent.DLwin.location.href = "/dlist/po/index.html#enddisplay";
 	}
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	else if( typeof(window.parent.HSO.SOFlg) == "object" ||
 			 typeof(window.parent.HSO.SCFlg) == "object" )
 	{
@@ -297,29 +297,29 @@ function fncDtAddRecord()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÁªÂò¤·¤¿¹Ô¤òºï½ü
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* È÷¹Í   : ÁªÂò¹Ô¤ò½ü¤¤¤¿ÇÛÎó¤òºîÀ®¡£
-*          ¤½¤Î¸å¡¢´Ø¿ô¡ÖfncDtDisplay()¡×¤ò¸Æ¤Ó½Ğ¤·¡¢ÌÀºÙÏÈ¤òºÆÉ½¼¨¡£
-* Ãí°Õ   : ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤Ë¤Ï¡¢¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ¡£
+* æ¦‚è¦   : é¸æŠã—ãŸè¡Œã‚’å‰Šé™¤
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* å‚™è€ƒ   : é¸æŠè¡Œã‚’é™¤ã„ãŸé…åˆ—ã‚’ä½œæˆã€‚
+*          ãã®å¾Œã€é–¢æ•°ã€ŒfncDtDisplay()ã€ã‚’å‘¼ã³å‡ºã—ã€æ˜ç´°æ ã‚’å†è¡¨ç¤ºã€‚
+* æ³¨æ„   : è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆã«ã¯ã€ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›ã€‚
 */
 // ---------------------------------------------------------------
 function fncDtDelRecord()
 {
-	// ¹ÔÆâÍÆ¤Î¥Á¥§¥Ã¥¯
+	// è¡Œå†…å®¹ã®ãƒã‚§ãƒƒã‚¯
 	if( !fncCheckRecord('DtDel') )
 	{
 		return false;
 	}
 	
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¡¢¥¢¥é¡¼¥È¤ò½Ğ¤·¤Æ½èÍı½ªÎ»
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆã€ã‚¢ãƒ©ãƒ¼ãƒˆã‚’å‡ºã—ã¦å‡¦ç†çµ‚äº†
 	if( g_lngSelIndex == -1 )
 	{
-		alert("ÌÀºÙ¹Ô¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤");
+		alert("æ˜ç´°è¡Œã‚’é¸æŠã—ã¦ãã ã•ã„");
 		return false;
 	}
 
-	if( res = confirm("ÁªÂò¹Ô¤òºï½ü¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡©") )
+	if( res = confirm("é¸æŠè¡Œã‚’å‰Šé™¤ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ") )
 	{
 		saveRecordLength = parseInt(saveRecord.length);
 	
@@ -330,13 +330,13 @@ function fncDtDelRecord()
 	
 		g_lngSelIndex = -1;
 	
-		//ÌÀºÙÏÈ¤òºÆÉ½¼¨
+		//æ˜ç´°æ ã‚’å†è¡¨ç¤º
 		fncDtDisplay();
 	
-		//ÌÀºÙ¹Ô¤¬¤Ê¤¤¾ì¹ç¡¢
-		// ¥Ø¥Ã¥À¤Î[ÄÌ²ß]¤òÊÑ¹¹²ÄÇ½¤Ë¤¹¤ë
+		//æ˜ç´°è¡ŒãŒãªã„å ´åˆã€
+		// ãƒ˜ãƒƒãƒ€ã®[é€šè²¨]ã‚’å¤‰æ›´å¯èƒ½ã«ã™ã‚‹
 		fncHdMonetaryUnitCheck();
-		// [¥ì¡¼¥È¥¿¥¤¥×]¤òÊÑ¹¹²ÄÇ½¤Ë¤¹¤ë
+		// [ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’å¤‰æ›´å¯èƒ½ã«ã™ã‚‹
 		fncHdMonetaryRateCheck();
 	}
 }
@@ -344,78 +344,78 @@ function fncDtDelRecord()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÆşÎÏÏÈ¤ÎÃÍ¤òÁªÂò¹Ô¤ÈÃÖ¤­´¹¤¨¤ë
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* È÷¹Í   : ÆşÎÏÏÈ¤ÎÃÍ¤òÁªÂò¹Ô¤ÈÃÖ¤­´¹¤¨¤ë¡£
-*          ¤½¤Î¸å¡¢´Ø¿ô¡ÖfncDtDisplay()¡×¤ò¸Æ¤Ó½Ğ¤·¡¢ÌÀºÙÏÈ¤òºÆÉ½¼¨¡£
-* Ãí°Õ    :¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤Ë¤Ï¡¢¥Ø¥Ã¥ÀÉôÊ¬¤Ë¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ
+* æ¦‚è¦   : å…¥åŠ›æ ã®å€¤ã‚’é¸æŠè¡Œã¨ç½®ãæ›ãˆã‚‹
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* å‚™è€ƒ   : å…¥åŠ›æ ã®å€¤ã‚’é¸æŠè¡Œã¨ç½®ãæ›ãˆã‚‹ã€‚
+*          ãã®å¾Œã€é–¢æ•°ã€ŒfncDtDisplay()ã€ã‚’å‘¼ã³å‡ºã—ã€æ˜ç´°æ ã‚’å†è¡¨ç¤ºã€‚
+* æ³¨æ„    :è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆã«ã¯ã€ãƒ˜ãƒƒãƒ€éƒ¨åˆ†ã«ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›
 */
 // ---------------------------------------------------------------
 function fncDtCommitRecord()
 {
 
-	// ¹ÔÆâÍÆ¤Î¥Á¥§¥Ã¥¯
+	// è¡Œå†…å®¹ã®ãƒã‚§ãƒƒã‚¯
 	if( !fncCheckRecord('DtCommit') )
 	{
 		return false;
 	}
 
-	// À½ÉÊ¥³¡¼¥ÉÁê°ã¥Á¥§¥Ã¥¯
+	// è£½å“ã‚³ãƒ¼ãƒ‰ç›¸é•ãƒã‚§ãƒƒã‚¯
 	if( !fncCheckDetailCode() )
 	{
 		return false;
 	}
 	
 
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆ
 	if( g_lngSelIndex != -1)
 	{
-		//ÆşÎÏ¥Á¥§¥Ã¥¯
+		//å…¥åŠ›ãƒã‚§ãƒƒã‚¯
 		if( fncDtAddCheck() == false) return false;
 
 		fncDtReplaceAry();
 
-		//¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò½é´ü²½
+		//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’åˆæœŸåŒ–
 		g_lngSelIndex = -1;
 
-		//ÌÀºÙÏÈ¤òºÆÉ½¼¨
+		//æ˜ç´°æ ã‚’å†è¡¨ç¤º
 		fncDtDisplay();
 	}
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆ
 	else
 	{
-		alert("ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ş¤»¤ó");
+		alert("æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“");
 	}
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ¥¯¥ê¥¢¥Ü¥¿¥ó¤¬²¡¤µ¤ì¤¿¤È¤­¤Ë½èÍı
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* È÷¹Í   : 
+* æ¦‚è¦   : ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã¨ãã«å‡¦ç†
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* å‚™è€ƒ   : 
 */
 // ---------------------------------------------------------------
 function fncDtClearRecord()
 {
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		//»ÅÆşÉôÉÊ¤ò¥¯¥ê¥¢
+		//ä»•å…¥éƒ¨å“ã‚’ã‚¯ãƒªã‚¢
 		window.parent.DSO.strStockItemCode.length = 0;
 	
-		//»ÅÆşÉôÉÊ¤òÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+		//ä»•å…¥éƒ¨å“ã‚’é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 		window.parent.DSO.strStockItemCode.disabled = true;
 	}
 
-	//Ã±²Á¥ê¥¹¥È¤ò¥¯¥ê¥¢
+	//å˜ä¾¡ãƒªã‚¹ãƒˆã‚’ã‚¯ãƒªã‚¢
 	window.parent.DSO.lngGoodsPriceCode.length = 0;
 
-	//Áí¹ç·×¶â³Û¤Ş¤Ç¡¢¥¯¥ê¥¢¤µ¤ì¤Æ¤·¤Ş¤¦¤Î¤Ç¡¢ºÆÅÙµá¤á¤Ê¤ª¤¹
+	//ç·åˆè¨ˆé‡‘é¡ã¾ã§ã€ã‚¯ãƒªã‚¢ã•ã‚Œã¦ã—ã¾ã†ã®ã§ã€å†åº¦æ±‚ã‚ãªãŠã™
 	fncDtCalAllTotalPrice();
 
-	//ÌÀºÙ¹Ô¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+	//æ˜ç´°è¡Œã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	g_lngSentakufunouFlg = 0;
 
 	fncDtGsChecked();
@@ -430,29 +430,29 @@ function fncDtClearRecord()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÌÀºÙÏÈ¤òºÆÉ½¼¨
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* param  : preindex : É½¼¨¤¹¤ë°ÌÃÖ¤ò·èÄê¤¹¤ë¤¿¤á¤Ë»ÈÍÑ
-* È÷¹Í   : ÇÛÎó¡ÖsaveRecord¡×¤«¤é¡¢ÌÀºÙÏÈ¤Î¥Æ¡¼¥Ö¥ë¤òºîÀ®¤·¡¢É½¼¨
+* æ¦‚è¦   : æ˜ç´°æ ã‚’å†è¡¨ç¤º
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* param  : preindex : è¡¨ç¤ºã™ã‚‹ä½ç½®ã‚’æ±ºå®šã™ã‚‹ãŸã‚ã«ä½¿ç”¨
+* å‚™è€ƒ   : é…åˆ—ã€ŒsaveRecordã€ã‹ã‚‰ã€æ˜ç´°æ ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œæˆã—ã€è¡¨ç¤º
 */
 // ---------------------------------------------------------------
 function fncDtDisplay( preindex )
 {
-	// Áí¹ç·×¶â³Û¤Î½é´ü²½
+	// ç·åˆè¨ˆé‡‘é¡ã®åˆæœŸåŒ–
 	g_lngReSumTotalPrice = 0;
 
 
-	//¹ÔÈÖ¹æ
+	//è¡Œç•ªå·
 	lngTrCount = 1;
 	
-	//¥«¥é¥àÌ¾¤ò¼èÆÀ
+	//ã‚«ãƒ©ãƒ åã‚’å–å¾—
 	strTableHtml = fncStrTableHtmlColumns();
 
-	//°ìÍ÷¤òºîÀ®
+	//ä¸€è¦§ã‚’ä½œæˆ
 	for( i = 0; i < saveRecord.length; i++ )
 	{
 		strTableHtml = strTableHtml + 
-					'<tr class="Lists01" id ="retsu' + i + '" onClick="fncDtSentaku(' + i + ');return false;"' + 'bgcolor="#ffffff"¡Ë>' + 
+					'<tr class="Lists01" id ="retsu' + i + '" onClick="fncDtSentaku(' + i + ');return false;"' + 'bgcolor="#ffffff"ï¼‰>' + 
 					'<td align="center">' + lngTrCount + '</td>' + 
 					fncStrTableHtmlRows(i) + 
 					'</tr>';
@@ -461,21 +461,21 @@ function fncDtDisplay( preindex )
 
 	strTableHtml = strTableHtml + '</table>';
 
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤Ë¤Î¤ß¡¢É½¼¨¤ò°ìÈÖºÇ¸å¤Î¹Ô¤Ë¤¹¤ë½èÍı¤Î½àÈ÷¤ò¤¹¤ë
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ãªã„å ´åˆã«ã®ã¿ã€è¡¨ç¤ºã‚’ä¸€ç•ªæœ€å¾Œã®è¡Œã«ã™ã‚‹å‡¦ç†ã®æº–å‚™ã‚’ã™ã‚‹
 	if( preindex == -1 )
 	{
 		strTableHtml = strTableHtml + '<a name="enddisplay"></a>';
 	}
 
 
-	//´ûÂ¸¤Î°ìÍ÷¤òºîÀ®¤·Ä¾¤·¤¿°ìÍ÷¤Ë½ñ¤­´¹¤¨¤ë
+	//æ—¢å­˜ã®ä¸€è¦§ã‚’ä½œæˆã—ç›´ã—ãŸä¸€è¦§ã«æ›¸ãæ›ãˆã‚‹
 	document.all.DetailList.innerHTML = strTableHtml;
 
-	//Áí¹ç·×¶â³Û¤Î·×»»
+	//ç·åˆè¨ˆé‡‘é¡ã®è¨ˆç®—
 	fncDtCalAllTotalPrice();
 
 
-	//ÌÀºÙ¹Ô¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+	//æ˜ç´°è¡Œã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	g_lngSentakufunouFlg = 0;
 
 }
@@ -483,96 +483,96 @@ function fncDtDisplay( preindex )
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÌÀºÙ¹Ô¤ÎÁªÂò»ş¤Î½èÍı
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* È÷¹Í   : ÌÀºÙ¹Ô¤òÁªÂò¤¹¤ë¤È¤­¤Ë¡¢¤¹¤Ç¤ËÁªÂò¤µ¤ì¤Æ¤¤¤ë¹Ô¤¬¤¢¤Ã¤¿¾ì¹ç¤Ï¡¢¤½¤Î¹Ô¤ÎÈ¿Å¾¤ò²ò½ü¤¹¤ë¡£
-*          ´ûÂ¸¤ÎÁªÂò¤µ¤ì¤Æ¤¤¤ë¹Ô¤ò¤â¤¦°ìÅÙ²¡¤·¤¿¾ì¹ç¤Ë¤Ï¡¢g_lngSelIndex¤ò½é´ü²½¤¹¤ë¡£
-*          ¤½¤ì°Ê³°¤Î¾ì¹ç¤Ë¤Ï¡¢ÁªÂò¹Ô¤ÎÃÍ¤ò¡¢ÆşÎÏÏÈ¤ËÈ¿±Ç¤µ¤»¤ë¡£
-* Ãí°Õ   : ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ç¡¢ÁªÂò¹Ô¤òÊÑ¹¹¤·¤è¤¦¤È¤·¤¿¾ì¹ç¤Ë¤Ï¡¢ÆşÎÏÏÈ¤ËÊÑ¹¹¤¬¤Ê¤¤¤«¥Á¥§¥Ã¥¯¤·¡¢
-*          ÊÑ¹¹¤¬¤¢¤ì¤Ğ¡¢¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ¡£
+* æ¦‚è¦   : æ˜ç´°è¡Œã®é¸æŠæ™‚ã®å‡¦ç†
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* å‚™è€ƒ   : æ˜ç´°è¡Œã‚’é¸æŠã™ã‚‹ã¨ãã«ã€ã™ã§ã«é¸æŠã•ã‚Œã¦ã„ã‚‹è¡ŒãŒã‚ã£ãŸå ´åˆã¯ã€ãã®è¡Œã®åè»¢ã‚’è§£é™¤ã™ã‚‹ã€‚
+*          æ—¢å­˜ã®é¸æŠã•ã‚Œã¦ã„ã‚‹è¡Œã‚’ã‚‚ã†ä¸€åº¦æŠ¼ã—ãŸå ´åˆã«ã¯ã€g_lngSelIndexã‚’åˆæœŸåŒ–ã™ã‚‹ã€‚
+*          ãã‚Œä»¥å¤–ã®å ´åˆã«ã¯ã€é¸æŠè¡Œã®å€¤ã‚’ã€å…¥åŠ›æ ã«åæ˜ ã•ã›ã‚‹ã€‚
+* æ³¨æ„   : æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆã§ã€é¸æŠè¡Œã‚’å¤‰æ›´ã—ã‚ˆã†ã¨ã—ãŸå ´åˆã«ã¯ã€å…¥åŠ›æ ã«å¤‰æ›´ãŒãªã„ã‹ãƒã‚§ãƒƒã‚¯ã—ã€
+*          å¤‰æ›´ãŒã‚ã‚Œã°ã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›ã€‚
 */
 // ---------------------------------------------------------------
 function fncDtSentaku(i)
 {
 
-	//Â¾¤ÎÌÀºÙ¹Ô¤Î½èÍı¤¬½ª¤ï¤Ã¤Æ¤Ê¤±¤ì¤Ğ¡¢ÁªÂò¤µ¤»¤Ê¤¤
+	//ä»–ã®æ˜ç´°è¡Œã®å‡¦ç†ãŒçµ‚ã‚ã£ã¦ãªã‘ã‚Œã°ã€é¸æŠã•ã›ãªã„
 	if( g_lngSentakufunouFlg == 1 )
 	{
 		return null;
 	}
 
-	//½èÍıÃæ¤Î¥Õ¥é¥°¤òÎ©¤Æ¤ë
-	//(¸½ºß¤Ï»ÅÆşÉôÉÊ¤Î½èÍı¤¬½ª¤ï¤Ã¤¿¤È¤­¤Ë²ò½ü¤·¤Æ¤¤¤ë)
+	//å‡¦ç†ä¸­ã®ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
+	//(ç¾åœ¨ã¯ä»•å…¥éƒ¨å“ã®å‡¦ç†ãŒçµ‚ã‚ã£ãŸã¨ãã«è§£é™¤ã—ã¦ã„ã‚‹)
 	g_lngSentakufunouFlg = 1;
 
 
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Î¥Á¥§¥Ã¥¯¥Õ¥é¥°(ÆşÎÏÏÈ¤Ë¥¨¥é¡¼¤¬¤¢¤ë¤È¥¨¥é¡¼¤Ë¤Ê¤ë)
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆã®ãƒã‚§ãƒƒã‚¯ãƒ•ãƒ©ã‚°(å…¥åŠ›æ ã«ã‚¨ãƒ©ãƒ¼ãŒã‚ã‚‹ã¨ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹)
 	var checkFlg = true;
 
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆ
 	if( g_lngSelIndex != -1 )
 	{
-		//ÆşÎÏÏÈ¤ËÊÑ¹¹¤¬¤Ê¤¤¤«¥Á¥§¥Ã¥¯
+		//å…¥åŠ›æ ã«å¤‰æ›´ãŒãªã„ã‹ãƒã‚§ãƒƒã‚¯
 		checkFlg = fncDtCheck();
 	}
 
 	if (checkFlg == true)
 	{
 
-		//´ûÂ¸¤ÎÁªÂò¹Ô¤¬¤¢¤Ã¤¿¾ì¹ç¤Ë¤Ï¡¢¤½¤Î¹Ô¤ÎÈ¿Å¾¤ò²ò½ü
+		//æ—¢å­˜ã®é¸æŠè¡ŒãŒã‚ã£ãŸå ´åˆã«ã¯ã€ãã®è¡Œã®åè»¢ã‚’è§£é™¤
 		if( g_lngSelIndex != -1 )
 		{
 			document.getElementById("retsu" + g_lngSelIndex).style.backgroundColor="#ffffff";
 		}
 
-		//°ÊÁ°¤ÎÁªÂò¹Ô¤ò¤â¤¦°ìÅÙ¥¯¥ê¥Ã¥¯¤·¤¿¾ì¹ç
+		//ä»¥å‰ã®é¸æŠè¡Œã‚’ã‚‚ã†ä¸€åº¦ã‚¯ãƒªãƒƒã‚¯ã—ãŸå ´åˆ
 		if (g_lngSelIndex == i)
 		{
-			//¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò½é´ü²½
+			//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’åˆæœŸåŒ–
 			g_lngSelIndex = -1;
-			//ÌÀºÙ¹Ô¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+			//æ˜ç´°è¡Œã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 			g_lngSentakufunouFlg = 0;
 		}
-		//°ÊÁ°¤È°ã¤¦ÁªÂò¹Ô¤ò¥¯¥ê¥Ã¥¯¤·¤¿¾ì¹ç
+		//ä»¥å‰ã¨é•ã†é¸æŠè¡Œã‚’ã‚¯ãƒªãƒƒã‚¯ã—ãŸå ´åˆ
 		else
 		{
-			//¥¤¥ó¥Ç¥Ã¥¯¥¹¤ËÁªÂò¹Ô¤ÎÇÛÎóÈÖ¹æ¤ò¥»¥Ã¥È
+			//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«é¸æŠè¡Œã®é…åˆ—ç•ªå·ã‚’ã‚»ãƒƒãƒˆ
 			g_lngSelIndex = i;
 	
-			//¡ÖÁªÂò¹Ô¡×¤òÈ¿Å¾¤µ¤»¤ë
+			//ã€Œé¸æŠè¡Œã€ã‚’åè»¢ã•ã›ã‚‹
 			document.getElementById("retsu" + g_lngSelIndex).style.backgroundColor="#bbbbbb";
 
-			//ÆşÎÏÏÈ¤ò¤¹¤Ù¤Æ¥¯¥ê¥¢¡Ê¶õ¹Ô¤Î¤È¤­¤Î¤¿¤á¡Ë
+			//å…¥åŠ›æ ã‚’ã™ã¹ã¦ã‚¯ãƒªã‚¢ï¼ˆç©ºè¡Œã®ã¨ãã®ãŸã‚ï¼‰
 			window.parent.fncResetFrm( window.parent.DSO );
 	
-			//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç¡¢»ÅÆşÉôÉÊ¤ò¥¯¥ê¥¢¡Ê¶õ¹Ô¤Î¤È¤­¤Î¤¿¤á¡Ë
+			//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆã€ä»•å…¥éƒ¨å“ã‚’ã‚¯ãƒªã‚¢ï¼ˆç©ºè¡Œã®ã¨ãã®ãŸã‚ï¼‰
 			if( typeof(window.parent.HSO.POFlg) == "object" || 
 				typeof(window.parent.HSO.PCFlg) == "object" )
 			{
 				window.parent.DSO.strStockItemCode.length  = 0;
 			}
 	
-			//Ã±²Á¥ê¥¹¥È¤ò¥¯¥ê¥¢¡Ê¶õ¹Ô¤Î¤È¤­¤Î¤¿¤á¡Ë
+			//å˜ä¾¡ãƒªã‚¹ãƒˆã‚’ã‚¯ãƒªã‚¢ï¼ˆç©ºè¡Œã®ã¨ãã®ãŸã‚ï¼‰
 			window.parent.DSO.lngGoodsPriceCode.length = 0;
 	
 			if( saveRecord[g_lngSelIndex][0] != "" )
 			{
 /*
-				//À½ÉÊ¤«¤é¡¢À½ÉÊÌ¾¤òºîÀ®
+				//è£½å“ã‹ã‚‰ã€è£½å“åã‚’ä½œæˆ
 				subLoadMasterValue('cnProduct',
 						 saveRecord[g_lngSelIndex][0],
 						 window.parent.DSO.strProductName,
 						 Array(saveRecord[g_lngSelIndex][0]),
 						 window.document.objDataSourceSetting,
 						 0);
-				//À½ÉÊ¤«¤é¡¢¸ÜµÒÉÊÈÖ¤òºîÀ®
+				//è£½å“ã‹ã‚‰ã€é¡§å®¢å“ç•ªã‚’ä½œæˆ
 				subLoadMasterValue('cnGoodsCode',
 						 saveRecord[g_lngSelIndex][0],
 						 window.parent.DSO.strGoodsCode,
 						 Array(saveRecord[g_lngSelIndex][0]),
 						 window.document.objDataSourceSetting1,
 						 1);
-				//À½ÉÊ¤«¤é¡¢¥«¡¼¥È¥óÆş¿ô¤òºîÀ®
+				//è£½å“ã‹ã‚‰ã€ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’ä½œæˆ
 				subLoadMasterValue('cnCartonQuantity',
 						 saveRecord[g_lngSelIndex][0],
 						 window.parent.DSO.lngCartonQuantity,
@@ -581,14 +581,14 @@ function fncDtSentaku(i)
 						 13);
 */
 				
-				// ¾¦ÉÊ¾ğÊó¤ò¼èÆÀ¡Êsubloadmastersettings.js ¤òÍøÍÑ¡Ë
+				// å•†å“æƒ…å ±ã‚’å–å¾—ï¼ˆsubloadmastersettings.js ã‚’åˆ©ç”¨ï¼‰
 				subLoadMasterValue('cnProductInfo', this, this, Array(saveRecord[g_lngSelIndex][0]), window.document.objDataSourceSettingProductInfo, 1);
 
-				//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+				//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 				if( typeof(window.parent.HSO.POFlg) == "object" || 
 					typeof(window.parent.HSO.PCFlg) == "object" )
 				{
-					//»ÅÆş²ÊÌÜ¤«¤é¡¢»ÅÆşÉôÉÊ¤Î¥ª¥×¥·¥ç¥óÃÍ¤òºîÀ®
+					//ä»•å…¥ç§‘ç›®ã‹ã‚‰ã€ä»•å…¥éƒ¨å“ã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³å€¤ã‚’ä½œæˆ
 					subLoadMasterOption( 'cnStockItem',
 							 window.parent.DSO.strStockSubjectCode, 
 							 window.parent.DSO.strStockItemCode,
@@ -597,24 +597,24 @@ function fncDtSentaku(i)
 							 10);
 				}
 
-				//Ã±²Á¥ê¥¹¥È¤òºîÀ®
+				//å˜ä¾¡ãƒªã‚¹ãƒˆã‚’ä½œæˆ
 				fncDtGoodsPriceList2();
 
 			}
-			//¶õÇò¹Ô¤Î»ş¡¢ÌÀºÙ¹Ô¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+			//ç©ºç™½è¡Œã®æ™‚ã€æ˜ç´°è¡Œã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 			else
 			{
-				//ÌÀºÙ¹Ô¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+				//æ˜ç´°è¡Œã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 				g_lngSentakufunouFlg = 0;
 			}
 	
-			//¡ÖÆşÎÏÏÈ¡×¤ËÁªÂò¹Ô¤òÈ¿±Ç
+			//ã€Œå…¥åŠ›æ ã€ã«é¸æŠè¡Œã‚’åæ˜ 
 			fncDtReplaceInput();
 
-			//´ğ½àÄÌ²ß¤òÉ½¼¨
+			//åŸºæº–é€šè²¨ã‚’è¡¨ç¤º
 			fncDtCalStdTotalPrice();
 
-			//Áí¹ç·×¶â³Û¤Î·×»»
+			//ç·åˆè¨ˆé‡‘é¡ã®è¨ˆç®—
 			fncDtCalAllTotalPrice();
 		}
 	}
@@ -623,15 +623,15 @@ function fncDtSentaku(i)
 		g_lngSentakufunouFlg = 0;
 	}
 
-	// ¹ÔÆâÍÆ¤Î¥Á¥§¥Ã¥¯¤ÈÀßÄê
+	// è¡Œå†…å®¹ã®ãƒã‚§ãƒƒã‚¯ã¨è¨­å®š
 	fncCheckRecord('DtSentaku');
 
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		//ÌÀºÙ¹Ô¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+		//æ˜ç´°è¡Œã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 		g_lngSentakufunouFlg = 0;
 	}
 }
@@ -639,66 +639,66 @@ function fncDtSentaku(i)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÆşÎÏÏÈ¤ÈÁªÂò¹Ô¤Îº¹°Û¤ò¥Á¥§¥Ã¥¯¤·¡¢°ã¤¤¤¬¤¢¤ì¤Ğ¡¢³ÎÇ§¥À¥¤¥¢¥í¥°¤òÉ½¼¨
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* @return : [Boolean·¿] ÁªÂò¹Ô¤ò°ÜÆ°¤·¤Æ¤â¤è¤¤¾ì¹ç¤Ï¡¢true¡¢°ÜÆ°¤·¤Ê¤¤¾ì¹ç¤Ï¡¢false
+* æ¦‚è¦   : å…¥åŠ›æ ã¨é¸æŠè¡Œã®å·®ç•°ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€é•ã„ãŒã‚ã‚Œã°ã€ç¢ºèªãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤º
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* @return : [Booleanå‹] é¸æŠè¡Œã‚’ç§»å‹•ã—ã¦ã‚‚ã‚ˆã„å ´åˆã¯ã€trueã€ç§»å‹•ã—ãªã„å ´åˆã¯ã€false
 */
 // ---------------------------------------------------------------
 function fncDtCheck()
 {
 
-	// À½ÉÊ¥³¡¼¥ÉÁê°ã¥Á¥§¥Ã¥¯
+	// è£½å“ã‚³ãƒ¼ãƒ‰ç›¸é•ãƒã‚§ãƒƒã‚¯
 	if( !fncCheckDetailCode() )
 	{
 		return false;
 	}
 
 
-	//¡ÖÆşÎÏÏÈ¡×¤ÎÃÍ¤òÇÛÎó¤Ë¥»¥Ã¥È
+	//ã€Œå…¥åŠ›æ ã€ã®å€¤ã‚’é…åˆ—ã«ã‚»ãƒƒãƒˆ
 	var aryRecord = fncDtNewAry();
 
-	//ÇÛÎó¤ÎÄ¹¤µ
+	//é…åˆ—ã®é•·ã•
 	var aryRecordLength = aryRecord.length;
 
 	for( j = 0; j < aryRecordLength ; j++ )
 	{
-		//ÆşÎÏÏÈ¤ÈÁªÂò¹Ô¤ÎÈæ³Ó
+		//å…¥åŠ›æ ã¨é¸æŠè¡Œã®æ¯”è¼ƒ
 		if( aryRecord[j] != saveRecord[g_lngSelIndex][j] )
 		{
-			// Ã±²Á¥ê¥¹¥È,»ÅÆş²ÊÌÜÌ¾,»ÅÆşÉôÉÊÌ¾,Ã±°Ì¡ÊÌ¾¾Î¡Ë,
-			// Ã±²ÁÄÉ²Ã¥ê¥¹¥È,¹ÔÈÖ¹æ¤Î¤È¤­¥¹¥­¥Ã¥×
-			// No.¡Ê¶â·¿ÈÖ¹æ¡Ë¥¹¥­¥Ã¥× (Added by Kazushi Saito
-			// ¸µ¿ôÎÌ¡¡¥¹¥­¥Ã¥×
+			// å˜ä¾¡ãƒªã‚¹ãƒˆ,ä»•å…¥ç§‘ç›®å,ä»•å…¥éƒ¨å“å,å˜ä½ï¼ˆåç§°ï¼‰,
+			// å˜ä¾¡è¿½åŠ ãƒªã‚¹ãƒˆ,è¡Œç•ªå·ã®ã¨ãã‚¹ã‚­ãƒƒãƒ—
+			// No.ï¼ˆé‡‘å‹ç•ªå·ï¼‰ã‚¹ã‚­ãƒƒãƒ— (Added by Kazushi Saito
+			// å…ƒæ•°é‡ã€€ã‚¹ã‚­ãƒƒãƒ—
 			if (j==1 || j == 3 || j == 5 || j == 9 ||j == 14 || j==18 || j==22 || j==24 || j==25 || j==26 || j==27) continue;
 
-			//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+			//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 			if( typeof(window.parent.HSO.SOFlg) == "object" || 
 				typeof(window.parent.HSO.SCFlg) == "object" )
 			{
 				if( j==22 || j==23 ) continue;
 			}
 
-//¥Ç¥Ğ¥Ã¥¯Ãæ ¸å¤Ç¾Ã¤¹
-//alert("ÊÑ¹¹¤µ¤ì¤¿ÇÛÎóÈÖ¹æ : " + j + "\n" +
-//	  "¡ÖÆşÎÏÏÈ¡×¤ÎÃÍ : " + aryRecord[j] + "\n" +
-//	  "¡ÖÌÀºÙ¹Ô¡×¤ÎÃÍ : " + saveRecord[g_lngSelIndex][j]);
+//ãƒ‡ãƒãƒƒã‚¯ä¸­ å¾Œã§æ¶ˆã™
+//alert("å¤‰æ›´ã•ã‚ŒãŸé…åˆ—ç•ªå· : " + j + "\n" +
+//	  "ã€Œå…¥åŠ›æ ã€ã®å€¤ : " + aryRecord[j] + "\n" +
+//	  "ã€Œæ˜ç´°è¡Œã€ã®å€¤ : " + saveRecord[g_lngSelIndex][j]);
 
 
-			if( res = confirm("ÊÑ¹¹²Õ½ê¤¬¤¢¤ê¤Ş¤¹¡£ÊÑ¹¹¤·¤Æ¤â¤è¤í¤·¤¤¤Ç¤¹¤«¡©") )
+			if( res = confirm("å¤‰æ›´ç®‡æ‰€ãŒã‚ã‚Šã¾ã™ã€‚å¤‰æ›´ã—ã¦ã‚‚ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ") )
 			{
 
-				// ¹ÔÆâÍÆ¤Î¥Á¥§¥Ã¥¯
+				// è¡Œå†…å®¹ã®ãƒã‚§ãƒƒã‚¯
 				if( !fncCheckRecord('DtCommit') )
 				{
 					return false;
 				}
 
-				//ÆşÎÏ¥Á¥§¥Ã¥¯
+				//å…¥åŠ›ãƒã‚§ãƒƒã‚¯
 				if( fncDtAddCheck() )
 				{
-					//ÆşÎÏÏÈ¤ÎÃÍ¤òÁªÂò¹Ô¤ÈÃÖ¤­´¹¤¨
+					//å…¥åŠ›æ ã®å€¤ã‚’é¸æŠè¡Œã¨ç½®ãæ›ãˆ
 					fncDtReplaceAry();
-					//ÌÀºÙÏÈ¤òºÆÉ½¼¨
+					//æ˜ç´°æ ã‚’å†è¡¨ç¤º
 					fncDtDisplay();
 
 					return true;
@@ -718,35 +718,35 @@ function fncDtCheck()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÄÉ²Ã¥Ü¥¿¥ó¤ò²¡¤·¤¿¤È¤­¤ÎÃÍ¤Î¥Á¥§¥Ã¥¯
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* Ãí°Õ   : ÌäÂê¤¬¤¢¤ì¤Ğ¥¢¥é¡¼¥È¤ò½Ğ¤¹
+* æ¦‚è¦   : è¿½åŠ ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã®å€¤ã®ãƒã‚§ãƒƒã‚¯
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* æ³¨æ„   : å•é¡ŒãŒã‚ã‚Œã°ã‚¢ãƒ©ãƒ¼ãƒˆã‚’å‡ºã™
 */
 // ---------------------------------------------------------------
 function fncDtAddCheck()
 {
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		//ÃÍ¤¬¤¹¤Ù¤Æ¤«¤é¤À¤Ã¤¿¤é¡¢¶õ¹Ô¤òÄÉ²Ã¤Ç¤­¤ë
-		if( window.parent.DSO.strProductCode.value            == "" && //À½ÉÊ¥³¡¼¥É
-			window.parent.DSO.strStockSubjectCode.value       == 0  && //»ÅÆş²ÊÌÜ
-			window.parent.DSO.strStockItemCode.selectedIndex  == -1 )  //»ÅÆşÉôÉÊ
+		//å€¤ãŒã™ã¹ã¦ã‹ã‚‰ã ã£ãŸã‚‰ã€ç©ºè¡Œã‚’è¿½åŠ ã§ãã‚‹
+		if( window.parent.DSO.strProductCode.value            == "" && //è£½å“ã‚³ãƒ¼ãƒ‰
+			window.parent.DSO.strStockSubjectCode.value       == 0  && //ä»•å…¥ç§‘ç›®
+			window.parent.DSO.strStockItemCode.selectedIndex  == -1 )  //ä»•å…¥éƒ¨å“
 		{
 			if( window.parent.DSO.lngConversionClassCode[0].checked )
 			{
-				if( window.parent.DSO.curProductPrice_gs.value  == "" && //À½ÉÊÃ±²Á¤¬¤Ê¤¤
-					window.parent.DSO.lngGoodsQuantity_gs.value == "" )  //À½ÉÊ¿ôÎÌ¤¬¤Ê¤¤
+				if( window.parent.DSO.curProductPrice_gs.value  == "" && //è£½å“å˜ä¾¡ãŒãªã„
+					window.parent.DSO.lngGoodsQuantity_gs.value == "" )  //è£½å“æ•°é‡ãŒãªã„
 				{
 					return true;
 				}
 			}
 			else if( window.parent.DSO.lngConversionClassCode[1].checked )
 			{
-				if( window.parent.DSO.curProductPrice_ps.value  == "" && //²Ù»ÑÃ±²Á¤¬¤Ê¤¤
-					window.parent.DSO.lngGoodsQuantity_ps.value == "" )  //²Ù»Ñ¿ôÎÌ¤¬¤Ê¤¤
+				if( window.parent.DSO.curProductPrice_ps.value  == "" && //è·å§¿å˜ä¾¡ãŒãªã„
+					window.parent.DSO.lngGoodsQuantity_ps.value == "" )  //è·å§¿æ•°é‡ãŒãªã„
 				{
 					return true;
 				}
@@ -754,26 +754,26 @@ function fncDtAddCheck()
 		}
 	}
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		//ÃÍ¤¬¤¹¤Ù¤Æ¤«¤é¤À¤Ã¤¿¤é¡¢¶õ¹Ô¤òÄÉ²Ã¤Ç¤­¤ë
-		if( window.parent.DSO.strProductCode.value            == "" && //À½ÉÊ¥³¡¼¥É
-			window.parent.DSO.lngSalesClassCode.value         == 0  )  //Çä¾å¶èÊ¬
+		//å€¤ãŒã™ã¹ã¦ã‹ã‚‰ã ã£ãŸã‚‰ã€ç©ºè¡Œã‚’è¿½åŠ ã§ãã‚‹
+		if( window.parent.DSO.strProductCode.value            == "" && //è£½å“ã‚³ãƒ¼ãƒ‰
+			window.parent.DSO.lngSalesClassCode.value         == 0  )  //å£²ä¸ŠåŒºåˆ†
 		{
 			if( window.parent.DSO.lngConversionClassCode[0].checked )
 			{
-				if( window.parent.DSO.curProductPrice_gs.value  == "" && //À½ÉÊÃ±²Á¤¬¤Ê¤¤
-					window.parent.DSO.lngGoodsQuantity_gs.value == "" )  //À½ÉÊ¿ôÎÌ¤¬¤Ê¤¤
+				if( window.parent.DSO.curProductPrice_gs.value  == "" && //è£½å“å˜ä¾¡ãŒãªã„
+					window.parent.DSO.lngGoodsQuantity_gs.value == "" )  //è£½å“æ•°é‡ãŒãªã„
 				{
 					return true;
 				}
 			}
 			else if( window.parent.DSO.lngConversionClassCode[1].checked )
 			{
-				if( window.parent.DSO.curProductPrice_ps.value  == "" && //²Ù»ÑÃ±²Á¤¬¤Ê¤¤
-					window.parent.DSO.lngGoodsQuantity_ps.value == "" )  //²Ù»Ñ¿ôÎÌ¤¬¤Ê¤¤
+				if( window.parent.DSO.curProductPrice_ps.value  == "" && //è·å§¿å˜ä¾¡ãŒãªã„
+					window.parent.DSO.lngGoodsQuantity_ps.value == "" )  //è·å§¿æ•°é‡ãŒãªã„
 				{
 					return true;
 				}
@@ -781,201 +781,201 @@ function fncDtAddCheck()
 		}
 	}
 
-	//¥¨¥é¡¼¤¬¤¢¤Ã¤¿¾ì¹ç¤Ë¥á¥Ã¥»¡İ¥¸¤òµÍ¤á¹ş¤àÊÑ¿ô
+	//ã‚¨ãƒ©ãƒ¼ãŒã‚ã£ãŸå ´åˆã«ãƒ¡ãƒƒã‚»âˆ’ã‚¸ã‚’è©°ã‚è¾¼ã‚€å¤‰æ•°
 	var alertList = "";
 
-	//ÃÍ¤¬¤¹¤Ù¤Æ¶õ¤Ç¤Ï¤Ê¤¤¾ì¹ç¤Î¥Á¥§¥Ã¥¯
-	//À½ÉÊ¥³¡¼¥É¤ÎÆşÎÏ¤¬¤Ê¤«¤Ã¤¿¾ì¹ç
+	//å€¤ãŒã™ã¹ã¦ç©ºã§ã¯ãªã„å ´åˆã®ãƒã‚§ãƒƒã‚¯
+	//è£½å“ã‚³ãƒ¼ãƒ‰ã®å…¥åŠ›ãŒãªã‹ã£ãŸå ´åˆ
 	if( window.parent.DSO.strProductCode.value == "" )
 	{
-		alertList += "À½ÉÊ¥³¡¼¥É¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤!\n";
+		alertList += "è£½å“ã‚³ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„!\n";
 	}
-	//À½ÉÊ¥³¡¼¥É¤ÎÆşÎÏ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+	//è£½å“ã‚³ãƒ¼ãƒ‰ã®å…¥åŠ›ãŒä¸æ­£ã ã£ãŸå ´åˆ
 	if( isNaN(window.parent.DSO.strProductCode.value) )
 	{
-		alertList += "À½ÉÊ¥³¡¼¥É¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+		alertList += "è£½å“ã‚³ãƒ¼ãƒ‰ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 	}
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		//»ÅÆş²ÊÌÜ¤¬ÁªÂò¤µ¤ì¤Ê¤«¤Ã¤¿¾ì¹ç
+		//ä»•å…¥ç§‘ç›®ãŒé¸æŠã•ã‚Œãªã‹ã£ãŸå ´åˆ
 		if( window.parent.DSO.strStockSubjectCode.value       == 0 )
 		{
-			alertList += "»ÅÆş²ÊÌÜ¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤!\n";
+			alertList += "ä»•å…¥ç§‘ç›®ã‚’é¸æŠã—ã¦ãã ã•ã„!\n";
 		}
-		//»ÅÆşÉôÉÊ¤¬ÁªÂò¤µ¤ì¤Ê¤«¤Ã¤¿¾ì¹ç
+		//ä»•å…¥éƒ¨å“ãŒé¸æŠã•ã‚Œãªã‹ã£ãŸå ´åˆ
 		if( window.parent.DSO.strStockItemCode.selectedIndex == -1 ||
 			window.parent.DSO.strStockItemCode.selectedIndex == 0  )
 		{
-			alertList += "»ÅÆşÉôÉÊ¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤!\n";
+			alertList += "ä»•å…¥éƒ¨å“ã‚’é¸æŠã—ã¦ãã ã•ã„!\n";
 		}
 //2004.03.02 suzukaze update start
 		if( typeof(window.parent.HSO.POFlg) == "object" )
 		{
-			//Ç¼´ü¤¬ÁªÂò¤µ¤ì¤Ê¤«¤Ã¤¿¾ì¹ç
+			//ç´æœŸãŒé¸æŠã•ã‚Œãªã‹ã£ãŸå ´åˆ
 			if( window.parent.DSO.dtmDeliveryDate.value == "" )
 			{
-				alertList += "Ç¼´ü¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤!\n";
+				alertList += "ç´æœŸã‚’é¸æŠã—ã¦ãã ã•ã„!\n";
 			}
 		}
 //2004.03.02 suzukaze update end
 	}
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		//Çä¾å¶èÊ¬¤¬ÁªÂò¤µ¤ì¤Ê¤«¤Ã¤¿¾ì¹ç
+		//å£²ä¸ŠåŒºåˆ†ãŒé¸æŠã•ã‚Œãªã‹ã£ãŸå ´åˆ
 		if( window.parent.DSO.lngSalesClassCode.value == 0 )
 		{
-			alertList += "Çä¾å¶èÊ¬¤òÁªÂò¤·¤Æ¤¯¤À¤µ¤¤!\n";
+			alertList += "å£²ä¸ŠåŒºåˆ†ã‚’é¸æŠã—ã¦ãã ã•ã„!\n";
 		}
 //2004.03.03 suzukaze update start
 		if( typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//Ç¼´ü¤¬ÆşÎÏ¤µ¤ì¤Ê¤«¤Ã¤¿¾ì¹ç
+			//ç´æœŸãŒå…¥åŠ›ã•ã‚Œãªã‹ã£ãŸå ´åˆ
 			if( window.parent.DSO.dtmDeliveryDate.value == "" )
 			{
-				alertList += "Ç¼´ü¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤!\n";
+				alertList += "ç´æœŸã‚’å…¥åŠ›ã—ã¦ãã ã•ã„!\n";
 			}
 		}
 //2004.03.03 suzukaze update end
 	}
 
-	//À½ÉÊÃ±°Ì·×¾å¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+	//è£½å“å˜ä½è¨ˆä¸ŠãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆ
 	if (window.parent.DSO.lngConversionClassCode[0].checked)
 	{
 //2004.03.01 suzukaze update start
-		//À½ÉÊÃ±²Á¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ê¤«¤Ã¤¿¾ì¹ç
+		//è£½å“å˜ä¾¡ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãªã‹ã£ãŸå ´åˆ
 //		if( window.parent.DSO.curProductPrice_gs.value == "" ||
 //			fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value)) == 0 )
 		if( window.parent.DSO.curProductPrice_gs.value == "" )
 //2004.03.01 suzukaze update end
 		{
-			alertList += "À½ÉÊÃ±²Á¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤!\n";
+			alertList += "è£½å“å˜ä¾¡ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„!\n";
 		}
-		//À½ÉÊ¿ôÎÌ¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ê¤«¤Ã¤¿¾ì¹ç
+		//è£½å“æ•°é‡ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãªã‹ã£ãŸå ´åˆ
 		if( window.parent.DSO.lngGoodsQuantity_gs.value == "" ||
 			fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value) == 0 )
 		{
-			alertList += "À½ÉÊ¿ôÎÌ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤!\n";
+			alertList += "è£½å“æ•°é‡ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„!\n";
 		}
 //2004.03.01 suzukaze update start
-		//È¯Ãí´ÉÍı¡¢¼õÃí´ÉÍı¤Î¾ì¹ç
+		//ç™ºæ³¨ç®¡ç†ã€å—æ³¨ç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" || 
 			typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//À½ÉÊÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+			//è£½å“å˜ä¾¡ã®å€¤ãŒä¸æ­£ã ã£ãŸå ´åˆ
 			if( isNaN(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value))) || 
 				fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value)) < 0    )
 			{
-				alertList += "À½ÉÊÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+				alertList += "è£½å“å˜ä¾¡ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 			}
 		}
-		//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+		//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" || 
 			typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//À½ÉÊÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+			//è£½å“å˜ä¾¡ã®å€¤ãŒä¸æ­£ã ã£ãŸå ´åˆ
 			if( isNaN(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value))) )
 			{
-				alertList += "À½ÉÊÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+				alertList += "è£½å“å˜ä¾¡ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 			}
 		}
 //2004.03.01 suzukaze update end
 //2004.03.17 suzukaze update start
-		//È¯Ãí´ÉÍı¡¢¼õÃí´ÉÍı¤Î¾ì¹ç
+		//ç™ºæ³¨ç®¡ç†ã€å—æ³¨ç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" || 
 			typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//À½ÉÊ¿ôÎÌ¤ÎÃÍ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+			//è£½å“æ•°é‡ã®å€¤ãŒä¸æ­£ã ã£ãŸå ´åˆ
 			if( isNaN(fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value)) || 
 				fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value) < 0    )
 			{
-				alertList += "À½ÉÊ¿ôÎÌ¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+				alertList += "è£½å“æ•°é‡ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 			}
 		}
-		//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+		//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" || 
 			typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//À½ÉÊ¿ôÎÌ¤ÎÃÍ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+			//è£½å“æ•°é‡ã®å€¤ãŒä¸æ­£ã ã£ãŸå ´åˆ
 			if( isNaN(fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value)) )
 			{
-				alertList += "À½ÉÊ¿ôÎÌ¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+				alertList += "è£½å“æ•°é‡ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 			}
 		}
 //2004.03.17 suzukaze update end
 	}
-	//²Ù»ÑÃ±°Ì·×¾å¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+	//è·å§¿å˜ä½è¨ˆä¸ŠãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆ
 	else if( window.parent.DSO.lngConversionClassCode[1].checked )
 	{
 //2004.03.01 suzukaze update start
-		//²Ù»ÑÃ±²Á¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ê¤«¤Ã¤¿¾ì¹ç
+		//è·å§¿å˜ä¾¡ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãªã‹ã£ãŸå ´åˆ
 //		if( window.parent.DSO.curProductPrice_ps.value == "" ||
 //			fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value)) == 0  )
 		if( window.parent.DSO.curProductPrice_ps.value == "" )
 //2004.03.01 suzukaze update end
 		{
-			alertList += "²Ù»ÑÃ±²Á¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤!\n";
+			alertList += "è·å§¿å˜ä¾¡ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„!\n";
 		}
-		//²Ù»Ñ¿ôÎÌ¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ê¤«¤Ã¤¿¾ì¹ç
+		//è·å§¿æ•°é‡ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãªã‹ã£ãŸå ´åˆ
 		if( window.parent.DSO.lngGoodsQuantity_ps.value == "" ||
 			fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value) == 0 )
 		{
-			alertList += "²Ù»Ñ¿ôÎÌ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤!\n";
+			alertList += "è·å§¿æ•°é‡ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„!\n";
 		}
 //2004.03.01 suzukaze update start
-		//È¯Ãí´ÉÍı¡¢¼õÃí´ÉÍı¤Î¾ì¹ç
+		//ç™ºæ³¨ç®¡ç†ã€å—æ³¨ç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" || 
 			typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//²Ù»ÑÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+			//è·å§¿å˜ä¾¡ã®å€¤ãŒä¸æ­£ã ã£ãŸå ´åˆ
 			if( isNaN(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value))) || 
 				fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value)) < 0 )
 			{
-				alertList += "²Ù»ÑÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+				alertList += "è·å§¿å˜ä¾¡ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 			}
 		}
-		//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+		//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" || 
 			typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//²Ù»ÑÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+			//è·å§¿å˜ä¾¡ã®å€¤ãŒä¸æ­£ã ã£ãŸå ´åˆ
 			if( isNaN(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value))) )
 			{
-				alertList += "²Ù»ÑÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+				alertList += "è·å§¿å˜ä¾¡ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 			}
 		}
 //2004.03.01 suzukaze update end
 //2004.03.17 suzukaze update start
-		//È¯Ãí´ÉÍı¡¢¼õÃí´ÉÍı¤Î¾ì¹ç
+		//ç™ºæ³¨ç®¡ç†ã€å—æ³¨ç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" || 
 			typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//²Ù»Ñ¿ôÎÌ¤ÎÃÍ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+			//è·å§¿æ•°é‡ã®å€¤ãŒä¸æ­£ã ã£ãŸå ´åˆ
 		if( isNaN(fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value)) || 
 			fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value) < 0    )
 			{
-				alertList += "²Ù»Ñ¿ôÎÌ¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+				alertList += "è·å§¿æ•°é‡ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 			}
 		}
-		//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+		//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" || 
 			typeof(window.parent.HSO.SOFlg) == "object" )
 		{
-			//²Ù»ÑÃ±²Á¤ÎÃÍ¤¬ÉÔÀµ¤À¤Ã¤¿¾ì¹ç
+			//è·å§¿å˜ä¾¡ã®å€¤ãŒä¸æ­£ã ã£ãŸå ´åˆ
 			if( isNaN(fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value)) )
 			{
-				alertList += "²Ù»Ñ¿ôÎÌ¤ÎÃÍ¤¬ÉÔÀµ¤Ç¤¹!\n";
+				alertList += "è·å§¿æ•°é‡ã®å€¤ãŒä¸æ­£ã§ã™!\n";
 			}
 		}
 //2004.03.17 suzukaze update end
 	}
 
-	//¥¨¥é¡¼¤¬¤¢¤Ã¤¿¤é¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ
+	//ã‚¨ãƒ©ãƒ¼ãŒã‚ã£ãŸã‚‰ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›
 	if( alertList != "" )
 	{
 		alert(alertList);
@@ -988,28 +988,28 @@ function fncDtAddCheck()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : ÆşÎÏÏÈ¤ÎÃÍ¤ò¿·µ¬¤ÎÇÛÎó¤Ë³ÊÇ¼
-* ÂĞ¾İ    : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* @retrun : aryRecord, [ÇÛÎó·¿], ¿·µ¬¤ÎÇÛÎó
+* æ¦‚è¦    : å…¥åŠ›æ ã®å€¤ã‚’æ–°è¦ã®é…åˆ—ã«æ ¼ç´
+* å¯¾è±¡    : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* @retrun : aryRecord, [é…åˆ—å‹], æ–°è¦ã®é…åˆ—
 */
 // ---------------------------------------------------------------
 function fncDtNewAry()
 {
 	var aryRecord = new Array();
 
-	aryRecord[0]  = window.parent.DSO.strProductCode.value;            //À½ÉÊ¥³¡¼¥É
-	aryRecord[1]  = window.parent.DSO.lngGoodsPriceCode.value;         //Ã±²Á¥ê¥¹¥È
+	aryRecord[0]  = window.parent.DSO.strProductCode.value;            //è£½å“ã‚³ãƒ¼ãƒ‰
+	aryRecord[1]  = window.parent.DSO.lngGoodsPriceCode.value;         //å˜ä¾¡ãƒªã‚¹ãƒˆ
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		aryRecord[2]  = window.parent.DSO.strStockSubjectCode.value;       //»ÅÆş²ÊÌÜ
-		aryRecord[3]  = window.parent.DSO.strStockSubjectCode.options[window.parent.DSO.strStockSubjectCode.selectedIndex].text;     //»ÅÆş²ÊÌÜ¡Êvalue + Ì¾¾Î¡Ë
-		aryRecord[4]  = window.parent.DSO.strStockItemCode.value;          //»ÅÆşÉôÉÊ
+		aryRecord[2]  = window.parent.DSO.strStockSubjectCode.value;       //ä»•å…¥ç§‘ç›®
+		aryRecord[3]  = window.parent.DSO.strStockSubjectCode.options[window.parent.DSO.strStockSubjectCode.selectedIndex].text;     //ä»•å…¥ç§‘ç›®ï¼ˆvalue + åç§°ï¼‰
+		aryRecord[4]  = window.parent.DSO.strStockItemCode.value;          //ä»•å…¥éƒ¨å“
 		if( window.parent.DSO.strStockItemCode.selectedIndex != -1 )
 		{
-			aryRecord[5]  = window.parent.DSO.strStockItemCode.options[window.parent.DSO.strStockItemCode.selectedIndex].text;           //»ÅÆşÉôÉÊ¡Êvalue + Ì¾¾Î¡Ë
+			aryRecord[5]  = window.parent.DSO.strStockItemCode.options[window.parent.DSO.strStockItemCode.selectedIndex].text;           //ä»•å…¥éƒ¨å“ï¼ˆvalue + åç§°ï¼‰
 		}else{
 			aryRecord[5]  = "";
 		}
@@ -1017,89 +1017,89 @@ function fncDtNewAry()
 
 	if( window.parent.DSO.lngConversionClassCode[0].checked )
 	{
-		aryRecord[6]  = window.parent.DSO.lngConversionClassCode[0].value; // ´¹»»¶èÊ¬(À½ÉÊÃ±°Ì·×¾å)
-		aryRecord[7]  = window.parent.DSO.curProductPrice_gs.value;        // À½ÉÊÃ±²Á
-		aryRecord[8]  = window.parent.DSO.lngProductUnitCode_gs.value;     // À½ÉÊÃ±°Ì
-		aryRecord[9]  = window.parent.DSO.lngProductUnitCode_gs.options[window.parent.DSO.lngProductUnitCode_gs.selectedIndex].text; //À½ÉÊÃ±°Ì¡ÊÌ¾¾Î¡Ë
-		aryRecord[10] = window.parent.DSO.lngGoodsQuantity_gs.value;       // À½ÉÊ¿ôÎÌ
-		aryRecord[14] = window.parent.DSO.curProductPrice_gs.value;        // Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
+		aryRecord[6]  = window.parent.DSO.lngConversionClassCode[0].value; // æ›ç®—åŒºåˆ†(è£½å“å˜ä½è¨ˆä¸Š)
+		aryRecord[7]  = window.parent.DSO.curProductPrice_gs.value;        // è£½å“å˜ä¾¡
+		aryRecord[8]  = window.parent.DSO.lngProductUnitCode_gs.value;     // è£½å“å˜ä½
+		aryRecord[9]  = window.parent.DSO.lngProductUnitCode_gs.options[window.parent.DSO.lngProductUnitCode_gs.selectedIndex].text; //è£½å“å˜ä½ï¼ˆåç§°ï¼‰
+		aryRecord[10] = window.parent.DSO.lngGoodsQuantity_gs.value;       // è£½å“æ•°é‡
+		aryRecord[14] = window.parent.DSO.curProductPrice_gs.value;        // å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
 	}
 	else if( window.parent.DSO.lngConversionClassCode[1].checked )
 	{
-		aryRecord[6]  = window.parent.DSO.lngConversionClassCode[1].value; // ´¹»»¶èÊ¬(²Ù»ÑÃ±°Ì·×¾å)
-		aryRecord[7]  = window.parent.DSO.curProductPrice_ps.value;        // ²Ù»ÑÃ±²Á
-		aryRecord[8]  = window.parent.DSO.lngProductUnitCode_ps.value;     // ²Ù»ÑÃ±°Ì
-		aryRecord[9]  = window.parent.DSO.lngProductUnitCode_ps.options[window.parent.DSO.lngProductUnitCode_ps.selectedIndex].text; //²Ù»ÑÃ±°Ì¡ÊÌ¾¾Î¡Ë
-		aryRecord[10] = window.parent.DSO.lngGoodsQuantity_ps.value;       // ²Ù»Ñ¿ôÎÌ
-		aryRecord[14] = fncProductPriceForList();                          // Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
+		aryRecord[6]  = window.parent.DSO.lngConversionClassCode[1].value; // æ›ç®—åŒºåˆ†(è·å§¿å˜ä½è¨ˆä¸Š)
+		aryRecord[7]  = window.parent.DSO.curProductPrice_ps.value;        // è·å§¿å˜ä¾¡
+		aryRecord[8]  = window.parent.DSO.lngProductUnitCode_ps.value;     // è·å§¿å˜ä½
+		aryRecord[9]  = window.parent.DSO.lngProductUnitCode_ps.options[window.parent.DSO.lngProductUnitCode_ps.selectedIndex].text; //è·å§¿å˜ä½ï¼ˆåç§°ï¼‰
+		aryRecord[10] = window.parent.DSO.lngGoodsQuantity_ps.value;       // è·å§¿æ•°é‡
+		aryRecord[14] = fncProductPriceForList();                          // å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
 	}
-	aryRecord[11] = window.parent.DSO.curTotalPrice.value;             // ÀÇÈ´¶â³Û
+	aryRecord[11] = window.parent.DSO.curTotalPrice.value;             // ç¨æŠœé‡‘é¡
 
-	// Çä¾å´ÉÍı¡¢»ÅÆş´ÉÍı
+	// å£²ä¸Šç®¡ç†ã€ä»•å…¥ç®¡ç†
 	if( typeof(window.parent.HSO.SCFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		aryRecord[24] = aryRecord[10];
 	}
 	
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		aryRecord[12] = window.parent.DSO.lngCarrierCode.value;            // ±¿ÈÂÊıË¡
+		aryRecord[12] = window.parent.DSO.lngCarrierCode.value;            // é‹æ¬æ–¹æ³•
 	}
 
-	aryRecord[13] = fncCheckReplaceString(window.parent.DSO.strDetailNote.value);             // È÷¹Í
+	aryRecord[13] = fncCheckReplaceString(window.parent.DSO.strDetailNote.value);             // å‚™è€ƒ
 
-	//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.PCFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		aryRecord[15] = window.parent.DSO.lngTaxClassCode.value;             // ¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-		aryRecord[16] = window.parent.DSO.lngTaxCode.value;                  // ¾ÃÈñÀÇ¡ÊÎ¨¡Ë
-		aryRecord[17] = window.parent.DSO.curTaxPrice.value;                 // ¾ÃÈñÀÇ³Û
-		aryRecord[18] = "";            // ¹ÔÈÖ¹æ
+		aryRecord[15] = window.parent.DSO.lngTaxClassCode.value;             // æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+		aryRecord[16] = window.parent.DSO.lngTaxCode.value;                  // æ¶ˆè²»ç¨ï¼ˆç‡ï¼‰
+		aryRecord[17] = window.parent.DSO.curTaxPrice.value;                 // æ¶ˆè²»ç¨é¡
+		aryRecord[18] = "";            // è¡Œç•ªå·
 	}
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		aryRecord[19] = window.parent.DSO.lngSalesClassCode.value;          // Çä¾å¶èÊ¬
+		aryRecord[19] = window.parent.DSO.lngSalesClassCode.value;          // å£²ä¸ŠåŒºåˆ†
 		if( window.parent.DSO.lngSalesClassCode.selectedIndex != -1 )
 		{
-			aryRecord[20] = window.parent.DSO.lngSalesClassCode.options[window.parent.DSO.lngSalesClassCode.selectedIndex].text;           // Çä¾å¶èÊ¬¡Êvalue + Ì¾¾Î¡Ë
+			aryRecord[20] = window.parent.DSO.lngSalesClassCode.options[window.parent.DSO.lngSalesClassCode.selectedIndex].text;           // å£²ä¸ŠåŒºåˆ†ï¼ˆvalue + åç§°ï¼‰
 		}else{
 			aryRecord[20] = "";
 		}
-		aryRecord[21] = window.parent.DSO.dtmDeliveryDate.value;          // Ç¼´ü
-		aryRecord[22] = '';          // ÂĞ¾İÇä¾åÂ¸ºß¥Õ¥é¥°
-		aryRecord[23] = '';          // ÂĞ¾İÇä¾å¡¢¿ôÎÌ
+		aryRecord[21] = window.parent.DSO.dtmDeliveryDate.value;          // ç´æœŸ
+		aryRecord[22] = '';          // å¯¾è±¡å£²ä¸Šå­˜åœ¨ãƒ•ãƒ©ã‚°
+		aryRecord[23] = '';          // å¯¾è±¡å£²ä¸Šã€æ•°é‡
 	}
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		aryRecord[22] = ""; //window.parent.DSO.strSerialNo.value;         // No	// No.¤Ï¿·µ¬¹ÔÄÉ²Ã»ş¤Ë·Ñ¾µ¤·¤Ê¤¤¤è¤¦¤Ë¤¹¤ë (Modifyed by Kazushi Saito
-		aryRecord[23] = window.parent.DSO.dtmDeliveryDate.value;          // Ç¼´ü
+		aryRecord[22] = ""; //window.parent.DSO.strSerialNo.value;         // No	// No.ã¯æ–°è¦è¡Œè¿½åŠ æ™‚ã«ç¶™æ‰¿ã—ãªã„ã‚ˆã†ã«ã™ã‚‹ (Modifyed by Kazushi Saito
+		aryRecord[23] = window.parent.DSO.dtmDeliveryDate.value;          // ç´æœŸ
 	}
 
 
 
 
-	// Çä¾å´ÉÍı
+	// å£²ä¸Šç®¡ç†
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		aryRecord[24] = aryRecord[10];            // ¸µ¿ôÎÌ
-		aryRecord[25] = "";                       // ¼õÃíÈÖ¹æ
-		aryRecord[26] = "";                       // ÌÀºÙ¹ÔÈÖ¹æ
-		aryRecord[27] = g_bytDefaultCheckedFlag;  // ÂĞ¾İ
+		aryRecord[24] = aryRecord[10];            // å…ƒæ•°é‡
+		aryRecord[25] = "";                       // å—æ³¨ç•ªå·
+		aryRecord[26] = "";                       // æ˜ç´°è¡Œç•ªå·
+		aryRecord[27] = g_bytDefaultCheckedFlag;  // å¯¾è±¡
 	}
-	// »ÅÆş´ÉÍı
+	// ä»•å…¥ç®¡ç†
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		aryRecord[25] = g_bytDefaultCheckedFlag; // ÂĞ¾İ
+		aryRecord[25] = g_bytDefaultCheckedFlag; // å¯¾è±¡
 	}
 
 
@@ -1109,31 +1109,31 @@ function fncDtNewAry()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÆşÎÏÏÈ¤ÎÃÍ¤òÁªÂò¹Ô¤ÈÃÖ¤­´¹¤¨
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : å…¥åŠ›æ ã®å€¤ã‚’é¸æŠè¡Œã¨ç½®ãæ›ãˆ
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtReplaceAry()
 {
-	// ÂĞ¾İÃÍºÆÀßÄê
+	// å¯¾è±¡å€¤å†è¨­å®š
 	fncSetCheckValue();
 
 
 
-	saveRecord[g_lngSelIndex][0]  = window.parent.DSO.strProductCode.value;         // À½ÉÊ¥³¡¼¥É
-	saveRecord[g_lngSelIndex][1]  = window.parent.DSO.lngGoodsPriceCode.value;      // Ã±²Á¥ê¥¹¥È
+	saveRecord[g_lngSelIndex][0]  = window.parent.DSO.strProductCode.value;         // è£½å“ã‚³ãƒ¼ãƒ‰
+	saveRecord[g_lngSelIndex][1]  = window.parent.DSO.lngGoodsPriceCode.value;      // å˜ä¾¡ãƒªã‚¹ãƒˆ
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		saveRecord[g_lngSelIndex][2]  = window.parent.DSO.strStockSubjectCode.value;    // »ÅÆş²ÊÌÜ
-		saveRecord[g_lngSelIndex][3]  = window.parent.DSO.strStockSubjectCode.options[window.parent.DSO.strStockSubjectCode.selectedIndex].text;     //»ÅÆş²ÊÌÜ¡Êvalue + Ì¾¾Î¡Ë
-		saveRecord[g_lngSelIndex][4]  = window.parent.DSO.strStockItemCode.value;       // »ÅÆşÉôÉÊ
+		saveRecord[g_lngSelIndex][2]  = window.parent.DSO.strStockSubjectCode.value;    // ä»•å…¥ç§‘ç›®
+		saveRecord[g_lngSelIndex][3]  = window.parent.DSO.strStockSubjectCode.options[window.parent.DSO.strStockSubjectCode.selectedIndex].text;     //ä»•å…¥ç§‘ç›®ï¼ˆvalue + åç§°ï¼‰
+		saveRecord[g_lngSelIndex][4]  = window.parent.DSO.strStockItemCode.value;       // ä»•å…¥éƒ¨å“
 	
 		if( window.parent.DSO.strStockItemCode.selectedIndex != -1 )
 		{
-		saveRecord[g_lngSelIndex][5]  = window.parent.DSO.strStockItemCode.options[window.parent.DSO.strStockItemCode.selectedIndex].text;           //»ÅÆşÉôÉÊ¡Êvalue + Ì¾¾Î¡Ë
+		saveRecord[g_lngSelIndex][5]  = window.parent.DSO.strStockItemCode.options[window.parent.DSO.strStockItemCode.selectedIndex].text;           //ä»•å…¥éƒ¨å“ï¼ˆvalue + åç§°ï¼‰
 		}else{
 		saveRecord[g_lngSelIndex][5]  = "";
 		}
@@ -1145,131 +1145,131 @@ function fncDtReplaceAry()
 
 	if( window.parent.DSO.lngConversionClassCode[0].checked )
 	{
-		saveRecord[g_lngSelIndex][6]  = window.parent.DSO.lngConversionClassCode[0].value; // ´¹»»¶èÊ¬(À½ÉÊÃ±°Ì·×¾å)
-		saveRecord[g_lngSelIndex][7]  = window.parent.DSO.curProductPrice_gs.value;        // À½ÉÊÃ±²Á
-		saveRecord[g_lngSelIndex][8]  = window.parent.DSO.lngProductUnitCode_gs.value;     // À½ÉÊÃ±°Ì
-		saveRecord[g_lngSelIndex][9]  = window.parent.DSO.lngProductUnitCode_gs.options[window.parent.DSO.lngProductUnitCode_gs.selectedIndex].text;     //À½ÉÊÃ±°Ì¡ÊÌ¾¾Î¡Ë
-		saveRecord[g_lngSelIndex][10] = window.parent.DSO.lngGoodsQuantity_gs.value;       // À½ÉÊ¿ôÎÌ
-		saveRecord[g_lngSelIndex][14] = window.parent.DSO.curProductPrice_gs.value;        // Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
+		saveRecord[g_lngSelIndex][6]  = window.parent.DSO.lngConversionClassCode[0].value; // æ›ç®—åŒºåˆ†(è£½å“å˜ä½è¨ˆä¸Š)
+		saveRecord[g_lngSelIndex][7]  = window.parent.DSO.curProductPrice_gs.value;        // è£½å“å˜ä¾¡
+		saveRecord[g_lngSelIndex][8]  = window.parent.DSO.lngProductUnitCode_gs.value;     // è£½å“å˜ä½
+		saveRecord[g_lngSelIndex][9]  = window.parent.DSO.lngProductUnitCode_gs.options[window.parent.DSO.lngProductUnitCode_gs.selectedIndex].text;     //è£½å“å˜ä½ï¼ˆåç§°ï¼‰
+		saveRecord[g_lngSelIndex][10] = window.parent.DSO.lngGoodsQuantity_gs.value;       // è£½å“æ•°é‡
+		saveRecord[g_lngSelIndex][14] = window.parent.DSO.curProductPrice_gs.value;        // å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
 	}
 	else if(window.parent.DSO.lngConversionClassCode[1].checked )
 	{
-		saveRecord[g_lngSelIndex][6]  =  window.parent.DSO.lngConversionClassCode[1].value; // ´¹»»¶èÊ¬(²Ù»ÑÃ±°Ì·×¾å)
-		saveRecord[g_lngSelIndex][7]  = window.parent.DSO.curProductPrice_ps.value;         // ²Ù»ÑÃ±²Á
-		saveRecord[g_lngSelIndex][8]  = window.parent.DSO.lngProductUnitCode_ps.value;      // ²Ù»ÑÃ±°Ì
-		saveRecord[g_lngSelIndex][9]  = window.parent.DSO.lngProductUnitCode_ps.options[window.parent.DSO.lngProductUnitCode_ps.selectedIndex].text;     //²Ù»ÑÃ±°Ì¡ÊÌ¾¾Î¡Ë
-		saveRecord[g_lngSelIndex][10] = window.parent.DSO.lngGoodsQuantity_ps.value;        // ²Ù»Ñ¿ôÎÌ
-		saveRecord[g_lngSelIndex][14] = fncProductPriceForList();                           // Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
+		saveRecord[g_lngSelIndex][6]  =  window.parent.DSO.lngConversionClassCode[1].value; // æ›ç®—åŒºåˆ†(è·å§¿å˜ä½è¨ˆä¸Š)
+		saveRecord[g_lngSelIndex][7]  = window.parent.DSO.curProductPrice_ps.value;         // è·å§¿å˜ä¾¡
+		saveRecord[g_lngSelIndex][8]  = window.parent.DSO.lngProductUnitCode_ps.value;      // è·å§¿å˜ä½
+		saveRecord[g_lngSelIndex][9]  = window.parent.DSO.lngProductUnitCode_ps.options[window.parent.DSO.lngProductUnitCode_ps.selectedIndex].text;     //è·å§¿å˜ä½ï¼ˆåç§°ï¼‰
+		saveRecord[g_lngSelIndex][10] = window.parent.DSO.lngGoodsQuantity_ps.value;        // è·å§¿æ•°é‡
+		saveRecord[g_lngSelIndex][14] = fncProductPriceForList();                           // å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
 	} 
 
 
-	saveRecord[g_lngSelIndex][11] = window.parent.DSO.curTotalPrice.value;          // ÀÇÈ´¶â³Û
+	saveRecord[g_lngSelIndex][11] = window.parent.DSO.curTotalPrice.value;          // ç¨æŠœé‡‘é¡
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		saveRecord[g_lngSelIndex][12] = window.parent.DSO.lngCarrierCode.value;         // ±¿ÈÂÊıË¡
+		saveRecord[g_lngSelIndex][12] = window.parent.DSO.lngCarrierCode.value;         // é‹æ¬æ–¹æ³•
 	}
 
-	saveRecord[g_lngSelIndex][13] = fncCheckReplaceString(window.parent.DSO.strDetailNote.value);          // È÷¹Í
+	saveRecord[g_lngSelIndex][13] = fncCheckReplaceString(window.parent.DSO.strDetailNote.value);          // å‚™è€ƒ
 
 
 
 
-	//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.PCFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		saveRecord[g_lngSelIndex][15] = window.parent.DSO.lngTaxClassCode.value;         // ¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-		saveRecord[g_lngSelIndex][16] = window.parent.DSO.lngTaxCode.value;              // ¾ÃÈñÀÇ¡ÊÎ¨¡Ë
-		saveRecord[g_lngSelIndex][17] = window.parent.DSO.curTaxPrice.value;             // ¾ÃÈñÀÇ³Û
+		saveRecord[g_lngSelIndex][15] = window.parent.DSO.lngTaxClassCode.value;         // æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+		saveRecord[g_lngSelIndex][16] = window.parent.DSO.lngTaxCode.value;              // æ¶ˆè²»ç¨ï¼ˆç‡ï¼‰
+		saveRecord[g_lngSelIndex][17] = window.parent.DSO.curTaxPrice.value;             // æ¶ˆè²»ç¨é¡
 	}
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		saveRecord[g_lngSelIndex][19] = window.parent.DSO.lngSalesClassCode.value;          // Çä¾å¶èÊ¬
+		saveRecord[g_lngSelIndex][19] = window.parent.DSO.lngSalesClassCode.value;          // å£²ä¸ŠåŒºåˆ†
 		if( window.parent.DSO.lngSalesClassCode.selectedIndex != -1 )
 		{
-			saveRecord[g_lngSelIndex][20] = window.parent.DSO.lngSalesClassCode.options[window.parent.DSO.lngSalesClassCode.selectedIndex].text;           //Çä¾å¶èÊ¬¡Êvalue + Ì¾¾Î¡Ë
+			saveRecord[g_lngSelIndex][20] = window.parent.DSO.lngSalesClassCode.options[window.parent.DSO.lngSalesClassCode.selectedIndex].text;           //å£²ä¸ŠåŒºåˆ†ï¼ˆvalue + åç§°ï¼‰
 		}else{
 			saveRecord[g_lngSelIndex][20] = "";
 		}
-		saveRecord[g_lngSelIndex][21] = window.parent.DSO.dtmDeliveryDate.value;          // Ç¼´ü
+		saveRecord[g_lngSelIndex][21] = window.parent.DSO.dtmDeliveryDate.value;          // ç´æœŸ
 	}
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		saveRecord[g_lngSelIndex][22] = window.parent.DSO.strSerialNo.value;              // No
-		saveRecord[g_lngSelIndex][23] = window.parent.DSO.dtmDeliveryDate.value;          // Ç¼´ü
+		saveRecord[g_lngSelIndex][23] = window.parent.DSO.dtmDeliveryDate.value;          // ç´æœŸ
 	}
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÆşÎÏÏÈ¤ËÁªÂò¹Ô¤òÈ¿±Ç
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : å…¥åŠ›æ ã«é¸æŠè¡Œã‚’åæ˜ 
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtReplaceInput()
 {
-	window.parent.DSO.strProductCode.value         = saveRecord[g_lngSelIndex][0];  //À½ÉÊ¥³¡¼¥É
-	//Ã±²Á¥ê¥¹¥È(saveRecord[g_lngSelIndex][1])¤Ï¡¢hmtl¤ËÄ¾ÀÜ½ñ¤¯¡ÊÃÙ±ä¤Î¤¿¤á¡Ë
+	window.parent.DSO.strProductCode.value         = saveRecord[g_lngSelIndex][0];  //è£½å“ã‚³ãƒ¼ãƒ‰
+	//å˜ä¾¡ãƒªã‚¹ãƒˆ(saveRecord[g_lngSelIndex][1])ã¯ã€hmtlã«ç›´æ¥æ›¸ãï¼ˆé…å»¶ã®ãŸã‚ï¼‰
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		window.parent.DSO.strStockSubjectCode.value    = saveRecord[g_lngSelIndex][2];  //»ÅÆş²ÊÌÜ
-		//»ÅÆşÉôÉÊ(saveRecord[g_lngSelIndex][4])¤Ï¡¢hmtl¤ËÄ¾ÀÜ½ñ¤¯¡ÊÃÙ±ä¤Î¤¿¤á¡Ë
+		window.parent.DSO.strStockSubjectCode.value    = saveRecord[g_lngSelIndex][2];  //ä»•å…¥ç§‘ç›®
+		//ä»•å…¥éƒ¨å“(saveRecord[g_lngSelIndex][4])ã¯ã€hmtlã«ç›´æ¥æ›¸ãï¼ˆé…å»¶ã®ãŸã‚ï¼‰
 	}
 //alert(saveRecord[g_lngSelIndex][7]);
 
 
-	// À½ÉÊ
+	// è£½å“
 	if( saveRecord[g_lngSelIndex][6] == "gs" )
 	{
-		window.parent.DSO.lngConversionClassCode[0].checked = true;             //´¹»»¶èÊ¬(À½ÉÊÃ±°Ì·×¾å)
-		window.parent.DSO.curProductPrice_gs.value     = saveRecord[g_lngSelIndex][7];  //À½ÉÊÃ±²Á
-		window.parent.DSO.lngProductUnitCode_gs.value  = saveRecord[g_lngSelIndex][8];  //À½ÉÊÃ±°Ì
-		window.parent.DSO.lngGoodsQuantity_gs.value    = saveRecord[g_lngSelIndex][10]; //À½ÉÊ¿ôÎÌ
+		window.parent.DSO.lngConversionClassCode[0].checked = true;             //æ›ç®—åŒºåˆ†(è£½å“å˜ä½è¨ˆä¸Š)
+		window.parent.DSO.curProductPrice_gs.value     = saveRecord[g_lngSelIndex][7];  //è£½å“å˜ä¾¡
+		window.parent.DSO.lngProductUnitCode_gs.value  = saveRecord[g_lngSelIndex][8];  //è£½å“å˜ä½
+		window.parent.DSO.lngGoodsQuantity_gs.value    = saveRecord[g_lngSelIndex][10]; //è£½å“æ•°é‡
 
-		//[À½ÉÊÃ±²Á][À½ÉÊÃ±°Ì][À½ÉÊ¿ôÎÌ]¤òÆşÎÏ¡¢ÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+		//[è£½å“å˜ä¾¡][è£½å“å˜ä½][è£½å“æ•°é‡]ã‚’å…¥åŠ›ã€é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 		window.parent.DSO.curProductPrice_gs.disabled    = false;
 		window.parent.DSO.lngProductUnitCode_gs.disabled = false;
 		window.parent.DSO.lngGoodsQuantity_gs.disabled   = false;
 
-		//[²Ù»ÑÃ±²Á][²Ù»ÑÃ±°Ì][²Ù»Ñ¿ôÎÌ]¤òÆşÎÏ¡¢ÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+		//[è·å§¿å˜ä¾¡][è·å§¿å˜ä½][è·å§¿æ•°é‡]ã‚’å…¥åŠ›ã€é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 		window.parent.DSO.curProductPrice_ps.disabled    = true;
 		window.parent.DSO.lngProductUnitCode_ps.disabled = true;
 		window.parent.DSO.lngGoodsQuantity_ps.disabled   = true;
 
-		// À½ÉÊ¿ôÎÌ
+		// è£½å“æ•°é‡
 		fncDtGSGoodsQuantityForPC();
 	}
-	// ²Ù»Ñ
+	// è·å§¿
 	else if( saveRecord[g_lngSelIndex][6] == "ps" )
 	{
-		window.parent.DSO.lngConversionClassCode[1].checked = true;             //´¹»»¶èÊ¬(²Ù»ÑÃ±°Ì·×¾å)
-		window.parent.DSO.curProductPrice_ps.value     = saveRecord[g_lngSelIndex][7];  //²Ù»ÑÃ±²Á
-		window.parent.DSO.lngProductUnitCode_ps.value  = saveRecord[g_lngSelIndex][8];  //²Ù»ÑÃ±°Ì
-		window.parent.DSO.lngGoodsQuantity_ps.value    = saveRecord[g_lngSelIndex][10]; //²Ù»Ñ¿ôÎÌ
+		window.parent.DSO.lngConversionClassCode[1].checked = true;             //æ›ç®—åŒºåˆ†(è·å§¿å˜ä½è¨ˆä¸Š)
+		window.parent.DSO.curProductPrice_ps.value     = saveRecord[g_lngSelIndex][7];  //è·å§¿å˜ä¾¡
+		window.parent.DSO.lngProductUnitCode_ps.value  = saveRecord[g_lngSelIndex][8];  //è·å§¿å˜ä½
+		window.parent.DSO.lngGoodsQuantity_ps.value    = saveRecord[g_lngSelIndex][10]; //è·å§¿æ•°é‡
 
-		//[À½ÉÊÃ±²Á][À½ÉÊÃ±°Ì][À½ÉÊ¿ôÎÌ]¤òÆşÎÏ¡¢ÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+		//[è£½å“å˜ä¾¡][è£½å“å˜ä½][è£½å“æ•°é‡]ã‚’å…¥åŠ›ã€é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 		window.parent.DSO.curProductPrice_gs.disabled    = true;
 		window.parent.DSO.lngProductUnitCode_gs.disabled = true;
 		window.parent.DSO.lngGoodsQuantity_gs.disabled   = true;
-		//[²Ù»ÑÃ±²Á][²Ù»ÑÃ±°Ì][²Ù»Ñ¿ôÎÌ]¤òÆşÎÏ¡¢ÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+		//[è·å§¿å˜ä¾¡][è·å§¿å˜ä½][è·å§¿æ•°é‡]ã‚’å…¥åŠ›ã€é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 		window.parent.DSO.curProductPrice_ps.disabled    = false;
 		window.parent.DSO.lngProductUnitCode_ps.disabled = false;
 		window.parent.DSO.lngGoodsQuantity_ps.disabled   = false;
 
-		// ²Ù»Ñ¿ôÎÌ
+		// è·å§¿æ•°é‡
 		fncDtPSGoodsQuantityForPC();
 	}
 
@@ -1277,57 +1277,57 @@ function fncDtReplaceInput()
 	if( typeof(window.parent.HSO.PCFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		window.parent.DSO.lngTaxClassCode.value = saveRecord[g_lngSelIndex][15];         //¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-		window.parent.DSO.lngTaxCode.value      = saveRecord[g_lngSelIndex][16];         //¾ÃÈñÀÇ¡ÊÎ¨¡Ë
-		window.parent.DSO.curTaxPrice.value     = saveRecord[g_lngSelIndex][17];         //¾ÃÈñÀÇ³Û
-//		saveRecord[g_lngSelIndex][17] = window.parent.DSO.curTaxPrice.value; //¾ÃÈñÀÇ³Û
+		window.parent.DSO.lngTaxClassCode.value = saveRecord[g_lngSelIndex][15];         //æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+		window.parent.DSO.lngTaxCode.value      = saveRecord[g_lngSelIndex][16];         //æ¶ˆè²»ç¨ï¼ˆç‡ï¼‰
+		window.parent.DSO.curTaxPrice.value     = saveRecord[g_lngSelIndex][17];         //æ¶ˆè²»ç¨é¡
+//		saveRecord[g_lngSelIndex][17] = window.parent.DSO.curTaxPrice.value; //æ¶ˆè²»ç¨é¡
 	}
 	
-	// *v2* ¹ç·×¶â³Û
+	// *v2* åˆè¨ˆé‡‘é¡
 	fncDtCalTotalPrice();
 
-	window.parent.DSO.curTotalPrice.value = saveRecord[g_lngSelIndex][11]; //ÀÇÈ´¶â³Û
+	window.parent.DSO.curTotalPrice.value = saveRecord[g_lngSelIndex][11]; //ç¨æŠœé‡‘é¡
 
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		window.parent.DSO.lngCarrierCode.value         = saveRecord[g_lngSelIndex][12]; //±¿ÈÂÊıË¡
+		window.parent.DSO.lngCarrierCode.value         = saveRecord[g_lngSelIndex][12]; //é‹æ¬æ–¹æ³•
 	}
-	window.parent.DSO.strDetailNote.value          = fncCheckReplaceStringBack(saveRecord[g_lngSelIndex][13]); //È÷¹Í
+	window.parent.DSO.strDetailNote.value          = fncCheckReplaceStringBack(saveRecord[g_lngSelIndex][13]); //å‚™è€ƒ
 
-	//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.PCFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-//		window.parent.DSO.lngTaxClassCode.value = saveRecord[g_lngSelIndex][15];         //¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-//		window.parent.DSO.lngTaxCode.value      = saveRecord[g_lngSelIndex][16];         //¾ÃÈñÀÇ¡ÊÎ¨¡Ë
-//		//window.parent.DSO.curTaxPrice.value     = saveRecord[g_lngSelIndex][17];         //¾ÃÈñÀÇ³Û
-		saveRecord[g_lngSelIndex][17] = window.parent.DSO.curTaxPrice.value; //¾ÃÈñÀÇ³Û
+//		window.parent.DSO.lngTaxClassCode.value = saveRecord[g_lngSelIndex][15];         //æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+//		window.parent.DSO.lngTaxCode.value      = saveRecord[g_lngSelIndex][16];         //æ¶ˆè²»ç¨ï¼ˆç‡ï¼‰
+//		//window.parent.DSO.curTaxPrice.value     = saveRecord[g_lngSelIndex][17];         //æ¶ˆè²»ç¨é¡
+		saveRecord[g_lngSelIndex][17] = window.parent.DSO.curTaxPrice.value; //æ¶ˆè²»ç¨é¡
 
 // 2004.06.14 suzukaze update start
 		if( window.parent.DSO.lngTaxClassCode.value == g_strInTaxClass )
 		{
-			// ÌÀºÙÏÈ¤«¤éÆşÎÏÏÈ¤ØÈ¿±Ç»ş¤Ë ²Á³Ê¡ö¿ôÎÌ¡áÀÇÈ´¶â³Û¡Ü¾ÃÈñÀÇ³Û ¤È¤Ê¤Ã¤Æ¤¤¤Ê¤¤ÌÀºÙ¹Ô¤ËÂĞ¤·¤Æ¡¢¾ÃÈñÀÇ³Û¤Ê¤É¤òºÆ·×»»¤¹¤ë¤è¤¦¤Ë½¤Àµ
+			// æ˜ç´°æ ã‹ã‚‰å…¥åŠ›æ ã¸åæ˜ æ™‚ã« ä¾¡æ ¼ï¼Šæ•°é‡ï¼ç¨æŠœé‡‘é¡ï¼‹æ¶ˆè²»ç¨é¡ ã¨ãªã£ã¦ã„ãªã„æ˜ç´°è¡Œã«å¯¾ã—ã¦ã€æ¶ˆè²»ç¨é¡ãªã©ã‚’å†è¨ˆç®—ã™ã‚‹ã‚ˆã†ã«ä¿®æ­£
 
-			var ProductPrice  = 0;	// Ã±²Á
-			var GoodsQuantity = 0;	// ¿ôÎÌ
-			var TotalPrice    = 0;	// ÀÇÈ´¶â³Û
-			var ComTotalPrice = 0;	// Èæ³ÓÍÑ
+			var ProductPrice  = 0;	// å˜ä¾¡
+			var GoodsQuantity = 0;	// æ•°é‡
+			var TotalPrice    = 0;	// ç¨æŠœé‡‘é¡
+			var ComTotalPrice = 0;	// æ¯”è¼ƒç”¨
 
 			if( saveRecord[g_lngSelIndex][6] == "gs" )
 			{
-				//ÆşÎÏÏÈ¤Î[À½ÉÊÃ±²Á]¤«¤éÃÍ¤òÆÀ¤Æ¡¢ÄÌ²ßµ­¹æ¡¢¥«¥ó¥Ş¤ò¼è¤ë
+				//å…¥åŠ›æ ã®[è£½å“å˜ä¾¡]ã‹ã‚‰å€¤ã‚’å¾—ã¦ã€é€šè²¨è¨˜å·ã€ã‚«ãƒ³ãƒã‚’å–ã‚‹
 				ProductPrice  = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value));
-				//ÆşÎÏÏÈ¤Î[À½ÉÊ¿ôÎÌ]¤«¤éÃÍ¤òÆÀ¤Æ¡¢¥«¥ó¥Ş¤ò¼è¤ë
+				//å…¥åŠ›æ ã®[è£½å“æ•°é‡]ã‹ã‚‰å€¤ã‚’å¾—ã¦ã€ã‚«ãƒ³ãƒã‚’å–ã‚‹
 				GoodsQuantity = fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value);
 			}
 			else if( saveRecord[g_lngSelIndex][6] == "ps" )
 			{
-				//ÆşÎÏÏÈ¤Î²Ù»ÑÃ±²Á¤«¤éÃÍ¤òÆÀ¤Æ¡¢ÄÌ²ßµ­¹æ¡¢¥«¥ó¥Ş¤ò¼è¤ë
+				//å…¥åŠ›æ ã®è·å§¿å˜ä¾¡ã‹ã‚‰å€¤ã‚’å¾—ã¦ã€é€šè²¨è¨˜å·ã€ã‚«ãƒ³ãƒã‚’å–ã‚‹
 				ProductPrice  = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value));
-				//ÆşÎÏÏÈ¤Î²Ù»Ñ¿ôÎÌ¤«¤éÃÍ¤òÆÀ¤Æ¡¢¥«¥ó¥Ş¤ò¼è¤ë
+				//å…¥åŠ›æ ã®è·å§¿æ•°é‡ã‹ã‚‰å€¤ã‚’å¾—ã¦ã€ã‚«ãƒ³ãƒã‚’å–ã‚‹
 				GoodsQuantity = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
 			}
 
@@ -1342,20 +1342,20 @@ function fncDtReplaceInput()
 // 2004.06.14 suzukaze update end
 	}
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		window.parent.DSO.lngSalesClassCode.value = saveRecord[g_lngSelIndex][19];          //Çä¾å¶èÊ¬
-		window.parent.DSO.dtmDeliveryDate.value   = saveRecord[g_lngSelIndex][21];          //Ç¼´ü
+		window.parent.DSO.lngSalesClassCode.value = saveRecord[g_lngSelIndex][19];          //å£²ä¸ŠåŒºåˆ†
+		window.parent.DSO.dtmDeliveryDate.value   = saveRecord[g_lngSelIndex][21];          //ç´æœŸ
 	}
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		window.parent.DSO.strSerialNo.value     = saveRecord[g_lngSelIndex][22];              //No
-		window.parent.DSO.dtmDeliveryDate.value = saveRecord[g_lngSelIndex][23];              //Ç¼´ü
+		window.parent.DSO.dtmDeliveryDate.value = saveRecord[g_lngSelIndex][23];              //ç´æœŸ
 	}
 
 }
@@ -1363,16 +1363,16 @@ function fncDtReplaceInput()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : ÌÀºÙÏÈ¥Æ¡¼¥Ö¥ë¤ÎÎóÌ¾¤òºîÀ®
-* ÂĞ¾İ    : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* @return : strTableHtml, [String·¿], ÌÀºÙÏÈ¤ÎÎóÌ¾
+* æ¦‚è¦    : æ˜ç´°æ ãƒ†ãƒ¼ãƒ–ãƒ«ã®åˆ—åã‚’ä½œæˆ
+* å¯¾è±¡    : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* @return : strTableHtml, [Stringå‹], æ˜ç´°æ ã®åˆ—å
 */
 // ---------------------------------------------------------------
 function fncStrTableHtmlColumns()
 {
 
 
-	// ¼õÃí´ÉÍı¤Î¾ì¹ç
+	// å—æ³¨ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" )
 	{
 		if( window.parent.lngLanguageCode == 1 )
@@ -1380,14 +1380,14 @@ function fncStrTableHtmlColumns()
 			strTableHtml ='<table width="910" cellpadding="0" cellspacing="1" border="0"' + 
 						  'bgcolor="#6f8180"><tr class="TrSegs">' + 
 						  '<td nowrap>&nbsp;</td>'                  +
-						  '<td nowrap id="ExStrDL02">À½ÉÊ</td>' +
-						  '<td nowrap id="ExStrDL01">Çä¾å¶èÊ¬</td>'     +
-						  '<td nowrap id="ExStrDL03">Ã±²Á</td>' +
-						  '<td nowrap id="ExStrDL04">Ã±°Ì</td>'     +
-						  '<td nowrap id="ExStrDL05">¿ôÎÌ</td>'     +
-						  '<td nowrap id="ExStrDL06">ÀÇÈ´¶â³Û</td>'     +
-						  '<td nowrap id="ExStrDL07">Ç¼´ü</td>' +
-						  '<td nowrap id="ExStrDL08">È÷¹Í</td>'     +
+						  '<td nowrap id="ExStrDL02">è£½å“</td>' +
+						  '<td nowrap id="ExStrDL01">å£²ä¸ŠåŒºåˆ†</td>'     +
+						  '<td nowrap id="ExStrDL03">å˜ä¾¡</td>' +
+						  '<td nowrap id="ExStrDL04">å˜ä½</td>'     +
+						  '<td nowrap id="ExStrDL05">æ•°é‡</td>'     +
+						  '<td nowrap id="ExStrDL06">ç¨æŠœé‡‘é¡</td>'     +
+						  '<td nowrap id="ExStrDL07">ç´æœŸ</td>' +
+						  '<td nowrap id="ExStrDL08">å‚™è€ƒ</td>'     +
 						  '</tr>';
 		}
 		else if( window.parent.lngLanguageCode == 0 )
@@ -1407,7 +1407,7 @@ function fncStrTableHtmlColumns()
 		}
 	}
 
-	//È¯Ãí´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" )
 	{
 		if( window.parent.lngLanguageCode == 1 )
@@ -1415,15 +1415,15 @@ function fncStrTableHtmlColumns()
 			strTableHtml ='<table width="910" cellpadding="0" cellspacing="1" border="0"' + 
 						  'bgcolor="#6f8180"><tr class="TrSegs">' + 
 						  '<td nowrap>&nbsp;</td>'                  +
-						  '<td nowrap id="ExStrDL01">À½ÉÊ</td>'     +
-						  '<td nowrap id="ExStrDL02">»ÅÆş²ÊÌÜ</td>' +
-						  '<td nowrap id="ExStrDL03">»ÅÆşÉôÉÊ</td>' +
-						  '<td nowrap id="ExStrDL04">Ã±²Á</td>'     +
-						  '<td nowrap id="ExStrDL05">Ã±°Ì</td>'     +
-						  '<td nowrap id="ExStrDL06">¿ôÎÌ</td>'     +
-						  '<td nowrap id="ExStrDL07">ÀÇÈ´¶â³Û</td>' +
-						  '<td nowrap id="ExStrDL08">Ç¼´ü</td>'     +
-						  '<td nowrap id="ExStrDL09">È÷¹Í</td>'     +
+						  '<td nowrap id="ExStrDL01">è£½å“</td>'     +
+						  '<td nowrap id="ExStrDL02">ä»•å…¥ç§‘ç›®</td>' +
+						  '<td nowrap id="ExStrDL03">ä»•å…¥éƒ¨å“</td>' +
+						  '<td nowrap id="ExStrDL04">å˜ä¾¡</td>'     +
+						  '<td nowrap id="ExStrDL05">å˜ä½</td>'     +
+						  '<td nowrap id="ExStrDL06">æ•°é‡</td>'     +
+						  '<td nowrap id="ExStrDL07">ç¨æŠœé‡‘é¡</td>' +
+						  '<td nowrap id="ExStrDL08">ç´æœŸ</td>'     +
+						  '<td nowrap id="ExStrDL09">å‚™è€ƒ</td>'     +
 						  '</tr>';
 		}
 		else if( window.parent.lngLanguageCode == 0 )
@@ -1444,7 +1444,7 @@ function fncStrTableHtmlColumns()
 		}
 	}
 
-	// Çä¾å´ÉÍı¤Î¾ì¹ç
+	// å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
 		if( window.parent.lngLanguageCode == 1 )
@@ -1452,22 +1452,22 @@ function fncStrTableHtmlColumns()
 			strTableHtml ='<table width="910" cellpadding="0" cellspacing="1" border="0"' + 
 						  'bgcolor="#6f8180"><tr class="TrSegs">'	+ 
 						  '<td nowrap>&nbsp;</td>'                  +
-						  '<td nowrap id="ExStrDL01">ÁªÂò</td>'		+
+						  '<td nowrap id="ExStrDL01">é¸æŠ</td>'		+
 						  '<td nowrap id="ExStrDL02">No.</td>'	+
-						  '<td nowrap id="ExStrDL03">¸ÜµÒ¼õÃíÈÖ¹æ</td>'		+
-						  '<td nowrap id="ExStrDL04">¼õÃíÈÖ¹æ</td>'		+
-						  '<td nowrap id="ExStrDL05">¸ÜµÒÉÊÈÖ</td>'		+
-						  '<td nowrap id="ExStrDL06">À½ÉÊ¥³¡¼¥É</td>'	+
-						  '<td nowrap id="ExStrDL07">À½ÉÊÌ¾</td>'		+
-						  '<td nowrap id="ExStrDL08">À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë</td>'		+
-						  '<td nowrap id="ExStrDL09">±Ä¶ÈÉô½ğ</td>'		+
-						  '<td nowrap id="ExStrDL10">Çä¾å¶èÊ¬</td>'	+
-						  '<td nowrap id="ExStrDL11">Ç¼´ü</td>'      +
-						  '<td nowrap id="ExStrDL12">Ã±²Á</td>'      +
-						  '<td nowrap id="ExStrDL13">Ã±°Ì</td>'      +
-						  '<td nowrap id="ExStrDL14">¿ôÎÌ</td>'      +
-						  '<td nowrap id="ExStrDL15">ÀÇÈ´¶â³Û</td>'      +
-						  '<td nowrap id="ExStrDL16">·×¾åÃ±°Ì</td>'      +
+						  '<td nowrap id="ExStrDL03">é¡§å®¢å—æ³¨ç•ªå·</td>'		+
+						  '<td nowrap id="ExStrDL04">å—æ³¨ç•ªå·</td>'		+
+						  '<td nowrap id="ExStrDL05">é¡§å®¢å“ç•ª</td>'		+
+						  '<td nowrap id="ExStrDL06">è£½å“ã‚³ãƒ¼ãƒ‰</td>'	+
+						  '<td nowrap id="ExStrDL07">è£½å“å</td>'		+
+						  '<td nowrap id="ExStrDL08">è£½å“åï¼ˆè‹±èªï¼‰</td>'		+
+						  '<td nowrap id="ExStrDL09">å–¶æ¥­éƒ¨ç½²</td>'		+
+						  '<td nowrap id="ExStrDL10">å£²ä¸ŠåŒºåˆ†</td>'	+
+						  '<td nowrap id="ExStrDL11">ç´æœŸ</td>'      +
+						  '<td nowrap id="ExStrDL12">å˜ä¾¡</td>'      +
+						  '<td nowrap id="ExStrDL13">å˜ä½</td>'      +
+						  '<td nowrap id="ExStrDL14">æ•°é‡</td>'      +
+						  '<td nowrap id="ExStrDL15">ç¨æŠœé‡‘é¡</td>'      +
+						  '<td nowrap id="ExStrDL16">è¨ˆä¸Šå˜ä½</td>'      +
 						  '</tr>';
 		}
 		else if( window.parent.lngLanguageCode == 0 )
@@ -1489,7 +1489,7 @@ function fncStrTableHtmlColumns()
 		}
 	}
 
-	// »ÅÆş´ÉÍı¤Î¾ì¹ç
+	// ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		if( window.parent.lngLanguageCode == 1 )
@@ -1497,17 +1497,17 @@ function fncStrTableHtmlColumns()
 			strTableHtml ='<table width="910" cellpadding="0" cellspacing="1" border="0"' + 
 						  'bgcolor="#6f8180"><tr class="TrSegs">' + 
 						  '<td nowrap>&nbsp;</td>'                  +
-						  '<td nowrap id="ExStrDL10">ÂĞ¾İ</td>'     +
-						  '<td nowrap id="ExStrDL01">À½ÉÊ</td>'     +
-						  '<td nowrap id="ExStrDL02">»ÅÆş²ÊÌÜ</td>' +
-						  '<td nowrap id="ExStrDL03">»ÅÆşÉôÉÊ</td>' +
-						  '<td nowrap id="ExStrDL04">Ã±²Á</td>'     +
-						  '<td nowrap id="ExStrDL05">Ã±°Ì</td>'     +
-						  '<td nowrap id="ExStrDL06">¿ôÎÌ</td>'     +
-						  '<td nowrap id="ExStrDL11">¸µ¿ôÎÌ</td>'   +
-						  '<td nowrap id="ExStrDL07">ÀÇÈ´¶â³Û</td>' +
-						  '<td nowrap id="ExStrDL08">Ç¼´ü</td>'     +
-						  '<td nowrap id="ExStrDL09">È÷¹Í</td>'     +
+						  '<td nowrap id="ExStrDL10">å¯¾è±¡</td>'     +
+						  '<td nowrap id="ExStrDL01">è£½å“</td>'     +
+						  '<td nowrap id="ExStrDL02">ä»•å…¥ç§‘ç›®</td>' +
+						  '<td nowrap id="ExStrDL03">ä»•å…¥éƒ¨å“</td>' +
+						  '<td nowrap id="ExStrDL04">å˜ä¾¡</td>'     +
+						  '<td nowrap id="ExStrDL05">å˜ä½</td>'     +
+						  '<td nowrap id="ExStrDL06">æ•°é‡</td>'     +
+						  '<td nowrap id="ExStrDL11">å…ƒæ•°é‡</td>'   +
+						  '<td nowrap id="ExStrDL07">ç¨æŠœé‡‘é¡</td>' +
+						  '<td nowrap id="ExStrDL08">ç´æœŸ</td>'     +
+						  '<td nowrap id="ExStrDL09">å‚™è€ƒ</td>'     +
 						  '</tr>';
 		}
 		else if( window.parent.lngLanguageCode == 0 )
@@ -1536,9 +1536,9 @@ function fncStrTableHtmlColumns()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : ÌÀºÙÏÈ¥Æ¡¼¥Ö¥ë¤Î¹Ô¤òºîÀ®
-* ÂĞ¾İ    : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* @return : strTableHtml, [String·¿], ÌÀºÙÏÈ¤ÎÆâÍÆ
+* æ¦‚è¦    : æ˜ç´°æ ãƒ†ãƒ¼ãƒ–ãƒ«ã®è¡Œã‚’ä½œæˆ
+* å¯¾è±¡    : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* @return : strTableHtml, [Stringå‹], æ˜ç´°æ ã®å†…å®¹
 */
 // ---------------------------------------------------------------
 function fncStrTableHtmlRows(i)
@@ -1553,10 +1553,10 @@ function fncStrTableHtmlRows(i)
 	if( typeof(window.parent.HSO.SCFlg) == "object" ||
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+		// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 		if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 		{
-			// Çä¾å¡¢»ÅÆş¡¢¤Î¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¾õÂÖ¤Î½é´üÃÍ¤ò°ú·Ñ¤®ÀßÄê
+			// å£²ä¸Šã€ä»•å…¥ã€ã®ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹çŠ¶æ…‹ã®åˆæœŸå€¤ã‚’å¼•ç¶™ãè¨­å®š
 			if( typeof(eval("window.DL.blnOffset" + i)) != "undefined" )
 			{
 				if( eval("window.DL.blnOffset" + i + ".value") == 1 )
@@ -1566,7 +1566,7 @@ function fncStrTableHtmlRows(i)
 				}
 			}
 		}
-		// Ä¾ÅĞÏ¿¤Î¾ì¹ç
+		// ç›´ç™»éŒ²ã®å ´åˆ
 		else
 		{
 			lngOffsetVal  = 1;
@@ -1575,10 +1575,10 @@ function fncStrTableHtmlRows(i)
 	}
 
 
-	// Çä¾å
+	// å£²ä¸Š
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+		// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 		if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 		{
 			if( saveRecord[i][27] == 1 )
@@ -1587,7 +1587,7 @@ function fncStrTableHtmlRows(i)
 				strChkImgPath = strChkOnPath;
 			}
 		}
-		// Ä¾ÅĞÏ¿¤Î¾ì¹ç
+		// ç›´ç™»éŒ²ã®å ´åˆ
 		else
 		{
 			lngOffsetVal  = 1;
@@ -1595,10 +1595,10 @@ function fncStrTableHtmlRows(i)
 		}
 	}
 
-	// »ÅÆş
+	// ä»•å…¥
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+		// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 		if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 		{
 			if( saveRecord[i][25] == 1 )
@@ -1607,7 +1607,7 @@ function fncStrTableHtmlRows(i)
 				strChkImgPath = strChkOnPath;
 			}
 		}
-		// Ä¾ÅĞÏ¿¤Î¾ì¹ç
+		// ç›´ç™»éŒ²ã®å ´åˆ
 		else
 		{
 			lngOffsetVal  = 1;
@@ -1619,38 +1619,38 @@ function fncStrTableHtmlRows(i)
 
 
 
-	// ¼õÃí´ÉÍı¤Î¾ì¹ç
+	// å—æ³¨ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" )
 	{
-		strTableHtml ='<td align     ="center" nowrap>' + saveRecord[i][0]  +				// À½ÉÊ
-					  '</td><td nowrap>'                + saveRecord[i][20] +				// Çä¾å¶èÊ¬
-					  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +	// Ã±²Á
-					  '</td><td align="center" nowrap>' + saveRecord[i][9]  +				// Ã±°Ì¡ÊÌ¾¾Î¡Ë
-					  '</td><td align="right" nowrap>'  + saveRecord[i][10] + "&nbsp;" +	// ¿ôÎÌ
-					  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +	// ÀÇÈ´¶â³Û
-					  '</td><td align="center" nowrap>' + saveRecord[i][21] +				// Ç¼ÉÊÆü
-					  '</td><td nowrap>'                + saveRecord[i][13] +				// È÷¹Í
+		strTableHtml ='<td align     ="center" nowrap>' + saveRecord[i][0]  +				// è£½å“
+					  '</td><td nowrap>'                + saveRecord[i][20] +				// å£²ä¸ŠåŒºåˆ†
+					  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +	// å˜ä¾¡
+					  '</td><td align="center" nowrap>' + saveRecord[i][9]  +				// å˜ä½ï¼ˆåç§°ï¼‰
+					  '</td><td align="right" nowrap>'  + saveRecord[i][10] + "&nbsp;" +	// æ•°é‡
+					  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +	// ç¨æŠœé‡‘é¡
+					  '</td><td align="center" nowrap>' + saveRecord[i][21] +				// ç´å“æ—¥
+					  '</td><td nowrap>'                + saveRecord[i][13] +				// å‚™è€ƒ
 					  '</td>';
 		return strTableHtml;
 	}
 
-	// È¯Ãí´ÉÍı¤Î¾ì¹ç
+	// ç™ºæ³¨ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" )
 	{
-		strTableHtml ='<td align="center" nowrap>'      + saveRecord[i][0]  +				// À½ÉÊ
-					  '</td><td nowrap>'                + saveRecord[i][3]  +				// »ÅÆş²ÊÌÜ¡ÊÌ¾¾Î¡Ë
-					  '</td><td nowrap>'                + saveRecord[i][5]  +				// »ÅÆşÉôÉÊ¡ÊÌ¾¾Î¡Ë
-					  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +	// Ã±²Á
-					  '</td><td align="center" nowrap>' + saveRecord[i][9]  +				// Ã±°Ì¡ÊÌ¾¾Î¡Ë
-					  '</td><td align="right" nowrap>'  + saveRecord[i][10] + "&nbsp;" +	// ¿ôÎÌ
-					  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +	// ÀÇÈ´¶â³Û
-					  '</td><td align="center" nowrap>' + saveRecord[i][23] + "&nbsp;" +	// Ç¼´ü
-					  '</td><td nowrap>'                + saveRecord[i][13] +				// È÷¹Í
+		strTableHtml ='<td align="center" nowrap>'      + saveRecord[i][0]  +				// è£½å“
+					  '</td><td nowrap>'                + saveRecord[i][3]  +				// ä»•å…¥ç§‘ç›®ï¼ˆåç§°ï¼‰
+					  '</td><td nowrap>'                + saveRecord[i][5]  +				// ä»•å…¥éƒ¨å“ï¼ˆåç§°ï¼‰
+					  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +	// å˜ä¾¡
+					  '</td><td align="center" nowrap>' + saveRecord[i][9]  +				// å˜ä½ï¼ˆåç§°ï¼‰
+					  '</td><td align="right" nowrap>'  + saveRecord[i][10] + "&nbsp;" +	// æ•°é‡
+					  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +	// ç¨æŠœé‡‘é¡
+					  '</td><td align="center" nowrap>' + saveRecord[i][23] + "&nbsp;" +	// ç´æœŸ
+					  '</td><td nowrap>'                + saveRecord[i][13] +				// å‚™è€ƒ
 					  '</td>';
 		return strTableHtml;
 	}
 
-	// Çä¾å´ÉÍı¤Î¾ì¹ç
+	// å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
 		
@@ -1658,37 +1658,37 @@ function fncStrTableHtmlRows(i)
 					  '<td align="center" valign="top">' +
 					  '<img onclick="fncSetCheck( this, ' + i + ' );" src="' + strChkImgPath + '" width="12" height="12">' +
 
-					  '</td><td align="center" nowrap>'	+ saveRecord[i][0]  +				// À½ÉÊ
-					  '</td><td nowrap>'                + saveRecord[i][20] +				// Çä¾å¶èÊ¬
-					  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +	// Ã±²Á
-					  '</td><td align="center" nowrap>' + saveRecord[i][9]  +				// Ã±°Ì¡ÊÌ¾¾Î¡Ë
-					  '</td><td align="right" nowrap>'  + saveRecord[i][10] + "&nbsp;" +	// ¿ôÎÌ
-					  '</td><td align="right" nowrap>'  + saveRecord[i][24] + "&nbsp;" +	// ¸µ¿ôÎÌ
-					  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +	// ÀÇÈ´¶â³Û
-					  '</td><td align="center" nowrap>' + saveRecord[i][21] +				// Ç¼ÉÊÆü
-					  '</td><td nowrap>'                + saveRecord[i][13] +				// È÷¹Í
+					  '</td><td align="center" nowrap>'	+ saveRecord[i][0]  +				// è£½å“
+					  '</td><td nowrap>'                + saveRecord[i][20] +				// å£²ä¸ŠåŒºåˆ†
+					  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +	// å˜ä¾¡
+					  '</td><td align="center" nowrap>' + saveRecord[i][9]  +				// å˜ä½ï¼ˆåç§°ï¼‰
+					  '</td><td align="right" nowrap>'  + saveRecord[i][10] + "&nbsp;" +	// æ•°é‡
+					  '</td><td align="right" nowrap>'  + saveRecord[i][24] + "&nbsp;" +	// å…ƒæ•°é‡
+					  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +	// ç¨æŠœé‡‘é¡
+					  '</td><td align="center" nowrap>' + saveRecord[i][21] +				// ç´å“æ—¥
+					  '</td><td nowrap>'                + saveRecord[i][13] +				// å‚™è€ƒ
 					  '</td>' +
 					  '<input type="hidden" name="blnOffset' + i + '" value="' + lngOffsetVal + '">';
 		return strTableHtml;
 	}
 	
-	// »ÅÆş´ÉÍı¤Î¾ì¹ç
+	// ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		strTableHtml ='' +
 					  '<td align="center" valign="top">' +
 					  '<img onclick="fncSetCheck( this, ' + i + ' );" src="' + strChkImgPath + '" width="12" height="12">' +
 
-					  '<td align="center" nowrap>'      + saveRecord[i][0]  +				// À½ÉÊ
-					  '</td><td nowrap>'                + saveRecord[i][3]  +				// »ÅÆş²ÊÌÜ¡ÊÌ¾¾Î¡Ë
-					  '</td><td nowrap>'                + saveRecord[i][5]  +				// »ÅÆşÉôÉÊ¡ÊÌ¾¾Î¡Ë
-					  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +	// Ã±²Á
-					  '</td><td align="center" nowrap>' + saveRecord[i][9]  +				// Ã±°Ì¡ÊÌ¾¾Î¡Ë
-					  '</td><td align="right" nowrap>'  + saveRecord[i][10] + "&nbsp;" +	// ¿ôÎÌ
-					  '</td><td align="right" nowrap>'  + saveRecord[i][24] + "&nbsp;" +	// ¸µ¿ôÎÌ
-					  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +	// ÀÇÈ´¶â³Û
-					  '</td><td align="center" nowrap>' + saveRecord[i][23] + "&nbsp;" +	// Ç¼´ü
-					  '</td><td nowrap>'                + saveRecord[i][13] +				// È÷¹Í
+					  '<td align="center" nowrap>'      + saveRecord[i][0]  +				// è£½å“
+					  '</td><td nowrap>'                + saveRecord[i][3]  +				// ä»•å…¥ç§‘ç›®ï¼ˆåç§°ï¼‰
+					  '</td><td nowrap>'                + saveRecord[i][5]  +				// ä»•å…¥éƒ¨å“ï¼ˆåç§°ï¼‰
+					  '</td><td align="right" nowrap>'  + saveRecord[i][7]  + "&nbsp;" +	// å˜ä¾¡
+					  '</td><td align="center" nowrap>' + saveRecord[i][9]  +				// å˜ä½ï¼ˆåç§°ï¼‰
+					  '</td><td align="right" nowrap>'  + saveRecord[i][10] + "&nbsp;" +	// æ•°é‡
+					  '</td><td align="right" nowrap>'  + saveRecord[i][24] + "&nbsp;" +	// å…ƒæ•°é‡
+					  '</td><td align="right" nowrap>'  + saveRecord[i][11] + "&nbsp;" +	// ç¨æŠœé‡‘é¡
+					  '</td><td align="center" nowrap>' + saveRecord[i][23] + "&nbsp;" +	// ç´æœŸ
+					  '</td><td nowrap>'                + saveRecord[i][13] +				// å‚™è€ƒ
 					  '</td>' +
 					  '<input type="hidden" name="blnOffset' + i + '" value="' + lngOffsetVal + '">';
 		return strTableHtml;
@@ -1699,10 +1699,10 @@ function fncStrTableHtmlRows(i)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÅĞÏ¿¥Ü¥¿¥ó¤ò²¡¤·¤¿¤È¤­¤Ë¡¢headerÍó¤Ë¡¢ÌÀºÙÏÈ¤Î¥Ç¡¼¥¿¤òhidden¤ËÅÇ¤­½Ğ¤¹
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* È÷¹Í   : select¥Ü¥Ã¥¯¥¹¤Îdisabled¤Ï¡¢¤½¤Î¤Ş¤Ş¤Ç¤Ï¡¢post¤µ¤ì¤Ê¤¤¤Î¤Ç¡¢
-*          ÌÀ¼¨Åª¤Ëhidden¤ò½ñ¤¤¤Æ¤¤¤Ş¤¹
+* æ¦‚è¦   : ç™»éŒ²ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸã¨ãã«ã€headeræ¬„ã«ã€æ˜ç´°æ ã®ãƒ‡ãƒ¼ã‚¿ã‚’hiddenã«åãå‡ºã™
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* å‚™è€ƒ   : selectãƒœãƒƒã‚¯ã‚¹ã®disabledã¯ã€ãã®ã¾ã¾ã§ã¯ã€postã•ã‚Œãªã„ã®ã§ã€
+*          æ˜ç¤ºçš„ã«hiddenã‚’æ›¸ã„ã¦ã„ã¾ã™
 */
 // ---------------------------------------------------------------
 function fncDtRegistRecord(){
@@ -1710,40 +1710,40 @@ function fncDtRegistRecord(){
 
 	if( saveRecord.length <= 0 )
 	{
-		alert( "ÌÀºÙ¹Ô¤¬¤¢¤ê¤Ş¤»¤ó¡£" );
+		alert( "æ˜ç´°è¡ŒãŒã‚ã‚Šã¾ã›ã‚“ã€‚" );
 		return;
 	}
 	
-	// Æó½Å¥¯¥ê¥Ã¥¯¤ÎËÉ»ßÂĞºö¡Ê°ì²ó¤Î²¡²¼¸å¤Ë¡¢½èÍıÃæ...¤ØÊÑ¹¹¤¹¤ë¡Ë
-	window.parent.document.all.RegistBt.innerHTML = '<span style="font-size:14px;color:white;line-height:1.6;">½èÍıÃæ...</span>';
+	// äºŒé‡ã‚¯ãƒªãƒƒã‚¯ã®é˜²æ­¢å¯¾ç­–ï¼ˆä¸€å›ã®æŠ¼ä¸‹å¾Œã«ã€å‡¦ç†ä¸­...ã¸å¤‰æ›´ã™ã‚‹ï¼‰
+	window.parent.document.all.RegistBt.innerHTML = '<span style="font-size:14px;color:white;line-height:1.6;">å‡¦ç†ä¸­...</span>';
 	//style.filter = 'alpha(opacity=50)';
 
-	// ÂĞ¾İÃÍºÆÀßÄê
+	// å¯¾è±¡å€¤å†è¨­å®š
 	fncSetCheckValue();
 
 
 
 
 
-	// ÌÀºÙ¹ÔÀ½ÉÊ¡¦Çä¾å¶èÊ¬¥Á¥§¥Ã¥¯
+	// æ˜ç´°è¡Œè£½å“ãƒ»å£²ä¸ŠåŒºåˆ†ãƒã‚§ãƒƒã‚¯
 	var blnCheck = fncCheckDetailRecords( saveRecord );
 
 	if( !blnCheck )
 	{
-		alert( "À½ÉÊ¤Ş¤¿¤Ï¡¢Çä¾å¶èÊ¬¤¬°ã¤¤¤Ş¤¹¡£" );
+		alert( "è£½å“ã¾ãŸã¯ã€å£²ä¸ŠåŒºåˆ†ãŒé•ã„ã¾ã™ã€‚" );
 		return false;
 	}
 
 
 
 
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Î¥Á¥§¥Ã¥¯¥Õ¥é¥°(ÆşÎÏÏÈ¤Ë¥¨¥é¡¼¤¬¤¢¤ë¤È¥¨¥é¡¼¤Ë¤Ê¤ë)
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆã®ãƒã‚§ãƒƒã‚¯ãƒ•ãƒ©ã‚°(å…¥åŠ›æ ã«ã‚¨ãƒ©ãƒ¼ãŒã‚ã‚‹ã¨ã‚¨ãƒ©ãƒ¼ã«ãªã‚‹)
 	var checkFlg = true;
 
-	//ÌÀºÙ¹Ô¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+	//æ˜ç´°è¡ŒãŒé¸æŠã•ã‚Œã¦ã„ã‚‹å ´åˆ
 	if( g_lngSelIndex != -1 )
 	{
-		//ÆşÎÏÏÈ¤ËÊÑ¹¹¤¬¤Ê¤¤¤«¥Á¥§¥Ã¥¯
+		//å…¥åŠ›æ ã«å¤‰æ›´ãŒãªã„ã‹ãƒã‚§ãƒƒã‚¯
 		checkFlg = fncDtCheck();
 	}
 
@@ -1751,16 +1751,16 @@ function fncDtRegistRecord(){
 	{
 		var strHiddenHtml = "";
 	
-		//hidden¤ÇÅÇ¤­½Ğ¤¹Ï¢ÈÖ¡Ê¶õ¹Ô¤òºï½ü¤¹¤ë¤È½çÈÖ¤¬¤«¤ï¤ë¤¿¤á»ÈÍÑ¡Ë
+		//hiddenã§åãå‡ºã™é€£ç•ªï¼ˆç©ºè¡Œã‚’å‰Šé™¤ã™ã‚‹ã¨é †ç•ªãŒã‹ã‚ã‚‹ãŸã‚ä½¿ç”¨ï¼‰
 		var hiddenNumber = 0 ;
 	
 		for( i = 0; i < saveRecord.length; i++ )
 		{
-			//¶õ¹Ô¥Á¥§¥Ã¥¯
+			//ç©ºè¡Œãƒã‚§ãƒƒã‚¯
 			if (saveRecord[i][0] == "") continue;
 
 
-			// Áê»¦¥Á¥§¥Ã¥¯³ÎÇ§¡Ê¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬¥Á¥§¥Ã¥¯¤µ¤ì¤Æ¤¤¤ë¹Ô¤Î¤ß¤ò½èÍıÂĞ¾İ¤È¤¹¤ë¡Ë added by saito
+			// ç›¸æ®ºãƒã‚§ãƒƒã‚¯ç¢ºèªï¼ˆãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒãƒã‚§ãƒƒã‚¯ã•ã‚Œã¦ã„ã‚‹è¡Œã®ã¿ã‚’å‡¦ç†å¯¾è±¡ã¨ã™ã‚‹ï¼‰ added by saito
 			//alert( eval("window.DL.blnOffset" + i + ".value") );
 			if( typeof(eval("window.DL.blnOffset" + i)) != "undefined" )
 			{
@@ -1772,37 +1772,37 @@ function fncDtRegistRecord(){
 			hiddenNumber++; 
 		}
 	
-		//¾µÇ§¥ë¡¼¥È¤òÄÉ²Ã
+		//æ‰¿èªãƒ«ãƒ¼ãƒˆã‚’è¿½åŠ 
 		strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngWorkflowOrderCode' value='" + window.parent.DSO.lngWorkflowOrderCode.value + "' >\n" ;
 
-		// ÉôÌç¥³¡¼¥É¤òÄÉ²Ã
+		// éƒ¨é–€ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ 
 		strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngInChargeGroupCode' value='" + window.parent.DSO.lngInChargeGroupCode.value + "' >\n" ;
 
-		// Ã´Åö¼Ô¥³¡¼¥É¤òÄÉ²Ã
+		// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ 
 		strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngInChargeUserCode' value='" + window.parent.DSO.lngInChargeUserCode.value + "' >\n" ;
 
 
 		if( window.parent.HSO.strCustomerReceiveCode )
 		{
-			// ¸ÜµÒ¼õÃíÈÖ¹æ¤òÄÉ²Ã
+			// é¡§å®¢å—æ³¨ç•ªå·ã‚’è¿½åŠ 
 			strHiddenHtml = strHiddenHtml + "<input type='hidden' name='strCustomerReceiveCode' value='" + window.parent.HSO.strCustomerReceiveCode.value + "' >\n" ;
 		}
 
 
 
 
-		//ÄÌ²ß¤òÄÉ²Ã
+		//é€šè²¨ã‚’è¿½åŠ 
 		strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngMonetaryUnitCode' value='" + window.parent.HSO.lngMonetaryUnitCode.value + "' >\n" ;
 	
-		//¥ì¡¼¥È¥¿¥¤¥×¤òÄÉ²Ã
+		//ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—ã‚’è¿½åŠ 
 		strHiddenHtml = strHiddenHtml + "<input type='hidden' name='lngMonetaryRateCode' value='" + window.parent.HSO.lngMonetaryRateCode.value + "' >\n" ;
 	
-		//Áí¹ç·×¶â³Û¡ÊÀÇÈ´¤­¡Ë¤òÄÉ²Ã
+		//ç·åˆè¨ˆé‡‘é¡ï¼ˆç¨æŠœãï¼‰ã‚’è¿½åŠ 
 		strHiddenHtml = strHiddenHtml + "<input type='hidden' name='curAllTotalPrice' value='" + fncDelKannma(fncDelCurrencySign(window.parent.DSO.curAllTotalPrice.value)) + "' >\n" ;
 
 
 
-		//¥Ç¥Ğ¥Ã¥¯ÍÑ
+		//ãƒ‡ãƒãƒƒã‚¯ç”¨
 		if( g_bytDebugFlag )
 		{
 			var blnRes = confirm( strHiddenHtml );
@@ -1815,10 +1815,10 @@ function fncDtRegistRecord(){
 
 
 
-		//¥Õ¥©¡¼¥à(name="HSO")¤ËÌÀºÙÏÈ¤Î¥Ç¡¼¥¿¤òÅÏ¤¹
+		//ãƒ•ã‚©ãƒ¼ãƒ (name="HSO")ã«æ˜ç´°æ ã®ãƒ‡ãƒ¼ã‚¿ã‚’æ¸¡ã™
 		window.parent.document.all.DtHiddenRecord.innerHTML = strHiddenHtml;
 	
-		//¥Õ¥©¡¼¥àHSO¤ò¥µ¥Ö¥ß¥Ã¥È
+		//ãƒ•ã‚©ãƒ¼ãƒ HSOã‚’ã‚µãƒ–ãƒŸãƒƒãƒˆ
 		window.parent.document.HSO.submit();
 	}
 }
@@ -1826,136 +1826,136 @@ function fncDtRegistRecord(){
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÆşÎÏÏÈ¤Îhidden¤ËÅÇ¤­½Ğ¤¹¥Ç¡¼¥¿¤òºîÀ®
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
-* return : strHiddenHtml, [string·¿], ÌÀºÙÏÈ¤ÎÆâÍÆ¤òhidden¤ËÃÖ¤­´¹¤¨¤ÆÅÇ¤­½Ğ¤¹
+* æ¦‚è¦   : å…¥åŠ›æ ã®hiddenã«åãå‡ºã™ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
+* return : strHiddenHtml, [stringå‹], æ˜ç´°æ ã®å†…å®¹ã‚’hiddenã«ç½®ãæ›ãˆã¦åãå‡ºã™
 */
 // ---------------------------------------------------------------
 function fncDtHiddenHtml(i, hiddenNumber){
 
-	//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç¤Î¤ß¤ÎhiddenÃÍ
+	//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆã®ã¿ã®hiddenå€¤
 	var strPC = "";
 
 	if( typeof(window.parent.HSO.PCFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
 		var zeicodevalue;
-		//ÀÇ¥³¡¼¥É(ÃÍ¤«¤é¥³¡¼¥É¤ËÊÑ´¹)
-		//Èó²İÀÇ¤Î¤È¤­
+		//ç¨ã‚³ãƒ¼ãƒ‰(å€¤ã‹ã‚‰ã‚³ãƒ¼ãƒ‰ã«å¤‰æ›)
+		//éèª²ç¨ã®ã¨ã
 		if( saveRecord[i][15] == g_strFreeTaxClass )
 		{
 			zeicodevalue = "";
 		}
-		//Èó²İÀÇ°Ê³°¤Î¤È¤­
+		//éèª²ç¨ä»¥å¤–ã®ã¨ã
 		else
 		{
 			zeicodevalue = g_lngTaxCode;
 		}
 
-	strPC = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngTaxClassCode]'  value='" + saveRecord[i][15] + "' >\n" +                                   //¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngTaxCode]'       value='" + zeicodevalue + "' >\n"      +                                   //¾ÃÈñÀÇ¥³¡¼¥É
-			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTaxPrice]'      value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][17])) + "' >\n" + //¾ÃÈñÀÇ³Û
-			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngOrderDetailNo]' value='" + saveRecord[i][18] + "' >\n" ;                                   //¹ÔÈÖ¹æ
+	strPC = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngTaxClassCode]'  value='" + saveRecord[i][15] + "' >\n" +                                   //æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngTaxCode]'       value='" + zeicodevalue + "' >\n"      +                                   //æ¶ˆè²»ç¨ã‚³ãƒ¼ãƒ‰
+			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTaxPrice]'      value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][17])) + "' >\n" + //æ¶ˆè²»ç¨é¡
+			"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngOrderDetailNo]' value='" + saveRecord[i][18] + "' >\n" ;                                   //è¡Œç•ªå·
 	}
 // 2004.03.26 suzukaze update start
-//¼õÃí´ÉÍı¡¢È¯Ãí´ÉÍı¤Î¾ì¹ç¤Ë¤â¹ÔÈÖ¹æ¤òHiddenÃÍ¤Ç³Ğ¤¨¤Æ¤ª¤¯¤è¤¦¤Ë½¤Àµ
+//å—æ³¨ç®¡ç†ã€ç™ºæ³¨ç®¡ç†ã®å ´åˆã«ã‚‚è¡Œç•ªå·ã‚’Hiddenå€¤ã§è¦šãˆã¦ãŠãã‚ˆã†ã«ä¿®æ­£
 	else
 	{
-	strPC = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngOrderDetailNo]' value='" + saveRecord[i][18] + "' >\n" ;                                   //¹ÔÈÖ¹æ
+	strPC = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngOrderDetailNo]' value='" + saveRecord[i][18] + "' >\n" ;                                   //è¡Œç•ªå·
 	}
 // 2004.03.26 suzukaze update end
 
 
-	// ¼õÃí´ÉÍı¤Î¾ì¹ç
+	// å—æ³¨ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" )
 	{
-		strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //À½ÉÊ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //Ã±²Á¥ê¥¹¥È
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //´¹»»¶èÊ¬
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //Ã±²Á
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //Ã±°Ì
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //Ã±°Ì¡ÊÌ¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //¿ôÎÌ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //ÀÇÈ´¶â³Û
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //È÷¹Í
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngSalesClassCode]'       value='" + saveRecord[i][19] + "' >\n" + //Çä¾å¶èÊ¬
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngSalesClassCodeName]'   value='" + saveRecord[i][20] + "' >\n" + //Çä¾å¶èÊ¬¡Êvalue + Ì¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][dtmDeliveryDate]'         value='" + saveRecord[i][21] + "' >\n" + //Ç¼´ü
+		strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //è£½å“
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //å˜ä¾¡ãƒªã‚¹ãƒˆ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //æ›ç®—åŒºåˆ†
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //å˜ä¾¡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //å˜ä½
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //å˜ä½ï¼ˆåç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //æ•°é‡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //ç¨æŠœé‡‘é¡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //å‚™è€ƒ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngSalesClassCode]'       value='" + saveRecord[i][19] + "' >\n" + //å£²ä¸ŠåŒºåˆ†
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngSalesClassCodeName]'   value='" + saveRecord[i][20] + "' >\n" + //å£²ä¸ŠåŒºåˆ†ï¼ˆvalue + åç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][dtmDeliveryDate]'         value='" + saveRecord[i][21] + "' >\n" + //ç´æœŸ
 						strPC;
 	}
 
-	// È¯Ãí´ÉÍı¤Î¾ì¹ç
+	// ç™ºæ³¨ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" )
 	{
-		strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //À½ÉÊ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //Ã±²Á¥ê¥¹¥È
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCode]'     value='" + saveRecord[i][2] + "' >\n"  + //»ÅÆş²ÊÌÜ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCodeName]' value='" + saveRecord[i][3] + "' >\n"  + //»ÅÆş²ÊÌÜ¡Êvalue + Ì¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCode]'        value='" + saveRecord[i][4] + "' >\n"  + //»ÅÆşÉôÉÊ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCodeName]'    value='" + saveRecord[i][5] + "' >\n"  + //»ÅÆşÉôÉÊ¡Êvalue + Ì¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //´¹»»¶èÊ¬
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //Ã±²Á
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //Ã±°Ì
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //Ã±°Ì¡ÊÌ¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //¿ôÎÌ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //ÀÇÈ´¶â³Û
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngCarrierCode]'          value='" + saveRecord[i][12] + "' >\n" + //±¿ÈÂÊıË¡
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //È÷¹Í
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
+		strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //è£½å“
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //å˜ä¾¡ãƒªã‚¹ãƒˆ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCode]'     value='" + saveRecord[i][2] + "' >\n"  + //ä»•å…¥ç§‘ç›®
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCodeName]' value='" + saveRecord[i][3] + "' >\n"  + //ä»•å…¥ç§‘ç›®ï¼ˆvalue + åç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCode]'        value='" + saveRecord[i][4] + "' >\n"  + //ä»•å…¥éƒ¨å“
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCodeName]'    value='" + saveRecord[i][5] + "' >\n"  + //ä»•å…¥éƒ¨å“ï¼ˆvalue + åç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //æ›ç®—åŒºåˆ†
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //å˜ä¾¡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //å˜ä½
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //å˜ä½ï¼ˆåç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //æ•°é‡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //ç¨æŠœé‡‘é¡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngCarrierCode]'          value='" + saveRecord[i][12] + "' >\n" + //é‹æ¬æ–¹æ³•
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //å‚™è€ƒ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
 						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strSerialNo]'             value='" + saveRecord[i][22] + "' >\n" + //No
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][dtmDeliveryDate]'         value='" + saveRecord[i][23] + "' >\n" + //Ç¼´ü
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][dtmDeliveryDate]'         value='" + saveRecord[i][23] + "' >\n" + //ç´æœŸ
 						strPC;
 	}
 
-	// Çä¾å´ÉÍı¤Î¾ì¹ç
+	// å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //À½ÉÊ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //Ã±²Á¥ê¥¹¥È
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //´¹»»¶èÊ¬
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //Ã±²Á
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //Ã±°Ì
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //Ã±°Ì¡ÊÌ¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //¿ôÎÌ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][org_lngGoodsQuantity]'    value='" + fncDelKannma(saveRecord[i][24]) + "' >\n"  + // ¸µ¿ôÎÌ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //ÀÇÈ´¶â³Û
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //È÷¹Í
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngSalesClassCode]'       value='" + saveRecord[i][19] + "' >\n" + //Çä¾å¶èÊ¬
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngSalesClassCodeName]'   value='" + saveRecord[i][20] + "' >\n" + //Çä¾å¶èÊ¬¡Êvalue + Ì¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][dtmDeliveryDate]'         value='" + saveRecord[i][21] + "' >\n" + //Ç¼´ü
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngReceiveNo]'            value='" + saveRecord[i][25] + "' >\n"  + //¼õÃíÈÖ¹æ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngReceiveDetailNo]'      value='" + saveRecord[i][26] + "' >\n"  + //ÌÀºÙ¹ÔÈÖ¹æ
+		strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //è£½å“
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //å˜ä¾¡ãƒªã‚¹ãƒˆ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //æ›ç®—åŒºåˆ†
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //å˜ä¾¡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //å˜ä½
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //å˜ä½ï¼ˆåç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //æ•°é‡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][org_lngGoodsQuantity]'    value='" + fncDelKannma(saveRecord[i][24]) + "' >\n"  + // å…ƒæ•°é‡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //ç¨æŠœé‡‘é¡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //å‚™è€ƒ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngSalesClassCode]'       value='" + saveRecord[i][19] + "' >\n" + //å£²ä¸ŠåŒºåˆ†
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngSalesClassCodeName]'   value='" + saveRecord[i][20] + "' >\n" + //å£²ä¸ŠåŒºåˆ†ï¼ˆvalue + åç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][dtmDeliveryDate]'         value='" + saveRecord[i][21] + "' >\n" + //ç´æœŸ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngReceiveNo]'            value='" + saveRecord[i][25] + "' >\n"  + //å—æ³¨ç•ªå·
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngReceiveDetailNo]'      value='" + saveRecord[i][26] + "' >\n"  + //æ˜ç´°è¡Œç•ªå·
 
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngChkVal]'               value='" + saveRecord[i][27] + "' >\n"  + //ÂĞ¾İ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngChkVal]'               value='" + saveRecord[i][27] + "' >\n"  + //å¯¾è±¡
 
 						strPC;
 	}
 
-	// »ÅÆş´ÉÍı¤Î¾ì¹ç
+	// ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //À½ÉÊ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //Ã±²Á¥ê¥¹¥È
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCode]'     value='" + saveRecord[i][2] + "' >\n"  + //»ÅÆş²ÊÌÜ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCodeName]' value='" + saveRecord[i][3] + "' >\n"  + //»ÅÆş²ÊÌÜ¡Êvalue + Ì¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCode]'        value='" + saveRecord[i][4] + "' >\n"  + //»ÅÆşÉôÉÊ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCodeName]'    value='" + saveRecord[i][5] + "' >\n"  + //»ÅÆşÉôÉÊ¡Êvalue + Ì¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //´¹»»¶èÊ¬
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //Ã±²Á
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //Ã±°Ì
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //Ã±°Ì¡ÊÌ¾¾Î¡Ë
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //¿ôÎÌ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][org_lngGoodsQuantity]'    value='" + fncDelKannma(saveRecord[i][24]) + "' >\n"  + // ¸µ¿ôÎÌ
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //ÀÇÈ´¶â³Û
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngCarrierCode]'          value='" + saveRecord[i][12] + "' >\n" + //±¿ÈÂÊıË¡
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //È÷¹Í
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
+		strHiddenHtml = "<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strProductCode]'          value='" + saveRecord[i][0] + "' >\n"  + //è£½å“
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsPriceCode]'       value='" + saveRecord[i][1] + "' >\n"  + //å˜ä¾¡ãƒªã‚¹ãƒˆ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCode]'     value='" + saveRecord[i][2] + "' >\n"  + //ä»•å…¥ç§‘ç›®
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockSubjectCodeName]' value='" + saveRecord[i][3] + "' >\n"  + //ä»•å…¥ç§‘ç›®ï¼ˆvalue + åç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCode]'        value='" + saveRecord[i][4] + "' >\n"  + //ä»•å…¥éƒ¨å“
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strStockItemCodeName]'    value='" + saveRecord[i][5] + "' >\n"  + //ä»•å…¥éƒ¨å“ï¼ˆvalue + åç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngConversionClassCode]'  value='" + saveRecord[i][6] + "' >\n"  + //æ›ç®—åŒºåˆ†
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPrice]'         value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][7])) + "' >\n"  + //å˜ä¾¡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCode]'      value='" + saveRecord[i][8] + "' >\n"  + //å˜ä½
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngProductUnitCodeName]'  value='" + saveRecord[i][9] + "' >\n"  + //å˜ä½ï¼ˆåç§°ï¼‰
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngGoodsQuantity]'        value='" + fncDelKannma(saveRecord[i][10]) + "' >\n"  + //æ•°é‡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][org_lngGoodsQuantity]'    value='" + fncDelKannma(saveRecord[i][24]) + "' >\n"  + // å…ƒæ•°é‡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curTotalPrice]'           value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][11])) + "' >\n" + //ç¨æŠœé‡‘é¡
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngCarrierCode]'          value='" + saveRecord[i][12] + "' >\n" + //é‹æ¬æ–¹æ³•
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strDetailNote]'           value='" + saveRecord[i][13] + "' >\n" + //å‚™è€ƒ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][curProductPriceForList]'  value='" + fncDelKannma(fncDelCurrencySign(saveRecord[i][14])) + "' >\n" + //å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
 						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][strSerialNo]'             value='" + saveRecord[i][22] + "' >\n" + //No
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][dtmDeliveryDate]'         value='" + saveRecord[i][23] + "' >\n" + //Ç¼´ü
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][dtmDeliveryDate]'         value='" + saveRecord[i][23] + "' >\n" + //ç´æœŸ
 
-						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngChkVal]'               value='" + saveRecord[i][25] + "' >\n" + //ÂĞ¾İ
+						"<input type='hidden' name='aryPoDitail[" + hiddenNumber + "][lngChkVal]'               value='" + saveRecord[i][25] + "' >\n" + //å¯¾è±¡
 
 						strPC;
 	}
@@ -1967,146 +1967,146 @@ function fncDtHiddenHtml(i, hiddenNumber){
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ½¤Àµ¤Î¤¿¤á¤ËÅÇ¤­½Ğ¤µ¤ì¤¿hiddenÃÍ¤ª¤è¤ÓÅĞÏ¿¥Ü¥¿¥ó¤ò²¡¤·¤¿¸å¤Ë
-*          Ìá¤Ã¤Æ¤­¤¿hiddenÃÍ¤ò¿·µ¬¤ÎÇÛÎó¤Ë³ÊÇ¼
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : ä¿®æ­£ã®ãŸã‚ã«åãå‡ºã•ã‚ŒãŸhiddenå€¤ãŠã‚ˆã³ç™»éŒ²ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸå¾Œã«
+*          æˆ»ã£ã¦ããŸhiddenå€¤ã‚’æ–°è¦ã®é…åˆ—ã«æ ¼ç´
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtNewAryForReturn(i)
 {
 	var aryRecord = new Array();
-	aryRecord[0]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strProductCode]").value;          //À½ÉÊ¥³¡¼¥É
-	aryRecord[1]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsPriceCode]").value;       //Ã±²Á¥ê¥¹¥È
+	aryRecord[0]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strProductCode]").value;          //è£½å“ã‚³ãƒ¼ãƒ‰
+	aryRecord[1]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsPriceCode]").value;       //å˜ä¾¡ãƒªã‚¹ãƒˆ
 
 	// Added by Kazushi Saito
-	// ·×»»ÊıË¡¼ïÊÌ¤Î¼èÆÀ
+	// è¨ˆç®—æ–¹æ³•ç¨®åˆ¥ã®å–å¾—
 	if( typeof(window.parent.DSO.lngCalcCode) != "undefined" )
 	{
 		g_lngCalcCode = window.parent.DSO.lngCalcCode.value;
 	}
 	// Added by Kazushi Saito
-	// ¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô
+	// å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°
 	g_lngDecimalCutPoint = 2;
-	// ÆüËÜ±ß¤Î¾ì¹ç¡¢¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô¤òÊÑ¹¹
+	// æ—¥æœ¬å††ã®å ´åˆã€å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°ã‚’å¤‰æ›´
 	if( window.parent.HSO.lngMonetaryUnitCode.value == g_strJpnCurrencySign )
 	{
 		g_lngDecimalCutPoint = 0;
 	}
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		aryRecord[2]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockSubjectCode]").value;     //»ÅÆş²ÊÌÜ
-		aryRecord[3]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockSubjectCodeName]").value; //»ÅÆş²ÊÌÜ¡Êvalue + Ì¾¾Î¡Ë
-		aryRecord[4]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockItemCode]").value;        //»ÅÆşÉôÉÊ
-		aryRecord[5]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockItemCodeName]").value;    //»ÅÆşÉôÉÊ¡Êvalue + Ì¾¾Î¡Ë
+		aryRecord[2]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockSubjectCode]").value;     //ä»•å…¥ç§‘ç›®
+		aryRecord[3]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockSubjectCodeName]").value; //ä»•å…¥ç§‘ç›®ï¼ˆvalue + åç§°ï¼‰
+		aryRecord[4]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockItemCode]").value;        //ä»•å…¥éƒ¨å“
+		aryRecord[5]  = window.parent.DSO.elements("aryPoDitail[" + i + "][strStockItemCodeName]").value;    //ä»•å…¥éƒ¨å“ï¼ˆvalue + åç§°ï¼‰
 	}
 
-	aryRecord[6]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngConversionClassCode]").value;  //´¹»»¶èÊ¬(À½ÉÊÃ±°Ì·×¾å)
-	aryRecord[7]  = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curProductPrice]").value, 4); //Ã±²Á
-	aryRecord[8]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngProductUnitCode]").value;      //Ã±°Ì
-	aryRecord[9]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngProductUnitCodeName]").value;  //Ã±°Ì¡ÊÌ¾¾Î¡Ë
-	aryRecord[10] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsQuantity]").value, 0, false); //¿ôÎÌ
-	aryRecord[11] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curTotalPrice]").value, 2); //ÀÇÈ´¶â³Û
+	aryRecord[6]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngConversionClassCode]").value;  //æ›ç®—åŒºåˆ†(è£½å“å˜ä½è¨ˆä¸Š)
+	aryRecord[7]  = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curProductPrice]").value, 4); //å˜ä¾¡
+	aryRecord[8]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngProductUnitCode]").value;      //å˜ä½
+	aryRecord[9]  = window.parent.DSO.elements("aryPoDitail[" + i + "][lngProductUnitCodeName]").value;  //å˜ä½ï¼ˆåç§°ï¼‰
+	aryRecord[10] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsQuantity]").value, 0, false); //æ•°é‡
+	aryRecord[11] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curTotalPrice]").value, 2); //ç¨æŠœé‡‘é¡
 
-	// Çä¾å´ÉÍı¡¢»ÅÆş´ÉÍı
+	// å£²ä¸Šç®¡ç†ã€ä»•å…¥ç®¡ç†
 	if( typeof(window.parent.HSO.SCFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		aryRecord[24] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][org_lngGoodsQuantity]").value, 0, false); // ¸µ¿ôÎÌ
+		aryRecord[24] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][org_lngGoodsQuantity]").value, 0, false); // å…ƒæ•°é‡
 	}
 
-	// Çä¾å´ÉÍı
+	// å£²ä¸Šç®¡ç†
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		aryRecord[25] = window.parent.DSO.elements( "aryPoDitail[" + i + "][lngReceiveNo]" ).value;       // ¼õÃíÈÖ¹æ
-		aryRecord[26] = window.parent.DSO.elements( "aryPoDitail[" + i + "][lngReceiveDetailNo]" ).value; // ÌÀºÙ¹ÔÈÖ¹æ
-		aryRecord[27] = window.parent.DSO.elements( "aryPoDitail[" + i + "][lngChkVal]" ).value;          // ÂĞ¾İ
+		aryRecord[25] = window.parent.DSO.elements( "aryPoDitail[" + i + "][lngReceiveNo]" ).value;       // å—æ³¨ç•ªå·
+		aryRecord[26] = window.parent.DSO.elements( "aryPoDitail[" + i + "][lngReceiveDetailNo]" ).value; // æ˜ç´°è¡Œç•ªå·
+		aryRecord[27] = window.parent.DSO.elements( "aryPoDitail[" + i + "][lngChkVal]" ).value;          // å¯¾è±¡
 	}
-	// »ÅÆş´ÉÍı
+	// ä»•å…¥ç®¡ç†
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		aryRecord[25] = window.parent.DSO.elements( "aryPoDitail[" + i + "][lngChkVal]" ).value; // ÂĞ¾İ
+		aryRecord[25] = window.parent.DSO.elements( "aryPoDitail[" + i + "][lngChkVal]" ).value; // å¯¾è±¡
 	}
 
 
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		aryRecord[12] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngCarrierCode]").value;          //±¿ÈÂÊıË¡
+		aryRecord[12] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngCarrierCode]").value;          //é‹æ¬æ–¹æ³•
 	}
 
-	aryRecord[13] = fncCheckReplaceString(window.parent.DSO.elements("aryPoDitail[" + i + "][strDetailNote]").value);           //È÷¹Í
-	aryRecord[14] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curProductPriceForList]").value, 4, false); //Ã±²Á¥ê¥¹¥ÈÄÉ²Ã¥Ç¡¼¥¿
+	aryRecord[13] = fncCheckReplaceString(window.parent.DSO.elements("aryPoDitail[" + i + "][strDetailNote]").value);           //å‚™è€ƒ
+	aryRecord[14] = window.parent.fncCheckNumberValue(window.parent.DSO.elements("aryPoDitail[" + i + "][curProductPriceForList]").value, 4, false); //å˜ä¾¡ãƒªã‚¹ãƒˆè¿½åŠ ãƒ‡ãƒ¼ã‚¿
 
-	//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.PCFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		//¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
+		//æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
 		aryRecord[15] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngTaxClassCode]").value;
 
-		//¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É¤¬»ØÄê¤µ¤ì¤Æ¤Ê¤«¤Ã¤¿¤é¥Ç¥Õ¥©¥ë¥È³°ÀÇ
+		//æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰ãŒæŒ‡å®šã•ã‚Œã¦ãªã‹ã£ãŸã‚‰ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå¤–ç¨
 		if( aryRecord[15] == "" )
 		{
 			aryRecord[15] = g_strOutTaxClass;
 		}
 
-		//¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É¤¬Èó²İÀÇ¤Î¤È¤­
+		//æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰ãŒéèª²ç¨ã®ã¨ã
 		if( aryRecord[15] == g_strFreeTaxClass )
 		{
-			//¾ÃÈñÀÇ¥³¡¼¥É
+			//æ¶ˆè²»ç¨ã‚³ãƒ¼ãƒ‰
 			aryRecord[16] = "";
-			//¾ÃÈñÀÇ³Û
+			//æ¶ˆè²»ç¨é¡
 			aryRecord[17] = "";
 		}
-		//¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É¤¬Èó²İÀÇ°Ê³°¤Î¤È¤­
+		//æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰ãŒéèª²ç¨ä»¥å¤–ã®ã¨ã
 		else
 		{
-			//¾ÃÈñÀÇ¥³¡¼¥É
+			//æ¶ˆè²»ç¨ã‚³ãƒ¼ãƒ‰
 			aryRecord[16] = g_curTax;
 //2004.07.09 suzukaze update start
-//¹¹¿·»ş¤ÏÀÇ³Û¤ÏHiddenÃÍ¤ò¤½¤Î¤Ş¤Ş¤Ë¤¹¤ë¡¡ºÆ·×»»»ş¤ËÀÇÈ´¶â³Û¤ò¸µ¤Ë·×»»¤·¤Æ¤¤¤ë¤¿¤áÆâÀÇÃÍ¤¬¤ª¤«¤·¤¯¤Ê¤ë¤¿¤á
+//æ›´æ–°æ™‚ã¯ç¨é¡ã¯Hiddenå€¤ã‚’ãã®ã¾ã¾ã«ã™ã‚‹ã€€å†è¨ˆç®—æ™‚ã«ç¨æŠœé‡‘é¡ã‚’å…ƒã«è¨ˆç®—ã—ã¦ã„ã‚‹ãŸã‚å†…ç¨å€¤ãŒãŠã‹ã—ããªã‚‹ãŸã‚
 //			aryRecord[17] = fncDtCalTaxPrice(aryRecord[11],aryRecord[15]);
-			aryRecord[17] = window.parent.DSO.elements("aryPoDitail[" + i + "][curTaxPrice]").value;  //ÀÇ³Û;
+			aryRecord[17] = window.parent.DSO.elements("aryPoDitail[" + i + "][curTaxPrice]").value;  //ç¨é¡;
 //2004.07.09 suzukaze update end
 
-			// ÀÇ³Û¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
+			// ç¨é¡ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 			aryRecord[17]   = window.parent.fncCheckNumberValue(aryRecord[17], 2, true, g_lngDecimalCutPoint, g_lngCalcCode);
-			//alert("ÀÇ¶èÊ¬¥³¡¼¥É¡§"+aryRecord[15]+"ÀÇÎ¨¡§"+aryRecord[16]+"ÀÇ³Û¡§"+aryRecord[17]);
+			//alert("ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰ï¼š"+aryRecord[15]+"ç¨ç‡ï¼š"+aryRecord[16]+"ç¨é¡ï¼š"+aryRecord[17]);
 		}
 
-		aryRecord[18] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngorderdetailno]").value; //¹ÔÈÖ¹æ
+		aryRecord[18] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngorderdetailno]").value; //è¡Œç•ªå·
 	}
 // 2004.03.26 suzukaze update start
-//¼õÃí´ÉÍı¡¢È¯Ãí´ÉÍı¤Î¾ì¹ç¤Ë¤â¹ÔÈÖ¹æ¤òHiddenÃÍ¤Ç³Ğ¤¨¤Æ¤ª¤¯¤è¤¦¤Ë½¤Àµ
+//å—æ³¨ç®¡ç†ã€ç™ºæ³¨ç®¡ç†ã®å ´åˆã«ã‚‚è¡Œç•ªå·ã‚’Hiddenå€¤ã§è¦šãˆã¦ãŠãã‚ˆã†ã«ä¿®æ­£
 	else
 	{
-		aryRecord[18] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngorderdetailno]").value; //¹ÔÈÖ¹æ
+		aryRecord[18] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngorderdetailno]").value; //è¡Œç•ªå·
 	}
 // 2004.03.26 suzukaze update end
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		aryRecord[19] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngSalesClassCode]").value; //Çä¾å¶èÊ¬
-		aryRecord[20] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngSalesClassCodeName]").value; //Çä¾å¶èÊ¬¡Êvalue + Ì¾¾Î¡Ë
-		aryRecord[21] = window.parent.DSO.elements("aryPoDitail[" + i + "][dtmDeliveryDate]").value; //Ç¼´ü
+		aryRecord[19] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngSalesClassCode]").value; //å£²ä¸ŠåŒºåˆ†
+		aryRecord[20] = window.parent.DSO.elements("aryPoDitail[" + i + "][lngSalesClassCodeName]").value; //å£²ä¸ŠåŒºåˆ†ï¼ˆvalue + åç§°ï¼‰
+		aryRecord[21] = window.parent.DSO.elements("aryPoDitail[" + i + "][dtmDeliveryDate]").value; //ç´æœŸ
 		// 
-		aryRecord[22] = '1'; // ÂĞ¾İÇä¾åÂ¸ºß¥Õ¥é¥°¡Ê½é´üÃÍ1¡Ë¡Êº£¸å¡¢£Ä£Â¤«¤é¼èÆÀ¤·¤Æ¥»¥Ã¥È¤¹¤ëÍ½Äê¡Ë
-		aryRecord[23] = aryRecord[10]; // ÂĞ¾İÇä¾å¿ôÎÌ¡Êº£¤Ï¤È¤ê¤¢¤¨¤º¸µ¿ôÎÌ¡Ë¤òÊİ»ı¡Êº£¸å¡¢£Ä£Â¤«¤é¼èÆÀ¤·¤Æ¡¢¼Âºİ¤ÎÇä¾å¿ôÎÌ¤ò¥»¥Ã¥È¤¹¤ëÍ½Äê¡Ë
+		aryRecord[22] = '1'; // å¯¾è±¡å£²ä¸Šå­˜åœ¨ãƒ•ãƒ©ã‚°ï¼ˆåˆæœŸå€¤1ï¼‰ï¼ˆä»Šå¾Œã€ï¼¤ï¼¢ã‹ã‚‰å–å¾—ã—ã¦ã‚»ãƒƒãƒˆã™ã‚‹äºˆå®šï¼‰
+		aryRecord[23] = aryRecord[10]; // å¯¾è±¡å£²ä¸Šæ•°é‡ï¼ˆä»Šã¯ã¨ã‚Šã‚ãˆãšå…ƒæ•°é‡ï¼‰ã‚’ä¿æŒï¼ˆä»Šå¾Œã€ï¼¤ï¼¢ã‹ã‚‰å–å¾—ã—ã¦ã€å®Ÿéš›ã®å£²ä¸Šæ•°é‡ã‚’ã‚»ãƒƒãƒˆã™ã‚‹äºˆå®šï¼‰
 	}
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		aryRecord[22] = window.parent.DSO.elements("aryPoDitail[" + i + "][strSerialNo]").value; //No
-		aryRecord[23] = window.parent.DSO.elements("aryPoDitail[" + i + "][dtmDeliveryDate]").value; //Ç¼´ü
+		aryRecord[23] = window.parent.DSO.elements("aryPoDitail[" + i + "][dtmDeliveryDate]").value; //ç´æœŸ
 	}
 
 	return aryRecord;
@@ -2115,54 +2115,54 @@ function fncDtNewAryForReturn(i)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÀÇÈ´¤­¹ç·×¤ò»»½Ğ¤¹¤ë
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : ç¨æŠœãåˆè¨ˆã‚’ç®—å‡ºã™ã‚‹
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtCalTotalPrice()
 {
-	var ProductPrice  = 0;	// Ã±²Á
-	var GoodsQuantity = 0;	// ¿ôÎÌ
-	var TotalPrice    = 0;	// ÀÇÈ´¶â³Û
+	var ProductPrice  = 0;	// å˜ä¾¡
+	var GoodsQuantity = 0;	// æ•°é‡
+	var TotalPrice    = 0;	// ç¨æŠœé‡‘é¡
 
 
 	// Added by Kazushi Saito
-	// ·×»»ÊıË¡¼ïÊÌ¤Î¼èÆÀ
+	// è¨ˆç®—æ–¹æ³•ç¨®åˆ¥ã®å–å¾—
 	if( typeof(window.parent.DSO.lngCalcCode) != "undefined" )
 	{
 		g_lngCalcCode = window.parent.DSO.lngCalcCode.value;
 	}
 
 	
-	//´¹»»¶èÊ¬(À½ÉÊÃ±°Ì·×¾å)
+	//æ›ç®—åŒºåˆ†(è£½å“å˜ä½è¨ˆä¸Š)
 	if( window.parent.DSO.lngConversionClassCode[0].checked )
 	{
-		//¶õÇò¥Á¥§¥Ã¥¯
+		//ç©ºç™½ãƒã‚§ãƒƒã‚¯
 		if( window.parent.DSO.curProductPrice_gs.value  == "" || 
 			window.parent.DSO.lngGoodsQuantity_gs.value == "" )
 		{
-			//ÀÇÈ´¶â³Û¤ò¶õÇò¤Ë¤¹¤ë
+			//ç¨æŠœé‡‘é¡ã‚’ç©ºç™½ã«ã™ã‚‹
 			window.parent.DSO.curTotalPrice.value = "";
 			return false;
 		}
 		
-		//ÆşÎÏÏÈ¤Î[À½ÉÊÃ±²Á]¤«¤éÃÍ¤òÆÀ¤Æ¡¢ÄÌ²ßµ­¹æ¡¢¥«¥ó¥Ş¤ò¼è¤ë
+		//å…¥åŠ›æ ã®[è£½å“å˜ä¾¡]ã‹ã‚‰å€¤ã‚’å¾—ã¦ã€é€šè²¨è¨˜å·ã€ã‚«ãƒ³ãƒã‚’å–ã‚‹
 		ProductPrice  = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value));
-		//ÆşÎÏÏÈ¤Î[À½ÉÊ¿ôÎÌ]¤«¤éÃÍ¤òÆÀ¤Æ¡¢¥«¥ó¥Ş¤ò¼è¤ë
+		//å…¥åŠ›æ ã®[è£½å“æ•°é‡]ã‹ã‚‰å€¤ã‚’å¾—ã¦ã€ã‚«ãƒ³ãƒã‚’å–ã‚‹
 		GoodsQuantity = fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value);
 	}
-	//²Ù»ÑÃ±°Ì·×¾å¤Î¾ì¹ç
+	//è·å§¿å˜ä½è¨ˆä¸Šã®å ´åˆ
 	else if( window.parent.DSO.lngConversionClassCode[1].checked )
 	{
-		//[À½ÉÊ¿ôÎÌ]¤Ë[¥«¡¼¥È¥ó¿ô]¡ß[²Ù»Ñ¿ôÎÌ]¤òÈ¿±Ç¤µ¤»¤ë
+		//[è£½å“æ•°é‡]ã«[ã‚«ãƒ¼ãƒˆãƒ³æ•°]Ã—[è·å§¿æ•°é‡]ã‚’åæ˜ ã•ã›ã‚‹
 		if( window.parent.DSO.lngGoodsQuantity_ps.value == "" )
 		{
-			//[²Ù»Ñ¿ôÎÌ]¤¬¶õÇò¤Î¾ì¹ç¤Ë¤Ï¡¢¶õÇò¤òÈ¿±Ç
+			//[è·å§¿æ•°é‡]ãŒç©ºç™½ã®å ´åˆã«ã¯ã€ç©ºç™½ã‚’åæ˜ 
 			window.parent.DSO.lngGoodsQuantity_gs.value = "";
 		}
 		else
 		{
-			//ÆşÎÏÏÈ¤Î²Ù»Ñ¿ôÎÌ¤«¤éÃÍ¤òÆÀ¤Æ¡¢¥«¥ó¥Ş¤ò¼è¤ë
+			//å…¥åŠ›æ ã®è·å§¿æ•°é‡ã‹ã‚‰å€¤ã‚’å¾—ã¦ã€ã‚«ãƒ³ãƒã‚’å–ã‚‹
 			GoodsQuantity = fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value);
 
 			var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
@@ -2171,72 +2171,72 @@ function fncDtCalTotalPrice()
 			window.parent.fncCheckNumber( window.parent.DSO.lngGoodsQuantity_gs , 0 , false );
 		}
 
-		//[²Ù»ÑÃ±²Á]¤Ş¤¿¤Ï[²Ù»Ñ¿ôÎÌ]¤¬¶õÇò¤Î¾ì¹ç
+		//[è·å§¿å˜ä¾¡]ã¾ãŸã¯[è·å§¿æ•°é‡]ãŒç©ºç™½ã®å ´åˆ
 		if( window.parent.DSO.curProductPrice_ps.value  == "" || 
 			window.parent.DSO.lngGoodsQuantity_ps.value == "" )
 		{
-			//[ÀÇÈ´¶â³Û]¤ò¶õÇò¤Ë¤¹¤ë
+			//[ç¨æŠœé‡‘é¡]ã‚’ç©ºç™½ã«ã™ã‚‹
 			window.parent.DSO.curTotalPrice.value = "";
 			return false;
 		}
 		else
 		{
-			//ÆşÎÏÏÈ¤Î²Ù»ÑÃ±²Á¤«¤éÃÍ¤òÆÀ¤Æ¡¢ÄÌ²ßµ­¹æ¡¢¥«¥ó¥Ş¤ò¼è¤ë
+			//å…¥åŠ›æ ã®è·å§¿å˜ä¾¡ã‹ã‚‰å€¤ã‚’å¾—ã¦ã€é€šè²¨è¨˜å·ã€ã‚«ãƒ³ãƒã‚’å–ã‚‹
 			ProductPrice  = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value));
 		}
 	}
 
 
-	//ÀÇÈ´¶â³Û
+	//ç¨æŠœé‡‘é¡
 //	TotalPrice    = ProductPrice * GoodsQuantity;
 	TotalPrice    = window.parent.fncVBSNumCalc(ProductPrice, "*", GoodsQuantity);
 
-	//ÀÇÈ´¶â³Û¤òÆşÎÏÏÈ¤ËÈ¿±Ç
+	//ç¨æŠœé‡‘é¡ã‚’å…¥åŠ›æ ã«åæ˜ 
 	window.parent.DSO.curTotalPrice.value = TotalPrice;
-	//ÀÇÈ´¶â³Û¤ò¾®¿ôÅÀ°Ê²¼2·å¤Ç¥Õ¥©¡¼¥Ş¥Ã¥È¤¹¤ë
+	//ç¨æŠœé‡‘é¡ã‚’å°æ•°ç‚¹ä»¥ä¸‹2æ¡ã§ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã™ã‚‹
 //	window.parent.fncCheckNumber( window.parent.DSO.curTotalPrice , 2);
 	window.parent.DSO.curTotalPrice.value = window.parent.fncCheckNumberValue( TotalPrice, 2, true, 2, g_lngCalcCode);
 
 
-	//»ÅÆş´ÉÍı(PCFlg)¡¢Çä¾å´ÉÍı(SCFlg)¤Î¾ì¹ç¡¢ÀÇ³Û¤ò·×»»
+	//ä»•å…¥ç®¡ç†(PCFlg)ã€å£²ä¸Šç®¡ç†(SCFlg)ã®å ´åˆã€ç¨é¡ã‚’è¨ˆç®—
 	if( typeof(window.parent.HSO.PCFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
 		window.parent.DSO.curTaxPrice.value = fncDtCalTaxPrice(window.parent.DSO.curTotalPrice.value,
 																window.parent.DSO.lngTaxClassCode.value,
-																window.parent.DSO.lngTaxCode.value); //¾ÃÈñÀÇ³Û
+																window.parent.DSO.lngTaxCode.value); //æ¶ˆè²»ç¨é¡
 	}
 
 	// Added by Kazushi Saito
-	// ¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô
+	// å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°
 	g_lngDecimalCutPoint = 2;
-	// ÆüËÜ±ß¤Î¾ì¹ç¡¢¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô¤òÊÑ¹¹
+	// æ—¥æœ¬å††ã®å ´åˆã€å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°ã‚’å¤‰æ›´
 	if( window.parent.HSO.lngMonetaryUnitCode.value == g_strJpnCurrencySign )
 	{
 		g_lngDecimalCutPoint = 0;
 	}
 
 	// Added by Kazushi Saito
-	// Çä¾å´ÉÍı(SCFlg)
-	// »ÅÆş´ÉÍı(PCFlg)
-	//¡ÖÀÇÈ´¶â³Û¡×¡¢¡ÖÀÇ³Û¡×¤ò¾®¿ôÅÀ°Ê²¼¡Ê2·å¡Ë·×»»½èÍı
+	// å£²ä¸Šç®¡ç†(SCFlg)
+	// ä»•å…¥ç®¡ç†(PCFlg)
+	//ã€Œç¨æŠœé‡‘é¡ã€ã€ã€Œç¨é¡ã€ã‚’å°æ•°ç‚¹ä»¥ä¸‹ï¼ˆ2æ¡ï¼‰è¨ˆç®—å‡¦ç†
 	if( typeof(window.parent.HSO.SCFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 
-		// ÀÇÈ´¶â³Û
+		// ç¨æŠœé‡‘é¡
 		window.parent.DSO.curTotalPrice.value = window.parent.fncCheckNumberValue(window.parent.DSO.curTotalPrice.value, 2, true, g_lngDecimalCutPoint, g_lngCalcCode);
-		// ÀÇ³Û
+		// ç¨é¡
 		window.parent.DSO.curTaxPrice.value   = window.parent.fncCheckNumberValue(window.parent.DSO.curTaxPrice.value, 2, true, g_lngDecimalCutPoint, g_lngCalcCode);
 
 
-		// ÆâÀÇ¤Î¾ì¹ç¤ÎºÆ·×»»
+		// å†…ç¨ã®å ´åˆã®å†è¨ˆç®—
 		if( window.parent.DSO.lngTaxClassCode.value == g_strInTaxClass )
 		{
-			// ÄÌ²ßµ­¹æ¡¦¥«¥ó¥Ş¤ò½üµî
+			// é€šè²¨è¨˜å·ãƒ»ã‚«ãƒ³ãƒã‚’é™¤å»
 			curTotalPrice = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curTotalPrice.value));
 			curTaxPrice   = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curTaxPrice.value));
-			// ÀÇÈ´¶â³Û
+			// ç¨æŠœé‡‘é¡
 			curCalcTotalPrice = window.parent.fncVBSNumCalc(curTotalPrice, "-", curTaxPrice);
 			window.parent.DSO.curTotalPrice.value = window.parent.fncCheckNumberValue(curCalcTotalPrice, 2, true, g_lngDecimalCutPoint, g_lngCalcCode);
 		}
@@ -2244,70 +2244,70 @@ function fncDtCalTotalPrice()
 
 
 	// Added by Kazushi Saito
-	// ¼õÃí´ÉÍı(SOFlg)
-	// È¯Ãí´ÉÍı(POFlg)
-	// ¡ÊÆüËÜ±ß¤Î¾ì¹ç¤Î¤ß¡Ë
-	//¡ÖÀÇÈ´¶â³Û¡×¤ò¾®¿ôÅÀ°Ê²¼¡Ê2·å¡Ë·×»»½èÍı
+	// å—æ³¨ç®¡ç†(SOFlg)
+	// ç™ºæ³¨ç®¡ç†(POFlg)
+	// ï¼ˆæ—¥æœ¬å††ã®å ´åˆã®ã¿ï¼‰
+	//ã€Œç¨æŠœé‡‘é¡ã€ã‚’å°æ•°ç‚¹ä»¥ä¸‹ï¼ˆ2æ¡ï¼‰è¨ˆç®—å‡¦ç†
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.POFlg) == "object")
 	{
-		// ÀÇÈ´¶â³Û
+		// ç¨æŠœé‡‘é¡
 		window.parent.DSO.curTotalPrice.value = window.parent.fncCheckNumberValue(window.parent.DSO.curTotalPrice.value, 2, true, g_lngDecimalCutPoint, g_lngCalcCode);
 	}
 
-	//´ğ½àÄÌ²ß¤òÉ½¼¨
+	//åŸºæº–é€šè²¨ã‚’è¡¨ç¤º
 	fncDtCalStdTotalPrice();
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : À½ÉÊÃ±°Ì·×¾å¤Î¥é¥¸¥ª¥Ü¥¿¥ó¤¬²¡¤µ¤ì¤¿¤È¤­¤Î½èÍı
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : è£½å“å˜ä½è¨ˆä¸Šã®ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã¨ãã®å‡¦ç†
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtGsChecked()
 {
-	//Ã±²Á¥ê¥¹¥È¤¬¤Ê¤«¤Ã¤¿¤éÁªÂò¤Ç¤­¤Ê¤¤
+	//å˜ä¾¡ãƒªã‚¹ãƒˆãŒãªã‹ã£ãŸã‚‰é¸æŠã§ããªã„
 	if( window.parent.DSO.lngGoodsPriceCode.length == 0  ||
 		window.parent.DSO.lngGoodsPriceCode.options[0].text == "(No Data)" )
 	{
 		window.parent.DSO.lngGoodsPriceCode.disabled = true;
 	}
-	//Ã±²Á¥ê¥¹¥È¤¬¤¢¤Ã¤¿¤éÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+	//å˜ä¾¡ãƒªã‚¹ãƒˆãŒã‚ã£ãŸã‚‰é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	else
 	{
 		window.parent.DSO.lngGoodsPriceCode.disabled = false;
 	}
 
-	//[À½ÉÊÃ±²Á][À½ÉÊÃ±°Ì][À½ÉÊ¿ôÎÌ]¤òÆşÎÏ¡¢ÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë¡£
+	//[è£½å“å˜ä¾¡][è£½å“å˜ä½][è£½å“æ•°é‡]ã‚’å…¥åŠ›ã€é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
 	window.parent.DSO.curProductPrice_gs.disabled    = false;
 	window.parent.DSO.lngProductUnitCode_gs.disabled = false;
 	window.parent.DSO.lngGoodsQuantity_gs.disabled   = false;
 
-	//[²Ù»ÑÃ±²Á][²Ù»ÑÃ±°Ì][²Ù»Ñ¿ôÎÌ]¤òÆşÎÏ¡¢ÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+	//[è·å§¿å˜ä¾¡][è·å§¿å˜ä½][è·å§¿æ•°é‡]ã‚’å…¥åŠ›ã€é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 	window.parent.DSO.curProductPrice_ps.disabled    = true;
 	window.parent.DSO.lngProductUnitCode_ps.disabled = true;
 	window.parent.DSO.lngGoodsQuantity_ps.disabled   = true;
 
-	//ÀÇÈ´¶â³Û¤òºÆ·×»»
+	//ç¨æŠœé‡‘é¡ã‚’å†è¨ˆç®—
 	fncDtCalTotalPrice();
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ²Ù»ÑÃ±°Ì·×¾å¤Î¥é¥¸¥ª¥Ü¥¿¥ó¤¬²¡¤µ¤ì¤¿¤È¤­¤Î½èÍı
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : è·å§¿å˜ä½è¨ˆä¸Šã®ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚ŒãŸã¨ãã®å‡¦ç†
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtPsChecked()
 {
-	//¥Ü¥¿¥ó¤ò°ÜÆ°¤·¤Æ¤â¤è¤¤¤«¤É¤¦¤«¤Î¥Õ¥é¥°
+	//ãƒœã‚¿ãƒ³ã‚’ç§»å‹•ã—ã¦ã‚‚ã‚ˆã„ã‹ã©ã†ã‹ã®ãƒ•ãƒ©ã‚°
 	var checkFlg = true ;
 
 
-	//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç¤Ç¡¢¹ÔÈÖ¹æ¤Î¤¢¤ë¾ì¹ç¤Ë¡¢²Ù»ÑÃ±°Ì·×¾å¤ËÁªÂò¤·¤Æ¤â¤è¤¤¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
+	//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆã§ã€è¡Œç•ªå·ã®ã‚ã‚‹å ´åˆã«ã€è·å§¿å˜ä½è¨ˆä¸Šã«é¸æŠã—ã¦ã‚‚ã‚ˆã„ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
 	if( (typeof(window.parent.HSO.PCFlg) == "object"   || 
 		 typeof(window.parent.HSO.SCFlg) == "object" ) && 
 				g_lngSelIndex != -1                            && 
@@ -2316,18 +2316,18 @@ function fncDtPsChecked()
 		checkFlg = fncDtPsCheckedForPC();
 	}
 
-	//ÁªÂò¤Ç¤­¤Ê¤¤¾ì¹ç¤Ë¤Ï¡¢¥¢¥é¡¼¥È¤ò½Ğ¤·¤Æ½èÍı¤òÈ´¤±¤ë
+	//é¸æŠã§ããªã„å ´åˆã«ã¯ã€ã‚¢ãƒ©ãƒ¼ãƒˆã‚’å‡ºã—ã¦å‡¦ç†ã‚’æŠœã‘ã‚‹
 	if( checkFlg == false )
 	{
-		//´¹»»¶èÊ¬(À½ÉÊÃ±°Ì·×¾å)¤Ë¥Á¥§¥Ã¥¯¤òÌá¤¹
+		//æ›ç®—åŒºåˆ†(è£½å“å˜ä½è¨ˆä¸Š)ã«ãƒã‚§ãƒƒã‚¯ã‚’æˆ»ã™
 		window.parent.DSO.lngConversionClassCode[0].checked = true;
 
-		alert( "[À½ÉÊ¿ôÎÌ]¡à[¥«¡¼¥È¥óÆş¿ô]¤¬³ä¤êÀÚ¤ì¤Ê¤¤¤¿¤á\nÁªÂò¤Ç¤­¤Ş¤»¤ó");
+		alert( "[è£½å“æ•°é‡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ãŒå‰²ã‚Šåˆ‡ã‚Œãªã„ãŸã‚\né¸æŠã§ãã¾ã›ã‚“");
 
 		return false;
 	}
 
-	//[À½ÉÊÃ±²Á]¤¬¶õÇò¤Ç¤Ê¤¤¾ì¹ç¤Ë¡¢[²Ù»ÑÃ±²Á]¤Ë¡¢[À½ÉÊÃ±²Á]¡ß[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È¤¹¤ë
+	//[è£½å“å˜ä¾¡]ãŒç©ºç™½ã§ãªã„å ´åˆã«ã€[è·å§¿å˜ä¾¡]ã«ã€[è£½å“å˜ä¾¡]Ã—[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	if( window.parent.DSO.curProductPrice_gs.value != "" )
 	{
 		var ProductPrice_gs  = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value));
@@ -2337,58 +2337,58 @@ function fncDtPsChecked()
 		window.parent.fncCheckNumber(window.parent.DSO.curProductPrice_ps , 4, true);
 	}
 
-	//[²Ù»Ñ¿ôÎÌ]¤¬¶õÇò¤Î¾ì¹ç¤Ë¡Ö1¡×¤ò¥»¥Ã¥È¤¹¤ë
+	//[è·å§¿æ•°é‡]ãŒç©ºç™½ã®å ´åˆã«ã€Œ1ã€ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	if( window.parent.DSO.lngGoodsQuantity_ps.value == "" )
 	{
 		window.parent.DSO.lngGoodsQuantity_ps.value = 1;
 	}
 
-	//Ã±²Á¥ê¥¹¥È¤òÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+	//å˜ä¾¡ãƒªã‚¹ãƒˆã‚’é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 	window.parent.DSO.lngGoodsPriceCode.disabled = true;
 
-	//[À½ÉÊÃ±²Á][À½ÉÊÃ±°Ì][À½ÉÊ¿ôÎÌ]¤òÆşÎÏ¡¢ÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+	//[è£½å“å˜ä¾¡][è£½å“å˜ä½][è£½å“æ•°é‡]ã‚’å…¥åŠ›ã€é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 	window.parent.DSO.curProductPrice_gs.disabled    = true;
 	window.parent.DSO.lngProductUnitCode_gs.disabled = true;
 	window.parent.DSO.lngGoodsQuantity_gs.disabled   = true;
 
-	//[²Ù»ÑÃ±²Á][²Ù»ÑÃ±°Ì][²Ù»Ñ¿ôÎÌ]¤òÆşÎÏ¡¢ÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+	//[è·å§¿å˜ä¾¡][è·å§¿å˜ä½][è·å§¿æ•°é‡]ã‚’å…¥åŠ›ã€é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 	window.parent.DSO.curProductPrice_ps.disabled    = false;
 	window.parent.DSO.lngProductUnitCode_ps.disabled = false;
 	window.parent.DSO.lngGoodsQuantity_ps.disabled   = false;
 
-	//ÀÇÈ´¶â³Û¤òºÆ·×»»
+	//ç¨æŠœé‡‘é¡ã‚’å†è¨ˆç®—
 	fncDtCalTotalPrice();
 }
 
 
 // ---------------------------------------------------------------
 /**
-*  ³µÍ×   :²Ù»ÑÃ±°Ì·×¾å¤ËÁªÂò¤Ç¤­¤ë¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
-*  ÂĞ¾İ   :»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Ç¹ÔÈÖ¹æ¤Î¤¢¤ë¾ì¹ç
+*  æ¦‚è¦   :è·å§¿å˜ä½è¨ˆä¸Šã«é¸æŠã§ãã‚‹ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
+*  å¯¾è±¡   :ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã§è¡Œç•ªå·ã®ã‚ã‚‹å ´åˆ
 */
 // ---------------------------------------------------------------
 function fncDtPsCheckedForPC()
 {
-	//¥«¡¼¥È¥óÆş¿ô
+	//ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
 	var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 
-	//¥Ç¥Õ¥©¥ë¥È¤ÎÀ½ÉÊ¿ôÎÌ
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è£½å“æ•°é‡
 	var GoodsQuantity_gs_defalt = fncDtGSGoodsQuantityDefalt();
 
-	//¥«¡¼¥È¥ó¿ôÎÌ¤¬0¤Ş¤¿¤Ï¶õ¤Î¤È¤­ÁªÂò¤Ç¤­¤Ê¤¤
+	//ã‚«ãƒ¼ãƒˆãƒ³æ•°é‡ãŒ0ã¾ãŸã¯ç©ºã®ã¨ãé¸æŠã§ããªã„
 	if( CartonQuantity == "" || CartonQuantity == 0 )
 	{
 		return false;
 	}
 
-	//²Ù»Ñ¿ôÎÌ(À½ÉÊ¿ôÎÌ / ¥«¡¼¥È¥óÆş¤ê¿ô)
+	//è·å§¿æ•°é‡(è£½å“æ•°é‡ / ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°)
 	var GoodsQuantity_ps = parseInt( GoodsQuantity_gs_defalt / CartonQuantity );
 
 
-	//¥Ç¥Õ¥©¥ë¥È¤ÎÀ½ÉÊ¿ôÎÌ¤È¥«¡¼¥È¥ó¿ôÎÌ¤¬À°¿ô¤Ç³ä¤êÀÚ¤ì¤ì¤ĞÁªÂò¤Ç¤­¤ë(À½ÉÊ¿ôÎÌ == ²Ù»Ñ¿ôÎÌ¡ß¥«¡¼¥È¥óÆş¿ô)
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è£½å“æ•°é‡ã¨ã‚«ãƒ¼ãƒˆãƒ³æ•°é‡ãŒæ•´æ•°ã§å‰²ã‚Šåˆ‡ã‚Œã‚Œã°é¸æŠã§ãã‚‹(è£½å“æ•°é‡ == è·å§¿æ•°é‡Ã—ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°)
 	if( GoodsQuantity_gs_defalt == (GoodsQuantity_ps * CartonQuantity ) )
 	{
-		//[²Ù»Ñ¿ôÎÌ]¤Ë[À½ÉÊ¿ôÎÌ]¡à[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È
+		//[è·å§¿æ•°é‡]ã«[è£½å“æ•°é‡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆ
 		window.parent.DSO.lngGoodsQuantity_ps.value = fncAddKannma( GoodsQuantity_ps );
 		return true;
 	}
@@ -2401,87 +2401,87 @@ function fncDtPsCheckedForPC()
 
 // ---------------------------------------------------------------
 /**
-*  ³µÍ×   :²Ù»Ñ¿ôÎÌ¤ÎÆşÎÏ¥Á¥§¥Ã¥¯
-*  ÂĞ¾İ   :»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı
-*			¹ÔÈÖ¹æ¤Î¤¢¤ë¾ì¹ç¤Ç¡¢²Ù»Ñ¿ôÎÌ¤Ë¥Á¥§¥Ã¥¯¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+*  æ¦‚è¦   :è·å§¿æ•°é‡ã®å…¥åŠ›ãƒã‚§ãƒƒã‚¯
+*  å¯¾è±¡   :ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†
+*			è¡Œç•ªå·ã®ã‚ã‚‹å ´åˆã§ã€è·å§¿æ•°é‡ã«ãƒã‚§ãƒƒã‚¯ã•ã‚Œã¦ã„ã‚‹å ´åˆ
 */
 // ---------------------------------------------------------------
 function fncDtPSGoodsQuantityForPC()
 {
 
-	// ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤»ş¤Ï½èÍı¤·¤Ê¤¤
+	// é¸æŠã•ã‚Œã¦ã„ãªã„æ™‚ã¯å‡¦ç†ã—ãªã„
 	if( g_lngSelIndex == -1 )
 	{
 		return false;
 	}
-	// ¹ÔÈÖ¹æ¤¬Ìµ¤¤¾ì¹ç¤Ï½èÍı¤·¤Ê¤¤
+	// è¡Œç•ªå·ãŒç„¡ã„å ´åˆã¯å‡¦ç†ã—ãªã„
 	if( typeof(saveRecord[g_lngSelIndex][18]) == "undefined" ||	saveRecord[g_lngSelIndex][18] == "" )
 	{
 		return false;
 	}
 
-	// ´ÉÍı¤òÁªÊÌ
+	// ç®¡ç†ã‚’é¸åˆ¥
 	switch (fncGetKindOfManagement())
 	{
-		// Çä¾å´ÉÍı¤Î¾ì¹ç
+		// å£²ä¸Šç®¡ç†ã®å ´åˆ
 		case g_strSCKindOfManagement:
-			strCheckCode = window.parent.HSO.strReceiveCode.value;	// ¡Ö¼õÃíNo.¡×¤ò¼èÆÀ
+			strCheckCode = window.parent.HSO.strReceiveCode.value;	// ã€Œå—æ³¨No.ã€ã‚’å–å¾—
 			break;
-		// »ÅÆş´ÉÍı¤Î¾ì¹ç
+		// ä»•å…¥ç®¡ç†ã®å ´åˆ
 		case g_strPCKindOfManagement:
-			strCheckCode = window.parent.HSO.strOrderCode.value;	// ¡ÖÈ¯ÃíNo.¡×¤ò¼èÆÀ
+			strCheckCode = window.parent.HSO.strOrderCode.value;	// ã€Œç™ºæ³¨No.ã€ã‚’å–å¾—
 			break;
 		default:
 			return false;
 	}
-	// ¼õÃíNo.¡¢È¯ÃíNo. ¤ÎÌµ¤¤¥Ç¡¼¥¿¤Î¾ì¹ç¤Ï¥Á¥§¥Ã¥¯¤·¤Ê¤¤
+	// å—æ³¨No.ã€ç™ºæ³¨No. ã®ç„¡ã„ãƒ‡ãƒ¼ã‚¿ã®å ´åˆã¯ãƒã‚§ãƒƒã‚¯ã—ãªã„
 	if( window.parent.HSO.strPageCondition.value == "regist" && strCheckCode == "" )
 	{
 		return false;
 	}
 	
-	//¥«¡¼¥È¥óÆş¤ê¿ô
+	//ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
 	var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
-	//¥Ç¥Õ¥©¥ë¥È¤ÎÀ½ÉÊ¿ôÎÌ
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è£½å“æ•°é‡
 	var GoodsQuantity_gs_defalt = fncDtGSGoodsQuantityDefalt();
-	//ÆşÎÏ¤µ¤ì¤¿¤Ë²Ù»Ñ¿ôÎÌ
+	//å…¥åŠ›ã•ã‚ŒãŸã«è·å§¿æ•°é‡
 	var GoodsQuantity_ps = parseInt(fncDelKannma(window.parent.DSO.lngGoodsQuantity_ps.value));
 
-	//¥«¡¼¥È¥ó¿ôÎÌ¤¬0¤Ş¤¿¤Ï¶õ¤Î¤È¤­¥Á¥§¥Ã¥¯½ªÎ»
+	//ã‚«ãƒ¼ãƒˆãƒ³æ•°é‡ãŒ0ã¾ãŸã¯ç©ºã®ã¨ããƒã‚§ãƒƒã‚¯çµ‚äº†
 	if( CartonQuantity == "" || CartonQuantity == 0 )
 	{
 		return false;
 	}
 
-	//²Ù»Ñ¿ôÎÌ¤ËÆşÎÏ¤Ç¤­¤ë¾å¸Â
+	//è·å§¿æ•°é‡ã«å…¥åŠ›ã§ãã‚‹ä¸Šé™
 	var GoodsQuantity_ps_max = parseInt(GoodsQuantity_gs_defalt / CartonQuantity) ;
 
-	//ÆşÎÏ¤µ¤ì¤¿²Ù»Ñ¿ôÎÌ¤¬ºÇÂçÃÍ°Ê²¼¤Î¾ì¹ç¡¢¥¢¥Ê¥¦¥ó¥¹¤·¤Ê¤¤
+	//å…¥åŠ›ã•ã‚ŒãŸè·å§¿æ•°é‡ãŒæœ€å¤§å€¤ä»¥ä¸‹ã®å ´åˆã€ã‚¢ãƒŠã‚¦ãƒ³ã‚¹ã—ãªã„
 	if( GoodsQuantity_ps <= GoodsQuantity_ps_max )
 	{
 		return false;
 	}
 	
-	// ¿·µ¬ÅĞÏ¿»ş
+	// æ–°è¦ç™»éŒ²æ™‚
 	if( window.parent.HSO.strPageCondition.value == "regist" )
 	{
-		// ½é´üÃÍ¤òÀßÄê
+		// åˆæœŸå€¤ã‚’è¨­å®š
 		window.parent.DSO.lngGoodsQuantity_ps.value = fncAddKannma(GoodsQuantity_ps_max);
 		
-		// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ
-		alert("²Ù»Ñ¿ôÎÌ¤ËÆşÎÏ¤Ç¤­¤ë¾å¸Â¤Ï¡¢" + GoodsQuantity_ps_max + "¤Ç¤¹");
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›
+		alert("è·å§¿æ•°é‡ã«å…¥åŠ›ã§ãã‚‹ä¸Šé™ã¯ã€" + GoodsQuantity_ps_max + "ã§ã™");
 		
 		//
 		window.parent.DSO.lngGoodsQuantity_ps.select();
 
 	}
-	// ½¤Àµ»ş
+	// ä¿®æ­£æ™‚
 	else
 	{
-		retVal = confirm("ÅĞÏ¿ºÑ¤ß¤Î²Ù»Ñ¿ôÎÌ¤Ï " + GoodsQuantity_ps_max + " ¤Ç¤¹\nÇ¤°Õ¤Ç " + GoodsQuantity_ps + " ¤ËÊÑ¹¹¤·¤Ş¤¹¤«¡©");
+		retVal = confirm("ç™»éŒ²æ¸ˆã¿ã®è·å§¿æ•°é‡ã¯ " + GoodsQuantity_ps_max + " ã§ã™\nä»»æ„ã§ " + GoodsQuantity_ps + " ã«å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ");
 		if( retVal == false )
 		{
-			// Ç¤°ÕÃÍ¤ò¥»¥Ã¥È
+			// ä»»æ„å€¤ã‚’ã‚»ãƒƒãƒˆ
 			window.parent.DSO.lngGoodsQuantity_ps.value = fncAddKannma(GoodsQuantity_ps_max);
 		}
 	}
@@ -2491,76 +2491,76 @@ function fncDtPSGoodsQuantityForPC()
 
 // ---------------------------------------------------------------
 /**
-*  ³µÍ×   :À½ÉÊ¿ôÎÌ¤ÎÆşÎÏ¥Á¥§¥Ã¥¯
-*  ÂĞ¾İ   :»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı
-*			¹ÔÈÖ¹æ¤Î¤¢¤ë¾ì¹ç¤Ç¡¢À½ÉÊ¿ôÎÌ¤Ë¥Á¥§¥Ã¥¯¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+*  æ¦‚è¦   :è£½å“æ•°é‡ã®å…¥åŠ›ãƒã‚§ãƒƒã‚¯
+*  å¯¾è±¡   :ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†
+*			è¡Œç•ªå·ã®ã‚ã‚‹å ´åˆã§ã€è£½å“æ•°é‡ã«ãƒã‚§ãƒƒã‚¯ã•ã‚Œã¦ã„ã‚‹å ´åˆ
 */
 // ---------------------------------------------------------------
 function fncDtGSGoodsQuantityForPC()
 {
 	
-	// ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤¤»ş¤Ï½èÍı¤·¤Ê¤¤
+	// é¸æŠã•ã‚Œã¦ã„ãªã„æ™‚ã¯å‡¦ç†ã—ãªã„
 	if( g_lngSelIndex == -1 )
 	{
 		return false;
 	}
-	// ¹ÔÈÖ¹æ¤¬Ìµ¤¤¾ì¹ç¤Ï½èÍı¤·¤Ê¤¤
+	// è¡Œç•ªå·ãŒç„¡ã„å ´åˆã¯å‡¦ç†ã—ãªã„
 	if( typeof(saveRecord[g_lngSelIndex][18]) == "undefined" ||	saveRecord[g_lngSelIndex][18] == "" )
 	{
 		return false;
 	}
 
-	// ´ÉÍı¤òÁªÊÌ
+	// ç®¡ç†ã‚’é¸åˆ¥
 	switch (fncGetKindOfManagement())
 	{
-		// Çä¾å´ÉÍı¤Î¾ì¹ç
+		// å£²ä¸Šç®¡ç†ã®å ´åˆ
 		case g_strSCKindOfManagement:
-			strCheckCode = window.parent.HSO.strReceiveCode.value;	// ¡Ö¼õÃíNo.¡×¤ò¼èÆÀ
+			strCheckCode = window.parent.HSO.strReceiveCode.value;	// ã€Œå—æ³¨No.ã€ã‚’å–å¾—
 			break;
-		// »ÅÆş´ÉÍı¤Î¾ì¹ç
+		// ä»•å…¥ç®¡ç†ã®å ´åˆ
 		case g_strPCKindOfManagement:
-			strCheckCode = window.parent.HSO.strOrderCode.value;	// ¡ÖÈ¯ÃíNo.¡×¤ò¼èÆÀ
+			strCheckCode = window.parent.HSO.strOrderCode.value;	// ã€Œç™ºæ³¨No.ã€ã‚’å–å¾—
 			break;
 		default:
 			return false;
 	}
-	// ¼õÃíNo.¡¢È¯ÃíNo. ¤ÎÌµ¤¤¥Ç¡¼¥¿¤Î¾ì¹ç¤Ï¥Á¥§¥Ã¥¯¤·¤Ê¤¤
+	// å—æ³¨No.ã€ç™ºæ³¨No. ã®ç„¡ã„ãƒ‡ãƒ¼ã‚¿ã®å ´åˆã¯ãƒã‚§ãƒƒã‚¯ã—ãªã„
 	if( window.parent.HSO.strPageCondition.value == "regist" && strCheckCode == "" )
 	{
 		return false;
 	}
 
-	// ¥Ç¥Õ¥©¥ë¥È¤ÎÀ½ÉÊ¿ôÎÌ
+	// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è£½å“æ•°é‡
 	var GoodsQuantity_gs_defalt = parseInt(fncDtGSGoodsQuantityDefalt());
-	// ÆşÎÏ¤µ¤ì¤¿¤ËÀ½ÉÊ¿ôÎÌ
+	// å…¥åŠ›ã•ã‚ŒãŸã«è£½å“æ•°é‡
 	var GoodsQuantity_gs = parseInt(fncDelKannma(window.parent.DSO.lngGoodsQuantity_gs.value));
 
-	// ÆşÎÏ¤µ¤ì¤¿À½ÉÊ¿ôÎÌ¤¬¥Ç¥Õ¥©¥ë¥ÈÃÍ°Ê²¼¤Î¾ì¹ç¡¢¥¢¥Ê¥¦¥ó¥¹¤·¤Ê¤¤
+	// å…¥åŠ›ã•ã‚ŒãŸè£½å“æ•°é‡ãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ä»¥ä¸‹ã®å ´åˆã€ã‚¢ãƒŠã‚¦ãƒ³ã‚¹ã—ãªã„
 	if( GoodsQuantity_gs <= GoodsQuantity_gs_defalt )
 	{
 		return false;
 	}
 
-	// ¿·µ¬ÅĞÏ¿»ş
+	// æ–°è¦ç™»éŒ²æ™‚
 	if( window.parent.HSO.strPageCondition.value == "regist" )
 	{
-		// ½é´üÃÍ¤òÀßÄê
+		// åˆæœŸå€¤ã‚’è¨­å®š
 		window.parent.DSO.lngGoodsQuantity_gs.value = fncAddKannma(GoodsQuantity_gs_defalt);
 
-		// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ
-		alert("À½ÉÊ¿ôÎÌ¤ËÆşÎÏ¤Ç¤­¤ë¾å¸Â¤Ï¡¢" + GoodsQuantity_gs_defalt + " ¤Ç¤¹");
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›
+		alert("è£½å“æ•°é‡ã«å…¥åŠ›ã§ãã‚‹ä¸Šé™ã¯ã€" + GoodsQuantity_gs_defalt + " ã§ã™");
 		
 		//
 		window.parent.DSO.lngGoodsQuantity_gs.select();
 
 	}
-	// ½¤Àµ»ş
+	// ä¿®æ­£æ™‚
 	else
 	{
-		retVal = confirm("ÅĞÏ¿ºÑ¤ß¤ÎÀ½ÉÊ¿ôÎÌ¤Ï " + GoodsQuantity_gs_defalt + " ¤Ç¤¹\nÇ¤°Õ¤Ç " + GoodsQuantity_gs + " ¤ËÊÑ¹¹¤·¤Ş¤¹¤«¡©");
+		retVal = confirm("ç™»éŒ²æ¸ˆã¿ã®è£½å“æ•°é‡ã¯ " + GoodsQuantity_gs_defalt + " ã§ã™\nä»»æ„ã§ " + GoodsQuantity_gs + " ã«å¤‰æ›´ã—ã¾ã™ã‹ï¼Ÿ");
 		if( retVal == false )
 		{
-			// Ç¤°ÕÃÍ¤ò¥»¥Ã¥È
+			// ä»»æ„å€¤ã‚’ã‚»ãƒƒãƒˆ
 			window.parent.DSO.lngGoodsQuantity_gs.value = fncAddKannma(GoodsQuantity_gs_defalt);
 		}
 	}
@@ -2570,31 +2570,31 @@ function fncDtGSGoodsQuantityForPC()
 
 // ---------------------------------------------------------------
 /**
-*  ³µÍ×   :´ÉÍı²èÌÌ¤Î¼ïÊÌÈ½Äê
-*  ÂĞ¾İ   :ÈÆÍÑ
+*  æ¦‚è¦   :ç®¡ç†ç”»é¢ã®ç¨®åˆ¥åˆ¤å®š
+*  å¯¾è±¡   :æ±ç”¨
 */
 // ---------------------------------------------------------------
 function fncGetKindOfManagement()
 {
-	// ´ÉÍı¼ïÊÌ
+	// ç®¡ç†ç¨®åˆ¥
 	var strCheckStatus = "";
 	
-	// ¼õÃí´ÉÍı
+	// å—æ³¨ç®¡ç†
 	if( typeof(window.parent.HSO.SOFlg) == "object" )
 	{
 		strCheckStatus = g_strSOKindOfManagement;
 	}
-	// Çä¾å´ÉÍı
+	// å£²ä¸Šç®¡ç†
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
 		strCheckStatus = g_strSCKindOfManagement;
 	}
-	// È¯Ãí´ÉÍı
+	// ç™ºæ³¨ç®¡ç†
 	if( typeof(window.parent.HSO.POFlg) == "object" )
 	{
 		strCheckStatus = g_strPOKindOfManagement;
 	}
-	// »ÅÆş´ÉÍı
+	// ä»•å…¥ç®¡ç†
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
 		strCheckStatus = g_strPCKindOfManagement;
@@ -2606,32 +2606,32 @@ function fncGetKindOfManagement()
 
 // ---------------------------------------------------------------
 /**
-*  ³µÍ×   :¹ÔÈÖ¹æ¤«¤é¥Ç¥Õ¥©¥ë¥È¤ÎÀ½ÉÊ¿ôÎÌ¤òÆÀ¤ë
-*  ÂĞ¾İ   :»ÅÆş´ÉÍı¤Ç¹ÔÈÖ¹æ¤Î¤¢¤ë¾ì¹ç
+*  æ¦‚è¦   :è¡Œç•ªå·ã‹ã‚‰ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è£½å“æ•°é‡ã‚’å¾—ã‚‹
+*  å¯¾è±¡   :ä»•å…¥ç®¡ç†ã§è¡Œç•ªå·ã®ã‚ã‚‹å ´åˆ
 */
 // ---------------------------------------------------------------
 function fncDtGSGoodsQuantityDefalt()
 {
-	//¥Ç¥Õ¥©¥ë¥È¤ÎÀ½ÉÊ¿ôÎÌ
+	//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è£½å“æ•°é‡
 	var GoodsQuantity_gs_defalt = 0;
 
-	//¥ë¡¼¥×½èÍı¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹
+	//ãƒ«ãƒ¼ãƒ—å‡¦ç†ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	var i = 0;
 
-	//À½ÉÊ¥³¡¼¥É¤¬¤¢¤ë¤«¤®¤ê¥ë¡¼¥×
+	//è£½å“ã‚³ãƒ¼ãƒ‰ãŒã‚ã‚‹ã‹ãã‚Šãƒ«ãƒ¼ãƒ—
 	while( window.parent.DSO.elements("aryPoDitail[" + i + "][strProductCode]") != null )
 	{
-		//Hidden¤ÇÅÇ¤­½Ğ¤µ¤ì¤¿¹ÔÈÖ¹æ¤ÈÁªÂò¤µ¤ì¤¿¹ÔÈÖ¹æ¤¬Æ±°ì¤Î¾ì¹ç¤ËÀ½ÉÊ¿ôÎÌ¤òÆÀ¤ë
+		//Hiddenã§åãå‡ºã•ã‚ŒãŸè¡Œç•ªå·ã¨é¸æŠã•ã‚ŒãŸè¡Œç•ªå·ãŒåŒä¸€ã®å ´åˆã«è£½å“æ•°é‡ã‚’å¾—ã‚‹
 		if( window.parent.DSO.elements("aryPoDitail[" + i + "][lngorderdetailno]").value != saveRecord[g_lngSelIndex][18] )
 		{
 			i++;
 			continue;
 		}
 
-		// Çä¾å¤Î¾ì¹ç¤Î¤ß
+		// å£²ä¸Šã®å ´åˆã®ã¿
 		if( typeof(window.parent.HSO.SCFlg) == "object" )
 		{
-			// ¼õÃíÈÖ¹æ¤â°ìÃ×¤·¤Æ¤¤¤ë¤«¤ò³ÎÇ§¤¹¤ë¡ÊÊ£¿ô¼õÃíÈÖ¹æ¤¬ºß¤êÆÀ¤ë°Ù¡Ë
+			// å—æ³¨ç•ªå·ã‚‚ä¸€è‡´ã—ã¦ã„ã‚‹ã‹ã‚’ç¢ºèªã™ã‚‹ï¼ˆè¤‡æ•°å—æ³¨ç•ªå·ãŒåœ¨ã‚Šå¾—ã‚‹ç‚ºï¼‰
 			if( window.parent.DSO.elements("aryPoDitail[" + i + "][lngReceiveNo]").value != saveRecord[g_lngSelIndex][25] )
 			{
 				i++;
@@ -2641,23 +2641,23 @@ function fncDtGSGoodsQuantityDefalt()
 
 
 
-		//´¹»»¶èÊ¬¤¬À½ÉÊÃ±°Ì·×¾å¤Î¾ì¹ç
+		//æ›ç®—åŒºåˆ†ãŒè£½å“å˜ä½è¨ˆä¸Šã®å ´åˆ
 		if( window.parent.DSO.elements("aryPoDitail[" + i + "][lngConversionClassCode]").value == "gs" )
 		{
-			//¥Ç¥Õ¥©¥ë¥È¤ÎÀ½ÉÊ¿ôÎÌ
+			//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è£½å“æ•°é‡
 			var GoodsQuantity_gs_defalt = window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsQuantity]").value
 		}
-		//´¹»»¶èÊ¬¤¬²Ù»ÑÃ±°Ì·×¾å¤Î¾ì¹ç
+		//æ›ç®—åŒºåˆ†ãŒè·å§¿å˜ä½è¨ˆä¸Šã®å ´åˆ
 		else if( window.parent.DSO.elements("aryPoDitail[" + i + "][lngConversionClassCode]").value == "ps" )
 		{
-			//¥Ç¥Õ¥©¥ë¥È¤Î²Ù»Ñ¿ôÎÌ
+			//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è·å§¿æ•°é‡
 			var GoodsQuantity_ps_defalt = window.parent.DSO.elements("aryPoDitail[" + i + "][lngGoodsQuantity]").value
-			//¥«¡¼¥È¥óÆş¿ô
+			//ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
 			var CartonQuantity   = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
-			//¥Ç¥Õ¥©¥ë¥È¤ÎÀ½ÉÊ¿ôÎÌ(¥Ç¥Õ¥©¥ë¥È¤Î²Ù»Ñ¿ôÎÌ¡ß¥«¡¼¥È¥óÆş¿ô)
+			//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è£½å“æ•°é‡(ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®è·å§¿æ•°é‡Ã—ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°)
 			var GoodsQuantity_gs_defalt = GoodsQuantity_ps_defalt * CartonQuantity;
 		}
-		//¥ë¡¼¥×½èÍı¤ò½ªÎ»
+		//ãƒ«ãƒ¼ãƒ—å‡¦ç†ã‚’çµ‚äº†
 		break;
 
 	}
@@ -2668,55 +2668,55 @@ function fncDtGSGoodsQuantityDefalt()
 
 // ---------------------------------------------------------------
 /**
-*  ³µÍ×   : [À½ÉÊÃ±²Á]¤Ë[²Ù»ÑÃ±²Á]¡à[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È
-*  ÂĞ¾İ   : ¼õÃí¡¢Çä¾å¡¢È¯Ãí¡¢»ÅÆş´ÉÍı¤Ç[²Ù»ÑÃ±°Ì·×¾å]¤Î¤È¤­¤Ë[²Ù»ÑÃ±²Á]¤«¤éonBlur¤·¤¿¤È¤­
-*           ³ÆÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¤È¤­
+*  æ¦‚è¦   : [è£½å“å˜ä¾¡]ã«[è·å§¿å˜ä¾¡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆ
+*  å¯¾è±¡   : å—æ³¨ã€å£²ä¸Šã€ç™ºæ³¨ã€ä»•å…¥ç®¡ç†ã§[è·å§¿å˜ä½è¨ˆä¸Š]ã®ã¨ãã«[è·å§¿å˜ä¾¡]ã‹ã‚‰onBlurã—ãŸã¨ã
+*           å„æ˜ç´°è¡Œã‚’é¸æŠã—ãŸã¨ã
 */
 // ---------------------------------------------------------------
 function fncDtPSProductPrice()
 {
-	//²Ù»ÑÃ±²Á
+	//è·å§¿å˜ä¾¡
 	var ProductPrice_ps = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value));
-	//¥«¡¼¥È¥óÆş¤ê¿ô
+	//ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
 	var CartonQuantity  = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 
-	//¥«¡¼¥È¥ó¿ôÎÌ¤¬0¤Ş¤¿¤Ï¶õ¤Î¤È¤­½èÍı½ªÎ»
+	//ã‚«ãƒ¼ãƒˆãƒ³æ•°é‡ãŒ0ã¾ãŸã¯ç©ºã®ã¨ãå‡¦ç†çµ‚äº†
 	if( CartonQuantity == "" || CartonQuantity == 0 )
 	{
 		return false;
 	}
 
-	//[À½ÉÊÃ±²Á]¤Ë[²Ù»ÑÃ±²Á]¡à[¥«¡¼¥È¥óÆş¿ô]¤ò¥»¥Ã¥È
+	//[è£½å“å˜ä¾¡]ã«[è·å§¿å˜ä¾¡]Ã·[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]ã‚’ã‚»ãƒƒãƒˆ
 	window.parent.DSO.curProductPrice_gs.value = window.parent.fncCheckNumberValue((ProductPrice_ps / CartonQuantity), 4);
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : Áí¹ç·×¶â³Û¤ò»»½Ğ¤¹¤ë
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : ç·åˆè¨ˆé‡‘é¡ã‚’ç®—å‡ºã™ã‚‹
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtCalAllTotalPrice()
 {
 	if( saveRecord.length == 0 )
 	{
-		//ÌÀºÙ¹Ô¤¬¤Ê¤¤¾ì¹ç¤ÏÁí¹ç·×¶â³Û¤ò¤«¤é¤Ë¤¹¤ë
+		//æ˜ç´°è¡ŒãŒãªã„å ´åˆã¯ç·åˆè¨ˆé‡‘é¡ã‚’ã‹ã‚‰ã«ã™ã‚‹
 		window.parent.DSO.curAllTotalPrice.value = "";
 	}
 	else
 	{
-		//Áí¹ç·×¶â³Û
+		//ç·åˆè¨ˆé‡‘é¡
 		var AllTotalPrice = 0;
-		//ÌÀºÙ¹Ô¤Î¿ô
+		//æ˜ç´°è¡Œã®æ•°
 		var saveRecordLength = saveRecord.length;
 
 		for( i = 0; i < saveRecordLength; i++ )
 		{
-			// Çä¾å
+			// å£²ä¸Š
 			if( typeof(window.parent.HSO.SCFlg) == "object" )
 			{
-				// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+				// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 				if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 				{
 					if( saveRecord[i][27] == 1 )
@@ -2724,17 +2724,17 @@ function fncDtCalAllTotalPrice()
 						AllTotalPrice += parseInt( 10000 * fncDelKannma( fncDelCurrencySign( saveRecord[i][11] ) ) );
 					}
 				}
-				// Ä¾ÅĞÏ¿¤Î¾ì¹ç
+				// ç›´ç™»éŒ²ã®å ´åˆ
 				else
 				{
 					AllTotalPrice += parseInt( 10000 * fncDelKannma( fncDelCurrencySign( saveRecord[i][11] ) ) );
 				}
 			}
 
-			// »ÅÆş
+			// ä»•å…¥
 			if( typeof(window.parent.HSO.PCFlg) == "object" )
 			{
-				// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+				// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 				if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 				{
 					if( saveRecord[i][25] == 1 )
@@ -2742,14 +2742,14 @@ function fncDtCalAllTotalPrice()
 						AllTotalPrice += parseInt( 10000 * fncDelKannma( fncDelCurrencySign( saveRecord[i][11] ) ) );
 					}
 				}
-				// Ä¾ÅĞÏ¿¤Î¾ì¹ç
+				// ç›´ç™»éŒ²ã®å ´åˆ
 				else
 				{
 					AllTotalPrice += parseInt( 10000 * fncDelKannma( fncDelCurrencySign( saveRecord[i][11] ) ) );
 				}
 			}
 
-			// ¼õÃí¡¦È¯Ãí
+			// å—æ³¨ãƒ»ç™ºæ³¨
 			if( typeof(window.parent.HSO.SOFlg) == "object" ||
 				typeof(window.parent.HSO.POFlg) == "object" )
 			{
@@ -2760,9 +2760,9 @@ function fncDtCalAllTotalPrice()
 		AllTotalPrice = AllTotalPrice / 10000 ;
 
 
-		//Áí¹ç·×¶â³Û¤òÆşÎÏÏÈ¤ËÈ¿±Ç
+		//ç·åˆè¨ˆé‡‘é¡ã‚’å…¥åŠ›æ ã«åæ˜ 
 		window.parent.DSO.curAllTotalPrice.value = AllTotalPrice;
-		//Áí¹ç·×¶â³Û¤ò¥Õ¥©¡¼¥Ş¥Ã¥È¤¹¤ë
+		//ç·åˆè¨ˆé‡‘é¡ã‚’ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã™ã‚‹
 		window.parent.fncCheckNumber( window.parent.DSO.curAllTotalPrice , 2 );
 	}
 }
@@ -2770,90 +2770,90 @@ function fncDtCalAllTotalPrice()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ´ğ½àÄÌ²ß¤ò»»½Ğ¤¹¤ë
-* ÂĞ¾İ   : È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç¤ÇÄÌ²ß¤¬ÆüËÜ±ß°Ê³°
+* æ¦‚è¦   : åŸºæº–é€šè²¨ã‚’ç®—å‡ºã™ã‚‹
+* å¯¾è±¡   : ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆã§é€šè²¨ãŒæ—¥æœ¬å††ä»¥å¤–
 */
 // ---------------------------------------------------------------
 function fncDtCalStdTotalPrice()
 {
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç¤Î¤ß
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆã®ã¿
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		//ÆüËÜ±ß¤Î¤È¤­¤ÏÉ½¼¨¤µ¤»¤Ê¤¤
+		//æ—¥æœ¬å††ã®ã¨ãã¯è¡¨ç¤ºã•ã›ãªã„
 		if( window.parent.HSO.lngMonetaryUnitCode.value == g_strJpnCurrencySign )
 		{
-			//[´ğ½àÄÌ²ß]¤ò¶õÇò¤Ë¤¹¤ë
+			//[åŸºæº–é€šè²¨]ã‚’ç©ºç™½ã«ã™ã‚‹
 			window.parent.DSO.curStdTotalPrice.value = "";
-			//¥µ¥Ö¥¦¥£¥ó¥É¥¦¤Î[ÀÇ³Û]¤ò¶õÇò¤Ë¤¹¤ë
+			//ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®[ç¨é¡]ã‚’ç©ºç™½ã«ã™ã‚‹
 			window.parent.DSO.curSubTaxPrice.value = "";
-			//¥µ¥Ö¥¦¥£¥ó¥É¥¦¤Î[¹ç·×¶â³Û]¤ò¶õÇò¤Ë¤¹¤ë
+			//ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®[åˆè¨ˆé‡‘é¡]ã‚’ç©ºç™½ã«ã™ã‚‹
 			window.parent.DSO.curTotalStdAmt.value = "";
 			return false;
 		}
 
-		//[ÀÇÈ´¶â³Û]¤ò¼èÆÀ
+		//[ç¨æŠœé‡‘é¡]ã‚’å–å¾—
 		var TotalPrice = parseFloat(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curTotalPrice.value)));
 
-		//[ÀÇÈ´¶â³Û]¤¬¤Ê¤«¤Ã¤¿¤é½èÍı½ªÎ»
+		//[ç¨æŠœé‡‘é¡]ãŒãªã‹ã£ãŸã‚‰å‡¦ç†çµ‚äº†
 		if( TotalPrice == "" || TotalPrice == 0 || isNaN(TotalPrice) )
 		{
-			//[´ğ½àÄÌ²ß]¤ò¶õÇò¤Ë¤¹¤ë
+			//[åŸºæº–é€šè²¨]ã‚’ç©ºç™½ã«ã™ã‚‹
 			window.parent.DSO.curStdTotalPrice.value = "";
-			//¥µ¥Ö¥¦¥£¥ó¥É¥¦¤Î[ÀÇ³Û]¤ò¶õÇò¤Ë¤¹¤ë
+			//ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®[ç¨é¡]ã‚’ç©ºç™½ã«ã™ã‚‹
 			window.parent.DSO.curSubTaxPrice.value = "";
-			//¥µ¥Ö¥¦¥£¥ó¥É¥¦¤Î[¹ç·×¶â³Û]¤ò¶õÇò¤Ë¤¹¤ë
+			//ã‚µãƒ–ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®[åˆè¨ˆé‡‘é¡]ã‚’ç©ºç™½ã«ã™ã‚‹
 			window.parent.DSO.curTotalStdAmt.value = "";
 	
 			return false;
 		}
 
-		//[´¹»»¥ì¡¼¥È]¤ò¼èÆÀ
+		//[æ›ç®—ãƒ¬ãƒ¼ãƒˆ]ã‚’å–å¾—
 		var ConversionRate = fncDelKannma(fncDelCurrencySign(window.parent.HSO.curConversionRate.value));
 	
-		//[´ğ½àÄÌ²ß]¤òµá¤á¤Æ¥Õ¥©¡¼¥Ş¥Ã¥È
+		//[åŸºæº–é€šè²¨]ã‚’æ±‚ã‚ã¦ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		var StdTotalPrice = window.parent.fncCheckNumberValue(TotalPrice * ConversionRate, 2 ,false);
 	
-		//[´ğ½àÄÌ²ß]¤Ë±ß¥Ş¡¼¥¯¤ò¤Ä¤±¤ë
+		//[åŸºæº–é€šè²¨]ã«å††ãƒãƒ¼ã‚¯ã‚’ã¤ã‘ã‚‹
 		window.parent.DSO.curStdTotalPrice.value = g_strJpnCurrencySign + " " + StdTotalPrice;
 
-		//¥µ¥Ö¥¦¥¤¥ó¥É¤ÎÉ½¼¨
-		//È¯Ãí´ÉÍı¤Î¾ì¹ç
+		//ã‚µãƒ–ã‚¦ã‚¤ãƒ³ãƒ‰ã®è¡¨ç¤º
+		//ç™ºæ³¨ç®¡ç†ã®å ´åˆ
 		if( typeof(window.parent.HSO.POFlg) == "object" )
 		{
-			window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value; //[¹ç·×¶â³Û]
+			window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value; //[åˆè¨ˆé‡‘é¡]
 		}
-		//»ÅÆş´ÉÍı¤Î¾ì¹ç
+		//ä»•å…¥ç®¡ç†ã®å ´åˆ
 		else if( typeof(window.parent.HSO.PCFlg) == "object" )
 		{
-			//¾ÃÈñÀÇ³Û
+			//æ¶ˆè²»ç¨é¡
 			var TaxPrice = parseFloat(fncDelKannma(fncDelCurrencySign(window.parent.DSO.curTaxPrice.value)));
 	
-			//Èó²İÀÇ¤Î¾ì¹ç
+			//éèª²ç¨ã®å ´åˆ
 			if( window.parent.DSO.lngTaxClassCode.value == 1 )
 			{
-				window.parent.DSO.curSubTaxPrice.value = "" ;                                    //[ÀÇ³Û]
-				//[¹ç·×¶â³Û]=´ğ½àÄÌ²ß¤ÈÆ±ÍÍ
-				window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value ; //[¹ç·×¶â³Û]
+				window.parent.DSO.curSubTaxPrice.value = "" ;                                    //[ç¨é¡]
+				//[åˆè¨ˆé‡‘é¡]=åŸºæº–é€šè²¨ã¨åŒæ§˜
+				window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value ; //[åˆè¨ˆé‡‘é¡]
 			}
-			//³°ÀÇ¤Î¾ì¹ç
+			//å¤–ç¨ã®å ´åˆ
 			else if( window.parent.DSO.lngTaxClassCode.value == 2 )
 			{
-				//[ÀÇ³Û]=[¾ÃÈñÀÇ³Û]¡ß[´¹»»¥ì¡¼¥È]
+				//[ç¨é¡]=[æ¶ˆè²»ç¨é¡]Ã—[æ›ç®—ãƒ¬ãƒ¼ãƒˆ]
 				var SubTaxPrice = window.parent.fncCheckNumberValue(TaxPrice * ConversionRate, 2 ,false);
-				window.parent.DSO.curSubTaxPrice.value = g_strJpnCurrencySign + " " + SubTaxPrice ; //[ÀÇ³Û]
-				//[¹ç·×¶â³Û]=[ÀÇÈ´²Á³Ê]+[¾ÃÈñÀÇ³Û]
+				window.parent.DSO.curSubTaxPrice.value = g_strJpnCurrencySign + " " + SubTaxPrice ; //[ç¨é¡]
+				//[åˆè¨ˆé‡‘é¡]=[ç¨æŠœä¾¡æ ¼]+[æ¶ˆè²»ç¨é¡]
 				var TotalStdAmt = window.parent.fncCheckNumberValue(((TotalPrice + TaxPrice) * ConversionRate), 2 ,false);
-				window.parent.DSO.curTotalStdAmt.value = g_strJpnCurrencySign + " " + TotalStdAmt ; //[¹ç·×¶â³Û]
+				window.parent.DSO.curTotalStdAmt.value = g_strJpnCurrencySign + " " + TotalStdAmt ; //[åˆè¨ˆé‡‘é¡]
 			}
-			//ÆâÀÇ¤Î¾ì¹ç
+			//å†…ç¨ã®å ´åˆ
 			else if( window.parent.DSO.lngTaxClassCode.value == 3 )
 			{
-				//[ÀÇ³Û]=[¾ÃÈñÀÇ³Û]¡ß[´¹»»¥ì¡¼¥È]
+				//[ç¨é¡]=[æ¶ˆè²»ç¨é¡]Ã—[æ›ç®—ãƒ¬ãƒ¼ãƒˆ]
 				var SubTaxPrice = window.parent.fncCheckNumberValue(TaxPrice * ConversionRate, 2 ,false);
-				window.parent.DSO.curSubTaxPrice.value = g_strJpnCurrencySign + " " + SubTaxPrice ;	//[ÀÇ³Û]
-				//[¹ç·×¶â³Û]=´ğ½àÄÌ²ß¤ÈÆ±ÍÍ
-				window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value ;	//[¹ç·×¶â³Û]
+				window.parent.DSO.curSubTaxPrice.value = g_strJpnCurrencySign + " " + SubTaxPrice ;	//[ç¨é¡]
+				//[åˆè¨ˆé‡‘é¡]=åŸºæº–é€šè²¨ã¨åŒæ§˜
+				window.parent.DSO.curTotalStdAmt.value = window.parent.DSO.curStdTotalPrice.value ;	//[åˆè¨ˆé‡‘é¡]
 			}
 		}
 	}
@@ -2862,68 +2862,68 @@ function fncDtCalStdTotalPrice()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : [ÄÌ²ß]¤ÎÁªÂòÊÑ¹¹¤Ë¤è¤ë½èÍı
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : [é€šè²¨]ã®é¸æŠå¤‰æ›´ã«ã‚ˆã‚‹å‡¦ç†
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncHdMonetaryUnitCode()
 {
-	//ÆüËÜ±ß¤Î¾ì¹ç	
+	//æ—¥æœ¬å††ã®å ´åˆ	
 	if( window.parent.HSO.lngMonetaryUnitCode.value == g_strJpnCurrencySign )
 	{
-		//[¥ì¡¼¥È¥¿¥¤¥×]¤òÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+		//[ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’é¸æŠã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 		window.parent.HSO.lngMonetaryRateCode.disabled = true;
 
-		//[¥ì¡¼¥È¥¿¥¤¥×]¤ò¶õÇò¤Ë¤¹¤ë
+		//[ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’ç©ºç™½ã«ã™ã‚‹
 		window.parent.HSO.lngMonetaryRateCode.value = g_strNoneMonetaryRate;
 
-		//[´¹»»¥ì¡¼¥È]¤òÊÔ½¸¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+		//[æ›ç®—ãƒ¬ãƒ¼ãƒˆ]ã‚’ç·¨é›†ã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 		window.parent.HSO.curConversionRate.contentEditable = 'false';
 
-		//[´¹»»¥ì¡¼¥È]¤ò¥¯¥ê¥¢¤¹¤ë
+		//[æ›ç®—ãƒ¬ãƒ¼ãƒˆ]ã‚’ã‚¯ãƒªã‚¢ã™ã‚‹
 		window.parent.HSO.curConversionRate.value = "1.000000";
 	}
-	//ÆüËÜ±ß°Ê³°¤Î¾ì¹ç
+	//æ—¥æœ¬å††ä»¥å¤–ã®å ´åˆ
 	else
 	{
-		//[¥ì¡¼¥È¥¿¥¤¥×]¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+		//[ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 		window.parent.HSO.lngMonetaryRateCode.disabled = false;
 
-		//»ÅÆş´ÉÍı¤ÈÇä¾å´ÉÍı¤Î¾ì¹ç
+		//ä»•å…¥ç®¡ç†ã¨å£²ä¸Šç®¡ç†ã®å ´åˆ
 		if( (typeof(window.parent.HSO.PCFlg) == "object"   || 
 			 typeof(window.parent.HSO.SCFlg) == "object" ) )
 		{
-			//[¥ì¡¼¥È¥¿¥¤¥×]¤Î¥Ç¥Õ¥©¥ë¥È¤ò¡ÖTTM¡×¤Ë¤¹¤ë
+			//[ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’ã€ŒTTMã€ã«ã™ã‚‹
 			window.parent.HSO.lngMonetaryRateCode.value = g_strDefMonetaryRate;
 //			window.parent.HSO.lngMonetaryRateCode.value = g_strTtmMonetaryRate;
-			// ÀÇ¶èÊ¬¤ò¡ÖÈó²İÀÇ¡×¤Ë¤¹¤ë
+			// ç¨åŒºåˆ†ã‚’ã€Œéèª²ç¨ã€ã«ã™ã‚‹
 			window.parent.DSO.lngTaxClassCode.value = g_strFreeTaxClass;
 	
 		}
-		//È¯Ãí´ÉÍı¤È¼õÃí´ÉÍı¤Î¾ì¹ç
+		//ç™ºæ³¨ç®¡ç†ã¨å—æ³¨ç®¡ç†ã®å ´åˆ
 		else
 		{
-			//[¥ì¡¼¥È¥¿¥¤¥×]¤Î¥Ç¥Õ¥©¥ë¥È¤ò¡Ö¼ÒÆâ¥ì¡¼¥È¡×¤Ë¤¹¤ë
+			//[ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’ã€Œç¤¾å†…ãƒ¬ãƒ¼ãƒˆã€ã«ã™ã‚‹
 			window.parent.HSO.lngMonetaryRateCode.value = g_strDefMonetaryRate;
 //			window.parent.HSO.lngMonetaryRateCode.value = g_strOutTaxClass;
 		}
 
-		//[´¹»»¥ì¡¼¥È]¤òÊÔ½¸¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+		//[æ›ç®—ãƒ¬ãƒ¼ãƒˆ]ã‚’ç·¨é›†ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 		window.parent.HSO.curConversionRate.contentEditable = 'true';
 	}
 
-	//[À½ÉÊÃ±²Á][²Ù»ÑÃ±²Á]¤ò¥¯¥ê¥¢
+	//[è£½å“å˜ä¾¡][è·å§¿å˜ä¾¡]ã‚’ã‚¯ãƒªã‚¢
 	window.parent.DSO.curProductPrice_gs.value = "" ;
 	window.parent.DSO.curProductPrice_ps.value = "" ;
 
-	//ÀÇÈ´¤­¹ç·×¤ò¥¯¥ê¥¢
+	//ç¨æŠœãåˆè¨ˆã‚’ã‚¯ãƒªã‚¢
 	window.parent.DSO.curTotalPrice.value = "" ;
 
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		//´ğ½àÄÌ²ß¤ò¥¯¥ê¥¢
+		//åŸºæº–é€šè²¨ã‚’ã‚¯ãƒªã‚¢
 		window.parent.DSO.curStdTotalPrice.value = "" ;
 	}
 }
@@ -2931,49 +2931,49 @@ function fncHdMonetaryUnitCode()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÌÀºÙ¹Ô¤òÄÉ²Ã¤·¤¿¾ì¹ç¤Ë[ÄÌ²ß][¥ì¡¼¥È¥¿¥¤¥×]¤òÁªÂò¤Ç¤­¤Ê¤¯¤·¡¢
-*           ÌÀºÙ¹Ô¤¬¤Ê¤¤¾ì¹ç¤Ë[ÄÌ²ß][¥ì¡¼¥È¥¿¥¤¥×]¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë¡£
-*           ¤¿¤À¤·¡¢[¥ì¡¼¥È¥¿¥¤¥×]¤òÁªÂò¤Ç¤­¤ë¤Î¤Ï¡¢ÆüËÜ±ß°Ê³°¤Î¤È¤­¡£
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : æ˜ç´°è¡Œã‚’è¿½åŠ ã—ãŸå ´åˆã«[é€šè²¨][ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’é¸æŠã§ããªãã—ã€
+*           æ˜ç´°è¡ŒãŒãªã„å ´åˆã«[é€šè²¨][ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹ã€‚
+*           ãŸã ã—ã€[ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’é¸æŠã§ãã‚‹ã®ã¯ã€æ—¥æœ¬å††ä»¥å¤–ã®ã¨ãã€‚
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncHdMonetaryUnitCheck()
 {
 	if (saveRecord.length == 0)
 	{
-		//[ÄÌ²ß]¤òÊÔ½¸¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+		//[é€šè²¨]ã‚’ç·¨é›†ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 		window.parent.HSO.lngMonetaryUnitCode.disabled = false;
 	}
 	else
 	{
-		//[ÄÌ²ß]¤òÊÔ½¸¤Ç¤­¤Ê¤¤¤è¤¦¤Ë¤¹¤ë
+		//[é€šè²¨]ã‚’ç·¨é›†ã§ããªã„ã‚ˆã†ã«ã™ã‚‹
 		window.parent.HSO.lngMonetaryUnitCode.disabled = true;
 	}
 }
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×	¡§¥ì¡¼¥È¥¿¥¤¥×¤Î¾õÂÖÊÑ²½
+* æ¦‚è¦	ï¼šãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—ã®çŠ¶æ…‹å¤‰åŒ–
 *
-* ÂĞ¾İ	¡§
+* å¯¾è±¡	ï¼š
 */
 // ---------------------------------------------------------------
 function fncHdMonetaryRateCheck()
 {
-	// [¥ì¡¼¥È¥¿¥¤¥×]¤ÎÁªÂò¾õÂÖ¤òÊÑ¹¹
+	// [ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã®é¸æŠçŠ¶æ…‹ã‚’å¤‰æ›´
 	if (saveRecord.length == 0)
 	{
-		// [ÄÌ²ß]¤¬ÆüËÜ±ß¤Î¾ì¹ç¡¢Ìµ»ë¤¹¤ë
+		// [é€šè²¨]ãŒæ—¥æœ¬å††ã®å ´åˆã€ç„¡è¦–ã™ã‚‹
 		if( window.parent.HSO.lngMonetaryUnitCode.value == g_strJpnCurrencySign )
 		{
 			return false;
 		}
-		// [¥ì¡¼¥È¥¿¥¤¥×]¤òÁªÂò¤Ç¤­¤ë¤è¤¦¤Ë
+		// [ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’é¸æŠã§ãã‚‹ã‚ˆã†ã«
 		window.parent.HSO.lngMonetaryRateCode.disabled = false;
 	}
 	else
 	{
-		// [¥ì¡¼¥È¥¿¥¤¥×]¤òÁªÂò¤Ç¤­¤Ê¤¤¤è¤¦¤Ë
+		// [ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã‚’é¸æŠã§ããªã„ã‚ˆã†ã«
 		window.parent.HSO.lngMonetaryRateCode.disabled = true;
 	}
 }
@@ -2981,28 +2981,28 @@ function fncHdMonetaryRateCheck()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÄÌ²ß¤òÁªÂò¤·¤¿¤é¡¢³µ»»¥ì¡¼¥È¤ËÈ¿±Ç
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦   : é€šè²¨ã‚’é¸æŠã—ãŸã‚‰ã€æ¦‚ç®—ãƒ¬ãƒ¼ãƒˆã«åæ˜ 
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncCalConversionRate()
 {
-	//[ÄÌ²ß]¤¬ÆüËÜ±ß¤À¤Ã¤¿¤é¡¢¥­¥ã¥ó¥»¥ë
+	//[é€šè²¨]ãŒæ—¥æœ¬å††ã ã£ãŸã‚‰ã€ã‚­ãƒ£ãƒ³ã‚»ãƒ«
 	if( window.parent.HSO.lngMonetaryUnitCode.value == g_strJpnCurrencySign ) return false;
 
-	//[¥ì¡¼¥È¥¿¥¤¥×]¤Î¶õÇò¤òÁªÂò¤·¤¿¤é¡¢¡Ö¼ÒÆâ¡×¤òÁªÂò¤·¤¿¤³¤È¤Ë¤¹¤ë
+	//[ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—]ã®ç©ºç™½ã‚’é¸æŠã—ãŸã‚‰ã€ã€Œç¤¾å†…ã€ã‚’é¸æŠã—ãŸã“ã¨ã«ã™ã‚‹
 	if( window.parent.HSO.lngMonetaryRateCode.value == g_strNoneMonetaryRate )
 	{
 		window.parent.HSO.lngMonetaryRateCode.value = g_strDefMonetaryRate;
 	}
 
-	//[·×¾åÆü]¤¬¶õ¤Î¾ì¹ç¤Ë¡¢¸½ºß¤ÎÆüÉÕ¤±¤òÈ¿±Ç
+	//[è¨ˆä¸Šæ—¥]ãŒç©ºã®å ´åˆã«ã€ç¾åœ¨ã®æ—¥ä»˜ã‘ã‚’åæ˜ 
 	if( window.parent.HSO.dtmOrderAppDate.value == "" )
 	{
 		window.parent.HSO.dtmOrderAppDate.value = fncYYMMDD();
 	}
 
-	//[´¹»»¥ì¡¼¥È]¤ò[¥ì¡¼¥È¥¿¥¤¥×][ÄÌ²ß][·×¾åÆü]¤ò¤â¤È¤ËÈ¿±Ç
+	//[æ›ç®—ãƒ¬ãƒ¼ãƒˆ]ã‚’[ãƒ¬ãƒ¼ãƒˆã‚¿ã‚¤ãƒ—][é€šè²¨][è¨ˆä¸Šæ—¥]ã‚’ã‚‚ã¨ã«åæ˜ 
 	subLoadMasterValue('cnConversionRate',
 					 window.parent.HSO.lngMonetaryRateCode,
 					 window.parent.HSO.curConversionRate,
@@ -3015,35 +3015,35 @@ function fncCalConversionRate()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    ¡§ ¥Õ¥©¡¼¥àDSO¤ËÅÇ¤­½Ğ¤µ¤ì¤¿hiddenÃÍ¤«¤éÆşÎÏÏÈ¤Î¥Ç¡¼¥¿¤òºîÀ®
-*            Detail¤Î¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Ë¼Â¹Ô¤µ¤ì¤ë
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦    ï¼š ãƒ•ã‚©ãƒ¼ãƒ DSOã«åãå‡ºã•ã‚ŒãŸhiddenå€¤ã‹ã‚‰å…¥åŠ›æ ã®ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
+*            Detailã®ã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã«å®Ÿè¡Œã•ã‚Œã‚‹
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtHtml()
 {
 
-	//ÄÌ²ßµ­¹æ¤ÎÀßÄê
+	//é€šè²¨è¨˜å·ã®è¨­å®š
 	window.parent.fncCheckNumberCurrencySign( window.parent.HSO.lngMonetaryUnitCode.value );
 
-	//»ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.PCFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		//[·×¾åÆü]¤¬¶õ¤Î¾ì¹ç¤Ë¡¢¸½ºß¤ÎÆüÉÕ¤±¤òÈ¿±Ç
+		//[è¨ˆä¸Šæ—¥]ãŒç©ºã®å ´åˆã«ã€ç¾åœ¨ã®æ—¥ä»˜ã‘ã‚’åæ˜ 
 		if( window.parent.HSO.dtmOrderAppDate.value == "" )
 		{
 			window.parent.HSO.dtmOrderAppDate.value = fncYYMMDD();
 		}
 
-		//[ÀÇ¥³¡¼¥É]¤ò[·×¾åÆü]¤ò¤â¤È¤ËÈ¿±Ç
+		//[ç¨ã‚³ãƒ¼ãƒ‰]ã‚’[è¨ˆä¸Šæ—¥]ã‚’ã‚‚ã¨ã«åæ˜ 
 		subLoadMasterValue('cnTaxCode',
 						 null,
 						 window.parent.DSO.TaxCode,
 						 Array(window.parent.HSO.dtmOrderAppDate.value),
 						 window.document.objDataSourceSetting );
 
-		//[ÀÇÎ¨]¤ò[·×¾åÆü]¤ò¤â¤È¤ËÈ¿±Ç
+		//[ç¨ç‡]ã‚’[è¨ˆä¸Šæ—¥]ã‚’ã‚‚ã¨ã«åæ˜ 
 		subLoadMasterValue('cnTaxCodeValue',
 						 null,
 						 window.parent.DSO.zeiritsu,
@@ -3051,11 +3051,11 @@ function fncDtHtml()
 						 window.document.objDataSourceSetting14,
 						 14 );
 	}
-	//»ÅÆş´ÉÍı°Ê³°¤Î¤È¤­
+	//ä»•å…¥ç®¡ç†ä»¥å¤–ã®ã¨ã
 	else
 	{
-	//¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Î¤Ä¤Å¤­
-	//»ÅÆş´ÉÍı¤Î¾ì¹ç¤Ë¤Ï¡¢subLoadMasterValue('cnTaxCodeValue',...)¢ªfncDtHtmlForPC()¤Î¤¢¤È¼Â»Ü
+	//ã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã®ã¤ã¥ã
+	//ä»•å…¥ç®¡ç†ã®å ´åˆã«ã¯ã€subLoadMasterValue('cnTaxCodeValue',...)â†’fncDtHtmlForPC()ã®ã‚ã¨å®Ÿæ–½
 	fncDtHtml2();
 	}
 	
@@ -3065,112 +3065,112 @@ function fncDtHtml()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    ¡§ ¥Õ¥©¡¼¥àDSO¤ËÅÇ¤­½Ğ¤µ¤ì¤¿hiddenÃÍ¤«¤éÆşÎÏÏÈ¤Î¥Ç¡¼¥¿¤òºîÀ®¤Ä¤Å¤­
-*            Detail¤Î¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Ë¼Â¹Ô¤µ¤ì¤ë
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦    ï¼š ãƒ•ã‚©ãƒ¼ãƒ DSOã«åãå‡ºã•ã‚ŒãŸhiddenå€¤ã‹ã‚‰å…¥åŠ›æ ã®ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆã¤ã¥ã
+*            Detailã®ã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã«å®Ÿè¡Œã•ã‚Œã‚‹
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtHtml2()
 {
-	//ÄÌ²ß´ğ½à¤òºÆ·×»»
+	//é€šè²¨åŸºæº–ã‚’å†è¨ˆç®—
 	fncDtCalStdTotalPrice();
 
 	//
 	if( g_lngReturnFlg == -1 || typeof(window.parent.DSO.elements("aryPoDitail[0][strProductCode]")) == "undefined" ) return null;
 
-	//¥ë¡¼¥×¤Î½é´üÃÍ
+	//ãƒ«ãƒ¼ãƒ—ã®åˆæœŸå€¤
 	var i = 0;
 
 	while (window.parent.DSO.elements("aryPoDitail[" + i + "][strProductCode]") != null)
 	{
-		//¥Õ¥©¡¼¥àDSO¤ËÌá¤Ã¤Æ¤­¤¿hiddenÃÍ¤ò¿·µ¬¤ÎÇÛÎó¤Ë³ÊÇ¼
+		//ãƒ•ã‚©ãƒ¼ãƒ DSOã«æˆ»ã£ã¦ããŸhiddenå€¤ã‚’æ–°è¦ã®é…åˆ—ã«æ ¼ç´
 		var aryRecord = fncDtNewAryForReturn(i);
 
-		//ÇÛÎó¤Ë³ÊÇ¼
+		//é…åˆ—ã«æ ¼ç´
 		saveRecord.push(aryRecord);
 
 		i++;
 	}
 
-	//½èÍı¤ò¤¹¤ë¤Î¤Ï°ìÅÙ¤À¤±¤Î¤¿¤á¡¢¥Õ¥é¥°¤òÀßÄê
+	//å‡¦ç†ã‚’ã™ã‚‹ã®ã¯ä¸€åº¦ã ã‘ã®ãŸã‚ã€ãƒ•ãƒ©ã‚°ã‚’è¨­å®š
 	g_lngReturnFlg = -1;
 
-	//ÌÀºÙÏÈ¤òºÆÉ½¼¨
+	//æ˜ç´°æ ã‚’å†è¡¨ç¤º
 	fncDtDisplay();//
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : Detail¥¿¥Ö¤ò¤ª¤·¤¿¤È¤­¤Î½èÍı
-* ÂĞ¾İ    : »ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı
-* È÷¹Í    : ÃÙ±ä¤¬¤ª¤­¤ë¤¿¤á¡¢¥µ¥Ö¥í¡¼¥É´Ø¿ô¤Î½èÍı¤¬½ª¤ï¤Ã¤¿¤¢¤È¤Ë½èÍı³«»Ï
+* æ¦‚è¦    : Detailã‚¿ãƒ–ã‚’ãŠã—ãŸã¨ãã®å‡¦ç†
+* å¯¾è±¡    : ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†
+* å‚™è€ƒ    : é…å»¶ãŒãŠãã‚‹ãŸã‚ã€ã‚µãƒ–ãƒ­ãƒ¼ãƒ‰é–¢æ•°ã®å‡¦ç†ãŒçµ‚ã‚ã£ãŸã‚ã¨ã«å‡¦ç†é–‹å§‹
 */
 // ---------------------------------------------------------------
 function fncDtHtmlForPC()
 {
-	//ÀÇ¥³¡¼¥É¤ò¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤Ë³ÊÇ¼
+	//ç¨ã‚³ãƒ¼ãƒ‰ã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã«æ ¼ç´
 	// g_lngTaxClassCode = window.parent.DSO.zeicode.value;
 	g_lngTaxCode = window.parent.DSO.TaxCode.value;
 
-	//ÀÇÎ¨¤ò¥°¥í¡¼¥Ğ¥ëÊÑ¿ô¤Ë³ÊÇ¼
+	//ç¨ç‡ã‚’ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°ã«æ ¼ç´
 	g_curTax = window.parent.fncCheckNumberValue(window.parent.DSO.zeiritsu.value, 3, false);
-	//alert("ÀÇ¥³¡¼¥É¡§"+g_lngTaxCode+"ÀÇÎ¨¡§"+g_curTax);
+	//alert("ç¨ã‚³ãƒ¼ãƒ‰ï¼š"+g_lngTaxCode+"ç¨ç‡ï¼š"+g_curTax);
 
 	// Added by Kazushi Saito
-	// ·×»»ÊıË¡¼ïÊÌ¤Î¼èÆÀ
+	// è¨ˆç®—æ–¹æ³•ç¨®åˆ¥ã®å–å¾—
 	if( typeof(window.parent.DSO.lngCalcCode) != "undefined" )
 	{
 		g_lngCalcCode = window.parent.DSO.lngCalcCode.value;
 	}
 	// Added by Kazushi Saito
-	// ¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô
+	// å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°
 	g_lngDecimalCutPoint = 2;
-	// ÆüËÜ±ß¤Î¾ì¹ç¡¢¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô¤òÊÑ¹¹
+	// æ—¥æœ¬å††ã®å ´åˆã€å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°ã‚’å¤‰æ›´
 	if( window.parent.HSO.lngMonetaryUnitCode.value == g_strJpnCurrencySign )
 	{
 		g_lngDecimalCutPoint = 0;
 	}
 
-	//¥¿¥Ö¤ò²¡¤¹¤Î¤¬½é²ó¤Ç¤Ï¤Ê¤¯¡¢ÌÀºÙ¹Ô¤¬¤¢¤ë¤È¤­
-	//¾ÃÈñÀÇÎ¨¤¬ÊÑ¹¹¤µ¤ì¤¿²ÄÇ½À­¤¬¤¢¤ë¤¿¤áÀÇÎ¨¤ÈÀÇ¶â¤òºÆ·×»»
+	//ã‚¿ãƒ–ã‚’æŠ¼ã™ã®ãŒåˆå›ã§ã¯ãªãã€æ˜ç´°è¡ŒãŒã‚ã‚‹ã¨ã
+	//æ¶ˆè²»ç¨ç‡ãŒå¤‰æ›´ã•ã‚ŒãŸå¯èƒ½æ€§ãŒã‚ã‚‹ãŸã‚ç¨ç‡ã¨ç¨é‡‘ã‚’å†è¨ˆç®—
 	if( g_lngReturnFlg == -1 && saveRecord.length > 0 )
 	{
 		for( i=0 ; i < saveRecord.length ; i++ )
 		{
-			//¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É¤¬Èó²İÀÇ°Ê³°¤Î¤È¤­
+			//æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰ãŒéèª²ç¨ä»¥å¤–ã®ã¨ã
 			if( saveRecord[i][15] != g_strFreeTaxClass )
 			{
 				saveRecord[i][16] = g_curTax;
 				saveRecord[i][17] = fncDtCalTaxPrice(saveRecord[i][11], saveRecord[i][15]);
 
-				// ÀÇ³Û¤Î¥Õ¥©¡¼¥Ş¥Ã¥È
+				// ç¨é¡ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 				saveRecord[i][17]   = window.parent.fncCheckNumberValue(saveRecord[i][17], 2, true, g_lngDecimalCutPoint, g_lngCalcCode);
 
 			}
 		}
 	}
-	//ÆşÎÏÏÈ¤ÎÀÇ¶â¤òºÆ·×»»
+	//å…¥åŠ›æ ã®ç¨é‡‘ã‚’å†è¨ˆç®—
 	fncDtCalTaxPrice2();
 
-	//¥¿¥Ö¤ò²¡¤·¤¿¤È¤­¤Î¤Ä¤Å¤­
+	//ã‚¿ãƒ–ã‚’æŠ¼ã—ãŸã¨ãã®ã¤ã¥ã
 	fncDtHtml2();
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    ¡§ Ã±²Á¥ê¥¹¥È¤òÉ½¼¨
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦    ï¼š å˜ä¾¡ãƒªã‚¹ãƒˆã‚’è¡¨ç¤º
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtGoodsPriceList()
 {
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		//À½ÉÊ¥³¡¼¥É¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢½ªÎ»
+		//è£½å“ã‚³ãƒ¼ãƒ‰ãŒé¸æŠã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€çµ‚äº†
 		if( window.parent.DSO.strProductCode.value == ""            ||
 			isNaN(window.parent.DSO.strProductCode.value)           ||
 			window.parent.DSO.strStockSubjectCode.value       == 0  ||
@@ -3188,11 +3188,11 @@ function fncDtGoodsPriceList()
 			 window.document.objDataSourceSetting11,11);
 	}
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		//À½ÉÊ¥³¡¼¥É¡¢Çä¾å¶èÊ¬¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢½ªÎ»
+		//è£½å“ã‚³ãƒ¼ãƒ‰ã€å£²ä¸ŠåŒºåˆ†ãŒé¸æŠã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€çµ‚äº†
 		if( window.parent.DSO.strProductCode.value == ""            ||
 			isNaN(window.parent.DSO.strProductCode.value)           ||
 			window.parent.DSO.lngSalesClassCode.value == 0 ) return false;
@@ -3212,17 +3212,17 @@ function fncDtGoodsPriceList()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    ¡§ Ã±²Á¥ê¥¹¥È¤òÉ½¼¨(ÌÀºÙ¹Ô¤òÁªÂò¤·¤¿¾ì¹ç)
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦    ï¼š å˜ä¾¡ãƒªã‚¹ãƒˆã‚’è¡¨ç¤º(æ˜ç´°è¡Œã‚’é¸æŠã—ãŸå ´åˆ)
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtGoodsPriceList2()
 {
-	//È¯Ãí´ÉÍı¡¢»ÅÆş´ÉÍı¤Î¾ì¹ç
+	//ç™ºæ³¨ç®¡ç†ã€ä»•å…¥ç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.POFlg) == "object" || 
 		typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		//À½ÉÊ¥³¡¼¥É¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢½ªÎ»
+		//è£½å“ã‚³ãƒ¼ãƒ‰ãŒé¸æŠã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€çµ‚äº†
 		if (saveRecord[g_lngSelIndex][0] == ""           ||
 			saveRecord[g_lngSelIndex][2]       == 0 ||
 			saveRecord[g_lngSelIndex][4]  == -1 ) return false;
@@ -3237,11 +3237,11 @@ function fncDtGoodsPriceList2()
 			 window.document.objDataSourceSetting12,12);
 	}
 
-	//¼õÃí´ÉÍı¡¢Çä¾å´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã€å£²ä¸Šç®¡ç†ã®å ´åˆ
 	if( typeof(window.parent.HSO.SOFlg) == "object" || 
 		typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		//À½ÉÊ¥³¡¼¥É¡¢Çä¾å¶èÊ¬¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ê¤±¤ì¤Ğ¡¢½ªÎ»
+		//è£½å“ã‚³ãƒ¼ãƒ‰ã€å£²ä¸ŠåŒºåˆ†ãŒé¸æŠã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã€çµ‚äº†
 		if( saveRecord[g_lngSelIndex][0] == ""            ||
 			saveRecord[g_lngSelIndex][19] == 0 ) return false;
 	
@@ -3259,69 +3259,69 @@ function fncDtGoodsPriceList2()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    ¡§ Ã±²Á¥ê¥¹¥È¤òÁªÂò¤·¤¿¤é¡¢À½ÉÊÃ±²Á¤ËÈ¿±Ç
-* ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+* æ¦‚è¦    ï¼š å˜ä¾¡ãƒªã‚¹ãƒˆã‚’é¸æŠã—ãŸã‚‰ã€è£½å“å˜ä¾¡ã«åæ˜ 
+* å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncDtGoodsPriceToProductPrice()
 {
-	//Ã±²Á¥ê¥¹¥È¤¬¤Ê¤«¤Ã¤¿¤é¡¢EXIT
+	//å˜ä¾¡ãƒªã‚¹ãƒˆãŒãªã‹ã£ãŸã‚‰ã€EXIT
 	if( window.parent.DSO.lngGoodsPriceCode.selectedIndex == -1 ) return false;
 
-	//²Ù»ÑÃ±°Ì·×¾å¤Î¾ì¹ç¡¢EXIT
+	//è·å§¿å˜ä½è¨ˆä¸Šã®å ´åˆã€EXIT
 	if( window.parent.DSO.lngConversionClassCode[1].checked ) return false;
 
-	//Ã±²Á¥ê¥¹¥È¤ÎÃÍ¤ò¼èÆÀ
+	//å˜ä¾¡ãƒªã‚¹ãƒˆã®å€¤ã‚’å–å¾—
 	var GoodsPrice = window.parent.DSO.lngGoodsPriceCode[window.parent.DSO.lngGoodsPriceCode.selectedIndex].text;
 
-	//(No Data)¤À¤Ã¤¿¾ì¹ç
+	//(No Data)ã ã£ãŸå ´åˆ
 	if( isNaN(GoodsPrice) )
 	{
 		window.parent.DSO.curProductPrice_gs.value = 0;
 	}
 
-	//ÃÍ¤¬¤¢¤ë¾ì¹ç
+	//å€¤ãŒã‚ã‚‹å ´åˆ
 	else
 	{
 		window.parent.DSO.curProductPrice_gs.value = GoodsPrice;
 	}
 
-	//À½ÉÊÃ±²Á¤ò¥Õ¥©¡¼¥Ş¥Ã¥È¤¹¤ë
+	//è£½å“å˜ä¾¡ã‚’ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã™ã‚‹
 	window.parent.fncCheckNumber(window.parent.DSO.curProductPrice_gs, 4);
 
-	//ÀÇÈ´¶â³Û¤òºÆ·×»»
+	//ç¨æŠœé‡‘é¡ã‚’å†è¨ˆç®—
 	fncDtCalTotalPrice();
 }
 
 
 // ---------------------------------------------------------------
 /**
-// ³µÍ×    ¡§ [Ã±²Á¥ê¥¹¥È]ÄÉ²Ã¥Ç¡¼¥¿¤Î¥Á¥§¥Ã¥¯
-// ÂĞ¾İ   : ¡ÖÌÀºÙÏÈ¡×¤¬¤¢¤ë¤â¤Î¤¹¤Ù¤Æ
+// æ¦‚è¦    ï¼š [å˜ä¾¡ãƒªã‚¹ãƒˆ]è¿½åŠ ãƒ‡ãƒ¼ã‚¿ã®ãƒã‚§ãƒƒã‚¯
+// å¯¾è±¡   : ã€Œæ˜ç´°æ ã€ãŒã‚ã‚‹ã‚‚ã®ã™ã¹ã¦
 */
 // ---------------------------------------------------------------
 function fncProductPriceForList()
 {
-	//À½ÉÊÃ±²Á
+	//è£½å“å˜ä¾¡
 	var productPrice_gs = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_gs.value));
 
-	//²Ù»ÑÃ±²Á
+	//è·å§¿å˜ä¾¡
 	var productPrice_ps = fncDelKannma(fncDelCurrencySign(window.parent.DSO.curProductPrice_ps.value));
 
-	//¥«¡¼¥È¥óÆş¿ô
+	//ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
 	var cartonQuantity  = fncDelKannma(window.parent.DSO.lngCartonQuantity.value);
 
-	//¥«¡¼¥È¥ó¿ôÎÌ¤¬0¤Ş¤¿¤Ï¶õ¤Î¤È¤­Ã±²Á¥ê¥¹¥È¤òÅĞÏ¿¤·¤Ê¤¤
+	//ã‚«ãƒ¼ãƒˆãƒ³æ•°é‡ãŒ0ã¾ãŸã¯ç©ºã®ã¨ãå˜ä¾¡ãƒªã‚¹ãƒˆã‚’ç™»éŒ²ã—ãªã„
 	if( cartonQuantity == "" || cartonQuantity == 0 )
 	{
 		productPriceForList = "";
 	}
-	//²Ù»ÑÃ±²Á¡à¥«¡¼¥È¥óÆş¿ô¤¬À½ÉÊÃ±²Á¤ËÅù¤·¤¤¤È¤­Ã±²Á¥ê¥¹¥È¤òÅĞÏ¿¤¹¤ë
+	//è·å§¿å˜ä¾¡Ã·ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ãŒè£½å“å˜ä¾¡ã«ç­‰ã—ã„ã¨ãå˜ä¾¡ãƒªã‚¹ãƒˆã‚’ç™»éŒ²ã™ã‚‹
 	else if( (productPrice_ps / cartonQuantity) == productPrice_gs )
 	{
 		productPriceForList = window.parent.DSO.curProductPrice_gs.value;
 	}
-	//¤½¤ÎÂ¾¤Î¾ì¹ç¡¢Ã±²Á¥ê¥¹¥È¤òÅĞÏ¿¤·¤Ê¤¤
+	//ãã®ä»–ã®å ´åˆã€å˜ä¾¡ãƒªã‚¹ãƒˆã‚’ç™»éŒ²ã—ãªã„
 	else
 	{
 		productPriceForList = "";
@@ -3333,36 +3333,36 @@ function fncProductPriceForList()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×       : ÀÇ³Û¤Î·×»»
-* ÂĞ¾İ       : »ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı
-* @param     : zeinuki,  [string·¿], ÀÇÈ´¶â³Û
-*             TaxClassCode,  [int·¿]   , ÀÇ¥³¡¼¥É
-* @return    : str, [string·¿], ÀÇ³Û
+* æ¦‚è¦       : ç¨é¡ã®è¨ˆç®—
+* å¯¾è±¡       : ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†
+* @param     : zeinuki,  [stringå‹], ç¨æŠœé‡‘é¡
+*             TaxClassCode,  [intå‹]   , ç¨ã‚³ãƒ¼ãƒ‰
+* @return    : str, [stringå‹], ç¨é¡
 */
 // ---------------------------------------------------------------
 function fncDtCalTaxPrice(zeinuki, TaxClassCode)
 {
 	var str="";
 
-	//Èó²İÀÇ°Ê³°¤Ç°ú¿ô¤¬¤¹¤Ù¤Æ¤¢¤ë¾ì¹ç¤ËÀÇ³Û¤ò·×»»
+	//éèª²ç¨ä»¥å¤–ã§å¼•æ•°ãŒã™ã¹ã¦ã‚ã‚‹å ´åˆã«ç¨é¡ã‚’è¨ˆç®—
 
 	if (zeinuki != "" && TaxClassCode != 1)
 	{
-		//ÀÇÈ´¹ç·×¤«¤é¥«¥ó¥Ş¤ÈÄÌ²ßµ­¹æ¤ò¼è¤ë
+		//ç¨æŠœåˆè¨ˆã‹ã‚‰ã‚«ãƒ³ãƒã¨é€šè²¨è¨˜å·ã‚’å–ã‚‹
 		str = fncDelCurrencySign(fncDelKannma(zeinuki));
 
-		//ÀÇ¶èÊ¬¤¬³°ÀÇ¤Î¤È¤­
+		//ç¨åŒºåˆ†ãŒå¤–ç¨ã®ã¨ã
 		if (TaxClassCode == 2 )
 		{
 			str = str * g_curTax;
 		}
-		//ÀÇ¶èÊ¬¤¬ÆâÀÇ¤Î¤È¤­
+		//ç¨åŒºåˆ†ãŒå†…ç¨ã®ã¨ã
 		else if (TaxClassCode == 3 )
 		{
 			str = (str * g_curTax)/(1 + parseFloat(g_curTax));
 		}
 
-		//ÀÇ³Û¤òµá¤á¤Æ¥Õ¥©¡¼¥Ş¥Ã¥È
+		//ç¨é¡ã‚’æ±‚ã‚ã¦ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		str = window.parent.fncCheckNumberValue(str, 2);
 
 	}
@@ -3373,129 +3373,129 @@ function fncDtCalTaxPrice(zeinuki, TaxClassCode)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×   : ÀÇ³Û¤Î·×»»£²¡Ê[ÀÇ¶èÊ¬]¤òÊÑ¹¹¤·¤¿¤È¤­¡Ë
-* ÂĞ¾İ   : »ÅÆş´ÉÍı¡¢Çä¾å´ÉÍı
-* Ãí°Õ   : °ú¿ô¤¬¤¢¤ì¤Ğ¥¢¥é¡¼¥È¤ò½Ğ¤¹
-* @param   : object, [object·¿], ÀÇ¶èÊ¬
+* æ¦‚è¦   : ç¨é¡ã®è¨ˆç®—ï¼’ï¼ˆ[ç¨åŒºåˆ†]ã‚’å¤‰æ›´ã—ãŸã¨ãï¼‰
+* å¯¾è±¡   : ä»•å…¥ç®¡ç†ã€å£²ä¸Šç®¡ç†
+* æ³¨æ„   : å¼•æ•°ãŒã‚ã‚Œã°ã‚¢ãƒ©ãƒ¼ãƒˆã‚’å‡ºã™
+* @param   : object, [objectå‹], ç¨åŒºåˆ†
 */
 // ---------------------------------------------------------------
 function fncDtCalTaxPrice2(object)
 {
 	
-	//[ÀÇÈ´¶â³Û]
+	//[ç¨æŠœé‡‘é¡]
 	var zeinuki  = window.parent.DSO.curTotalPrice.value;
 
-	//[ÀÇ¶èÊ¬]
+	//[ç¨åŒºåˆ†]
 	g_lngTaxClassCode  = window.parent.DSO.lngTaxClassCode.value;
 
 	// Added by Kazushi Saito
-	// ·×»»ÊıË¡¼ïÊÌ¤Î¼èÆÀ
+	// è¨ˆç®—æ–¹æ³•ç¨®åˆ¥ã®å–å¾—
 	if( typeof(window.parent.DSO.lngCalcCode) != "undefined" )
 	{
 		g_lngCalcCode = window.parent.DSO.lngCalcCode.value;
 	}
 
-	//Èó²İÀÇ°Ê³°¤Ç°ú¿ô¤¬¤¹¤Ù¤Æ¤¢¤ë¾ì¹ç¤ËÀÇ³Û¤ò·×»»
+	//éèª²ç¨ä»¥å¤–ã§å¼•æ•°ãŒã™ã¹ã¦ã‚ã‚‹å ´åˆã«ç¨é¡ã‚’è¨ˆç®—
 	if (zeinuki != "" && g_curTax != "" )
 	{
-		//ÀÇÈ´¹ç·×¤«¤é¥«¥ó¥Ş¤ÈÄÌ²ßµ­¹æ¤ò¼è¤ë
+		//ç¨æŠœåˆè¨ˆã‹ã‚‰ã‚«ãƒ³ãƒã¨é€šè²¨è¨˜å·ã‚’å–ã‚‹
 		var str = fncDelCurrencySign(fncDelKannma(zeinuki));
 
-		//ÀÇ¶èÊ¬¤¬Èó²İÀÇ¤Î¤È¤­
+		//ç¨åŒºåˆ†ãŒéèª²ç¨ã®ã¨ã
 		if (g_lngTaxClassCode == 1 )
 		{
-			window.parent.DSO.lngTaxCode.value  = ""; //ÀÇÎ¨
-			window.parent.DSO.curTaxPrice.value = ""; //ÀÇ³Û
+			window.parent.DSO.lngTaxCode.value  = ""; //ç¨ç‡
+			window.parent.DSO.curTaxPrice.value = ""; //ç¨é¡
 		}
-		//ÀÇ¶èÊ¬¤¬³°ÀÇ¤Î¤È¤­
+		//ç¨åŒºåˆ†ãŒå¤–ç¨ã®ã¨ã
 		else if (g_lngTaxClassCode == 2 )
 		{
-			window.parent.DSO.lngTaxCode.value  = g_curTax; //ÀÇÎ¨
+			window.parent.DSO.lngTaxCode.value  = g_curTax; //ç¨ç‡
 			str = str * g_curTax;
-			window.parent.DSO.curTaxPrice.value = window.parent.fncCheckNumberValue(str, 2); //ÀÇ³Û
+			window.parent.DSO.curTaxPrice.value = window.parent.fncCheckNumberValue(str, 2); //ç¨é¡
 		}
-		//ÀÇ¶èÊ¬¤¬ÆâÀÇ¤Î¤È¤­
+		//ç¨åŒºåˆ†ãŒå†…ç¨ã®ã¨ã
 		else if (g_lngTaxClassCode == 3 )
 		{
-			window.parent.DSO.lngTaxCode.value  = g_curTax; //ÀÇÎ¨
+			window.parent.DSO.lngTaxCode.value  = g_curTax; //ç¨ç‡
 			str = (str * g_curTax)/(1 + parseFloat(g_curTax));
-			window.parent.DSO.curTaxPrice.value = window.parent.fncCheckNumberValue(str, 2); //ÀÇ³Û
+			window.parent.DSO.curTaxPrice.value = window.parent.fncCheckNumberValue(str, 2); //ç¨é¡
 		}
 
 		// Added by Kazushi Saito
-		// ¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô
+		// å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°
 		g_lngDecimalCutPoint = 2;
-		// ÆüËÜ±ß¤Î¾ì¹ç¡¢¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô¤òÊÑ¹¹
+		// æ—¥æœ¬å††ã®å ´åˆã€å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°ã‚’å¤‰æ›´
 		if( window.parent.HSO.lngMonetaryUnitCode.value == g_strJpnCurrencySign )
 		{
 			g_lngDecimalCutPoint = 0;
 		}
 
 		// Added by Kazushi Saito
-		// Çä¾å´ÉÍı(SCFlg)
-		// »ÅÆş´ÉÍı(PCFlg)
-		//¡ÖÁí¹ç·×¶â³Û¡×¤ò¾®¿ôÅÀ°Ê²¼¡¢ÀÚ¼Î¤Æ½èÍı¡Ê2·å0Ëä¤á¡Ë
+		// å£²ä¸Šç®¡ç†(SCFlg)
+		// ä»•å…¥ç®¡ç†(PCFlg)
+		//ã€Œç·åˆè¨ˆé‡‘é¡ã€ã‚’å°æ•°ç‚¹ä»¥ä¸‹ã€åˆ‡æ¨ã¦å‡¦ç†ï¼ˆ2æ¡0åŸ‹ã‚ï¼‰
 		if( typeof(window.parent.HSO.SCFlg) == "object" ||
 			typeof(window.parent.HSO.PCFlg) == "object")
 		{
 			
-			// Áí¹ç·×¶â³Û
+			// ç·åˆè¨ˆé‡‘é¡
 			window.parent.DSO.curTaxPrice.value   = window.parent.fncCheckNumberValue(window.parent.DSO.curTaxPrice.value, 2, true, g_lngDecimalCutPoint, g_lngCalcCode);
-			// ÀÇÈ´¶â³Û¤ÎºÆ·×»»
+			// ç¨æŠœé‡‘é¡ã®å†è¨ˆç®—
 			fncDtCalTotalPrice();
 		}
 
 	}
-	//´ğ½àÄÌ²ß¤Î·×»»
+	//åŸºæº–é€šè²¨ã®è¨ˆç®—
 	fncDtCalStdTotalPrice();
 
-	//ÀÇ¶èÊ¬¤¬ÊÑ¹¹¤µ¤ì¤¿¤È¤­¤Ë¤Ï·Ù¹ğ¤ò½Ğ¤¹¡Ê°ú¿ô¤¬¤¢¤ë¾ì¹ç¤Î¤ß¡Ë
+	//ç¨åŒºåˆ†ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã«ã¯è­¦å‘Šã‚’å‡ºã™ï¼ˆå¼•æ•°ãŒã‚ã‚‹å ´åˆã®ã¿ï¼‰
 	if( typeof(object) != "undefined" )
 	{
-		alert("ÀÇ¶èÊ¬¤¬ÊÑ¹¹¤µ¤ì¤Ş¤·¤¿");
+		alert("ç¨åŒºåˆ†ãŒå¤‰æ›´ã•ã‚Œã¾ã—ãŸ");
 	}
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×     : »ÅÆş²ÊÌÜ¤òÁªÂò¤·¤¿¤é¡¢ÀÇ¶èÊ¬¤ÈÀÇÎ¨¤ò·èÄê
-* ÂĞ¾İ     : »ÅÆş´ÉÍı
-* @param   : object, [object·¿], »ÅÆş²ÊÌÜ
+* æ¦‚è¦     : ä»•å…¥ç§‘ç›®ã‚’é¸æŠã—ãŸã‚‰ã€ç¨åŒºåˆ†ã¨ç¨ç‡ã‚’æ±ºå®š
+* å¯¾è±¡     : ä»•å…¥ç®¡ç†
+* @param   : object, [objectå‹], ä»•å…¥ç§‘ç›®
 */
 // ---------------------------------------------------------------
 function fncDtTaxClassCode( object )
 {
-	//[»ÅÆş²ÊÌÜ]¤¬¡Ö402 Í¢Æş¥Ñ¡¼¥Ä»ÅÆş¹â¡×¡Ö433 ¶â·¿³¤³°½şµÑ¤Î¾ì¹ç¡×¤Ë
-	//ÀÇ¶èÊ¬¤ò¡ÖÈó²İÀÇ¡×¤ËÀßÄê
+	//[ä»•å…¥ç§‘ç›®]ãŒã€Œ402 è¼¸å…¥ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜ã€ã€Œ433 é‡‘å‹æµ·å¤–å„Ÿå´ã®å ´åˆã€ã«
+	//ç¨åŒºåˆ†ã‚’ã€Œéèª²ç¨ã€ã«è¨­å®š
 	if (object.value == "402" || object.value == "433")
 	{
-		window.parent.DSO.lngTaxClassCode.value = 1 ; //¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-		window.parent.DSO.lngTaxCode.value      ="" ; //¾ÃÈñÀÇÎ¨
-		window.parent.DSO.curTaxPrice.value     ="" ; //¾ÃÈñÀÇ³Û
+		window.parent.DSO.lngTaxClassCode.value = 1 ; //æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+		window.parent.DSO.lngTaxCode.value      ="" ; //æ¶ˆè²»ç¨ç‡
+		window.parent.DSO.curTaxPrice.value     ="" ; //æ¶ˆè²»ç¨é¡
 	}
-	//¾åµ­°Ê³°¤Î¾ì¹ç¡¢³°ÀÇ¤ËÀßÄê
+	//ä¸Šè¨˜ä»¥å¤–ã®å ´åˆã€å¤–ç¨ã«è¨­å®š
 	else
 	{
-		window.parent.DSO.lngTaxClassCode.value = 2;        //¾ÃÈñÀÇ¶èÊ¬¥³¡¼¥É
-		window.parent.DSO.lngTaxCode.value      = g_curTax; //ÀÇÎ¨
+		window.parent.DSO.lngTaxClassCode.value = 2;        //æ¶ˆè²»ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+		window.parent.DSO.lngTaxCode.value      = g_curTax; //ç¨ç‡
 		window.parent.DSO.curTaxPrice.value     = fncDtCalTaxPrice(window.parent.DSO.curTotalPrice.value,
-																window.parent.DSO.lngTaxClassCode.value); //¾ÃÈñÀÇ³Û
+																window.parent.DSO.lngTaxClassCode.value); //æ¶ˆè²»ç¨é¡
 	}
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×     : À½ÉÊ¤ÎMSW¤«¤éÃÍ¤ò¼èÆÀ¤·¤¿¤È¤­¤Î½èÍı
-* ÂĞ¾İ     : À½ÉÊ¤ÎMSW¤¬¤¢¤ë¤â¤Î
-* @param   : strProductCode, [str·¿], À½ÉÊ¥³¡¼¥É
+* æ¦‚è¦     : è£½å“ã®MSWã‹ã‚‰å€¤ã‚’å–å¾—ã—ãŸã¨ãã®å‡¦ç†
+* å¯¾è±¡     : è£½å“ã®MSWãŒã‚ã‚‹ã‚‚ã®
+* @param   : strProductCode, [strå‹], è£½å“ã‚³ãƒ¼ãƒ‰
 */
 // ---------------------------------------------------------------
 function fncDtProductCodeForMSW(strProductCode)
 {
 
-	//À½ÉÊ¤«¤é¡¢À½ÉÊÌ¾¤òºîÀ®
+	//è£½å“ã‹ã‚‰ã€è£½å“åã‚’ä½œæˆ
 	subLoadMasterValue('cnProduct',
 			 window.parent.DSO.strProductCode,
 			 window.parent.DSO.strProductName,
@@ -3503,14 +3503,14 @@ function fncDtProductCodeForMSW(strProductCode)
 			 window.document.objDataSourceSetting,
 			 0);
 
-	//À½ÉÊ¤«¤é¡¢¸ÜµÒÉÊÈÖ¤òºîÀ®
+	//è£½å“ã‹ã‚‰ã€é¡§å®¢å“ç•ªã‚’ä½œæˆ
 	subLoadMasterValue('cnGoodsCode',
 			 window.parent.DSO.strProductCode,
 			 window.parent.DSO.strGoodsCode,
 			 Array(strProductCode),
 			 window.document.objDataSourceSetting1,
 			 1);
-	//À½ÉÊ¤«¤é¡¢¥«¡¼¥È¥óÆş¿ô¤òºîÀ®
+	//è£½å“ã‹ã‚‰ã€ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’ä½œæˆ
 	subLoadMasterValue('cnCartonQuantity',
 			 window.parent.DSO.strProductCode,
 			 window.parent.DSO.lngCartonQuantity,
@@ -3518,7 +3518,7 @@ function fncDtProductCodeForMSW(strProductCode)
 			 window.document.objDataSourceSetting15,
 			 15);
 
-	//Ã±²Á¥ê¥¹¥È¤òºîÀ®
+	//å˜ä¾¡ãƒªã‚¹ãƒˆã‚’ä½œæˆ
 	fncDtGoodsPriceList();
 	fncDtGoodsPriceToProductPrice();
 }
@@ -3526,15 +3526,15 @@ function fncDtProductCodeForMSW(strProductCode)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×     : ¾¦ÉÊ½¤Àµ²èÌÌ¤ò¸Æ¤Ó½Ğ¤·¤¿¤¢¤È¤ËÀ½ÉÊ´ØÏ¢¹àÌÜ¤òºÆ¼èÆÀ¤¹¤ë
-* ÂĞ¾İ     : È¯Ãí´ÉÍı, ¼õÃí´ÉÍı
-* @param   : strProductCode, [str·¿], À½ÉÊ¥³¡¼¥É
+* æ¦‚è¦     : å•†å“ä¿®æ­£ç”»é¢ã‚’å‘¼ã³å‡ºã—ãŸã‚ã¨ã«è£½å“é–¢é€£é …ç›®ã‚’å†å–å¾—ã™ã‚‹
+* å¯¾è±¡     : ç™ºæ³¨ç®¡ç†, å—æ³¨ç®¡ç†
+* @param   : strProductCode, [strå‹], è£½å“ã‚³ãƒ¼ãƒ‰
 */
 // ---------------------------------------------------------------
 function fncDtProductCodeForP(strProductCode)
 {
 
-	//À½ÉÊ¤«¤é¡¢À½ÉÊÌ¾¤òºîÀ®
+	//è£½å“ã‹ã‚‰ã€è£½å“åã‚’ä½œæˆ
 	subLoadMasterValue('cnProduct',
 			 window.parent.DSO.strProductCode,
 			 window.parent.DSO.strProductName,
@@ -3542,14 +3542,14 @@ function fncDtProductCodeForP(strProductCode)
 			 window.document.objDataSourceSetting,
 			 0);
 
-	//À½ÉÊ¤«¤é¡¢¸ÜµÒÉÊÈÖ¤òºîÀ®
+	//è£½å“ã‹ã‚‰ã€é¡§å®¢å“ç•ªã‚’ä½œæˆ
 	subLoadMasterValue('cnGoodsCode',
 			 window.parent.DSO.strProductCode,
 			 window.parent.DSO.strGoodsCode,
 			 Array(strProductCode),
 			 window.document.objDataSourceSetting1,
 			 1);
-	//À½ÉÊ¤«¤é¡¢¥«¡¼¥È¥óÆş¿ô¤òºîÀ®
+	//è£½å“ã‹ã‚‰ã€ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°ã‚’ä½œæˆ
 	subLoadMasterValue('cnCartonQuantity',
 			 window.parent.DSO.strProductCode,
 			 window.parent.DSO.lngCartonQuantity,
@@ -3557,28 +3557,28 @@ function fncDtProductCodeForP(strProductCode)
 			 window.document.objDataSourceSetting15,
 			 15);
 
-	//ÀÇÈ´¶â³Û¤òºÆ·×»»([À½ÉÊ¿ôÎÌ]¤Ë[¥«¡¼¥È¥óÆş¿ô]¡ß[²Ù»Ñ¿ôÎÌ]¤òÈ¿±Ç¤µ¤»¤ë¤¿¤á)
+	//ç¨æŠœé‡‘é¡ã‚’å†è¨ˆç®—([è£½å“æ•°é‡]ã«[ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°]Ã—[è·å§¿æ•°é‡]ã‚’åæ˜ ã•ã›ã‚‹ãŸã‚)
 	fncDtCalTotalPrice();
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×     : ¾¦ÉÊ½¤Àµ²èÌÌ¤ò¸Æ¤Ó½Ğ¤·¡¢ÊÑ¹¹¤µ¤ì¤¿¤é´ØÏ¢¤·¤¿¹àÌÜ¤òºÆ¼èÆÀ
-* ÂĞ¾İ     : È¯Ãí´ÉÍı, ¼õÃí´ÉÍı
-* @param   : strSessionID,    [string·¿], ¥»¥Ã¥·¥ç¥óID
-* @param   : lngLanguageCode, [string·¿], ¸À¸ì¥³¡¼¥É
+* æ¦‚è¦     : å•†å“ä¿®æ­£ç”»é¢ã‚’å‘¼ã³å‡ºã—ã€å¤‰æ›´ã•ã‚ŒãŸã‚‰é–¢é€£ã—ãŸé …ç›®ã‚’å†å–å¾—
+* å¯¾è±¡     : ç™ºæ³¨ç®¡ç†, å—æ³¨ç®¡ç†
+* @param   : strSessionID,    [stringå‹], ã‚»ãƒƒã‚·ãƒ§ãƒ³ID
+* @param   : lngLanguageCode, [stringå‹], è¨€èªã‚³ãƒ¼ãƒ‰
 */
 // ---------------------------------------------------------------
 function fncShowDialogRenewCheck( strSessionID , lngLanguageCode)
 {
-	//ÆşÎÏÏÈ¤Î[À½ÉÊ¥³¡¼¥É]
+	//å…¥åŠ›æ ã®[è£½å“ã‚³ãƒ¼ãƒ‰]
 	var ProductCode = window.parent.trim( window.parent.DSO.strProductCode.value );
 
-	//[À½ÉÊ¥³¡¼¥É]¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¡¢½èÍı½ªÎ»
+	//[è£½å“ã‚³ãƒ¼ãƒ‰]ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãªã„å ´åˆã€å‡¦ç†çµ‚äº†
 	if( ProductCode == "" )
 	{
-		var strComment = ( lngLanguageCode == "0" ) ? "Please specify the product." : "À½ÉÊ¤ò»ØÄê¤·¤Æ¤¯¤À¤µ¤¤¡£";
+		var strComment = ( lngLanguageCode == "0" ) ? "Please specify the product." : "è£½å“ã‚’æŒ‡å®šã—ã¦ãã ã•ã„ã€‚";
 
 		alert( strComment );
 
@@ -3590,28 +3590,28 @@ function fncShowDialogRenewCheck( strSessionID , lngLanguageCode)
 
 	var strUrl = "/p/regist/renew.php?strProductCode=" + ProductCode + "&strSessionID=" + strSessionID ;
 
-	args[0][0] = strUrl;               // ¼Â¹ÔÀèURL
-	args[0][1] = 'ResultIframeRenew';  //IFrame¤Î¥¹¥¿¥¤¥ëÍÑID
-	args[0][2] = 'NO';                 // IFrame¥¹¥¯¥í¡¼¥ë¤Îµö²Ä¡¦ÉÔµö²Ä
+	args[0][0] = strUrl;               // å®Ÿè¡Œå…ˆURL
+	args[0][1] = 'ResultIframeRenew';  //IFrameã®ã‚¹ã‚¿ã‚¤ãƒ«ç”¨ID
+	args[0][2] = 'NO';                 // IFrameã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã®è¨±å¯ãƒ»ä¸è¨±å¯
 	args[0][3] = lngLanguageCode;      // $lngLanguageCode
 
 	retval = window.showModalDialog( '/result/renew.html' , args , "dialogHeight:600px;dialogWidth:970px;center:yes;status:no;edge:raised;help:no;" );
 
 	if( typeof(retval) != "undefined" )
 	{
-		//À½ÉÊ¾ğÊó´ØÏ¢¤òºÆ¼èÆÀ
+		//è£½å“æƒ…å ±é–¢é€£ã‚’å†å–å¾—
 		fncDtProductCodeForP(ProductCode );
-		alert("À½ÉÊ¾ğÊó¤¬¹¹¿·¤µ¤ì¤Ş¤·¤¿");
+		alert("è£½å“æƒ…å ±ãŒæ›´æ–°ã•ã‚Œã¾ã—ãŸ");
 	}
 }
 
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×     : ¥«¥ó¥Ş¤ò¤È¤ë
-* ÂĞ¾İ     : ¤¹¤Ù¤Æ
-* @param   : num, [string·¿], ¥«¥ó¥Ş¤ò¼è¤ê¤¿¤¤ÃÍ
-* @return  : str, [string·¿], ¥«¥ó¥Ş¤ò¼è¤ê½ü¤¤¤¿ÃÍ
+* æ¦‚è¦     : ã‚«ãƒ³ãƒã‚’ã¨ã‚‹
+* å¯¾è±¡     : ã™ã¹ã¦
+* @param   : num, [stringå‹], ã‚«ãƒ³ãƒã‚’å–ã‚ŠãŸã„å€¤
+* @return  : str, [stringå‹], ã‚«ãƒ³ãƒã‚’å–ã‚Šé™¤ã„ãŸå€¤
 */
 // ---------------------------------------------------------------
 function fncDelKannma( num )
@@ -3625,10 +3625,10 @@ function fncDelKannma( num )
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×     : ¥«¥ó¥Ş¤òÉÕ¤±¤ë
-* ÂĞ¾İ     : ¤¹¤Ù¤Æ
-* @param   : num, [string·¿], ¥«¥ó¥Ş¤òÉÕ¤±¤¿¤¤ÃÍ
-* @return  : str, [string·¿], ¥«¥ó¥ŞÉÕ¤ÎÃÍ
+* æ¦‚è¦     : ã‚«ãƒ³ãƒã‚’ä»˜ã‘ã‚‹
+* å¯¾è±¡     : ã™ã¹ã¦
+* @param   : num, [stringå‹], ã‚«ãƒ³ãƒã‚’ä»˜ã‘ãŸã„å€¤
+* @return  : str, [stringå‹], ã‚«ãƒ³ãƒä»˜ã®å€¤
 */
 // ---------------------------------------------------------------
 function fncAddKannma(num)
@@ -3648,10 +3648,10 @@ function fncAddKannma(num)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : ÄÌ²ßµ­¹æ¤ò¼è¤ë¡Ê¶õÇò¤«¤é¤¢¤È¤ÎÉôÊ¬¤òÈ´¤­½Ğ¤¹¡Ë
-* ÂĞ¾İ    : ¤¹¤Ù¤Æ
-* @param  : num, [string·¿], ÄÌ²ßµ­¹æ¤ò¼è¤ê¤¿¤¤ÃÍ  (Îã \ 1,000.0000)
-* @return : str, [string·¿], ÄÌ²ßµ­¹æ¤ò¼è¤ê½ü¤¤¤¿ÃÍ(Îã   1,000.0000)
+* æ¦‚è¦    : é€šè²¨è¨˜å·ã‚’å–ã‚‹ï¼ˆç©ºç™½ã‹ã‚‰ã‚ã¨ã®éƒ¨åˆ†ã‚’æŠœãå‡ºã™ï¼‰
+* å¯¾è±¡    : ã™ã¹ã¦
+* @param  : num, [stringå‹], é€šè²¨è¨˜å·ã‚’å–ã‚ŠãŸã„å€¤  (ä¾‹ \ 1,000.0000)
+* @return : str, [stringå‹], é€šè²¨è¨˜å·ã‚’å–ã‚Šé™¤ã„ãŸå€¤(ä¾‹   1,000.0000)
 */
 // ---------------------------------------------------------------
 function fncDelCurrencySign(num)
@@ -3674,10 +3674,10 @@ function fncDelCurrencySign(num)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : ÄÌ²ßµ­¹æ¤òÉÕ¤±¤ë
-* ÂĞ¾İ    : ¤¹¤Ù¤Æ
-* @param  : num, [string·¿], ÄÌ²ßµ­¹æ¤òÉÕ¤±¤¿¤¤ÃÍ (Îã   1,000.0000)
-* @return : str, [string·¿], ÄÌ²ßµ­¹æ¤òÉÕ¤±¤¿ÃÍ   (Îã \ 1,000.0000)
+* æ¦‚è¦    : é€šè²¨è¨˜å·ã‚’ä»˜ã‘ã‚‹
+* å¯¾è±¡    : ã™ã¹ã¦
+* @param  : num, [stringå‹], é€šè²¨è¨˜å·ã‚’ä»˜ã‘ãŸã„å€¤ (ä¾‹   1,000.0000)
+* @return : str, [stringå‹], é€šè²¨è¨˜å·ã‚’ä»˜ã‘ãŸå€¤   (ä¾‹ \ 1,000.0000)
 */
 // ---------------------------------------------------------------
 function fncAddCurrencySign(num)
@@ -3685,7 +3685,7 @@ function fncAddCurrencySign(num)
 	var str = num.toString();
 	var CurrencySign = window.parent.HSO.lngMonetaryUnitCode.value;
 
-	//¶õÇò°Ê³°¤Î¾ì¹ç¤ËÄÌ²ßµ­¹æ¤ò¤Ä¤±¤ë
+	//ç©ºç™½ä»¥å¤–ã®å ´åˆã«é€šè²¨è¨˜å·ã‚’ã¤ã‘ã‚‹
 	if( str != "" )
 	{
 		str = CurrencySign + " " + str;
@@ -3697,9 +3697,9 @@ function fncAddCurrencySign(num)
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : º£Æü¤ÎÆüÉÕ¤±¤òÊÖ¤¹
-* ÂĞ¾İ    : ¤¹¤Ù¤Æ
-* @return : YYYYMMDD, [string·¿], YYYY/MM/DD
+* æ¦‚è¦    : ä»Šæ—¥ã®æ—¥ä»˜ã‘ã‚’è¿”ã™
+* å¯¾è±¡    : ã™ã¹ã¦
+* @return : YYYYMMDD, [stringå‹], YYYY/MM/DD
 */
 // ---------------------------------------------------------------
 function fncYYMMDD()
@@ -3721,9 +3721,9 @@ function fncYYMMDD()
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : ÆÃ¼ìÊ¸»ú¤ÎÊÑ´¹
-* ÂĞ¾İ    : ¤¹¤Ù¤Æ
-* @return : ÊÑ´¹¤µ¤ì¤¿Ê¸»úÎó
+* æ¦‚è¦    : ç‰¹æ®Šæ–‡å­—ã®å¤‰æ›
+* å¯¾è±¡    : ã™ã¹ã¦
+* @return : å¤‰æ›ã•ã‚ŒãŸæ–‡å­—åˆ—
 */
 // ---------------------------------------------------------------
 function fncCheckReplaceString( strInString )
@@ -3747,9 +3747,9 @@ function fncCheckReplaceString( strInString )
 
 // ---------------------------------------------------------------
 /**
-* ³µÍ×    : ÆÃ¼ìÊ¸»úÊÑ´¹¤µ¤ì¤¿Ê¸»úÎó¤ò¤â¤È¤ÎÆşÎÏÃÍ¤ËÌá¤¹
-* ÂĞ¾İ    : ¤¹¤Ù¤Æ
-* @return : ¤â¤È¤ÎÆşÎÏÃÍ
+* æ¦‚è¦    : ç‰¹æ®Šæ–‡å­—å¤‰æ›ã•ã‚ŒãŸæ–‡å­—åˆ—ã‚’ã‚‚ã¨ã®å…¥åŠ›å€¤ã«æˆ»ã™
+* å¯¾è±¡    : ã™ã¹ã¦
+* @return : ã‚‚ã¨ã®å…¥åŠ›å€¤
 */
 // ---------------------------------------------------------------
 function fncCheckReplaceStringBack( strInString )
@@ -3773,13 +3773,13 @@ function fncCheckReplaceStringBack( strInString )
 
 
 
-// ÂĞ¾İÃÍºÆÀßÄê
+// å¯¾è±¡å€¤å†è¨­å®š
 function fncSetCheckValue()
 {
-	// Çä¾å
+	// å£²ä¸Š
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+		// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 		if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 		{
 			for( var i = 0; i < saveRecord.length; i++ )
@@ -3789,10 +3789,10 @@ function fncSetCheckValue()
 		}
 	}
 
-	// »ÅÆş
+	// ä»•å…¥
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+		// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 		if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 		{
 			for( var i = 0; i < saveRecord.length; i++ )
@@ -3803,7 +3803,7 @@ function fncSetCheckValue()
 	}
 }
 
-// ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹½èÍı
+// ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹å‡¦ç†
 function fncSetCheck( obj, i )
 {
 	var objHidden = eval( "document.all.blnOffset" + i );
@@ -3813,10 +3813,10 @@ function fncSetCheck( obj, i )
 	var imgOn     = '/img/type01/cmn/check_on.gif';
 
 
-	// Çä¾å
+	// å£²ä¸Š
 	if( typeof(window.parent.HSO.SCFlg) == "object" )
 	{
-		// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+		// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 		if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 		{
 			if( strValue == '0' )
@@ -3836,10 +3836,10 @@ function fncSetCheck( obj, i )
 		}
 	}
 
-	// »ÅÆş
+	// ä»•å…¥
 	if( typeof(window.parent.HSO.PCFlg) == "object" )
 	{
-		// Ä¾ÅĞÏ¿¤Ç¤Ï¤Ê¤¤¾ì¹ç
+		// ç›´ç™»éŒ²ã§ã¯ãªã„å ´åˆ
 		if( window.parent.document.all.lngDirectRegistFlag.value == 0 )
 		{
 			if( strValue == '0' )
@@ -3859,7 +3859,7 @@ function fncSetCheck( obj, i )
 		}
 	}
 
-	// Áí¹ç·×¶â³Û¤ÎºÆ·×»»
+	// ç·åˆè¨ˆé‡‘é¡ã®å†è¨ˆç®—
 	fncDtCalAllTotalPrice();
 }
 
@@ -3867,17 +3867,17 @@ function fncSetCheck( obj, i )
 
 
 
-// ÌÀºÙ¹Ô¥Á¥§¥Ã¥¯
-// ÌÀºÙ¹ÔÂè1¥ì¥³¡¼¥É¤È¡¢¤½¤ì°Ê¹ß¤Î¥ì¥³¡¼¥É¤òÈæ³Ó¤¹¤ë
+// æ˜ç´°è¡Œãƒã‚§ãƒƒã‚¯
+// æ˜ç´°è¡Œç¬¬1ãƒ¬ã‚³ãƒ¼ãƒ‰ã¨ã€ãã‚Œä»¥é™ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’æ¯”è¼ƒã™ã‚‹
 function fncCheckDetailRecords( saveRecord )
 {
 	var i;
 	var blnCheck       = false;
-	var strCodeRecord  = saveRecord[0][0];	// ÌÀºÙ¹ÔÀ½ÉÊ¥³¡¼¥É
-	var strClassRecord = saveRecord[0][19];	// ÌÀºÙ¹Ô·×¾å¶èÊ¬
+	var strCodeRecord  = saveRecord[0][0];	// æ˜ç´°è¡Œè£½å“ã‚³ãƒ¼ãƒ‰
+	var strClassRecord = saveRecord[0][19];	// æ˜ç´°è¡Œè¨ˆä¸ŠåŒºåˆ†
 
 
-	//¼õÃí´ÉÍı¤Î¾ì¹ç
+	//å—æ³¨ç®¡ç†ã®å ´åˆ
 	if( typeof( window.parent.HSO.SOFlg ) == "object" )
 	{
 		for( i=0; i<saveRecord.length; i++ )
@@ -3887,7 +3887,7 @@ function fncCheckDetailRecords( saveRecord )
 			if( !blnCheck ) break;
 		}
 	}
-	// ¤½¤ÎÂ¾¤Î´ÉÍı
+	// ãã®ä»–ã®ç®¡ç†
 	else
 	{
 		blnCheck = true;
@@ -3896,17 +3896,17 @@ function fncCheckDetailRecords( saveRecord )
 	return blnCheck;
 }
 
-// À½ÉÊ¥³¡¼¥É¡¦·×¾å¶èÊ¬Áê°ã¥Á¥§¥Ã¥¯
+// è£½å“ã‚³ãƒ¼ãƒ‰ãƒ»è¨ˆä¸ŠåŒºåˆ†ç›¸é•ãƒã‚§ãƒƒã‚¯
 function fncCheckDetailCode()
 {
 	var blnCheck       = true;
-	var strPCode       = '';	// À½ÉÊ¥³¡¼¥É
-	var strPClass      = '';	// ·×¾å¶èÊ¬
-	var strCodeRecord  = '';	// ÌÀºÙ¹ÔÀ½ÉÊ¥³¡¼¥É
-	var strClassRecord = '';	// ÌÀºÙ¹Ô·×¾å¶èÊ¬
+	var strPCode       = '';	// è£½å“ã‚³ãƒ¼ãƒ‰
+	var strPClass      = '';	// è¨ˆä¸ŠåŒºåˆ†
+	var strCodeRecord  = '';	// æ˜ç´°è¡Œè£½å“ã‚³ãƒ¼ãƒ‰
+	var strClassRecord = '';	// æ˜ç´°è¡Œè¨ˆä¸ŠåŒºåˆ†
 
 
-	// ÌÀºÙ¹Ô¤¬1¹Ô°Ê¾åÂ¸ºß¤·¤Ê¤¤¾ì¹ç
+	// æ˜ç´°è¡ŒãŒ1è¡Œä»¥ä¸Šå­˜åœ¨ã—ãªã„å ´åˆ
 	if( saveRecord.length <= 0 )
 	{
 		return true;
@@ -3914,21 +3914,21 @@ function fncCheckDetailCode()
 
 	if( g_lngSelIndex != 0 )
 	{
-		// °ì¹ÔÌÜ¤Î¾ğÊó¤ÈÆşÎÏÃæ¤Î¾ğÊó¤òÈæ³Ó¤¹¤ë
+		// ä¸€è¡Œç›®ã®æƒ…å ±ã¨å…¥åŠ›ä¸­ã®æƒ…å ±ã‚’æ¯”è¼ƒã™ã‚‹
 		
-		strPCode = window.parent.trim( window.parent.DSO.strProductCode.value );	// À½ÉÊ¥³¡¼¥É¤Î¼èÆÀ
-		strCodeRecord = saveRecord[0][0];	// ÌÀºÙ¹ÔÀ½ÉÊ¥³¡¼¥É¤Î¼èÆÀ
+		strPCode = window.parent.trim( window.parent.DSO.strProductCode.value );	// è£½å“ã‚³ãƒ¼ãƒ‰ã®å–å¾—
+		strCodeRecord = saveRecord[0][0];	// æ˜ç´°è¡Œè£½å“ã‚³ãƒ¼ãƒ‰ã®å–å¾—
 
-		//¼õÃí´ÉÍı¤Î¾ì¹ç
+		//å—æ³¨ç®¡ç†ã®å ´åˆ
 		if( typeof( window.parent.HSO.SOFlg ) == "object" )
 		{
 			strPClass      = window.parent.DSO.lngSalesClassCode.value;
 			strClassRecord = saveRecord[0][19];
 
-			// ÂĞ¾İ¥³¡¼¥É¤ÎÈæ³Ó
+			// å¯¾è±¡ã‚³ãƒ¼ãƒ‰ã®æ¯”è¼ƒ
 			blnCheck = fncCheckTargetDetail( strCodeRecord, strClassRecord, strPCode, strPClass );
 		}
-		// ¤½¤ÎÂ¾¤Î´ÉÍı
+		// ãã®ä»–ã®ç®¡ç†
 		else
 		{
 			//blnCheck = ( strCodeRecord == strPCode ) ? true : false;
@@ -3940,15 +3940,15 @@ function fncCheckDetailCode()
 	// 
 	if( !blnCheck )
 	{
-		//¼õÃí´ÉÍı¤Î¾ì¹ç
+		//å—æ³¨ç®¡ç†ã®å ´åˆ
 		if( typeof( window.parent.HSO.SOFlg ) == "object" )
 		{
-			alert( "À½ÉÊ¤Ş¤¿¤Ï¡¢Çä¾å¶èÊ¬¤¬°ã¤¤¤Ş¤¹¡£" );
+			alert( "è£½å“ã¾ãŸã¯ã€å£²ä¸ŠåŒºåˆ†ãŒé•ã„ã¾ã™ã€‚" );
 		}
-		// ¤½¤ÎÂ¾¤Î´ÉÍı
+		// ãã®ä»–ã®ç®¡ç†
 		else
 		{
-			alert( "À½ÉÊ¤¬°ã¤¤¤Ş¤¹¡£" );
+			alert( "è£½å“ãŒé•ã„ã¾ã™ã€‚" );
 		}
 	}
 	
@@ -3956,7 +3956,7 @@ function fncCheckDetailCode()
 	return blnCheck;
 }
 
-// ¼õÃí´ÉÍı ÂĞ¾İ¥³¡¼¥É¤ÎÈæ³Ó
+// å—æ³¨ç®¡ç† å¯¾è±¡ã‚³ãƒ¼ãƒ‰ã®æ¯”è¼ƒ
 function fncCheckTargetDetail( pRecord, cRecord, pcode, pclass )
 {
 	var blnCheck = false;

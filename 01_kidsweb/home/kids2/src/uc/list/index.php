@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥æ¡¼¥¶¡¼´ÉÍý ¸¡º÷·ë²Ì²èÌÌ
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç† æ¤œç´¢çµæžœç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -12,10 +12,10 @@
 */
 // index.php -> strSessionID    -> index.php
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 
 $objDB   = new clsDB();
@@ -24,28 +24,28 @@ $objDB->open( "", "", "", "" );
 
 $aryData["strSessionID"]    = $_GET["strSessionID"];
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 $aryResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryResult, $objDB );
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( $aryData["lngFunctionCode"], $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 $objDB->close();
 
 
 
-// ¥Ø¥ë¥×¥ê¥ó¥¯ÍÑµ¡Ç½¥³¡¼¥É¤ò¥»¥Ã¥È
+// ãƒ˜ãƒ«ãƒ—ãƒªãƒ³ã‚¯ç”¨æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
 $aryData["lngFunctionCode"] = DEF_FUNCTION_UC1;
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 
 echo fncGetReplacedHtml( "wf/list/parts.tmpl", $aryData, $objAuth );
 

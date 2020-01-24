@@ -1,8 +1,8 @@
 <?
 /** 
-*	¥æ¡¼¥¶¡¼´ÉÍýÍÑ¥é¥¤¥Ö¥é¥ê
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
-*	¥æ¡¼¥¶¡¼´ÉÍýÍÑ´Ø¿ô¥é¥¤¥Ö¥é¥ê
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†ç”¨é–¢æ•°ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -16,13 +16,13 @@
 
 
 /**
-* ¥æ¡¼¥¶¡¼´ÉÍý
+* ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†
 *
-*	¥æ¡¼¥¶¡¼¥Ç¡¼¥¿ÆÉ¤ß¹þ¤ß¡¢¸¡º÷¡¢¾ÜºÙ¾ðÊó¼èÆÀ¥¯¥¨¥ê´Ø¿ô
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿ã€æ¤œç´¢ã€è©³ç´°æƒ…å ±å–å¾—ã‚¯ã‚¨ãƒªé–¢æ•°
 *
-*	@param  String $lngUserCode ¥æ¡¼¥¶¡¼¥³¡¼¥É
-*	@param  Array  $aryData     FORM¥Ç¡¼¥¿
-*	@param  Object $objDB       DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  String $lngUserCode ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+*	@param  Array  $aryData     FORMãƒ‡ãƒ¼ã‚¿
+*	@param  Object $objDB       DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@access public
 */
 function getUserQuery( $lngUserCode, $aryData, $objDB )
@@ -44,7 +44,7 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
 	$lngFunctionCode        = $aryData['lngFunctionCode'];
 	$strSort                = $aryData['strSort'];
 
-	// ¥½¡¼¥È¤¹¤ë¥«¥é¥à¤ÎÂÐ¾ÝÈÖ¹æÀßÄê
+	// ã‚½ãƒ¼ãƒˆã™ã‚‹ã‚«ãƒ©ãƒ ã®å¯¾è±¡ç•ªå·è¨­å®š
 	$arySortColumn = array ( 1 => "u.bytInvalidFlag",
 	                         2 => "u.lngUserCode",
 	                         3 => "u.strUserID",
@@ -61,7 +61,7 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
 	                        14 => "u.strNote" );
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¼èÆÀ¹àÌÜ
+	// å–å¾—é …ç›®
 	//////////////////////////////////////////////////////////////////////////
 	$strQuery = "SELECT\n" .
                 " u.bytInvalidFlag, u.lngUserCode," .
@@ -80,78 +80,78 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
                  "WHERE";
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¾ò·ï
+	// æ¡ä»¶
 	//////////////////////////////////////////////////////////////////////////
-	// °ìÍ÷            ¾ò·ï¼° 
-	// ¸¡º÷            ¾ò·ï¼°       B
-	// ¾ÜºÙ¡¦½èÍý(°ìÍ÷)¾ò·ï¼° A
-	// ¾ÜºÙ¡¦½èÍý(¸¡º÷)¾ò·ï¼° A and B
+	// ä¸€è¦§            æ¡ä»¶å¼ 
+	// æ¤œç´¢            æ¡ä»¶å¼       B
+	// è©³ç´°ãƒ»å‡¦ç†(ä¸€è¦§)æ¡ä»¶å¼ A
+	// è©³ç´°ãƒ»å‡¦ç†(æ¤œç´¢)æ¡ä»¶å¼ A and B
 	//////////////////////////////////////////////////////////////////////////
-	// A:»ØÄê¤·¤¿¥æ¡¼¥¶¡¼¥³¡¼¥É
-	// B:³Æ¸¡º÷¾ò·ï
+	// A:æŒ‡å®šã—ãŸãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+	// B:å„æ¤œç´¢æ¡ä»¶
 
-	// A:»ØÄê¤·¤¿¥æ¡¼¥¶¡¼¥³¡¼¥É
+	// A:æŒ‡å®šã—ãŸãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["lngUserCodeConditions"] && $lngUserCode != "" )
 	{
 		$strQuery .= " AND u.lngUserCode = $lngUserCode \n";
 	}
 
-	// B:³Æ¸¡º÷¾ò·ï
-	// ¥í¥°¥¤¥óµö²Ä
+	// B:å„æ¤œç´¢æ¡ä»¶
+	// ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯
 	if ( $aryData["bytInvalidFlagConditions"] && $bytInvalidFlag )
 	{
 		$strQuery .= " AND u.bytInvalidFlag = $bytInvalidFlag \n";
 	}
 
-	// ¥æ¡¼¥¶¡¼ID
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ID
 	if ( $aryData["strUserIDConditions"] && $strUserID != "" )
 	{
 		$strQuery .= " AND u.strUserID LIKE '%$strUserID%' \n";
 	}
 
-	// ¥á¡¼¥ë¥¢¥É¥ì¥¹
+	// ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹
 	if ( $aryData["strMailAddressConditions"] && $strMailAddress != "" )
 	{
 		$strQuery .= " AND u.strMailAddress LIKE '%$strMailAddress%' \n";
 	}
 
-	// ¥á¡¼¥ëÇÛ¿®µö²Ä
+	// ãƒ¡ãƒ¼ãƒ«é…ä¿¡è¨±å¯
 	if ( $aryData["bytMailTransmitFlagConditions"] && $bytMailTransmitFlag )
 	{
 		$strQuery .= " AND u.bytMailTransmitFlag = $bytMailTransmitFlag \n";
 	}
 
-	// É½¼¨¥æ¡¼¥¶¡¼¥Õ¥é¥°
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ•ãƒ©ã‚°
 	if ( $aryData["bytUserDisplayFlagConditions"] && $bytUserDisplayFlag )
 	{
 		$strQuery .= " AND u.bytUserDisplayFlag = $bytUserDisplayFlag \n";
 	}
 
-	// É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["strUserDisplayCodeConditions"] && $strUserDisplayCode != "" )
 	{
 		$strQuery .= " AND u.strUserDisplayCode LIKE '%$strUserDisplayCode%' \n";
 	}
 
-	// É½¼¨¥æ¡¼¥¶¡¼Ì¾
+	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼å
 	if ( $aryData["strUserDisplayNameConditions"] && $strUserDisplayName != "" )
 	{
 		$strQuery .= " AND u.strUserDisplayName LIKE '%$strUserDisplayName%' \n";
 	}
 
-	// ¥Õ¥ë¥Í¡¼¥à
+	// ãƒ•ãƒ«ãƒãƒ¼ãƒ 
 	if ( $aryData["strUserFullNameConditions"] && $strUserFullName != "" )
 	{
 		$strQuery .= " AND u.strUserFullName LIKE '%$strUserFullName%' \n";
 	}
 
-	// ´ë¶È¥³¡¼¥É
+	// ä¼æ¥­ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["lngCompanyCodeConditions"] && $lngCompanyCode != "" )
 	{
 		$strQuery .= " AND c.lngCompanyCode = $lngCompanyCode \n";
 	}
 
-	// ¥°¥ë¡¼¥×¥³¡¼¥É
+	// ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["lngGroupCodeConditions"] && $lngGroupCode != "" )
 	{
 		$strQuery .= " AND g.lngGroupCode = $lngGroupCode \n";
@@ -161,20 +161,20 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
 		$strQuery .= " AND gr.bytDefaultFlag = TRUE \n";
 	}
 
-	// ¸¢¸Â¥°¥ë¡¼¥×¥³¡¼¥É
+	// æ¨©é™ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["lngAuthorityGroupCodeConditions"] && $lngAuthorityGroupCode != "" )
 	{
 		$strQuery .= " AND ag.lngAuthorityGroupCode = $lngAuthorityGroupCode \n";
 	}
 
-	// ¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹
+	// ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹
 	if ( $aryData["lngAccessIPAddressCodeConditions"] && $lngAccessIPAddressCode != "" )
 	{
 		$strQuery .= " AND ip.lngAccessIPAddressCode = $lngAccessIPAddressCode \n";
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	// É³ÉÕ¤±
+	// ç´ä»˜ã‘
 	//////////////////////////////////////////////////////////////////////////
 	// m_User u, m_Company c, m_Group g, m_GroupRelation gr
 	// m_AuthorityGroup ag, m_AccessIPAddress ip
@@ -185,17 +185,17 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
                  " AND g.lngGroupCode = gr.lngGroupCode\n";
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¥½¡¼¥È½èÍý
+	// ã‚½ãƒ¼ãƒˆå‡¦ç†
 	//////////////////////////////////////////////////////////////////////////
-	// $strSort ¹½Â¤ "sort_[ÂÐ¾ÝÈÖ¹æ]_[¹ß½ç¡¦¾º½ç]"
-	// $strSort ¤«¤éÂÐ¾ÝÈÖ¹æ¡¢¹ß½ç¡¦¾º½ç¤ò¼èÆÀ
+	// $strSort æ§‹é€  "sort_[å¯¾è±¡ç•ªå·]_[é™é †ãƒ»æ˜‡é †]"
+	// $strSort ã‹ã‚‰å¯¾è±¡ç•ªå·ã€é™é †ãƒ»æ˜‡é †ã‚’å–å¾—
 	list ( $sort, $column, $DESC ) = explode ( "_", $strSort );
 	if ( $column )
 	{
 		$strQuery .= "ORDER BY $arySortColumn[$column] $DESC, u.lngUserCode ASC\n";
 	}
 
-	// ¥æ¡¼¥¶¡¼¾ÜºÙ¡¢¥æ¡¼¥¶¡¼½¤Àµ¤Î¾ì¹ç¡¢¥Ç¥Õ¥©¥ë¥È¥°¥ë¡¼¥×¤Ë¤Æ¥½¡¼¥È
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼è©³ç´°ã€ãƒ¦ãƒ¼ã‚¶ãƒ¼ä¿®æ­£ã®å ´åˆã€ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚°ãƒ«ãƒ¼ãƒ—ã«ã¦ã‚½ãƒ¼ãƒˆ
 	elseif ( $lngFunctionCode == DEF_FUNCTION_UC4 || $lngFunctionCode == DEF_FUNCTION_UC5 )
 	{
 		$strQuery .= "ORDER BY gr.bytDefaultFlag ASC\n";
@@ -209,7 +209,7 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
 
 // echo $strQuery;
 	//////////////////////////////////////////////////////////////////////////
-	// ¥¯¥¨¥ê¼Â¹Ô
+	// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 	//////////////////////////////////////////////////////////////////////////
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -227,10 +227,10 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
 
 
 /**
-* GET¥Ç¡¼¥¿°ú¿ôURLÀ¸À®´Ø¿ô
+* GETãƒ‡ãƒ¼ã‚¿å¼•æ•°URLç”Ÿæˆé–¢æ•°
 *
-*	@param  Array  $aryData GET¥Ç¡¼¥¿
-*	@return String          URL(**.php?¡¦¡¦¡¦°Ê¹ß¤ÎÊ¸»úÎó)
+*	@param  Array  $aryData GETãƒ‡ãƒ¼ã‚¿
+*	@return String          URL(**.php?ãƒ»ãƒ»ãƒ»ä»¥é™ã®æ–‡å­—åˆ—)
 *	@access public
 */
 function fncGetURL( $aryData )
@@ -296,10 +296,10 @@ function checkUniqueUser( $lngUserCode, $strUserID, $lngCompanyCode, $strUserDis
 	$aryError["strUserID"]          = "visibility:hidden;";
 	$aryError["strUserDisplayCode"] = "visibility:hidden;";
 
-	// ¹¹¿·¤Ç¤Ï¤Ê¤¤ ¤Þ¤¿¤Ï ¥æ¡¼¥¶¡¼¥³¡¼¥É¤¬ÊÑ¤ï¤Ã¤¿
+	// æ›´æ–°ã§ã¯ãªã„ ã¾ãŸã¯ ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå¤‰ã‚ã£ãŸ
 	if ( $mode != "UPDATE" || $lngUserCode != $lngUserCodeOriginal )
 	{
-		// ¥æ¡¼¥¶¡¼¥³¡¼¥É¤Î½ÅÊ£¥Á¥§¥Ã¥¯
+		// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã®é‡è¤‡ãƒã‚§ãƒƒã‚¯
 		$strQuery  = "SELECT lngUserCode FROM m_User " .
 	                 "WHERE lngUserCode = $lngUserCode";
 echo $strQuery;
@@ -308,15 +308,15 @@ echo $strQuery;
 		{
 			$bytErrorFlag = 1;
 			$aryError["lngUserCode"]   = "visibility:visible;";
-			$aryMessage["lngUserCode"] = "¥æ¡¼¥¶¡¼¤¬½ÅÊ£¤·¤Æ¤¤¤Þ¤¹¡£";
+			$aryMessage["lngUserCode"] = "ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒé‡è¤‡ã—ã¦ã„ã¾ã™ã€‚";
 			$objDB->freeResult( $lngResultID );
 		}
 	}
 
-	// ¹¹¿·¤Ç¤Ï¤Ê¤¤ ¤Þ¤¿¤Ï ¥æ¡¼¥¶¡¼ID¤¬ÊÑ¤ï¤Ã¤¿
+	// æ›´æ–°ã§ã¯ãªã„ ã¾ãŸã¯ ãƒ¦ãƒ¼ã‚¶ãƒ¼IDãŒå¤‰ã‚ã£ãŸ
 	if ( $mode != "UPDATE" || $strUserID != $strUserIDOriginal )
 	{
-		// ¥æ¡¼¥¶¡¼ID¤Î½ÅÊ£¥Á¥§¥Ã¥¯
+		// ãƒ¦ãƒ¼ã‚¶ãƒ¼IDã®é‡è¤‡ãƒã‚§ãƒƒã‚¯
 		$strQuery  = "SELECT lngUserCode FROM m_User " .
 	                 "WHERE strUserID = '$strUserID'";
 
@@ -325,15 +325,15 @@ echo $strQuery;
 		{
 			$bytErrorFlag = 1;
 			$aryError["strUserID"]   = "visibility:visible;";
-			$aryMessage["strUserID"] = "¥æ¡¼¥¶¡¼¤¬½ÅÊ£¤·¤Æ¤¤¤Þ¤¹¡£";
+			$aryMessage["strUserID"] = "ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒé‡è¤‡ã—ã¦ã„ã¾ã™ã€‚";
 			$objDB->freeResult( $lngResultID );
 		}
 	}
 
-	// ¹¹¿·¤Ç¤Ï¤Ê¤¤ ¤Þ¤¿¤Ï ¥æ¡¼¥¶¡¼É½¼¨¥³¡¼¥É¤¬ÊÑ¤ï¤Ã¤¿
+	// æ›´æ–°ã§ã¯ãªã„ ã¾ãŸã¯ ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤ºã‚³ãƒ¼ãƒ‰ãŒå¤‰ã‚ã£ãŸ
 	if ( $mode != "UPDATE" || $strUserDisplayCode != $strUserDisplayCodeOriginal || $lngCompanyCode != $lngCompanyCodeOriginal )
 	{
-		// ½êÂ°¤¹¤ë²ñ¼ÒÆâ¤ËÆ±¤¸É½¼¨¥³¡¼¥É¤Î¼Ô(¼«Ê¬°Ê³°)¤¬¤¤¤¿¾ì¹ç¥¨¥é¡¼
+		// æ‰€å±žã™ã‚‹ä¼šç¤¾å†…ã«åŒã˜è¡¨ç¤ºã‚³ãƒ¼ãƒ‰ã®è€…(è‡ªåˆ†ä»¥å¤–)ãŒã„ãŸå ´åˆã‚¨ãƒ©ãƒ¼
 		$strQuery = "SELECT lngUserCode FROM m_User " .
 	                "WHERE strUserDisplayCode = '$strUserDisplayCode'" .
 	                " AND lngCompanyCode = $lngCompanyCode\n" .
@@ -344,7 +344,7 @@ echo $strQuery;
 		{
 			$bytErrorFlag = 1;
 			$aryError["strUserDisplayCode"]   = "visibility:visible;";
-			$aryMessage["strUserDisplayCode"] = "¥æ¡¼¥¶¡¼¤¬½ÅÊ£¤·¤Æ¤¤¤Þ¤¹¡£";
+			$aryMessage["strUserDisplayCode"] = "ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒé‡è¤‡ã—ã¦ã„ã¾ã™ã€‚";
 			$objDB->freeResult( $lngResultID );
 		}
 	}

@@ -1,2 +1,2 @@
-// No24:¹©¾ì¡¢Ç¼ÉÊ¾ì½êÁÒ¸Ë¥³¡¼¥É	¢ªÇ¼ÉÊ¾ì½êÌ¾(È¯Ãí¸¡º÷¡§suzukaze)
+// No24:å·¥å ´ã€ç´å“å ´æ‰€å€‰åº«ã‚³ãƒ¼ãƒ‰	â†’ç´å“å ´æ‰€å(ç™ºæ³¨æ¤œç´¢ï¼šsuzukaze)
 SELECT c.strcompanydisplaycode,c.strcompanydisplayname FROM m_company c, m_attribute a, m_attributerelation al WHERE c.lngcompanycode = al.lngcompanycode AND al.lngattributecode = a.lngattributecode AND strcompanydisplaycode = '_%strFormValue0%_' AND (a.lngattributecode = 4 OR a.lngattributecode = 5)

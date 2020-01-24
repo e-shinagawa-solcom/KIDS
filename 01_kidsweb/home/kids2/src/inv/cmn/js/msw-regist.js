@@ -1,49 +1,49 @@
 (function () {
-    // ¥Õ¥©¡¼¥à¥µ¥Ö¥ß¥Ã¥ÈÍŞ»ß
+    // ãƒ•ã‚©ãƒ¼ãƒ ã‚µãƒ–ãƒŸãƒƒãƒˆæŠ‘æ­¢
     $('document').on('submit', 'form', function (e) {
         e.preventDefault();
         return false;
     });
 
-    // ToDo  msw.js¤ÈÆâÍÆ¤Ï¤Û¤ÜÆ±¤¸¤Ê¤Î¤Ç1¤Ä¤Ë¤Ş¤È¤á¤¿¤¤¡£
+    // ToDo  msw.jsã¨å†…å®¹ã¯ã»ã¼åŒã˜ãªã®ã§1ã¤ã«ã¾ã¨ã‚ãŸã„ã€‚
     var apply = function (handleName, docMsw) {
         var code = $('input[name=' + handleName + ']');
         code.val(docMsw.find('select.result-select').find('option:selected').attr('code'));
-        // msw¤ÎÈóÉ½¼¨
+        // mswã®éè¡¨ç¤º
         invokeMswClose(docMsw);
-        // ¸ÜµÒ¥³¡¼¥É¥Á¥§¥ó¥¸¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+        // é¡§å®¢ã‚³ãƒ¼ãƒ‰ãƒã‚§ãƒ³ã‚¸ã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
         code.trigger('change');
-        // ¸ÜµÒ¤¬ÊÑ¹¹¤µ¤ì¤¿¾ì¹ç
+        // é¡§å®¢ãŒå¤‰æ›´ã•ã‚ŒãŸå ´åˆ
         if (handleName == 'lngCustomerCode') {
             customerChangeReset();
         }
     };
 
-    // ¸ÜµÒ¤¬ÊÑ¹¹¤µ¤ì¤¿¾ì¹ç¤ÏÌÀºÙ´ØÏ¢¤ò¥ê¥»¥Ã¥È¤¹¤ë
+    // é¡§å®¢ãŒå¤‰æ›´ã•ã‚ŒãŸå ´åˆã¯æ˜ç´°é–¢é€£ã‚’ãƒªã‚»ãƒƒãƒˆã™ã‚‹
     var customerChangeReset = function () {
-        // ½ĞÎÏÌÀºÙ°ìÍ÷¤òºï½ü
+        // å‡ºåŠ›æ˜ç´°ä¸€è¦§ã‚’å‰Šé™¤
         $('#btnAllDelete').trigger('click');
-        // Á°·îÀÁµá»Ä³Û(¾ÃÈñÀÇ¹ş¤ß)
+        // å‰æœˆè«‹æ±‚æ®‹é¡(æ¶ˆè²»ç¨è¾¼ã¿)
         $('input[name="curlastmonthbalance"]').val(0).change();
-        // ¾ÃÈñÀÇ
+        // æ¶ˆè²»ç¨
         $('input[name="curtaxprice"]').val(0).change();
-        // Åö·îÀÁµá³Û
+        // å½“æœˆè«‹æ±‚é¡
         $('input[name="curthismonthamount"]').val(0).change();
-        // º¹°ú¹ç·×³Û
+        // å·®å¼•åˆè¨ˆé¡
         $('input[name="notaxcurthismonthamount"]').val(0).change();
-        // Äù¤áÆü¤Î·×»»
+        // ç· ã‚æ—¥ã®è¨ˆç®—
         btnbilling.trigger('click');
     }
 
-    // ÊÄ¤¸¤ë¥Ü¥¿¥ó½èÍı¤Î¸Æ¤Ó½Ğ¤·
+    // é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³å‡¦ç†ã®å‘¼ã³å‡ºã—
     var invokeMswClose = function (msw) {
         msw.find('.msw-box__header__close-btn').trigger('click');
     };
 
-    // // M¥Ü¥¿¥ó²¡²¼½èÍı (¸ÜµÒÊÑ¹¹)
+    // // Mãƒœã‚¿ãƒ³æŠ¼ä¸‹å‡¦ç† (é¡§å®¢å¤‰æ›´)
     // $('img.msw-inv-button').on({
     //     'click': function() {
-    //         var msg = 'ÀÁµáÂĞ¾İ¤ÎÌÀºÙ¤ò¤¹¤Ù¤Æ¥¯¥ê¥¢¤·¤Ş¤¹¡£\n¤è¤í¤·¤¤¤Ç¤¹¤«¡©';
+    //         var msg = 'è«‹æ±‚å¯¾è±¡ã®æ˜ç´°ã‚’ã™ã¹ã¦ã‚¯ãƒªã‚¢ã—ã¾ã™ã€‚\nã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ';
     //         var cc = isEmpty($('input[name="lngCustomerCode"]').val());
     //         var cn = isEmpty($('input[name="strCustomerName"]').val());
     //         var $tableA_rows = $('#tableA tbody tr');
@@ -59,8 +59,8 @@
     //         var ifmMsw = $('iframe.' + mswName);
     //         var docMsw = $(ifmMsw.get(0).contentWindow.document);
 
-    //         // iframe¤Î¥İ¥¸¥·¥ç¥ó,¥µ¥¤¥ºÀßÄê
-    //         // iframe¤ÎÉ½¼¨ÎÎ°è¤òÉ½¼¨Êª(msw-box)¤Î¥µ¥¤¥º¤Ë¹ç¤ï¤»¤ë
+    //         // iframeã®ãƒã‚¸ã‚·ãƒ§ãƒ³,ã‚µã‚¤ã‚ºè¨­å®š
+    //         // iframeã®è¡¨ç¤ºé ˜åŸŸã‚’è¡¨ç¤ºç‰©(msw-box)ã®ã‚µã‚¤ã‚ºã«åˆã‚ã›ã‚‹
     //         var mswBox = docMsw.find('.msw-box');
     //         var ifmHeight = mswBox.outerHeight(true);
     //         if(typeof mswBox.offset() !== 'undefined' ) {
@@ -92,16 +92,16 @@
     //             }
     //         );
 
-    //         // MSWÉ½¼¨Ä¾Á°¤Ë¼Â¹Ô¤µ¤»¤¿¤¤½èÍı
+    //         // MSWè¡¨ç¤ºç›´å‰ã«å®Ÿè¡Œã•ã›ãŸã„å‡¦ç†
     //         var mswBrfore = $(this).attr('msw-before');
     //         if(mswBrfore){
     //             eval(mswBrfore + '(handleName);');
     //         }
 
-    //         // msw¤ÎÉ½¼¨
+    //         // mswã®è¡¨ç¤º
     //         invokeMswClose(docMsw);
 
-    //         // ¥Ø¥Ã¥À¡¼¤ÎÀßÄê
+    //         // ãƒ˜ãƒƒãƒ€ãƒ¼ã®è¨­å®š
     //         var headerWidth = docMsw.find('.msw-box__header').width();
     //         var btnCloseWidth = docMsw.find('.msw-box__header__close-btn').width();
     //         var btnCloseHeight = docMsw.find('.msw-box__header__close-btn').height();
@@ -117,50 +117,50 @@
     //             'text-indent': '1em'
     //         });
 
-    //         // mswÆâ¤ÎºÇ½é¤Îinput¤Ë¥Õ¥©¡¼¥«¥¹
+    //         // mswå†…ã®æœ€åˆã®inputã«ãƒ•ã‚©ãƒ¼ã‚«ã‚¹
     //         docMsw.find('input[tabindex="1"]').focus();
     //     }
     // });
 
-    // // msw¤ÎpositionÀßÄê
+    // // mswã®positionè¨­å®š
     // var setPosition = function(btn, docMsw) {
-    //     // ¥Ü¥¿¥ó¤Î¿Æ¤Î¥é¥¤¥ó
+    //     // ãƒœã‚¿ãƒ³ã®è¦ªã®ãƒ©ã‚¤ãƒ³
     //     var line = $(btn).parents('[class*="regist-line"]');
     //     var lineOffset = line.offset();
 
     //     var mswBox = docMsw.find('.msw-box');
     //     var mswBoxHeight = mswBox.outerHeight(true);
     //     var mswBoxWidth = mswBox.outerWidth(true);
-    //     // msw½é´ü°ÌÃÖ
+    //     // mswåˆæœŸä½ç½®
     //     var position = {top: line.position().top + line.height(), left: line.position().left};
 
-    //     // msw¤ÎÉ½¼¨¤¬²èÌÌ¤Ë¼ı¤Ş¤é¤Ê¤¤¾ì¹ç
+    //     // mswã®è¡¨ç¤ºãŒç”»é¢ã«åã¾ã‚‰ãªã„å ´åˆ
     //     if(lineOffset.top + line.height() + mswBoxHeight > $(document).height() && $(document).height() > mswBoxHeight){
-    //         // ²èÌÌ¤Î¹â¤µ¤Ë¼ı¤Ş¤é¤Ê¤¤¹â¤µÊ¬¤ò°ú¤¯
+    //         // ç”»é¢ã®é«˜ã•ã«åã¾ã‚‰ãªã„é«˜ã•åˆ†ã‚’å¼•ã
     //         position.top -= $('[class^="form-box--"], [class="form-box"]').offset().top + position.top + line.height() + mswBoxHeight - $(document).height();
     //     }
 
-    //     // msw²£Éı¤¬²èÌÌ¤Ë¼ı¤Ş¤é¤Ê¤¤¾ì¹ç
+    //     // mswæ¨ªå¹…ãŒç”»é¢ã«åã¾ã‚‰ãªã„å ´åˆ
     //     position.left -= Math.min(position.left, (position.left + mswBoxWidth > $(document).width() && $(document).width() > mswBoxWidth)?
     //     Math.abs(position.left + mswBoxWidth - $(document).width()) : 0);
 
     //     return position;
     // }
 
-    // ¸¡º÷·ë²Ì¥À¥Ö¥ë¥¯¥ê¥Ã¥¯¤ÇÅ¬ÍÑ¤¹¤ë
+    // æ¤œç´¢çµæœãƒ€ãƒ–ãƒ«ã‚¯ãƒªãƒƒã‚¯ã§é©ç”¨ã™ã‚‹
     $(".result-select").on("dblclick", function () {
         mswBox.find('img.apply').trigger('click');
         mswBox.find('img.msw-box__header__close-btn').trigger('click');
     });
 
-    // ÀÁµáÆüÊÑ¹¹¤Î½èÍı
+    // è«‹æ±‚æ—¥å¤‰æ›´ã®å‡¦ç†
     $('input[name="ActionDate"]').on("change", function () {
         selectClosedDay();
     });
 
-    // ¸ÜµÒ¥³¡¼¥ÉÊÑ¹¹¤Î½èÍı
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰å¤‰æ›´ã®å‡¦ç†
     $('input[name="lngCustomerCode"]').on("change", function () {
-        var msg = 'ÀÁµáÂĞ¾İ¤ÎÌÀºÙ¤ò¤¹¤Ù¤Æ¥¯¥ê¥¢¤·¤Ş¤¹¡£\n¤è¤í¤·¤¤¤Ç¤¹¤«¡©';
+        var msg = 'è«‹æ±‚å¯¾è±¡ã®æ˜ç´°ã‚’ã™ã¹ã¦ã‚¯ãƒªã‚¢ã—ã¾ã™ã€‚\nã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ';
         var $tableA_rows = $('#tableA tbody tr');
         var $tableA_rows_length = $tableA_rows.length;
 
@@ -175,26 +175,26 @@
         selectClosedDay();
     });
 
-    // Äù¤áÆü¤ò¼èÆÀ¤¹¤ë
+    // ç· ã‚æ—¥ã‚’å–å¾—ã™ã‚‹
     var isCloseDay;
     var selectClosedDay = function () {
 
         var customerCode = $('input[name="lngCustomerCode"]');
         var customerName = $('input[name="strCustomerName"]');
         var billingDate = $('input[name="ActionDate"]');
-        // ÀÁµáÆü¤¬Ì¤ÆşÎÏ
+        // è«‹æ±‚æ—¥ãŒæœªå…¥åŠ›
         if (isEmpty(billingDate.val()) == '0') {
-            console.log('none ÀÁµáÆü');
+            console.log('none è«‹æ±‚æ—¥');
             return;
         }
 
         switch (isEmpty(customerCode.val()) + isEmpty(customerName.val())) {
-            // ¤É¤Á¤é¤âÌ¤ÆşÎÏ
+            // ã©ã¡ã‚‰ã‚‚æœªå…¥åŠ›
             case '00':
                 return;
                 break;
 
-            // ¤¤¤º¤ì¤«¤¬²¿¤«¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤ë
+            // ã„ãšã‚Œã‹ãŒä½•ã‹ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã‚‹
             case '01':
             case '10':
             case '11':
@@ -210,11 +210,11 @@
             default:
                 break;
         }
-        // ¥Ş¥¹¥¿¡¼¸¡º÷¼Â¹Ô
+        // ãƒã‚¹ã‚¿ãƒ¼æ¤œç´¢å®Ÿè¡Œ
         queryMasterData(condition, setResult, setNodata);
     };
 
-    // ¿¿µ¶ÃÍ¤ÎÊ¸»úÎóÉ½¸½¤ò¼èÆÀ
+    // çœŸå½å€¤ã®æ–‡å­—åˆ—è¡¨ç¾ã‚’å–å¾—
     function isEmpty(val) {
         if (val) {
             return '1';
@@ -223,63 +223,63 @@
         }
     }
 
-    // ¸¡º÷·ë²Ì¤«¤é¼«/»ê¤ò»»½Ğ¤·¥»¥Ã¥È
+    // æ¤œç´¢çµæœã‹ã‚‰è‡ª/è‡³ã‚’ç®—å‡ºã—ã‚»ãƒƒãƒˆ
     function setResult(response) {
 
         console.log(response);
         if (isEmpty(response[0].lngclosedday) == 0) {
-            alert('Äù¤áÆü¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£');
+            alert('ç· ã‚æ—¥ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚');
             return false;
         }
 
-        // ¼«/»ê¤ò¼èÆÀ
+        // è‡ª/è‡³ã‚’å–å¾—
         var [start, end] = getClosedDay(response[0].lngclosedday);
-        // ¼«/»ê¥»¥Ã¥È
+        // è‡ª/è‡³ã‚»ãƒƒãƒˆ
         var billingStart = $('input[name="dtmchargeternstart"]');
         var billingEnd = $('input[name="dtmchargeternend"]');
         var billingMonth = $('#invoiceMonth');
 
         billingStart.val(start).change();
         billingEnd.val(end).change();
-        // ÀÁµá·î¥»¥Ã¥È
+        // è«‹æ±‚æœˆã‚»ãƒƒãƒˆ
         billingMonth.val(end.split('/')[1]).change();
         return true;
 
 
     }
 
-    // ¸¡º÷·ë²Ì0·ï¤Î»şoption¤ËNoData¤ò¥»¥Ã¥È
+    // æ¤œç´¢çµæœ0ä»¶ã®æ™‚optionã«NoDataã‚’ã‚»ãƒƒãƒˆ
     function setNodata(response) {
-        console.log('0·ï');
+        console.log('0ä»¶');
         console.log(response.responseText);
     }
 
-    // Äù¤áÆü¤«¤é¼«»ê¤ò»»½Ğ¤¹¤ë
+    // ç· ã‚æ—¥ã‹ã‚‰è‡ªè‡³ã‚’ç®—å‡ºã™ã‚‹
     function getClosedDay(close) {
         var billingDate = $('input[name="ActionDate"]');
         var billingStart = $('input[name="dtmchargeternstart"]');
         var billingEnd = $('input[name="dtmchargeternend"]');
         var dateLength = splitDate(billingDate.val());
 
-        // ÀÁµáÆü¤¬Ì¤ÆşÎÏ
+        // è«‹æ±‚æ—¥ãŒæœªå…¥åŠ›
         if (isEmpty(billingDate.val()) == '0') {
             return [false, false];
         }
 
-        // ÀÁµáÆü¤Î·Á¼°¤¬¤ª¤«¤·¤¤
+        // è«‹æ±‚æ—¥ã®å½¢å¼ãŒãŠã‹ã—ã„
         if (dateLength == false) {
             return [false, false];
         }
 
-        // ÀÁµáÆü
+        // è«‹æ±‚æ—¥
         var yyyy = parseInt(dateLength[1]);
         var mm = parseInt(dateLength[2]);
         var dd = parseInt(dateLength[3]);
-        // Äù¤áÆü (close)
+        // ç· ã‚æ—¥ (close)
         close = parseInt(close);
         isCloseDay = close;
         if (close === 0) {
-            // ËöÆüÄù¤á¤ÎÂĞ±ş
+            // æœ«æ—¥ç· ã‚ã®å¯¾å¿œ
             var date1 = new Date(yyyy, mm, dd);
             date1.setMonth(date1.getMonth() - 2);
             date1.setDate(1);
@@ -288,7 +288,7 @@
             var end = date2.getFullYear() + '/' + (date2.getMonth() + 1) + '/' + date2.getDate();
         }
         else {
-            // »ê ¡§ÀÁµáÆü¤ÎÆü <= Äù¤áÆü¤Î¾ì¹ç¡¢ÀÁµá·îÀè·î¤ÎÄù¤áÆü¡¢¤½¤ì°Ê³°¤Î¾ì¹ç¤Ï¡¢ÀÁµá·î¤ÎÄù¤áÆü            
+            // è‡³ ï¼šè«‹æ±‚æ—¥ã®æ—¥ <= ç· ã‚æ—¥ã®å ´åˆã€è«‹æ±‚æœˆå…ˆæœˆã®ç· ã‚æ—¥ã€ãã‚Œä»¥å¤–ã®å ´åˆã¯ã€è«‹æ±‚æœˆã®ç· ã‚æ—¥            
             var date1 = new Date(yyyy, mm, dd);
             if (dd <= close) {
                 date1.setMonth(date1.getMonth() - 1);
@@ -302,28 +302,28 @@
             date2.setDate(date2.getDate() + 1);
             var start = date2.getFullYear() + '/' + date2.getMonth() + '/' + date2.getDate();
         }
-        // ÊÖµÑ
+        // è¿”å´
         return [start, end];
     }
 
-    // ÀÁµáÆü¤ÎÆüÉÕ¤ò¥Á¥§¥Ã¥¯¤·¤ÆÀµ¤·¤±¤ì¤Ğ¡Ö/¡×¤ÇÊ¬³ä
+    // è«‹æ±‚æ—¥ã®æ—¥ä»˜ã‚’ãƒã‚§ãƒƒã‚¯ã—ã¦æ­£ã—ã‘ã‚Œã°ã€Œ/ã€ã§åˆ†å‰²
     function splitDate(str) {
 
-        // ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È yyyy/mm(m)/dd(d)·Á¼°
+        // æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ yyyy/mm(m)/dd(d)å½¢å¼
         var regDate = /(\d{4})\/(\d{1,2})\/(\d{1,2})/;
 
-        // yyyy/mm/dd·Á¼°¤«
+        // yyyy/mm/ddå½¢å¼ã‹
         if (!(regDate.test(str))) {
             return false;
         }
 
-        // ÆüÉÕÊ¸»úÎó¤Î»ú¶çÊ¬²ò
+        // æ—¥ä»˜æ–‡å­—åˆ—ã®å­—å¥åˆ†è§£
         var regResult = regDate.exec(str);
         var yyyy = regResult[1];
         var mm = regResult[2];
         var dd = regResult[3];
         var di = new Date(yyyy, mm - 1, dd);
-        // ÆüÉÕ¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+        // æ—¥ä»˜ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
         if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
             return regResult;
         }
@@ -331,11 +331,11 @@
         return false;
     };
 
-    // ÀÁµá·î¤Î¥»¥ì¥¯¥ÈBOX
+    // è«‹æ±‚æœˆã®ã‚»ãƒ¬ã‚¯ãƒˆBOX
     function setMonthSelectBox() {
         var today = new Date();
         var mm = today.getMonth() + 1;
-        //·î
+        //æœˆ
         var month = "<select>";
         for (var i = 1; i <= 12; i++) {
             if (i == mm) {
@@ -345,34 +345,34 @@
             }
         }
         month += '</select>';
-        $('#invoiceMonth').html(month + "·î");
+        $('#invoiceMonth').html(month + "æœˆ");
     };
     setMonthSelectBox();
 
-    // Ç¼ÉÊ½ñÌÀºÙ¸¡º÷¥Ü¥¿¥ó²¡²¼½èÍı
+    // ç´å“æ›¸æ˜ç´°æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹å‡¦ç†
     $('img.search-condition').on({
         'click': function () {
-            // validation¥­¥Ã¥¯
+            // validationã‚­ãƒƒã‚¯
             var form = $('form[name="Invoice"]');
-            // From/To¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤¿¤é¥Á¥§¥Ã¥¯
+            // From/ToãŒå…¥åŠ›ã•ã‚Œã¦ã„ãŸã‚‰ãƒã‚§ãƒƒã‚¯
             let $dtmFrom = $('input[name="From_dtmDeliveryDate"]').val();
             let $dtmTo = $('input[name="To_dtmDeliveryDate"]').val();
             if ($dtmFrom && $dtmTo) {
                 let d1 = new Date($dtmFrom);
                 let d2 = new Date($dtmTo);
                 if (d1 > d2) {
-                    alert('Ç¼ÉÊÆü¡ÊTO¡Ë¤¬Ç¼ÉÊÆü¡ÊFROM¡Ë¤è¤ê²áµî¤ÎÆü¤Ç¤¹');
+                    alert('ç´å“æ—¥ï¼ˆTOï¼‰ãŒç´å“æ—¥ï¼ˆFROMï¼‰ã‚ˆã‚Šéå»ã®æ—¥ã§ã™');
                     return false;
                 }
             }
 
-            // ¥¯¥ê¥¢¥Á¥§¥Ã¥¯ (¸ÜµÒ¥³¡¼¥É¤Ş¤¿¤ÏÄÌ²ß¤Ş¤¿¤Ï²İÀÇ¶èÊ¬¤¬½é´üÃÍ¤È°Û¤Ê¤ë¾ì¹ç)
+            // ã‚¯ãƒªã‚¢ãƒã‚§ãƒƒã‚¯ (é¡§å®¢ã‚³ãƒ¼ãƒ‰ã¾ãŸã¯é€šè²¨ã¾ãŸã¯èª²ç¨åŒºåˆ†ãŒåˆæœŸå€¤ã¨ç•°ãªã‚‹å ´åˆ)
             let bReset = false;
             let changeCode = false;
-            // ¿Æ¸ÜµÒ¥³¡¼¥É
+            // è¦ªé¡§å®¢ã‚³ãƒ¼ãƒ‰
             var parentCustomerCode = window.opener.$('input[name="lngCustomerCode"]').val();
             var parentCustomerName = window.opener.$('input[name="strCustomerName"]').val();
-            // ¸ÜµÒ¥³¡¼¥É
+            // é¡§å®¢ã‚³ãƒ¼ãƒ‰
             let customerCode = $('input[name="lngCustomerCode"]').val();
             let customerName = $('input[name="strCustomerName"]').val();
 
@@ -383,14 +383,14 @@
             }
 
             let $tableB = window.opener.$('#tableB');
-            // ¥Æ¡¼¥Ö¥ëB <tbody>, <tr>
+            // ãƒ†ãƒ¼ãƒ–ãƒ«B <tbody>, <tr>
             let $tableB_tbody = $('tbody', $tableB);
             let $tableB_row = $('tr', $tableB_tbody);
             if ($tableB_row.length > 0) {
                 for (var i = 0, rowlen = $tableB_row.length; i < rowlen; i++) {
                     for (var j = 0, collen = $tableB_row[i].cells.length; j < collen; j++) {
                         if ($tableB_row[i].cells[j].className == 'taxclass') {
-                            // ²İÀÇ¶èÊ¬
+                            // èª²ç¨åŒºåˆ†
                             var parentTaxCode = $tableB_row[i].cells[j].innerText.replace(/[^0-9]/g, '');
                         }
                     }
@@ -406,8 +406,8 @@
                 return;
             }
 
-            // ÆşÎÏÃÍ¤ò¼èÆÀ
-            // ¸ÜµÒ
+            // å…¥åŠ›å€¤ã‚’å–å¾—
+            // é¡§å®¢
             var params = {
                 mode: 'ajax',
                 strSessionID: $('input[name="strSessionID"]').val(),
@@ -429,7 +429,7 @@
                 }
             }
 
-            // ¸¡º÷¤¹¤ë
+            // æ¤œç´¢ã™ã‚‹
             var search = {
                 url: '/inv/regist/condition.php?strSessionID=' + $.cookie('strSessionID'),
                 type: 'post',
@@ -440,17 +440,17 @@
             $.ajax(search)
                 .done(function (response) {
                     console.log(response);
-                    // ¿Æ¥¦¥£¥ó¥É¥¦¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+                    // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
                     if (!window.opener || window.opener.closed) {
-                        // ¿Æ¥¦¥£¥ó¥É¥¦¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
-                        window.alert('¥á¥¤¥ó¥¦¥£¥ó¥É¥¦¤¬¸«Åö¤¿¤ê¤Ş¤»¤ó¡£');
+                        // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒå­˜åœ¨ã—ãªã„å ´åˆ
+                        window.alert('ãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒè¦‹å½“ãŸã‚Šã¾ã›ã‚“ã€‚');
                     }
                     else {
                         if (response.Message) {
                             alert(response.Message);
                             return;
                         }
-                        var msg = 'ÁªÂò¤µ¤ì¤¿ÌÀºÙ¤òÁ´¤Æ¥¯¥ê¥¢¤·¤Ş¤¹¤¬¡¢¤è¤í¤·¤¤¤Ç¤¹¤«¡©';
+                        var msg = 'é¸æŠã•ã‚ŒãŸæ˜ç´°ã‚’å…¨ã¦ã‚¯ãƒªã‚¢ã—ã¾ã™ãŒã€ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ';
                         var $tableA_rows = window.opener.$('#tableA tbody tr');
                         var $tableA_rows_length = $tableA_rows.length;
                         var warn = ($tableA_rows_length > 0) ? true : false;
@@ -458,29 +458,29 @@
                             return;
                         }
 
-                        // ¸ÜµÒ¥³¡¼¥ÉÊÑ¹¹
+                        // é¡§å®¢ã‚³ãƒ¼ãƒ‰å¤‰æ›´
                         if (changeCode == true) {
                             window.opener.$('input[name="lngCustomerCode"]').val(customerCode).change();
                             window.opener.$('input[name="strCustomerName"]').val(customerName);
                         }
-                        // TABLEºîÀ®
+                        // TABLEä½œæˆ
                         window.opener.$.createTable(response);
 
-                        // ¥Æ¡¼¥Ö¥ë½é´ü²½
+                        // ãƒ†ãƒ¼ãƒ–ãƒ«åˆæœŸåŒ–
                         if (bReset == true) {
-                            // ½ĞÎÏÌÀºÙ°ìÍ÷¤òºï½ü
+                            // å‡ºåŠ›æ˜ç´°ä¸€è¦§ã‚’å‰Šé™¤
                             window.opener.$('#btnAllDelete').trigger('click');
-                            // Á°·îÀÁµá»Ä³Û(¾ÃÈñÀÇ¹ş¤ß)
+                            // å‰æœˆè«‹æ±‚æ®‹é¡(æ¶ˆè²»ç¨è¾¼ã¿)
                             window.opener.$('input[name="curlastmonthbalance"]').val(0).change();
-                            // ¾ÃÈñÀÇ
+                            // æ¶ˆè²»ç¨
                             window.opener.$('input[name="curtaxprice"]').val(0).change();
-                            // Åö·îÀÁµá³Û
+                            // å½“æœˆè«‹æ±‚é¡
                             window.opener.$('input[name="curthismonthamount"]').val(0).change();
-                            // º¹°ú¹ç·×³Û
+                            // å·®å¼•åˆè¨ˆé¡
                             window.opener.$('input[name="notaxcurthismonthamount"]').val(0).change();
                         }
 
-                        // ÄÌ²ßÊÑ¹¹
+                        // é€šè²¨å¤‰æ›´
                         var lngMoneyClassCode = $('select[name="lngMoneyClassCode"] option:selected').val();
                         if (lngMoneyClassCode == '1') {
                             window.opener.$('span.moneyclass').text("\xA5");
@@ -495,23 +495,23 @@
                 })
                 .fail(function (response) {
                     console.log(response);
-                    alert('¸¡º÷¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n¾ò·ï¤òÊÑ¹¹¤·¤Æ²¼¤µ¤¤¡£');
+                    alert('æ¤œç´¢ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\næ¡ä»¶ã‚’å¤‰æ›´ã—ã¦ä¸‹ã•ã„ã€‚');
                     return;
                 });
             return false;
         }
     });
 
-    // PREVIEW¥Ü¥¿¥ó²¡²¼½èÍı (preview)
+    // PREVIEWãƒœã‚¿ãƒ³æŠ¼ä¸‹å‡¦ç† (preview)
     $('img.preview-button').on({
         'click': function () {
-            // validation¥­¥Ã¥¯
+            // validationã‚­ãƒƒã‚¯
             if ($('form[name="Invoice"]').valid() == false) {
                 return;
             }
-            // // ¶â³Û·×»»
+            // // é‡‘é¡è¨ˆç®—
             // billingAmount();
-            // ¥×¥ì¥Ó¥å¡¼²èÌÌ¸Æ¤Ó½Ğ¤· (ÃÙ±ä¤µ¤»¤Ê¤¤¤ÈINPUT¼èÆÀ¤Ç¤­¤Ê¤¤)
+            // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”»é¢å‘¼ã³å‡ºã— (é…å»¶ã•ã›ãªã„ã¨INPUTå–å¾—ã§ããªã„)
             var prev = setTimeout(previewDrow, 800);
         }
     });
@@ -522,17 +522,17 @@
         tableB_tbody = $('tbody', $tableB);
         tableB_row = $('tbody tr', $tableB);
 
-        // Ç¼ÉÊ½ñÈÖ¹æ¤ò¼èÆÀ¤¹¤ë¡£slipcode
+        // ç´å“æ›¸ç•ªå·ã‚’å–å¾—ã™ã‚‹ã€‚slipcode
         var slipCodeList = [];
         var slipNoList = [];
         var revisionNoList = [];
-        // Ç¼ÉÊÆü¤ò³ÊÇ¼¤¹¤ë
+        // ç´å“æ—¥ã‚’æ ¼ç´ã™ã‚‹
         var deliveryDate = [];
-        // ºÇ½é¤Î²İÀÇ¶èÊ¬¤ò¼èÆÀ¤¹¤ë¡£
+        // æœ€åˆã®èª²ç¨åŒºåˆ†ã‚’å–å¾—ã™ã‚‹ã€‚
         var taxclass = false;
-        // ºÇ½é¤ÎÀÇÎ¨¤ò¼èÆÀ¤¹¤ë¡£
+        // æœ€åˆã®ç¨ç‡ã‚’å–å¾—ã™ã‚‹ã€‚
         var tax = false;
-        // ÀÇÎ¨¤¬Æ±¤¸¤«¤ò¥Á¥§¥Ã¥¯¤¹¤ë¥Õ¥é¥°
+        // ç¨ç‡ãŒåŒã˜ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹ãƒ•ãƒ©ã‚°
         var isSameTax = true;
         tableB_row.each( function(){
             slipNoList.push($(this).attr('slipno'));
@@ -545,48 +545,48 @@
                 if (!tableB_row[i].cells[j].innerText) continue;
 
                 if (tableB_row[i].cells[j].className.substr(0,'slipcode'.length) == 'slipcode') {
-                    // Ç¼ÉÊ½ñNo
+                    // ç´å“æ›¸No
                     slipCodeList.push(tableB_row[i].cells[j].innerText);
                 }
                 if (tableB_row[i].cells[j].className.substr(0,'tax right'.length) == 'tax right' && !tax) {
-                    // ¾ÃÈñÀÇ
+                    // æ¶ˆè²»ç¨
                     tax = tableB_row[i].cells[j].innerText;
-                    console.log('¾ÃÈñÀÇ¥»¥Ã¥È');
+                    console.log('æ¶ˆè²»ç¨ã‚»ãƒƒãƒˆ');
                 }
                 if (tableB_row[i].cells[j].className.substr(0,'taxclass'.length) == 'taxclass' && !taxclass) {
-                    // ÀÇÈ´¤­¶â³Û
+                    // ç¨æŠœãé‡‘é¡
                     taxclass = tableB_row[i].cells[j].innerText;
                 }
                 if (tableB_row[i].cells[j].className.substr(0,'deliverydate'.length) == 'deliverydate') {
-                    // Ç¼ÉÊÆü
+                    // ç´å“æ—¥
                     deliveryDate.push(tableB_row[i].cells[j].innerText);
                 }
                 if (tableB_row[i].cells[j].className.substr(0,'tax right'.length) == 'tax right' && tax) {
-                    console.log('¾ÃÈñÀÇÎ¨¥Á¥§¥Ã¥¯');
+                    console.log('æ¶ˆè²»ç¨ç‡ãƒã‚§ãƒƒã‚¯');
                     if (tableB_row[i].cells[j].innerText != tax) {
-                        console.log('¾ÃÈñÀÇNG');
+                        console.log('æ¶ˆè²»ç¨NG');
                         isSameTax = false;
                     }
                 }
             }
         }
 
-        // ¥¨¥é¡¼¥Á¥§¥Ã¥¯¤ÇÌäÂê¤Ê¤±¤ì¤Ğ³ÎÇ§²èÌÌÉ½¼¨
+        // ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã§å•é¡Œãªã‘ã‚Œã°ç¢ºèªç”»é¢è¡¨ç¤º
 
-        // ¥×¥ì¥Ó¥å¡¼¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¥Á¥§¥Ã¥¯
-        // ½ĞÎÏÌÀºÙ°ìÍ÷¥¨¥ê¥¢¤ËÌÀºÙ¤¬1¹Ô¤âÂ¸ºß¤·¤Ê¤¤¾ì¹ç
+        // ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ãƒã‚§ãƒƒã‚¯
+        // å‡ºåŠ›æ˜ç´°ä¸€è¦§ã‚¨ãƒªã‚¢ã«æ˜ç´°ãŒ1è¡Œã‚‚å­˜åœ¨ã—ãªã„å ´åˆ
         if (slipCodeList.length === 0) {
-            alert('½ĞÎÏÌÀºÙ¤¬ÁªÂò¤µ¤ì¤Æ¤¤¤Ş¤»¤ó');
+            alert('å‡ºåŠ›æ˜ç´°ãŒé¸æŠã•ã‚Œã¦ã„ã¾ã›ã‚“');
             return false;
         }
-        // ½ĞÎÏÌÀºÙ°ìÍ÷¥¨¥ê¥¢¤ËÁªÂò¤µ¤ì¤¿Ç¼ÉÊ½ñ¤Î¾ÃÈñÀÇÎ¨¤¬¤¹¤Ù¤ÆÆ±°ì¤Ç¤Ï¤Ê¤¤¾ì¹ç
+        // å‡ºåŠ›æ˜ç´°ä¸€è¦§ã‚¨ãƒªã‚¢ã«é¸æŠã•ã‚ŒãŸç´å“æ›¸ã®æ¶ˆè²»ç¨ç‡ãŒã™ã¹ã¦åŒä¸€ã§ã¯ãªã„å ´åˆ
         if (isSameTax == false) {
-            alert('¾ÃÈñÀÇÎ¨¤Î°Û¤Ê¤ëÇ¼ÉÊ½ñ¤ÏÀÁµá½ñ¤ÎÌÀºÙ¤Ëº®ºß¤Ç¤­¤Ş¤»¤ó');
+            alert('æ¶ˆè²»ç¨ç‡ã®ç•°ãªã‚‹ç´å“æ›¸ã¯è«‹æ±‚æ›¸ã®æ˜ç´°ã«æ··åœ¨ã§ãã¾ã›ã‚“');
             return false;
         }
-        // ÀÁµáÆü¤¬¡Ö¼«¡×¤è¤êÁ°¤ÎÆüÉÕ¤ò»ØÄê¤¹¤ë¾ì¹ç¡¢
+        // è«‹æ±‚æ—¥ãŒã€Œè‡ªã€ã‚ˆã‚Šå‰ã®æ—¥ä»˜ã‚’æŒ‡å®šã™ã‚‹å ´åˆã€
         let activeDate = new Date($('input[name="ActionDate"]').val());
-        // 2¥·¥¹¥Æ¥àÆüÉÕ¤È¸ÜµÒ¤ÎÄù¤áÆü¤«¤é¡¢ÅöÆü¤ÎÄù¤á·î¤òµá¤á¤ë¡£
+        // 2ã‚·ã‚¹ãƒ†ãƒ æ—¥ä»˜ã¨é¡§å®¢ã®ç· ã‚æ—¥ã‹ã‚‰ã€å½“æ—¥ã®ç· ã‚æœˆã‚’æ±‚ã‚ã‚‹ã€‚
         let systemDate = new Date();
         if (isCloseDay != 0) {
             if (systemDate.getDate() > isCloseDay) {
@@ -599,11 +599,11 @@
             var ternstart = new Date(systemDate.getFullYear(), systemDate.getMonth(), 1);
         }
         if (activeDate < ternstart) {
-            alert('ÄùºÑ¤ß¤Î¤¿¤á¡¢»ØÄê¤µ¤ì¤¿ÀÁµáÆü¤ÏÌµ¸ú¤Ç¤¹');
+            alert('ç· æ¸ˆã¿ã®ãŸã‚ã€æŒ‡å®šã•ã‚ŒãŸè«‹æ±‚æ—¥ã¯ç„¡åŠ¹ã§ã™');
             return false;
         }
 
-        // Ç¼ÉÊÆü¤¬¡Ö¼«¡×¤Î1¥ö·îÁ°¤«¤é¡Ö»ê¡×¤Ş¤Ç¤Î´ü´Ö°Ê³°¤Ê¤¤¾ì¹ç
+        // ç´å“æ—¥ãŒã€Œè‡ªã€ã®1ãƒ¶æœˆå‰ã‹ã‚‰ã€Œè‡³ã€ã¾ã§ã®æœŸé–“ä»¥å¤–ãªã„å ´åˆ
         let start = new Date($('input[name="dtmchargeternstart"]').val());
         start.setMonth(start.getMonth() - 1);
         let end = new Date($('input[name="dtmchargeternend"]').val());
@@ -618,13 +618,13 @@
         });
 
         if (isDeliveryDate == false) {
-            alert('½ĞÎÏÌÀºÙ¤Ë¤Ï¡¢ÆşÎÏ¤µ¤ì¤¿ÀÁµá·î¤ª¤è¤Ó¤½¤ÎÁ°·î¤ËÇ¼ÉÊ¤µ¤ì¤¿ÌÀºÙ¤Î¤ß»ØÄê¤·¤Æ¤¯¤À¤µ¤¤');
+            alert('å‡ºåŠ›æ˜ç´°ã«ã¯ã€å…¥åŠ›ã•ã‚ŒãŸè«‹æ±‚æœˆãŠã‚ˆã³ãã®å‰æœˆã«ç´å“ã•ã‚ŒãŸæ˜ç´°ã®ã¿æŒ‡å®šã—ã¦ãã ã•ã„');
             return false;
         }
 
         var strMode = $('input[name="strMode"]').val();
 
-        // ´ûÂ¸¥Õ¥©¡¼¥àºï½ü
+        // æ—¢å­˜ãƒ•ã‚©ãƒ¼ãƒ å‰Šé™¤
         var delold = document.getElementsByName('slipCodeList');
         if( delold.length > 0 )
         {
@@ -667,55 +667,55 @@
                 delold[i].parentNode.removeChild(delold[i]);
             }
         }
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele1 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele1.setAttribute('type', 'hidden');
         ele1.setAttribute('name', 'slipCodeList');
         ele1.setAttribute('value', slipCodeList);
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele1);
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele2 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele2.setAttribute('type', 'hidden');
         ele2.setAttribute('name', 'mode');
         ele2.setAttribute('value', 'prev');
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele2);
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele3 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele3.setAttribute('type', 'hidden');
         ele3.setAttribute('name', 'taxclass');
         ele3.setAttribute('value', taxclass);
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele3);
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele4 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele4.setAttribute('type', 'hidden');
         ele4.setAttribute('name', 'tax');
         ele4.setAttribute('value', tax);
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele4);
 
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele5 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele5.setAttribute('type', 'hidden');
         ele5.setAttribute('name', 'slipNoList');
         ele5.setAttribute('value', slipNoList);
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele5);
 
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele6 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele6.setAttribute('type', 'hidden');
         ele6.setAttribute('name', 'revisionNoList');
         ele6.setAttribute('value', revisionNoList);
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele6);
 
         var invForm = $('form[name="Invoice"]');
@@ -724,28 +724,28 @@
 
             var windowName = 'registPreview';
             if (strMode == 'renewPrev') {
-                // ½¤Àµ
+                // ä¿®æ­£
                 url = '/inv/regist/renew.php?strSessionID=' + $('input[name="strSessionID"]').val();
             } else {
-                // ÅĞÏ¿
+                // ç™»éŒ²
                 url = '/inv/regist/index.php?strSessionID=' + $('input[name="strSessionID"]').val();
             }
 
-            // ¥Õ¥©¡¼¥àÀßÄê
+            // ãƒ•ã‚©ãƒ¼ãƒ è¨­å®š
             var windowPrev = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
             invForm.attr('action', url);
             invForm.attr('method', 'post');
             invForm.attr('target', windowName);
 
 
-            // ¥µ¥Ö¥ß¥Ã¥È
+            // ã‚µãƒ–ãƒŸãƒƒãƒˆ
             invForm.submit();
 
             return false;
 
         }
         else {
-            // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Î¥­¥Ã¥¯
+            // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒƒã‚¯
             invForm.find(':submit').click();
         }
 
@@ -753,18 +753,18 @@
 
     }
 
-    // ÅĞÏ¿½èÍı (insert)
+    // ç™»éŒ²å‡¦ç† (insert)
     var insertCheck = function () {
 
         tableB = $('#tableB');
         tableB_tbody = $('tbody', $tableB);
         tableB_row = $('tbody tr', $tableB);
 
-        // Ç¼ÉÊ½ñÈÖ¹æ¤ò¼èÆÀ¤¹¤ë¡£slipcode
+        // ç´å“æ›¸ç•ªå·ã‚’å–å¾—ã™ã‚‹ã€‚slipcode
         var slipCodeList = [];
-        // ºÇ½é¤Î²İÀÇ¶èÊ¬¤ò¼èÆÀ¤¹¤ë¡£
+        // æœ€åˆã®èª²ç¨åŒºåˆ†ã‚’å–å¾—ã™ã‚‹ã€‚
         var taxclass = false;
-        // ºÇ½é¤ÎÀÇÎ¨¤ò¼èÆÀ¤¹¤ë¡£
+        // æœ€åˆã®ç¨ç‡ã‚’å–å¾—ã™ã‚‹ã€‚
         var tax = false;
 
         for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
@@ -772,19 +772,19 @@
                 if (!tableB_row[i].cells[j].innerText) continue;
 
                 if (tableB_row[i].cells[j].className == 'slipcode') {
-                    // Ç¼ÉÊ½ñNo
+                    // ç´å“æ›¸No
                     console.log(tableB_row[i].cells[j].className);
                     console.log(tableB_row[i].cells[j].innerText);
                     slipCodeList.push(tableB_row[i].cells[j].innerText);
                 }
                 if (tableB_row[i].cells[j].className == 'tax right' && !tax) {
-                    // ¾ÃÈñÀÇ
+                    // æ¶ˆè²»ç¨
                     console.log(tableB_row[i].cells[j].className);
                     console.log(tableB_row[i].cells[j].innerText);
                     tax = tableB_row[i].cells[j].innerText;
                 }
                 if (tableB_row[i].cells[j].className == 'taxclass' && !taxclass) {
-                    // ÀÇÈ´¤­¶â³Û
+                    // ç¨æŠœãé‡‘é¡
                     console.log(tableB_row[i].cells[j].className);
                     console.log(tableB_row[i].cells[j].innerText);
                     taxclass = tableB_row[i].cells[j].innerText;
@@ -792,39 +792,39 @@
             }
         }
 
-        // ¥¨¥é¡¼¥Á¥§¥Ã¥¯¤ÇÌäÂê¤Ê¤±¤ì¤Ğ³ÎÇ§²èÌÌÉ½¼¨
+        // ã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯ã§å•é¡Œãªã‘ã‚Œã°ç¢ºèªç”»é¢è¡¨ç¤º
 
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele1 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele1.setAttribute('type', 'hidden');
         ele1.setAttribute('name', 'slipCodeList');
         ele1.setAttribute('value', slipCodeList);
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele1);
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele2 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele2.setAttribute('type', 'hidden');
         ele2.setAttribute('name', 'mode');
         ele2.setAttribute('value', 'prev');
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele2);
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele3 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele3.setAttribute('type', 'hidden');
         ele3.setAttribute('name', 'taxclass');
         ele3.setAttribute('value', taxclass);
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele3);
-        // ¥Õ¥©¡¼¥àÄÉ²Ã
+        // ãƒ•ã‚©ãƒ¼ãƒ è¿½åŠ 
         var ele4 = document.createElement('input');
-        // ¥Ç¡¼¥¿¤òÀßÄê
+        // ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
         ele4.setAttribute('type', 'hidden');
         ele4.setAttribute('name', 'tax');
         ele4.setAttribute('value', tax);
-        // Í×ÁÇ¤òÄÉ²Ã
+        // è¦ç´ ã‚’è¿½åŠ 
         document.Invoice.appendChild(ele4);
 
         var invForm = $('form[name="Invoice"]');
@@ -832,17 +832,17 @@
 
             var windowName = 'registPreview';
             url = '/inv/regist/index.php?strSessionID=' + $.cookie('strSessionID');
-            // ¥Õ¥©¡¼¥àÀßÄê
+            // ãƒ•ã‚©ãƒ¼ãƒ è¨­å®š
             var windowPrev = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
             invForm.attr('action', url);
             invForm.attr('method', 'post');
             invForm.attr('target', windowName);
-            // ¥µ¥Ö¥ß¥Ã¥È
+            // ã‚µãƒ–ãƒŸãƒƒãƒˆ
             invForm.submit();
             return false;
         }
         else {
-            // ¥Ğ¥ê¥Ç¡¼¥·¥ç¥ó¤Î¥­¥Ã¥¯
+            // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒƒã‚¯
             form.find(':submit').click();
         }
         return true;

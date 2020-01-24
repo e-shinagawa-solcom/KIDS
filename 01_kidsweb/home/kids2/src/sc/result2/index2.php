@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       Ç¼ÉÊ½ñ¾ÜºÙ
+*       ç´å“æ›¸è©³ç´°
 *
 *
 *       @package    K.I.D.S.
@@ -13,32 +13,32 @@
 *       @version    2.00
 *
 *
-*       ½èÍý³µÍ×
-*         ¡¦»ØÄêÇ¼ÉÊÅÁÉ¼ÈÖ¹æ¥Ç¡¼¥¿¤Î¾ÜºÙÉ½¼¨½èÍý
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»æŒ‡å®šç´å“ä¼ç¥¨ç•ªå·ãƒ‡ãƒ¼ã‚¿ã®è©³ç´°è¡¨ç¤ºå‡¦ç†
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-	// ÀßÄêÆÉ¤ß¹þ¤ß
+	// è¨­å®šèª­ã¿è¾¼ã¿
 	include_once('conf.inc');
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require (LIB_FILE);
 	require (SRC_ROOT . "sc/cmn/lib_scd1.php");
 	require (SRC_ROOT . "sc/cmn/column_scd.php");
 	require( LIB_DEBUGFILE );
 	
-	// DBÀÜÂ³
+	// DBæŽ¥ç¶š
 	$objDB   = new clsDB();
 	$objAuth = new clsAuth();
 	$objDB->open( "", "", "", "" );
 
 	//////////////////////////////////////////////////////////////////////////
-	// GET¥Ç¡¼¥¿¼èÆÀ
+	// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 	//////////////////////////////////////////////////////////////////////////
 	if ( $_GET )
 	{
@@ -49,33 +49,33 @@
 		$aryData = $_POST;
 	}
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"] = "null:numenglish(32,32)";
 	$aryCheck["lngSlipNo"]	  = "null:number(0,10)";
 
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-	// ¸¢¸Â³ÎÇ§
-	// 602 Çä¾å´ÉÍý¡ÊÇä¾å¸¡º÷¡Ë
+	// æ¨©é™ç¢ºèª
+	// 602 å£²ä¸Šç®¡ç†ï¼ˆå£²ä¸Šæ¤œç´¢ï¼‰
 	if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 	{
-		fncOutputError ( 9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
-	// 604 Çä¾å´ÉÍý¡Ê¾ÜºÙÉ½¼¨¡Ë
+	// 604 å£²ä¸Šç®¡ç†ï¼ˆè©³ç´°è¡¨ç¤ºï¼‰
 	if ( !fncCheckAuthority( DEF_FUNCTION_SC4, $objAuth ) )
 	{
-		fncOutputError ( 9060, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 9060, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
-	//¾ÜºÙ²èÌÌ¤ÎÉ½¼¨
+	//è©³ç´°ç”»é¢ã®è¡¨ç¤º
 	$lngSlipNo = $aryData["lngSlipNo"];
 	$lngRevisionNo = $aryData["lngRevisionNo"];
 
-	// »ØÄêÇ¼ÉÊÅÁÉ¼ÈÖ¹æ¤ÎÇ¼ÉÊ½ñ¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+	// æŒ‡å®šç´å“ä¼ç¥¨ç•ªå·ã®ç´å“æ›¸ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 	$strQuery = fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );
 
-	// ¾ÜºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+	// è©³ç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -86,30 +86,30 @@
 		}
 		else
 		{
-			fncOutputError( 603, DEF_ERROR, "³ºÅö¥Ç¡¼¥¿¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Þ¤·¤¿", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+			fncOutputError( 603, DEF_ERROR, "è©²å½“ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 		}
 	}
 	else
 	{
-		fncOutputError( 603, DEF_ERROR, "¥Ç¡¼¥¿¤¬°Û¾ï¤Ç¤¹", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError( 603, DEF_ERROR, "ãƒ‡ãƒ¼ã‚¿ãŒç•°å¸¸ã§ã™", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 
 	$objDB->freeResult( $lngResultID );
 
-	// ¼èÆÀ¥Ç¡¼¥¿¤òÉ½¼¨ÍÑ¤ËÀ°·Á
+	// å–å¾—ãƒ‡ãƒ¼ã‚¿ã‚’è¡¨ç¤ºç”¨ã«æ•´å½¢
 	$aryNewResult = fncSetSlipHeadTableData ( $aryResult );
 
-	// ¥Ø¥Ã¥ÀÉô¤Î¥«¥é¥àÌ¾¤ÎÀßÄê¡Ê¥­¡¼¤ÎÆ¬¤Ë"CN"¤òÉÕÍ¿¤¹¤ë¡Ë
+	// ãƒ˜ãƒƒãƒ€éƒ¨ã®ã‚«ãƒ©ãƒ åã®è¨­å®šï¼ˆã‚­ãƒ¼ã®é ­ã«"CN"ã‚’ä»˜ä¸Žã™ã‚‹ï¼‰
 	$aryHeadColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryHeadColumnNames );
-	// ¾ÜºÙÉô¤Î¥«¥é¥àÌ¾¤ÎÀßÄê¡Ê¥­¡¼¤ÎÆ¬¤Ë"CN"¤òÉÕÍ¿¤¹¤ë¡Ë
+	// è©³ç´°éƒ¨ã®ã‚«ãƒ©ãƒ åã®è¨­å®šï¼ˆã‚­ãƒ¼ã®é ­ã«"CN"ã‚’ä»˜ä¸Žã™ã‚‹ï¼‰
 	$aryDetailColumnNames_CN = fncAddColumnNameArrayKeyToCN ( $aryDetailColumnNames );
 
-	////////// ÌÀºÙ¹Ô¤Î¼èÆÀ ////////////////////
+	////////// æ˜Žç´°è¡Œã®å–å¾— ////////////////////
 
-	// »ØÄêÇ¼ÉÊÅÁÉ¼ÈÖ¹æ¤ÎÇä¾åÌÀºÙ¥Ç¡¼¥¿¼èÆÀÍÑSQLÊ¸¤ÎºîÀ®
+	// æŒ‡å®šç´å“ä¼ç¥¨ç•ªå·ã®å£²ä¸Šæ˜Žç´°ãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨SQLæ–‡ã®ä½œæˆ
 	$strQuery = fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo );
 
-	// ÌÀºÙ¥Ç¡¼¥¿¤Î¼èÆÀ
+	// æ˜Žç´°ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 	if ( $lngResultNum )
@@ -121,7 +121,7 @@
 	}
 	else
 	{
-		$strMessage = fncOutputError( 603, DEF_WARNING, "Ç¼ÉÊÅÁÉ¼ÈÖ¹æ¤ËÂÐ¤¹¤ëÌÀºÙ¾ðÊó¤¬¸«¤Ä¤«¤ê¤Þ¤»¤ó¡£", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		$strMessage = fncOutputError( 603, DEF_WARNING, "ç´å“ä¼ç¥¨ç•ªå·ã«å¯¾ã™ã‚‹æ˜Žç´°æƒ…å ±ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 
 	$objDB->freeResult( $lngResultID );
@@ -130,16 +130,16 @@
 	{
 		$aryNewDetailResult[$i] = fncSetSlipDetailTableData ( $aryDetailResult[$i], $aryNewResult );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "sc/result2/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailColumnNames_CN );
 		$objTemplate->replace( $aryNewDetailResult[$i] );
 		$objTemplate->complete();
 
-		// HTML½ÐÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetailTable[] = $objTemplate->strTemplate;
 	}
 
@@ -148,16 +148,16 @@
 	$aryNewResult["strAction"] = "index2.php";
 	$aryNewResult["strMode"] = "detail";
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "sc/result2/parts2.tmpl" );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryNewResult );
 	$objTemplate->replace( $aryHeadColumnNames_CN );
 	$objTemplate->complete();
 
-	// HTML½ÐÎÏ
+	// HTMLå‡ºåŠ›
 	echo $objTemplate->strTemplate;
 
 

@@ -33,24 +33,24 @@ function ChgEtoJ( dlCount )
 	{
 		/* DETAIL LIST J */
 
-		ExStrDL01.innerText = 'À½ÉÊ';
-		ExStrDL02.innerText = '»ÅÆş²ÊÌÜ';
-		ExStrDL03.innerText = '»ÅÆşÉôÉÊ';
-		ExStrDL04.innerText = 'Ã±²Á';
-		ExStrDL05.innerText = 'Ã±°Ì';
-		ExStrDL06.innerText = '¿ôÎÌ';
-		ExStrDL07.innerText = 'ÀÇÈ´¶â³Û';
-		ExStrDL08.innerText = 'Ç¼´ü';
-		ExStrDL09.innerText = 'È÷¹Í';
+		ExStrDL01.innerText = 'è£½å“';
+		ExStrDL02.innerText = 'ä»•å…¥ç§‘ç›®';
+		ExStrDL03.innerText = 'ä»•å…¥éƒ¨å“';
+		ExStrDL04.innerText = 'å˜ä¾¡';
+		ExStrDL05.innerText = 'å˜ä½';
+		ExStrDL06.innerText = 'æ•°é‡';
+		ExStrDL07.innerText = 'ç¨æŠœé‡‘é¡';
+		ExStrDL08.innerText = 'ç´æœŸ';
+		ExStrDL09.innerText = 'å‚™è€ƒ';
 
 		if( typeof( ExStrDL10 ) != 'undefined' )
 		{
-			ExStrDL10.innerText = 'ÂĞ¾İ';
+			ExStrDL10.innerText = 'å¯¾è±¡';
 		}
 
 		if( typeof( ExStrDL11 ) != 'undefined' )
 		{
-			ExStrDL11.innerText = '¸µ¿ôÎÌ';
+			ExStrDL11.innerText = 'å…ƒæ•°é‡';
 		}
 	}
 

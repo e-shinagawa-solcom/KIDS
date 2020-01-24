@@ -1,28 +1,28 @@
 ' -----------------------------------------------------------------------------
-' ¥Õ¥¡¥¤¥ë³µÍ×¡§
-'               VBScript ¶¦ÄÌ´Ø¿ô
-' È÷¹Í¡§
-'       ¿ôÃÍ¥Õ¥©¡¼¥Ş¥Ã¥È¡¢ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È¤ò¹Ô¤Ê¤¦¤¿¤á¤Î´Ø¿ô·²¤Ç¤¹¡£
+' ãƒ•ã‚¡ã‚¤ãƒ«æ¦‚è¦ï¼š
+'               VBScript å…±é€šé–¢æ•°
+' å‚™è€ƒï¼š
+'       æ•°å€¤ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã€æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’è¡Œãªã†ãŸã‚ã®é–¢æ•°ç¾¤ã§ã™ã€‚
 '
-' ºîÀ®Æü¡§2003/10/07
-' ºîÀ®¼Ô¡§Kazushi Saito
-' ½¤ÀµÍúÎò¡§
-'			2003/10/23	fncVBSCheckText()ÄÉ²Ã¡¡¡§Kazushi Saito
+' ä½œæˆæ—¥ï¼š2003/10/07
+' ä½œæˆè€…ï¼šKazushi Saito
+' ä¿®æ­£å±¥æ­´ï¼š
+'			2003/10/23	fncVBSCheckText()è¿½åŠ ã€€ï¼šKazushi Saito
 '			2004/03/29	K.S
-'				fncVBSCheckNumberValue() ¾®¿ôÅÀ°Ê²¼ÀÚ¼Î¤Æ½èÍı¤ÎÄÉ²Ã
+'				fncVBSCheckNumberValue() å°æ•°ç‚¹ä»¥ä¸‹åˆ‡æ¨ã¦å‡¦ç†ã®è¿½åŠ 
 '				
 '
 ' -----------------------------------------------------------------------------
 
 	/*
 	' ------------------------------------------
-	' ³µÍ×¡§JavaScript ¥¨¥é¡¼´Ø¿ô¤Î¸Æ¤Ó½Ğ¤·
-	' °ú¿ô¡§
-	'		lngCheckID		-	¥Á¥§¥Ã¥¯ID
-	'		strObjectName	-	¥¨¥é¡¼¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾
+	' æ¦‚è¦ï¼šJavaScript ã‚¨ãƒ©ãƒ¼é–¢æ•°ã®å‘¼ã³å‡ºã—
+	' å¼•æ•°ï¼š
+	'		lngCheckID		-	ãƒã‚§ãƒƒã‚¯ID
+	'		strObjectName	-	ã‚¨ãƒ©ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
 	'
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
 	' ------------------------------------------
 	*/
 	function fncVBCheckErrorToJavaScript(lngCheckID, strObjectName) {
@@ -32,7 +32,7 @@
 	/*
 	'Public Function fncVBCheckErrorToJavaScript(lngCheckID, strObjectName)
 	'
-	'	' JavaScript ¤Î´Ø¿ô¤ò¼Â¹Ô¤¹¤ë
+	'	' JavaScript ã®é–¢æ•°ã‚’å®Ÿè¡Œã™ã‚‹
 	'	Call window.execScript("fncErrorMessage(" & lngCheckID & ", '" & strObjectName & "'); ", "JavaScript")
 	'
 	'	fncVBCheckErrorToJavaScript = True
@@ -40,14 +40,14 @@
 	*/
 	/*
 	' ------------------------------------------
-	' ³µÍ×¡§JavaScript ·ë²ÌÃÍÊÖµÑ
-	' °ú¿ô¡§
-	'		lngCheckID		-	¥Á¥§¥Ã¥¯ID
-	'		objValue		-	ÃÍ
+	' æ¦‚è¦ï¼šJavaScript çµæœå€¤è¿”å´
+	' å¼•æ•°ï¼š
+	'		lngCheckID		-	ãƒã‚§ãƒƒã‚¯ID
+	'		objValue		-	å€¤
 	'
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
-	'		·ë²ÌÃÍ¤Ï¡¢ËÜ¥Õ¥¡¥¤¥ëÆâ¤Î¤½¤ì¤¾¤ì¤Î´Ø¿ô¤Ç¥æ¥Ë¡¼¥¯¤Ç¤¢¤ëÉ¬Í×¤¬¤¢¤ë
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
+	'		çµæœå€¤ã¯ã€æœ¬ãƒ•ã‚¡ã‚¤ãƒ«å†…ã®ãã‚Œãã‚Œã®é–¢æ•°ã§ãƒ¦ãƒ‹ãƒ¼ã‚¯ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚‹
 	' ------------------------------------------]
 	*/
 	function fncVBCheckSetValueToJS(lngCheckID, objValue) {
@@ -58,7 +58,7 @@
 	/*
 	'Public Function fncVBCheckSetValueToJS(lngCheckID, objValue)
 
-	'	' JavaScript ¤Î´Ø¿ô¤ò¼Â¹Ô¤¹¤ë
+	'	' JavaScript ã®é–¢æ•°ã‚’å®Ÿè¡Œã™ã‚‹
 	'	Call window.execScript("fncCheckSetValue(" & lngCheckID & ", '" & objValue & "'); ", "JavaScript")
 
 	'	fncVBCheckSetValueToJS = True
@@ -66,19 +66,19 @@
 	*/
 	/*
 	' ------------------------------------------
-	' ³µÍ×¡§¿ôÃÍ¤Î¥Á¥§¥Ã¥¯
-	' °ú¿ô¡§
-	'		objObject	TextBox¥ª¥Ö¥¸¥§¥¯¥È
-	'		lngAfterDecimal	¾®¿ôÅÀ°Ê²¼¤Î·å¿ô
-	'		strCurrencySign	ÄÌ²ßµ­¹æ
+	' æ¦‚è¦ï¼šæ•°å€¤ã®ãƒã‚§ãƒƒã‚¯
+	' å¼•æ•°ï¼š
+	'		objObject	TextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	'		lngAfterDecimal	å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°
+	'		strCurrencySign	é€šè²¨è¨˜å·
 	'
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
 	' ------------------------------------------
 	*/
-	// window.execScript´¹Áõ¤Î¤¿¤áJavascript¤ÇºÆ¼ÂÁõ
+	// window.execScriptæ›è£…ã®ãŸã‚Javascriptã§å†å®Ÿè£…
 	function fncVBSCheckNumber(objObject, lngAfterDecimal, strCurrencySign){
-		// Ìá¤êÃÍ¤Î½é´ü²½
+		// æˆ»ã‚Šå€¤ã®åˆæœŸåŒ–
 		var rtn = False;
 	
 		var objCheck;
@@ -86,47 +86,47 @@
 		var strConnectionChar;
 		
 		
-		// ¥¨¥é¡¼ÈÖ¹æ
+		// ã‚¨ãƒ©ãƒ¼ç•ªå·
 		lngCheckID = 1;
 		
-		// ¥Á¥§¥Ã¥¯¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®
+		// ãƒã‚§ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 		objCheck = New clsCheck();
 		
-		// ÄÌ²ßµ­¹æ¤Î»ØÄê
+		// é€šè²¨è¨˜å·ã®æŒ‡å®š
 		objCheck.NumberCurrencySign = strCurrencySign;
 
-		// ÀÜÂ³Ê¸»ú¤ò¥¹¥Ú¡¼¥¹¤Ë¤¹¤ë
+		// æ¥ç¶šæ–‡å­—ã‚’ã‚¹ãƒšãƒ¼ã‚¹ã«ã™ã‚‹
 		strConnectionChar = " ";
 		
-		// ÄÌ²ßµ­¹æ¤Î»ØÄê¤¬¶õ¤À¤Ã¤¿¾ì¹ç¡¢ÀÜÂ³Ê¸»ú¤â¶õ¤Ë¤¹¤ë
+		// é€šè²¨è¨˜å·ã®æŒ‡å®šãŒç©ºã ã£ãŸå ´åˆã€æ¥ç¶šæ–‡å­—ã‚‚ç©ºã«ã™ã‚‹
 		if( strCurrencySign = "" ) {
 			strConnectionChar = "";
 		}
-		// ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
+		// é€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
 		objCheck.NumberConnectionChar = strConnectionChar;
 
-		// ¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô¤Î»ØÄê
+		// å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°ã®æŒ‡å®š
 		objCheck.NumberAfterDecimal = lngAfterDecimal;
 
-		// ÃÍ¤Î¥Á¥§¥Ã¥¯
+		// å€¤ã®ãƒã‚§ãƒƒã‚¯
 		blnRet =  objCheck.fncCheckObjectValue(objObject, 1);
 		if( blnRet ){
-			// ¥Á¥§¥Ã¥¯À®¸ù¤Î¾ì¹ç
+			// ãƒã‚§ãƒƒã‚¯æˆåŠŸã®å ´åˆ
 			rtn = True;
 			lngCheckID = 0;
 		}else{
-			// ¥¨¥é¡¼¤òÁªÂò
+			// ã‚¨ãƒ©ãƒ¼ã‚’é¸æŠ
 			objObject.select();
 		}
 
-		// ¥¨¥é¡¼¤Î¾ì¹ç
+		// ã‚¨ãƒ©ãƒ¼ã®å ´åˆ
 		fncVBCheckErrorToJavaScript( lngCheckID, objObject.name );
 		return rtn;
 	}
 	/*
 	'Public Function fncVBSCheckNumber(objObject, lngAfterDecimal, strCurrencySign)
 	'
-	'	'Ìá¤êÃÍ¤Î½é´ü²½
+	'	'æˆ»ã‚Šå€¤ã®åˆæœŸåŒ–
 	'	fncVBSCheckNumber = False
 	'
 	'	Dim objCheck
@@ -134,40 +134,40 @@
 	'	Dim strConnectionChar
 	'	
 	'	
-	'	'¥¨¥é¡¼ÈÖ¹æ
+	'	'ã‚¨ãƒ©ãƒ¼ç•ªå·
 	'	lngCheckID = 1
 	'	
-	'	'¥Á¥§¥Ã¥¯¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®
+	'	'ãƒã‚§ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	'	Set objCheck = New clsCheck
 	'	
-	'	'ÄÌ²ßµ­¹æ¤Î»ØÄê
+	'	'é€šè²¨è¨˜å·ã®æŒ‡å®š
 	'	objCheck.NumberCurrencySign = strCurrencySign
 	'	
-	'	'ÀÜÂ³Ê¸»ú¤ò¥¹¥Ú¡¼¥¹¤Ë¤¹¤ë
+	'	'æ¥ç¶šæ–‡å­—ã‚’ã‚¹ãƒšãƒ¼ã‚¹ã«ã™ã‚‹
 	'	strConnectionChar = " "
 	'	
-	'	'ÄÌ²ßµ­¹æ¤Î»ØÄê¤¬¶õ¤À¤Ã¤¿¾ì¹ç¡¢ÀÜÂ³Ê¸»ú¤â¶õ¤Ë¤¹¤ë
+	'	'é€šè²¨è¨˜å·ã®æŒ‡å®šãŒç©ºã ã£ãŸå ´åˆã€æ¥ç¶šæ–‡å­—ã‚‚ç©ºã«ã™ã‚‹
 	'	If( strCurrencySign = "" ) Then
 	'		strConnectionChar = ""
 	'	End If
-	'	'ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
+	'	'é€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
 	'	objCheck.NumberConnectionChar = strConnectionChar
 	''
-	'	'¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô¤Î»ØÄê
+	'	'å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°ã®æŒ‡å®š
 	'	objCheck.NumberAfterDecimal = lngAfterDecimal
 	'
-	'	'ÃÍ¤Î¥Á¥§¥Ã¥¯
+	'	'å€¤ã®ãƒã‚§ãƒƒã‚¯
 	'	blnRet =  objCheck.fncCheckObjectValue(objObject, 1)
 	'	If( blnRet ) Then
-	'		'¥Á¥§¥Ã¥¯À®¸ù¤Î¾ì¹ç
+	'		'ãƒã‚§ãƒƒã‚¯æˆåŠŸã®å ´åˆ
 	'		fncVBSCheckNumber = True
 	'		lngCheckID = 0
 	'	Else
-	'		' ¥¨¥é¡¼¤òÁªÂò
+	'		' ã‚¨ãƒ©ãƒ¼ã‚’é¸æŠ
 	'		objObject.select()
 	'	End If
 	'
-	'	'¥¨¥é¡¼¤Î¾ì¹ç
+	'	'ã‚¨ãƒ©ãƒ¼ã®å ´åˆ
 	'	Call fncVBCheckErrorToJavaScript( lngCheckID, objObject.name )
 	'
 	'
@@ -176,56 +176,56 @@
 	
 	/*
 	' ------------------------------------------
-	' ³µÍ×¡§¿ôÃÍ¤Î¥Á¥§¥Ã¥¯¡Ê¼Â¿ôÃÍÈÇ¡Ë
-	' °ú¿ô¡§
-	'		strValue			¼Â¿ôÃÍ¡ÊString¡Ë
-	'		lngAfterDecimal		¾®¿ôÅÀ°Ê²¼¤Î·å¿ô
-	'		strCurrencySign		ÄÌ²ßµ­¹æ
-	'		lngDecimalCutPoint	¾®¿ôÅÀ°Ê²¼¤ÎÀÚ¼Î¤Æ°ÌÃÖ¡Ê -1 ¤Î¾ì¹ç¡¢ÀÚ¼Î¤Æ¤·¤Ê¤¤¡Ë
-	'		lngCalcCode			·×»»ÊıË¡¼ïÊÌ
+	' æ¦‚è¦ï¼šæ•°å€¤ã®ãƒã‚§ãƒƒã‚¯ï¼ˆå®Ÿæ•°å€¤ç‰ˆï¼‰
+	' å¼•æ•°ï¼š
+	'		strValue			å®Ÿæ•°å€¤ï¼ˆStringï¼‰
+	'		lngAfterDecimal		å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°
+	'		strCurrencySign		é€šè²¨è¨˜å·
+	'		lngDecimalCutPoint	å°æ•°ç‚¹ä»¥ä¸‹ã®åˆ‡æ¨ã¦ä½ç½®ï¼ˆ -1 ã®å ´åˆã€åˆ‡æ¨ã¦ã—ãªã„ï¼‰
+	'		lngCalcCode			è¨ˆç®—æ–¹æ³•ç¨®åˆ¥
 	'
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
-	'		lngDecimalCutPoint ¤ò»ØÄê¤¹¤ë¤È¡¢¤½¤ì°Ê²¼¤ÏÁ´¤Æ0¤Ç¥Õ¥©¡¼¥Ş¥Ã¥È¤µ¤ìÀÚ¼Î¤Æ¤µ¤ì¤ë
-	'	¤³¤Î´Ø¿ô¤Î·×»»·ë²Ì¤Ï fncVBCheckSetValueToJS() ¤ò»ÈÍÑ¤·¤ÆJSÂ¦¤ØÀßÄê¤µ¤ì¤Ş¤¹¡£
-	'	·ë²ÌID = 1
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
+	'		lngDecimalCutPoint ã‚’æŒ‡å®šã™ã‚‹ã¨ã€ãã‚Œä»¥ä¸‹ã¯å…¨ã¦0ã§ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã•ã‚Œåˆ‡æ¨ã¦ã•ã‚Œã‚‹
+	'	ã“ã®é–¢æ•°ã®è¨ˆç®—çµæœã¯ fncVBCheckSetValueToJS() ã‚’ä½¿ç”¨ã—ã¦JSå´ã¸è¨­å®šã•ã‚Œã¾ã™ã€‚
+	'	çµæœID = 1
 	' ------------------------------------------
 	*/
-	// window.execScript´¹Áõ¤Î¤¿¤áJavascript¤ÇºÆ¼ÂÁõ
+	// window.execScriptæ›è£…ã®ãŸã‚Javascriptã§å†å®Ÿè£…
 	function fncVBSCheckNumberValue(strValue, lngAfterDecimal, strCurrencySign, lngDecimalCutPoint, lngCalcCode){
-		// Ìá¤êÃÍ¤Î½é´ü²½
+		// æˆ»ã‚Šå€¤ã®åˆæœŸåŒ–
 		var rtn = false;
 	
 		var objCheck;
 		var lngSetID;
 		var strConnectionChar;
 
-		// ·ë²ÌID
+		// çµæœID
 		lngSetID = 1;
 		
-		// ¥Á¥§¥Ã¥¯¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®
+		// ãƒã‚§ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 		
 		objCheck = new clsCheck();
-		// ÄÌ²ßµ­¹æ¤Î»ØÄê
+		// é€šè²¨è¨˜å·ã®æŒ‡å®š
 		objCheck.NumberCurrencySign = strCurrencySign;
 
-		// ÀÜÂ³Ê¸»ú¤ò¥¹¥Ú¡¼¥¹¤Ë¤¹¤ë
+		// æ¥ç¶šæ–‡å­—ã‚’ã‚¹ãƒšãƒ¼ã‚¹ã«ã™ã‚‹
 		strConnectionChar = " ";
 		
-		// ÄÌ²ßµ­¹æ¤Î»ØÄê¤¬¶õ¤À¤Ã¤¿¾ì¹ç¡¢ÀÜÂ³Ê¸»ú¤â¶õ¤Ë¤¹¤ë
+		// é€šè²¨è¨˜å·ã®æŒ‡å®šãŒç©ºã ã£ãŸå ´åˆã€æ¥ç¶šæ–‡å­—ã‚‚ç©ºã«ã™ã‚‹
 		If( strCurrencySign = "" ){
 			strConnectionChar = "";
 		}
-		// ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
+		// é€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
 		objCheck.NumberConnectionChar = strConnectionChar;
 
-		// ¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô¤Î»ØÄê
+		// å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°ã®æŒ‡å®š
 		objCheck.NumberAfterDecimal = lngAfterDecimal;
 		
 
-		// ¾®¿ôÅÀ°Ê²¼¤òÀÚ¤ê¼Î¤Æ½èÍı¤¹¤ë°ÌÃÖ¤òÀßÄê 
+		// å°æ•°ç‚¹ä»¥ä¸‹ã‚’åˆ‡ã‚Šæ¨ã¦å‡¦ç†ã™ã‚‹ä½ç½®ã‚’è¨­å®š 
 		switch(lngDecimalCutPoint){
-			// À°¿ô·¿ (Integer)/Ä¹À°¿ô·¿ (Long)/Ã±ÀºÅÙÉâÆ°¾®¿ôÅÀ¿ô·¿ (Single)/ÇÜÀºÅÙÉâÆ°¾®¿ôÅÀ¿ô·¿ (Double)/ÄÌ²ß·¿ (Currency)/Ê¸»úÎó·¿ (String)
+			// æ•´æ•°å‹ (Integer)/é•·æ•´æ•°å‹ (Long)/å˜ç²¾åº¦æµ®å‹•å°æ•°ç‚¹æ•°å‹ (Single)/å€ç²¾åº¦æµ®å‹•å°æ•°ç‚¹æ•°å‹ (Double)/é€šè²¨å‹ (Currency)/æ–‡å­—åˆ—å‹ (String)
 			case 2:
 			case 3:
 			case 4:
@@ -233,8 +233,8 @@
 			case 6:
 			case 8:
 				objCheck.DecimalCutPoint = new number(lngDecimalCutPoint);
-			// ¤½¤ÎÂ¾/ VarType() = 1 : Null ÃÍ (Ìµ¸ú¤ÊÃÍ)
-			// ¾®¿ôÅÀ°Ê²¼¤òÁ´¤ÆÍ­¸ú¤Ë¤¹¤ë
+			// ãã®ä»–/ VarType() = 1 : Null å€¤ (ç„¡åŠ¹ãªå€¤)
+			// å°æ•°ç‚¹ä»¥ä¸‹ã‚’å…¨ã¦æœ‰åŠ¹ã«ã™ã‚‹
 			default:
 				lngDecimalPointCharPoint = strValue.indexof(".");
 				If( lngDecimalPointCharPoint > 0 ){
@@ -244,23 +244,23 @@
 		}
 		
 		
-		// ·×»»ÊıË¡¼ïÊÌ
+		// è¨ˆç®—æ–¹æ³•ç¨®åˆ¥
 		objCheck.CalcClass = lngCalcCode;
 		
 		
-		// ÃÍ¤Î¥Á¥§¥Ã¥¯
+		// å€¤ã®ãƒã‚§ãƒƒã‚¯
 		if(!objCheck.fncComFormatNumberValue(strValue, true)){
-			// ¥¨¥é¡¼
+			// ã‚¨ãƒ©ãƒ¼
 			return false;
 		}
 
-		// ÃÍ¤ò¼èÆÀ
+		// å€¤ã‚’å–å¾—
 		strRetValue = objCheck.FormatNumberValue;
 		
-		// JavaScript Â¦¤ØÊİ»ı
+		// JavaScript å´ã¸ä¿æŒ
 		fncVBCheckSetValueToJS(lngSetID, strRetValue);
 	
-		// À®¸ù¤òÊÖµÑ
+		// æˆåŠŸã‚’è¿”å´
 		return  true;
 		
 	}
@@ -268,43 +268,43 @@
 	/*
 	'Public Function fncVBSCheckNumberValue(strValue, lngAfterDecimal, strCurrencySign, lngDecimalCutPoint, lngCalcCode)
 	'
-	'	'Ìá¤êÃÍ¤Î½é´ü²½
+	'	'æˆ»ã‚Šå€¤ã®åˆæœŸåŒ–
 	'	fncVBSCheckNumberValue = False
 	'
 	'	Dim objCheck
 	'	Dim lngSetID
 	'	Dim strConnectionChar
 	'
-	'	' ·ë²ÌID
+	'	' çµæœID
 	'	lngSetID = 1
 	'	
-	'	'¥Á¥§¥Ã¥¯¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®
+	'	'ãƒã‚§ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	'	Set objCheck = New clsCheck
 	'	
-	'	'ÄÌ²ßµ­¹æ¤Î»ØÄê
+	'	'é€šè²¨è¨˜å·ã®æŒ‡å®š
 	'	objCheck.NumberCurrencySign = strCurrencySign
 	'
-	'	'ÀÜÂ³Ê¸»ú¤ò¥¹¥Ú¡¼¥¹¤Ë¤¹¤ë
+	'	'æ¥ç¶šæ–‡å­—ã‚’ã‚¹ãƒšãƒ¼ã‚¹ã«ã™ã‚‹
 	'	strConnectionChar = " "
 	'	
-	'	'ÄÌ²ßµ­¹æ¤Î»ØÄê¤¬¶õ¤À¤Ã¤¿¾ì¹ç¡¢ÀÜÂ³Ê¸»ú¤â¶õ¤Ë¤¹¤ë
+	'	'é€šè²¨è¨˜å·ã®æŒ‡å®šãŒç©ºã ã£ãŸå ´åˆã€æ¥ç¶šæ–‡å­—ã‚‚ç©ºã«ã™ã‚‹
 	'	If( strCurrencySign = "" ) Then
 	'		strConnectionChar = ""
 	'	End If
-	'	'ÄÌ²ßµ­¹æ¤È¶â³Û¤òÀÜÂ³¤¹¤ëÊ¸»ú
+	'	'é€šè²¨è¨˜å·ã¨é‡‘é¡ã‚’æ¥ç¶šã™ã‚‹æ–‡å­—
 	'	objCheck.NumberConnectionChar = strConnectionChar
 	'
-	'	'¾®¿ôÅÀ°Ê²¼¤Î½èÍı·å¿ô¤Î»ØÄê
+	'	'å°æ•°ç‚¹ä»¥ä¸‹ã®å‡¦ç†æ¡æ•°ã®æŒ‡å®š
 	'	objCheck.NumberAfterDecimal = lngAfterDecimal
 	'	
 	'
-	'	'¾®¿ôÅÀ°Ê²¼¤òÀÚ¤ê¼Î¤Æ½èÍı¤¹¤ë°ÌÃÖ¤òÀßÄê 
+	'	'å°æ•°ç‚¹ä»¥ä¸‹ã‚’åˆ‡ã‚Šæ¨ã¦å‡¦ç†ã™ã‚‹ä½ç½®ã‚’è¨­å®š 
 	'	Select Case VarType(lngDecimalCutPoint)
-	'		' À°¿ô·¿ (Integer)/Ä¹À°¿ô·¿ (Long)/Ã±ÀºÅÙÉâÆ°¾®¿ôÅÀ¿ô·¿ (Single)/ÇÜÀºÅÙÉâÆ°¾®¿ôÅÀ¿ô·¿ (Double)/ÄÌ²ß·¿ (Currency)/Ê¸»úÎó·¿ (String)
+	'		' æ•´æ•°å‹ (Integer)/é•·æ•´æ•°å‹ (Long)/å˜ç²¾åº¦æµ®å‹•å°æ•°ç‚¹æ•°å‹ (Single)/å€ç²¾åº¦æµ®å‹•å°æ•°ç‚¹æ•°å‹ (Double)/é€šè²¨å‹ (Currency)/æ–‡å­—åˆ—å‹ (String)
 	'		Case 2,3,4,5,6,8
 	'			objCheck.DecimalCutPoint = CInt(lngDecimalCutPoint)
-	'		' ¤½¤ÎÂ¾/ VarType() = 1 : Null ÃÍ (Ìµ¸ú¤ÊÃÍ)
-	'		' ¾®¿ôÅÀ°Ê²¼¤òÁ´¤ÆÍ­¸ú¤Ë¤¹¤ë
+	'		' ãã®ä»–/ VarType() = 1 : Null å€¤ (ç„¡åŠ¹ãªå€¤)
+	'		' å°æ•°ç‚¹ä»¥ä¸‹ã‚’å…¨ã¦æœ‰åŠ¹ã«ã™ã‚‹
 	'		Case Else
 	'			lngDecimalPointCharPoint = InStr( strValue, ".")
 	'			If( lngDecimalPointCharPoint > 0 ) Then
@@ -314,65 +314,65 @@
 	'	End Select
 	'	
 	'	
-	'	' ·×»»ÊıË¡¼ïÊÌ
+	'	' è¨ˆç®—æ–¹æ³•ç¨®åˆ¥
 	'	objCheck.CalcClass = lngCalcCode
 	'	
 	'	
-	'	'ÃÍ¤Î¥Á¥§¥Ã¥¯
+	'	'å€¤ã®ãƒã‚§ãƒƒã‚¯
 	'	If Not objCheck.fncComFormatNumberValue(strValue, True) Then
-	'		' ¥¨¥é¡¼
+	'		' ã‚¨ãƒ©ãƒ¼
 	'		Exit Function
 	'	End If
 	'
-	'	' ÃÍ¤ò¼èÆÀ
+	'	' å€¤ã‚’å–å¾—
 	'	strRetValue = objCheck.FormatNumberValue
 	'	
-	'	' JavaScript Â¦¤ØÊİ»ı
+	'	' JavaScript å´ã¸ä¿æŒ
 	'	Call fncVBCheckSetValueToJS(lngSetID, strRetValue)
 	'
-	'	' À®¸ù¤òÊÖµÑ
+	'	' æˆåŠŸã‚’è¿”å´
 	'	fncVBSCheckNumberValue = True
 	'	
 	'End Function
 	*/
 	/*
 	' ------------------------------------------
-	' ³µÍ×¡§ÆüÉÕ¤Î¥Á¥§¥Ã¥¯
-	' °ú¿ô¡§
-	'		objObject	TextBox¥ª¥Ö¥¸¥§¥¯¥È
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
+	' æ¦‚è¦ï¼šæ—¥ä»˜ã®ãƒã‚§ãƒƒã‚¯
+	' å¼•æ•°ï¼š
+	'		objObject	TextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
 	' ------------------------------------------
 	*/
-	// window.execScript´¹Áõ¤Ë¤è¤êÌ¤»ÈÍÑ¤È¤Ê¤Ã¤¿¤¿¤áºï½ü
+	// window.execScriptæ›è£…ã«ã‚ˆã‚Šæœªä½¿ç”¨ã¨ãªã£ãŸãŸã‚å‰Šé™¤
 	/*
 	'Public Function fncVBSCheckDate(objObject, lngFormatNo)
 	'
-	'	'Ìá¤êÃÍ¤Î½é´ü²½
+	'	'æˆ»ã‚Šå€¤ã®åˆæœŸåŒ–
 	'	fncVBSCheckDate = False
 	'
 	'	Dim objCheck
 	'	Dim lngCheckID
 	'	
-	'	'¥¨¥é¡¼ÈÖ¹æ
+	'	'ã‚¨ãƒ©ãƒ¼ç•ªå·
 	'	lngCheckID = 2
 	'
-	'	'¥Á¥§¥Ã¥¯¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®
+	'	'ãƒã‚§ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	'	Set objCheck = New clsCheck
 	'
-	'	'¥Õ¥©¡¼¥Ş¥Ã¥È¤Î»ØÄê
+	'	'ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®æŒ‡å®š
 	'	objCheck.DateFormatNo = lngFormatNo
 	'
-	'	'ÃÍ¤Î¥Á¥§¥Ã¥¯
+	'	'å€¤ã®ãƒã‚§ãƒƒã‚¯
 	'	blnRet =  objCheck.fncCheckObjectValue(objObject, 2)
 	'	If( blnRet ) Then
-	'		'¥Á¥§¥Ã¥¯À®¸ù¤Î¾ì¹ç
+	'		'ãƒã‚§ãƒƒã‚¯æˆåŠŸã®å ´åˆ
 	'		fncVBSCheckDate = True
 	'		lngCheckID = 0
 	'	End If
 	'
-	'	'¥¨¥é¡¼¤Î¾ì¹ç
-	'	'¥á¥Ã¥»¡¼¥¸¤ÎÉ½¼¨
+	'	'ã‚¨ãƒ©ãƒ¼ã®å ´åˆ
+	'	'ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®è¡¨ç¤º
 	'	Call fncVBCheckErrorToJavaScript( lngCheckID, objObject.name )
 	'
 	'
@@ -381,44 +381,44 @@
 	
 	/*
 	' ------------------------------------------
-	' ³µÍ×¡§Ê¸»ú¤Î¥Á¥§¥Ã¥¯
-	' °ú¿ô¡§
-	'		objObject	TextBox¥ª¥Ö¥¸¥§¥¯¥È
-	' Ìá¤êÃÍ¡§True/False À®¸ù¡¢¼ºÇÔ
-	' È÷¹Í¡§
+	' æ¦‚è¦ï¼šæ–‡å­—ã®ãƒã‚§ãƒƒã‚¯
+	' å¼•æ•°ï¼š
+	'		objObject	TextBoxã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	' æˆ»ã‚Šå€¤ï¼šTrue/False æˆåŠŸã€å¤±æ•—
+	' å‚™è€ƒï¼š
 	' ------------------------------------------
 	*/
-	//window.execScript´¹Áõ¤Ë¤è¤êÉÔ»ÈÍÑ¤È¤Ê¤Ã¤¿¤¿¤áºï½ü
+	//window.execScriptæ›è£…ã«ã‚ˆã‚Šä¸ä½¿ç”¨ã¨ãªã£ãŸãŸã‚å‰Šé™¤
 	/*
 	'Public Function fncVBSCheckString(objObject, lngMaxLength)
 	'
-	'	'Ìá¤êÃÍ¤Î½é´ü²½
+	'	'æˆ»ã‚Šå€¤ã®åˆæœŸåŒ–
 	'	fncVBSCheckString = False
 	'
 	'	Dim objCheck
 	'	Dim lngCheckID
 	'	
-	'	'¥¨¥é¡¼ÈÖ¹æ
+	'	'ã‚¨ãƒ©ãƒ¼ç•ªå·
 	'	lngCheckID = 3
 	'
-	'	'¥Á¥§¥Ã¥¯¥ª¥Ö¥¸¥§¥¯¥È¤ÎºîÀ®
+	'	'ãƒã‚§ãƒƒã‚¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ä½œæˆ
 	'	Set objCheck = New clsCheck
 	'
-	'	'Ê¸»úÎóºÇÂç¿ô¤Î»ØÄê
+	'	'æ–‡å­—åˆ—æœ€å¤§æ•°ã®æŒ‡å®š
 	'	objCheck.StringMaxLength = lngMaxLength
 	'
-	'	'ÃÍ¤Î¥Á¥§¥Ã¥¯
+	'	'å€¤ã®ãƒã‚§ãƒƒã‚¯
 	'	blnRet =  objCheck.fncCheckObjectValue(objObject, 3)
 	'	If( blnRet ) Then
-	'		'¥Á¥§¥Ã¥¯À®¸ù¤Î¾ì¹ç
+	'		'ãƒã‚§ãƒƒã‚¯æˆåŠŸã®å ´åˆ
 	'		fncVBSCheckString = True
 	'		Exit Function
 	'	End If
 	'
 	'	'aryArgs(0) = "100";
 	'
-	'	'¥¨¥é¡¼¤Î¾ì¹ç
-	'	'¥á¥Ã¥»¡¼¥¸¤ÎÉ½¼¨
+	'	'ã‚¨ãƒ©ãƒ¼ã®å ´åˆ
+	'	'ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®è¡¨ç¤º
 	'	'window.parent.fncErrorMessage(3)
 	'	Call fncVBCheckErrorToJavaScript( lngCheckID, objObject.name )
 	'	
@@ -427,29 +427,29 @@
 	
 	/*
 	' ------------------------------------------
-	' ³µÍ×¡§¿ôÃÍ·×»»¡ÊVBS¡Ë
-	' °ú¿ô¡§
-	' 		lngCalc1		·×»»ÃÍ£±
-	'		strOperator		»»½Ñ±é»»»Ò ( ^, *, /, \, Mod, +, - )
-	' 		lngCalc2		·×»»ÃÍ£²
-	' Ìá¤êÃÍ¡§True À®¸ù
-	' È÷¹Í¡§
-	'	¤³¤Î´Ø¿ô¤Î·×»»·ë²Ì¤Ï fncVBCheckSetValueToJS() ¤ò»ÈÍÑ¤·¤ÆJSÂ¦¤ØÀßÄê¤µ¤ì¤Ş¤¹¡£
-	' 	·ë²ÌID = 5
+	' æ¦‚è¦ï¼šæ•°å€¤è¨ˆç®—ï¼ˆVBSï¼‰
+	' å¼•æ•°ï¼š
+	' 		lngCalc1		è¨ˆç®—å€¤ï¼‘
+	'		strOperator		ç®—è¡“æ¼”ç®—å­ ( ^, *, /, \, Mod, +, - )
+	' 		lngCalc2		è¨ˆç®—å€¤ï¼’
+	' æˆ»ã‚Šå€¤ï¼šTrue æˆåŠŸ
+	' å‚™è€ƒï¼š
+	'	ã“ã®é–¢æ•°ã®è¨ˆç®—çµæœã¯ fncVBCheckSetValueToJS() ã‚’ä½¿ç”¨ã—ã¦JSå´ã¸è¨­å®šã•ã‚Œã¾ã™ã€‚
+	' 	çµæœID = 5
 	' ------------------------------------------
 	*/
-	// ¸Æ¤Ó½Ğ¤·¸µ¤¬Javascript²½¤Ë¤è¤ê¡¢eval¤ÇÂĞ±ş¤·¤¿¤¿¤á¤³¤Î´Ø¿ô¤òºï½ü
+	// å‘¼ã³å‡ºã—å…ƒãŒJavascriptåŒ–ã«ã‚ˆã‚Šã€evalã§å¯¾å¿œã—ãŸãŸã‚ã“ã®é–¢æ•°ã‚’å‰Šé™¤
 	/*
 	'Public Function fncVBSNumberCalculation(lngCalc1, strOperator, lngCalc2)
 	'	On Error Resume Next
 	'
-	'	Dim aryValue		' ·×»»¼°
-	'	Dim lngResult		' ·ë²Ì¿ôÃÍ
-	'	Dim lngSetID		' ¤³¤Î¥¹¥¯¥ê¥×¥È·ë²Ì¤ÎID
-	'	Dim varResult		' ·ë²ÌÊÖµÑÃÍ
+	'	Dim aryValue		' è¨ˆç®—å¼
+	'	Dim lngResult		' çµæœæ•°å€¤
+	'	Dim lngSetID		' ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆçµæœã®ID
+	'	Dim varResult		' çµæœè¿”å´å€¤
 	'	
 	'	
-	'	' ·ë²ÌID
+	'	' çµæœID
 	'	lngSetID = 5
 	'
 	'	If ( StrComp(strOperator, "^", vbTextCompare) = 0) Then
@@ -474,19 +474,19 @@
 	'		lngResult = CDbl(lngCalc1) - CDbl(lngCalc2)
 	'	End If
 	'	
-	'	' ·ë²ÌÃÍ¤ÎÀßÄê
+	'	' çµæœå€¤ã®è¨­å®š
 	'	varResult = lngResult
 	'	
-	'	' ¤â¤·¥¨¥é¡¼¤¬µ¯¤­¤Æ¤¤¤¿¾ì¹ç
+	'	' ã‚‚ã—ã‚¨ãƒ©ãƒ¼ãŒèµ·ãã¦ã„ãŸå ´åˆ
 	'	If( Err.number > 0 ) Then
 	'		varResult = "(Error)"
 	'		Err.Clear
 	'	End If
 	'
-	'	' JavaScript Â¦¤ØÊİ»ı
+	'	' JavaScript å´ã¸ä¿æŒ
 	'	Call fncVBCheckSetValueToJS(lngSetID, varResult)
 	'
-	'	' ´Ø¿ô¤ÎÌá¤êÃÍ¡Ê°ì±ş¡Ë
+	'	' é–¢æ•°ã®æˆ»ã‚Šå€¤ï¼ˆä¸€å¿œï¼‰
 	'	fncVBSNumberCalculation = True
 	'
 	'End Function

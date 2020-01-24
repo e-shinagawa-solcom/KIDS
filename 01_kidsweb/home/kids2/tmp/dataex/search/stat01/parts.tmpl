@@ -44,11 +44,11 @@
 
 
 
-<!-- �ե����� -->
+<!-- フォーム -->
 <div class="form-box__contents">
 	<div class="regist-line">
 		<span class="form-line">
-			<span class="Column">������Ǽ��</span>
+			<span class="Column">受注・納期</span>
 			<span class="VarText" id="VarsA01">
 				<span class="VarLabel">FROM</span>
 				<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="">
@@ -59,7 +59,7 @@
 	</div>
 	<div class="regist-line">
 		<span class="form-line">
-			<span class="Column">����</span>
+			<span class="Column">部門</span>
 			<span class="VarPull" id="VarsA02">
 				<select class="Slt20" name="lngGroupCode" tabindex="">
 					_%lngGroupCode%_
@@ -69,9 +69,9 @@
 	</div>
 	<div class="regist-line">
 		<span class="form-line">
-			<span class="Column">����ʬ</span>
+			<span class="Column">売上区分</span>
 			<span class="VarCheck" id="VarsA03">
-				<input class="CheckBox14" type="checkbox" name="lngSalesClassCode[]" value="0">���ơ�<br />
+				<input class="CheckBox14" type="checkbox" name="lngSalesClassCode[]" value="0">全て　<br />
 				_%lngSalesClassCode%_
 			</span>
 		</span>
@@ -79,9 +79,9 @@
 	<div class="Spacer">
 	</div>
 	<div class="QuerySet-none">	
-		<!-- �ץ�ӥ塼�ܥ��� -->
+		<!-- プレビューボタン -->
 		<span class="QueryBt" id="PreviewBt" onclick="document.PS.lngActionCode.value=1;fncDataFormPreview( window.PS , '/dataex/result/stat.html' ); return false;"></span>
-		<!-- �������ݡ��ȥܥ��� -->
+		<!-- エクスポートボタン -->
 		<span class="QueryBt" id="ExportBt"  onclick="document.PS.lngActionCode.value=2;PS.submit();"></span>
 	</div>
 </div>

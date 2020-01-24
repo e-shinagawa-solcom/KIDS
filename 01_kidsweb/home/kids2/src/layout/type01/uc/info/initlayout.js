@@ -14,7 +14,7 @@ var NumTabG1 = '';
 var NumTabH1 = '';
 var NumTabI1 = '';
 
-// ÅĞÏ¿¥Ü¥¿¥ó
+// ç™»éŒ²ãƒœã‚¿ãƒ³
 var RegistNum = '40';
 
 //// [UC] MSW TAB INDEX NUM /////
@@ -28,7 +28,7 @@ var NumPunitTab = '';
 
 
 ///// MAIN MTITLE IMAGE /////
-var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="¥æ¡¼¥¶¡¼´ÉÍı">';
+var maintitleJ = '<img src="' + titleJ + '" width="314" height="22" border="0" alt="ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†">';
 var maintitleE = '<img src="' + titleE + '" width="314" height="22" border="0" alt="USER CONTROL">';
 
 
@@ -38,20 +38,20 @@ var maintitleE = '<img src="' + titleE + '" width="314" height="22" border="0" a
 
 
 ///// INPUT A,B,C HEADER IMAGE /////
-var headerAJ = '<img src="' + piheadtitleAJ + '" width="949" height="30" border="0" alt="¥æ¡¼¥¶¡¼¾ğÊó">';
+var headerAJ = '<img src="' + piheadtitleAJ + '" width="949" height="30" border="0" alt="ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±">';
 var headerAE = '<img src="' + piheadtitleAE + '" width="949" height="30" border="0" alt="USER INFOMATION">';
 
 
 ///// CSS VALUE /////
-var fcolor = '#666666'; //¹àÌÜ¥Õ¥©¥ó¥È¥«¥é¡¼
-var segcolor = '#e8f0f1'; //¹àÌÜÇØ·Ê¿§
-var segbody = '#d6d0b1'; //INPUT A BODY ÇØ·Ê¿§
-var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //¹àÌÜ±¦¶õ¤­BORDER
-var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //¹àÌÜº¸¶õ¤­BORDER
-var brcolor03 = '#798787 #e8f0f1 #798787 #e8f0f1'; //¹àÌÜº¸±¦¶õ¤­BORDER
+var fcolor = '#666666'; //é …ç›®ãƒ•ã‚©ãƒ³ãƒˆã‚«ãƒ©ãƒ¼
+var segcolor = '#e8f0f1'; //é …ç›®èƒŒæ™¯è‰²
+var segbody = '#d6d0b1'; //INPUT A BODY èƒŒæ™¯è‰²
+var brcolor01 = '#798787 #e8f0f1 #798787 #798787'; //é …ç›®å³ç©ºãBORDER
+var brcolor02 = '#798787 #798787 #798787 #e8f0f1'; //é …ç›®å·¦ç©ºãBORDER
+var brcolor03 = '#798787 #e8f0f1 #798787 #e8f0f1'; //é …ç›®å·¦å³ç©ºãBORDER
 
-var brcolorF1 = '#798787 #f1f1f1 #798787 #798787'; //¹àÌÜ±¦¶õ¤­BORDER
-var brcolorF2 = '#798787 #798787 #798787 #f1f1f1'; //¹àÌÜº¸¶õ¤­BORDER
+var brcolorF1 = '#798787 #f1f1f1 #798787 #798787'; //é …ç›®å³ç©ºãBORDER
+var brcolorF2 = '#798787 #798787 #798787 #f1f1f1'; //é …ç›®å·¦ç©ºãBORDER
 
 
 function initLayoutUC()

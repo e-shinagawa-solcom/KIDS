@@ -5,13 +5,13 @@
 	<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
 	<script src="/mold/cmn/form/js/tab-function.js" defer></script>
 	<script src="/mold/cmn/form/js/util-selectbox.js" defer></script>
-    <!-- �����å��ܥå������ڤ��ؤ����� -->
+    <!-- チェックボックスの切り替え処理 -->
     <script src="/mold/cmn/search/js/toggleCheckbox.js" defer></script>
-    <!-- �������̶���������� -->
+    <!-- 検索画面共通入力補助 -->
     <script src="/mold/cmn/search/js/input-assist.js" defer></script>
-    <!-- msw ɽ�� -->
+    <!-- msw 表示 -->
     <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
-    <!-- COOKIE��Ϣ�ν���(��������) -->
+    <!-- COOKIE関連の処理(検索画面) -->
     <script src="/mold/cmn/search/js/cookie-functions.js" defer></script>
 </header1>
 
@@ -19,27 +19,27 @@
 </header2>
 
 <header3>
-	<!-- �����ڤ��ؤ����� -->
+	<!-- 言語切り替え処理 -->
 	<script src="/mr/search/js/switch-language.js" defer></script>
-	<!-- datepicker�����ǻ��� -->
+	<!-- datepickerの要素指定 -->
 	<script src="/mr/search/js/datepicker.js" defer></script>
-	<!-- ���쥯�ȥܥå������ -->
+	<!-- セレクトボックス操作 -->
 	<script src="/mr/search/js/bind-selectbox-action.js" defer></script>
-	<!-- msw���ѥ������� -->
+	<!-- msw汎用スタイル -->
 	<link rel="stylesheet" href="/mr/search/css/msw.css">
-    <!-- �ե�����ܥ��� css -->
+    <!-- フォームボタン css -->
     <link rel="stylesheet" href="/mr/search/css/form-buttons.css">
-    <!-- �ե����� �ܥ��� -->
+    <!-- フォーム ボタン -->
 	<script src="/mr/search/js/form-buttons.js" defer></script>
-    <!-- �ե�����Х�ǡ������ -->
+    <!-- フォームバリデーション -->
     <script src="/mr/search/js/validate-form.js" defer></script>
-    <!-- �ޥ��������ƤӽФ� -->
+    <!-- マスタ検索呼び出し -->
 	<script src="/mr/search/js/invoke-master-search.js" defer></script>
-    <!-- ���쥯�ȥܥå������ -->
+    <!-- セレクトボックス操作 -->
 	<script src="/mr/search/js/bind-selectbox-action.js" defer></script>
-    <!-- COOKIE ɽ�������å��ܥå��� ��¸/���� -->
+    <!-- COOKIE 表示チェックボックス 保存/復元 -->
 	<script src="/mr/search/js/cookie-display-items.js" defer></script>
-    <!-- �����Х���� -->
+    <!-- キーバインド -->
 	<script src="/mr/search/js/key-bind.js" defer></script>
 </header3>
 
@@ -47,24 +47,24 @@
 </bodyonload>
 </config>
 
-<!-- �������ɥС� �ʥӥ����� -->
+<!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
 	<script>
 		$('.navigation-loadpoint').load('/mold/cmn/navigate/mold_navi.html');
 	</script>
 </div>
 
-<!-- ���ϥե����� -->
+<!-- 入力フォーム -->
 <div class="form-box--notabs-for-search">
-	<!-- �ե�����إå� -->
+	<!-- フォームヘッダ -->
 	<div class="form-box__header">
-		<p class="form-box__header__title">�ⷿĢɼ����</p>
+		<p class="form-box__header__title">金型帳票検索</p>
         <span class="form-box__header__buttons">
             <img class="clear button" src="/img/type01/cmn/seg/sch_clear_off_ja_bt.gif">
             <img class="search button" src="/img/type01/cmn/seg/sch_search_off_ja_bt.gif">
         </span>
 	</div>
-	<!-- �ե����ॳ��ƥ�� -->
+	<!-- フォームコンテンツ -->
 	<div class="form-box__contents--with-scroll">
 		<form name="SearchMoldReport" method="post">
             <input type="submit">
@@ -81,7 +81,7 @@
                     <input name="IsDisplay_Detail" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label--text-only">�ܺ�</span>
+                    <span class="regist-label--text-only">詳細</span>
                 </span>
             </div>
             <div class="regist-line">
@@ -90,7 +90,7 @@
                     <input name="IsDisplay_Modify" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label--text-only">����</span>
+                    <span class="regist-label--text-only">修正</span>
                 </span>
             </div>
             <div class="regist-line">
@@ -99,7 +99,7 @@
                     <input name="IsDisplay_Preview" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label--text-only">�ץ�ӥ塼</span>
+                    <span class="regist-label--text-only">プレビュー</span>
                 </span>
             </div>
             <div class="regist-line">
@@ -111,12 +111,12 @@
                     <input name="IsDisplay_ReportCategory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">Ģɼ��ʬ</span>
+                    <span class="regist-label__text">帳票区分</span>
                     <select name="ReportCategory" class="Slt13">
-                        <option value="">��</option>
-                        <option value="10">��ư��</option>
-                        <option value="20">�ֵ���</option>
-                        <option value="30">�Ѵ���</option>
+                        <option value="">−</option>
+                        <option value="10">移動版</option>
+                        <option value="20">返却版</option>
+                        <option value="30">廃棄版</option>
                     </select>
                 </span>
             </div>
@@ -126,11 +126,11 @@
 					<input name="IsDisplay_Status" class="is-display" type="checkbox">
 				</span>
 				<span class="regist-label">
-					<span class="regist-label__text">���ơ�����</span>
+					<span class="regist-label__text">ステータス</span>
 					<select name="Status" class="Slt13">
-						<option value="">��</option>
-						<option value="00">̤��λ</option>
-						<option value="50">��λ</option>
+						<option value="">−</option>
+						<option value="00">未完了</option>
+						<option value="50">完了</option>
 					</select>
 				</span>
 			</div>
@@ -140,7 +140,7 @@
                     <input name="IsDisplay_RequestDate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">������</span>
+                    <span class="regist-label__text">依頼日</span>
                     FROM <input name="From_RequestDate" class="TxtStyle05L" type="text">
                     TO <input name="To_RequestDate" class="TxtStyle05L" type="text">
                 </span>
@@ -151,7 +151,7 @@
                     <input name="IsDisplay_MoldReportId" class="is-display" type="checkbox">
                 </span>
 				<span class="regist-label">
-					<span class="regist-label__text">�ⷿĢɼID</span>
+					<span class="regist-label__text">金型帳票ID</span>
 					FROM <input class="TxtStyle05L" name="From_MoldReportId" type="text">
                     TO <input class="TxtStyle05L" name="To_MoldReportId" type="text">
 				</span>
@@ -162,7 +162,7 @@
                     <input name="IsDisplay_Revision" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label--text-only">��ӥ����</span>
+                    <span class="regist-label--text-only">リビジョン</span>
                 </span>
             </div>
             <div class="regist-line">
@@ -171,7 +171,7 @@
                     <input name="IsDisplay_ProductCode" class="is-display" type="checkbox">
                 </span>
 				<span class="regist-label">
-					<span class="regist-label__text">���ʥ�����</span>
+					<span class="regist-label__text">製品コード</span>
 					FROM <input class="TxtStyle05L" name="From_ProductCode" type="text">
 					TO <input class="TxtStyle05L" name="To_ProductCode" type="text">
 				</span>
@@ -182,7 +182,7 @@
 					<input name="IsDisplay_StrProductName" class="is-display" type="checkbox">
 				</span>
 				<span class="regist-label">
-					<span class="regist-label__text">����̾��</span>
+					<span class="regist-label__text">製品名称</span>
 					<input class="Txt46L" name="StrProductName" type="text">
 				</span>
 			</div>
@@ -192,7 +192,7 @@
 					<input name="IsDisplay_StrProductEnglishName" class="is-display" type="checkbox">
 				</span>
 				<span class="regist-label">
-					<span class="regist-label__text">����̾��(�Ѹ�)</span>
+					<span class="regist-label__text">製品名称(英語)</span>
 					<input class="Txt46L" name="StrProductEnglishName" type="text">
 				</span>
 			</div>
@@ -202,7 +202,7 @@
                     <input name="IsDisplay_GoodsCode" class="is-display" type="checkbox">
                 </span>
 				<span class="regist-label">
-					<span class="regist-label__text">�ܵ�����</span>
+					<span class="regist-label__text">顧客品番</span>
 					<input class="TxtStyle05L" name="GoodsCode" type="text">
 				</span>
 			</div>
@@ -212,8 +212,8 @@
                     <input name="IsDisplay_MoldNo" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">�ⷿNO</span>
-					������<input class="TxtStyle05L mold-product-code" placeholder="���ʥ�����" type="text">
+                    <span class="regist-label__text">金型NO</span>
+					検索：<input class="TxtStyle05L mold-product-code" placeholder="製品コード" type="text">
 					<span class="regist-label__required-mark" style="right:2px;">_</span>
                     <input class="TxtStyle01L" name="ReviseCode">
                 </span>
@@ -221,9 +221,9 @@
 			<div class="regist-line">
 				<table class="mold-selection">
 					<tr>
-						<th class="mold-selection__label">�ⷿ�ꥹ��</th>
+						<th class="mold-selection__label">金型リスト</th>
 						<th></th>
-						<th class="mold-selection__label">�����оݤζⷿ�ꥹ��</th>
+						<th class="mold-selection__label">検索対象の金型リスト</th>
 						<th></th>
 					</tr>
 					<tr>
@@ -252,7 +252,7 @@
                     <input name="IsDisplay_SourceFactory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">�ݴɹ���</span>
+                    <span class="regist-label__text">保管工場</span>
                     <input class="TxtStyle05L" name="SourceFactory" type="text">
                     <input class="disTxt46L" name="SourceFactoryName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -264,7 +264,7 @@
                     <input name="IsDisplay_DestinationFactory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">��ư�蹩��</span>
+                    <span class="regist-label__text">移動先工場</span>
                     <input class="TxtStyle05L" name="DestinationFactory" type="text">
                     <input class="disTxt46L" name="DestinationFactoryName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -276,9 +276,9 @@
                     <input name="IsDisplay_RequestCategory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">�����ʬ</span>
+                    <span class="regist-label__text">依頼区分</span>
                     <select name="RequestCategory" class="Slt25">
-                        <option value="">��</option>
+                        <option value="">−</option>
                         <option value="10">KUWAGATA JAPAN REQUEST</option>
                         <option value="20">KUWAGATA H.K. REQUEST</option>
                     </select>
@@ -290,7 +290,7 @@
                     <input name="IsDisplay_ActionRequestDate" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">��˾��</span>
+                    <span class="regist-label__text">希望日</span>
                     FROM <input name="From_ActionRequestDate" class="TxtStyle05L" type="text">
                     TO <input name="To_ActionRequestDate" class="TxtStyle05L" type="text">
                 </span>
@@ -301,12 +301,12 @@
                     <input name="IsDisplay_TransferMethod" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">��ư��ˡ</span>
+                    <span class="regist-label__text">移動方法</span>
                     <select name="TransferMethod" class="Slt47">
-                        <option value="">��</option>
-                        <option value="10">DELIVER TO RECEIVER(��ư����Ϥ���)</option>
-                        <option value="20">PICK-UP BY RECEIVER(��ư�褬�����������)</option>
-                        <option value="30">VIA HONG KONG(�����ͳ)</option>
+                        <option value="">−</option>
+                        <option value="10">DELIVER TO RECEIVER(移動先に届ける)</option>
+                        <option value="20">PICK-UP BY RECEIVER(移動先が引き取りに来る)</option>
+                        <option value="30">VIA HONG KONG(香港経由)</option>
                     </select>
                 </span>
             </div>
@@ -316,11 +316,11 @@
                     <input name="IsDisplay_InstructionCategory" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">�ؼ���ʬ</span>
+                    <span class="regist-label__text">指示区分</span>
                     <select name="InstructionCategory" class="Slt13">
-                        <option value="">��</option>
-                        <option value="10">�ܵһؼ�</option>
-                        <option value="20">KWG�ؼ�</option>
+                        <option value="">−</option>
+                        <option value="10">顧客指示</option>
+                        <option value="20">KWG指示</option>
                     </select>
                 </span>
             </div>
@@ -330,7 +330,7 @@
                     <input name="IsDisplay_CustomerCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">������(�ܵ�)</span>
+                    <span class="regist-label__text">事業部(顧客)</span>
                     <input class="TxtStyle05L" name="CustomerCode" type="text">
                     <input class="disTxt46L" name="CustomerName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -342,7 +342,7 @@
                     <input name="IsDisplay_KuwagataGroupCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">KWGô������</span>
+                    <span class="regist-label__text">KWG担当部署</span>
                     <input class="TxtStyle05L" name="KuwagataGroupCode" type="text" displayFlagLimit="0">
                     <input class="disTxt46L" name="KuwagataGroupName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-group" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -354,7 +354,7 @@
                     <input name="IsDisplay_KuwagataUserCode" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">KWGô����</span>
+                    <span class="regist-label__text">KWG担当者</span>
                     <input class="TxtStyle05L" name="KuwagataUserCode" type="text" displayFlagLimit="0">
                     <input class="disTxt46L" name="KuwagataUserName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-inchargeuser" displayFlagLimit="0" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -366,11 +366,11 @@
                     <input name="IsDisplay_FinalKeep" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">������ν���</span>
+                    <span class="regist-label__text">生産後の処理</span>
                     <select name="FinalKeep" class="Slt39">
-                        <option value="">��</option>
-                        <option value="10">KEEP BY RECEIVER(��ư�蹩����ݴɤ���)</option>
-                        <option value="20">RETURN TO ORIGINAL(�ݴɹ�����ֵѤ���)</option>
+                        <option value="">−</option>
+                        <option value="10">KEEP BY RECEIVER(移動先工場で保管する)</option>
+                        <option value="20">RETURN TO ORIGINAL(保管工場に返却する)</option>
                     </select>
                 </span>
             </div>
@@ -380,7 +380,7 @@
                     <input name="IsDisplay_ReturnSchedule" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">�ֵ�ͽ����</span>
+                    <span class="regist-label__text">返却予定日</span>
                     FROM <input name="From_ReturnSchedule" class="TxtStyle05L" type="text">
                     TO <input name="To_ReturnSchedule" class="TxtStyle05L" type="text">
                 </span>
@@ -391,7 +391,7 @@
                     <input name="IsDisplay_Created" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">��Ͽ��</span>
+                    <span class="regist-label__text">登録日</span>
                     FROM <input class="TxtStyle05L" name="From_Created" type="text">
                     TO <input class="TxtStyle05L" name="To_Created" type="text">
                 </span>
@@ -402,7 +402,7 @@
                     <input name="IsDisplay_CreateBy" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">��Ͽ��</span>
+                    <span class="regist-label__text">登録者</span>
                     <input class="TxtStyle05L" name="CreateBy" type="text" displayFlagLimit="0">
                     <input class="disTxt46L" name="CreateByName" readonly type="text">
                     <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -414,7 +414,7 @@
                     <input name="IsDisplay_Updated" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">������</span>
+                    <span class="regist-label__text">更新日</span>
                     FROM <input class="TxtStyle05L" name="From_Updated" type="text">
                     TO <input class="TxtStyle05L" name="To_Updated" type="text">
                 </span>
@@ -425,7 +425,7 @@
                     <input name="IsDisplay_UpdateBy" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label__text">������</span>
+                    <span class="regist-label__text">更新者</span>
                     <input class="TxtStyle05L" name="UpdateBy" type="text" displayFlagLimit="0">
                     <input class="disTxt46L" name="UpdateByName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -437,25 +437,25 @@
                     <input name="IsDisplay_Delete" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
-                    <span class="regist-label--text-only">���</span>
+                    <span class="regist-label--text-only">削除</span>
                 </span>
             </div>
 		</form>
 	</div>
     <div class="msw-loadpoints">
-		<!-- MSW ����ޥ������� -->
+		<!-- MSW 工場マスタ検索 -->
 		<iframe class="msw-factory" src="/search/cmn/msw/factory/mswfactory.html" frameborder="0">
 		</iframe>
-		<!-- MSW �ܵҥޥ������� -->
+		<!-- MSW 顧客マスタ検索 -->
 		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
 		</iframe>
-		<!-- MSW ô������ޥ������� -->
+		<!-- MSW 担当部署マスタ検索 -->
 		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
 		</iframe>
-		<!-- MSW ô���ԥޥ������� -->
+		<!-- MSW 担当者マスタ検索 -->
 		<iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
 		</iframe>
-		<!-- MSW ���ϼԥޥ������� -->
+		<!-- MSW 入力者マスタ検索 -->
 		<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
 		</iframe>
 	</div>

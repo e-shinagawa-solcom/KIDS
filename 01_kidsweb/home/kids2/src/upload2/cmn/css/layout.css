@@ -1,35 +1,35 @@
-/* ¥ª¥×¥·¥ç¥ó¥Ü¥Ã¥¯¥¹ */
+/* ã‚ªãƒ—ã‚·ãƒ§ãƒ³ãƒœãƒƒã‚¯ã‚¹ */
 
-/* ¥Æ¥­¥¹¥È¥Ü¥Ã¥¯¥¹ ¥×¥ì¡¼¥¹¥Û¥ë¥À */
+/* ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ ãƒ—ãƒ¬ãƒ¼ã‚¹ãƒ›ãƒ«ãƒ€ */
 input:-ms-input-placeholder {
     color: #cccccc;
     text-align: center;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¤½¤ÎÂ¾ */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãã®ä»– */
 input.note
 {
     width: 38em;
 }
 
-/* ¥µ¥Ö¥ß¥Ã¥È¥Ü¥¿¥ó ÈóÉ½¼¨¡¡*/
+/* ã‚µãƒ–ãƒŸãƒƒãƒˆãƒœã‚¿ãƒ³ éè¡¨ç¤ºã€€*/
 input[type="submit"]{
     display: none;
 }
 
-/* ¥Æ¥­¥¹¥ÈÆşÎÏ ¶¦ÄÌ */
+/* ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ› å…±é€š */
 input:focus, textarea:focus
 {
     background-color: #c7d0cb;
 }
 
-/* ¥Æ¥­¥¹¥ÈÆşÎÏ ¶¦ÄÌ readonly¤Î¾ì¹ç¤ÏÇØ·Ê¿§¤òÊÑ¤¨¤Ê¤¤ */
+/* ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ› å…±é€š readonlyã®å ´åˆã¯èƒŒæ™¯è‰²ã‚’å¤‰ãˆãªã„ */
 input[readonly]:focus
 {
     background-color: #ffffff;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à¶¦ÄÌÇØ·ÊÏÈ */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ å…±é€šèƒŒæ™¯æ  */
 .form-box
 {
     position: absolute;
@@ -47,7 +47,7 @@ input[readonly]:focus
     background-color: #d6d0b1;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à¶¦ÄÌÇØ·ÊÏÈ ¥³¥ó¥Æ¥Ê*/
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ å…±é€šèƒŒæ™¯æ  ã‚³ãƒ³ãƒ†ãƒŠ*/
 .form-box--container
 {
     position: absolute;
@@ -66,7 +66,7 @@ input[readonly]:focus
 }
 
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥Ø¥Ã¥À */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ˜ãƒƒãƒ€ */
 .form-box__header
 {
     position: absolute;
@@ -82,7 +82,7 @@ input[readonly]:focus
     border-top-right-radius: 15px;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥Ø¥Ã¥À¥¿¥¤¥È¥ë */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ˜ãƒƒãƒ€ã‚¿ã‚¤ãƒˆãƒ« */
 .form-box__header__title
 {
     margin: 8px 12px;
@@ -93,7 +93,7 @@ input[readonly]:focus
     line-height: 12px;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥³¥ó¥Æ¥ó¥Ä */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ */
 .form-box__contents
 {
     margin: 40px 10px 20px;
@@ -102,13 +102,13 @@ input[readonly]:focus
 }
 
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¹Ô */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  è¡Œ */
 .regist-line
 {
     margin: 1px 3px 4px 0px;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥é¥Ù¥ë */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ©ãƒ™ãƒ« */
 .regist-label
 {
     display: inline-block;
@@ -123,7 +123,7 @@ input[readonly]:focus
     background-color: #e8f0f1;
 }
 
-/*¾õÂÖ ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹ input */
+/*çŠ¶æ…‹ ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ input */
 .regist-label input[type="checkbox"].is-state
 {
     width: 30px;
@@ -131,13 +131,13 @@ input[readonly]:focus
 }
 
 
-/* ¥é¥Ù¥ë¤Î»ÒÍ×ÁÇ¤ò½ÄÃæ±û¤ËÂ·¤¨¤ë */
+/* ãƒ©ãƒ™ãƒ«ã®å­è¦ç´ ã‚’ç¸¦ä¸­å¤®ã«æƒãˆã‚‹ */
 .regist-label *
 {
     vertical-align: middle;
 }
 
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥é¥Ù¥ë¥Æ¥­¥¹¥È */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ©ãƒ™ãƒ«ãƒ†ã‚­ã‚¹ãƒˆ */
 .regist-label__text
 {
     display: inline-block;
@@ -146,8 +146,8 @@ input[readonly]:focus
     background-color: #e8f0f1;
 }
 
-/* ÄÉ²ÃÊ¬ */
-/* ÆşÎÏ¥Õ¥©¡¼¥à ¥¨¥¯¥»¥ë¥Õ¥¡¥¤¥ëÁªÂò */
+/* è¿½åŠ åˆ† */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ã‚¨ã‚¯ã‚»ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«é¸æŠ */
 #varExcel
 {
     display: inline-block;
@@ -165,7 +165,7 @@ input[readonly]:focus
     height: 35px;
 }
 
-/* ¥¨¥¯¥»¥ë¥Õ¥¡¥¤¥ëÁªÂòÆâ¤ÎÍ×ÁÇ(span¥¿¥°)¤ò½ÄÃæ±û¤ËÂ·¤¨¤ë */
+/* ã‚¨ã‚¯ã‚»ãƒ«ãƒ•ã‚¡ã‚¤ãƒ«é¸æŠå†…ã®è¦ç´ (spanã‚¿ã‚°)ã‚’ç¸¦ä¸­å¤®ã«æƒãˆã‚‹ */
 #varExcel > span
 {
     display: inline-block;

@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥·¥¹¥Æ¥à´ÉÍý ¥á¥Ë¥å¡¼²èÌÌ
+*	ã‚·ã‚¹ãƒ†ãƒ ç®¡ç† ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,26 +10,26 @@
 *	@version   1.00
 *
 */
-// ¥á¥¤¥ó²èÌÌ
+// ãƒ¡ã‚¤ãƒ³ç”»é¢
 // index.php -> strSessionID -> index.php
 //
-// ³Æµ¡Ç½²èÌÌ¤Ø
+// å„æ©Ÿèƒ½ç”»é¢ã¸
 // index.php -> strSessionID -> index.php
 
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "sysc/cmn/lib_sys.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 if ( $_GET )
 {
 	$aryData = $_GET;
@@ -40,14 +40,14 @@ else
 }
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_SYS0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 $aryData["strInfVisibility"]     = "visible";
@@ -75,17 +75,17 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SYS4, $objAuth ) )
 $aryCheck["strSessionID"]  = "null:numenglish(32,32)";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 if ( join ( $aryCheckResult ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥·¥¹¥Æ¥à´ÉÍý¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo fncGetReplacedHtml( "sysc/parts.tmpl", $aryData, $objAuth );
 
 ?>

@@ -1,8 +1,8 @@
 <?php
 /** 
-*	Äù¤á½èÍı¡¡¼Â¹Ô½èÍı
+*	ç· ã‚å‡¦ç†ã€€å®Ÿè¡Œå‡¦ç†
 *
-*	Äù¤á½èÍı¤Î¼Â¹Ô½èÍı
+*	ç· ã‚å‡¦ç†ã®å®Ÿè¡Œå‡¦ç†
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -11,25 +11,25 @@
 *	@access    public
 *	@version   1.00
 *
-*	½èÍı³µÍ×
-*	Äù¤á½èÍı¡¢¤ª¤è¤ÓÄù¤á½èÍı¤ÎÌá¤·½èÍı¤Î¼Â¹Ô
+*	å‡¦ç†æ¦‚è¦
+*	ç· ã‚å‡¦ç†ã€ãŠã‚ˆã³ç· ã‚å‡¦ç†ã®æˆ»ã—å‡¦ç†ã®å®Ÿè¡Œ
 *
 */
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "closed/cmn/lib_closed.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
 //////////////////////////////////////////////////////////////////////////
-// GET¥Ç¡¼¥¿¼èÆÀ
+// GETãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $_GET )
 {
@@ -40,34 +40,34 @@ else if ( $_POST )
 	$aryData = $_POST;
 }
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 if ( $aryData["lngActionCode"] == "" or $aryData["lngActionCode"] < 2 or $aryData["lngActionCode"] > 3 )
 {
-	echo "¾ğÊó¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£<BR>";
+	echo "æƒ…å ±ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚<BR>";
 	return true;
 }
 if ( fncCheckString( $aryData["dtmUpdateFrom"], "null:date" ) != FALSE )
 {
-	echo "³«»Ï·×¾åÆü¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£<BR>";
+	echo "é–‹å§‹è¨ˆä¸Šæ—¥ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚<BR>";
 	return true;
 }
 if ( fncCheckString( $aryData["dtmUpdateTo"], "null:date" ) != FALSE )
 {
-	echo "½ªÎ»·×¾åÆü¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£<BR>";
+	echo "çµ‚äº†è¨ˆä¸Šæ—¥ãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚<BR>";
 	return true;
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
-// 1400 Äù¤á½èÍı
+// æ¨©é™ç¢ºèª
+// 1400 ç· ã‚å‡¦ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_CLD0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ÆüÉÕ¤Î³ÎÇ§
+// æ—¥ä»˜ã®ç¢ºèª
 if ( $aryData["dtmUpdateFrom"] > $aryData["dtmUpdateTo"] )
 {
 	$aryData["dtmUpdateTo"] = $aryData["dtmUpdateFrom"];
@@ -81,7 +81,7 @@ else
 $aryData["strMessageDetail"] = "";
 
 ////////////////////////////////////////////////////////////////////
-/////////////////////////////Äù¤á½èÍı///////////////////////////////
+/////////////////////////////ç· ã‚å‡¦ç†///////////////////////////////
 ////////////////////////////////////////////////////////////////////
 if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 {
@@ -91,13 +91,13 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	$lngStockCount   = 0;
 	
 	////////////////////////////////////
-	//////////////¼õÃí½èÍı//////////////
+	//////////////å—æ³¨å‡¦ç†//////////////
 	////////////////////////////////////
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¹¹¿·¹Ô¤Î¹Ô¥ì¥Ù¥ë¥í¥Ã¥¯
+	// æ›´æ–°è¡Œã®è¡Œãƒ¬ãƒ™ãƒ«ãƒ­ãƒƒã‚¯
 	$strQuery = "SELECT lngReceiveNo, strReceiveCode, strReviseCode FROM m_Receive WHERE lngReceiveStatusCode = " . DEF_RECEIVE_END
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -106,7 +106,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "¼õÃí¥Ç¡¼¥¿¤Î¥í¥Ã¥¯½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "å—æ³¨ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	if ( $lngResultNum )
 	{
@@ -118,7 +118,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹¹¿·¹Ô¤ÎUPDATE
+	// æ›´æ–°è¡Œã®UPDATE
 	$strQuery = "UPDATE m_Receive SET lngReceiveStatusCode = " . DEF_RECEIVE_CLOSED . " WHERE lngReceiveStatusCode = " . DEF_RECEIVE_END
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -126,28 +126,28 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "¼õÃí¥Ç¡¼¥¿¤ÎÄù¤á½èÍı¾õÂÖ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "å—æ³¨ãƒ‡ãƒ¼ã‚¿ã®ç· ã‚å‡¦ç†çŠ¶æ…‹ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
-	// ÃÖ´¹ÍÑÊ¸»úÎó¤ÎÀßÄê
+	// ç½®æ›ç”¨æ–‡å­—åˆ—ã®è¨­å®š
 	for( $i = 0; $i < $lngReceiveCount; $i++ )
 	{
-		$aryDetailData["strFuncType"] = "¼õÃí´ÉÍı";
+		$aryDetailData["strFuncType"] = "å—æ³¨ç®¡ç†";
 		$aryDetailData["strCode"] = $aryReceiveResult[$i]["strreceivecode"] . "-" . $aryReceiveResult[$i]["strrevisecode"];
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "closed/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailData );
 		$objTemplate->complete();
 		
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetail[] = $objTemplate->strTemplate;
 	}
 
@@ -157,13 +157,13 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	}
 
 	////////////////////////////////////
-	//////////////È¯Ãí½èÍı//////////////
+	//////////////ç™ºæ³¨å‡¦ç†//////////////
 	////////////////////////////////////
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¹¹¿·¹Ô¤Î¹Ô¥ì¥Ù¥ë¥í¥Ã¥¯
+	// æ›´æ–°è¡Œã®è¡Œãƒ¬ãƒ™ãƒ«ãƒ­ãƒƒã‚¯
 	$strQuery = "SELECT lngOrderNo, strOrderCode, strReviseCode FROM m_Order WHERE lngOrderStatusCode = " . DEF_ORDER_END
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -172,7 +172,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "È¯Ãí¥Ç¡¼¥¿¤Î¥í¥Ã¥¯½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	if ( $lngResultNum )
 	{
@@ -184,7 +184,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹¹¿·¹Ô¤ÎUPDATE
+	// æ›´æ–°è¡Œã®UPDATE
 	$strQuery = "UPDATE m_Order SET lngOrderStatusCode = " . DEF_ORDER_CLOSED . " WHERE lngOrderStatusCode = " . DEF_ORDER_END
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -192,29 +192,29 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "È¯Ãí¥Ç¡¼¥¿¤ÎÄù¤á½èÍı¾õÂÖ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ç· ã‚å‡¦ç†çŠ¶æ…‹ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
 	unset ( $aryDetail );
-	// ÃÖ´¹ÍÑÊ¸»úÎó¤ÎÀßÄê
+	// ç½®æ›ç”¨æ–‡å­—åˆ—ã®è¨­å®š
 	for( $i = 0; $i < $lngOrderCount; $i++ )
 	{
-		$aryDetailData["strFuncType"] = "È¯Ãí´ÉÍı";
+		$aryDetailData["strFuncType"] = "ç™ºæ³¨ç®¡ç†";
 		$aryDetailData["strCode"] = $aryOrderResult[$i]["strordercode"] . "-" . $aryOrderResult[$i]["strrevisecode"];
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "closed/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailData );
 		$objTemplate->complete();
 		
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetail[] = $objTemplate->strTemplate;
 	}
 
@@ -224,13 +224,13 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	}
 
 	////////////////////////////////////
-	//////////////Çä¾å½èÍı//////////////
+	//////////////å£²ä¸Šå‡¦ç†//////////////
 	////////////////////////////////////
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¹¹¿·¹Ô¤Î¹Ô¥ì¥Ù¥ë¥í¥Ã¥¯
+	// æ›´æ–°è¡Œã®è¡Œãƒ¬ãƒ™ãƒ«ãƒ­ãƒƒã‚¯
 	$strQuery = "SELECT lngSalesNo, strSalesCode FROM m_Sales WHERE lngSalesStatusCode = " . DEF_SALES_END
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -239,7 +239,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "Çä¾å¥Ç¡¼¥¿¤Î¥í¥Ã¥¯½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "å£²ä¸Šãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	if ( $lngResultNum )
 	{
@@ -251,7 +251,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹¹¿·¹Ô¤ÎUPDATE
+	// æ›´æ–°è¡Œã®UPDATE
 	$strQuery = "UPDATE m_Sales SET lngSalesStatusCode = " . DEF_SALES_CLOSED . " WHERE lngSalesStatusCode = " . DEF_SALES_END
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -259,29 +259,29 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "Çä¾å¥Ç¡¼¥¿¤ÎÄù¤á½èÍı¾õÂÖ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "å£²ä¸Šãƒ‡ãƒ¼ã‚¿ã®ç· ã‚å‡¦ç†çŠ¶æ…‹ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
 	unset ( $aryDetail );
-	// ÃÖ´¹ÍÑÊ¸»úÎó¤ÎÀßÄê
+	// ç½®æ›ç”¨æ–‡å­—åˆ—ã®è¨­å®š
 	for( $i = 0; $i < $lngSalesCount; $i++ )
 	{
-		$aryDetailData["strFuncType"] = "Çä¾å´ÉÍı";
+		$aryDetailData["strFuncType"] = "å£²ä¸Šç®¡ç†";
 		$aryDetailData["strCode"] = $arySalesResult[$i]["strsalescode"];
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "closed/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailData );
 		$objTemplate->complete();
 		
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetail[] = $objTemplate->strTemplate;
 	}
 
@@ -291,13 +291,13 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	}
 
 	////////////////////////////////////
-	//////////////»ÅÆş½èÍı//////////////
+	//////////////ä»•å…¥å‡¦ç†//////////////
 	////////////////////////////////////
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¹¹¿·¹Ô¤Î¹Ô¥ì¥Ù¥ë¥í¥Ã¥¯
+	// æ›´æ–°è¡Œã®è¡Œãƒ¬ãƒ™ãƒ«ãƒ­ãƒƒã‚¯
 	$strQuery = "SELECT lngStockNo, strStockCode FROM m_Stock WHERE lngStockStatusCode = " . DEF_STOCK_END
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -306,7 +306,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "»ÅÆş¥Ç¡¼¥¿¤Î¥í¥Ã¥¯½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "ä»•å…¥ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	if ( $lngResultNum )
 	{
@@ -318,7 +318,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹¹¿·¹Ô¤ÎUPDATE
+	// æ›´æ–°è¡Œã®UPDATE
 	$strQuery = "UPDATE m_Stock SET lngStockStatusCode = " . DEF_STOCK_CLOSED . " WHERE lngStockStatusCode = " . DEF_STOCK_END
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -326,29 +326,29 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "»ÅÆş¥Ç¡¼¥¿¤ÎÄù¤á½èÍı¾õÂÖ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "ä»•å…¥ãƒ‡ãƒ¼ã‚¿ã®ç· ã‚å‡¦ç†çŠ¶æ…‹ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
 	unset ( $aryDetail );
-	// ÃÖ´¹ÍÑÊ¸»úÎó¤ÎÀßÄê
+	// ç½®æ›ç”¨æ–‡å­—åˆ—ã®è¨­å®š
 	for( $i = 0; $i < $lngStockCount; $i++ )
 	{
-		$aryDetailData["strFuncType"] = "»ÅÆş´ÉÍı";
+		$aryDetailData["strFuncType"] = "ä»•å…¥ç®¡ç†";
 		$aryDetailData["strCode"] = $aryStockResult[$i]["strstockcode"];
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "closed/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailData );
 		$objTemplate->complete();
 		
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetail[] = $objTemplate->strTemplate;
 	}
 
@@ -358,22 +358,22 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	}
 
 	////////////////////////////////////
-	//////////////·ë²Ì½èÍı//////////////
+	//////////////çµæœå‡¦ç†//////////////
 	////////////////////////////////////
 
 	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
-	$aryData["strProcessMessage"] = "²¼µ­¤Î¡ÖÇ¼ÉÊºÑ¡×¤Î¥Ç¡¼¥¿¤ËÂĞ¤·¤ÆÄù¤á½èÍı¤ò¹Ô¤¤¤Ş¤·¤¿¡£";
+	$aryData["strProcessMessage"] = "ä¸‹è¨˜ã®ã€Œç´å“æ¸ˆã€ã®ãƒ‡ãƒ¼ã‚¿ã«å¯¾ã—ã¦ç· ã‚å‡¦ç†ã‚’è¡Œã„ã¾ã—ãŸã€‚";
 	$aryData["strAction"] = "/closed/closed.php?strSessionID=";
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "closed/finish.tmpl" );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryData );
 	$objTemplate->complete();
 
-	// HTML½ĞÎÏ
+	// HTMLå‡ºåŠ›
 	echo $objTemplate->strTemplate;
 
 	$objDB->close();
@@ -381,7 +381,7 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 	return true;
 }
 ////////////////////////////////////////////////////////////////////
-///////////////////////////Äù¤áÌá¤·½èÍı/////////////////////////////
+///////////////////////////ç· ã‚æˆ»ã—å‡¦ç†/////////////////////////////
 ////////////////////////////////////////////////////////////////////
 else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 {
@@ -391,13 +391,13 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	$lngStockCount   = 0;
 	
 	////////////////////////////////////
-	//////////////¼õÃí½èÍı//////////////
+	//////////////å—æ³¨å‡¦ç†//////////////
 	////////////////////////////////////
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¹¹¿·¹Ô¤Î¹Ô¥ì¥Ù¥ë¥í¥Ã¥¯
+	// æ›´æ–°è¡Œã®è¡Œãƒ¬ãƒ™ãƒ«ãƒ­ãƒƒã‚¯
 	$strQuery = "SELECT lngReceiveNo, strReceiveCode, strReviseCode FROM m_Receive WHERE lngReceiveStatusCode = " . DEF_RECEIVE_CLOSED
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -406,7 +406,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "¼õÃí¥Ç¡¼¥¿¤Î¥í¥Ã¥¯½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "å—æ³¨ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	if ( $lngResultNum )
 	{
@@ -418,7 +418,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹¹¿·¹Ô¤ÎUPDATE
+	// æ›´æ–°è¡Œã®UPDATE
 	$strQuery = "UPDATE m_Receive SET lngReceiveStatusCode = " . DEF_RECEIVE_END . " WHERE lngReceiveStatusCode = " . DEF_RECEIVE_CLOSED
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -426,28 +426,28 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "¼õÃí¥Ç¡¼¥¿¤ÎÄù¤á½èÍıÌá¤·¾õÂÖ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "å—æ³¨ãƒ‡ãƒ¼ã‚¿ã®ç· ã‚å‡¦ç†æˆ»ã—çŠ¶æ…‹ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
-	// ÃÖ´¹ÍÑÊ¸»úÎó¤ÎÀßÄê
+	// ç½®æ›ç”¨æ–‡å­—åˆ—ã®è¨­å®š
 	for( $i = 0; $i < $lngReceiveCount; $i++ )
 	{
-		$aryDetailData["strFuncType"] = "¼õÃí´ÉÍı";
+		$aryDetailData["strFuncType"] = "å—æ³¨ç®¡ç†";
 		$aryDetailData["strCode"] = $aryReceiveResult[$i]["strreceivecode"] . "-" . $aryReceiveResult[$i]["strrevisecode"];
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "closed/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailData );
 		$objTemplate->complete();
 		
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetail[] = $objTemplate->strTemplate;
 	}
 
@@ -457,13 +457,13 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	}
 
 	////////////////////////////////////
-	//////////////È¯Ãí½èÍı//////////////
+	//////////////ç™ºæ³¨å‡¦ç†//////////////
 	////////////////////////////////////
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¹¹¿·¹Ô¤Î¹Ô¥ì¥Ù¥ë¥í¥Ã¥¯
+	// æ›´æ–°è¡Œã®è¡Œãƒ¬ãƒ™ãƒ«ãƒ­ãƒƒã‚¯
 	$strQuery = "SELECT lngOrderNo, strOrderCode, strReviseCode FROM m_Order WHERE lngOrderStatusCode = " . DEF_ORDER_CLOSED
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -472,7 +472,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "È¯Ãí¥Ç¡¼¥¿¤Î¥í¥Ã¥¯½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	if ( $lngResultNum )
 	{
@@ -484,7 +484,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹¹¿·¹Ô¤ÎUPDATE
+	// æ›´æ–°è¡Œã®UPDATE
 	$strQuery = "UPDATE m_Order SET lngOrderStatusCode = " . DEF_ORDER_END . " WHERE lngOrderStatusCode = " . DEF_ORDER_CLOSED
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -492,29 +492,29 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "È¯Ãí¥Ç¡¼¥¿¤ÎÄù¤á½èÍıÌá¤·¾õÂÖ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®ç· ã‚å‡¦ç†æˆ»ã—çŠ¶æ…‹ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
 	unset ( $aryDetail );
-	// ÃÖ´¹ÍÑÊ¸»úÎó¤ÎÀßÄê
+	// ç½®æ›ç”¨æ–‡å­—åˆ—ã®è¨­å®š
 	for( $i = 0; $i < $lngOrderCount; $i++ )
 	{
-		$aryDetailData["strFuncType"] = "È¯Ãí´ÉÍı";
+		$aryDetailData["strFuncType"] = "ç™ºæ³¨ç®¡ç†";
 		$aryDetailData["strCode"] = $aryOrderResult[$i]["strordercode"] . "-" . $aryOrderResult[$i]["strrevisecode"];
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "closed/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailData );
 		$objTemplate->complete();
 		
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetail[] = $objTemplate->strTemplate;
 	}
 
@@ -524,13 +524,13 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	}
 
 	////////////////////////////////////
-	//////////////Çä¾å½èÍı//////////////
+	//////////////å£²ä¸Šå‡¦ç†//////////////
 	////////////////////////////////////
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¹¹¿·¹Ô¤Î¹Ô¥ì¥Ù¥ë¥í¥Ã¥¯
+	// æ›´æ–°è¡Œã®è¡Œãƒ¬ãƒ™ãƒ«ãƒ­ãƒƒã‚¯
 	$strQuery = "SELECT lngSalesNo, strSalesCode FROM m_Sales WHERE lngSalesStatusCode = " . DEF_SALES_CLOSED
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -539,7 +539,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "Çä¾å¥Ç¡¼¥¿¤Î¥í¥Ã¥¯½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "å£²ä¸Šãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	if ( $lngResultNum )
 	{
@@ -551,7 +551,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹¹¿·¹Ô¤ÎUPDATE
+	// æ›´æ–°è¡Œã®UPDATE
 	$strQuery = "UPDATE m_Sales SET lngSalesStatusCode = " . DEF_SALES_END . " WHERE lngSalesStatusCode = " . DEF_SALES_CLOSED
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -559,29 +559,29 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "Çä¾å¥Ç¡¼¥¿¤ÎÄù¤á½èÍıÌá¤·¾õÂÖ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "å£²ä¸Šãƒ‡ãƒ¼ã‚¿ã®ç· ã‚å‡¦ç†æˆ»ã—çŠ¶æ…‹ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
 	unset ( $aryDetail );
-	// ÃÖ´¹ÍÑÊ¸»úÎó¤ÎÀßÄê
+	// ç½®æ›ç”¨æ–‡å­—åˆ—ã®è¨­å®š
 	for( $i = 0; $i < $lngSalesCount; $i++ )
 	{
-		$aryDetailData["strFuncType"] = "Çä¾å´ÉÍı";
+		$aryDetailData["strFuncType"] = "å£²ä¸Šç®¡ç†";
 		$aryDetailData["strCode"] = $arySalesResult[$i]["strsalescode"];
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "closed/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailData );
 		$objTemplate->complete();
 		
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetail[] = $objTemplate->strTemplate;
 	}
 
@@ -591,13 +591,13 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	}
 
 	////////////////////////////////////
-	//////////////»ÅÆş½èÍı//////////////
+	//////////////ä»•å…¥å‡¦ç†//////////////
 	////////////////////////////////////
 
-	// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+	// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 	$objDB->transactionBegin();
 
-	// ¹¹¿·¹Ô¤Î¹Ô¥ì¥Ù¥ë¥í¥Ã¥¯
+	// æ›´æ–°è¡Œã®è¡Œãƒ¬ãƒ™ãƒ«ãƒ­ãƒƒã‚¯
 	$strQuery = "SELECT lngStockNo, strStockCode FROM m_Stock WHERE lngStockStatusCode = " . DEF_STOCK_CLOSED
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -606,7 +606,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "»ÅÆş¥Ç¡¼¥¿¤Î¥í¥Ã¥¯½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "ä»•å…¥ãƒ‡ãƒ¼ã‚¿ã®ãƒ­ãƒƒã‚¯å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	if ( $lngResultNum )
 	{
@@ -618,7 +618,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¹¹¿·¹Ô¤ÎUPDATE
+	// æ›´æ–°è¡Œã®UPDATE
 	$strQuery = "UPDATE m_Stock SET lngStockStatusCode = " . DEF_STOCK_END . " WHERE lngStockStatusCode = " . DEF_STOCK_CLOSED
 		. " AND bytInvalidFlag = FALSE " 
 		. " AND to_char( date_trunc( 'month', dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
@@ -626,29 +626,29 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 
 	if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 	{
-		fncOutputError ( 9061, DEF_ERROR, "»ÅÆş¥Ç¡¼¥¿¤ÎÄù¤á½èÍıÌá¤·¾õÂÖ¤Ø¤Î¹¹¿·½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError ( 9061, DEF_ERROR, "ä»•å…¥ãƒ‡ãƒ¼ã‚¿ã®ç· ã‚å‡¦ç†æˆ»ã—çŠ¶æ…‹ã¸ã®æ›´æ–°å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
-	// ¥³¥ß¥Ã¥È½èÍı
+	// ã‚³ãƒŸãƒƒãƒˆå‡¦ç†
 	$objDB->transactionCommit();
 
 	unset ( $aryDetail );
-	// ÃÖ´¹ÍÑÊ¸»úÎó¤ÎÀßÄê
+	// ç½®æ›ç”¨æ–‡å­—åˆ—ã®è¨­å®š
 	for( $i = 0; $i < $lngStockCount; $i++ )
 	{
-		$aryDetailData["strFuncType"] = "»ÅÆş´ÉÍı";
+		$aryDetailData["strFuncType"] = "ä»•å…¥ç®¡ç†";
 		$aryDetailData["strCode"] = $aryStockResult[$i]["strstockcode"];
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "closed/parts_detail.tmpl" );
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryDetailData );
 		$objTemplate->complete();
 		
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		$aryDetail[] = $objTemplate->strTemplate;
 	}
 
@@ -658,22 +658,22 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 	}
 
 	////////////////////////////////////
-	//////////////·ë²Ì½èÍı//////////////
+	//////////////çµæœå‡¦ç†//////////////
 	////////////////////////////////////
 
 	$aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
-	$aryData["strProcessMessage"] = "²¼µ­¤Î¡ÖÄù¤áºÑ¡×¤Î¥Ç¡¼¥¿¤ËÂĞ¤·¤ÆÄù¤á½èÍı¤ÎÌá¤·½èÍı¤ò¹Ô¤¤¤Ş¤·¤¿¡£";
+	$aryData["strProcessMessage"] = "ä¸‹è¨˜ã®ã€Œç· ã‚æ¸ˆã€ã®ãƒ‡ãƒ¼ã‚¿ã«å¯¾ã—ã¦ç· ã‚å‡¦ç†ã®æˆ»ã—å‡¦ç†ã‚’è¡Œã„ã¾ã—ãŸã€‚";
 	$aryData["strAction"] = "/closed/closed.php?strSessionID=";
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "closed/finish.tmpl" );
 
-	// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+	// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 	$objTemplate->replace( $aryData );
 	$objTemplate->complete();
 
-	// HTML½ĞÎÏ
+	// HTMLå‡ºåŠ›
 	echo $objTemplate->strTemplate;
 
 	$objDB->close();

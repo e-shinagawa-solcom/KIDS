@@ -2,20 +2,20 @@
 
 // ----------------------------------------------------------------------------
 /**
- *       »ÅÆþ´ÉÍý  ¸¡º÷²èÌÌ
+ *       ä»•å…¥ç®¡ç†  æ¤œç´¢ç”»é¢
  *
- *       ½èÍý³µÍ×
- *         ¡¦¸¡º÷²èÌÌÉ½¼¨½èÍý
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»æ¤œç´¢ç”»é¢è¡¨ç¤ºå‡¦ç†
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
 
-// ÀßÄê¤ÎÆÉ¤ß¹þ¤ß
+// è¨­å®šã®èª­ã¿è¾¼ã¿
 include_once "conf.inc";
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require LIB_FILE;
 
 $objDB = new clsDB();
@@ -23,7 +23,7 @@ $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
 
 //////////////////////////////////////////////////////////////////////////
-// POST(°ìÉôGET)¥Ç¡¼¥¿¼èÆÀ
+// POST(ä¸€éƒ¨GET)ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ($_POST) {
     $aryData = $_POST;
@@ -33,20 +33,20 @@ if ($_POST) {
 
 setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// ¸¢¸Â¥Á¥§¥Ã¥¯
-// 702 »ÅÆþ´ÉÍý¡Ê»ÅÆþ¸¡º÷¡Ë
+// æ¨©é™ãƒã‚§ãƒƒã‚¯
+// 702 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥æ¤œç´¢ï¼‰
 if (!fncCheckAuthority(DEF_FUNCTION_PC2, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", true, "", $objDB);
+    fncOutputError(9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", true, "", $objDB);
 }
 
-// 703 »ÅÆþ´ÉÍý¡Ê»ÅÆþ¸¡º÷¡¡´ÉÍý¥â¡¼¥É¡Ë
+// 703 ä»•å…¥ç®¡ç†ï¼ˆä»•å…¥æ¤œç´¢ã€€ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ï¼‰
 if ( fncCheckAuthority( DEF_FUNCTION_PC3, $objAuth ) )
 {
     $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
-    // 707 »ÅÆþ´ÉÍý¡ÊÌµ¸ú²½¡Ë
+    // 707 ä»•å…¥ç®¡ç†ï¼ˆç„¡åŠ¹åŒ–ï¼‰
     if (fncCheckAuthority(DEF_FUNCTION_PC7, $objAuth)) {
         $aryData["btnInvalid_visibility"] = 'style="visibility: visible"';
         $aryData["btnInvalidVisible"] = "disabled";
@@ -62,7 +62,7 @@ else
     $aryData["btnInvalidVisible"] = "";
 }
 
-// 704 »ÅÆþ´ÉÍý¡Ê¾ÜºÙÉ½¼¨¡Ë
+// 704 ä»•å…¥ç®¡ç†ï¼ˆè©³ç´°è¡¨ç¤ºï¼‰
 if (fncCheckAuthority(DEF_FUNCTION_PC4, $objAuth)) {
     $aryData["btnDetail_visibility"] = 'style="visibility: visible"';
     $aryData["btnDetailVisible"] = "checked";
@@ -70,7 +70,7 @@ if (fncCheckAuthority(DEF_FUNCTION_PC4, $objAuth)) {
     $aryData["btnDetail_visibility"] = 'style="visibility: hidden"';
     $aryData["btnDetailVisible"] = "";
 }
-// 705 »ÅÆþ´ÉÍý¡Ê½¤Àµ¡Ë
+// 705 ä»•å…¥ç®¡ç†ï¼ˆä¿®æ­£ï¼‰
 if (fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
     $aryData["btnFix_visibility"] = 'style="visibility: visible"';
     $aryData["btnFixVisible"] = "checked";
@@ -78,7 +78,7 @@ if (fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
     $aryData["btnFix_visibility"] = 'style="visibility: hidden"';
     $aryData["btnFixVisible"] = "";
 }
-// 706 »ÅÆþ´ÉÍý¡Êºï½ü¡Ë
+// 706 ä»•å…¥ç®¡ç†ï¼ˆå‰Šé™¤ï¼‰
 if (fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth)) {
     $aryData["btnDelete_visibility"] = 'style="visibility: visible"';
     $aryData["btnDeleteVisible"] = "checked";
@@ -86,18 +86,18 @@ if (fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth)) {
     $aryData["btnDelete_visibility"] = 'style="visibility: hidden"';
     $aryData["btnDeleteVisible"] = "";
 }
-// »ÅÆþ¾õÂÖ
+// ä»•å…¥çŠ¶æ…‹
 $aryData["lngStockStatusCode"] = fncGetCheckBoxObject("m_stockstatus", "lngstockstatuscode", "strstockstatusname", "lngStockStatusCode[]", 'where lngStockStatusCode not in (1)', $objDB);
-// »ÙÊ§¾ò·ï
+// æ”¯æ‰•æ¡ä»¶
 $aryData["lngPayConditionCode"] = fncGetPulldown("m_paycondition", "lngpayconditioncode", "strpayconditionname", 0, '', $objDB);
-// ±¿ÈÂÊýË¡
+// é‹æ¬æ–¹æ³•
 $aryData["lngDeliveryMethodCode"] = fncGetPulldown("m_deliverymethod", "lngdeliverymethodcode", "strdeliverymethodname", 0, '', $objDB);
-// »ÅÆþ²ÊÌÜ
+// ä»•å…¥ç§‘ç›®
 $aryData["lngStockSubjectCode"] = fncGetPulldown("m_stocksubject", "lngstocksubjectcode", "lngstocksubjectcode,	strstocksubjectname", 1, '', $objDB);
-// »ÅÆþÉôÉÊ
+// ä»•å…¥éƒ¨å“
 $aryData["lngStockItemCode"] = fncGetPulldown("m_stockitem", "lngstocksubjectcode || '-' || lngstockitemcode", "lngstockitemcode, 	strstockitemname", 0, '', $objDB);
 
-// »ÅÆþÉôÉÊÉü¸µÍÑ
+// ä»•å…¥éƒ¨å“å¾©å…ƒç”¨
 $TmpAry = explode("\n", $aryData["lngStockItemCode"]);
 
 foreach ($TmpAry as $key => $value) {
@@ -119,12 +119,12 @@ foreach ($TmpAry as $key => $value) {
 $aryData["lngStockItemCodeValue"] = "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"</option>";
 $aryData["lngStockItemCodeDisp"] = mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"</option>", "EUC-JP", "auto");
 
-//¡¡¥×¥ë¥À¥¦¥ó¥ê¥¹¥È¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤¿¾ì¹ç¥¨¥é¡¼É½¼¨
+//ã€€ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®å–å¾—ã«å¤±æ•—ã—ãŸå ´åˆã‚¨ãƒ©ãƒ¼è¡¨ç¤º
 if (!$aryData["lngStockStatusCode"] or !$aryData["lngPayConditionCode"] or !$aryData["lngStockSubjectCode"] or !$aryData["lngStockItemCode"]) {
-    fncOutputError(9055, DEF_WARNING, "¥·¥¹¥Æ¥à´ÉÍý¼Ô¤Ë¤ªÌä¤¤¹ç¤ï¤»²¼¤µ¤¤¡£", true, "", $objDB);
+    fncOutputError(9055, DEF_WARNING, "ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†è€…ã«ãŠå•ã„åˆã‚ã›ä¸‹ã•ã„ã€‚", true, "", $objDB);
 }
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 echo fncGetReplacedHtmlWithBase("search/base_search.html", "pc/search/pc_search.html", $aryData, $objAuth);
 
 $objDB->close();

@@ -12,13 +12,13 @@ function fncChgEtoJ( lngCode )
 			 typeof(Column5) != 'undefined' &&
 			 typeof(Column6) != 'undefined' )
 		{
-			Column0.innerText = 'Æü';
-			Column1.innerText = '·î';
-			Column2.innerText = '²Ğ';
-			Column3.innerText = '¿å';
-			Column4.innerText = 'ÌÚ';
-			Column5.innerText = '¶â';
-			Column6.innerText = 'ÅÚ';
+			Column0.innerText = 'æ—¥';
+			Column1.innerText = 'æœˆ';
+			Column2.innerText = 'ç«';
+			Column3.innerText = 'æ°´';
+			Column4.innerText = 'æœ¨';
+			Column5.innerText = 'é‡‘';
+			Column6.innerText = 'åœŸ';
 		}
 	}
 	else if( lngCode == 0 )

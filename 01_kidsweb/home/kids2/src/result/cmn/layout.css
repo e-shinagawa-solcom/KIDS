@@ -20,7 +20,7 @@ a:active.Cells   { color: #666666 ;  background-color: transparent ; }
 
 body {
 	background-color : #f1f1f1 ;
-	font-family : Arial , £Õ£” £–•¥•∑•√•Ø;
+	font-family : Arial , Ôº≠Ôº≥ Ôº∞„Ç¥„Ç∑„ÉÉ„ÇØ;
 	font-style : normal ;
 	font-weight : normal ;
 	color : #666666 ;
@@ -41,7 +41,7 @@ body {
 
 
 
-/* ≈–œø≥Œ«ßÕ—•™°º•–°º•’•Ì°º•Ï•§•‰°º */
+/* ÁôªÈå≤Á¢∫Ë™çÁî®„Ç™„Éº„Éê„Éº„Éï„É≠„Éº„É¨„Ç§„É§„Éº */
 #ConfirmOverFlowBox
 {
 	position : absolute ;
@@ -58,7 +58,7 @@ body {
 
 
 /********************* Iframe Size *********************/
-#ResultIframeforRegist /* ≈–œø≥Œ«ßÕ— */
+#ResultIframeforRegist /* ÁôªÈå≤Á¢∫Ë™çÁî® */
 {
 	position : absolute ;
 	left : 0px ;
@@ -70,7 +70,7 @@ body {
 	background-color: transparent ;
 }
 
-#ResultIframe /* ∏°∫˜∑Î≤Ã∞ÏÕ˜Õ— */
+#ResultIframe /* Ê§úÁ¥¢ÁµêÊûú‰∏ÄË¶ßÁî® */
 {
 	position : absolute ;
 	left : 0px ;
@@ -82,7 +82,7 @@ body {
 	background-color: transparent ;
 }
 
-#ResultIframeCommon /* æ‹∫Ÿ°¶∫ÔΩ¸Õ— */
+#ResultIframeCommon /* Ë©≥Á¥∞„ÉªÂâäÈô§Áî® */
 {
 	position : absolute ;
 	left : 0px ;
@@ -94,7 +94,7 @@ body {
 	background-color: transparent ;
 }
 
-#ResultIframeRenew /* Ω§¿µÕ— */
+#ResultIframeRenew /* ‰øÆÊ≠£Áî® */
 {
 	position : absolute ;
 	left : 0px ;
@@ -107,7 +107,7 @@ body {
 }
 
 
-#ResultIframeCommonMaster /* [•ﬁ•π•ø°º]æ‹∫Ÿ°¶∫ÔΩ¸Õ— */
+#ResultIframeCommonMaster /* [„Éû„Çπ„Çø„Éº]Ë©≥Á¥∞„ÉªÂâäÈô§Áî® */
 {
 	position : absolute ;
 	left : 0px ;
@@ -120,7 +120,7 @@ body {
 }
 
 
-#ResultIframeWf /* æµ«ß•Î°º•»Õ— */
+#ResultIframeWf /* ÊâøË™ç„É´„Éº„ÉàÁî® */
 {
 	position : absolute ;
 	left : 0px ;
@@ -136,7 +136,7 @@ body {
 /********************* Table Style *********************/
 #strError
 {
-	font-family : monospace ; /* £Õ£” £–•¥•∑•√•Ø, Osaka */
+	font-family : monospace ; /* Ôº≠Ôº≥ Ôº∞„Ç¥„Ç∑„ÉÉ„ÇØ, Osaka */
 	font-style : normal ;
 	font-weight : normal ;
 	color : #ea8555 ;
@@ -152,7 +152,7 @@ body {
 table
 {
 	width : 100% ;
-	font-family : Arial , £Õ£” £–•¥•∑•√•Ø, Osaka ;
+	font-family : Arial , Ôº≠Ôº≥ Ôº∞„Ç¥„Ç∑„ÉÉ„ÇØ, Osaka ;
 	font-style : normal ;
 	font-weight : normal ;
 	font-size : 12px ;
@@ -165,7 +165,7 @@ table
 
 #SegTitle
 {
-	font-family : Arial , £Õ£”°°£–•¥•∑•√•Ø ;
+	font-family : Arial , Ôº≠Ôº≥„ÄÄÔº∞„Ç¥„Ç∑„ÉÉ„ÇØ ;
 	position : absolute ;
 	top : 0px ;
 	color : #ffffff ;
@@ -175,7 +175,7 @@ table
 
 .SegColumn
 {
-	font-family : Arial , £Õ£”°°£–•¥•∑•√•Ø ;
+	font-family : Arial , Ôº≠Ôº≥„ÄÄÔº∞„Ç¥„Ç∑„ÉÉ„ÇØ ;
 	color : #ffffff ;
 	background-color : #799797 ;
 	word-break : keep-all ;
@@ -184,7 +184,7 @@ table
 
 .SegColumn2
 {
-	font-family : Arial , £Õ£”°°£–•¥•∑•√•Ø ;
+	font-family : Arial , Ôº≠Ôº≥„ÄÄÔº∞„Ç¥„Ç∑„ÉÉ„ÇØ ;
 	color : #ffffff ;
 	background-color : #6d8aab ;
 	word-break : keep-all ;
@@ -201,7 +201,7 @@ table
 
 .SegsUse
 {
-	font-family : Arial , £Õ£”°°£–•¥•∑•√•Ø ;
+	font-family : Arial , Ôº≠Ôº≥„ÄÄÔº∞„Ç¥„Ç∑„ÉÉ„ÇØ ;
 	color : #555555 ;
 	background : #ffffff ;
 	padding : 4px 6px 3px 6px ;
@@ -217,7 +217,7 @@ table
 .detail-footer .box-title
 {
 	text-align: center;
-	font-family : Arial , £Õ£”°°£–•¥•∑•√•Ø ;
+	font-family : Arial , Ôº≠Ôº≥„ÄÄÔº∞„Ç¥„Ç∑„ÉÉ„ÇØ ;
 	color : #ffffff ;
 	background : #555555 ;
 	padding : 4px 6px 3px 6px ;
@@ -282,7 +282,7 @@ table
 	position : absolute ;
 	top : 17px ;
 	left : 430px ;
-	font-family : Arial , £Õ£” £–•¥•∑•√•Ø, Osaka ;
+	font-family : Arial , Ôº≠Ôº≥ Ôº∞„Ç¥„Ç∑„ÉÉ„ÇØ, Osaka ;
 	font-style : normal ;
 	font-weight : normal ;
 	width : 100px ;

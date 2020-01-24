@@ -1,7 +1,7 @@
 /*
-	���ס����̲ߥ졼�ȥ����ɡס��̲�ñ�̥����ɡפ����Ŭ�ѽ�λ��+1�פ����
-	�оݡ��ޥ�������
-	������chiba
+	概要：「通貨レートコード」「通貨単位コード」から「適用終了月+1」を取得
+	対象：マスタ管理
+	作成：chiba
 */
 SELECT dtmApplyEndDate, to_char ( date_trunc('month', dtmApplyEndDate + interval '1 month' ), 'YYYY/MM/DD')
 FROM m_MonetaryRate

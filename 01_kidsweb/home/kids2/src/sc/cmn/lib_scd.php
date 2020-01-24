@@ -1,7 +1,7 @@
 <?
 // ----------------------------------------------------------------------------
 /**
-*       ������  Ǽ�ʽ񸡺���Ϣ�ؿ���
+*       売上管理  納品書検索関連関数群
 *
 *
 *       @package    K.I.D.S.
@@ -12,10 +12,10 @@
 *       @version    2.00
 *
 *
-*       ��������
-*         ��Ǽ�ʽ񸡺���̴�Ϣ�δؿ�
+*       処理概要
+*         ・納品書検索結果関連の関数
 *
-*       ��������
+*       更新履歴
 *
 */
 // ----------------------------------------------------------------------------
@@ -23,54 +23,54 @@
 
 
 /**
-* Ǽ�ʽ񸡺��θ������ܤ�����פ���ǿ������ǡ������������SQLʸ�κ����ؿ�
+* 納品書検索の検索項目から一致する最新の売上データを取得するSQL文の作成関数
 *
-*	Ǽ�ʽ񸡺��θ������ܤ��� SQLʸ���������
+*	納品書検索の検索項目から SQL文を作成する
 *
-*	@param  Array 	$arySearchColumn 		�����оݥ����̾������
-*	@param  Array 	$arySearchDataColumn 	�������Ƥ�����
-*	@param  Object	$objDB       			DB���֥�������
-*	@param	String	$strSlipCode			Ǽ����ɼ������	��������:������̽���	Ǽ����ɼ�����ɻ����:�����ѡ�Ʊ��Ǽ�ʽ�ΣϤΰ�������
-*	@param	Integer	$lngSlipNo				Ǽ����ɼ�ֹ�	0:������̽���	Ǽ����ɼ�ֹ�����:�����ѡ�Ʊ��Ǽ����ɼ�����ɤȤ�������оݳ�Ǽ����ɼ�ֹ�
-*	@return Array 	$strSQL ������SQLʸ OR Boolean FALSE
+*	@param  Array 	$arySearchColumn 		検索対象カラム名の配列
+*	@param  Array 	$arySearchDataColumn 	検索内容の配列
+*	@param  Object	$objDB       			DBオブジェクト
+*	@param	String	$strSlipCode			納品伝票コード	空白指定時:検索結果出力	納品伝票コード指定時:管理用、同じ納品書ＮＯの一覧取得
+*	@param	Integer	$lngSlipNo				納品伝票番号	0:検索結果出力	納品伝票番号指定時:管理用、同じ納品伝票コードとする時の対象外納品伝票番号
+*	@return Array 	$strSQL 検索用SQL文 OR Boolean FALSE
 *	@access public
 */
 function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $strSlipCode, $lngSlipNo, $strSessionID)
 {
 	// -----------------------------
-	//  ��������ưŪ����
+	//  検索条件の動的設定
 	// -----------------------------
-	// ���پ���ɲúѤߥե饰
+	// 明細条件追加済みフラグ
 	$detailFlag = FALSE;
 
-	// Ʊ��Ǽ����ɼ�����ɤΥǡ��������������
+	// 同じ納品伝票コードのデータを取得する場合
 	if ( $strSlipCode )
 	{
-		// Ʊ��Ǽ����ɼ�����ɤ��Ф��ƻ����Ǽ����ɼ�ֹ�Υǡ����Ͻ�������
+		// 同じ納品伝票コードに対して指定の納品伝票番号のデータは除外する
 		if ( $lngSlipNo )
 		{
 			$aryQuery[] = " WHERE s.bytInvalidFlag = FALSE AND s.strSlipCode = '" . $strSlipCode . "'";
 		}
 		else
 		{
-			fncOutputError( 3, "DEF_FATAL", "�����꡼�¹ԥ��顼" ,TRUE, "../sc/search2/index.php?strSessionID=".$strSessionID, $objDB );
+			fncOutputError( 3, "DEF_FATAL", "クエリー実行エラー" ,TRUE, "../sc/search2/index.php?strSessionID=".$strSessionID, $objDB );
 		}
 	}
-	// �����⡼�ɤǤ�Ʊ��Ǽ����ɼ�����ɤ��Ф��븡���⡼�ɰʳ��ξ��ϸ��������ɲä���
+	// 管理モードでの同じ納品伝票コードに対する検索モード以外の場合は検索条件を追加する
 	else
 	{
-		// ���о�� ̵���ե饰�����ꤵ��Ƥ��餺���ǿ����Τ�
+		// 絶対条件 無効フラグが設定されておらず、最新売上のみ
 		$aryQuery[] = " WHERE s.bytInvalidFlag = FALSE AND s.lngRevisionNo >= 0";
 
-		// ���������å��ܥå�����ON�ι��ܤΤ߸��������ɲ�
+		// 検索チェックボックスがONの項目のみ検索条件に追加
 		for ( $i = 0; $i < count($arySearchColumn); $i++ )
 		{
 			$strSearchColumnName = $arySearchColumn[$i];
 			
 			// ----------------------------------------------
-			//   Ǽ�ʽ�ޥ����ʥإå����ˤθ������
+			//   納品書マスタ（ヘッダ部）の検索条件
 			// ----------------------------------------------
-			// �ܵҡ�������
+			// 顧客（売上先）
 			if ( $strSearchColumnName == "lngCustomerCompanyCode" )
 			{
 				if ( $arySearchDataColumn["lngCustomerCompanyCode"] )
@@ -79,7 +79,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				}
 			}
 
-			// ���Ƕ�ʬ�ʾ����Ƕ�ʬ��
+			// 課税区分（消費税区分）
 			if ( $strSearchColumnName == "lngTaxClassCode" )
 			{
 				if ( $arySearchDataColumn["lngTaxClassCode"] )
@@ -88,12 +88,12 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				}
 			}
 
-			// Ǽ����ɼ�����ɡ�Ǽ�ʽ�NO��
+			// 納品伝票コード（納品書NO）
 			if ( $strSearchColumnName == "strSlipCode" )
 			{
 				if ( $arySearchDataColumn["strSlipCode"] )
 				{
-					// ����޶��ڤ�������ͤ�OR����Ÿ��
+					// カンマ区切りの入力値をOR条件に展開
 					$arySCValue = explode(",",$arySearchDataColumn["strSlipCode"]);
 					foreach($arySCValue as $strSCValue){
 						$arySCOr[] = "UPPER(s.strSlipCode) LIKE UPPER('%" . $strSCValue . "%')";
@@ -104,7 +104,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				}
 			}
 
-			// Ǽ����
+			// 納品日
 			if ( $strSearchColumnName == "dtmDeliveryDate" )
 			{
 				if ( $arySearchDataColumn["dtmDeliveryDateFrom"] )
@@ -119,12 +119,12 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				}
 			}
 
-			// Ǽ����
+			// 納品先
 			if ( $strSearchColumnName == "lngDeliveryPlaceCode" )
 			{
 				if ( $arySearchDataColumn["lngDeliveryPlaceCode"] )
 				{
-					//��ҥޥ�����ɳ�Ť����ͤ����
+					//会社マスタと紐づけた値と比較
 					$aryQuery[] = " AND delv_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
 				}
 //				if ( $arySearchDataColumn["strDeliveryPlaceName"] )
@@ -133,7 +133,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 //				}
 			}
 
-			// ��ɼ��
+			// 起票者
 			if ( $strSearchColumnName == "lngInsertUserCode" )
 			{
 				if ( $arySearchDataColumn["lngInsertUserCode"] )
@@ -147,9 +147,9 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			}
 
 			// ----------------------------------------------
-			//   Ǽ����ɼ���٥ơ��֥���������ˤθ������
+			//   納品伝票明細テーブル（明細部）の検索条件
 			// ----------------------------------------------
-			// ��ʸ��NO.
+			// 注文書NO.
 			if ( $strSearchColumnName == "strCustomerSalesCode" )
 			{
 				if ( $arySearchDataColumn["strCustomerSalesCode"] )
@@ -166,7 +166,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 						$aryDetailWhereQuery[] = "AND ";
 					}
 
-					// ����޶��ڤ�������ͤ�OR����Ÿ��
+					// カンマ区切りの入力値をOR条件に展開
 					$aryCSCValue = explode(",",$arySearchDataColumn["strCustomerSalesCode"]);
 					foreach($aryCSCValue as $strCSCValue){
 						$aryCSCOr[] = "UPPER(sd1.strCustomerSalesCode) LIKE UPPER('%" . $strCSCValue . "%')";
@@ -179,7 +179,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				}
 			}
 		
-			// �ܵ�����
+			// 顧客品番
 			if ( $strSearchColumnName == "strGoodsCode" )
 			{
 				if ( $arySearchDataColumn["strGoodsCode"] )
@@ -196,7 +196,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 						$aryDetailWhereQuery[] = "AND ";
 					}
 
-					// ����޶��ڤ�������ͤ�OR����Ÿ��
+					// カンマ区切りの入力値をOR条件に展開
 					$aryGCValue = explode(",",$arySearchDataColumn["strGoodsCode"]);
 					foreach($aryGCValue as $strGCValue){
 						$aryGCOr[] = "UPPER(sd1.strGoodsCode) LIKE UPPER('%" . $strGCValue . "%')";
@@ -209,7 +209,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				}
 			}
 
-			// ����ʬ
+			// 売上区分
 			if ( $strSearchColumnName == "lngSalesClassCode" )
 			{
 				if ( $arySearchDataColumn["lngSalesClassCode"] )
@@ -232,52 +232,52 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 
 
 	// ---------------------------------
-	//   SQLʸ�κ���
+	//   SQL文の作成
 	// ---------------------------------
 	$aryOutQuery = array();
-	$aryOutQuery[] = "SELECT distinct s.lngSlipNo as lngSlipNo";	//Ǽ����ɼ�ֹ�
-	$aryOutQuery[] = "	,s.lngSlipNo as lngpkno";			    //����ֹ�
-	$aryOutQuery[] = "	,s.lngSalesNo as lngSalesNo";			    //����ֹ�
-	$aryOutQuery[] = "	,s.lngRevisionNo as lngRevisionNo";			//��ӥ�����ֹ�
-	$aryOutQuery[] = "	,s.dtmInsertDate as dtmInsertDate";			//������
-	// �ܵ�
+	$aryOutQuery[] = "SELECT distinct s.lngSlipNo as lngSlipNo";	//納品伝票番号
+	$aryOutQuery[] = "	,s.lngSlipNo as lngpkno";			    //売上番号
+	$aryOutQuery[] = "	,s.lngSalesNo as lngSalesNo";			    //売上番号
+	$aryOutQuery[] = "	,s.lngRevisionNo as lngRevisionNo";			//リビジョン番号
+	$aryOutQuery[] = "	,s.dtmInsertDate as dtmInsertDate";			//作成日
+	// 顧客
 	$arySelectQuery[] = ", cust_c.strcompanydisplaycode as strCustomerDisplayCode";
 	$arySelectQuery[] = ", s.strcustomername as strCustomerDisplayName";
-	// �ܵҤι�
+	// 顧客の国
 	$arySelectQuery[] = ", cust_c.lngCountryCode as lngcountrycode";
-	// ������ֹ�
+	// 請求書番号
 	$arySelectQuery[] = ", sa.lngInvoiceNo as lnginvoiceno";
-	// ���Ƕ�ʬ
+	// 課税区分
 	$arySelectQuery[] = ", s.strTaxClassName as strTaxClassName";
-	// Ǽ����ɼ�����ɡ�Ǽ�ʽ�NO��
+	// 納品伝票コード（納品書NO）
 	$arySelectQuery[] = ", s.strSlipCode as strSlipCode";
-	// Ǽ����
+	// 納品日
 	$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD' ) as dtmDeliveryDate";
-	// Ǽ����
+	// 納品先
 	$arySelectQuery[] = " , delv_c.strcompanydisplaycode as strdeliveryplacecode";
 	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
-	// ��ɼ��
+	// 起票者
 	$arySelectQuery[] = ", u.struserdisplaycode as strusercode";
 	$arySelectQuery[] = ", s.strUserName as strusername";
-	// ����
+	// 備考
 	$arySelectQuery[] = ", s.strNote as strNote";
-	// ��׶��
+	// 合計金額
 	$arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
-	//// ���Σ�
+	//// 売上Ｎｏ
 	$arySelectQuery[] = ", sa.strSalesCode as strSalesCode";
-	// �����֥�����
+	// 売上状態コード
 	$arySelectQuery[] = ", sa.lngSalesStatusCode as lngSalesStatusCode";
 	$arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
 	//$arySelectQuery[] = ", ti.lnginvoiceno as lnginvoiceno";
 	
-	// �̲�ñ��
+	// 通貨単位
 	$arySelectQuery[] = ", s.lngMonetaryUnitCode";
 	$arySelectQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
 
-	// select�� �����꡼Ϣ��
+	// select句 クエリー連結
 	$aryOutQuery[] = implode("\n", $arySelectQuery);
 
-	// From�� ������
+	// From句 の生成
 	$aryFromQuery = array();
 	$aryFromQuery[] = " FROM m_Slip s";
 //	if ( !$strSlipCode )
@@ -293,29 +293,29 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryFromQuery[] = " LEFT JOIN m_User u ON s.lngusercode = u.lngusercode";
 	$aryFromQuery[] = " LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
 	//$aryFromQuery[] = " LEFT JOIN t_invoicedetail ti ON ti.lngslipno = s.lngslipno and ti.lngsliprevisionno = s.lngrevisionno";
-	// From�� �����꡼Ϣ��
+	// From句 クエリー連結
 	$aryOutQuery[] = implode("\n", $aryFromQuery);
 
-	// ���ٸ����ѥơ��֥�����
+	// 明細検索用テーブル結合条件
 	$aryDetailFrom = array();
 	$aryDetailFrom[] = ", (SELECT sd1.lngSlipNo ";
-	$aryDetailFrom[] = "	,sd1.lngSlipDetailNo";				// Ǽ����ɼ�����ֹ�
-	$aryDetailFrom[] = "	,sd1.lngrevisionno";	// ��ӥ�����ֹ�
-	$aryDetailFrom[] = "	,sd1.lngSortKey as lngRecordNo";	// ���ٹ�NO
-	$aryDetailFrom[] = "	,sd1.strCustomerSalesCode";			// ��ʸ��NO
-	$aryDetailFrom[] = "	,sd1.strGoodsCode";					// �ܵ�����
-	$aryDetailFrom[] = "	,sd1.strProductName";				// ��̾
-	$aryDetailFrom[] = "	,sd1.strSalesClassName";	// ����ʬ
-	$aryDetailFrom[] = "	,sd1.curProductPrice";		// ñ��
-	$aryDetailFrom[] = "	,sd1.lngQuantity";	        // ����
-	$aryDetailFrom[] = "	,sd1.lngProductQuantity";	// ����
-	$aryDetailFrom[] = "	,sd1.strProductUnitName";	// ñ��
-	$aryDetailFrom[] = "	,sd1.curSubTotalPrice";		// ��ȴ���
-	$aryDetailFrom[] = "	,sd1.strNote";				// ��������
+	$aryDetailFrom[] = "	,sd1.lngSlipDetailNo";				// 納品伝票明細番号
+	$aryDetailFrom[] = "	,sd1.lngrevisionno";	// リビジョン番号
+	$aryDetailFrom[] = "	,sd1.lngSortKey as lngRecordNo";	// 明細行NO
+	$aryDetailFrom[] = "	,sd1.strCustomerSalesCode";			// 注文書NO
+	$aryDetailFrom[] = "	,sd1.strGoodsCode";					// 顧客品番
+	$aryDetailFrom[] = "	,sd1.strProductName";				// 品名
+	$aryDetailFrom[] = "	,sd1.strSalesClassName";	// 売上区分
+	$aryDetailFrom[] = "	,sd1.curProductPrice";		// 単価
+	$aryDetailFrom[] = "	,sd1.lngQuantity";	        // 入数
+	$aryDetailFrom[] = "	,sd1.lngProductQuantity";	// 数量
+	$aryDetailFrom[] = "	,sd1.strProductUnitName";	// 単位
+	$aryDetailFrom[] = "	,sd1.curSubTotalPrice";		// 税抜金額
+	$aryDetailFrom[] = "	,sd1.strNote";				// 明細備考
 	$aryDetailFrom[] = "	FROM t_SlipDetail sd1 ";
-	// where������ٹԡ� �����꡼Ϣ��
+	// where句（明細行） クエリー連結
 	$strDetailQuery = implode("\n", $aryDetailFrom) . "\n";
-	// ���ٹԤξ�郎¸�ߤ�����
+	// 明細行の条件が存在する場合
 	if ( $detailFlag )
 	{
 		$strDetailQuery .= implode("\n", $aryDetailTargetQuery) . "\n";
@@ -323,24 +323,24 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryDetailWhereQuery[] = ") as sd";
 	$strDetailQuery .= implode("\n", $aryDetailWhereQuery) . "\n";
 	
-	// Where�� �����꡼Ϣ��
+	// Where句 クエリー連結
 	$aryOutQuery[] = $strDetailQuery;
 	$aryOutQuery[] = implode("\n", $aryQuery);
 
-	// ���ٹ��Ѥξ��Ϣ��
+	// 明細行用の条件連結
 	$aryOutQuery[] = " AND sd.lngSlipNo = s.lngSlipNo";
 	$aryOutQuery[] = " AND sd.lngrevisionno = s.lngrevisionno";
 
 
 	/////////////////////////////////////////////////////////////
-	//// �ǿ����ʥ�ӥ�����ֹ椬���硢��Х����ֹ椬���硢     ////
-	//// ���ĥ�ӥ�����ֹ�����ͤ�̵���ե饰��FALSE��           ////
-	//// Ʊ��Ǽ����ɼ�����ɤ���ĥǡ�����̵�����ǡ���          ////
+	//// 最新売上（リビジョン番号が最大、リバイズ番号が最大、     ////
+	//// かつリビジョン番号負の値で無効フラグがFALSEの           ////
+	//// 同じ納品伝票コードを持つデータが無い売上データ          ////
 	/////////////////////////////////////////////////////////////
-	// Ǽ����ɼ�����ɤ����ꤵ��Ƥ��ʤ����ϸ����������ꤹ��
+	// 納品伝票コードが指定されていない場合は検索条件を設定する
 	if ( !$strSlipCode )
 	{
-		// �����⡼�ɤξ��Ϻ���ǡ����⸡���оݤȤ��뤿��ʲ��ξ����оݳ�
+		// 管理モードの場合は削除データも検索対象とするため以下の条件は対象外
 		if ( !$arySearchDataColumn["Admin"] )
 		{
 //			$aryOutQuery[] = " AND 0 <= ( "
@@ -349,14 +349,14 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 		}
 	}
 
-	// Ʊ��Ǽ����ɼ�����ɤΥǡ��������������
+	// 同じ納品伝票コードのデータを取得する場合
 	if ($strSlipCode)
 	{
 		$aryOutQuery[] = " ORDER BY dtmInsertDate DESC";
 	}
 	else
 	{
-		// �����Ⱦ������
+		// ソート条件設定
 		$aryOutQuery[] = " ORDER BY lngSlipNo DESC";		
 	}
 	return implode("\n", $aryOutQuery);

@@ -1,17 +1,17 @@
 (function(){
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var workForm = $('form');
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     var btnClear = $('img.clear');
-    // ÅĞÏ¿¥Ü¥¿¥ó
+    // ç™»éŒ²ãƒœã‚¿ãƒ³
     var btnSearch = $('img.search');
 
-    // ¥Õ¥©¡¼¥à¥µ¥Ö¥ß¥Ã¥ÈÍŞ»ß
+    // ãƒ•ã‚©ãƒ¼ãƒ ã‚µãƒ–ãƒŸãƒƒãƒˆæŠ‘æ­¢
     $('document').on('submit', 'form', function(e){
         e.preventDefault();
         return false;
     });
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     btnClear.on('click', function(){
 		if(workForm.length == 0){
 	        var IFrames = $('iframe');	        
@@ -24,23 +24,23 @@
 	        	}
 	        }
         }
-        // ¥Æ¥­¥¹¥ÈÆşÎÏ²Õ½ê¤ò¥ê¥»¥Ã¥È
+        // ãƒ†ã‚­ã‚¹ãƒˆå…¥åŠ›ç®‡æ‰€ã‚’ãƒªã‚»ãƒƒãƒˆ
         workForm.find('input[type="text"], textarea').val('');
         var checks = workForm.find('input[type="checkbox"]');
         for(var i = 0;i < checks.length;i++){
         	checks[i].checked = false;
 		}
-		// ¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤ò°ìÈÖÌÜ¤ÎÁªÂò»è¤ËÀßÄê
+		// ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã‚’ä¸€ç•ªç›®ã®é¸æŠè‚¢ã«è¨­å®š
 		workForm.find('select').each(function(index){
             $(this).val($(this).find('option').first().val());
         });
 
     });
 
-    // ¸¡º÷¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+    // æ¤œç´¢ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnSearch.on('click', function(){
         var windowName = 'searchResult';
-        // »Ò¥¦¥£¥ó¥É¥¦¤ÎÉ½¼¨
+        // å­ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¡¨ç¤º
         
         if(workForm.length == 0){
 	        var IFrames = $('iframe');
@@ -55,7 +55,7 @@
 	        }
         }
         
-        // ¥Õ¥©¡¼¥àÀßÄê
+        // ãƒ•ã‚©ãƒ¼ãƒ è¨­å®š
         workForm.get(0).target = windowName;
         workForm.get(0).method = 'post';
         var baseURI = workForm.get(0).baseURI;
@@ -68,7 +68,7 @@
         	// var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
         	// var screen = baseURI.slice(baseURI.lastIndexOf('/',baseURI.indexOf('/search.php')-1)+1,baseURI.indexOf('/search.php'))
         	// workForm.get(0).action = '/m/result/' + screen + '/index.php?strSessionID=' + $.cookie('strSessionID');
-        	// // ¥µ¥Ö¥ß¥Ã¥È
+        	// // ã‚µãƒ–ãƒŸãƒƒãƒˆ
 			// workForm.submit();
 			// var searchResult = open('about:blank', windowName, 'width=1011px, height=700px, resizable=yes, scrollbars=no, menubar=no');
             GoResult(workForm.get(0) , "/result/index.html" , "/result/ifrm.html" , "ResultIframe" , "YES" );
@@ -76,21 +76,21 @@
         else if((baseURI.indexOf('/search.php') > 0) && (baseURI.indexOf('/uc/search/') > 0)){
         	var windowResult = open('about:blank', windowName, 'width=1011px, height=700px, scrollbars=yes, resizable=yes');
         	workForm.get(0).action = '/uc/result/index.php?strSessionID=' + $.cookie('strSessionID');
-        	// ¥µ¥Ö¥ß¥Ã¥È
+        	// ã‚µãƒ–ãƒŸãƒƒãƒˆ
         	workForm.submit();
         }
         else if(baseURI.indexOf('/search/index.php') > 0){
         	var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
         	var screen = baseURI.slice(baseURI.lastIndexOf('/',baseURI.indexOf('/search/index.php')-1)+1,baseURI.indexOf('/search/index.php'))
         	workForm.get(0).action = '/' + screen + '/result/index.php?strSessionID=' + $.cookie('strSessionID');
-        	// ¥µ¥Ö¥ß¥Ã¥È
+        	// ã‚µãƒ–ãƒŸãƒƒãƒˆ
         	workForm.submit();
         }
         else if(baseURI.indexOf('/search2/index.php') > 0){
         	var windowResult = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
         	var screen = baseURI.slice(baseURI.lastIndexOf('/',baseURI.indexOf('/search2/index.php')-1)+1,baseURI.indexOf('/search2/index.php'))
         	workForm.get(0).action = '/' + screen + '/result2/index.php?strSessionID=' + $.cookie('strSessionID');
-        	// ¥µ¥Ö¥ß¥Ã¥È
+        	// ã‚µãƒ–ãƒŸãƒƒãƒˆ
         	workForm.submit();
         }
         
@@ -99,20 +99,20 @@
 
 //@-------------------------------------------------------------------------------------------------------------------
 /**
-* ³µÍ× : ¸¡º÷·ë²ÌÉ½¼¨ÍÑ´Ø¿ô
+* æ¦‚è¦ : æ¤œç´¢çµæœè¡¨ç¤ºç”¨é–¢æ•°
 *
-* ²òÀâ : ¸¡º÷·ë²Ì¤ò¥À¥¤¥¢¥í¥°¤òÉ½¼¨¤µ¤»¤ë¤¿¤á¤Î´Ø¿ô¡£
-*        ÇÛÎó[args]¤Ë¥Õ¥©¡¼¥àÍ×ÁÇ¤ÎÃÍ¤òÂåÆş¸å¥À¥¤¥¢¥í¥°¤òÉ½¼¨¤¹¤ë¡£
+* è§£èª¬ : æ¤œç´¢çµæœã‚’ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã•ã›ã‚‹ãŸã‚ã®é–¢æ•°ã€‚
+*        é…åˆ—[args]ã«ãƒ•ã‚©ãƒ¼ãƒ è¦ç´ ã®å€¤ã‚’ä»£å…¥å¾Œãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’è¡¨ç¤ºã™ã‚‹ã€‚
 *
-* ÂĞ¾İ : ¸¡º÷ÍÑ¥Æ¥ó¥×¥ì¡¼¥È
+* å¯¾è±¡ : æ¤œç´¢ç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 *
-* @param [obj1]      : [¥ª¥Ö¥¸¥§¥¯¥È·¿] . ¥Õ¥©¡¼¥à¤Î¥ª¥Ö¥¸¥§¥¯¥ÈÌ¾
-* @param [obj2]      : [Ê¸»úÎó·¿]       . ¥À¥¤¥¢¥í¥°¾å¤Ç¸Æ¤Ó½Ğ¤¹¿ÆHTML¥Õ¥¡¥¤¥ë¤ÎURL
-* @param [strUrl]    : [Ê¸»úÎó·¿]       . ¥À¥¤¥¢¥í¥°¾å¤Ç¸Æ¤Ó½Ğ¤¹»ÒHTML¥Õ¥¡¥¤¥ë¤ÎURL(Iframe)
-* @param [strID]     : [Ê¸»úÎó·¿]       . ¥À¥¤¥¢¥í¥°¾å¤Ç¸Æ¤Ó½Ğ¤¹»ÒHTML¥Õ¥¡¥¤¥ë¤Î IframeÍÑID
-* @param [strScroll] : [Ê¸»úÎó·¿]       . Iframe¤Ç¥¹¥¯¥í¡¼¥ë¤Îµö²Ä¡¦ÉÔµö²Ä
+* @param [obj1]      : [ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå‹] . ãƒ•ã‚©ãƒ¼ãƒ ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå
+* @param [obj2]      : [æ–‡å­—åˆ—å‹]       . ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ä¸Šã§å‘¼ã³å‡ºã™è¦ªHTMLãƒ•ã‚¡ã‚¤ãƒ«ã®URL
+* @param [strUrl]    : [æ–‡å­—åˆ—å‹]       . ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ä¸Šã§å‘¼ã³å‡ºã™å­HTMLãƒ•ã‚¡ã‚¤ãƒ«ã®URL(Iframe)
+* @param [strID]     : [æ–‡å­—åˆ—å‹]       . ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ä¸Šã§å‘¼ã³å‡ºã™å­HTMLãƒ•ã‚¡ã‚¤ãƒ«ã® Iframeç”¨ID
+* @param [strScroll] : [æ–‡å­—åˆ—å‹]       . Iframeã§ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã®è¨±å¯ãƒ»ä¸è¨±å¯
 *
-* @event [onclick] : ÂĞ¾İ¥ª¥Ö¥¸¥§¥¯¥È
+* @event [onclick] : å¯¾è±¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 */
 //--------------------------------------------------------------------------------------------------------------------
 function GoResult_list(TargetWindow, obj1 , obj2 , strUrl , strID , strScroll )
@@ -152,7 +152,7 @@ function GoResult_list(TargetWindow, obj1 , obj2 , strUrl , strID , strScroll )
 			continue;
 		}
 
-		// ¸¡º÷¥Ú¡¼¥¸[¾õÂÖ]¹àÌÜ°Ê³°
+		// æ¤œç´¢ãƒšãƒ¼ã‚¸[çŠ¶æ…‹]é …ç›®ä»¥å¤–
 		if( obj1.elements[i].name != 'OrderStatusObject' )
 		{
 			args[3][k] = obj1.elements[i].name;

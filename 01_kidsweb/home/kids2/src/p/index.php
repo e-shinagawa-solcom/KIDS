@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ¾¦ÉÊ´ÉÍı  ¥á¥Ë¥å¡¼²èÌÌ
+*       å•†å“ç®¡ç†  ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 *
 *
 *       @package    K.I.D.S.
@@ -13,17 +13,17 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦¥á¥Ë¥å¡¼²èÌÌ¤òÉ½¼¨
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ã‚’è¡¨ç¤º
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-	// ÆÉ¤ß¹ş¤ß
+	// èª­ã¿è¾¼ã¿
 	include('conf.inc');
 	require (LIB_FILE);
 	
@@ -37,22 +37,22 @@
 	$aryData["strSessionID"] = $_POST["strSessionID"];
 
 	
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 	
-	// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+	// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 	$objAuth = fncIsSession( $_POST["strSessionID"], $objAuth, $objDB );
 
-	// 300 ¾¦ÉÊ´ÉÍı
+	// 300 å•†å“ç®¡ç†
 	if ( !fncCheckAuthority( DEF_FUNCTION_P0, $objAuth ) )
 	{
-	        fncOutputError ( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	        fncOutputError ( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
 
-	// ¥Ø¥ë¥×ÂĞ±ş
+	// ãƒ˜ãƒ«ãƒ—å¯¾å¿œ
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_P0;
 
 

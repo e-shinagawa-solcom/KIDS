@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" lang="ja" content="text/html;charset=utf-8"/> 
     <title></title> 
     <script> 
-    //innerText �򥵥ݡ��Ȥ��ʤ� Web �֥饦���ȶ��̤ǻ��Ѥ��뤿��� 
-    //setText �ؿ������        
+    //innerText をサポートしない Web ブラウザと共通で使用するための 
+    //setText 関数を定義        
     function setAlter_innerText(element) {        
        if (element.innerText) {        
           element.setText = function (text) {           
@@ -16,32 +16,32 @@
        }        
        return element;        
     }
-    //getElementById ��û��        
+    //getElementById の短縮        
     var $id = function (id) {        
         return document.getElementById(id); };
-    //����ƥ�ĤΥ����ɤ���λ������        
+    //コンテンツのロードが完了したら        
     window.onload = function () {        
        var editArea = $id('editArea');        
        var ritchTextHtmlArea = $id('ritchTextHtmlArea');        
              
-       //innerText �����ꤹ�뤿��Υ᥽�åɤ��ɲ�        
+       //innerText を設定するためのメソッドを追加        
        setAlter_innerText(editArea);        
        setAlter_innerText(ritchTextHtmlArea);
-       //[�Խ��γ���] �ܥ���Υ��٥�ȥϥ�ɥ�        
+       //[編集の開始] ボタンのイベントハンドラ        
        $id('startEditButton')        
           .addEventListener('click', function () {        
              editArea.style.color = 'black';         
              editArea.style.backgroundColor = 'white';        
              editArea.contentEditable = true;        
-             editArea.setText('(��)���Ϥ��Խ�����ǽ�ˤʤ�ޤ���');        
+             editArea.setText('(※)入力と編集が可能になりました');        
              editArea.focus();         
          });
-        //[�Խ��ν�λ] �ܥ���Υ��٥�ȥϥ�ɥ�        
+        //[編集の終了] ボタンのイベントハンドラ        
         $id('endEditButton')        
            .addEventListener('click', function () {        
              editArea.contentEditable = false;        
         });
-        //�ե���ȥ���������ꤹ��ɥ��åץ�����ꥹ�ȤΥ��٥�ȥϥ�ɥ�        
+        //フォントサイズを指定するドロップダウンリストのイベントハンドラ        
         $id('fontSizeSelecter')        
             .addEventListener('change', function () {        
                if (checkSelectionText()) {        
@@ -49,7 +49,7 @@
                      false, this.value);        
                }        
          });
-         //�ե����̾����ꤹ��ɥ��åץ�����ꥹ�ȤΥ��٥�ȥϥ�ɥ�        
+         //フォント名を指定するドロップダウンリストのイベントハンドラ        
          $id('fontNameSelecter')        
             .addEventListener('change', function () {        
                 if (checkSelectionText()) {        
@@ -57,7 +57,7 @@
                      false, this.value); 
                  }        
           });
-         //�ե���ȥ��顼����ꤹ��ɥ��åץ�����ꥹ�ȤΥ��٥�ȥϥ�ɥ�        
+         //フォントカラーを指定するドロップダウンリストのイベントハンドラ        
          $id('fontColorSelecter')        
             .addEventListener('change', function () {        
                if (checkSelectionText()) {        
@@ -65,7 +65,7 @@
                      false, this.value);        
                }        
           });
-         //�طʿ�����ꤹ��ɥ��åץ�����ꥹ�ȤΥ��٥�ȥϥ�ɥ�        
+         //背景色を指定するドロップダウンリストのイベントハンドラ        
          $id('bgColorSelecter')        
             .addEventListener('change', function () {        
                if (checkSelectionText()) {        
@@ -73,7 +73,7 @@
                      false, this.value);        
                }        
          });
-         //��󥯤���������ܥ���Υ��٥�ȥϥ�ɥ�        
+         //リンクを生成するボタンのイベントハンドラ        
          $id('mkLinkButton') 
              .addEventListener('click', function () { 
                 if (checkSelectionText()) {        
@@ -81,7 +81,7 @@
                    document.execCommand('createLink', false, url);        
                 }        
           });
-         //��������������ܥ���Υ��٥�ȥϥ�ɥ�        
+         //画像を挿入するボタンのイベントハンドラ        
          $id('isertImageButton') 
              .addEventListener('click', function () { 
                 if (checkSelectionText()) {        
@@ -89,38 +89,38 @@
                    document.execCommand('insertImage', false, url); 
                 }        
           });
-          //[����] �ܥ���        
+          //[太字] ボタン        
           $id('boldButton') 
              .addEventListener('click', function () { 
                 if (checkSelectionText()) {        
                    document.execCommand('bold', false); 
                 }        
           });
-          //[����] �ܥ���        
+          //[下線] ボタン        
           $id('underLineButton') 
              .addEventListener('click', function () {        
                 if (checkSelectionText()) {        
                    document.execCommand('underline', false); 
                 } 
             });
-           //[������å�] �ܥ���        
+           //[イタリック] ボタン        
            $id('ialicBotton') 
              .addEventListener('click', function () { 
                 if (checkSelectionText()) { 
                     document.execCommand('italic', false); 
                 } 
             });
-            //[�������줿 HTML�μ���] �ܥ��� 
+            //[生成された HTMLの取得] ボタン 
             $id('getHtmlButton') 
              .addEventListener('click', function () { 
                 ritchTextHtmlArea.setText(editArea.innerHTML); 
             });
-            //ʸ�������򤵤�Ƥ��뤫Ƚ�� 
+            //文字が選択されているか判断 
             function checkSelectionText() { 
                 var selectionFlag = ( 
                     document.getSelection().toString().length > 0); 
                  if (!selectionFlag) { 
-                    alert('ʸ�������򤵤�Ƥ��ޤ���\nʸ�������򤷤Ƥ���������'); 
+                    alert('文字が選択されていません。\n文字を選択してください。'); 
                 } 
                 return selectionFlag; 
             } 
@@ -129,21 +129,21 @@
 </head> 
 <body>       
     <p> 
-        <button id="startEditButton">�Խ��γ���</button> 
-        <button id="endEditButton">�Խ��ν�λ</button> 
+        <button id="startEditButton">編集の開始</button> 
+        <button id="endEditButton">編集の終了</button> 
     </p> 
-    <label>�ե����̾:</label> 
+    <label>フォント名:</label> 
     <select id="fontNameSelecter"> 
-        <option value="�ͣӥ����å�">�ͣӥ����å�</option> 
-        <option value="�ͣ���ī">�ͣ���ī</option> 
-        <option value="�ᥤ�ꥪ">�ᥤ�ꥪ</option> 
-        <option value="�⥴���å�">�⥴���å�</option> 
-        <option value="����ī">����ī</option> 
-        <option value="�ͣ� �Х����å�">�ͣ� �Х����å�</option> 
-         <option value="�ͣ� ����ī">�ͣ� ����ī</option> 
+        <option value="ＭＳゴシック">ＭＳゴシック</option> 
+        <option value="ＭＳ明朝">ＭＳ明朝</option> 
+        <option value="メイリオ">メイリオ</option> 
+        <option value="游ゴシック">游ゴシック</option> 
+        <option value="游明朝">游明朝</option> 
+        <option value="ＭＳ Ｐゴシック">ＭＳ Ｐゴシック</option> 
+         <option value="ＭＳ Ｐ明朝">ＭＳ Ｐ明朝</option> 
     </select> 
     <br /> 
-    <label>�ե���ȥ�����:</label> 
+    <label>フォントサイズ:</label> 
     <select id="fontSizeSelecter"> 
         <option value="1">1</option> 
         <option value="2">2</option> 
@@ -154,41 +154,41 @@
         <option value="7">7</option> 
     </select> 
     <br /> 
-    <label>�ե���ȥ��顼:</label> 
+    <label>フォントカラー:</label> 
     <select id="fontColorSelecter"> 
-        <option value="#2980b9">��</option> 
-        <option value="blue">��</option> 
-         <option value="red">��</option> 
-        <option value="yellow">��</option> 
-        <option value="green">��</option> 
-        <option value="violet">��</option> 
+        <option value="#2980b9">黒</option> 
+        <option value="blue">青</option> 
+         <option value="red">赤</option> 
+        <option value="yellow">黄</option> 
+        <option value="green">緑</option> 
+        <option value="violet">紫</option> 
     </select> 
     <br /> 
-    <label>�طʿ�:</label> 
+    <label>背景色:</label> 
     <select id="bgColorSelecter"> 
-        <option value="white">��</option> 
-        <option value="black">��</option> 
-        <option value="blue">��</option> 
-        <option value="red">��</option> 
-        <option value="yellow">��</option> 
-         <option value="green">��</option> 
-        <option value="violet">��</option> 
+        <option value="white">白</option> 
+        <option value="black">黒</option> 
+        <option value="blue">青</option> 
+        <option value="red">赤</option> 
+        <option value="yellow">黄</option> 
+         <option value="green">緑</option> 
+        <option value="violet">紫</option> 
     </select> 
     <br /> 
-    <label>��󥯤�����:</label> 
+    <label>リンクの生成:</label> 
     <input id="urlText"       
      type="url"  value="https://blogs.msdn.microsoft.com/osamum" /> 
-     <button id="mkLinkButton">����</button> 
+     <button id="mkLinkButton">作成</button> 
     <br /> 
-    <label>����������:</label> 
+    <label>画像の挿入:</label> 
     <input id="imageUrlText" type="url"  
           value="https://1.gravatar.com/avatar/aeaed3b18248eab4afbae793fe5824b1?s=56&d=mm&r=g" />  
-    <button id="isertImageButton">����</button> 
+    <button id="isertImageButton">作成</button> 
     <br /> 
     <p> 
-        <button id="boldButton">����</button>   
-        <button id="underLineButton">����</button> 
-        <button id="ialicBotton">������å�</button> 
+        <button id="boldButton">太字</button>   
+        <button id="underLineButton">下線</button> 
+        <button id="ialicBotton">イタリック</button> 
         <div id="editArea" 
            style="height:300px; 
                       width:300px; 
@@ -196,9 +196,9 @@
                       border-color:red; 
                       background-color:gainsboro; 
                       color:gray"> 
-            (��)�Խ���ǽ�ǤϤ���ޤ���[�Խ��γ���]�ܥ���򥯥�å����Ƥ��������� 
+            (※)編集可能ではありません。[編集の開始]ボタンをクリックしてください。 
         </div> 
-        <button id="getHtmlButton">�������줿 HTML �μ���</button> 
+        <button id="getHtmlButton">生成された HTML の取得</button> 
     <p>        
    <textarea id="ritchTextHtmlArea"            
         style='height: 300px; width: 300px'></textarea> 

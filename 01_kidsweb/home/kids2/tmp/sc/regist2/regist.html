@@ -3,14 +3,14 @@
 		<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
 		<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
 		<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
-		<!-- confirm iframe �������� -->
+		<!-- confirm iframe スタイル -->
 		<link rel="stylesheet" href="/mold/cmn/confirm/css/confirm-in-iframe.css">
-		<!-- �����ڤ��ؤ����̽��� -->
+		<!-- タブ切り替え共通処理 -->
 		<script src="/mold/cmn/form/js/tab-function.js" defer></script>
 		<script src="/search/cmn/js/date.js" defer></script>
-		<!-- ���쥯�ȥܥå������̽��� -->
+		<!-- セレクトボックス共通処理 -->
 		<script src="/mold/cmn/form/js/util-selectbox.js" defer></script>
-		<!-- mswɽ������ -->
+		<!-- msw表示切替 -->
 		<!-- <script src="/mold/cmn/msw/cmn/js/msw.js" defer></script> -->
 	</header1>
 
@@ -18,7 +18,7 @@
 	</header2>
 
 	<header3>
-		<!-- msw���ѥ������� -->
+		<!-- msw汎用スタイル -->
 		<link rel="stylesheet" href="/search/cmn/css/msw.css">
 
 		<script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
@@ -30,11 +30,11 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/table-decide.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/table-box.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/form-buttons.css">
-		<!-- datepicker�����ǻ��� -->
+		<!-- datepickerの要素指定 -->
 		<script src="/sc/regist2/js/datepicker.js" defer></script>
 		<script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
 		<script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
-		<!-- msw ɽ�� -->
+		<!-- msw 表示 -->
 		<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
 		<script src="/search/cmn/js/invoke-master-search.js" defer></script>
 	</header3>
@@ -43,7 +43,7 @@
 	</bodyonload>
 </config>
 
-<!-- �������ɥС� �ʥӥ����� -->
+<!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
 	<script>
 		$('.navigation-loadpoint').load('/sc/cmn/navigate/sc_navi.html');
@@ -51,58 +51,58 @@
 </div>
 
 <input type="submit">
-<!-- ���ϥե����� -->
+<!-- 入力フォーム -->
 <div class="form-box">
-	<!-- �ե�����إå� -->
+	<!-- フォームヘッダ -->
 	<div class="form-box__header">
-		<p class="form-box__header__title" id="SegAHeader">����Ǽ�ʽ����Ͽ</p>
+		<p class="form-box__header__title" id="SegAHeader">売上（納品書）登録</p>
 	</div>
-	<!-- �ե����ॳ��ƥ�� -->
+	<!-- フォームコンテンツ -->
 	<div class="form-box__contents">
 		<form action="_%strActionUrl%_" method="post">
 			<input type="submit">
 			<div class="regist-tab-header">
 				<div class="regist-line">
 					<span class="regist-label">
-						<span class="regist-label__text_50">Ǽ����</span>
+						<span class="regist-label__text_50">納品日</span>
 						<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10"
 						 tabindex="1">
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text">�ܵ�</span>
+						<span class="regist-label__text">顧客</span>
 						<input class="TxtStyle03L input-code" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer">
 						<input class="disTxt28L input-name" name="strCustomerName" type="text" readonly>
 						<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_80">�ܵ�¦ô����</span>
+						<span class="regist-label__text_80">顧客側担当者</span>
 						<input style="ime-mode:disabled;" class="disTxt08L" type="text" name="strCustomerUserName" value="_%strCustomerUserName%_">
-						<span class="regist-label__text_15">��</span>
+						<span class="regist-label__text_15">様</span>
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_60">�̲�</span>
+						<span class="regist-label__text_60">通貨</span>
 						<input style="ime-mode:disabled;" class="disTxt05L" type="text" readonly name="strMonetaryUnitName" tabindex="13" class="Slt93">
 						<input type="hidden" name="lngMonetaryUnitCode">
 					</span>
 				</div>
 				<div class="regist-line">
 					<span class="regist-label">
-						<span class="regist-label__text_50">��ʧ����</span>
+						<span class="regist-label__text_50">支払期限</span>
 						<input class="TxtStyle05L is-date" type="text" name="dtmPaymentLimit" value="_%dtmPaymentLimit%_" maxlength="10">
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text">Ǽ����</span>
+						<span class="regist-label__text">納品先</span>
 						<input class="TxtStyle03L" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_" alt="DeliveryPlace">
 						<input class="disTxt28L" name="strDeliveryPlaceName" readonly value="_%strDeliveryPlaceName%_">
 						<img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_80">Ǽ����ô����</span>
+						<span class="regist-label__text_80">納品先担当者</span>
 						<input style="ime-mode:disabled;" class="disTxt08L" type="text" name="strDeliveryPlaceUserName" value="_%strDeliveryPlaceUserName%_">
-						<span class="regist-label__text_15">��</span>
+						<span class="regist-label__text_15">様</span>
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_60">�졼��</span>
+						<span class="regist-label__text_60">レート</span>
 						<select name="lngMonetaryRateCode" tabindex="14" class="Slt80">
 							_%optMonetaryRate%_
 						</select>
@@ -111,30 +111,30 @@
 				<div class="regist-line">
 
 					<span class="regist-label">
-						<span class="regist-label__text">��ɼ��</span>
+						<span class="regist-label__text">起票者</span>
 						<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngInsertUserCode" value="_%lngInsertUserCode%_"
 						 alt="InsertUser">
 						<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strInsertUserName" value="_%strInsertUserName%_" contenteditable="false">
 						<img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_70">�����Ƕ�ʬ</span>
+						<span class="regist-label__text_70">消費税区分</span>
 						<select name="lngTaxClassCode" class="Slt70">
 							_%optTaxClass%_
 						</select>
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_50">������Ψ</span>
+						<span class="regist-label__text_50">消費税率</span>
 						<select name="lngTaxRate" class="Slt6">
 							_%optTaxRate%_
 						</select>
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_50">�����ǳ�</span>
+						<span class="regist-label__text_50">消費税額</span>
 						<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" readonly>
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_60">Ŭ�ѥ졼��</span>
+						<span class="regist-label__text_60">適用レート</span>
 						<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="curConversionRate" tabindex="15" readonly>
 						<input type="hidden" name="curConversionRate">
 					</span>
@@ -142,15 +142,15 @@
 				<div class="regist-line">
 
 					<span class="regist-label">
-						<span class="regist-label__text">����</span>
+						<span class="regist-label__text">備考</span>
 						<input class="Txt57L" type="text" name="strNote" tabindex="19">
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_50">��׶��</span>
+						<span class="regist-label__text_50">合計金額</span>
 						<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTotalAmount" value="_%strTotalAmount%_" readonly>
 					</span>
 					<span class="regist-label">
-						<span class="regist-label__text_60">��ʧ��ˡ</span>
+						<span class="regist-label__text_60">支払方法</span>
 						<select name="lngPaymentMethodCode" class="Slt80">
 							_%optPaymentMethod%_
 						</select>
@@ -168,40 +168,40 @@
 												</th>
 											</tr>
 										</thead>
-										<!-- ����إå� -->
+										<!-- 固定ヘッダ -->
 									</table>
 									<div id="header_h">
 										<table class="table-decide-description" name="T" id="tbl_detail_head">
 											<thead>
-												<!-- ��ʿ�إå� -->
+												<!-- 水平ヘッダ -->
 												<tr>
 													<th class="not-sortable">No.</th>
-													<th class="sortable">�ܵҼ����ֹ�</th>
-													<th class="sortable">���ʥ�����</th>
-													<th class="sortable">����̾</th>
-													<th class="sortable">����ʬ</th>
-													<th class="sortable">Ǽ��</th>
-													<th class="sortable">����</th>
-													<th class="sortable">����</th>
-													<th class="sortable">ñ��</th>
-													<th class="sortable">ñ��</th>
-													<th class="sortable">��ȴ���</th>
-													<th class="sortable">�ܵ�����</th>
-													<th class="sortable">����̾�ʱѸ��</th>
-													<th class="sortable">�Ķ�����</th>
-													<th class="forEdit">�����ֹ����ɽ����</th>
-													<th class="forEdit">���������ֹ����ɽ����</th>
-													<th class="forEdit">��ӥ�����ֹ����ɽ����</th>
-													<th class="forEdit">���Υ����ɡ���ɽ����</th>
-													<th class="forEdit">����ʬ�����ɡ���ɽ����</th>
-													<th class="forEdit">����ñ�̥����ɡ���ɽ����</th>
-													<th class="forEdit">���͡���ɽ����</th>
-													<th class="forEdit">�̲�ñ�̥����ɡ���ɽ����</th>
-													<th class="forEdit">�̲ߥ졼�ȥ����ɡ���ɽ����</th>
-													<th class="forEdit">�̲�ñ�̵������ɽ����</th>
-													<th class="forEdit">��������ե饰����ɽ����</th>
-													<th class="forEdit">ñ������ɽ����</th>
-													<th class="forEdit">��ȴ��ۡ���ɽ����</th>
+													<th class="sortable">顧客受注番号</th>
+													<th class="sortable">製品コード</th>
+													<th class="sortable">製品名</th>
+													<th class="sortable">売上区分</th>
+													<th class="sortable">納期</th>
+													<th class="sortable">入数</th>
+													<th class="sortable">数量</th>
+													<th class="sortable">単位</th>
+													<th class="sortable">単価</th>
+													<th class="sortable">税抜金額</th>
+													<th class="sortable">顧客品番</th>
+													<th class="sortable">製品名（英語）</th>
+													<th class="sortable">営業部署</th>
+													<th class="forEdit">受注番号（非表示）</th>
+													<th class="forEdit">受注明細番号（非表示）</th>
+													<th class="forEdit">リビジョン番号（非表示）</th>
+													<th class="forEdit">再販コード（非表示）</th>
+													<th class="forEdit">売上区分コード（非表示）</th>
+													<th class="forEdit">製品単位コード（非表示）</th>
+													<th class="forEdit">備考（非表示）</th>
+													<th class="forEdit">通貨単位コード（非表示）</th>
+													<th class="forEdit">通貨レートコード（非表示）</th>
+													<th class="forEdit">通貨単位記号（非表示）</th>
+													<th class="forEdit">明細統一フラグ（非表示）</th>
+													<th class="forEdit">単価（非表示）</th>
+													<th class="forEdit">税抜金額（非表示）</th>
 												</tr>
 											</thead>
 										</table>
@@ -242,39 +242,39 @@
 												<th>No.</th>
 											</tr>
 										</thead>
-										<!-- ����إå� -->
+										<!-- 固定ヘッダ -->
 									</table>
 									<div id="header_decide_h">
 										<table class="table-decide-description" name="DECIDE_T" id="tbl_edit_detail_head">
 											<thead>
 												<tr>
 													<th class="forEdit">No.</th>
-													<th>�ܵҼ����ֹ�</th>
-													<th>���ʥ�����</th>
-													<th>����̾</th>
-													<th>����ʬ</th>
-													<th>Ǽ��</th>
-													<th>����</th>
-													<th>����</th>
-													<th>ñ��</th>
-													<th>ñ��</th>
-													<th>��ȴ���</th>
-													<th>�ܵ�����</th>
-													<th>����̾�ʱѸ��</th>
-													<th>�Ķ�����</th>
-													<th class="forEdit">�����ֹ����ɽ����</th>
-													<th class="forEdit">���������ֹ����ɽ����</th>
-													<th class="forEdit">��ӥ�����ֹ����ɽ����</th>
-													<th class="forEdit">���Υ����ɡ���ɽ����</th>
-													<th class="forEdit">����ʬ�����ɡ���ɽ����</th>
-													<th class="forEdit">����ñ�̥����ɡ���ɽ����</th>
-													<th class="forEdit">���͡���ɽ����</th>
-													<th class="forEdit">�̲�ñ�̥����ɡ���ɽ����</th>
-													<th class="forEdit">�̲ߥ졼�ȥ����ɡ���ɽ����</th>
-													<th class="forEdit">�̲�ñ�̵������ɽ����</th>
-													<th class="forEdit">��������ե饰����ɽ����</th>
-													<th class="forEdit">ñ������ɽ����</th>
-													<th class="forEdit">��ȴ��ۡ���ɽ����</th>
+													<th>顧客受注番号</th>
+													<th>製品コード</th>
+													<th>製品名</th>
+													<th>売上区分</th>
+													<th>納期</th>
+													<th>入数</th>
+													<th>数量</th>
+													<th>単位</th>
+													<th>単価</th>
+													<th>税抜金額</th>
+													<th>顧客品番</th>
+													<th>製品名（英語）</th>
+													<th>営業部署</th>
+													<th class="forEdit">受注番号（非表示）</th>
+													<th class="forEdit">受注明細番号（非表示）</th>
+													<th class="forEdit">リビジョン番号（非表示）</th>
+													<th class="forEdit">再販コード（非表示）</th>
+													<th class="forEdit">売上区分コード（非表示）</th>
+													<th class="forEdit">製品単位コード（非表示）</th>
+													<th class="forEdit">備考（非表示）</th>
+													<th class="forEdit">通貨単位コード（非表示）</th>
+													<th class="forEdit">通貨レートコード（非表示）</th>
+													<th class="forEdit">通貨単位記号（非表示）</th>
+													<th class="forEdit">明細統一フラグ（非表示）</th>
+													<th class="forEdit">単価（非表示）</th>
+													<th class="forEdit">税抜金額（非表示）</th>
 												</tr>
 											</thead>
 										</table>
@@ -322,24 +322,24 @@
 				</div>
 			</div>
 			<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-			<!-- �����оݤ�ɳ�Ť�Ǽ����ɼ�ֹ� -->
+			<!-- 修正対象に紐づく納品伝票番号 -->
 			<input type="hidden" name="lngSlipNo" value="_%lngSlipNo%_">
-			<!-- �����оݤ�ɳ�Ť�Ǽ����ɼ������ -->
+			<!-- 修正対象に紐づく納品伝票コード -->
 			<input type="hidden" name="strSlipCode" value="_%strSlipCode%_">
-			<!-- �����оݤ�ɳ�Ť�����ֹ� -->
+			<!-- 修正対象に紐づく売上番号 -->
 			<input type="hidden" name="lngSalesNo" value="_%lngSalesNo%_">
-			<!-- �����оݤ�ɳ�Ť���女���� -->
+			<!-- 修正対象に紐づく売上コード -->
 			<input type="hidden" name="strSalesCode" value="_%strSalesCode%_">
-			<!-- Ajax POST�� -->
+			<!-- Ajax POST先 -->
 			<input type="hidden" name="ajaxPostTarget" value = "_%ajaxPostTarget%_">
 			<div class="msw-loadpoints">
-				<!-- MSW �ܵҥޥ������� -->
+				<!-- MSW 顧客マスタ検索 -->
 				<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
 				</iframe>
-				<!-- MSW Ǽ�ʾ��ޥ������� -->
+				<!-- MSW 納品場所マスタ検索 -->
 				<iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
 				</iframe>
-				<!-- MSW ���ϼԥޥ������� -->
+				<!-- MSW 入力者マスタ検索 -->
 				<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
 				</iframe>
 			</div>
@@ -347,22 +347,22 @@
 	</div>
 </div>
 
-<!-- �ե����� �ܥ��� -->
+<!-- フォーム ボタン -->
 <div class="form-buttons">
 	<img class="preview button" src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="form preview">
 </div>
 <script type="text/javascript">
 	function $E(name) { return document.getElementById(name); }
 	function scroll() {
-		$E("header_h").scrollLeft = $E("data").scrollLeft;// �ǡ������Υ����������إå���ȿ��
-		$E("header_v").scrollTop = $E("data").scrollTop;// �ǡ������Υ����������إå���ȿ��
+		$E("header_h").scrollLeft = $E("data").scrollLeft;// データ部のスクロールをヘッダに反映
+		$E("header_v").scrollTop = $E("data").scrollTop;// データ部のスクロールをヘッダに反映
 	}
 	$E("data").onscroll = scroll;
 
 
 	function decide_scroll() {
-		$E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// �ǡ������Υ����������إå���ȿ��
-		$E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// �ǡ������Υ����������إå���ȿ��
+		$E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
+		$E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
 	}
 	$E("decide_data").onscroll = decide_scroll;
 </script>

@@ -1,16 +1,16 @@
-// ³Æ¼ï¥Ü¥¿¥ó¤ò¥Õ¥©¡¼¥«¥¹²ÄÇ½¤Ë¤¹¤ë
+// å„ç¨®ãƒœã‚¿ãƒ³ã‚’ãƒ•ã‚©ãƒ¼ã‚«ã‚¹å¯èƒ½ã«ã™ã‚‹
 $('img.msw-button, img.list-add, img.list-del').attr({
     tabindex: 0
 });
 
-// ÁªÂòÃæ¤Î¶â·¿¥ê¥¹¥È¤ò¥Õ¥©¡¼¥«¥¹ÉÔ²Ä¤Ë¤¹¤ë
+// é¸æŠä¸­ã®é‡‘å‹ãƒªã‚¹ãƒˆã‚’ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ä¸å¯ã«ã™ã‚‹
 $('.mold-selection__choosen-list').attr({
     tabindex: -1
 });
 
 $('.form-box__contents').on(
     'keydown', 'img.msw-button, img.list-add, img.list-del', function(e){
-        // 13:Enter¥­¡¼, 32:Space¥­¡¼
+        // 13:Enterã‚­ãƒ¼, 32:Spaceã‚­ãƒ¼
         if(e.which == 13 || e.which == 32){
             $(this).click();
             return false;

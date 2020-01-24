@@ -7,7 +7,7 @@ function fncChgEtoJ( strMode )
 	if ( g_lngCode == 0 )
 	{
 
-		// ½èÍıÍÑ¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// å‡¦ç†ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		fncProcessingOutputModule( strMode , 0 );
 
 
@@ -59,52 +59,52 @@ function fncChgEtoJ( strMode )
 	else if ( g_lngCode == 1 )
 	{
 
-		// ½èÍıÍÑ¥Æ¡¼¥Ö¥ë½ñ¤­½Ğ¤·
+		// å‡¦ç†ç”¨ãƒ†ãƒ¼ãƒ–ãƒ«æ›¸ãå‡ºã—
 		fncProcessingOutputModule( strMode , 1 );
 
 
 		if( typeof(SimilarProducts) != 'undefined' )
 		{
-			SimilarProducts.innerText = 	'Îà»÷À½ÉÊ(Ì¾¾Î)';
+			SimilarProducts.innerText = 	'é¡ä¼¼è£½å“(åç§°)';
 		}
 
 
-		CreationDate.innerText = 			'ºîÀ®Æü»ş';
-		GoodsPlanProgress.innerText = 		'´ë²è¿Ê¹Ô¾õ¶·';
-		RevisionNo.innerText = 				'²şÄûÈÖ¹æ';
-		RevisionDate.innerText = 			'²şÄûÆü»ş';
-		ProductCode.innerText = 			'À½ÉÊ¥³¡¼¥É';
-		ProductName.innerText = 			'À½ÉÊÌ¾¾Î(ÆüËÜ¸ì)';
-		ProductEnglishName.innerText = 		'À½ÉÊÌ¾¾Î(±Ñ¸ì)';
-		InChargeGroup.innerText = 			'ÉôÌç';
-		InChargeUser.innerText = 			'Ã´Åö¼Ô';
-		GoodsCode.innerText = 				'¸ÜµÒÉÊÈÖ';
-		GoodsName.innerText = 				'¾¦ÉÊÌ¾¾Î';
-		Customer.innerText = 				'¸ÜµÒ';
-		CustomerUser.innerText = 			'¸ÜµÒÃ´Åö¼Ô';
-		PackingUnit.innerText = 			'²Ù»ÑÃ±°Ì';
-		ProductUnit.innerText = 			'À½ÉÊÃ±°Ì';
-		GoodsForm.innerText = 				'¾¦ÉÊ·ÁÂÖ';
-		BoxQuantity.innerText = 			'ÆâÈ¢(ÂŞ)Æş¿ô';
-		CartonQuantity.innerText = 			'¥«¡¼¥È¥óÆş¿ô';
-		RefoundQuantity.innerText = 		'À¸»ºÍ½Äê¿ô';
-		FirstDeliveryQuantity.innerText = 	'½é²óÇ¼ÉÊ¿ô';
-		CreationFactory.innerText = 		'À¸»º¹©¾ì';
-		AssemblyFactory.innerText = 		'¥¢¥Ã¥»¥ó¥Ö¥ê¹©¾ì';
-		Location.innerText = 				'Ç¼ÉÊ¾ì½ê';
-		DeliveryLimitDate.innerText = 		'Ç¼´ü';
-		SellingPrince.innerText = 			'Ç¼²Á(pcs)';
-		WholesalePrice.innerText = 			'¾åÂå(pcs)';
-		TargetAge.innerText = 				'ÂĞ¾İÇ¯Îğ';
-		Royalty.innerText = 				'¥í¥¤¥ä¥ê¥Æ¥£(%)';
-		Inspection.innerText = 				'¾Ú»æ';
-		Copyright.innerText = 				'ÈÇ¸¢¸µ';
-		CopyrightRemark.innerText = 		'ÈÇ¸¢¸µÈ÷¹Í';
-		CopyrightStamp.innerText = 			'ÈÇ¸¢É½¼¨(¹ï°õ)';
-		CopyrightPrint.innerText = 			'ÈÇ¸¢É½¼¨(°õºşÊª)';
-		ProductsInfo.innerText = 			'À½ÉÊ¹½À®';
-		AssemblyInfo.innerText = 			'¥¢¥Ã¥»¥ó¥Ö¥êÆâÍÆ';
-		Details.innerText = 				'»ÅÍÍ¾ÜºÙ';
+		CreationDate.innerText = 			'ä½œæˆæ—¥æ™‚';
+		GoodsPlanProgress.innerText = 		'ä¼ç”»é€²è¡ŒçŠ¶æ³';
+		RevisionNo.innerText = 				'æ”¹è¨‚ç•ªå·';
+		RevisionDate.innerText = 			'æ”¹è¨‚æ—¥æ™‚';
+		ProductCode.innerText = 			'è£½å“ã‚³ãƒ¼ãƒ‰';
+		ProductName.innerText = 			'è£½å“åç§°(æ—¥æœ¬èª)';
+		ProductEnglishName.innerText = 		'è£½å“åç§°(è‹±èª)';
+		InChargeGroup.innerText = 			'éƒ¨é–€';
+		InChargeUser.innerText = 			'æ‹…å½“è€…';
+		GoodsCode.innerText = 				'é¡§å®¢å“ç•ª';
+		GoodsName.innerText = 				'å•†å“åç§°';
+		Customer.innerText = 				'é¡§å®¢';
+		CustomerUser.innerText = 			'é¡§å®¢æ‹…å½“è€…';
+		PackingUnit.innerText = 			'è·å§¿å˜ä½';
+		ProductUnit.innerText = 			'è£½å“å˜ä½';
+		GoodsForm.innerText = 				'å•†å“å½¢æ…‹';
+		BoxQuantity.innerText = 			'å†…ç®±(è¢‹)å…¥æ•°';
+		CartonQuantity.innerText = 			'ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°';
+		RefoundQuantity.innerText = 		'ç”Ÿç”£äºˆå®šæ•°';
+		FirstDeliveryQuantity.innerText = 	'åˆå›ç´å“æ•°';
+		CreationFactory.innerText = 		'ç”Ÿç”£å·¥å ´';
+		AssemblyFactory.innerText = 		'ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå·¥å ´';
+		Location.innerText = 				'ç´å“å ´æ‰€';
+		DeliveryLimitDate.innerText = 		'ç´æœŸ';
+		SellingPrince.innerText = 			'ç´ä¾¡(pcs)';
+		WholesalePrice.innerText = 			'ä¸Šä»£(pcs)';
+		TargetAge.innerText = 				'å¯¾è±¡å¹´é½¢';
+		Royalty.innerText = 				'ãƒ­ã‚¤ãƒ¤ãƒªãƒ†ã‚£(%)';
+		Inspection.innerText = 				'è¨¼ç´™';
+		Copyright.innerText = 				'ç‰ˆæ¨©å…ƒ';
+		CopyrightRemark.innerText = 		'ç‰ˆæ¨©å…ƒå‚™è€ƒ';
+		CopyrightStamp.innerText = 			'ç‰ˆæ¨©è¡¨ç¤º(åˆ»å°)';
+		CopyrightPrint.innerText = 			'ç‰ˆæ¨©è¡¨ç¤º(å°åˆ·ç‰©)';
+		ProductsInfo.innerText = 			'è£½å“æ§‹æˆ';
+		AssemblyInfo.innerText = 			'ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå†…å®¹';
+		Details.innerText = 				'ä»•æ§˜è©³ç´°';
 
 	}
 

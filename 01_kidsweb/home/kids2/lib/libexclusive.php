@@ -1,7 +1,7 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
-*       ÇÓÂ¾À©¸æ¥é¥¤¥Ö¥é¥ê
+*       æ’ä»–åˆ¶å¾¡ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
 *
 *       @package    K.I.D.S.
@@ -12,17 +12,17 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
+*       å‡¦ç†æ¦‚è¦
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-// ¥¯¥é¥¹¤ÎÆÉ¤ß¹ş¤ß
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// ã‚¯ãƒ©ã‚¹ã®èª­ã¿è¾¼ã¿
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 include_once (LIB_FILE);
 include_once (LIB_DEBUGFILE);
@@ -32,33 +32,33 @@ require ( CLS_DB_FILE );
 require ( CLS_AUTH_FILE );
 require ( CLS_TEMPLATE_FILE );
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 */
-// ¸«ÀÑ¸¶²Á¥Ç¡¼¥¿ÊÔ½¸¥í¥Ã¥¯¼èÆÀ
+// è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿ç·¨é›†ãƒ­ãƒƒã‚¯å–å¾—
 function lockEstimateEdit($lngestimateno, $functioncode, $objDB, $objAuth){
-    // ¸«ÀÑ¸¶²Á¥Ç¡¼¥¿ÇÓÂ¾¼èÆÀ
+    // è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿æ’ä»–å–å¾—
     if(!lockExclusive($lngestimateno, $functioncode, $objAuth, $objDB)){
         return false;
     }
-    // Ì¤³ÎÄê¼õÃí¥Ç¡¼¥¿ÇÓÂ¾¼èÆÀ
+    // æœªç¢ºå®šå—æ³¨ãƒ‡ãƒ¼ã‚¿æ’ä»–å–å¾—
     if(!lockReceiveFix($lngestimateno, $functioncode, $objDB, $objAuth)){
         return false;
     }
     
-    // Ì¤³ÎÄêÈ¯Ãí¥Ç¡¼¥¿ÇÓÂ¾¼èÆÀ
+    // æœªç¢ºå®šç™ºæ³¨ãƒ‡ãƒ¼ã‚¿æ’ä»–å–å¾—
     if(!lockOrderFix($lngestimateno, 0, $functioncode, $objDB, $objAuth)){
         return false;
     }
     return true;
 }
 
-// ¸«ÀÑ¸¶²Á¥Ç¡¼¥¿¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+// è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
 function isEstimateModified($lngestimateno, $lngrevisionno, $objDB){
     return isModified("m_estimate", "lngestimateno", $lngestimateno, $lngrevisionno, $objDB);
 }
 
 
-// ¼õÃí³ÎÄê¥Ç¡¼¥¿¥í¥Ã¥¯¼èÆÀ
+// å—æ³¨ç¢ºå®šãƒ‡ãƒ¼ã‚¿ãƒ­ãƒƒã‚¯å–å¾—
 function lockReceiveFix($lngestimateno, $functioncode, $objDB, $objAuth){
     $strQuery  = "SELECT ";
     $strQuery .= "    trd.lngreceiveno, ";
@@ -95,37 +95,37 @@ function lockReceiveFix($lngestimateno, $functioncode, $objDB, $objAuth){
 }
 
 
-// ¼õÃí¥Ç¡¼¥¿¥í¥Ã¥¯¼èÆÀ
+// å—æ³¨ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒƒã‚¯å–å¾—
 function lockReceive($lngreceiveno, $objDB){
     return getLock("m_receive", "lngreceiveno", $lngreceiveno, $objDB);
 }
 
-// ¼õÃí¥Ç¡¼¥¿¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+// å—æ³¨ãƒ‡ãƒ¼ã‚¿æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
 function isReceiveModified($lngreceiveno, $statuscode, $objDB){
     return isStatusModified("m_receive", "lngreceiveno", $lngreceiveno, $statuscode, $objDB);
 }
 
-// Ç¼ÉÊ½ñ¡ÊÇä¾å¡Ë¥Ç¡¼¥¿¥í¥Ã¥¯¼èÆÀ
+// ç´å“æ›¸ï¼ˆå£²ä¸Šï¼‰ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒƒã‚¯å–å¾—
 function lockSlip($lngslipno, $objDB){
     return getLock("m_slip", "lngslipno", $lngslipno, $objDB);
 }
 
-// Ç¼ÉÊ½ñ¡ÊÇä¾å¡Ë¥Ç¡¼¥¿¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+// ç´å“æ›¸ï¼ˆå£²ä¸Šï¼‰ãƒ‡ãƒ¼ã‚¿æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
 function isSlipModified($lngslipno, $lngrevisionno, $objDB){
     return isModified("m_slip", "lngslipno", $lngslipno, $lngrevisionno, $objDB);
 }
 
-// ÀÁµá¥Ç¡¼¥¿¥í¥Ã¥¯¼èÆÀ
+// è«‹æ±‚ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒƒã‚¯å–å¾—
 function lockInvoice($lnginvoiceno, $objDB){
     return getLock("m_invoice", "lnginvoiceno", $lnginvoiceno, $objDB);
 }
 
-// ÀÁµá¥Ç¡¼¥¿¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+// è«‹æ±‚ãƒ‡ãƒ¼ã‚¿æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
 function isInvoiceModified($lnginvoiceno, $lngrevisionno, $objDB){
     return isModified("m_invoice", "lnginvoiceno", $lnginvoiceno, $lngrevisionno, $objDB);
 }
 
-// È¯Ãí³ÎÄê¥Ç¡¼¥¿¥í¥Ã¥¯¼èÆÀ
+// ç™ºæ³¨ç¢ºå®šãƒ‡ãƒ¼ã‚¿ãƒ­ãƒƒã‚¯å–å¾—
 function lockOrderFix($lngestimateno, $lngOrderCode, $functioncode, $objDB, $objAuth){
 fncDebug("kids2.log", $lngOrderCode, __FILE__, __LINE__, "a");
     $strQuery  = "SELECT ";
@@ -175,36 +175,36 @@ fncDebug("kids2.log", $lngOrderCode, __FILE__, __LINE__, "a");
     return true;
 }
 
-// È¯Ãí¡ÊÀµ³Î¤Ë¤ÏÈ¯Ãí½ñ¡Ë¥Ç¡¼¥¿¥í¥Ã¥¯¼èÆÀ
+// ç™ºæ³¨ï¼ˆæ­£ç¢ºã«ã¯ç™ºæ³¨æ›¸ï¼‰ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒƒã‚¯å–å¾—
 function lockOrder($lngpurchaseorderno, $objDB){
     return getLock("m_purchaseorder", "lngpurchaseorderno", $lngpurchaseorderno, $objDB);
 }
 
-// È¯Ãí¥Ç¡¼¥¿¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+// ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
 function isOrderModified($lngorderno, $statuscode, $objDB){
     return isStatusModified("m_order", "lngorderno", $lngorderno, $statuscode, $objDB);
 }
 
-// È¯Ãí½ñ¥Ç¡¼¥¿¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+// ç™ºæ³¨æ›¸ãƒ‡ãƒ¼ã‚¿æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
 function isPurchaseOrderModified($lngpurchaseorderno, $lngrevisionno, $objDB){
     return isModified("m_purchaseorder", "lngpurchaseorderno", $lngpurchaseorderno, $lngrevisionno, $objDB);
 }
 
-// »ÅÆş¥Ç¡¼¥¿¥í¥Ã¥¯¼èÆÀ
+// ä»•å…¥ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒƒã‚¯å–å¾—
 function lockStock($lngstockno, $objDB){
     return getLock("m_stock", "lngstockno", $lngstockno, $objDB);
 }
 
-// »ÅÆş¥Ç¡¼¥¿¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
+// ä»•å…¥ãƒ‡ãƒ¼ã‚¿æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
 function isStockModified($lngstockno, $lngrevisionno, $objDB){
     return isModified("m_stock", "lngstockno", $lngstockno, $lngrevisionno, $objDB);
 }
 
-/* ¥í¥Ã¥¯¼èÆÀ
-*	@param  string  $table    ¥í¥Ã¥¯ÂĞ¾İ¥Æ¡¼¥Ö¥ëÌ¾
-*	@param  string  $keyname  ¥í¥Ã¥¯¥­¡¼¹àÌÜÌ¾
-*	@param  int     $key      ¥í¥Ã¥¯ÂĞ¾İ¥­¡¼
-*	@param  object  $objDB    DB¥ª¥Ö¥¸¥§¥¯¥È
+/* ãƒ­ãƒƒã‚¯å–å¾—
+*	@param  string  $table    ãƒ­ãƒƒã‚¯å¯¾è±¡ãƒ†ãƒ¼ãƒ–ãƒ«å
+*	@param  string  $keyname  ãƒ­ãƒƒã‚¯ã‚­ãƒ¼é …ç›®å
+*	@param  int     $key      ãƒ­ãƒƒã‚¯å¯¾è±¡ã‚­ãƒ¼
+*	@param  object  $objDB    DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@return boolean TRUE,FALSE
 */
 function getLock($table, $keyname, $key, $objDB){
@@ -218,11 +218,11 @@ function getLock($table, $keyname, $key, $objDB){
     return true;
 }
 
-/* ÇÓÂ¾¥í¥Ã¥¯¼èÆÀ
-*	@param  int     $key          ¥í¥Ã¥¯¼èÆÀ¥­¡¼
-*	@param  int     $functioncode µ¡Ç½¥³¡¼¥É
-*	@param  object  $objAuth      Ç§¾Ú¾ğÊó
-*	@param  object  $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
+/* æ’ä»–ãƒ­ãƒƒã‚¯å–å¾—
+*	@param  int     $key          ãƒ­ãƒƒã‚¯å–å¾—ã‚­ãƒ¼
+*	@param  int     $functioncode æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
+*	@param  object  $objAuth      èªè¨¼æƒ…å ±
+*	@param  object  $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@return boolean TRUE,FALSE
 */
 function lockExclusive($key, $functioncode, $objAuth, $objDB){
@@ -265,21 +265,21 @@ function lockExclusive($key, $functioncode, $objAuth, $objDB){
     return true;
 }
 
-/* ÇÓÂ¾¥í¥Ã¥¯²ò½ü
-*	@param  int     $key          ¥í¥Ã¥¯¼èÆÀ¥­¡¼
-*	@param  object  $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
+/* æ’ä»–ãƒ­ãƒƒã‚¯è§£é™¤
+*	@param  int     $key          ãƒ­ãƒƒã‚¯å–å¾—ã‚­ãƒ¼
+*	@param  object  $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@return boolean TRUE,FALSE
 */
 function unlockExclusive($objAuth, $objDB){
     return unlockExclusiveBySessionID($objAuth->SessionID, $objDB);
 }
 
-/* ¹¹¿·Í­Ìµ¥Á¥§¥Ã¥¯
-*	@param  string  $table          ¥Á¥§¥Ã¥¯ÂĞ¾İ¥Æ¡¼¥Ö¥ëÌ¾
-*	@param  string  $keyname        ¥Á¥§¥Ã¥¯ÂĞ¾İ¥­¡¼¹àÌÜÌ¾
-*	@param  int     $key            ¥Á¥§¥Ã¥¯ÂĞ¾İ¥­¡¼
-*	@param  int     $lngrevisionno  ¥Á¥§¥Ã¥¯ÂĞ¾İ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-*	@param  object  $objDB          DB¥ª¥Ö¥¸¥§¥¯¥È
+/* æ›´æ–°æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
+*	@param  string  $table          ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒ†ãƒ¼ãƒ–ãƒ«å
+*	@param  string  $keyname        ãƒã‚§ãƒƒã‚¯å¯¾è±¡ã‚­ãƒ¼é …ç›®å
+*	@param  int     $key            ãƒã‚§ãƒƒã‚¯å¯¾è±¡ã‚­ãƒ¼
+*	@param  int     $lngrevisionno  ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+*	@param  object  $objDB          DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@return boolean TRUE,FALSE
 */
 function isModified($table, $keyname, $key, $lngrevisionno, $objDB){
@@ -300,12 +300,12 @@ function isModified($table, $keyname, $key, $lngrevisionno, $objDB){
 
 }
 
-/* ¥¹¥Æ¡¼¥¿¥¹¥Á¥§¥Ã¥¯
-*	@param  string  $table          ¥Á¥§¥Ã¥¯ÂĞ¾İ¥Æ¡¼¥Ö¥ëÌ¾("m_order","m_receive","m_sales","m_stock"¤Î¤¤¤º¤ì¤«)
-*	@param  string  $keyname        ¥Á¥§¥Ã¥¯ÂĞ¾İ¥­¡¼¹àÌÜÌ¾
-*	@param  int     $key            ¥Á¥§¥Ã¥¯ÂĞ¾İ¥­¡¼
-*	@param  int     $lngrevisionno  ¥Á¥§¥Ã¥¯ÂĞ¾İ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-*	@param  object  $objDB          DB¥ª¥Ö¥¸¥§¥¯¥È
+/* ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒã‚§ãƒƒã‚¯
+*	@param  string  $table          ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒ†ãƒ¼ãƒ–ãƒ«å("m_order","m_receive","m_sales","m_stock"ã®ã„ãšã‚Œã‹)
+*	@param  string  $keyname        ãƒã‚§ãƒƒã‚¯å¯¾è±¡ã‚­ãƒ¼é …ç›®å
+*	@param  int     $key            ãƒã‚§ãƒƒã‚¯å¯¾è±¡ã‚­ãƒ¼
+*	@param  int     $lngrevisionno  ãƒã‚§ãƒƒã‚¯å¯¾è±¡ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+*	@param  object  $objDB          DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@return boolean TRUE,FALSE
 */
 function isStatusModified($table, $keyname, $key, $statuscode, $objDB){

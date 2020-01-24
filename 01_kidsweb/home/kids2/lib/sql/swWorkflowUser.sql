@@ -1,10 +1,10 @@
 /*
-	���ס���ɽ���桼���������ɡס�ɽ���桼����̾�פ����ɽ���桼����̾�פ����
-	�оݡ�����ե�������
-	������chiba
-	��������ƣ
-	���͡��֥����ɡס�̾�Ρפ�����פ����̾�Ρפ����
-	lngCompanyCode = 1   ���塞���ͤΤ�
+	概要：「表示ユーザーコード」「表示ユーザー名」から「表示ユーザー名」を取得
+	対象：ワークフロー管理
+	作成：chiba
+	更新：斎藤
+	備考：「コード」「名称」から一致する「名称」を取得
+	lngCompanyCode = 1   クワガタ様のみ
 */
 SELECT mu.strUserDisplayCode,
 	mu.strUserDisplayCode || ' ' || mu.strUserDisplayName AS strUserDisplayCodeName,

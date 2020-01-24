@@ -1,8 +1,8 @@
 <?
 /** 
-*	¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍıÍÑ¥é¥¤¥Ö¥é¥ê
+*	ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
-*	¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍıÍÑ´Ø¿ô¥é¥¤¥Ö¥é¥ê
+*	ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†ç”¨é–¢æ•°ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -14,24 +14,24 @@
 */
 
 
-// ¼ïÊÌ¥³¡¼¥É¤ËÂĞ¤¹¤ë¼ïÊÌÌ¾ÇÛÎó¤òÀ¸À®
-//$aryFunctionCode = Array ( DEF_FUNCTION_PO1 => "È¯Ãí", DEF_FUNCTION_E0 => "¸«ÀÑ¸¶²Á" );
-$aryFunctionCode = Array (	DEF_FUNCTION_P1	 =>  "¾¦ÉÊ"
-							,DEF_FUNCTION_SO1 => "¼õÃí"
-							,DEF_FUNCTION_PO1 => "È¯Ãí"
-							,DEF_FUNCTION_SC1 => "Çä¾å"
-							,DEF_FUNCTION_PC1 => "»ÅÆş"
-							,DEF_FUNCTION_E1 =>  "¸«ÀÑ¸¶²Á"
+// ç¨®åˆ¥ã‚³ãƒ¼ãƒ‰ã«å¯¾ã™ã‚‹ç¨®åˆ¥åé…åˆ—ã‚’ç”Ÿæˆ
+//$aryFunctionCode = Array ( DEF_FUNCTION_PO1 => "ç™ºæ³¨", DEF_FUNCTION_E0 => "è¦‹ç©åŸä¾¡" );
+$aryFunctionCode = Array (	DEF_FUNCTION_P1	 =>  "å•†å“"
+							,DEF_FUNCTION_SO1 => "å—æ³¨"
+							,DEF_FUNCTION_PO1 => "ç™ºæ³¨"
+							,DEF_FUNCTION_SC1 => "å£²ä¸Š"
+							,DEF_FUNCTION_PC1 => "ä»•å…¥"
+							,DEF_FUNCTION_E1 =>  "è¦‹ç©åŸä¾¡"
 						);
 
 /**
-* ¥ï¡¼¥¯¥Õ¥í¡¼´ÉÍı
+* ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ç®¡ç†
 *
-*	°Æ·ïÆÉ¤ß¹ş¤ß¡¢¸¡º÷¡¢¾ÜºÙ¾ğÊó¼èÆÀ¥¯¥¨¥ê´Ø¿ô
+*	æ¡ˆä»¶èª­ã¿è¾¼ã¿ã€æ¤œç´¢ã€è©³ç´°æƒ…å ±å–å¾—ã‚¯ã‚¨ãƒªé–¢æ•°
 *
-*	@param  String $lngUserCode ¥æ¡¼¥¶¡¼¥³¡¼¥É
-*	@param  Array  $aryData     FORM¥Ç¡¼¥¿
-*	@param  Object $objDB       DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  String $lngUserCode ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+*	@param  Array  $aryData     FORMãƒ‡ãƒ¼ã‚¿
+*	@param  Object $objDB       DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@access public
 */
 function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
@@ -50,7 +50,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
 	$lngActionFunctionCode = $aryData['lngActionFunctionCode'];
 	$strSort               = $aryData['strSort'];
 
-	// ¥½¡¼¥È¤¹¤ë¥«¥é¥à¤ÎÂĞ¾İÈÖ¹æÀßÄê
+	// ã‚½ãƒ¼ãƒˆã™ã‚‹ã‚«ãƒ©ãƒ ã®å¯¾è±¡ç•ªå·è¨­å®š
 	$arySortColumn = array ( 1 => "m.dtmStartDate",
 	                         2 => "m.strWorkflowName",
 	                         3 => "strApplicantName",
@@ -62,7 +62,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
 	                         9 => "m.lngFunctionCode" );
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¼èÆÀ¹àÌÜ
+	// å–å¾—é …ç›®
 	//////////////////////////////////////////////////////////////////////////
 	if ( !$lngActionFunctionCode )
 	{
@@ -109,88 +109,88 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
                  "WHERE";
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¾ò·ï
+	// æ¡ä»¶
 	//////////////////////////////////////////////////////////////////////////
-	// °ìÍ÷            ¾ò·ï¼°             C and D and ( E or F )
-	// ¸¡º÷            ¾ò·ï¼°       B and C and D and ( E      or G or H )
-	// ¾ÜºÙ¡¦½èÍı(°ìÍ÷)¾ò·ï¼° A and       C and D and ( E or F )
-	// ¾ÜºÙ¡¦½èÍı(¸¡º÷)¾ò·ï¼° A and B and C and D and ( E      or G or H )
+	// ä¸€è¦§            æ¡ä»¶å¼             C and D and ( E or F )
+	// æ¤œç´¢            æ¡ä»¶å¼       B and C and D and ( E      or G or H )
+	// è©³ç´°ãƒ»å‡¦ç†(ä¸€è¦§)æ¡ä»¶å¼ A and       C and D and ( E or F )
+	// è©³ç´°ãƒ»å‡¦ç†(æ¤œç´¢)æ¡ä»¶å¼ A and B and C and D and ( E      or G or H )
 	//////////////////////////////////////////////////////////////////////////
-	// A:»ØÄê¤·¤¿¥ï¡¼¥¯¥Õ¥í¡¼¥³¡¼¥É
-	// B:³Æ¸¡º÷¾ò·ï
-	// C:¾õÂÖ = $lngWorkflowStatusCode
-	// D:Ìµ¸ú¥Õ¥é¥°¤¬Èİ
-	// E:ÆşÎÏ¼Ô¤¬¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤ÈÆ±¤¸
-	// F:¥ï¡¼¥¯¥Õ¥í¡¼¥Æ¡¼¥Ö¥ë¤Ë¤ª¤±¤ë½çÈÖ¤¬¥æ¡¼¥¶¡¼¤Î½çÈÖ¤è¤ê¤âÂç¤­¤¤
-	// G:¥ï¡¼¥¯¥Õ¥í¡¼¥Æ¡¼¥Ö¥ë¤Ë´Ş¤Ş¤ì¤ë
-	// H:¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤ÎÂ°¤¹¤ë¥°¥ë¡¼¥×¤«¤Ä¸¢¸Â¤¬²¼¤Î¥æ¡¼¥¶¡¼
+	// A:æŒ‡å®šã—ãŸãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã‚³ãƒ¼ãƒ‰
+	// B:å„æ¤œç´¢æ¡ä»¶
+	// C:çŠ¶æ…‹ = $lngWorkflowStatusCode
+	// D:ç„¡åŠ¹ãƒ•ãƒ©ã‚°ãŒå¦
+	// E:å…¥åŠ›è€…ãŒãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã¨åŒã˜
+	// F:ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã«ãŠã‘ã‚‹é †ç•ªãŒãƒ¦ãƒ¼ã‚¶ãƒ¼ã®é †ç•ªã‚ˆã‚Šã‚‚å¤§ãã„
+	// G:ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã«å«ã¾ã‚Œã‚‹
+	// H:ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®å±ã™ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—ã‹ã¤æ¨©é™ãŒä¸‹ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼
 
-	// A:»ØÄê¤·¤¿¥ï¡¼¥¯¥Õ¥í¡¼¥³¡¼¥É
+	// A:æŒ‡å®šã—ãŸãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã‚³ãƒ¼ãƒ‰
 	if ( $lngWorkflowCode )
 	{
 		$strQuery .= " AND m.lngWorkflowCode = $lngWorkflowCode \n";
 	}
 
-	// B:³Æ¸¡º÷¾ò·ï
-	if ( $aryData["lngApplicantUserDisplayCodeConditions"] && $lngApplicantUserDisplayCode ) // ¿½ÀÁ¼Ô
+	// B:å„æ¤œç´¢æ¡ä»¶
+	if ( $aryData["lngApplicantUserDisplayCodeConditions"] && $lngApplicantUserDisplayCode ) // ç”³è«‹è€…
 	{
 		//$strQuery .= " AND m.lngApplicantUserCode = $lngApplicantUserCode \n";
 		$strQuery .= " AND u.strUserDisplayCode = '$lngApplicantUserDisplayCode' \n";
 	}
-	if ( $aryData["lngInputUserDisplayCodeConditions"] && $lngInputUserDisplayCode ) // ÆşÎÏ¼Ô
+	if ( $aryData["lngInputUserDisplayCodeConditions"] && $lngInputUserDisplayCode ) // å…¥åŠ›è€…
 	{
 		$strQuery .= " AND u2.strUserDisplayCode = '$lngInputUserDisplayCode' \n";
 	}
-	if ( $aryData["dtmStartDateConditions"] && $dtmStartDateFrom ) // ¿½ÀÁÆü¤«¤é
+	if ( $aryData["dtmStartDateConditions"] && $dtmStartDateFrom ) // ç”³è«‹æ—¥ã‹ã‚‰
 	{
 		$strQuery .= " AND date_trunc ( 'day', m.dtmStartDate ) >= '$dtmStartDateFrom' \n";
 	}
-	if ( $aryData["dtmStartDateConditions"] && $dtmStartDateTo ) // ¿½ÀÁÆü¤Ş¤Ç
+	if ( $aryData["dtmStartDateConditions"] && $dtmStartDateTo ) // ç”³è«‹æ—¥ã¾ã§
 	{
 		$strQuery .= " AND date_trunc ( 'day', m.dtmStartDate ) <= '$dtmStartDateTo' \n";
 	}
-	if ( $aryData["dtmEndDateConditions"] && $dtmEndDateFrom ) // ´°Î»Æü¤«¤é
+	if ( $aryData["dtmEndDateConditions"] && $dtmEndDateFrom ) // å®Œäº†æ—¥ã‹ã‚‰
 	{
 		$strQuery .= " AND date_trunc ( 'day', m.dtmEndDate ) >= '$dtmEndDateFrom' \n";
 	}
-	if ( $aryData["dtmEndDateConditions"] && $dtmEndDateTo ) // ´°Î»Æü¤Ş¤Ç
+	if ( $aryData["dtmEndDateConditions"] && $dtmEndDateTo ) // å®Œäº†æ—¥ã¾ã§
 	{
 		$strQuery .= " AND date_trunc ( 'day', m.dtmEndDate ) <= '$dtmEndDateTo' \n";
 	}
-	if ( $aryData["lngInChargeCodeConditions"] && $lngInChargeCode ) // ¾µÇ§¼Ô
+	if ( $aryData["lngInChargeCodeConditions"] && $lngInChargeCode ) // æ‰¿èªè€…
 	{
 		$strQuery .= " AND o.lngInChargeCode = $lngInChargeCode \n";
 	}
-	if ( $aryData["lngSelectFunctionCodeConditions"] && $lngSelectFunctionCode ) // µ¡Ç½¥³¡¼¥É
+	if ( $aryData["lngSelectFunctionCodeConditions"] && $lngSelectFunctionCode ) // æ©Ÿèƒ½ã‚³ãƒ¼ãƒ‰
 	{
 		$strQuery .= " AND m.lngFunctionCode = $lngSelectFunctionCode \n";
 	}
 
 	if ( $aryData["lngWorkflowStatusCodeConditions"] && $lngWorkflowStatusCode !== "" )
 	{
-                 // C:¾õÂÖ = $lngWorkflowStatusCode
+                 // C:çŠ¶æ…‹ = $lngWorkflowStatusCode
 //		$strQuery .= " AND t.lngWorkflowStatusCode = $lngWorkflowStatusCode\n";
 		$strQuery .= " AND t.lngWorkflowStatusCode in ( $lngWorkflowStatusCode )\n";
 	}
-	// ¡Ö¼è¾Ã¡×°Æ·ï¤Ë´Ø¤·¤Æ¸¢¸Â¥Á¥§¥Ã¥¯
+	// ã€Œå–æ¶ˆã€æ¡ˆä»¶ã«é–¢ã—ã¦æ¨©é™ãƒã‚§ãƒƒã‚¯
 	if ( $lngFunctionCode != DEF_FUNCTION_WF3 )
 	{
-                 // C:¾õÂÖ != DEF_STATUS_CANCELL
+                 // C:çŠ¶æ…‹ != DEF_STATUS_CANCELL
 		$strQuery .= " AND t.lngWorkflowStatusCode <> " . DEF_STATUS_CANCELL;
 	}
 
-                 // D:Ìµ¸ú¥Õ¥é¥°¤¬Èİ
+                 // D:ç„¡åŠ¹ãƒ•ãƒ©ã‚°ãŒå¦
 	$strQuery .= " AND m.bytinvalidflag = FALSE\n" .
 
                  " AND\n" .
                  "(\n" .
 
-                 // E:ÆşÎÏ¼Ô¤¬¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤ÈÆ±¤¸
+                 // E:å…¥åŠ›è€…ãŒãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã¨åŒã˜
                  "  m.lngInputUserCode = $lngUserCode\n";
 
 	if ( $lngFunctionCode == DEF_FUNCTION_WF1 )
 	{
-		// F:¥ï¡¼¥¯¥Õ¥í¡¼¥Æ¡¼¥Ö¥ë¤Ë¤ª¤±¤ë½çÈÖ¤¬¥æ¡¼¥¶¡¼¤Î½çÈÖ¤è¤ê¤âÂç¤­¤¤
+		// F:ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã«ãŠã‘ã‚‹é †ç•ªãŒãƒ¦ãƒ¼ã‚¶ãƒ¼ã®é †ç•ªã‚ˆã‚Šã‚‚å¤§ãã„
 		$strQuery .= "   OR t.lngWorkflowOrderNo >= \n" . 
                      "  (\n" .
                      "    SELECT o2.lngWorkflowOrderNo\n" .
@@ -201,7 +201,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
 	}
 	elseif ( $lngFunctionCode == DEF_FUNCTION_WF2 || $lngFunctionCode == DEF_FUNCTION_WF3 )
 	{
-		// G:¥ï¡¼¥¯¥Õ¥í¡¼¥Æ¡¼¥Ö¥ë¤Ë´Ş¤Ş¤ì¤ë
+		// G:ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã«å«ã¾ã‚Œã‚‹
 		$strQuery .= "   OR m.lngWorkflowOrderCode = \n" . 
                      "  (\n" .
                      "    SELECT o2.lngWorkflowOrderCode\n" .
@@ -210,7 +210,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
                      "     AND m.lngWorkflowOrderCode = o2.lngWorkflowOrderCode\n" .
                      "  )\n";
 
-		// H:¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤ÎÂ°¤¹¤ë¥°¥ë¡¼¥×¤«¤Ä¸¢¸Â¤¬²¼¤Î¥æ¡¼¥¶¡¼
+		// H:ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®å±ã™ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—ã‹ã¤æ¨©é™ãŒä¸‹ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼
 		$strQuery .= "   OR u.lngUserCode = \n" .
 		             "  (\n" .
 		             "    SELECT u5.lngUserCode \n" .
@@ -220,7 +220,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
                      "     AND u5.lngUserCode = gr.lngUserCode\n" .
                      "     AND u5.lngAuthorityGroupCode = ag.lngAuthorityGroupCode\n" .
 
-                     // ¸¢¸Â¥ì¥Ù¥ë¤¬²¼(Äã¤¤¤Û¤¦¤¬¸¢¸Â¤¬¾å)
+                     // æ¨©é™ãƒ¬ãƒ™ãƒ«ãŒä¸‹(ä½ã„ã»ã†ãŒæ¨©é™ãŒä¸Š)
                      "     AND ag.lngAuthorityLevel < \n" .
                      "    (\n" .
                      "      SELECT ag.lngAuthorityLevel \n" .
@@ -229,7 +229,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
                      "       AND u.lngAuthorityGroupCode = ag.lngAuthorityGroupCode\n" .
                      "    )\n" .
 
-                     // Æ±¤¸¥°¥ë¡¼¥×
+                     // åŒã˜ã‚°ãƒ«ãƒ¼ãƒ—
                      "     AND gr.lngGroupCode = \n" .
                      "    (\n" .
                      "      SELECT gr2.lngGroupCode \n" .
@@ -243,7 +243,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
 	$strQuery .= ") \n" .
 
 	//////////////////////////////////////////////////////////////////////////
-	// É³ÉÕ¤±
+	// ç´ä»˜ã‘
 	//////////////////////////////////////////////////////////////////////////
 	// m_Workflow m, t_Workflow t, m_WorkflowOrder o
 	// m_User u, m_User u2, m_User u3
@@ -258,7 +258,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
                  //" AND u3.bytinvalidflag = FALSE\n";
 
 	//////////////////////////////////////////////////////////////////////////
-	// lngWorkflowSubCode ¤ÎºÇÂçÃÍ¼èÆÀ
+	// lngWorkflowSubCode ã®æœ€å¤§å€¤å–å¾—
 	//////////////////////////////////////////////////////////////////////////
                  " AND t.lngWorkflowSubCode = \n" .
                  "(\n" .
@@ -269,16 +269,16 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
                  ")\n";
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¥½¡¼¥È½èÍı
+	// ã‚½ãƒ¼ãƒˆå‡¦ç†
 	//////////////////////////////////////////////////////////////////////////
-	// $strSort ¹½Â¤ "sort_[ÂĞ¾İÈÖ¹æ]_[¹ß½ç¡¦¾º½ç]"
+	// $strSort æ§‹é€  "sort_[å¯¾è±¡ç•ªå·]_[é™é †ãƒ»æ˜‡é †]"
 
 	if ( $lngFunctionCode == DEF_FUNCTION_WF2 || $lngFunctionCode == DEF_FUNCTION_WF3 )
 	{
 		$arySortColumn[6] = "m.dtmEndDate";
 	}
 
-	// $strSort ¤«¤éÂĞ¾İÈÖ¹æ¡¢¹ß½ç¡¦¾º½ç¤ò¼èÆÀ
+	// $strSort ã‹ã‚‰å¯¾è±¡ç•ªå·ã€é™é †ãƒ»æ˜‡é †ã‚’å–å¾—
 	list ( $sort, $column, $DESC ) = explode ( "_", $strSort );
 	if ( $column )
 	{
@@ -288,7 +288,7 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
 
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¥¯¥¨¥ê¼Â¹Ô
+	// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 	//////////////////////////////////////////////////////////////////////////
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -306,10 +306,10 @@ function getWorkflowQuery( $lngUserCode, $aryData, $objDB )
 
 
 /**
-* GET¥Ç¡¼¥¿°ú¿ôURLÀ¸À®´Ø¿ô
+* GETãƒ‡ãƒ¼ã‚¿å¼•æ•°URLç”Ÿæˆé–¢æ•°
 *
-*	@param  Array  $aryData GET¥Ç¡¼¥¿
-*	@return String          URL(**.php?¡¦¡¦¡¦°Ê¹ß¤ÎÊ¸»úÎó)
+*	@param  Array  $aryData GETãƒ‡ãƒ¼ã‚¿
+*	@return String          URL(**.php?ãƒ»ãƒ»ãƒ»ä»¥é™ã®æ–‡å­—åˆ—)
 *	@access public
 */
 function fncGetURL( $aryData )
@@ -318,8 +318,8 @@ function fncGetURL( $aryData )
            "&lngFunctionCode=" .$aryData["lngFunctionCode"] .
            "&lngSelectFunctionCode=" .$aryData["lngSelectFunctionCode"] .
            "&lngWorkflowStatusCode=" .$aryData["lngWorkflowStatusCode"];
-	// ¸¡º÷¤«¤é¼Â¹Ô¤µ¤ì¤¿¾ì¹ç¤Ï¸¡º÷¾ò·ï¤âÅê¤²¤ë
-	// (¾ò·ï:lngSelectFunctionCode¤¬¡Ö°ìÍ÷¡×¤Ç¤Ê¤«¤Ã¤¿¤é)
+	// æ¤œç´¢ã‹ã‚‰å®Ÿè¡Œã•ã‚ŒãŸå ´åˆã¯æ¤œç´¢æ¡ä»¶ã‚‚æŠ•ã’ã‚‹
+	// (æ¡ä»¶:lngSelectFunctionCodeãŒã€Œä¸€è¦§ã€ã§ãªã‹ã£ãŸã‚‰)
 	if ( $aryData["lngSelectFunctionCode"] != DEF_FUNCTION_WF1 )
 	{
 		$url .= "&lngApplicantUserDisplayCode=" .$aryData["lngApplicantUserDisplayCode"] .
@@ -331,8 +331,8 @@ function fncGetURL( $aryData )
                 "&lngInChargeCode=" .$aryData["lngInChargeCode"];
 	}
 
-	// ¥Ú¡¼¥¸ÊÑ¹¹¡¢¥½¡¼¥È½èÍı¤Î¾ì¹ç¤Ï¸¡º÷É½¼¨¹àÌÜ¡¢¸¡º÷¾ò·ï¹àÌÜ¤âÅê¤²¤ë
-	// (¾ò·ï:lngWorkflowCode¤¬¤Ê¤«¤Ã¤¿¤é)
+	// ãƒšãƒ¼ã‚¸å¤‰æ›´ã€ã‚½ãƒ¼ãƒˆå‡¦ç†ã®å ´åˆã¯æ¤œç´¢è¡¨ç¤ºé …ç›®ã€æ¤œç´¢æ¡ä»¶é …ç›®ã‚‚æŠ•ã’ã‚‹
+	// (æ¡ä»¶:lngWorkflowCodeãŒãªã‹ã£ãŸã‚‰)
 	if ( !$aryData["lngWorkflowCode"] )
 	{
 		$url .= "&lngWorkflowStatusCodeVisible=" .$aryData["lngWorkflowStatusCodeVisible"] .
@@ -356,24 +356,24 @@ function fncGetURL( $aryData )
 
 
 /**
-* ¥Ç¡¼¥¿ÇÛÎó¼èÆÀ´Ø¿ô
+* ãƒ‡ãƒ¼ã‚¿é…åˆ—å–å¾—é–¢æ•°
 *
-*	@param  Long   $lngCode  ¥³¡¼¥É
-*	@param  Long   $lngSQL   ¼Â¹Ô¤¹¤ëSQL¥³¡¼¥É
-*	@param  Object $objDB    DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $aryData1 ÇÛÎó1
-*	        Array  $aryData2 ÇÛÎó2
+*	@param  Long   $lngCode  ã‚³ãƒ¼ãƒ‰
+*	@param  Long   $lngSQL   å®Ÿè¡Œã™ã‚‹SQLã‚³ãƒ¼ãƒ‰
+*	@param  Object $objDB    DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $aryData1 é…åˆ—1
+*	        Array  $aryData2 é…åˆ—2
 *	@access public
 */
 function fncGetArrayData( $lngCode, $lngSQL, $objDB )
 {
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É¤«¤é¥ï¡¼¥¯¥Õ¥í¡¼½ç½ø¥³¡¼¥É¤È½ç½øÈÖ¹æ¤ò¼èÆÀ
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †åºã‚³ãƒ¼ãƒ‰ã¨é †åºç•ªå·ã‚’å–å¾—
 	$strQuery[0] = "SELECT lngWorkflowOrderCode, lngWorkflowOrderNo " .
 	               "FROM m_WorkflowOrder " .
 	               "WHERE bytWorkflowOrderDisplayFlag = TRUE" .
 	               " AND lngInChargeCode = $lngCode";
 
-	// ¥ï¡¼¥¯¥Õ¥í¡¼¥³¡¼¥É¤«¤é¥ï¡¼¥¯¥Õ¥í¡¼½çÈÖÈÖ¹æ¤È¥á¡¼¥ë¥¢¥É¥ì¥¹¤ò¼èÆÀ
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †ç•ªç•ªå·ã¨ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
 	//$strQuery[1] = "SELECT o.lngWorkflowOrderNo, u.strMailAddress " .
 	//               "FROM m_WorkflowOrder o, m_Workflow m, m_User u " .
 	//               "WHERE m.lngWorkflowCode = $lngCode" .
@@ -400,17 +400,17 @@ function fncGetArrayData( $lngCode, $lngSQL, $objDB )
 }
 
 /**
-* °Æ·ï¾ğÊó¤Î¥ê¥ó¥¯µ­½Ò¤òÀ¸À®
+* æ¡ˆä»¶æƒ…å ±ã®ãƒªãƒ³ã‚¯è¨˜è¿°ã‚’ç”Ÿæˆ
 *
-*	@param  Object $objDB    DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@param  Object $objResult    ¸Æ¤Ó½Ğ¤·¸µ¡¢WF¸¡º÷·ë²Ì¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $strWorkflowNameLink À¸À®·ë²Ì¥ê¥ó¥¯Ê¸»úÎó
+*	@param  Object $objDB    DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@param  Object $objResult    å‘¼ã³å‡ºã—å…ƒã€WFæ¤œç´¢çµæœã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $strWorkflowNameLink ç”Ÿæˆçµæœãƒªãƒ³ã‚¯æ–‡å­—åˆ—
 *	@access public
 *	@makedate	2005/11/07
 */
 function fncGetWorkflowNameLink( $objDB, $objResult, $strSessionID)
 {
-// °Æ·ï¾ğÊó¤Î¥ê¥ó¥¯Àè¥×¥í¥°¥é¥àÌ¾¾Î
+// æ¡ˆä»¶æƒ…å ±ã®ãƒªãƒ³ã‚¯å…ˆãƒ—ãƒ­ã‚°ãƒ©ãƒ åç§°
 $aryFunctionLink = Array (	DEF_FUNCTION_P1	 =>  "/p/result/index2.php"
 							,DEF_FUNCTION_SO1 => "/so/result/index2.php"
 							,DEF_FUNCTION_PO1 => "/po/result/index2.php"
@@ -419,7 +419,7 @@ $aryFunctionLink = Array (	DEF_FUNCTION_P1	 =>  "/p/result/index2.php"
 							,DEF_FUNCTION_E1 =>  "/estimate/result/detail.php"
 						);
 
-// °Æ·ï¾ğÊó¤Î¥ê¥ó¥¯Àè¤ËÀßÄê¤¹¤ë¥­¡¼¥³¡¼¥É¤ÎÂĞ¾İ¥«¥é¥àÌ¾¾Î
+// æ¡ˆä»¶æƒ…å ±ã®ãƒªãƒ³ã‚¯å…ˆã«è¨­å®šã™ã‚‹ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å¯¾è±¡ã‚«ãƒ©ãƒ åç§°
 $aryWorkflowKeyName = array( DEF_FUNCTION_P1  => "lngProductNo"
 							,DEF_FUNCTION_SO1 => "lngReceiveNo"
 							,DEF_FUNCTION_PO1 => "lngOrderNo"
@@ -431,14 +431,14 @@ $aryWorkflowKeyName = array( DEF_FUNCTION_P1  => "lngProductNo"
 	$strWorkflowNameLink = "";
 	
 	//
-	// È¯Ãí¡¦¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+	// ç™ºæ³¨ãƒ»ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 	//
 	if( $objResult->lngfunctioncode == DEF_FUNCTION_PO1 )
 	{
-		// È¯Ãí¤Ë¤Æ»ØÄê¤·¤Æ¤¤¤ëÀ½ÉÊ¥³¡¼¥É¤Î¼èÆÀ½èÍı
+		// ç™ºæ³¨ã«ã¦æŒ‡å®šã—ã¦ã„ã‚‹è£½å“ã‚³ãƒ¼ãƒ‰ã®å–å¾—å‡¦ç†
 		$strProductCodeQuery = "SELECT od.strProductCode as strProductCode FROM t_OrderDetail od WHERE od.lngOrderNo = " . $objResult->strworkflowkeycode;
 
-		// ÃÍ¤ò¤È¤ë =====================================
+		// å€¤ã‚’ã¨ã‚‹ =====================================
 		$lngEstimateNo = "";
 		list ( $lngResultProductCodeID, $lngResultProductCodeNum ) = fncQuery( $strProductCodeQuery, $objDB );
 		if ( $lngResultProductCodeNum )
@@ -446,7 +446,7 @@ $aryWorkflowKeyName = array( DEF_FUNCTION_P1  => "lngProductNo"
 			$objProductCodeResult = $objDB->fetchObject( $lngResultProductCodeID, 0 );
 			$strProductCode = $objProductCodeResult->strproductcode;
 
-			// ¸«ÀÑ¸¶²Á¥Ç¡¼¥¿¼èÆÀ
+			// è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿å–å¾—
 			$aryEstimateQuery[] = "SELECT e.lngEstimateNo ";
 			$aryEstimateQuery[] = "FROM m_Estimate e";
 			$aryEstimateQuery[] = "WHERE e.strProductCode = '" . $strProductCode . "'";
@@ -469,24 +469,24 @@ $aryWorkflowKeyName = array( DEF_FUNCTION_P1  => "lngProductNo"
 		}
 		$objDB->freeResult( $lngResultProductCodeID );
 
-		// ´û¤Ë»ØÄê¤ÎÀ½ÉÊ¥³¡¼¥É¤ËÂĞ¤·¤Æ¸«ÀÑ¸¶²Á¾ğÊó¤¬Â¸ºß¤¹¤ì¤Ğ
+		// æ—¢ã«æŒ‡å®šã®è£½å“ã‚³ãƒ¼ãƒ‰ã«å¯¾ã—ã¦è¦‹ç©åŸä¾¡æƒ…å ±ãŒå­˜åœ¨ã™ã‚Œã°
 		if ( $lngEstimateNo != "" )
 		{
-			// È¯ÃíÆâÍÆ¤È¸«ÀÑ¸¶²ÁÁĞÊı¤Î¥¦¥£¥ó¥É¥¦¤ò³«¤¯½èÍı
+			// ç™ºæ³¨å†…å®¹ã¨è¦‹ç©åŸä¾¡åŒæ–¹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ãå‡¦ç†
 			$strWorkflowNameLink = "<td class=\"Segs\" onClick=\"javascript:fncShowWfDialogCommon('".$aryFunctionLink[$objResult->lngfunctioncode]."?strSessionID=" . $strSessionID . "&lngOrderNo=" . $objResult->strworkflowkeycode . "' , window.form1 , 'ResultIframeWf' , 'YES' , " . $_COOKIE["lngLanguageCode"] . " , 'detail', 505, 679, 6, 30 );\"><a class=wfA href=\"/estimate/result/detail.php?strSessionID=" . $strSessionID . "&lngEstimateNo=" . $lngEstimateNo . "\" target=_blank>" . $objResult->strworkflowname . "</a></td>";
 		}
 	}
 	//
-	// ¸«ÀÑ¸¶²Á¤Î¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+	// è¦‹ç©åŸä¾¡ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 	//
 	elseif( $objResult->lngfunctioncode == DEF_FUNCTION_E1 )
 	{
-		// ¸«ÀÑ¸¶²Á¤Î¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç¡¢¸«ÀÑ¸¶²Á¾ğÊóÆâÍÆ¤Î¥¦¥£¥ó¥É¥¦¤ò³«¤¯½èÍı
+		// è¦‹ç©åŸä¾¡ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆã€è¦‹ç©åŸä¾¡æƒ…å ±å†…å®¹ã®ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ãå‡¦ç†
 		$strWorkflowNameLink = "<td class=\"Segs\"><a class=wfA href=\"".$aryFunctionLink[$objResult->lngfunctioncode]."?strSessionID=" . $strSessionID . "&lngEstimateNo=" . $objResult->strworkflowkeycode . "\" target=_blank>" . $objResult->strworkflowname . "</a></td>";
 	}
 
 	//
-	// ¾åµ­¡¢È¯Ãí¡Ê¸«ÀÑ¸¶²Á¡¦Ê»ÍÑ¡Ë¡¢¸«ÀÑ¸¶²Á¡¢¤Ë³ºÅö¤·¤Ê¤¤¡¢Â¾¤Î¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾ì¹ç
+	// ä¸Šè¨˜ã€ç™ºæ³¨ï¼ˆè¦‹ç©åŸä¾¡ãƒ»ä½µç”¨ï¼‰ã€è¦‹ç©åŸä¾¡ã€ã«è©²å½“ã—ãªã„ã€ä»–ã®ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®å ´åˆ
 	//
 	if( empty($strWorkflowNameLink) )
 	{
@@ -498,10 +498,10 @@ $aryWorkflowKeyName = array( DEF_FUNCTION_P1  => "lngProductNo"
 }
 
 /**
-* ÇÛÎó¤ÇÅÏ¤µ¤ì¤¿ lngWorkflowStatusCode ¤ò Ê¸»úÎó¤ØÊÑ´¹¤¹¤ë
+* é…åˆ—ã§æ¸¡ã•ã‚ŒãŸ lngWorkflowStatusCode ã‚’ æ–‡å­—åˆ—ã¸å¤‰æ›ã™ã‚‹
 *
 *	@param  Array  $aryStatus "lngWorkflowStatusCode"
-*	@return	string	SQL¾ò·ïÊ¸¤ËÁÈ¤ß¹ş¤à¡¢·ë¹ç¤µ¤ì¤¿Ê¸»úÎó
+*	@return	string	SQLæ¡ä»¶æ–‡ã«çµ„ã¿è¾¼ã‚€ã€çµåˆã•ã‚ŒãŸæ–‡å­—åˆ—
 *	@access public
 *	@makedate	2005/11/07
 */
@@ -511,18 +511,18 @@ function fncGetArrayToWorkflowStatusCode( $aryStatus )
 	$aryQuery = array();
 	$strRet   = "";
 	
-	// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ"lngWorkflowStatusCode"
-	// ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹ÃÍ¤è¤ê¡¢ÇÛÎó¤ò¤½¤Î¤Ş¤ŞÂåÆş
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹"lngWorkflowStatusCode"
+	// ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹å€¤ã‚ˆã‚Šã€é…åˆ—ã‚’ãã®ã¾ã¾ä»£å…¥
 	
 	if( is_array( $aryStatus ) )
 	{
 		$aryQuery[] = "";
 
-		// WF¾õÂÖ¤ÏÊ£¿ôÀßÄê¤µ¤ì¤Æ¤¤¤ë²ÄÇ½À­¤¬¤¢¤ë¤Î¤Ç¡¢ÀßÄê¸Ä¿ôÊ¬¥ë¡¼¥×
+		// WFçŠ¶æ…‹ã¯è¤‡æ•°è¨­å®šã•ã‚Œã¦ã„ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€è¨­å®šå€‹æ•°åˆ†ãƒ«ãƒ¼ãƒ—
 		$strBuff = "";
 		for ( $j = 0; $j < count($aryStatus); $j++ )
 		{
-			// ½é²ó½èÍı
+			// åˆå›å‡¦ç†
 			if ( $j <> 0 )
 			{
 				$strBuff .= " ,";

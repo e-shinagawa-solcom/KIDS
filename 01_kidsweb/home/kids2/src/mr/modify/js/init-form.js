@@ -1,5 +1,5 @@
 (function(){
-    // change¥¤¥Ù¥ó¥È¤òÈ¯À¸¤µ¤»¤ëÍ×ÁÇ¥ê¥¹¥È
+    // changeã‚¤ãƒ™ãƒ³ãƒˆã‚’ç™ºç”Ÿã•ã›ã‚‹è¦ç´ ãƒªã‚¹ãƒˆ
     var list_onchange = [
           $('.regist-tab-header input[name="ProductCode"]')
         , $('input[name="CustomerCode"]')
@@ -8,7 +8,7 @@
         , $('input[name="DestinationFactory"]')
     ];
 
-    // ½é´üÃÍÀßÄêÂĞ¾İ¤ÎSELECTÍ×ÁÇ¥ê¥¹¥È
+    // åˆæœŸå€¤è¨­å®šå¯¾è±¡ã®SELECTè¦ç´ ãƒªã‚¹ãƒˆ
     var list_select = [
           $('select[name="ReportCategory"]')
         , $('select[name="RequestCategory"]')
@@ -17,69 +17,69 @@
         , $('select[name="FinalKeep"]')
     ];
 
-    // ¶â·¿¥»¥ì¥¯¥È¥Ü¥Ã¥¯¥¹¤Î¼èÆÀ
+    // é‡‘å‹ã‚»ãƒ¬ã‚¯ãƒˆãƒœãƒƒã‚¯ã‚¹ã®å–å¾—
     var moldList = $('.mold-selection__list');
     var moldChoosenList = $('.mold-selection__choosen-list');
 
-    // ½é´ü²½¤Ë»ÈÍÑ¤¹¤ë¶â·¿¾ğÊó¥ê¥¹¥È
+    // åˆæœŸåŒ–ã«ä½¿ç”¨ã™ã‚‹é‡‘å‹æƒ…å ±ãƒªã‚¹ãƒˆ
     var list_initMoldRecord = $('.init-mold-info__record');
 
-    // ÄÉ²Ã¥Ü¥¿¥ó
+    // è¿½åŠ ãƒœã‚¿ãƒ³
     var btnAdd = $('.mold-selection__backimage-add-del .list-add');
-    // ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë
+    // é‡‘å‹èª¬æ˜ãƒ†ãƒ¼ãƒ–ãƒ«
     var tableMoldDescription = $('.table-description');
 
-    // onchange¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+    // onchangeã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
     $.each(list_onchange, function(){
         this.change();
     });
 
-    // SELECTÍ×ÁÇ¤Î½é´üÃÍÀßÄê & onchange¥¤¥Ù¥ó¥È¥­¥Ã¥¯
+    // SELECTè¦ç´ ã®åˆæœŸå€¤è¨­å®š & onchangeã‚¤ãƒ™ãƒ³ãƒˆã‚­ãƒƒã‚¯
     $.each(list_select, function(){
         var init_value = this.attr('init-value');
         this.find('option[value="' + init_value + '"]').prop('selected', true);
         this.change();
     });
 
-    // ¶â·¿¥ê¥¹¥ÈÆÉ¹ş´°Î»»ş¤Ë¡ÖÁªÂòºÑ¤ß¤Î¶â·¿¥ê¥¹¥È¡×¤ò½é´ü²½¤¹¤ë
+    // é‡‘å‹ãƒªã‚¹ãƒˆèª­è¾¼å®Œäº†æ™‚ã«ã€Œé¸æŠæ¸ˆã¿ã®é‡‘å‹ãƒªã‚¹ãƒˆã€ã‚’åˆæœŸåŒ–ã™ã‚‹
     moldList.on('load-completed', function(){
         var options = moldList.find('option');
 
-        // ¶â·¿NO¿ôÊ¬Áöºº
+        // é‡‘å‹NOæ•°åˆ†èµ°æŸ»
         list_initMoldRecord.each(function(i, row){
             var cur = $(row).attr('moldno');
-            // OPTIONÍ×ÁÇ¿ôÊ¬Áöºº
+            // OPTIONè¦ç´ æ•°åˆ†èµ°æŸ»
             options.each(function(j, option) {
                 var target = $(option).val();
-                // ¶â·¿¥ê¥¹¥È¤Ë´Ş¤Ş¤ì¤Æ¤¤¤ë¾ì¹ç
+                // é‡‘å‹ãƒªã‚¹ãƒˆã«å«ã¾ã‚Œã¦ã„ã‚‹å ´åˆ
                 if (cur === target) {
-                    // ÁªÂò¾õÂÖ¤Ë¤¹¤ë
+                    // é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
                     $(this).prop('selected', true);
-                    // ¥ë¡¼¥×¤«¤éÈ´¤±¤ë
+                    // ãƒ«ãƒ¼ãƒ—ã‹ã‚‰æŠœã‘ã‚‹
                     return false;
                 }
             });
         });
 
-        // ÄÉ²Ã¥Ü¥¿¥ó¤Î¥¯¥ê¥Ã¥¯(¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë¤ÎºîÀ®)
+        // è¿½åŠ ãƒœã‚¿ãƒ³ã®ã‚¯ãƒªãƒƒã‚¯(é‡‘å‹èª¬æ˜ãƒ†ãƒ¼ãƒ–ãƒ«ã®ä½œæˆ)
         btnAdd.click();
     });
 
-    // ¶â·¿ÀâÌÀ¤ÎºîÀ®´°Î»»ş¤Ë¶â·¿ÀâÌÀ¤òÀßÄê¤¹¤ë
+    // é‡‘å‹èª¬æ˜ã®ä½œæˆå®Œäº†æ™‚ã«é‡‘å‹èª¬æ˜ã‚’è¨­å®šã™ã‚‹
     tableMoldDescription.on('create-completed', function(){
         var trs = $(this).find('tbody > tr');
 
-        // ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ë¤Î¥ì¥³¡¼¥É·ï¿ôÊ¬Áöºº
+        // é‡‘å‹èª¬æ˜ãƒ†ãƒ¼ãƒ–ãƒ«ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ä»¶æ•°åˆ†èµ°æŸ»
         trs.each(function(i, table_row){
             var cur_table_moldno = $(table_row).attr('moldno');
-            // ½é´ü²½ÂĞ¾İ¤È¤Ê¤ë¶â·¿ÀâÌÀ¤Î·ï¿ôÊ¬Áöºº
+            // åˆæœŸåŒ–å¯¾è±¡ã¨ãªã‚‹é‡‘å‹èª¬æ˜ã®ä»¶æ•°åˆ†èµ°æŸ»
             list_initMoldRecord.each(function(j, init_row){
                 var cur_init_moldno = $(init_row).attr('moldno')
-                // ¶â·¿ÀâÌÀ¥Æ¡¼¥Ö¥ëÆâ¤Ë½é´ü²½ÂĞ¾İ¤Î¶â·¿¤¬Â¸ºß¤¹¤ë¾ì¹ç
+                // é‡‘å‹èª¬æ˜ãƒ†ãƒ¼ãƒ–ãƒ«å†…ã«åˆæœŸåŒ–å¯¾è±¡ã®é‡‘å‹ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
                 if (cur_table_moldno === cur_init_moldno){
-                    // ¶â·¿ÀâÌÀ¤ò½é´ü²½
+                    // é‡‘å‹èª¬æ˜ã‚’åˆæœŸåŒ–
                     $(table_row).find('input[name^="MoldDescription"]').val($(init_row).attr('desc'));
-                    // ¥ë¡¼¥×¤«¤éÈ´¤±¤ë
+                    // ãƒ«ãƒ¼ãƒ—ã‹ã‚‰æŠœã‘ã‚‹
                     return false;
                 };
             });

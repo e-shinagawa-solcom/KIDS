@@ -1,6 +1,6 @@
 <?
 /** 
-*	�ޥ������� ��ҥޥ��� ��ǧ����
+*	マスタ管理 会社マスタ 確認画面
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,7 +10,7 @@
 *	@version   1.00
 *
 */
-// ��Ͽ�������¹�
+// 登録、修正実行
 // confirm.php -> strSessionID           -> action.php
 // confirm.php -> lngActionCode          -> action.php
 // confirm.php -> lngcompanycode         -> action.php
@@ -35,34 +35,34 @@
 // confirm.php -> lngcloseddaycode       -> action.php
 // confirm.php -> strattributecode       -> action.php
 //
-// ����¹�
+// 削除実行
 // confirm.php -> strSessionID   -> action.php
 // confirm.php -> lngActionCode  -> action.php
 // confirm.php -> lngcompanycode -> action.php
 
-// �����ɤ߹���
+// 設定読み込み
 include_once('conf.inc');
 
-// �饤�֥���ɤ߹���
+// ライブラリ読み込み
 require (LIB_FILE);
 require (SRC_ROOT . "m/cmn/lib_m.php");
 
-// DB��³
+// DB接続
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST�ǡ�������
+// POSTデータ取得
 $aryData = $_GET;
 
-// °�������ɤ˴ؤ�������å�(ʸ��������å����ܼҡ��ܵҥ����å�)
+// 属性コードに関するチェック(文字列チェック、本社・顧客チェック)
 $aryAttributeCode = explode ( ":", $aryData["strattributecode"] );
 for ( $i = 0; $i < count ( $aryAttributeCode ); $i++ )
 {
-	// °�����ͥ����å�
+	// 属性数値チェック
 	if ( fncCheckString( $aryAttributeCode[$i], "number(0,2147483647)" ) == "" )
 	{
-		// �ܼҤޤ��ϸܵ�°�����ä���硢���줾��Υե饰��
+		// 本社または顧客属性だった場合、それぞれのフラグ真
 		if ( $aryAttributeCode[$i] == DEF_ATTRIBUTE_HEADOFFICE )
 		{
 			$bytHeadOfficeFlag = TRUE;
@@ -73,21 +73,21 @@ for ( $i = 0; $i < count ( $aryAttributeCode ); $i++ )
 		}
 	}
 }
-// �ܼҤȸܵ�������°������ꤵ��Ƥ�����硢���顼
+// 本社と顧客双方の属性を指定されていた場合、エラー
 if ( $bytHeadOfficeFlag && $bytClientFlag )
 {
-	fncOutputError ( 9056, DEF_WARNING, "�ܼҡ��ܵ�������°�����ղä��뤳�ȤϤǤ��ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9056, DEF_WARNING, "本社、顧客双方の属性を付加することはできません。", TRUE, "", $objDB );
 }
 
 
-// ���å�����ǧ
+// セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ���³�ǧ
+// 権限確認
 if ( !fncCheckAuthority( DEF_FUNCTION_M0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 
@@ -118,7 +118,7 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 	$aryCheck["strattributecode"]      = "null";
 	$aryCheck["strdistinctcode"]       = "numenglish(0,100)";
 
-	// �ܵ�°�����Ĥ��Ƥ����硢���̥�����ɬ�ܤ��ѹ�
+	// 顧客属性がついている場合、識別コード必須に変更
 	//if ( $bytClientFlag )
 	//{
 	//	$aryCheck["strdistinctcode"] = "null:numenglish(0,100)";
@@ -126,7 +126,7 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 }
 
 
-// ʸ��������å�
+// 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 //echo getArrayTable( $aryCheckResult, "TABLE" );
 //echo getArrayTable( $aryData, "TABLE" );
@@ -136,28 +136,28 @@ fncPutStringCheckError( $aryCheckResult, $objDB );
 
 
 //////////////////////////////////////////////////////////////////////////
-// ������ͭ����������å�
+// 処理の有効性をチェック
 //////////////////////////////////////////////////////////////////////////
-// ( ��Ͽ �ޤ��� ���� ) ���顼���ʤ� ��硢
-// ������Ͽ�����������å��¹�
+// ( 登録 または 修正 ) エラーがない 場合、
+// 新規登録、修正チェック実行
 if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode"] == DEF_ACTION_UPDATE ) && !join ( $aryCheckResult ) )
 {
-	// ��ҥ����ɽ�ʣ�����å�
+	// 会社コード重複チェック
 	$strQuery = "SELECT * FROM m_Company " .
                 "WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ������Ͽ ���� ��̷����0�ʾ�
-	// �ޤ���
-	// ���� ���� ��̷����1�ʳ� �ξ�硢���顼
+	// 新規登録 かつ 結果件数が0以上
+	// または
+	// 修正 かつ 結果件数が1以外 の場合、エラー
 	if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT && $lngResultNum > 0 ) || ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE && $lngResultNum != 1 ) )
 	{
 		$objDB->freeResult( $lngResultID );
-		fncOutputError ( 9056, DEF_WARNING, "��ҥ����ɤ���ʣ���Ƥ��ޤ���", TRUE, "", $objDB );
+		fncOutputError ( 9056, DEF_WARNING, "会社コードが重複しています。", TRUE, "", $objDB );
 	}
 
-	// °����ʣ�����å�
+	// 属性重複チェック
 	$count = count ( $aryAttributeCode );
 	for ( $i = 0; $i < $count; $i++ )
 	{
@@ -165,17 +165,17 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 		{
 			if ( $aryAttributeCode[$i] == $aryAttributeCode[$j] )
 			{
-				fncOutputError ( 9056, DEF_WARNING, "°�������ɤ���ʣ���Ƥ��ޤ���", TRUE, "", $objDB );
+				fncOutputError ( 9056, DEF_WARNING, "属性コードが重複しています。", TRUE, "", $objDB );
 			}
 		}
 	}
 
-	// ��Ͽ����(INSERT)
+	// 登録処理(INSERT)
 	if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 	{
-		// �������󥹥ơ��֥����ҥ����ɤ����
+		// シーケンステーブルより会社コードを取得
 		//$aryData["lngcompanycode"] = fncGetSequence( "m_company.lngcompanycode", $objDB );
-		// ���󥯥���ȸ�Υ������󥹤�9999���ä���礵��˼���
+		// インクリメント後のシーケンスが9999だった場合さらに取得
 		//if ( $aryData["lngcompanycode"] == 9999 )
 		//{
 		//	$aryData["lngcompanycode"] = fncGetSequence( "m_company.lngcompanycode", $objDB );
@@ -214,13 +214,13 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 		}
 	}
 
-	// ��������(UPDATE)
+	// 修正処理(UPDATE)
 	elseif ( $aryData["lngActionCode"] == DEF_ACTION_UPDATE )
 	{
-		// ���å�
+		// ロック
 		$aryQuery[] = "SELECT * FROM m_Company WHERE lngcompanycode = " . $aryData["lngcompanycode"];
 
-		// UPDATE ������
+		// UPDATE クエリ
 		$aryQuery[] = "UPDATE m_Company SET " .
                        "lngcountrycode = " . $aryData["lngcountrycode"]. ", " .
                        "lngorganizationcode = " . $aryData["lngorganizationcode"] . ", " .
@@ -243,26 +243,26 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
                        "lngcloseddaycode = " . $aryData["lngcloseddaycode"] .
                        " WHERE lngcompanycode = " . $aryData["lngcompanycode"];
 
-		// °�����ѹ������å�(�ѹ��Τ��ä����Τߡ��ѹ�����������)
-		// ������°�������
+		// 属性の変更チェック(変更のあった場合のみ、変更クエリ生成)
+		// 現状の属性を取得
 		$strQuery = "SELECT lngAttributeCode FROM m_AttributeRelation WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 		$objAttribute = new clsMaster();
 		$objAttribute->setMasterTableData( $strQuery, $objDB );
 
-		// ������Ͽ���줿°���򥳥ԡ�
+		// 今回登録された属性をコピー
 		$aryAttributeCopy = $aryAttributeCode;
 
-		// ���줾��ο������
+		// それぞれの数を取得
 		$countDB  = count ( $objAttribute->aryData );
 		$countGET = count ( $aryAttributeCode );
 
-		// °���θ����Ƚ��������
+		// 属性の現状と修正の比較
 		for ( $i = 0; $i < $countDB; $i++ )
 		{
 			for ( $j = 0; $j < $countGET; $j++ )
 			{
-				// Ʊ��°����¸�ߤ�����硢
-				// �����å��ե饰�򵶡�������Ͽʬ���������롼�פ�ȴ����
+				// 同じ属性が存在した場合、
+				// チェックフラグを偽、新規登録分を削除し、ループを抜ける
 				if ( $objAttribute->aryData[$i]["lngattributecode"] == $aryAttributeCopy[$j] )
 				{
 					$bytCheckFlag = FALSE;
@@ -272,8 +272,8 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 				$bytCheckFlag = TRUE;
 			}
 
-			// �����å��ե饰�����ξ�硢���°����¸�ߤ���Ȥ������ȤʤΤǡ�
-			// °�����������������ե饰�򿿤Ȥ����롼�פ�ȴ����
+			// チェックフラグが真の場合、削除属性が存在するということなので、
+			// 属性修正クエリ生成フラグを真とし、ループを抜ける
 			if ( $bytCheckFlag )
 			{
 				$bytAttributeChangeFlag = TRUE;
@@ -281,15 +281,15 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 			}
 		}
 
-		// ���Ϥ��줿°���Υ��ԡ������ʸ����Ȥ��Ʒ�礷����̡�
-		// �ͤ�¸�ߤ�����硢�ɲä��줿°����¸�ߤ���Ȥ������ȤʤΤǡ�
-		// °�����������������ե饰�򿿤Ȥ���
+		// 入力された属性のコピー配列を文字列として結合した結果、
+		// 値が存在した場合、追加された属性が存在するということなので、
+		// 属性修正クエリ生成フラグを真とする
 		if ( join ( "", $aryAttributeCopy ) )
 		{
 			$bytAttributeChangeFlag = TRUE;
 		}
 
-		// °�����������������ե饰�����ξ�硢°�����������������
+		// 属性修正クエリ生成フラグが真の場合、属性修正クエリを生成
 		if ( $bytAttributeChangeFlag )
 		{
 			$aryQuery[] = "DELETE FROM m_AttributeRelation WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
@@ -306,32 +306,32 @@ if ( ( $aryData["lngActionCode"] == DEF_ACTION_INSERT || $aryData["lngActionCode
 	}
 }
 
-// ��� ���� ���顼���ʤ� ��硢
-// ��������å��¹�
+// 削除 かつ エラーがない 場合、
+// 削除チェック実行
 elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResult ) )
 {
-	// �����å��оݥơ��֥�̾��������
-	// ���롼�ץޥ������桼�����ޥ��� �����å�������
+	// チェック対象テーブル名配列を定義
+	// グループマスタ、ユーザーマスタ チェッククエリ
 	$aryTableName = Array ( "m_Group", "m_User" );
 
-	// �����å�����������
+	// チェッククエリ生成
 	for ( $i = 0; $i < count ( $aryTableName ); $i++ )
 	{
 		$aryQuery[] = "SELECT lngCompanyCode FROM " . $aryTableName[$i] . " WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 	}
-	// ȯ���ޥ��� �����å�����������
+	// 発注マスタ チェッククエリ生成
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Order WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"] . " OR lngDeliveryPlaceCode = " . $aryData["lngcompanycode"];
 
-	// ���ʥޥ��� �����å�����������
+	// 製品マスタ チェッククエリ生成
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Product WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"] . " OR lngFactoryCode = " . $aryData["lngcompanycode"] . " OR lngAssemblyFactoryCode = " . $aryData["lngcompanycode"] . " OR lngAssemblyFactoryCode = " . $aryData["lngcompanycode"] . " OR lngDeliveryPlaceCode = " . $aryData["lngcompanycode"];
 
-	// �����ޥ��� �����å�����������
+	// 受注マスタ チェッククエリ生成
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Receive WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"];
 
-	// ���ޥ��� �����å�����������
+	// 売上マスタ チェッククエリ生成
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Sales WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"];
 
-	// �����ޥ��� �����å�����������
+	// 仕入マスタ チェッククエリ生成
 	$aryQuery[] = "SELECT lngCustomerCompanyCode FROM m_Stock WHERE lngCustomerCompanyCode = " . $aryData["lngcompanycode"] . " OR lngDeliveryPlaceCode = " . $aryData["lngcompanycode"];
 
 	$strQuery = join ( " UNION ", $aryQuery );
@@ -339,14 +339,14 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-	// ��̤�1��Ǥ⤢�ä���硢����Բ�ǽ�Ȥ������顼����
+	// 結果が1件でもあった場合、削除不可能とし、エラー出力
 	if ( $lngResultNum > 0 )
 	{
 		$objDB->freeResult( $lngResultID );
-		fncOutputError ( 1201, DEF_WARNING, "�ޥ�����������", TRUE, "", $objDB );
+		fncOutputError ( 1201, DEF_WARNING, "マスタ管理失敗", TRUE, "", $objDB );
 	}
 
-	// �������(DELETE)
+	// 削除処理(DELETE)
 	$aryQuery[] = "DELETE FROM m_Company WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 	$aryQuery[] = "DELETE FROM m_AttributeRelation WHERE lngCompanyCode = " . $aryData["lngcompanycode"];
 }
@@ -354,7 +354,7 @@ elseif ( $aryData["lngActionCode"] == DEF_ACTION_DELETE && !join ( $aryCheckResu
 
 
 ////////////////////////////////////////////////////////////////////////////
-// ������¹�
+// クエリ実行
 ////////////////////////////////////////////////////////////////////////////
 $objDB->transactionBegin();
 
@@ -372,7 +372,7 @@ $objDB->close();
 
 
 //////////////////////////////////////////////////////////////////////////
-// ����
+// 出力
 //////////////////////////////////////////////////////////////////////////
 ?>
 <html>

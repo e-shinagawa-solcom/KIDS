@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥·¥¹¥Æ¥à´ÉÍý ¥·¥¹¥Æ¥àµ¯Æ°ÀßÄê²èÌÌ
+*	ã‚·ã‚¹ãƒ†ãƒ ç®¡ç† ã‚·ã‚¹ãƒ†ãƒ èµ·å‹•è¨­å®šç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -10,35 +10,35 @@
 *	@version   1.00
 *
 */
-// ¥·¥¹¥Æ¥àµ¯Æ°ÀßÄê´°Î»²èÌÌ
+// ã‚·ã‚¹ãƒ†ãƒ èµ·å‹•è¨­å®šå®Œäº†ç”»é¢
 // index.php -> strSessionID  -> action.php
 // index.php -> lngActionCode -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹þ¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "sysc/cmn/lib_sys.php");
 
-// DBÀÜÂ³
+// DBæŽ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_GET;
 
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 if ( !fncCheckAuthority( DEF_FUNCTION_SYS2, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Þ¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 
@@ -46,32 +46,32 @@ $aryCheck["strSessionID"]  = "null:numenglish(32,32)";
 $aryCheck["lngActionCode"] = "null:number(" . DEF_ACTION_RESTART . "," . DEF_ACTION_STOP . ")";
 
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
 
 if ( join ( $aryCheckResult ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥·¥¹¥Æ¥à´ÉÍý¼ºÇÔ", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚·ã‚¹ãƒ†ãƒ ç®¡ç†å¤±æ•—", TRUE, "", $objDB );
 }
 
 
-// ºÆµ¯Æ°
+// å†èµ·å‹•
 if ( $aryData["lngActionCode"] == DEF_ACTION_RESTART )
 {
 	$strShell = DEF_PATH_RESTART;
-	$strMessage = "ºÆµ¯Æ°Ãæ";
+	$strMessage = "å†èµ·å‹•ä¸­";
 }
 
-// ¥¹¥È¥Ã¥×
+// ã‚¹ãƒˆãƒƒãƒ—
 elseif ( $aryData["lngActionCode"] == DEF_ACTION_STOP )
 {
 	$strShell = DEF_PATH_STOP;
-	$strMessage = "Ää»ßÃæ";
+	$strMessage = "åœæ­¢ä¸­";
 }
 
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 /*
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "m/regist/c/edit.tmpl" );
@@ -84,10 +84,10 @@ echo $strMessage;
 echo "<a href=/login.php>BACK</a>";
 
 
-// ¥·¥§¥ë¼Â¹Ô
+// ã‚·ã‚§ãƒ«å®Ÿè¡Œ
 if ( !$strShell || !$strResult = exec ( $strShell ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥·¥§¥ë¤Î¼Â¹Ô¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚·ã‚§ãƒ«ã®å®Ÿè¡Œã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 }
 return TRUE;
 ?>

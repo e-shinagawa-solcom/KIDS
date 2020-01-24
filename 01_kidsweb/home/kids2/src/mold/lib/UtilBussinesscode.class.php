@@ -6,20 +6,20 @@ require_once (SRC_ROOT.'/mold/lib/exception/SQLException.class.php');
 define("M_BUSINESSCODE", "m_businesscode");
 
 /**
- * ¶ÈÌ³¥³¡¼¥É¤Î²ò·è¤ò¹Ô¤¦
- * clsDB¤ò»ÈÍÑ¤·¤Æ¤¤¤ë¤¬½èÍý¤¬ÉÔ´°Á´¤Ê°ÙÃí°Õ¤¹¤ë¤³¤È
+ * æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã®è§£æ±ºã‚’è¡Œã†
+ * clsDBã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹ãŒå‡¦ç†ãŒä¸å®Œå…¨ãªç‚ºæ³¨æ„ã™ã‚‹ã“ã¨
  *
  * @see clsDB
  */
 class UtilBussinesscode extends WithQuery
 {
 	/**
-	 * ¶ÈÌ³¥³¡¼¥É¤ÎÀâÌÀ¤ò¼èÆÀ¤¹¤ë
+	 * æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã®èª¬æ˜Žã‚’å–å¾—ã™ã‚‹
 	 *
-	 * @param string $businesscodeName ¶ÈÌ³¥³¡¼¥ÉÌ¾
-	 * @param string $businesscode ¶ÈÌ³¥³¡¼¥É
-	 * @param boolean $exists º÷°ú¤Ç¤­¤¿¾ì¹ç¤Ïtrue¤òÊÖ¤¹
-	 * @return ¶ÈÌ³¥³¡¼¥ÉÌ¾ ¼èÆÀ¤Ç¤­¤Ê¤«¤Ã¤¿¾ì¹ç¤Ïfalse¤òÊÖ¤¹
+	 * @param string $businesscodeName æ¥­å‹™ã‚³ãƒ¼ãƒ‰å
+	 * @param string $businesscode æ¥­å‹™ã‚³ãƒ¼ãƒ‰
+	 * @param boolean $exists ç´¢å¼•ã§ããŸå ´åˆã¯trueã‚’è¿”ã™
+	 * @return æ¥­å‹™ã‚³ãƒ¼ãƒ‰å å–å¾—ã§ããªã‹ã£ãŸå ´åˆã¯falseã‚’è¿”ã™
 	 */
 	public function getDescription($businesscodeName, $businesscode, $exists = false)
 	{
@@ -28,20 +28,20 @@ class UtilBussinesscode extends WithQuery
 		if (is_string($businesscode) && is_string($businesscode))
 		{
 			$queryDescription = file_get_contents($this->getQueryFileName("selectDescriptionFromBussinesscode"));
-			// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿ºîÀ®(SELECT)
+			// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ(SELECT)
 			$paramDescription = array(
 				"businesscodeName" => pg_escape_string($businesscodeName),
 				"businesscode" => pg_escape_string($businesscode)
 			);
 
-			// ¶ÈÌ³¥³¡¼¥É¤ÎÀâÌÀ¤ò¼èÆÀ¤¹¤ë
+			// æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã®èª¬æ˜Žã‚’å–å¾—ã™ã‚‹
 			pg_prepare(static::$db->ConnectID, "", $queryDescription);
 			$pgResultDescription = pg_execute("", $paramDescription);
 
-			// ¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤ËÀ®¸ù¤·¤¿¾ì¹ç
+			// æ¤œç´¢ã®å•ã„åˆã‚ã›ã«æˆåŠŸã—ãŸå ´åˆ
 			if ($pgResultDescription)
 			{
-				// °ìÃ×¤¹¤ë¹Ô¤¬Â¸ºß¤¹¤ë¾ì¹ç
+				// ä¸€è‡´ã™ã‚‹è¡ŒãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 				if (1 <= pg_num_rows($pgResultDescription))
 				{
 					if ($exists)
@@ -50,29 +50,29 @@ class UtilBussinesscode extends WithQuery
 					}
 					else
 					{
-						// ¸¡º÷·ë²Ì¤ÎÀèÆ¬¹Ô¤«¤é¶ÈÌ³¥³¡¼¥ÉÀâÌÀ¤ò¼èÆÀ
+						// æ¤œç´¢çµæžœã®å…ˆé ­è¡Œã‹ã‚‰æ¥­å‹™ã‚³ãƒ¼ãƒ‰èª¬æ˜Žã‚’å–å¾—
 						$resultRow = pg_fetch_array($pgResultDescription, 0, PGSQL_ASSOC);
 						$result = $resultRow["description"];
 					}
 				}
-				// °ìÃ×¤¹¤ë¹Ô¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+				// ä¸€è‡´ã™ã‚‹è¡ŒãŒå­˜åœ¨ã—ãªã„å ´åˆ
 				else
 				{
 					if (!$exists)
 					{
 						throw new SQLException(
-								"¸¡º÷¾ò·ï¤Ë°ìÃ×¤¹¤ë¥ì¥³¡¼¥É¤¬Â¸ºß¤·¤Þ¤»¤ó¤Ç¤·¤¿¡£",
+								"æ¤œç´¢æ¡ä»¶ã«ä¸€è‡´ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã§ã—ãŸã€‚",
 								$queryDescription,
 								$paramDescription
 								);
 					}
 				}
 			}
-			// ¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤Ë¼ºÇÔ¤·¤¿¾ì¹ç
+			// æ¤œç´¢ã®å•ã„åˆã‚ã›ã«å¤±æ•—ã—ãŸå ´åˆ
 			else
 			{
 				throw new SQLException(
-						"¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£",
+						"æ¤œç´¢ã®å•ã„åˆã‚ã›ã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 						$queryDescription,
 						$paramDescription
 				);
@@ -81,9 +81,9 @@ class UtilBussinesscode extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($businesscodeName)."\n".
-					"°ú¿ô2:".gettype($businesscode)."\n"
+					"å¼•æ•°ã®åž‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($businesscodeName)."\n".
+					"å¼•æ•°2:".gettype($businesscode)."\n"
 			);
 		}
 

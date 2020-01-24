@@ -1,5 +1,5 @@
 
-/* ¥»¥Ã¥È */
+/* ã‚»ãƒƒãƒˆ */
 #CompanyGroupSet
 {
 	position : absolute ;
@@ -12,13 +12,13 @@
 	background-color : transparent ;
 }
 
-/* ÇØ·Ê */
+/* èƒŒæ™¯ */
 #CompanyGroupBody
 {
 	background-color : #6f8180 ;
 }
 
-/* ¥Ø¥Ã¥À¡¼¥¤¥á¡¼¥¸ */
+/* ãƒ˜ãƒƒãƒ€ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ */
 #CompanyGroupHeader
 {
 	position : absolute ;
@@ -29,7 +29,7 @@
 	background-color : #6f8180 ;
 }
 
-/* ¥Õ¥Ã¥¿¡¼¥¤¥á¡¼¥¸ */
+/* ãƒ•ãƒƒã‚¿ãƒ¼ã‚¤ãƒ¡ãƒ¼ã‚¸ */
 #CompanyGroupFooter
 {
 	position : absolute ;
@@ -80,7 +80,7 @@
 	background-color : transparent ;
 }
 
-/* ²ñ¼ÒÁªÂò¥×¥ë¥À¥¦¥ó */
+/* ä¼šç¤¾é¸æŠãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ */
 #selectCompany
 {
 	position : absolute ;
@@ -92,7 +92,7 @@
 }
 
 
-/* ÁªÂò¥°¥ë¡¼¥×È¿±ÇÀè¥ê¥¹¥È¥Ü¥Ã¥¯¥¹ */
+/* é¸æŠã‚°ãƒ«ãƒ¼ãƒ—åæ˜ å…ˆãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ */
 #selectGroup1
 {
 	position : absolute ;
@@ -104,7 +104,7 @@
 }
 
 
-/* ÁªÂò¥°¥ë¡¼¥×¥ê¥¹¥È¥Ü¥Ã¥¯¥¹ */
+/* é¸æŠã‚°ãƒ«ãƒ¼ãƒ—ãƒªã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ */
 #selectGroup2
 {
 	position : absolute ;
@@ -116,7 +116,7 @@
 }
 
 
-/* ¥ê¥¹¥È¹àÌÜ¥¢¥Ã¥×¡¦¥À¥¦¥ó¥Ü¥¿¥ó */
+/* ãƒªã‚¹ãƒˆé …ç›®ã‚¢ãƒƒãƒ—ãƒ»ãƒ€ã‚¦ãƒ³ãƒœã‚¿ãƒ³ */
 #ListUpBt
 {
 	position : absolute ;
@@ -138,7 +138,7 @@
 }
 
 
-/* ¥ê¥¹¥È¹àÌÜÄÉ²Ã¡¦ºï½ü¥Ü¥¿¥ó */
+/* ãƒªã‚¹ãƒˆé …ç›®è¿½åŠ ãƒ»å‰Šé™¤ãƒœã‚¿ãƒ³ */
 #ListAddBt
 {
 	position : absolute ;
@@ -160,7 +160,7 @@
 }
 
 
-/* ¥Ü¥¿¥óÇØ·Ê²èÁü */
+/* ãƒœã‚¿ãƒ³èƒŒæ™¯ç”»åƒ */
 #AddDelBack
 {
 	position : absolute ;

@@ -4,36 +4,36 @@ require_once (SRC_ROOT.'/mold/lib/WithQuery.class.php');
 require_once (SRC_ROOT.'/mold/lib/exception/SQLException.class.php');
 
 /**
- * À½ÉÊ¥Þ¥¹¥¿¤Ë´ØÏ¢¤¹¤ë½èÍý¤òÄó¶¡¤¹¤ë
- * clsDB¤ò»ÈÍÑ¤·¤Æ¤¤¤ë¤¬½èÍý¤¬ÉÔ´°Á´¤Ê°ÙÃí°Õ¤¹¤ë¤³¤È
+ * è£½å“ãƒžã‚¹ã‚¿ã«é–¢é€£ã™ã‚‹å‡¦ç†ã‚’æä¾›ã™ã‚‹
+ * clsDBã‚’ä½¿ç”¨ã—ã¦ã„ã‚‹ãŒå‡¦ç†ãŒä¸å®Œå…¨ãªç‚ºæ³¨æ„ã™ã‚‹ã“ã¨
  *
  * @see clsDB
  */
 class UtilProduct extends WithQuery
 {
 	/**
-	 * À½ÉÊ¥³¡¼¥É¤ò´ð¤ËÀ½ÉÊ¥Þ¥¹¥¿¤Î¥ì¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë
+	 * è£½å“ã‚³ãƒ¼ãƒ‰ã‚’åŸºã«è£½å“ãƒžã‚¹ã‚¿ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹
 	 *
-	 * @param string $productCode À½ÉÊ¥³¡¼¥É
-	 * @return À½ÉÊ¥Þ¥¹¥¿¥ì¥³¡¼¥ÉÏ¢ÁÛÇÛÎó
+	 * @param string $productCode è£½å“ã‚³ãƒ¼ãƒ‰
+	 * @return è£½å“ãƒžã‚¹ã‚¿ãƒ¬ã‚³ãƒ¼ãƒ‰é€£æƒ³é…åˆ—
 	 */
 	public function selectProductByProductCode($productCode)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿ºîÀ®(SELECT)
+		// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ(SELECT)
 		$param = array(
 				"productCode" => pg_escape_string($productCode)
 		);
 
-		// ¶ÈÌ³¥³¡¼¥É¤ÎÀâÌÀ¤ò¼èÆÀ¤¹¤ë
+		// æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã®èª¬æ˜Žã‚’å–å¾—ã™ã‚‹
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// °ìÃ×¤¹¤ë¹Ô¤¬Â¸ºß¤¹¤ë¾ì¹ç
+			// ä¸€è‡´ã™ã‚‹è¡ŒãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$result = pg_fetch_array($pgResult, 0);
@@ -41,7 +41,7 @@ class UtilProduct extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"¸¡º÷¾ò·ï¤Ë°ìÃ×¤¹¤ë¥ì¥³¡¼¥É¤¬Â¸ºß¤·¤Þ¤»¤ó¤Ç¤·¤¿¡£",
+						"æ¤œç´¢æ¡ä»¶ã«ä¸€è‡´ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã§ã—ãŸã€‚",
 						$query,
 						$param
 						);
@@ -50,7 +50,7 @@ class UtilProduct extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£",
+					"æ¤œç´¢ã®å•ã„åˆã‚ã›ã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 					$query,
 					$param
 					);
@@ -61,38 +61,38 @@ class UtilProduct extends WithQuery
 
 
 	/**
-	 * À½ÉÊ¥³¡¼¥É¤ò´ð¤ËÀ½ÉÊÌ¾¾Î¤ò¼èÆÀ¤¹¤ë
+	 * è£½å“ã‚³ãƒ¼ãƒ‰ã‚’åŸºã«è£½å“åç§°ã‚’å–å¾—ã™ã‚‹
 	 *
-	 * @param string $productCode À½ÉÊ¥³¡¼¥É
-	 * @return À½ÉÊÌ¾¾Î
+	 * @param string $productCode è£½å“ã‚³ãƒ¼ãƒ‰
+	 * @return è£½å“åç§°
 	 */
 	public function selectProductNameByProductCode($productCode, $reviseCode)
 	{
 		$result = false;
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-		// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿ºîÀ®(SELECT)
+		// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ(SELECT)
 		$param = array(
 				"productCode" => pg_escape_string($productCode),
 				"strReviseCode" => pg_escape_string($reviseCode)
 		);
-		// ¶ÈÌ³¥³¡¼¥É¤ÎÀâÌÀ¤ò¼èÆÀ¤¹¤ë
+		// æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã®èª¬æ˜Žã‚’å–å¾—ã™ã‚‹
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);
 
 		if ($pgResult)
 		{
-			// °ìÃ×¤¹¤ë¹Ô¤¬Â¸ºß¤¹¤ë¾ì¹ç
+			// ä¸€è‡´ã™ã‚‹è¡ŒãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 			if (1 <= pg_num_rows($pgResult))
 			{
 				$record = pg_fetch_array($pgResult, 0);
-				// É½¼¨Ì¾¤Î¼èÆÀ
+				// è¡¨ç¤ºåã®å–å¾—
 				$result = $record["strproductname"];
 			}
 			else
 			{
 				throw new SQLException(
-						"¸¡º÷¾ò·ï¤Ë°ìÃ×¤¹¤ë¥ì¥³¡¼¥É¤¬Â¸ºß¤·¤Þ¤»¤ó¤Ç¤·¤¿¡£",
+						"æ¤œç´¢æ¡ä»¶ã«ä¸€è‡´ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã§ã—ãŸã€‚",
 						$query,
 						$param
 				);
@@ -101,7 +101,7 @@ class UtilProduct extends WithQuery
 		else
 		{
 			throw new SQLException(
-					"¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£",
+					"æ¤œç´¢ã®å•ã„åˆã‚ã›ã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 					$query,
 					$param
 			);
@@ -112,7 +112,7 @@ class UtilProduct extends WithQuery
 
 	/**
 	 * <pre>
-	 * À½ÉÊ¥³¡¼¥É¤¬¥Þ¥¹¥¿¾å¤ËÂ¸ºß¤¹¤ë¤â¤Î¤«¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+	 * è£½å“ã‚³ãƒ¼ãƒ‰ãŒãƒžã‚¹ã‚¿ä¸Šã«å­˜åœ¨ã™ã‚‹ã‚‚ã®ã‹ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
 	 * </pre>
 	 *
 	 * @param string $productCode
@@ -125,18 +125,18 @@ class UtilProduct extends WithQuery
 		if(is_string($productCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿ºîÀ®(SELECT)
+			// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ(SELECT)
 			$param = array(
 					"strproductcode" => pg_escape_string($productCode)
 			);
 
-			// ¶ÈÌ³¥³¡¼¥É¤ÎÀâÌÀ¤ò¼èÆÀ¤¹¤ë
+			// æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã®èª¬æ˜Žã‚’å–å¾—ã™ã‚‹
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// °ìÃ×¤¹¤ë¹Ô¤¬Â¸ºß¤¹¤ë¾ì¹ç
+				// ä¸€è‡´ã™ã‚‹è¡ŒãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -145,7 +145,7 @@ class UtilProduct extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£",
+						"æ¤œç´¢ã®å•ã„åˆã‚ã›ã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 						$query,
 						$param
 						);
@@ -154,8 +154,8 @@ class UtilProduct extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($productCode)
+					"å¼•æ•°ã®åž‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($productCode)
 					);
 		}
 
@@ -164,11 +164,11 @@ class UtilProduct extends WithQuery
 
 	/**
 	 * <pre>
-	 * ¸ÜµÒÉÊÈÖ(¾¦ÉÊ¥³¡¼¥É)¤¬»ØÄê¤µ¤ì¤¿À½ÉÊ¥³¡¼¥É¤ÈÉ³ÉÕ¤¯¤â¤Î¤«¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+	 * é¡§å®¢å“ç•ª(å•†å“ã‚³ãƒ¼ãƒ‰)ãŒæŒ‡å®šã•ã‚ŒãŸè£½å“ã‚³ãƒ¼ãƒ‰ã¨ç´ä»˜ãã‚‚ã®ã‹ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
 	 * </pre>
 	 *
-	 * @param string $goodsCode ¸ÜµÒÉÊÈÖ(¾¦ÉÊ¥³¡¼¥É)
-	 * @param string $productCode À½ÉÊ¥³¡¼¥É
+	 * @param string $goodsCode é¡§å®¢å“ç•ª(å•†å“ã‚³ãƒ¼ãƒ‰)
+	 * @param string $productCode è£½å“ã‚³ãƒ¼ãƒ‰
 	 * @return boolean
 	 */
 	public function existsGoodsCodeWithProductCode($goodsCode, $productCode)
@@ -178,19 +178,19 @@ class UtilProduct extends WithQuery
 		if(is_string($goodsCode) && is_string($productCode))
 		{
 			$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
-			// ¥¯¥¨¥ê¥Ñ¥é¥á¡¼¥¿ºîÀ®(SELECT)
+			// ã‚¯ã‚¨ãƒªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ä½œæˆ(SELECT)
 			$param = array(
 					"strgoodscode" => pg_escape_string($goodsCode),
 					"strproductcode" => pg_escape_string($productCode)
 			);
 
-			// ¶ÈÌ³¥³¡¼¥É¤ÎÀâÌÀ¤ò¼èÆÀ¤¹¤ë
+			// æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã®èª¬æ˜Žã‚’å–å¾—ã™ã‚‹
 			pg_prepare(static::$db->ConnectID, "", $query);
 			$pgResult = pg_execute("", $param);
 
 			if ($pgResult)
 			{
-				// °ìÃ×¤¹¤ë¹Ô¤¬Â¸ºß¤¹¤ë¾ì¹ç
+				// ä¸€è‡´ã™ã‚‹è¡ŒãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 				if (1 <= pg_num_rows($pgResult))
 				{
 					$result = true;
@@ -199,7 +199,7 @@ class UtilProduct extends WithQuery
 			else
 			{
 				throw new SQLException(
-						"¸¡º÷¤ÎÌä¤¤¹ç¤ï¤»¤Ë¼ºÇÔ¤·¤Þ¤·¤¿¡£",
+						"æ¤œç´¢ã®å•ã„åˆã‚ã›ã«å¤±æ•—ã—ã¾ã—ãŸã€‚",
 						$query,
 						$param
 						);
@@ -208,9 +208,9 @@ class UtilProduct extends WithQuery
 		else
 		{
 			throw new InvalidArgumentException(
-					"°ú¿ô¤Î·¿¤¬ÉÔÀµ¤Ç¤¹¡£".
-					"°ú¿ô1:".gettype($goodsCode).
-					"°ú¿ô2:".gettype($productCode)
+					"å¼•æ•°ã®åž‹ãŒä¸æ­£ã§ã™ã€‚".
+					"å¼•æ•°1:".gettype($goodsCode).
+					"å¼•æ•°2:".gettype($productCode)
 					);
 		}
 

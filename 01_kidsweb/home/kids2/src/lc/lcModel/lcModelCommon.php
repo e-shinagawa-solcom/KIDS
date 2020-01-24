@@ -1,18 +1,18 @@
 <?php
-//¥¯¥é¥¹¥Õ¥¡¥¤¥ë¤ÎÆÉ¤ß¹ş¤ß
+//ã‚¯ãƒ©ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 require_once 'db_common.php';
 // ----------------------------------------------------------------------------
 /**
- *       LC´ØÏ¢²èÌÌ¥¯¥é¥¹
+ *       LCé–¢é€£ç”»é¢ã‚¯ãƒ©ã‚¹
  *
  *
- *       ½èÍı³µÍ×
- *        getMaxLoginStateNum     ¥í¥°¥¤¥ó¾õ¶·¥Æ¡¼¥Ö¥ë¤è¤êºÇÂç¤Î´ÉÍıÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
- *        getUserAuth                   ¥æ¡¼¥¶¡¼¸¢¸Â¼èÆÀ
- *        logout                  ¥í¥°¥¢¥¦¥È½èÍı
- *        checkAccessIP           IP¥¢¥É¥ì¥¹¥Á¥§¥Ã¥¯
+ *       å‡¦ç†æ¦‚è¦
+ *        getMaxLoginStateNum     ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ãƒ†ãƒ¼ãƒ–ãƒ«ã‚ˆã‚Šæœ€å¤§ã®ç®¡ç†ç•ªå·ã‚’å–å¾—ã™ã‚‹
+ *        getUserAuth                   ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™å–å¾—
+ *        logout                  ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†
+ *        checkAccessIP           IPã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚§ãƒƒã‚¯
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 // ----------------------------------------------------------------------------
@@ -20,21 +20,21 @@ require_once 'db_common.php';
 class lcModel
 {
     /**
-     *    ÀÜÂ³ID
+     *    æ¥ç¶šID
      *    @var string
      */
     public $lcConn;
 
     /**
-     *    ¥³¥ó¥¹¥È¥é¥¯¥¿
-     *    ¥¯¥é¥¹Æâ¤Î½é´ü²½¤ò¹Ô¤¦
+     *    ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+     *    ã‚¯ãƒ©ã‚¹å†…ã®åˆæœŸåŒ–ã‚’è¡Œã†
      *
      *    @return void
      *    @access public
      */
     public function __construct()
     {
-        // ÀÜÂ³ID¤Î½é´ü²½
+        // æ¥ç¶šIDã®åˆæœŸåŒ–
         $db = new lcConnect();
         $db->open();
         $this->lcConn = $db;
@@ -42,7 +42,7 @@ class lcModel
     }
 
     /**
-     * ¥¯¥é¥¹Æâ¤Î²òÊü¤ò¹Ô¤¦
+     * ã‚¯ãƒ©ã‚¹å†…ã®è§£æ”¾ã‚’è¡Œã†
      *
      * @return void
      */
@@ -65,16 +65,16 @@ class lcModel
     } 
     // ---------------------------------------------------------------
     /**
-     *    ¥í¥°¥¤¥ó¥»¥Ã¥·¥ç¥ó¥Ç¡¼¥¿¤Î³ÎÇ§
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    ãƒ­ã‚°ã‚¤ãƒ³ã‚»ãƒƒã‚·ãƒ§ãƒ³ãƒ‡ãƒ¼ã‚¿ã®ç¢ºèª
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function fncIsSession($session_id)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
 					l.lngUserCode,
@@ -108,55 +108,55 @@ class lcModel
 
 
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($session_id);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result;
     }
 
     // ---------------------------------------------------------------
     /**
-     *    ¥í¥°¥¤¥ó¾õ¶·¥Æ¡¼¥Ö¥ë¤è¤êºÇÂç¤Î´ÉÍıÈÖ¹æ¤ò¼èÆÀ¤¹¤ë
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ãƒ†ãƒ¼ãƒ–ãƒ«ã‚ˆã‚Šæœ€å¤§ã®ç®¡ç†ç•ªå·ã‚’å–å¾—ã™ã‚‹
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getMaxLoginStateNum()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 select
                     max(lgno)
                 from
                     m_acloginstate
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result->max;
 
     }
 
     /**
-     * ac¥æ¡¼¥¶¡¼ID¤ÎÂ¸ºß¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+     * acãƒ¦ãƒ¼ã‚¶ãƒ¼IDã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
      *
      * @param [string] $usrid
      * @return void
      */
     public function checkAcUsrid($usrid)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 select
 					usrno,
@@ -168,9 +168,9 @@ class lcModel
                     m_acuserinfo
                 where
                 	m_acuserinfo.usrid = $1";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($usrid);
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -182,17 +182,17 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ¥æ¡¼¥¶¡¼¸¢¸Â¼èÆÀ
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
-     *    @param  object  $param           °ú¤­ÅÏ¤·¥Ñ¥é¥á¡¼¥¿
+     *    ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™å–å¾—
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     *    @param  object  $param           å¼•ãæ¸¡ã—ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getUserAuth($usrid)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 select
                     usrAuth
@@ -201,34 +201,34 @@ class lcModel
                 where
                 	m_acuserinfo.usrid = $1
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($usrid);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result->usrauth;
     }
 
     // ---------------------------------------------------------------
     /**
-     *    ÇÓÂ¾½èÍı
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
-     *    @param  object  $param           °ú¤­ÅÏ¤·¥Ñ¥é¥á¡¼¥¿
+     *    æ’ä»–å‡¦ç†
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     *    @param  object  $param           å¼•ãæ¸¡ã—ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
      *    @access public
      */
     // ---------------------------------------------------------------
     public function chkEp($lgno, $userAuth, $usrid)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
 
         $result;
 
-        //»²¾È¸¢¸Â¤Î¤ß
+        //å‚ç…§æ¨©é™ã®ã¿
         if ($userAuth == 0) {
-            //¥¯¥¨¥ê¤ÎÀ¸À®
+            //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
             $sql = "update
                         m_acloginstate
                     set
@@ -236,17 +236,17 @@ class lcModel
                     where
                         lgno =  $1
                 ";
-            //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+            //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
             $bind = array($lgno);
 
-            //¥¯¥¨¥ê¼Â¹Ô
+            //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
             $result = $db->executeNonQuery($sql, $bind);
 
-            //·ë²Ì
-            $return_res = 0; //¥í¥°¥¤¥ó¼Ô¤¬¤¤¤Ê¤¤
-            //¹¹¿·¸¢¸Âºß¤ê
+            //çµæœ
+            $return_res = 0; //ãƒ­ã‚°ã‚¤ãƒ³è€…ãŒã„ãªã„
+            //æ›´æ–°æ¨©é™åœ¨ã‚Š
         } else if ($userAuth == 1) {
-            //¥í¥°¥¤¥ó¾õ¶·¤Î³ÎÇ§
+            //ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®ç¢ºèª
             $sql = "
 	                select
 	                    m_acuserinfo.usrid,
@@ -262,15 +262,15 @@ class lcModel
 						lgstate is not null
 
 	            ";
-            //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+            //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
             $bind = array($lgno);
 
-            //¥¯¥¨¥ê¼Â¹Ô
+            //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
             $result = $db->select($sql, $bind);
 
             if (count($result) > 0) {
                 if ($result[0]["usrid"] == $usrid) {
-                    //¥í¥°¥¤¥ó¾õ¶·¤ò¥í¥°¥¢¥¦¥È¤Ë¹¹¿·¤¹¤ë
+                    //ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã‚’ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã«æ›´æ–°ã™ã‚‹
                     $sql = "update
 		                        m_acloginstate
 		                    set
@@ -284,23 +284,23 @@ class lcModel
 								lgouttime is null and
 								lgusrname in(select lgusrname from m_acloginstate where lgno = $1)
 		                ";
-                    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                     $bind = array($lgno);
 
-                    //¥¯¥¨¥ê¼Â¹Ô
+                    //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                     $result = $db->executeNonQuery($sql, $bind);
 
-                    $return_res = 1; //Æ±°ìID¤Ç¥í¥°¥¤¥ó¤·¤Æ¤¤¤ë
+                    $return_res = 1; //åŒä¸€IDã§ãƒ­ã‚°ã‚¤ãƒ³ã—ã¦ã„ã‚‹
                 } else {
                     if (substr($result["lgstate"], 2, 1) == '1') {
                         $lgstate = '10000000';
-                        $return_res = 2; //Æ±°ì¸¢¸Â¼Ô¤¬¥í¥°¥¤¥ó¤·¤Æ¤¤¤ë
+                        $return_res = 2; //åŒä¸€æ¨©é™è€…ãŒãƒ­ã‚°ã‚¤ãƒ³ã—ã¦ã„ã‚‹
                     } else {
                         $lgstate = '01000000';
-                        $return_res = 0; //¥í¥°¥¤¥ó¼Ô¤¬¤¤¤Ê¤¤¤ÈÈ½ÃÇ¤¹¤ë
+                        $return_res = 0; //ãƒ­ã‚°ã‚¤ãƒ³è€…ãŒã„ãªã„ã¨åˆ¤æ–­ã™ã‚‹
                     }
 
-                    //¥¯¥¨¥ê¤ÎÀ¸À®
+                    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
                     $sql = "update
 		                        m_acloginstate
 		                    set
@@ -308,17 +308,17 @@ class lcModel
 		                    where
 		                        lgno =  $2
 		                ";
-                    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                     $bind = array($lgstate, $lgno);
 
-                    //¥¯¥¨¥ê¼Â¹Ô
+                    //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                     $result = $db->executeNonQuery($sql, $bind);
                 }
             } else {
                 $lgstate = '01000000';
-                $return_res = 0; //¥í¥°¥¤¥ó¼Ô¤¬¤¤¤Ê¤¤¤ÈÈ½ÃÇ¤¹¤ë
+                $return_res = 0; //ãƒ­ã‚°ã‚¤ãƒ³è€…ãŒã„ãªã„ã¨åˆ¤æ–­ã™ã‚‹
 
-                //¥¯¥¨¥ê¤ÎÀ¸À®
+                //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
                 $sql = "update
 							m_acloginstate
 						set
@@ -326,10 +326,10 @@ class lcModel
 						where
 							lgno =  $2
 					";
-                //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                 $bind = array($lgstate, $lgno);
 
-                //¥¯¥¨¥ê¼Â¹Ô
+                //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                 $result = $db->executeNonQuery($sql, $bind);
             }
             return $return_res;
@@ -340,16 +340,16 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ¥í¥°¥¤¥ó¼ÔÍ­Ìµ¥Á¥§¥Ã¥¯
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    ãƒ­ã‚°ã‚¤ãƒ³è€…æœ‰ç„¡ãƒã‚§ãƒƒã‚¯
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getUserCount()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
 					count(*)
@@ -363,28 +363,28 @@ class lcModel
 					(substr(lgstate,1,1)='1' or substr(lgstate,2,1) = '1')
 
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result;
     }
 
     // ---------------------------------------------------------------
     /**
-     *    ÇØ·Ê¿§¼èÆÀ
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    èƒŒæ™¯è‰²å–å¾—
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getBackColor()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
 					strclrstatus,
@@ -398,34 +398,34 @@ class lcModel
 				order by strclrno
 
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
-        //strclrstatus¤´¤È¤ËÏ¢ÁÛÇÛÎó¤È¤·¤ÆµÍ¤á¤ë(Æ±°ì¤Îstrckrstatus¤Î¥Ç¡¼¥¿¤Ï½ç¤Ë¾å½ñ¤­)
+        //strclrstatusã”ã¨ã«é€£æƒ³é…åˆ—ã¨ã—ã¦è©°ã‚ã‚‹(åŒä¸€ã®strckrstatusã®ãƒ‡ãƒ¼ã‚¿ã¯é †ã«ä¸Šæ›¸ã)
         $res;
         for ($i = 0; $i < count($result); $i++) {
             $res[$result[$i]["strclrstatus"]] = $result[$i];
         }
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $res;
     }
 
     // ---------------------------------------------------------------
     /**
-     *    ¥í¥°¥¤¥ó¾õ¶·¤Î¥í¥°¥¢¥¦¥È½èÍı
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function loginStateLogout($param)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥í¥°¥¤¥ó¾õ¶·¤ò¥í¥°¥¢¥¦¥È¤Ë¹¹¿·¤¹¤ë
+        //ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã‚’ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã«æ›´æ–°ã™ã‚‹
         $sql = "update
 					m_acloginstate
 				set
@@ -439,30 +439,30 @@ class lcModel
 					lgouttime is null and
 					lgusrname in(select lgusrname from m_acloginstate where lgno = $1)
 		    ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($param["lgno"]);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result;
     }
 
     // ---------------------------------------------------------------
     /**
-     *    ¥í¥°¥¤¥ó¾õ¶·¾ğÊó¤ò¼èÆÀ
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³æƒ…å ±ã‚’å–å¾—
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getLoginState($user_id)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
-        // Web¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¤Ø¤Î°Ü¹Ô¤Ë¤è¤ê¡¢logout¤»¤º¤Ë½ªÎ»¤¹¤ë¥±¡¼¥¹¤¬¤¢¤ë¤¿¤á¡¢
-        // Ä¾¶á¤Îlgno¤Î¤ß¤ò¼èÆÀ¤¹¤ë¡£
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
+        // Webã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã¸ã®ç§»è¡Œã«ã‚ˆã‚Šã€logoutã›ãšã«çµ‚äº†ã™ã‚‹ã‚±ãƒ¼ã‚¹ãŒã‚ã‚‹ãŸã‚ã€
+        // ç›´è¿‘ã®lgnoã®ã¿ã‚’å–å¾—ã™ã‚‹ã€‚
         $sql = "
 				select
 					m_acuserinfo.usrid,
@@ -479,23 +479,23 @@ class lcModel
 				order by lgno desc limit 1;
 
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
         $res = array();
         $res["login_obj"] = $result;
         if (count($result) > 0) {
             if ($result["usrid"] == $user_id) {
-                //Æ±°ìID¤Ç¥í¥°¥¤¥ó¤·¤Æ¤¤¤ë
+                //åŒä¸€IDã§ãƒ­ã‚°ã‚¤ãƒ³ã—ã¦ã„ã‚‹
                 $res["login_state"] = "1";
             } else {
-                //Æ±°ì¸¢¸Â¼Ô¤¬¥í¥°¥¤¥ó¤·¤Æ¤¤¤ë
+                //åŒä¸€æ¨©é™è€…ãŒãƒ­ã‚°ã‚¤ãƒ³ã—ã¦ã„ã‚‹
                 $res["login_state"] = "2";
             }
         } else {
-            // ¥í¥°¥¤¥ó¼Ô¤¬¤¤¤Ê¤¤
+            // ãƒ­ã‚°ã‚¤ãƒ³è€…ãŒã„ãªã„
             $res["login_state"] = "0";
         }
 
@@ -504,16 +504,16 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ¥í¥°¥¤¥ó¾õ¶·¾ğÊó¤ò¼èÆÀ
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³æƒ…å ±ã‚’å–å¾—
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getLcInfoDate()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
 					lcgetdate,
@@ -524,7 +524,7 @@ class lcModel
 					lcgetdate is not null
 				order by lcgetdate desc
             ";
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, array());
 
         return $result;
@@ -532,16 +532,16 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ´ÉÍıÈÖ¹æ¤Ë¤è¤ê¥í¥°¥¤¥ó¾õ¶·¾ğÊó¤ò¼èÆÀ
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    ç®¡ç†ç•ªå·ã«ã‚ˆã‚Šãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³æƒ…å ±ã‚’å–å¾—
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getAcLoginstateBylgno($lgno)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
                     *
@@ -550,14 +550,14 @@ class lcModel
 				where
 					lgno = $1
             ";
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, array($lgno));
 
         return $result;
     }
 
     /**
-     * ¥í¥°¥¤¥ó¾õ¶·¤ÎÅĞÏ¿
+     * ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®ç™»éŒ²
      *
      * @param [integer] $lgno
      * @param [string] $lgusrname
@@ -565,9 +565,9 @@ class lcModel
      */
     public function setLcLoginState($lgno, $lgusrname)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				insert into m_acloginstate
 				(
@@ -582,10 +582,10 @@ class lcModel
 					to_char(now(), 'HH24:MI:SS')
 				);
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array(sprintf('%08d', ($lgno + 1)), $lgusrname);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         return $result;
@@ -593,16 +593,16 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    LC¾ğÊó¼èÆÀ
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    LCæƒ…å ±å–å¾—
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getLcInfoData($data)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //´ğËÜ¼èÆÀ
+        //åŸºæœ¬å–å¾—
         $sql = "
 				select
 					payfnameomit,
@@ -654,7 +654,7 @@ class lcModel
             case "0":
                 break;
             case "1":
-                //Ãê½Ğ¾ò·ï
+                //æŠ½å‡ºæ¡ä»¶
                 $sql .= "
 						where
                             opendate = '" . $data["from"] . "'";
@@ -673,7 +673,7 @@ class lcModel
                 }
                 break;
             case "2":
-                //¥·¥ß¥å¥ì¡¼¥È¾ò·ï
+                //ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ãƒˆæ¡ä»¶
                 $sql .= "
 						where
 							opendate = '" . $data["to"] . "'";
@@ -688,7 +688,7 @@ class lcModel
 				order by pono,poreviseno,polineno
                 ";
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, array());
         return $sql;
 
@@ -701,17 +701,17 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    LC¾ğÊó¼èÆÀÃ±ÂÎ
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    LCæƒ…å ±å–å¾—å˜ä½“
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getLcInfoSingle($data)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
 
-        //´ğËÜ¼èÆÀ
+        //åŸºæœ¬å–å¾—
         $sql = "
 				select
 					payfnameomit,
@@ -762,10 +762,10 @@ class lcModel
 					poreviseno = $2 and
 					polineno = $3
 				";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($data["pono"], $data["poreviseno"], $data["polineno"]);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
         if (count($result) > 0) {
@@ -777,20 +777,20 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    LC¾ğÊóÃ±ÂÎ¹¹¿·
-     *    @param  object  $objDB           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    LCæƒ…å ±å˜ä½“æ›´æ–°
+     *    @param  object  $objDB           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function updateLcInfoSingle($data)
     {
         try {
-            //¥¯¥é¥¹¤ÎÀ¸À®
+            //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
             $db = $this->lcConn;
 
-//°Ê²¼Ì¤¼ÂÁõ-----------------------------------------
+//ä»¥ä¸‹æœªå®Ÿè£…-----------------------------------------
             /*
-            $data¤ÎÃæ¿È¤ÎÎã
+            $dataã®ä¸­èº«ã®ä¾‹
             array(14) {
             ["method"]=>
             string(12) "updateLcEdit"
@@ -807,7 +807,7 @@ class lcModel
             ["bankcd"]=>
             string(4) "0005"
             ["bankname"]=>
-            string(9) "»°Åì£Õ"
+            string(9) "ä¸‰æ±ï¼µ"
             ["bankreqdate"]=>
             string(10) "2010/01/15"
             ["lcno"]=>
@@ -823,14 +823,14 @@ class lcModel
             }
              */
 
-            //´ğËÜ¼èÆÀ
+            //åŸºæœ¬å–å¾—
             $sql = "
 
 				";
-            //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+            //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
             //$bind = array($data["pono"],$data["poreviseno"],$data["polineno"]);
 
-            //¥¯¥¨¥ê¼Â¹Ô
+            //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
             //$result = $db->executeNonQuery($sql, $bind);
 
             if (count($result) > 0) {
@@ -839,23 +839,23 @@ class lcModel
                 return false;
             }
         } catch (Exception $e) {
-            //°Û¾ï½ªÎ»
+            //ç•°å¸¸çµ‚äº†
             return false;
         }
     }
 
     // ---------------------------------------------------------------
     /**
-     *    ´ğ½àÆü¤Î¹¹¿·
+     *    åŸºæº–æ—¥ã®æ›´æ–°
      *    @access public
      */
     // ---------------------------------------------------------------
     public function updateBaseOpenDate($data, $lgusrname)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
 
-        //¥Ç¡¼¥¿¹¹¿·
+        //ãƒ‡ãƒ¼ã‚¿æ›´æ–°
         $sql = "update
 					m_acbaseopendate
 				set
@@ -864,21 +864,21 @@ class lcModel
 					updatetime = to_char(now(), 'HH24:MI:SS'),
 					invalidflag = TRUE
 			";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($lgusrname);
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
-        //¥Ç¡¼¥¿¿·µ¬ÄÉ²Ã
-        //baseno¤ÎºÇÂçÃÍ¡Ü£±¤ÎÃÍ¤ò¼èÆÀ
+        //ãƒ‡ãƒ¼ã‚¿æ–°è¦è¿½åŠ 
+        //basenoã®æœ€å¤§å€¤ï¼‹ï¼‘ã®å€¤ã‚’å–å¾—
         $sql = "SELECT max(baseno) AS baseno FROM m_acbaseopendate";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
         $next_baseno = sprintf('%04d', (intval($result->baseno) + 1));
 
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				insert into m_acbaseopendate
 				(
@@ -903,7 +903,7 @@ class lcModel
 					FALSE
 				);
 			";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array(
             $next_baseno,
             $data,
@@ -911,7 +911,7 @@ class lcModel
             $lgusrname,
         );
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         return true;
@@ -919,15 +919,15 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ¶ä¹Ô¾ğÊó¤Î¼èÆÀ
+     *    éŠ€è¡Œæƒ…å ±ã®å–å¾—
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getBankInfo()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
 					*
@@ -935,10 +935,10 @@ class lcModel
 					m_acbankinfo
 				order by bankno
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -949,15 +949,15 @@ class lcModel
     }
 
     /**
-     * ¶ä¹Ô¥Ş¥¹¥¿¤è¤êÍ­¸ú¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+     * éŠ€è¡Œãƒã‚¹ã‚¿ã‚ˆã‚Šæœ‰åŠ¹ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
      *
      * @return array
      */
     public function getValidBankInfo()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
                     bankomitname,
@@ -969,10 +969,10 @@ class lcModel
                     invalidflag = false
                 order by bankdivrate desc
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -985,17 +985,17 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ¶ä¹Ô¾ğÊó¤Î¹¹¿·
+     *    éŠ€è¡Œæƒ…å ±ã®æ›´æ–°
      *    @access public
      */
     // ---------------------------------------------------------------
     public function updateBankInfo($data, $lgusrname)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
 
         for ($i = 0; $i < count($data); $i++) {
-            //¥¯¥¨¥ê¤ÎÀ¸À®
+            //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
             $sql = "
 					select
 						*
@@ -1004,14 +1004,14 @@ class lcModel
 					where
 						bankcd = $1
 				";
-            //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+            //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
             $bind = array($data[$i]["bankcd"]);
 
-            //¥¯¥¨¥ê¼Â¹Ô
+            //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
             $result = $db->select_single($sql, $bind);
 
             if ($result != null) {
-                //¥Ç¡¼¥¿¹¹¿·
+                //ãƒ‡ãƒ¼ã‚¿æ›´æ–°
                 $sql = "update
 							m_acbankinfo
 						set
@@ -1026,7 +1026,7 @@ class lcModel
 						where
 							bankcd =  $7
 					";
-                //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                 $bind = array(
                     $data[$i]["bankcd"],
                     $data[$i]["bankomitname"],
@@ -1036,19 +1036,19 @@ class lcModel
                     $lgusrname,
                     $data[$i]["bankcd"],
                 );
-                //¥¯¥¨¥ê¼Â¹Ô
+                //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                 $result = $db->executeNonQuery($sql, $bind);
             } else {
-                //¥Ç¡¼¥¿¿·µ¬ÄÉ²Ã(²èÌÌ¾å¤Ç¤Ï¿·µ¬ÄÉ²Ã¤Ï¹Ô¤ï¤ì¤Ê¤¤¡©)
-                //bankno¤ÎºÇÂçÃÍ¡Ü£±¤ÎÃÍ¤ò¼èÆÀ
+                //ãƒ‡ãƒ¼ã‚¿æ–°è¦è¿½åŠ (ç”»é¢ä¸Šã§ã¯æ–°è¦è¿½åŠ ã¯è¡Œã‚ã‚Œãªã„ï¼Ÿ)
+                //banknoã®æœ€å¤§å€¤ï¼‹ï¼‘ã®å€¤ã‚’å–å¾—
                 $sql = "SELECT max(bankno) AS bankno FROM m_acbankinfo";
-                //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                 $bind = array();
-                //¥¯¥¨¥ê¼Â¹Ô
+                //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                 $result = $db->select_single($sql, $bind);
                 $next_bankno = sprintf('%04d', (intval($result->bankno) + 1));
 
-                //¥¯¥¨¥ê¤ÎÀ¸À®
+                //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
                 $sql = "
 						insert into m_acbankinfo
 						(
@@ -1079,7 +1079,7 @@ class lcModel
 							to_char(now(), 'HH24:MI:SS')
 						);
 					";
-                //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                 $bind = array(
                     $next_bankno,
                     $data[$i]["bankcd"],
@@ -1091,7 +1091,7 @@ class lcModel
                     $lgusrname,
                 );
 
-                //¥¯¥¨¥ê¼Â¹Ô
+                //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                 $result = $db->executeNonQuery($sql, $bind);
             }
         }
@@ -1101,15 +1101,15 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    »ÙÊ§Àè¾ğÊó¤Î¼èÆÀ
+     *    æ”¯æ‰•å…ˆæƒ…å ±ã®å–å¾—
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getPayfInfo()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
 					*
@@ -1117,10 +1117,10 @@ class lcModel
 					m_acpayfinfo
 				order by payfno
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -1132,18 +1132,18 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    »ÙÊ§Àè¾ğÊó¤Î¹¹¿·
+     *    æ”¯æ‰•å…ˆæƒ…å ±ã®æ›´æ–°
      *    @access public
      */
     // ---------------------------------------------------------------
     public function updatePayfInfo($data, $lgusrname)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
         for ($i = 0; $i < count($data); $i++) {
-            //¹¹¿·½èÍı
+            //æ›´æ–°å‡¦ç†
             if ($data[$i]["del_flg"] != true) {
-                //¥¯¥¨¥ê¤ÎÀ¸À®
+                //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
                 $sql = "
 						select
 							payfomitname,
@@ -1153,13 +1153,13 @@ class lcModel
 						where
 						    payfcd = $1
 					";
-                //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                 $bind = array($data[$i]["payfcd"]);
 
-                //¥¯¥¨¥ê¼Â¹Ô
+                //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                 $hit_payfinfo = $db->select_single($sql, $bind);
                 if ($hit_payfinfo != null) {
-                    //¥Ç¡¼¥¿¹¹¿·
+                    //ãƒ‡ãƒ¼ã‚¿æ›´æ–°
                     $sql = "update
 								m_acpayfinfo
 							set
@@ -1175,7 +1175,7 @@ class lcModel
 							where
 								payfcd =  $8
 						";
-                    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                     $bind = array(
                         $data[$i]["payfcd"],
                         $data[$i]["payfomitname"],
@@ -1187,10 +1187,10 @@ class lcModel
                         $data[$i]["payfcd"],
                     );
 
-                    //¥¯¥¨¥ê¼Â¹Ô
+                    //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                     $result = $db->executeNonQuery($sql, $bind);
 
-                    //¼èÆÀ¤·¤¿payfinfo¤ÎÌ¾¾ÎÎà¤ÈÆşÎÏ¤µ¤ì¤¿Ì¾¾Î¤¬°Û¤Ê¤ë¾ì¹ç¤Ït_AcLcInfo¤Î¹¹¿·¤ò¹Ô¤¦¢«»ÅÍÍ½ñ¤Ë¤Ït_AcLcInfo¤È¤¢¤ë¤¬t_lcinfo¤Ç¤Ï¤Ê¤¤¤Î¤«¡©
+                    //å–å¾—ã—ãŸpayfinfoã®åç§°é¡ã¨å…¥åŠ›ã•ã‚ŒãŸåç§°ãŒç•°ãªã‚‹å ´åˆã¯t_AcLcInfoã®æ›´æ–°ã‚’è¡Œã†â†ä»•æ§˜æ›¸ã«ã¯t_AcLcInfoã¨ã‚ã‚‹ãŒt_lcinfoã§ã¯ãªã„ã®ã‹ï¼Ÿ
                     if ($hit_payfinfo->payfomitname != $data[$i]["payfomitname"] || $hit_payfinfo->payfformalname != $data[$i]["payfformalname"]) {
                         $sql = "update
 									t_aclcinfo
@@ -1200,26 +1200,26 @@ class lcModel
 								where
 									payfcd =  $1
 							";
-                        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                         $bind = array(
                             $data[$i]["payfcd"],
                             $data[$i]["payfomitname"],
                             $data[$i]["payfformalname"],
                         );
-                        //¥¯¥¨¥ê¼Â¹Ô
+                        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                         $result = $db->executeNonQuery($sql, $bind);
                     }
                 } else {
-                    //¥Ç¡¼¥¿¿·µ¬ÄÉ²Ã
-                    //payfno¤ÎºÇÂçÃÍ¡Ü£±¤ÎÃÍ¤ò¼èÆÀ
+                    //ãƒ‡ãƒ¼ã‚¿æ–°è¦è¿½åŠ 
+                    //payfnoã®æœ€å¤§å€¤ï¼‹ï¼‘ã®å€¤ã‚’å–å¾—
                     $sql = "SELECT max(payfno) AS payfno FROM m_acpayfinfo";
-                    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                     $bind = array();
-                    //¥¯¥¨¥ê¼Â¹Ô
+                    //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                     $result = $db->select_single($sql, $bind);
                     $next_payfno = sprintf('%04d', (intval($result->payfno) + 1));
 
-                    //¥¯¥¨¥ê¤ÎÀ¸À®
+                    //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
                     $sql = "
 							insert into m_acpayfinfo
 							(
@@ -1252,7 +1252,7 @@ class lcModel
 								to_char(now(), 'HH24:MI:SS')
 							);
 						";
-                    //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                    //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                     $bind = array(
                         $next_payfno,
                         $data[$i]["payfcd"],
@@ -1265,15 +1265,15 @@ class lcModel
                         $lgusrname,
                     );
 
-                    //¥¯¥¨¥ê¼Â¹Ô
+                    //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                     $result = $db->executeNonQuery($sql, $bind);
                 }
             } else {
-                //ºï½ü½èÍı
+                //å‰Šé™¤å‡¦ç†
                 $sql = "DELETE FROM m_acpayfinfo WHERE payfcd = $1";
-                //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
                 $bind = array($data[$i]["payfcd"]);
-                //¥¯¥¨¥ê¼Â¹Ô
+                //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
                 $result = $db->executeNonQuery($sql, $bind);
             }
         }
@@ -1283,15 +1283,15 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ¶ä¹Ô¥ê¥¹¥È¤Î¼èÆÀ
+     *    éŠ€è¡Œãƒªã‚¹ãƒˆã®å–å¾—
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getBankList()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
 					*
@@ -1300,10 +1300,10 @@ class lcModel
 				where
 					invalidFlag = false
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -1315,25 +1315,25 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ²ÙÍÈÃÏ¾ğÊó¤Î¼èÆÀ
+     *    è·æšåœ°æƒ…å ±ã®å–å¾—
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getUnloadingAreas()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				SELECT
 					DISTINCT unloadingAreas
 				FROM
 					t_lcinfo
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -1345,15 +1345,15 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ÄÌ²ß¶èÊ¬¥ê¥¹¥È¤Î¼èÆÀ
+     *    é€šè²¨åŒºåˆ†ãƒªã‚¹ãƒˆã®å–å¾—
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getCurrencyClassList()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				SELECT
 					DISTINCT currencyclass
@@ -1363,10 +1363,10 @@ class lcModel
 					lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8
 				ORDER BY currencyclass
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -1378,15 +1378,15 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ÄÌ²ß¶èÊ¬¥ê¥¹¥È(Ì¤¾µÇ§´Ş¤à)¤Î¼èÆÀ
+     *    é€šè²¨åŒºåˆ†ãƒªã‚¹ãƒˆ(æœªæ‰¿èªå«ã‚€)ã®å–å¾—
      *    @access public
      */
     // ---------------------------------------------------------------
     public function getCurrencyClassListAll()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				SELECT
 					DISTINCT currencyclass
@@ -1396,10 +1396,10 @@ class lcModel
 					lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 6 or lcstate = 7 or lcstate = 8
 				ORDER BY currencyclass
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -1410,7 +1410,7 @@ class lcModel
     }
 
     /**
-     * ¸¢¸Â¥Á¥§¥Ã¥¯
+     * æ¨©é™ãƒã‚§ãƒƒã‚¯
      *
      * @param [string] $usrId
      * @return void
@@ -1432,19 +1432,19 @@ class lcModel
     }
 
     /**
-     * acLc¾ğÊó¥ê¥¹¥È¤ò¼èÆÀ¤¹¤ë
+     * acLcæƒ…å ±ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
      *
      * @return void
      */
     public function getAcLcInfo()
     {
-        // ¸½ºßÆüÉÕ¤è¤ê£±£²¥ö·îÁ°¤ÎÆüÉÕ¤ò¼èÆÀ
+        // ç¾åœ¨æ—¥ä»˜ã‚ˆã‚Šï¼‘ï¼’ãƒ¶æœˆå‰ã®æ—¥ä»˜ã‚’å–å¾—
         $oneyearold = date("Ym", strtotime("-12 month"));
-        // ¸½ºßÆüÉÕ¤è¤ê£´¥ö·î¸å¤ÎÆüÉÕ¤ò¼èÆÀ
+        // ç¾åœ¨æ—¥ä»˜ã‚ˆã‚Šï¼”ãƒ¶æœˆå¾Œã®æ—¥ä»˜ã‚’å–å¾—
         $fourmonths = date("Ym", strtotime("+4 month"));
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿ
         $sql = "
             SELECT
                 pono
@@ -1503,9 +1503,9 @@ class lcModel
                 or (opendate < $4 and moneyprice is not null and bldetail1money is not null and bldetail2money is null and moneyprice != bldetail1money and  lcstate in (0,3,4,7,8))
                 or (opendate < $5 and moneyprice is not null and bldetail1money is not null and bldetail2money is not null and moneyprice != (bldetail1money + bldetail2money) and  lcstate in (0,3,4,7,8))
         ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($oneyearold, $fourmonths, $oneyearold, $oneyearold, $oneyearold);
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {
@@ -1517,57 +1517,57 @@ class lcModel
     }
 
     /**
-     * L/C¾ğÊóºÇ¿·¼èÆÀÆü¤ò¼èÆÀ¤¹¤ë
+     * L/Cæƒ…å ±æœ€æ–°å–å¾—æ—¥ã‚’å–å¾—ã™ã‚‹
      *
-     * @return void ºÇ¿·¤Î¼èÆÀÆü
+     * @return void æœ€æ–°ã®å–å¾—æ—¥
      */
     public function getMaxLcGetDate()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 select
                     max(lcgetdate)
                 from
                     m_acloginstate
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result->max;
 
     }
 
     /**
-     * ACL/C¥Ç¡¼¥¿¤òºï½ü¤¹¤ë
+     * ACL/Cãƒ‡ãƒ¼ã‚¿ã‚’å‰Šé™¤ã™ã‚‹
      *
      * @param [string] $date
      * @param [string] $time
-     * @return void ºï½ü·ï¿ô
+     * @return void å‰Šé™¤ä»¶æ•°
      */
     public function deleteAcLcInfo($date, $time)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 delete from t_aclcinfo
                 where entryDate > $1
                 or (entrydate = $2 and entrytime > $3)
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($date, $date, $time);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ACL/C¾ğÊóºï½ü¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "ACL/Cæƒ…å ±å‰Šé™¤å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 //        return pg_affected_rows($result);
@@ -1577,31 +1577,31 @@ class lcModel
     }
 
     /**
-     * ACL/C¾õÂÖ¤òºï½ü¤Ë¹¹¿·¤¹¤ë
+     * ACL/CçŠ¶æ…‹ã‚’å‰Šé™¤ã«æ›´æ–°ã™ã‚‹
      *
      * @param [string] $pono
      * @param [string] $postate
-     * @return void ¹¹¿··ï¿ô
+     * @return void æ›´æ–°ä»¶æ•°
      */
     public function updateAcLcStateToDelete($pono, $postate)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update t_aclcinfo
                 set lcstate = 2,
                 postate = $1
                 where pono = $2
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($pono, $postate);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ACL/C¾ğÊó¤Î¾õÂÖ¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "ACL/Cæƒ…å ±ã®çŠ¶æ…‹æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -1609,16 +1609,16 @@ class lcModel
     }
 
     /**
-     * ACL/C¾ğÊó·ï¿ô¤ò¼èÆÀ¤¹¤ë
+     * ACL/Cæƒ…å ±ä»¶æ•°ã‚’å–å¾—ã™ã‚‹
      *
      * @param [type] $pono
      * @return void
      */
     public function getAcLcCount($pono)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 select
                     count(0)
@@ -1627,19 +1627,19 @@ class lcModel
                 where pono = $1
 
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($pono);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result->count;
 
     }
 
     /**
-     * È¯ÃíÈÖ¹æ¤Ë¤è¤êACL/C¾ğÊó¤ò¼èÆÀ¤¹¤ë
+     * ç™ºæ³¨ç•ªå·ã«ã‚ˆã‚ŠACL/Cæƒ…å ±ã‚’å–å¾—ã™ã‚‹
      *
      * @param [string] $pono
      * @return void
@@ -1647,9 +1647,9 @@ class lcModel
     public function getAcLcInfoByPono($pono)
     {
 
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
             select distinct
                 pono
@@ -1664,17 +1664,17 @@ class lcModel
                 poreviseno desc
                 , polineno
         ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($pono);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result;
     }
     /**
-     * È¯ÃíÈÖ¹æ¤Ë¤è¤êACL/C¾ğÊó¤Î¶ä¹Ô°ÍÍêÆü¤ò¼èÆÀ¤¹¤ë
+     * ç™ºæ³¨ç•ªå·ã«ã‚ˆã‚ŠACL/Cæƒ…å ±ã®éŠ€è¡Œä¾é ¼æ—¥ã‚’å–å¾—ã™ã‚‹
      *
      * @param [string] $pono
      * @return void
@@ -1682,9 +1682,9 @@ class lcModel
     public function getAcLcBankReqDate($pono)
     {
 
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
             select pono
                 , polineno
@@ -1697,10 +1697,10 @@ class lcModel
                 poreviseno desc
                 , polineno
         ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($pono);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
         $bankReqDate = "";
         foreach ($result as $data) {
@@ -1710,12 +1710,12 @@ class lcModel
             }
         }
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $bankReqDate;
     }
 
     /**
-     * ACL/C¾ğÊó¤Î¹¹¿·Æü¤ò¼èÆÀ¤¹¤ë
+     * ACL/Cæƒ…å ±ã®æ›´æ–°æ—¥ã‚’å–å¾—ã™ã‚‹
      *
      * @param [integer] $pono
      * @param [integer] $polineno
@@ -1725,9 +1725,9 @@ class lcModel
     public function getPoUpdateDate($pono, $polineno, $poreviseno)
     {
 
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
             select poupdatedate
             from
@@ -1736,31 +1736,31 @@ class lcModel
                 and polineno = $2
                 and poreviseno = $3
         ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($pono, $polineno, $poreviseno);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result->poupdatedate;
     }
 
     /**
-     * ACL/C¾ğÊó¤Î¹¹¿·Æü¤ÈLC¾õÂÖ¤ò¹¹¿·¤¹¤ë
+     * ACL/Cæƒ…å ±ã®æ›´æ–°æ—¥ã¨LCçŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [integer] $pono
      * @param [integer] $polineno
      * @param [integer] $poreviseno
      * @param [string] $lcstate
      * @param [string] $poupdatedate
-     * @return ¹¹¿··ï¿ô
+     * @return æ›´æ–°ä»¶æ•°
      */
     public function updateAcLcUpdatedate($pono, $polineno, $poreviseno, $lcstate, $poupdatedate)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update t_aclcinfo
                 set poupdatedate = $1,
@@ -1769,14 +1769,14 @@ class lcModel
                     and polineno = $4
                     and poreviseno = $5
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($poupdatedate, $lcstate, $pono, $polineno, $poreviseno);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ACL/C¾ğÊó¤Î¹¹¿·Æü¤Î¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "ACL/Cæƒ…å ±ã®æ›´æ–°æ—¥ã®æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -1784,16 +1784,16 @@ class lcModel
     }
 
     /**
-     * ACL/C¾ğÊó¤òÅĞÏ¿¤¹¤ë
+     * ACL/Cæƒ…å ±ã‚’ç™»éŒ²ã™ã‚‹
      *
      * @param [array] $data
-     * @return ÅĞÏ¿·ï¿ô
+     * @return ç™»éŒ²ä»¶æ•°
      */
     public function insertAcLcInfo($data)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
             insert into t_aclcinfo(
                 pono,
@@ -1893,14 +1893,14 @@ class lcModel
             . "," . ($data["shipym"] == null ? "NULL" : "'" . $data["shipym"] . "'")
             . ")";
 
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ACL/C¾ğÊó¤ÎÅĞÏ¿¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "ACL/Cæƒ…å ±ã®ç™»éŒ²å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -1908,17 +1908,17 @@ class lcModel
     }
 
     /**
-     * ACL/C¾õÂÖ¤ò¹¹¿·¤¹¤ë
+     * ACL/CçŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [string] $pono
      * @param [string] $postate
-     * @return void ¹¹¿··ï¿ô
+     * @return void æ›´æ–°ä»¶æ•°
      */
     public function updateAcLcStateByLcState($pono)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update
                     t_aclcinfo
@@ -1926,14 +1926,14 @@ class lcModel
                 where pono = $1
                 and lcstate not in (2, 9, 10)
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($pono);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "LC¾õÂÖ¤Ë¤è¤ëACL/C¾ğÊó¤Î¾õÂÖ¹¹¿·¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "LCçŠ¶æ…‹ã«ã‚ˆã‚‹ACL/Cæƒ…å ±ã®çŠ¶æ…‹æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -1941,15 +1941,15 @@ class lcModel
     }
 
     /**
-     *¡¡´ğ½àÆü¤ò¼èÆÀ¤¹¤ë
+     *ã€€åŸºæº–æ—¥ã‚’å–å¾—ã™ã‚‹
      *
-     * @return ´ğ½àÆü
+     * @return åŸºæº–æ—¥
      */
     public function getBaseDate()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                     select
                         basedate
@@ -1958,14 +1958,14 @@ class lcModel
                     where
                         invalidflag = false
                 ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
         if (!$result) {
-            echo "´ğ½àÆü¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "åŸºæº–æ—¥ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -1973,31 +1973,31 @@ class lcModel
     }
 
     /**
-     * ACL/C¾ğÊó¤Î¥ª¡¼¥×¥ó·î¤ò¹¹¿·¤¹¤ë
+     * ACL/Cæƒ…å ±ã®ã‚ªãƒ¼ãƒ—ãƒ³æœˆã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [integer] $pono
      * @param [string] $opendate
-     * @return ¹¹¿··ï¿ô
+     * @return æ›´æ–°ä»¶æ•°
      */
     public function updateAcLcOpendate($pono, $opendate)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update
                     t_aclcinfo
                 set opendate = $1
                 where pono = $2
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($opendate, $pono);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ACL/C¾ğÊó¤Î¥ª¡¼¥×¥ó·î¤Î¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "ACL/Cæƒ…å ±ã®ã‚ªãƒ¼ãƒ—ãƒ³æœˆã®æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2006,17 +2006,17 @@ class lcModel
     }
 
     /**
-     * pono,polineno¤Ë¤è¤êACL/C¾ğÊó¤ò¼èÆÀ¤¹¤ë
+     * pono,polinenoã«ã‚ˆã‚ŠACL/Cæƒ…å ±ã‚’å–å¾—ã™ã‚‹
      *
      * @param [integer] $pono
      * @param [integer] $polineno
-     * @return ACL/C¾ğÊó
+     * @return ACL/Cæƒ…å ±
      */
     public function getReviseAcLcInfo($pono, $polineno)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
             select
                 lcno,
@@ -2037,28 +2037,28 @@ class lcModel
             where pono = $1
                 and polineno = $2
             order by poreviseno desc";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($pono, $polineno);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result;
 
     }
 
     /**
-     * ACL/C¾ğÊó¤ò¹¹¿·¤¹¤ë
+     * ACL/Cæƒ…å ±ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [array] $data
-     * @return ¹¹¿··ï¿ô
+     * @return æ›´æ–°ä»¶æ•°
      */
     public function updateReviseAcLcInfo($data)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update
                     t_aclcinfo
@@ -2080,14 +2080,14 @@ class lcModel
             . " where pono = " . "'" . $data["pono"] . "'"
             . " and polineno = " . "'" . $data["polineno"] . "'"
             . " and poreviseno = " . "'" . $data["poreviseno"] . "'";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ACL/C¾ğÊó¤Î¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "ACL/Cæƒ…å ±ã®æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2096,7 +2096,7 @@ class lcModel
     }
 
     /**
-     * ACL/C¾ğÊó¤Î¾õÂÖ¤ò¥ê¥Ğ¥¤¥º¤Ë¹¹¿·¤¹¤ë
+     * ACL/Cæƒ…å ±ã®çŠ¶æ…‹ã‚’ãƒªãƒã‚¤ã‚ºã«æ›´æ–°ã™ã‚‹
      *
      * @param [type] $pono
      * @param [type] $poreviseno
@@ -2104,9 +2104,9 @@ class lcModel
      */
     public function updateAcLcStateToRevise($pono, $poreviseno)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update
                     t_aclcinfo
@@ -2115,14 +2115,14 @@ class lcModel
                 and poreviseno < $2
                 and lcstate not in (1, 2, 5, 10)
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($pono, $poreviseno);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ACL/C¾ğÊó¤Î¾õÂÖ(¥ê¥Ğ¥¤¥º)¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "ACL/Cæƒ…å ±ã®çŠ¶æ…‹(ãƒªãƒã‚¤ã‚º)æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2130,7 +2130,7 @@ class lcModel
     }
 
     /**
-     * Ì¤¾µÇ§ACL/C¾ğÊó¤Î¾õÂÖ¤ò¹¹¿·¤¹¤ë
+     * æœªæ‰¿èªACL/Cæƒ…å ±ã®çŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [type] $pono
      * @param [type] $poreviseno
@@ -2138,9 +2138,9 @@ class lcModel
      */
     public function updateUnapprovedAcLcState($pono, $polineno, $poreviseno, $lcstate, $postate)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update
                     t_aclcinfo
@@ -2151,24 +2151,24 @@ class lcModel
                 and poreviseno = $5
                 and lcstate not in (1, 2, 5, 9, 10)
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($lcstate, $postate, $pono, $polineno, $poreviseno);
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         return $result;
     }
 
     /**
-     * Ì¤¾µÇ§¤ÎACL/C¾ğÊó¤ò¼èÆÀ¤¹¤ë
+     * æœªæ‰¿èªã®ACL/Cæƒ…å ±ã‚’å–å¾—ã™ã‚‹
      *
-     * @return Ì¤¾µÇ§¤ÎACL/C¾ğÊó¥ê¥¹¥È
+     * @return æœªæ‰¿èªã®ACL/Cæƒ…å ±ãƒªã‚¹ãƒˆ
      */
     public function getUnapprovedAcLcInfo()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 select
                     distinct pono,
@@ -2179,18 +2179,18 @@ class lcModel
                     bankreqdate
                 from
                     t_aclcinfo
-                where postate = 'Ì¤¾µÇ§'
+                where postate = 'æœªæ‰¿èª'
                 and pono is not null
                 order by pono, poreviseno desc
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (!$result) {
-            echo "Ì¤¾µÇ§¤ÎACL/C¾ğÊó¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "æœªæ‰¿èªã®ACL/Cæƒ…å ±ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2198,17 +2198,17 @@ class lcModel
     }
 
     /**
-     * poÈÖ¹æ,po¥ê¥Ğ¥¤¥ºÈÖ¹æ¤Ë¤è¤êACL/C¾ğÊó¤Î¾õÂÖ¤ò¹¹¿·¤¹¤ë
+     * poç•ªå·,poãƒªãƒã‚¤ã‚ºç•ªå·ã«ã‚ˆã‚ŠACL/Cæƒ…å ±ã®çŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [integer] $pono
      * @param [string] $opendate
-     * @return ¹¹¿··ï¿ô
+     * @return æ›´æ–°ä»¶æ•°
      */
     public function updateAcLcState($pono, $poreviseno, $lcstate)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update
                     t_aclcinfo
@@ -2216,25 +2216,25 @@ class lcModel
                 where pono = $2
                 and poreviseno =$3
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($lcstate, $pono, $poreviseno);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         return $result;
     }
     /**
-     * ¶ä¹ÔÀè¾ğÊó¤ò¼èÆÀ¤¹¤ë
+     * éŠ€è¡Œå…ˆæƒ…å ±ã‚’å–å¾—ã™ã‚‹
      *
      * @param [integer] $bankcd
-     * @return ¶ä¹ÔÀè¾ğÊó
+     * @return éŠ€è¡Œå…ˆæƒ…å ±
      */
     public function getAcBankInfo($bankcd)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                     select
                         *
@@ -2243,14 +2243,14 @@ class lcModel
                     where
                         bankcd = $1
                 ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($bankcd);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
         if (!$result) {
-            echo "¶ä¹ÔÀè¾ğÊó¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "éŠ€è¡Œå…ˆæƒ…å ±ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2258,16 +2258,16 @@ class lcModel
     }
 
     /**
-     * »ÙÊ§Àè¾ğÊó¤ò¼èÆÀ¤¹¤ë
+     * æ”¯æ‰•å…ˆæƒ…å ±ã‚’å–å¾—ã™ã‚‹
      *
      * @param [integer] $payfcd
-     * @return »ÙÊ§Àè¾ğÊó
+     * @return æ”¯æ‰•å…ˆæƒ…å ±
      */
     public function getAcPayfInfo($payfcd)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                     select
                         payfOmitname,
@@ -2277,14 +2277,14 @@ class lcModel
                     where
                         payfcd = $1
                 ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($payfcd);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select_single($sql, $bind);
 
         if (!$result) {
-            echo "»ÙÊ§Àè¾ğÊó¤Î¼èÆÀ¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "æ”¯æ‰•å…ˆæƒ…å ±ã®å–å¾—å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2292,7 +2292,7 @@ class lcModel
     }
 
     /**
-     * L/C¼èÆÀÆü»ş¤ò¹¹¿·¤¹¤ë
+     * L/Cå–å¾—æ—¥æ™‚ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [string] $lgno
      * @param [string] $lcgetdate
@@ -2300,22 +2300,22 @@ class lcModel
      */
     public function updateLcGetDate($lgno, $lcgetdate)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "update
                         m_acloginstate
                     set
                         lcgetdate = $1
                     where
                         lgno =  $2
-                "; //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                "; //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($lcgetdate, $lgno);
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "L/C¼èÆÀÆü»ş¤Î¹¹¿·¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "L/Cå–å¾—æ—¥æ™‚ã®æ›´æ–°å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2323,7 +2323,7 @@ class lcModel
     }
 
     /**
-     * ÍøÍÑ¾õÂÖ¤Î½é´ü²½¤ò¹Ô¤¦
+     * åˆ©ç”¨çŠ¶æ…‹ã®åˆæœŸåŒ–ã‚’è¡Œã†
      *
      * @param [string] $lgno
      * @param [string] $lcgetdate
@@ -2331,24 +2331,24 @@ class lcModel
      */
     public function updateLgStateToInit($lgno)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "update
                         m_acloginstate
                     set
                         lgstate = null
                     where
                         lgno =  $1
-                "; //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                "; //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($lgno);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ÍøÍÑ¾õÂÖ¤Î½é´ü²½¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "åˆ©ç”¨çŠ¶æ…‹ã®åˆæœŸåŒ–ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2356,16 +2356,16 @@ class lcModel
     }
 
     /**
-     * ACL/C¾ğÊó(Á´¹àÌÜ)¤ò¹¹¿·¤¹¤ë
+     * ACL/Cæƒ…å ±(å…¨é …ç›®)ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [array] $data
-     * @return ¹¹¿··ï¿ô
+     * @return æ›´æ–°ä»¶æ•°
      */
     public function updateAcLcInfo($data)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
                 update
                     t_aclcinfo
@@ -2415,7 +2415,7 @@ class lcModel
                 and polineno = $44
                 and poreviseno = $45
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($data["postate"]
             , $data["opendate"]
             , $data["portplace"]
@@ -2462,11 +2462,11 @@ class lcModel
             , $data["polineno"]
             , $data["poreviseno"]);
         //return $bind;
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "ACL/C¾ğÊó(Á´¹àÌÜ)¤Î¹¹¿·¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "ACL/Cæƒ…å ±(å…¨é …ç›®)ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2476,16 +2476,16 @@ class lcModel
 
     // ---------------------------------------------------------------
     /**
-     *    ¥í¥°¥¤¥ó¾õ¶·¤Î¥í¥°¥¢¥¦¥È½èÍı
-     *    @param  object  $param           DB¥ª¥Ö¥¸¥§¥¯¥È
+     *    ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã®ãƒ­ã‚°ã‚¢ã‚¦ãƒˆå‡¦ç†
+     *    @param  object  $param           DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
      *    @access public
      */
     // ---------------------------------------------------------------
     public function updateLgoutym($param)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥í¥°¥¤¥ó¾õ¶·¤ò¥í¥°¥¢¥¦¥È¤Ë¹¹¿·¤¹¤ë
+        //ãƒ­ã‚°ã‚¤ãƒ³çŠ¶æ³ã‚’ãƒ­ã‚°ã‚¢ã‚¦ãƒˆã«æ›´æ–°ã™ã‚‹
         $sql = "update
 					m_acloginstate
 				set
@@ -2499,18 +2499,18 @@ class lcModel
 					lgouttime is null and
 					lgusrname in(select lgusrname from m_acloginstate where lgno = $1)
 		    ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($param["lgno"]);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
-        //¸¡º÷·ë²ÌÊÖµÑ
+        //æ¤œç´¢çµæœè¿”å´
         return $result;
     }
 
     /**
-     * L/C¥¤¥ó¥İ¡¼¥ÈÆü»ş¤ò¹¹¿·¤¹¤ë
+     * L/Cã‚¤ãƒ³ãƒãƒ¼ãƒˆæ—¥æ™‚ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [string] $lgno
      * @param [string] $lcimpdate
@@ -2518,23 +2518,23 @@ class lcModel
      */
     public function updateLcImpDate($lgno, $lcimpdate)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "update
                         m_acloginstate
                     set
                         lcimpdate = $1
                     where
                         lgno =  $2
-                "; //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                "; //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($lcimpdate, $lgno);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "L/C¥¤¥ó¥İ¡¼¥ÈÆü»ş¤Î¹¹¿·n¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "L/Cã‚¤ãƒ³ãƒãƒ¼ãƒˆæ—¥æ™‚ã®æ›´æ–°nã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2542,7 +2542,7 @@ class lcModel
     }
 
     /**
-     * L/C¥¨¥¯¥¹¥İ¡¼¥ÈÆü»ş¤ò¹¹¿·¤¹¤ë
+     * L/Cã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆæ—¥æ™‚ã‚’æ›´æ–°ã™ã‚‹
      *
      * @param [string] $lgno
      * @param [string] $lcexpdate
@@ -2550,23 +2550,23 @@ class lcModel
      */
     public function updateLcExpDate($lgno, $lcimpdate)
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "update
                         m_acloginstate
                     set
                         lcexpdate = $1
                     where
                         lgno =  $2
-                "; //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+                "; //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array($lcexpdate, $lgno);
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->executeNonQuery($sql, $bind);
 
         if ($result < 0) {
-            echo "L/C¥¨¥¯¥¹¥İ¡¼¥ÈÆü»ş¤Î¹¹¿·¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£\n";
+            echo "L/Cã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆæ—¥æ™‚ã®æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸã€‚\n";
             exit;
         }
 
@@ -2574,15 +2574,15 @@ class lcModel
     }
 
     /**
-     * Á÷ÉÕ¸µ¥Ş¥¹¥¿¾ğÊó¤ò¼èÆÀ¤¹¤ë
+     * é€ä»˜å…ƒãƒã‚¹ã‚¿æƒ…å ±ã‚’å–å¾—ã™ã‚‹
      *
      * @return void
      */
     public function getSendInfo()
     {
-        //¥¯¥é¥¹¤ÎÀ¸À®
+        //ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆ
         $db = $this->lcConn;
-        //¥¯¥¨¥ê¤ÎÀ¸À®
+        //ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
         $sql = "
 				select
 					*
@@ -2591,10 +2591,10 @@ class lcModel
                 where
                     invalidflag = false
             ";
-        //¥Ğ¥¤¥ó¥É¤ÎÀßÄê
+        //ãƒã‚¤ãƒ³ãƒ‰ã®è¨­å®š
         $bind = array();
 
-        //¥¯¥¨¥ê¼Â¹Ô
+        //ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
         $result = $db->select($sql, $bind);
 
         if (count($result) > 0) {

@@ -31,30 +31,30 @@ function ChgEtoJ( dlCount )
 	{
 		/* DETAIL LIST J */
 
-		ExStrDL01.innerText = 'ÁªÂò';
+		ExStrDL01.innerText = 'é¸æŠ';
 		ExStrDL02.innerText = 'No';
-		ExStrDL03.innerText = '¸ÜµÒ¼õÃíÈÖ¹æ';
-		ExStrDL04.innerText = '¼õÃíÈÖ¹æ';
-		ExStrDL05.innerText = '¸ÜµÒÉÊÈÖ';
-		ExStrDL06.innerText = 'À½ÉÊ¥³¡¼¥É';
-		ExStrDL07.innerText = 'À½ÉÊÌ¾';
-		ExStrDL08.innerText = 'À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë';
-		ExStrDL09.innerText = '±Ä¶ÈÉô½ğ';
-		ExStrDL10.innerText = 'Çä¾å¶èÊ¬';
-		ExStrDL11.innerText = 'Ç¼´ü';
-		ExStrDL12.innerText = 'Ã±²Á';
-		ExStrDL13.innerText = 'Ã±°Ì';
-		ExStrDL14.innerText = '¿ôÎÌ';
-		ExStrDL15.innerText = 'ÀÇÈ´¶â³Û';
-		ExStrDL16.innerText = '·×¾åÃ±°Ì';
+		ExStrDL03.innerText = 'é¡§å®¢å—æ³¨ç•ªå·';
+		ExStrDL04.innerText = 'å—æ³¨ç•ªå·';
+		ExStrDL05.innerText = 'é¡§å®¢å“ç•ª';
+		ExStrDL06.innerText = 'è£½å“ã‚³ãƒ¼ãƒ‰';
+		ExStrDL07.innerText = 'è£½å“å';
+		ExStrDL08.innerText = 'è£½å“åï¼ˆè‹±èªï¼‰';
+		ExStrDL09.innerText = 'å–¶æ¥­éƒ¨ç½²';
+		ExStrDL10.innerText = 'å£²ä¸ŠåŒºåˆ†';
+		ExStrDL11.innerText = 'ç´æœŸ';
+		ExStrDL12.innerText = 'å˜ä¾¡';
+		ExStrDL13.innerText = 'å˜ä½';
+		ExStrDL14.innerText = 'æ•°é‡';
+		ExStrDL15.innerText = 'ç¨æŠœé‡‘é¡';
+		ExStrDL16.innerText = 'è¨ˆä¸Šå˜ä½';
 		// if( typeof( ExStrDL09 ) != 'undefined' )
 		// {
-		// 	ExStrDL09.innerText = 'ÂĞ¾İ';
+		// 	ExStrDL09.innerText = 'å¯¾è±¡';
 		// }
 
 		// if( typeof( ExStrDL10 ) != 'undefined' )
 		// {
-		// 	ExStrDL10.innerText = '¸µ¿ôÎÌ';
+		// 	ExStrDL10.innerText = 'å…ƒæ•°é‡';
 		// }
 	}
 

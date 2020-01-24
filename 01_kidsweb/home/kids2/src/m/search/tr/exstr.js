@@ -1,8 +1,8 @@
 ///// HEADER IMAGE /////
-var headerA = '<img src="' + mtemporaryrateJ + '" width="949" height="30" border="0" alt="ÁÛÄê¥ì¡¼¥È¥Ş¥¹¥¿¸¡º÷">';
+var headerA = '<img src="' + mtemporaryrateJ + '" width="949" height="30" border="0" alt="æƒ³å®šãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿æ¤œç´¢">';
 
 //////////////////////////////////////////////////////////////////
-////////// ¥ª¥Ö¥¸¥§¥¯¥È¤Î¥ª¥ó¥í¡¼¥É½èÍı´Ø¿ô //////////
+////////// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚ªãƒ³ãƒ­ãƒ¼ãƒ‰å‡¦ç†é–¢æ•° //////////
 function fncMasterSearchOnload()
 {
     parent.schSchButton.style.visibility = 'visible';

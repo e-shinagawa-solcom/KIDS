@@ -1,80 +1,80 @@
 
 (function(){
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var workForm = $('form');
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥¯¥é¥¹Ì¾
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚¯ãƒ©ã‚¹å
     var classNameErrorIcon = 'error-icon';
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥ê¥½¡¼¥¹URL
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãƒªã‚½ãƒ¼ã‚¹URL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     var btnClear = $('.form-buttons__clear');
-    // ÅĞÏ¿¥Ü¥¿¥ó
+    // ç™»éŒ²ãƒœã‚¿ãƒ³
     var btnRegist = $('.form-buttons__regist');
-    // ¥Õ¥©¡¼¥à¥µ¥Ö¥ß¥Ã¥ÈÍŞ»ß
+    // ãƒ•ã‚©ãƒ¼ãƒ ã‚µãƒ–ãƒŸãƒƒãƒˆæŠ‘æ­¢
     $('document').on('submit', 'form', function(e){
         e.preventDefault();
         return false;
     });
 
-    // ÊÄ¤¸¤¿ºİ¤Î½èÍı
+    // é–‰ã˜ãŸéš›ã®å‡¦ç†
     $(window).on('beforeunload', function(){
         $(window.opener.opener.document).find('form').submit();
     });
 
-    // ¥¯¥ê¥¢¥Ü¥¿¥ó
+    // ã‚¯ãƒªã‚¢ãƒœã‚¿ãƒ³
     btnClear.on('click', function(){
         workForm.find('select').each(function(index){
             $(this).val($(this).find('option').first().val());
         });
-        // ¸¡¾Ú½èÍı¤Î¥­¥Ã¥¯
+        // æ¤œè¨¼å‡¦ç†ã®ã‚­ãƒƒã‚¯
         validate(this);
     });
 
-    // ÅĞÏ¿¥Ü¥¿¥ó²¡²¼»ş¤Î½èÍı
+    // ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å‡¦ç†
     btnRegist.on('click', function(){
             clickRegist(this);
     });
 
-    // ÅĞÏ¿¥Ü¥¿¥ó¥¯¥ê¥Ã¥¯»ş¤Ë¸Æ¤Ó½Ğ¤¹function
+    // ç™»éŒ²ãƒœã‚¿ãƒ³ã‚¯ãƒªãƒƒã‚¯æ™‚ã«å‘¼ã³å‡ºã™function
     var clickRegist = function(invoker) {
-        // ¥Õ¥©¡¼¥à¸¡¾Ú
+        // ãƒ•ã‚©ãƒ¼ãƒ æ¤œè¨¼
         if(validate(invoker)){
-            // ¥µ¥Ö¥ß¥Ã¥È½èÍı
+            // ã‚µãƒ–ãƒŸãƒƒãƒˆå‡¦ç†
             submitMoldReport(invoker);
         }
     }
 
-    // ¸¡¾Ú½èÍı¤Î¥­¥Ã¥¯
+    // æ¤œè¨¼å‡¦ç†ã®ã‚­ãƒƒã‚¯
     var validate = function(invoker) {
-        // ¸¡¾Ú·ë²Ì
+        // æ¤œè¨¼çµæœ
         var result = false;
 
-        // ¾Ú·ë²Ì¤¬OK¤Î¾ì¹ç
+        // è¨¼çµæœãŒOKã®å ´åˆ
         if(workForm.valid()){
                 result = true;
         }
-        // ¾ÜºÙ¥¿¥Ö¸¡¾Ú·ë²Ì¤¬NG¤Î¾ì¹ç
+        // è©³ç´°ã‚¿ãƒ–æ¤œè¨¼çµæœãŒNGã®å ´åˆ
         else {
-            // ¥µ¥Ö¥ß¥Ã¥È(¸¡¾Ú·ë²Ì¤ÎÉ½¼¨)
+            // ã‚µãƒ–ãƒŸãƒƒãƒˆ(æ¤œè¨¼çµæœã®è¡¨ç¤º)
             workForm.find(':submit').click();
         }
 
         return result;
     };
 
-    // ¶â·¿ÍúÎò¥µ¥Ö¥ß¥Ã¥È
+    // é‡‘å‹å±¥æ­´ã‚µãƒ–ãƒŸãƒƒãƒˆ
     var submitMoldReport = function(invoker) {
-        // ¥¯¥ê¥Ã¥¯¥¤¥Ù¥ó¥ÈÌµ¸ú²Ä
+        // ã‚¯ãƒªãƒƒã‚¯ã‚¤ãƒ™ãƒ³ãƒˆç„¡åŠ¹å¯
         $(invoker).off('click');
 
         var formData = workForm.serializeArray();
 
-        // ¥Ç¥Ğ¥Ã¥°½ĞÎÏ
+        // ãƒ‡ãƒãƒƒã‚°å‡ºåŠ›
         $.each(formData, function(index, data){
             console.log(data.name + ' : ' + data.value);
         });
 
-        // ¥ê¥¯¥¨¥¹¥ÈÁ÷¿®
+        // ãƒªã‚¯ã‚¨ã‚¹ãƒˆé€ä¿¡
         $.ajax({
             url: '/mold/validation/MoldHistory/modify.php?strSessionID=' + $.cookie('strSessionID'),
             type: 'post',
@@ -82,24 +82,24 @@
             data: formData
         })
         .done(function(response){
-            console.log('¶â·¿ÍúÎò½¤Àµ-¸¡¾Ú done');
+            console.log('é‡‘å‹å±¥æ­´ä¿®æ­£-æ¤œè¨¼ done');
 
-            // ¸¡¾ÚOK¤Î¾ì¹ç
+            // æ¤œè¨¼OKã®å ´åˆ
             if (response.resultHash)
             {
-                console.log('¶â·¿ÍúÎò½¤Àµ-¸¡¾Ú·ë²Ì OK');
+                console.log('é‡‘å‹å±¥æ­´ä¿®æ­£-æ¤œè¨¼çµæœ OK');
 
-                // ³ÎÇ§²èÌÌURL
+                // ç¢ºèªç”»é¢URL
                 var confirmURL = '/mm/modify/confirm/mm_confirm.php?strSessionID=' + $.cookie('strSessionID') + "&resultHash=" + response.resultHash
 
-                // ³ÎÇ§²èÌÌÍÑiframeºîÀ®
+                // ç¢ºèªç”»é¢ç”¨iframeä½œæˆ
                 $dialogContent = $('<iframe>')
                                     .attr("class", "modify-confirm")
                                     .attr("src", confirmURL)
                                     .attr("frameborder", 0)
                                     .attr("style", "width: 150px; height: 200px;");
 
-                // ¥À¥¤¥¢¥í¥°ÀßÄê(jQuery UI)
+                // ãƒ€ã‚¤ã‚¢ãƒ­ã‚°è¨­å®š(jQuery UI)
                 $dialogContent.dialog({
                     autoOpen: true,
                     closeOnEscape: true,
@@ -111,61 +111,61 @@
                     },
                     hight: 200,
                     width: "auto",
-                    // ÊÄ¤¸¤ëºİ¤Ëiframe¤òÇË´ş¤¹¤ë
+                    // é–‰ã˜ã‚‹éš›ã«iframeã‚’ç ´æ£„ã™ã‚‹
                     close: function(event, ui){
                         try {
-                            // ³ÎÇ§²èÌÌ°Ê³°¤ÇÊÄ¤¸¤¿¾ì¹ç¤Ï¿Æ¥¦¥£¥ó¥É¥¦¤ò¥ê¥í¡¼¥É¤·¤ÆÁë¤òÊÄ¤¸¤ë
+                            // ç¢ºèªç”»é¢ä»¥å¤–ã§é–‰ã˜ãŸå ´åˆã¯è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’ãƒªãƒ­ãƒ¼ãƒ‰ã—ã¦çª“ã‚’é–‰ã˜ã‚‹
                             if (location.origin != this.contentWindow.location.origin ||
                                 !/\/mm\/modify\/confirm\/mm_confirm.php/.test(this.contentWindow.location.href)){
                                 window.close();
                             }
-                            // ¥À¥¤¥¢¥í¥°/iframeÇË´ş
+                            // ãƒ€ã‚¤ã‚¢ãƒ­ã‚°/iframeç ´æ£„
                             $(this).dialog('destroy');
                             $(event.target).remove();
                         }
-                        // ¥¨¥é¡¼¤Î¾ì¹ç¤Ï¥ê¥í¡¼¥É
+                        // ã‚¨ãƒ©ãƒ¼ã®å ´åˆã¯ãƒªãƒ­ãƒ¼ãƒ‰
                         catch (e){
                             location.reload();
                         }
 
-                        // ÅĞÏ¿¥Ü¥¿¥ó²¡²¼»ş¤ÎÉü³è
+                        // ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å¾©æ´»
                         btnRegist.on('click', function(){
                                 clickRegist(this);
                         });
                     }
                 });
 
-                // jQuery UI¤Ç¼«Æ°Åª¤ËÀßÄê¤µ¤ì¤ë¥¹¥¿¥¤¥ë¤òºï½ü
+                // jQuery UIã§è‡ªå‹•çš„ã«è¨­å®šã•ã‚Œã‚‹ã‚¹ã‚¿ã‚¤ãƒ«ã‚’å‰Šé™¤
                 $dialogContent.removeAttr("style");
-                // ¥À¥¤¥¢¥í¥°¤ò¥»¥ó¥¿¥ê¥ó¥°¤¹¤ë
+                // ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚’ã‚»ãƒ³ã‚¿ãƒªãƒ³ã‚°ã™ã‚‹
                 var divDialog = $('body > .ui-dialog');
                 divDialog.css("top", ( $(window).height() - divDialog.height() ) / 2 + $(window).scrollTop() + "px")
                          .css("left", ( $(window).width() - divDialog.width() ) / 2 + $(window).scrollLeft() + "px");
             }
-            // ¸¡¾ÚNG¤Î¾ì¹ç
+            // æ¤œè¨¼NGã®å ´åˆ
             else {
-                console.log('¶â·¿ÍúÎò½¤Àµ-¸¡¾Ú·ë²Ì NG');
+                console.log('é‡‘å‹å±¥æ­´ä¿®æ­£-æ¤œè¨¼çµæœ NG');
                 console.log(response);
 
-                // alert¤ÇÉ½¼¨¤µ¤»¤ë¥á¥Ã¥»¡¼¥¸·²
+                // alertã§è¡¨ç¤ºã•ã›ã‚‹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ç¾¤
                 var alertMessages = '';
 
-                // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Î¥Õ¥£¡¼¥É¥Ğ¥Ã¥¯
+                // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ãƒ•ã‚£ãƒ¼ãƒ‰ãƒãƒƒã‚¯
                 $.each(response, function(name, msgError){
                     var element = $('[name="' + name + '"]');
 
-                    // nameÂ°À­¤¬°ìÃ×¤¹¤ë¾ì¹ç
+                    // nameå±æ€§ãŒä¸€è‡´ã™ã‚‹å ´åˆ
                     if (1 <= element.length){
                         invalidImg = $('<img>')
                                         .attr('class', classNameErrorIcon)
                                         .attr('src', urlErrorIcon)
-                                        // CSSÀßÄê(É½¼¨°ÌÃÖ)
+                                        // CSSè¨­å®š(è¡¨ç¤ºä½ç½®)
                                         .css({
                                             position: 'absolute',
                                             top: $(element).position().top,
                                             left: $(element).position().left - 20,
                                         })
-                                        // ¥Ä¡¼¥ë¥Á¥Ã¥×É½¼¨
+                                        // ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—è¡¨ç¤º
                                         .tooltipster({
                                             trigger: 'hover',
                                             onlyone: false,
@@ -173,45 +173,45 @@
                                             content: msgError
                                         });
 
-                        // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+                        // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã—ãªã„å ´åˆ
                         if ($(element).prev('img.' + classNameErrorIcon).length <= 0){
-                            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤òÉ½¼¨
+                            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤º
                             $(element).before(invalidImg);
                         }
-                        // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤¹¤ë¾ì¹ç
+                        // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
                         else {
-                            // ´ûÂ¸¤Î¥¨¥é¡¼¥¢¥¤¥³¥ó¤Î¥Ä¡¼¥ë¥Á¥Ã¥×¥Æ¥­¥¹¥È¤ò¹¹¿·
+                            // æ—¢å­˜ã®ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°
                             $(element).prev('img.' + classNameErrorIcon)
                                         .tooltipster('content', msgError);
                         }
                     }
-                    // ¤½¤ì°Ê³°¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Ïalert¤ÇÉ½¼¨¤¹¤ë¡£
+                    // ãã‚Œä»¥å¤–ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã¯alertã§è¡¨ç¤ºã™ã‚‹ã€‚
                     else {
                         alertMessages += msgError + "\r\n";
                     }
                 });
 
-                // alert¥á¥Ã¥»¡¼¥¸¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ë¾ì¹ç
+                // alertãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒè¨­å®šã•ã‚Œã¦ã„ã‚‹å ´åˆ
                 if (alertMessages){
                     alert(alertMessages);
                 }
 
-                // ÅĞÏ¿¥Ü¥¿¥ó²¡²¼»ş¤ÎÉü³è
+                // ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å¾©æ´»
                 btnRegist.on('click', function(){
                         clickRegist(this);
                 });
             }
         })
         .fail(function(response){
-            console.log('¶â·¿ÍúÎò½¤Àµ-¸¡¾Ú fail');
+            console.log('é‡‘å‹å±¥æ­´ä¿®æ­£-æ¤œè¨¼ fail');
             console.log(response.responseText);
 
             alert(
-                "¥ê¥¯¥¨¥¹¥È¤Î½èÍıÃæ¤Ë¥¨¥é¡¼¤¬È¯À¸¤·¤Ş¤·¤¿¡£" + "\r\n" +
-                "ºÆ¥í¥°¥¤¥ó¤ò¹Ô¤Ã¤Æ¤â¤³¤Î¥¨¥é¡¼¤¬²ò¾Ã¤µ¤ì¤Ê¤¤¾ì¹ç¤Ï¥·¥¹¥Æ¥àÃ´Åö¼Ô¤Ë¤´Ï¢Íí²¼¤µ¤¤¡£"
+                "ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®å‡¦ç†ä¸­ã«ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ã¾ã—ãŸã€‚" + "\r\n" +
+                "å†ãƒ­ã‚°ã‚¤ãƒ³ã‚’è¡Œã£ã¦ã‚‚ã“ã®ã‚¨ãƒ©ãƒ¼ãŒè§£æ¶ˆã•ã‚Œãªã„å ´åˆã¯ã‚·ã‚¹ãƒ†ãƒ æ‹…å½“è€…ã«ã”é€£çµ¡ä¸‹ã•ã„ã€‚"
             );
 
-            // ÅĞÏ¿¥Ü¥¿¥ó²¡²¼»ş¤ÎÉü³è
+            // ç™»éŒ²ãƒœã‚¿ãƒ³æŠ¼ä¸‹æ™‚ã®å¾©æ´»
             btnRegist.on('click', function(){
                     clickRegist(this);
             });

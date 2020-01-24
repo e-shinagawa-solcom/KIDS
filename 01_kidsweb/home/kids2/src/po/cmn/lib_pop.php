@@ -1,6 +1,6 @@
 <?
 /** 
-*	È¯Ãí¡¡ÆÃÊÌ´Ø¿ô·²
+*	ç™ºæ³¨ã€€ç‰¹åˆ¥é–¢æ•°ç¾¤
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -9,45 +9,45 @@
 *	@access    public
 *	@version   1.01
 *
-*	½èÍı³µÍ×
-*	ÅĞÏ¿´ØÏ¢ÆÃÊÌ½èÍı´Ø¿ô·²
+*	å‡¦ç†æ¦‚è¦
+*	ç™»éŒ²é–¢é€£ç‰¹åˆ¥å‡¦ç†é–¢æ•°ç¾¤
 *
-*	½¤ÀµÍúÎò
-*	2004.04.02	À½ÉÊ²Á³Ê¥Ş¥¹¥¿¡¢À½ÉÊ¥Æ¡¼¥Ö¥ë¤Ø¤ÎÅĞÏ¿´Ø¿ô¤òÄÉ²Ã
+*	ä¿®æ­£å±¥æ­´
+*	2004.04.02	è£½å“ä¾¡æ ¼ãƒã‚¹ã‚¿ã€è£½å“ãƒ†ãƒ¼ãƒ–ãƒ«ã¸ã®ç™»éŒ²é–¢æ•°ã‚’è¿½åŠ 
 *
 *
 */
 
 /**
-* »ØÄê¤ÎÈ¯Ãí¥Ç¡¼¥¿¤Ë´Ø¤·¤Æ¡¢¤½¤ÎÈ¯ÃíÌÀºÙ¥Ç¡¼¥¿¤è¤ê»ØÄê¤µ¤ì¤Æ¤¤¤ëÀ½ÉÊ¥³¡¼¥É¤Î°ã¤¤¤òÄ´ºº¤¹¤ë´Ø¿ô
+* æŒ‡å®šã®ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã«é–¢ã—ã¦ã€ãã®ç™ºæ³¨æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã‚ˆã‚ŠæŒ‡å®šã•ã‚Œã¦ã„ã‚‹è£½å“ã‚³ãƒ¼ãƒ‰ã®é•ã„ã‚’èª¿æŸ»ã™ã‚‹é–¢æ•°
 *
-*	È¯ÃíÌÀºÙ¾ğÊó¤è¤êÀ½ÉÊ¥³¡¼¥É¤Î°ã¤¦¹Ô¤¬Â¸ºß¤·¤Ê¤¤¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯´Ø¿ô
+*	ç™ºæ³¨æ˜ç´°æƒ…å ±ã‚ˆã‚Šè£½å“ã‚³ãƒ¼ãƒ‰ã®é•ã†è¡ŒãŒå­˜åœ¨ã—ãªã„ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯é–¢æ•°
 *
-*	@param	Array		$aryOrderDetail	È¯ÃíÅĞÏ¿¤Ë¤ÆÀßÄê¤µ¤ì¤¿ÌÀºÙ¾ğÊó
-*	@param  Object		$objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Integer 	0				¼Â¹ÔÀ®¸ù¡¡ÌÀºÙ¤Î¥Ç¡¼¥¿¤Ï¤¹¤Ù¤ÆÆ±¤¸À½ÉÊ¥³¡¼¥É¤Î¥Ç¡¼¥¿¤Ç¤¢¤ë
-*						99				¼Â¹Ô¼ºÇÔ¡¡ÌÀºÙ¤Ë°ã¤¦À½ÉÊ¥³¡¼¥É¤Î¥Ç¡¼¥¿¤¬Â¸ºß¤¹¤ë
+*	@param	Array		$aryOrderDetail	ç™ºæ³¨ç™»éŒ²ã«ã¦è¨­å®šã•ã‚ŒãŸæ˜ç´°æƒ…å ±
+*	@param  Object		$objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Integer 	0				å®Ÿè¡ŒæˆåŠŸã€€æ˜ç´°ã®ãƒ‡ãƒ¼ã‚¿ã¯ã™ã¹ã¦åŒã˜è£½å“ã‚³ãƒ¼ãƒ‰ã®ãƒ‡ãƒ¼ã‚¿ã§ã‚ã‚‹
+*						99				å®Ÿè¡Œå¤±æ•—ã€€æ˜ç´°ã«é•ã†è£½å“ã‚³ãƒ¼ãƒ‰ã®ãƒ‡ãƒ¼ã‚¿ãŒå­˜åœ¨ã™ã‚‹
 *	@access public
 */
 function fncCheckOrderDetailProductCode ( $aryOrderDetail, $objDB )
 {
 	$bytSearchFlag = 0;
 
-	// ³ÆÌÀºÙ¤Ë¤Ä¤¤¤ÆÄ´ºº
+	// å„æ˜ç´°ã«ã¤ã„ã¦èª¿æŸ»
 	for ( $i = 0; $i < count($aryOrderDetail); $i++ )
 	{
 		$strProductCode1 = $aryOrderDetail[$i]["strProductCode"];
-		// »ØÄê¤µ¤ì¤¿¥«¥é¥àÌ¾¤Ë¥Ç¡¼¥¿¤¬¤Ê¤¤¾ì¹ç
+		// æŒ‡å®šã•ã‚ŒãŸã‚«ãƒ©ãƒ åã«ãƒ‡ãƒ¼ã‚¿ãŒãªã„å ´åˆ
 		if ( $strProductCode1 == "" )
 		{
 			$strProductCode1 = $aryOrderDetail[$i]["strproductcode"];
 		}
 
-		// ³ÆÌÀºÙ¤Ë¤Ä¤¤¤ÆÄ´ºº
+		// å„æ˜ç´°ã«ã¤ã„ã¦èª¿æŸ»
 		for ( $j = 0; $j < count($aryOrderDetail); $j++ )
 		{
 			$strProductCode2 = $aryOrderDetail[$j]["strProductCode"];
-			// »ØÄê¤µ¤ì¤¿¥«¥é¥àÌ¾¤Ë¥Ç¡¼¥¿¤¬¤Ê¤¤¾ì¹ç
+			// æŒ‡å®šã•ã‚ŒãŸã‚«ãƒ©ãƒ åã«ãƒ‡ãƒ¼ã‚¿ãŒãªã„å ´åˆ
 			if ( $strProductCode2 == "" )
 			{
 				$strProductCode2 = $aryOrderDetail[$j]["strproductcode"];
@@ -74,58 +74,58 @@ function fncCheckOrderDetailProductCode ( $aryOrderDetail, $objDB )
 }
 
 /**
-* È¯ÃíÅĞÏ¿»ş¤ËÀ½ÉÊ²Á³Ê¥Ş¥¹¥¿¡¢À½ÉÊ¥Æ¡¼¥Ö¥ë¤Î¾ğÊó³ÎÇ§¡¢ÅĞÏ¿´Ø¿ô
+* ç™ºæ³¨ç™»éŒ²æ™‚ã«è£½å“ä¾¡æ ¼ãƒã‚¹ã‚¿ã€è£½å“ãƒ†ãƒ¼ãƒ–ãƒ«ã®æƒ…å ±ç¢ºèªã€ç™»éŒ²é–¢æ•°
 *
-*	È¯ÃíÌÀºÙ¾ğÊó¤è¤êÀ½ÉÊ²Á³Ê¥Ş¥¹¥¿¤Ë¤Ê¤¤¥Ç¡¼¥¿¡¢À½ÉÊ¥Æ¡¼¥Ö¥ë¤Ë¤Ê¤¤¥Ç¡¼¥¿¤ò¿·µ¬¤ËÅĞÏ¿¤¹¤ë
+*	ç™ºæ³¨æ˜ç´°æƒ…å ±ã‚ˆã‚Šè£½å“ä¾¡æ ¼ãƒã‚¹ã‚¿ã«ãªã„ãƒ‡ãƒ¼ã‚¿ã€è£½å“ãƒ†ãƒ¼ãƒ–ãƒ«ã«ãªã„ãƒ‡ãƒ¼ã‚¿ã‚’æ–°è¦ã«ç™»éŒ²ã™ã‚‹
 *
-*	@param	Array		$aryOrderDetail			È¯ÃíÅĞÏ¿¤Ë¤ÆÀßÄê¤µ¤ì¤¿ÌÀºÙ¾ğÊó
-*	@param	Integer		$lngMonetaryUnitCode	ÄÌ²ßÃ±°Ì¥³¡¼¥É
-*	@param  Object		$objDB					DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Boolean 	TRUE					¼Â¹ÔÀ®¸ù
-*						FALSE					¼Â¹Ô¼ºÇÔ
+*	@param	Array		$aryOrderDetail			ç™ºæ³¨ç™»éŒ²ã«ã¦è¨­å®šã•ã‚ŒãŸæ˜ç´°æƒ…å ±
+*	@param	Integer		$lngMonetaryUnitCode	é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+*	@param  Object		$objDB					DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Boolean 	TRUE					å®Ÿè¡ŒæˆåŠŸ
+*						FALSE					å®Ÿè¡Œå¤±æ•—
 *	@access public
 */
 function fncCheckSetProduct ( $aryOrderDetail, $lngMonetaryUnitCode, $objDB )
 {
-	// ÄÌ²ßÃ±°Ì¤ÎÀßÄê
+	// é€šè²¨å˜ä½ã®è¨­å®š
 	if ( $lngMonetaryUnitCode == "" )
 	{
 		$lngMonetaryUnitCode = DEF_MONETARY_YEN;
 	}
 
-	// À½ÉÊ²Á³Ê¥Ş¥¹¥¿¤Ø¤Î¥Ç¡¼¥¿ÅĞÏ¿
+	// è£½å“ä¾¡æ ¼ãƒã‚¹ã‚¿ã¸ã®ãƒ‡ãƒ¼ã‚¿ç™»éŒ²
 	for( $i = 0 ; $i < count( $aryOrderDetail ); $i++ )
 	{
-		// ³µ»»¶èÊ¬¥³¡¼¥É
+		// æ¦‚ç®—åŒºåˆ†ã‚³ãƒ¼ãƒ‰
 		$lngConversionClassCode = ( $aryOrderDetail[$i]["lngConversionClassCode"] == "gs" ) ? 1 : 2;
-		// À½ÉÊÈÖ¹æ
+		// è£½å“ç•ªå·
 		$lngProductNo = intval($aryOrderDetail[$i]["strProductCode"]);
-		// »ÅÆş²ÊÌÜ¥³¡¼¥É
+		// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
 		$lngStockSubjectCode = $aryOrderDetail[$i]["strStockSubjectCode"];
-		// »ÅÆşÉôÉÊ¥³¡¼¥É
+		// ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰
 		$lngStockItemCode = $aryOrderDetail[$i]["strStockItemCode"];
-		// À½ÉÊ²Á³Ê
+		// è£½å“ä¾¡æ ¼
 		$curProductPrice = $aryOrderDetail[$i]["curProductPrice"];
 		if ( $curProductPrice == "" )
 		{
 			$curProductPrice == 0;
 		}
-		// ÌÀºÙÈ÷¹Í
+		// æ˜ç´°å‚™è€ƒ
 		$strDetailNote = $aryOrderDetail[$i]["strDetailNote"];
 		if ( $strDetailNote == "null" )
 		{
 			$strDetailNote = "";
 		}
 
-		// ÌÀºÙ¹Ô¥Ç¡¼¥¿¤ò¥Á¥§¥Ã¥¯¤·¤½¤ÎÌÀºÙ¹Ô¤Î¾ğÊó¤ÇÀ½ÉÊ²Á³Ê¥Ş¥¹¥¿¤ÎÆâÍÆ¤Ë¤Ê¤¤¤â¤Î¤ÏÅĞÏ¿¤¹¤ë
-		// ÂĞ¾İ¤ÏÀ½ÉÊÃ±°Ì·×¾å¤Î¾ì¹ç¤Î¤ß
+		// æ˜ç´°è¡Œãƒ‡ãƒ¼ã‚¿ã‚’ãƒã‚§ãƒƒã‚¯ã—ãã®æ˜ç´°è¡Œã®æƒ…å ±ã§è£½å“ä¾¡æ ¼ãƒã‚¹ã‚¿ã®å†…å®¹ã«ãªã„ã‚‚ã®ã¯ç™»éŒ²ã™ã‚‹
+		// å¯¾è±¡ã¯è£½å“å˜ä½è¨ˆä¸Šã®å ´åˆã®ã¿
 		if ( $lngConversionClassCode == DEF_CONVERSION_SEIHIN )
 		{
 			$checkFlag = FALSE;
 			$strCheckQuery = "SELECT lngProductPriceCode FROM m_ProductPrice WHERE lngProductNo = " . $lngProductNo
 				. " AND lngStockSubjectCode = " . $lngStockSubjectCode . " AND lngStockItemCode = " . $lngStockItemCode
 				. " AND lngMonetaryUnitCode = " . $lngMonetaryUnitCode . " AND curProductPrice = " . $curProductPrice;
-			// ¥Á¥§¥Ã¥¯¥¯¥¨¥ê¡¼¤Î¼Â¹Ô
+			// ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªãƒ¼ã®å®Ÿè¡Œ
 			list ( $lngCheckResultID, $lngCheckResultNum ) = fncQuery( $strCheckQuery, $objDB );
 
 			if ( $lngCheckResultNum )
@@ -134,28 +134,28 @@ function fncCheckSetProduct ( $aryOrderDetail, $lngMonetaryUnitCode, $objDB )
 			}
 			$objDB->freeResult( $lngCheckResultID );
 
-			// ÅĞÏ¿¤µ¤ì¤Æ¤¤¤ëÀ½ÉÊ²Á³Ê¤¬¤Ê¤¤¾ì¹ç¤Ï¿·¤¿¤ËÀ½ÉÊ²Á³Ê¥Ş¥¹¥¿¤ËÅĞÏ¿¤¹¤ë
+			// ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹è£½å“ä¾¡æ ¼ãŒãªã„å ´åˆã¯æ–°ãŸã«è£½å“ä¾¡æ ¼ãƒã‚¹ã‚¿ã«ç™»éŒ²ã™ã‚‹
 			if ( $checkFlag == FALSE )
 			{
-				// m_ProductPrice¤Î¥·¡¼¥±¥ó¥¹¤ò¼èÆÀ
+				// m_ProductPriceã®ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ã‚’å–å¾—
 				$sequence_m_productprice = fncGetSequence( 'm_ProductPrice.lngProductPriceCode', $objDB );
 
 				unset( $aryQuery );
 
 				$aryQuery[] = "INSERT INTO m_ProductPrice (";
-				$aryQuery[] = "lngProductPriceCode, ";												// À½ÉÊ²Á³Ê¥³¡¼¥É 
-				$aryQuery[] = "lngProductNo,";														// À½ÉÊÈÖ¹æ
-				$aryQuery[] = "lngStockSubjectCode,";												// »ÅÆş²ÊÌÜ¥³¡¼¥É
-				$aryQuery[] = "lngStockItemCode,";													// »ÅÆşÉôÉÊ¥³¡¼¥É 
-				$aryQuery[] = "lngMonetaryUnitCode,";												// ÄÌ²ßÃ±°Ì¥³¡¼¥É
-				$aryQuery[] = "curProductPrice ";													// À½ÉÊ²Á³Ê 
+				$aryQuery[] = "lngProductPriceCode, ";												// è£½å“ä¾¡æ ¼ã‚³ãƒ¼ãƒ‰ 
+				$aryQuery[] = "lngProductNo,";														// è£½å“ç•ªå·
+				$aryQuery[] = "lngStockSubjectCode,";												// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
+				$aryQuery[] = "lngStockItemCode,";													// ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰ 
+				$aryQuery[] = "lngMonetaryUnitCode,";												// é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+				$aryQuery[] = "curProductPrice ";													// è£½å“ä¾¡æ ¼ 
 				$aryQuery[] = ") VALUES (";
-				$aryQuery[] = $sequence_m_productprice . ", ";										// À½ÉÊ²Á³Ê¥³¡¼¥É
-				$aryQuery[] = $lngProductNo . ", ";												// À½ÉÊÈÖ¹æ
-				$aryQuery[] = $lngStockSubjectCode . ", ";											// »ÅÆş²ÊÌÜ¥³¡¼¥É
-				$aryQuery[] = $lngStockItemCode . ", ";												// »ÅÆşÉôÉÊ¥³¡¼¥É
-				$aryQuery[] = $lngMonetaryUnitCode . ", ";											// ÄÌ²ßÃ±°Ì¥³¡¼¥É
-				$aryQuery[] = $curProductPrice;														// À½ÉÊ²Á³Ê
+				$aryQuery[] = $sequence_m_productprice . ", ";										// è£½å“ä¾¡æ ¼ã‚³ãƒ¼ãƒ‰
+				$aryQuery[] = $lngProductNo . ", ";												// è£½å“ç•ªå·
+				$aryQuery[] = $lngStockSubjectCode . ", ";											// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
+				$aryQuery[] = $lngStockItemCode . ", ";												// ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰
+				$aryQuery[] = $lngMonetaryUnitCode . ", ";											// é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+				$aryQuery[] = $curProductPrice;														// è£½å“ä¾¡æ ¼
 				$aryQuery[] = ")";
 
 				$strQuery = "";
@@ -163,23 +163,23 @@ function fncCheckSetProduct ( $aryOrderDetail, $lngMonetaryUnitCode, $objDB )
 
 				if ( !$lngResultID = $objDB->execute( $strQuery ) )
 				{
-					fncOutputError ( 9051, DEF_ERROR, "À½ÉÊ²Á³Ê¥Ş¥¹¥¿¤Ø¤ÎÅĞÏ¿½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+					fncOutputError ( 9051, DEF_ERROR, "è£½å“ä¾¡æ ¼ãƒã‚¹ã‚¿ã¸ã®ç™»éŒ²å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 					return FALSE;
 				}
 				$objDB->freeResult( $lngResultID );
 			}
 		}
 
-		// ÌÀºÙ¹Ô¥Ç¡¼¥¿¤ò¥Á¥§¥Ã¥¯¤·¤½¤ÎÌÀºÙ¹Ô¤Î¾ğÊó¤ÇÀ½ÉÊ¥Æ¡¼¥Ö¥ë¤Ë¤Ê¤¤¥Ç¡¼¥¿¤òÀ½ÉÊ¥Æ¡¼¥Ö¥ë¤ËÅĞÏ¿¤¹¤ë
+		// æ˜ç´°è¡Œãƒ‡ãƒ¼ã‚¿ã‚’ãƒã‚§ãƒƒã‚¯ã—ãã®æ˜ç´°è¡Œã®æƒ…å ±ã§è£½å“ãƒ†ãƒ¼ãƒ–ãƒ«ã«ãªã„ãƒ‡ãƒ¼ã‚¿ã‚’è£½å“ãƒ†ãƒ¼ãƒ–ãƒ«ã«ç™»éŒ²ã™ã‚‹
 		$checkFlag = FALSE;
 		$strCheckQuery = "SELECT lngProductSubNo FROM t_Product WHERE lngProductNo = " . $lngProductNo
 			. " AND lngStockSubjectCode = " . $lngStockSubjectCode . " AND lngStockItemCode = " . $lngStockItemCode;
-		// »ÅÆşÉôÉÊ¤¬ £¹£¹ ¤½¤ÎÂ¾ ¤Î¾ì¹ç¤ÏÌÀºÙ¹Ô¤Ë¤Ä¤¤¤Æ¤âÈæ³Ó¤¹¤ë
+		// ä»•å…¥éƒ¨å“ãŒ ï¼™ï¼™ ãã®ä»– ã®å ´åˆã¯æ˜ç´°è¡Œã«ã¤ã„ã¦ã‚‚æ¯”è¼ƒã™ã‚‹
 		if ( $lngStockItemCode == 99 )
 		{
 			$strCheckQuery .= " AND strNote = '" . $strNote . "'";
 		}
-		// ¥Á¥§¥Ã¥¯¥¯¥¨¥ê¡¼¤Î¼Â¹Ô
+		// ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªãƒ¼ã®å®Ÿè¡Œ
 		list ( $lngCheckResultID, $lngCheckResultNum ) = fncQuery( $strCheckQuery, $objDB );
 
 		if ( $lngCheckResultNum )
@@ -188,15 +188,15 @@ function fncCheckSetProduct ( $aryOrderDetail, $lngMonetaryUnitCode, $objDB )
 		}
 		$objDB->freeResult( $lngCheckResultID );
 
-		// ÅĞÏ¿¤µ¤ì¤Æ¤¤¤ëÀ½ÉÊ¾ğÊó¤¬¤Ê¤¤¾ì¹ç¤Ï¿·¤¿¤ËÀ½ÉÊ¥Æ¡¼¥Ö¥ë¤ËÅĞÏ¿¤¹¤ë
+		// ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹è£½å“æƒ…å ±ãŒãªã„å ´åˆã¯æ–°ãŸã«è£½å“ãƒ†ãƒ¼ãƒ–ãƒ«ã«ç™»éŒ²ã™ã‚‹
 		if ( $checkFlag == FALSE )
 		{
-			// Æ±¤¸À½ÉÊ¥³¡¼¥É¤ËÂĞ¤·¤Æ°ì°Õ¤Ë¤Ê¤ë¤è¤¦¤Ë¥í¥Ã¥¯¤ò¤«¤±¤ë
+			// åŒã˜è£½å“ã‚³ãƒ¼ãƒ‰ã«å¯¾ã—ã¦ä¸€æ„ã«ãªã‚‹ã‚ˆã†ã«ãƒ­ãƒƒã‚¯ã‚’ã‹ã‘ã‚‹
 			$strLockQuery = "SELECT lngProductNo, lngProductSubNo "
 				. "FROM t_Product WHERE lngProductNo = " . $lngProductNo
 				. " FOR UPDATE";
 
-			// ¥í¥Ã¥¯¥¯¥¨¥ê¡¼¤Î¼Â¹Ô
+			// ãƒ­ãƒƒã‚¯ã‚¯ã‚¨ãƒªãƒ¼ã®å®Ÿè¡Œ
 			list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
 
 			$lngMaxProductSubNo = 0;
@@ -213,27 +213,27 @@ function fncCheckSetProduct ( $aryOrderDetail, $lngMonetaryUnitCode, $objDB )
 			}
 			$objDB->freeResult( $lngLockResultID );
 
-			// À½ÉÊ¥µ¥ÖÈÖ¹æ
+			// è£½å“ã‚µãƒ–ç•ªå·
 			$lngMaxProductSubNo++;
 
 			unset( $aryQuery );
 			$aryQuery[] = "INSERT INTO t_Product (";
-			$aryQuery[] = "lngProductSubNo, ";							// À½ÉÊ¥µ¥ÖÈÖ¹æ
-			$aryQuery[] = "lngProductNo,";								// À½ÉÊÈÖ¹æ
-			$aryQuery[] = "lngStockSubjectCode,";						// »ÅÆş²ÊÌÜ¥³¡¼¥É
-			$aryQuery[] = "lngStockItemCode";							// »ÅÆşÉôÉÊ¥³¡¼¥É 
+			$aryQuery[] = "lngProductSubNo, ";							// è£½å“ã‚µãƒ–ç•ªå·
+			$aryQuery[] = "lngProductNo,";								// è£½å“ç•ªå·
+			$aryQuery[] = "lngStockSubjectCode,";						// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
+			$aryQuery[] = "lngStockItemCode";							// ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰ 
 			if ( $lngStockItemCode == 99 )
 			{
-				$aryQuery[] = ", strNote";								// È÷¹Í
+				$aryQuery[] = ", strNote";								// å‚™è€ƒ
 			}
 			$aryQuery[] = ") VALUES (";
-			$aryQuery[] = $lngMaxProductSubNo . ", ";					// À½ÉÊ¥µ¥ÖÈÖ¹æ
-			$aryQuery[] = $lngProductNo . ", ";						// À½ÉÊÈÖ¹æ
-			$aryQuery[] = $lngStockSubjectCode . ", ";					// »ÅÆş²ÊÌÜ¥³¡¼¥É
-			$aryQuery[] = $lngStockItemCode;							// »ÅÆşÉôÉÊ¥³¡¼¥É
+			$aryQuery[] = $lngMaxProductSubNo . ", ";					// è£½å“ã‚µãƒ–ç•ªå·
+			$aryQuery[] = $lngProductNo . ", ";						// è£½å“ç•ªå·
+			$aryQuery[] = $lngStockSubjectCode . ", ";					// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
+			$aryQuery[] = $lngStockItemCode;							// ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰
 			if ( $lngStockItemCode == 99 )
 			{
-				$aryQuery[] = ", '" . $strDetailNote . "'";				// È÷¹Í
+				$aryQuery[] = ", '" . $strDetailNote . "'";				// å‚™è€ƒ
 			}
 			$aryQuery[] = ")";
 
@@ -242,7 +242,7 @@ function fncCheckSetProduct ( $aryOrderDetail, $lngMonetaryUnitCode, $objDB )
 
 			if ( !$lngResultID = $objDB->execute( $strQuery ) )
 			{
-				fncOutputError ( 9051, DEF_ERROR, "À½ÉÊ¥Æ¡¼¥Ö¥ë¤Ø¤ÎÅĞÏ¿½èÍı¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£", TRUE, "", $objDB );
+				fncOutputError ( 9051, DEF_ERROR, "è£½å“ãƒ†ãƒ¼ãƒ–ãƒ«ã¸ã®ç™»éŒ²å‡¦ç†ã«å¤±æ•—ã—ã¾ã—ãŸã€‚", TRUE, "", $objDB );
 				return FALSE;
 			}
 			$objDB->freeResult( $lngResultID );
@@ -258,11 +258,11 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 	//$objDB          = new clsDB();
 	//$objAuth        = new clsAuth();
 	$cnt = count( $aryPoDitail);
-	$strPayConditionTable = "";//³ÎÇ§²èÌÌ¤Ë¤ª¤±¤ë»ÙÊ§¾ò·ïÉôÊ¬¤ÎhtmlÊ¸¾Ï
+	$strPayConditionTable = "";//ç¢ºèªç”»é¢ã«ãŠã‘ã‚‹æ”¯æ‰•æ¡ä»¶éƒ¨åˆ†ã®htmlæ–‡ç« 
 	$flgPayConditionsMatch = true;
-	$flgForeignTable = false;//³ºÅö¥Æ¡¼¥Ö¥ë¤ËÂ¸ºß¤¹¤ë¤«¤É¤¦¤«
+	$flgForeignTable = false;//è©²å½“ãƒ†ãƒ¼ãƒ–ãƒ«ã«å­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹
 		
-	//´Ø¿ôÆâ¤Ç¤Î»ÙÊ§¾ò·ï¤òÈ½ÃÇ
+	//é–¢æ•°å†…ã§ã®æ”¯æ‰•æ¡ä»¶ã‚’åˆ¤æ–­
 	$arystockitemcode = array("1", "2", "3" ,"7","9","11");
 	//$bytcompanyforeignflag	= fncGetMasterValue( "m_company", "strcompanydisplaycode", "bytcompanyforeignflag", $aryData["lngCustomerCode"] , '', $objDB);
 	$strcompanydisplaycode = fncGetMasterValue( "m_company", "lngcompanycode", "strcompanydisplaycode",  $aryData["lngCustomerCode"].":str", '', $objDB);
@@ -270,19 +270,19 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 				
 				
 	//2008.02.21 matsuki update start
-	//$bytcompanyforeignflag¤ÎÂå¤ï¤ê¤Ë$strCountryCode¤¬81(ÆüËÜ)¤Ç¤Ê¤¤¾ì¹ç¤ò¼è°úÀè¤¬³¤³°¤«¤É¤¦¤«¤Î´ğ½à¤È¤¹¤ë
-	//°ÊÁ°¤Î¥·¥¹¥Æ¥à¤Ç¤Ï$bytcompanyforeignflag¤ò»ÈÍÑ¤·¤Æ¤¤¤¿¤Î¤Ç¡¢¤³¤³¤Ç¤Ï´ÊÃ±¤Î¤¿¤á
-	//°Ê²¼¤Î¤è¤¦¤Ëµ­½Ò¤¹¤ë
+	//$bytcompanyforeignflagã®ä»£ã‚ã‚Šã«$strCountryCodeãŒ81(æ—¥æœ¬)ã§ãªã„å ´åˆã‚’å–å¼•å…ˆãŒæµ·å¤–ã‹ã©ã†ã‹ã®åŸºæº–ã¨ã™ã‚‹
+	//ä»¥å‰ã®ã‚·ã‚¹ãƒ†ãƒ ã§ã¯$bytcompanyforeignflagã‚’ä½¿ç”¨ã—ã¦ã„ãŸã®ã§ã€ã“ã“ã§ã¯ç°¡å˜ã®ãŸã‚
+	//ä»¥ä¸‹ã®ã‚ˆã†ã«è¨˜è¿°ã™ã‚‹
 	$bytcompanyforeignflag = "";
-	if( $strCountryCode != 81)//´ë¶È¥³¡¼¥É81°Ê³°¤Ï³¤³°¼è°úÀè¤Ë³ºÅö
+	if( $strCountryCode != 81)//ä¼æ¥­ã‚³ãƒ¼ãƒ‰81ä»¥å¤–ã¯æµ·å¤–å–å¼•å…ˆã«è©²å½“
 		$bytcompanyforeignflag = "t";
 	//2008.02.21 matsuki update end
 	
 	if( $bytcompanyforeignflag == "t")
 	{
-//echo "»ÅÆşÀè¤Ï³¤³°<br>";
-	    //¼è°úÀè³¤³°¥Õ¥é¥°true
-		//°Ê²¼¤ÏÌÀºÙÅĞÏ¿¤ÎÆâÍÆ
+//echo "ä»•å…¥å…ˆã¯æµ·å¤–<br>";
+	    //å–å¼•å…ˆæµ·å¤–ãƒ•ãƒ©ã‚°true
+		//ä»¥ä¸‹ã¯æ˜ç´°ç™»éŒ²ã®å†…å®¹
 				
 		//2007.12.14 matsuki update start
 				
@@ -290,7 +290,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		for( $i = 0; $i < count( $aryforeigntable ) ; $i++ )
 		{
 			if( $aryforeigntable[$i] == $strcompanydisplaycode )
-			{	//³ºÅö¤Î¾ì¹ç¤ÏÌÀºÙÅĞÏ¿¤ò¥Á¥§¥Ã¥¯
+			{	//è©²å½“ã®å ´åˆã¯æ˜ç´°ç™»éŒ²ã‚’ãƒã‚§ãƒƒã‚¯
 				$flgForeignTable = true;
 				break;
 			}
@@ -298,10 +298,10 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		
 		if($flgForeignTable)
 		{
-//echo "¥Á¥§¥Ã¥¯ÂĞ¾İ»ÅÆşÀè<br>";
+//echo "ãƒã‚§ãƒƒã‚¯å¯¾è±¡ä»•å…¥å…ˆ<br>";
 			for( $i = 0; $i < $cnt; $i++ )
 			{
-				$Code[$i]= "2";//½é´üÃÍ2(T/T)¤Ë¥»¥Ã¥È
+				$Code[$i]= "2";//åˆæœŸå€¤2(T/T)ã«ã‚»ãƒƒãƒˆ
 				if(  $aryPoDitail[$i]["lngStockSubjectCode"] == "402")
 				{
 					for( $j = 0; $j < count( $arystockitemcode ); $j++ )
@@ -309,8 +309,8 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 							
 						if( $aryPoDitail[$i]["strStockItemCode"] == $arystockitemcode[$j])
 						{
-							$Code[$i]="1";//L/C¤Ë¥»¥Ã¥È
-//echo "L/C¿ä¾©ÌÀºÙ¸¡½Ğ<br>";
+							$Code[$i]="1";//L/Cã«ã‚»ãƒƒãƒˆ
+//echo "L/Cæ¨å¥¨æ˜ç´°æ¤œå‡º<br>";
 							break;
 						}
 					}
@@ -319,8 +319,8 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		}
 		
 		else
-		{//³ºÅö¥Æ¡¼¥Ö¥ë¤ËÂ¸ºß¤·¤Ê¤¤È¯ÃíÀè¤Î¾ì¹ç¡¢¿ä¾©¤µ¤ì¤ë»ÙÊ§¤¤¾ò·ï¤ÏÁ´¤ÆT/T
-//echo "¥Á¥§¥Ã¥¯ÉÔÍ×»ÅÆşÀè¡£¿ä¾©¤ÏT/T<br>";
+		{//è©²å½“ãƒ†ãƒ¼ãƒ–ãƒ«ã«å­˜åœ¨ã—ãªã„ç™ºæ³¨å…ˆã®å ´åˆã€æ¨å¥¨ã•ã‚Œã‚‹æ”¯æ‰•ã„æ¡ä»¶ã¯å…¨ã¦T/T
+//echo "ãƒã‚§ãƒƒã‚¯ä¸è¦ä»•å…¥å…ˆã€‚æ¨å¥¨ã¯T/T<br>";
 			for( $i = 0; $i < $cnt; $i++ )
 			{
 				$Code[$i]= "2";
@@ -330,12 +330,12 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 				
 		if ( $aryData["lngMonetaryUnitCode"] == 2 )
 		{
-//echo "US¥É¥ë¤Î¤¿¤á¥Á¥§¥Ã¥¯É¬Í×<br>";
-		    //US¥É¥ë¤Î¾ì¹ç¤Ë¸Â¤ë
+//echo "USãƒ‰ãƒ«ã®ãŸã‚ãƒã‚§ãƒƒã‚¯å¿…è¦<br>";
+		    //USãƒ‰ãƒ«ã®å ´åˆã«é™ã‚‹
 			if( in_array("1", $Code) && $aryData["curAllTotalPrice"] < 30000 )
 			{
-//echo "L/C¿ä¾©ÌÀºÙ¸¡½Ğ¡¢¤«¤ÄUS¥É¥ë 30000Ì¤Ëş¤Î¤¿¤áT/T¿ä¾©<br>";
-				//°ìÅÙL/C¤Ë¥»¥Ã¥È¤·¤¿¤¬Ìá¤¹
+//echo "L/Cæ¨å¥¨æ˜ç´°æ¤œå‡ºã€ã‹ã¤USãƒ‰ãƒ« 30000æœªæº€ã®ãŸã‚T/Tæ¨å¥¨<br>";
+				//ä¸€åº¦L/Cã«ã‚»ãƒƒãƒˆã—ãŸãŒæˆ»ã™
 				for( $i = 0; $i < $cnt; $i++ )
 				{
 					for( $j = 0; $j < count( $arystockitemcode ); $j++ )
@@ -351,34 +351,34 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		}
 		else
 		{
-//echo "US¥É¥ë°Ê³°¤Î¤¿¤áT/T¿ä¾©<br>";
-			$Code[0]="2";//US¥É¥ë¤Î¾ì¹ç°Ê³°¤ÏT/T¿ä¾©
+//echo "USãƒ‰ãƒ«ä»¥å¤–ã®ãŸã‚T/Tæ¨å¥¨<br>";
+			$Code[0]="2";//USãƒ‰ãƒ«ã®å ´åˆä»¥å¤–ã¯T/Tæ¨å¥¨
 		}	
 		if( $cnt >1 )
 		{
-		    //ÌÀºÙ¤¬1·ï°Ê¾å¤¢¤ë¾ì¹ç
+		    //æ˜ç´°ãŒ1ä»¶ä»¥ä¸Šã‚ã‚‹å ´åˆ
 			for ( $i = 0; $i < $cnt; $i++ )
 			{
 				if ($Code[$i] != $Code[0] )
-				{//Á´¤Æ¤ÎÌÀºÙ¤¬1·ïÌÜ¤È°ìÃ×¤·¤Æ¤¤¤ë¤«
+				{//å…¨ã¦ã®æ˜ç´°ãŒ1ä»¶ç›®ã¨ä¸€è‡´ã—ã¦ã„ã‚‹ã‹
 					$flgPayConditionsMatch = false;
 					break;
 				}
 			}
 		}			
 								
-		//¥æ¡¼¥¶¡¼¤¬ÀßÄê¤·¤¿»ÙÊ§¾ò·ï¤ÈÈ¯Ãí¾ò·ï¤Ë¤è¤Ã¤ÆÈ½ÃÇ¤µ¤ì¤¿»ÙÊ§¤¤¾ò·ï¤¬¥Ş¥Ã¥Á¤·¤Æ¤ë¤«¤É¤¦¤«
+		//ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒè¨­å®šã—ãŸæ”¯æ‰•æ¡ä»¶ã¨ç™ºæ³¨æ¡ä»¶ã«ã‚ˆã£ã¦åˆ¤æ–­ã•ã‚ŒãŸæ”¯æ‰•ã„æ¡ä»¶ãŒãƒãƒƒãƒã—ã¦ã‚‹ã‹ã©ã†ã‹
 		$flgPayConditionCodeMatch = ( $aryData["lngPayConditionCode"] == $Code[0] )? true:false;
 		if ($flgPayConditionCodeMatch == true && $flgPayConditionsMatch == true )
 		{
-			//»ÙÊ§¤¤¾ò·ï¤¬¥Ş¥Ã¥Á¤·¤Æ¤¤¤ë¤Î¤Ç¥Õ¥©¡¼¥àÉÔÍ×
+			//æ”¯æ‰•ã„æ¡ä»¶ãŒãƒãƒƒãƒã—ã¦ã„ã‚‹ã®ã§ãƒ•ã‚©ãƒ¼ãƒ ä¸è¦
 			$frmPayConditionTable = $aryData["strPayConditionName"];
 			$aryData["isPayConditionMatch"] = "false";
 		}
 		else
 		{
-//echo "½¤Àµ¤ò¿ä¾©<br>";
-			$strhtml= fncPulldownMenu( 2, 0, '', $objDB );//ÂèÆó°ú¿ô¤¬selected º£¤Î¤È¤³¤íonload¤ÇÅ¬µ¹ÀßÄê¤·¤Æ¤¤¤ë
+//echo "ä¿®æ­£ã‚’æ¨å¥¨<br>";
+			$strhtml= fncPulldownMenu( 2, 0, '', $objDB );//ç¬¬äºŒå¼•æ•°ãŒselected ä»Šã®ã¨ã“ã‚onloadã§é©å®œè¨­å®šã—ã¦ã„ã‚‹
 			$frmPayConditionTable = '<span id="VarsA10">
 						<select id="lngPayConditionCodeList" tabindex="3" onchange = "fncPayConditionFrmChanged();">
 							'.$strhtml.
@@ -386,21 +386,21 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 			
 			if ($flgPayConditionCodeMatch == false && $flgPayConditionsMatch == true )
 			{
-			    //ÁªÂò¤·¤Æ¤¤¤ë»ÙÊ§¤¤¾ò·ï¤¬´Ö°ã¤Ã¤Æ¤¤¤ë¤¬Á´¤Æ¤ÎÌÀºÙ¤Ï°ìÃ×
+			    //é¸æŠã—ã¦ã„ã‚‹æ”¯æ‰•ã„æ¡ä»¶ãŒé–“é•ã£ã¦ã„ã‚‹ãŒå…¨ã¦ã®æ˜ç´°ã¯ä¸€è‡´
 				$strPayMode = "0";
 			}
 					
 			else if ( $flgPayConditionCodeMatch == true && $flgPayConditionsMatch == false )
 			{
-			    //ÁªÂò¤·¤Æ¤¤¤ë»ÙÊ§¤¤¾ò·ï¤Ï¹çÃ×¤·¤Æ¤¤¤ë¤¬Á´¤Æ¤ÎÌÀºÙ¤¬°ìÃ×¤»¤º
+			    //é¸æŠã—ã¦ã„ã‚‹æ”¯æ‰•ã„æ¡ä»¶ã¯åˆè‡´ã—ã¦ã„ã‚‹ãŒå…¨ã¦ã®æ˜ç´°ãŒä¸€è‡´ã›ãš
 				$strPayMode = "1";
 			}
 			
 			else
 			{
-				$strPayMode = "2";//ÁªÂò¤·¤Æ¤¤¤ë»ÙÊ§¤¤¾ò·ï¤Ï¹çÃ×¤·¤Æ¤ª¤é¤º¡¢¤µ¤é¤ËÁ´¤Æ¤ÎÌÀºÙ¤¬°ìÃ×¤»¤º
+				$strPayMode = "2";//é¸æŠã—ã¦ã„ã‚‹æ”¯æ‰•ã„æ¡ä»¶ã¯åˆè‡´ã—ã¦ãŠã‚‰ãšã€ã•ã‚‰ã«å…¨ã¦ã®æ˜ç´°ãŒä¸€è‡´ã›ãš
 			}	
-			//body¤ÎOnload´Ø¿ô¤Ë´Ø¿ô¤òÄÉ²Ã
+			//bodyã®Onloadé–¢æ•°ã«é–¢æ•°ã‚’è¿½åŠ 
 			$aryData["isPayConditionMatch"] = "false";
 			$aryData["lngMatchResult1"] = $strPayMode;
 			$aryData["lngMatchResult2"] = $aryData["lngPayConditionCode"];
@@ -418,8 +418,8 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 			
 	}
 	else{
-//echo "»ÅÆşÀè¤Ï¹ñÆâ<br>";
-		 //³¤³°¼è°úÀè¤Ç¤Ê¤¤¾ì¹ç¤Ï¾åµ­¤Î½èÍı¤ò¹Ô¤ï¤Ê¤¤
+//echo "ä»•å…¥å…ˆã¯å›½å†…<br>";
+		 //æµ·å¤–å–å¼•å…ˆã§ãªã„å ´åˆã¯ä¸Šè¨˜ã®å‡¦ç†ã‚’è¡Œã‚ãªã„
 		$frmPayConditionTable = $aryData["strPayConditionName"];
 	}		
 	//2007.12.14 matsuki update end
@@ -492,9 +492,9 @@ function fncSetForeignTabel(){
 	
 	return $aryforeigntable;
 }
-//²ñ¼Ò¥³¡¼¥É8310¤È9402¤Ï¤³¤Î¥ë¡¼¥ë¤ËÅ¬ÍÑ¤·¤Ê¤¤¡£
-//ºÇ½ªÊÔ½¸¤Ï2012Ç¯3·î8Æü¡£
-//8301¤ò¥ë¡¼¥ë¤ËÄÉ²Ã¡¡//2012Ç¯6·î25Æü
+//ä¼šç¤¾ã‚³ãƒ¼ãƒ‰8310ã¨9402ã¯ã“ã®ãƒ«ãƒ¼ãƒ«ã«é©ç”¨ã—ãªã„ã€‚
+//æœ€çµ‚ç·¨é›†ã¯2012å¹´3æœˆ8æ—¥ã€‚
+//8301ã‚’ãƒ«ãƒ¼ãƒ«ã«è¿½åŠ ã€€//2012å¹´6æœˆ25æ—¥
 
 //2007.12.14 matsuki update end
 ?>

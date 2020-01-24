@@ -1,29 +1,29 @@
 <?php
 
-require ( 'conf.inc' );										// ÀßÄêÆÉ¤ß¹þ¤ß
-require ( LIB_DEBUGFILE );									// Debug¥â¥¸¥å¡¼¥ë
+require ( 'conf.inc' );										// è¨­å®šèª­ã¿è¾¼ã¿
+require ( LIB_DEBUGFILE );									// Debugãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«
 
-require ( LIB_FILE );										// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹þ¤ß
+require ( LIB_FILE );										// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 
 $aryData = $_POST;
 
 $message = $aryData['message'];
 
-// [lngLanguageCode]½ñ¤­½Ð¤·
+// [lngLanguageCode]æ›¸ãå‡ºã—
 $aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"] ? $aryData["lngLanguageCode"] : '0';
 
-// [strErrorMessage]½ñ¤­½Ð¤·
+// [strErrorMessage]æ›¸ãå‡ºã—
 $aryHtml["strErrorMessage"] = "ERROR! ". $message;
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹þ¤ß
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "/result/error/parts.tmpl" );
 
-// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 $objTemplate->replace( $aryHtml );
 $objTemplate->complete();
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $objTemplate->strTemplate;
 
 exit;

@@ -1,86 +1,86 @@
 <?php
 
 /*-----------------------------------------------------------------------------
-	¥µ¥Ö¥á¥Ë¥å¡¼É½¼¨ÀßÄê
+	ã‚µãƒ–ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤ºè¨­å®š
 
 -----------------------------------------------------------------------------*/
 	function fncSetSubMenu( $aryData, $objAuth, $objDB, $lcModel )
 	{
-		// ¥æ¡¼¥¶¡¼¥³¡¼¥É¼èÆÀ
+		// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰å–å¾—
 		$lngUserCode = $objAuth->UserCode;
 
 
-		// ¥Ü¥¿¥óÉ½¼¨²ÄÈÝ¥Õ¥é¥°
-		$aryData["lngSubFlag_p_1"]		= 1;	// ¾¦ÉÊ¸¡º÷
+		// ãƒœã‚¿ãƒ³è¡¨ç¤ºå¯å¦ãƒ•ãƒ©ã‚°
+		$aryData["lngSubFlag_p_1"]		= 1;	// å•†å“æ¤œç´¢
 
-		$aryData["lngSubFlag_es_0"]		= 1;	// ¸«ÀÑ¸¶²Á¸¡º÷
-		$aryData["lngSubFlag_es_1"]		= 1;	// ¥À¥¦¥ó¥í¡¼¥É
-		$aryData["lngSubFlag_es_2"]		= 1;	// ¥¢¥Ã¥×¥í¡¼¥É
+		$aryData["lngSubFlag_es_0"]		= 1;	// è¦‹ç©åŽŸä¾¡æ¤œç´¢
+		$aryData["lngSubFlag_es_1"]		= 1;	// ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
+		$aryData["lngSubFlag_es_2"]		= 1;	// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 
-		$aryData["lngSubFlag_so_1"]		= 1;	// ¼õÃí¸¡º÷
+		$aryData["lngSubFlag_so_1"]		= 1;	// å—æ³¨æ¤œç´¢
 
-		$aryData["lngSubFlag_po_0"]		= 1;	// È¯Ãí¸¡º÷
-		$aryData["lngSubFlag_po_1"]		= 1;	// È¯Ãí½ñ½¤Àµ
+		$aryData["lngSubFlag_po_0"]		= 1;	// ç™ºæ³¨æ¤œç´¢
+		$aryData["lngSubFlag_po_1"]		= 1;	// ç™ºæ³¨æ›¸ä¿®æ­£
 
-		$aryData["lngSubFlag_sc_0"]		= 1;	// Çä¾å(Ç¼ÉÊ½ñ)ÅÐÏ¿
-		$aryData["lngSubFlag_sc_1"]		= 1;	// Ç¼ÉÊ½ñ¸¡º÷
-		$aryData["lngSubFlag_sc_2"]		= 1;	// Çä¾å¸¡º÷
+		$aryData["lngSubFlag_sc_0"]		= 1;	// å£²ä¸Š(ç´å“æ›¸)ç™»éŒ²
+		$aryData["lngSubFlag_sc_1"]		= 1;	// ç´å“æ›¸æ¤œç´¢
+		$aryData["lngSubFlag_sc_2"]		= 1;	// å£²ä¸Šæ¤œç´¢
 
-		$aryData["lngSubFlag_pc_0"]		= 1;	// »ÅÆþÅÐÏ¿
-		$aryData["lngSubFlag_pc_1"]		= 1;	// »ÅÆþ¸¡º÷
+		$aryData["lngSubFlag_pc_0"]		= 1;	// ä»•å…¥ç™»éŒ²
+		$aryData["lngSubFlag_pc_1"]		= 1;	// ä»•å…¥æ¤œç´¢
 		
-		$aryData["lngSubFlag_inv_0"]	= 1;	// ÀÁµá½ñÈ¯¹Ô
-		$aryData["lngSubFlag_inv_1"]	= 1;	// ÀÁµá½ñ¸¡º÷
-		$aryData["lngSubFlag_inv_2"]	= 1;	// ÀÁµá½¸·×
+		$aryData["lngSubFlag_inv_0"]	= 1;	// è«‹æ±‚æ›¸ç™ºè¡Œ
+		$aryData["lngSubFlag_inv_1"]	= 1;	// è«‹æ±‚æ›¸æ¤œç´¢
+		$aryData["lngSubFlag_inv_2"]	= 1;	// è«‹æ±‚é›†è¨ˆ
 
-		$aryData["lngSubFlag_list_0"]	= 1;	// ¾¦ÉÊ²½´ë²è½ñ
-		$aryData["lngSubFlag_list_1"]	= 1;	// È¯Ãí½ñ
-		$aryData["lngSubFlag_list_2"]	= 1;	// ¸«ÀÑ¸¶²Á½ñ
-		$aryData["lngSubFlag_list_3"]	= 1;	// Ç¼ÉÊÅÁÉ¼
-		$aryData["lngSubFlag_list_4"]	= 1;	// ÀÁµá½ñ
+		$aryData["lngSubFlag_list_0"]	= 1;	// å•†å“åŒ–ä¼ç”»æ›¸
+		$aryData["lngSubFlag_list_1"]	= 1;	// ç™ºæ³¨æ›¸
+		$aryData["lngSubFlag_list_2"]	= 1;	// è¦‹ç©åŽŸä¾¡æ›¸
+		$aryData["lngSubFlag_list_3"]	= 1;	// ç´å“ä¼ç¥¨
+		$aryData["lngSubFlag_list_4"]	= 1;	// è«‹æ±‚æ›¸
 
-		$aryData["lngSubFlag_mm_0"]		= 1;	// ¶â·¿ÍúÎòÅÐÏ¿
-		$aryData["lngSubFlag_mm_1"]		= 1;	// ¶â·¿ÍúÎò¸¡º÷
+		$aryData["lngSubFlag_mm_0"]		= 1;	// é‡‘åž‹å±¥æ­´ç™»éŒ²
+		$aryData["lngSubFlag_mm_1"]		= 1;	// é‡‘åž‹å±¥æ­´æ¤œç´¢
 
-		$aryData["lngSubFlag_mr_0"]		= 1;	// ¶â·¿Ä¢É¼ÅÐÏ¿
-		$aryData["lngSubFlag_mr_1"]		= 1;	// ¶â·¿Ä¢É¼¸¡º÷
+		$aryData["lngSubFlag_mr_0"]		= 1;	// é‡‘åž‹å¸³ç¥¨ç™»éŒ²
+		$aryData["lngSubFlag_mr_1"]		= 1;	// é‡‘åž‹å¸³ç¥¨æ¤œç´¢
 		
-		$aryData["lngSubFlag_lc_0"]		= 1;	// L/C¾ðÊó
-		$aryData["lngSubFlag_lc_1"]		= 1;	// L/CÀßÄêÊÑ¹¹
+		$aryData["lngSubFlag_lc_0"]		= 1;	// L/Cæƒ…å ±
+		$aryData["lngSubFlag_lc_1"]		= 1;	// L/Cè¨­å®šå¤‰æ›´
 
-		// ¥ê¥ó¥¯
-		// ¾¦ÉÊ´ÉÍý
+		// ãƒªãƒ³ã‚¯
+		// å•†å“ç®¡ç†
 		$aryData["lngSubRef_p_1"]		= '/p/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
-		// ¸«ÀÑ¸¶²Á´ÉÍý
+		// è¦‹ç©åŽŸä¾¡ç®¡ç†
 		$aryData["lngSubRef_es_0"]		= '/estimate/search/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_es_1"]		= '/download/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_es_2"]		= '/upload2/index.php?strSessionID=' . $aryData["strSessionID"];
 
-		// ¼õÃí´ÉÍý
+		// å—æ³¨ç®¡ç†
 		$aryData["lngSubRef_so_1"]		= '/so/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
-		// È¯Ãí´ÉÍý
+		// ç™ºæ³¨ç®¡ç†
 		$aryData["lngSubRef_po_0"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_po_1"]		= '/po/search2/index.php?strSessionID=' . $aryData["strSessionID"];
 
-		// Çä¾å´ÉÍý
+		// å£²ä¸Šç®¡ç†
 		$aryData["lngSubRef_sc_0"]		= '/sc/regist2/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_sc_1"]		= '/sc/search2/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_sc_2"]		= '/sc/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
-		// »ÅÆþ´ÉÍý
+		// ä»•å…¥ç®¡ç†
 		$aryData["lngSubRef_pc_0"]		= '/pc/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_pc_1"]		= '/pc/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
-		// Ä¢É¼½ÐÎÏ
+		// å¸³ç¥¨å‡ºåŠ›
 		$aryData["lngSubRef_list_0"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=p';
 		$aryData["lngSubRef_list_1"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=po';
 		$aryData["lngSubRef_list_2"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=es';
 		$aryData["lngSubRef_list_3"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=slp';
 		$aryData["lngSubRef_list_4"]	= '/list/index.php?strSessionID=' . $aryData["strSessionID"] . '&strListMode=inv';
 
-		// ¶â·¿´ÉÍý
+		// é‡‘åž‹ç®¡ç†
 		$aryData["lngSubRef_mm_0"]		= '/mm/regist/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_mm_1"]		= '/mm/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
@@ -98,27 +98,27 @@
 
 
 		//-------------------------------------------------------------------------
-		// ¾¦ÉÊ´ÉÍý
+		// å•†å“ç®¡ç†
 		//-------------------------------------------------------------------------
 		//-------------------------------------------------------------------------
 
 
 		//-------------------------------------------------------------------------
-		// ¸«ÀÑ¸¶²Á´ÉÍý
+		// è¦‹ç©åŽŸä¾¡ç®¡ç†
 		//-------------------------------------------------------------------------
-		// ¸«ÀÑ¸¶²Á¸¡º÷
+		// è¦‹ç©åŽŸä¾¡æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_E2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_es_0"] = 0;
 		}
 
-		// ¥À¥¦¥ó¥í¡¼¥É
+		// ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
 		if ( !fncCheckAuthority( DEF_FUNCTION_DWN, $objAuth ) )
 		{
 			$aryData["lngSubFlag_es_1"] = 0;
 		}
 		
-		// ¥¢¥Ã¥×¥í¡¼¥É
+		// ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰
 		if ( !fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 		{
 			$aryData["lngSubFlag_es_2"] = 0;
@@ -127,9 +127,9 @@
 
 
 		//-------------------------------------------------------------------------
-		// ¼õÃí´ÉÍý
+		// å—æ³¨ç®¡ç†
 		//-------------------------------------------------------------------------
-		// 402 ¼õÃí¸¡º÷
+		// 402 å—æ³¨æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_so_1"] = 0;
@@ -139,15 +139,15 @@
 
 
 		//-------------------------------------------------------------------------
-		// È¯Ãí´ÉÍý
+		// ç™ºæ³¨ç®¡ç†
 		//-------------------------------------------------------------------------
-		// 501 È¯Ãí¸¡º÷
+		// 501 ç™ºæ³¨æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_po_0"] = 0;
 		}
 
-		// 502 È¯Ãí½ñ¸¡º÷
+		// 502 ç™ºæ³¨æ›¸æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_po_1"] = 0;
@@ -156,21 +156,21 @@
 
 
 		//-------------------------------------------------------------------------
-		// Çä¾å´ÉÍý
+		// å£²ä¸Šç®¡ç†
 		//-------------------------------------------------------------------------
-		// 601 Çä¾å(Ç¼ÉÊ½ñ)ÅÐÏ¿
+		// 601 å£²ä¸Š(ç´å“æ›¸)ç™»éŒ²
 		if( !fncCheckAuthority( DEF_FUNCTION_SC1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_sc_0"] = 0;
 		}
 
-		// 602 Ç¼ÉÊ½ñ¸¡º÷
+		// 602 ç´å“æ›¸æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
 		{
 			$aryData["lngSubFlag_sc_1"] = 0;
 		}
 		
-		// 603 Çä¾å¸¡º÷
+		// 603 å£²ä¸Šæ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_sc_2"] = 0;
@@ -181,15 +181,15 @@
 
 
 		//-------------------------------------------------------------------------
-		// »ÅÆþ´ÉÍý
+		// ä»•å…¥ç®¡ç†
 		//-------------------------------------------------------------------------
-		// 701 »ÅÆþÅÐÏ¿
+		// 701 ä»•å…¥ç™»éŒ²
 		if( !fncCheckAuthority( DEF_FUNCTION_PC1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_pc_0"] = 0;
 		}
 
-		// 702 »ÅÆþ¸¡º÷
+		// 702 ä»•å…¥æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_PC2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_pc_1"] = 0;
@@ -198,15 +198,15 @@
 
 
 		//-------------------------------------------------------------------------
-		// ¥ï¡¼¥¯¥Õ¥í¡¼
+		// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼
 		//-------------------------------------------------------------------------
-		// °Æ·ï°ìÍ÷
+		// æ¡ˆä»¶ä¸€è¦§
 		if( !fncCheckAuthority( DEF_FUNCTION_WF1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_wf_0"] = 0;
 		}
 
-		// °Æ·ï¸¡º÷
+		// æ¡ˆä»¶æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_WF2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_wf_1"] = 0;
@@ -214,48 +214,48 @@
 		//-------------------------------------------------------------------------
 
 		//-------------------------------------------------------------------------
-		// ÀÁµá´ÉÍý
+		// è«‹æ±‚ç®¡ç†
 		//-------------------------------------------------------------------------
-		// ÀÁµá½ñÈ¯¹Ô
+		// è«‹æ±‚æ›¸ç™ºè¡Œ
 		if( !fncCheckAuthority( DEF_FUNCTION_INV1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_inv_0"] = 0;
 		}
-		// ÀÁµá½ñ¸¡º÷
+		// è«‹æ±‚æ›¸æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_INV2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_inv_1"] = 0;
 		}
-		// ÀÁµá½¸·×
+		// è«‹æ±‚é›†è¨ˆ
 		if( !fncCheckAuthority( DEF_FUNCTION_INV3, $objAuth ) )
 		{
 			$aryData["lngSubFlag_inv_2"] = 0;
 		}
 
 		//-------------------------------------------------------------------------
-		// Ä¢É¼½ÐÎÏ
+		// å¸³ç¥¨å‡ºåŠ›
 		//-------------------------------------------------------------------------
-		// ¾¦ÉÊ²½´ë²è½ñ
+		// å•†å“åŒ–ä¼ç”»æ›¸
 		if( !fncCheckAuthority( DEF_FUNCTION_LO1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_list_0"] = 0;
 		}
-		// È¯Ãí½ñ(P.O)
+		// ç™ºæ³¨æ›¸(P.O)
 		if( !fncCheckAuthority( DEF_FUNCTION_LO2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_list_1"] = 0;
 		}
-		// ¸«ÀÑ¸¶²Á½ñ
+		// è¦‹ç©åŽŸä¾¡æ›¸
 		if( !fncCheckAuthority( DEF_FUNCTION_E0, $objAuth ) )
 		{
 			$aryData["lngSubFlag_list_2"] = 0;
 		}
-		// Ç¼ÉÊ½ñ
+		// ç´å“æ›¸
 		if( !fncCheckAuthority( DEF_FUNCTION_LO5, $objAuth ) )
 		{
 			$aryData["lngSubFlag_list_3"] = 0;
 		}
-		// ÀÁµá½ñ
+		// è«‹æ±‚æ›¸
 		if( !fncCheckAuthority( DEF_FUNCTION_LO7, $objAuth ) )
 		{
 			$aryData["lngSubFlag_list_4"] = 0;
@@ -264,47 +264,47 @@
 
 
 		//-------------------------------------------------------------------------
-		// ¶â·¿´ÉÍý
+		// é‡‘åž‹ç®¡ç†
 		//-------------------------------------------------------------------------
-		// 1801 ¶â·¿ÍúÎòÅÐÏ¿
+		// 1801 é‡‘åž‹å±¥æ­´ç™»éŒ²
 		if( !fncCheckAuthority( DEF_FUNCTION_MM1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_mm_0"] = 0;
 		}
 
-		// 1802 ¶â·¿ÍúÎò¸¡º÷
+		// 1802 é‡‘åž‹å±¥æ­´æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_MM2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_mm_1"] = 0;
 		}
 
 		//-------------------------------------------------------------------------
-		// ¶â·¿Ä¢É¼´ÉÍý
+		// é‡‘åž‹å¸³ç¥¨ç®¡ç†
 		//-------------------------------------------------------------------------
-		// 1901 ¶â·¿Ä¢É¼ÅÐÏ¿
+		// 1901 é‡‘åž‹å¸³ç¥¨ç™»éŒ²
 		if( !fncCheckAuthority( DEF_FUNCTION_MR1, $objAuth ) )
 		{
 			$aryData["lngSubFlag_mr_0"] = 0;
 		}
 
-		// 1902 ¶â·¿Ä¢É¼¸¡º÷
+		// 1902 é‡‘åž‹å¸³ç¥¨æ¤œç´¢
 		if( !fncCheckAuthority( DEF_FUNCTION_MR2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_mr_1"] = 0;
 		}
 
 		//-------------------------------------------------------------------------
-		// L/C´ÉÍý
+		// L/Cç®¡ç†
 		//-------------------------------------------------------------------------
 		
 		$lcAuthority = $lcModel->checkAuthority(trim($objAuth->UserID));
 
-		// L/C¾ðÊó
+		// L/Cæƒ…å ±
 		if(!$lcAuthority["lcinfo"])
 		{
 			$aryData["lngSubFlag_lc_0"] = 0;
 		}
-		// L/CÀßÄêÊÑ¹¹
+		// L/Cè¨­å®šå¤‰æ›´
 		if(!$lcAuthority["setting"])
 		{
 			$aryData["lngSubFlag_lc_1"] = 0;

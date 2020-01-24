@@ -11,7 +11,7 @@
 		require (LIB_FILE);
 		include_once('clstabletemp.php');
 
-		// DBÀÜÂ³
+		// DBæ¥ç¶š
 		$objDB   = new clsDB();
 		$objAuth = new clsAuth();
 		$objDB->open( "", "", "", "" );
@@ -19,36 +19,36 @@
 
 	/*
 		$aryA = array();
-		$aryA['curproductprice']		= '99.0000';			// ¾åÂå
-		$aryA['curretailprice']			= '300.0000';			// Ç¼²Á
-		$aryA['lngestimateno']			= '386';				// ¸«ÀÑ¸¶²ÁNo
-		$aryA['lnginchargeusercode']	= '243';				// Ã´Åö¼Ô¥³¡¼¥É
-		$aryA['lngproductionquantity']	= '400000';				// À¸»ºÍ½Äê¿ô
-		$aryA['strproductcode']			= '2009';				// À½ÉÊ¥³¡¼¥É
-		$aryA['strproductname']			= 'EF¥³¥ì¥¯¥·¥ç¥ó£¶';	// À½ÉÊÌ¾¾Î
+		$aryA['curproductprice']		= '99.0000';			// ä¸Šä»£
+		$aryA['curretailprice']			= '300.0000';			// ç´ä¾¡
+		$aryA['lngestimateno']			= '386';				// è¦‹ç©åŸä¾¡No
+		$aryA['lnginchargeusercode']	= '243';				// æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+		$aryA['lngproductionquantity']	= '400000';				// ç”Ÿç”£äºˆå®šæ•°
+		$aryA['strproductcode']			= '2009';				// è£½å“ã‚³ãƒ¼ãƒ‰
+		$aryA['strproductname']			= 'EFã‚³ãƒ¬ã‚¯ã‚·ãƒ§ãƒ³ï¼–';	// è£½å“åç§°
 	*/
 
 
 
 	// ------------------------------------------------------------------------
 	/**
-	*   fncExcel2Temp() ´Ø¿ô
+	*   fncExcel2Temp() é–¢æ•°
 	*
-	*   ½èÍı³µÍ×
-	*     ¡¦ÇÛÎó¡Ê¥Ï¥Ã¥·¥å=ÃÍ¡Ë¤Ç»ı¤Ã¤Æ¤¤¤ë¥Ç¡¼¥¿¤ò¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤ØÅĞÏ¿¤¹¤ë
+	*   å‡¦ç†æ¦‚è¦
+	*     ãƒ»é…åˆ—ï¼ˆãƒãƒƒã‚·ãƒ¥=å€¤ï¼‰ã§æŒã£ã¦ã„ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã¸ç™»éŒ²ã™ã‚‹
 	*
-	*   @param   $objDB			[Object]	¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È
-	*   @param   $aryIn			[Array]		$ary["¥Ï¥Ã¥·¥å"]=ÃÍ¡¢¤ÇÊİ»ı¤µ¤ì¤Æ¤¤¤ë¾ğÊó
-	*   @return  $lngTempNo  	[integer]	¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤ØÅĞÏ¿¤·¤¿ºİ¤ÎNo¡ÊlngTempNo¡Ë
+	*   @param   $objDB			[Object]	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	*   @param   $aryIn			[Array]		$ary["ãƒãƒƒã‚·ãƒ¥"]=å€¤ã€ã§ä¿æŒã•ã‚Œã¦ã„ã‚‹æƒ…å ±
+	*   @return  $lngTempNo  	[integer]	ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã¸ç™»éŒ²ã—ãŸéš›ã®Noï¼ˆlngTempNoï¼‰
 	*/
 	// ------------------------------------------------------------------------
 	function fncArray2Temp($objDB, $aryIn)
 	{
-		// ¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 		$objTT = new clsTableTemp;
 		$objTT->objDB = $objDB;
 
-		// ¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤ØÅĞÏ¿¡¢ÅĞÏ¿¤·¤¿lngTempNo¤ò¼èÆÀ
+		// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã¸ç™»éŒ²ã€ç™»éŒ²ã—ãŸlngTempNoã‚’å–å¾—
 		$lngTempNo = $objTT->fncInsert($aryIn);
 
 		return $lngTempNo;
@@ -56,19 +56,19 @@
 
 	// ------------------------------------------------------------------------
 	/**
-	*   fncTemp2ProductUpdate() ´Ø¿ô
+	*   fncTemp2ProductUpdate() é–¢æ•°
 	*
-	*   ½èÍı³µÍ×
-	*     ¡¦¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤ÎÆâÍÆ¤òÍÑ¤¤¤Æ¾¦ÉÊ¥Ş¥¹¥¿¤ò¹¹¿·¤¹¤ë
+	*   å‡¦ç†æ¦‚è¦
+	*     ãƒ»ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã®å†…å®¹ã‚’ç”¨ã„ã¦å•†å“ãƒã‚¹ã‚¿ã‚’æ›´æ–°ã™ã‚‹
 	*
-	*   @param   $objDB			[Object]	¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È
-	*   @param   $lngTempNo		[integer]	ÍÑ¤¤¤ë¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤ÎNo¡ÊlngTempNo¡Ë
-	*   @return  true/false  	[boolean]	À®¸ù¡¿¼ºÇÔ
+	*   @param   $objDB			[Object]	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	*   @param   $lngTempNo		[integer]	ç”¨ã„ã‚‹ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã®Noï¼ˆlngTempNoï¼‰
+	*   @return  true/false  	[boolean]	æˆåŠŸï¼å¤±æ•—
 	*
-	*	Ãí°Õ
-	*	¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤Î strKey ¤Ë¤Ï strproductcode ¤¬Â¸ºß¤·¤Ê¤±¤ì¤Ğ¤Ê¤é¤Ê¤¤¡£
-	*	¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤Î strKey ¤Ë¡¢m_product ¤ËÂ¸ºß¤·¤Ê¤¤¥«¥é¥àÌ¾¤¬¤¢¤ë¾ì¹ç½èÍıÉÔÇ½¡£
-	*	¡Êlngestimateno ¤Ï°Õ¿ŞÅª¤ËÂĞ¾İ³°¤Ë¤·¤Æ¤¤¤ë¡Ë
+	*	æ³¨æ„
+	*	ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã® strKey ã«ã¯ strproductcode ãŒå­˜åœ¨ã—ãªã‘ã‚Œã°ãªã‚‰ãªã„ã€‚
+	*	ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã® strKey ã«ã€m_product ã«å­˜åœ¨ã—ãªã„ã‚«ãƒ©ãƒ åãŒã‚ã‚‹å ´åˆå‡¦ç†ä¸èƒ½ã€‚
+	*	ï¼ˆlngestimateno ã¯æ„å›³çš„ã«å¯¾è±¡å¤–ã«ã—ã¦ã„ã‚‹ï¼‰
 	*/
 	// ------------------------------------------------------------------------
 	function fncTemp2ProductUpdate($objDB, $lngTempNo)
@@ -76,27 +76,27 @@
 		require_once ( LIB_DEBUGFILE );
 
 
-		// ¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 		$objTT = new clsTableTemp;
 		$objTT->objDB = $objDB;
 
 
-		// ¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤«¤é¼èÆÀ
+		// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã‹ã‚‰å–å¾—
 		$aryTempInfo = $objTT->fncSelect($lngTempNo);
 
-		// ¥Ç¡¼¥¿¤¬¼èÆÀ½ĞÍè¤Ê¤¤¾ì¹ç
+		// ãƒ‡ãƒ¼ã‚¿ãŒå–å¾—å‡ºæ¥ãªã„å ´åˆ
 		if(!isset($aryTempInfo)) return false;
 
-		// ¼èÆÀ¤·¤¿¥Ç¡¼¥¿¤ò´ğ¤Ë¾¦ÉÊ¥Ş¥¹¥¿¤ò¹¹¿·
+		// å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’åŸºã«å•†å“ãƒã‚¹ã‚¿ã‚’æ›´æ–°
 		$arySql = array();
 		$arySql[] = "update m_product";
 		$arySql[] = "set";
-		$arySql[] = "strproductcode='" .$aryTempInfo["strproductcode"]. "'";	// ²¼while¤Ç,Ê¸»ú·ë¹ç¤òµ¤¤Ë¤·¤Ê¤¤¤¿¤á¤ËÉ¬¿Ü
+		$arySql[] = "strproductcode='" .$aryTempInfo["strproductcode"]. "'";	// ä¸‹whileã§,æ–‡å­—çµåˆã‚’æ°—ã«ã—ãªã„ãŸã‚ã«å¿…é ˆ
 
-		// $aryTempInfo ÇÛÎóÊ¬¤Î½èÍı
+		// $aryTempInfo é…åˆ—åˆ†ã®å‡¦ç†
 		while( list($strKey, $strValue) = each($aryTempInfo) )
 		{
-			// strproductcode, lngestimateno , curconversionrate, curstandardrate, lngplancartonproduction ¤Ï¾ò·ï¤ËÄÉ²Ã¤·¤Ê¤¤
+			// strproductcode, lngestimateno , curconversionrate, curstandardrate, lngplancartonproduction ã¯æ¡ä»¶ã«è¿½åŠ ã—ãªã„
 			if( $strKey == "strproductcode" || $strKey == "lngestimateno" ||
 				$strKey == "curconversionrate" || $strKey == "curstandardrate" ||
 				$strKey == "lngplancartonproduction" )
@@ -107,10 +107,10 @@
 //fncDebug( 'temp_sql.txt', $arySql, __FILE__, __LINE__);
 
 
-			// ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¡¢¾ò·ï¤ËÄÉ²Ã¤·¤Ê¤¤
+			// å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã€æ¡ä»¶ã«è¿½åŠ ã—ãªã„
 			if( $strValue == "" ) continue;
 
-			// dtmdeliverylimitdate ¤Î¾ì¹ç¡¢YYYY/mm/dd ·Á¼°¤ËÊÑ´¹
+			// dtmdeliverylimitdate ã®å ´åˆã€YYYY/mm/dd å½¢å¼ã«å¤‰æ›
 			if( $strKey == "dtmdeliverylimitdate" ) $strValue	= $strValue . "/01";
 
 			// strGroupDisplayCode -> lnginchargegroupcode
@@ -127,7 +127,7 @@
 				$strValue	= fncGetMasterValue( "m_user", "struserdisplaycode", "lngusercode", $strValue.":str", '', $objDB );
 			}
 
-			// ·¿¼èÆÀ
+			// å‹å–å¾—
 			$strType	= substr( $strKey, 0, 3 );
 
 			switch( $strType )
@@ -146,14 +146,14 @@
 
 
 
-		// À¸»ºÍ½Äê¿ôÃ±°Ì¤ò¡ÖPCS¡×¤ËÊÑ¹¹¡Ê¶¯À©¡Ë
+		// ç”Ÿç”£äºˆå®šæ•°å˜ä½ã‚’ã€ŒPCSã€ã«å¤‰æ›´ï¼ˆå¼·åˆ¶ï¼‰
 		$arySql[]	= ",lngproductionunitcode=1";
 
 		$arySql[]	= "where";
 		$arySql[]	= "strproductcode='" .$aryTempInfo["strproductcode"]. "'";
 		$strSql	= implode($arySql,"\n");
 
-		// ¹¹¿·¼Â¹Ô
+		// æ›´æ–°å®Ÿè¡Œ
 		list ($lngResultID, $lngResultNum) = fncQuery($strSql, $objDB);
 
 		return true;
@@ -163,28 +163,28 @@
 
 	// ------------------------------------------------------------------------
 	/**
-	*   fncGetTempData() ´Ø¿ô
+	*   fncGetTempData() é–¢æ•°
 	*
-	*   ½èÍı³µÍ×
-	*     ¡¦¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤ÎÆâÍÆ¼èÆÀ¤¹¤ë
+	*   å‡¦ç†æ¦‚è¦
+	*     ãƒ»ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã®å†…å®¹å–å¾—ã™ã‚‹
 	*
-	*   @param   $objDB				[Object]	¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È
-	*   @param   $lngTempNo			[integer]	ÍÑ¤¤¤ë¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤ÎNo¡ÊlngTempNo¡Ë
-	*   @return  Array/Boolean  	[Object]	À®¸ù:Array ¡¿ ¼ºÇÔ:Flase
+	*   @param   $objDB				[Object]	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	*   @param   $lngTempNo			[integer]	ç”¨ã„ã‚‹ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã®Noï¼ˆlngTempNoï¼‰
+	*   @return  Array/Boolean  	[Object]	æˆåŠŸ:Array ï¼ å¤±æ•—:Flase
 	*
 	*/
 	// ------------------------------------------------------------------------
 	function fncGetTempData($objDB, $lngTempNo)
 	{
-		// ¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 		$objTT = new clsTableTemp;
 		$objTT->objDB = $objDB;
 
 
-		// ¥Æ¥ó¥İ¥é¥ê¥Æ¡¼¥Ö¥ë¤«¤é¼èÆÀ
+		// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ†ãƒ¼ãƒ–ãƒ«ã‹ã‚‰å–å¾—
 		$aryTempInfo = $objTT->fncSelect($lngTempNo);
 
-		// ¥Ç¡¼¥¿¤¬¼èÆÀ½ĞÍè¤Ê¤¤¾ì¹ç
+		// ãƒ‡ãƒ¼ã‚¿ãŒå–å¾—å‡ºæ¥ãªã„å ´åˆ
 		if( !isset($aryTempInfo) ) return false;
 
 		return $aryTempInfo;
@@ -194,14 +194,14 @@
 
 	// ------------------------------------------------------------------------
 	/**
-	*   fncDeleteEstimateTempNo() ´Ø¿ô
+	*   fncDeleteEstimateTempNo() é–¢æ•°
 	*
-	*   ½èÍı³µÍ×
-	*     ¡¦¸«ÀÑ¸¶²ÁÈÖ¹æ¤ò¥­¡¼¤È¤·¤Æ¡¢¤½¤ÎÂĞ¾İ¥Æ¡¼¥Ö¥ë¤ÎlngTempNo¤ò¾Ã¤¹
+	*   å‡¦ç†æ¦‚è¦
+	*     ãƒ»è¦‹ç©åŸä¾¡ç•ªå·ã‚’ã‚­ãƒ¼ã¨ã—ã¦ã€ãã®å¯¾è±¡ãƒ†ãƒ¼ãƒ–ãƒ«ã®lngTempNoã‚’æ¶ˆã™
 	*
-	*   @param   $objDB			[Object]	¥Ç¡¼¥¿¥Ù¡¼¥¹¥ª¥Ö¥¸¥§¥¯¥È
-	*   @param   $lngKeyNo		[integer]	¥­¡¼¤È¤Ê¤ë¸«ÀÑ¸¶²ÁÈÖ¹æ¡ÊlngEstimateNo¡Ë
-	*   @return  true/false  	[boolean]	À®¸ù¡¿¼ºÇÔ
+	*   @param   $objDB			[Object]	ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	*   @param   $lngKeyNo		[integer]	ã‚­ãƒ¼ã¨ãªã‚‹è¦‹ç©åŸä¾¡ç•ªå·ï¼ˆlngEstimateNoï¼‰
+	*   @return  true/false  	[boolean]	æˆåŠŸï¼å¤±æ•—
 	*
 	*/
 	// ------------------------------------------------------------------------
@@ -221,7 +221,7 @@
 
 		$strSql	= implode( "\n", $arySql );
 
-		// ¹¹¿·¼Â¹Ô
+		// æ›´æ–°å®Ÿè¡Œ
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strSql, $objDB );
 
 //fncDebug( 'temp_no.txt', $lngResultNum, __FILE__, __LINE__);

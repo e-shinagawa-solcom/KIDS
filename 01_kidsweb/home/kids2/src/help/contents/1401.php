@@ -1,6 +1,6 @@
 <?
 /** 
-*	HELPÌä¤¤¹ç¤ï¤»²èÌÌ
+*	HELPå•ã„åˆã‚ã›ç”»é¢
 *
 *	@package   KIDS
 *	@license   http://www.wiseknot.co.jp/ 
@@ -14,49 +14,49 @@
 // 1401.php -> strContents         -> 1401.php
 
 
-// POST¥Ç¡¼¥¿¤¬¤¢¤ë¾ì¹ç¡¢¥á¡¼¥ëÇÛ¿®½èÍı¤Ø
+// POSTãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹å ´åˆã€ãƒ¡ãƒ¼ãƒ«é…ä¿¡å‡¦ç†ã¸
 if ( array_count_values ( $_POST ) )
 {
-	// ÀßÄêÆÉ¤ß¹ş¤ß
+	// è¨­å®šèª­ã¿è¾¼ã¿
 	include_once('conf.inc');
 
-	// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+	// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 	require (LIB_FILE);
 
-	// DBÀÜÂ³
+	// DBæ¥ç¶š
 	$objDB   = new clsDB();
 	$objDB->open( "", "", "", "" );
 
 	$aryData = $_POST;
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 	$aryCheck["strSendMailUserName"] = "null:length(1,100)";
 	$aryCheck["strContents"]         = "null:length(1,200)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	//fncPutStringCheckError( $aryResult, $objDB );
 
-	// Ê¸»úÎó¥Á¥§¥Ã¥¯·ë²Ì¥¨¥é¡¼Ê¸»úÎóÀ¸À®
+	// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯çµæœã‚¨ãƒ©ãƒ¼æ–‡å­—åˆ—ç”Ÿæˆ
 	$strError = join ( "", $aryResult );
 	if ( $strError )
 	{
-		$strMessage = "¹àÌÜ¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó¡£";
+		$strMessage = "é …ç›®ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“ã€‚";
 	}
 	else
 	{
-		$strMailBody = $aryData["strSendMailUserName"] . " ¤µ¤ó¤«¤é¤Î¼ÁÌä\n" . $aryData["strContents"];
+		$strMailBody = $aryData["strSendMailUserName"] . " ã•ã‚“ã‹ã‚‰ã®è³ªå•\n" . $aryData["strContents"];
 
-		// Ê¸»ú¥³¡¼¥ÉÊÑ´¹(EUC->JIS)
+		// æ–‡å­—ã‚³ãƒ¼ãƒ‰å¤‰æ›(EUC->JIS)
 		$strMailBody = mb_convert_encoding( $strMailBody, "JIS", "EUC-JP" );
 		$strSubject  = mb_convert_encoding( "K.I.D.S HELP MAIL", "JIS", "EUC-JP" );
 		$strSubject  = mb_encode_mimeheader ( $strSubject , "iso-2022-jp", "B" );
 
-		$strMessage = "Ìä¤¤¹ç¤ï¤»¥á¡¼¥ë¤òÁ÷¿®¤·¤Ş¤·¤¿¡£";
+		$strMessage = "å•ã„åˆã‚ã›ãƒ¡ãƒ¼ãƒ«ã‚’é€ä¿¡ã—ã¾ã—ãŸã€‚";
 
-		// ¥á¡¼¥ëÁ÷¿®
+		// ãƒ¡ãƒ¼ãƒ«é€ä¿¡
 		$strAdminMailAddress = fncGetAdminFunction( "adminmailaddress", $objDB );
 		if ( !mail ( $strAdminMailAddress, $strSubject, $strMailBody, "From: $strAdminMailAddress\nReturn-Path: " . ERROR_MAIL_TO . "\n" ) )
 		{
-			$strMessage = "Ìä¤¤¹ç¤ï¤»¥á¡¼¥ëÁ÷¿®¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£";
+			$strMessage = "å•ã„åˆã‚ã›ãƒ¡ãƒ¼ãƒ«é€ä¿¡ã«å¤±æ•—ã—ã¾ã—ãŸã€‚";
 		}
 	}
 }
@@ -72,7 +72,7 @@ if ( array_count_values ( $_POST ) )
 <body id="ContentsBody">
 
 
-<span class="indexContents">¡ÁÌä¹ç¤»¥Õ¥©¡¼¥à¡Á</span>
+<span class="indexContents">ã€œå•åˆã›ãƒ•ã‚©ãƒ¼ãƒ ã€œ</span>
 
 <div align="center">
 <b><font color="#FF0000"><? echo $strMessage; ?> </font></b>
@@ -84,13 +84,13 @@ if ( array_count_values ( $_POST ) )
 			<table cellpadding="5" cellspacing="1" border="0" bgcolor="#555555">
 				<tr>
 					<td class="doc1">
-						K.I.D.S¥·¥¹¥Æ¥à¤òÍøÍÑ¤¹¤ë»ş¤Ëº¤¤Ã¤¿¤³¤È¤¬Í­¤Ã¤¿¤é¤³¤Î¥Õ¥©¡¼¥à¤òÍøÍÑ¤·¤Æ¤¯¤À¤µ¤¤¡£<BR>
+						K.I.D.Sã‚·ã‚¹ãƒ†ãƒ ã‚’åˆ©ç”¨ã™ã‚‹æ™‚ã«å›°ã£ãŸã“ã¨ãŒæœ‰ã£ãŸã‚‰ã“ã®ãƒ•ã‚©ãƒ¼ãƒ ã‚’åˆ©ç”¨ã—ã¦ãã ã•ã„ã€‚<BR>
 						</td>
 				</tr>
 
 				<tr class="doc2">
 					<td>
-						¢£ÆşÎÏ¥Õ¥©¡¼¥à
+						â– å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ 
 					</td>
 				</tr>
 
@@ -99,13 +99,13 @@ if ( array_count_values ( $_POST ) )
 	<form action="<? echo $_SERVER["PHP_SELF"]; ?>" method="POST">
 <font size=2>
 
-<B>Ì¾Á°¡§</B><p>
+<B>åå‰ï¼š</B><p>
 <input type="text" name="strSendMailUserName"><p>
 
-<B>ÆâÍÆ¡§</B><p>
+<B>å†…å®¹ï¼š</B><p>
 <textarea rows=6 cols=50 wrap="hard" name="strContents"></textarea><p>
-<input type="submit"value="Á÷   ¿®">
-<input type="reset" value="¥ê¥»¥Ã¥È">
+<input type="submit"value="é€   ä¿¡">
+<input type="reset" value="ãƒªã‚»ãƒƒãƒˆ">
 
 </form>
 </font>

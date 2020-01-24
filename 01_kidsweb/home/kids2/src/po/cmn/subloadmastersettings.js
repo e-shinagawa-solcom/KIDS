@@ -1,33 +1,33 @@
 
 	// ---------------------------------------------------------------------------
-	//	³µÍ×¡§
-	// 		¥ì¥³¡¼¥É¥»¥Ã¥È¤«¤é»ØÄê¥ª¥Ö¥¸¥§¥¯¥ÈÃÍ¤Ø¤ÎÀßÄê
-	//	°ú¿ô¡§
-	// 		objRst		-	¥ì¥³¡¼¥É¥»¥Ã¥È¥ª¥Ö¥¸¥§¥¯¥È
-	//		lngObjNo	-	¥ª¥Ö¥¸¥§¥¯¥ÈNo
-	//		objTarget	-	ÀßÄêÀè¤ÎTOP³¬ÁØ¥ª¥Ö¥¸¥§¥¯¥È¡Öwindow.DSO¡Ê¥á¥¤¥ó¥¦¥£¥ó¥É¥¦¤«¤é¡Ë / window.parent.DSO¡ÊÌÀºÙ¹Ô¤«¤é¡Ë¡×
-	//	È÷¹Í¡§
-	//		<Script for=... ¤Î
-	//		¡ã¸Æ¤Ó½Ð¤·¥µ¥ó¥×¥ë¡ä
+	//	æ¦‚è¦ï¼š
+	// 		ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆã‹ã‚‰æŒ‡å®šã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå€¤ã¸ã®è¨­å®š
+	//	å¼•æ•°ï¼š
+	// 		objRst		-	ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//		lngObjNo	-	ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆNo
+	//		objTarget	-	è¨­å®šå…ˆã®TOPéšŽå±¤ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã€Œwindow.DSOï¼ˆãƒ¡ã‚¤ãƒ³ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‹ã‚‰ï¼‰ / window.parent.DSOï¼ˆæ˜Žç´°è¡Œã‹ã‚‰ï¼‰ã€
+	//	å‚™è€ƒï¼š
+	//		<Script for=... ã®
+	//		ï¼œå‘¼ã³å‡ºã—ã‚µãƒ³ãƒ—ãƒ«ï¼ž
 	//			subLoadMasterSettings(this.recordset,1, window.DSO);
 	//			subLoadMasterSettings(this.recordset,1, window.parent.DSO);
-	//	Ãí°Õ¡§
-	//		masterlib.js ¤òÆ±»þ¤Ë»ÈÍÑ¤¹¤ë»ö¤òÁ°Äó¤È¤·¤¿´Ø¿ô¤Ç¤¢¤ë
-	//  ½¤ÀµÍúÎò¡§
+	//	æ³¨æ„ï¼š
+	//		masterlib.js ã‚’åŒæ™‚ã«ä½¿ç”¨ã™ã‚‹äº‹ã‚’å‰æã¨ã—ãŸé–¢æ•°ã§ã‚ã‚‹
+	//  ä¿®æ­£å±¥æ­´ï¼š
 	//			2005/10/13
 	// ---------------------------------------------------------------------------
 	function subLoadMasterSettings(objRst, lngObjNo, objTarget)
 	{
 
-		strName1 = "";	// ¸ÜµÒÉÊÈÖ
-		strName2 = "";	// À½ÉÊÌ¾¾Î
-		strName3 = "";	// ¥«¡¼¥È¥óÆþ¿ô
-		strName5 = "";	// É½¼¨ÉôÌç¥³¡¼¥É
-		strName6 = "";	// ÉôÌçÌ¾¾Î
-		strName8 = "";	// É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥É
-		strName9 = "";	// ¥æ¡¼¥¶¡¼Ì¾¾Î
+		strName1 = "";	// é¡§å®¢å“ç•ª
+		strName2 = "";	// è£½å“åç§°
+		strName3 = "";	// ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
+		strName5 = "";	// è¡¨ç¤ºéƒ¨é–€ã‚³ãƒ¼ãƒ‰
+		strName6 = "";	// éƒ¨é–€åç§°
+		strName8 = "";	// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
+		strName9 = "";	// ãƒ¦ãƒ¼ã‚¶ãƒ¼åç§°
 
-		// ¥ì¥³¡¼¥É¥»¥Ã¥È¤Î¿ô¤ò³ÎÇ§
+		// ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚»ãƒƒãƒˆã®æ•°ã‚’ç¢ºèª
 		if( objRst.recordcount)
 		{
 			strName1 = objRst.Fields('name1').value;
@@ -40,13 +40,13 @@
 		}
 		else
 		{
-			// ¥¨¥é¡¼¥Õ¥é¥°¤òÀßÄê - subLoadMasterCheck ÍÑ
+			// ã‚¨ãƒ©ãƒ¼ãƒ•ãƒ©ã‚°ã‚’è¨­å®š - subLoadMasterCheck ç”¨
 			g_aryLoadMasterErrorFlag[0] = true;
-			// ÆþÎÏ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÃÍ¤òÁªÂò
+			// å…¥åŠ›ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å€¤ã‚’é¸æŠž
 			if( g_objLoadMasterInForm.style.visibility != 'hidden' ) g_objLoadMasterInForm.select();
 		}
 
-		// nameÉôÊ¬¤ò¼èÆÀ¤·¤ÆÀßÄê
+		// nameéƒ¨åˆ†ã‚’å–å¾—ã—ã¦è¨­å®š
 		objTarget.strGoodsCode.value			= strName1;
 		objTarget.strProductName.value			= strName2;
 		objTarget.lngCartonQuantity.value		= strName3;

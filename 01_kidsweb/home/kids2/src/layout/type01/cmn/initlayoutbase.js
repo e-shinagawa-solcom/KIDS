@@ -2,7 +2,7 @@
 
 
 //--------------------------------------------------------
-// ÆÃ¼ìÊ¸»ú¥Ü¥¿¥ó
+// ç‰¹æ®Šæ–‡å­—ãƒœã‚¿ãƒ³
 //--------------------------------------------------------
 var specialButton1 = '<a href="#"><img onmouseover="fncSpecialButton( \'on\' , this );" onmouseout="fncSpecialButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + specialbt1 + '" width="19" height="19" border="0" alt="EDIT" tabindex=""></a>';
 var specialButton3 = '<a href="#"><img src="' + specialbt3 + '" width="19" height="19" border="0" alt="EDIT"></a>';

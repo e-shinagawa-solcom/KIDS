@@ -1,5 +1,5 @@
 
-//  ¥Ø¥Ã¥À¥¿¥Ö
+//  ãƒ˜ãƒƒãƒ€ã‚¿ãƒ–
 $('.tabs__header').on({
 	'mouseover' : function() {
 		$(this).attr('src', '/img/type01/cmn/seg/h_tab_off_on.gif');
@@ -17,7 +17,7 @@ $('.tabs__header').on({
 	}
 });
 
-// ¥Õ¥Ã¥¿¥¿¥Ö
+// ãƒ•ãƒƒã‚¿ã‚¿ãƒ–
 $('.tabs__detail').on({
 	'mouseover' : function() {
 		$(this).attr('src', '/img/type01/cmn/seg/d_tab_off_on.gif');

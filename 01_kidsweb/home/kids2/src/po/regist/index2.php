@@ -2,7 +2,7 @@
 
 // ----------------------------------------------------------------------------
 /**
-*       ȯ������  ��Ͽ
+*       発注管理  登録
 *
 *
 *       @package    K.I.D.S.
@@ -13,19 +13,19 @@
 *       @version    2.00
 *
 *
-*       ��������
-*         ����Ͽ����
-*         �����顼�����å�
-*         ����Ͽ������λ�塢��Ͽ��λ���̤�
+*       処理概要
+*         ・登録処理
+*         ・エラーチェック
+*         ・登録処理完了後、登録完了画面へ
 *
-*       ��������
+*       更新履歴
 *
 */
 // ----------------------------------------------------------------------------
 
 
 
-	// �ɤ߹���
+	// 読み込み
 	include('conf.inc');
 	require (LIB_FILE);
 	// require(SRC_ROOT."po/cmn/lib_po.php");
@@ -41,42 +41,42 @@
 
 	$objDB->open("", "", "", "");
 	
-	// ʸ��������å�
+	// 文字列チェック
 	$aryCheck["strSessionID"]          = "null:numenglish(32,32)";
 	$aryResult = fncAllCheck( $aryData, $aryCheck );
 	fncPutStringCheckError( $aryResult, $objDB );
 
 
 
-	// ���å�����ǧ
+	// セッション確認
 	$objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 	
 	$lngInputUserCode = $objAuth->UserCode;
 	
-	// ���³�ǧ
+	// 権限確認
 	if ( !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
 	{
-		fncOutputError ( 9060, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
-	// 500	ȯ������
+	// 500	発注管理
 	if ( !fncCheckAuthority( DEF_FUNCTION_PO0, $objAuth ) )
 	{
-		fncOutputError ( 9060, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 	
-	// 501 ȯ��������ȯ����Ͽ��
+	// 501 発注管理（発注登録）
 	if ( !fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
 	{
-		fncOutputError ( 9060, DEF_WARNING, "�����������¤�����ޤ���", TRUE, "", $objDB );
+		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 	
-	// 508 ȯ�������ʾ��ʥޥ��������쥯�Ƚ�����
+	// 508 発注管理（商品マスタダイレクト修正）
 	if( !fncCheckAuthority( DEF_FUNCTION_PO8, $objAuth ) )
 	{
 		$aryData["popenview"] = 'hidden';
 	}
 
-	// ȯ����ǡ�������
+	// 発注書データ取得
 	$aryPurchaseOrderNo = explode(",", $aryData["aryPurchaseOrderNo"]);
 	for($i = 0; $i < count($aryPurchaseOrderNo); $i++){
 		$arr = explode("-", $aryPurchaseOrderNo[$i]);
@@ -85,7 +85,7 @@
 	}
 	$aryPurcharseOrder = fncGetPurchaseOrder($aryKey, $objDB);
 	if(!$aryPurcharseOrder){
-		fncOutputError ( 9051, DEF_ERROR, "ȯ����μ����˼��Ԥ��ޤ�����", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_ERROR, "発注書の取得に失敗しました。", TRUE, "", $objDB );
 		return FALSE;
 	}
 	
@@ -99,23 +99,23 @@
 	$objDB->close();
 
 
-	// �����������Υ��ɥ쥹����
+	// 成功時戻り先のアドレス指定
 	$aryData["strAction"] = "/po/regist/index.php?strSessionID=";
 
-	// �ƥ�ץ졼���ɤ߹���
+	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
 	
-	// �ƥ�ץ졼�Ȥ�ȿ�Ǥ���ʸ����
+	// テンプレートに反映する文字列
 	$aryData["lngPONo"] = "$strOrderCode - $strReviseCode";
 
 	header("Content-type: text/plain; charset=EUC-JP");
 	$objTemplate->getTemplate( "po/finish/parts.tmpl" );
 	
-	// �ƥ�ץ졼������
+	// テンプレート生成
 	$objTemplate->replace( $aryData );
 	$objTemplate->complete();
 
-	// HTML����
+	// HTML出力
 	echo $objTemplate->strTemplate;
 			
 	return true;

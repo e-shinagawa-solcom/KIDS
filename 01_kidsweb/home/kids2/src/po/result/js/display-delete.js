@@ -5,7 +5,7 @@
         lngorderno = 'lngOrderNo=' + $(this).attr('id');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
-        //  Ã•¶•£•Û•…•¶§«…Ωº®
+        // Âà•„Ç¶„Ç£„É≥„Éâ„Ç¶„ÅßË°®Á§∫
         open(url + '?' + lngorderno + '&' + sessionID, 'display-detail', 'resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

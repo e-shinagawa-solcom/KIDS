@@ -1,61 +1,61 @@
 <?php
 
 /**
- * ¶â·¿ÅÐÏ¿¶¦ÄÌ¹àÌÜ
+ * é‡‘åž‹ç™»éŒ²å…±é€šé …ç›®
  */
 class FormMoldRegistBase
 {
 	/**
-	 * À½ÉÊ¥³¡¼¥É
+	 * è£½å“ã‚³ãƒ¼ãƒ‰
 	 * @var string
 	 */
 	const ProductCode = "ProductCode";
 
 	/**
-	 * ºÆÈÎ¥³¡¼¥É
+	 * å†è²©ã‚³ãƒ¼ãƒ‰
 	 * @var string
 	 */
 	const ReviseCode = "ReviseCode";
 
 	/**
-	 * À½ÉÊÌ¾¾Î(ÆüËÜ¸ì)
+	 * è£½å“åç§°(æ—¥æœ¬èªž)
 	 * @var string
 	 */
 	const ProductName = "ProductName";
 
 	/**
-	 * ¸ÜµÒÉÊÈÖ
+	 * é¡§å®¢å“ç•ª
 	 * @var string
 	 */
 	const GoodsCode = "GoodsCode";
 
 
 	/**
-	 * ÊÝ´É¸µ¹©¾ì(É½¼¨²ñ¼Ò¥³¡¼¥É)
+	 * ä¿ç®¡å…ƒå·¥å ´(è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰)
 	 * @var string
 	 */
 	const SourceFactory = "SourceFactory";
 
 	/**
-	 * ÊÝ´É¸µ¹©¾ì(É½¼¨²ñ¼ÒÌ¾)
+	 * ä¿ç®¡å…ƒå·¥å ´(è¡¨ç¤ºä¼šç¤¾å)
 	 * @var string
 	 */
 	const SourceFactoryName = "SourceFactoryName";
 
 	/**
-	 * °ÜÆ°Àè¹©¾ì(É½¼¨²ñ¼Ò¥³¡¼¥É)
+	 * ç§»å‹•å…ˆå·¥å ´(è¡¨ç¤ºä¼šç¤¾ã‚³ãƒ¼ãƒ‰)
 	 * @var string
 	 */
 	const DestinationFactory = "DestinationFactory";
 
 	/**
-	 * °ÜÆ°Àè¹©¾ì(É½¼¨²ñ¼ÒÌ¾)
+	 * ç§»å‹•å…ˆå·¥å ´(è¡¨ç¤ºä¼šç¤¾å)
 	 * @var string
 	 */
 	const DestinationFactoryName = "DestinationFactoryName";
 
 	/**
-	 * ¶â·¿NO
+	 * é‡‘åž‹NO
 	 * @var string
 	 */
 	const MoldNo = "MoldNo";

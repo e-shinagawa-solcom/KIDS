@@ -2,11 +2,11 @@
 <html lang="ja">
 
 <head>
-    <!-- ¸ß´¹É½¼¨OFF¤ò¶¯À©¤µ¤»¤ë -->
+    <!-- äº’æ›è¡¨ç¤ºOFFã‚’å¼·åˆ¶ã•ã›ã‚‹ -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    php dom¥Ñ¡¼¥¹ÍÑ¥á¥¿Í×ÁÇ ¥³¥á¥ó¥È¥¢¥¦¥È¤·¤Æ¤¤¤Æ¤âphp¤ÎdomElement->loadHTML¤ÇÇ§¼±¤µ¤ì¤ë
+    php domãƒ‘ãƒ¼ã‚¹ç”¨ãƒ¡ã‚¿è¦ç´  ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã—ã¦ã„ã¦ã‚‚phpã®domElement->loadHTMLã§èªè­˜ã•ã‚Œã‚‹
     -->
     <meta charset="euc-jp">
 
@@ -15,26 +15,26 @@
     <script src="/cmn/jquery/jquery-3.1.0.js"></script>
     <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 
-    <!-- ´°Î»²èÌÌ¶¦ÄÌ  CSS -->
+    <!-- å®Œäº†ç”»é¢å…±é€š  CSS -->
     <link rel="stylesheet" href="/so/cancel/css/forms-finish.css">
     <link rel="stylesheet" href="/so/cancel/css/forms-confirm.css">
 
-    <!-- ¥¹¥¿¥¤¥ë½é´ü²½ & ³Æ¼ï¥³¥ó¥È¥í¡¼¥ë¥¹¥¿¥¤¥ë -->
+    <!-- ã‚¹ã‚¿ã‚¤ãƒ«åˆæœŸåŒ– & å„ç¨®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚¹ã‚¿ã‚¤ãƒ« -->
     <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
-    <!-- ¥Ü¥¿¥ó²èÁü¤Î¶¦ÄÌ¤Î¿¶¤ëÉñ¤¤ CSS -->
+    <!-- ãƒœã‚¿ãƒ³ç”»åƒã®å…±é€šã®æŒ¯ã‚‹èˆã„ CSS -->
     <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
 
-    <!-- ÊÄ¤¸¤ë¥Ü¥¿¥ó¤ÎµóÆ° -->
+    <!-- é–‰ã˜ã‚‹ãƒœã‚¿ãƒ³ã®æŒ™å‹• -->
     <script src="/so/cancel/js/cancel-finish.js" defer></script>
 </head>
 
 <body class="finish-background">
     <div class="centering">
         <span>
-            ²¼µ­¤Î¼õÃí³ÎÄê¤ò´°Î»¤¤¤¿¤·¤·¤¿¡£
+            ä¸‹è¨˜ã®å—æ³¨ç¢ºå®šã‚’å®Œäº†ã„ãŸã—ã—ãŸã€‚
         </span>
         <div class="finish-box">
-            <span class="finish-box__message">³ÎÄê´°Î»
+            <span class="finish-box__message">ç¢ºå®šå®Œäº†
             </span>
             <span class="finish-box__button">
                 <img class="close button" style="position: relative;top: 6px;" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" alt="close">
@@ -43,43 +43,43 @@
         <div class="confirm-data" style="width: 80%;">
                 <div class="confirm-data__section">
                     <div class="confirm-data__section__record">
-                        <div>¼õÃíNo.</div>
+                        <div>å—æ³¨No.</div>
                         <div>_%strreceivecode%_</div>
-                        <div>¸ÜµÒ¼õÃíÈÖ¹æ</div>
+                        <div>é¡§å®¢å—æ³¨ç•ªå·</div>
                         <div>_%strcustomerreceivecode%_</div>
                     </div>
                     <div class="confirm-data__section__record">
-                        <div>À½ÉÊ¥³¡¼¥É</div>
+                        <div>è£½å“ã‚³ãƒ¼ãƒ‰</div>
                         <div>[_%strproductcode%_]</div>
-                        <div>Çä¾å¶èÊ¬</div>
+                        <div>å£²ä¸ŠåŒºåˆ†</div>
                         <div>[_%lngsalesclasscode%_]&nbsp;_%strsalesclassname%_</div>
                     </div>
                     <div class="confirm-data__section__record">
-                        <div>À½ÉÊÌ¾</div>
+                        <div>è£½å“å</div>
                         <div style="width: 80%;">[_%strproductname%_]</div>
                     </div>
                     <div class="confirm-data__section__record">
-                        <div>¸ÜµÒ</div>
+                        <div>é¡§å®¢</div>
                         <div>[_%strcustomerdisplaycode%_]&nbsp;_%strcustomerdisplayname%_</div>
-                        <div>¾õÂÖ</div>
+                        <div>çŠ¶æ…‹</div>
                         <div>_%strreceivestatusname%_</div>
                     </div>
                     <div class="confirm-data__section__record">
-                        <div>±Ä¶ÈÉô½ğ</div>
+                        <div>å–¶æ¥­éƒ¨ç½²</div>
                         <div>[_%strinchargegroupdisplaycode%_]&nbsp;_%strinchargegroupdisplayname%_</div>
-                        <div>³«È¯Ã´Åö¼Ô</div>
+                        <div>é–‹ç™ºæ‹…å½“è€…</div>
                         <div>[_%strinchargeuserdisplaycode%_]&nbsp;_%strinchargeuserdisplayname%_</div>
                     </div>
                     <div class="confirm-data__section__record">
-                        <div>Ç¼ÉÊÆü</div>
+                        <div>ç´å“æ—¥</div>
                         <div>_%dtmdeliverydate%_</div>
-                        <div>Ã±²Á</div>
+                        <div>å˜ä¾¡</div>
                         <div>_%strmonetaryunitsign%__%curproductprice%_</div>
                     </div>
                     <div class="confirm-data__section__record">
-                        <div>¿ôÎÌ</div>
+                        <div>æ•°é‡</div>
                         <div>_%lngproductquantity%_</div>
-                        <div>¾®·×</div>
+                        <div>å°è¨ˆ</div>
                         <div>_%strmonetaryunitsign%__%cursubtotalprice%_</div>
                     </div>
                 </div>

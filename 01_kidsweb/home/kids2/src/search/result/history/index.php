@@ -1,77 +1,77 @@
 <?php
 // ----------------------------------------------------------------------------
 /**
- *       ³Æ¸¡º÷ ÍúÎò¼èÆÀ¥¤¥Ù¥ó¥È
+ *       å„æ¤œç´¢ å±¥æ­´å–å¾—ã‚¤ãƒ™ãƒ³ãƒˆ
  *
- *       ½èÍý³µÍ×
- *         ¡¦¥³¡¼¥É¡¢¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤Ë¤è¤êÍúÎò¾ðÊó¤ò¼èÆÀ¤¹¤ë
+ *       å‡¦ç†æ¦‚è¦
+ *         ãƒ»ã‚³ãƒ¼ãƒ‰ã€ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã«ã‚ˆã‚Šå±¥æ­´æƒ…å ±ã‚’å–å¾—ã™ã‚‹
  *
- *       ¹¹¿·ÍúÎò
+ *       æ›´æ–°å±¥æ­´
  *
  */
 
-// ÆÉ¤ß¹þ¤ß
+// èª­ã¿è¾¼ã¿
 include 'conf.inc';
 require LIB_FILE;
 include 'JSON.php';
 require SRC_ROOT . "search/cmn/lib_search.php";
-//ÃÍ¤Î¼èÆÀ
+//å€¤ã®å–å¾—
 $postdata = file_get_contents("php://input");
 $aryData = json_decode($postdata, true);
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open("", "", "", "");
-//JSON¥¯¥é¥¹¥¤¥ó¥¹¥¿¥ó¥¹²½
+//JSONã‚¯ãƒ©ã‚¹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
 $s = new Services_JSON();
-//ÃÍ¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤ÏÄÌ¾ï¤Î POST ¤Ç¼õ¤±¤ë
+//å€¤ãŒå­˜åœ¨ã—ãªã„å ´åˆã¯é€šå¸¸ã® POST ã§å—ã‘ã‚‹
 if ($aryData == null) {
     $aryData = $_POST;
 }
 
-// ¥Ñ¥é¥á¡¼¥¿¼èÆÀ
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 $type = $aryData["type"];
 $strCode = $aryData["strCode"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
 $lngDetailNo = $aryData["lngDetailNo"];
 $displayColumns = array();
 if ($aryData["displayColumns"]) {
-    // É½¼¨¹àÌÜ¤ÎÃê½Ð
+    // è¡¨ç¤ºé …ç›®ã®æŠ½å‡º
     foreach ($aryData["displayColumns"] as $key) {
         $displayColumns[$key] = $key;
     }
-    // ¥­¡¼Ê¸»úÎó¤ò¾®Ê¸»ú¤ËÊÑ´¹
+    // ã‚­ãƒ¼æ–‡å­—åˆ—ã‚’å°æ–‡å­—ã«å¤‰æ›
     $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
 }
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
-// ¥³¡¼¥É¡¢ÍúÎò¥Ç¡¼¥¿¤Ë¤è¤êÍúÎò¼èÆÀSQL
+// ã‚³ãƒ¼ãƒ‰ã€å±¥æ­´ãƒ‡ãƒ¼ã‚¿ã«ã‚ˆã‚Šå±¥æ­´å–å¾—SQL
 $records = fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo, $objDB);
 
-// ¸¡º÷·ë²Ì¥Æ¡¼¥Ö¥ëÀ¸À®¤Î°ÙDOMDocument¤ò»ÈÍÑ
+// æ¤œç´¢çµæžœãƒ†ãƒ¼ãƒ–ãƒ«ç”Ÿæˆã®ç‚ºDOMDocumentã‚’ä½¿ç”¨
 $doc = new DOMDocument();
 
 // -------------------------------------------------------
-// ³Æ¼ï¥Ü¥¿¥ó¸¢¸Â¥Á¥§¥Ã¥¯
+// å„ç¨®ãƒœã‚¿ãƒ³æ¨©é™ãƒã‚§ãƒƒã‚¯
 // -------------------------------------------------------
 $aryAuthority = fncGetAryAuthority('so', $objAuth);
 
-// ¥Ø¥Ã¥À¡¼¤ÎÀßÄê
-if ($type == 'purchaseorder') { // È¯Ãí½ñ
+// ãƒ˜ãƒƒãƒ€ãƒ¼ã®è¨­å®š
+if ($type == 'purchaseorder') { // ç™ºæ³¨æ›¸
     $aryTableHeaderName = $aryTableHeaderName_PURORDER;
-} else if ($type == 'po') { // È¯Ãí
+} else if ($type == 'po') { // ç™ºæ³¨
     $aryTableHeaderName = $aryTableHeaderName_PO;
-} else if ($type == 'so') { // ¼õÃí
+} else if ($type == 'so') { // å—æ³¨
     $aryTableHeaderName = $aryTableHeaderName_SO;
-} else if ($type == 'sc') { // Çä¾å    
+} else if ($type == 'sc') { // å£²ä¸Š    
     $aryTableHeaderName = $aryTableHeaderName_SC;
     $aryTableDetailHeaderName = $aryTableDetailHeaderName_SC;
-} else if ($type == 'slip') { //Ç¼ÉÊ½ñ
+} else if ($type == 'slip') { //ç´å“æ›¸
     $aryTableHeadBtnName = $aryTableHeadBtnName_SLIP;
     $aryTableHeaderName = $aryTableHeaderName_SLIP;
     $aryTableDetailHeaderName = $aryTableDetailHeaderName_SLIP;
     $aryTableBackBtnName = $aryTableBackBtnName_SLIP;
     $displayColumns = null;
-} else if ($type == 'pc') { // »ÅÆþ   
+} else if ($type == 'pc') { // ä»•å…¥   
     $aryTableHeaderName = $aryTableHeaderName_PC;
     $aryTableDetailHeaderName = $aryTableDetailHeaderName_PC;
 } else if ($type == 'inv') {
@@ -83,10 +83,10 @@ if ($type == 'purchaseorder') { // È¯Ãí½ñ
 } else if ($type == 'estimate') {
 }
 // -------------------------------------------------------
-// ¥Æ¡¼¥Ö¥ë¥»¥ëºîÀ®
+// ãƒ†ãƒ¼ãƒ–ãƒ«ã‚»ãƒ«ä½œæˆ
 // -------------------------------------------------------
 $index = 0;
-// ¸¡º÷·ë²Ì·ï¿ôÊ¬Áöºº
+// æ¤œç´¢çµæžœä»¶æ•°åˆ†èµ°æŸ»
 foreach ($records as $i => $record) {
     if ($type == 'slip') {
         $strcode = $record["lngpkno"];
@@ -95,13 +95,13 @@ foreach ($records as $i => $record) {
     }
     $lngrevisionno = $record["lngrevisionno"];
     $lngpkno = $record["lngpkno"];
-    // ÇØ·Ê¿§ÀßÄê
+    // èƒŒæ™¯è‰²è¨­å®š
     $bgcolor = fncSetBgColor($type, $strcode, false, $objDB);
 
     $detailData = array();
     $rowspan == 0;
 
-    // ÀÁµá½ñ¡¦»ÅÆþ¡¦Çä¾å¡¦Ç¼ÉÊ½ñ¤Î¾ì¹ç¾ÜºÙ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë
+    // è«‹æ±‚æ›¸ãƒ»ä»•å…¥ãƒ»å£²ä¸Šãƒ»ç´å“æ›¸ã®å ´åˆè©³ç´°ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹
     if ($type == 'inv' || $type == 'pc' || $type == 'sc' || $type == 'slip') {
         $detailData = fncGetDetailData($type, $lngpkno, $lngrevisionno, $objDB);
         $rowspan = count($detailData);
@@ -111,7 +111,7 @@ foreach ($records as $i => $record) {
         $rowspan = 1;
     }
 
-    // tbody > trÍ×ÁÇºîÀ®
+    // tbody > trè¦ç´ ä½œæˆ
     $trBody = $doc->createElement("tr");
     if ($type == 'so' || $type == 'po') {
         $trBody->setAttribute("id", $strcode . "_" . $record["lngdetailno"] . "_" . $lngrevisionno);
@@ -121,27 +121,27 @@ foreach ($records as $i => $record) {
     $trBody->setAttribute("class", 'detail');
 
     $aryTableHeaderName;
-    // ¹àÈÖ
+    // é …ç•ª
     $index = $index + 1;
     $subindex = $aryData["rownum"] . "." . $index;
 
-    // ÀèÆ¬¥Ü¥¿¥ó¤ÎÀßÄê
+    // å…ˆé ­ãƒœã‚¿ãƒ³ã®è¨­å®š
     fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, false, false, $subindex, 'sc', null);
 
-    // ¥Ø¥Ã¥À¡¼¥Ç¡¼¥¿¤ÎÀßÄê
+    // ãƒ˜ãƒƒãƒ€ãƒ¼ãƒ‡ãƒ¼ã‚¿ã®è¨­å®š
     fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, false);
 
-    // ÌÀºÙÉô¥Ç¡¼¥¿ÀßÄê
+    // æ˜Žç´°éƒ¨ãƒ‡ãƒ¼ã‚¿è¨­å®š
     if (count($detailData) > 0) {
         fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $record, $detailData, false, false);
     }
 
-    // ËöÈø¥Ü¥¿¥ó¤ÎÀßÄê
+    // æœ«å°¾ãƒœã‚¿ãƒ³ã®è¨­å®š
     fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $aryAuthority, false, false, $type);
 
     // tbody > tr
     $strHtml .= $doc->saveXML($trBody);
 }
 
-// HTML½ÐÎÏ
+// HTMLå‡ºåŠ›
 echo $strHtml;

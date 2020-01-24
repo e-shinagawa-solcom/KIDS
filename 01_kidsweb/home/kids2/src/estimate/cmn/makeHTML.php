@@ -15,7 +15,7 @@ class makeHTML {
     public static function getOptionsList($sheetNameList) {
         $optionHTML = '';
 		foreach($sheetNameList as $key => $sheetName) {
-			// ¥·¡¼¥ÈÌ¾¤¬¤¢¤ì¤Ğ¥·¡¼¥ÈÌ¾¤ò¼èÆÀ¤¹¤ë
+			// ã‚·ãƒ¼ãƒˆåãŒã‚ã‚Œã°ã‚·ãƒ¼ãƒˆåã‚’å–å¾—ã™ã‚‹
 			if (strlen($sheetName)) {
 				$sheetName = mb_convert_encoding($sheetName, "EUC-JP", "UTF-8");
 				$optionHTML .= "<option value = " .$key. ">" .$sheetName. "</option>\n";
@@ -26,7 +26,7 @@ class makeHTML {
         return $optionHTML;
 	}
 
-	// Excel¤ÎÅ¬ÍÑ¥ì¡¼¥È¤¬¥Ş¥¹¥¿¡¼¤È°Û¤Ê¤ë¥Ç¡¼¥¿¤Î¥Æ¡¼¥Ö¥ë¤òºîÀ®¤¹¤ë
+	// Excelã®é©ç”¨ãƒ¬ãƒ¼ãƒˆãŒãƒã‚¹ã‚¿ãƒ¼ã¨ç•°ãªã‚‹ãƒ‡ãƒ¼ã‚¿ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œæˆã™ã‚‹
 	public static function makeDifferenceRateTable($difference, $message) {
 		$strTemporary = '';
 		if ($difference) {
@@ -36,10 +36,10 @@ class makeHTML {
 			$strTemporary .= "<div class = 'temporary'>\n";
 			$strTemporary .= "<table class = \"temporaryTable\" align=\"center\">\n";
 			$strTemporary .= "<tr>\n";
-			$strTemporary .= "<th>¹àÌÜ</th>\n";
-			$strTemporary .= "<th>KIDSÀßÄêÃÍ</th>\n";
-			$strTemporary .= "<th>¥Ö¥Ã¥¯ÀßÄêÃÍ</th>\n";
-			// $strTemporary .= "<th>Ç¼ÉÊÆü</th>\n";
+			$strTemporary .= "<th>é …ç›®</th>\n";
+			$strTemporary .= "<th>KIDSè¨­å®šå€¤</th>\n";
+			$strTemporary .= "<th>ãƒ–ãƒƒã‚¯è¨­å®šå€¤</th>\n";
+			// $strTemporary .= "<th>ç´å“æ—¥</th>\n";
 			$strTemporary .= "</tr>\n";
 	
 			foreach($difference as $rateInfo) {
@@ -56,7 +56,7 @@ class makeHTML {
 		return $strTemporary;
 	}
 
-	// Excel¤ÎÅ¬ÍÑ¥ì¡¼¥È¼èÆÀ¤Ç¤­¤Ê¤«¤Ã¤¿¥Ç¡¼¥¿¤Î¥Æ¡¼¥Ö¥ë¤òºîÀ®¤¹¤ë
+	// Excelã®é©ç”¨ãƒ¬ãƒ¼ãƒˆå–å¾—ã§ããªã‹ã£ãŸãƒ‡ãƒ¼ã‚¿ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’ä½œæˆã™ã‚‹
 	public static function makeNotFoundRateTable($notFound, $message) {
 		$strTemporary = '';
 		if ($notFound) {
@@ -66,9 +66,9 @@ class makeHTML {
 			$strTemporary .= "<div class = 'temporary'>\n";
 			$strTemporary .= "<table class = \"temporaryTable\" align=\"center\">\n";
 			$strTemporary .= "<tr>\n";
-			$strTemporary .= "<th>ÄÌ²ß</th>\n";
-			$strTemporary .= "<th>Excel¥ì¡¼¥È</th>\n";
-			$strTemporary .= "<th>Ç¼ÉÊÆü</th>\n";
+			$strTemporary .= "<th>é€šè²¨</th>\n";
+			$strTemporary .= "<th>Excelãƒ¬ãƒ¼ãƒˆ</th>\n";
+			$strTemporary .= "<th>ç´å“æ—¥</th>\n";
 			$strTemporary .= "</tr>\n";
 	
 			foreach($notFound as $rateInfo) {
@@ -99,12 +99,12 @@ class makeHTML {
 
 	//@------------------------------------------------------------------------
 	/**
-	*	³µÍ×	: div¥¿¥°ÊÖµÑ
+	*	æ¦‚è¦	: divã‚¿ã‚°è¿”å´
 	*
 	*
-	*	²òÀâ	: HandsontableÉ½¼¨ÍÑ¤Ëid = grid¡Ü¥·¡¼¥ÈNo.¤Î<div>¥¿¥°¤ò¥»¥Ã¥È¤¹¤ë
+	*	è§£èª¬	: Handsontableè¡¨ç¤ºç”¨ã«id = gridï¼‹ã‚·ãƒ¼ãƒˆNo.ã®<div>ã‚¿ã‚°ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	*
-	*	@param	[$sheetNum]	: [Array]	É½¼¨¤¹¤ëtable(sheet)¿ô
+	*	@param	[$sheetNum]	: [Array]	è¡¨ç¤ºã™ã‚‹table(sheet)æ•°
 	*
 	*	@return	[$strHTML]	: [String]
 	*/
@@ -116,14 +116,14 @@ class makeHTML {
 	
 	//@------------------------------------------------------------------------
 	/**
-	*	³µÍ×	: ¥Õ¥¡¥¤¥ëHIDDENÍ×ÁÇÊÖµÑ
+	*	æ¦‚è¦	: ãƒ•ã‚¡ã‚¤ãƒ«HIDDENè¦ç´ è¿”å´
 	*
 	*
-	*	²òÀâ	: ³Æ¥ï¡¼¥¯¥·¡¼¥ÈËè¤ËHIDDEN¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®¡¢ÊÖµÑ
+	*	è§£èª¬	: å„ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆæ¯ã«HIDDENã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã€è¿”å´
 	*
-	*	ÂĞ¾İ	: ·ë²ÌÍÑ¥Æ¥ó¥×¥ì¡¼¥È
+	*	å¯¾è±¡	: çµæœç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	*
-	*	@param	[$file]	: [Array]	. $_FILE ¤è¤ê¼èÆÀ¤·¤¿ÃÍ
+	*	@param	[$file]	: [Array]	. $_FILE ã‚ˆã‚Šå–å¾—ã—ãŸå€¤
 	*
 	*	@return	[$strHTML]	: [String]
 	*/
@@ -146,14 +146,14 @@ class makeHTML {
 
 	//@------------------------------------------------------------------------
 	/**
-	*	³µÍ×	: HIDDENÍ×ÁÇÊÖµÑ
+	*	æ¦‚è¦	: HIDDENè¦ç´ è¿”å´
 	*
 	*
-	*	²òÀâ	: HIDDEN¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®¡¢ÊÖµÑ
+	*	è§£èª¬	: HIDDENã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã€è¿”å´
 	*
-	*	ÂĞ¾İ	: ·ë²ÌÍÑ¥Æ¥ó¥×¥ì¡¼¥È
+	*	å¯¾è±¡	: çµæœç”¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ
 	*
-	*	@param	[$aryData]	: [Array]	.  $_REQUEST¤è¤ê¼èÆÀ¤·¤¿ÃÍ
+	*	@param	[$aryData]	: [Array]	.  $_REQUESTã‚ˆã‚Šå–å¾—ã—ãŸå€¤
 	*
 	*	@return	[$strHTML]	: [String]
 	*/
@@ -174,22 +174,22 @@ class makeHTML {
 
 	//@------------------------------------------------------------------------
 	/**
-	*	³µÍ×	: Excel¥ï¡¼¥¯¥·¡¼¥È¥Ç¡¼¥¿HTMLÊÖµÑ
+	*	æ¦‚è¦	: Excelãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ‡ãƒ¼ã‚¿HTMLè¿”å´
 	*
 	*
-	*	²òÀâ	: ¥ï¡¼¥¯¥·¡¼¥È¥Ç¡¼¥¿É½¼¨ <table> HTMLÀ¸À®¡¢ÊÖµÑ
+	*	è§£èª¬	: ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ‡ãƒ¼ã‚¿è¡¨ç¤º <table> HTMLç”Ÿæˆã€è¿”å´
 	*
 	*
-	*	@param	[$strWSName]	: [String]	. ¥ï¡¼¥¯¥·¡¼¥ÈÌ¾
-	*	@param	[$ws_num]		: [Integer]	. ÁªÂò¤·¤¿Excel¥ï¡¼¥¯¥·¡¼¥ÈÈÖ¹æ
-	*	@param	[$strMode]		: [String]	. ¥ï¡¼¥¯¥·¡¼¥ÈÁªÂò¡¦³ÎÇ§²èÌÌÈ½ÄêÊ¸»úÎó
+	*	@param	[$strWSName]	: [String]	. ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå
+	*	@param	[$ws_num]		: [Integer]	. é¸æŠã—ãŸExcelãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆç•ªå·
+	*	@param	[$strMode]		: [String]	. ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆé¸æŠãƒ»ç¢ºèªç”»é¢åˆ¤å®šæ–‡å­—åˆ—
 	*
 	*	@return	[$strHTML]		: [String]
 	*/
 	//-------------------------------------------------------------------------
 	public static function getWorkSheet2HTML($strWSName, $sn, $strMode)	{ 
 
-		// ¥ï¡¼¥¯¥·¡¼¥ÈÌ¾¼èÆÀ
+		// ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆåå–å¾—
 		$strHTML	.= "<a name=\"" .$sn. "\"></a>";
 		$strHTML	.= "<br />\n";
 		$strHTML	.= "<div class=\"worksheetTitleHeader\">";
@@ -198,7 +198,7 @@ class makeHTML {
 		$strHTML	.= $strWSName;
 		$strHTML	.= "\"</b></span>\n\n";
 
-		// ¥Õ¥¡¥¤¥ëÁªÂòHTML¥¹¥¯¥ê¥×¥È
+		// ãƒ•ã‚¡ã‚¤ãƒ«é¸æŠHTMLã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 		$strHTML	.= self::getFileConfirmScript2HTML( $strWSName, $sn, $strMode );
 		
 		$strHTML	.= "</div>";	
@@ -206,7 +206,7 @@ class makeHTML {
         return $strHTML;
     }
 
-	// ÁªÂò²èÌÌ¤Î¥Ø¥Ã¥ÀÉô¤ÎHtml¤òÀ¸À®¤¹¤ë
+	// é¸æŠç”»é¢ã®ãƒ˜ãƒƒãƒ€éƒ¨ã®Htmlã‚’ç”Ÿæˆã™ã‚‹
     public static function getFileConfirmScript2HTML( $strWSName, $sn, $strMode )
 	{
 		$aryHTML	=	array();
@@ -216,15 +216,15 @@ class makeHTML {
 
 		switch( $strMode )
 		{
-			// ÁªÂò²èÌÌ
+			// é¸æŠç”»é¢
 			case "select":
-				$aryHTML[]	= "\t<button type=\"submit\" name=\"sheetname\" value=\"". $strWSName. "\">ÁªÂò</button>";
-				$aryHTML[]	= "\t<button type=\"button\" onclick=\"viewInvalidData(". $sn. ");\" data-column=\"0\" class=\"toggle\"> ¾ğÊóÉ½¼¨ </button>&nbsp;&nbsp;&nbsp;\n";
-				$aryHTML[]	= "\t<button type=\"button\" onclick=\"fncWindowClose();\"> ÊÄ¤¸¤ë </button>&nbsp;&nbsp;&nbsp;\n";
-				$aryHTML[]	= "\t<a id=\"excHref\" href=\"#\" onclick=\"scrollTop();\"><b>¢¬Page Top</b></a>&nbsp;&nbsp;\n";
+				$aryHTML[]	= "\t<button type=\"submit\" name=\"sheetname\" value=\"". $strWSName. "\">é¸æŠ</button>";
+				$aryHTML[]	= "\t<button type=\"button\" onclick=\"viewInvalidData(". $sn. ");\" data-column=\"0\" class=\"toggle\"> æƒ…å ±è¡¨ç¤º </button>&nbsp;&nbsp;&nbsp;\n";
+				$aryHTML[]	= "\t<button type=\"button\" onclick=\"fncWindowClose();\"> é–‰ã˜ã‚‹ </button>&nbsp;&nbsp;&nbsp;\n";
+				$aryHTML[]	= "\t<a id=\"excHref\" href=\"#\" onclick=\"scrollTop();\"><b>â†‘Page Top</b></a>&nbsp;&nbsp;\n";
 				break;
 
-			// ³ÎÇ§²èÌÌ
+			// ç¢ºèªç”»é¢
 			case "confirm":
 				break;
 
@@ -244,13 +244,13 @@ class makeHTML {
 
 	//@------------------------------------------------------------------------
 	/**
-	*	³µÍ×	: ¸«ÀÑ¸¶²Á¥×¥ì¥Ó¥å¡¼¥Ø¥Ã¥ÀÉôÀ¸À®
+	*	æ¦‚è¦	: è¦‹ç©åŸä¾¡ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ãƒ˜ãƒƒãƒ€éƒ¨ç”Ÿæˆ
 	*
-	*	²òÀâ	: ¥Ø¥Ã¥ÀÉô¤ÎHTMLÀ¸À®¡¢ÊÖµÑ
+	*	è§£èª¬	: ãƒ˜ãƒƒãƒ€éƒ¨ã®HTMLç”Ÿæˆã€è¿”å´
 	*
 	*
-	*	@param	[$maxRevisionNo]		: [Integer]	. ºÇÂç¤Î¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-	*	@param	[$strMode]		        : [Integer]	. ¸½ºß¤Î¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+	*	@param	[$maxRevisionNo]		: [Integer]	. æœ€å¤§ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+	*	@param	[$strMode]		        : [Integer]	. ç¾åœ¨ã®ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
 	*
 	*	@return	[$strHTML]		: [String]
 	*/
@@ -265,12 +265,12 @@ class makeHTML {
 			if ($i == $revisionNo) {
 				$strHTML .= "<button type=\"button\" id=\"btnSelected\" class=\"btnSwitch\" value=\"". $i."\">\n";
 				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\">\n";
-				$strHTML .= "<p>¥Ç¡¼¥¿".$i ."</p>";
+				$strHTML .= "<p>ãƒ‡ãƒ¼ã‚¿".$i ."</p>";
 				$strHTML .=	"</button>\n";
 			} else {
 				$strHTML .= "<button type=\"button\" class=\"btnSwitch\" value=\"". $i."\">\n";
 				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\">\n";
-				$strHTML .= "<p>¥Ç¡¼¥¿".$i ."</p>";
+				$strHTML .= "<p>ãƒ‡ãƒ¼ã‚¿".$i ."</p>";
 				$strHTML .=	"</button>\n";
 			}
 		}
@@ -278,24 +278,24 @@ class makeHTML {
 		
 		$strHTML .= "<div class = \"action-buttons\">\n";
 
-		// URL¥³¥Ô¡¼
+		// URLã‚³ãƒ”ãƒ¼
 		$strHTML .= "<button type=\"button\" id=\"url_copy\" onclick=\"urlCopy();\">\n";
 		$strHTML .= "<img class= \"url_copy_button\" src=\"/img/type01/estimate/preview/url_copy.gif\">\n";
 		$strHTML .=	"</button>\n";
 
-		// ¥À¥¦¥ó¥í¡¼¥É
+		// ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰
 		$strHTML .= "<button type=\"button\" id=\"download\" onclick=\"fileDownload();\">\n";
 		$strHTML .= "<img class= \"download_button\" src=\"/img/type01/estimate/preview/download.gif\">\n";
 		$strHTML .=	"</button>\n";
 
-		// °õºş(¶¦ÄÌ¤ÎÄ¢É¼°õºş¤¬ºÇ¿·ÈÇ¤·¤«°õºş¤Ç¤­¤Ê¤¤¤Î¤ÇºÇ¿·¥ê¥Ó¥¸¥ç¥ó¤Î»ş¤Î¤ßÉ½¼¨)
+		// å°åˆ·(å…±é€šã®å¸³ç¥¨å°åˆ·ãŒæœ€æ–°ç‰ˆã—ã‹å°åˆ·ã§ããªã„ã®ã§æœ€æ–°ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã®æ™‚ã®ã¿è¡¨ç¤º)
 		if ($revisionNo === $maxRevisionNo) {
 			$strHTML .= "<button type=\"button\" id=\"print\" onclick=\"sheetPrint();\">\n";
 			$strHTML .= "<img class= \"print_button\" src=\"/img/type01/estimate/preview/print.gif\">\n";
 			$strHTML .=	"</button>\n";
 		}
 
-		// ÊÔ½¸(ºÇ¿·¥ê¥Ó¥¸¥ç¥ó¤«¤Äºï½üºÑ¤ß¤Ç¤Ê¤¤¾ì¹ç¤Î¤ßÊÔ½¸²ÄÇ½)
+		// ç·¨é›†(æœ€æ–°ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã‹ã¤å‰Šé™¤æ¸ˆã¿ã§ãªã„å ´åˆã®ã¿ç·¨é›†å¯èƒ½)
 		if ($revisionNo === $maxRevisionNo && $minRevisionNo >= 0) {
 			$strHTML .= "<button type=\"button\" id=\"edit\" onclick=\"editModeTransition();\">\n";
 			$strHTML .= "<img class= \"edit_button\" src=\"/img/type01/estimate/preview/edit.gif\">\n";
@@ -307,7 +307,7 @@ class makeHTML {
 		return $strHTML;
 	}
 
-	// ÊÔ½¸¥â¡¼¥É¤Î¥Ø¥Ã¥ÀÀ¸À®Html
+	// ç·¨é›†ãƒ¢ãƒ¼ãƒ‰ã®ãƒ˜ãƒƒãƒ€ç”ŸæˆHtml
 	public function getEditHeader($maxRevisionNo, $revisionNo = null) {
 		if (!isset($revisionNo)) {
 			$revisionNo = $maxRevisionNo;
@@ -318,12 +318,12 @@ class makeHTML {
 			if ($i == $revisionNo) {
 				$strHTML .= "<button type=\"button\" id=\"btnSelected\" class=\"btnSwitch\">\n";
 				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\">\n";
-				$strHTML .= "<p>¥Ç¡¼¥¿".$i ."</p>";
+				$strHTML .= "<p>ãƒ‡ãƒ¼ã‚¿".$i ."</p>";
 				$strHTML .=	"</button>\n";
 			} else {
 				$strHTML .= "<button type=\"button\" class=\"btnSwitch\">\n";
 				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\">\n";
-				$strHTML .= "<p>¥Ç¡¼¥¿".$i ."</p>";
+				$strHTML .= "<p>ãƒ‡ãƒ¼ã‚¿".$i ."</p>";
 				$strHTML .=	"</button>\n";
 			}
 		}
@@ -345,7 +345,7 @@ class makeHTML {
 	}
 
 	public static function outputErrorWindow($strErrorMessage) {
-		// ¸¡º÷¤Ç¥¨¥é¡¼¤¬È¯À¸¤·¤¿¤é¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò½ĞÎÏ¤¹¤ë
+		// æ¤œç´¢ã§ã‚¨ãƒ©ãƒ¼ãŒç™ºç”Ÿã—ãŸã‚‰ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡ºåŠ›ã™ã‚‹
 		if (is_array($strErrorMessage) && count($strErrorMessage)) {
 			$strMessage = '';
 			foreach($strErrorMessage as $message) {
@@ -355,18 +355,18 @@ class makeHTML {
 			$strMessage = "<div style=\"margin:5px;\">". $strErrorMessage. "</div>";
 		}		
 
-		// [strErrorMessage]½ñ¤­½Ğ¤·
+		// [strErrorMessage]æ›¸ãå‡ºã—
 		$aryHtml["strErrorMessage"] = $strMessage;
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "/result/error/parts.tmpl" );
 		
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 		$objTemplate->replace( $aryHtml );
 		$objTemplate->complete();
 
-		// HTML½ĞÎÏ
+		// HTMLå‡ºåŠ›
 		echo $objTemplate->strTemplate;
 
 		exit;

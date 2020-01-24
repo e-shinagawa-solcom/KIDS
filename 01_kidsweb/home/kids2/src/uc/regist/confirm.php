@@ -1,6 +1,6 @@
 <?
 /** 
-*	¥æ¡¼¥¶¡¼´ÉÍı ³ÎÇ§²èÌÌ
+*	ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç† ç¢ºèªç”»é¢
 *
 *	@package   kuwagata
 *	@license   http://www.wiseknot.co.jp/ 
@@ -9,8 +9,8 @@
 *	@access    public
 *	@version   1.00
 *
-*	¹¹¿·ÍúÎò
-*	2004.04.14	¥æ¡¼¥¶¡¼¤¬¸ÜµÒ¤Ç¤¢¤Ã¤¿¾ì¹ç¤Ë¡¢É½¼¨¡¦ÈóÉ½¼¨¤òÀÚ¤êÂØ¤¨¤é¤ì¤Ê¤¤¥Ğ¥°¤Î½¤Àµ
+*	æ›´æ–°å±¥æ­´
+*	2004.04.14	ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒé¡§å®¢ã§ã‚ã£ãŸå ´åˆã«ã€è¡¨ç¤ºãƒ»éè¡¨ç¤ºã‚’åˆ‡ã‚Šæ›¿ãˆã‚‰ã‚Œãªã„ãƒã‚°ã®ä¿®æ­£
 *
 */
 // edit.php -> strSessionID           -> confirm.php
@@ -33,7 +33,7 @@
 // edit.php -> strNote                -> confirm.php
 // edit.php -> strUserImageFileName   -> confirm.php
 
-// ¼Â¹Ô¤Ø
+// å®Ÿè¡Œã¸
 // confirm.php -> strSessionID           -> action.php
 // confirm.php -> lngFunctionCode        -> action.php
 // confirm.php -> bytInvalidFlag         -> action.php
@@ -55,19 +55,19 @@
 // confirm.php -> strUserImageFileName   -> action.php
 
 
-// ÀßÄêÆÉ¤ß¹ş¤ß
+// è¨­å®šèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 
-// ¥é¥¤¥Ö¥é¥êÆÉ¤ß¹ş¤ß
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 require (LIB_FILE);
 require (SRC_ROOT . "uc/cmn/lib_uc.php");
 
-// DBÀÜÂ³
+// DBæ¥ç¶š
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 $objDB->open( "", "", "", "" );
 
-// POST¥Ç¡¼¥¿¼èÆÀ
+// POSTãƒ‡ãƒ¼ã‚¿å–å¾—
 $aryData = $_POST;
 
 
@@ -85,8 +85,8 @@ $aryCheck["lngAuthorityGroupCode"]  = "null:number(0,32767)";
 $aryCheck["lngAccessIPAddressCode"] = "null:number(-1,32767)";
 $aryCheck["strNote"]                = "length(0,1000)";
 
-// ²ñ¼Ò¤Î¤ß¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÊÑ¤¨¤ëÆÃ¼ì½èÍı
-$aryCheck["lngCompanyCode"]     = "null:number(0,32767,É¬¿Ü¹àÌÜ¤¬ÆşÎÏ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó)";
+// ä¼šç¤¾ã®ã¿ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å¤‰ãˆã‚‹ç‰¹æ®Šå‡¦ç†
+$aryCheck["lngCompanyCode"]     = "null:number(0,32767,å¿…é ˆé …ç›®ãŒå…¥åŠ›ã•ã‚Œã¦ã„ã¾ã›ã‚“)";
 
 $aryData["bytInvalidFlag_Error"]     = "visibility:hidden;";
 $aryData["lngUserCode_Error"]        = "visibility:hidden;";
@@ -102,7 +102,7 @@ $aryData["lngGroupCode_Error"]       = "visibility:hidden;";
 $aryData["strNote_Error"]            = "visibility:hidden;";
 
 
-// bytMailTransmitFlag ¤Î Boolean ²½
+// bytMailTransmitFlag ã® Boolean åŒ–
 if ( $aryData["bytMailTransmitFlag"] == "t" )
 {
 	$aryCheck["strMailAddress"]      = "null:mail";
@@ -112,12 +112,12 @@ else
 	$aryCheck["strMailAddress"]      = "mail";
 }
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// ¸¢¸Â³ÎÇ§
+// æ¨©é™ç¢ºèª
 //////////////////////////////////////////////////////////////////////////
-// ¥æ¡¼¥¶¡¼ÀßÄê¤Î¾ì¹ç
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼è¨­å®šã®å ´åˆ
 //////////////////////////////////////////////////////////////////////////
 if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 && fncCheckAuthority( DEF_FUNCTION_UC1, $objAuth ) )
 {
@@ -136,11 +136,11 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 && fncCheckAuthority( DEF_F
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ¥æ¡¼¥¶¡¼ÅĞÏ¿¤Î¾ì¹ç
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ç™»éŒ²ã®å ´åˆ
 //////////////////////////////////////////////////////////////////////////
 elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC2 && fncCheckAuthority( DEF_FUNCTION_UC2, $objAuth ) )
 {
-	// ¸ÜµÒ¤Ç¤Ê¤±¤ì¤Ğ¥Ñ¥¹¥ï¡¼¥ÉÉ¬¿Ü
+	// é¡§å®¢ã§ãªã‘ã‚Œã°ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰å¿…é ˆ
 	if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC2 && $aryData["lngAttributeCode"] < 1 )
 	{
 		$aryCheck["strPassword"]        = "null:password(0,64)";
@@ -152,12 +152,12 @@ elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC2 && fncCheckAuthority( D
 		$aryCheck["strPasswordCheck"]   = "password(0,64)";
 	}
 
-	// ¥æ¡¼¥¶¡¼¥³¡¼¥É¤Ï¤Ê¤¯¤ÆÎÉ¤¤
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã¯ãªãã¦è‰¯ã„
 	$aryData["lngUserCode_Error"] = "visibility:hidden;";
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ¥æ¡¼¥¶¡¼½¤Àµ¤Î¾ì¹ç
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ä¿®æ­£ã®å ´åˆ
 //////////////////////////////////////////////////////////////////////////
 elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 && fncCheckAuthority( DEF_FUNCTION_UC5, $objAuth ) )
 {
@@ -168,19 +168,19 @@ elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 && fncCheckAuthority( D
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ¤½¤ì°Ê³°(¸¢¸ÂERROR)
+// ãã‚Œä»¥å¤–(æ¨©é™ERROR)
 //////////////////////////////////////////////////////////////////////////
 else
 {
-	fncOutputError ( 9052, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError ( 9052, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Â°À­¤¬¡Ö¸ÜµÒ¡×¤À¤Ã¤¿¾ì¹ç¤ÎÆÃ¼ì½èÍı
+// å±æ€§ãŒã€Œé¡§å®¢ã€ã ã£ãŸå ´åˆã®ç‰¹æ®Šå‡¦ç†
 //////////////////////////////////////////////////////////////////////////
 if ( $aryData["lngAttributeCode"] > 0 )
 {
-	// ¶¯À©ÀßÄê
+	// å¼·åˆ¶è¨­å®š
 	unset ( $aryData["bytInvalidFlag"] );
 	unset ( $aryData["bytMailTransmitFlag"] );
 	$aryData["lngAuthorityGroupCode"]         = 6;
@@ -192,32 +192,32 @@ if ( $aryData["lngAttributeCode"] > 0 )
 		$aryData["lngGroupCode"]              = ":0";
 	}
 
-	// ÆşÎÏ¾õ¶·¥Á¥§¥Ã¥¯(¤Ê¤±¤ì¤Ğ¼«Æ°À¸À®½èÍı¤Ø)
+	// å…¥åŠ›çŠ¶æ³ãƒã‚§ãƒƒã‚¯(ãªã‘ã‚Œã°è‡ªå‹•ç”Ÿæˆå‡¦ç†ã¸)
 	if ( ( !$aryData["strUserID"] || !$aryData["strUserDisplayCode"] || !$aryData["strPassword"] ) && $aryData["lngFunctionCode"] == DEF_FUNCTION_UC2 )
 	{
-		// ID¼«Æ°À¸À®½èÍı(Ìµ¸Â¥ë¡¼¥×¤òÈò¤±¤ë¤¿¤á20¸ÇÄê)
+		// IDè‡ªå‹•ç”Ÿæˆå‡¦ç†(ç„¡é™ãƒ«ãƒ¼ãƒ—ã‚’é¿ã‘ã‚‹ãŸã‚20å›ºå®š)
 		for ( $i = 0; $i  < 20; $i++ )
 		{
-			// ¥æ¡¼¥¶¡¼IDÆşÎÏ¤¬¤Ê¤«¤Ã¤¿¤é¼«Æ°À¸À®
+			// ãƒ¦ãƒ¼ã‚¶ãƒ¼IDå…¥åŠ›ãŒãªã‹ã£ãŸã‚‰è‡ªå‹•ç”Ÿæˆ
 			if ( !$aryData["strUserID"] )
 			{
 				$aryData["strUserID"]          = "guest" . sprintf ( "%05d", fncGetSequence( "m_User.strUserID", $objDB ) );
 			}
 
-			// É½¼¨¥æ¡¼¥¶¡¼¥³¡¼¥ÉÆşÎÏ¤¬¤Ê¤«¤Ã¤¿¤é¼«Æ°À¸À®
+			// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰å…¥åŠ›ãŒãªã‹ã£ãŸã‚‰è‡ªå‹•ç”Ÿæˆ
 			if ( !$aryData["strUserDisplayCode"] )
 			{
 				$aryData["strUserDisplayCode"] = sprintf ( "%03x", fncGetSequence( "m_User.strUserDisplayCode", $objDB ) );
 			}
 
-			// ¥Ñ¥¹¥ï¡¼¥ÉÆşÎÏ¤¬¤Ê¤«¤Ã¤¿¤é¼«Æ°À¸À®
+			// ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰å…¥åŠ›ãŒãªã‹ã£ãŸã‚‰è‡ªå‹•ç”Ÿæˆ
 			if ( !$aryData["strPassword"] )
 			{
 				$aryData["strPassword"]        = sprintf ( "%.6s", MD5 ( $aryData["strUserID"] ) );
 				$aryData["strPasswordCheck"]   = $aryData["strPassword"];
 			}
 
-			// ½ÅÊ£¥Á¥§¥Ã¥¯
+			// é‡è¤‡ãƒã‚§ãƒƒã‚¯
 			list ( $bytErrorFlag, $a, $a ) = checkUniqueUser( 0, $aryData["strUserID"], $aryData["lngCompanyCode"], $aryData["strUserDisplayCode"], 0, $aryData["strUserID"], $aryData["lngCompanyCode"], $aryData["strUserDisplayCode"], "", $objDB );
 
 			if ( !$bytErrorFlag )
@@ -230,12 +230,12 @@ if ( $aryData["lngAttributeCode"] > 0 )
 
 $lngErrorCount += $bytErrorFlag;
 
-// Ê¸»úÎó¥Á¥§¥Ã¥¯
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 
 
 //////////////////////////////////////////////////////////////////////////
-// ¥æ¡¼¥¶¡¼ÅĞÏ¿¤Î¾ì¹ç¤Î¥æ¡¼¥¶¡¼¥Á¥§¥Ã¥¯
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ç™»éŒ²ã®å ´åˆã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒã‚§ãƒƒã‚¯
 //////////////////////////////////////////////////////////////////////////
 if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC2 && $aryData["lngCompanyCode"] )
 {
@@ -251,7 +251,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC2 && $aryData["lngCompanyCode
 }
 
 
-// ¥Ñ¥¹¥ï¡¼¥É°Å¹æ²½
+// ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰æš—å·åŒ–
 if ( $aryData["strPassword"] )
 {
 	$aryData["strPassword"]      = MD5 ( $aryData["strPassword"] );
@@ -259,17 +259,17 @@ if ( $aryData["strPassword"] )
 }
 
 //////////////////////////////////////////////////////////////////////////
-// ¥æ¡¼¥¶¡¼ÀßÄê¡¢¥æ¡¼¥¶¡¼½¤Àµ¤Î¾ì¹ç¡¢¸½¾õ¤Î¥æ¡¼¥¶¡¼¥Ç¡¼¥¿¼èÆÀ
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼è¨­å®šã€ãƒ¦ãƒ¼ã‚¶ãƒ¼ä¿®æ­£ã®å ´åˆã€ç¾çŠ¶ã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ãƒ‡ãƒ¼ã‚¿å–å¾—
 //////////////////////////////////////////////////////////////////////////
 if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 )
 {
-	// ¥æ¡¼¥¶¡¼´ÉÍı
-	// °Æ·ïÆÉ¤ß¹ş¤ß¡¢¸¡º÷¡¢¾ÜºÙ¾ğÊó¼èÆÀ¥¯¥¨¥ê´Ø¿ô
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼ç®¡ç†
+	// æ¡ˆä»¶èª­ã¿è¾¼ã¿ã€æ¤œç´¢ã€è©³ç´°æƒ…å ±å–å¾—ã‚¯ã‚¨ãƒªé–¢æ•°
 	list ( $lngResultID, $lngResultNum, $strErrorMessage ) = getUserQuery( $objAuth->UserCode, $aryData, $objDB );
 
 	if ( !$lngResultNum )
 	{
-		fncOutputError ( 1101, DEF_WARNING, "¥æ¡¼¥¶¡¼¤¬¤¤¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+		fncOutputError ( 1101, DEF_WARNING, "ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒã„ã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 	}
 
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
@@ -297,7 +297,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 
 	$objDB->freeResult( $lngResultID );
 
-	// ¥í¥°Ç§µö¥Õ¥é¥°¤ÎÊÑ´¹
+	// ãƒ­ã‚°èªè¨±ãƒ•ãƒ©ã‚°ã®å¤‰æ›
 	if ( $aryUserData["bytInvalidFlag"] == "f" )
 	{
 		$aryUserData["bytInvalidFlag"] = "checked";
@@ -307,7 +307,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 		$aryUserData["bytInvalidFlag"] = "";
 	}
 
-	// ¥æ¡¼¥¶¡¼ÀßÄê¤Î¾ì¹ç¡¢ÊÑ¹¹ÉÔ²Ä¹àÌÜ¤ò¶¯À©ÀßÄê
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼è¨­å®šã®å ´åˆã€å¤‰æ›´ä¸å¯é …ç›®ã‚’å¼·åˆ¶è¨­å®š
 	if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 )
 	{
 		$aryData["strUserID"]              = $aryUserData["strUserID"];
@@ -317,7 +317,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 		$aryData["lngAccessIPAddressCode"] = $aryUserData["lngAccessIPAddressCode"];
 	}
 	
-	// ¥æ¡¼¥¶¡¼½ÅÊ£¥Á¥§¥Ã¥¯
+	// ãƒ¦ãƒ¼ã‚¶ãƒ¼é‡è¤‡ãƒã‚§ãƒƒã‚¯
 	list ( $bytErrorFlag, $aryError, $aryErrorMessage ) = checkUniqueUser( $aryData["lngUserCode"], $aryData["strUserID"], $aryData["lngCompanyCode"], $aryData["strUserDisplayCode"], $aryUserData["lngUserCode"], $aryUserData["strUserID"], $aryUserData["lngCompanyCode"], $aryUserData["strUserDisplayCode"], "UPDATE", $objDB );
 	if ( $bytErrorFlag )
 	{
@@ -331,13 +331,13 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 		$lngErrorCount += $bytErrorFlag;
 	}
 
-	// ¥°¥ë¡¼¥×ÊÑ¹¹¥Á¥§¥Ã¥¯
-	// ÆşÎÏ¤µ¤ì¤¿¥°¥ë¡¼¥×¥³¡¼¥É¤ÎÇÛÎó¤òÀ¸À®
+	// ã‚°ãƒ«ãƒ¼ãƒ—å¤‰æ›´ãƒã‚§ãƒƒã‚¯
+	// å…¥åŠ›ã•ã‚ŒãŸã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã®é…åˆ—ã‚’ç”Ÿæˆ
 	$aryGroupCode = explode ( ":", $aryData["lngGroupCode"] );
 	array_shift ( $aryGroupCode );
 	$lngGroupCodeNum = count ( $aryGroupCode );
 
-	// DB¤ËÅĞÏ¿¤µ¤ì¤Æ¤¤¤ë¥°¥ë¡¼¥×¥³¡¼¥É¤ò¼èÆÀ
+	// DBã«ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
 	$strQuery = "SELECT lngGroupCode FROM m_GroupRelation WHERE lngUserCode = " . $aryUserData["lngUserCode"] . " ORDER BY lngGroupCode\n";
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 	for ( $i = 0; $i < $lngResultNum; $i++ )
@@ -347,14 +347,14 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 	}
 	$lngGroupCodeOriginalNum = count ( $aryGroupCodeOriginal );
 
-	// ½êÂ°¤ò²ò½ü¤·¤¿¥°¥ë¡¼¥×¥³¡¼¥É¤ò¼èÆÀ
-	// ¤â¤È¤â¤È¤Î½êÂ°¥°¥ë¡¼¥×Ê¬¡¢¥ë¡¼¥×
+	// æ‰€å±ã‚’è§£é™¤ã—ãŸã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—
+	// ã‚‚ã¨ã‚‚ã¨ã®æ‰€å±ã‚°ãƒ«ãƒ¼ãƒ—åˆ†ã€ãƒ«ãƒ¼ãƒ—
 	for ( $i = 0; $i < $lngGroupCodeOriginalNum; $i++ )
 	{
-		// º£²óÆşÎÏ¤µ¤ì¤¿¥°¥ë¡¼¥×Ê¬¡¢¥ë¡¼¥×
+		// ä»Šå›å…¥åŠ›ã•ã‚ŒãŸã‚°ãƒ«ãƒ¼ãƒ—åˆ†ã€ãƒ«ãƒ¼ãƒ—
 		for ( $j = 0; $j < $lngGroupCodeNum; $j++ )
 		{
-			// ÆşÎÏ¤µ¤ì¤¿¥°¥ë¡¼¥×¤¬¡¢¤â¤È¤â¤È½êÂ°¤·¤Æ¤¤¤¿¤«¤É¤¦¤«¤òÈæ³Ó
+			// å…¥åŠ›ã•ã‚ŒãŸã‚°ãƒ«ãƒ¼ãƒ—ãŒã€ã‚‚ã¨ã‚‚ã¨æ‰€å±ã—ã¦ã„ãŸã‹ã©ã†ã‹ã‚’æ¯”è¼ƒ
 			if ( $aryGroupCode[$j] == $aryGroupCodeOriginal[$i] )
 			{
 				$flgMatchDelete = 1;
@@ -362,29 +362,29 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 			}
 		}
 
-		// Â¸ºß¤·¤Æ¤¤¤Ê¤«¤Ã¤¿¾ì¹ç¡¢
-		// ¥ï¡¼¥¯¥Õ¥í¡¼¥Á¥§¥Ã¥¯ÂĞ¾İ¤È¤·¤Æ¥¯¥¨¥êWHERE¶çÀ¸À®
+		// å­˜åœ¨ã—ã¦ã„ãªã‹ã£ãŸå ´åˆã€
+		// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ãƒã‚§ãƒƒã‚¯å¯¾è±¡ã¨ã—ã¦ã‚¯ã‚¨ãƒªWHEREå¥ç”Ÿæˆ
 		if ( !$flgMatchDelete )
 		{
 			$aryGroupCodeDelete[] = " lngWorkflowOrderGroupCode = $aryGroupCodeOriginal[$i]";
 			$flgMatchArray  = 1;
 		}
 
-		// Â¸ºß¥Õ¥é¥°½é´ü²½
+		// å­˜åœ¨ãƒ•ãƒ©ã‚°åˆæœŸåŒ–
 		$flgMatchDelete = 0;
 	}
 	$objDB->freeResult( $lngResultID );
 }
 
 
-// ¥Ñ¥¹¥ï¡¼¥É¥Á¥§¥Ã¥¯
+// ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãƒã‚§ãƒƒã‚¯
 if ( $aryData["strPassword"] && $aryData["strPasswordCheck"] && $aryData["strPassword"] != $aryData["strPasswordCheck"] )
 {
 	$lngErrorCount++;
 	$aryData["strPassword_Error"]              = "visibility:visible;";
-	$aryData["strPassword_Error_Message"]      = "³ÎÇ§¥Ñ¥¹¥ï¡¼¥É¤¬°ã¤Ã¤Æ¤¤¤Ş¤¹¡£";
+	$aryData["strPassword_Error_Message"]      = "ç¢ºèªãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã£ã¦ã„ã¾ã™ã€‚";
 	$aryData["strPasswordCheck_Error"]         = "visibility:visible;";
-	$aryData["strPasswordCheck_Error_Message"] = "³ÎÇ§¥Ñ¥¹¥ï¡¼¥É¤¬°ã¤Ã¤Æ¤¤¤Ş¤¹¡£";
+	$aryData["strPasswordCheck_Error_Message"] = "ç¢ºèªãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé•ã£ã¦ã„ã¾ã™ã€‚";
 }
 else
 {
@@ -394,36 +394,36 @@ else
 
 
 //////////////////////////////////////////////////////////////////////////
-// É½¼¨¤Î¤¿¤á¤ÎÊ¸»úÎóÀ®·Á´ØÏ¢½èÍı
+// è¡¨ç¤ºã®ãŸã‚ã®æ–‡å­—åˆ—æˆå½¢é–¢é€£å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
-// ¥æ¡¼¥¶¡¼½¤Àµ¤Î¾ì¹ç¡¢ÆÃ¼ì¥ì¥¤¥¢¥¦¥È
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼ä¿®æ­£ã®å ´åˆã€ç‰¹æ®Šãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
 if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 )
 {
 	$aryData["RENEW"] = TRUE;
 }
 
-// ¥í¥°¥¤¥óµö²Ä¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥Á¥§¥Ã¥¯
+// ãƒ­ã‚°ã‚¤ãƒ³è¨±å¯ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒã‚§ãƒƒã‚¯
 if ( $aryData["bytInvalidFlag"] == "f" )
 {
 	$aryData["bytInvalidFlag"] = "checked";
 }
-// ¥á¡¼¥ëÁ÷¿®µö²Ä¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥Á¥§¥Ã¥¯
+// ãƒ¡ãƒ¼ãƒ«é€ä¿¡è¨±å¯ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒã‚§ãƒƒã‚¯
 if ( $aryData["bytMailTransmitFlag"] == "t" )
 {
 	$aryData["bytMailTransmitFlag"] = "checked";
 }
-// ¥æ¡¼¥¶¡¼É½¼¨¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤Î¥Á¥§¥Ã¥¯
+// ãƒ¦ãƒ¼ã‚¶ãƒ¼è¡¨ç¤ºãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ã®ãƒã‚§ãƒƒã‚¯
 if ( $aryData["bytUserDisplayFlag"] == "t" )
 {
 	$aryData["bytUserDisplayFlag"] = "checked";
 }
 
-// ¥¨¥é¡¼¹àÌÜÉ½¼¨½èÍı
+// ã‚¨ãƒ©ãƒ¼é …ç›®è¡¨ç¤ºå‡¦ç†
 list ( $aryData, $bytErrorFlag ) = getArrayErrorVisibility( $aryData, $aryCheckResult, $objDB );
 $lngErrorCount += $bytErrorFlag;
 
 //////////////////////////////////////////////////////////////////////////
-// ²èÁüUPLOAD
+// ç”»åƒUPLOAD
 //////////////////////////////////////////////////////////////////////////
 if ( $_FILES['binUserPic']['name'] != "" && preg_match ( "/image\/(" . USER_IMAGE_TYPE . ")$/i", $_FILES['binUserPic']['type'], $aryFileType ) && $_FILES['binUserPic']['size'] < IMAGE_LIMIT )
 {
@@ -433,17 +433,17 @@ if ( $_FILES['binUserPic']['name'] != "" && preg_match ( "/image\/(" . USER_IMAG
 	if ( !move_uploaded_file( $_FILES['binUserPic']['tmp_name'], USER_IMAGE_TMPDIR . $aryData["strUserImageFileName"] ) )
 	{
 		$aryData["strUserImageFile_Error"]         = "visibility:visible;";
-		$aryData["strUserImageFile_Error_Message"] = "²èÁü¥¢¥Ã¥×¥í¡¼¥É¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£";
+		$aryData["strUserImageFile_Error_Message"] = "ç”»åƒã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ã«å¤±æ•—ã—ã¾ã—ãŸã€‚";
 		$lngErrorCount++;
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-// ·ë²Ì¼èÆÀ¡¢½ĞÎÏ½èÍı
+// çµæœå–å¾—ã€å‡ºåŠ›å‡¦ç†
 //////////////////////////////////////////////////////////////////////////
-// Ê¸»úÎó¥Á¥§¥Ã¥¯¤Ë¥¨¥é¡¼¤¬¤¢¤ë¾ì¹ç¡¢ÆşÎÏ²èÌÌ¤ËÌá¤ë
+// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯ã«ã‚¨ãƒ©ãƒ¼ãŒã‚ã‚‹å ´åˆã€å…¥åŠ›ç”»é¢ã«æˆ»ã‚‹
 
 
-//¥¨¥é¡¼¤¬¤¢¤Ã¤¿¤é
+//ã‚¨ãƒ©ãƒ¼ãŒã‚ã£ãŸã‚‰
 if( $lngErrorCount > 0 )
 {
 	//echo getArrayTable( $aryData, "TABLE" );exit;
@@ -453,7 +453,7 @@ if( $lngErrorCount > 0 )
 	echo "</form>\n";
 	echo "<script language=\"javascript\">document.forms[0].submit();</script>";
 }
-//¥¨¥é¡¼¤¬¤Ê¤«¤Ã¤¿¤é
+//ã‚¨ãƒ©ãƒ¼ãŒãªã‹ã£ãŸã‚‰
 else
 {
 	//echo getArrayTable( $aryData, "TABLE" );exit;
