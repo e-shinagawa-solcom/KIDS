@@ -2,7 +2,7 @@
 
 require_once ('conf.inc');
 
-// ¥ï¡¼¥¯¥·¡¼¥ÈÄê¿ôÄêµÁ¥¯¥é¥¹
+// ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå®šæ•°å®šç¾©ã‚¯ãƒ©ã‚¹
 
 class workSheetConst {
 
@@ -10,442 +10,442 @@ class workSheetConst {
 
     }
 
-    // Excel(xlsx)¥¢¥×¥ê¥±¡¼¥·¥ç¥ó¥¿¥¤¥×
+    // Excel(xlsx)ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒ—
     const APP_EXCEL_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
     
-    // ¥ï¡¼¥¯¥·¡¼¥È¥»¥ëÌ¾¾Î -------------------------------------------------------------------------------------------
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã‚»ãƒ«åç§° -------------------------------------------------------------------------------------------
 
-    // ½ÐÎÏ¥¨¥ê¥¢°ÌÃÖ·è¤áÍÑ¥»¥ë
-    // ¾åÃ¼º¸Ã¼           
+    // å‡ºåŠ›ã‚¨ãƒªã‚¢ä½ç½®æ±ºã‚ç”¨ã‚»ãƒ«
+    // ä¸Šç«¯å·¦ç«¯           
     const TOP_LEFT = 'top_left';
-    // ¾åÃ¼±¦Ã¼
+    // ä¸Šç«¯å³ç«¯
     const TOP_RIGHT = 'top_right';
-    // ²¼Ã¼º¸Ã¼
+    // ä¸‹ç«¯å·¦ç«¯
     const BOTTOM_LEFT = 'bottom_left';
 
-    // ¥Ø¥Ã¥À¡¼Éô
-    // ºîÀ®Æü¥¿¥¤¥È¥ë
+    // ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨
+    // ä½œæˆæ—¥ã‚¿ã‚¤ãƒˆãƒ«
     const INSERT_DATE_HEADER = 'insert_date_header';
-    // ºîÀ®Æü
+    // ä½œæˆæ—¥
     const INSERT_DATE = 'insert_date';
-    // À½ÉÊ¥³¡¼¥É¥¿¥¤¥È¥ë
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã‚¿ã‚¤ãƒˆãƒ«
     const PRODUCT_CODE_HEADER = 'productcode_header';
-    // À½ÉÊ¥³¡¼¥É
+    // è£½å“ã‚³ãƒ¼ãƒ‰
     const PRODUCT_CODE = 'productcode';
-    // À½ÉÊÌ¾¥¿¥¤¥È¥ë
+    // è£½å“åã‚¿ã‚¤ãƒˆãƒ«
     const PRODUCT_NAME_HEADER = 'productname_header';
-    // À½ÉÊÌ¾
+    // è£½å“å
     const PRODUCT_NAME = 'productname';
-    // À½ÉÊÌ¾(±Ñ¸ì)¥¿¥¤¥È¥ë
+    // è£½å“å(è‹±èªž)ã‚¿ã‚¤ãƒˆãƒ«
     const PRODUCT_ENGLISH_NAME_HEADER = 'productenglishname_header';
-    // À½ÉÊÌ¾(±Ñ¸ì)
+    // è£½å“å(è‹±èªž)
     const PRODUCT_ENGLISH_NAME = 'productenglishname';
-    // ¾åÂå¥¿¥¤¥È¥ë
+    // ä¸Šä»£ã‚¿ã‚¤ãƒˆãƒ«
     const RETAIL_PRICE_HEADER = 'retailprice_header';
-    // ¾åÂå
+    // ä¸Šä»£
     const RETAIL_PRICE = 'retailprice';
-    // ±Ä¶ÈÉô½ð¥¿¥¤¥È¥ë
+    // å–¶æ¥­éƒ¨ç½²ã‚¿ã‚¤ãƒˆãƒ«
     const INCHARGE_GROUP_CODE_HEADER = 'inchargegroupcode_header';
-    // ±Ä¶ÈÉô½ð
+    // å–¶æ¥­éƒ¨ç½²
     const INCHARGE_GROUP_CODE = 'inchargegroupcode';
-    // Ã´Åö¥¿¥¤¥È¥ë
+    // æ‹…å½“ã‚¿ã‚¤ãƒˆãƒ«
     const INCHARGE_USER_CODE_HEADER = 'inchargeusercode_header';
-    // Ã´Åö
+    // æ‹…å½“
     const INCHARGE_USER_CODE = 'inchargeusercode';
-    // Ã´Åö³«È¯¼Ô¥¿¥¤¥È¥ë
+    // æ‹…å½“é–‹ç™ºè€…ã‚¿ã‚¤ãƒˆãƒ«
     const DEVELOP_USER_CODE_HEADER = 'developusercode_header';
-    // Ã´Åö³«È¯¼Ô
+    // æ‹…å½“é–‹ç™ºè€…
     const DEVELOP_USER_CODE = 'developusercode';
-    // ¥«¡¼¥È¥óÆþ¤ê¿ô¥¿¥¤¥È¥ë
+    // ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°ã‚¿ã‚¤ãƒˆãƒ«
     const CARTON_QUANTITY_HEADER = 'cartonquantity_header';
-    // ¥«¡¼¥È¥óÆþ¤ê¿ô
+    // ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
     const CARTON_QUANTITY = 'cartonquantity';
-    // ½þµÑ¿ô pcs¥¿¥¤¥È¥ë
+    // å„Ÿå´æ•° pcsã‚¿ã‚¤ãƒˆãƒ«
     const PRODUCTION_QUANTITY_HEADER = 'productionquantity_header';
-    // ½þµÑ¿ô pcs
+    // å„Ÿå´æ•° pcs
     const PRODUCTION_QUANTITY = 'productionquantity';
     
-    // ¼õÃíÌÀºÙ
-    // À½ÉÊÇä¾å
-    // Çä¾åÊ¬Îà
+    // å—æ³¨æ˜Žç´°
+    // è£½å“å£²ä¸Š
+    // å£²ä¸Šåˆ†é¡ž
     const RECEIVE_PRODUCT_SALES_DIVISION_CODE ='receive_p_salesdivisioncode';
-    // Çä¾å¶èÊ¬
+    // å£²ä¸ŠåŒºåˆ†
     const RECEIVE_PRODUCT_SALES_CLASS_CODE = 'receive_p_salesclasscode';
-    // ¸ÜµÒÀè
+    // é¡§å®¢å…ˆ
     const RECEIVE_PRODUCT_CUSTOMER_COMPANY_CODE = 'receive_p_customercompanycode';
-    // ¿ôÎÌ
+    // æ•°é‡
     const RECEIVE_PRODUCT_PRODUCT_QUANTITY = 'receive_p_productquantity';
-    // ÄÌ²ß
+    // é€šè²¨
     const RECEIVE_PRODUCT_MONETARY_UNIT_CODE = 'receive_p_monetaryunitcode';
-    // ÄÌ²ß¥³¡¼¥É
+    // é€šè²¨ã‚³ãƒ¼ãƒ‰
     const RECEIVE_PRODUCT_MONETARY_RATE_CODE = 'receive_p_rate_code';
-    // Ã±²Á
+    // å˜ä¾¡
     const RECEIVE_PRODUCT_PRODUCT_PRICE = 'receive_p_productprice';
-    // Å¬ÍÑ¥ì¡¼¥È
+    // é©ç”¨ãƒ¬ãƒ¼ãƒˆ
     const RECEIVE_PRODUCT_CONVERSION_RATE = 'receive_p_conversionrate';
-    // ¾®·×
+    // å°è¨ˆ
     const RECEIVE_PRODUCT_SUBTOTAL_PRICE = 'receive_p_subtotalprice';
-    // Ç¼´ü
+    // ç´æœŸ
     const RECEIVE_PRODUCT_DELIVERY_DATE = 'receive_p_deliverydate';
-    // È÷¹Í
+    // å‚™è€ƒ
     const RECEIVE_PRODUCT_NOTE = 'receive_p_note';
-    // À½ÉÊÇä¾å¹ç·×¥¿¥¤¥È¥ë
+    // è£½å“å£²ä¸Šåˆè¨ˆã‚¿ã‚¤ãƒˆãƒ«
     const RECEIVE_PRODUCT_TOTAL_PRICE_HEADER = 'receive_p_totalprice_header';
-    // À½ÉÊÇä¾å¹ç·×¿ô
+    // è£½å“å£²ä¸Šåˆè¨ˆæ•°
     const RECEIVE_PRODUCT_TOTAL_QUANTITY = 'receive_p_totalquantity';
-    // À½ÉÊÇä¾å¹ç·×
+    // è£½å“å£²ä¸Šåˆè¨ˆ
     const RECEIVE_PRODUCT_TOTAL_PRICE = 'receive_p_totalprice';
 
-    // Çä¾å¶èÊ¬¥Á¥§¥Ã¥¯ÍÑ
+    // å£²ä¸ŠåŒºåˆ†ãƒã‚§ãƒƒã‚¯ç”¨
     const RECEIVE_PRODUCT_CLASS_CHECK = 'receive_p_class_check';
 
 
-    // ¸ÇÄêÈñÇä¾å
-    // Çä¾åÊ¬Îà
+    // å›ºå®šè²»å£²ä¸Š
+    // å£²ä¸Šåˆ†é¡ž
     const RECEIVE_FIXED_COST_SALES_DIVISION_CODE ='receive_f_salesdivisioncode';
-    // Çä¾å¶èÊ¬
+    // å£²ä¸ŠåŒºåˆ†
     const RECEIVE_FIXED_COST_SALES_CLASS_CODE = 'receive_f_salesclasscode';
-    // ¸ÜµÒÀè
+    // é¡§å®¢å…ˆ
     const RECEIVE_FIXED_COST_CUSTOMER_COMPANY_CODE = 'receive_f_customercompanycode';
-    // ¿ôÎÌ
+    // æ•°é‡
     const RECEIVE_FIXED_COST_PRODUCT_QUANTITY = 'receive_f_productquantity';
-    // ÄÌ²ß
+    // é€šè²¨
     const RECEIVE_FIXED_COST_MONETARY_UNIT_CODE = 'receive_f_monetaryunitcode';
-    // ÄÌ²ß¥³¡¼¥É
+    // é€šè²¨ã‚³ãƒ¼ãƒ‰
     const RECEIVE_FIXED_COST_MONETARY_RATE_CODE = 'receive_f_rate_code';
-    // Ã±²Á
+    // å˜ä¾¡
     const RECEIVE_FIXED_COST_PRODUCT_PRICE = 'receive_f_productprice';
-    // Å¬ÍÑ¥ì¡¼¥È
+    // é©ç”¨ãƒ¬ãƒ¼ãƒˆ
     const RECEIVE_FIXED_COST_CONVERSION_RATE = 'receive_f_conversionrate';
-    // ¾®·×
+    // å°è¨ˆ
     const RECEIVE_FIXED_COST_SUBTOTAL_PRICE = 'receive_f_subtotalprice';
-    // Ç¼´ü
+    // ç´æœŸ
     const RECEIVE_FIXED_COST_DELIVERY_DATE = 'receive_f_deliverydate';
-    // È÷¹Í
+    // å‚™è€ƒ
     const RECEIVE_FIXED_COST_NOTE = 'receive_f_note';
-    // ¸ÇÄêÈñÇä¾å¹ç·×¥¿¥¤¥È¥ë
+    // å›ºå®šè²»å£²ä¸Šåˆè¨ˆã‚¿ã‚¤ãƒˆãƒ«
     const RECEIVE_FIXED_COST_TOTAL_PRICE_HEADER = 'receive_f_totalprice_header';
-    // ¸ÇÄêÈñÇä¾å¹ç·×¿ô
+    // å›ºå®šè²»å£²ä¸Šåˆè¨ˆæ•°
     const RECEIVE_FIXED_COST_TOTAL_QUANTITY = 'receive_f_totalquantity';
-    // ¸ÇÄêÈñÇä¾å¹ç·×
+    // å›ºå®šè²»å£²ä¸Šåˆè¨ˆ
     const RECEIVE_FIXED_COST_TOTAL_PRICE = 'receive_f_totalprice';
 
-    // Çä¾å¶èÊ¬¥Á¥§¥Ã¥¯ÍÑ
+    // å£²ä¸ŠåŒºåˆ†ãƒã‚§ãƒƒã‚¯ç”¨
     const RECEIVE_FIXED_COST_CLASS_CHECK = 'receive_f_class_check';
 
 
-    // È¯ÃíÌÀºÙ
-    // ¸ÇÄêÈñ
-    // »ÅÆþ²ÊÌÜ
+    // ç™ºæ³¨æ˜Žç´°
+    // å›ºå®šè²»
+    // ä»•å…¥ç§‘ç›®
     const ORDER_FIXED_COST_STOCK_SUBJECT_CODE = 'order_f_stocksubjectcode';
-    // »ÅÆþÉôÉÊ
+    // ä»•å…¥éƒ¨å“
     const ORDER_FIXED_COST_STOCK_ITEM_CODE =  'order_f_stockitemcode';
-    // »ÅÆþÀè
+    // ä»•å…¥å…ˆ
     const ORDER_FIXED_COST_CUSTOMER_COMPANY_CODE = 'order_f_customercompanycode';
-    // ½þµÑ
+    // å„Ÿå´
     const ORDER_FIXED_COST_PAYOFF_TARGET_FLAG = 'order_f_payofftargetflag';
-    // ·×²è¸Ä¿ô
+    // è¨ˆç”»å€‹æ•°
     const ORDER_FIXRD_COST_PRODUCT_QUANTITY = 'order_f_productquantity';
-    // ÄÌ²ß
+    // é€šè²¨
     const ORDER_FIXED_COST_MONETARY_UNIT_CODE = 'order_f_monetaryunitcode';
-    // ÄÌ²ß¥³¡¼¥É
+    // é€šè²¨ã‚³ãƒ¼ãƒ‰
     const ORDER_FIXED_COST_MONETARY_RATE_CODE = 'order_f_rate_code';
-    // Ã±²Á
+    // å˜ä¾¡
     const ORDER_FIXED_COST_PRODUCT_PRICE = 'order_f_productprice';
-    // Å¬ÍÑŽÚŽ°ŽÄ
+    // é©ç”¨ï¾šï½°ï¾„
     const ORDER_FIXED_COST_CONVERSION_RATE = 'order_f_conversionrate';
-    // ·×²è¸¶²Á
+    // è¨ˆç”»åŽŸä¾¡
     const ORDER_FIXED_COST_SUBTOTAL_PRICE = 'order_f_subtotalprice';
-    // Ç¼´ü
+    // ç´æœŸ
     const ORDER_FIXED_COST_DELIVERY_DATE = 'order_f_deliverydate';
-    // È÷¹Í
+    // å‚™è€ƒ
     const ORDER_FIXED_COST_NOTE = 'order_f_note';
-    // ¸ÇÄêÈñ¹ç·×¥¿¥¤¥È¥ë
+    // å›ºå®šè²»åˆè¨ˆã‚¿ã‚¤ãƒˆãƒ«
     const ORDER_FIXED_COST_FIXED_COST_HEADER = 'order_f_fixedcost_header';
-    // ¸ÇÄêÈñ¾®·×
+    // å›ºå®šè²»å°è¨ˆ
     const ORDER_FIXED_COST_FIXED_COST = 'order_f_fixedcost';
-    // ½þµÑÂÐ¾Ý³°¹ç·×
+    // å„Ÿå´å¯¾è±¡å¤–åˆè¨ˆ
     const ORDER_FIXED_COST_COST_NOT_DEPRECIATION = 'order_f_cost_not_depreciation';
 
-    // »ÅÆþÉôÉÊ¥Á¥§¥Ã¥¯ÍÑ
+    // ä»•å…¥éƒ¨å“ãƒã‚§ãƒƒã‚¯ç”¨
     const ORDER_FIXED_COST_ITEM_CHECK = 'order_f_item_check';
 
 
-    // ÉôºàÈñ
-    // »ÅÆþ²ÊÌÜ
+    // éƒ¨æè²»
+    // ä»•å…¥ç§‘ç›®
     const ORDER_ELEMENTS_COST_STOCK_SUBJECT_CODE = 'order_e_stocksubjectcode';
-    // »ÅÆþÉôÉÊ
+    // ä»•å…¥éƒ¨å“
     const ORDER_ELEMENTS_COST_STOCK_ITEM_CODE =  'order_e_stockitemcode';
-    // »ÅÆþÀè
+    // ä»•å…¥å…ˆ
     const ORDER_ELEMENTS_COST_CUSTOMER_COMPANY_CODE = 'order_e_customercompanycode';
-    // ½þµÑ
+    // å„Ÿå´
     const ORDER_ELEMENTS_COST_PAYOFF_TARGET_FLAG = 'order_e_payofftargetflag';
-    // ·×²è¸Ä¿ô
+    // è¨ˆç”»å€‹æ•°
     const ORDER_ELEMENTS_COST_PRODUCT_QUANTITY = 'order_e_productquantity';
-    // ÄÌ²ß
+    // é€šè²¨
     const ORDER_ELEMENTS_COST_MONETARY_UNIT_CODE = 'order_e_monetaryunitcode';
-    // ÄÌ²ß¥³¡¼¥É
+    // é€šè²¨ã‚³ãƒ¼ãƒ‰
     const ORDER_ELEMENTS_COST_MONETARY_RATE_CODE = 'order_e_rate_code';
-    // Ã±²Á
+    // å˜ä¾¡
     const ORDER_ELEMENTS_COST_PRODUCT_PRICE = 'order_e_productprice';
-    // Å¬ÍÑŽÚŽ°ŽÄ
+    // é©ç”¨ï¾šï½°ï¾„
     const ORDER_ELEMENTS_COST_CONVERSION_RATE = 'order_e_conversionrate';
-    // ·×²è¸¶²Á
+    // è¨ˆç”»åŽŸä¾¡
     const ORDER_ELEMENTS_COST_SUBTOTAL_PRICE = 'order_e_subtotalprice';
-    // Ç¼´ü
+    // ç´æœŸ
     const ORDER_ELEMENTS_COST_DELIVERY_DATE = 'order_e_deliverydate';
-    // È÷¹Í
+    // å‚™è€ƒ
     const ORDER_ELEMENTS_COST_NOTE = 'order_e_note';
-    // ÌÀºÙ¥ê¥¹¥È½ªÎ»
+    // æ˜Žç´°ãƒªã‚¹ãƒˆçµ‚äº†
     const LIST_END = 'list_end';
 
-    // »ÅÆþÉôÉÊ¥Á¥§¥Ã¥¯ÍÑ
+    // ä»•å…¥éƒ¨å“ãƒã‚§ãƒƒã‚¯ç”¨
     const ORDER_ELEMENTS_COST_ITEM_CHECK = 'order_e_item_check';
 
 
-    // ·×»»·ë²Ì
-    // À½ÉÊÇä¾å¹â¥¿¥¤¥È¥ë
+    // è¨ˆç®—çµæžœ
+    // è£½å“å£²ä¸Šé«˜ã‚¿ã‚¤ãƒˆãƒ«
     const PRODUCT_TOTAL_PRICE_HEADER = 'product_totalprice_header';
-    // À½ÉÊÇä¾å¹â
+    // è£½å“å£²ä¸Šé«˜
     const PRODUCT_TOTAL_PRICE = 'product_totalprice';
-    // ¸ÇÄêÈñÇä¾å¹â¥¿¥¤¥È¥ë
+    // å›ºå®šè²»å£²ä¸Šé«˜ã‚¿ã‚¤ãƒˆãƒ«
     const FIXED_COST_TOTAL_PRICE_HEADER = 'fixedcost_totalprice_header';
-    // ¸ÇÄêÈñÇä¾å¹â
+    // å›ºå®šè²»å£²ä¸Šé«˜
     const FIXED_COST_TOTAL_PRICE = 'fixedcost_totalprice';
-    // ÁíÇä¾å¹â¥¿¥¤¥È¥ë
+    // ç·å£²ä¸Šé«˜ã‚¿ã‚¤ãƒˆãƒ«
     const SALES_AMOUNT_HEADER = 'salesamount_header';
-    // ÁíÇä¾å¹â
+    // ç·å£²ä¸Šé«˜
     const SALES_AMOUNT = 'salesamount';
-    // À½ÉÊÍø±×¥¿¥¤¥È¥ë
+    // è£½å“åˆ©ç›Šã‚¿ã‚¤ãƒˆãƒ«
     const PRODUCT_PROFIT_HEADER = 'product_profit_header';
-    // À½ÉÊÍø±×
+    // è£½å“åˆ©ç›Š
     const PRODUCT_PROFIT = 'product_profit';
-    // À½ÉÊÍø±×Î¨
+    // è£½å“åˆ©ç›ŠçŽ‡
     const PRODUCT_PROFIT_RATE = 'product_profit_rate';
-    // ¸ÇÄêÈñÍø±×¥¿¥¤¥È¥ë
+    // å›ºå®šè²»åˆ©ç›Šã‚¿ã‚¤ãƒˆãƒ«
     const FIXED_COST_PROFIT_HEADER = 'fixedcost_profit_header';
-    // ¸ÇÄêÈñÍø±×
+    // å›ºå®šè²»åˆ©ç›Š
     const FIXED_COST_PROFIT = 'fixedcost_profit';
-    // ¸ÇÄêÈñÍø±×Î¨
+    // å›ºå®šè²»åˆ©ç›ŠçŽ‡
     const FIXED_COST_PROFIT_RATE = 'fixedcost_profit_rate';
-    // Çä¾åÁíÍø±×¥¿¥¤¥È¥ë
+    // å£²ä¸Šç·åˆ©ç›Šã‚¿ã‚¤ãƒˆãƒ«
     const PROFIT_HEADER = 'profit_header';
-    // Çä¾åÁíÍø±×
+    // å£²ä¸Šç·åˆ©ç›Š
     const PROFIT = 'profit';
-    // Íø±×Î¨
+    // åˆ©ç›ŠçŽ‡
     const PROFIT_RATE = 'profit_rate';
-    // ´ÖÀÜÀ½Â¤·ÐÈñ¥¿¥¤¥È¥ë
+    // é–“æŽ¥è£½é€ çµŒè²»ã‚¿ã‚¤ãƒˆãƒ«
     const INDIRECT_COST_HEADER = 'indirect_cost_header';
-    // ´ÖÀÜÀ½Â¤·ÐÈñ
+    // é–“æŽ¥è£½é€ çµŒè²»
     const INDIRECT_COST = 'indirect_cost';
-    // É¸½à³ä¹ç
+    // æ¨™æº–å‰²åˆ
     const STANDARD_RATE = 'standard_rate';
-    // ±Ä¶ÈÍø±×¥¿¥¤¥È¥ë
+    // å–¶æ¥­åˆ©ç›Šã‚¿ã‚¤ãƒˆãƒ«
     const OPERATING_PROFIT_HEADER = 'operating_profit_header';
-    // ±Ä¶ÈÍø±×
+    // å–¶æ¥­åˆ©ç›Š
     const OPERATING_PROFIT = 'operating_profit';
-    // ±Ä¶ÈÍø±×Î¨
+    // å–¶æ¥­åˆ©ç›ŠçŽ‡
     const OPERATING_PROFIT_RATE = 'operating_profit_rate';
-    // ÉôºàÈñ¥¿¥¤¥È¥ë
+    // éƒ¨æè²»ã‚¿ã‚¤ãƒˆãƒ«
     const MEMBER_COST_HEADER = 'membercost_header';
-    // ÉôºàÈñÂÐ¾Ý¿ô
+    // éƒ¨æè²»å¯¾è±¡æ•°
     const MEMBER_QUANTITY = 'member_quantity';
-    // pcsÉôºàÈñÍÑ
+    // pcséƒ¨æè²»ç”¨
     const MEMBER_UNIT_COST = 'member_unit_cost';
-    // ÉôºàÈñ¹ç·×
+    // éƒ¨æè²»åˆè¨ˆ
     const MEMBER_COST = 'membercost';
-    // ½þµÑÈñ¥¿¥¤¥È¥ë
+    // å„Ÿå´è²»ã‚¿ã‚¤ãƒˆãƒ«
     const DEPRECIATION_COST_HEADER = 'depreciation_cost_header';
-    // ½þµÑÂÐ¾Ý¿ô
+    // å„Ÿå´å¯¾è±¡æ•°
     const DEPRECIATION_QUANTITY = 'depreciation_quantity';
-    // pcs½þµÑÈñÍÑ
+    // pcså„Ÿå´è²»ç”¨
     const DEPRECIATION_UNIT_COST = 'depreciation_unit_cost';
-    // ½þµÑÈñ¹ç·×
+    // å„Ÿå´è²»åˆè¨ˆ
     const DEPRECIATION_COST = 'depreciation_cost';
-    // À½Â¤ÈñÍÑ¥¿¥¤¥È¥ë
+    // è£½é€ è²»ç”¨ã‚¿ã‚¤ãƒˆãƒ«
     const MANUFACTURING_COST_HEADER = 'manufacturingcost_header';
-    // À½Â¤ÂÐ¾Ý¿ô
+    // è£½é€ å¯¾è±¡æ•°
     const MANUFACTURING_QUANTITY = 'manufacturing_quantity';
-    // pcs¥³¥¹¥È
+    // pcsã‚³ã‚¹ãƒˆ
     const MANUFACTURING_UNIT_COST = 'manufacturing_unit_cost';
-    // À½Â¤ÈñÍÑ¹ç·×
+    // è£½é€ è²»ç”¨åˆè¨ˆ
     const MANUFACTURING_COST = 'manufacturingcost';
-    // ½þµÑÂÐ¾Ý³°¸ÇÄêÈñ¥¿¥¤¥È¥ë
+    // å„Ÿå´å¯¾è±¡å¤–å›ºå®šè²»ã‚¿ã‚¤ãƒˆãƒ«
     const COST_NOT_DEPRECIATION_HEADER = 'cost_not_depreciation_header';
-    // ½þµÑÂÐ¾Ý³°¸ÇÄêÈñ
+    // å„Ÿå´å¯¾è±¡å¤–å›ºå®šè²»
     const COST_NOT_DEPRECIATION = 'cost_not_depreciation';
 
-    // Íó³°¤ËÀßÄê¤µ¤ì¤¿¥»¥ë¥ê¥¹¥È¡Ê¹Ô¤ËÉ³ÉÕ¤¯¥Ç¡¼¥¿½ü¤¯¡Ë
-    // ´ØÀÇ·×»»ÍÑ¥»¥ë
+    // æ¬„å¤–ã«è¨­å®šã•ã‚ŒãŸã‚»ãƒ«ãƒªã‚¹ãƒˆï¼ˆè¡Œã«ç´ä»˜ããƒ‡ãƒ¼ã‚¿é™¤ãï¼‰
+    // é–¢ç¨Žè¨ˆç®—ç”¨ã‚»ãƒ«
     const CALCULATION_TARIFF = 'calculation_tariff';
-    // ´ØÀÇ¹ç·×¥»¥ë(Í¢ÆþÈñÍÑ·×»»ÍÑ)
+    // é–¢ç¨Žåˆè¨ˆã‚»ãƒ«(è¼¸å…¥è²»ç”¨è¨ˆç®—ç”¨)
     const TARIFF_TOTAL = 'tariff_total';
-    // Í¢ÆþÈñÍÑ·×»»ÍÑ¥»¥ë
+    // è¼¸å…¥è²»ç”¨è¨ˆç®—ç”¨ã‚»ãƒ«
     const CALCULATION_IMPORT_COST = 'calculation_import_cost';
-    // ½þµÑÁªÂò»è¡§¡û
+    // å„Ÿå´é¸æŠžè‚¢ï¼šâ—‹
     const HIDDEN_PAYOFF_CIRCLE = 'hdn_payoff_circle';
-    // À½ÉÊÇä¾å»²¾È¥»¥ë
+    // è£½å“å£²ä¸Šå‚ç…§ã‚»ãƒ«
     const HIDDEN_PRODUCT_SALES = 'hdn_product_sales';
-    // ËÜ²Ù»²¾È¥»¥ë
+    // æœ¬è·å‚ç…§ã‚»ãƒ«
     const HIDDEN_MAIN_PRODUCT = 'hdn_main_product';
-    // Í¢ÆþÈñÍÑ»²¾È¥»¥ë
+    // è¼¸å…¥è²»ç”¨å‚ç…§ã‚»ãƒ«
     const HIDDEN_IMPORT_COST = 'hdn_import_cost';
-    // ´ØÀÇ»²¾È¥»¥ë
+    // é–¢ç¨Žå‚ç…§ã‚»ãƒ«
     const HIDDEN_TARIFF = 'hdn_tariff';
-    // ¸ÇÄêÈñÇä¾åÍÑ´ØÀÇ»²¾È¥»¥ë
+    // å›ºå®šè²»å£²ä¸Šç”¨é–¢ç¨Žå‚ç…§ã‚»ãƒ«
     const HIDDEN_TARIFF_SALES = 'hdn_tariff_sales';
-    // ¶â·¿³¤³°½þµÑ»²¾È¥»¥ë
+    // é‡‘åž‹æµ·å¤–å„Ÿå´å‚ç…§ã‚»ãƒ«
     const HIDDEN_MOLD_OVERSEAS_DEPRECIATION = 'hdn_mold_overseas_depreciation';
-    // Í¢Æþ¥Ñ¡¼¥Ä»ÅÆþ¹â»²¾È¥»¥ë
+    // è¼¸å…¥ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜å‚ç…§ã‚»ãƒ«
     const HIDDEN_IMPORT_PARTS_COST = 'hdn_import_parts_cost';
-    // ºàÎÁ¥Ñ¡¼¥Ä»ÅÆþ¹â»²¾È¥»¥ë
+    // ææ–™ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜å‚ç…§ã‚»ãƒ«
     const HIDDEN_MATERIAL_PARTS_COST = 'hdn_material_parts_cost';
-    // ºàÎÁ¥Ä¡¼¥ë»ÅÆþ¹â
+    // ææ–™ãƒ„ãƒ¼ãƒ«ä»•å…¥é«˜
     const HIDDEN_MATERIAL_TOOLS_COST = 'hdn_material_tools_cost';
     // Mass Product
     const HIDDEN_MASS_PRODUCT = 'hdn_mass_product';
-    // ÄÌ²ßÁªÂò»è:JP (ÆüËÜ±ß¤ÎÁªÂò»è)
+    // é€šè²¨é¸æŠžè‚¢:JP (æ—¥æœ¬å††ã®é¸æŠžè‚¢)
     const JPYEN_DISPLAY = 'JPYEN_display';
 
 
-    // À½ÉÊÇä¾å¤ÎÇä¾åÊ¬Îà¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // è£½å“å£²ä¸Šã®å£²ä¸Šåˆ†é¡žãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const RECEIVE_PRODUCT_SALES_DIVISION_DROPDOWN = 'receive_p_salesdivision_dropdown';
-    // ¸ÇÄêÈñÇä¾å¤ÎÇä¾åÊ¬Îà¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // å›ºå®šè²»å£²ä¸Šã®å£²ä¸Šåˆ†é¡žãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const RECEIVE_FIXED_COST_SALES_DIVISION_DROPDOWN = 'receive_f_salesdivision_dropdown';
-    // ¸ÇÄêÈñ¤Î»ÅÆþ²ÊÌÜ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // å›ºå®šè²»ã®ä»•å…¥ç§‘ç›®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const ORDER_FIXED_COST_STOCK_SUBJECT_DROPDOWN = 'order_f_stocksubject_dropdown';
-    // ÉôºàÈñ¤Î»ÅÆþ²ÊÌÜ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // éƒ¨æè²»ã®ä»•å…¥ç§‘ç›®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const ORDER_ELEMENT_COST_STOCK_SUBJECT_DROPDOWN = 'order_e_stocksubject_dropdown';
-    // ¤½¤ÎÂ¾ÈñÍÑ¤Î»ÅÆþ²ÊÌÜ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // ãã®ä»–è²»ç”¨ã®ä»•å…¥ç§‘ç›®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const ORDER_OTHER_COST_STOCK_SUBJECT_DROPDOWN = 'order_o_stocksubject_dropdown';
 
-    // À½ÉÊÇä¾å¤ÎÇä¾å¶èÊ¬¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // è£½å“å£²ä¸Šã®å£²ä¸ŠåŒºåˆ†ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const RECEIVE_PRODUCT_SALES_CLASS_DROPDOWN = 'receive_p_salesclass_dropdown';
-    // ¸ÇÄêÈñÇä¾å¤ÎÇä¾å¶èÊ¬¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // å›ºå®šè²»å£²ä¸Šã®å£²ä¸ŠåŒºåˆ†ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const RECEIVE_FIXED_COST_SALES_CLASS_DROPDOWN = 'receive_f_salesclass_dropdown';
-    // ¸ÇÄêÈñ¤Î»ÅÆþÉôÉÊ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // å›ºå®šè²»ã®ä»•å…¥éƒ¨å“ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const ORDER_FIXED_COST_STOCK_ITEM_DROPDOWN = 'order_f_stockitem_dropdown';
-    // ÉôºàÈñ¤Î»ÅÆþÉôÉÊ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // éƒ¨æè²»ã®ä»•å…¥éƒ¨å“ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const ORDER_ELEMENT_COST_STOCK_ITEM_DROPDOWN = 'order_e_stockitem_dropdown';
-    // ¤½¤ÎÂ¾ÈñÍÑ¤Î»ÅÆþÉôÉÊ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // ãã®ä»–è²»ç”¨ã®ä»•å…¥éƒ¨å“ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const ORDER_OTHER_COST_STOCK_ITEM_DROPDOWN = 'order_o_stockitem_dropdown';
 
-    // ±Ä¶ÈÉô½ð¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // å–¶æ¥­éƒ¨ç½²ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const INCHARGE_GROUP_DROPDOWN = 'incharge_group_dropdown';
 
-    // Ã´Åö¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // æ‹…å½“ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const INCHARGE_USER_DROPDOWN = 'incharge_user_dropdown';
 
-    // ³«È¯Ã´Åö¼Ô¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // é–‹ç™ºæ‹…å½“è€…ã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const DEVELOP_USER_DROPDOWN = 'develop_user_dropdown';
 
-    // ¸ÜµÒÀè¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // é¡§å®¢å…ˆã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const CLIENT_DROPDOWN = 'client_dropdown';
 
-    // »ÅÆþÀè¤Î¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë
+    // ä»•å…¥å…ˆã®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«
     const SUPPLIER_DROPDOWN = 'supplier_dropdown';
     
     // ----------------------------------------------------------------------------------------------------
 
 
-    // ÌÀºÙÍó¤Î¥»¥ëÌ¾¾ÎÀÜÆ¬¼­
-    // Çä¾å(¼õÃíÌÀºÙ)
+    // æ˜Žç´°æ¬„ã®ã‚»ãƒ«åç§°æŽ¥é ­è¾ž
+    // å£²ä¸Š(å—æ³¨æ˜Žç´°)
     const PREFIX_RECEIVE = 'receive';
-    // »ÅÆþ(È¯ÃíÌÀºÙ)
+    // ä»•å…¥(ç™ºæ³¨æ˜Žç´°)
     const PREFIX_ORDER = 'order';
-    // À½ÉÊ(À½ÉÊÇä¾å)
+    // è£½å“(è£½å“å£²ä¸Š)
     const PREFIX_PRODUCT = 'p';
-    // ¸ÇÄêÈñ(¸ÇÄêÈñÇä¾å¡¢¸ÇÄêÈñ)
+    // å›ºå®šè²»(å›ºå®šè²»å£²ä¸Šã€å›ºå®šè²»)
     const PREFIX_FIXED_COST = 'f';
-    // ÉôºàÈñ(ÉôºàÈñ)
+    // éƒ¨æè²»(éƒ¨æè²»)
     const PREFIX_ELEMENTS_COST = 'e';
 
-    // ¸«ÀÑ¸¶²Á¤Îµ¡Ç½Ì¾--------------------------------------------------------------------------------------
-    // ¸«ÀÑ¸¶²Á¥×¥ì¥Ó¥å¡¼(±ÜÍ÷)
+    // è¦‹ç©åŽŸä¾¡ã®æ©Ÿèƒ½å--------------------------------------------------------------------------------------
+    // è¦‹ç©åŽŸä¾¡ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼(é–²è¦§)
     const ESTIMATE_PREVIEW = 'preview';
-    // ¸«ÀÑ¸¶²Á¥×¥ì¥Ó¥å¡¼(ÊÔ½¸)
+    // è¦‹ç©åŽŸä¾¡ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼(ç·¨é›†)
     const ESTIMATE_EDIT = 'edit';
-    // ¸«ÀÑ¸¶²Áºï½ü
+    // è¦‹ç©åŽŸä¾¡å‰Šé™¤
     const ESTIMATE_DELETE = 'delete';
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÁªÂò
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆé¸æŠž
     const ESTIMATE_RESIST_SELECT = 'select';
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÅÐÏ¿(³ÎÇ§)
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆç™»éŒ²(ç¢ºèª)
     const ESTIMATE_RESIST_CONFIRM = 'confirm';
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÅÐÏ¿
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆç™»éŒ²
     const ESTIMATE_RESIST_RESULT = 'regist';
-    // ¸«ÀÑ¸¶²Á¸¡º÷
+    // è¦‹ç©åŽŸä¾¡æ¤œç´¢
     const ESTIMATE_SEARCH = 'search';
-    // ¸«ÀÑ¸¶²Á°ìÍ÷
+    // è¦‹ç©åŽŸä¾¡ä¸€è¦§
     const ESTIMATE_RESULT = 'result';
 
 
 
-    // ¸«ÀÑ¸¶²Á¤Î½èÍý¥â¡¼¥É--------------------------------------------------------------------------------------
-    // ¸«ÀÑ¸¶²Á¥×¥ì¥Ó¥å¡¼(±ÜÍ÷)
+    // è¦‹ç©åŽŸä¾¡ã®å‡¦ç†ãƒ¢ãƒ¼ãƒ‰--------------------------------------------------------------------------------------
+    // è¦‹ç©åŽŸä¾¡ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼(é–²è¦§)
     const MODE_ESTIMATE_PREVIEW = 'preview';
-    // ¸«ÀÑ¸¶²Á¥×¥ì¥Ó¥å¡¼(ÊÔ½¸)
+    // è¦‹ç©åŽŸä¾¡ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼(ç·¨é›†)
     const MODE_ESTIMATE_EDIT = 'edit';
-    // ¸«ÀÑ¸¶²Á¥×¥ì¥Ó¥å¡¼(¥À¥¦¥ó¥í¡¼¥É)
+    // è¦‹ç©åŽŸä¾¡ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼(ãƒ€ã‚¦ãƒ³ãƒ­ãƒ¼ãƒ‰)
     const MODE_ESTIMATE_DOWNLOAD = 'download';
-    // ¸«ÀÑ¸¶²Áºï½ü
+    // è¦‹ç©åŽŸä¾¡å‰Šé™¤
     const MODE_ESTIMATE_DELETE = 'delete';
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÁªÂò
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆé¸æŠž
     const MODE_ESTIMATE_RESIST_SELECT = 'select';
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÅÐÏ¿(³ÎÇ§)
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆç™»éŒ²(ç¢ºèª)
     const MODE_ESTIMATE_RESIST_CONFIRM = 'confirm';
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÅÐÏ¿
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆç™»éŒ²
     const MODE_ESTIMATE_RESIST_RESULT = 'regist';
-    // ¸«ÀÑ¸¶²Á¸¡º÷
+    // è¦‹ç©åŽŸä¾¡æ¤œç´¢
     const MODE_ESTIMATE_SEARCH = 'search';
-    // ¸«ÀÑ¸¶²Á°ìÍ÷
+    // è¦‹ç©åŽŸä¾¡ä¸€è¦§
     const MODE_ESTIMATE_RESULT = 'result';
-    // ¸«ÀÑ¸¶²Á°õºþ
+    // è¦‹ç©åŽŸä¾¡å°åˆ·
     const MODE_ESTIMATE_PRINT = 'print';
 
 
 
-    // ÂÐ¾Ý¥¨¥ê¥¢´ØÏ¢¤ÎÄê¿ô -------------------------------------------------------------------------------------------
+    // å¯¾è±¡ã‚¨ãƒªã‚¢é–¢é€£ã®å®šæ•° -------------------------------------------------------------------------------------------
 
-    // ÂÐ¾Ý¥¨¥ê¥¢Ì¾
+    // å¯¾è±¡ã‚¨ãƒªã‚¢å
     const TARGET_AREA_NAME = [
-        DEF_AREA_PRODUCT_SALES => 'À½ÉÊÇä¾å',
-        DEF_AREA_FIXED_COST_SALES => '¸ÇÄêÈñÇä¾å',
-        DEF_AREA_FIXED_COST_ORDER => '¸ÇÄêÈñ',
-        DEF_AREA_PARTS_COST_ORDER => 'ÉôºàÈñ',
-        DEF_AREA_OTHER_COST_ORDER => '¤½¤ÎÂ¾ÈñÍÑ'
+        DEF_AREA_PRODUCT_SALES => 'è£½å“å£²ä¸Š',
+        DEF_AREA_FIXED_COST_SALES => 'å›ºå®šè²»å£²ä¸Š',
+        DEF_AREA_FIXED_COST_ORDER => 'å›ºå®šè²»',
+        DEF_AREA_PARTS_COST_ORDER => 'éƒ¨æè²»',
+        DEF_AREA_OTHER_COST_ORDER => 'ãã®ä»–è²»ç”¨'
     ];
 
-    // ÂÐ¾Ý¥¨¥ê¥¢¤ÎÉ½¼¨ÍÑÌ¾¾Î¥ê¥¹¥È¡Ê¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸É½¼¨ÍÑ)
+    // å¯¾è±¡ã‚¨ãƒªã‚¢ã®è¡¨ç¤ºç”¨åç§°ãƒªã‚¹ãƒˆï¼ˆã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤ºç”¨)
     const TARGET_AREA_DISPLAY_NAME_LIST = [
-        DEF_AREA_PRODUCT_SALES => 'À½ÉÊ¼õÃíÌÀºÙÉô',
-        DEF_AREA_FIXED_COST_SALES => '¸ÇÄêÈñ¼õÃíÌÀºÙÉô',
-        DEF_AREA_FIXED_COST_ORDER => '¸ÇÄêÈñ/½þµÑÂÐ¾Ý³°È¯ÃíÌÀºÙÉô',
-        DEF_AREA_PARTS_COST_ORDER => 'ÉôºàÈ¯ÃíÌÀºÙÉô',
-        DEF_AREA_OTHER_COST_ORDER => '¤½¤ÎÂ¾ÌÀºÙÉô',
+        DEF_AREA_PRODUCT_SALES => 'è£½å“å—æ³¨æ˜Žç´°éƒ¨',
+        DEF_AREA_FIXED_COST_SALES => 'å›ºå®šè²»å—æ³¨æ˜Žç´°éƒ¨',
+        DEF_AREA_FIXED_COST_ORDER => 'å›ºå®šè²»/å„Ÿå´å¯¾è±¡å¤–ç™ºæ³¨æ˜Žç´°éƒ¨',
+        DEF_AREA_PARTS_COST_ORDER => 'éƒ¨æç™ºæ³¨æ˜Žç´°éƒ¨',
+        DEF_AREA_OTHER_COST_ORDER => 'ãã®ä»–æ˜Žç´°éƒ¨',
     ];
 
-    // ¼õÃí¤Þ¤¿¤ÏÈ¯Ãí¤Î¿¶¤êÊ¬¤±
-    // ¼õÃí¤ËÂ°¤¹¤ë¥¨¥ê¥¢¥³¡¼¥É
+    // å—æ³¨ã¾ãŸã¯ç™ºæ³¨ã®æŒ¯ã‚Šåˆ†ã‘
+    // å—æ³¨ã«å±žã™ã‚‹ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰
     const RECEIVE_AREA_CODE = [
         DEF_AREA_PRODUCT_SALES => true,
         DEF_AREA_FIXED_COST_SALES => true
     ];
-    // È¯Ãí¤ËÂ°¤¹¤ë¥¨¥ê¥¢¥³¡¼¥É
+    // ç™ºæ³¨ã«å±žã™ã‚‹ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰
     const ORDER_AREA_CODE = [
         DEF_AREA_FIXED_COST_ORDER => true,
         DEF_AREA_PARTS_COST_ORDER => true,
         DEF_AREA_OTHER_COST_ORDER => false
     ];
 
-    // ÂÐ¾Ý¥¨¥ê¥¢¤Ç»ÈÍÑ¤¹¤ë¸ÜµÒÀè¡¢»ÅÆþÀè¤ÎÊ¬Îà
+    // å¯¾è±¡ã‚¨ãƒªã‚¢ã§ä½¿ç”¨ã™ã‚‹é¡§å®¢å…ˆã€ä»•å…¥å…ˆã®åˆ†é¡ž
     const ORDER_ATTRIBUTE_FOR_TARGET_AREA = [
-        // ¸ÜµÒÀè¤ò»ÈÍÑ¤¹¤ë¥¨¥ê¥¢
+        // é¡§å®¢å…ˆã‚’ä½¿ç”¨ã™ã‚‹ã‚¨ãƒªã‚¢
         DEF_ATTRIBUTE_CLIENT => self::RECEIVE_AREA_CODE,
-        // »ÅÆþÀè¤ò»ÈÍÑ¤¹¤ë¥¨¥ê¥¢
+        // ä»•å…¥å…ˆã‚’ä½¿ç”¨ã™ã‚‹ã‚¨ãƒªã‚¢
         DEF_ATTRIBUTE_SUPPLIER => self::ORDER_AREA_CODE
     ];
 
-    // ÂÐ¾Ý¥¨¥ê¥¢¤Ç»ÈÍÑ¤¹¤ëÇä¾å¶èÊ¬¡¢»ÅÆþÉôÉÊÈæ³ÓÍÑ¤Î¥»¥ë
+    // å¯¾è±¡ã‚¨ãƒªã‚¢ã§ä½¿ç”¨ã™ã‚‹å£²ä¸ŠåŒºåˆ†ã€ä»•å…¥éƒ¨å“æ¯”è¼ƒç”¨ã®ã‚»ãƒ«
     const CLASS_ITEM_CHECK_CELL = [
         DEF_AREA_PRODUCT_SALES => self::RECEIVE_PRODUCT_CLASS_CHECK,
         DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_CLASS_CHECK,
@@ -454,9 +454,9 @@ class workSheetConst {
     ];
 
 
-    // Ì¾¾Î¥ê¥¹¥È¡Ê¹àÌÜÊÌ¤Î³ç¤ê) -------------------------------------------------------------------------------------------
+    // åç§°ãƒªã‚¹ãƒˆï¼ˆé …ç›®åˆ¥ã®æ‹¬ã‚Š) -------------------------------------------------------------------------------------------
 
-    // ÌÀºÙÉô¥Ø¥Ã¥À¡¼¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // æ˜Žç´°éƒ¨ãƒ˜ãƒƒãƒ€ãƒ¼ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const DETAIL_HEADER_CELL_NAME_LIST = [
         DEF_AREA_PRODUCT_SALES => self::PRODUCT_SALES_HEADER_NAME_LIST,
         DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_HEADER_CELL,
@@ -465,7 +465,7 @@ class workSheetConst {
         DEF_AREA_OTHER_COST_ORDER => self::ORDER_ELEMENT_COST_HEADER_CELL
     ];
 
-    // À½ÉÊÇä¾å¥Ø¥Ã¥À¡¼Ì¾¾Î¥ê¥¹¥È
+    // è£½å“å£²ä¸Šãƒ˜ãƒƒãƒ€ãƒ¼åç§°ãƒªã‚¹ãƒˆ
     const PRODUCT_SALES_HEADER_NAME_LIST = [
         'divisionSubject' => self::RECEIVE_PRODUCT_SALES_DIVISION_CODE,
         'classItem' => self::RECEIVE_PRODUCT_SALES_CLASS_CODE,
@@ -481,14 +481,14 @@ class workSheetConst {
         'classItemCheck' => self::RECEIVE_PRODUCT_CLASS_CHECK
     ];
 
-    // À½ÉÊÇä¾å·×»»·ë²ÌÌ¾¾Î¥ê¥¹¥È
+    // è£½å“å£²ä¸Šè¨ˆç®—çµæžœåç§°ãƒªã‚¹ãƒˆ
     const PRODUCT_SALES_RESULT_NAME_LIST = [
         'total_header' => self::RECEIVE_PRODUCT_TOTAL_PRICE_HEADER,
         'total_quantity' => self::RECEIVE_PRODUCT_TOTAL_QUANTITY,
         'total_price' => self::RECEIVE_PRODUCT_TOTAL_PRICE
     ];
 
-    // ¸ÇÄêÈñÇä¾å¥Ø¥Ã¥À¡¼¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // å›ºå®šè²»å£²ä¸Šãƒ˜ãƒƒãƒ€ãƒ¼ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const RECEIVE_FIXED_COST_HEADER_CELL = [
         'divisionSubject' => self::RECEIVE_FIXED_COST_SALES_DIVISION_CODE,
         'classItem' => self::RECEIVE_FIXED_COST_SALES_CLASS_CODE,
@@ -504,14 +504,14 @@ class workSheetConst {
         'classItemCheck' => self::RECEIVE_FIXED_COST_CLASS_CHECK
     ];
 
-    // ¸ÇÄêÈñÇä¾å·×»»·ë²Ì¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // å›ºå®šè²»å£²ä¸Šè¨ˆç®—çµæžœã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const RECEIVE_FIXED_COST_RESULT_CELL = [
         'total_header' => self::RECEIVE_FIXED_COST_TOTAL_PRICE_HEADER,
         'total_quantity' => self::RECEIVE_FIXED_COST_TOTAL_QUANTITY,
         'total_price' => self::RECEIVE_FIXED_COST_TOTAL_PRICE
     ];
     
-    // ¸ÇÄêÈñ¥Ø¥Ã¥À¡¼¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // å›ºå®šè²»ãƒ˜ãƒƒãƒ€ãƒ¼ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const ORDER_FIXED_COST_HEADER_CELL = [
         'divisionSubject' => self::ORDER_FIXED_COST_STOCK_SUBJECT_CODE,
         'classItem' => self::ORDER_FIXED_COST_STOCK_ITEM_CODE,
@@ -528,14 +528,14 @@ class workSheetConst {
         'classItemCheck' => self::ORDER_FIXED_COST_ITEM_CHECK
     ];
 
-    // ¸ÇÄêÈñ·×»»·ë²Ì¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // å›ºå®šè²»è¨ˆç®—çµæžœã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const ORDER_FIXED_COST_RESULT_CELL = [
         'total_header' => self::ORDER_FIXED_COST_FIXED_COST_HEADER,
         'fixed_cost_total' => self::ORDER_FIXED_COST_FIXED_COST,
         'not_depreciation' => self::ORDER_FIXED_COST_COST_NOT_DEPRECIATION
     ];
 
-    // ÉôºàÈñ¥Ø¥Ã¥À¡¼¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // éƒ¨æè²»ãƒ˜ãƒƒãƒ€ãƒ¼ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const ORDER_ELEMENT_COST_HEADER_CELL = [
         'divisionSubject' => self::ORDER_ELEMENTS_COST_STOCK_SUBJECT_CODE,
         'classItem' => self::ORDER_ELEMENTS_COST_STOCK_ITEM_CODE,
@@ -552,12 +552,12 @@ class workSheetConst {
         'classItemCheck' => self::ORDER_ELEMENTS_COST_ITEM_CHECK
     ];
 
-    // ÉôºàÈñ¥Õ¥Ã¥¿¡¼¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // éƒ¨æè²»ãƒ•ãƒƒã‚¿ãƒ¼ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const ORDER_ELEMENT_COST_RESULT_CELL = [
         'list' => self::LIST_END
     ];
 
-    // ¥ï¡¼¥¯¥·¡¼¥È¥Ø¥Ã¥À¡¼ÆþÎÏ¹àÌÜ¥»¥ëÌ¾¾Î
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ˜ãƒƒãƒ€ãƒ¼å…¥åŠ›é …ç›®ã‚»ãƒ«åç§°
     const WORK_SHEET_HEADER_DATA_CELL = [
         'insertDate' => self::INSERT_DATE,
         'productCode' => self::PRODUCT_CODE,
@@ -571,7 +571,7 @@ class workSheetConst {
         'productionQuantity' => self::PRODUCTION_QUANTITY
     ];
 
-    // ¥ï¡¼¥¯¥·¡¼¥È¥Ø¥Ã¥À¡¼¹àÌÜ¥¿¥¤¥È¥ë¥»¥ëÌ¾¾Î
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ˜ãƒƒãƒ€ãƒ¼é …ç›®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«åç§°
     const WORK_SHEET_HEADER_TITLE_CELL = [
         'insertDate' => self::INSERT_DATE_HEADER,
         'productCode' => self::PRODUCT_CODE_HEADER,
@@ -585,20 +585,20 @@ class workSheetConst {
         'productionQuantity' => self::PRODUCTION_QUANTITY_HEADER
     ];
 
-    // ¥ï¡¼¥¯¥·¡¼¥È¥Ø¥Ã¥À¡¼¥»¥ëÁ´ÂÎ
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ˜ãƒƒãƒ€ãƒ¼ã‚»ãƒ«å…¨ä½“
     const WORK_SHEET_HEADER_CELL = [
         'header_data' => self::WORK_SHEET_HEADER_DATA_CELL,
         'header_title' => self::WORK_SHEET_HEADER_TITLE_CELL
     ];
 
-    // ¥·¡¼¥È¤ÎÈÏ°Ï·èÄêÍÑ¤Î¥»¥ëÌ¾¾Î
+    // ã‚·ãƒ¼ãƒˆã®ç¯„å›²æ±ºå®šç”¨ã®ã‚»ãƒ«åç§°
     const SET_POSITION_NAME_LIST =  [
         self::TOP_LEFT,
         self::TOP_RIGHT,
         self::BOTTOM_LEFT
     ];
 
-    // ¥ï¡¼¥¯¥·¡¼¥È¥Õ¥Ã¥¿¡¼ÆþÎÏ¹àÌÜ¥»¥ëÌ¾¾Î
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ•ãƒƒã‚¿ãƒ¼å…¥åŠ›é …ç›®ã‚»ãƒ«åç§°
     const WORK_SHEET_FOOTER_DATA_CELL = [
         'productTotalPrice' => self::PRODUCT_TOTAL_PRICE,
         'fixedCostTotalPrice' => self::FIXED_COST_TOTAL_PRICE,
@@ -625,7 +625,7 @@ class workSheetConst {
         'costNotDepreciation' => self::COST_NOT_DEPRECIATION,
     ];
 
-    // ¥ï¡¼¥¯¥·¡¼¥È¥Õ¥Ã¥¿¡¼ÆþÎÏ¹àÌÜ¥»¥ëÌ¾¾Î
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ•ãƒƒã‚¿ãƒ¼å…¥åŠ›é …ç›®ã‚»ãƒ«åç§°
     const WORK_SHEET_FOOTER_TITLE_CELL = [
         'productTotalPriceHeader' => self::PRODUCT_TOTAL_PRICE_HEADER,
         'fixedCostTotalPriceHeader' => self::FIXED_COST_TOTAL_PRICE_HEADER,
@@ -642,7 +642,7 @@ class workSheetConst {
     ];
 
 
-    // ÏÈ³°¤Î¸¡º÷ÍÑÌ¾¾Î¥ê¥¹¥È(¹Ô¤´¤È¤Î¥Ç¡¼¥¿½ü¤¯)
+    // æž å¤–ã®æ¤œç´¢ç”¨åç§°ãƒªã‚¹ãƒˆ(è¡Œã”ã¨ã®ãƒ‡ãƒ¼ã‚¿é™¤ã)
     const HIDDEN_NAME_LIST= [
         'calculationTariff' => self::CALCULATION_TARIFF,
         'calculationImportCost' => self::CALCULATION_IMPORT_COST,
@@ -662,7 +662,7 @@ class workSheetConst {
     ];
 
 
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÁ´¤Æ¤Î¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå…¨ã¦ã®ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const ALL_WORK_SHEET_CELL_NAME_LIST = [
         self::SET_POSITION_NAME_LIST,
         self::PRODUCT_SALES_HEADER_NAME_LIST,
@@ -680,7 +680,7 @@ class workSheetConst {
         self::HIDDEN_NAME_LIST
     ];
 
-    // ¥ï¡¼¥¯¥·¡¼¥ÈÁ´¤Æ¤Î¥»¥ëÌ¾¾Î¥ê¥¹¥È
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆå…¨ã¦ã®ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
     const ALL_WORK_SHEET_CELL_NAME_LIST_PREVIEW = [
         self::SET_POSITION_NAME_LIST,
         self::PRODUCT_SALES_HEADER_NAME_LIST,
@@ -701,7 +701,7 @@ class workSheetConst {
         self::OTHER_DROPDOWN_CELL_NAME
     ];
 
-    // Á´¤Æ¤Î¥»¥ëÌ¾¾Î¤òÊÂÎó¤Ç»ÈÍÑ¤¹¤ë¾ì¹ç
+    // å…¨ã¦ã®ã‚»ãƒ«åç§°ã‚’ä¸¦åˆ—ã§ä½¿ç”¨ã™ã‚‹å ´åˆ
     public static function getAllNameList() {
         $beforeNameList = self::ALL_WORK_SHEET_CELL_NAME_LIST;
         foreach ($beforeNameList as $cellNameList) {
@@ -712,7 +712,7 @@ class workSheetConst {
         return $afterCellNameList;
     }
 
-    // Á´¤Æ¤Î¥»¥ëÌ¾¾Î¤òÊÂÎó¤Ç»ÈÍÑ¤¹¤ë¾ì¹ç
+    // å…¨ã¦ã®ã‚»ãƒ«åç§°ã‚’ä¸¦åˆ—ã§ä½¿ç”¨ã™ã‚‹å ´åˆ
     public static function getAllNameListForDownload() {
         $beforeNameList = self::ALL_WORK_SHEET_CELL_NAME_LIST_PREVIEW;
         foreach ($beforeNameList as $cellNameList) {
@@ -726,9 +726,9 @@ class workSheetConst {
 
 
     /**
-    * ÂÐ¾Ý¥¨¥ê¥¢¤Î¥»¥ëÌ¾¾Î¥ê¥¹¥È¤Î¼èÆÀ
+    * å¯¾è±¡ã‚¨ãƒªã‚¢ã®ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆã®å–å¾—
     * 
-    * @param array   $areaCode  ÂÐ¾Ý¥¨¥ê¥¢¤Î¥³¡¼¥É
+    * @param array   $areaCode  å¯¾è±¡ã‚¨ãƒªã‚¢ã®ã‚³ãƒ¼ãƒ‰
     * 
     * @return array  $insertRow
     */
@@ -765,33 +765,33 @@ class workSheetConst {
     }
     
     const TABLE_NAME_LIST = [
-        'm_salesdivision' => 'Çä¾åÊ¬Îà¥Þ¥¹¥¿',
-        'm_salesclass' => 'Çä¾å¶èÊ¬¥Þ¥¹¥¿',
-        'm_stocksubject' => '»ÅÆþ²ÊÌÜ¥Þ¥¹¥¿',
-        'm_stockitem' => '»ÅÆþÉôÉÊ¥Þ¥¹¥¿',
-        'm_company' => '²ñ¼Ò¥Þ¥¹¥¿',
-        'm_monetaryrate' => 'ÄÌ²ß¥ì¡¼¥È¥Þ¥¹¥¿'
+        'm_salesdivision' => 'å£²ä¸Šåˆ†é¡žãƒžã‚¹ã‚¿',
+        'm_salesclass' => 'å£²ä¸ŠåŒºåˆ†ãƒžã‚¹ã‚¿',
+        'm_stocksubject' => 'ä»•å…¥ç§‘ç›®ãƒžã‚¹ã‚¿',
+        'm_stockitem' => 'ä»•å…¥éƒ¨å“ãƒžã‚¹ã‚¿',
+        'm_company' => 'ä¼šç¤¾ãƒžã‚¹ã‚¿',
+        'm_monetaryrate' => 'é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒžã‚¹ã‚¿'
     ];
 
-    // ÂÐ¾Ý¥¨¥ê¥¢¤ÎÂ°¤¹¤ë»ÅÆþ¶èÊ¬
+    // å¯¾è±¡ã‚¨ãƒªã‚¢ã®å±žã™ã‚‹ä»•å…¥åŒºåˆ†
     const AREA_ATTRIBUTE_TO_STOCK_CLASS_CODE = [
         DEF_AREA_FIXED_COST_ORDER => DEF_STOCK_CLASS_CODE_PRODUCTION,
         DEF_AREA_PARTS_COST_ORDER => DEF_STOCK_CLASS_CODE_PARTS,
         DEF_AREA_OTHER_COST_ORDER => DEF_STOCK_CLASS_CODE_PARTS
     ];
 
-    // ÄÌ²ß¤ÎÉ½¼¨¥³¡¼¥É
+    // é€šè²¨ã®è¡¨ç¤ºã‚³ãƒ¼ãƒ‰
     const MONETARY_DISPLAY_CODE = [
         DEF_MONETARY_YEN => 'JP',
         DEF_MONETARY_USD => 'US',
         DEF_MONETARY_HKD => 'HK',
     ];
 
-    // ¤½¤ÎÂ¾¤ÎÄê¿ô -------------------------------------------------------------------------------------------
-    // ¥ï¡¼¥¯¥·¡¼¥È¤Î¹Ô¿ô¡ÊÉ½¼¨ÉôÊ¬¡Ë
+    // ãã®ä»–ã®å®šæ•° -------------------------------------------------------------------------------------------
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆã®è¡Œæ•°ï¼ˆè¡¨ç¤ºéƒ¨åˆ†ï¼‰
     const WORK_SHEET_COLUMN_NUMBER = 16;
 
-    // Ã±²Á¤Î¾®¿ôÅÀ°Ê²¼¤Î·å¿ô(¥­¡¼¤ÏÄÌ²ß¥³¡¼¥É)
+    // å˜ä¾¡ã®å°æ•°ç‚¹ä»¥ä¸‹ã®æ¡æ•°(ã‚­ãƒ¼ã¯é€šè²¨ã‚³ãƒ¼ãƒ‰)
     const PRICE_DECIMAL_DIGIT = [
 //        DEF_MONETARY_YEN => 2,
         DEF_MONETARY_YEN => 4,
@@ -799,39 +799,39 @@ class workSheetConst {
         DEF_MONETARY_HKD => 4,
     ];
 
-    // ¹Ô¥³¥Ô¡¼»þ¤Ë¥³¥Ô¡¼½èÍý¤ò¹Ô¤¦Îó¤ÎÈÏ°Ï
+    // è¡Œã‚³ãƒ”ãƒ¼æ™‚ã«ã‚³ãƒ”ãƒ¼å‡¦ç†ã‚’è¡Œã†åˆ—ã®ç¯„å›²
     const WORK_SHEET_COPY_COLUMN_NUMBER = 27;
 
 
-    // ¥ï¡¼¥¯¥·¡¼¥È¾ðÊó¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ
-    // ÃÍ
+    // ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆæƒ…å ±ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
+    // å€¤
     const WORK_SHEET_CELL_VALUE_DEFAULT = '';
 
-    // ½ñ¼°
-    const WORK_SHEET_FONT_FAMILY_DEFAULT = '£Í£Ó £Ð¥´¥·¥Ã¥¯';
+    // æ›¸å¼
+    const WORK_SHEET_FONT_FAMILY_DEFAULT = 'ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯';
 
-    // Ê¸»ú¥µ¥¤¥º
+    // æ–‡å­—ã‚µã‚¤ã‚º
     const WORK_SHEET_FONT_SIZE_DEFAULT = 9;
 
-    // ÇØ·Ê¿§
+    // èƒŒæ™¯è‰²
     const WORK_SHEET_BACKGROUND_COLOR_DEFAULT = 'FFFFFF';
 
-    // Ê¸»ú¿§
+    // æ–‡å­—è‰²
     const WORK_SHEET_FONT_COLOR_DEFAULT = '000000';
 
-    // ·ÓÀþ¤Î¿§
+    // ç½«ç·šã®è‰²
     const WORK_SHEET_BORDER_COLOR_DEFAULT = '000000';
 
-    // ¥¨¥¯¥»¥ë¤Î·ÓÀþ½ñ¼°
+    // ã‚¨ã‚¯ã‚»ãƒ«ã®ç½«ç·šæ›¸å¼
     const WORK_SHEET_EXCEL_BORDER_STYLE_DEFAULT = 'none';
 
-    // ·ÓÀþ½ñ¼°(css)
+    // ç½«ç·šæ›¸å¼(css)
     const WORK_SHEET_BORDER_STYLE_DEFAULT = 'none';
 
-    // ·ÓÀþ¤ÎÉý
+    // ç½«ç·šã®å¹…
     const WORK_SHEET_BORDER_WIDTH_DEFAULT = 0;
 
-    // ·ÓÀþ
+    // ç½«ç·š
     const WORK_SHEET_BORDER_DEFAULT = [
         'color' => self::WORK_SHEET_BORDER_COLOR_DEFAULT,
         'excelStyle' => self::WORK_SHEET_EXCEL_BORDER_STYLE_DEFAULT,
@@ -839,7 +839,7 @@ class workSheetConst {
         'width' => self::WORK_SHEET_BORDER_WIDTH_DEFAULT
     ];
 
-    // ·ÓÀþ¾ðÊó(Éô°ÌÊÌ)
+    // ç½«ç·šæƒ…å ±(éƒ¨ä½åˆ¥)
     const WORK_SHEET_BORDER_INFO_DEFAULT = [
         'left' => self::WORK_SHEET_BORDER_DEFAULT,
         'right' => self::WORK_SHEET_BORDER_DEFAULT,
@@ -847,25 +847,25 @@ class workSheetConst {
         'bottom' => self::WORK_SHEET_BORDER_DEFAULT
     ];
 
-    // ¿âÄ¾ÇÛÃÖ
+    // åž‚ç›´é…ç½®
     const WORK_SHEET_VERTICAL_POSITION_DEFAULT = 'bottom';
 
-    // ¿åÊ¿ÇÛÃÖ
+    // æ°´å¹³é…ç½®
     const WORK_SHEET_HORIZONTAL_POSITION = 'center';
     
-    // ÂÀ»ú
+    // å¤ªå­—
     const WORK_SHEET_EMPHASIS_BOLD_DEFAULT = false;
 
-    // ¼ÐÂÎ
+    // æ–œä½“
     const WORK_SHEET_EMPHASIS_ITALIC_DEFAULT = false;
 
-    // Ê¸»ú¤Î¶¯Ä´
+    // æ–‡å­—ã®å¼·èª¿
     const WORK_SHEET_EMPHASIS_DEFAULT = [
         'bold' => self::WORK_SHEET_EMPHASIS_BOLD_DEFAULT,
         'italic' => self::WORK_SHEET_EMPHASIS_ITALIC_DEFAULT
     ];
 
-    // ¥»¥ë¤Î¥Ç¥Õ¥©¥ë¥ÈÃÍ
+    // ã‚»ãƒ«ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
     const WORK_SHEET_CELL_DEFAULT = [
         'value' => self::WORK_SHEET_CELL_VALUE_DEFAULT,
         'fontFamily' => self::WORK_SHEET_FONT_FAMILY_DEFAULT,
@@ -879,9 +879,9 @@ class workSheetConst {
     ];
 
     /**
-    * ÊÔ½¸²ÄÇ½¤Ê¥»¥ë¥ê¥¹¥È(ÂÐ¾Ý¥¨¥ê¥¢)
+    * ç·¨é›†å¯èƒ½ãªã‚»ãƒ«ãƒªã‚¹ãƒˆ(å¯¾è±¡ã‚¨ãƒªã‚¢)
     * 
-    * @param array   $areaCode  ÂÐ¾Ý¥¨¥ê¥¢¤Î¥³¡¼¥É
+    * @param array   $areaCode  å¯¾è±¡ã‚¨ãƒªã‚¢ã®ã‚³ãƒ¼ãƒ‰
     * 
     * @return array  $editableKeys
     */
@@ -902,7 +902,7 @@ class workSheetConst {
         return $editableKeys;
     }
 
-    // ÊÔ½¸²ÄÇ½¤Ê¥»¥ë¥ê¥¹¥È(ÂÐ¾Ý¥¨¥ê¥¢°Ê³°)
+    // ç·¨é›†å¯èƒ½ãªã‚»ãƒ«ãƒªã‚¹ãƒˆ(å¯¾è±¡ã‚¨ãƒªã‚¢ä»¥å¤–)
     const EDITABLE_KEY_EXPECT_FOR_TARGET_AREA = [
         self::PRODUCT_CODE => false,
         self::PRODUCT_NAME => true,
@@ -916,7 +916,7 @@ class workSheetConst {
     ];
     
 
-    // ±ß¥Þ¡¼¥¯É½¼¨¥»¥ë¤Î¥ê¥¹¥È
+    // å††ãƒžãƒ¼ã‚¯è¡¨ç¤ºã‚»ãƒ«ã®ãƒªã‚¹ãƒˆ
     const JPY_MARK_DISPLAY_CELLS = [
         self::RETAIL_PRICE => true,
         self::RECEIVE_PRODUCT_TOTAL_PRICE => true,
@@ -940,7 +940,7 @@ class workSheetConst {
         self::COST_NOT_DEPRECIATION => true
     ];
 
-    // ¿ôÎÌ¡¢Ã±²Á´ØÏ¢¤Î¥»¥ë(±ß¥Þ¡¼¥¯¤Î¤Ä¤«¤Ê¤¤¥«¥ó¥Þ¶èÀÚ¤ê¤Î¿ôÃÍ)
+    // æ•°é‡ã€å˜ä¾¡é–¢é€£ã®ã‚»ãƒ«(å††ãƒžãƒ¼ã‚¯ã®ã¤ã‹ãªã„ã‚«ãƒ³ãƒžåŒºåˆ‡ã‚Šã®æ•°å€¤)
     const QUANTITY_OR_PRICE_CELLS = [
         self::CARTON_QUANTITY => true,
         self::PRODUCTION_QUANTITY => true,
@@ -951,21 +951,21 @@ class workSheetConst {
         self::MANUFACTURING_QUANTITY => true
     ];
 
-    // ¥¯¥é¥¹Ì¾¤òÉ½¤¹Ê¸»úÎó
-    const AREA_CLASS_STRING = 'area';      // ÂÐ¾Ý¥¨¥ê¥¢¥³¡¼¥É¤È¥»¥Ã¥È¤Ç»ÈÍÑ
-    const DETAIL_CLASS_STRING = 'detail';  // ÌÀºÙ¹Ô¤Î¾ì¹ç¤ËÍ¿¤¨¤ë¥¯¥é¥¹Ì¾
+    // ã‚¯ãƒ©ã‚¹åã‚’è¡¨ã™æ–‡å­—åˆ—
+    const AREA_CLASS_STRING = 'area';      // å¯¾è±¡ã‚¨ãƒªã‚¢ã‚³ãƒ¼ãƒ‰ã¨ã‚»ãƒƒãƒˆã§ä½¿ç”¨
+    const DETAIL_CLASS_STRING = 'detail';  // æ˜Žç´°è¡Œã®å ´åˆã«ä¸Žãˆã‚‹ã‚¯ãƒ©ã‚¹å
 
-    // ÄÌ²ß¥³¡¼¥ÉÊÑ´¹ÍÑÄê¿ô(¥ï¡¼¥¯¥·¡¼¥È)
+    // é€šè²¨ã‚³ãƒ¼ãƒ‰å¤‰æ›ç”¨å®šæ•°(ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆ)
     const MONETARY_UNIT_WORKSHEET = [
       'JP' => DEF_MONETARY_YEN,
       'US' => DEF_MONETARY_USD,
       'HK' => DEF_MONETARY_HKD
     ];
 
-    // ½þµÑµ­¹æ
-    const PAYOFF_CIRCLE_SIGN = '¡û';
+    // å„Ÿå´è¨˜å·
+    const PAYOFF_CIRCLE_SIGN = 'â—‹';
 
-    // Çä¾åÊ¬Îà¡¢»ÅÆþ²ÊÌÜ¥É¥í¥Ã¥×¥À¥¦¥ó¥ê¥¹¥È¤Î¥¿¥¤¥È¥ë¥»¥ë¥ê¥¹¥È
+    // å£²ä¸Šåˆ†é¡žã€ä»•å…¥ç§‘ç›®ãƒ‰ãƒ­ãƒƒãƒ—ãƒ€ã‚¦ãƒ³ãƒªã‚¹ãƒˆã®ã‚¿ã‚¤ãƒˆãƒ«ã‚»ãƒ«ãƒªã‚¹ãƒˆ
     const DIVISION_SUBJECT_DROPDOWN_CELL_NAME = [
         DEF_AREA_PRODUCT_SALES => self::RECEIVE_PRODUCT_SALES_DIVISION_DROPDOWN,
         DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_SALES_DIVISION_DROPDOWN,
@@ -992,51 +992,51 @@ class workSheetConst {
     ];
 
     
-    // ¥Ö¥Ã¥¯Æâ¤Î¸¡º÷ÍÑ¥»¥ë¤ÎÀßÄêÍÑÇÛÎó(³Æ¥¨¥ê¥¢¤´¤È¤Ë¥»¥Ã¥È¤¹¤ë¥»¥ë¤È¤½¤Î¥»¥Ã¥È¾ò·ï¤ò»ØÄê)
+    // ãƒ–ãƒƒã‚¯å†…ã®æ¤œç´¢ç”¨ã‚»ãƒ«ã®è¨­å®šç”¨é…åˆ—(å„ã‚¨ãƒªã‚¢ã”ã¨ã«ã‚»ãƒƒãƒˆã™ã‚‹ã‚»ãƒ«ã¨ãã®ã‚»ãƒƒãƒˆæ¡ä»¶ã‚’æŒ‡å®š)
     const ASSIGN_FOR_HIDDEN = [
         DEF_AREA_PRODUCT_SALES => [
             self::HIDDEN_PRODUCT_SALES => [
-                'divisionSubject' => DEF_SALES_DIVISION_CODE_PRODUCT_SALES // À½ÉÊÇä¾å
+                'divisionSubject' => DEF_SALES_DIVISION_CODE_PRODUCT_SALES // è£½å“å£²ä¸Š
             ],
             self::HIDDEN_MAIN_PRODUCT => [
-                'divisionSubject' => DEF_SALES_DIVISION_CODE_PRODUCT_SALES, // À½ÉÊÇä¾å
-                'classItem' => DEF_SALES_CLASS_CODE_MAIN_PRODUCT // ËÜ²Ù
+                'divisionSubject' => DEF_SALES_DIVISION_CODE_PRODUCT_SALES, // è£½å“å£²ä¸Š
+                'classItem' => DEF_SALES_CLASS_CODE_MAIN_PRODUCT // æœ¬è·
             ]
         ],
         DEF_AREA_FIXED_COST_SALES => [
             self::HIDDEN_TARIFF_SALES => [
-                'divisionSubject' => DEF_SALES_DIVISION_CODE_FIXED_COST_SALES, // ¸ÇÄêÈñÇä¾å
-                'classItem' => 13 // ´ØÀÇ
+                'divisionSubject' => DEF_SALES_DIVISION_CODE_FIXED_COST_SALES, // å›ºå®šè²»å£²ä¸Š
+                'classItem' => 13 // é–¢ç¨Ž
             ]
         ],
         DEF_AREA_FIXED_COST_ORDER => [
             self::HIDDEN_MOLD_OVERSEAS_DEPRECIATION => [
-                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_OVERSEA_MOLD_DEPRECIATION // ¶â·¿³¤³°½þµÑ
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_OVERSEA_MOLD_DEPRECIATION // é‡‘åž‹æµ·å¤–å„Ÿå´
             ],
             self::HIDDEN_MATERIAL_TOOLS_COST => [
-                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_MATERIAL_TOOLS_COST // ºàÎÁ¥Ä¡¼¥ë»ÅÆþ¹â
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_MATERIAL_TOOLS_COST // ææ–™ãƒ„ãƒ¼ãƒ«ä»•å…¥é«˜
             ]
         ],
         DEF_AREA_PARTS_COST_ORDER => [
             self::HIDDEN_IMPORT_PARTS_COST => [
-                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST // Í¢Æþ¥Ñ¡¼¥Ä»ÅÆþ¹â
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST // è¼¸å…¥ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜
             ],
             self::HIDDEN_MATERIAL_PARTS_COST => [
-                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST // ºàÎÁ¥Ñ¡¼¥Ä»ÅÆþ¹â
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST // ææ–™ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜
             ],
             self::HIDDEN_MASS_PRODUCT => [
-                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST, // Í¢Æþ¥Ñ¡¼¥Ä»ÅÆþ¹â
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_IMPORT_PARTS_COST, // è¼¸å…¥ãƒ‘ãƒ¼ãƒ„ä»•å…¥é«˜
                 'classItem' => DEF_STOCK_ITEM_CODE_MASS_PRODUCT // Mass Product
             ]
         ],
         DEF_AREA_OTHER_COST_ORDER => [
             self::HIDDEN_IMPORT_COST => [
-                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_CHARGE, // ¥Á¥ã¡¼¥¸
-                'classItem' => DEF_STOCK_ITEM_CODE_IMPORT_COST // Í¢ÆþÈñÍÑ
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_CHARGE, // ãƒãƒ£ãƒ¼ã‚¸
+                'classItem' => DEF_STOCK_ITEM_CODE_IMPORT_COST // è¼¸å…¥è²»ç”¨
             ],
             self::HIDDEN_TARIFF => [
-                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_CHARGE, // ¥Á¥ã¡¼¥¸
-                'classItem' => DEF_STOCK_ITEM_CODE_TARIFF // ´ØÀÇ
+                'divisionSubject' => DEF_STOCK_SUBJECT_CODE_CHARGE, // ãƒãƒ£ãƒ¼ã‚¸
+                'classItem' => DEF_STOCK_ITEM_CODE_TARIFF // é–¢ç¨Ž
             ]
         ]
     ];

@@ -1,9 +1,9 @@
 /*
-	³µÍ×¡§¡Ö»ÅÆşÀè¥³¡¼¥É¡×¤«¤é¡ÖÌ¾¾Î¡×¤ò¼èÆÀ
-	ÂĞ¾İ¡§¡Ê¶¦ÄÌ¡Ë
-	ºûÜ®¡§watanabe
-	¹¹¿·¡§¾¾ÌÚÍÎ
-	È÷¹Í¡§
+	æ¦‚è¦ï¼šã€Œä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰ã€ã‹ã‚‰ã€Œåç§°ã€ã‚’å–å¾—
+	å¯¾è±¡ï¼šï¼ˆå…±é€šï¼‰
+	ç¬¹æ¤ªï¼šwatanabe
+	æ›´æ–°ï¼šæ¾æœ¨æ´‹
+	å‚™è€ƒï¼š
 */
 SELECT mc.lngcompanycode, mc.strcompanydisplayname , lngcountrycode
 FROM m_company mc, m_attribute ma, m_attributerelation mar

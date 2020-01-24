@@ -1,7 +1,7 @@
 <?
 // ----------------------------------------------------------------------------
 /**
-*       ÀÁµá½ñ´ÉÍı  ÀÁµá½ñ´ØÏ¢´Ø¿ô·²
+*       è«‹æ±‚æ›¸ç®¡ç†  è«‹æ±‚æ›¸é–¢é€£é–¢æ•°ç¾¤
 *
 *
 *       @package    K.I.D.S.
@@ -12,10 +12,10 @@
 *       @version    2.00
 *
 *
-*       ½èÍı³µÍ×
-*         ¡¦ÀÁµá½ñ´ØÏ¢¤Î´Ø¿ô
+*       å‡¦ç†æ¦‚è¦
+*         ãƒ»è«‹æ±‚æ›¸é–¢é€£ã®é–¢æ•°
 *
-*       ¹¹¿·ÍúÎò
+*       æ›´æ–°å±¥æ­´
 *
 */
 // ----------------------------------------------------------------------------
@@ -23,93 +23,93 @@
 
 
 /**
-* Ç¼ÉÊ½ñ¸¡º÷¤Î¸¡º÷¹àÌÜ¤«¤é°ìÃ×¤¹¤ëºÇ¿·¤ÎÇ¼ÉÊÅÁÉ¼¥Ş¥¹¥¿¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®´Ø¿ô
+* ç´å“æ›¸æ¤œç´¢ã®æ¤œç´¢é …ç›®ã‹ã‚‰ä¸€è‡´ã™ã‚‹æœ€æ–°ã®ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆé–¢æ•°
 *
-*    Ç¼ÉÊ½ñ¸¡º÷¤Î¸¡º÷¹àÌÜ¤«¤é SQLÊ¸¤òºîÀ®¤¹¤ë
+*    ç´å“æ›¸æ¤œç´¢ã®æ¤œç´¢é …ç›®ã‹ã‚‰ SQLæ–‡ã‚’ä½œæˆã™ã‚‹
 *
-*    @param  Array     $arySearchDataColumn     ¸¡º÷ÆâÍÆ¤ÎÇÛÎó
-*    @param  bool      $renew                   ¹¹¿·»ş¤ÏÇä¾å¥Ş¥¹¥¿¤ÎÅĞÏ¿¤Ï¸«¤Ê¤¤
-*    @param  Object    $objDB                   DB¥ª¥Ö¥¸¥§¥¯¥È
-*    @param    String    $strSlipCode            Ç¼ÉÊÅÁÉ¼¥³¡¼¥É    ¶õÇò»ØÄê»ş:¸¡º÷·ë²Ì½ĞÎÏ    Ç¼ÉÊÅÁÉ¼¥³¡¼¥É»ØÄê»ş:´ÉÍıÍÑ¡¢Æ±¤¸Ç¼ÉÊ½ñ£Î£Ï¤Î°ìÍ÷¼èÆÀ
-*    @param    Integer    $lngSlipNo                Ç¼ÉÊÅÁÉ¼ÈÖ¹æ    0:¸¡º÷·ë²Ì½ĞÎÏ    Ç¼ÉÊÅÁÉ¼ÈÖ¹æ»ØÄê»ş:´ÉÍıÍÑ¡¢Æ±¤¸Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¤È¤¹¤ë»ş¤ÎÂĞ¾İ³°Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
-*    @return Array     $strSQL ¸¡º÷ÍÑSQLÊ¸ OR Boolean FALSE
+*    @param  Array     $arySearchDataColumn     æ¤œç´¢å†…å®¹ã®é…åˆ—
+*    @param  bool      $renew                   æ›´æ–°æ™‚ã¯å£²ä¸Šãƒã‚¹ã‚¿ã®ç™»éŒ²ã¯è¦‹ãªã„
+*    @param  Object    $objDB                   DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*    @param    String    $strSlipCode            ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰    ç©ºç™½æŒ‡å®šæ™‚:æ¤œç´¢çµæœå‡ºåŠ›    ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰æŒ‡å®šæ™‚:ç®¡ç†ç”¨ã€åŒã˜ç´å“æ›¸ï¼®ï¼¯ã®ä¸€è¦§å–å¾—
+*    @param    Integer    $lngSlipNo                ç´å“ä¼ç¥¨ç•ªå·    0:æ¤œç´¢çµæœå‡ºåŠ›    ç´å“ä¼ç¥¨ç•ªå·æŒ‡å®šæ™‚:ç®¡ç†ç”¨ã€åŒã˜ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰ã¨ã™ã‚‹æ™‚ã®å¯¾è±¡å¤–ç´å“ä¼ç¥¨ç•ªå·
+*    @return Array     $strSQL æ¤œç´¢ç”¨SQLæ–‡ OR Boolean FALSE
 *    @access public
 */
 function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
 {
     // -----------------------------
-    //  ¸¡º÷¾ò·ï¤ÎÆ°ÅªÀßÄê
+    //  æ¤œç´¢æ¡ä»¶ã®å‹•çš„è¨­å®š
     // -----------------------------
-    // µ¬ÄêÃÍ
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // è¦å®šå€¤
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $revisionNo = 1;
 
 
     $aryOutQuery = array();
-//     //ÌÀºÙ¹ÔNO
+//     //æ˜ç´°è¡ŒNO
 //     $aryOutQuery[] = "SELECT sd.lngSortKey as lngRecordNo";
-    //Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
+    //ç´å“ä¼ç¥¨ç•ªå·
     $aryOutQuery[] = " SELECT ms.lngslipno ";
-    //¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    //ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $aryOutQuery[] = ",ms.lngrevisionno ";
-    // Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
+    // ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.strslipcode ";
-    // Çä¾åÈÖ¹æ
+    // å£²ä¸Šç•ªå·
     $aryOutQuery[] = ", ms.lngsalesno ";
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lngcustomercode ";
-    // ¸ÜµÒÌ¾
+    // é¡§å®¢å
     $aryOutQuery[] = ", ms.strcustomername ";
-    // Çä¾åÈÖ¹æ
+    // å£²ä¸Šç•ªå·
     $aryOutQuery[] = ", ms.lngsalesno ";
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lngcustomercode ";
-    // É½¼¨ÍÑ¸ÜµÒ¥³¡¼¥É
+    // è¡¨ç¤ºç”¨é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", mc.strcompanydisplaycode ";
-    // ¸ÜµÒÌ¾
+    // é¡§å®¢å
     $aryOutQuery[] = ", ms.strcustomername ";
-    // ¸ÜµÒÃ´Åö¼ÔÌ¾
+    // é¡§å®¢æ‹…å½“è€…å
     $aryOutQuery[] = ", ms.strcustomerusername ";
-    // Ç¼ÉÊÆü
+    // ç´å“æ—¥
     $aryOutQuery[] = ", ms.dtmdeliverydate ";
-    // Ç¼ÉÊ¾ì½ê¥³¡¼¥É
+    // ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
     // $aryOutQuery[] = ", ms.lngdeliveryplacecode ";
     $aryOutQuery[] = ", mc2.strcompanydisplaycode as lngdeliveryplacecode";
-    // Ç¼ÉÊ¾ì½êÌ¾
+    // ç´å“å ´æ‰€å
     $aryOutQuery[] = ", ms.strdeliveryplacename ";
-    // Ç¼ÉÊ¾ì½êÃ´Åö¼ÔÌ¾
+    // ç´å“å ´æ‰€æ‹…å½“è€…å
     $aryOutQuery[] = ", ms.strdeliveryplaceusername ";
-    // »ÙÊ§´ü¸Â
+    // æ”¯æ‰•æœŸé™
     $aryOutQuery[] = ", ms.dtmpaymentlimit ";
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É]
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰]
     $aryOutQuery[] = ", ms.lngtaxclasscode ";
-    // ²İÀÇ¶èÊ¬
+    // èª²ç¨åŒºåˆ†
     $aryOutQuery[] = ", ms.strtaxclassname ";
-    // ¾ÃÈñÀÇÎ¨
+    // æ¶ˆè²»ç¨ç‡
     $aryOutQuery[] = ", ms.curtax ";
-    // Ã´Åö¼Ô¥³¡¼¥É
+    // æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lngusercode ";
-    // Ã´Åö¼ÔÌ¾
+    // æ‹…å½“è€…å
     $aryOutQuery[] = ", ms.strusername ";
-    // ¹ç·×¶â³Û
+    // åˆè¨ˆé‡‘é¡
     $aryOutQuery[] = ", ms.curtotalprice";
-    // ÄÌ²ßÃ±°Ì¥³¡¼¥É
+    // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lngmonetaryunitcode ";
-    // ÄÌ²ßÃ±°Ì
+    // é€šè²¨å˜ä½
     $aryOutQuery[] = ", ms.strmonetaryunitsign ";
-    // ºîÀ®Æü
+    // ä½œæˆæ—¥
     $aryOutQuery[] = ", ms.dtminsertdate ";
-    // ÆşÎÏ¼Ô¥³¡¼¥É
+    // å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lnginsertusercode ";
-    // ÆşÎÏ¼ÔÌ¾
+    // å…¥åŠ›è€…å
     $aryOutQuery[] = ", ms.strinsertusername ";
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryOutQuery[] = ", ms.strnote ";
-    // °õºş²ó¿ô
+    // å°åˆ·å›æ•°
     $aryOutQuery[] = ", ms.lngprintcount ";
-    // Ìµ¸ú¥Õ¥é¥°
+    // ç„¡åŠ¹ãƒ•ãƒ©ã‚°
     $aryOutQuery[] = ", ms.bytinvalidflag ";
-    // From¶ç
+    // Fromå¥
     $aryOutQuery[] = " FROM m_slip ms ";
     $aryOutQuery[] = " INNER JOIN (select lngslipno, MAX(lngrevisionno) as lngrevisionno from m_slip group by lngslipno)";
     $aryOutQuery[] = " rev_max on rev_max.lngslipno = ms.lngslipno and rev_max.lngrevisionno = ms.lngrevisionno";
@@ -119,8 +119,8 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
     $aryOutQuery[] = " LEFT JOIN m_user mu1 ON mu1.lngusercode = ms.lngusercode ";
     $aryOutQuery[] = " LEFT JOIN m_user mu2 ON mu2.lngusercode = ms.lnginsertusercode ";
 
-    // Where¶ç
-    $aryOutQuery[] = " WHERE not exists (select lngslipno from m_slip ms1 where ms1.lngslipno = ms.lngslipno and ms1.lngrevisionno < 0) " ; // ºï½üºÑ¤ß¤ÏÂĞ¾İ³°
+    // Whereå¥
+    $aryOutQuery[] = " WHERE not exists (select lngslipno from m_slip ms1 where ms1.lngslipno = ms.lngslipno and ms1.lngrevisionno < 0) " ; // å‰Šé™¤æ¸ˆã¿ã¯å¯¾è±¡å¤–
 
     foreach($aryCondtition as $column => $value) {
         $value = trim($value);
@@ -128,20 +128,20 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
             continue;
         }
 
-        // ¸ÜµÒ¥³¡¼¥É(É½¼¨ÍÑ)
+        // é¡§å®¢ã‚³ãƒ¼ãƒ‰(è¡¨ç¤ºç”¨)
         if($column == 'customerCode') {
             $aryOutQuery[] = " AND mc.strcompanydisplaycode = '" .$value ."' " ;
         }
 
-        // ¸ÜµÒÌ¾
+        // é¡§å®¢å
 /*
         if($column == 'customerName') {
             $aryOutQuery[] = " AND strcustomername LIKE '%" .$value ."%' " ;
         }
 */
-        // Ç¼ÉÊ½ñÈÖ¹æ
+        // ç´å“æ›¸ç•ªå·
         if($column == 'strSlipCode') {
-            // ¥«¥ó¥Ş¶èÀÚ¤ê¤ÎÆşÎÏÃÍ¤òOR¾ò·ï¤ËÅ¸³«
+            // ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®å…¥åŠ›å€¤ã‚’ORæ¡ä»¶ã«å±•é–‹
             $arySCValue = preg_split('/[,\s]/', $value);
             foreach($arySCValue as $strSCValue){
                 if(empty(trim($strSCValue)))
@@ -154,36 +154,36 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
             $aryOutQuery[] = ") ";
         }
 
-        // Ç¼ÉÊÆü FROM
+        // ç´å“æ—¥ FROM
         if($column == 'deliveryFrom') {
             $aryOutQuery[] = " AND dtmdeliverydate >= '" .$value ." 00:00:00" ."' " ;
         }
 
-        // Ç¼ÉÊÆü To
+        // ç´å“æ—¥ To
         if($column == 'deliveryTo') {
             $aryOutQuery[] = " AND dtmdeliverydate <= '" .$value ." 23:59:59" ."' " ;
         }
 
-        // Ç¼ÉÊ¾ì½ê¥³¡¼¥É
+        // ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
         if($column == 'deliveryPlaceCode') {
             $aryOutQuery[] = " AND ms.lngdeliveryplacecode = ( SELECT lngcompanycode FROM m_company WHERE strcompanydisplaycode = '" .$value ."') ";
         }
-        // ÄÌ²ß
+        // é€šè²¨
         if($column == 'moneyClassCode') {
             $aryOutQuery[] = " AND lngmonetaryunitcode = " .$value ." " ;
         }
 
-        // ²İÀÇ¶èÊ¬
+        // èª²ç¨åŒºåˆ†
         if($column == 'taxClassCode') {
             $aryOutQuery[] = " AND lngtaxclasscode = " .$value ." " ;
         }
 
-        // Ã´Åö¼Ô¥³¡¼¥É
+        // æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
         if($column == 'inChargeUserCode') {
             $aryOutQuery[] = " AND mu1.struserdisplaycode LIKE '%" .$value ."%' " ;
         }
 
-        // ºîÀ®¼Ô¥³¡¼¥É
+        // ä½œæˆè€…ã‚³ãƒ¼ãƒ‰
         if($column == 'inputUserCode') {
             $aryOutQuery[] = " AND mu2.struserdisplaycode LIKE '%" .$value ."%' " ;
         }
@@ -198,7 +198,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
         $aryOutQuery[] = " AND  ms.lngsalesno NOT IN( SELECT m_sales.lngsalesno FROM m_sales WHERE lnginvoiceno <> " . $lnginvoiceno .  ") " ;
     }
 
-    // OrderBy¶ç
+    // OrderByå¥
     $aryOutQuery[] = " ORDER BY ms.lngslipno ASC , ms.lngrevisionno DESC ";
 
 
@@ -208,89 +208,89 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
 
 
 /**
- * ÀÁµá½ñÈÖ¹æ¤«¤éÀÁµá½ñÌÀºÙ¤ËÉ³¤Å¤¯Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®´Ø¿ô
+ * è«‹æ±‚æ›¸ç•ªå·ã‹ã‚‰è«‹æ±‚æ›¸æ˜ç´°ã«ç´ã¥ãç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆé–¢æ•°
  *
  *
- *    @param    Integer    $lnginvoiceno            ÀÁµá½ñNo
- *    @return Array     $strSQL ¸¡º÷ÍÑSQLÊ¸ OR Boolean FALSE
+ *    @param    Integer    $lnginvoiceno            è«‹æ±‚æ›¸No
+ *    @return Array     $strSQL æ¤œç´¢ç”¨SQLæ–‡ OR Boolean FALSE
  *    @access public
  */
 function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno, $lngrevisionno )
 {
 
     $aryOutQuery = array();
-    //Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
+    //ç´å“ä¼ç¥¨ç•ªå·
     $aryOutQuery[] = " SELECT DISTINCT ON (ms.lngSlipNo) ms.lngSlipNo ";
-    //¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    //ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $aryOutQuery[] = ", ms.lngrevisionno ";
-    // Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
+    // ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.strslipcode ";
-    // Çä¾åÈÖ¹æ
+    // å£²ä¸Šç•ªå·
     $aryOutQuery[] = ", ms.lngsalesno ";
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lngcustomercode ";
-    // É½¼¨ÍÑ¸ÜµÒ¥³¡¼¥É
+    // è¡¨ç¤ºç”¨é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", mc.strcompanydisplaycode ";
-    // ¸ÜµÒÌ¾
+    // é¡§å®¢å
     $aryOutQuery[] = ", ms.strcustomername ";
-    // ¸ÜµÒÃ´Åö¼ÔÌ¾
+    // é¡§å®¢æ‹…å½“è€…å
     $aryOutQuery[] = ", ms.strcustomerusername ";
-    // Ç¼ÉÊÆü
+    // ç´å“æ—¥
     $aryOutQuery[] = ", ms.dtmdeliverydate ";
-    // Ç¼ÉÊ¾ì½ê¥³¡¼¥É
+    // ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", mc2.strcompanydisplaycode as lngdeliveryplacecode ";
-    // Ç¼ÉÊ¾ì½êÌ¾
+    // ç´å“å ´æ‰€å
     $aryOutQuery[] = ", ms.strdeliveryplacename ";
-    // Ç¼ÉÊ¾ì½êÃ´Åö¼ÔÌ¾
+    // ç´å“å ´æ‰€æ‹…å½“è€…å
     $aryOutQuery[] = ", ms.strdeliveryplaceusername ";
-    // »ÙÊ§´ü¸Â
+    // æ”¯æ‰•æœŸé™
     $aryOutQuery[] = ", ms.dtmpaymentlimit ";
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É]
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰]
     $aryOutQuery[] = ", ms.lngtaxclasscode ";
-    // ²İÀÇ¶èÊ¬
+    // èª²ç¨åŒºåˆ†
     $aryOutQuery[] = ", ms.strtaxclassname ";
-    // ¾ÃÈñÀÇÎ¨
+    // æ¶ˆè²»ç¨ç‡
     $aryOutQuery[] = ", ms.curtax ";
-    // Ã´Åö¼Ô¥³¡¼¥É
+    // æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lngusercode ";
-    // Ã´Åö¼ÔÌ¾
+    // æ‹…å½“è€…å
     $aryOutQuery[] = ", ms.strusername ";
-    // ¹ç·×¶â³Û
+    // åˆè¨ˆé‡‘é¡
     $aryOutQuery[] = ", ms.curtotalprice ";
-    // ÄÌ²ßÃ±°Ì¥³¡¼¥É
+    // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lngmonetaryunitcode ";
-    // ÄÌ²ßÃ±°Ì
+    // é€šè²¨å˜ä½
     $aryOutQuery[] = ", ms.strmonetaryunitsign ";
-    // ºîÀ®Æü
+    // ä½œæˆæ—¥
     $aryOutQuery[] = ", ms.dtminsertdate ";
-    // ÆşÎÏ¼Ô¥³¡¼¥É
+    // å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
     $aryOutQuery[] = ", ms.lnginsertusercode ";
-    // ÆşÎÏ¼ÔÌ¾
+    // å…¥åŠ›è€…å
     $aryOutQuery[] = ", ms.strinsertusername ";
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryOutQuery[] = ", ms.strnote ";
-    // °õºş²ó¿ô
+    // å°åˆ·å›æ•°
     $aryOutQuery[] = ", ms.lngprintcount ";
-    // Ìµ¸ú¥Õ¥é¥°
+    // ç„¡åŠ¹ãƒ•ãƒ©ã‚°
     $aryOutQuery[] = ", ms.bytinvalidflag ";
-    // From¶ç
+    // Fromå¥
     $aryOutQuery[] = " FROM m_slip ms ";
     // JOIN
     $aryOutQuery[] = " LEFT JOIN m_company mc ON (mc.lngcompanycode = ms.lngcustomercode ) ";
     $aryOutQuery[] = " LEFT JOIN m_company mc2 ON (mc2.lngcompanycode = ms.lngdeliveryplacecode ) ";
 
-    // Where¶ç
-    // strslipcode ¤ò¸¡º÷¤¹¤ë¥µ¥Ö¥¯¥¨¥ê
+    // Whereå¥
+    // strslipcode ã‚’æ¤œç´¢ã™ã‚‹ã‚µãƒ–ã‚¯ã‚¨ãƒª
     $subQuery  = "select DISTINCT lngslipno from t_invoicedetail where lnginvoiceno = "  .$lnginvoiceno ."  ";
     $subQuery .= "AND lngrevisionno = " .$lngrevisionno. " ";
 
-    $aryOutQuery[] = " WHERE lngrevisionno >= 0 " ;    // ÂĞ¾İÇ¼ÉÊÅÁÉ¼ÈÖ¹æ¤Î»ØÄê
+    $aryOutQuery[] = " WHERE lngrevisionno >= 0 " ;    // å¯¾è±¡ç´å“ä¼ç¥¨ç•ªå·ã®æŒ‡å®š
     $aryOutQuery[] = " AND ms.lngslipno IN ( " .$subQuery ." ) " ;
 
-    // order¶ç
+    // orderå¥
     $aryOutQuery[] = " ORDER BY  ms.lngSlipNo ASC , ms.lngrevisionno DESC " ;
 
-    // ¥¯¥¨¥ê¤òÊ¿°×¤ÊÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚¯ã‚¨ãƒªã‚’å¹³æ˜“ãªæ–‡å­—åˆ—ã«å¤‰æ›
     $query = implode("\n",$aryOutQuery);
 
     return $query;
@@ -300,28 +300,28 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno, $lngrevisionno )
 
 
 /**
- * »ØÄê¤·¤¿ÀÁµá½ñÈÖ¹æ¤«¤éÀÁµá½ñ¥³¡¼¥É¤ò¼èÆÀ¤¹¤ë(¤Ê¤±¤ì¤Ğ¥³¡¼¥É¤òÀ¸À®)
+ * æŒ‡å®šã—ãŸè«‹æ±‚æ›¸ç•ªå·ã‹ã‚‰è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰ã‚’å–å¾—ã™ã‚‹(ãªã‘ã‚Œã°ã‚³ãƒ¼ãƒ‰ã‚’ç”Ÿæˆ)
  *
  *
- *    @param  String    $lnginvoiceno     ÀÁµá½ñÈÖ¹æ
- *    @param  date      $isDummy          true  : ¥·¡¼¥±¥ó¥¹Ì¤È¯¹Ô
- *                                         false : ¥·¡¼¥±¥ó¥¹È¯¹Ô
- *    @param  Object    $objDB            DB¥ª¥Ö¥¸¥§¥¯¥È
+ *    @param  String    $lnginvoiceno     è«‹æ±‚æ›¸ç•ªå·
+ *    @param  date      $isDummy          true  : ã‚·ãƒ¼ã‚±ãƒ³ã‚¹æœªç™ºè¡Œ
+ *                                         false : ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç™ºè¡Œ
+ *    @param  Object    $objDB            DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  *    @return str       strinvoicecode    TT-BMMnnn
- *                                         TT¡§´ü¡Ê4/1¤Ë¥«¥¦¥ó¥È¥¢¥Ã¥×¡£2019Ç¯ÅÙ¤Ï42´ü¡Ë
- *                                         MM¡§·î(01¢·12¡Ë
- *                                         nnn¡§·îÆâ¤Ç¤ÎÏ¢ÈÖ¡Ê001¢·999¡Ë¤ò¼«Æ°ºÎÈÖ
+ *                                         TTï¼šæœŸï¼ˆ4/1ã«ã‚«ã‚¦ãƒ³ãƒˆã‚¢ãƒƒãƒ—ã€‚2019å¹´åº¦ã¯42æœŸï¼‰
+ *                                         MMï¼šæœˆ(01ï½12ï¼‰
+ *                                         nnnï¼šæœˆå†…ã§ã®é€£ç•ªï¼ˆ001ï½999ï¼‰ã‚’è‡ªå‹•æ¡ç•ª
  *    @access public
  */
 function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $objDB )
 {
-    // ÅĞÏ¿ºÑ¤Ê¤éÅĞÏ¿¤µ¤ì¤Æ¤¤¤ë¥³¡¼¥É¤òÊÖ¤¹
+    // ç™»éŒ²æ¸ˆãªã‚‰ç™»éŒ²ã•ã‚Œã¦ã„ã‚‹ã‚³ãƒ¼ãƒ‰ã‚’è¿”ã™
     if ( !empty($lnginvoiceno) )
     {
         $strQuery = " SELECT DISTINCT strinvoicecode FROM m_invoice WHERE lnginvoiceno = " . $lnginvoiceno . " ";
 
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-        // ¥ì¥³¡¼¥É¤¬¤¢¤ì¤Ğ¥³¡¼¥É¤òÊÖ¤¹
+        // ãƒ¬ã‚³ãƒ¼ãƒ‰ãŒã‚ã‚Œã°ã‚³ãƒ¼ãƒ‰ã‚’è¿”ã™
         if ( $lngResultNum )
         {
             $result = pg_fetch_assoc($lngResultID);
@@ -331,9 +331,9 @@ function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $objDB )
         $objDB->freeResult($lngResultID);
     }
 
-    // ÀÁµá½ñÈÖ¹æ(strinvoicecode)¤òÈ¯¹Ô
+    // è«‹æ±‚æ›¸ç•ªå·(strinvoicecode)ã‚’ç™ºè¡Œ
     $format = '%02d-B%02d%03d';
-    // ´ü¼èÆÀ
+    // æœŸå–å¾—
     $basePeriod = 42;
     $baseDate   = '2019-04-01';
 
@@ -343,25 +343,25 @@ function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $objDB )
     $period = $basePeriod + (int)$diff->format('%Y');
     $thisMonth = $dateTimeNow->format('m');
 
-    // dummy¤Î½èÍı(ÌµÂÌ¤Ê¥·¡¼¥±¥ó¥¹È¯¹Ô¤òËÉ¤°)
+    // dummyã®å‡¦ç†(ç„¡é§„ãªã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç™ºè¡Œã‚’é˜²ã)
     if($isDummy)
     {
-        // Åö·îÆâ¤ËÈ¯¹Ô¤µ¤ì¤¿ÀÁµá½ñ¥«¥¦¥ó¥È¤ò¼èÆÀ¤¹¤ë
+        // å½“æœˆå†…ã«ç™ºè¡Œã•ã‚ŒãŸè«‹æ±‚æ›¸ã‚«ã‚¦ãƒ³ãƒˆã‚’å–å¾—ã™ã‚‹
         $start = date('Y-m-01', strtotime('first day of ' .$dateTimeNow->format('Y-m-d')));
         $end   = date('Y-m-01', strtotime($start. '+1 month'));
         $strQuery = "SELECT DISTINCT(lnginvoiceno) FROM m_invoice WHERE dtminsertdate >= '" . $start . "' AND dtminsertdate < '" . $end . "' " ;
 
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-        // ·ï¿ô¤¬Íß¤·¤¤¤Î¤Ç·ë²Ì¤Ï¤Ê¤¯¤Æ¤âÌäÂê¤Ê¤¤
+        // ä»¶æ•°ãŒæ¬²ã—ã„ã®ã§çµæœã¯ãªãã¦ã‚‚å•é¡Œãªã„
         $num = $lngResultNum+1;
-        // format¤Ë½¾¤Ã¤ÆÀÁµá½ñ¥³¡¼¥É¤òÊÖ¤¹
+        // formatã«å¾“ã£ã¦è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰ã‚’è¿”ã™
         $strinvoicecode = sprintf($format, $period, $thisMonth, $num );
     }
     else
     {
-        // ¥·¡¼¥±¥ó¥¹È¯¹Ô
+        // ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç™ºè¡Œ
         $sequenceInvoiceCode = fncGetDateSequence($period, $thisMonth, 'm_invoice.strinvoicecode', $objDB);
-        // format¤Ë½¾¤Ã¤ÆÀÁµá½ñ¥³¡¼¥É¤òÊÖ¤¹
+        // formatã«å¾“ã£ã¦è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰ã‚’è¿”ã™
         $strinvoicecode = sprintf($format, substr($sequenceInvoiceCode,0,2), substr($sequenceInvoiceCode,2,2), substr($sequenceInvoiceCode,5,3) );
     }
 
@@ -369,15 +369,15 @@ function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $objDB )
 }
 
 /**
- * »ØÄê¤·¤¿É½¼¨ÍÑ¸ÜµÒ¥³¡¼¥É¤«¤é ¸ÜµÒÌ¾/¸ÜµÒ¼ÒÌ¾¤òÊÖ¤¹
+ * æŒ‡å®šã—ãŸè¡¨ç¤ºç”¨é¡§å®¢ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ é¡§å®¢å/é¡§å®¢ç¤¾åã‚’è¿”ã™
  *
  *
- *    @param  String    $companyDisplayCode  É½¼¨ÍÑ¸ÜµÒ¥³¡¼¥É
- *    @param  Object    $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
- *    @return int       $lngCustomerCode     ¸ÜµÒ¥³¡¼¥É
- *    @return string    printCustomerName    É½¼¨ÍÑ¸ÜµÒÌ¾
- *    @return string    printCompanyName     É½¼¨ÍÑ¸ÜµÒ¼ÒÌ¾
- *    @return string    $result['strcompanydisplayname']    DB¤ÎÉ½¼¨ÍÑ²ñ¼ÒÌ¾¾Î
+ *    @param  String    $companyDisplayCode  è¡¨ç¤ºç”¨é¡§å®¢ã‚³ãƒ¼ãƒ‰
+ *    @param  Object    $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    @return int       $lngCustomerCode     é¡§å®¢ã‚³ãƒ¼ãƒ‰
+ *    @return string    printCustomerName    è¡¨ç¤ºç”¨é¡§å®¢å
+ *    @return string    printCompanyName     è¡¨ç¤ºç”¨é¡§å®¢ç¤¾å
+ *    @return string    $result['strcompanydisplayname']    DBã®è¡¨ç¤ºç”¨ä¼šç¤¾åç§°
  *    @access public
  */
 function fncGetCompanyPrintName( $companyDisplayCode ,$objDB)
@@ -405,30 +405,30 @@ function fncGetCompanyPrintName( $companyDisplayCode ,$objDB)
     $strQuery[] = "ON(mc.lngorganizationcode = oz.lngorganizationcode)";
     $strQuery[] = "WHERE mc.strcompanydisplaycode = '"  .$companyDisplayCode ."' ";
 
-    // ¥¯¥¨¥ê¤òÊ¿°×¤ÊÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚¯ã‚¨ãƒªã‚’å¹³æ˜“ãªæ–‡å­—åˆ—ã«å¤‰æ›
     $query = implode("\n",$strQuery);
 
-    // ¥¯¥¨¥ê¼Â¹Ô
+    // ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
     list ( $lngResultID, $lngResultNum ) = fncQuery( $query, $objDB );
-    // ¥ì¥³¡¼¥É¤¢¤ì¤Ğ¸ÜµÒÌ¾¡¦¸ÜµÒ¼ÒÌ¾¤òÀßÄê¤¹¤ë
+    // ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚ã‚Œã°é¡§å®¢åãƒ»é¡§å®¢ç¤¾åã‚’è¨­å®šã™ã‚‹
     if ( $lngResultNum )
     {
-        // ¸¡º÷·ë²ÌÏ¢ÁÛÇÛÎó¤ò¼èÆÀ
+        // æ¤œç´¢çµæœé€£æƒ³é…åˆ—ã‚’å–å¾—
         $result =  pg_fetch_assoc($lngResultID);
         $lngCustomerCode = $result['lngcompanycode'];
 
         if( !empty($result['strprintcompanyname']) )
         {
-            // °õ»úÍÑ²ñ¼Ò¥Ş¥¹¥¿.°õ»úÍÑ²ñ¼ÒÌ¾¤¬¤ß¤Ä¤«¤Ã¤¿¾ì¹ç
-            // ¸ÜµÒ¼ÒÌ¾
+            // å°å­—ç”¨ä¼šç¤¾ãƒã‚¹ã‚¿.å°å­—ç”¨ä¼šç¤¾åãŒã¿ã¤ã‹ã£ãŸå ´åˆ
+            // é¡§å®¢ç¤¾å
             $printCompanyName  = $result['strprintcompanyname'];
-            // ¸ÜµÒÌ¾
+            // é¡§å®¢å
             $printCustomerName = $result['strcompanydisplayname'];
         }
         else
         {
            $organizationName = ($result['strorganizationname'] == '-') ? '' : $result['strorganizationname'];
-            // ¸ÜµÒ¼ÒÌ¾
+            // é¡§å®¢ç¤¾å
             if($result['bytorganizationfront'] != 't')
             {
                $printCompanyName  = $result['strcompanyname'] .$organizationName;
@@ -437,7 +437,7 @@ function fncGetCompanyPrintName( $companyDisplayCode ,$objDB)
             {
                 $printCompanyName = $organizationName .$result['strcompanyname'];
             }
-            // ¸ÜµÒÌ¾(ÀßÄê¤·¤Ê¤¤)
+            // é¡§å®¢å(è¨­å®šã—ãªã„)
             $printCustomerName = "";
         }
         $objDB->freeResult($lngResultID);
@@ -448,13 +448,13 @@ function fncGetCompanyPrintName( $companyDisplayCode ,$objDB)
 
 
 /**
- * »ØÄê¤·¤¿É½¼¨ÍÑ¸ÜµÒ¥³¡¼¥É¡¦ÆüÉÕ¤«¤é Äù¤áÆü¤òÊÖ¤¹
+ * æŒ‡å®šã—ãŸè¡¨ç¤ºç”¨é¡§å®¢ã‚³ãƒ¼ãƒ‰ãƒ»æ—¥ä»˜ã‹ã‚‰ ç· ã‚æ—¥ã‚’è¿”ã™
  *
  *
- *    @param  String    $companyDisplayCode  É½¼¨ÍÑ¸ÜµÒ¥³¡¼¥É
- *    @param  date      $targetDate          »ØÄêÆü(¤Ê¤±¤ì¤Ğ¥·¥¹¥Æ¥àDATE)
- *    @param  Object    $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
- *    @return date      $closedDay           Äù¤áÆü
+ *    @param  String    $companyDisplayCode  è¡¨ç¤ºç”¨é¡§å®¢ã‚³ãƒ¼ãƒ‰
+ *    @param  date      $targetDate          æŒ‡å®šæ—¥(ãªã‘ã‚Œã°ã‚·ã‚¹ãƒ†ãƒ DATE)
+ *    @param  Object    $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    @return date      $closedDay           ç· ã‚æ—¥
  *    @access public
  */
 function fncGetCompanyClosedDay($companyDisplayCode , $targetDate=null, $objDB)
@@ -477,21 +477,21 @@ function fncGetCompanyClosedDay($companyDisplayCode , $targetDate=null, $objDB)
     $strQuery[] = "ON (mc.lngcloseddaycode = close.lngcloseddaycode) ";
     $strQuery[] = "WHERE mc.strcompanydisplaycode = '"  .$companyDisplayCode ."' ";
 
-    // ¥¯¥¨¥ê¤òÊ¿°×¤ÊÊ¸»úÎó¤ËÊÑ´¹
+    // ã‚¯ã‚¨ãƒªã‚’å¹³æ˜“ãªæ–‡å­—åˆ—ã«å¤‰æ›
     $query = implode("\n",$strQuery);
-    // ¥¯¥¨¥ê¼Â¹Ô
+    // ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
     list ( $lngResultID, $lngResultNum ) = fncQuery( $query, $objDB );
 
-    // ¥ì¥³¡¼¥É¤¢¤ì¤Ğ¸ÜµÒÌ¾¡¦¸ÜµÒ¼ÒÌ¾¤òÀßÄê¤¹¤ë
+    // ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚ã‚Œã°é¡§å®¢åãƒ»é¡§å®¢ç¤¾åã‚’è¨­å®šã™ã‚‹
     if ( $lngResultNum )
     {
-        // ¸¡º÷·ë²ÌÏ¢ÁÛÇÛÎó¤ò¼èÆÀ
+        // æ¤œç´¢çµæœé€£æƒ³é…åˆ—ã‚’å–å¾—
         $result = pg_fetch_assoc($lngResultID);
         $lngClosedDay = (int)$result['lngclosedday'];
         if($lngClosedDay < 0){
             return $closedDay;
         }
-        // ÆüÉÕ¤ÎÈæ³Ó
+        // æ—¥ä»˜ã®æ¯”è¼ƒ
         $dateTime = new DateTime($targetDate);
 
         if( $lngClosedDay == 0 )
@@ -507,7 +507,7 @@ function fncGetCompanyClosedDay($companyDisplayCode , $targetDate=null, $objDB)
             $day = (int)$dateTime->format('d');
             if($day > $lngClosedDay)
             {
-                // Íè·î
+                // æ¥æœˆ
                 $dateTime->add(DateInterval::createFromDateString('1 month'));
             }
         }
@@ -520,26 +520,26 @@ function fncGetCompanyClosedDay($companyDisplayCode , $targetDate=null, $objDB)
 
 
 /**
- * »ØÄê¤·¤¿ÄÌ²ßÃ±°Ì¥³¡¼¥É¤«¤é ÄÌ²ßÃ±°ÌÌ¾¤òÊÖ¤¹
+ * æŒ‡å®šã—ãŸé€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰ã‹ã‚‰ é€šè²¨å˜ä½åã‚’è¿”ã™
  *
  *
- *    @param  int      $monetaryUnitCode  ÄÌ²ßÃ±°Ì¥³¡¼¥É
- *    @param  Object   $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
- *    @return string   $monetaryUnitSign    ÄÌ²ßÃ±°ÌÌ¾
+ *    @param  int      $monetaryUnitCode  é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+ *    @param  Object   $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    @return string   $monetaryUnitSign    é€šè²¨å˜ä½å
  *    @access public
  */
 function fncGetMonetaryunitSign( $monetaryUnitCode ,$objDB)
 {
-    // ÄÌ²ßÃ±°Ì¥Ş¥¹¥¿¤ò¼èÆÀ
+    // é€šè²¨å˜ä½ãƒã‚¹ã‚¿ã‚’å–å¾—
     $query = "SELECT strmonetaryunitsign FROM m_monetaryunit WHERE lngmonetaryunitcode = " .$monetaryUnitCode;
 
-    // ¥¯¥¨¥ê¼Â¹Ô
+    // ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
     list ( $lngResultID, $lngResultNum ) = fncQuery( $query, $objDB );
-    // ¥ì¥³¡¼¥É¤¢¤ì¤ĞÄÌ²ßÃ±°ÌÌ¾¾Î¤òÀßÄê¤¹¤ë
+    // ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚ã‚Œã°é€šè²¨å˜ä½åç§°ã‚’è¨­å®šã™ã‚‹
     $monetaryUnitSign = "";
     if ( $lngResultNum )
     {
-        // ¸¡º÷·ë²ÌÏ¢ÁÛÇÛÎó¤ò¼èÆÀ
+        // æ¤œç´¢çµæœé€£æƒ³é…åˆ—ã‚’å–å¾—
         $result =  pg_fetch_assoc($lngResultID);
         $monetaryUnitSign = $result['strmonetaryunitsign'];
     }
@@ -549,51 +549,51 @@ function fncGetMonetaryunitSign( $monetaryUnitCode ,$objDB)
 
 
 /**
- * ÀÁµá½ñ¸¡º÷¤Î¸¡º÷¹àÌÜ¤«¤é°ìÃ×¤¹¤ëºÇ¿·¤ÎÀÁµá½ñ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®´Ø¿ô
+ * è«‹æ±‚æ›¸æ¤œç´¢ã®æ¤œç´¢é …ç›®ã‹ã‚‰ä¸€è‡´ã™ã‚‹æœ€æ–°ã®è«‹æ±‚æ›¸ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆé–¢æ•°
  *
- *    ÀÁµá½ñ¸¡º÷¤Î¸¡º÷¹àÌÜ¤«¤é SQLÊ¸¤òºîÀ®¤¹¤ë
+ *    è«‹æ±‚æ›¸æ¤œç´¢ã®æ¤œç´¢é …ç›®ã‹ã‚‰ SQLæ–‡ã‚’ä½œæˆã™ã‚‹
  *
- *    @param  Array     $arySearchColumn         ¸¡º÷ÂĞ¾İ¥«¥é¥àÌ¾¤ÎÇÛÎó
- *    @param  Array     $arySearchDataColumn     ¸¡º÷ÆâÍÆ¤ÎÇÛÎó
- *    @param  Object    $objDB                   DB¥ª¥Ö¥¸¥§¥¯¥È
- *    @return Array     $strSQL ¸¡º÷ÍÑSQLÊ¸ OR Boolean FALSE
+ *    @param  Array     $arySearchColumn         æ¤œç´¢å¯¾è±¡ã‚«ãƒ©ãƒ åã®é…åˆ—
+ *    @param  Array     $arySearchDataColumn     æ¤œç´¢å†…å®¹ã®é…åˆ—
+ *    @param  Object    $objDB                   DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    @return Array     $strSQL æ¤œç´¢ç”¨SQLæ–‡ OR Boolean FALSE
  *    @access public
  */
 function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $strSessionID)
 {
     // -----------------------------
-    //  ¸¡º÷¾ò·ï¤ÎÆ°ÅªÀßÄê
+    //  æ¤œç´¢æ¡ä»¶ã®å‹•çš„è¨­å®š
     // -----------------------------
-    // ÌÀºÙ¾ò·ïÄÉ²ÃºÑ¤ß¥Õ¥é¥°
+    // æ˜ç´°æ¡ä»¶è¿½åŠ æ¸ˆã¿ãƒ•ãƒ©ã‚°
     $detailFlag = FALSE;
 
-    // Æ±¤¸Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¤Î¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë¾ì¹ç
+    // åŒã˜ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹å ´åˆ
     if ( $strSlipCode )
     {
-        // Æ±¤¸Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¤ËÂĞ¤·¤Æ»ØÄê¤ÎÇ¼ÉÊÅÁÉ¼ÈÖ¹æ¤Î¥Ç¡¼¥¿¤Ï½ü³°¤¹¤ë
+        // åŒã˜ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰ã«å¯¾ã—ã¦æŒ‡å®šã®ç´å“ä¼ç¥¨ç•ªå·ã®ãƒ‡ãƒ¼ã‚¿ã¯é™¤å¤–ã™ã‚‹
         if ( $lngSlipNo )
         {
             $aryQuery[] = " WHERE inv.bytInvalidFlag = FALSE AND s.strSlipCode = '" . $strSlipCode . "'";
         }
         else
         {
-            fncOutputError( 3, "DEF_FATAL", "¥¯¥¨¥ê¡¼¼Â¹Ô¥¨¥é¡¼" ,TRUE, "../inv/search/index.php?strSessionID=".$strSessionID, $objDB );
+            fncOutputError( 3, "DEF_FATAL", "ã‚¯ã‚¨ãƒªãƒ¼å®Ÿè¡Œã‚¨ãƒ©ãƒ¼" ,TRUE, "../inv/search/index.php?strSessionID=".$strSessionID, $objDB );
         }
     }
-    // ´ÉÍı¥â¡¼¥É¤Ç¤ÎÆ±¤¸Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¤ËÂĞ¤¹¤ë¸¡º÷¥â¡¼¥É°Ê³°¤Î¾ì¹ç¤Ï¸¡º÷¾ò·ï¤òÄÉ²Ã¤¹¤ë
+    // ç®¡ç†ãƒ¢ãƒ¼ãƒ‰ã§ã®åŒã˜ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰ã«å¯¾ã™ã‚‹æ¤œç´¢ãƒ¢ãƒ¼ãƒ‰ä»¥å¤–ã®å ´åˆã¯æ¤œç´¢æ¡ä»¶ã‚’è¿½åŠ ã™ã‚‹
     else
     {
-        // ÀäÂĞ¾ò·ï Ìµ¸ú¥Õ¥é¥°¤¬ÀßÄê¤µ¤ì¤Æ¤ª¤é¤º¡¢ºÇ¿·Çä¾å¤Î¤ß
+        // çµ¶å¯¾æ¡ä»¶ ç„¡åŠ¹ãƒ•ãƒ©ã‚°ãŒè¨­å®šã•ã‚Œã¦ãŠã‚‰ãšã€æœ€æ–°å£²ä¸Šã®ã¿
         $aryQuery[] = " WHERE inv.bytinvalidflag = FALSE AND inv.lngrevisionno >= 0";
-        // ¸¡º÷¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹¤¬ON¤Î¹àÌÜ¤Î¤ß¸¡º÷¾ò·ï¤ËÄÉ²Ã
+        // æ¤œç´¢ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ãŒONã®é …ç›®ã®ã¿æ¤œç´¢æ¡ä»¶ã«è¿½åŠ 
         for ( $i = 0; $i < count($arySearchColumn); $i++ )
         {
             $strSearchColumnName = $arySearchColumn[$i];
 
             // ----------------------------------------------
-            //   Ç¼ÉÊ½ñ¥Ş¥¹¥¿¡Ê¥Ø¥Ã¥ÀÉô¡Ë¤Î¸¡º÷¾ò·ï
+            //   ç´å“æ›¸ãƒã‚¹ã‚¿ï¼ˆãƒ˜ãƒƒãƒ€éƒ¨ï¼‰ã®æ¤œç´¢æ¡ä»¶
             // ----------------------------------------------
-            // ¸ÜµÒ¡ÊÇä¾åÀè¡Ë
+            // é¡§å®¢ï¼ˆå£²ä¸Šå…ˆï¼‰
             if ( $strSearchColumnName == "lngCustomerCompanyCode" )
             {
                 if ( $arySearchDataColumn["lngCustomerCompanyCode"] )
@@ -606,7 +606,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
                 }
             }
 
-            // ²İÀÇ¶èÊ¬¡Ê¾ÃÈñÀÇ¶èÊ¬¡Ë
+            // èª²ç¨åŒºåˆ†ï¼ˆæ¶ˆè²»ç¨åŒºåˆ†ï¼‰
             if ( $strSearchColumnName == "lngTaxClassCode" )
             {
                 if ( $arySearchDataColumn["lngTaxClassCode"] )
@@ -615,12 +615,12 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
                 }
             }
 
-            // Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¡ÊÇ¼ÉÊ½ñNO¡ËÀÁµá½ñÌÀºÙ¥Æ¡¼¥Ö¥ë¤«¤é°ú¤¯
+            // ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰ï¼ˆç´å“æ›¸NOï¼‰è«‹æ±‚æ›¸æ˜ç´°ãƒ†ãƒ¼ãƒ–ãƒ«ã‹ã‚‰å¼•ã
             if ( $strSearchColumnName == "strInvoiceCode" )
             {
                 if ( $arySearchDataColumn["strInvoiceCode"] )
                 {
-                    // ¥«¥ó¥Ş¶èÀÚ¤ê¤ÎÆşÎÏÃÍ¤òOR¾ò·ï¤ËÅ¸³«
+                    // ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®å…¥åŠ›å€¤ã‚’ORæ¡ä»¶ã«å±•é–‹
                     $arySCValue = preg_split('/[,\s]/', $arySearchDataColumn["strInvoiceCode"]);
                     foreach($arySCValue as $strSCValue){
                         if(empty(trim($strSCValue)))
@@ -634,7 +634,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
                 }
             }
 
-            // ÀÁµáÆü
+            // è«‹æ±‚æ—¥
             if ( $strSearchColumnName == "dtmInvoiceDate" )
             {
                 if ( $arySearchDataColumn["dtmInvoiceDateFrom"] )
@@ -649,7 +649,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
                 }
             }
 
-            // ÆşÎÏÆü
+            // å…¥åŠ›æ—¥
             if ( $strSearchColumnName == "dtmInsertDate" )
             {
                 if ( $arySearchDataColumn["dtmInsertDateFrom"] )
@@ -664,12 +664,12 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
                 }
             }
 
-//             // Ç¼ÉÊÀè
+//             // ç´å“å…ˆ
 //             if ( $strSearchColumnName == "lngDeliveryPlaceCode" )
 //             {
 //                 if ( $arySearchDataColumn["lngDeliveryPlaceCode"] )
 //                 {
-//                     //²ñ¼Ò¥Ş¥¹¥¿¤ÈÉ³¤Å¤±¤¿ÃÍ¤ÈÈæ³Ó
+//                     //ä¼šç¤¾ãƒã‚¹ã‚¿ã¨ç´ã¥ã‘ãŸå€¤ã¨æ¯”è¼ƒ
 //                     $aryQuery[] = " AND delv_c.strCompanyDisplayCode ~* '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
 //                 }
 //                 if ( $arySearchDataColumn["strDeliveryPlaceName"] )
@@ -678,7 +678,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
 //                 }
 //             }
 
-            // µ¯É¼¼Ô
+            // èµ·ç¥¨è€…
             if ( $strSearchColumnName == "lngInsertUserCode" )
             {
                 if ( $arySearchDataColumn["lngInsertUserCode"] )
@@ -690,7 +690,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
                     $aryQuery[] = " AND UPPER(inv.strusername) LIKE UPPER('%" . $arySearchDataColumn["strInsertUserName"] . "%')";
                 }
             }
-            // ÆşÎÏ¼Ô
+            // å…¥åŠ›è€…
             if ( $strSearchColumnName == "lngInputUserCode" )
             {
                 if ( $arySearchDataColumn["lngInputUserCode"] )
@@ -704,9 +704,9 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             }
 
             // ----------------------------------------------
-            //   Ç¼ÉÊÅÁÉ¼ÌÀºÙ¥Æ¡¼¥Ö¥ë¡ÊÌÀºÙÉô¡Ë¤Î¸¡º÷¾ò·ï
+            //   ç´å“ä¼ç¥¨æ˜ç´°ãƒ†ãƒ¼ãƒ–ãƒ«ï¼ˆæ˜ç´°éƒ¨ï¼‰ã®æ¤œç´¢æ¡ä»¶
             // ----------------------------------------------
-            // ÃíÊ¸½ñNO.
+            // æ³¨æ–‡æ›¸NO.
             if ( $strSearchColumnName == "strCustomerSalesCode" )
             {
                 if ( $arySearchDataColumn["strCustomerSalesCode"] )
@@ -723,7 +723,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
                         $aryDetailWhereQuery[] = "AND ";
                     }
 
-                    // ¥«¥ó¥Ş¶èÀÚ¤ê¤ÎÆşÎÏÃÍ¤òOR¾ò·ï¤ËÅ¸³«
+                    // ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã®å…¥åŠ›å€¤ã‚’ORæ¡ä»¶ã«å±•é–‹
                     $aryCSCValue = explode(",",$arySearchDataColumn["strCustomerSalesCode"]);
                     foreach($aryCSCValue as $strCSCValue){
                         $aryCSCOr[] = "UPPER(sd1.strCustomerSalesCode) LIKE UPPER('%" . $strCSCValue . "%')";
@@ -737,7 +737,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
             }
 
 
-            // Çä¾å¶èÊ¬
+            // å£²ä¸ŠåŒºåˆ†
             if ( $strSearchColumnName == "lngSalesClassCode" )
             {
                 if ( $arySearchDataColumn["lngSalesClassCode"] )
@@ -758,82 +758,82 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     }
 
     // ---------------------------------
-    //   SQLÊ¸¤ÎºîÀ®
+    //   SQLæ–‡ã®ä½œæˆ
     // ---------------------------------
     $aryOutQuery = array();
-    $aryOutQuery[] = "SELECT distinct inv.lnginvoiceno as lnginvoiceno";    // ÀÁµá½ñÈÖ¹æÈÖ¹æ
-    $aryOutQuery[] = "    ,inv.lngrevisionno as lngrevisionno";                // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $aryOutQuery[] = "    ,inv.lnginvoiceno as lngpkno";                // ÀÁµá½ñÈÖ¹æÈÖ¹æ
-    $aryOutQuery[] = "    ,inv.dtminsertdate as dtminsertdate";                // ºîÀ®Æü
+    $aryOutQuery[] = "SELECT distinct inv.lnginvoiceno as lnginvoiceno";    // è«‹æ±‚æ›¸ç•ªå·ç•ªå·
+    $aryOutQuery[] = "    ,inv.lngrevisionno as lngrevisionno";                // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $aryOutQuery[] = "    ,inv.lnginvoiceno as lngpkno";                // è«‹æ±‚æ›¸ç•ªå·ç•ªå·
+    $aryOutQuery[] = "    ,inv.dtminsertdate as dtminsertdate";                // ä½œæˆæ—¥
 
-    // ¸ÜµÒ
-    $arySelectQuery[] = ", cust_c.strcompanydisplaycode as strcustomerdisplaycode";               // ¸ÜµÒ¥³¡¼¥É
-    $arySelectQuery[] = ", inv.strcustomername as strcustomername";               // ¸ÜµÒÌ¾
-    $arySelectQuery[] = ", inv.strcustomercompanyname as strcustomerdisplayname"; // ¸ÜµÒ¼ÒÌ¾
-    // ¸ÜµÒ¤Î¹ñ
+    // é¡§å®¢
+    $arySelectQuery[] = ", cust_c.strcompanydisplaycode as strcustomerdisplaycode";               // é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $arySelectQuery[] = ", inv.strcustomername as strcustomername";               // é¡§å®¢å
+    $arySelectQuery[] = ", inv.strcustomercompanyname as strcustomerdisplayname"; // é¡§å®¢ç¤¾å
+    // é¡§å®¢ã®å›½
     $arySelectQuery[] = ", cust_c.lngCountryCode as lngcountrycode";
-    // ÀÁµá½ñ¥³¡¼¥É
+    // è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
     $arySelectQuery[] = ", inv.strinvoicecode as strinvoicecode";
-    // ÀÁµáÆü
+    // è«‹æ±‚æ—¥
     $arySelectQuery[] = ", to_char( inv.dtminvoicedate, 'YYYY/MM/DD' ) as dtminvoicedate";
-    // ÀÁµá´ü´Ö ¼«
+    // è«‹æ±‚æœŸé–“ è‡ª
     $arySelectQuery[] = ", to_char( inv.dtmchargeternstart, 'YYYY/MM/DD' ) as dtmchargeternstart";
-    // ÀÁµá´ü´Ö »ê
+    // è«‹æ±‚æœŸé–“ è‡³
     $arySelectQuery[] = ", to_char( inv.dtmchargeternend, 'YYYY/MM/DD' ) as dtmchargeternend";
-    // Á°·îÀÁµá»Ä³Û
+    // å‰æœˆè«‹æ±‚æ®‹é¡
     $arySelectQuery[] = ", To_char( inv.curlastmonthbalance, '9,999,999,990.99' ) as curlastmonthbalance";
-    // ¸æÀÁµá¶â³Û
+    // å¾¡è«‹æ±‚é‡‘é¡
     $arySelectQuery[] = ", To_char( inv.curthismonthamount, '9,999,999,990.99' ) as curthismonthamount";
-    // ÄÌ²ßÃ±°Ì¥³¡¼¥É
+    // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
     $arySelectQuery[] = ", inv.lngmonetaryunitcode as lngmonetaryunitcode";
-    // ÄÌ²ßÃ±°Ì
+    // é€šè²¨å˜ä½
     $arySelectQuery[] = ", inv.strmonetaryunitsign as strmonetaryunitsign";
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
     $arySelectQuery[] = ", inv.lngtaxclasscode as lngtaxclasscode";
-    // ²İÀÇ¶èÊ¬Ì¾
+    // èª²ç¨åŒºåˆ†å
     $arySelectQuery[] = ", inv.strtaxclassname as strtaxclassname";
-    // ÀÇÈ´¶â³Û1
+    // ç¨æŠœé‡‘é¡1
     $arySelectQuery[] = ", To_char( inv.cursubtotal1, '9,999,999,990.99' ) as cursubtotal";
-    // ¾ÃÈñÀÇÎ¨1
+    // æ¶ˆè²»ç¨ç‡1
     $arySelectQuery[] = ", inv.curtax1 as curtax";
-    // ¾ÃÈñÀÇ³Û1
+    // æ¶ˆè²»ç¨é¡1
     $arySelectQuery[] = ", To_char( inv.curtaxprice1, '9,999,999,990.99' ) as curtaxprice";
-    // Ã´Åö¼Ô
+    // æ‹…å½“è€…
     $arySelectQuery[] = ", u.struserdisplaycode as strusercode";
     $arySelectQuery[] = ", inv.strusername as strusername";
-    // ºîÀ®¼Ô
+    // ä½œæˆè€…
     $arySelectQuery[] = ", insert_u.struserdisplaycode as strinsertusercode";
     $arySelectQuery[] = ", inv.strinsertusername as strinsertusername";
-    // ºîÀ®Æü
+    // ä½œæˆæ—¥
     $arySelectQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD' ) as dtminsertdate";
-    // È÷¹Í
+    // å‚™è€ƒ
     $arySelectQuery[] = ", inv.strnote as strnote";
-    // Ã¢¤·½ñ¤­
+    // ä½†ã—æ›¸ã
     $arySelectQuery[] = ", inv.description as description";
-    // °õºş²ó¿ô
+    // å°åˆ·å›æ•°
     $arySelectQuery[] = ", inv.lngprintcount as lngprintcount";
 
 
-//     // ²İÀÇ¶èÊ¬
+//     // èª²ç¨åŒºåˆ†
 //     $arySelectQuery[] = ", s.strtaxclassname as strtaxclassname";
-//     // Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¡ÊÇ¼ÉÊ½ñNO¡Ë
+//     // ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰ï¼ˆç´å“æ›¸NOï¼‰
 //     $arySelectQuery[] = ", s.strSlipCode as strSlipCode";
-//     // Ç¼ÉÊÀè
+//     // ç´å“å…ˆ
 //     $arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
-//     // ¹ç·×¶â³Û
+//     // åˆè¨ˆé‡‘é¡
 //     $arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
-    //// Çä¾å£Î£ï
+    //// å£²ä¸Šï¼®ï½
     //$arySelectQuery[] = ", s.strSalesCode as strSalesCode";
-    // Çä¾å¾õÂÖ¥³¡¼¥É
+    // å£²ä¸ŠçŠ¶æ…‹ã‚³ãƒ¼ãƒ‰
     $arySelectQuery[] = ", sa.lngSalesStatusCode as lngSalesStatusCode";
     $arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
-//     // ÄÌ²ßÃ±°Ì
+//     // é€šè²¨å˜ä½
 //     $arySelectQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
 
-    // select¶ç ¥¯¥¨¥ê¡¼Ï¢·ë
+    // selectå¥ ã‚¯ã‚¨ãƒªãƒ¼é€£çµ
     $aryOutQuery[] = implode("\n", $arySelectQuery);
 
-    // From¶ç ¤ÎÀ¸À®
+    // Fromå¥ ã®ç”Ÿæˆ
     $aryFromQuery = array();
     $aryFromQuery[] = " FROM m_invoice inv";
     $aryFromQuery[] = " LEFT JOIN m_sales sa ON inv.lnginvoiceno = sa.lnginvoiceno";
@@ -843,34 +843,34 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     $aryFromQuery[] = " LEFT JOIN m_User insert_u ON inv.lngInsertUserCode = insert_u.lngusercode";
     $aryFromQuery[] = " LEFT JOIN m_User u ON inv.lngusercode = u.lngusercode";
     // $aryFromQuery[] = " LEFT JOIN m_Company delv_c ON inv.strcustomercode = delv_c.strcompanydisplaycode";
-    //¡¡ÀÁµá½ñÌÀºÙ¤¬¤Ê¤¤¾ì¹ç¤ÏÉÔÀ°¹ç¤Î°Ù½ü³°
+    //ã€€è«‹æ±‚æ›¸æ˜ç´°ãŒãªã„å ´åˆã¯ä¸æ•´åˆã®ç‚ºé™¤å¤–
     $aryFromQuery[] = " INNER JOIN t_invoicedetail inv_d ON inv.lnginvoiceno = inv_d.lnginvoiceno";
 
-    // From¶ç ¥¯¥¨¥ê¡¼Ï¢·ë
+    // Fromå¥ ã‚¯ã‚¨ãƒªãƒ¼é€£çµ
     $aryOutQuery[] = implode("\n", $aryFromQuery);
 
 
-    // Where¶ç ¥¯¥¨¥ê¡¼Ï¢·ë
+    // Whereå¥ ã‚¯ã‚¨ãƒªãƒ¼é€£çµ
 //     $aryOutQuery[] = $strDetailQuery;
     $aryOutQuery[] = implode("\n", $aryQuery);
 
-//     // ÌÀºÙ¹ÔÍÑ¤Î¾ò·ïÏ¢·ë
+//     // æ˜ç´°è¡Œç”¨ã®æ¡ä»¶é€£çµ
 //     $aryOutQuery[] = " AND sd.lngSlipNo = s.lngSlipNo";
 
 
     /////////////////////////////////////////////////////////////
-    //// ºÇ¿·Çä¾å¡Ê¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤¬ºÇÂç¡¢¥ê¥Ğ¥¤¥ºÈÖ¹æ¤¬ºÇÂç¡¢     ////
-    //// ¤«¤Ä¥ê¥Ó¥¸¥ç¥óÈÖ¹æÉé¤ÎÃÍ¤ÇÌµ¸ú¥Õ¥é¥°¤¬FALSE¤Î           ////
-    //// Æ±¤¸Ç¼ÉÊÅÁÉ¼¥³¡¼¥É¤ò»ı¤Ä¥Ç¡¼¥¿¤¬Ìµ¤¤Çä¾å¥Ç¡¼¥¿          ////
+    //// æœ€æ–°å£²ä¸Šï¼ˆãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒæœ€å¤§ã€ãƒªãƒã‚¤ã‚ºç•ªå·ãŒæœ€å¤§ã€     ////
+    //// ã‹ã¤ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·è² ã®å€¤ã§ç„¡åŠ¹ãƒ•ãƒ©ã‚°ãŒFALSEã®           ////
+    //// åŒã˜ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰ã‚’æŒã¤ãƒ‡ãƒ¼ã‚¿ãŒç„¡ã„å£²ä¸Šãƒ‡ãƒ¼ã‚¿          ////
     /////////////////////////////////////////////////////////////
     $aryOutQuery[] = " AND inv.lngrevisionno = ( "
                     . "SELECT MAX( inv1.lngrevisionno ) FROM m_invoice inv1 WHERE inv1.strinvoicecode = inv.strinvoicecode AND inv1.bytinvalidflag = false )";
 
-    // ºï½ü¥Ç¡¼¥¿¤ÏÂĞ¾İ³°
+    // å‰Šé™¤ãƒ‡ãƒ¼ã‚¿ã¯å¯¾è±¡å¤–
     $aryOutQuery[] = " AND 0 <= ( "
             . "SELECT MIN( inv2.lngrevisionno ) FROM m_invoice inv2 WHERE inv2.bytinvalidflag = false AND inv2.strinvoicecode = inv.strinvoicecode )";
 
-    // ¥½¡¼¥È¾ò·ïÀßÄê
+    // ã‚½ãƒ¼ãƒˆæ¡ä»¶è¨­å®š
     $aryOutQuery[] = " ORDER BY inv.lnginvoiceno DESC";
 
     return implode("\n", $aryOutQuery);
@@ -879,21 +879,21 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
 
 
 /**
-* ÀÁµá½ñÈÖ¹æ¤«¤éÀÁµá½ñ¥Ş¥¹¥¿¤ËÉ³¤Å¤¯ÀÁµáÁÄÌÀºÙ¤ò¼èÆÀ¤¹¤ëSQLÊ¸¤ÎºîÀ®´Ø¿ô
+* è«‹æ±‚æ›¸ç•ªå·ã‹ã‚‰è«‹æ±‚æ›¸ãƒã‚¹ã‚¿ã«ç´ã¥ãè«‹æ±‚ç¥–æ˜ç´°ã‚’å–å¾—ã™ã‚‹SQLæ–‡ã®ä½œæˆé–¢æ•°
 *
 *
-*    @param    Integer    $lnginvoiceno            ÀÁµá½ñNo
-*    @param    Integer    $lngrevisionno         ¥ê¥Ó¥¸¥ç¥óNo
-*    @return Array     $strSQL ¸¡º÷ÍÑSQLÊ¸ OR Boolean FALSE
+*    @param    Integer    $lnginvoiceno            è«‹æ±‚æ›¸No
+*    @param    Integer    $lngrevisionno         ãƒªãƒ“ã‚¸ãƒ§ãƒ³No
+*    @return Array     $strSQL æ¤œç´¢ç”¨SQLæ–‡ OR Boolean FALSE
 *    @access public
 */
 function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
 {
     // -----------------------------
-    //  ¸¡º÷¾ò·ï¤ÎÆ°ÅªÀßÄê
+    //  æ¤œç´¢æ¡ä»¶ã®å‹•çš„è¨­å®š
     // -----------------------------
 
-    // ÀäÂĞ¾ò·ï Ìµ¸ú¥Õ¥é¥°¤¬ÀßÄê¤µ¤ì¤Æ¤ª¤é¤º¡¢ºÇ¿·ÀÁµá½ñÌÀºÙ¤Î¤ß
+    // çµ¶å¯¾æ¡ä»¶ ç„¡åŠ¹ãƒ•ãƒ©ã‚°ãŒè¨­å®šã•ã‚Œã¦ãŠã‚‰ãšã€æœ€æ–°è«‹æ±‚æ›¸æ˜ç´°ã®ã¿
     $aryQuery[] = " WHERE inv_d.lngrevisionno >= 0 ";
     $aryQuery[] = " AND  inv_d.lnginvoiceno = " . (int)$lnginvoiceno ." ";
     
@@ -902,7 +902,7 @@ function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
     } else {
         $aryQuery[] = " AND  inv_d.lngrevisionno = (SELECT MAX(inv.lngrevisionno) FROM m_invoice inv WHERE inv.lnginvoiceno = " . (int)$lnginvoiceno .") ";
     }
-    // ºï½üºÑ¤ß¤ÏÇÓ½ü
+    // å‰Šé™¤æ¸ˆã¿ã¯æ’é™¤
     $aryQuery[] = " AND inv_d.lnginvoiceno NOT IN ( ";
     $aryQuery[] = " SELECT DISTINCT(lnginvoiceno) FROM m_invoice WHERE lngrevisionno = -1";
     $aryQuery[] = " ) ";
@@ -914,51 +914,51 @@ function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
 
 
     // ---------------------------------
-    //   SQLÊ¸¤ÎºîÀ®
+    //   SQLæ–‡ã®ä½œæˆ
     // ---------------------------------
     $aryOutQuery = array();
-    // ÀÁµá½ñÈÖ¹æ
+    // è«‹æ±‚æ›¸ç•ªå·
     $arySelectQuery[] = "SELECT inv_d.lnginvoiceno as lnginvoiceno";
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $arySelectQuery[] = ", inv_d.lngrevisionno as lngrevisionno";
-    // ÀÁµá½ñÌÀºÙÈÖ¹æ
+    // è«‹æ±‚æ›¸æ˜ç´°ç•ªå·
     $arySelectQuery[] = ", inv_d.lnginvoicedetailno";
-    // Ç¼ÉÊÆü
+    // ç´å“æ—¥
     $arySelectQuery[] = ", to_char( inv_d.dtmdeliverydate, 'YYYY/MM/DD HH:MI:SS' ) as dtmdeliverydate";
-    // Ç¼ÉÊ¾ì½ê¥³¡¼¥É
+    // ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
     $arySelectQuery[] = ", delv_c.strcompanydisplaycode as lngdeliveryplacecode";
-    // Ç¼ÉÊ¾ì½êÌ¾
+    // ç´å“å ´æ‰€å
     $arySelectQuery[] = ", inv_d.strdeliveryplacename as strdeliveryplacename";
-    // ¾®·×
+    // å°è¨ˆ
     $arySelectQuery[] = ", To_char( inv_d.cursubtotalprice, '9,999,999,990.99' ) as cursubtotalprice";
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
     $arySelectQuery[] = ", inv_d.lngtaxclasscode as lngtaxclasscode";
-    // ²İÀÇ¶èÊ¬Ì¾
+    // èª²ç¨åŒºåˆ†å
     $arySelectQuery[] = ", inv_d.strtaxclassname as strtaxclassname";
-    // ¾ÃÈñÀÇÎ¨
+    // æ¶ˆè²»ç¨ç‡
     $arySelectQuery[] = ", inv_d.curtax as curtax";
-    // È÷¹Í
+    // å‚™è€ƒ
     $arySelectQuery[] = ", inv_d.strnote as strnote";
-    // Ç¼ÉÊ½ñÈÖ¹æ
+    // ç´å“æ›¸ç•ªå·
     $arySelectQuery[] = ", inv_d.lngslipno as lngslipno";
-    // Ç¼ÉÊ½ñ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ç´å“æ›¸ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $arySelectQuery[] = ", inv_d.lngsliprevisionno as lngsliprevisionno";
-    // Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
+    // ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
     $arySelectQuery[] = ", slip_m.strslipcode as strslipcode";
 
-    // select¶ç ¥¯¥¨¥ê¡¼Ï¢·ë
+    // selectå¥ ã‚¯ã‚¨ãƒªãƒ¼é€£çµ
     $aryOutQuery[] = implode("\n", $arySelectQuery);
 
-    // From¶ç ¤ÎÀ¸À®
+    // Fromå¥ ã®ç”Ÿæˆ
     $aryFromQuery = array();
     $aryFromQuery[] = " FROM t_invoicedetail inv_d ";
     $aryFromQuery[] = " LEFT JOIN m_slip slip_m ON inv_d.lngslipno = slip_m.lngslipno";
 //     $aryFromQuery[] = " LEFT JOIN m_Company cust_c ON inv_d.lngdeliveryplacecode = cust_c.lngdeliveryplacecode";
     $aryFromQuery[] = " LEFT JOIN m_Company delv_c ON inv_d.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
-    // From¶ç ¥¯¥¨¥ê¡¼Ï¢·ë
+    // Fromå¥ ã‚¯ã‚¨ãƒªãƒ¼é€£çµ
     $aryOutQuery[] = implode("\n", $aryFromQuery);
 
-    // Where¶ç ¥¯¥¨¥ê¡¼Ï¢·ë
+    // Whereå¥ ã‚¯ã‚¨ãƒªãƒ¼é€£çµ
     $aryOutQuery[] = implode("\n", $aryQuery);
 
     return implode("\n", $aryOutQuery);
@@ -1020,51 +1020,51 @@ function fncGetSearchInvoiceByInvoiceCodeSQL($strInvoiceCode, $lngRevisionNo)
 }
 
 /**
- * ÀÁµá½ñÅĞÏ¿´Ø¿ô
+ * è«‹æ±‚æ›¸ç™»éŒ²é–¢æ•°
  *
- *    ÅÏ¤µ¤ì¤¿POSTÃÍ¤ÈÀÁµá½ñ¥Ş¥¹¥¿¤«¤éÅĞÏ¿¤ËÉ¬Í×¤ÊÇÛÎó¤òÊÖ¤¹
+ *    æ¸¡ã•ã‚ŒãŸPOSTå€¤ã¨è«‹æ±‚æ›¸ãƒã‚¹ã‚¿ã‹ã‚‰ç™»éŒ²ã«å¿…è¦ãªé…åˆ—ã‚’è¿”ã™
  *
- *    @param  Array     $aryData          £Ğ£Ï£Ó£Ô¥Ç¡¼¥¿·²
- *    @param  Array     $aryResult        ÀÁµá½ñÈÖ¹æ¤ËÉ³¤Å¤¯ÀÁµá½ñ¥Ş¥¹¥¿¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
- *    @param  Object    $objDB               DB¥ª¥Ö¥¸¥§¥¯¥È
+ *    @param  Array     $aryData          ï¼°ï¼¯ï¼³ï¼´ãƒ‡ãƒ¼ã‚¿ç¾¤
+ *    @param  Array     $aryResult        è«‹æ±‚æ›¸ç•ªå·ã«ç´ã¥ãè«‹æ±‚æ›¸ãƒã‚¹ã‚¿ãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
+ *    @param  Object    $objDB               DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  *    @access public
  */
 function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB)
 {
     $insertAry = [];
 
-    // ½ĞÎÏÌÀºÙ°ìÍ÷¤ÎÇ¼ÉÊ½ñ¥³¡¼¥É
+    // å‡ºåŠ›æ˜ç´°ä¸€è¦§ã®ç´å“æ›¸ã‚³ãƒ¼ãƒ‰
     $slipCodeArray = explode(',' ,$aryData['slipCodeList']);
     $insertAry['slipCodeArray']  = $slipCodeArray;
 
     $insertAry['slipNoArray']  = explode(',' ,$aryData['slipNoList']);
     $insertAry['revisionNoArray']  = explode(',' ,$aryData['revisionNoList']);
 
-    // ÀÁµá½ñNo
-    // ÅĞÏ¿»ş : MAX(ÀÁµá½ñÈÖ¹æÆâ¤ÎÀÁµá½ñ¥Ş¥¹¥¿.ÀÁµá½ñÈÖ¹æ)+1
-    // ¹¹¿·»ş : ¹¹¿·¸µ¤ÎÀÁµá½ñ¥Ş¥¹¥¿.ÀÁµá½ñÈÖ¹æ
+    // è«‹æ±‚æ›¸No
+    // ç™»éŒ²æ™‚ : MAX(è«‹æ±‚æ›¸ç•ªå·å†…ã®è«‹æ±‚æ›¸ãƒã‚¹ã‚¿.è«‹æ±‚æ›¸ç•ªå·)+1
+    // æ›´æ–°æ™‚ : æ›´æ–°å…ƒã®è«‹æ±‚æ›¸ãƒã‚¹ã‚¿.è«‹æ±‚æ›¸ç•ªå·
     $insertAry['lnginvoiceno'] = empty($aryResult['lnginvoiceno'])
                                     ? null
                                 : $aryResult['lnginvoiceno'];
 
-    // ¥ê¥Ó¥¸¥ç¥óNo
-    // ÅĞÏ¿»ş : 0
-    // ¹¹¿·»ş : ¹¹¿·¸µ¤ÎÀÁµá½ñ¥Ş¥¹¥¿.¥ê¥Ó¥¸¥ç¥óÈÖ¹æ + 1
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³No
+    // ç™»éŒ²æ™‚ : 0
+    // æ›´æ–°æ™‚ : æ›´æ–°å…ƒã®è«‹æ±‚æ›¸ãƒã‚¹ã‚¿.ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå· + 1
     $insertAry['lngrevisionno'] = !isset($aryResult['lngrevisionno'])
                                     ? 0
                                     : (int)$aryResult['lngrevisionno']+1;
 
-    // ÀÁµáÆü
+    // è«‹æ±‚æ—¥
     $insertAry['dtminvoicedate'] = $aryData['dtminvoicedate'];
 
-    // ÀÁµá½ñ¥³¡¼¥É
-    // ÅĞÏ¿»ş : ¥ë¡¼¥ë¤Ë´ğ¤Å¤¤¤¿¥³¡¼¥ÉÀ¸À®
-    // ¹¹¿·»ş : ¹¹¿·¸µ¤ÎÀÁµá½ñ¥Ş¥¹¥¿.ÀÁµá½ñ¥³¡¼¥É
+    // è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
+    // ç™»éŒ²æ™‚ : ãƒ«ãƒ¼ãƒ«ã«åŸºã¥ã„ãŸã‚³ãƒ¼ãƒ‰ç”Ÿæˆ
+    // æ›´æ–°æ™‚ : æ›´æ–°å…ƒã®è«‹æ±‚æ›¸ãƒã‚¹ã‚¿.è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
     $insertAry['strinvoicecode'] = empty($aryResult['strinvoicecode'])
                                     ? fncGetStrInvoiceCode(null, false, $objDB)
                                     : $aryResult['strinvoicecode'];
 
-    // ¸ÜµÒ¥³¡¼¥É(DISPLAY)
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰(DISPLAY)
     $insertAry['strcustomercode'] = $aryData['strcustomercode'];
     
     $lngcompanycode = fncGetMasterValue("m_company","strcompanydisplaycode","lngcompanycode",$aryData['strcustomercode'] . ":str", "", $objDB);
@@ -1073,14 +1073,14 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     $companyname = fncGetMasterValue("m_company","strcompanydisplaycode","strcompanyname",$aryData['strcustomercode'] . ":str", "", $objDB);
     
     if( strlen($printname) > 0 ){
-        // ¸ÜµÒÌ¾
+        // é¡§å®¢å
         $insertAry['strcustomername'] = $companyname;
 
-        // ¸ÜµÒ¼ÒÌ¾
+        // é¡§å®¢ç¤¾å
         $insertAry['strcustomercompanyname'] = $printname;
     }
     else{
-        // ¸ÜµÒÌ¾
+        // é¡§å®¢å
         $insertAry['strcustomername'] = null;
 
         $organization = fncGetMasterValue("m_company","strcompanydisplaycode","lngorganizationcode",$aryData['strcustomercode'] . ":str", "", $objDB);
@@ -1098,58 +1098,58 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
             }
         }
         
-        // ¸ÜµÒ¼ÒÌ¾
+        // é¡§å®¢ç¤¾å
         $insertAry['strcustomercompanyname'] = $companyname;
     }
 
-    // ÀÁµá´ü´Ö ¼«
+    // è«‹æ±‚æœŸé–“ è‡ª
     $insertAry['dtmchargeternstart'] = $aryData['dtmchargeternstart'];
 
-    // ÀÁµá´ü´Ö »ê
+    // è«‹æ±‚æœŸé–“ è‡³
     $insertAry['dtmchargeternend'] = $aryData['dtmchargeternend'];
 
-    // ÀÁµá´ü´Ö
+    // è«‹æ±‚æœŸé–“
 //     $dtmchargeternend = $aryData['dtmchargeternend'];
 
-    // Á°·îÀÁµá»Ä³Û
+    // å‰æœˆè«‹æ±‚æ®‹é¡
     $insertAry['curlastmonthbalance'] = $aryData['curlastmonthbalance'];
 
-    // ¸æÀÁµá¶â³Û
+    // å¾¡è«‹æ±‚é‡‘é¡
     $insertAry['curthismonthamount']   = $aryData['curthismonthamount'];
 
-    // ÄÌ²ßÃ±°Ì¥³¡¼¥É //±ß°Ê³°¤Ï¡©
+    // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰ //å††ä»¥å¤–ã¯ï¼Ÿ
     $insertAry['lngmonetaryunitcode'] = 1;
 //     $insertAry['lngmonetaryunitcode']  = $aryData['lngmonetaryunitcode'];
-    // ÄÌ²ßÃ±°ÌÌ¾¾Î
+    // é€šè²¨å˜ä½åç§°
     $insertAry['strmonetaryunitsign']  = fncGetMonetaryunitSign($insertAry['lngmonetaryunitcode'] ,$objDB);
 
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É
-    // ²İÀÇ¶èÊ¬Ì¾
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    // èª²ç¨åŒºåˆ†å
     $insertAry['lngtaxclasscode']  = $aryData['lngtaxclasscode'];
     $insertAry['strtaxclassname']  = $aryData['strtaxclassname'];
 
-    // ÀÇÈ´¶â³Û1(Åö·îÀÁµá¶â³Û)
+    // ç¨æŠœé‡‘é¡1(å½“æœˆè«‹æ±‚é‡‘é¡)
     $insertAry['cursubtotal1'] = $aryData['cursubtotal1'];
-    // ¾ÃÈñÀÇÎ¨1
+    // æ¶ˆè²»ç¨ç‡1
     $insertAry['curtax1'] = (int)$aryData['curtax1'];
-    // ¾ÃÈñÀÇ³Û1
+    // æ¶ˆè²»ç¨é¡1
     $insertAry['curtaxprice1'] = $aryData['curtaxprice'];
 
-    // ºîÀ®Æü
+    // ä½œæˆæ—¥
     $insertAry['dtminsertdate'] = 'now()';
 
-    // Ã´Åö¼Ô¥³¡¼¥É
+    // æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
     $insertAry['strusercode'] = $aryData['strusercode'];
-    // Ã´Åö¼ÔÌ¾
+    // æ‹…å½“è€…å
     $insertAry['strusername'] = $aryData['strusername'];
 
-    // ºîÀ®¼Ô¥³¡¼¥É
+    // ä½œæˆè€…ã‚³ãƒ¼ãƒ‰
     $insertAry['strinsertusercode'] = $objAuth->UserCode;
-    // ºîÀ®¼ÔÌ¾
+    // ä½œæˆè€…å
     $insertAry['strinsertusername'] = $objAuth->UserDisplayName;
-    // È÷¹Í
+    // å‚™è€ƒ
     $insertAry['strnote'] = $aryData['strnote'];
-    // ÀâÌÀ
+    // èª¬æ˜
     $insertAry['description'] = $aryData['description'];
 
     return $insertAry;
@@ -1158,87 +1158,87 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
 
 
 /**
- * ÀÁµá½ñÅĞÏ¿´Ø¿ô
+ * è«‹æ±‚æ›¸ç™»éŒ²é–¢æ•°
  *
- *    ÅÏ¤µ¤ì¤¿¥Ç¡¼¥¿¤ÇÀÁµá½ñ¥Ş¥¹¥¿¤ËÅĞÏ¿¤¹¤ë
+ *    æ¸¡ã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ã§è«‹æ±‚æ›¸ãƒã‚¹ã‚¿ã«ç™»éŒ²ã™ã‚‹
  *
- *    @param  Array    $insertAry  ÅĞÏ¿¥Ç¡¼¥¿
- *    @param  Object   $objDB      DB¥ª¥Ö¥¸¥§¥¯¥È
+ *    @param  Array    $insertAry  ç™»éŒ²ãƒ‡ãƒ¼ã‚¿
+ *    @param  Object   $objDB      DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
  *    @access public
  */
 function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
 {
-    // ÀÁµá½ñ¥Ş¥¹¥¿¤Ë¥Ç¡¼¥¿¤òÅĞÏ¿¤¹¤ë
-    // ÀÁµá½ñÈÖ¹æ¤ò¼èÆÀ
+    // è«‹æ±‚æ›¸ãƒã‚¹ã‚¿ã«ãƒ‡ãƒ¼ã‚¿ã‚’ç™»éŒ²ã™ã‚‹
+    // è«‹æ±‚æ›¸ç•ªå·ã‚’å–å¾—
     if($insertAry['lnginvoiceno'] > 0){
         $sequence_m_lnginvoice = $insertAry['lnginvoiceno'];
     }
     else
     {
-        // ¥·¡¼¥±¥ó¥¹È¯¹Ô
+        // ã‚·ãƒ¼ã‚±ãƒ³ã‚¹ç™ºè¡Œ
         $sequence_m_lnginvoice = fncGetSequence('m_invoice.lnginvoiceno', $objDB);
     }
 
     $aryQuery    = array();
     $aryQuery[] = "INSERT INTO m_invoice (";
-    $aryQuery[] = "lnginvoiceno, ";             // ÀÁµá½ñÈÖ¹æ
-    $aryQuery[] = "lngrevisionno, ";            // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ //ÅĞÏ¿»ş¤Ï0
-    $aryQuery[] = "strinvoicecode, ";           // ÀÁµá½ñ¥³¡¼¥É
-    $aryQuery[] = "dtminvoicedate, ";           // ÀÁµáÆü
-    $aryQuery[] = "lngcustomercode, ";          // ¸ÜµÒ¥³¡¼¥É
-    $aryQuery[] = "strcustomername, ";          // ¸ÜµÒÌ¾
-    $aryQuery[] = "strcustomercompanyname, ";   // ¸ÜµÒ¼ÒÌ¾
-    $aryQuery[] = "dtmchargeternstart, ";       // ÀÁµá´ü´Ö(FROM)
-    $aryQuery[] = "dtmchargeternend, ";         // ÀÁµá´ü´Ö(TO)
-    $aryQuery[] = "curlastmonthbalance, ";      // Á°·îÀÁµá»Ä³Û
-    $aryQuery[] = "curthismonthamount, ";       // ¸æÀÁµá¶â³Û
-    $aryQuery[] = "lngmonetaryunitcode, ";      // ÄÌ²ßÃ±°Ì¥³¡¼¥É
-    $aryQuery[] = "strmonetaryunitsign, ";      // ÄÌ²ßÃ±°Ì
-    $aryQuery[] = "lngtaxclasscode, ";          // ²İÀÇ¶èÊ¬¥³¡¼¥É
-    $aryQuery[] = "strtaxclassname, ";          // ²İÀÇ¶èÊ¬Ì¾
-    $aryQuery[] = "cursubtotal1, ";             // ÀÇÈ´¤­¶â³Û1
-    $aryQuery[] = "curtax1, ";                  // ¾ÃÈñÀÇÎ¨1
-    $aryQuery[] = "curtaxprice1, ";             // ¾ÃÈñÀÇ³Û1
-    $aryQuery[] = "dtminsertdate, ";            // ºîÀ®Æü
-    $aryQuery[] = "lngusercode, ";              // Ã´Åö¼Ô¥³¡¼¥É
-    $aryQuery[] = "strusername, ";              // Ã´Åö¼ÔÌ¾
-    $aryQuery[] = "lnginsertusercode, ";        // ºîÀ®¼Ô¥³¡¼¥É
-    $aryQuery[] = "strinsertusername, ";        // ºîÀ®¼ÔÌ¾
-    $aryQuery[] = "strnote, ";                  // È÷¹Í
-     $aryQuery[] = "lngprintcount, ";         // °õºş²ó¿ô
-    $aryQuery[] = "bytinvalidflag, ";            // Ìµ¸ú¥Õ¥é¥°
-    $aryQuery[] = "description ";            // ÀâÌÀ
+    $aryQuery[] = "lnginvoiceno, ";             // è«‹æ±‚æ›¸ç•ªå·
+    $aryQuery[] = "lngrevisionno, ";            // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå· //ç™»éŒ²æ™‚ã¯0
+    $aryQuery[] = "strinvoicecode, ";           // è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "dtminvoicedate, ";           // è«‹æ±‚æ—¥
+    $aryQuery[] = "lngcustomercode, ";          // é¡§å®¢ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "strcustomername, ";          // é¡§å®¢å
+    $aryQuery[] = "strcustomercompanyname, ";   // é¡§å®¢ç¤¾å
+    $aryQuery[] = "dtmchargeternstart, ";       // è«‹æ±‚æœŸé–“(FROM)
+    $aryQuery[] = "dtmchargeternend, ";         // è«‹æ±‚æœŸé–“(TO)
+    $aryQuery[] = "curlastmonthbalance, ";      // å‰æœˆè«‹æ±‚æ®‹é¡
+    $aryQuery[] = "curthismonthamount, ";       // å¾¡è«‹æ±‚é‡‘é¡
+    $aryQuery[] = "lngmonetaryunitcode, ";      // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "strmonetaryunitsign, ";      // é€šè²¨å˜ä½
+    $aryQuery[] = "lngtaxclasscode, ";          // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "strtaxclassname, ";          // èª²ç¨åŒºåˆ†å
+    $aryQuery[] = "cursubtotal1, ";             // ç¨æŠœãé‡‘é¡1
+    $aryQuery[] = "curtax1, ";                  // æ¶ˆè²»ç¨ç‡1
+    $aryQuery[] = "curtaxprice1, ";             // æ¶ˆè²»ç¨é¡1
+    $aryQuery[] = "dtminsertdate, ";            // ä½œæˆæ—¥
+    $aryQuery[] = "lngusercode, ";              // æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "strusername, ";              // æ‹…å½“è€…å
+    $aryQuery[] = "lnginsertusercode, ";        // ä½œæˆè€…ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "strinsertusername, ";        // ä½œæˆè€…å
+    $aryQuery[] = "strnote, ";                  // å‚™è€ƒ
+     $aryQuery[] = "lngprintcount, ";         // å°åˆ·å›æ•°
+    $aryQuery[] = "bytinvalidflag, ";            // ç„¡åŠ¹ãƒ•ãƒ©ã‚°
+    $aryQuery[] = "description ";            // èª¬æ˜
     $aryQuery[] = ") values (";
-    // ÀÁµá½ñÈÖ¹æ
+    // è«‹æ±‚æ›¸ç•ªå·
     $aryQuery[] = $sequence_m_lnginvoice ." ,";
-    $aryQuery[] = $insertAry['lngrevisionno'] ." ,";                                        // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $aryQuery[] = "'" .$insertAry['strinvoicecode'] ."' ,";                                 // ÀÁµá½ñ¥³¡¼¥É
-    $aryQuery[] = "'" .$insertAry['dtminvoicedate'] ."' ,";                                 // ÀÁµáÆü
-    $aryQuery[] = "(select lngcompanycode from m_company where strcompanydisplaycode='". $insertAry['strcustomercode'] ."')  ,";                               // ¸ÜµÒ¥³¡¼¥É(É½¼¨ÍÑ)
-    $aryQuery[] = "'" .$insertAry['strcustomername']."' , " ;                               // ¸ÜµÒÌ¾
-    $aryQuery[] = "'" .$insertAry['strcustomercompanyname']."' , " ;                        // ¸ÜµÒ¼ÒÌ¾
-    $aryQuery[] = "'". $insertAry['dtmchargeternstart'] ."'  ,";                            // ÀÁµá´ü´Ö(FROM)
-    $aryQuery[] = "'". $insertAry['dtmchargeternend'] ."'  ,";                              // ÀÁµá´ü´Ö(TO)
-    $aryQuery[] = $insertAry['curlastmonthbalance'] ." ,";                                  // Á°·îÀÁµá»Ä³Û
-//    $aryQuery[] = (int)$insertAry['cursubtotal1']." ,";                                     // ¸æÀÁµá¶â³Û
-    $aryQuery[] = (int)$insertAry['curthismonthamount']." ,";                                     // ¸æÀÁµá¶â³Û
-    $aryQuery[] = $insertAry['lngmonetaryunitcode'] ." ,";                                  // ÄÌ²ßÃ±°Ì¥³¡¼¥É default ?
-    $aryQuery[] = "'". preg_replace('/\\\/','¡ï',$insertAry['strmonetaryunitsign']) ."'  ,";// ÄÌ²ßÃ±°Ì \¤Î¥¤¥ó¥µ¡¼¥È¤¬¤Ç¤­¤Ê¤¤¤Î¤ÇÁ´³ÑÂĞ±ş
-    $aryQuery[] = (int)$insertAry['lngtaxclasscode'] ." , ";                                // ²İÀÇ¶èÊ¬¥³¡¼¥É
-    $aryQuery[] = "'" .$insertAry['strtaxclassname']."' , ";                                // ²İÀÇ¶èÊ¬Ì¾
-//    $aryQuery[] =  $insertAry['curthismonthamount'] .",";                                   // ÀÇÈ´¤­¶â³Û1
-    $aryQuery[] =  $insertAry['cursubtotal1'] .",";                                   // ÀÇÈ´¤­¶â³Û1
-    $aryQuery[] = $insertAry['curtax1'] / 100 .",";                                          // ¾ÃÈñÀÇÎ¨1
-    $aryQuery[] = (int)$insertAry['curtaxprice1'] .",";                                     // ¾ÃÈñÀÇ³Û1
-    $aryQuery[] = "now() ,";                                                                // ºîÀ®Æü
-    $aryQuery[] = "(select lngusercode from m_user where struserdisplaycode = '". $insertAry['strusercode'] ."')  ,";                                   // Ã´Åö¼Ô¥³¡¼¥É
-    $aryQuery[] = "'". $insertAry['strusername'] ."'  ,";                                   // Ã´Åö¼ÔÌ¾
-    $aryQuery[] = $objAuth->UserCode . " ,";                              // ºîÀ®¼Ô¥³¡¼¥É
-    $aryQuery[] = "'" .$objAuth->UserDisplayName ."' ,";                              // ºîÀ®¼ÔÌ¾
-    $aryQuery[] = "'" .$insertAry['strnote'] ."', ";                                        // È÷¹Í
-    $aryQuery[] = "0 ,";                                                                 // °õºş²ó¿ô
-    $aryQuery[] = "FALSE, ";                                                                 // Ìµ¸ú¥Õ¥é¥°
-    $aryQuery[] = "'" .$insertAry['description'] ."'";                                        // È÷¹Í
+    $aryQuery[] = $insertAry['lngrevisionno'] ." ,";                                        // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $aryQuery[] = "'" .$insertAry['strinvoicecode'] ."' ,";                                 // è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "'" .$insertAry['dtminvoicedate'] ."' ,";                                 // è«‹æ±‚æ—¥
+    $aryQuery[] = "(select lngcompanycode from m_company where strcompanydisplaycode='". $insertAry['strcustomercode'] ."')  ,";                               // é¡§å®¢ã‚³ãƒ¼ãƒ‰(è¡¨ç¤ºç”¨)
+    $aryQuery[] = "'" .$insertAry['strcustomername']."' , " ;                               // é¡§å®¢å
+    $aryQuery[] = "'" .$insertAry['strcustomercompanyname']."' , " ;                        // é¡§å®¢ç¤¾å
+    $aryQuery[] = "'". $insertAry['dtmchargeternstart'] ."'  ,";                            // è«‹æ±‚æœŸé–“(FROM)
+    $aryQuery[] = "'". $insertAry['dtmchargeternend'] ."'  ,";                              // è«‹æ±‚æœŸé–“(TO)
+    $aryQuery[] = $insertAry['curlastmonthbalance'] ." ,";                                  // å‰æœˆè«‹æ±‚æ®‹é¡
+//    $aryQuery[] = (int)$insertAry['cursubtotal1']." ,";                                     // å¾¡è«‹æ±‚é‡‘é¡
+    $aryQuery[] = (int)$insertAry['curthismonthamount']." ,";                                     // å¾¡è«‹æ±‚é‡‘é¡
+    $aryQuery[] = $insertAry['lngmonetaryunitcode'] ." ,";                                  // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰ default ?
+    $aryQuery[] = "'". preg_replace('/\\\/','ï¿¥',$insertAry['strmonetaryunitsign']) ."'  ,";// é€šè²¨å˜ä½ \ã®ã‚¤ãƒ³ã‚µãƒ¼ãƒˆãŒã§ããªã„ã®ã§å…¨è§’å¯¾å¿œ
+    $aryQuery[] = (int)$insertAry['lngtaxclasscode'] ." , ";                                // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "'" .$insertAry['strtaxclassname']."' , ";                                // èª²ç¨åŒºåˆ†å
+//    $aryQuery[] =  $insertAry['curthismonthamount'] .",";                                   // ç¨æŠœãé‡‘é¡1
+    $aryQuery[] =  $insertAry['cursubtotal1'] .",";                                   // ç¨æŠœãé‡‘é¡1
+    $aryQuery[] = $insertAry['curtax1'] / 100 .",";                                          // æ¶ˆè²»ç¨ç‡1
+    $aryQuery[] = (int)$insertAry['curtaxprice1'] .",";                                     // æ¶ˆè²»ç¨é¡1
+    $aryQuery[] = "now() ,";                                                                // ä½œæˆæ—¥
+    $aryQuery[] = "(select lngusercode from m_user where struserdisplaycode = '". $insertAry['strusercode'] ."')  ,";                                   // æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "'". $insertAry['strusername'] ."'  ,";                                   // æ‹…å½“è€…å
+    $aryQuery[] = $objAuth->UserCode . " ,";                              // ä½œæˆè€…ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "'" .$objAuth->UserDisplayName ."' ,";                              // ä½œæˆè€…å
+    $aryQuery[] = "'" .$insertAry['strnote'] ."', ";                                        // å‚™è€ƒ
+    $aryQuery[] = "0 ,";                                                                 // å°åˆ·å›æ•°
+    $aryQuery[] = "FALSE, ";                                                                 // ç„¡åŠ¹ãƒ•ãƒ©ã‚°
+    $aryQuery[] = "'" .$insertAry['description'] ."'";                                        // å‚™è€ƒ
     $aryQuery[] = ") ";
 
     $strQuery = implode("\n",  $aryQuery );
@@ -1250,8 +1250,8 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
 
     $objDB->freeResult( $lngResultID );
 
-    // ÀÁµá½ñÌÀºÙÅĞÏ¿
-    $salesNoList = [];      // Çä¾åNo
+    // è«‹æ±‚æ›¸æ˜ç´°ç™»éŒ²
+    $salesNoList = [];      // å£²ä¸ŠNo
     foreach($insertAry['slipCodeArray'] as $no => $strslipcode)
     {
         $condtition = [];
@@ -1265,39 +1265,39 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
 
         $aryQuery   = [];
         $aryQuery[] = "INSERT INTO t_invoicedetail ( ";
-        $aryQuery[] = "lnginvoiceno , ";                    // ÀÁµá½ñÈÖ¹æ
-        $aryQuery[] = "lnginvoicedetailno , ";              // ÀÁµá½ñÌÀºÙÈÖ¹æ
-        $aryQuery[] = "lngrevisionno , ";                   // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $aryQuery[] = "dtmdeliverydate , ";                 // Ç¼ÉÊÆü
-        $aryQuery[] = "lngdeliveryplacecode , ";            // Ç¼ÉÊ¾ì½ê¥³¡¼¥É
-        $aryQuery[] = "strdeliveryplacename , ";            // Ç¼ÉÊ¾ì½êÌ¾
-        $aryQuery[] = "cursubtotalprice , ";                // ¾®·×
-        $aryQuery[] = "lngtaxclasscode , ";                 // ²İÀÇ¶èÊ¬¥³¡¼¥É
-        $aryQuery[] = "strtaxclassname , ";                 // ²İÀÇ¶èÊ¬
-        $aryQuery[] = "curtax , ";                          // ¾ÃÈñÀÇÎ¨
-        $aryQuery[] = "strnote , ";                         // È÷¹Í
-        $aryQuery[] = "lngslipno , ";                       // Ç¼ÉÊ½ñÈÖ¹æ
-        $aryQuery[] = "lngsliprevisionno  ";                // Ç¼ÉÊ½ñ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+        $aryQuery[] = "lnginvoiceno , ";                    // è«‹æ±‚æ›¸ç•ªå·
+        $aryQuery[] = "lnginvoicedetailno , ";              // è«‹æ±‚æ›¸æ˜ç´°ç•ªå·
+        $aryQuery[] = "lngrevisionno , ";                   // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $aryQuery[] = "dtmdeliverydate , ";                 // ç´å“æ—¥
+        $aryQuery[] = "lngdeliveryplacecode , ";            // ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
+        $aryQuery[] = "strdeliveryplacename , ";            // ç´å“å ´æ‰€å
+        $aryQuery[] = "cursubtotalprice , ";                // å°è¨ˆ
+        $aryQuery[] = "lngtaxclasscode , ";                 // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryQuery[] = "strtaxclassname , ";                 // èª²ç¨åŒºåˆ†
+        $aryQuery[] = "curtax , ";                          // æ¶ˆè²»ç¨ç‡
+        $aryQuery[] = "strnote , ";                         // å‚™è€ƒ
+        $aryQuery[] = "lngslipno , ";                       // ç´å“æ›¸ç•ªå·
+        $aryQuery[] = "lngsliprevisionno  ";                // ç´å“æ›¸ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
         $aryQuery[] = " ) VALUES ( ";
-        $aryQuery[] = $sequence_m_lnginvoice ." ,";                      // ÀÁµá½ñÈÖ¹æ
-        $aryQuery[] = (int)$no+1 ." ,";                                 // ÀÁµá½ñÌÀºÙÈÖ¹æ
-        $aryQuery[] =  $insertAry['lngrevisionno']." ,";                // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-        $aryQuery[] =  "'"  .$insertAry['dtminvoicedate'] ."' ,";       // Ç¼ÉÊÆü
-        $aryQuery[] = "(select lngcompanycode from m_company where strcompanydisplaycode='". $result['lngdeliveryplacecode'] ."')  ,"; // Ç¼ÉÊ¾ì½ê¥³¡¼¥É
-        $aryQuery[] =  "'"  .$result['strdeliveryplacename'] ."' ,";    // Ç¼ÉÊ¾ì½êÌ¾
-        $aryQuery[] =  "'"  .$result['curtotalprice'] ."' ,";           // ¾®·×
-        $aryQuery[] =  "'"  .$result['lngtaxclasscode'] ."' ,";         // ²İÀÇ¶èÊ¬¥³¡¼¥É
-        $aryQuery[] =  "'"  .$result['strtaxclassname'] ."' ,";         // ²İÀÇ¶èÊ¬
-        $aryQuery[] =  "'"  .$result['curtax'] ."' ,";                  // ¾ÃÈñÀÇÎ¨
-        $aryQuery[] =  "'"  .$result['strnote'] ."' ,";                 // È÷¹Í
-        $aryQuery[] =  $result['lngslipno'] ." ,";                      // Ç¼ÉÊ½ñÈÖ¹æ
-        $aryQuery[] =  $result['lngrevisionno'] ." ";                   // Ç¼ÉÊ½ñ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+        $aryQuery[] = $sequence_m_lnginvoice ." ,";                      // è«‹æ±‚æ›¸ç•ªå·
+        $aryQuery[] = (int)$no+1 ." ,";                                 // è«‹æ±‚æ›¸æ˜ç´°ç•ªå·
+        $aryQuery[] =  $insertAry['lngrevisionno']." ,";                // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+        $aryQuery[] =  "'"  .$insertAry['dtminvoicedate'] ."' ,";       // ç´å“æ—¥
+        $aryQuery[] = "(select lngcompanycode from m_company where strcompanydisplaycode='". $result['lngdeliveryplacecode'] ."')  ,"; // ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
+        $aryQuery[] =  "'"  .$result['strdeliveryplacename'] ."' ,";    // ç´å“å ´æ‰€å
+        $aryQuery[] =  "'"  .$result['curtotalprice'] ."' ,";           // å°è¨ˆ
+        $aryQuery[] =  "'"  .$result['lngtaxclasscode'] ."' ,";         // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+        $aryQuery[] =  "'"  .$result['strtaxclassname'] ."' ,";         // èª²ç¨åŒºåˆ†
+        $aryQuery[] =  "'"  .$result['curtax'] ."' ,";                  // æ¶ˆè²»ç¨ç‡
+        $aryQuery[] =  "'"  .$result['strnote'] ."' ,";                 // å‚™è€ƒ
+        $aryQuery[] =  $result['lngslipno'] ." ,";                      // ç´å“æ›¸ç•ªå·
+        $aryQuery[] =  $result['lngrevisionno'] ." ";                   // ç´å“æ›¸ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
         $aryQuery[] =  " ) ";
 
         $strQuery = "";
         $strQuery = implode( $aryQuery );
 
-        // ÀÁµá½ñÌÀºÙ¤ËÅĞÏ¿
+        // è«‹æ±‚æ›¸æ˜ç´°ã«ç™»éŒ²
         if( !$lngResultID = $objDB->execute( $strQuery ) )
         {
             fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
@@ -1309,8 +1309,8 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     }
     $objDB->freeResult( $lngResultID );
 
-    // Çä¾å¥Ş¥¹¥¿¤ÎÀÁµá½ñÈÖ¹æ¤ò¹¹¿·
-    // Ç¼ÉÊÅÁÉ¼¥Ş¥¹¥¿¤ËÉ³¤Å¤¯Çä¾å¥Ş¥¹¥¿
+    // å£²ä¸Šãƒã‚¹ã‚¿ã®è«‹æ±‚æ›¸ç•ªå·ã‚’æ›´æ–°
+    // ç´å“ä¼ç¥¨ãƒã‚¹ã‚¿ã«ç´ã¥ãå£²ä¸Šãƒã‚¹ã‚¿
     $where = "";
     foreach($salesNoList as $salesno)
     {
@@ -1327,7 +1327,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $strQuery = "";
     $strQuery = implode( $aryQuery );
 
-    // Çä¾å¥Ş¥¹¥¿¹¹¿·
+    // å£²ä¸Šãƒã‚¹ã‚¿æ›´æ–°
     if( !$lngResultID = $objDB->execute( $strQuery ) )
     {
         fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
@@ -1340,65 +1340,65 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
 }
 
 /**
- * »ØÄê¤µ¤ì¤¿ÀÁµá½ñÈÖ¹æ¤«¤éÀÁµá½ñ¥Ş¥¹¥¿¾ğÊó¤ò¼èÆÀ¤¹¤ë£Ó£Ñ£ÌÊ¸¤òºîÀ®
+ * æŒ‡å®šã•ã‚ŒãŸè«‹æ±‚æ›¸ç•ªå·ã‹ã‚‰è«‹æ±‚æ›¸ãƒã‚¹ã‚¿æƒ…å ±ã‚’å–å¾—ã™ã‚‹ï¼³ï¼±ï¼¬æ–‡ã‚’ä½œæˆ
  *
- *    »ØÄêÀÁµá½ñÈÖ¹æ¤ÎÀÁµá½ñ¥Ş¥¹¥¿¾ğÊó¤Î¼èÆÀÍÑ£Ó£Ñ£ÌÊ¸ºîÀ®´Ø¿ô
+ *    æŒ‡å®šè«‹æ±‚æ›¸ç•ªå·ã®è«‹æ±‚æ›¸ãƒã‚¹ã‚¿æƒ…å ±ã®å–å¾—ç”¨ï¼³ï¼±ï¼¬æ–‡ä½œæˆé–¢æ•°
  *
- *    @param  Integer     $lngInvoiceNo             ¼èÆÀ¤¹¤ëÀÁµá½ñÈÖ¹æ
- *    @return strQuery     $strQuery ¸¡º÷ÍÑSQLÊ¸
+ *    @param  Integer     $lngInvoiceNo             å–å¾—ã™ã‚‹è«‹æ±‚æ›¸ç•ªå·
+ *    @return strQuery     $strQuery æ¤œç´¢ç”¨SQLæ–‡
  *    @access public
  */
 function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo)
 {
-    // ÀÁµá½ñÈÖ¹æÈÖ¹æ
+    // è«‹æ±‚æ›¸ç•ªå·ç•ªå·
     $aryQuery[] = "SELECT distinct on (inv.lnginvoiceno) inv.lnginvoiceno as lnginvoiceno ";
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $aryQuery[] = ", inv.lngrevisionno as lngrevisionno";
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", cust_c.strcompanydisplaycode as strcustomercode";
-    // ¸ÜµÒÌ¾
+    // é¡§å®¢å
     $aryQuery[] = ", inv.strcustomername as strcustomername";
-    // ¸ÜµÒ¼ÒÌ¾
+    // é¡§å®¢ç¤¾å
     $aryQuery[] = ", inv.strcustomercompanyname as strcustomercompanyname";
-    // ÀÁµá½ñ¥³¡¼¥É
+    // è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", inv.strinvoicecode as strinvoicecode";
-    // ÀÁµáÆü
+    // è«‹æ±‚æ—¥
     $aryQuery[] = ", to_char( inv.dtminvoicedate, 'YYYY/MM/DD' ) as dtminvoicedate";
-    // ÀÁµá´ü´Ö ¼«
+    // è«‹æ±‚æœŸé–“ è‡ª
     $aryQuery[] = ", to_char( inv.dtmchargeternstart, 'YYYY/MM/DD' ) as dtmchargeternstart";
-    // ÀÁµá´ü´Ö »ê
+    // è«‹æ±‚æœŸé–“ è‡³
     $aryQuery[] = ", to_char( inv.dtmchargeternend, 'YYYY/MM/DD' ) as dtmchargeternend";
-    // Á°·îÀÁµá»Ä³Û
+    // å‰æœˆè«‹æ±‚æ®‹é¡
     $aryQuery[] = ", To_char( inv.curlastmonthbalance, '9,999,999,990' ) as curlastmonthbalance";
-    // ¸æÀÁµá¶â³Û
+    // å¾¡è«‹æ±‚é‡‘é¡
     $aryQuery[] = ", To_char( inv.curthismonthamount, '9,999,999,990' ) as curthismonthamount";
-    // ÄÌ²ßÃ±°Ì¥³¡¼¥É
+    // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", inv.lngmonetaryunitcode as lngmonetaryunitcode";
-    // ÄÌ²ßÃ±°Ì
+    // é€šè²¨å˜ä½
     $aryQuery[] = ", inv.strmonetaryunitsign as strmonetaryunitsign";
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", inv.lngtaxclasscode as lngtaxclasscode";
-    // ²İÀÇ¶èÊ¬Ì¾
+    // èª²ç¨åŒºåˆ†å
     $aryQuery[] = ", inv.strtaxclassname as strtaxclassname";
-    // ÀÇÈ´¶â³Û1
+    // ç¨æŠœé‡‘é¡1
     $aryQuery[] = ", To_char( inv.cursubtotal1, '9,999,999,990' ) as cursubtotal1";
-    // ¾ÃÈñÀÇÎ¨1
+    // æ¶ˆè²»ç¨ç‡1
     $aryQuery[] = ", inv.curtax1 as curtax1";
-    // ¾ÃÈñÀÇ³Û1
+    // æ¶ˆè²»ç¨é¡1
     $aryQuery[] = ", To_char( inv.curtaxprice1, '9,999,999,990' ) as curtaxprice1";
-    // Ã´Åö¼Ô
+    // æ‹…å½“è€…
     $aryQuery[] = ", u.struserdisplaycode as strusercode";
     $aryQuery[] = ", inv.strusername as strusername";
-    // ºîÀ®¼Ô
+    // ä½œæˆè€…
     $aryQuery[] = ", insert_u.struserdisplaycode as strinsertusercode";
     $aryQuery[] = ", inv.strinsertusername as strinsertusername";
-    // ºîÀ®Æü
+    // ä½œæˆæ—¥
     $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryQuery[] = ", inv.strnote as strnote";
-    // °õºş²ó¿ô
+    // å°åˆ·å›æ•°
     $aryQuery[] = ", inv.lngprintcount as lngprintcount";
-    // ÀâÌÀ
+    // èª¬æ˜
     $aryQuery[] = ", inv.description as description";
 
     $aryQuery[] = " FROM m_invoice inv ";
@@ -1413,7 +1413,7 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo)
         $aryQuery[] = " AND inv.lngrevisionno = ".$lngRevisionNo. " ";
     }
 
-    // ºï½üºÑ¤ß¤ÏÇÓ½ü
+    // å‰Šé™¤æ¸ˆã¿ã¯æ’é™¤
     $aryQuery[] = " AND inv.lnginvoiceno NOT IN ( ";
     $aryQuery[] = " SELECT DISTINCT(lnginvoiceno) FROM m_invoice WHERE lngrevisionno = -1";
     $aryQuery[] = " ) ";
@@ -1429,21 +1429,21 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo)
 
 
 // --------------------------------
-//  ºï½ü¤ËÉ¬Í×¤Ê¥¨¥é¡¼¥Á¥§¥Ã¥¯
+//  å‰Šé™¤ã«å¿…è¦ãªã‚¨ãƒ©ãƒ¼ãƒã‚§ãƒƒã‚¯
 // --------------------------------
 
 /**
- *    ÀÁµá½ñÌÀºÙ¤ËÉ³¤Å¤¯Ç¼ÉÊ½ñ¥Ş¥¹¥¿¤ËÉ³¤Å¤¯Çä¾å¥Ş¥¹¥¿¤ÎÇä¾å¥¹¥Æ¡¼¥¿¥¹¤¬ÄùºÑ¤ß(=99)¤«¤É¤¦¤«¥Á¥§¥Ã¥¯
- *  »ØÄê¤µ¤ì¤¿ÀÁµá½ñÈÖ¹æ¤«¤éÇä¾å¥Ş¥¹¥¿¾ğÊó
+ *    è«‹æ±‚æ›¸æ˜ç´°ã«ç´ã¥ãç´å“æ›¸ãƒã‚¹ã‚¿ã«ç´ã¥ãå£²ä¸Šãƒã‚¹ã‚¿ã®å£²ä¸Šã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãŒç· æ¸ˆã¿(=99)ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
+ *  æŒ‡å®šã•ã‚ŒãŸè«‹æ±‚æ›¸ç•ªå·ã‹ã‚‰å£²ä¸Šãƒã‚¹ã‚¿æƒ…å ±
  *
- *    @param  Integer     $lngInvoiceNo         ÀÁµá½ñÈÖ¹æ
- *    @return boolean    true : ÄùºÑ¤ß¤¬´Ş¤Ş¤ì¤Æ¤¤¤ë
- *                      false:¡ÖÄù¤áºÑ¡×¤ÎÌÀºÙ¤ÏÌµ¤·
+ *    @param  Integer     $lngInvoiceNo         è«‹æ±‚æ›¸ç•ªå·
+ *    @return boolean    true : ç· æ¸ˆã¿ãŒå«ã¾ã‚Œã¦ã„ã‚‹
+ *                      false:ã€Œç· ã‚æ¸ˆã€ã®æ˜ç´°ã¯ç„¡ã—
  */
 
 function fncSalesStatusIsClosed($lngInvoiceNo, $objDB)
 {
-    // ÀÁµá½ñÈÖ¹æ¤ËÉ³¤Å¤¯Çä¾å¥Ş¥¹¥¿¥Ç¡¼¥¿¤Î¼èÆÀ
+    // è«‹æ±‚æ›¸ç•ªå·ã«ç´ã¥ãå£²ä¸Šãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     $strQuery = fncGetSalesMSQL ( $lngInvoiceNo );
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -1456,39 +1456,39 @@ function fncSalesStatusIsClosed($lngInvoiceNo, $objDB)
     }
     else
     {
-        // ÀÁµá½ñÈÖ¹æ¤ËÉ³¤Å¤¯Çä¾å¥Ş¥¹¥¿¤¬¸«¤Ä¤«¤é¤Ê¤¤¢ÍDB¥¨¥é¡¼
-        fncOutputError ( 9061, DEF_FATAL, "ºï½üÁ°¥Á¥§¥Ã¥¯½èÍı¤ËÈ¼¤¦Çä¾å¥Ş¥¹¥¿¼èÆÀ¼ºÇÔ", TRUE, "", $objDB );
+        // è«‹æ±‚æ›¸ç•ªå·ã«ç´ã¥ãå£²ä¸Šãƒã‚¹ã‚¿ãŒè¦‹ã¤ã‹ã‚‰ãªã„â‡’DBã‚¨ãƒ©ãƒ¼
+        fncOutputError ( 9061, DEF_FATAL, "å‰Šé™¤å‰ãƒã‚§ãƒƒã‚¯å‡¦ç†ã«ä¼´ã†å£²ä¸Šãƒã‚¹ã‚¿å–å¾—å¤±æ•—", TRUE, "", $objDB );
     }
 
-    //  Çä¾å¥Ş¥¹¥¿¤ËÉ³¤Å¤¯Çä¾å¾õÂÖ¤Î¥¹¥Æ¡¼¥¿¥¹¤¬¡ÖÄù¤áºÑ¡×¤«¤É¤¦¤«
+    //  å£²ä¸Šãƒã‚¹ã‚¿ã«ç´ã¥ãå£²ä¸ŠçŠ¶æ…‹ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãŒã€Œç· ã‚æ¸ˆã€ã‹ã©ã†ã‹
     for ( $i = 0; $i < count($aryDetailResult); $i++)
     {
-        // Çä¾å¾õÂÖ¥³¡¼¥É
+        // å£²ä¸ŠçŠ¶æ…‹ã‚³ãƒ¼ãƒ‰
         $lngSalesStatusCode = $aryDetailResult[$i]["lngsalesstatuscode"];
 
         if ($lngSalesStatusCode == DEF_SALES_CLOSED){
-            // Çä¾å¾õÂÖ¥³¡¼¥É¤¬¡ÖÄù¤áºÑ¡×¤Î¥Ş¥¹¥¿¤¬1·ï°Ê¾åÂ¸ºß
+            // å£²ä¸ŠçŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ãŒã€Œç· ã‚æ¸ˆã€ã®ãƒã‚¹ã‚¿ãŒ1ä»¶ä»¥ä¸Šå­˜åœ¨
             return true;
         }
     }
 
-    // Çä¾å¾õÂÖ¥³¡¼¥É¤¬¡ÖÄù¤áºÑ¡×¤Ï1·ï¤âÌµ¤¤
+    // å£²ä¸ŠçŠ¶æ…‹ã‚³ãƒ¼ãƒ‰ãŒã€Œç· ã‚æ¸ˆã€ã¯1ä»¶ã‚‚ç„¡ã„
     return false;
 }
 
 
 
 /**
- * ÀÁµá½ñ¥Ş¥¹¥¿¤Î¥Ç¡¼¥¿¤Îºï½ü
+ * è«‹æ±‚æ›¸ãƒã‚¹ã‚¿ã®ãƒ‡ãƒ¼ã‚¿ã®å‰Šé™¤
  *
- *    @param  Integer     $lngInvoiceNo ÀÁµá½ñÈÖ¹æ
- *    @param  Object        $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
- *    @return Boolean     true        ¼Â¹ÔÀ®¸ù
- *                        false        ¼Â¹Ô¼ºÇÔ ¾ğÊó¼èÆÀ¼ºÇÔ
+ *    @param  Integer     $lngInvoiceNo è«‹æ±‚æ›¸ç•ªå·
+ *    @param  Object        $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    @return Boolean     true        å®Ÿè¡ŒæˆåŠŸ
+ *                        false        å®Ÿè¡Œå¤±æ•— æƒ…å ±å–å¾—å¤±æ•—
  */
 function fncDeleteInvoice($lngInvoiceNo, $lngRevisionNo, $objDB, $objAuth)
 {
-    // ÀÁµá½ñÈÖ¹æÈÖ¤ÎÍ­¸ú¤Ê¥Ş¥¹¥¿¥Ç¡¼¥¿¤¬¤¢¤ë¤«³ÎÇ§
+    // è«‹æ±‚æ›¸ç•ªå·ç•ªã®æœ‰åŠ¹ãªãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚‹ã‹ç¢ºèª
     $strQuery = fncGetInvoiceMSQL($lngInvoiceNo, $lngRevisionNo);
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB);
     if ( $lngResultNum )
@@ -1499,31 +1499,31 @@ function fncDeleteInvoice($lngInvoiceNo, $lngRevisionNo, $objDB, $objAuth)
     }
     else
     {
-        // ÀÁµá½ñ¥Ş¥¹¥¿¼èÆÀ¤Ë¼ºÇÔ
+        // è«‹æ±‚æ›¸ãƒã‚¹ã‚¿å–å¾—ã«å¤±æ•—
         return false;
     }
     $objDB->freeResult( $lngResultID );
 
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤Ï-1¸ÇÄê¡Ê»ÅÍÍ½ñ¤Ë½à¤º¤ë¡Ë
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ã¯-1å›ºå®šï¼ˆä»•æ§˜æ›¸ã«æº–ãšã‚‹ï¼‰
     $lngMinRevisionNo = -1;
 
-    // ÀÁµá½ñ¥Ş¥¹¥¿¤Ë¥ê¥Ó¥¸¥ç¥óÈÖ¹æ¤¬ -1 ¤Î¥ì¥³¡¼¥É¤òÄÉ²Ã
+    // è«‹æ±‚æ›¸ãƒã‚¹ã‚¿ã«ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·ãŒ -1 ã®ãƒ¬ã‚³ãƒ¼ãƒ‰ã‚’è¿½åŠ 
     $aryQuery[] = "INSERT INTO m_invoice (";
-    $aryQuery[] = " lnginvoiceno,";                     // 1:ÀÁµá½ñÈÖ¹æ
-    $aryQuery[] = " lngrevisionno, ";                   // 2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $aryQuery[] = " strinvoicecode, ";                  // 3:ÀÁµá½ñ¥³¡¼¥É
-    $aryQuery[] = " lnginsertusercode, ";               // 4:ÆşÎÏ¼Ô¥³¡¼¥É
-    $aryQuery[] = " strinsertusername, ";               // 3:ÆşÎÏ¼ÔÌ¾
-    $aryQuery[] = " bytinvalidflag, ";                  // 5:Ìµ¸ú¥Õ¥é¥°
-    $aryQuery[] = " dtminsertdate";                     // 6:ÅĞÏ¿Æü
+    $aryQuery[] = " lnginvoiceno,";                     // 1:è«‹æ±‚æ›¸ç•ªå·
+    $aryQuery[] = " lngrevisionno, ";                   // 2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $aryQuery[] = " strinvoicecode, ";                  // 3:è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = " lnginsertusercode, ";               // 4:å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = " strinsertusername, ";               // 3:å…¥åŠ›è€…å
+    $aryQuery[] = " bytinvalidflag, ";                  // 5:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
+    $aryQuery[] = " dtminsertdate";                     // 6:ç™»éŒ²æ—¥
     $aryQuery[] = ") values (";
-    $aryQuery[] = $lngInvoiceNo . ", ";                 // 1:ÀÁµá½ñÈÖ¹æ
-    $aryQuery[] = $lngMinRevisionNo . ", ";             // 2:¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
-    $aryQuery[] = "'" .$strInvoiceCode . "', ";         // 3:ÀÁµá½ñ¥³¡¼¥É
-    $aryQuery[] = "" .$objAuth->UserCode . ", ";      // 4:ÆşÎÏ¼Ô¥³¡¼¥É
-    $aryQuery[] = "'" .$objAuth->UserFullName . "', ";  // 4:ÆşÎÏ¼ÔÌ¾
-    $aryQuery[] = "false, ";                            // 5:Ìµ¸ú¥Õ¥é¥°
-    $aryQuery[] = "now()";                              // 6:ÅĞÏ¿Æü
+    $aryQuery[] = $lngInvoiceNo . ", ";                 // 1:è«‹æ±‚æ›¸ç•ªå·
+    $aryQuery[] = $lngMinRevisionNo . ", ";             // 2:ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+    $aryQuery[] = "'" .$strInvoiceCode . "', ";         // 3:è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "" .$objAuth->UserCode . ", ";      // 4:å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+    $aryQuery[] = "'" .$objAuth->UserFullName . "', ";  // 4:å…¥åŠ›è€…å
+    $aryQuery[] = "false, ";                            // 5:ç„¡åŠ¹ãƒ•ãƒ©ã‚°
+    $aryQuery[] = "now()";                              // 6:ç™»éŒ²æ—¥
     $aryQuery[] = ")";
 
     unset($strQuery);
@@ -1531,38 +1531,38 @@ function fncDeleteInvoice($lngInvoiceNo, $lngRevisionNo, $objDB, $objAuth)
 
     if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
     {
-        // ¥ì¥³¡¼¥ÉÄÉ²Ã¼ºÇÔ
+        // ãƒ¬ã‚³ãƒ¼ãƒ‰è¿½åŠ å¤±æ•—
         return false;
     }
     $objDB->freeResult( $lngResultID );
 
-    // ½èÍıÀ®¸ù
+    // å‡¦ç†æˆåŠŸ
     return true;
 }
 
 
 /**
- * »ØÄê¤µ¤ì¤¿ÀÁµá½ñÈÖ¹æ¤ËÉ³¤Å¤¤¤Æ¤¤¤ëÇä¾å¥Ş¥¹¥¿¤ÎÀÁµá½ñÈÖ¹æ¤ò¶õ¤Ë¤¹¤ë
+ * æŒ‡å®šã•ã‚ŒãŸè«‹æ±‚æ›¸ç•ªå·ã«ç´ã¥ã„ã¦ã„ã‚‹å£²ä¸Šãƒã‚¹ã‚¿ã®è«‹æ±‚æ›¸ç•ªå·ã‚’ç©ºã«ã™ã‚‹
  *
- *    @param  integer     $lngInvoiceNo   ÀÁµá½ñÈÖ¹æ
- *    @param  Object        $objDB          DB¥ª¥Ö¥¸¥§¥¯¥È
- *    @return Boolean     true            ¼Â¹ÔÀ®¸ù
- *                        false           ¼Â¹Ô¼ºÇÔ ¾ğÊó¼èÆÀ¼ºÇÔ
+ *    @param  integer     $lngInvoiceNo   è«‹æ±‚æ›¸ç•ªå·
+ *    @param  Object        $objDB          DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    @return Boolean     true            å®Ÿè¡ŒæˆåŠŸ
+ *                        false           å®Ÿè¡Œå¤±æ•— æƒ…å ±å–å¾—å¤±æ•—
  */
 function fncUpdateInvoicenoToMSales($lngInvoiceNo, $objDB)
 {
-    // ÀÁµá½ñÈÖ¹æ¤ËÉ³¤Å¤¯Çä¾å¥Ş¥¹¥¿¥Ç¡¼¥¿¤Î¼èÆÀ
+    // è«‹æ±‚æ›¸ç•ªå·ã«ç´ã¥ãå£²ä¸Šãƒã‚¹ã‚¿ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
     $strQuery = fncGetSalesMSQL ( $lngInvoiceNo );
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
     if ( !$lngResultNum )
     {
-        // ÀÁµá½ñÈÖ¹æ¤ËÉ³¤Å¤¯Çä¾å¥Ş¥¹¥¿¤¬¸«¤Ä¤«¤é¤Ê¤¤¢ÍDB¥¨¥é¡¼
+        // è«‹æ±‚æ›¸ç•ªå·ã«ç´ã¥ãå£²ä¸Šãƒã‚¹ã‚¿ãŒè¦‹ã¤ã‹ã‚‰ãªã„â‡’DBã‚¨ãƒ©ãƒ¼
         return false;
     }
 
 
-    // ¹¹¿·ÂĞ¾İ¥ì¥³¡¼¥É¤ÎÀÁµá½ñÈÖ¹æ¤òNULL¤Ë¹¹¿·
+    // æ›´æ–°å¯¾è±¡ãƒ¬ã‚³ãƒ¼ãƒ‰ã®è«‹æ±‚æ›¸ç•ªå·ã‚’NULLã«æ›´æ–°
     $strWhere  = "WHERE ";
     $strWhere .= "lnginvoiceno = " . $lngInvoiceNo . " ";
     $strWhere .= "and lngrevisionno = (SELECT MAX(lngrevisionno) FROM m_sales WHERE lnginvoiceno = " . $lngInvoiceNo . ")";
@@ -1574,59 +1574,59 @@ function fncUpdateInvoicenoToMSales($lngInvoiceNo, $objDB)
     if (!$lngUpdateResultID){ return false; }
     $objDB->freeResult( $lngUpdateResultID );
 
-    // ½èÍıÀ®¸ù
+    // å‡¦ç†æˆåŠŸ
     return true;
 
 }
 
 
 /**
- * »ØÄê¤µ¤ì¤¿ÀÁµá½ñÈÖ¹æ¤«¤éÇä¾å¥Ş¥¹¥¿¾ğÊó¤ò¼èÆÀ¤¹¤ë£Ó£Ñ£ÌÊ¸¤òºîÀ®
+ * æŒ‡å®šã•ã‚ŒãŸè«‹æ±‚æ›¸ç•ªå·ã‹ã‚‰å£²ä¸Šãƒã‚¹ã‚¿æƒ…å ±ã‚’å–å¾—ã™ã‚‹ï¼³ï¼±ï¼¬æ–‡ã‚’ä½œæˆ
  *
- *    »ØÄêÀÁµá½ñÈÖ¹æ¤¬ÅĞÏ¿¤µ¤ì¤Æ¤¤¤ëÇä¾å¥Ş¥¹¥¿¾ğÊó¼èÆÀÍÑ£Ó£Ñ£ÌÊ¸ºîÀ®´Ø¿ô
+ *    æŒ‡å®šè«‹æ±‚æ›¸ç•ªå·ãŒç™»éŒ²ã•ã‚Œã¦ã„ã‚‹å£²ä¸Šãƒã‚¹ã‚¿æƒ…å ±å–å¾—ç”¨ï¼³ï¼±ï¼¬æ–‡ä½œæˆé–¢æ•°
  *
- *    @param  Integer     $lngInvoiceNo ¥­¡¼¤È¤Ê¤ëÀÁµá½ñÈÖ¹æ
- *    @return strQuery     $strQuery     ¸¡º÷ÍÑSQLÊ¸
+ *    @param  Integer     $lngInvoiceNo ã‚­ãƒ¼ã¨ãªã‚‹è«‹æ±‚æ›¸ç•ªå·
+ *    @return strQuery     $strQuery     æ¤œç´¢ç”¨SQLæ–‡
  *    @access public
  */
 function fncGetSalesMSQL ( $lngInvoiceNo )
 {
-    // Çä¾åÈÖ¹æ
+    // å£²ä¸Šç•ªå·
     $aryQuery[] = "SELECT distinct on (lngsalesno) lngsalesno ";
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $aryQuery[] = ", lngrevisionno";
-    // Çä¾å¥³¡¼¥É
+    // å£²ä¸Šã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", strsalescode";
-    // ·×¾åÆü
+    // è¨ˆä¸Šæ—¥
     $aryQuery[] = ", to_char( dtmappropriationdate, 'YYYY/MM/DD' ) as dtmappropriationdate";
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", lngcustomercompanycode";
-    // ¥°¥ë¡¼¥×¥³¡¼¥É
+    // ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", lnggroupcode";
-    // ¥æ¡¼¥¶¥³¡¼¥É
+    // ãƒ¦ãƒ¼ã‚¶ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", lngusercode";
-    // Çä¾å¾õÂÖ¥³¡¼¥É
+    // å£²ä¸ŠçŠ¶æ…‹ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", lngsalesstatuscode";
-    // ÄÌ²ßÃ±°Ì¥³¡¼¥É
+    // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", lngmonetaryunitcode";
-    // ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É
+    // é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", lngmonetaryratecode";
-    // ÄÌ»»¥ì¡¼¥È
+    // é€šç®—ãƒ¬ãƒ¼ãƒˆ
     $aryQuery[] = ", curconversionrate";
-    // Ç¼ÉÊ½ñNO
+    // ç´å“æ›¸NO
     $aryQuery[] = ", strslipcode";
-    // ÀÁµá½ñÈÖ¹æ
+    // è«‹æ±‚æ›¸ç•ªå·
     $aryQuery[] = ", lnginvoiceno";
-    // ¹ç·×¶â³Û
+    // åˆè¨ˆé‡‘é¡
     $aryQuery[] = ", To_char( curtotalprice, '9,999,999,990.9999' )  as curtotalprice";
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryQuery[] = ", strnote";
-    // ÆşÎÏ¼Ô¥³¡¼¥É
+    // å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", lnginputusercode";
-    // ÅĞÏ¿Æü
+    // ç™»éŒ²æ—¥
     $aryQuery[] = ", to_char( dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
 
-    // FROM¶ç
+    // FROMå¥
     $aryQuery[] = " FROM m_sales ";
 
     $aryQuery[] = " WHERE lnginvoiceno = " . $lngInvoiceNo . "";
@@ -1640,25 +1640,25 @@ function fncGetSalesMSQL ( $lngInvoiceNo )
 
 
 /**
- * ¥Ø¥Ã¥ÀÉô¥Ç¡¼¥¿²Ã¹©
+ * ãƒ˜ãƒƒãƒ€éƒ¨ãƒ‡ãƒ¼ã‚¿åŠ å·¥
  *
- *    SQL¤Ç¼èÆÀ¤·¤¿¥Ø¥Ã¥ÀÉô¤ÎÃÍ¤òÉ½¼¨ÍÑ¤Ë²Ã¹©¤¹¤ë
- *    ¢¨SQL¼èÆÀ·ë²Ì¤Î¥­¡¼Ì¾¤Ï¤¹¤Ù¤Æ¾®Ê¸»ú¤Ë¤Ê¤ë¤³¤È¤ËÃí°Õ
+ *    SQLã§å–å¾—ã—ãŸãƒ˜ãƒƒãƒ€éƒ¨ã®å€¤ã‚’è¡¨ç¤ºç”¨ã«åŠ å·¥ã™ã‚‹
+ *    â€»SQLå–å¾—çµæœã®ã‚­ãƒ¼åã¯ã™ã¹ã¦å°æ–‡å­—ã«ãªã‚‹ã“ã¨ã«æ³¨æ„
  *
- *    @param  Array     $aryResult                 ¥Ø¥Ã¥À¹Ô¤Î¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
+ *    @param  Array     $aryResult                 ãƒ˜ãƒƒãƒ€è¡Œã®æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
  *    @access public
  */
 function fncSetInvoiceHeadTableData ( $aryResult )
 {
-    // ÀÁµá½ñNo
+    // è«‹æ±‚æ›¸No
     $aryNewResult["lngInvoiceNo"]    = $aryResult["lnginvoiceno"];
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $aryNewResult["lngRevisionNo"]   = $aryResult["lngrevisionno"];
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryNewResult["strCustomerCode"] = $aryResult["strcustomercode"];
-    // ¸ÜµÒÌ¾
+    // é¡§å®¢å
     $aryNewResult["strCustomerName"] = $aryResult["strcustomername"];
-    // ¸ÜµÒ
+    // é¡§å®¢
     if ( $aryResult["strcustomercode"] )
     {
         $aryNewResult["strCustomer"] = "[" . $aryResult["strcustomercode"] ."]";
@@ -1671,38 +1671,38 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     if( $aryResult["printCustomerName"] ) {
         $aryNewResult["strCustomer"] .= "  " . $aryResult["printCustomerName"];
     }
-    // ¸ÜµÒ¼ÒÌ¾
+    // é¡§å®¢ç¤¾å
     $aryNewResult["strCustomerCompanyName"] = $aryResult["strcustomercompanyname"];
-    // ÀÁµá½ñ¥³¡¼¥É
+    // è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
     $aryNewResult["strInvoiceCode"]         = $aryResult["strinvoicecode"];
-    // ÀÁµáÆü
+    // è«‹æ±‚æ—¥
     $aryNewResult["dtmInvoiceDate"]         = $aryResult["dtminvoicedate"];
-    // ÀÁµá´ü´Ö ¼«
+    // è«‹æ±‚æœŸé–“ è‡ª
     $aryNewResult["dtmChargeternStart"]     = $aryResult["dtmchargeternstart"];
-    // ÀÁµá´ü´Ö »ê
+    // è«‹æ±‚æœŸé–“ è‡³
     $aryNewResult["dtmChargeternEnd"]       = $aryResult["dtmchargeternend"];
-    // Á°·îÀÁµá»Ä³Û
+    // å‰æœˆè«‹æ±‚æ®‹é¡
     $aryNewResult["curLastMonthBalance"]    = $aryResult["curlastmonthbalance"];
-    // ¸æÀÁµá¶â³Û
+    // å¾¡è«‹æ±‚é‡‘é¡
     $aryNewResult["curThisMonthAmount"]     = $aryResult["curthismonthamount"];
-    // ÄÌ²ßÃ±°Ì¥³¡¼¥É
+    // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
     $aryNewResult["lngMonetaryUnitCode"]    = $aryResult["lngmonetaryunitcode"];
-    // ÄÌ²ßÃ±°Ì
+    // é€šè²¨å˜ä½
     $aryNewResult["strMonetaryUnitSign"]    = $aryResult["strmonetaryunitsign"];
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
     $aryNewResult["lngTaxClassCode"]        = $aryResult["lngtaxclasscode"];
-    // ²İÀÇ¶èÊ¬Ì¾
+    // èª²ç¨åŒºåˆ†å
     $aryNewResult["strTaxClassName"]        = $aryResult["strtaxclassname"];
-    // ÀÇÈ´¶â³Û1
+    // ç¨æŠœé‡‘é¡1
     $aryNewResult["curSubTotal1"]           = $aryResult["cursubtotal1"];
-    // ¾ÃÈñÀÇÎ¨1
+    // æ¶ˆè²»ç¨ç‡1
     $aryNewResult["curTax1"]                = $aryResult["curtax1"];
-    // ¾ÃÈñÀÇ³Û1
+    // æ¶ˆè²»ç¨é¡1
     $aryNewResult["curTaxPrice1"]           = $aryResult["curtaxprice1"];
-    // Ã´Åö¼Ô
+    // æ‹…å½“è€…
     $aryNewResult["strUserCode"]            = $aryResult["strusercode"];
     $aryNewResult["strUserName"]            = $aryResult["strusername"];
-    // É½¼¨ÍÑÃ´Åö¼Ô
+    // è¡¨ç¤ºç”¨æ‹…å½“è€…
     if ( $aryResult["strusercode"] )
     {
         $aryNewResult["strUser"] = "[" . $aryResult["strusercode"] ."]";
@@ -1713,10 +1713,10 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     }
     $aryNewResult["strUser"]               .= " " . $aryResult["strusername"];
 
-    // ºîÀ®¼Ô
+    // ä½œæˆè€…
     $aryNewResult["strInsertUserCode"]      = $aryResult["strinsertusercode"];
     $aryNewResult["strInsertUserName"]      = $aryResult["strinsertusername"];
-    // É½¼¨ÍÑºîÀ®¼Ô
+    // è¡¨ç¤ºç”¨ä½œæˆè€…
     if ( $aryResult["strinsertusercode"] )
     {
         $aryNewResult["strInsertUser"] = "[" . $aryResult["strinsertusercode"] ."]";
@@ -1727,13 +1727,13 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     }
     $aryNewResult["strInsertUser"]         .= " " . $aryResult["strinsertusername"];
 
-    // ºîÀ®Æü
+    // ä½œæˆæ—¥
     $aryNewResult["dtmInsertDate"]          = $aryResult["dtminsertdate"];
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryNewResult["strNote"]                = $aryResult["strnote"];
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryNewResult["description"]                = $aryResult["description"];
-    // °õºş²ó¿ô
+    // å°åˆ·å›æ•°
     $aryNewResult["lngPrintCount"]          = $aryResult["lngprintcount"];
 
     return $aryNewResult;
@@ -1742,28 +1742,28 @@ function fncSetInvoiceHeadTableData ( $aryResult )
 
 
 /**
- * ÀÁµá½ñÌÀºÙÉô¥Ç¡¼¥¿²Ã¹©
+ * è«‹æ±‚æ›¸æ˜ç´°éƒ¨ãƒ‡ãƒ¼ã‚¿åŠ å·¥
  *
- *    SQL¤Ç¼èÆÀ¤·¤¿ÀÁµá½ñÌÀºÙ¤ÎÃÍ¤òÉ½¼¨ÍÑ¤Ë²Ã¹©¤¹¤ë
- *    ¢¨SQL¼èÆÀ·ë²Ì¤Î¥­¡¼Ì¾¤Ï¤¹¤Ù¤Æ¾®Ê¸»ú¤Ë¤Ê¤ë¤³¤È¤ËÃí°Õ
+ *    SQLã§å–å¾—ã—ãŸè«‹æ±‚æ›¸æ˜ç´°ã®å€¤ã‚’è¡¨ç¤ºç”¨ã«åŠ å·¥ã™ã‚‹
+ *    â€»SQLå–å¾—çµæœã®ã‚­ãƒ¼åã¯ã™ã¹ã¦å°æ–‡å­—ã«ãªã‚‹ã“ã¨ã«æ³¨æ„
  *
- *    @param  Array     $aryDetailResult     ÌÀºÙ¹Ô¤Î¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó¡Ê£±¥Ç¡¼¥¿Ê¬¡Ë
- *    @param  Array     $aryHeadResult         ¥Ø¥Ã¥À¹Ô¤Î¸¡º÷·ë²Ì¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó¡Ê»²¾ÈÍÑ¡Ë
+ *    @param  Array     $aryDetailResult     æ˜ç´°è¡Œã®æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—ï¼ˆï¼‘ãƒ‡ãƒ¼ã‚¿åˆ†ï¼‰
+ *    @param  Array     $aryHeadResult         ãƒ˜ãƒƒãƒ€è¡Œã®æ¤œç´¢çµæœãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—ï¼ˆå‚ç…§ç”¨ï¼‰
  *    @access public
  */
 function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
 {
-    // ¥½¡¼¥È¥­¡¼
+    // ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
     $aryNewDetailResult["lngInvoiceDetailNo"]    = $aryDetailResult["lnginvoicedetailno"];
-    // ÀÁµá½ñÈÖ¹æ
+    // è«‹æ±‚æ›¸ç•ªå·
     $aryNewDetailResult["lngInvoiceNo"]          = $aryDetailResult["lnginvoiceno"];
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $aryNewDetailResult["lngRevisionNo"]         = $aryDetailResult["lngrevisionno"];
-    // Ç¼ÉÊÆü
+    // ç´å“æ—¥
     $aryNewDetailResult["dtmDeliveryDate"]       = date('Y-m-d', strtotime($aryDetailResult["dtmdeliverydate"]));
-    // // Ç¼ÉÊ¾ì½ê¥³¡¼¥É
+    // // ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
     // $aryNewDetailResult["lngDeliveryPlaceCode"]  = $aryDetailResult["lngdeliveryplacecode"];
-    // // Ç¼ÉÊ¾ì½ê
+    // // ç´å“å ´æ‰€
     // if ( $aryDetailResult["lngdeliveryplacecode"] )
     // {
     //     $aryNewResult["c"] = "[" . $aryResult["lngdeliveryplacecode"] ."]";
@@ -1773,10 +1773,10 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
     //     $aryNewResult["strDeliveryPlaceName"] = "      ";
     // }
     // $aryNewDetailResult["strDeliveryPlaceName"]  = $aryDetailResult["c"];
-    // Ç¼ÉÊ¾ì½ê¥³¡¼¥É
+    // ç´å“å ´æ‰€ã‚³ãƒ¼ãƒ‰
     $aryNewDetailResult["lngDeliveryPlaceCode"]            = $aryDetailResult["lngdeliveryplacecode"];
     $aryNewDetailResult["strDeliveryPlaceName"]            = $aryDetailResult["lngdeliveryplacecode"];
-    // É½¼¨ÍÑÇ¼ÉÊ¾ì½ê
+    // è¡¨ç¤ºç”¨ç´å“å ´æ‰€
     if ( $aryDetailResult["lngdeliveryplacecode"] )
     {
         $aryNewDetailResult["strDeliveryPlace"] = "[" . $aryDetailResult["lngdeliveryplacecode"] ."]";
@@ -1786,7 +1786,7 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
         $aryNewDetailResult["strDeliveryPlace"] = "      ";
     }
     $aryNewDetailResult["strDeliveryPlace"]               .= " " . $aryDetailResult["strdeliveryplacename"];
-    // ÀÇÈ´¶â³Û
+    // ç¨æŠœé‡‘é¡
     if ( !$aryDetailResult["cursubtotalprice"] )
     {
         $aryNewDetailResult["curSubTotalPrice"] .= "0.00";
@@ -1795,27 +1795,27 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
     {
         $aryNewDetailResult["curSubTotalPrice"] .= $aryDetailResult["cursubtotalprice"];
     }
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
     $aryNewDetailResult["lngTaxClassCode"]       = $aryDetailResult["lngtaxclasscode"];
-    // ²İÀÇ¶èÊ¬Ì¾
+    // èª²ç¨åŒºåˆ†å
     $aryNewDetailResult["strTaxClassName"]       = $aryDetailResult["strtaxclassname"];
-    // ¾ÃÈñÀÇÎ¨
+    // æ¶ˆè²»ç¨ç‡
     $curTax = (float)$aryDetailResult["curtax"];
     $aryNewDetailResult["curTax"]                = (int)($curTax*100);
-    // ¾ÃÈñÀÇ³Û
+    // æ¶ˆè²»ç¨é¡
     $curSubTotalPrice = preg_replace('/,/', '', $aryDetailResult["cursubtotalprice"]);
     $aryNewDetailResult["taxPrice"]              = (int)($aryDetailResult["lngtaxclasscode"]) == 1
                                                     ? 0
                                                     : (float)$curSubTotalPrice*$curTax;
-    // ²İÀÇ¶èÊ¬¡¦ÀÇÎ¨
-    $aryNewDetailResult["strTax"]                = $aryDetailResult["strtaxclassname"] ."¡¦" . (int)($curTax*100) . '%';
-    // ÌÀºÙÈ÷¹Í
+    // èª²ç¨åŒºåˆ†ãƒ»ç¨ç‡
+    $aryNewDetailResult["strTax"]                = $aryDetailResult["strtaxclassname"] ."ãƒ»" . (int)($curTax*100) . '%';
+    // æ˜ç´°å‚™è€ƒ
     $aryNewDetailResult["strDetailNote"]         = nl2br($aryDetailResult["strnote"]);
-    // Ç¼ÉÊÅÁÉ¼ÈÖ¹æ
+    // ç´å“ä¼ç¥¨ç•ªå·
     $aryNewDetailResult["lngSlipNo"]             = $aryDetailResult["lngslipno"];
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $aryNewDetailResult["lngSlipRevisionNo"]     = $aryDetailResult["lngsliprevisionno"];
-    // Ç¼ÉÊÅÁÉ¼¥³¡¼¥É
+    // ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
     $aryNewDetailResult["lngSlipCode"]           = $aryDetailResult["strslipcode"];
 
     return $aryNewDetailResult;
@@ -1824,18 +1824,18 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
 
 
 /**
- * ¥×¥ì¥Ó¥å¡¼ÍÑ¥Ç¡¼¥¿²Ã¹©
+ * ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ãƒ¼ã‚¿åŠ å·¥
  *
- *    POST¥Ç¡¼¥¿¤ò¥×¥ì¥Ó¥å¡¼É½¼¨ÍÑ¤Ë²Ã¹©¤¹¤ë
+ *    POSTãƒ‡ãƒ¼ã‚¿ã‚’ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼è¡¨ç¤ºç”¨ã«åŠ å·¥ã™ã‚‹
  *
- *    @param  Array       $aryResult         POST¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
- *  @param  integer  $lngInvoiceNo      ÀÁµá½ñÈÖ¹æ
+ *    @param  Array       $aryResult         POSTãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
+ *  @param  integer  $lngInvoiceNo      è«‹æ±‚æ›¸ç•ªå·
  *    @access public
  */
 function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
 {
 	require_once (LIB_DEBUGFILE);
-    // ÀÁµá½ñÌÀºÙ¤ÎÇ¼ÉÊ½ñNo
+    // è«‹æ±‚æ›¸æ˜ç´°ã®ç´å“æ›¸No
     $slipCodeArray = explode(',' ,$aryResult['slipCodeList']);
     $aryPrevResult['slipCodeList']  = $aryResult['slipCodeList'];
     $aryPrevResult['slipCodeArray'] = $slipCodeArray;
@@ -1848,64 +1848,64 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
         $taxclass = explode(' ' ,$aryResult['taxclass']);
         $taxclasscode = preg_replace('/[^0-9]/', '', $taxclass[0]);
         $taxclassname = $taxclass[1];
-        // ²İÀÇ¶èÊ¬¥³¡¼¥É
+        // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
         $aryPrevResult["lngTaxClassCode"] = $taxclasscode;
-        // ²İÀÇ¶èÊ¬Ì¾
+        // èª²ç¨åŒºåˆ†å
         $aryPrevResult["strTaxClassName"] = $taxclassname;
     }
 
 
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryPrevResult["strCustomerCode"] = $aryResult["lngCustomerCode"];
-    // ¸ÜµÒÌ¾
+    // é¡§å®¢å
     $aryPrevResult["strCustomerName"] = $aryResult["strCustomerName"];
 
-    // Á°·îÀÁµá»Ä³Û
+    // å‰æœˆè«‹æ±‚æ®‹é¡
     $aryPrevResult['curLastMonthBalance_desc'] = preg_match('/,/',$aryResult["curlastmonthbalance"]) ? $aryResult["curlastmonthbalance"] : number_format($aryResult["curlastmonthbalance"]);
-    // º£·îÀÇÈ´¤­¶â³Û
+    // ä»Šæœˆç¨æŠœãé‡‘é¡
     $aryPrevResult['curSubTotal1_desc']        = preg_match('/,/',$aryResult["curthismonthamount"]) ? $aryResult["curthismonthamount"] : number_format($aryResult["curthismonthamount"]);
-    // ¾ÃÈñÀÇ³Û
+    // æ¶ˆè²»ç¨é¡
     $aryPrevResult['curTaxPrice1_desc']        = preg_match('/,/',$aryResult["curtaxprice"]) ? $aryResult["curtaxprice"] : number_format($aryResult["curtaxprice"]);
-    // ¤´ÀÁµá³Û
+    // ã”è«‹æ±‚é¡
     $aryPrevResult['curThisMonthAmount_desc']  = preg_match('/,/',$aryResult["notaxcurthismonthamount"]) ? $aryResult["notaxcurthismonthamount"] : number_format($aryResult["notaxcurthismonthamount"]);
-    // Á°·îÀÁµá»Ä³Û
+    // å‰æœˆè«‹æ±‚æ®‹é¡
     $aryPrevResult['curLastMonthBalance'] = preg_replace('/,/', '', $aryResult["curlastmonthbalance"]);
-    // º£·îÀÇÈ´¤­¶â³Û
+    // ä»Šæœˆç¨æŠœãé‡‘é¡
     $aryPrevResult['curSubTotal1']        = preg_replace('/,/', '', $aryResult["curthismonthamount"]);
-    // ¾ÃÈñÀÇ³Û
+    // æ¶ˆè²»ç¨é¡
     $aryPrevResult['curTaxPrice1']        = preg_replace('/,/', '', $aryResult["curtaxprice"]);
-    // ¤´ÀÁµá³Û
+    // ã”è«‹æ±‚é¡
     $aryPrevResult['curThisMonthAmount']  = preg_replace('/,/', '', $aryResult["notaxcurthismonthamount"]);
 
-    // ¾ÃÈñÀÇÎ¨1
+    // æ¶ˆè²»ç¨ç‡1
     $curtax1 = preg_replace('/[^0-9]/', '', $aryResult["tax"]);
     $aryPrevResult['curTax1'] = (int)$curtax1;
 
-    // ÀÁµáÆü
+    // è«‹æ±‚æ—¥
     $dtmInvoiceDate = $aryResult['ActionDate'];
     $aryPrevResult['dtmInvoiceDate'] = $dtmInvoiceDate;
-    // É½¼¨ÍÑÀÁµáÆü
+    // è¡¨ç¤ºç”¨è«‹æ±‚æ—¥
     $printInvDate = fncGetJapaneseDate($dtmInvoiceDate);
-    $aryPrevResult['printInvDate']  = $printInvDate[0] . $printInvDate[1] .'Ç¯ ' .$printInvDate[2] .'·î' .$printInvDate[3] .'Æü';
+    $aryPrevResult['printInvDate']  = $printInvDate[0] . $printInvDate[1] .'å¹´ ' .$printInvDate[2] .'æœˆ' .$printInvDate[3] .'æ—¥';
 
-    // ÀÁµá½ñ¥³¡¼¥É
+    // è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
     $aryPrevResult['strInvoiceCode'] = fncGetStrInvoiceCode($lngInvoiceNo, true, $objDB);
 
-    // ¼« dtmchargeternstart
+    // è‡ª dtmchargeternstart
     $printTernStart = fncGetJapaneseDate($aryResult['dtmchargeternstart']);
     $aryPrevResult['dtmChargeternStart'] = $aryResult['dtmchargeternstart'];
     $aryPrevResult['printTernStartM'] = $printTernStart[2];
     $aryPrevResult['printTernStartD'] = $printTernStart[3];
 
-    // »ê dtmchargeternend
+    // è‡³ dtmchargeternend
     $printTernEnd = fncGetJapaneseDate($aryResult['dtmchargeternend']);
     $aryPrevResult['dtmChargeternEnd'] = $aryResult['dtmchargeternend'];
     $aryPrevResult['printTernEndM'] = $printTernEnd[2];
     $aryPrevResult['printTernEndD'] = $printTernEnd[3];
 
-    // ¸ÜµÒ¥³¡¼¥É¡¦¸ÜµÒÌ¾¡¦¸ÜµÒ¼ÒÌ¾
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰ãƒ»é¡§å®¢åãƒ»é¡§å®¢ç¤¾å
     list ($aryPrevResult['printCustomerName'], $aryPrevResult['printCompanyName'], $aryPrevResult['customerCode'], $strcompanydisplayname ) = fncGetCompanyPrintName($aryResult["lngCustomerCode"], $objDB);
-    // ¸ÜµÒ
+    // é¡§å®¢
     if ( $aryResult["lngCustomerCode"] )
     {
         $aryNewResult["strCustomer"] = "[" . $aryResult["lngCustomerCode"] ."]";
@@ -1916,27 +1916,27 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     }
     $aryNewResult["strCustomer"] .= " " . $aryPrevResult["printCompanyName"];
 
-    // Ã´Åö¼Ô
+    // æ‹…å½“è€…
     $aryPrevResult["strUserCode"] = $aryResult["lngInputUserCode"];
     $aryPrevResult["strUserName"] = $aryResult["strInputUserName"];
-    // ÄÌ²ßÃ±°ÌÌ¾¾Î
+    // é€šè²¨å˜ä½åç§°
     $monetaryUnitCode = 1;
     $aryPrevResult['strMonetaryUnitName'] = fncGetMonetaryunitSign( $monetaryUnitCode ,$objDB);
 
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryPrevResult['description'] = $aryResult['description'];
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryPrevResult['strNote'] = $aryResult['strnote'];
-    // ºÆ°õºş
+    // å†å°åˆ·
     if( !empty($aryResult['strnotecheck']) && $aryResult['strnotecheck'] == 'on') {
         $space =  !empty($aryPrevResult['strNote']) ? '  ' : '';
-        $aryPrevResult['strNote'] .= $space . "ºÆ°õºş";
+        $aryPrevResult['strNote'] .= $space . "å†å°åˆ·";
     }
 
-    // ºîÀ®Æü(R Y.M.D)
+    // ä½œæˆæ—¥(R Y.M.D)
     $aryPrevResult['prevDate'] = "R." .((int)date('Y')-2018) . "." .(int)date('m') ."." .(int)date('d');
 
-    // ¥æ¡¼¥¶¡¼Ì¾¼èÆÀ
+    // ãƒ¦ãƒ¼ã‚¶ãƒ¼åå–å¾—
     $aryPrevResult['lngUserName'] = $objAuth->UserFullName;
 
     return $aryPrevResult;
@@ -1944,16 +1944,16 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
 
 
 /**
- * ¥«¥é¥àÌ¾¤ò³ÊÇ¼¤¹¤ëÇÛÎó¤Î¥­¡¼¤Ë"CN"¤òÉÕÍ¿¤¹¤ë
+ * ã‚«ãƒ©ãƒ åã‚’æ ¼ç´ã™ã‚‹é…åˆ—ã®ã‚­ãƒ¼ã«"CN"ã‚’ä»˜ä¸ã™ã‚‹
  *
- *    @param  Array     $aryColumnNames         ¥«¥é¥àÌ¾¤¬³ÊÇ¼¤µ¤ì¤¿ÇÛÎó
+ *    @param  Array     $aryColumnNames         ã‚«ãƒ©ãƒ åãŒæ ¼ç´ã•ã‚ŒãŸé…åˆ—
  *    @access public
  */
 function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 {
     $arrayKeys = array_keys($aryColumnNames);
 
-    // É½¼¨ÂĞ¾İ¥«¥é¥à¤ÎÇÛÎó¤è¤ê·ë²Ì¤Î½ĞÎÏ
+    // è¡¨ç¤ºå¯¾è±¡ã‚«ãƒ©ãƒ ã®é…åˆ—ã‚ˆã‚Šçµæœã®å‡ºåŠ›
     for ( $i = 0; $i < count($arrayKeys); $i++ )
     {
         $key = $arrayKeys[$i];
@@ -1966,12 +1966,12 @@ function fncAddColumnNameArrayKeyToCN ($aryColumnNames)
 
 
 /**
- * ÏÂÎñ    À¾ÎñÊÑ´¹´Ø¿ô
+ * å’Œæš¦    è¥¿æš¦å¤‰æ›é–¢æ•°
  *
  *
- *    @param  Date    $date       À¾Îñ Y/m/d
+ *    @param  Date    $date       è¥¿æš¦ Y/m/d
  *    @access public
- *    return   Array   $jdate      [0] Ç¯¹æ [1] Ç¯ [2] ·î [3] Æü
+ *    return   Array   $jdate      [0] å¹´å· [1] å¹´ [2] æœˆ [3] æ—¥
  */
 function fncGetJapaneseDate($date)
 {
@@ -1982,7 +1982,7 @@ function fncGetJapaneseDate($date)
     $d = (int)$_date[2];
     $retY = $y - 2018;
     if($retY > 0) {
-        $result[0] = 'ÎáÏÂ';
+        $result[0] = 'ä»¤å’Œ';
         $result[1] = $retY;
     }
     $result[2] = (int)$m;
@@ -1995,66 +1995,66 @@ function fncGetJapaneseDate($date)
 
 /**
  *
- *    ÀÁµá½ñ½¸·×¤ËÉ¬Í×¤Ê¥Ç¡¼¥¿¼èÆÀÍÑ£Ó£Ñ£ÌÊ¸ºîÀ®´Ø¿ô
+ *    è«‹æ±‚æ›¸é›†è¨ˆã«å¿…è¦ãªãƒ‡ãƒ¼ã‚¿å–å¾—ç”¨ï¼³ï¼±ï¼¬æ–‡ä½œæˆé–¢æ•°
  *
  *    @param  date        $invoiceMonth
- *    @return strQuery    $strQuery ¸¡º÷ÍÑSQLÊ¸
+ *    @return strQuery    $strQuery æ¤œç´¢ç”¨SQLæ–‡
  *    @access public
  */
 function fncGetInvoiceAggregateSQL ( $invoiceMonth )
 {
     $start = new DateTime($invoiceMonth);
     $end =   new DateTime($invoiceMonth);
-    // Íè·î
+    // æ¥æœˆ
     $end->add(DateInterval::createFromDateString('1 month'));
 
-    // ÀÁµá½ñÈÖ¹æÈÖ¹æ
+    // è«‹æ±‚æ›¸ç•ªå·ç•ªå·
     $aryQuery[] = "SELECT distinct on (inv.lnginvoiceno) inv.lnginvoiceno as lnginvoiceno ";
-    // ¥ê¥Ó¥¸¥ç¥óÈÖ¹æ
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
     $aryQuery[] = ", inv.lngrevisionno as lngrevisionno";
-    // ¸ÜµÒ¥³¡¼¥É
+    // é¡§å®¢ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", cust_c.strCompanyDisplayCode as strcustomercode";
-    // ¸ÜµÒÌ¾
+    // é¡§å®¢å
     $aryQuery[] = ", inv.strcustomername as strcustomername";
-    // ¸ÜµÒ¼ÒÌ¾
+    // é¡§å®¢ç¤¾å
     $aryQuery[] = ", inv.strcustomercompanyname as strcustomercompanyname";
-    // ÀÁµá½ñ¥³¡¼¥É
+    // è«‹æ±‚æ›¸ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", inv.strinvoicecode as strinvoicecode";
-    // ÀÁµáÆü
+    // è«‹æ±‚æ—¥
     $aryQuery[] = ", to_char( inv.dtminvoicedate, 'YYYY/MM/DD' ) as dtminvoicedate";
-    // ÀÁµá´ü´Ö ¼«
+    // è«‹æ±‚æœŸé–“ è‡ª
     $aryQuery[] = ", to_char( inv.dtmchargeternstart, 'YYYY/MM/DD' ) as dtmchargeternstart";
-    // ÀÁµá´ü´Ö »ê
+    // è«‹æ±‚æœŸé–“ è‡³
     $aryQuery[] = ", to_char( inv.dtmchargeternend, 'YYYY/MM/DD' ) as dtmchargeternend";
-    // Á°·îÀÁµá»Ä³Û
+    // å‰æœˆè«‹æ±‚æ®‹é¡
     $aryQuery[] = ", inv.curlastmonthbalance as curlastmonthbalance";
-    // ¸æÀÁµá¶â³Û
+    // å¾¡è«‹æ±‚é‡‘é¡
     $aryQuery[] = ", inv.curthismonthamount as curthismonthamount";
-    // ÄÌ²ßÃ±°Ì¥³¡¼¥É
+    // é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", inv.lngmonetaryunitcode as lngmonetaryunitcode";
-    // ÄÌ²ßÃ±°Ì
+    // é€šè²¨å˜ä½
     $aryQuery[] = ", inv.strmonetaryunitsign as strmonetaryunitsign";
-    // ²İÀÇ¶èÊ¬¥³¡¼¥É
+    // èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
     $aryQuery[] = ", inv.lngtaxclasscode as lngtaxclasscode";
-    // ²İÀÇ¶èÊ¬Ì¾
+    // èª²ç¨åŒºåˆ†å
     $aryQuery[] = ", inv.strtaxclassname as strtaxclassname";
-    // ÀÇÈ´¶â³Û1
+    // ç¨æŠœé‡‘é¡1
     $aryQuery[] = ", inv.cursubtotal1 as cursubtotal1";
-    // ¾ÃÈñÀÇÎ¨1
+    // æ¶ˆè²»ç¨ç‡1
     $aryQuery[] = ", inv.curtax1 as curtax1";
-    // ¾ÃÈñÀÇ³Û1
+    // æ¶ˆè²»ç¨é¡1
     $aryQuery[] = ", inv.curtaxprice1 as curtaxprice1";
-    // Ã´Åö¼Ô
+    // æ‹…å½“è€…
     $aryQuery[] = ", u.struserdisplaycode as strusercode";
     $aryQuery[] = ", inv.strusername as strusername";
-    // ºîÀ®¼Ô
+    // ä½œæˆè€…
     $aryQuery[] = ", insert_u.struserdisplaycode as strinsertusercode";
     $aryQuery[] = ", inv.strinsertusername as strinsertusername";
-    // ºîÀ®Æü
+    // ä½œæˆæ—¥
     $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
-    // È÷¹Í
+    // å‚™è€ƒ
     $aryQuery[] = ", inv.strnote as strnote";
-    // °õºş²ó¿ô
+    // å°åˆ·å›æ•°
     $aryQuery[] = ", inv.lngprintcount as lngprintcount";
 
     $aryQuery[] = " FROM m_invoice inv ";
@@ -2064,7 +2064,7 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
 
     // WHERE  dtminvoicedate
     $aryQuery[] = " WHERE inv.dtminvoicedate >= '" .$start->format('Y-m-d') ."'  AND inv.dtminvoicedate < '"  .$end->format('Y-m-d') ."' ";
-    // ºï½üºÑ¤ß¤ÏÇÓ½ü
+    // å‰Šé™¤æ¸ˆã¿ã¯æ’é™¤
     $aryQuery[] = " AND inv.lnginvoiceno NOT IN ( ";
     $aryQuery[] = " SELECT DISTINCT(lnginvoiceno) FROM m_invoice WHERE lngrevisionno = -1";
     $aryQuery[] = " ) ";

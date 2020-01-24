@@ -5,7 +5,7 @@
 	background-color : #d6d0b1 ;
 }
 
-/* “ü—ÍƒtƒH[ƒ€ s */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  è¡Œ */
 .form-box__contents
 {
 	position : absolute ;
@@ -20,7 +20,7 @@
 	margin: 1px 3px 4px 0px;
 }
 
-/* ŒŸõ/•\¦ ‘SØ‚è‘Ö‚¦ƒ{ƒ^ƒ“ */
+/* æ¤œç´¢/è¡¨ç¤º å…¨åˆ‡ã‚Šæ›¿ãˆãƒœã‚¿ãƒ³ */
 .toggle-search
 {
     margin: 0px 13px 0px 13px;
@@ -57,7 +57,7 @@
 
 .VarText {
 	display: inline-block;
-	font-family : ‚l‚r ‚oƒSƒVƒbƒN, Osaka ;
+	font-family : ï¼­ï¼³ ï¼°ã‚´ã‚·ãƒƒã‚¯, Osaka ;
 	font-style : normal ;
 	font-weight : normal ;
 	font-size : 12px;
@@ -78,7 +78,7 @@
 
     background-color: #e8f0f1;
 }
-/* ŒŸõƒtƒH[ƒ€ ƒ`ƒFƒbƒNƒ{ƒbƒNƒX ˆÊ’u’²® */
+/* æ¤œç´¢ãƒ•ã‚©ãƒ¼ãƒ  ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹ ä½ç½®èª¿æ•´ */
 .is-search
 {
     width: 30px;

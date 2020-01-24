@@ -1,6 +1,6 @@
 <?php
 
-// ƒ‰ƒCƒuƒ‰ƒŠ“Ç‚Ýž‚Ý
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªèª­ã¿è¾¼ã¿
 include_once('conf.inc');
 require_once(LIB_FILE);
 require_once(LIB_DEBUGFILE);

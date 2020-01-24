@@ -1,9 +1,9 @@
 <?
 /**
- *	¥Ş¥¹¥¿´ÉÍıÍÑ¥é¥¤¥Ö¥é¥ê
+ *	ãƒã‚¹ã‚¿ç®¡ç†ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
  *
- *	¥Ş¥¹¥¿´ÉÍıÍÑ´Ø¿ô¥é¥¤¥Ö¥é¥ê
- *	Ãí) »ÅÆş²ÊÌÜ(m_StockSubject)¡¢»ÅÆşÉôÉÊ(m_StockItem)¥Ş¥¹¥¿¤ÏÆÃ¼ì½èÍıÍ­¤ê
+ *	ãƒã‚¹ã‚¿ç®¡ç†ç”¨é–¢æ•°ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+ *	æ³¨) ä»•å…¥ç§‘ç›®(m_StockSubject)ã€ä»•å…¥éƒ¨å“(m_StockItem)ãƒã‚¹ã‚¿ã¯ç‰¹æ®Šå‡¦ç†æœ‰ã‚Š
  *
  *	@package   KIDS
  *	@license   http://www.wiseknot.co.jp/
@@ -15,45 +15,45 @@
  */
 
 //////////////////////////////////////////////////////////////////////////////
-// ÀßÄê
+// è¨­å®š
 //////////////////////////////////////////////////////////////////////////////
-// ½èÍıIDÄêµÁ
-define ( "DEF_ACTION_INSERT", 1 ); // ÄÉ²Ã
-define ( "DEF_ACTION_UPDATE", 2 ); // ÊÑ¹¹
-define ( "DEF_ACTION_DELETE", 3 ); // ºï½ü
+// å‡¦ç†IDå®šç¾©
+define ( "DEF_ACTION_INSERT", 1 ); // è¿½åŠ 
+define ( "DEF_ACTION_UPDATE", 2 ); // å¤‰æ›´
+define ( "DEF_ACTION_DELETE", 3 ); // å‰Šé™¤
 
 
-// °ìÍ÷¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ëÄêµÁ
+// ä¸€è¦§ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«å®šç¾©
 $aryListTableName = Array (
-    "m_StockClass"       => "»ÅÆş¶èÊ¬¥Ş¥¹¥¿´ÉÍı",
-    "m_StockSubject"     => "»ÅÆş²ÊÌÜ¥Ş¥¹¥¿´ÉÍı",
-    "m_StockItem"        => "»ÅÆşÉôÉÊ¥Ş¥¹¥¿´ÉÍı",
-    "m_AccessIPAddress"  => "¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹¥Ş¥¹¥¿´ÉÍı",
-    "m_CertificateClass" => "¾Ú»æ¼ïÎà¥Ş¥¹¥¿´ÉÍı",
-    "m_Country"          => "¹ñ¥Ş¥¹¥¿´ÉÍı",
-    "m_Copyright"        => "ÈÇ¸¢¸µ¥Ş¥¹¥¿´ÉÍı",
-    "m_Organization"     => "ÁÈ¿¥¥Ş¥¹¥¿´ÉÍı",
-    "m_ProductForm"      => "¾¦ÉÊ·ÁÂÖ¥Ş¥¹¥¿´ÉÍı",
-    "m_SalesClass"       => "Çä¾å¶èÊ¬¥Ş¥¹¥¿´ÉÍı",
-    "m_TargetAge"        => "ÂĞ¾İÇ¯Îğ¥Ş¥¹¥¿´ÉÍı",
-    "m_DeliveryMethod"   => "±¿ÈÂÊıË¡¥Ş¥¹¥¿´ÉÍı"
+    "m_StockClass"       => "ä»•å…¥åŒºåˆ†ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_StockSubject"     => "ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_StockItem"        => "ä»•å…¥éƒ¨å“ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_AccessIPAddress"  => "ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_CertificateClass" => "è¨¼ç´™ç¨®é¡ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_Country"          => "å›½ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_Copyright"        => "ç‰ˆæ¨©å…ƒãƒã‚¹ã‚¿ç®¡ç†",
+    "m_Organization"     => "çµ„ç¹”ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_ProductForm"      => "å•†å“å½¢æ…‹ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_SalesClass"       => "å£²ä¸ŠåŒºåˆ†ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_TargetAge"        => "å¯¾è±¡å¹´é½¢ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_DeliveryMethod"   => "é‹æ¬æ–¹æ³•ãƒã‚¹ã‚¿ç®¡ç†"
 );
 
 
-// ¸¡º÷¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ëÄêµÁ
+// æ¤œç´¢ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«å®šç¾©
 $arySearchTableName = Array (
-    "m_Company"          => "²ñ¼Ò¥Ş¥¹¥¿´ÉÍı",
-    "m_Group"            => "¥°¥ë¡¼¥×¥Ş¥¹¥¿´ÉÍı",
-    "m_MonetaryRate"     => "ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿´ÉÍı"
+    "m_Company"          => "ä¼šç¤¾ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_Group"            => "ã‚°ãƒ«ãƒ¼ãƒ—ãƒã‚¹ã‚¿ç®¡ç†",
+    "m_MonetaryRate"     => "é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ç®¡ç†"
 );
 
 
 /**
- *	¥Ş¥¹¥¿¡¼¥Æ¡¼¥Ö¥ë¥¯¥é¥¹
+ *	ãƒã‚¹ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒ–ãƒ«ã‚¯ãƒ©ã‚¹
  *
- *	setMasterTable     ¥Æ¡¼¥Ö¥ë¾ğÊó¤Î¼èÆÀ¡¢ÀßÄê
- *	setAryMasterInfo   ³Æ¥Ş¥¹¥¿¤Î¥«¥é¥à¥Á¥§¥Ã¥¯Ë¡¡¢ÄÉ²Ã¡¦ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥ê¡¢¥×¥ë¥À¥¦¥ó¥«¥é¥à¤ÎÀßÄê
- *	getColumnHtmlTable ¥«¥é¥à¤ÎHTML¤ò¼èÆÀ(<td>¢·</td>¡¦¡¦¡¦)
+ *	setMasterTable     ãƒ†ãƒ¼ãƒ–ãƒ«æƒ…å ±ã®å–å¾—ã€è¨­å®š
+ *	setAryMasterInfo   å„ãƒã‚¹ã‚¿ã®ã‚«ãƒ©ãƒ ãƒã‚§ãƒƒã‚¯æ³•ã€è¿½åŠ ãƒ»å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªã€ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ã‚«ãƒ©ãƒ ã®è¨­å®š
+ *	getColumnHtmlTable ã‚«ãƒ©ãƒ ã®HTMLã‚’å–å¾—(<td>ï½</td>ãƒ»ãƒ»ãƒ»)
  *
  *	@package k.i.d.s.
  *	@license http://www.wiseknot.co.jp/
@@ -65,61 +65,61 @@ $arySearchTableName = Array (
 class clsMaster
 {
     /**
-     *	¥Æ¡¼¥Ö¥ëÌ¾
+     *	ãƒ†ãƒ¼ãƒ–ãƒ«å
      *	@var string
      */
     var $strTableName;
 
     /**
-     *	¹Ô¥Ç¡¼¥¿ $aryData[¹ÔÈÖ¹æ][¥«¥é¥àÌ¾]
+     *	è¡Œãƒ‡ãƒ¼ã‚¿ $aryData[è¡Œç•ªå·][ã‚«ãƒ©ãƒ å]
      *	@var array
      */
     var $aryData;
 
     /**
-     *	¹Ô¿ô
+     *	è¡Œæ•°
      *	@var integer
      */
     var $lngRecordRow;
 
     /**
-     *	¥«¥é¥àÌ¾ $aryColumnName[¥Õ¥£¡¼¥ë¥ÉÈÖ¹æ]
+     *	ã‚«ãƒ©ãƒ å $aryColumnName[ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ç•ªå·]
      *	@var array
      */
     var $aryColumnName;
 
     /**
-     *	¥«¥é¥à¤Î·¿ÇÛÎó $aryType[¥Õ¥£¡¼¥ë¥ÉÈÖ¹æ]
+     *	ã‚«ãƒ©ãƒ ã®å‹é…åˆ— $aryType[ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ç•ªå·]
      *	@var array
      */
     var $aryType;
 
     /**
-     *	¥«¥é¥à¤Î¥Á¥§¥Ã¥¯ÇÛÎó $aryCheck[¥«¥é¥àÌ¾]
+     *	ã‚«ãƒ©ãƒ ã®ãƒã‚§ãƒƒã‚¯é…åˆ— $aryCheck[ã‚«ãƒ©ãƒ å]
      *	@var array
      */
     var $aryCheck;
 
     /**
-     *	¥«¥é¥à¤Î¥×¥ë¥À¥¦¥ó¥á¥Ë¥å¡¼ÇÛÎó $aryMasterMenu[¥«¥é¥àÌ¾][¹ÔÈÖ¹æ][(VALUE|TEXT)]
+     *	ã‚«ãƒ©ãƒ ã®ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³ãƒ¡ãƒ‹ãƒ¥ãƒ¼é…åˆ— $aryMasterMenu[ã‚«ãƒ©ãƒ å][è¡Œç•ªå·][(VALUE|TEXT)]
      *	@var array
      */
     var $aryMasterMenu;
 
     /**
-     *	¥Á¥§¥Ã¥¯½èÍı¥¯¥¨¥ê $aryCheckQuery[(INSERT|UPDATE|DELETE)][¥¯¥¨¥êÈÖ¹æ]
+     *	ãƒã‚§ãƒƒã‚¯å‡¦ç†ã‚¯ã‚¨ãƒª $aryCheckQuery[(INSERT|UPDATE|DELETE)][ã‚¯ã‚¨ãƒªç•ªå·]
      *	@var array
      */
     var $aryCheckQuery;
 
     /**
-     *	½èÍı¥Æ¡¼¥Ö¥ë $aryDeleteTable[Ï¢ÈÖ]
+     *	å‡¦ç†ãƒ†ãƒ¼ãƒ–ãƒ« $aryDeleteTable[é€£ç•ª]
      *	@var array
      */
     var $aryDeleteTable;
 
     /**
-     *	¥¯¥é¥¹Æâ¤Î½é´ü²½¤ò¹Ô¤¦
+     *	ã‚¯ãƒ©ã‚¹å†…ã®åˆæœŸåŒ–ã‚’è¡Œã†
      *
      *	@return void
      *	@access public
@@ -138,35 +138,35 @@ class clsMaster
 
     // -----------------------------------------------------------------
     /**
-     *	¥Ş¥¹¥¿¥Æ¡¼¥Ö¥ë¤Ë´Ø¤¹¤ë¥¯¥¨¥êÀ¸À®¤·¡¢¾ğÊó¤ò¼èÆÀ¡¢ÀßÄê
-     *	@param	string  $strTableName  ¥Ş¥¹¥¿¥Æ¡¼¥Ö¥ëÌ¾
-     *	@param	string  $strKeyName    ¥­¡¼¤Î¥«¥é¥àÌ¾
-     *	@param	int     $lngKeyCode    ¥­¡¼¤ÎÃÍ
+     *	ãƒã‚¹ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«ã«é–¢ã™ã‚‹ã‚¯ã‚¨ãƒªç”Ÿæˆã—ã€æƒ…å ±ã‚’å–å¾—ã€è¨­å®š
+     *	@param	string  $strTableName  ãƒã‚¹ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«å
+     *	@param	string  $strKeyName    ã‚­ãƒ¼ã®ã‚«ãƒ©ãƒ å
+     *	@param	int     $lngKeyCode    ã‚­ãƒ¼ã®å€¤
      *	@param	Array   $arySubCode    FORM VALUE
-     *	@param	object  $objDB         DB¥ª¥Ö¥¸¥§¥¯¥È
-     *	@return	boolean ¼ºÇÔ¡¢À®¸ù
+     *	@param	object  $objDB         DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     *	@return	boolean å¤±æ•—ã€æˆåŠŸ
      */
     // -----------------------------------------------------------------
     function setMasterTable( $strTableName, $strKeyName, $lngKeyCode, $arySubCode, $objDB )
     {
-        // ¥Ş¥¹¥¿¥Æ¡¼¥Ö¥ëÌ¾¤Î¥»¥Ã¥È
+        // ãƒã‚¹ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«åã®ã‚»ãƒƒãƒˆ
         $this->strTableName = $strTableName;
 
-        // ¥¯¥¨¥êÀ¸À®³«»Ï
+        // ã‚¯ã‚¨ãƒªç”Ÿæˆé–‹å§‹
         $strQuery = "SELECT * FROM " . $this->strTableName;
 
-        // ¥³¡¼¥É»ØÄê(½¤Àµ¡¢ºï½ü½èÍı¤Î¾ì¹ç)
+        // ã‚³ãƒ¼ãƒ‰æŒ‡å®š(ä¿®æ­£ã€å‰Šé™¤å‡¦ç†ã®å ´åˆ)
         if ( $strKeyName && $lngKeyCode != "" )
         {
             $strQuery .= " WHERE $strKeyName = $lngKeyCode";
 
-            // »ÅÆşÉôÉÊ¥Ş¥¹¥¿¤Î¾ì¹ç¡¢¾ò·ï¤òÄÉ²Ã
+            // ä»•å…¥éƒ¨å“ãƒã‚¹ã‚¿ã®å ´åˆã€æ¡ä»¶ã‚’è¿½åŠ 
             if ( $this->strTableName == "m_StockItem" )
             {
                 $strQuery .= " AND lngStockSubjectCode = " . $arySubCode["lngstocksubjectcode"];
             }
 
-            // ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿¤Î¾ì¹ç¡¢¾ò·ï¤òÄÉ²Ã
+            // é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ã®å ´åˆã€æ¡ä»¶ã‚’è¿½åŠ 
 			elseif ( $this->strTableName == "m_MonetaryRate" )
             {
                 $strQuery .= " AND lngMonetaryUnitCode = " . $arySubCode["lngmonetaryunitcode"] .
@@ -175,7 +175,7 @@ class clsMaster
             }
         }
 
-        // »ÅÆşÉôÉÊ¥Ş¥¹¥¿¤Î¾ì¹ç¡¢2¥«¥é¥àÌÜ¤Ç¥½¡¼¥È¤¹¤ëÆÃ¼ì½èÍı
+        // ä»•å…¥éƒ¨å“ãƒã‚¹ã‚¿ã®å ´åˆã€2ã‚«ãƒ©ãƒ ç›®ã§ã‚½ãƒ¼ãƒˆã™ã‚‹ç‰¹æ®Šå‡¦ç†
         if ( $this->strTableName == "m_StockItem" )
         {
             $strQuery .= " ORDER BY 2, 1";
@@ -194,26 +194,26 @@ class clsMaster
 
     // -----------------------------------------------------------------
     /**
-     *	¥Ş¥¹¥¿¥Æ¡¼¥Ö¥ë¤Ë´Ø¤¹¤ë¾ğÊó¤ò¼èÆÀ¡¢ÀßÄê
-     *	@param	string  $strQuery     ¥¯¥¨¥ê
-     *	@param	object  $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
-     *	@return	int     $lngResultNum ·ë²Ì¹Ô¿ô
+     *	ãƒã‚¹ã‚¿ãƒ†ãƒ¼ãƒ–ãƒ«ã«é–¢ã™ã‚‹æƒ…å ±ã‚’å–å¾—ã€è¨­å®š
+     *	@param	string  $strQuery     ã‚¯ã‚¨ãƒª
+     *	@param	object  $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+     *	@return	int     $lngResultNum çµæœè¡Œæ•°
      */
     // -----------------------------------------------------------------
     function setMasterTableData( $strQuery, $objDB )
     {
-        // ¥Ç¡¼¥¿¤Î¼èÆÀ¤È¥»¥Ã¥È
+        // ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã¨ã‚»ãƒƒãƒˆ
         list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-        // ¥«¥é¥à´ØÏ¢¥Ç¡¼¥¿¤Î¼èÆÀ¤È¥»¥Ã¥È
+        // ã‚«ãƒ©ãƒ é–¢é€£ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã¨ã‚»ãƒƒãƒˆ
         $lngColumnNum = $objDB->getFieldsCount ( $lngResultID );
 
         for ( $i = 0; $i < $lngColumnNum; $i++ )
         {
-            // ¥«¥é¥àÌ¾¤ÎÆÉ¤ß¹ş¤ß¤È¥»¥Ã¥È
+            // ã‚«ãƒ©ãƒ åã®èª­ã¿è¾¼ã¿ã¨ã‚»ãƒƒãƒˆ
             $this->aryColumnName[$i] = pg_field_name ( $lngResultID, $i);
 
-            // ·¿¤ÎÆÉ¤ß¹ş¤ß¤È¥»¥Ã¥È
+            // å‹ã®èª­ã¿è¾¼ã¿ã¨ã‚»ãƒƒãƒˆ
             $this->aryType[$i]       = pg_field_type ( $lngResultID, $i);
         }
 
@@ -221,14 +221,14 @@ class clsMaster
         {
             $this->aryData = pg_fetch_all ( $lngResultID );
 
-            // ¥¤¥ó¥¯¥ê¥á¥ó¥È¥·¥ê¥¢¥ë¥³¡¼¥É¼èÆÀ½èÍı
-            // ¥ì¥³¡¼¥É¿ô¤«¤é1¤ò°ú¤¤¤¿¿ô(ºÇ¸å¤ÎÇÛÎóÈÖ¹æ)¤ò¼èÆÀ
+            // ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã‚·ãƒªã‚¢ãƒ«ã‚³ãƒ¼ãƒ‰å–å¾—å‡¦ç†
+            // ãƒ¬ã‚³ãƒ¼ãƒ‰æ•°ã‹ã‚‰1ã‚’å¼•ã„ãŸæ•°(æœ€å¾Œã®é…åˆ—ç•ªå·)ã‚’å–å¾—
             $lngRecordRow = ( count ( $this->aryData ) - 1 );
 
             for ( $i = 0; $i < $lngRecordRow; $i++ )
             {
-                // ºÇ½ª¥ì¥³¡¼¥É¤ÎÂè1¥«¥é¥à¤¬99°Ê³°¤«¤Ä9999°Ê²¼¤Î¾ì¹ç¡¢
-                // ¤½¤Î¿ôÃÍ¤ò¥¤¥ó¥¯¥ê¥á¥ó¥È¤·¤¿¤â¤Î¤ò $this->lngRecordRow ¤Ë¥»¥Ã¥È
+                // æœ€çµ‚ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ç¬¬1ã‚«ãƒ©ãƒ ãŒ99ä»¥å¤–ã‹ã¤9999ä»¥ä¸‹ã®å ´åˆã€
+                // ãã®æ•°å€¤ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã—ãŸã‚‚ã®ã‚’ $this->lngRecordRow ã«ã‚»ãƒƒãƒˆ
                 if ( $this->aryData[$lngRecordRow - $i][$this->aryColumnName[0]] != 99 && $this->aryData[$lngRecordRow - $i][$this->aryColumnName[0]] < 9999 )
                 {
                     $this->lngRecordRow = $this->aryData[$lngRecordRow - $i][$this->aryColumnName[0]] + 1;
@@ -245,67 +245,67 @@ class clsMaster
 
     // -----------------------------------------------------------------
     /**
-     *	¥Á¥§¥Ã¥¯ÇÛÎó¤ÎÀßÄê
-     *	@param	int     ¥­¡¼¥³¡¼¥É¤ÎÃÍ
-     *	@param	Array   ¥µ¥Ö¥­¡¼¥³¡¼¥É¤ÎÃÍ(°ìÉô¤Î¥Æ¡¼¥Ö¥ë¤Ë¤ÆÉ¬Í×)
-     *	@return	boolean ¼ºÇÔ¡¢À®¸ù
+     *	ãƒã‚§ãƒƒã‚¯é…åˆ—ã®è¨­å®š
+     *	@param	int     ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å€¤
+     *	@param	Array   ã‚µãƒ–ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®å€¤(ä¸€éƒ¨ã®ãƒ†ãƒ¼ãƒ–ãƒ«ã«ã¦å¿…è¦)
+     *	@return	boolean å¤±æ•—ã€æˆåŠŸ
      */
     // -----------------------------------------------------------------
     function setAryMasterInfo( $lngKeyCodeValue, $lngSubCode )
     {
         $this->aryCheckQuery["INSERT"] = "SELECT " . $this->aryColumnName[0] . " FROM " . $this->strTableName . " WHERE " . $this->aryColumnName[0] . " = $lngKeyCodeValue";
 
-        // ³Æ¥Ş¥¹¥¿¤ÎÀßÄê
+        // å„ãƒã‚¹ã‚¿ã®è¨­å®š
         switch ( $this->strTableName )
         {
             //////////////////////////////////////////////////////
-            // ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿´ÉÍı
+            // é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ç®¡ç†
             case "m_MonetaryRate":
 
-                // ÅĞÏ¿¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // ç™»éŒ²ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["INSERT"] = "SELECT " . $this->aryColumnName[0] . " FROM " . $this->strTableName . " WHERE " . $this->aryColumnName[0] . " = $lngKeyCodeValue AND " . $this->aryColumnName[1] . " = $lngSubCode";
 
-                // ¹¹¿·¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // æ›´æ–°ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["UPDATE"] = "SELECT " . $this->aryColumnName[0] . " FROM " . $this->strTableName . " WHERE " . $this->aryColumnName[0] . " = $lngKeyCodeValue AND " . $this->aryColumnName[1] . " = $lngSubCode";
 
                 break;
 
             //////////////////////////////////////////////////////
-            // »ÙÊ§ÍÍ¼°¥Ş¥¹¥¿´ÉÍı
+            // æ”¯æ‰•æ§˜å¼ãƒã‚¹ã‚¿ç®¡ç†
             case "m_PayCondition":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_Order WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // »ÅÆş¶èÊ¬¥Ş¥¹¥¿´ÉÍı
+            // ä»•å…¥åŒºåˆ†ãƒã‚¹ã‚¿ç®¡ç†
             case "m_StockClass":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_StockSubject WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // »ÅÆş²ÊÌÜ¥Ş¥¹¥¿´ÉÍı
+            // ä»•å…¥ç§‘ç›®ãƒã‚¹ã‚¿ç®¡ç†
             case "m_StockSubject":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[2]] = "length(1,100)";
 
-                // ÅĞÏ¿¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // ç™»éŒ²ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["INSERT"] = "SELECT " . $this->aryColumnName[0] . " FROM " . $this->strTableName . " WHERE " . $this->aryColumnName[0] . " = $lngKeyCodeValue";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_StockItem WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
                 $this->aryCheckQuery["DELETE"][1] = "SELECT * FROM m_ProductPrice WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
                 $this->aryCheckQuery["DELETE"][2] = "SELECT * FROM t_StockDetail WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
@@ -315,17 +315,17 @@ class clsMaster
                 break;
 
             //////////////////////////////////////////////////////
-            // »ÅÆşÉôÉÊ¥Ş¥¹¥¿´ÉÍı
+            // ä»•å…¥éƒ¨å“ãƒã‚¹ã‚¿ç®¡ç†
             case "m_StockItem":
-                $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,214748				// Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,214748				// æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
 3647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[2]] = "length(1,100)";
 
-                // ÅĞÏ¿¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // ç™»éŒ²ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["INSERT"] = "SELECT " . $this->aryColumnName[0] . " FROM " . $this->strTableName . " WHERE " . $this->aryColumnName[0] . " = $lngKeyCodeValue AND " . $this->aryColumnName[1] . " = $lngSubCode";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_ProductPrice WHERE " . $this->aryColumnName[0] . " = $lngKeyCodeValue AND lngStockSubjectCode = $lngSubCode";
                 $this->aryCheckQuery["DELETE"][1] = "SELECT * FROM t_OrderDetail WHERE " . $this->aryColumnName[0] . " = $lngKeyCodeValue AND lngStockSubjectCode = $lngSubCode";
                 $this->aryCheckQuery["DELETE"][2] = "SELECT * FROM t_StockDetail WHERE " . $this->aryColumnName[0] . " = $lngKeyCodeValue AND lngStockSubjectCode = $lngSubCode";
@@ -336,112 +336,112 @@ class clsMaster
                 break;
 
             //////////////////////////////////////////////////////
-            // ¥¢¥¯¥»¥¹IP¥¢¥É¥ì¥¹¥Ş¥¹¥¿´ÉÍı
+            // ã‚¢ã‚¯ã‚»ã‚¹IPã‚¢ãƒ‰ãƒ¬ã‚¹ãƒã‚¹ã‚¿ç®¡ç†
             case "m_AccessIPAddress":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(-1,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "IP(1,100,',')";
                 $this->aryCheck[$this->aryColumnName[2]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_User WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // ¾Ú»æ¼ïÎà¥Ş¥¹¥¿´ÉÍı
+            // è¨¼ç´™ç¨®é¡ãƒã‚¹ã‚¿ç®¡ç†
             case "m_CertificateClass":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_Product WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // ¹ñ¥Ş¥¹¥¿´ÉÍı
+            // å›½ãƒã‚¹ã‚¿ç®¡ç†
             case "m_Country":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
                 $this->aryCheck[$this->aryColumnName[2]] = "english(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_Company WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // ÈÇ¸¢¸µ¥Ş¥¹¥¿´ÉÍı
+            // ç‰ˆæ¨©å…ƒãƒã‚¹ã‚¿ç®¡ç†
             case "m_Copyright":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_Product WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // ÁÈ¿¥¥Ş¥¹¥¿´ÉÍı
+            // çµ„ç¹”ãƒã‚¹ã‚¿ç®¡ç†
             case "m_Organization":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_Company WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // ¾¦ÉÊ·ÁÂÖ¥Ş¥¹¥¿´ÉÍı
+            // å•†å“å½¢æ…‹ãƒã‚¹ã‚¿ç®¡ç†
             case "m_ProductForm":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_Product WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // Çä¾å¶èÊ¬¥Ş¥¹¥¿´ÉÍı
+            // å£²ä¸ŠåŒºåˆ†ãƒã‚¹ã‚¿ç®¡ç†
             case "m_SalesClass":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM t_ReceiveDetail WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
                 $this->aryCheckQuery["DELETE"][1] = "SELECT * FROM t_SalesDetail WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // ÂĞ¾İÇ¯Îğ¥Ş¥¹¥¿´ÉÍı
+            // å¯¾è±¡å¹´é½¢ãƒã‚¹ã‚¿ç®¡ç†
             case "m_TargetAge":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM m_Product WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
 
             //////////////////////////////////////////////////////
-            // ±¿ÈÂÊıË¡¥Ş¥¹¥¿´ÉÍı
+            // é‹æ¬æ–¹æ³•ãƒã‚¹ã‚¿ç®¡ç†
             case "m_DeliveryMethod":
-                // Ê¸»úÎó¥Á¥§¥Ã¥¯ÀßÄê
+                // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯è¨­å®š
                 $this->aryCheck[$this->aryColumnName[0]] = "null:number(0,2147483647)";
                 $this->aryCheck[$this->aryColumnName[1]] = "length(1,100)";
 
-                // ºï½ü¥Á¥§¥Ã¥¯¥¯¥¨¥êÀßÄê
+                // å‰Šé™¤ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªè¨­å®š
                 $this->aryCheckQuery["DELETE"][0] = "SELECT * FROM t_OrderDetail WHERE " . $this->aryColumnName[0] . " = " . $lngKeyCodeValue;
 
                 break;
@@ -454,34 +454,34 @@ class clsMaster
 
     // -----------------------------------------------------------------
     /**
-     *	¥«¥é¥à¤ÎHTML¤ò¼èÆÀ(<td>¢·</td>¡¦¡¦¡¦)
-     *	@param	Int    $lngColumnNum  ¥«¥é¥à¿ô(»ØÄê¤¬¤Ê¤¤¾ì¹ç¡¢Â°À­¤«¤é¼èÆÀ)
-     *	@return	String $strColumnHtml ¥«¥é¥à¹Ô(<td>¢·</td>¡¦¡¦¡¦)
+     *	ã‚«ãƒ©ãƒ ã®HTMLã‚’å–å¾—(<td>ï½</td>ãƒ»ãƒ»ãƒ»)
+     *	@param	Int    $lngColumnNum  ã‚«ãƒ©ãƒ æ•°(æŒ‡å®šãŒãªã„å ´åˆã€å±æ€§ã‹ã‚‰å–å¾—)
+     *	@return	String $strColumnHtml ã‚«ãƒ©ãƒ è¡Œ(<td>ï½</td>ãƒ»ãƒ»ãƒ»)
      */
     // -----------------------------------------------------------------
     function getColumnHtmlTable( $lngColumnNum )
     {
-        // ¥«¥é¥à¿ô»ØÄê¤¬¤Ê¤¤¾ì¹ç¡¢Â°À­¤«¤é¼èÆÀ
+        // ã‚«ãƒ©ãƒ æ•°æŒ‡å®šãŒãªã„å ´åˆã€å±æ€§ã‹ã‚‰å–å¾—
         if ( !$lngColumnNum )
         {
             $lngColumnNum = count ( $this->aryColumnName );
         }
 
-        // ¥«¥é¥à¿ôÊ¬<td></td>¤òÀ¸À®
+        // ã‚«ãƒ©ãƒ æ•°åˆ†<td></td>ã‚’ç”Ÿæˆ
         for ( $i = 0; $i < $lngColumnNum; $i++ )
         {
             $strColumnHtml .= "		<td id=\"Column$i\" nowrap>Column$i</td>\n";
         }
 
-        // ¥ï¡¼¥¯¥Õ¥í¡¼½çÈÖ¥Ş¥¹¥¿°Ê³°¤Î¾ì¹ç¡¢½¤Àµ¥«¥é¥àÉ½¼¨
+        // ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼é †ç•ªãƒã‚¹ã‚¿ä»¥å¤–ã®å ´åˆã€ä¿®æ­£ã‚«ãƒ©ãƒ è¡¨ç¤º
         if ( $this->strTableName != "m_WorkflowOrder" )
         {
-            $strColumnHtml .= "		<td id=\"FixColumn\" nowrap>½¤Àµ</td>\n";
+            $strColumnHtml .= "		<td id=\"FixColumn\" nowrap>ä¿®æ­£</td>\n";
         }
-        // ÄÌ²ß¥ì¡¼¥È¥Ş¥¹¥¿°Ê³°¤Î¾ì¹ç¡¢ºï½ü¥«¥é¥àÉ½¼¨
+        // é€šè²¨ãƒ¬ãƒ¼ãƒˆãƒã‚¹ã‚¿ä»¥å¤–ã®å ´åˆã€å‰Šé™¤ã‚«ãƒ©ãƒ è¡¨ç¤º
         if ( $this->strTableName != "m_MonetaryRate" )
         {
-            $strColumnHtml .= "		<td id=\"DeleteColumn\" nowrap>ºï½ü</td>\n";
+            $strColumnHtml .= "		<td id=\"DeleteColumn\" nowrap>å‰Šé™¤</td>\n";
         }
         return $strColumnHtml;
     }
@@ -491,9 +491,9 @@ class clsMaster
 
 // -----------------------------------------------------------------
 /**
- *	ÇÛÎó¤«¤éGET¤ÇÅÏ¤¹¤¿¤á¤ÎURLÊ¸»úÎó¤òÀ¸À®
- *	@param	Array  $aryData ÊÑ¿ôÌ¾¤ò¥­¡¼¤Ë»ı¤ÄÏ¢ÁÛÇÛÎó
- *	@return	String $strURL  URL(&***=***¡¦¡¦¡¦)
+ *	é…åˆ—ã‹ã‚‰GETã§æ¸¡ã™ãŸã‚ã®URLæ–‡å­—åˆ—ã‚’ç”Ÿæˆ
+ *	@param	Array  $aryData å¤‰æ•°åã‚’ã‚­ãƒ¼ã«æŒã¤é€£æƒ³é…åˆ—
+ *	@return	String $strURL  URL(&***=***ãƒ»ãƒ»ãƒ»)
  */
 // -----------------------------------------------------------------
 function fncGetUrl( $aryData )

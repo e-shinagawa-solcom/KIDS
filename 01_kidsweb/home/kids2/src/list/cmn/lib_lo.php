@@ -1,8 +1,8 @@
 <?
 /**
- *    Ä¢É¼½ĞÎÏÍÑ¥é¥¤¥Ö¥é¥ê
+ *    å¸³ç¥¨å‡ºåŠ›ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
  *
- *    Ä¢É¼½ĞÎÏÍÑ¡¡ÄêµÁ¡¡´Ø¿ô¥é¥¤¥Ö¥é¥ê
+ *    å¸³ç¥¨å‡ºåŠ›ç”¨ã€€å®šç¾©ã€€é–¢æ•°ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
  *
  *    @package   kuwagata
  *    @license   http://www.wiseknot.co.jp/
@@ -13,97 +13,97 @@
  *
  */
 
-// Ä¢É¼½ĞÎÏÍÑÄêµÁ
+// å¸³ç¥¨å‡ºåŠ›ç”¨å®šç¾©
 $aryListOutputMenu = array
     (
     DEF_REPORT_PRODUCT => array
     (
-        "name" => "¾¦ÉÊ´ÉÍı ¾¦ÉÊ´ë²è½ñ",
+        "name" => "å•†å“ç®¡ç† å•†å“ä¼ç”»æ›¸",
         "file" => "p",
     ),
 
     DEF_REPORT_ORDER => array
     (
-        "name" => "È¯Ãí´ÉÍı È¯Ãí½ñ",
+        "name" => "ç™ºæ³¨ç®¡ç† ç™ºæ³¨æ›¸",
         "file" => "po",
     ),
 
     DEF_REPORT_ESTIMATE => array
     (
-        "name" => "¸«ÀÑ¸¶²Á´ÉÍı",
+        "name" => "è¦‹ç©åŸä¾¡ç®¡ç†",
         "file" => "estimate",
     ),
 
     DEF_REPORT_SLIP => array
     (
-        "name" => "Çä¾å´ÉÍı Ç¼ÉÊ½ñ",
+        "name" => "å£²ä¸Šç®¡ç† ç´å“æ›¸",
         "file" => "slip",
     ),
 
     DEF_REPORT_INV => array
     (
-        "name" => "ÀÁµá´ÉÍı ÀÁµá½ñ",
+        "name" => "è«‹æ±‚ç®¡ç† è«‹æ±‚æ›¸",
         "file" => "inv",
     ),
 );
 
 // -----------------------------------------------------------------
 /**
- *    È¯Ãí¥Ç¡¼¥¿¾µÇ§¾õÂÖ¥Á¥§¥Ã¥¯´Ø¿ô
+ *    ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿æ‰¿èªçŠ¶æ…‹ãƒã‚§ãƒƒã‚¯é–¢æ•°
  *
- *    »ØÄê¤·¤¿È¯Ãí¥Ç¡¼¥¿¤Î¾µÇ§¾õÂÖ¤ò¥Á¥§¥Ã¥¯¤¹¤ë´Ø¿ô
+ *    æŒ‡å®šã—ãŸç™ºæ³¨ãƒ‡ãƒ¼ã‚¿ã®æ‰¿èªçŠ¶æ…‹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹é–¢æ•°
  *
- *    @param  Integer $lngOrderNo È¯Ãí¥Ê¥ó¥Ğ¡¼
- *    @param  Object  $objDB      DB¥ª¥Ö¥¸¥§¥¯¥È
- *    @return Boolean $bytApproval  ¾µÇ§¾õÂÖ(TRUE:¾µÇ§ÀÆ FALSE:Ì¤¾µÇ§)
+ *    @param  Integer $lngOrderNo ç™ºæ³¨ãƒŠãƒ³ãƒãƒ¼
+ *    @param  Object  $objDB      DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    @return Boolean $bytApproval  æ‰¿èªçŠ¶æ…‹(TRUE:æ‰¿èªæ–‰ FALSE:æœªæ‰¿èª)
  *    @access public
  */
 // -----------------------------------------------------------------
 function fncCheckApprovalProductOrder($lngOrderNo, $objDB)
 {
-    // È¯Ãí¥ï¡¼¥¯¥Õ¥í¡¼¤Î¾µÇ§¾õÂÖ¥Á¥§¥Ã¥¯¥¯¥¨¥êÀ¸À®
+    // ç™ºæ³¨ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã®æ‰¿èªçŠ¶æ…‹ãƒã‚§ãƒƒã‚¯ã‚¯ã‚¨ãƒªç”Ÿæˆ
     $aryQuery[] = "SELECT o.lngOrderNo ";
     $aryQuery[] = "FROM m_Order o ";
 
-    // »ØÄêÈ¯ÃíNo
+    // æŒ‡å®šç™ºæ³¨No
     $aryQuery[] = "WHERE o.lngOrderNo = " . $lngOrderNo;
 
-    // A:¡ÖÈ¯Ãí¡×¾õÂÖ¤è¤êÂç¤­¤¤¾õÂÖ¤ÎÈ¯Ãí¥Ç¡¼¥¿
-    // B:¡ÖÈ¯Ãí¡×¾õÂÖ¤Î¥Ç¡¼¥¿
-    // C:¥ï¡¼¥¯¥Õ¥í¡¼¤ËÂ¸ºß¤·¤Ê¤¤(Â¨Ç§¾Ú°Æ·ï)
-    // D:¡Ö¾µÇ§¡×¾õÂÖ¤Ë¤¢¤ë°Æ·ï
+    // A:ã€Œç™ºæ³¨ã€çŠ¶æ…‹ã‚ˆã‚Šå¤§ãã„çŠ¶æ…‹ã®ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿
+    // B:ã€Œç™ºæ³¨ã€çŠ¶æ…‹ã®ãƒ‡ãƒ¼ã‚¿
+    // C:ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã«å­˜åœ¨ã—ãªã„(å³èªè¨¼æ¡ˆä»¶)
+    // D:ã€Œæ‰¿èªã€çŠ¶æ…‹ã«ã‚ã‚‹æ¡ˆä»¶
     // A OR ( B AND ( C OR D ) )
     $aryQuery[] = " AND (";
 
-    // A:¡ÖÈ¯Ãí¡×¾õÂÖ¤è¤êÂç¤­¤¤¾õÂÖ¤ÎÈ¯Ãí¥Ç¡¼¥¿
+    // A:ã€Œç™ºæ³¨ã€çŠ¶æ…‹ã‚ˆã‚Šå¤§ãã„çŠ¶æ…‹ã®ç™ºæ³¨ãƒ‡ãƒ¼ã‚¿
     $aryQuery[] = "  o.lngOrderStatusCode > " . DEF_ORDER_ORDER;
 
     $aryQuery[] = "  OR";
     $aryQuery[] = "  (";
 
-    // B:¡ÖÈ¯Ãí¡×¾õÂÖ¤Î¥Ç¡¼¥¿
+    // B:ã€Œç™ºæ³¨ã€çŠ¶æ…‹ã®ãƒ‡ãƒ¼ã‚¿
     $aryQuery[] = "    o.lngOrderStatusCode = " . DEF_ORDER_ORDER;
     $aryQuery[] = "     AND";
     $aryQuery[] = "    (";
 
-    // C:¥ï¡¼¥¯¥Õ¥í¡¼¤ËÂ¸ºß¤·¤Ê¤¤(Â¨Ç§¾Ú°Æ·ï)
+    // C:ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼ã«å­˜åœ¨ã—ãªã„(å³èªè¨¼æ¡ˆä»¶)
     $aryQuery[] = "      0 = ";
     $aryQuery[] = "      (";
     $aryQuery[] = "        SELECT COUNT ( mw.lngWorkflowCode ) ";
     $aryQuery[] = "        FROM m_Workflow mw ";
-// ¥ì¥×¥ê¥±¡¼¥·¥ç¥ó¥µ¡¼¥Ğ¡¼¤Ç¡¢Index¤¬ºîÀ®½ĞÍè¤Ê¤¤¾ã³²ÂĞ±ş - to_number ¤ò¾Ã¤·¤¿
+// ãƒ¬ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚µãƒ¼ãƒãƒ¼ã§ã€IndexãŒä½œæˆå‡ºæ¥ãªã„éšœå®³å¯¾å¿œ - to_number ã‚’æ¶ˆã—ãŸ
     // CREATE INDEX m_workflow_strworkflowkeycode_index ON m_workflow USING btree (to_number(strworkflowkeycode, '9999999'::text));
     //    $aryQuery[] = "        WHERE to_number ( mw.strWorkflowKeyCode, '9999999') = o.lngOrderNo";
     $aryQuery[] = "        WHERE mw.strWorkflowKeyCode = trim(to_char(o.lngOrderNo, '9999999'))";
     $aryQuery[] = "         AND mw.lngFunctionCode = " . DEF_FUNCTION_PO1;
     $aryQuery[] = "      )";
 
-    // D:¡Ö¾µÇ§¡×¾õÂÖ¤Ë¤¢¤ë°Æ·ï
+    // D:ã€Œæ‰¿èªã€çŠ¶æ…‹ã«ã‚ã‚‹æ¡ˆä»¶
     $aryQuery[] = "      OR " . DEF_STATUS_APPROVE . " = ";
     $aryQuery[] = "      (";
     $aryQuery[] = "        SELECT tw.lngWorkflowStatusCode";
     $aryQuery[] = "        FROM m_Workflow mw2, t_Workflow tw";
-// ¥ì¥×¥ê¥±¡¼¥·¥ç¥ó¥µ¡¼¥Ğ¡¼¤Ç¡¢Index¤¬ºîÀ®½ĞÍè¤Ê¤¤¾ã³²ÂĞ±ş - to_number ¤ò¾Ã¤·¤¿
+// ãƒ¬ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚µãƒ¼ãƒãƒ¼ã§ã€IndexãŒä½œæˆå‡ºæ¥ãªã„éšœå®³å¯¾å¿œ - to_number ã‚’æ¶ˆã—ãŸ
     //    $aryQuery[] = "        WHERE to_number ( mw2.strWorkflowKeyCode, '9999999') = o.lngOrderNo";
     $aryQuery[] = "        WHERE mw2.strWorkflowKeyCode = trim(to_char(o.lngOrderNo, '9999999'))";
     $aryQuery[] = "         AND mw2.lngFunctionCode = " . DEF_FUNCTION_PO1;
@@ -117,9 +117,9 @@ function fncCheckApprovalProductOrder($lngOrderNo, $objDB)
     $aryQuery[] = "  )";
     $aryQuery[] = ")";
 
-    // ²áµî¥ê¥Ğ¥¤¥ºÈ¯Ãí½ñ¤ÎÈóÉ½¼¨½èÍı
-    // »ØÄêlngOrderNo¤ÈÆ±¤¸È¯Ãí¥³¡¼¥ÉÆâ¤Ë¤ª¤¤¤Æ¡¢
-    // ¥ê¥Ó¥¸¥ç¥óNO¤¬ºÇÂç¤Î¤â¤Î¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
+    // éå»ãƒªãƒã‚¤ã‚ºç™ºæ³¨æ›¸ã®éè¡¨ç¤ºå‡¦ç†
+    // æŒ‡å®šlngOrderNoã¨åŒã˜ç™ºæ³¨ã‚³ãƒ¼ãƒ‰å†…ã«ãŠã„ã¦ã€
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³NOãŒæœ€å¤§ã®ã‚‚ã®ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
     $aryQuery[] = " AND o.lngRevisionNo = ";
     $aryQuery[] = "(";
     $aryQuery[] = "  SELECT MAX ( o2.lngRevisionNo )";
@@ -127,9 +127,9 @@ function fncCheckApprovalProductOrder($lngOrderNo, $objDB)
     $aryQuery[] = "  WHERE o.strOrderCode = o2.strOrderCode AND o2.bytInvalidFlag = false";
     $aryQuery[] = ")";
 
-    // ¼è¾ÃÈ¯Ãí½ñ¤ÎÈóÉ½¼¨½èÍı
-    // »ØÄêlngOrderNo¤ÈÆ±¤¸È¯Ãí¥³¡¼¥ÉÆâ¤Ë¤ª¤¤¤Æ¡¢
-    // ¥ê¥Ó¥¸¥ç¥óNO¤¬ºÇ¾®¤Î¤â¤Î¤¬0°Ê¾å(È¯Ãí¼è¾Ã°Æ·ï°Ê³°)¤«¤É¤¦¤«¤Î¥Á¥§¥Ã¥¯
+    // å–æ¶ˆç™ºæ³¨æ›¸ã®éè¡¨ç¤ºå‡¦ç†
+    // æŒ‡å®šlngOrderNoã¨åŒã˜ç™ºæ³¨ã‚³ãƒ¼ãƒ‰å†…ã«ãŠã„ã¦ã€
+    // ãƒªãƒ“ã‚¸ãƒ§ãƒ³NOãŒæœ€å°ã®ã‚‚ã®ãŒ0ä»¥ä¸Š(ç™ºæ³¨å–æ¶ˆæ¡ˆä»¶ä»¥å¤–)ã‹ã©ã†ã‹ã®ãƒã‚§ãƒƒã‚¯
     $aryQuery[] = " AND 0 <= ";
     $aryQuery[] = "(";
     $aryQuery[] = "  SELECT MIN ( o3.lngRevisionNo )";
@@ -141,10 +141,10 @@ function fncCheckApprovalProductOrder($lngOrderNo, $objDB)
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
-    // ¥Ç¥Õ¥©¥ë¥È FALSE ¤òÀßÄê
+    // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ FALSE ã‚’è¨­å®š
     $bytApproval = false;
 
-    // ·ë²Ì¥ì¥³¡¼¥É¤¬1¤À¤Ã¤¿¾ì¹ç(Ê£¿ôÂ¸ºß¤Ï¥¤¥ê¡¼¥¬¥ë¤Ç¤¢¤ë²ÄÇ½À­Í­¤ê)¡¢TRUE
+    // çµæœãƒ¬ã‚³ãƒ¼ãƒ‰ãŒ1ã ã£ãŸå ´åˆ(è¤‡æ•°å­˜åœ¨ã¯ã‚¤ãƒªãƒ¼ã‚¬ãƒ«ã§ã‚ã‚‹å¯èƒ½æ€§æœ‰ã‚Š)ã€TRUE
     if ($lngResultNum == 1) {
         $bytApproval = true;
         $objDB->freeResult($lngResultID);
@@ -155,92 +155,92 @@ function fncCheckApprovalProductOrder($lngOrderNo, $objDB)
 
 // -----------------------------------------------------------------
 /**
- *    Ä¢É¼½ĞÎÏ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¥Ñ¥¹¼èÆÀ¥¯¥¨¥êÀ¸À®´Ø¿ô
+ *    å¸³ç¥¨å‡ºåŠ›ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆé–¢æ•°
  *
- *    »ØÄê¤·¤¿Ä¢É¼¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¥Ñ¥¹¤ò¼èÆÀ¤¹¤ë¥¯¥¨¥ê¤òÀ¸À®¤¹¤ë´Ø¿ô
+ *    æŒ‡å®šã—ãŸå¸³ç¥¨ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’å–å¾—ã™ã‚‹ã‚¯ã‚¨ãƒªã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
  *
- *    @param  Integer $lngReportClassCode Ä¢É¼¶èÊ¬¥³¡¼¥É
- *    @param  String  $strReportKeyCode   Ä¢É¼¥­¡¼¥³¡¼¥É
- *    @param  Integer $lngReportCode      Ä¢É¼¥³¡¼¥É
- *    @return String                      Ä¢É¼½ĞÎÏ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¥Ñ¥¹¼èÆÀ¥¯¥¨¥ê
+ *    @param  Integer $lngReportClassCode å¸³ç¥¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+ *    @param  String  $strReportKeyCode   å¸³ç¥¨ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+ *    @param  Integer $lngReportCode      å¸³ç¥¨ã‚³ãƒ¼ãƒ‰
+ *    @return String                      å¸³ç¥¨å‡ºåŠ›ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹å–å¾—ã‚¯ã‚¨ãƒª
  *    @access public
  */
 // -----------------------------------------------------------------
 function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngReportCode)
 {
 
-    // Ä¢É¼¥³¡¼¥É¤¬¿¿¤Î¾ì¹ç¡¢¤½¤Î¾ò·ï¥¯¥¨¥êÊ¬À¸À®
+    // å¸³ç¥¨ã‚³ãƒ¼ãƒ‰ãŒçœŸã®å ´åˆã€ãã®æ¡ä»¶ã‚¯ã‚¨ãƒªåˆ†ç”Ÿæˆ
     if ($lngReportCode) {
         $strReportCodeConditions = " AND r.lngReportCode = " . $lngReportCode;
     }
 
-    // ¾¦ÉÊ´ë²è½ñ½ĞÎÏ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¼èÆÀ¥¯¥¨¥êÀ¸À®
+    // å•†å“ä¼ç”»æ›¸å‡ºåŠ›ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
     if ($lngReportClassCode == DEF_REPORT_PRODUCT) {
         $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM t_GoodsPlan gp, t_Report r ";
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
         $aryQuery[] = $strReportCodeConditions;
 
-        // »ØÄêÀ½ÉÊ¥³¡¼¥É
+        // æŒ‡å®šè£½å“ã‚³ãƒ¼ãƒ‰
         $aryQuery[] = " AND gp.lngProductNo = " . $strReportKeyCode;
-        // ºÇ¿·¥ê¥Ó¥¸¥ç¥ó
+        // æœ€æ–°ãƒªãƒ“ã‚¸ãƒ§ãƒ³
         $aryQuery[] = " AND lngRevisionNo = ( SELECT MAX ( gp2.lngRevisionNo ) FROM t_GoodsPlan gp2 WHERE gp.lngProductNo = gp2.lngProductNo )";
 
-        // Ä¢É¼¥­¡¼¥³¡¼¥É¤ÈÀ½ÉÊ´ë²è¥³¡¼¥É·ë¹ç
+        // å¸³ç¥¨ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã¨è£½å“ä¼ç”»ã‚³ãƒ¼ãƒ‰çµåˆ
         $aryQuery[] = " AND to_number ( r.strReportKeyCode, '9999999') = gp.lngGoodsPlanCode";
     }
 
-    // È¯ÃíÄ¢É¼½ĞÎÏ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¼èÆÀ¥¯¥¨¥êÀ¸À®
+    // ç™ºæ³¨å¸³ç¥¨å‡ºåŠ›ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
     elseif ($lngReportClassCode == DEF_REPORT_ORDER) {
         $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM m_purchaseorder po, t_Report r ";
 
-        // ÂĞ¾İÄ¢É¼(À½ÉÊ´ë²è or È¯Ãí)»ØÄê
+        // å¯¾è±¡å¸³ç¥¨(è£½å“ä¼ç”» or ç™ºæ³¨)æŒ‡å®š
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
 
         $aryQuery[] = $strReportCodeConditions;
 
-        // Ä¢É¼¥³¡¼¥É»ØÄê
+        // å¸³ç¥¨ã‚³ãƒ¼ãƒ‰æŒ‡å®š
         $aryQuery[] = " AND r.strReportKeyCode = '" . $strReportKeyCode . "'";
-        // ¥ê¥Ó¥¸¥ç¥ó¤Ë¥Ş¥¤¥Ê¥¹¤ÎÌµ¤¤
+        // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã«ãƒã‚¤ãƒŠã‚¹ã®ç„¡ã„
         $aryQuery[] = " AND 0 <= ";
         $aryQuery[] = "( ";
         $aryQuery[] = "  SELECT MIN( po1.lngRevisionNo ) FROM m_purchaseorder po1 WHERE po1.strOrderCode = po.strOrderCode ";
         $aryQuery[] = ")";
         $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(po.lngpurchaseorderno, '9999999'))";
     }
-    // Ç¼ÉÊ½ñÄ¢É¼½ĞÎÏ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¼èÆÀ¥¯¥¨¥êÀ¸À®
+    // ç´å“æ›¸å¸³ç¥¨å‡ºåŠ›ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
     elseif ($lngReportClassCode == DEF_REPORT_SLIP) {
         $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM m_slip s, t_Report r ";
 
-        // ÂĞ¾İÄ¢É¼»ØÄê
+        // å¯¾è±¡å¸³ç¥¨æŒ‡å®š
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
 
         $aryQuery[] = $strReportCodeConditions;
 
-        // Ä¢É¼¥³¡¼¥É»ØÄê
+        // å¸³ç¥¨ã‚³ãƒ¼ãƒ‰æŒ‡å®š
         $aryQuery[] = " AND r.strReportKeyCode = '" . $strReportKeyCode . "'";
-        // ¥ê¥Ó¥¸¥ç¥ó¤Ë¥Ş¥¤¥Ê¥¹¤ÎÌµ¤¤
+        // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã«ãƒã‚¤ãƒŠã‚¹ã®ç„¡ã„
         $aryQuery[] = " AND 0 <= ";
         $aryQuery[] = "( ";
         $aryQuery[] = "  SELECT MIN( s1.lngRevisionNo ) FROM m_slip s1 WHERE s1.bytInvalidFlag = false AND s1.strslipcode = s.strslipcode ";
         $aryQuery[] = ")";
         $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(s.lngslipno, '9999999'))";
     }
-    // ÀÁµá½ñÄ¢É¼½ĞÎÏ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¼èÆÀ¥¯¥¨¥êÀ¸À®
+    // è«‹æ±‚æ›¸å¸³ç¥¨å‡ºåŠ›ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
     elseif ($lngReportClassCode == DEF_REPORT_INV) {
         $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM m_invoice i, t_Report r ";
 
-        // ÂĞ¾İÄ¢É¼»ØÄê
+        // å¯¾è±¡å¸³ç¥¨æŒ‡å®š
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
 
         $aryQuery[] = $strReportCodeConditions;
 
-        // Ä¢É¼¥³¡¼¥É»ØÄê
+        // å¸³ç¥¨ã‚³ãƒ¼ãƒ‰æŒ‡å®š
         $aryQuery[] = " AND r.strReportKeyCode = '" . $strReportKeyCode . "'";
-        // ¥ê¥Ó¥¸¥ç¥ó¤Ë¥Ş¥¤¥Ê¥¹¤ÎÌµ¤¤
+        // ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã«ãƒã‚¤ãƒŠã‚¹ã®ç„¡ã„
         $aryQuery[] = " AND 0 <= ";
         $aryQuery[] = "( ";
         $aryQuery[] = "  SELECT MIN( i1.lngRevisionNo ) FROM m_invoice i1 WHERE i1.bytInvalidFlag = false AND i1.strinvoicecode = i.strinvoicecode ";
@@ -248,7 +248,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
         $aryQuery[] = " AND  r.strReportKeyCode = trim(to_char(i.lnginvoiceno, '9999999'))";
     }
 
-    // ¸«ÀÑ¸¶²ÁÄ¢É¼½ĞÎÏ¥³¥Ô¡¼¥Õ¥¡¥¤¥ë¼èÆÀ¥¯¥¨¥êÀ¸À®
+    // è¦‹ç©åŸä¾¡å¸³ç¥¨å‡ºåŠ›ã‚³ãƒ”ãƒ¼ãƒ•ã‚¡ã‚¤ãƒ«å–å¾—ã‚¯ã‚¨ãƒªç”Ÿæˆ
     elseif ($lngReportClassCode == DEF_REPORT_ESTIMATE) {
         $aryQuery[] = "SELECT distinct r.strReportPathName ";
         $aryQuery[] = "FROM t_Report r ";
@@ -256,7 +256,7 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
         $aryQuery[] = "WHERE r.lngReportClassCode = " . $lngReportClassCode;
         $aryQuery[] = $strReportCodeConditions;
 
-        // »ØÄêÀ½ÉÊ¥³¡¼¥É
+        // æŒ‡å®šè£½å“ã‚³ãƒ¼ãƒ‰
         $aryQuery[] = " AND e.lngEstimateNo = " . $strReportKeyCode;
     }
     return join("", $aryQuery);
@@ -264,52 +264,52 @@ function fncGetCopyFilePathQuery($lngReportClassCode, $strReportKeyCode, $lngRep
 
 // -----------------------------------------------------------------
 /**
- *    Ä¢É¼¥¯¥¨¥êÀ¸À®´Ø¿ô
+ *    å¸³ç¥¨ã‚¯ã‚¨ãƒªç”Ÿæˆé–¢æ•°
  *
- *    ½ĞÎÏÂĞ¾İ¤ÎÄ¢É¼¥¯¥¨¥ê¤òÀ¸À®¤¹¤ë´Ø¿ô
+ *    å‡ºåŠ›å¯¾è±¡ã®å¸³ç¥¨ã‚¯ã‚¨ãƒªã‚’ç”Ÿæˆã™ã‚‹é–¢æ•°
  *
- *    @param  Integer $lngClassCode Ä¢É¼¶èÊ¬¥³¡¼¥É
- *    @param  Integer $lngKeyCode   Ä¢É¼¥­¡¼¥³¡¼¥É
- *    @param  Object  $objDB        DB¥ª¥Ö¥¸¥§¥¯¥È
- *    @return String                ¥¯¥¨¥ê
+ *    @param  Integer $lngClassCode å¸³ç¥¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+ *    @param  Integer $lngKeyCode   å¸³ç¥¨ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
+ *    @param  Object  $objDB        DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+ *    @return String                ã‚¯ã‚¨ãƒª
  *    @access public
  */
 // -----------------------------------------------------------------
 function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
 {
     /////////////////////////////////////////////////////////////////////////
-    // ¾¦ÉÊ²½´ë²è½ñ
+    // å•†å“åŒ–ä¼ç”»æ›¸
     /////////////////////////////////////////////////////////////////////////
-    // ¸ÜµÒÉÊÈÖ
-    // ¹¹¿·Æü            dtmUpdateDate
-    // ¾¦ÉÊÌ¾            strProductEnglishName
-    // À½ÉÊ¥³¡¼¥É        strProductCode - strGoodsCode
-    // À½ÉÊÌ¾(ÆüËÜ¸ì)    strProductName
-    // À½ÉÊÌ¾(±Ñ¸ì)        strProductEnglishName
-    // ÉôÌç                strGroupDisplayCode strGroupDisplayName
-    // Ã´Åö¼Ô            strUserDisplayCode strUserDisplayName
-    // ¸ÜµÒ                strCompanyDisplayCode strCompanyDisplayName
-    // ¸ÜµÒÃ´Åö¼Ô        strUserDisplayCode strUserDisplayName
-    // ¾¦ÉÊ·ÁÂÖ            strProductFormName
-    // ÆâÈ¢(ÂŞ)Æş¿ô        lngBoxQuantity strProductUnitName
-    // ¥«¡¼¥È¥óÆş¿ô        lngCartonQuantity strProductUnitName
-    // À¸»ºÍ½Äê¿ô        lngProductionQuantity
-    // ½é²óÇ¼ÉÊ¿ô        lngFirstDeliveryQuantity
-    // Ç¼´ü                dtmDeliveryLimitDate
-    // À¸»º¹©¾ì            strCompanyDisplayCode strCompanyDisplayName
-    // ±¯¾İÌŞØ¹©¾ì        strCompanyDisplayCode strCompanyDisplayName
-    // Ç¼ÉÊ¾ì½ê            strCompanyDisplayCode strCompanyDisplayName
-    // Ç¼²Á                curProductPrice
-    // ¾åÂå                curRetailPrice
-    // ÂĞ¾İÇ¯Îğ            strTargetAgeName
-    // Û²ÔØÃ¨(%)        lngRoyalty
-    // ¾Ú»æ                strCertificateClassName
-    // ÈÇ¸¢¸µ            strCopyrightName
-    // ÈÇ¸¢É½¼¨(¹ï°õ)    strCopyrightDisplayStamp
-    // ÈÇ¸¢É½¼¨(°õºşÊª)    strCopyrightDisplayPrint
-    // À½ÉÊ¹½À®            strProductComposition
-    // ±¯¾İÌŞØÆâÍÆ        strAssemblyContents
-    // »ÅÍÍ¾ÜºÙ            strSpecificationDetails
+    // é¡§å®¢å“ç•ª
+    // æ›´æ–°æ—¥            dtmUpdateDate
+    // å•†å“å            strProductEnglishName
+    // è£½å“ã‚³ãƒ¼ãƒ‰        strProductCode - strGoodsCode
+    // è£½å“å(æ—¥æœ¬èª)    strProductName
+    // è£½å“å(è‹±èª)        strProductEnglishName
+    // éƒ¨é–€                strGroupDisplayCode strGroupDisplayName
+    // æ‹…å½“è€…            strUserDisplayCode strUserDisplayName
+    // é¡§å®¢                strCompanyDisplayCode strCompanyDisplayName
+    // é¡§å®¢æ‹…å½“è€…        strUserDisplayCode strUserDisplayName
+    // å•†å“å½¢æ…‹            strProductFormName
+    // å†…ç®±(è¢‹)å…¥æ•°        lngBoxQuantity strProductUnitName
+    // ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°        lngCartonQuantity strProductUnitName
+    // ç”Ÿç”£äºˆå®šæ•°        lngProductionQuantity
+    // åˆå›ç´å“æ•°        lngFirstDeliveryQuantity
+    // ç´æœŸ                dtmDeliveryLimitDate
+    // ç”Ÿç”£å·¥å ´            strCompanyDisplayCode strCompanyDisplayName
+    // ï½±ï½¯ï½¾ï¾ï¾Œï¾ï¾˜å·¥å ´        strCompanyDisplayCode strCompanyDisplayName
+    // ç´å“å ´æ‰€            strCompanyDisplayCode strCompanyDisplayName
+    // ç´ä¾¡                curProductPrice
+    // ä¸Šä»£                curRetailPrice
+    // å¯¾è±¡å¹´é½¢            strTargetAgeName
+    // ï¾›ï½²ï¾”ï¾˜ï¾ƒï½¨(%)        lngRoyalty
+    // è¨¼ç´™                strCertificateClassName
+    // ç‰ˆæ¨©å…ƒ            strCopyrightName
+    // ç‰ˆæ¨©è¡¨ç¤º(åˆ»å°)    strCopyrightDisplayStamp
+    // ç‰ˆæ¨©è¡¨ç¤º(å°åˆ·ç‰©)    strCopyrightDisplayPrint
+    // è£½å“æ§‹æˆ            strProductComposition
+    // ï½±ï½¯ï½¾ï¾ï¾Œï¾ï¾˜å†…å®¹        strAssemblyContents
+    // ä»•æ§˜è©³ç´°            strSpecificationDetails
     if ($lngClassCode == DEF_REPORT_PRODUCT) {
         $aryQuery[] = "SELECT DISTINCT ON (p.lngProductNo)";
         $aryQuery[] = "   p.lngProductNo";
@@ -317,99 +317,99 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = " , p.lngprintcount";
         $aryQuery[] = " , p.strrevisecode";
         $aryQuery[] = " , p.lngInChargeGroupCode as lngGroupCode";
-        //  ºîÀ®Æü
+        //  ä½œæˆæ—¥
         $aryQuery[] = " , To_Char( p.dtminsertdate, 'YYYY/MM/DD' ) as dtminsertdate";
-        //  ¹¹¿·Æü
+        //  æ›´æ–°æ—¥
         $aryQuery[] = " , To_Char( p.dtmUpdateDate, 'YYYY/MM/DD' ) as dtmUpdateDate";
-        //  ´ë²è¿Ê¹Ô¾õ¶·
+        //  ä¼ç”»é€²è¡ŒçŠ¶æ³
         $aryQuery[] = " , t_gp.lngGoodsPlanProgressCode";
-        //  ²şÄûÈÖ¹æ
+        //  æ”¹è¨‚ç•ªå·
         // $aryQuery[] = " , t_gp.lngRevisionNo";
-        //  ²şÄûÆü»ş
+        //  æ”¹è¨‚æ—¥æ™‚
         $aryQuery[] = " , To_Char( p.dtmUpdateDate, 'YYYY/MM/DD' ) as dtmRevisionDate";
-        //  À½ÉÊ¥³¡¼¥É
+        //  è£½å“ã‚³ãƒ¼ãƒ‰
         $aryQuery[] = " , p.strProductCode";
-        //  À½ÉÊÌ¾¾Î
+        //  è£½å“åç§°
         $aryQuery[] = " , p.strProductName";
-        //  À½ÉÊÌ¾¾Î¡Ê±Ñ¸ì¡Ë
+        //  è£½å“åç§°ï¼ˆè‹±èªï¼‰
         $aryQuery[] = " , p.strProductEnglishName";
-        //  ÆşÎÏ¼Ô
+        //  å…¥åŠ›è€…
         $aryQuery[] = " , input_u.strUserDisplayCode as strInputUserDisplayCode";
         $aryQuery[] = " , input_u.strUserDisplayName as strInputUserDisplayName";
         $aryQuery[] = " , p.lnginputusercode";
-        //  ÉôÌç
+        //  éƒ¨é–€
         $aryQuery[] = " , inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
         $aryQuery[] = " , inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
-        //  Ã´Åö¼Ô
+        //  æ‹…å½“è€…
         $aryQuery[] = " , inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
         $aryQuery[] = " , inchg_u.strUserDisplayName as strInChargeUserDisplayName";
-        //  ³«È¯Ã´Åö¼Ô
+        //  é–‹ç™ºæ‹…å½“è€…
         $aryQuery[] = " , devp_u.strUserDisplayCode as strDevelopUserDisplayCode";
         $aryQuery[] = " , devp_u.strUserDisplayName as strDevelopUserDisplayName";
         $aryQuery[] = " , category.strCategoryName as strCategoryName";
-        //  ¸ÜµÒÉÊÈÖ
+        //  é¡§å®¢å“ç•ª
         $aryQuery[] = " , p.strGoodsCode";
         $aryQuery[] = " , cust_c.strDistinctCode";
-        //  ¾¦ÉÊÌ¾¾Î
+        //  å•†å“åç§°
         $aryQuery[] = " , p.strGoodsName";
-        //  ¸ÜµÒ
+        //  é¡§å®¢
         $aryQuery[] = " , cust_c.strCompanyDisplayCode as strCustomerCompanyDisplayCode";
         $aryQuery[] = " , cust_c.strCompanyDisplayName as strCustomerCompanyDisplayName";
-        //  ¸ÜµÒÃ´Åö¼Ô
+        //  é¡§å®¢æ‹…å½“è€…
         $aryQuery[] = " , cust_u.strUserDisplayCode as strCustomerUserDisplayCode";
         $aryQuery[] = " , cust_u.strUserDisplayName as strCustomerUserDisplayName";
         $aryQuery[] = " , p.lngCustomerUserCode";
         $aryQuery[] = " , p.strCustomerUserName";
-        //  ²Ù»ÑÃ±°Ì
+        //  è·å§¿å˜ä½
         $aryQuery[] = " , packingunit.strProductUnitName as strPackingUnitName";
-        //  À½ÉÊÃ±°Ì
+        //  è£½å“å˜ä½
         $aryQuery[] = " , productunit.strProductUnitName as strProductUnitName";
-        //  ¾¦ÉÊ·ÁÂÖ
+        //  å•†å“å½¢æ…‹
         $aryQuery[] = " , productform.strProductFormName";
-        //  ÆâÈ¢¡ÊÂŞ¡ËÆş¿ô
+        //  å†…ç®±ï¼ˆè¢‹ï¼‰å…¥æ•°
         $aryQuery[] = " , To_char( p.lngBoxQuantity, '9,999,999,990' ) as lngBoxQuantity";
-        //  ¥«¡¼¥È¥óÆş¿ô
+        //  ã‚«ãƒ¼ãƒˆãƒ³å…¥æ•°
         $aryQuery[] = " , To_char( p.lngCartonQuantity, '9,999,999,990' ) as lngCartonQuantity";
-        //  À¸»ºÍ½Äê¿ô
+        //  ç”Ÿç”£äºˆå®šæ•°
         $aryQuery[] = " , To_char( p.lngProductionQuantity, '9,999,999,990' ) as lngProductionQuantity";
         $aryQuery[] = " , productionunit.strProductUnitName AS strProductionUnitName";
-        //  ½é²óÇ¼ÉÊ¿ô
+        //  åˆå›ç´å“æ•°
         $aryQuery[] = " , To_char( p.lngFirstDeliveryQuantity, '9,999,999,990' ) as lngFirstDeliveryQuantity";
         $aryQuery[] = " , firstdeliveryunit.strProductUnitName AS strFirstDeliveryUnitName";
-        //  À¸»º¹©¾ì
+        //  ç”Ÿç”£å·¥å ´
         $aryQuery[] = " , fact_c.strCompanyDisplayCode as strFactoryDisplayCode";
         $aryQuery[] = " , fact_c.strCompanyDisplayName as strFactoryDisplayName";
-        //  ¥¢¥Ã¥»¥ó¥Ö¥ê¹©¾ì
+        //  ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå·¥å ´
         $aryQuery[] = " , assemfact_c.strCompanyDisplayCode as strAssemblyFactoryDisplayCode";
         $aryQuery[] = " , assemfact_c.strCompanyDisplayName as strAssemblyFactoryDisplayName";
-        //  Ç¼ÉÊ¾ì½ê
+        //  ç´å“å ´æ‰€
         $aryQuery[] = " , delv_c.strCompanyDisplayCode as strDeliveryPlaceDisplayCode";
         $aryQuery[] = " , delv_c.strCompanyDisplayName as strDeliveryPlaceDisplayName";
-        //  Ç¼´ü
+        //  ç´æœŸ
         $aryQuery[] = " , To_Char( p.dtmDeliveryLimitDate, 'YYYY/MM' ) as dtmDeliveryLimitDate";
-        //  Ç¼²Á
+        //  ç´ä¾¡
         $aryQuery[] = " , To_char( p.curProductPrice, '9,999,999,990.99' )  as curProductPrice";
-        //  ¾åÂå
+        //  ä¸Šä»£
         $aryQuery[] = " , To_char( p.curRetailPrice, '9,999,999,990.99' )  as curRetailPrice";
-        //  ÂĞ¾İÇ¯Îğ
+        //  å¯¾è±¡å¹´é½¢
         $aryQuery[] = " , targetage.strTargetAgeName";
-        //  ¥í¥¤¥ä¥ê¥Æ¥£
+        //  ãƒ­ã‚¤ãƒ¤ãƒªãƒ†ã‚£
         $aryQuery[] = " , To_char( p.lngRoyalty, '9,999,999,990.99' )  as lngRoyalty";
-        //  ¾Ú»æ
+        //  è¨¼ç´™
         $aryQuery[] = " , certificate.strCertificateClassName";
-        //  ÈÇ¸¢¸µ
+        //  ç‰ˆæ¨©å…ƒ
         $aryQuery[] = " , copyright.strCopyrightName";
-        //  ÈÇ¸¢¸µÈ÷¹Í
+        //  ç‰ˆæ¨©å…ƒå‚™è€ƒ
         $aryQuery[] = " , p.strCopyrightNote";
-        //  ÈÇ¸¢É½¼¨¡Ê¹ï°õ¡Ë
+        //  ç‰ˆæ¨©è¡¨ç¤ºï¼ˆåˆ»å°ï¼‰
         $aryQuery[] = " , p.strCopyrightDisplayStamp";
-        //  ÈÇ¸¢É½¼¨¡Ê°õºşÊª¡Ë
+        //  ç‰ˆæ¨©è¡¨ç¤ºï¼ˆå°åˆ·ç‰©ï¼‰
         $aryQuery[] = " , p.strCopyrightDisplayPrint";
-        //  À½ÉÊ¹½À®
+        //  è£½å“æ§‹æˆ
         $aryQuery[] = " , p.strProductComposition";
-        //  ¥¢¥Ã¥»¥ó¥Ö¥êÆâÍÆ
+        //  ã‚¢ãƒƒã‚»ãƒ³ãƒ–ãƒªå†…å®¹
         $aryQuery[] = " , p.strAssemblyContents";
-        //  »ÅÍÍ¾ÜºÙ
+        //  ä»•æ§˜è©³ç´°
         $aryQuery[] = " , p.strSpecificationDetails ";
 
         $aryQuery[] = " , t_gp.lngGoodsPlanCode ";
@@ -429,7 +429,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "    on p.strProductCode = p1.strProductCode ";
         $aryQuery[] = "    and p.lngrevisionno = p1.lngrevisionno ";
         $aryQuery[] = "    and p.strrevisecode = p1.strrevisecode ";
-        //  ÄÉ²ÃÉ½¼¨ÍÑ¤Î»²¾È¥Ş¥¹¥¿ÂĞ±ş
+        //  è¿½åŠ è¡¨ç¤ºç”¨ã®å‚ç…§ãƒã‚¹ã‚¿å¯¾å¿œ
         $aryQuery[] = " LEFT JOIN m_User input_u ON p.lngInputUserCode = input_u.lngUserCode";
         $aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lngInChargeGroupCode = inchg_g.lngGroupCode";
         $aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lngInChargeUserCode = inchg_u.lngUserCode";
@@ -473,7 +473,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
     }
 
     /////////////////////////////////////////////////////////////////////////
-    // È¯Ãí½ñ
+    // ç™ºæ³¨æ›¸
     /////////////////////////////////////////////////////////////////////////
     elseif ($lngClassCode == DEF_REPORT_ORDER) {
         $aryQuery[] = "select";
@@ -580,7 +580,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , i.strinvoicecode";
         $aryQuery[] = "  , i.lngprintcount";
         $aryQuery[] = "  , to_char(i.dtminvoicedate, 'yyyy/mm/dd') as dtminvoicedate";
-        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'ddÆü') as dtminvoicedate_day";
+        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'ddæ—¥') as dtminvoicedate_day";
         $aryQuery[] = "  , i.strcustomername";
         $aryQuery[] = "  , i.strcustomercompanyname";
         $aryQuery[] = "  , i.lngmonetaryunitcode";
@@ -590,11 +590,11 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , to_char(i.cursubtotal1, '9,999,999,990.99') AS curthismonthamount";
         $aryQuery[] = "  , to_char(i.curlastmonthbalance, '9,999,999,990.99') AS curlastmonthbalance";
         $aryQuery[] = "  , to_char(i.curtaxprice1, '9,999,999,990.99') AS curtaxprice1";
-        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'mm·î') as dtminvoicemonth";
-        $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'mm·î') as dtmchargeternstart_month";
-        $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'ddÆü') as dtmchargeternstart_day";
-        $aryQuery[] = "  , to_char(i.dtmchargeternend, 'mm·î') as dtmchargeternend_month";
-        $aryQuery[] = "  , to_char(i.dtmchargeternend, 'ddÆü') as dtmchargeternend_day";
+        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'mmæœˆ') as dtminvoicemonth";
+        $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'mmæœˆ') as dtmchargeternstart_month";
+        $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'ddæ—¥') as dtmchargeternstart_day";
+        $aryQuery[] = "  , to_char(i.dtmchargeternend, 'mmæœˆ') as dtmchargeternend_month";
+        $aryQuery[] = "  , to_char(i.dtmchargeternend, 'ddæ—¥') as dtmchargeternend_day";
         $aryQuery[] = "  , id.detailcount";
         $aryQuery[] = "  , i.strnote";
         $aryQuery[] = "  , i.description";
@@ -636,14 +636,14 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
 
 // -----------------------------------------------------------------
 /**
- *    ½ğÌ¾¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ëÂ¸ºß¥Á¥§¥Ã¥¯´Ø¿ô
+ *    ç½²åã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«å­˜åœ¨ãƒã‚§ãƒƒã‚¯é–¢æ•°
  *
- *    ³ºÅö¥æ¡¼¥¶¡¼¤Î½ğÌ¾¥¤¥á¡¼¥¸¥Õ¥¡¥¤¥ë¤¬Â¸ºß¤¹¤ë¤«¤É¤¦¤«¥Á¥§¥Ã¥¯¤¹¤ë´Ø¿ô
+ *    è©²å½“ãƒ¦ãƒ¼ã‚¶ãƒ¼ã®ç½²åã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã™ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹é–¢æ•°
  *
- *    GIF / JEPG ¤ËÂĞ±ş
+ *    GIF / JEPG ã«å¯¾å¿œ
  *
- *    @param  String  $strPath  ¥Õ¥¡¥¤¥ë³ÊÇ¼¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
- *    @param  Number  $lnguc    ³ºÅö¥æ¡¼¥¶¡¼¥³¡¼¥É
+ *    @param  String  $strPath  ãƒ•ã‚¡ã‚¤ãƒ«æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
+ *    @param  Number  $lnguc    è©²å½“ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰
  *    @access public
  *
  *    @return bool
@@ -671,7 +671,7 @@ function fncSignatureCheckFile($strPath, $lnguc)
 }
 
 /**
- * ¸ÜµÒ¥³¡¼¥É¤Ë¤è¤êÇ¼ÉÊÅÁÉ¼¼ïÊÌ¼èÆÀ¥¯¥¨¥ê¤ÎÀ¸À®
+ * é¡§å®¢ã‚³ãƒ¼ãƒ‰ã«ã‚ˆã‚Šç´å“ä¼ç¥¨ç¨®åˆ¥å–å¾—ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
  *
  * @param [type] $lngCompanyCode
  * @return void
@@ -692,7 +692,7 @@ function fncGetSlipKindQuery($lngCompanyCode)
 }
 
 /**
- * Ç¼ÉÊ¾ÜºÙ¼èÆÀ¥¯¥¨¥ê¤ÎÀ¸À®
+ * ç´å“è©³ç´°å–å¾—ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
  *
  * @param [type] $strReportKeyCode
  * @return void
@@ -732,7 +732,7 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
 
 
 /**
- * ÀÁµáÌÀºÙ¼èÆÀ¥¯¥¨¥ê¤ÎÀ¸À®
+ * è«‹æ±‚æ˜ç´°å–å¾—ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
  *
  * @param [type] $strReportKeyCode
  * @return void
@@ -756,7 +756,7 @@ function fncGetInvDetailQuery($strReportKeyCode, $lngRevisionNo)
 }
 
 /**
- * Ç¼ÉÊ¾ÜºÙ¼èÆÀ¥¯¥¨¥ê¤ÎÀ¸À®
+ * ç´å“è©³ç´°å–å¾—ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
  *
  * @param [type] $strReportKeyCode
  * @return void
@@ -794,7 +794,7 @@ function fncGetSlipDetailForDownloadQuery($strReportKeyCode, $lngRevisionNo)
 }
 
 /**
- * Ç¼ÉÊ¾ÜºÙ¼èÆÀ¥¯¥¨¥ê¤ÎÀ¸À®
+ * ç´å“è©³ç´°å–å¾—ã‚¯ã‚¨ãƒªã®ç”Ÿæˆ
  *
  * @param [type] $strReportKeyCode
  * @return void
@@ -853,7 +853,7 @@ function fncGetSlipForDownloadQuery($strReportKeyCode)
 }
 
 /**
- * °õºş²ó¿ô¤Î¹¹¿·
+ * å°åˆ·å›æ•°ã®æ›´æ–°
  *
  * @param [type] $lngClassCode
  * @param [type] $aryParts
@@ -863,11 +863,11 @@ function fncGetSlipForDownloadQuery($strReportKeyCode)
 function fncUpdatePrintCount($lngClassCode, $aryParts, $objDB)
 {
     $strQuery = "";
-    // °õºş²ó¿ô¤ÎÀßÄê
+    // å°åˆ·å›æ•°ã®è¨­å®š
     $aryParts["lngprintcount"] += 1;
 
     if ($lngClassCode == DEF_REPORT_PRODUCT) {
-    // °õºş²ó¿ô¤Î¹¹¿·    
+    // å°åˆ·å›æ•°ã®æ›´æ–°    
 	$strQuery = "update m_product set lngprintcount = ".$aryParts["lngprintcount"] 
 	." where lngproductno = " .$aryParts["lngproductno"]
 	. " and lngrevisionno = " .$aryParts["lngrevisionno"]

@@ -4,21 +4,21 @@ require_once ('conf.inc');
 require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 
 /**
-*	¥ï¡¼¥¯¥·¡¼¥È¥Ø¥Ã¥À¡¼¤Î¥Ç¡¼¥¿¥Á¥§¥Ã¥¯¥¯¥é¥¹
+*	ãƒ¯ãƒ¼ã‚¯ã‚·ãƒ¼ãƒˆãƒ˜ãƒƒãƒ€ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ãƒã‚§ãƒƒã‚¯ã‚¯ãƒ©ã‚¹
 *	
 *   
 */
 
 class estimateHeaderController {
 
-    protected $errorMessage; // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+    protected $errorMessage; // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
     protected $messageCode;
     
     protected $loginUserCode;
 
     protected $objDB;
 
-    // ¼è¤ê¹þ¤ßÃÍ
+    // å–ã‚Šè¾¼ã¿å€¤
     protected $productCode;
     protected $productName;
     protected $productEnglishName;
@@ -30,22 +30,22 @@ class estimateHeaderController {
     protected $productionQuantity;
     protected $calculatedProductionQuantity;
 
-    // ¥Þ¥¹¥¿¡¼¥Ç¡¼¥¿ÇÛÎó
+    // ãƒžã‚¹ã‚¿ãƒ¼ãƒ‡ãƒ¼ã‚¿é…åˆ—
 
     protected static $groupDislayNameMaster;
     protected static $userDisplayNameMaster;
     protected static $salesGroupMaster;
     protected static $developUserMaster;
 
-    // ¥»¥ëÌ¾¾Î¥ê¥¹¥È
-    protected static $nameList; // ¥Ø¥Ã¥À¡¼ÉôÆþÎÏ¹àÌÜ¤Î¥»¥ëÌ¾¾Î
-    protected static $titleNameList; // ¥Ø¥Ã¥À¡¼Éô¥¿¥¤¥È¥ë¹àÌÜ¤Î¥»¥ëÌ¾¾Î
+    // ã‚»ãƒ«åç§°ãƒªã‚¹ãƒˆ
+    protected static $nameList; // ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨å…¥åŠ›é …ç›®ã®ã‚»ãƒ«åç§°
+    protected static $titleNameList; // ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨ã‚¿ã‚¤ãƒˆãƒ«é …ç›®ã®ã‚»ãƒ«åç§°
 
-    protected $headerTitleNameList; // ÆþÎÏ¹àÌÜ¤Î¥¿¥¤¥È¥ë¥ê¥¹¥È
+    protected $headerTitleNameList; // å…¥åŠ›é …ç›®ã®ã‚¿ã‚¤ãƒˆãƒ«ãƒªã‚¹ãƒˆ
 
-    protected $cellAddressList; // ¥»¥ëÌ¾¾Î¤ËÂÐ±þ¤·¤¿¥»¥ë°ÌÃÖ¤Î¥ê¥¹¥È
+    protected $cellAddressList; // ã‚»ãƒ«åç§°ã«å¯¾å¿œã—ãŸã‚»ãƒ«ä½ç½®ã®ãƒªã‚¹ãƒˆ
 
-    protected $reviseFlag; // ºÆÈÎ¥Õ¥é¥°
+    protected $reviseFlag; // å†è²©ãƒ•ãƒ©ã‚°
 
     protected function __construct($objDB) {
         $this->objDB = $objDB;
@@ -70,7 +70,7 @@ class estimateHeaderController {
         return $this->reviseFlag;
     }
 
-    // ¥Þ¥¹¥¿¡¼¥»¥Ã¥È´Ø¿ô
+    // ãƒžã‚¹ã‚¿ãƒ¼ã‚»ãƒƒãƒˆé–¢æ•°
     protected function setGroupAndUserMaster() {
         if (!self::$groupDislayNameMaster
             || !self::$userDisplayNameMaster
@@ -96,11 +96,11 @@ class estimateHeaderController {
                     $userDisplayNameMaster[$userDisplayCode] = $userDisplayName;
                 }
                 
-                if ($attributeCode === DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP) { // ±Ä¶ÈÉôÌç¤Î¾ì¹ç
+                if ($attributeCode === DEF_GROUP_ATTRIBUTE_CODE_SALES_GROUP) { // å–¶æ¥­éƒ¨é–€ã®å ´åˆ
 
                     $salesGroupMaster[$groupDisplayCode][$userDisplayCode] = true;
                     
-                } else if ($attributeCode === DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP) { // ³«È¯ÉôÌç¤Î¾ì¹ç
+                } else if ($attributeCode === DEF_GROUP_ATTRIBUTE_CODE_DEVELOP_GROUP) { // é–‹ç™ºéƒ¨é–€ã®å ´åˆ
 
                     $developUserMaster[$userDisplayCode] = true;
 
@@ -127,7 +127,7 @@ class estimateHeaderController {
         return;
     }
 
-    // ÇÛÎóÆâ¤Î¥Ç¡¼¥¿¤ò³ÆÄê¿ô¤Ë¥»¥Ã¥È¤¹¤ë
+    // é…åˆ—å†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’å„å®šæ•°ã«ã‚»ãƒƒãƒˆã™ã‚‹
     protected function setCellParams($data) {
         $this->productCode = isset($data['productCode']) ? $data['productCode'] : '';
         $this->productName = isset($data['productName']) ? $data['productName'] : '';
@@ -141,7 +141,7 @@ class estimateHeaderController {
         return true;
     }
 
-    // ÅÐÏ¿ÍÑ¤Î¥Ç¡¼¥¿¤ò½ÐÎÏ¤¹¤ë
+    // ç™»éŒ²ç”¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹
     public function outputRegistData() {
         $registData = array(
             workSheetConst::PRODUCT_CODE => $this->productCode,
@@ -157,7 +157,7 @@ class estimateHeaderController {
         return $registData;
     }
 
-    // É½¼¨Ì¾¤ÈÉ½¼¨¥³¡¼¥É¤ò·ë¹ç¤·¤¿¥Ç¡¼¥¿¤Î¥ê¥¹¥È¤ò½ÐÎÏ¤¹¤ë
+    // è¡¨ç¤ºåã¨è¡¨ç¤ºã‚³ãƒ¼ãƒ‰ã‚’çµåˆã—ãŸãƒ‡ãƒ¼ã‚¿ã®ãƒªã‚¹ãƒˆã‚’å‡ºåŠ›ã™ã‚‹
     public function outputDisplayData() {
         $displayData = array(
             workSheetConst::INCHARGE_GROUP_CODE => $this->inchargeGroupCode,
@@ -168,23 +168,23 @@ class estimateHeaderController {
         return $displayData;
     }
 
-    // ¥Ð¥ê¥Ç¡¼¥·¥ç¥ó½èÍý¤ò¹Ô¤¦
+    // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³å‡¦ç†ã‚’è¡Œã†
     public function validate() {
-        // ¥¨¥é¡¼¥³¡¼¥É¤ò¥»¥Ã¥È¤¹¤ë´Ø¿ô
-        $this->validateProductCode(); // À½ÉÊ¥³¡¼¥É
-        $this->validateProductName(); // À½ÉÊÌ¾
-        $this->validateProductEnglishName(); // À½ÉÊÌ¾(±Ñ¸ì)
-        $this->validateRetailPrice(); // ¾åÂå
-        $this->validateIncharge(); // ±Ä¶ÈÉô½ð¡¢Ã´Åö
-        $this->validateDevelopUserCode(); // ³«È¯Ã´Åö¼Ô
-        $this->validateCartonQuantity(); // ¥«¡¼¥È¥óÆþ¤ê¿ô
-        $this->validateProductionQuantity(); // ½þµÑ¿ô
+        // ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆã™ã‚‹é–¢æ•°
+        $this->validateProductCode(); // è£½å“ã‚³ãƒ¼ãƒ‰
+        $this->validateProductName(); // è£½å“å
+        $this->validateProductEnglishName(); // è£½å“å(è‹±èªž)
+        $this->validateRetailPrice(); // ä¸Šä»£
+        $this->validateIncharge(); // å–¶æ¥­éƒ¨ç½²ã€æ‹…å½“
+        $this->validateDevelopUserCode(); // é–‹ç™ºæ‹…å½“è€…
+        $this->validateCartonQuantity(); // ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
+        $this->validateProductionQuantity(); // å„Ÿå´æ•°
         
         $loginUserCode = $this->loginUserCode;
         $inchargeGroupCodeNumber = $this->inchargeGroupCodeNumber;
-        $salesGroupMaster = self::$salesGroupMaster; // ±Ä¶ÈÉô½ð¤Î¥Þ¥¹¥¿¡¼¤ò¼èÆÀ
+        $salesGroupMaster = self::$salesGroupMaster; // å–¶æ¥­éƒ¨ç½²ã®ãƒžã‚¹ã‚¿ãƒ¼ã‚’å–å¾—
 
-        // ¥í¥°¥¤¥ó¥æ¡¼¥¶¡¼¤¬±Ä¶ÈÉô½ð¤Ë½êÂ°¤¹¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+        // ãƒ­ã‚°ã‚¤ãƒ³ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒå–¶æ¥­éƒ¨ç½²ã«æ‰€å±žã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
         if (!$this->messageCode['inchargeGroupCode'] && $inchargeGroupCodeNumber) {
             $result = $this->objDB->userCodeAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
             if (!$result) {
@@ -197,25 +197,25 @@ class estimateHeaderController {
 
         if ($messageCodeList) {
             $str = '';
-            // ¥á¥Ã¥»¡¼¥¸¤Ë½ÐÎÏ¤¹¤ë¹àÌÜ¤ò¥»¥Ã¥È¤¹¤ë
+            // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã«å‡ºåŠ›ã™ã‚‹é …ç›®ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
             foreach ($messageCodeList as $key => $messageCode) {
                 $message = '';
                 switch ($messageCode) {
                     case DEF_MESSAGE_CODE_NOT_ENTRY_ERROR:
                         $str = array(
-                            "¥Ø¥Ã¥ÀÉô",
+                            "ãƒ˜ãƒƒãƒ€éƒ¨",
                             mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8')
                         );
                         break;
                     case DEF_MESSAGE_CODE_FORMAT_ERROR:
                         $str = array(
-                            "¥Ø¥Ã¥ÀÉô",
+                            "ãƒ˜ãƒƒãƒ€éƒ¨",
                             mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8')
                         );
                         break;
                     case DEF_MESSAGE_CODE_MASTER_CHECK_ERROR:
                         $str = array(
-                            "¥Ø¥Ã¥ÀÉô",
+                            "ãƒ˜ãƒƒãƒ€éƒ¨",
                             mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8'),
                         );
                         break;
@@ -233,9 +233,9 @@ class estimateHeaderController {
         return $errorMessage;
     }
 
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ËÅÏ¤¹ÆþÎÏÃÍ¤Î¥Ç¡¼¥¿¤ò½ÐÎÏ¤¹¤ë
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã«æ¸¡ã™å…¥åŠ›å€¤ã®ãƒ‡ãƒ¼ã‚¿ã‚’å‡ºåŠ›ã™ã‚‹
 
-    // ¥¨¥é¡¼¥³¡¼¥É¤¬Â¸ºß¤¹¤ë¤«³ÎÇ§¤¹¤ë
+    // ã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã™ã‚‹ã‹ç¢ºèªã™ã‚‹
     protected function messageCodeExist() {
         if ($this->messageCode) {
             return true;
@@ -244,18 +244,18 @@ class estimateHeaderController {
         }
     }
 
-    // À½ÉÊ¥³¡¼¥É¤ÎÆþÎÏÃÍ¤ò¥Ð¥ê¥Ç¡¼¥·¥ç¥ó¤¹¤ë
+    // è£½å“ã‚³ãƒ¼ãƒ‰ã®å…¥åŠ›å€¤ã‚’ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã™ã‚‹
     protected function validateProductCode() {
         $productCode = $this->productCode;
-        // ¥Ð¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (isset($productCode) && $productCode !=='') {
             if(!preg_match("/\A[0-9]{5}\z/", $productCode)) {
-                // ¥¨¥é¡¼½èÍý
+                // ã‚¨ãƒ©ãƒ¼å‡¦ç†
                 $this->messageCode['productCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else {
                 $record = $this->objDB->getRecordValue('m_product', 'strproductcode', $productCode);
                 if ($record == false) {
-                    // ¥Þ¥¹¥¿¡¼¥Á¥§¥Ã¥¯¥¨¥é¡¼
+                    // ãƒžã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼
                     $this->messageCode['productCode'] = DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR;
                 }
                 $this->reviseFlag = true;
@@ -266,97 +266,97 @@ class estimateHeaderController {
         return true;
     }
 
-    // À½ÉÊÌ¾
+    // è£½å“å
     protected function validateProductName() {
         $productName = $this->productName;
-        // ¥Ð¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (!isset($productName) || $productName ==='') {
-            // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸or¥¨¥é¡¼¥³¡¼¥É½ÐÎÏ¡ÊÉ¬¿Ü¥¨¥é¡¼¡Ë
-            $this->messageCode['productName'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // É¬¿Ü
+            // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸orã‚¨ãƒ©ãƒ¼ã‚³ãƒ¼ãƒ‰å‡ºåŠ›ï¼ˆå¿…é ˆã‚¨ãƒ©ãƒ¼ï¼‰
+            $this->messageCode['productName'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // å¿…é ˆ
         }
         return true;
     }
 
-    // À½ÉÊÌ¾¡Ê±Ñ¸ì¡Ë
+    // è£½å“åï¼ˆè‹±èªžï¼‰
     protected function validateProductEnglishName() {
         $productEnglishName = $this->productEnglishName;
-        // Ê¸»úÎó¥Á¥§¥Ã¥¯(È¾³Ñ±Ñ¿ô»úµ­¹æ ASCII¤Î0x20¢·0x7e)
+        // æ–‡å­—åˆ—ãƒã‚§ãƒƒã‚¯(åŠè§’è‹±æ•°å­—è¨˜å· ASCIIã®0x20ï½ž0x7e)
         if (isset($productEnglishName) && $productEnglishName !=='') {
             if(!preg_match("/\A[ -~]+\z/", $productEnglishName)) {
-                // ¥¨¥é¡¼½èÍý
+                // ã‚¨ãƒ©ãƒ¼å‡¦ç†
                 $this->messageCode['productEnglishName'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            $this->messageCode['productEnglishName'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // É¬¿Ü¥Á¥§¥Ã¥¯
+            $this->messageCode['productEnglishName'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // å¿…é ˆãƒã‚§ãƒƒã‚¯
         }
         return true;
     }
 
-    // ¾åÂå
+    // ä¸Šä»£
     protected function validateRetailPrice() {
         $retailPrice = $this->retailPrice;
         if (isset($retailPrice) && $retailPrice !=='') {
             if(!is_numeric($retailPrice)) {
-                // ¥¨¥é¡¼½èÍý
+                // ã‚¨ãƒ©ãƒ¼å‡¦ç†
                 $this->messageCode['retailPrice'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else {
-                // ¾®¿ôÅÀ°Ê²¼Âè3°Ì¤ò»Í¼Î¸ÞÆþ
+                // å°æ•°ç‚¹ä»¥ä¸‹ç¬¬3ä½ã‚’å››æ¨äº”å…¥
                 $formattedValue = number_format(round($retailPrice, 2), 2, '.', '');
                 $this->retailPrice = $formattedValue;
             }
         } else {
-            $this->messageCode['retailPrice'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // É¬¿Ü¥Á¥§¥Ã¥¯
+            $this->messageCode['retailPrice'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // å¿…é ˆãƒã‚§ãƒƒã‚¯
         }
         return true;
     }
 
-    // ±Ä¶ÈÉô½ð´ØÏ¢¤Î¥Ð¥ê¥Ç¡¼¥·¥ç¥ó¤ò¹Ô¤¦
+    // å–¶æ¥­éƒ¨ç½²é–¢é€£ã®ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¡Œã†
     protected function validateIncharge() {
-        $this->validateInchargeGroupCode(); // ±Ä¶ÈÉô½ð
-        $this->validateInchargeUserCode();  // Ã´Åö
+        $this->validateInchargeGroupCode(); // å–¶æ¥­éƒ¨ç½²
+        $this->validateInchargeUserCode();  // æ‹…å½“
         return;
     }
 
-    // ±Ä¶ÈÉô½ð¥Á¥§¥Ã¥¯
+    // å–¶æ¥­éƒ¨ç½²ãƒã‚§ãƒƒã‚¯
     protected function validateInchargeGroupCode() {
         $inchargeGroupCode = $this->inchargeGroupCode;
 
-        $salesGroupMaster = self::$salesGroupMaster; // ¥Þ¥¹¥¿¡¼¤Î¥Ç¡¼¥¿¤ò¼èÆÀ
+        $salesGroupMaster = self::$salesGroupMaster; // ãƒžã‚¹ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 
-        // ¥Ð¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (isset($inchargeGroupCode) && $inchargeGroupCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $inchargeGroupCode)) {
                 list ($inchargeGroupCodeNumber, $inchargeGroupCodeName) = explode(':', $inchargeGroupCode);
 
                 // $result = $this->objDB->getGroupRecordForDisplay($inchargeGroupCodeNumber);
                 
-                // ¥Þ¥¹¥¿¡¼¥Á¥§¥Ã¥¯
+                // ãƒžã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯
                 if (!$salesGroupMaster[$inchargeGroupCodeNumber]) {
-                    // ±Ä¶ÈÉô½ð¤ËÂ¸ºß¤·¤Ê¤¤¾ì¹ç
+                    // å–¶æ¥­éƒ¨ç½²ã«å­˜åœ¨ã—ãªã„å ´åˆ
                     $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
 
                 } else {
 
-                    $this->inchargeGroupCodeNumber = $inchargeGroupCodeNumber; // ¥°¥ë¡¼¥×¥³¡¼¥É¤ò¥»¥Ã¥È¤¹¤ë
+                    $this->inchargeGroupCodeNumber = $inchargeGroupCodeNumber; // ã‚°ãƒ«ãƒ¼ãƒ—ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 
-                    // É½¼¨Ì¾¤òDB¼èÆÀÃÍ¤ËÃÖ´¹             
+                    // è¡¨ç¤ºåã‚’DBå–å¾—å€¤ã«ç½®æ›             
                     $groupDislayNameMaster = self::$groupDislayNameMaster;
                     $displayName = $groupDislayNameMaster[$inchargeGroupCodeNumber];
                     $this->inchargeGroupCode = $inchargeGroupCodeNumber. ':'. $displayName;
 
                 }
             } else {
-                // ÆþÎÏ·Á¼°ÉÔÀµ
+                // å…¥åŠ›å½¢å¼ä¸æ­£
                 $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // É¬¿Ü¥¨¥é¡¼
+            // å¿…é ˆã‚¨ãƒ©ãƒ¼
             $this->messageCode['inchargeGroupCode'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
 
-    // Ã´Åö¼Ô¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+    // æ‹…å½“è€…ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
     protected function validateInchargeUserCode() {
         $inchargeGroupCodeNumber = $this->inchargeGroupCodeNumber;
 
@@ -366,97 +366,97 @@ class estimateHeaderController {
 
         $inchargeUserCode = $this->inchargeUserCode;
 
-        $salesGroupMaster = self::$salesGroupMaster; // ¥Þ¥¹¥¿¡¼¤Î¥Ç¡¼¥¿¤ò¼èÆÀ
+        $salesGroupMaster = self::$salesGroupMaster; // ãƒžã‚¹ã‚¿ãƒ¼ã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
 
-        // ¥Ð¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (isset($inchargeUserCode) && $inchargeUserCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $inchargeUserCode)) {
                 list ($inchargeUserCodeNumber, $inchargeUserCodeName) = explode(':', $inchargeUserCode);
 
-                // ¥Þ¥¹¥¿¡¼¥Á¥§¥Ã¥¯
+                // ãƒžã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯
                 if ($salesGroupMaster[$inchargeGroupCodeNumber][$inchargeUserCodeNumber] !== true) {
-                    // ±Ä¶ÈÉô½ð¤ËÂ¸ºß¤·¤Ê¤¤¤Þ¤¿¤Ï¥æ¡¼¥¶¡¼¥³¡¼¥É¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+                    // å–¶æ¥­éƒ¨ç½²ã«å­˜åœ¨ã—ãªã„ã¾ãŸã¯ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ãªã„å ´åˆ
                     $this->messageCode['inchargeUserCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 } else {
-                    $this->inchargeUserCodeNumber = $inchargeUserCodeNumber; // É½¼¨¾å¤Î¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¥»¥Ã¥È¤¹¤ë
+                    $this->inchargeUserCodeNumber = $inchargeUserCodeNumber; // è¡¨ç¤ºä¸Šã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 
-                    // É½¼¨Ì¾¤òDB¼èÆÀÃÍ¤ËÃÖ´¹             
+                    // è¡¨ç¤ºåã‚’DBå–å¾—å€¤ã«ç½®æ›             
                     $userDisplayNameMaster = self::$userDisplayNameMaster;
                     $displayName = $userDisplayNameMaster[$inchargeUserCodeNumber];
                     $this->inchargeUserCode = $inchargeUserCodeNumber. ':'. $displayName;
                 }
             } else {
-                // ÆþÎÏ·Á¼°ÉÔÀµ
+                // å…¥åŠ›å½¢å¼ä¸æ­£
                 $this->messageCode['inchargeUserCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // É¬¿Ü¥¨¥é¡¼
+            // å¿…é ˆã‚¨ãƒ©ãƒ¼
             $this->messageCode['inchargeUserCode'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
 
-    // ³«È¯Ã´Åö¼Ô¤Î¥Á¥§¥Ã¥¯¤ò¹Ô¤¦
+    // é–‹ç™ºæ‹…å½“è€…ã®ãƒã‚§ãƒƒã‚¯ã‚’è¡Œã†
     protected function validateDevelopUserCode() {
 
         $developUserCode = $this->developUserCode;
         
         $developUserMaster = self::$developUserMaster;
 
-        // ¥Ð¥ê¥Ç¡¼¥·¥ç¥ó¾ò·ï
+        // ãƒãƒªãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³æ¡ä»¶
         if (isset($developUserCode) && $developUserCode !=='') {
             if (preg_match("/\A[0-9]+:.+\z/", $developUserCode)) {
                 list ($developUserCodeNumber, $developUserCodeName) = explode(':', $developUserCode);
 
-                // ¥Þ¥¹¥¿¡¼¥Á¥§¥Ã¥¯
+                // ãƒžã‚¹ã‚¿ãƒ¼ãƒã‚§ãƒƒã‚¯
                 if ($developUserMaster[$developUserCodeNumber] !== true) {
-                    // ³«È¯½ñ¤ËÂ¸ºß¤·¤Æ¤¤¤Ê¤¤¤Þ¤¿¤Ï¥æ¡¼¥¶¡¼¥³¡¼¥É¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+                    // é–‹ç™ºæ›¸ã«å­˜åœ¨ã—ã¦ã„ãªã„ã¾ãŸã¯ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ãŒå­˜åœ¨ã—ãªã„å ´åˆ
                     $this->messageCode['developUserCode'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 } else {
-                    $this->developUserCodeNumber = $developUserCodeNumber; // É½¼¨¾å¤Î¥æ¡¼¥¶¡¼¥³¡¼¥É¤ò¥»¥Ã¥È¤¹¤ë
+                    $this->developUserCodeNumber = $developUserCodeNumber; // è¡¨ç¤ºä¸Šã®ãƒ¦ãƒ¼ã‚¶ãƒ¼ã‚³ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 
-                    // É½¼¨Ì¾¤òDB¼èÆÀÃÍ¤ËÃÖ´¹             
+                    // è¡¨ç¤ºåã‚’DBå–å¾—å€¤ã«ç½®æ›             
                     $userDisplayNameMaster = self::$userDisplayNameMaster;
                     $displayName = $userDisplayNameMaster[$developUserCodeNumber];
                     
                     $this->developUserCode = $developUserCodeNumber. ':'. $displayName;
                 }
             } else {
-                // ÆþÎÏ·Á¼°ÉÔÀµ
+                // å…¥åŠ›å½¢å¼ä¸æ­£
                 $this->messageCode['developUserCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // É¬¿Ü¥¨¥é¡¼
+            // å¿…é ˆã‚¨ãƒ©ãƒ¼
             $this->messageCode['developUserCode'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
 
-    // ¥«¡¼¥È¥óÆþ¤ê¿ô
+    // ã‚«ãƒ¼ãƒˆãƒ³å…¥ã‚Šæ•°
     protected function validateCartonQuantity() {
         $cartonQuantity = $this->cartonQuantity;
         if (isset($cartonQuantity) && $cartonQuantity !=='') {
             if (!preg_match("/\A[1-9][0-9]*\z/", $cartonQuantity)) {
-                // ÆþÎÏ·Á¼°ÉÔÀµ
+                // å…¥åŠ›å½¢å¼ä¸æ­£
                 $this->messageCode['cartonQuantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // É¬¿Ü¥¨¥é¡¼
+            // å¿…é ˆã‚¨ãƒ©ãƒ¼
             $this->messageCode['cartonQuantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;
     }
 
-    // ½þµÑ¿ô
+    // å„Ÿå´æ•°
     protected function validateProductionQuantity() {
         $productionQuantity = $this->productionQuantity;
         if (isset($productionQuantity) && $productionQuantity !=='') {
             if (!preg_match("/\A\d+\z/", $productionQuantity)) {
-                // ÆþÎÏ·Á¼°ÉÔÀµ
+                // å…¥åŠ›å½¢å¼ä¸æ­£
                 $this->messageCode['productionQuantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            // É¬¿Ü¥¨¥é¡¼
+            // å¿…é ˆã‚¨ãƒ©ãƒ¼
             $this->messageCode['productionQuantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
         return true;

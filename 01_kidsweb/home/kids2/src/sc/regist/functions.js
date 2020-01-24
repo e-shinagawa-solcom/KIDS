@@ -33,7 +33,7 @@ function autoFocus2()
 
 
 
-// CRCリスト再表示・非表示
+// CRC繝ｪ繧ｹ繝亥�崎｡ｨ遉ｺ繝ｻ髱櫁｡ｨ遉ｺ
 function fncReViewCRCList()
 {
 	var crcFlag    = document.all.crcflag.value;

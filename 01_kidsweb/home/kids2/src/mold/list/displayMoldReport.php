@@ -1,9 +1,9 @@
 <?php
 
 // ----------------------------------------------------------------------------
-//       ¶â·¿Ä¢É¼½ĞÎÏ Ä¢É¼½ĞÎÏ²èÌÌ
+//       é‡‘å‹å¸³ç¥¨å‡ºåŠ› å¸³ç¥¨å‡ºåŠ›ç”»é¢
 // ----------------------------------------------------------------------------
-// ¥é¥¤¥Ö¥é¥ê¥Õ¥¡¥¤¥ëÆÉ¹ş
+// ãƒ©ã‚¤ãƒ–ãƒ©ãƒªãƒ•ã‚¡ã‚¤ãƒ«èª­è¾¼
 include( 'conf.inc' );
 require( LIB_FILE );
 
@@ -18,44 +18,44 @@ require_once(SRC_ROOT.'/mold/lib/UtilCompany.class.php');
 require_once (SRC_ROOT.'/mold/lib/index/TableMoldReport.class.php');
 require_once (SRC_ROOT.'/mold/lib/index/TableMoldReportDetail.class.php');
 
-// ¶â·¿Ä¢É¼¥Æ¥ó¥×¥ì¡¼¥È¥Ñ¥¹
+// é‡‘å‹å¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ‘ã‚¹
 const PATH_TEMPLATE = "/list/result/mr_base.html";
-// ¶â·¿Ä¢É¼¥á¥¤¥ó¥³¥ó¥Æ¥ó¥Ä¤ÎID
+// é‡‘å‹å¸³ç¥¨ãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã®ID
 const ID_REPORT_CONTENTS = "mold-report-page";
-// ¶â·¿Ä¢É¼¥Ú¡¼¥¸ÈÖ¹æÉ½¼¨°ÌÃÖ¤Î¼èÆÀ
+// é‡‘å‹å¸³ç¥¨ãƒšãƒ¼ã‚¸ç•ªå·è¡¨ç¤ºä½ç½®ã®å–å¾—
 const ID_PAGE_NUMBER = "page-number";
 
-// ¶â·¿Ä¢É¼¥Æ¥ó¥×¥ì¡¼¥È ID¥×¥ì¥Õ¥£¥Ã¥¯¥¹
+// é‡‘å‹å¸³ç¥¨ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆ IDãƒ—ãƒ¬ãƒ•ã‚£ãƒƒã‚¯ã‚¹
 const ID_MOLD_INDEX = "mold-index";
 const ID_MOLD_NO = "mold-no";
 const ID_MOLD_DESC = "mold-desc";
 
-// ¥ª¥Ö¥¸¥§¥¯¥ÈÀ¸À®
+// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 $objDB   = new clsDB();
 $objAuth = new clsAuth();
 
-// DB¥ª¡¼¥×¥ó
+// DBã‚ªãƒ¼ãƒ—ãƒ³
 $objDB->open("", "", "", "");
 
 setcookie("strSessionID", $_REQUEST["strSessionID"]);
 
-// ¥»¥Ã¥·¥ç¥ó³ÎÇ§
+// ã‚»ãƒƒã‚·ãƒ§ãƒ³ç¢ºèª
 $objAuth = fncIsSession( $_REQUEST["strSessionID"], $objAuth, $objDB );
 
-// 1900 ¶â·¿Ä¢É¼´ÉÍı
+// 1900 é‡‘å‹å¸³ç¥¨ç®¡ç†
 if ( !fncCheckAuthority( DEF_FUNCTION_MR0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "¥¢¥¯¥»¥¹¸¢¸Â¤¬¤¢¤ê¤Ş¤»¤ó¡£", TRUE, "", $objDB );
+	fncOutputError( 9018, DEF_WARNING, "ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ãŒã‚ã‚Šã¾ã›ã‚“ã€‚", TRUE, "", $objDB );
 }
 
-// ¥Ñ¥é¥á¡¼¥¿¤Î¼èÆÀ
+// ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®å–å¾—
 $moldReportId = $_REQUEST["MoldReportId"];
 $revision = $_REQUEST["Revision"];
 $version = $_REQUEST["Version"];
 
 if($moldReportId && (0 <= $revision) && (0 <= $version))
 {
-	// ¥æ¡¼¥Æ¥£¥ê¥Æ¥£¥¯¥é¥¹¤Î¥¤¥ó¥¹¥¿¥ó¥¹À¸À®
+	// ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£ã‚¯ãƒ©ã‚¹ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	$utilMold = UtilMold::getInstance();
 	$utilBussinesscode = UtilBussinesscode::getInstance();
 	$utilGroup = UtilGroup::getInstance();
@@ -65,48 +65,48 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 
 	try
 	{
-		// ¶â·¿Ä¢É¼¥Ç¡¼¥¿¤Î¼èÆÀ
+		// é‡‘å‹å¸³ç¥¨ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 		$recordMoldReport = $utilMold->selectMoldReport($moldReportId, $revision, $version);
 
-		// ¥ê¥Ó¥¸¥ç¥ó¤Î¼èÆÀ
+		// ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã®å–å¾—
 		$revision = $recordMoldReport[TableMoldReport::Revision];
-		// °õºşºÑ¥Õ¥é¥°¤Î¼èÆÀ
+		// å°åˆ·æ¸ˆãƒ•ãƒ©ã‚°ã®å–å¾—
 		$printed =  $recordMoldReport[TableMoldReport::Printed];
 
-		// ¥ê¥¯¥¨¥¹¥È¤¬¸¶ËÜ°õºş¤Î¾ì¹ç ¤«¤Ä
-		// ¥ê¥¯¥¨¥¹¥È¸µ¤¬¶â·¿Ä¢É¼ÅĞÏ¿´°Î»²èÌÌ°Ê³°¤Î¾ì¹ç
+		// ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒåŸæœ¬å°åˆ·ã®å ´åˆ ã‹ã¤
+		// ãƒªã‚¯ã‚¨ã‚¹ãƒˆå…ƒãŒé‡‘å‹å¸³ç¥¨ç™»éŒ²å®Œäº†ç”»é¢ä»¥å¤–ã®å ´åˆ
 		if (!array_key_exists("isCopy", $_REQUEST) && !isset($_REQUEST['isRegist']))
 		{
-			// ¸¶ËÜ¤¬°õºş¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç
+			// åŸæœ¬ãŒå°åˆ·ã•ã‚Œã¦ã„ãªã„å ´åˆ
 			if($printed == "f")
 			{
 				try
 				{
-					// ¥È¥é¥ó¥¶¥¯¥·¥ç¥ó³«»Ï
+					// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³é–‹å§‹
 					$objDB->transactionBegin();
-					// °õºşºÑ¤ß¥Õ¥é¥°¤òtrue¤Ë¹¹¿·
+					// å°åˆ·æ¸ˆã¿ãƒ•ãƒ©ã‚°ã‚’trueã«æ›´æ–°
 					$utilMold->updateAlredyPrintedReport($moldReportId, $revision);
-					// ¥³¥ß¥Ã¥È
+					// ã‚³ãƒŸãƒƒãƒˆ
 					$objDB->transactionCommit();
 				}
 				catch (SQLException $e)
 				{
-					// ¥í¡¼¥ë¥Ğ¥Ã¥¯
+					// ãƒ­ãƒ¼ãƒ«ãƒãƒƒã‚¯
 					$objDB->transactionRollback();
 					throw $e;
 				}
 			}
 		}
 
-		// ¶ÈÌ³¥³¡¼¥ÉÀâÌÀ¤Î¼èÆÀ(_%ReportCategoryDesc%_)
+		// æ¥­å‹™ã‚³ãƒ¼ãƒ‰èª¬æ˜ã®å–å¾—(_%ReportCategoryDesc%_)
 		$recordMoldReport[TableMoldReport::ReportCategory."Desc"] =
-			$utilBussinesscode->getDescription('Ä¢É¼¶èÊ¬', $recordMoldReport[TableMoldReport::ReportCategory]);
+			$utilBussinesscode->getDescription('å¸³ç¥¨åŒºåˆ†', $recordMoldReport[TableMoldReport::ReportCategory]);
 
-		// À½ÉÊÌ¾¾Î¤Î¼èÆÀ(_%ProductName%_)
+		// è£½å“åç§°ã®å–å¾—(_%ProductName%_)
 		$recordMoldReport["ProductName"] =
 			$utilProduct->selectProductNameByProductCode($recordMoldReport[TableMoldReport::ProductCode], $recordMoldReport[TableMoldReport::ReviseCode]);
 
-		// É½¼¨²ñ¼ÒÌ¾¤ò¼èÆÀ
+		// è¡¨ç¤ºä¼šç¤¾åã‚’å–å¾—
 		// _%SendTo%_
 		$recordMoldReport[TableMoldReport::SendTo] =
 			$utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::SendTo]);
@@ -114,7 +114,7 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 		$recordMoldReport["CustomerName"] =
 			$utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::CustomerCode]);
 
-		// Ä¢É¼¶èÊ¬¤¬10:°ÜÆ°ÈÇËô¤Ï20:ÊÖµÑÈÇ¤Î¾ì¹ç
+		// å¸³ç¥¨åŒºåˆ†ãŒ10:ç§»å‹•ç‰ˆåˆã¯20:è¿”å´ç‰ˆã®å ´åˆ
 		if (($recordMoldReport[TableMoldReport::ReportCategory] == "10" ||
 			 $recordMoldReport[TableMoldReport::ReportCategory] == "20"))
 		{
@@ -126,71 +126,71 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 				$utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::DestinationFactory]);
 		}
 
-		// É½¼¨¥°¥ë¡¼¥×Ì¾¤ò¼èÆÀ(_%KuwagataGroupName%_)
+		// è¡¨ç¤ºã‚°ãƒ«ãƒ¼ãƒ—åã‚’å–å¾—(_%KuwagataGroupName%_)
 		$recordMoldReport["KuwagataGroupName"] =
 			$utilGroup->selectDisplayNameByGroupCode($recordMoldReport[TableMoldReport::KuwagataGroupCode]);
-		// É½¼¨¥æ¡¼¥¶Ì¾¤ò¼èÆÀ(_%KuwagataUserName%_)
+		// è¡¨ç¤ºãƒ¦ãƒ¼ã‚¶åã‚’å–å¾—(_%KuwagataUserName%_)
 		$recordMoldReport["KuwagataUserName"] =
 			$utilUser->selectDisplayNameByUserCode($recordMoldReport[TableMoldReport::KuwagataUserCode]);
 
-		// ÆüÉÕ¤ÎÊ¬³ä(ActionRequestDate)
+		// æ—¥ä»˜ã®åˆ†å‰²(ActionRequestDate)
 		list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::ActionRequestDate]);
 		$recordMoldReport[TableMoldReport::ActionRequestDate."0"] = $yyyy;
 		$recordMoldReport[TableMoldReport::ActionRequestDate."1"] = $mm;
 		$recordMoldReport[TableMoldReport::ActionRequestDate."2"] = $dd;
 
-		// ÆüÉÕ¤ÎÊ¬³ä(RequestDate)
+		// æ—¥ä»˜ã®åˆ†å‰²(RequestDate)
 		list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::RequestDate]);
 		$recordMoldReport[TableMoldReport::RequestDate."0"] = $yyyy;
 		$recordMoldReport[TableMoldReport::RequestDate."1"] = $mm;
 		$recordMoldReport[TableMoldReport::RequestDate."2"] = $dd;
 
-		// ÆüÉÕ¤ÎÊ¬³ä(ReturnSchedule)
+		// æ—¥ä»˜ã®åˆ†å‰²(ReturnSchedule)
 		list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::ReturnSchedule]);
 		$recordMoldReport[TableMoldReport::ReturnSchedule."0"] = $yyyy;
 		$recordMoldReport[TableMoldReport::ReturnSchedule."1"] = $mm;
 		$recordMoldReport[TableMoldReport::ReturnSchedule."2"] = $dd;
 
-		// ¶â·¿¾ÜºÙ¤Î¼èÆÀ
+		// é‡‘å‹è©³ç´°ã®å–å¾—
 		$details = $utilMold->selectMoldReportDetail(
 				$recordMoldReport[TableMoldReport::MoldReportId],
 				$recordMoldReport[TableMoldReport::Revision]);
 
-		// ¶â·¿¾ÜºÙ·ï¿ô¤Î¼èÆÀ
+		// é‡‘å‹è©³ç´°ä»¶æ•°ã®å–å¾—
 		$cntDetails = count($details);
 
-		// ¶â·¿Ä¢É¼ID¤Î½ĞÎÏ(¥Õ¥©¡¼¥Ş¥Ã¥ÈÊÑ¹¹)
+		// é‡‘å‹å¸³ç¥¨IDã®å‡ºåŠ›(ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆå¤‰æ›´)
 		$revision = "-" . str_pad($recordMoldReport[TableMoldReport::Revision], 2, "0", STR_PAD_LEFT);
 		$recordMoldReport[TableMoldReport::MoldReportId] = $recordMoldReport[TableMoldReport::MoldReportId] . $revision;
 
-		// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 		$objTemplate = new clsTemplate ();
 		$objTemplate->getTemplate (PATH_TEMPLATE);
 
-		// ¥×¥ì¡¼¥¹¥Û¥ë¥À¡¼ÃÖ´¹
+		// ãƒ—ãƒ¬ãƒ¼ã‚¹ãƒ›ãƒ«ãƒ€ãƒ¼ç½®æ›
 		// mb_convert_variables("utf8", "eucjp-win", $recordMoldReport);
 		$objTemplate->replace($recordMoldReport);
 		$objTemplate->complete();
 
 		$doc = new DOMDocument();
 
-		// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍŞÀ©
+		// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶
 		libxml_use_internal_errors(true);
-		// DOM¥Ñ¡¼¥¹
+		// DOMãƒ‘ãƒ¼ã‚¹
 		$doc->loadHTML($objTemplate->strTemplate);
-		// ¥Ñ¡¼¥¹¥¨¥é¡¼¥¯¥ê¥¢
+		// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼ã‚¯ãƒªã‚¢
 		libxml_clear_errors();
-		// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍŞÀ©²ò½ü
+		// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶è§£é™¤
 		libxml_use_internal_errors(false);
 
-		// bodyÍ×ÁÇ¤Î¼èÆÀ
+		// bodyè¦ç´ ã®å–å¾—
 		$body = $doc->getElementsByTagName("body")->item(0);
-		// ¶â·¿Ä¢É¼¥Ú¡¼¥¸Ã±°Ì¼èÆÀ
+		// é‡‘å‹å¸³ç¥¨ãƒšãƒ¼ã‚¸å˜ä½å–å¾—
 		$page = $doc->getElementById(ID_REPORT_CONTENTS);
-		// ¥Ú¡¼¥¸ÀßÄê(1¥Ú¡¼¥¸ÌÜ)
+		// ãƒšãƒ¼ã‚¸è¨­å®š(1ãƒšãƒ¼ã‚¸ç›®)
 		$page->setAttribute("page", 1);
 
-		// °ÍÍê¶èÊ¬
+		// ä¾é ¼åŒºåˆ†
 		switch ($recordMoldReport[TableMoldReport::RequestCategory])
 		{
 			case "10":
@@ -200,12 +200,12 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 				setSelectedCell($doc->getElementById("hongkong-request"));
 				break;
 			default:
-				// ¥×¥í¥°¥é¥à¥¨¥é¡¼
-				fncOutputError(9054, DEF_ERROR, "ÉÔÀµ¤Ê°ÍÍê¶èÊ¬¤Ç¤¹¡£:"."", TRUE, "", $objDB);
+				// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚¨ãƒ©ãƒ¼
+				fncOutputError(9054, DEF_ERROR, "ä¸æ­£ãªä¾é ¼åŒºåˆ†ã§ã™ã€‚:"."", TRUE, "", $objDB);
 				break;
 		}
 
-		// »Ø¼¨¶èÊ¬
+		// æŒ‡ç¤ºåŒºåˆ†
 		switch ($recordMoldReport[TableMoldReport::InstructionCategory])
 		{
 			case "10":
@@ -215,15 +215,15 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 				setSelectedCell($doc->getElementById("instruction-kuwagata"));
 				break;
 			default:
-				// TODO Îã³°½ĞÎÏ ¶ÈÌ³¥³¡¼¥É¥¨¥é¡¼
+				// TODO ä¾‹å¤–å‡ºåŠ› æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã‚¨ãƒ©ãƒ¼
 				break;
 		}
 
-		// °ÜÆ°ÈÇ/ÊÖµÑÈÇ¤Î¤ß¥»¥ë¤ÎÅÉ¤êÄÙ¤·¤ò¹Ô¤¦¹àÌÜ
+		// ç§»å‹•ç‰ˆ/è¿”å´ç‰ˆã®ã¿ã‚»ãƒ«ã®å¡—ã‚Šæ½°ã—ã‚’è¡Œã†é …ç›®
 		if ($recordMoldReport[TableMoldReport::ReportCategory] == "10" ||
 				$recordMoldReport[TableMoldReport::ReportCategory] == "20")
 		{
-			// °ÜÆ°ÊıË¡
+			// ç§»å‹•æ–¹æ³•
 			switch ($recordMoldReport[TableMoldReport::TransferMethod])
 			{
 				case "10":
@@ -236,10 +236,10 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 					setSelectedCell($doc->getElementById("via-hong-kong"));
 					break;
 				default:
-					// TODO Îã³°½ĞÎÏ ¶ÈÌ³¥³¡¼¥É¥¨¥é¡¼
+					// TODO ä¾‹å¤–å‡ºåŠ› æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã‚¨ãƒ©ãƒ¼
 					break;
 			}
-			// À¸»º¸å¤Î½èÍı
+			// ç”Ÿç”£å¾Œã®å‡¦ç†
 			switch ($recordMoldReport[TableMoldReport::FinalKeep])
 			{
 				case "10":
@@ -249,137 +249,137 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 					setSelectedCell($doc->getElementById("return-to-original"));
 					break;
 				default:
-					// TODO Îã³°½ĞÎÏ ¶ÈÌ³¥³¡¼¥É¥¨¥é¡¼
+					// TODO ä¾‹å¤–å‡ºåŠ› æ¥­å‹™ã‚³ãƒ¼ãƒ‰ã‚¨ãƒ©ãƒ¼
 					break;
 			}
 		}
 
-		// ¾ÜºÙ·ï¿ô¤¬10·ï°Ê²¼¤Î¾ì¹ç(Ä¢É¼1Ëç)
-		// # 0·ï¤Ïº÷°ú»ş¤ËÎã³°¤òÅê¤²¤ë¤Î¤Ç¹Í¤¨¤Ê¤¤
+		// è©³ç´°ä»¶æ•°ãŒ10ä»¶ä»¥ä¸‹ã®å ´åˆ(å¸³ç¥¨1æš)
+		// # 0ä»¶ã¯ç´¢å¼•æ™‚ã«ä¾‹å¤–ã‚’æŠ•ã’ã‚‹ã®ã§è€ƒãˆãªã„
 		if ($cntDetails <= 10)
 		{
 			foreach($details as $i => $record)
 			{
 				$index = $i + 1;
 
-				// ¶â·¿ ³Æ¼ï¥»¥ë¤Î¼èÆÀ
+				// é‡‘å‹ å„ç¨®ã‚»ãƒ«ã®å–å¾—
 				$td_index = $doc->getElementById(ID_MOLD_INDEX.$index);
 				$td_moldNo = $doc->getElementById(ID_MOLD_NO.$index);
 				$td_desc = $doc->getElementById(ID_MOLD_DESC.$index);
 
-				// ¥Æ¥­¥¹¥È¥Î¡¼¥É¤ÎºîÀ®
+				// ãƒ†ã‚­ã‚¹ãƒˆãƒãƒ¼ãƒ‰ã®ä½œæˆ
 				$text_index = $doc->createTextNode($index);
 				$text_moldNo = $doc->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldNo]));
 				$text_desc = $doc->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldDescription]));
 
-				// ¥Æ¥­¥¹¥È¥Î¡¼¥É¤ÎÄÉ²Ã
+				// ãƒ†ã‚­ã‚¹ãƒˆãƒãƒ¼ãƒ‰ã®è¿½åŠ 
 				$td_index->appendChild($text_index);
 				$td_moldNo->appendChild($text_moldNo);
 				$td_desc->appendChild($text_desc);
 			}
 
-			// ¥Ú¡¼¥¸ÈÖ¹æÀßÄê
+			// ãƒšãƒ¼ã‚¸ç•ªå·è¨­å®š
 			$td_pageNum = $doc->getElementById(ID_PAGE_NUMBER);
 			$td_pageNum->appendChild($doc->createTextNode("1 / 1"));
 
-			// ²èÌÌ½ĞÎÏ
+			// ç”»é¢å‡ºåŠ›
 			// header("Content-type: text/html; charset=utf-8");
 			$out = $doc->saveHTML();
 			echo $out;
 		}
-		// 10·ï°Ê¾å(Ä¢É¼2Ëç°Ê¾å)
+		// 10ä»¶ä»¥ä¸Š(å¸³ç¥¨2æšä»¥ä¸Š)
 		else
 		{
-			// ºÇÂç¥Ú¡¼¥¸¿ô¤Î»»½Ğ
+			// æœ€å¤§ãƒšãƒ¼ã‚¸æ•°ã®ç®—å‡º
 			$maxPage = floor($cntDetails / 10) + ($cntDetails % 10 ? 1 : 0);
 
-			// ¶¦ÄÌÉôÊ¬ÊİÂ¸¤Î°Ù¡¢°ìÃ¶clsTemplateÆâ¤ËÂàÈò
+			// å…±é€šéƒ¨åˆ†ä¿å­˜ã®ç‚ºã€ä¸€æ—¦clsTemplateå†…ã«é€€é¿
 			$objTemplate->strTemplate = $doc->saveHTML();
 
-			// Ä¢É¼¥Ú¡¼¥¸Ã±°Ì¤ÇDOMDocument¤òºîÀ®
+			// å¸³ç¥¨ãƒšãƒ¼ã‚¸å˜ä½ã§DOMDocumentã‚’ä½œæˆ
 			$docs[] = $doc;
 
-			// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍŞÀ©
+			// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶
 			libxml_use_internal_errors(true);
 
-			// ¶â·¿¿ô¤Ë±ş¤¸¤ÆÄÉ²Ã¥Ú¡¼¥¸¤òºîÀ®¤¹¤ë(1¥Ú¡¼¥¸Ê¬²¼ÂÌ¤òÍú¤«¤»¤ë)
+			// é‡‘å‹æ•°ã«å¿œã˜ã¦è¿½åŠ ãƒšãƒ¼ã‚¸ã‚’ä½œæˆã™ã‚‹(1ãƒšãƒ¼ã‚¸åˆ†ä¸‹é§„ã‚’å±¥ã‹ã›ã‚‹)
 			for ($i = 1; $i < $maxPage; $i++)
 			{
-				// ¿·µ¬¥Ú¡¼¥¸¤ÎºîÀ®ÍÑ¤ÎDOMDocument¤òºîÀ®
+				// æ–°è¦ãƒšãƒ¼ã‚¸ã®ä½œæˆç”¨ã®DOMDocumentã‚’ä½œæˆ
 				$newDoc = new DOMDocument();
 				$newDoc->loadHTML($objTemplate->strTemplate);
-				// ¶â·¿Ä¢É¼¥Ú¡¼¥¸Ã±°Ì¼èÆÀ
+				// é‡‘å‹å¸³ç¥¨ãƒšãƒ¼ã‚¸å˜ä½å–å¾—
 				$newPage = $newDoc->getElementById(ID_REPORT_CONTENTS);
-				// ¥Ú¡¼¥¸ÈÖ¹æÀßÄê
+				// ãƒšãƒ¼ã‚¸ç•ªå·è¨­å®š
 				$newPage->setAttribute("page", $i + 1);
-				// DOMDocument¤ÎÄÉ²Ã
+				// DOMDocumentã®è¿½åŠ 
 				$docs[] = $newDoc;
 			}
 
-			// ¥Ñ¡¼¥¹¥¨¥é¡¼¥¯¥ê¥¢
+			// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼ã‚¯ãƒªã‚¢
 			libxml_clear_errors();
-			// ¥Ñ¡¼¥¹¥¨¥é¡¼ÍŞÀ©²ò½ü
+			// ãƒ‘ãƒ¼ã‚¹ã‚¨ãƒ©ãƒ¼æŠ‘åˆ¶è§£é™¤
 			libxml_use_internal_errors(false);
 
-			// (¥Æ¥ó¥×¥ì¡¼¥È¾å¤Î)¥Ú¡¼¥¸ÈÖ¹æ¤ÎÀßÄê
+			// (ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä¸Šã®)ãƒšãƒ¼ã‚¸ç•ªå·ã®è¨­å®š
 			foreach($docs as $pageNum => $innerDoc)
 			{
 				$td_pageNum = $innerDoc->getElementById(ID_PAGE_NUMBER);
-				// ¥Ú¡¼¥¸ÈÖ¹æ¥Æ¥­¥¹¥È¥Î¡¼¥É¤ÎºîÀ®
+				// ãƒšãƒ¼ã‚¸ç•ªå·ãƒ†ã‚­ã‚¹ãƒˆãƒãƒ¼ãƒ‰ã®ä½œæˆ
 				$text_pageNum = $innerDoc->createTextNode(($pageNum + 1)." / ".$maxPage);
 				$td_pageNum->appendChild($text_pageNum);
 			}
 
-			// ¶â·¿¿ôÊ¬Áöºº
+			// é‡‘å‹æ•°åˆ†èµ°æŸ»
 			foreach($details as $i => $record)
 			{
 				$index = $i + 1;
 
-				// ¸½ºß¤Î¥Ú¡¼¥¸ÈÖ¹æ¤òºÎÈÖ
+				// ç¾åœ¨ã®ãƒšãƒ¼ã‚¸ç•ªå·ã‚’æ¡ç•ª
 				if ($index <=10)
 				{
 					$currentPage = 0;
 				}
-				// 2¥Ú¡¼¥¸Ì¾°Ê¾å(²ş¥Ú¡¼¥¸)
+				// 2ãƒšãƒ¼ã‚¸åä»¥ä¸Š(æ”¹ãƒšãƒ¼ã‚¸)
 				else if ($index%10 == 1)
 				{
-					// ²ş¥Ú¡¼¥¸
+					// æ”¹ãƒšãƒ¼ã‚¸
 					$currentPage++;
 				}
 
-				// ID¼èÆÀÍÑ¤ÎindexºîÀ®(ÀÜÆ¬¼­+1¢·10¤Ş¤Ç¤Ê¤Î¤Ç)
+				// IDå–å¾—ç”¨ã®indexä½œæˆ(æ¥é ­è¾+1ï½10ã¾ã§ãªã®ã§)
 				$index_loop = ($index%10 == 0) ? 10 : $index - floor($index/10)*10;
 
-				// ¶â·¿ ³Æ¼ï¥»¥ë¤Î¼èÆÀ
+				// é‡‘å‹ å„ç¨®ã‚»ãƒ«ã®å–å¾—
 				$td_index = $docs[$currentPage]->getElementById(ID_MOLD_INDEX.$index_loop);
 				$td_moldNo = $docs[$currentPage]->getElementById(ID_MOLD_NO.$index_loop);
 				$td_desc = $docs[$currentPage]->getElementById(ID_MOLD_DESC.$index_loop);
 
-				// ¥Æ¥­¥¹¥È¥Î¡¼¥É¤ÎºîÀ®
+				// ãƒ†ã‚­ã‚¹ãƒˆãƒãƒ¼ãƒ‰ã®ä½œæˆ
 				$text_index = $docs[$currentPage]->createTextNode($index);
 				$text_moldNo = $docs[$currentPage]->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldNo]));
 				$text_desc = $docs[$currentPage]->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldDescription]));
 
-				// ¥Æ¥­¥¹¥È¥Î¡¼¥É¤ÎÄÉ²Ã
+				// ãƒ†ã‚­ã‚¹ãƒˆãƒãƒ¼ãƒ‰ã®è¿½åŠ 
 				$td_index->appendChild($text_index);
 				$td_moldNo->appendChild($text_moldNo);
 				$td_desc->appendChild($text_desc);
 			}
 
-			// ¿Æ(¥Ş¡¼¥¸Àè)¤È¤Ê¤ëÀèÆ¬Í×ÁÇ¤ÎDOMDocument¤ÎÂàÈò
+			// è¦ª(ãƒãƒ¼ã‚¸å…ˆ)ã¨ãªã‚‹å…ˆé ­è¦ç´ ã®DOMDocumentã®é€€é¿
 			array_shift($docs);
 
-			// ¥Î¡¼¥É¤Î¥Ş¡¼¥¸
+			// ãƒãƒ¼ãƒ‰ã®ãƒãƒ¼ã‚¸
 			foreach ($docs as $innerDoc)
 			{
-				// Ä¢É¼¥³¥ó¥Æ¥ó¥Ä¤Î¼èÆÀ
+				// å¸³ç¥¨ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã®å–å¾—
 				$srcContents = $innerDoc->getElementById(ID_REPORT_CONTENTS);
-				// Ä¢É¼¥³¥ó¥Æ¥ó¥Ä¤Î¥¤¥ó¥İ¡¼¥È
+				// å¸³ç¥¨ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 				$currentContents = $doc->importNode($srcContents, true);
 				$body->appendChild($currentContents);
 			}
 
-			// ²èÌÌ½ĞÎÏ
+			// ç”»é¢å‡ºåŠ›
 			// header("Content-type: text/html; charset=utf-8");
 			echo $doc->saveHTML();
 		}
@@ -387,22 +387,22 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 	catch (SQLException $e)
 	{
 		echo ($e->getMessage());
-		// ¾ğÊó¤Î¼èÆÀ¤Ë¼ºÇÔ¤·¤Ş¤·¤¿¡£
-		fncOutputError(9061, DEF_WARNING, " ÂĞ¾İ¤Î¥Ç¡¼¥¿¤¬ÊÑ¹¹¤µ¤ì¤¿²ÄÇ½À­¤¬¤¢¤ê¤Ş¤¹¡£", TRUE, "", $objDB);
+		// æƒ…å ±ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸã€‚
+		fncOutputError(9061, DEF_WARNING, " å¯¾è±¡ã®ãƒ‡ãƒ¼ã‚¿ãŒå¤‰æ›´ã•ã‚ŒãŸå¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚", TRUE, "", $objDB);
 	}
 	catch (InvalidArgumentException $e)
 	{
-		// ¥×¥í¥°¥é¥à¥¨¥é¡¼
+		// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã‚¨ãƒ©ãƒ¼
 		fncOutputError(9054, DEF_WARNING, "", TRUE, "", $objDB);
 	}
 }
 else
 {
-	fncOutputError(9061, DEF_WARNING, "¥Ñ¥é¥á¡¼¥¿¤¬ÉÔÀµ¤Ç¤¹¡£", TRUE, "", $objDB);
+	fncOutputError(9061, DEF_WARNING, "ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒä¸æ­£ã§ã™ã€‚", TRUE, "", $objDB);
 }
 
 /**
- * ¶â·¿Ä¢É¼¤ÎÁªÂòÍó¤òÅÉ¤ê¤Ä¤Ö¤¹
+ * é‡‘å‹å¸³ç¥¨ã®é¸æŠæ¬„ã‚’å¡—ã‚Šã¤ã¶ã™
  * @param DOMElement $element
  */
 function setSelectedCell(DOMElement $element)

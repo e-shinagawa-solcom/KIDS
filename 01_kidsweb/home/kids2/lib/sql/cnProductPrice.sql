@@ -1,8 +1,8 @@
 /*
-	�T�v�F���i�R�[�h�A�d���ȖڃR�[�h�A�d�����i�R�[�h�A�ʉݒP�ʃR�[�h����P�����X�g�̎擾
-	�ΏہF�����Ǘ��A�d���Ǘ�
-	�쐬�F��ˋM��
-	���l�F
+	概要：製品コード、仕入科目コード、仕入部品コード、通貨単位コードから単価リストの取得
+	対象：発注管理、仕入管理
+	作成：手塚貴文
+	備考：
 */
 SELECT mpp.lngProductPriceCode, mpp.curProductPrice
 FROM m_productprice mpp

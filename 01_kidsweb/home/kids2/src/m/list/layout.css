@@ -51,7 +51,7 @@
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
-/* “ü—ÍƒtƒH[ƒ€ ƒwƒbƒ_ƒ^ƒCƒgƒ‹ */
+/* å…¥åŠ›ãƒ•ã‚©ãƒ¼ãƒ  ãƒ˜ãƒƒãƒ€ã‚¿ã‚¤ãƒˆãƒ« */
 .form-box__header__title
 {
     margin: 8px 12px;
@@ -61,7 +61,7 @@
     font-weight: bold;
     line-height: 12px;
 }
-/* ƒtƒH[ƒ€ƒ{ƒbƒNƒXƒwƒbƒ_ ƒ{ƒ^ƒ“ */
+/* ãƒ•ã‚©ãƒ¼ãƒ ãƒœãƒƒã‚¯ã‚¹ãƒ˜ãƒƒãƒ€ ãƒœã‚¿ãƒ³ */
 .form-box__header__buttons
 {
     position: absolute;

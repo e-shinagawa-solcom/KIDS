@@ -1,13 +1,13 @@
 
 //------------------------------------------------------------
-// ²òÀâ : [TD]ÇØ·Ê¿§ÊÑ¹¹´Ø¿ô
+// è§£èª¬ : [TD]èƒŒæ™¯è‰²å¤‰æ›´é–¢æ•°
 //------------------------------------------------------------
 function fncTdColorChange( strMode , obj )
 {
 
-	var defaultcolor = '#0b509f'; // ¥Ç¥Õ¥©¥ë¥È¿§ /* 6d8aab */
-	var overcolor    = '#6d8aab'; // ¥í¡¼¥ë¥ª¡¼¥Ğ¡¼¿§
-	var downcolor    = '#ea8555'; // ¥Ş¥¦¥¹¥À¥¦¥ó¿§
+	var defaultcolor = '#0b509f'; // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè‰² /* 6d8aab */
+	var overcolor    = '#6d8aab'; // ãƒ­ãƒ¼ãƒ«ã‚ªãƒ¼ãƒãƒ¼è‰²
+	var downcolor    = '#ea8555'; // ãƒã‚¦ã‚¹ãƒ€ã‚¦ãƒ³è‰²
 
 	switch( strMode )
 	{
@@ -33,29 +33,29 @@ function fncTdColorChange( strMode , obj )
 
 
 //------------------------------------------------------------
-// ²òÀâ : [ÆÃ¼ìÊ¸»ú]¤ò¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤Ë¥³¥Ô¡¼¤¹¤ë´Ø¿ô
+// è§£èª¬ : [ç‰¹æ®Šæ–‡å­—]ã‚’ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼ã™ã‚‹é–¢æ•°
 //
-// Êß×Ò°À° : strSpecialChar   , ÆÃ¼ìÊ¸»ú¼èÆÀ°ú¿ô
-//           objSpecialBuffer , ¥Ğ¥Ã¥Õ¥¡ÍÑ¥ª¥Ö¥¸¥§¥¯¥È(hidden)
+// ï¾Šï¾Ÿï¾—ï¾’ï½°ï¾€ï½° : strSpecialChar   , ç‰¹æ®Šæ–‡å­—å–å¾—å¼•æ•°
+//           objSpecialBuffer , ãƒãƒƒãƒ•ã‚¡ç”¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(hidden)
 //------------------------------------------------------------
 function fncSpecialCharCopy( strSpecialChar )
 {
-	// ÆÃ¼ìÊ¸»ú¤ò¥Ğ¥Ã¥Õ¥¡¤Ë³ÊÇ¼
+	// ç‰¹æ®Šæ–‡å­—ã‚’ãƒãƒƒãƒ•ã‚¡ã«æ ¼ç´
 	objSpecialBuffer.value = strSpecialChar;
 
-	// ¥Ğ¥Ã¥Õ¥¡¤Î¥Æ¥­¥¹¥È¥ì¥ó¥¸¤ò¼èÆÀ
+	// ãƒãƒƒãƒ•ã‚¡ã®ãƒ†ã‚­ã‚¹ãƒˆãƒ¬ãƒ³ã‚¸ã‚’å–å¾—
 	var objSpecial = objSpecialBuffer.createTextRange();
 
-	// ¥³¥Ô¡¼¤¹¤ëÎÎ°è¤ÎÀßÄê
+	// ã‚³ãƒ”ãƒ¼ã™ã‚‹é ˜åŸŸã®è¨­å®š
 	objSpecial.moveStart( 'character' , 0 );
 	objSpecial.moveEnd( 'character' );
 
 	//alert(objSpecial);
 
-	// ¥¯¥ê¥Ã¥×¥Ü¡¼¥É¤Ë¥³¥Ô¡¼
+	// ã‚¯ãƒªãƒƒãƒ—ãƒœãƒ¼ãƒ‰ã«ã‚³ãƒ”ãƒ¼
 	objSpecial.execCommand("copy");
 
-	// ¥Ğ¥Ã¥Õ¥¡¤Î½é´ü²½
+	// ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–
 	objSpecialBuffer.value = '';
 
 	return false;

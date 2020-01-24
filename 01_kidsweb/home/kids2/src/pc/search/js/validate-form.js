@@ -1,31 +1,31 @@
 
 (function () {
-    // ¥Õ¥©¡¼¥à
+    // ãƒ•ã‚©ãƒ¼ãƒ 
     var form = $('form');
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥¯¥é¥¹Ì¾
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚¯ãƒ©ã‚¹å
     var classNameErrorIcon = 'error-icon';
-    // ¥¨¥é¡¼¥¢¥¤¥³¥ó¥ê¥½¡¼¥¹URL
+    // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãƒªã‚½ãƒ¼ã‚¹URL
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(É¬¿Ü¹àÌÜ)
-    var msgRequired = "ÆşÎÏÉ¬¿Ü¹àÌÜ¤Ç¤¹¡£";
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸(ÆüÉÕ)
-    var msgDateFormat = "yyyy/mm/dd·Á¼°¤«¤ÄÍ­¸ú¤ÊÆüÉÕ¤òÆşÎÏ¤·¤Æ¤¯¤À¤µ¤¤¡£";
-    // ÆüÉÕ¥Õ¥©¡¼¥Ş¥Ã¥È yyyy/mm/dd·Á¼°
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(å¿…é ˆé …ç›®)
+    var msgRequired = "å…¥åŠ›å¿…é ˆé …ç›®ã§ã™ã€‚";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸(æ—¥ä»˜)
+    var msgDateFormat = "yyyy/mm/ddå½¢å¼ã‹ã¤æœ‰åŠ¹ãªæ—¥ä»˜ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„ã€‚";
+    // æ—¥ä»˜ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ yyyy/mm/ddå½¢å¼
     var regDate = /(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])\/([0-2][0-9]|3[0-1])/;
-    // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¡Ê½ñ¼°¸í¤ê¡Ë
-    var msgSpecialFormat = "½ñ¼°¤Ë¸í¤ê¤¬¤¢¤ê¤Ş¤¹¡£"
-    var msgLessThanToday = "Ì¤Íè¤ÎÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿¡£";
-    var msgLessThantToDate = "FROM¤ËTO¤è¤êÌ¤Íè¤ÎÆüÉÕ¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿¡£";
-    var msgLessThantTo = "FROM¤ËTO¤è¤êÂç¤­¤¤NO.¤¬»ØÄê¤µ¤ì¤Ş¤·¤¿¡£";
+    // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ï¼ˆæ›¸å¼èª¤ã‚Šï¼‰
+    var msgSpecialFormat = "æ›¸å¼ã«èª¤ã‚ŠãŒã‚ã‚Šã¾ã™ã€‚"
+    var msgLessThanToday = "æœªæ¥ã®æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸã€‚";
+    var msgLessThantToDate = "FROMã«TOã‚ˆã‚Šæœªæ¥ã®æ—¥ä»˜ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸã€‚";
+    var msgLessThantTo = "FROMã«TOã‚ˆã‚Šå¤§ãã„NO.ãŒæŒ‡å®šã•ã‚Œã¾ã—ãŸã€‚";
 
-    // validation¥­¥Ã¥¯
+    // validationã‚­ãƒƒã‚¯
     $('.hasDatepicker').on({
         'change': function () {
             $(this).blur();
         }
     });
 
-    // ¶èÊ¬¤ÎÉ¬¿Ü¥Á¥§¥Ã¥¯
+    // åŒºåˆ†ã®å¿…é ˆãƒã‚§ãƒƒã‚¯
     $.validator.addMethod(
         "checkSelect",
         function (value, element, params) {
@@ -63,7 +63,7 @@
         },
         msgSpecialFormat
     );
-    // £°¢·£±£°·å¤Î¿ô»ú°Ê³°¤ÎÊ¸»ú¤¬ÆşÎÏ¤Ç¤­¤Ê¤¤
+    // ï¼ï½ï¼‘ï¼æ¡ã®æ•°å­—ä»¥å¤–ã®æ–‡å­—ãŒå…¥åŠ›ã§ããªã„
     $.validator.addMethod(
         "checkAscii",
         function (value, element, params) {
@@ -74,7 +74,7 @@
         },
         msgSpecialFormat
     );
-    // ÆüÉÕ¤¬yyyy/mm/dd·Á¼°¤Ë¥Ş¥Ã¥Á¤·¤Æ¤¤¤ë¤«,Í­¸ú¤ÊÆüÉÕ¤«
+    // æ—¥ä»˜ãŒyyyy/mm/ddå½¢å¼ã«ãƒãƒƒãƒã—ã¦ã„ã‚‹ã‹,æœ‰åŠ¹ãªæ—¥ä»˜ã‹
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
@@ -100,17 +100,17 @@
                     var d = '01';
                     value = y + "/" + m + "/" + d;
                 }
-                // yyyy/mm/dd·Á¼°¤«
+                // yyyy/mm/ddå½¢å¼ã‹
                 if (!(regDate.test(value))) {
                     return false;
                 }
-                // ÆüÉÕÊ¸»úÎó¤Î»ú¶çÊ¬²ò
+                // æ—¥ä»˜æ–‡å­—åˆ—ã®å­—å¥åˆ†è§£
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ÆüÉÕ¤ÎÍ­¸úÀ­¥Á¥§¥Ã¥¯
+                // æ—¥ä»˜ã®æœ‰åŠ¹æ€§ãƒã‚§ãƒƒã‚¯
                 if (di.getFullYear() == yyyy && di.getMonth() == mm - 1 && di.getDate() == dd) {
                     return true;
                 } else {
@@ -121,7 +121,7 @@
         msgDateFormat
     );
 
-    // ÆüÉÕ¤¬Ì¤ÍèÆü¤Ç¤Ê¤¤¤« ActionDate
+    // æ—¥ä»˜ãŒæœªæ¥æ—¥ã§ãªã„ã‹ ActionDate
     $.validator.addMethod(
         "isLessThanToday",
         function (value, element, params) {
@@ -138,24 +138,24 @@
                 var mm = regResult[2];
                 var dd = regResult[3];
                 var di = new Date(yyyy, mm - 1, dd);
-                // ¸½ºß¤ÎÆü»ş¤ÈÈæ³Ó
+                // ç¾åœ¨ã®æ—¥æ™‚ã¨æ¯”è¼ƒ
                 var nowDi = new Date();
-                // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤è¤ê¾®¤µ¤±¤ì¤ĞÀµ
+                // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã‚ˆã‚Šå°ã•ã‘ã‚Œã°æ­£
                 if (nowDi.getFullYear() > di.getFullYear()) {
                     return true;
-                    // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤è¤êÂç¤­¤±¤ì¤Ğ¥¨¥é¡¼
+                    // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã‚ˆã‚Šå¤§ãã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                 } else if (nowDi.getFullYear() < di.getFullYear()) {
                     return false;
-                    // ÆşÎÏ¤·¤¿Ç¯¤¬¸½ºß¤ÈÆ±¤¸¾ì¹ç
+                    // å…¥åŠ›ã—ãŸå¹´ãŒç¾åœ¨ã¨åŒã˜å ´åˆ
                 } else if (nowDi.getFullYear() == di.getFullYear()) {
-                    // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤è¤ê¾®¤µ¤±¤ì¤ĞÀµ
+                    // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã‚ˆã‚Šå°ã•ã‘ã‚Œã°æ­£
                     if (nowDi.getMonth() > di.getMonth()) {
                         return true;
-                        // ÆşÎÏ¤·¤¿·î¤¬¸½ºß¤è¤êÂç¤­¤±¤ì¤Ğ¥¨¥é¡¼
+                        // å…¥åŠ›ã—ãŸæœˆãŒç¾åœ¨ã‚ˆã‚Šå¤§ãã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                     } else if (nowDi.getMonth() < di.getMonth()) {
                         return false;
                     } else if (nowDi.getMonth() == di.getMonth()) {
-                        // ÆşÎÏ¤·¤¿Æü¤¬¸½ºß¤ÈÆ±¤¸¤«¤½¤ì¤è¤ê¾®¤µ¤±¤ì¤ĞÀµ
+                        // å…¥åŠ›ã—ãŸæ—¥ãŒç¾åœ¨ã¨åŒã˜ã‹ãã‚Œã‚ˆã‚Šå°ã•ã‘ã‚Œã°æ­£
                         if (nowDi.getDate() >= di.getDate()) {
                             return true;
                         } else {
@@ -168,7 +168,7 @@
         msgLessThanToday
     );
 
-    // FROM_XXXX¤¬TO_XXXX¤è¤ê¾®¤µ¤¤¤«(Æ±ÆüÉÔ²Ä)
+    // FROM_XXXXãŒTO_XXXXã‚ˆã‚Šå°ã•ã„ã‹(åŒæ—¥ä¸å¯)
     $.validator.addMethod(
         "isGreaterThanFromDate",
         function (value, element, params) {
@@ -181,7 +181,7 @@
                     value = y + "/" + m + "/" + d;
                 }
                 var params1 = $(params[1]).val();
-                // FROM_XXXX¤¬ÆşÎÏ¤µ¤ì¤¿¾ì¹ç¡¢
+                // FROM_XXXXãŒå…¥åŠ›ã•ã‚ŒãŸå ´åˆã€
                 if ($(params[1]).val() != "") {
                     if (/^[0-9]{8}$/.test(params1)) {
                         var str = params1.trim();
@@ -200,23 +200,23 @@
                     mm = regResult[2];
                     dd = regResult[3];
                     var di = new Date(yyyy, mm, dd);
-                    // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                    // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                     if (fromDate.getFullYear() > di.getFullYear()) {
                         return false;
-                        // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                        // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                     } else if (fromDate.getFullYear() < di.getFullYear()) {
                         return true;
-                        // ÆşÎÏ¤·¤¿Ç¯¤¬FROM_XXXX¤ÈÆ±¤¸¾ì¹ç
+                        // å…¥åŠ›ã—ãŸå¹´ãŒFROM_XXXXã¨åŒã˜å ´åˆ
                     } else if (fromDate.getFullYear() == di.getFullYear()) {
-                        // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                        // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                         if (fromDate.getMonth() > di.getMonth()) {
                             return false;
-                            // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤è¤êÂç¤­¤±¤ì¤ĞÀµ
+                            // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã‚ˆã‚Šå¤§ãã‘ã‚Œã°æ­£
                         } else if (fromDate.getMonth() < di.getMonth()) {
                             return true;
-                            // ÆşÎÏ¤·¤¿·î¤¬FROM_XXXX¤ÈÆ±¤¸¾ì¹ç
+                            // å…¥åŠ›ã—ãŸæœˆãŒFROM_XXXXã¨åŒã˜å ´åˆ
                         } else if (fromDate.getMonth() == di.getMonth()) {
-                            // ÆşÎÏ¤·¤¿Æü¤¬FROM_XXXX¤è¤ê¾®¤µ¤±¤ì¤Ğ¥¨¥é¡¼
+                            // å…¥åŠ›ã—ãŸæ—¥ãŒFROM_XXXXã‚ˆã‚Šå°ã•ã‘ã‚Œã°ã‚¨ãƒ©ãƒ¼
                             if (fromDate.getDate() > di.getDate()) {
                                 return false;
                             } else {
@@ -231,7 +231,7 @@
         msgLessThantToDate
     );
 
-    // FROM_XXXX¤¬TO_XXXX¤è¤ê¾®¤µ¤¤¤«()
+    // FROM_XXXXãŒTO_XXXXã‚ˆã‚Šå°ã•ã„ã‹()
     $.validator.addMethod(
         "isGreaterThanFrom",
         function (value, element, params) {
@@ -247,23 +247,23 @@
         msgLessThantTo
     );
 
-    // ¸¡¾ÚÀßÄê
+    // æ¤œè¨¼è¨­å®š
     form.validate({
         // -----------------------------------------------
-        // ¥¨¥é¡¼É½¼¨½èÍı
+        // ã‚¨ãƒ©ãƒ¼è¡¨ç¤ºå‡¦ç†
         // -----------------------------------------------
         errorPlacement: function (error, element) {
             invalidImg = $('<img>')
                 .attr('class', classNameErrorIcon)
                 .attr('src', urlErrorIcon)
-                // CSSÀßÄê(É½¼¨°ÌÃÖ)
+                // CSSè¨­å®š(è¡¨ç¤ºä½ç½®)
                 .css({
                     position: 'relative',
                     top: -1,
                     left: -2,
                     opacity: 'inherit'
                 })
-                // ¥Ä¡¼¥ë¥Á¥Ã¥×É½¼¨
+                // ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—è¡¨ç¤º
                 .tooltipster({
                     trigger: 'hover',
                     onlyone: false,
@@ -271,30 +271,30 @@
                     content: error.text()
                 });
 
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã—ãªã„å ´åˆ
             if ($(element).prev('img.' + classNameErrorIcon).length <= 0) {
-                // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤òÉ½¼¨
+                // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã‚’è¡¨ç¤º
                 $(element).before(invalidImg);
             }
-            // ¥¨¥é¡¼¥¢¥¤¥³¥ó¤¬Â¸ºß¤¹¤ë¾ì¹ç
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
             else {
-                // ´ûÂ¸¤Î¥¨¥é¡¼¥¢¥¤¥³¥ó¤Î¥Ä¡¼¥ë¥Á¥Ã¥×¥Æ¥­¥¹¥È¤ò¹¹¿·
+                // æ—¢å­˜ã®ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³ã®ãƒ„ãƒ¼ãƒ«ãƒãƒƒãƒ—ãƒ†ã‚­ã‚¹ãƒˆã‚’æ›´æ–°
                 $(element).prev('img.' + classNameErrorIcon)
                     .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
-        // ¸¡¾ÚOK»ş¤Î½èÍı
+        // æ¤œè¨¼OKæ™‚ã®å‡¦ç†
         // -----------------------------------------------
         unhighlight: function (element) {
-            // ¥¨¥é¡¼¥¢¥¤¥³¥óºï½ü
+            // ã‚¨ãƒ©ãƒ¼ã‚¢ã‚¤ã‚³ãƒ³å‰Šé™¤
             $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
-        // ¸¡¾Ú¥ë¡¼¥ë
+        // æ¤œè¨¼ãƒ«ãƒ¼ãƒ«
         // -----------------------------------------------
         rules: {
-            // ÅĞÏ¿Æü
+            // ç™»éŒ²æ—¥
             From_dtmInsertDate: {
                 required: function () {
                     return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked && $('input[name="To_dtmInsertDate"]').val() == "";
@@ -318,7 +318,7 @@
                 }
             },
 
-            // »ÅÆşÆü
+            // ä»•å…¥æ—¥
             From_dtmAppropriationDate: {
                 required: function () {
                     return $('input[name="IsSearch_dtmAppropriationDate"]').get(0).checked && $('input[name="To_dtmAppropriationDate"]').val() == "";
@@ -341,7 +341,7 @@
                     return [$('input[name="IsSearch_dtmAppropriationDate"]').get(0).checked, 'input[name="From_dtmAppropriationDate"]'];
                 }
             },
-            // »ÅÆşNO.
+            // ä»•å…¥NO.
             From_strStockCode: {
                 required: function () {
                     return $('input[name="IsSearch_strStockCode"]').get(0).checked && $('input[name="To_strStockCode"]').val() == "";
@@ -361,7 +361,7 @@
                     return [$('input[name="IsSearch_strStockCode"]').get(0).checked, $('input[name="From_strStockCode"]').val()];
                 }
             },
-            // È¯Ãí½ñNO.
+            // ç™ºæ³¨æ›¸NO.
             From_strOrderCode: {
                 required: function () {
                     return $('input[name="IsSearch_strOrderCode"]').get(0).checked && $('input[name="To_strOrderCode"]').val() == "";
@@ -382,7 +382,7 @@
                 }
             },
 
-            // Ç¼ÉÊ½ñNO.
+            // ç´å“æ›¸NO.
             strSlipCode: {
                 required: function () {
                     return $('input[name="IsSearch_strSlipCode"]').get(0).checked;
@@ -391,25 +391,25 @@
                     return $('input[name="IsSearch_strSlipCode"]').get(0).checked;
                 }
             },
-            // ÆşÎÏ¼Ô            
+            // å…¥åŠ›è€…            
             lngInputUserCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngInputUserCode"]').get(0).checked;
                 }
             },
-            // »ÅÆşÀè            
+            // ä»•å…¥å…ˆ            
             lngCustomerCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngCustomerCode"]').get(0).checked;
                 }
             },
-            // »ÙÊ§¾ò·ï            
+            // æ”¯æ‰•æ¡ä»¶            
             lngPayConditionCode: {
                 checkSelect: function () {
                     return $('input[name="IsSearch_lngPayConditionCode"]').get(0).checked;
                 }
             },
-            // À½ÉÊÅşÃåÆü           
+            // è£½å“åˆ°ç€æ—¥           
             From_dtmExpirationDate: {
                 required: function () {
                     return $('input[name="IsSearch_dtmExpirationDate"]').get(0).checked && $('input[name="To_dtmExpirationDate"]').val() == "";
@@ -423,19 +423,19 @@
                     return [$('input[name="IsSearch_dtmExpirationDate"]').get(0).checked, 'input[name="From_dtmExpirationDate"]'];
                 }
             },
-            // »ÅÆş²ÊÌÜ            
+            // ä»•å…¥ç§‘ç›®            
             lngStockSubjectCode: {
                 checkSelect: function () {
                     return $('input[name="IsSearch_lngStockSubjectCode"]').get(0).checked;
                 }
             },
-            // »ÅÆşÉôÉÊ            
+            // ä»•å…¥éƒ¨å“            
             lngStockItemCode: {
                 checkSelect: function () {
                     return $('input[name="IsSearch_lngStockItemCode"]').get(0).checked;
                 }
             },
-            // À½ÉÊ¥³¡¼¥É            
+            // è£½å“ã‚³ãƒ¼ãƒ‰            
             strProductCode: {
                 required: function () {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked
@@ -444,25 +444,25 @@
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked
                 }
             },
-            // À½ÉÊÌ¾¾Î            
+            // è£½å“åç§°            
             strProductName: {
                 required: function () {
                     return $('input[name="IsSearch_strProductName"]').get(0).checked;
                 }
             },
-            // ±Ä¶ÈÉô½ğ            
+            // å–¶æ¥­éƒ¨ç½²            
             lngInChargeGroupCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngInChargeGroupCode"]').get(0).checked;
                 }
             },
-            // ³«È¯Ã´Åö¼Ô            
+            // é–‹ç™ºæ‹…å½“è€…            
             lngInChargeUserCode: {
                 required: function () {
                     return $('input[name="IsSearch_lngInChargeUserCode"]').get(0).checked;
                 }
             },
-            // ¾õÂÖ            
+            // çŠ¶æ…‹            
             'lngStockStatusCode[]': {
                 required: function () {
                     return $('input[name="IsSearch_lngStockStatusCode"]').get(0).checked;
@@ -470,83 +470,83 @@
             }
         },
         // -----------------------------------------------
-        // ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸
+        // ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
         // -----------------------------------------------
         messages: {
-            // ÅĞÏ¿Æü
+            // ç™»éŒ²æ—¥
             From_dtmInsertDate: {
                 required: msgRequired
             },
             To_dtmInsertDate: {
                 required: msgRequired
             },
-            // »ÅÆşÆü
+            // ä»•å…¥æ—¥
             From_dtmAppropriationDate: {
                 required: msgRequired
             },
             To_dtmAppropriationDate: {
                 required: msgRequired
-            },// »ÅÆşNO.
+            },// ä»•å…¥NO.
             From_strStockCode: {
                 required: msgRequired
             },
             To_strStockCode: {
                 required: msgRequired
             },
-            // È¯Ãí½ñNO.
+            // ç™ºæ³¨æ›¸NO.
             From_strOrderCode: {
                 required: msgRequired
             },
             To_strOrderCode: {
                 required: msgRequired
             },
-            // Ç¼ÉÊ½ñNO.
+            // ç´å“æ›¸NO.
             strSlipCode: {
                 required: msgRequired
             },
-            // ÆşÎÏ¼Ô            
+            // å…¥åŠ›è€…            
             lngInputUserCode: {
                 required: msgRequired
             },
-            // »ÅÆşÀè            
+            // ä»•å…¥å…ˆ            
             lngCustomerCode: {
                 required: msgRequired
             },
-            // »ÙÊ§¾ò·ï            
+            // æ”¯æ‰•æ¡ä»¶            
             lngPayConditionCode: {
                 required: msgRequired
             },
-            // À½ÉÊÅşÃåÆü           
+            // è£½å“åˆ°ç€æ—¥           
             From_dtmExpirationDate: {
                 required: msgRequired
             },
             To_dtmExpirationDate: {
                 required: msgRequired
             },
-            // »ÅÆş²ÊÌÜ            
+            // ä»•å…¥ç§‘ç›®            
             lngStockSubjectCode: {
                 required: msgRequired
             },
-            // »ÅÆşÉôÉÊ            
+            // ä»•å…¥éƒ¨å“            
             lngStockItemCode: {
                 required: msgRequired
             },
-            // À½ÉÊ¥³¡¼¥É            
+            // è£½å“ã‚³ãƒ¼ãƒ‰            
             From_strProductCode: {
                 required: msgRequired
             },
             To_strProductCode: {
                 required: msgRequired
             },
-            // ±Ä¶ÈÉô½ğ            
+            // å–¶æ¥­éƒ¨ç½²            
             lngInChargeGroupCode: {
                 required: msgRequired
             },
-            // ³«È¯Ã´Åö¼Ô            
+            // é–‹ç™ºæ‹…å½“è€…            
             lngInChargeUserCode: {
                 required: msgRequired
             },
-            // ¾õÂÖ            
+            // çŠ¶æ…‹            
             'lngStockStatusCode[]': {
                 required: msgRequired
             }

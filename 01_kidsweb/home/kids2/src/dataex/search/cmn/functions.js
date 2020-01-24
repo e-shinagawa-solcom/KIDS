@@ -24,14 +24,14 @@ function fncDataFormPreview( objFrm , strURL )
 	g_aryFrm	= null;
 	g_aryFrm    = new Array();
 
-	/* ��`�ς݂̔z�������������i������ʂŏ�����ύX���ꂽ�ꍇ�ɑΉ��j */
+	/* 定義済みの配列を初期化する（同じ画面で条件を変更された場合に対応） */
 	for ( i = 0; i < 4; i++ )
 	{
 		g_aryFrm[i] = null;
 		g_aryFrm[i] = new Array();
 	}
 
-	/* �t�H�[���̃f�[�^���擾���� */
+	/* フォームのデータを取得する */
 	if( typeof(objFrm) != 'undefined' )
 	{
 

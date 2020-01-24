@@ -1,8 +1,8 @@
 /*
-	�T�v�F���i�R�[�h�A����敪�R�[�h�A�ʉݒP�ʃR�[�h����P�����X�g�̎擾
-	�ΏہF�󒍊Ǘ��A����Ǘ�
-	�쐬�F��ˋM��
-	���l�F
+	概要：製品コード、売上区分コード、通貨単位コードから単価リストの取得
+	対象：受注管理、売上管理
+	作成：手塚貴文
+	備考：
 */
 SELECT mpp.lngProductPriceCode, mpp.curProductPrice
 FROM m_productprice mpp

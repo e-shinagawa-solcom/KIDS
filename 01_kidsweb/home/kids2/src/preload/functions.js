@@ -2,25 +2,25 @@
 
 
 	//-----------------------------------------------------
-	// ����    : ���֥������ȤΥ��󥿥�󥰽����ؿ�
+	// 概要    : オブジェクトのセンタリング処理関数
 	//
-	// �ʎߎ׎Ҏ����� : [objId]   . ���֥�������ID
-	//           [lngTop]  . TOP��ɸ��Ĵ����
-	//           [lngLeft] . LEFT��ɸ��Ĵ����
+	// ﾊﾟﾗﾒｰﾀｰ : [objId]   . オブジェクトID
+	//           [lngTop]  . TOP座標微調整値
+	//           [lngLeft] . LEFT座標微調整値
 	//
-	// ����    : ������ɥ�����ɽ����ǽ�ΰ襵��������1/2
-	//           �����ͤ򡢥��֥������Ȥ�X,Y��ɸ�ͤ�������
+	// 解説    : ウィンドウ枠内表示可能領域サイズから1/2
+	//           した値を、オブジェクトのX,Y座標値に代入。
 	//
-	// ���͎ގݎ�   : body . [onload],[onresize]
+	// ｲﾍﾞﾝﾄ   : body . [onload],[onresize]
 	//-----------------------------------------------------
 	function fncObjectCentering( objId , lngTop , lngLeft )
 	{
 
-		// ������ɥ�����ɽ����ǽ�ΰ�μ���
+		// ウィンドウ枠内表示可能領域の取得
 		var winH = document.body.offsetHeight;
 		var winW = document.body.offsetWidth;
 
-		// ���󥿥�� - ��Ĵ����
+		// センタリング - 微調整値
 		objId.style.top  = (winH / 2) - lngTop;
 		objId.style.left = (winW / 2) - lngLeft;
 

@@ -1,8 +1,8 @@
 <?
 /** 
-*	¸«ÀÑ¸¶²Á´ÉÍıÍÑ¥é¥¤¥Ö¥é¥ê
+*	è¦‹ç©åŸä¾¡ç®¡ç†ç”¨ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
-*	¸«ÀÑ¸¶²Á´ÉÍıÍÑ´Ø¿ô¥é¥¤¥Ö¥é¥ê
+*	è¦‹ç©åŸä¾¡ç®¡ç†ç”¨é–¢æ•°ãƒ©ã‚¤ãƒ–ãƒ©ãƒª
 *
 *	@package   KIDS
 *	@copyright Copyright &copy; 2004, AntsBizShare 
@@ -10,23 +10,23 @@
 *	@access    public
 *	@version   1.00
 *
-*	¹¹¿·ÍúÎò
-*	2004.09.28	fncGetEstimateToProductCode ´Ø¿ô¤ÎÄÉ²Ã
+*	æ›´æ–°å±¥æ­´
+*	2004.09.28	fncGetEstimateToProductCode é–¢æ•°ã®è¿½åŠ 
 */
 
 
-// ¼ÒÆâ¥ì¡¼¥ÈÄêµÁ
-define ("DEF_MONETARYCLASS_SHANAI", 	2);		// ¼ÒÆâ
+// ç¤¾å†…ãƒ¬ãƒ¼ãƒˆå®šç¾©
+define ("DEF_MONETARYCLASS_SHANAI", 	2);		// ç¤¾å†…
 
 
 /**
-* ¸«ÀÑ¸¶²Á´ÉÍı(¸¡º÷¤Ë»ÈÍÑ)
+* è¦‹ç©åŸä¾¡ç®¡ç†(æ¤œç´¢ã«ä½¿ç”¨)
 *
-*	¸«ÀÑ¸¶²Á¥Ç¡¼¥¿ÆÉ¤ß¹ş¤ß¡¢¸¡º÷¡¢¾ÜºÙ¾ğÊó¼èÆÀ¥¯¥¨¥ê´Ø¿ô
+*	è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿ã€æ¤œç´¢ã€è©³ç´°æƒ…å ±å–å¾—ã‚¯ã‚¨ãƒªé–¢æ•°
 *
-*	@param  String $lngEstimateCode ¸«ÀÑ¸¶²Á¥³¡¼¥É
-*	@param  Array  $aryData     FORM¥Ç¡¼¥¿
-*	@param  Object $objDB       DB¥ª¥Ö¥¸¥§¥¯¥È
+*	@param  String $lngEstimateCode è¦‹ç©åŸä¾¡ã‚³ãƒ¼ãƒ‰
+*	@param  Array  $aryData     FORMãƒ‡ãƒ¼ã‚¿
+*	@param  Object $objDB       DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 *	@access public
 */
 function getEstimateQuery( $lngUserCode, $aryData, $objDB )
@@ -36,7 +36,7 @@ function getEstimateQuery( $lngUserCode, $aryData, $objDB )
 fncDebug( 'getEstimateQuery_01.txt', $lngUserCode, __FILE__, __LINE__);
 fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 
-	// ¥½¡¼¥È¤¹¤ë¥«¥é¥à¤ÎÂĞ¾İÈÖ¹æÀßÄê
+	// ã‚½ãƒ¼ãƒˆã™ã‚‹ã‚«ãƒ©ãƒ ã®å¯¾è±¡ç•ªå·è¨­å®š
 
 	$arySortColumn = array ( 1 => "p.strProductCode",
 	                         2 => "p.strProductName",
@@ -71,13 +71,13 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¼èÆÀ¹àÌÜ
+	// å–å¾—é …ç›®
 	//////////////////////////////////////////////////////////////////////////
 	list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT curStandardRate FROM m_EstimateStandardRate WHERE dtmApplyStartDate <= NOW() AND dtmApplyEndDate >= NOW()", $objDB );
 	if ( $lngResultNum < 1 )
 	{
 // 2004.10.01 suzukaze update start
-		// ¤â¤·Åö·î¤ÎÉ¸½à³ä¹ç¤¬»²¾È¤Ç¤­¤Ê¤¤¾ì¹çºÇ¿·¤ÎÆüÉÕ¤ÎÉ¸½à³ä¹ç¤ò»²¾È
+		// ã‚‚ã—å½“æœˆã®æ¨™æº–å‰²åˆãŒå‚ç…§ã§ããªã„å ´åˆæœ€æ–°ã®æ—¥ä»˜ã®æ¨™æº–å‰²åˆã‚’å‚ç…§
 		list ( $lngResultMaxID, $lngResultMaxNum ) = fncQuery( "select * from m_estimatestandardrate where dtmapplyenddate = (select max(dtmapplyenddate) from m_estimatestandardrate);", $objDB );
 
 		if ( $lngResultMaxNum < 1 )
@@ -114,13 +114,13 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 	$aryQuery[] = " to_char(p.curRetailPrice,'999,999,990.9999') AS curRetailPrice,";
 	$aryQuery[] = " to_char( p.lngCartonQuantity, '9,999,999,999' ) AS lngCartonQuantity,";
 
-	// À½ÉÊÃ±°Ì¤¬ctn¤Ê¤é¤Ğ¡¢À¸»ºÍ½Äê¿ô¤Ïpcs¤ËÊÑ´¹¤¹¤ë
+	// è£½å“å˜ä½ãŒctnãªã‚‰ã°ã€ç”Ÿç”£äºˆå®šæ•°ã¯pcsã«å¤‰æ›ã™ã‚‹
 	$aryQuery[] = " CASE WHEN p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_CTN;
 	$aryQuery[] = "  THEN to_char( p.lngProductionQuantity * p.lngCartonQuantity, '9,999,999,999' ) ";
 	$aryQuery[] = "  ELSE to_char( p.lngProductionQuantity, '9,999,999,999' ) ";
 	$aryQuery[] = " END AS lngProductionQuantity, ";
 
-	// À½ÉÊÃ±°Ì¤¬ctn¤Ê¤é¤Ğ¡¢·×²èC/t¤Ï¤½¤Î¤Ş¤ŞÀ¸»ºÍ½Äê¿ô
+	// è£½å“å˜ä½ãŒctnãªã‚‰ã°ã€è¨ˆç”»C/tã¯ãã®ã¾ã¾ç”Ÿç”£äºˆå®šæ•°
 	$aryQuery[] = " CASE WHEN ( p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_PCS . " OR p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_SET . " ) AND p.lngCartonQuantity <> 0 ";
 	$aryQuery[] = "  THEN to_char( p.lngProductionQuantity / p.lngCartonQuantity, '9,999,999,999' )";
 	$aryQuery[] = "  ELSE to_char( p.lngProductionQuantity, '9,999,999,999' ) ";
@@ -161,21 +161,21 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 	$aryQuery[] = " c.strCompanyDisplayName,";
 	//$aryQuery[] = " tw.lngWorkflowStatusCode,";
 
-	// ´ë²èÌÜÉ¸Íø±× ¢Í Í½ÄêÇä¾å¹â ¡İ ÁíÀ½Â¤ÈñÍÑ
+	// ä¼ç”»ç›®æ¨™åˆ©ç›Š â‡’ äºˆå®šå£²ä¸Šé«˜ âˆ’ ç·è£½é€ è²»ç”¨
 	$aryQuery[] = " to_char( e.curSalesAmount - e.curManufacturingCost, '999,999,990.9999' )  AS curTargetProfit, ";
 
-	// ÌÜÉ¸Íø±×Î¨ ¢Í ´ë²èÌÜÉ¸Íø±× / Í½ÄêÇä¾å¹â
+	// ç›®æ¨™åˆ©ç›Šç‡ â‡’ ä¼ç”»ç›®æ¨™åˆ©ç›Š / äºˆå®šå£²ä¸Šé«˜
 	$aryQuery[] = " CASE WHEN e.curSalesAmount <> 0 ";
 	$aryQuery[] = "  THEN to_char( (e.curSalesAmount - e.curManufacturingCost) / e.curSalesAmount * 100, '9,999,999,990.99' ) || ' %' ";
 	$aryQuery[] = "  ELSE to_char( 0, '0.99' ) || ' %' ";
 	$aryQuery[] = " END AS curAchievementRatio,";
 
-	// ´ÖÀÜÀ½Â¤·ĞÈñ
+	// é–“æ¥è£½é€ çµŒè²»
 //	$aryQuery[] = " to_char( e.curSalesAmount * " . $objResult->curstandardrate . ", '9,999,999,990.99' ) AS curStandardRate,";
-	// É¸½à³ä¹ç
+	// æ¨™æº–å‰²åˆ
 	$aryQuery[] = $objResult->curstandardrate . " AS curStandardRate,";
 
-	// Çä¾åÁíÍø±×
+	// å£²ä¸Šç·åˆ©ç›Š
 	$aryQuery[] = " to_char( (e.curSalesAmount - e.curManufacturingCost) - (e.curSalesAmount * " . $objResult->curstandardrate . "), '9,999,999,990.99' ) AS curProfitOnSales ";
 
 	unset ( $objResult );
@@ -201,7 +201,7 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 	$aryQuery[] = "  AND ed.lngRevisionNo =";
 //	$aryQuery[] = "   ( SELECT MAX(ed2.lngRevisionNo) FROM t_EstimateDetail ed2 WHERE ed.lngEstimateNo = ed2.lngEstimateNo AND ed.lngEstimateDetailNo = ed2.lngEstimateDetailNo )";
 //=======================================================================================================
-// 050407 bykou revision¤ÎMAXÃÍ¤ò¼è¤ì¤Ê¤¤¤¿¤á¤Î½¤Àµ
+// 050407 bykou revisionã®MAXå€¤ã‚’å–ã‚Œãªã„ãŸã‚ã®ä¿®æ­£
 	$aryQuery[] = "   ( SELECT MAX(ed2.lngRevisionNo) FROM t_EstimateDetail ed2 WHERE ed.lngEstimateNo = ed2.lngEstimateNo)";
 //========================================================================================================
 	$aryQuery[] = "  AND 0 <=";
@@ -227,16 +227,16 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 	$aryQueryWhere[] = " 0 <= ( SELECT MIN ( e3.lngRevisionNo ) FROM m_Estimate e3 WHERE e.lngEstimateNo = e3.lngEstimateNo )";
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¾ò·ï½èÍı
+	// æ¡ä»¶å‡¦ç†
 	//////////////////////////////////////////////////////////////////////////
-	// A:»ØÄê¤·¤¿¸«ÀÑ¸¶²Á¥³¡¼¥É
+	// A:æŒ‡å®šã—ãŸè¦‹ç©åŸä¾¡ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["lngUserCodeConditions"] && $lngUserCode != "" )
 	{
 		$aryQueryWhere[] = " u.lngUserCode = $lngUserCode \n";
 	}
 
-	// B:³Æ¸¡º÷¾ò·ï
-	// À½ÉÊ¥³¡¼¥É
+	// B:å„æ¤œç´¢æ¡ä»¶
+	// è£½å“ã‚³ãƒ¼ãƒ‰
 	if ( $aryData["strProductCodeConditions"] )
 	{
 		if ( $aryData["strProductCodeFrom"] != "" )
@@ -249,31 +249,31 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 		}
 	}
 
-	// À½ÉÊÌ¾
+	// è£½å“å
 	if ( $aryData["strProductNameConditions"] && $aryData["strProductName"] != "" )
 	{
 		$aryQueryWhere[] = " p.strProductName LIKE '%" . $aryData["strProductName"] . "%' \n";
 	}
 
-	// Ã´Åö¥°¥ë¡¼¥×É½¼¨¥³¡¼¥É
+	// æ‹…å½“ã‚°ãƒ«ãƒ¼ãƒ—è¡¨ç¤ºã‚³ãƒ¼ãƒ‰
 	if ( $aryData["strInchargeGroupDisplayCodeConditions"] && $aryData["lngInChargeGroupCode"] != "" )
 	{
 		$aryQueryWhere[] = " g.strGroupDisplayCode = '" . $aryData["lngInChargeGroupCode"] . "' \n";
 	}
 
-	// Ã´Åö¼ÔÉ½¼¨¥³¡¼¥É
+	// æ‹…å½“è€…è¡¨ç¤ºã‚³ãƒ¼ãƒ‰
 	if ( $aryData["strInchargeUserDisplayCodeConditions"] && $aryData["lngInChargeUserCode"] != "" )
 	{
 		$aryQueryWhere[] = " u1.strUserDisplayCode = '" . $aryData["lngInChargeUserCode"] . "' \n";
 	}
 
-	// ÆşÎÏ¼ÔÉ½¼¨¥³¡¼¥É
+	// å…¥åŠ›è€…è¡¨ç¤ºã‚³ãƒ¼ãƒ‰
 	if ( $aryData["strInputUserDisplayCodeConditions"] && $aryData["lngInputUserCode"] != "" )
 	{
 		$aryQueryWhere[] = " u2.strUserDisplayCode = '" . $aryData["lngInputUserCode"] . "' \n";
 	}
 
-	// ºîÀ®Æü
+	// ä½œæˆæ—¥
 	if ( $aryData["dtmCreationDateConditions"] )
 	{
 		if ( $aryData["dtmCreationDateFrom"] != "" )
@@ -286,7 +286,7 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 		}
 	}
 
-	// Ç¼´ü
+	// ç´æœŸ
 	if ( $aryData["dtmDeliveryLimitDateConditions"] )
 	{
 		if ( $aryData["dtmDeliveryLimitDateFrom"] != "" )
@@ -298,26 +298,26 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 			$aryQueryWhere[] = " p.dtmDeliveryLimitDate <= to_date( '" . $aryData["dtmDeliveryLimitDateTo"] . "', 'YYYY/MM' )\n";
 		}
 	}
-	// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ
+	// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹
 	if ( $aryData["lngWorkFlowStatusCodeConditions"] )
 	{
-		// ¥ï¡¼¥¯¥Õ¥í¡¼¾õÂÖ
+		// ãƒ¯ãƒ¼ã‚¯ãƒ•ãƒ­ãƒ¼çŠ¶æ…‹
 		if ( $aryData["lngWorkFlowStatusCode"] != "" )
 		{
 			if ( $aryData["lngWorkFlowStatusCode"] )
 			{
-				// ¥Á¥§¥Ã¥¯¥Ü¥Ã¥¯¥¹ÃÍ¤è¤ê¡¢ÇÛÎó¤ò¤½¤Î¤Ş¤ŞÂåÆş
+				// ãƒã‚§ãƒƒã‚¯ãƒœãƒƒã‚¯ã‚¹å€¤ã‚ˆã‚Šã€é…åˆ—ã‚’ãã®ã¾ã¾ä»£å…¥
 				$arySearchStatus = $aryData["lngWorkFlowStatusCode"];
 				
 				if ( is_array( $arySearchStatus ) )
 				{
 					$aryQueryWF[] = " AND e.lngestimatestatuscode in ( ";
 
-					// WF¾õÂÖ¤ÏÊ£¿ôÀßÄê¤µ¤ì¤Æ¤¤¤ë²ÄÇ½À­¤¬¤¢¤ë¤Î¤Ç¡¢ÀßÄê¸Ä¿ôÊ¬¥ë¡¼¥×
+					// WFçŠ¶æ…‹ã¯è¤‡æ•°è¨­å®šã•ã‚Œã¦ã„ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€è¨­å®šå€‹æ•°åˆ†ãƒ«ãƒ¼ãƒ—
 					$strBuff = "";
 					for ( $j = 0; $j < count($arySearchStatus); $j++ )
 					{
-						// ½é²ó½èÍı
+						// åˆå›å‡¦ç†
 						if ( $j <> 0 )
 						{
 							$strBuff .= " ,";
@@ -339,10 +339,10 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¥½¡¼¥È½èÍı
+	// ã‚½ãƒ¼ãƒˆå‡¦ç†
 	//////////////////////////////////////////////////////////////////////////
-	// $strSort ¹½Â¤ "sort_[ÂĞ¾İÈÖ¹æ]_[¹ß½ç¡¦¾º½ç]"
-	// $strSort ¤«¤éÂĞ¾İÈÖ¹æ¡¢¹ß½ç¡¦¾º½ç¤ò¼èÆÀ
+	// $strSort æ§‹é€  "sort_[å¯¾è±¡ç•ªå·]_[é™é †ãƒ»æ˜‡é †]"
+	// $strSort ã‹ã‚‰å¯¾è±¡ç•ªå·ã€é™é †ãƒ»æ˜‡é †ã‚’å–å¾—
 	list ( $sort, $column, $DESC ) = explode ( "_", $aryData["strSort"] );
 	if ( $column )
 	{
@@ -362,7 +362,7 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 fncDebug( 'getEstimateQuery_01.txt', $strQuery, __FILE__, __LINE__,'a');
 
 	//////////////////////////////////////////////////////////////////////////
-	// ¥¯¥¨¥ê¼Â¹Ô
+	// ã‚¯ã‚¨ãƒªå®Ÿè¡Œ
 	//////////////////////////////////////////////////////////////////////////
 	list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 	unset ( $aryQuery );
@@ -381,10 +381,10 @@ fncDebug( 'getEstimateQuery_01.txt', $strQuery, __FILE__, __LINE__,'a');
 
 
 /**
-* GET¥Ç¡¼¥¿°ú¿ôURLÀ¸À®´Ø¿ô
+* GETãƒ‡ãƒ¼ã‚¿å¼•æ•°URLç”Ÿæˆé–¢æ•°
 *
-*	@param  Array  $aryData GET¥Ç¡¼¥¿
-*	@return String          URL(**.php?¡¦¡¦¡¦°Ê¹ß¤ÎÊ¸»úÎó)
+*	@param  Array  $aryData GETãƒ‡ãƒ¼ã‚¿
+*	@return String          URL(**.php?ãƒ»ãƒ»ãƒ»ä»¥é™ã®æ–‡å­—åˆ—)
 *	@access public
 */
 function fncGetURL( $aryData )
@@ -402,13 +402,13 @@ function fncGetURL( $aryData )
 
 
 /**
-* É¸½à³ä¹ç¼èÆÀ´Ø¿ô
+* æ¨™æº–å‰²åˆå–å¾—é–¢æ•°
 *
-*	É¸½à³ä¹ç¥Ç¡¼¥¿¥¯¥¨¥ê´Ø¿ô
+*	æ¨™æº–å‰²åˆãƒ‡ãƒ¼ã‚¿ã‚¯ã‚¨ãƒªé–¢æ•°
 *
-*	@param  String  $strProductCode	 À½ÉÊ¥³¡¼¥É
-*	@param  Object  $objDB			 DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Integer $curStandardRate É¸½à³ä¹ç
+*	@param  String  $strProductCode	 è£½å“ã‚³ãƒ¼ãƒ‰
+*	@param  Object  $objDB			 DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Integer $curStandardRate æ¨™æº–å‰²åˆ
 *	@access public
 */
 function fncGetEstimateDefault( $objDB )
@@ -418,7 +418,7 @@ function fncGetEstimateDefault( $objDB )
 	if ( $lngResultNum < 1 )
 	{
 // 2004.10.01 suzukaze update start
-		// ¤â¤·Åö·î¤ÎÉ¸½à³ä¹ç¤¬»²¾È¤Ç¤­¤Ê¤¤¾ì¹çºÇ¿·¤ÎÆüÉÕ¤ÎÉ¸½à³ä¹ç¤ò»²¾È
+		// ã‚‚ã—å½“æœˆã®æ¨™æº–å‰²åˆãŒå‚ç…§ã§ããªã„å ´åˆæœ€æ–°ã®æ—¥ä»˜ã®æ¨™æº–å‰²åˆã‚’å‚ç…§
 		list ( $lngResultMaxID, $lngResultMaxNum ) = fncQuery( "select To_char( curstandardrate, '990.9999' ) as curstandardrate from m_estimatestandardrate where dtmapplyenddate = (select max(dtmapplyenddate) from m_estimatestandardrate);", $objDB );
 
 		if ( $lngResultMaxNum < 1 )
@@ -438,7 +438,7 @@ function fncGetEstimateDefault( $objDB )
 
 	$curStandardRate = $objResult->curstandardrate;
 
-// É¸½à³ä¹ç¤ÎÃÍ¤Ë¤Ä¤¤¤Æ¤Ï ¡óÉ½µ­¤Ë¤Æ°·¤¦
+// æ¨™æº–å‰²åˆã®å€¤ã«ã¤ã„ã¦ã¯ ï¼…è¡¨è¨˜ã«ã¦æ‰±ã†
 	$curStandardRate = $curStandardRate * 100;
 
 	unset ( $objResult );
@@ -449,13 +449,13 @@ function fncGetEstimateDefault( $objDB )
 
 
 /**
-* ¸«ÀÑ¸¶²ÁºîÀ®»ş¤Î¼ÒÆâÄÌ²ß¼èÆÀ´Ø¿ô
+* è¦‹ç©åŸä¾¡ä½œæˆæ™‚ã®ç¤¾å†…é€šè²¨å–å¾—é–¢æ•°
 *
-*	¼ÒÆâÄÌ²ß¥Ç¡¼¥¿¥¯¥¨¥ê´Ø¿ô
+*	ç¤¾å†…é€šè²¨ãƒ‡ãƒ¼ã‚¿ã‚¯ã‚¨ãƒªé–¢æ•°
 *
-*	@param  String  $dtmInsertDate	 ¸«ÀÑ¸¶²ÁÅĞÏ¿Æü
-*	@param  Object  $objDB			 DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Integer $curStandardRate É¸½à³ä¹ç
+*	@param  String  $dtmInsertDate	 è¦‹ç©åŸä¾¡ç™»éŒ²æ—¥
+*	@param  Object  $objDB			 DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Integer $curStandardRate æ¨™æº–å‰²åˆ
 *	@access public
 */
 function fncGetUSConversionRate( $dtmInsertDate, $objDB )
@@ -504,15 +504,15 @@ function fncGetUSConversionRate( $dtmInsertDate, $objDB )
 
 
 /**
-* ¥Ç¥Õ¥©¥ë¥È¸«ÀÑ¸¶²Á¼èÆÀ´Ø¿ô
+* ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¦‹ç©åŸä¾¡å–å¾—é–¢æ•°
 *
-*	¥Ç¥Õ¥©¥ë¥È¸«ÀÑ¸¶²Á¼èÆÀ¥Ç¡¼¥¿¥¯¥¨¥ê´Ø¿ô
+*	ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆè¦‹ç©åŸä¾¡å–å¾—ãƒ‡ãƒ¼ã‚¿ã‚¯ã‚¨ãƒªé–¢æ•°
 *
-*	@param  Integer $lngProductionQuantity	À¸»ºÍ½Äê¿ô
-*	@param  Array  	$curProductPrice		Ç¼²Á
-*	@param  Array  	$aryRate		 ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ëÄÌ²ß¥ì¡¼¥È
-*	@param  Object  $objDB			 DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array 	$aryDefaultValue ¥Ç¥Õ¥©¥ë¥ÈÃÍ
+*	@param  Integer $lngProductionQuantity	ç”Ÿç”£äºˆå®šæ•°
+*	@param  Array  	$curProductPrice		ç´ä¾¡
+*	@param  Array  	$aryRate		 é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€šè²¨ãƒ¬ãƒ¼ãƒˆ
+*	@param  Object  $objDB			 DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array 	$aryDefaultValue ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
 *	@access public
 */
 function fncGetEstimateDefaultValue( $lngProductionQuantity, $curProductPrice, $aryRate, $objDB, $sessionid )
@@ -536,13 +536,13 @@ function fncGetEstimateDefaultValue( $lngProductionQuantity, $curProductPrice, $
 		fncOutputError( 1502, DEF_WARNING, "", TRUE, "estimate/regist/edit.php?strSessionID=" . $sessionid . "&lngFunctionCode=" . DEF_FUNCTION_E1 . "&lngRegist=1", $objDB );
 	}
 
-	// »ÅÆş²ÊÌÜ¤òÇÛÎó¤Î¿ôÃÍ¥­¡¼¤ËÂĞ±ş¤µ¤»¤ë¤¿¤á¤ÎÇÛÎóÀ¸À®
+	// ä»•å…¥ç§‘ç›®ã‚’é…åˆ—ã®æ•°å€¤ã‚­ãƒ¼ã«å¯¾å¿œã•ã›ã‚‹ãŸã‚ã®é…åˆ—ç”Ÿæˆ
 	$aryStockKey = Array ( "431" => 0 , "433" => 1, "403" => 2, "402" => 3, "401" => 4, "420" => 5, "1224" => 6, "1230" => 7 );
 
-	// »ÅÆş²ÊÌÜËè¤Î¥«¥¦¥ó¥¿¡¼ÇÛÎó¤òÀ¸À®
+	// ä»•å…¥ç§‘ç›®æ¯ã®ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼é…åˆ—ã‚’ç”Ÿæˆ
 	$aryCount = Array ( "431" => 0 , "433" => 0, "403" => 0, "402" => 0, "401" => 0, "420" => 0, "1224" => 0, "1230" => 0 );
 
-	// Boolean¤ËÂĞ±ş¤µ¤»¤ë¤¿¤á¤ÎÇÛÎóÀ¸À®
+	// Booleanã«å¯¾å¿œã•ã›ã‚‹ãŸã‚ã®é…åˆ—ç”Ÿæˆ
 	$aryBooleanString = Array ( "t" => "true" , "f" => "false", "true" => "true" , "false" => "false", "" => "false" );
 
 	$aryMonetaryUnit = Array ( DEF_MONETARY_YEN => "\\", DEF_MONETARY_USD => "$", DEF_MONETARY_HKD => "HKD" );
@@ -550,91 +550,91 @@ function fncGetEstimateDefaultValue( $lngProductionQuantity, $curProductPrice, $
 
 
 
-	// Temp¥Õ¥é¥°¤¬Í­¸ú
+	// Tempãƒ•ãƒ©ã‚°ãŒæœ‰åŠ¹
 	if( $g_aryTemp["bytTemporaryFlg"] )
 	{
 		$aryDefaultValue	= $g_aryTemp["aryDitail"];
 	}
 	else
 	{
-		// ¸«ÀÑ¸¶²Á¥Æ¡¼¥Ö¥ë¥Ç¡¼¥¿¼èÆÀ
-		// ÌÀºÙ¤Î¿ô¤À¤±¥ë¡¼¥×
+		// è¦‹ç©åŸä¾¡ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ‡ãƒ¼ã‚¿å–å¾—
+		// æ˜ç´°ã®æ•°ã ã‘ãƒ«ãƒ¼ãƒ—
 		for ( $i = 0; $i < $lngResultNum; $i++ )
 		{
 			$objResult = $objDB->fetchObject( $lngResultID, $i );
 
-			// $aryDetail[²ÊÌÜËèÇÛÎóÈÖ¹æ][²ÊÌÜËè¥«¥¦¥ó¥¿¡¼][ÌÀºÙ¥«¥é¥àÌ¾]
-			// »ÅÆş²ÊÌÜ¥³¡¼¥É
+			// $aryDetail[ç§‘ç›®æ¯é…åˆ—ç•ªå·][ç§‘ç›®æ¯ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼][æ˜ç´°ã‚«ãƒ©ãƒ å]
+			// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["lngStockSubjectCode"]
 			= $objResult->lngstocksubjectcode;
 
-			// »ÅÆşÉôÉÊ¥³¡¼¥É
+			// ä»•å…¥éƒ¨å“ã‚³ãƒ¼ãƒ‰
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["lngStockItemCode"]
 			= $objResult->lngstockitemcode;
 
-			// ½şµÑÂĞ¾İ¥Õ¥é¥°
+			// å„Ÿå´å¯¾è±¡ãƒ•ãƒ©ã‚°
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["bytPayOffTargetFlag"]
 			= $aryBooleanString[$objResult->bytpayofftargetflag];
 
-			// »ÅÆşÀè¥³¡¼¥É
+			// ä»•å…¥å…ˆã‚³ãƒ¼ãƒ‰
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["lngCustomerCompanyCode"]
 			= $objResult->strcompanydisplaycode;
 
-			// %ÆşÎÏ¥Õ¥é¥°
+			// %å…¥åŠ›ãƒ•ãƒ©ã‚°
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["bytPercentInputFlag"]
 			= $aryBooleanString[$objResult->bytpercentinputflag];
 
-			// ¤â¤·¡¢¥Ñ¡¼¥»¥ó¥ÈÆşÎÏ¥Õ¥é¥°¤¬ÀßÄê¤µ¤ì¤Æ¤¤¤ì¤Ğ°Ê²¼¤ÎÃÍ¤ò°ú¿ô¤è¤êÀßÄê¤¹¤ë
+			// ã‚‚ã—ã€ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆå…¥åŠ›ãƒ•ãƒ©ã‚°ãŒè¨­å®šã•ã‚Œã¦ã„ã‚Œã°ä»¥ä¸‹ã®å€¤ã‚’å¼•æ•°ã‚ˆã‚Šè¨­å®šã™ã‚‹
 			if ( $aryBooleanString[$objResult->bytpercentinputflag] == "true" )
 			{
-				// ·×²è¸Ä¿ô
+				// è¨ˆç”»å€‹æ•°
 				$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["lngProductQuantity"]
 				= $lngProductionQuantity;
 
-				// ·×²èÎ¨
+				// è¨ˆç”»ç‡
 				$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curProductRate"]
 				= $objResult->curproductrate;
 
-				// ·×²è¸¶²Á
+				// è¨ˆç”»åŸä¾¡
 				$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curSubTotalPrice"]
 				= $lngProductionQuantity * $curProductPrice * $objResult->curproductrate;
 			}
 			else
 			{
-				// ·×²è¸Ä¿ô
+				// è¨ˆç”»å€‹æ•°
 				$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["lngProductQuantity"]
 				= $objResult->lngproductquantity;
 
-				// ·×²èÎ¨
+				// è¨ˆç”»ç‡
 				$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curProductRate"]
 				= $objResult->curproductrate;
 
-				// ·×²è¸¶²Á
+				// è¨ˆç”»åŸä¾¡
 				$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curSubTotalPrice"]
 				= $objResult->cursubtotalprice;
 			}
 
-			// Ã±²Á
+			// å˜ä¾¡
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curProductPrice"]
 			= $objResult->curproductprice;
 
-			// È÷¹Í
+			// å‚™è€ƒ
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["strNote"]
 			= $objResult->strnote;
 
-			// ÄÌ²ß¥³¡¼¥É
+			// é€šè²¨ã‚³ãƒ¼ãƒ‰
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["lngMonetaryUnitCode"]
 			= $aryMonetaryUnit[$objResult->lngmonetaryunitcode];
 
 
-			// ÆüËÜ±ß°Ê³°¤Î·×²è¸¶²Á¾®·×
+			// æ—¥æœ¬å††ä»¥å¤–ã®è¨ˆç”»åŸä¾¡å°è¨ˆ
 			if ( count ( $aryRate ) > 0 )
 			{
 				$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curSubTotalPriceJP"]
 				= $aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curSubTotalPrice"]
 				 * $aryRate[$objResult->lngmonetaryunitcode];
 			}
-			// ÆüËÜ±ß¤Î·×²è¸¶²Á¾®·×
+			// æ—¥æœ¬å††ã®è¨ˆç”»åŸä¾¡å°è¨ˆ
 			else
 			{
 				$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curSubTotalPriceJP"]
@@ -642,7 +642,7 @@ function fncGetEstimateDefaultValue( $lngProductionQuantity, $curProductPrice, $
 				 * $objResult->curconversionrate;
 			}
 
-			// ´¹»»¥ì¡¼¥È
+			// æ›ç®—ãƒ¬ãƒ¼ãƒˆ
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curConversionRate"]
 			= $objResult->curconversionrate;
 
@@ -650,7 +650,7 @@ function fncGetEstimateDefaultValue( $lngProductionQuantity, $curProductPrice, $
 			//$aryDetail[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["strCompanyDisplayName"]
 			//= $objResult->strcompanydisplaycode . " " . $objResult->strcompanydisplayname;
 
-			// »ÅÆşÀèÌ¾¾Î
+			// ä»•å…¥å…ˆåç§°
 			$aryDefaultValue[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["strCompanyDisplayName"]
 			= $objResult->strcompanydisplayname;
 
@@ -673,12 +673,12 @@ function fncGetEstimateDefaultValue( $lngProductionQuantity, $curProductPrice, $
 
 
 /**
-* ÄÌ²ß¥ì¡¼¥È¼èÆÀ´Ø¿ô
+* é€šè²¨ãƒ¬ãƒ¼ãƒˆå–å¾—é–¢æ•°
 *
-*	ÄÌ²ß¥ì¡¼¥È¥¯¥¨¥ê´Ø¿ô
+*	é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚¯ã‚¨ãƒªé–¢æ•°
 *
-*	@param  Object $objDB	DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $aryRate	ÄÌ²ß¥ì¡¼¥È
+*	@param  Object $objDB	DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $aryRate	é€šè²¨ãƒ¬ãƒ¼ãƒˆ
 *	@access public
 */
 function fncGetMonetaryRate( $objDB )
@@ -719,13 +719,13 @@ function fncGetMonetaryRate( $objDB )
 
 
 /**
-* À½ÉÊ¾ğÊó¼èÆÀ´Ø¿ô
+* è£½å“æƒ…å ±å–å¾—é–¢æ•°
 *
-*	strProductCode ¤«¤é¸«ÀÑ¸¶²Á·×»»³Æ¼ïÉ½¼¨¤Ë»ÈÍÑ¤¹¤ë¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë´Ø¿ô
+*	strProductCode ã‹ã‚‰è¦‹ç©åŸä¾¡è¨ˆç®—å„ç¨®è¡¨ç¤ºã«ä½¿ç”¨ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 *
-*	@param  String $strProductCode	À½ÉÊ¥³¡¼¥É
-*	@param  Object $objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $aryData			À½ÉÊ¥Ç¡¼¥¿
+*	@param  String $strProductCode	è£½å“ã‚³ãƒ¼ãƒ‰
+*	@param  Object $objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $aryData			è£½å“ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 function fncGetProduct( $strProductCode, $objDB, $lngUserCode = "" )
@@ -743,7 +743,7 @@ function fncGetProduct( $strProductCode, $objDB, $lngUserCode = "" )
 	$aryQuery[] = " p.lngCartonQuantity,";
 	$aryQuery[] = " p.lngproductstatuscode,";
 
-	// À½ÉÊÃ±°Ì¤¬ctn¤Ê¤é¤Ğ¡¢À¸»ºÍ½Äê¿ô¤Ïpcs¤ËÊÑ´¹¤¹¤ë
+	// è£½å“å˜ä½ãŒctnãªã‚‰ã°ã€ç”Ÿç”£äºˆå®šæ•°ã¯pcsã«å¤‰æ›ã™ã‚‹
 	$aryQuery[] = " CASE WHEN p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_CTN;
 	$aryQuery[] = "  THEN p.lngProductionQuantity * p.lngCartonQuantity ";
 	$aryQuery[] = "  ELSE p.lngProductionQuantity ";
@@ -751,7 +751,7 @@ function fncGetProduct( $strProductCode, $objDB, $lngUserCode = "" )
 
 	$aryQuery[] = " p.lngProductionUnitCode,";
 
-	// À½ÉÊÃ±°Ì¤¬ctn¤Ê¤é¤Ğ¡¢·×²èC/t¤Ï¤½¤Î¤Ş¤ŞÀ¸»ºÍ½Äê¿ô
+	// è£½å“å˜ä½ãŒctnãªã‚‰ã°ã€è¨ˆç”»C/tã¯ãã®ã¾ã¾ç”Ÿç”£äºˆå®šæ•°
 	$aryQuery[] = " CASE WHEN ( p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_PCS . " OR p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_SET . " ) AND p.lngCartonQuantity <> 0 ";
 	$aryQuery[] = "  THEN p.lngProductionQuantity / p.lngCartonQuantity ";
 	$aryQuery[] = "  ELSE p.lngProductionQuantity ";
@@ -824,7 +824,7 @@ function fncGetProduct( $strProductCode, $objDB, $lngUserCode = "" )
 	global $g_aryTemp;
 	global $aryEstimateData;
 
-	// ¥Æ¥ó¥İ¥é¥ê¥Õ¥é¥°¤¬Í­¸ú
+	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ãƒ©ã‚°ãŒæœ‰åŠ¹
 	if( $aryEstimateData["blnTempFlag"] )
 	{
 //		$aryData["strProductCode"]				= $aryEstimateData["strProductCode"];
@@ -840,11 +840,11 @@ function fncGetProduct( $strProductCode, $objDB, $lngUserCode = "" )
 		$aryData["curProductPrice"]				= $aryEstimateData["curProductPrice"];
 		$aryData["curProductPrice_hidden"]		= $aryEstimateData["curProductPrice"];
 
-//		$aryData["curConversionRate"]			= $aryEstimateData["curConversionRate"];	// ´¹»»¥ì¡¼¥È
-//		$aryData["curStandardRate"]				= $aryEstimateData["curStandardRate"];		// É¸½à³ä¹ç
-		$aryData["blnTempFlag"]					= $aryEstimateData["blnTempFlag"];			// ¥Æ¥ó¥İ¥é¥ê¥Õ¥é¥°
+//		$aryData["curConversionRate"]			= $aryEstimateData["curConversionRate"];	// æ›ç®—ãƒ¬ãƒ¼ãƒˆ
+//		$aryData["curStandardRate"]				= $aryEstimateData["curStandardRate"];		// æ¨™æº–å‰²åˆ
+		$aryData["blnTempFlag"]					= $aryEstimateData["blnTempFlag"];			// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ãƒ©ã‚°
 	}
-	// ¥Õ¥¡¥¤¥ë¥Æ¥ó¥İ¥é¥ê¥Õ¥é¥°¤¬Í­¸ú
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ãƒ©ã‚°ãŒæœ‰åŠ¹
 	else if( $g_aryTemp["bytTemporaryFlg"] )
 	{
 //fncDebug( 'es_temp2.txt', $g_aryTemp["lngCartonQuantity"], __FILE__, __LINE__);
@@ -862,11 +862,11 @@ function fncGetProduct( $strProductCode, $objDB, $lngUserCode = "" )
 		$aryData["curProductPrice"]				= $g_aryTemp["curProductPrice_hidden"];			// curProductPrice
 		$aryData["curProductPrice_hidden"]		= $g_aryTemp["curProductPrice_hidden"];			// curProductPrice_hidden
 
-		$aryData["strRemark"]					= $g_aryTemp["strRemark"];						// ¥³¥á¥ó¥È
+		$aryData["strRemark"]					= $g_aryTemp["strRemark"];						// ã‚³ãƒ¡ãƒ³ãƒˆ
 
 fncDebug( 'tempdata.txt', $g_aryTemp, __FILE__, __LINE__);
 	}
-	// ÄÌ¾ï
+	// é€šå¸¸
 	else
 	{
 
@@ -888,7 +888,7 @@ fncDebug( 'tempdata.txt', $g_aryTemp, __FILE__, __LINE__);
 	$aryData["strProductCode"]			= $objResult->strproductcode;
 	$aryData["lngProductionUnitCode"]	= $objResult->lngproductionunitcode;
 	$aryData["dtmInsertDate"]			= $objResult->dtminsertdate;
-	$aryData["lngproductstatuscode"]	= $objResult->lngproductstatuscode;	// À½ÉÊ¾õÂÖ
+	$aryData["lngproductstatuscode"]	= $objResult->lngproductstatuscode;	// è£½å“çŠ¶æ…‹
 
 	unset ( $objResult );
 
@@ -899,13 +899,13 @@ fncDebug( 'tempdata.txt', $g_aryTemp, __FILE__, __LINE__);
 
 
 /**
-* ¸«ÀÑ¸¶²Á·×»»¼èÆÀ´Ø¿ô
+* è¦‹ç©åŸä¾¡è¨ˆç®—å–å¾—é–¢æ•°
 *
-*	lngEstimateNo ¤«¤é¸«ÀÑ¸¶²Á·×»»³Æ¼ïÉ½¼¨¤Ë»ÈÍÑ¤¹¤ë¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë´Ø¿ô
+*	lngEstimateNo ã‹ã‚‰è¦‹ç©åŸä¾¡è¨ˆç®—å„ç¨®è¡¨ç¤ºã«ä½¿ç”¨ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 *
-*	@param  String $lngEstimateNo	¸«ÀÑ¸¶²Á¥Ê¥ó¥Ğ¡¼
-*	@param  Object $objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $aryData			¸«ÀÑ¸¶²Á¥Ç¡¼¥¿
+*	@param  String $lngEstimateNo	è¦‹ç©åŸä¾¡ãƒŠãƒ³ãƒãƒ¼
+*	@param  Object $objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $aryData			è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 function fncGetEstimate( $lngEstimateNo, $objDB )
@@ -918,13 +918,13 @@ function fncGetEstimate( $lngEstimateNo, $objDB )
 	$aryQuery[] = " p.curRetailPrice, ";
 	$aryQuery[] = " p.lngCartonQuantity,";
 
-	// À½ÉÊÃ±°Ì¤¬ctn¤Ê¤é¤Ğ¡¢À¸»ºÍ½Äê¿ô¤Ïpcs¤ËÊÑ´¹¤¹¤ë
+	// è£½å“å˜ä½ãŒctnãªã‚‰ã°ã€ç”Ÿç”£äºˆå®šæ•°ã¯pcsã«å¤‰æ›ã™ã‚‹
 	$aryQuery[] = " CASE WHEN p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_CTN;
 	$aryQuery[] = "  THEN p.lngProductionQuantity * p.lngCartonQuantity ";
 	$aryQuery[] = "  ELSE p.lngProductionQuantity ";
 	$aryQuery[] = " END AS lngProductionQuantity, ";
 
-	// À½ÉÊÃ±°Ì¤¬ctn¤Ê¤é¤Ğ¡¢·×²èC/t¤Ï¤½¤Î¤Ş¤ŞÀ¸»ºÍ½Äê¿ô
+	// è£½å“å˜ä½ãŒctnãªã‚‰ã°ã€è¨ˆç”»C/tã¯ãã®ã¾ã¾ç”Ÿç”£äºˆå®šæ•°
 	$aryQuery[] = " CASE WHEN ( p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_PCS . " OR p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_SET . " ) AND p.lngCartonQuantity <> 0 ";
 	$aryQuery[] = "  THEN p.lngProductionQuantity / p.lngCartonQuantity ";
 	$aryQuery[] = "  ELSE p.lngProductionQuantity ";
@@ -966,26 +966,26 @@ function fncGetEstimate( $lngEstimateNo, $objDB )
 
 
 
-	$blnTempFlag	= false;	// ¥Æ¥ó¥İ¥é¥ê¥Õ¥é¥°
-	$lngTempNo		= 0;		// ¥Æ¥ó¥İ¥é¥êÈÖ¹æ
-	$aryTemp		= array();	// ¥Æ¥ó¥İ¥é¥ê¥Ç¡¼¥¿ÇÛÎó
+	$blnTempFlag	= false;	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ãƒ©ã‚°
+	$lngTempNo		= 0;		// ãƒ†ãƒ³ãƒãƒ©ãƒªç•ªå·
+	$aryTemp		= array();	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ‡ãƒ¼ã‚¿é…åˆ—
 
-	// ¸«ÀÑ¾õÂÖ¤¬¡Ö¾µÇ§¡×°Ê³°¤Î¾ì¹ç
+	// è¦‹ç©çŠ¶æ…‹ãŒã€Œæ‰¿èªã€ä»¥å¤–ã®å ´åˆ
 	if( $objResult->lngestimatestatuscode != DEF_ESTIMATE_APPROVE )
 	{
-		// ¥Æ¥ó¥İ¥é¥êÈÖ¹æ¼èÆÀ
+		// ãƒ†ãƒ³ãƒãƒ©ãƒªç•ªå·å–å¾—
 		$lngTempNo = fncGetMasterValue( "m_estimate", "lngestimateno", "lngtempno",  $lngEstimateNo, '', $objDB );
 
-		// ¥Æ¥ó¥İ¥é¥êÈÖ¹æ¤¬Â¸ºß¤¹¤ë¾ì¹ç
+		// ãƒ†ãƒ³ãƒãƒ©ãƒªç•ªå·ãŒå­˜åœ¨ã™ã‚‹å ´åˆ
 		if( $lngTempNo )
 		{
-			// ¥Æ¥ó¥İ¥é¥ê¥Ç¡¼¥¿¼èÆÀ
+			// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ‡ãƒ¼ã‚¿å–å¾—
 			$aryTemp = fncGetTempData($objDB, $lngTempNo);
 
-			// ¥Æ¥ó¥İ¥é¥ê¥Ç¡¼¥¿¼èÆÀ¼ºÇÔ¤Î¾ì¹ç
+			// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ‡ãƒ¼ã‚¿å–å¾—å¤±æ•—ã®å ´åˆ
 			if( !$aryTemp ) fncOutputError( 9061, DEF_WARNING, "", TRUE, "", $objDB );
 
-			// À®¸ù
+			// æˆåŠŸ
 			else $blnTempFlag	= true;
 		}
 	}
@@ -993,7 +993,7 @@ function fncGetEstimate( $lngEstimateNo, $objDB )
 //fncDebug( 'tempno.txt', $aryTemp, __FILE__, __LINE__);
 
 
-	// ¥Æ¥ó¥İ¥é¥ê¥Õ¥é¥°Í­¸ú
+	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ãƒ©ã‚°æœ‰åŠ¹
 	if( $blnTempFlag )
 	{
 		$aryData["strProductName"]				= $aryTemp["strproductname"];
@@ -1005,12 +1005,12 @@ function fncGetEstimate( $lngEstimateNo, $objDB )
 		$aryData["curProductPrice_hidden"]		= $aryTemp["curproductprice"];
 		$aryData["curRetailPrice"]				= $aryTemp["curretailprice"];
 
-		$aryData["lngPlanCartonProduction"]		= $aryTemp["lngplancartonproduction"];	// ·×²èC/t
+		$aryData["lngPlanCartonProduction"]		= $aryTemp["lngplancartonproduction"];	// è¨ˆç”»C/t
 
-//		$aryData["curConversionRate"]			= $aryTemp["curconversionrate"];		// ´¹»»¥ì¡¼¥È
-//		$aryData["curStandardRate"]				= $aryTemp["curstandardrate"];			// É¸½à³ä¹ç
+//		$aryData["curConversionRate"]			= $aryTemp["curconversionrate"];		// æ›ç®—ãƒ¬ãƒ¼ãƒˆ
+//		$aryData["curStandardRate"]				= $aryTemp["curstandardrate"];			// æ¨™æº–å‰²åˆ
 	}
-	// ÄÌ¾ï
+	// é€šå¸¸
 	else
 	{
 		$aryData["strProductName"]				= $objResult->strproductname;
@@ -1025,7 +1025,7 @@ function fncGetEstimate( $lngEstimateNo, $objDB )
 		$aryData["lngPlanCartonProduction"]		= $objResult->lngplancartonproduction;
 	}
 
-	$aryData["blnTempFlag"]					= $blnTempFlag;	// ¥Æ¥ó¥İ¥é¥ê¥Õ¥é¥°
+	$aryData["blnTempFlag"]					= $blnTempFlag;	// ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ãƒ©ã‚°
 
 
 	$aryData["lngEstimateNo"]				= $lngEstimateNo;
@@ -1044,7 +1044,7 @@ function fncGetEstimate( $lngEstimateNo, $objDB )
 	$aryData["bytDecisionFlag"]				= $objResult->bytdecisionflag;
 	$aryData["lngOldProductionQuantity"]	= $objResult->lngoldproductionquantity;
 
-	$aryData["strRemark"]					= $objResult->strnote;	// ¥³¥á¥ó¥È
+	$aryData["strRemark"]					= $objResult->strnote;	// ã‚³ãƒ¡ãƒ³ãƒˆ
 
 	unset ( $objResult );
 
@@ -1057,13 +1057,13 @@ function fncGetEstimate( $lngEstimateNo, $objDB )
 
 // 2004.09.28 suzukaze update start
 /**
-* ¸«ÀÑ¸¶²Á·×»»¼èÆÀ´Ø¿ô
+* è¦‹ç©åŸä¾¡è¨ˆç®—å–å¾—é–¢æ•°
 *
-*	strProductCode ¤«¤é¸«ÀÑ¸¶²Á·×»»³Æ¼ïÉ½¼¨¤Ë»ÈÍÑ¤¹¤ë¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë´Ø¿ô
+*	strProductCode ã‹ã‚‰è¦‹ç©åŸä¾¡è¨ˆç®—å„ç¨®è¡¨ç¤ºã«ä½¿ç”¨ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 *
-*	@param  String $strProductCode	À½ÉÊ¥³¡¼¥É
-*	@param  Object $objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $aryData			¸«ÀÑ¸¶²Á¥Ç¡¼¥¿
+*	@param  String $strProductCode	è£½å“ã‚³ãƒ¼ãƒ‰
+*	@param  Object $objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $aryData			è¦‹ç©åŸä¾¡ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 function fncGetEstimateToProductCode( $strProductCode, $objDB )
@@ -1082,13 +1082,13 @@ function fncGetEstimateToProductCode( $strProductCode, $objDB )
 	$aryQuery[] = " p.curRetailPrice, ";
 	$aryQuery[] = " p.lngCartonQuantity,";
 
-	// À½ÉÊÃ±°Ì¤¬ctn¤Ê¤é¤Ğ¡¢À¸»ºÍ½Äê¿ô¤Ïpcs¤ËÊÑ´¹¤¹¤ë
+	// è£½å“å˜ä½ãŒctnãªã‚‰ã°ã€ç”Ÿç”£äºˆå®šæ•°ã¯pcsã«å¤‰æ›ã™ã‚‹
 	$aryQuery[] = " CASE WHEN p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_CTN;
 	$aryQuery[] = "  THEN p.lngProductionQuantity * p.lngCartonQuantity ";
 	$aryQuery[] = "  ELSE p.lngProductionQuantity ";
 	$aryQuery[] = " END AS lngProductionQuantity, ";
 
-	// À½ÉÊÃ±°Ì¤¬ctn¤Ê¤é¤Ğ¡¢·×²èC/t¤Ï¤½¤Î¤Ş¤ŞÀ¸»ºÍ½Äê¿ô
+	// è£½å“å˜ä½ãŒctnãªã‚‰ã°ã€è¨ˆç”»C/tã¯ãã®ã¾ã¾ç”Ÿç”£äºˆå®šæ•°
 	$aryQuery[] = " CASE WHEN ( p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_PCS . " OR p.lngProductionUnitCode = " . DEF_PRODUCTUNIT_SET . " ) AND p.lngCartonQuantity <> 0 ";
 	$aryQuery[] = "  THEN p.lngProductionQuantity / p.lngCartonQuantity ";
 	$aryQuery[] = "  ELSE p.lngProductionQuantity ";
@@ -1124,7 +1124,7 @@ function fncGetEstimateToProductCode( $strProductCode, $objDB )
 	unset ( $lngResultNum );
 
 
-	// ¥Õ¥¡¥¤¥ë¥Æ¥ó¥İ¥é¥ê¥Õ¥é¥°Í­¸ú
+	// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ†ãƒ³ãƒãƒ©ãƒªãƒ•ãƒ©ã‚°æœ‰åŠ¹
 	if( $g_aryTemp["bytTemporaryFlg"] )
 	{
 		$aryData["strProductCode"]				= $g_aryTemp["strProductCode"];
@@ -1141,7 +1141,7 @@ function fncGetEstimateToProductCode( $strProductCode, $objDB )
 		$aryData["curProductPrice_hidden"]		= $g_aryTemp["curProductPrice"];
 		$aryData["strRemark"]					= $g_aryTemp["strRemark"];
 	}
-	// ÄÌ¾ï
+	// é€šå¸¸
 	else
 	{
 		$aryData["strProductCode"]				= $objResult->strproductcode;
@@ -1177,14 +1177,14 @@ function fncGetEstimateToProductCode( $strProductCode, $objDB )
 
 
 /**
-* ¸«ÀÑ¸¶²Á·×»»ÌÀºÙ¼èÆÀ´Ø¿ô
+* è¦‹ç©åŸä¾¡è¨ˆç®—æ˜ç´°å–å¾—é–¢æ•°
 *
-*	lngEstimateNo ¤«¤é¸«ÀÑ¸¶²Á·×»»³Æ¼ïÉ½¼¨¤Ë»ÈÍÑ¤¹¤ëÌÀºÙ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë´Ø¿ô
+*	lngEstimateNo ã‹ã‚‰è¦‹ç©åŸä¾¡è¨ˆç®—å„ç¨®è¡¨ç¤ºã«ä½¿ç”¨ã™ã‚‹æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 *
-*	@param  String $lngEstimateNo	¸«ÀÑ¸¶²Á¥Ê¥ó¥Ğ¡¼
-*	@param  Array  $aryRate			ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ëÄÌ²ß¥ì¡¼¥È
-*	@param  Object $objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $aryDetail		¸«ÀÑ¸¶²ÁÌÀºÙ¥Ç¡¼¥¿
+*	@param  String $lngEstimateNo	è¦‹ç©åŸä¾¡ãƒŠãƒ³ãƒãƒ¼
+*	@param  Array  $aryRate			é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€šè²¨ãƒ¬ãƒ¼ãƒˆ
+*	@param  Object $objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $aryDetail		è¦‹ç©åŸä¾¡æ˜ç´°ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 function fncGetEstimateDetail( $lngEstimateNo, $aryRate, $objDB )
@@ -1201,7 +1201,7 @@ require_once( LIB_DEBUGFILE );
 	$aryQuery[] = "WHERE e.lngEstimateNo = " . $lngEstimateNo;
 //	$aryQuery[] = " AND e.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM t_EstimateDetail e2 WHERE e.lngEstimateNo = e2.lngEstimateNo AND e.lngEstimateDetailNo = e2.lngEstimateDetailNo)";
 //================================================================================================
-//¡¡050407bykou revisionno¤ÎMAXÃÍ¤¬¼è¤ì¤Ê¤¤¤Î½¤Àµ
+//ã€€050407bykou revisionnoã®MAXå€¤ãŒå–ã‚Œãªã„ã®ä¿®æ­£
 	$aryQuery[] = " AND e.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM t_EstimateDetail e2 WHERE e.lngEstimateNo = e2.lngEstimateNo)";
 //================================================================================================
 
@@ -1254,13 +1254,13 @@ fncDebug( 'estimate_cmn_lib_e_0.txt', $aryQuery, __FILE__, __LINE__);
 		fncOutputError ( 1502, DEF_WARNING, "", TRUE, "", $objDB );
 	}
 
-	// »ÅÆş²ÊÌÜ¤òÇÛÎó¤Î¿ôÃÍ¥­¡¼¤ËÂĞ±ş¤µ¤»¤ë¤¿¤á¤ÎÇÛÎóÀ¸À®
+	// ä»•å…¥ç§‘ç›®ã‚’é…åˆ—ã®æ•°å€¤ã‚­ãƒ¼ã«å¯¾å¿œã•ã›ã‚‹ãŸã‚ã®é…åˆ—ç”Ÿæˆ
 	$aryStockKey = Array ( "431" => 0 , "433" => 1, "403" => 2, "402" => 3, "401" => 4, "420" => 5, "1224" => 6, "1230" => 7 );
 
-	// »ÅÆş²ÊÌÜËè¤Î¥«¥¦¥ó¥¿¡¼ÇÛÎó¤òÀ¸À®
+	// ä»•å…¥ç§‘ç›®æ¯ã®ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼é…åˆ—ã‚’ç”Ÿæˆ
 	$aryCount = Array ( "431" => 0 , "433" => 0, "403" => 0, "402" => 0, "401" => 0, "420" => 0, "1224" => 0, "1230" => 0 );
 
-	// Boolean¤ËÂĞ±ş¤µ¤»¤ë¤¿¤á¤ÎÇÛÎóÀ¸À®
+	// Booleanã«å¯¾å¿œã•ã›ã‚‹ãŸã‚ã®é…åˆ—ç”Ÿæˆ
 	$aryBooleanString = Array ( "t" => "true" , "f" => "false", "true" => "true" , "false" => "false", "" => "false" );
 
 	$aryMonetaryUnit = Array ( DEF_MONETARY_YEN => "\\", DEF_MONETARY_USD => "$", DEF_MONETARY_HKD => "HKD" );
@@ -1270,20 +1270,20 @@ fncDebug( 'estimate_cmn_lib_e_0.txt', $aryQuery, __FILE__, __LINE__);
 	$lngSalesClassCnt = 0;
 	
 
-	// ¸«ÀÑ¸¶²Á¥Æ¡¼¥Ö¥ë¥Ç¡¼¥¿¼èÆÀ
-	// ÌÀºÙ¤Î¿ô¤À¤±¥ë¡¼¥×
+	// è¦‹ç©åŸä¾¡ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ‡ãƒ¼ã‚¿å–å¾—
+	// æ˜ç´°ã®æ•°ã ã‘ãƒ«ãƒ¼ãƒ—
 	for ( $i = 0; $i < $lngResultNum; $i++ )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, $i );
 
 		// ----------------------------------------------------------------
-		// »ÅÆş²ÊÌÜ¤ÎÎó¤«¡¢Çä¾åÊ¬Îà¤ÎÎó¤«¡¢¤òÈ½ÃÇ¤¹¤ë
-		// null¤Ç¤ÏÌµ¤¯¡¢0°Ê³°¡¡¢ª¡¡»ÅÆş²ÊÌÜ
-		// 0 ¢ª¡¡Çä¾åÊ¬Îà
+		// ä»•å…¥ç§‘ç›®ã®åˆ—ã‹ã€å£²ä¸Šåˆ†é¡ã®åˆ—ã‹ã€ã‚’åˆ¤æ–­ã™ã‚‹
+		// nullã§ã¯ç„¡ãã€0ä»¥å¤–ã€€â†’ã€€ä»•å…¥ç§‘ç›®
+		// 0 â†’ã€€å£²ä¸Šåˆ†é¡
 		// ----------------------------------------------------------------
 		if( !is_null($objResult->lngstocksubjectcode) && $objResult->lngstocksubjectcode != 0 )
 		{
-			// »ÅÆş²ÊÌÜ¡¦¶èÊ¬¡¡¤Î½èÍı
+			// ä»•å…¥ç§‘ç›®ãƒ»åŒºåˆ†ã€€ã®å‡¦ç†
 			$lngKamokuKey = $aryStockKey[$objResult->lngstocksubjectcode];
 			$lngKamokuCnt = $aryCount[$objResult->lngstocksubjectcode];
 		}
@@ -1293,16 +1293,16 @@ fncDebug( 'estimate_cmn_lib_e_0.txt', $aryQuery, __FILE__, __LINE__);
 			$lngKamokuKey = 11;
 			$lngKamokuCnt = $lngSalesClassCnt;
 
-			// Çä¾åÊ¬Îà¡¦²ÊÌÜ¡¡¤Î½èÍı
-			// Key ¤Ï¡È11¡É¤ÇÄêµÁºÑ¤ß ¢ª $aryMapping[PROC_SALES][SALESCLS_1]	¾­ÍèÅª¤ËÁı¤¨¤¿¾ì¹ç¤Ë¤ÏÍ×²şÂ¤
+			// å£²ä¸Šåˆ†é¡ãƒ»ç§‘ç›®ã€€ã®å‡¦ç†
+			// Key ã¯â€œ11â€ã§å®šç¾©æ¸ˆã¿ â†’ $aryMapping[PROC_SALES][SALESCLS_1]	å°†æ¥çš„ã«å¢—ãˆãŸå ´åˆã«ã¯è¦æ”¹é€ 
 			$aryDetail[$lngKamokuKey][$lngSalesClassCnt]["lngSalesDivisionCode"]	= $objResult->lngsalesdivisioncode;
 			$aryDetail[$lngKamokuKey][$lngSalesClassCnt]["lngSalesClassCode"] 		= $objResult->lngsalesclasscode;
 			
-			$lngSalesClassCnt++;	// 11Îó¤Î¥Ç¡¼¥¿¥¤¥ó¥¯¥ê¥á¥ó¥È
+			$lngSalesClassCnt++;	// 11åˆ—ã®ãƒ‡ãƒ¼ã‚¿ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		}
 
 
-		// $aryDetail[²ÊÌÜËèÇÛÎóÈÖ¹æ][²ÊÌÜËè¥«¥¦¥ó¥¿¡¼][ÌÀºÙ¥«¥é¥àÌ¾]
+		// $aryDetail[ç§‘ç›®æ¯é…åˆ—ç•ªå·][ç§‘ç›®æ¯ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼][æ˜ç´°ã‚«ãƒ©ãƒ å]
 		$aryDetail[$lngKamokuKey][$lngKamokuCnt]["lngStockSubjectCode"]		= $objResult->lngstocksubjectcode;
 		$aryDetail[$lngKamokuKey][$lngKamokuCnt]["strStockSubjectName"]		= $objResult->strstocksubjectname;
 		$aryDetail[$lngKamokuKey][$lngKamokuCnt]["lngStockItemCode"]		= $objResult->lngstockitemcode;
@@ -1328,7 +1328,7 @@ fncDebug( 'estimate_cmn_lib_e_0.txt', $aryQuery, __FILE__, __LINE__);
 			$aryDetail[$lngKamokuKey][$lngKamokuCnt]["curSubTotalPriceJP"]	= $objResult->cursubtotalprice * $objResult->curconversionrate;
 		}
 */
-		$aryDetail[$lngKamokuKey][$lngKamokuCnt]["curConversionRate"]		= $objResult->curconversionrate;	//¥ì¡¼¥È¤òÅĞÏ¿¤µ¤ì¤¿¥ì¡¼¥È¤«¤é¼è¤ë
+		$aryDetail[$lngKamokuKey][$lngKamokuCnt]["curConversionRate"]		= $objResult->curconversionrate;	//ãƒ¬ãƒ¼ãƒˆã‚’ç™»éŒ²ã•ã‚ŒãŸãƒ¬ãƒ¼ãƒˆã‹ã‚‰å–ã‚‹
 		$aryDetail[$lngKamokuKey][$lngKamokuCnt]["curSubTotalPriceJP"]		= $objResult->cursubtotalprice * $objResult->curconversionrate;
 
 		//$aryDetail[$lngKamokuKey][$lngKamokuCnt]["strCompanyDisplayName"]	= $objResult->strcompanydisplaycode . " " . $objResult->strcompanydisplayname;
@@ -1350,17 +1350,17 @@ fncDebug( 'estimate_cmn_lib_e_2.txt', $aryDetail, __FILE__, __LINE__);
 
 
 /**
-* ¸«ÀÑ¸¶²Á·×»»ÌÀºÙ¼èÆÀ´Ø¿ô¡Ê¹¹¿·»şÃÍÊÑ¹¹ÍÑ¡Ë
+* è¦‹ç©åŸä¾¡è¨ˆç®—æ˜ç´°å–å¾—é–¢æ•°ï¼ˆæ›´æ–°æ™‚å€¤å¤‰æ›´ç”¨ï¼‰
 *
-*	lngEstimateNo ¤«¤é¸«ÀÑ¸¶²Á·×»»³Æ¼ïÉ½¼¨¤Ë»ÈÍÑ¤¹¤ëÌÀºÙ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë´Ø¿ô¡Ê¹¹¿·¤Îºİ¤Ï¿·¤·¤¤À½ÉÊ¥Ş¥¹¥¿¤Î¾ğÊó¤è¤êºÆ·×»»¡Ë
+*	lngEstimateNo ã‹ã‚‰è¦‹ç©åŸä¾¡è¨ˆç®—å„ç¨®è¡¨ç¤ºã«ä½¿ç”¨ã™ã‚‹æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°ï¼ˆæ›´æ–°ã®éš›ã¯æ–°ã—ã„è£½å“ãƒã‚¹ã‚¿ã®æƒ…å ±ã‚ˆã‚Šå†è¨ˆç®—ï¼‰
 *
-*	@param  String	$lngEstimateNo				¸«ÀÑ¸¶²Á¥Ê¥ó¥Ğ¡¼
-*	@param  Array	$aryRate					ÄÌ²ß¥ì¡¼¥È¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ëÄÌ²ß¥ì¡¼¥È
-*	@param	Integer	$lngProductionQuantity		À½ÉÊ¥Ş¥¹¥¿¤ÎÀ¸»ºÍ½Äê¿ô¡Êpcs)
-*	@param	Integer	$lngOldProductionQuantity	¸«ÀÑ¸¶²Á¥Ş¥¹¥¿¤ÎÀ¸»ºÍ½Äê¿ô¡Êpcs)
-*	@param	Float	$curProductPrice			À½ÉÊ¥Ş¥¹¥¿¤ÎÇ¼²Á
-*	@param  Object	$objDB						DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array	$aryDetail					¸«ÀÑ¸¶²ÁÌÀºÙ¥Ç¡¼¥¿
+*	@param  String	$lngEstimateNo				è¦‹ç©åŸä¾¡ãƒŠãƒ³ãƒãƒ¼
+*	@param  Array	$aryRate					é€šè²¨ãƒ¬ãƒ¼ãƒˆã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹é€šè²¨ãƒ¬ãƒ¼ãƒˆ
+*	@param	Integer	$lngProductionQuantity		è£½å“ãƒã‚¹ã‚¿ã®ç”Ÿç”£äºˆå®šæ•°ï¼ˆpcs)
+*	@param	Integer	$lngOldProductionQuantity	è¦‹ç©åŸä¾¡ãƒã‚¹ã‚¿ã®ç”Ÿç”£äºˆå®šæ•°ï¼ˆpcs)
+*	@param	Float	$curProductPrice			è£½å“ãƒã‚¹ã‚¿ã®ç´ä¾¡
+*	@param  Object	$objDB						DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array	$aryDetail					è¦‹ç©åŸä¾¡æ˜ç´°ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 function fncGetEstimateDetailRenew( $lngEstimateNo, $aryRate, $lngProductionQuantity, $lngOldProductionQuantity, $curProductPrice,$curRetailPrice, $objDB )
@@ -1373,7 +1373,7 @@ function fncGetEstimateDetailRenew( $lngEstimateNo, $aryRate, $lngProductionQuan
 	$aryQuery[] = "WHERE e.lngEstimateNo = " . $lngEstimateNo;
 //	$aryQuery[] = " AND e.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM t_EstimateDetail e2 WHERE e.lngEstimateNo = e2.lngEstimateNo AND e.lngEstimateDetailNo = e2.lngEstimateDetailNo)";
 //=============================================================================
-//¡¡050407bykou revisionno¤ÎMAXÃÍ¤¬¼è¤ì¤Ê¤¤¤Î½¤Àµ
+//ã€€050407bykou revisionnoã®MAXå€¤ãŒå–ã‚Œãªã„ã®ä¿®æ­£
 	$aryQuery[] = " AND e.lngRevisionNo = (SELECT MAX(e2.lngRevisionNo) FROM t_EstimateDetail e2 WHERE e.lngEstimateNo = e2.lngEstimateNo)";
 //=============================================================================
 
@@ -1387,26 +1387,26 @@ function fncGetEstimateDetailRenew( $lngEstimateNo, $aryRate, $lngProductionQuan
 		fncOutputError ( 1502, DEF_WARNING, "", TRUE, "", $objDB );
 	}
 
-	// »ÅÆş²ÊÌÜ¤òÇÛÎó¤Î¿ôÃÍ¥­¡¼¤ËÂĞ±ş¤µ¤»¤ë¤¿¤á¤ÎÇÛÎóÀ¸À®
+	// ä»•å…¥ç§‘ç›®ã‚’é…åˆ—ã®æ•°å€¤ã‚­ãƒ¼ã«å¯¾å¿œã•ã›ã‚‹ãŸã‚ã®é…åˆ—ç”Ÿæˆ
 	$aryStockKey = Array ( "431" => 0 , "433" => 1, "403" => 2, "402" => 3, "401" => 4, "420" => 5, "1224" => 6, "1230" => 7 );
 
-	// »ÅÆş²ÊÌÜËè¤Î¥«¥¦¥ó¥¿¡¼ÇÛÎó¤òÀ¸À®
+	// ä»•å…¥ç§‘ç›®æ¯ã®ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼é…åˆ—ã‚’ç”Ÿæˆ
 	$aryCount = Array ( "431" => 0 , "433" => 0, "403" => 0, "402" => 0, "401" => 0, "420" => 0, "1224" => 0, "1230" => 0 );
 
-	// Boolean¤ËÂĞ±ş¤µ¤»¤ë¤¿¤á¤ÎÇÛÎóÀ¸À®
+	// Booleanã«å¯¾å¿œã•ã›ã‚‹ãŸã‚ã®é…åˆ—ç”Ÿæˆ
 	$aryBooleanString = Array ( "t" => "true" , "f" => "false", "true" => "true" , "false" => "false", "" => "false" );
 
 	$aryMonetaryUnit = Array ( DEF_MONETARY_YEN => "\\", DEF_MONETARY_USD => "$", DEF_MONETARY_HKD => "HKD" );
 
-	// ¸«ÀÑ¸¶²Á¥Æ¡¼¥Ö¥ë¥Ç¡¼¥¿¼èÆÀ
-	// ÌÀºÙ¤Î¿ô¤À¤±¥ë¡¼¥×
+	// è¦‹ç©åŸä¾¡ãƒ†ãƒ¼ãƒ–ãƒ«ãƒ‡ãƒ¼ã‚¿å–å¾—
+	// æ˜ç´°ã®æ•°ã ã‘ãƒ«ãƒ¼ãƒ—
 	for ( $i = 0; $i < $lngResultNum; $i++ )
 	{
 		$objResult = $objDB->fetchObject( $lngResultID, $i );
 
 		$lngChangeFlag = 0;
 
-		// $aryDetail[²ÊÌÜËèÇÛÎóÈÖ¹æ][²ÊÌÜËè¥«¥¦¥ó¥¿¡¼][ÌÀºÙ¥«¥é¥àÌ¾]
+		// $aryDetail[ç§‘ç›®æ¯é…åˆ—ç•ªå·][ç§‘ç›®æ¯ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼][æ˜ç´°ã‚«ãƒ©ãƒ å]
 		$aryDetail[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["lngStockSubjectCode"]
 		= $objResult->lngstocksubjectcode;
 
@@ -1434,7 +1434,7 @@ function fncGetEstimateDetailRenew( $lngEstimateNo, $aryRate, $lngProductionQuan
 		$aryDetail[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["bytPercentInputFlag"]
 		= $aryBooleanString[$objResult->bytpercentinputflag];
 
-		// ·×²è¸Ä¿ô¤¬¸«ÀÑ¸¶²Á¥Ş¥¹¥¿¤ËÊİÂ¸¤µ¤ì¤Æ¤¤¤ëÀ¸»ºÍ½Äê¿ô¤ÈÆ±¤¸ÃÍ¤Î¾ì¹ç¡¢À½ÉÊ¥Ş¥¹¥¿¤ÎÀ¸»ºÍ½Äê¿ô¤ËÊÑ¹¹¤¹¤ë
+		// è¨ˆç”»å€‹æ•°ãŒè¦‹ç©åŸä¾¡ãƒã‚¹ã‚¿ã«ä¿å­˜ã•ã‚Œã¦ã„ã‚‹ç”Ÿç”£äºˆå®šæ•°ã¨åŒã˜å€¤ã®å ´åˆã€è£½å“ãƒã‚¹ã‚¿ã®ç”Ÿç”£äºˆå®šæ•°ã«å¤‰æ›´ã™ã‚‹
 		if ( $lngOldProductionQuantity != "" AND $lngOldProductionQuantity == $objResult->lngproductquantity )
 		{
 			$aryDetail[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["lngProductQuantity"]
@@ -1454,13 +1454,13 @@ function fncGetEstimateDetailRenew( $lngEstimateNo, $aryRate, $lngProductionQuan
 		= $objResult->curproductprice;
 //=================================================================================================================
 // 050316 by kou
-// ½¤Àµ¤«¤é¸«ÀÑ¥Ç¡¼¥¿¤òÆÉ¤ß¼è¤ë»ş¤Ë¾¦ÉÊ¥Ş¥¹¥¿¡¼¤«¤éºÆ·×»»¤Î¤¿¤á¡¡¾Ú»æ¤òÎã³°¤ÇÀßÄê¤¹¤ë
+// ä¿®æ­£ã‹ã‚‰è¦‹ç©ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿å–ã‚‹æ™‚ã«å•†å“ãƒã‚¹ã‚¿ãƒ¼ã‹ã‚‰å†è¨ˆç®—ã®ãŸã‚ã€€è¨¼ç´™ã‚’ä¾‹å¤–ã§è¨­å®šã™ã‚‹
 //		$aryDetail[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curRetailPrice"]
 //		= $objResult->curretailprice;
-		// ·×²è¸Ä¿ô¤¬ÊÑ¹¹¤Ë¤Ê¤Ã¤¿¾ì¹ç¤Ï¡¢·×²è¸¶²Á¤òÊÑ¹¹¤¹¤ë
+		// è¨ˆç”»å€‹æ•°ãŒå¤‰æ›´ã«ãªã£ãŸå ´åˆã¯ã€è¨ˆç”»åŸä¾¡ã‚’å¤‰æ›´ã™ã‚‹
 		if ( $lngChangeFlag == 1 )
 		{
-			// ¡óÆşÎÏ¥Õ¥é¥°¤¬ON¤Î¾ì¹ç
+			// ï¼…å…¥åŠ›ãƒ•ãƒ©ã‚°ãŒONã®å ´åˆ
 			if ( $aryDetail[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["bytPercentInputFlag"] == "true" )
 			{
 				if ($objResult->lngstocksubjectcode == "401" and $objResult->lngstockitemcode == "1" )
@@ -1478,7 +1478,7 @@ function fncGetEstimateDetailRenew( $lngEstimateNo, $aryRate, $lngProductionQuan
 						$curSubTotalPrice = $lngProductionQuantity * $curProductPrice * $objResult->curproductrate;
 					}	
 			}
-			// OFF¤Î¾ì¹ç
+			// OFFã®å ´åˆ
 			else
 			{
 				$aryDetail[$aryStockKey[$objResult->lngstocksubjectcode]][$aryCount[$objResult->lngstocksubjectcode]]["curSubTotalPrice"]
@@ -1531,22 +1531,22 @@ function fncGetEstimateDetailRenew( $lngEstimateNo, $aryRate, $lngProductionQuan
 
 /**
 *
-	¸«ÀÑ¸¶²Á·×»»½ñ ÌÀºÙ¡ÊÇä¾åÉôÊ¬¡ËHTML½ĞÎÏ
+	è¦‹ç©åŸä¾¡è¨ˆç®—æ›¸ æ˜ç´°ï¼ˆå£²ä¸Šéƒ¨åˆ†ï¼‰HTMLå‡ºåŠ›
 *
 */
 function fncGetEstimateDetail_Sales_Html( $aryDetail, $strDetailTemplatePath, $objDB )
 {
 require_once( LIB_DEBUGFILE );
 
-	// ¸«ÀÑ¸¶²ÁÌÀºÙ¥Æ¥ó¥×¥ì¡¼¥È¼èÆÀ
+	// è¦‹ç©åŸä¾¡æ˜ç´°ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå–å¾—
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( $strDetailTemplatePath );
 	$strTemplate = $objTemplate->strTemplate;
 
-	// »ÅÆş²ÊÌÜ¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ë»ÅÆşÌ¾¾ÎÁÛÇÛÎó¤ò¼èÆÀ
+	// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹ä»•å…¥åç§°æƒ³é…åˆ—ã‚’å–å¾—
 	$arySalesClass = fncGetMasterValue( "m_salesclass", "lngsalesclasscode", "strsalesclassname", "Array", "", $objDB );
 
-	// ²ñ¼ÒÉ½¼¨¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ë²ñ¼ÒÌ¾Ï¢ÁÛÇÛÎó¤ò¼èÆÀ
+	// ä¼šç¤¾è¡¨ç¤ºã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹ä¼šç¤¾åé€£æƒ³é…åˆ—ã‚’å–å¾—
 	$aryCompanyName = fncGetMasterValue( "m_Company", "strCompanyDisplayCode", "strCompanyDisplayName", "Array", "", $objDB );
 
 fncDebug( 'fncGetEstimateDetail_Sales_Html.txt', $aryDetail, __FILE__, __LINE__);
@@ -1557,9 +1557,9 @@ fncDebug( 'fncGetEstimateDetail_Sales_Html.txt', $aryDetail, __FILE__, __LINE__)
 	$arySalesDetail	= array();
 
 	//////////////////////////////////////////////////////////////////
-	// ÌÀºÙ¥Ç¡¼¥¿
+	// æ˜ç´°ãƒ‡ãƒ¼ã‚¿
 	//////////////////////////////////////////////////////////////////
-	// $aryDetail[Çä¾å¶èÊ¬][ÌÀºÙ¹Ô][¹àÌÜ]
+	// $aryDetail[å£²ä¸ŠåŒºåˆ†][æ˜ç´°è¡Œ][é …ç›®]
 	for ( $i = 11; $i <= 11; $i++ )
 	{
 
@@ -1581,8 +1581,8 @@ fncDebug( 'fncGetEstimateDetail_Sales_Html.txt', $aryDetail, __FILE__, __LINE__)
 
 				if ( $strKey == "lngSalesDivisionCode" )
 				{
-					$aryHiddenString[] = "<input type='hidden' name='aryDetail[" . $i . "][" .  $j . "][\"strSalesDivisionName\"]' value='" . "¸ÇÄêÈñÇä¾å" . "'>\n";
-					$aryDetail[$i][$j]["strSalesDivisionName"] = "¸ÇÄêÈñÇä¾å";
+					$aryHiddenString[] = "<input type='hidden' name='aryDetail[" . $i . "][" .  $j . "][\"strSalesDivisionName\"]' value='" . "å›ºå®šè²»å£²ä¸Š" . "'>\n";
+					$aryDetail[$i][$j]["strSalesDivisionName"] = "å›ºå®šè²»å£²ä¸Š";
 					$lngSalesDivisionCode = $aryDetail[$i][$j][$strKey];
 					$strSalesDivisionName = $aryDetail[$i][$j]["strSalesDivisionName"];
 					$arySalesDetail[$i]["lngSalesDivisionCode"] = $lngSalesDivisionCode;
@@ -1607,12 +1607,12 @@ fncDebug( 'fncGetEstimateDetail_Sales_Html.txt', $aryDetail, __FILE__, __LINE__)
 				
 			}
 			
-			// ¿ôÎÌ
+			// æ•°é‡
 			if( is_numeric($aryDetail[$i][$j]["lngProductQuantity"]) )
 			{
 				$aryDetail[$i][$j]["lngProductQuantity"] = floor($aryDetail[$i][$j]["lngProductQuantity"]);
 			}
-			// Ã±²Á
+			// å˜ä¾¡
 			$aryDetail[$i][$j]["strPlanPrice"] = $aryDetail[$i][$j]["lngMonetaryUnitCode"] . " " . number_format($aryDetail[$i][$j]["curProductPrice"], 4, ".", ",");
 //fncDebug( 'fncGetEstimateDetail_Sales_hidden_Tanka.txt', $aryDetail[$i][$j]["curSubTotalPrice"], __FILE__, __LINE__);
 
@@ -1621,31 +1621,31 @@ fncDebug( 'fncGetEstimateDetail_Sales_Html.txt', $aryDetail, __FILE__, __LINE__)
 			$aryDetail[$i][$j]["curSubTotalPriceJP"] = number_format( $aryDetail[$i][$j]["curSubTotalPriceJP"], 2, '.', ',' );
 
 
-			// ÃÖ¤­´¹¤¨
+			// ç½®ãæ›ãˆ
 			$objTemplate->replace( $aryDetail[$i][$j] );
 			$objTemplate->complete();
 
-						// »ÅÆş²ÊÌÜËè¤Ë¥Æ¥ó¥×¥ì¡¼¥ÈÊİ»ı
+						// ä»•å…¥ç§‘ç›®æ¯ã«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä¿æŒ
 			$aryDetailTemplate[$i] .= $objTemplate->strTemplate;
 			$objTemplate->strTemplate = $strTemplate;
 
 		}
 
-		// Çä¾åÊ¬Îà¤¬Â¸ºß¤·¤Æ¤¤¤ì¤Ğ
+		// å£²ä¸Šåˆ†é¡ãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°
 //		if( (int)$lngSalesDivisionCode != 0 )
 //		{
-			// Çä¾å¶èÊ¬¡¡·×¤Î»»½Ğ
+			// å£²ä¸ŠåŒºåˆ†ã€€è¨ˆã®ç®—å‡º
 			$arySalesDetail[$i]["curSubjectTotalCost"] = number_format( $curSubjectTotalCost, 2, '.', ',' );
 
-			// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 			$objSubTemplate = new clsTemplate();
 			$objSubTemplate->getTemplate( "estimate/regist/plan_subjecttotal_sales.tmpl" );
 
-			// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 			$objSubTemplate->replace( $arySalesDetail[$i] );
 			$objSubTemplate->complete();
 
-			// »ÅÆş²ÊÌÜËè¤Ë¥Æ¥ó¥×¥ì¡¼¥ÈÊİ»ı
+			// ä»•å…¥ç§‘ç›®æ¯ã«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä¿æŒ
 			$aryDetailTemplate[$i] .= $objSubTemplate->strTemplate;
 
 			unset ( $objSubTemplate );
@@ -1664,49 +1664,49 @@ fncDebug( 'fncGetEstimateDetail_Sales_hidden.txt', $arySalesDetail, __FILE__, __
 
 
 /**
-* ¸«ÀÑ¸¶²Á·×»»ÌÀºÙHTML½ĞÎÏÊ¸»úÎó¼èÆÀ´Ø¿ô
+* è¦‹ç©åŸä¾¡è¨ˆç®—æ˜ç´°HTMLå‡ºåŠ›æ–‡å­—åˆ—å–å¾—é–¢æ•°
 *
-*	¸«ÀÑ¸¶²Á·×»»ÌÀºÙ¥Ç¡¼¥¿¤òÌÀºÙ¥Æ¥ó¥×¥ì¡¼¥È¤Ë¤Ï¤á¹ş¤ó¤ÀÊ¸»úÎó¤ò¼èÆÀ¤¹¤ë´Ø¿ô
+*	è¦‹ç©åŸä¾¡è¨ˆç®—æ˜ç´°ãƒ‡ãƒ¼ã‚¿ã‚’æ˜ç´°ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«ã¯ã‚è¾¼ã‚“ã æ–‡å­—åˆ—ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 *
-*	@param  String $strProductCode	À½ÉÊ¥³¡¼¥É
-*	@param  String $aryDetail		¸«ÀÑ¸¶²Á·×»»ÌÀºÙ¥Ç¡¼¥¿
-*	@param  String $curStandardRate	É¸½à³ä¹ç
-*	@param  Object $objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $aryDetail		¸«ÀÑ¸¶²ÁÌÀºÙ¥Ç¡¼¥¿
+*	@param  String $strProductCode	è£½å“ã‚³ãƒ¼ãƒ‰
+*	@param  String $aryDetail		è¦‹ç©åŸä¾¡è¨ˆç®—æ˜ç´°ãƒ‡ãƒ¼ã‚¿
+*	@param  String $curStandardRate	æ¨™æº–å‰²åˆ
+*	@param  Object $objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $aryDetail		è¦‹ç©åŸä¾¡æ˜ç´°ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 function fncGetEstimateDetailHtml( $aryDetail, $strDetailTemplatePath, $objDB )
 {
 require_once ( LIB_DEBUGFILE );
 
-	// ¸«ÀÑ¸¶²ÁÌÀºÙ¥Æ¥ó¥×¥ì¡¼¥È¼èÆÀ
+	// è¦‹ç©åŸä¾¡æ˜ç´°ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆå–å¾—
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( $strDetailTemplatePath );
 	$strTemplate = $objTemplate->strTemplate;
 
-	// »ÅÆş²ÊÌÜ¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ë»ÅÆşÌ¾¾ÎÁÛÇÛÎó¤ò¼èÆÀ
+	// ä»•å…¥ç§‘ç›®ã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹ä»•å…¥åç§°æƒ³é…åˆ—ã‚’å–å¾—
 	$aryStockSubjectCode = fncGetMasterValue( "m_StockSubject", "lngStockSubjectCode", "strStockSubjectName", "Array", "", $objDB );
 
-	// ²ñ¼ÒÉ½¼¨¥³¡¼¥É¤ò¥­¡¼¤È¤¹¤ë²ñ¼ÒÌ¾Ï¢ÁÛÇÛÎó¤ò¼èÆÀ
+	// ä¼šç¤¾è¡¨ç¤ºã‚³ãƒ¼ãƒ‰ã‚’ã‚­ãƒ¼ã¨ã™ã‚‹ä¼šç¤¾åé€£æƒ³é…åˆ—ã‚’å–å¾—
 	$aryCompanyName = fncGetMasterValue( "m_Company", "strCompanyDisplayCode", "strCompanyDisplayName", "Array", "", $objDB );
 
-	// ¸º²Á½şµÑÂĞ¾İ¤ËÂĞ±ş¤µ¤»¤ë¤¿¤á¤ÎÇÛÎóÀ¸À®
-	$aryPayOffFlag = Array ( "t" => "¡û" , "f" => "", "true" => "¡û" , "false" => "", "" => "" );
+	// æ¸›ä¾¡å„Ÿå´å¯¾è±¡ã«å¯¾å¿œã•ã›ã‚‹ãŸã‚ã®é…åˆ—ç”Ÿæˆ
+	$aryPayOffFlag = Array ( "t" => "â—‹" , "f" => "", "true" => "â—‹" , "false" => "", "" => "" );
 
-	// ¸ÇÄêÈñ¡¢ÉôºàÈñ¹ç·×ÃÍ
+	// å›ºå®šè²»ã€éƒ¨æè²»åˆè¨ˆå€¤
 	$curFixedCost = 0;
 	$curMemberCost = 0;
 
-	// ¸ÇÄêÈñ¾®·× added by k.saito
+	// å›ºå®šè²»å°è¨ˆ added by k.saito
 	$curFixedCostSubtotal = 0;
 
-	// ¸¡ººÈñÍÑ
+	// æ¤œæŸ»è²»ç”¨
 	$curCheckCost = 0;
 
 	//////////////////////////////////////////////////////////////////
-	// ÌÀºÙ¥Ç¡¼¥¿
+	// æ˜ç´°ãƒ‡ãƒ¼ã‚¿
 	//////////////////////////////////////////////////////////////////
-	// $aryDetail[»ÅÆş²ÊÌÜ][ÌÀºÙ¹Ô][¹àÌÜ]
+	// $aryDetail[ä»•å…¥ç§‘ç›®][æ˜ç´°è¡Œ][é …ç›®]
 	for ( $i = 0; $i < 8; $i++ )
 	{
 		$lngStockSubjectCode = 0;
@@ -1760,7 +1760,7 @@ require_once ( LIB_DEBUGFILE );
 				$aryDetail[$i][$j]["strPlanPrice"] = $aryDetail[$i][$j]["lngMonetaryUnitCode"] . " " . number_format($aryDetail[$i][$j]["curProductPrice"], 4, ".", ",");
 			}
 
-			// ¥³¥¹¥È²Ã»»
+			// ã‚³ã‚¹ãƒˆåŠ ç®—
 // 2004.10.30 suzukaze update start
 			if ( !is_numeric( $aryDetail[$i][$j]["curSubTotalPriceJP"] ) )
 			{
@@ -1771,26 +1771,26 @@ require_once ( LIB_DEBUGFILE );
 			if ( $aryDetail[$i][$j]["curSubTotalPriceJP"] != "" )
 			{
 				$aryCost[$i] += $aryDetail[$i][$j]["curSubTotalPriceJP"];
-				// ÂĞ¾İ¤¬¸ÇÄêÈñ¤Ê¤é¤Ğ
+				// å¯¾è±¡ãŒå›ºå®šè²»ãªã‚‰ã°
 				if ( $i < 3 )
 				{
 // start modified by k.saito 2005.01.27
-					// ½şµÑÂĞ¾İ¤Î¾ì¹ç¡¢¸ÇÄêÈñ¹ç·×¤Ë²Ã»»¤¹¤ë
-					if ( $aryDetail[$i][$j]["bytPayOffTargetFlag"] == "¡û" )
+					// å„Ÿå´å¯¾è±¡ã®å ´åˆã€å›ºå®šè²»åˆè¨ˆã«åŠ ç®—ã™ã‚‹
+					if ( $aryDetail[$i][$j]["bytPayOffTargetFlag"] == "â—‹" )
 					{
 						$curFixedCost       += $aryDetail[$i][$j]["curSubTotalPriceJP"];
 					}
 
-					// ½şµÑÂĞ¾İ³°¹ç·×¼èÆÀ
+					// å„Ÿå´å¯¾è±¡å¤–åˆè¨ˆå–å¾—
 					else
 					{
 						$curNonFixedCost	+= $aryDetail[$i][$j]["curSubTotalPriceJP"];
 					}
 
 
-					// ½şµÑÂĞ¾İ´Ø·¸¤Ê¤¯¡¢¸ÇÄêÈñ¾®·×¤Ë²Ã»»¤¹¤ë
+					// å„Ÿå´å¯¾è±¡é–¢ä¿‚ãªãã€å›ºå®šè²»å°è¨ˆã«åŠ ç®—ã™ã‚‹
 					$curFixedCostSubtotal   += $aryDetail[$i][$j]["curSubTotalPriceJP"];
-					// ²ÊÌÜËè¤Î¾®·×¤Ë²Ã»»¤¹¤ë
+					// ç§‘ç›®æ¯ã®å°è¨ˆã«åŠ ç®—ã™ã‚‹
 					$curSubjectTotalCost += $aryDetail[$i][$j]["curSubTotalPriceJP"];
 
 //					}
@@ -1800,10 +1800,10 @@ require_once ( LIB_DEBUGFILE );
 //					}
 // end modified
 				}
-				// ÂĞ¾İ¤¬ÉôºàÈñ¤Ê¤é¤Ğ
+				// å¯¾è±¡ãŒéƒ¨æè²»ãªã‚‰ã°
 				else
 				{
-					if ( $aryDetail[$i][$j]["bytPayOffTargetFlag"] == "¡û" )
+					if ( $aryDetail[$i][$j]["bytPayOffTargetFlag"] == "â—‹" )
 					{
 						$curFixedCost        += $aryDetail[$i][$j]["curSubTotalPriceJP"];
 					}
@@ -1815,13 +1815,13 @@ require_once ( LIB_DEBUGFILE );
 				}
 			}
 
-			// ¸¡ººÈñÍÑÂĞ±ş
+			// æ¤œæŸ»è²»ç”¨å¯¾å¿œ
 			if ( $lngStockSubjectCode == "403" and $lngStockItemCode == "6" )
 			{
 				$curCheckCost += $aryDetail[$i][$j]["curSubTotalPriceJP"];
 			}
 
-			// ·×²è¸Ä¿ô²Ã»»
+			// è¨ˆç”»å€‹æ•°åŠ ç®—
 			if ( !is_numeric( $aryDetail[$i][$j]["lngProductQuantity"] ) )
 			{
 				$aryDetail[$i][$j]["lngProductQuantity"] = str_replace( "\\", "", $aryDetail[$i][$j]["lngProductQuantity"] );
@@ -1835,11 +1835,11 @@ require_once ( LIB_DEBUGFILE );
 // 2004.10.30 suzukaze update end
 fncDebug( 'lib_e_fncGetCommaNumber.txt', $aryDetail[$i][$j], __FILE__, __LINE__, "a");
 
-			// ¥«¥ó¥Ş½èÍı
+			// ã‚«ãƒ³ãƒå‡¦ç†
 			$aryDetail[$i][$j] = fncGetCommaNumber( $aryDetail[$i][$j] );
 
 
-			// ÃÖ¤­´¹¤¨
+			// ç½®ãæ›ãˆ
 			$objTemplate->replace( $aryDetail[$i][$j] );
 			$objTemplate->complete();
 
@@ -1848,7 +1848,7 @@ fncDebug( 'lib_e_fncGetCommaNumber.txt', $aryDetail[$i][$j], __FILE__, __LINE__,
 				$aryDetail[$i][$j]["curProductPrice"] = $aryDetail[$i][$j]["curConversionRate"];
 			}
 
-			// »ÅÆş²ÊÌÜËè¤Ë¥Æ¥ó¥×¥ì¡¼¥ÈÊİ»ı
+			// ä»•å…¥ç§‘ç›®æ¯ã«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä¿æŒ
 			$aryDetailTemplate[$i] .= $objTemplate->strTemplate;
 
 fncDebug( 'lib_e_fncGetEstimateDetailHtml.txt', $objTemplate->strTemplate, __FILE__, __LINE__, "a");
@@ -1856,55 +1856,55 @@ fncDebug( 'lib_e_fncGetEstimateDetailHtml.txt', $objTemplate->strTemplate, __FIL
 			$objTemplate->strTemplate = $strTemplate;
 		}
 /*
-		// ¸¡ººÈñÍÑÂĞ±ş
-		// »ÅÆş²ÊÌÜ¡Ö1230¡×¤Ç¡¢¸¡ººÈñÍÑ¹ç·×¤¬¡Ö0±ß¡×¤Ç¤Ï¤Ê¤¯¡¢»ÅÆş²ÊÌÜ¡Ö1230¡×¹ç·×¤¬¡Ö0±ß¡×¤Ï¤Ê¤¤¾ì¹ç
-		// ¸ÇÄêÈñ¸º»»½èÍı
+		// æ¤œæŸ»è²»ç”¨å¯¾å¿œ
+		// ä»•å…¥ç§‘ç›®ã€Œ1230ã€ã§ã€æ¤œæŸ»è²»ç”¨åˆè¨ˆãŒã€Œ0å††ã€ã§ã¯ãªãã€ä»•å…¥ç§‘ç›®ã€Œ1230ã€åˆè¨ˆãŒã€Œ0å††ã€ã¯ãªã„å ´åˆ
+		// å›ºå®šè²»æ¸›ç®—å‡¦ç†
 		if ( $lngStockSubjectCode == "1230" and $curCheckCost != 0 and $aryCost[$i] != 0 )
 		{
 			$lngCount = count ( $aryDetail[$i] );
 			$aryDetail[$i][$lngCount]["lngStockSubjectCode"] = $lngStockSubjectCode;
 			$aryDetail[$i][$lngCount]["strStockSubjectName"] = $strStockSubjectName;
-			$aryDetail[$i][$lngCount]["strStockItemName"] = "¸ÇÄêÈñ¸º»»";
+			$aryDetail[$i][$lngCount]["strStockItemName"] = "å›ºå®šè²»æ¸›ç®—";
 			$aryDetail[$i][$lngCount]["curSubTotalPriceJP"] = 0 - $curCheckCost;
 
 			$aryCost[$i] += $aryDetail[$i][$lngCount]["curSubTotalPriceJP"];
-			$curMemberCost       += $aryDetail[$i][$lngCount]["curSubTotalPriceJP"];	// ÉôºàÈñ¹ç·×
+			$curMemberCost       += $aryDetail[$i][$lngCount]["curSubTotalPriceJP"];	// éƒ¨æè²»åˆè¨ˆ
 			$curSubjectTotalCost += $aryDetail[$i][$lngCount]["curSubTotalPriceJP"];
 
-			// ¥«¥ó¥Ş½èÍı
+			// ã‚«ãƒ³ãƒå‡¦ç†
 			$aryDetail[$i][$lngCount] = fncGetCommaNumber( $aryDetail[$i][$lngCount] );
 
 
 
-			// ÃÖ¤­´¹¤¨
+			// ç½®ãæ›ãˆ
 			$objTemplate->replace( $aryDetail[$i][$lngCount] );
 			$objTemplate->complete();
 
-			// »ÅÆş²ÊÌÜËè¤Ë¥Æ¥ó¥×¥ì¡¼¥ÈÊİ»ı
+			// ä»•å…¥ç§‘ç›®æ¯ã«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä¿æŒ
 			$aryDetailTemplate[$i] .= $objTemplate->strTemplate;
 
 			$objTemplate->strTemplate = $strTemplate;
 		}
 */
 
-		// ²ÊÌÜ·×¤¬£°°Ê³°¤Ç¤¢¤ì¤Ğ
+		// ç§‘ç›®è¨ˆãŒï¼ä»¥å¤–ã§ã‚ã‚Œã°
 //		if ( $curSubjectTotalCost != 0 )
 //		{
-		// »ÅÆş²ÊÌÜ¤¬Â¸ºß¤·¤Æ¤¤¤ì¤Ğ
+		// ä»•å…¥ç§‘ç›®ãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°
 		if( (int)$lngStockSubjectCode != 0 )
 		{
-			// »ÅÆş²ÊÌÜ·×¤Î»»½Ğ
+			// ä»•å…¥ç§‘ç›®è¨ˆã®ç®—å‡º
 			$arySubDetail[$i]["curSubjectTotalCost"] = number_format( $curSubjectTotalCost, 2, '.', ',' );
 
-			// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß
+			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿
 			$objSubTemplate = new clsTemplate();
 			$objSubTemplate->getTemplate( "estimate/regist/plan_subjecttotal.tmpl" );
 
-			// ¥Æ¥ó¥×¥ì¡¼¥ÈÀ¸À®
+			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç”Ÿæˆ
 			$objSubTemplate->replace( $arySubDetail[$i] );
 			$objSubTemplate->complete();
 
-			// »ÅÆş²ÊÌÜËè¤Ë¥Æ¥ó¥×¥ì¡¼¥ÈÊİ»ı
+			// ä»•å…¥ç§‘ç›®æ¯ã«ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆä¿æŒ
 			$aryDetailTemplate[$i] .= $objSubTemplate->strTemplate;
 
 			unset ( $objSubTemplate );
@@ -1920,31 +1920,31 @@ fncDebug( 'lib_e_fncGetEstimateDetailHtml.txt', $objTemplate->strTemplate, __FIL
 	$aryEstimate["curMemberCost"] = 0;
 
 
-	// ¸ÇÄêÌÀºÙÉôÊ¬
+	// å›ºå®šæ˜ç´°éƒ¨åˆ†
 	for ( $i = 0; $i < 3; $i++ )
 	{
 		$aryEstimateDetail["strFixCostTemplate"]	.= $aryDetailTemplate[$i];
 		$aryEstimate["lngFixedQuantity"]			+= $aryProductQuantity[$i];
 	}
 
-	// ¸ÇÄêÈñ¾®·× added by k.saito 
+	// å›ºå®šè²»å°è¨ˆ added by k.saito 
 	$aryEstimate["curFixedCostSubtotal"] = $curFixedCostSubtotal;
-	// ¸ÇÄêÈñ¹ç·×¤Ï·×»»ÃÍ
+	// å›ºå®šè²»åˆè¨ˆã¯è¨ˆç®—å€¤
 	$aryEstimate["curFixedCost"] = $curFixedCost;
 
 
-// ½şµÑÂĞ¾İ³°¹ç·×
+// å„Ÿå´å¯¾è±¡å¤–åˆè¨ˆ
 $aryEstimate["curNonFixedCost"]	= ( is_null($curNonFixedCost) || empty($curNonFixedCost) ) ? 0.00 : $curNonFixedCost;
 
 
-	// ÉôºàÌÀºÙÉôÊ¬
+	// éƒ¨ææ˜ç´°éƒ¨åˆ†
 	for ( $i = 3; $i < 8; $i++ )
 	{
 		$aryEstimateDetail["strMemberCostTemplate"]	.= $aryDetailTemplate[$i];
 	}
-	// ÉôºàÈñ¹ç·×¤ÏÀ¸»ºÍ½Äê¿ô¤È¤¹¤ë¤¿¤á¡¢¤³¤³¤Ç¤Ï¶õÇòÃÍ¤È¤¹¤ë
+	// éƒ¨æè²»åˆè¨ˆã¯ç”Ÿç”£äºˆå®šæ•°ã¨ã™ã‚‹ãŸã‚ã€ã“ã“ã§ã¯ç©ºç™½å€¤ã¨ã™ã‚‹
 	$aryEstimate["lngMemberQuantity"]			     = "";
-	// ÉôºàÈñ¹ç·×¤Ï·×»»ÃÍ
+	// éƒ¨æè²»åˆè¨ˆã¯è¨ˆç®—å€¤
 	$aryEstimate["curMemberCost"] = $curMemberCost;
 
 	unset ( $aryDetailTemplate );
@@ -1956,13 +1956,13 @@ $aryEstimate["curNonFixedCost"]	= ( is_null($curNonFixedCost) || empty($curNonFi
 
 
 /**
-* ¸«ÀÑ¸¶²Á·×»»·×»»·ë²Ì¼èÆÀ´Ø¿ô
+* è¦‹ç©åŸä¾¡è¨ˆç®—è¨ˆç®—çµæœå–å¾—é–¢æ•°
 *
-*	ÁíÀ½Â¤ÈñÍÑ¢·Çä¾åÁíÍø±×¤Î¸«ÀÑ¸¶²Á·×»»·×»»·ë²Ì¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë´Ø¿ô
+*	ç·è£½é€ è²»ç”¨ï½å£²ä¸Šç·åˆ©ç›Šã®è¦‹ç©åŸä¾¡è¨ˆç®—è¨ˆç®—çµæœãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 *
-*	@param  Array  $aryEstimateData	¸«ÀÑ¸¶²Á·×»»¥Ç¡¼¥¿
-*	@param  Object $objDB			DB¥ª¥Ö¥¸¥§¥¯¥È
-*	@return Array  $aryEstimateData	¸«ÀÑ¸¶²Á·×»»¥Ç¡¼¥¿
+*	@param  Array  $aryEstimateData	è¦‹ç©åŸä¾¡è¨ˆç®—ãƒ‡ãƒ¼ã‚¿
+*	@param  Object $objDB			DBã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+*	@return Array  $aryEstimateData	è¦‹ç©åŸä¾¡è¨ˆç®—ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 function fncGetEstimateCalculate( $aryEstimateData )
@@ -1971,7 +1971,7 @@ function fncGetEstimateCalculate( $aryEstimateData )
 require_once ( LIB_DEBUGFILE );
 
 
-	// ¸ÇÄêÈñÃ±²Á ¢Í ÉôºàÈñ¹ç·×·×²è¸¶²Á / À¸»ºÍ½Äê¿ô
+	// å›ºå®šè²»å˜ä¾¡ â‡’ éƒ¨æè²»åˆè¨ˆè¨ˆç”»åŸä¾¡ / ç”Ÿç”£äºˆå®šæ•°
 	if ( $aryEstimateData["lngProductionQuantity"] <> 0 )
 	{
 		$aryEstimateData["curFixedProductPrice"]    = $aryEstimateData["curFixedCost"] / $aryEstimateData["lngProductionQuantity"];
@@ -1981,10 +1981,10 @@ require_once ( LIB_DEBUGFILE );
 		$aryEstimateData["curFixedProductPrice"]    = 0.00;
 	}
 
-	// ÉôºàÈñ¹ç·×·×²è¸Ä¿ô
+	// éƒ¨æè²»åˆè¨ˆè¨ˆç”»å€‹æ•°
 	$aryEstimateData["lngMemberQuantity"]        = $aryEstimateData["lngProductionQuantity"];
 
-	// ÉôºàÈñÃ±²Á ¢Í ÉôºàÈñ¹ç·×·×²è¸¶²Á / À¸»ºÍ½Äê¿ô
+	// éƒ¨æè²»å˜ä¾¡ â‡’ éƒ¨æè²»åˆè¨ˆè¨ˆç”»åŸä¾¡ / ç”Ÿç”£äºˆå®šæ•°
 	if ( $aryEstimateData["lngMemberQuantity"] <> 0 )
 	{
 		$aryEstimateData["curMemberProductPrice"]    = $aryEstimateData["curMemberCost"] / $aryEstimateData["lngMemberQuantity"];
@@ -1995,59 +1995,59 @@ require_once ( LIB_DEBUGFILE );
 	}
 
 //var_dump( $aryEstimateData["curNonFixedCost"] );
-	// ÁíÀ½Â¤ÈñÍÑ ¢Í ¸ÇÄêÈñ ¡Ü ÉôºàÈñ + ½şµÑÂĞ¾İ³°¹ç·×
+	// ç·è£½é€ è²»ç”¨ â‡’ å›ºå®šè²» ï¼‹ éƒ¨æè²» + å„Ÿå´å¯¾è±¡å¤–åˆè¨ˆ
 	$aryEstimateData["curManufacturingCost"]	 = $aryEstimateData["curFixedCost"] + $aryEstimateData["curMemberCost"];// + $aryEstimateData["curNonFixedCost"];
 
 
-	// ÁíÀ½Â¤ÈñÍÑ·×²è¸Ä¿ô ¢Í À¸»ºÍ½Äê¿ô¡Êpcs¡Ë
+	// ç·è£½é€ è²»ç”¨è¨ˆç”»å€‹æ•° â‡’ ç”Ÿç”£äºˆå®šæ•°ï¼ˆpcsï¼‰
 	$aryEstimateData["lngManufacturingQuantity"] = $aryEstimateData["lngProductionQuantity"];
 
-	// ÁíÀ½Â¤ÈñÍÑÃ±²Á ¢Í ÁíÀ½Â¤ÈñÍÑ / À¸»ºÍ½Äê¿ô
+	// ç·è£½é€ è²»ç”¨å˜ä¾¡ â‡’ ç·è£½é€ è²»ç”¨ / ç”Ÿç”£äºˆå®šæ•°
 	if ( $aryEstimateData["lngProductionQuantity"] <> 0 )
 	{
 		$aryEstimateData["curManufacturingProductPrice"] = $aryEstimateData["curManufacturingCost"] / $aryEstimateData["lngProductionQuantity"];
 	}
 
 
-	// Í½ÄêÇä¾å¹â ¢Í À¸»ºÍ½Äê¿ô ¡ß Ç¼²Á + ½şµÑÂĞ¾İ³°¹ç·×
+	// äºˆå®šå£²ä¸Šé«˜ â‡’ ç”Ÿç”£äºˆå®šæ•° Ã— ç´ä¾¡ + å„Ÿå´å¯¾è±¡å¤–åˆè¨ˆ
 	//$aryEstimateData["curAmountOfSales"]	= $aryEstimateData["lngProductionQuantity"] * $aryEstimateData["curProductPrice"] + $aryEstimateData["curNonFixedCost"];
-	// Í½ÄêÀ½ÉÊÇä¾å¹â
+	// äºˆå®šè£½å“å£²ä¸Šé«˜
 	$aryEstimateData["curAmountOfSales"]	= $aryEstimateData["lngProductionQuantity"] * $aryEstimateData["curProductPrice"];
-	// Í½Äê¸ÇÄêÈñÇä¾å¹â
+	// äºˆå®šå›ºå®šè²»å£²ä¸Šé«˜
 	$aryEstimateData["curFixedCostSales"]	= $aryEstimateData["curFixedCostSales"];
 
 
-	// Í½ÄêÀ½ÉÊÍø±×	¢Í Í½ÄêÀ½ÉÊÇä¾å¹â - ÁíÀ½Â¤ÈñÍÑ
+	// äºˆå®šè£½å“åˆ©ç›Š	â‡’ äºˆå®šè£½å“å£²ä¸Šé«˜ - ç·è£½é€ è²»ç”¨
 	$aryEstimateData["curProductPlanProfit"]	= $aryEstimateData["curAmountOfSales"] - $aryEstimateData["curManufacturingCost"];
-	// Í½Äê¸ÇÄêÈñÍø±×	¢Í Í½Äê¸ÇÄêÈñÇä¾å¹â - ½şµÑÂĞ¾İ³°¹ç·×
+	// äºˆå®šå›ºå®šè²»åˆ©ç›Š	â‡’ äºˆå®šå›ºå®šè²»å£²ä¸Šé«˜ - å„Ÿå´å¯¾è±¡å¤–åˆè¨ˆ
 	$aryEstimateData["curFixedPlanProfit"]	= $aryEstimateData["curFixedCostSales"] - $aryEstimateData["curNonFixedCost"];
 
 
-	// Í½ÄêÁíÇä¾å¹â ¢Í Í½ÄêÀ½ÉÊÇä¾å¹â + Í½Äê¸ÇÄêÈñÇä¾å¹â
+	// äºˆå®šç·å£²ä¸Šé«˜ â‡’ äºˆå®šè£½å“å£²ä¸Šé«˜ + äºˆå®šå›ºå®šè²»å£²ä¸Šé«˜
 	$aryEstimateData["curTotalPlanPrice"] = $aryEstimateData["curAmountOfSales"] + $aryEstimateData["curFixedCostSales"];
 
 
-	// ´ë²èÌÜÉ¸Íø±×  ¢Í Í½ÄêÀ½ÉÊÍø±× + Í½Äê¸ÇÄêÈñÍø±×
+	// ä¼ç”»ç›®æ¨™åˆ©ç›Š  â‡’ äºˆå®šè£½å“åˆ©ç›Š + äºˆå®šå›ºå®šè²»åˆ©ç›Š
 	$aryEstimateData["curTargetProfit"] = $aryEstimateData["curProductPlanProfit"] + $aryEstimateData["curFixedPlanProfit"];
 	
 
 // fncDebug( 'lib_e_fncGetEstimateCalculate_01.txt', $aryEstimateData["curTargetProfit"], __FILE__, __LINE__);
 
 
-	// ´ë²èÌÜÉ¸Íø±× ¢Í Í½ÄêÇä¾å¹â ¡İ ÁíÀ½Â¤ÈñÍÑ
+	// ä¼ç”»ç›®æ¨™åˆ©ç›Š â‡’ äºˆå®šå£²ä¸Šé«˜ âˆ’ ç·è£½é€ è²»ç”¨
 //	$aryEstimateData["curTargetProfit"]			= $aryEstimateData["curAmountOfSales"] - $aryEstimateData["curManufacturingCost"];
 
 
-	// ÌÜÉ¸Íø±×Î¨ ¢Í ´ë²èÌÜÉ¸Íø±× / Í½ÄêÁíÇä¾å¹â
+	// ç›®æ¨™åˆ©ç›Šç‡ â‡’ ä¼ç”»ç›®æ¨™åˆ©ç›Š / äºˆå®šç·å£²ä¸Šé«˜
 	if ( $aryEstimateData["curAmountOfSales"] <> 0 )
 	{
 		$aryEstimateData["curAchievementRatio"]		= round ( $aryEstimateData["curTargetProfit"] / $aryEstimateData["curTotalPlanPrice"] * 100, 2);
 	}
 
-	// ´ÖÀÜÀ½Â¤·ĞÈñ ¢Í Í½ÄêÁíÇä¾å¹â ¡ß É¸½à³ä¹ç
+	// é–“æ¥è£½é€ çµŒè²» â‡’ äºˆå®šç·å£²ä¸Šé«˜ Ã— æ¨™æº–å‰²åˆ
 	$aryEstimateData["curStandardCost"]			= $aryEstimateData["curTotalPlanPrice"] * $aryEstimateData["curStandardRate"] / 100;
 
-	// Çä¾åÁíÍø±× ¢Í ´ë²èÌÜÉ¸Íø±× ¡İ ´ÖÀÜÀ½Â¤·ĞÈñ
+	// å£²ä¸Šç·åˆ©ç›Š â‡’ ä¼ç”»ç›®æ¨™åˆ©ç›Š âˆ’ é–“æ¥è£½é€ çµŒè²»
 	$aryEstimateData["curProfitOnSales"]		= $aryEstimateData["curTargetProfit"] - $aryEstimateData["curStandardCost"];
 
 	return $aryEstimateData;
@@ -2056,12 +2056,12 @@ require_once ( LIB_DEBUGFILE );
 
 
 /**
-* ¥«¥ó¥Ş½èÍı¿ôÃÍ¥Ç¡¼¥¿¼èÆÀ´Ø¿ô
+* ã‚«ãƒ³ãƒå‡¦ç†æ•°å€¤ãƒ‡ãƒ¼ã‚¿å–å¾—é–¢æ•°
 *
-*	¥«¥ó¥Ş½èÍı¤ò»Ü¤·¤¿¿ôÃÍ¥Ç¡¼¥¿¤ò¼èÆÀ¤¹¤ë´Ø¿ô
+*	ã‚«ãƒ³ãƒå‡¦ç†ã‚’æ–½ã—ãŸæ•°å€¤ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã™ã‚‹é–¢æ•°
 *
-*	@param  Array $aryNumberData	¿ôÃÍ¥Ç¡¼¥¿
-*	@return Array $aryNumberData	¿ôÃÍ¥Ç¡¼¥¿
+*	@param  Array $aryNumberData	æ•°å€¤ãƒ‡ãƒ¼ã‚¿
+*	@return Array $aryNumberData	æ•°å€¤ãƒ‡ãƒ¼ã‚¿
 *	@access public
 */
 function fncGetCommaNumber( $aryNumberData )
