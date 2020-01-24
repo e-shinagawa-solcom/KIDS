@@ -3,7 +3,7 @@
 	ÂĞ¾İ¡§¡Ê¶¦ÄÌ¡Ë
 	ºûÜ®¡§watanabe
 	¹¹¿·¡§¾¾ÌÚÍÎ²
-	È÷¹Í¡§°E×¤¹¤EÖ¥³¡¼¥É¡ÜÌ¾¾Î¡×¤ò¼èÆÀ¡¡²Ã¤¨¤Æ³¤³°¼è°úÀè¥Õ¥é¥°¤ò¼èÆÀ
+	È÷¹Í¡§À
 */
 SELECT mc.lngcompanycode, mc.strcompanydisplayname , lngcountrycode
 FROM m_company mc, m_attribute ma, m_attributerelation mar
