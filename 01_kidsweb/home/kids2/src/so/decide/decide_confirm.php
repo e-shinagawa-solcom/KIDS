@@ -31,7 +31,7 @@ $objDB->open("", "", "", "");
 if ($aryData == null) {
     $aryData = $_POST;
 }
-
+// var_dump($aryData);
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 // 権限確認
@@ -54,7 +54,7 @@ $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/so/decide/so_confirm_decide.html");
 $objTemplate->replace($aryData);
 // 検索結果テーブル生成の為DOMDocumentを使用
-$doc = new DOMDocument();
+$doc = new DOMDocument("1.0","utf-8");
 // パースエラー抑制
 libxml_use_internal_errors(true);
 // DOMパース
@@ -79,7 +79,7 @@ foreach ($aryData["detailData"] as $data) {
     $trBody->appendChild($td);
 
     // 顧客
-    $td = $doc->createElement("td", $data["strCompanyDisplayCode"]);
+    $td = $doc->createElement("td", utf8_encode($data["strCompanyDisplayCode"]));
     $trBody->appendChild($td);
 
     // 受注NO.

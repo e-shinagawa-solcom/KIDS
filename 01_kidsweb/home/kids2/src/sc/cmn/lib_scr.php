@@ -20,8 +20,8 @@
  */
 // ----------------------------------------------------------------------------
 
-require_once (LIB_DEBUGFILE);
-require_once (LIB_EXCLUSIVEFILE);
+require_once LIB_DEBUGFILE;
+require_once LIB_EXCLUSIVEFILE;
 // 修正対象データに対してロックしている人を確認する
 // ロックしている人がいないなら空文字列を返す
 
@@ -173,10 +173,10 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
     $objDB->freeResult($lngResultID);
 
     // 選択項目作成
-    $strHtml = "";
+    $strHtml = "<OPTION VALUE=\"\" SELECTED>0%</OPTION>\n";
     for ($i = 0; $i < count($aryResult); $i++) {
         $optionValue = $aryResult[$i]["lngtaxcode"];
-        $displayText = $aryResult[$i]["curtax"] * 1; // 小数点末尾の0をカット
+        $displayText = $aryResult[$i]["curtax"] * 1 . "%"; // 小数点末尾の0をカット
 
         // デフォルト値が設定されている場合、その値を選択
         if ($curDefaultTax == $displayText) {
@@ -325,6 +325,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  r.lngmonetaryunitcode,"; //通貨単位コード（明細登録用）
     $arySelect[] = "  r.lngmonetaryratecode,"; //通貨レートコード（明細登録用）
     $arySelect[] = "  mu.strmonetaryunitsign,"; //通貨単位記号（明細登録用）
+    $arySelect[] = "  mu.strmonetaryunitname,"; //通貨単位
     $arySelect[] = "  sc.bytdetailunifiedflg"; //明細統一フラグ（明細登録用）
     $arySelect[] = " FROM";
     $arySelect[] = "  t_receivedetail rd ";
@@ -517,103 +518,121 @@ function fncGetReceiveDetail($aryCondition, $objDB)
 
 function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
 {
-    $strHtml = "";
+    $aryResult = array();
+    $chkbox_body_html = "";
+    $detail_body_html = "";
     for ($i = 0; $i < count($aryDetail); $i++) {
         $strDisplayValue = "";
-        //行選択スクリプト埋め込み
-        $strHtml .= "<tr onmousedown='RowClick(this,false);'>";
-
         // 明細選択エリアはチェックボックスあり、出力明細一覧エリアはチェックボックスなしのためこのようなスイッチを用意
         if ($isCreateNew) {
+
+            $chkbox_body_html .= "<tr onmousedown='RowClick(this,false);'>";
             // データ登録時、明細選択エリアには選択チェックボックスが必要（データ修正時、出力明細一覧エリアにチェックボックスは不要）
-            $strHtml .= "<td class='detailCheckbox'><input type='checkbox' name='edit' onmousedown='return false;' onclick='return false;'></td>";
+            $chkbox_body_html .= "<td style='text-align:center;'><input type='checkbox' name='edit' style='width:10px;'></td>";
+
+            $chkbox_body_html .= "</tr>";
         }
+
+        //行選択スクリプト埋め込み
+        $detail_body_html .= "<tr onmousedown='RowClick(this,false);'>";
 
         //NO.
         // データ修正時、出力明細一覧エリアのNo.は明細の配列のインデックス+1とする（行番号）
         $rownumber = $i + 1;
-        $strHtml .= "<td name='rownum'>" . $rownumber . "</td>";
+        $detail_body_html .= "<td name='rownum'>" . $rownumber . "</td>";
         //顧客発注番号
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strcustomerreceivecode"]);
-        $strHtml .= "<td class='detailCustomerReceiveCode'>" . $strDisplayValue . "</td>";
-        //受注番号
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strreceivecode"]);
-        $strHtml .= "<td class='detailReceiveCode'>" . $strDisplayValue . "</td>";
-        //顧客品番
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strgoodscode"]);
-        $strHtml .= "<td class='detailGoodsCode'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='detailCustomerReceiveCode'>" . $strDisplayValue . "</td>";
         //製品コード
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductcode"]);
         $strDisplayValue .= "_";
         $strDisplayValue .= htmlspecialchars($aryDetail[$i]["strrevisecode"]);
-        $strHtml .= "<td class='detailProductCode'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='detailProductCode'>" . $strDisplayValue . "</td>";
         //製品名
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductname"]);
-        $strHtml .= "<td class='detailProductName'>" . $strDisplayValue . "</td>";
-        //製品名（英語）
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductenglishname"]);
-        $strHtml .= "<td class='detailProductEnglishName'>" . $strDisplayValue . "</td>";
-        //営業部署
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strsalesdeptname"]);
-        $strHtml .= "<td class='detailSalesDeptName'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='detailProductName'>" . $strDisplayValue . "</td>";
         //売上区分
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strsalesclassname"]);
-        $strHtml .= "<td class='detailSalesClassName'>" . $strDisplayValue . "</td>";
+        $strDisplayValue = "[". htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]) ."]"
+        . htmlspecialchars($aryDetail[$i]["strsalesclassname"]);
+        $detail_body_html .= "<td class='detailSalesClassName'>" . $strDisplayValue . "</td>";
         //納期
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["dtmdeliverydate"]);
-        $strHtml .= "<td class='detailDeliveryDate'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='detailDeliveryDate'>" . $strDisplayValue . "</td>";
         //入数
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngunitquantity"]);
-        $strHtml .= "<td class='detailUnitQuantity'>" . $strDisplayValue . "</td>";
-        //単価
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["curproductprice"]);
-        $strHtml .= "<td class='detailProductPrice' style='text-align:right;'>" . number_format($strDisplayValue, 4) . "</td>";
-        //単位
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductunitname"]);
-        $strHtml .= "<td class='detailProductUnitName'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='detailUnitQuantity'>" . $strDisplayValue . "</td>";
         //数量
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngproductquantity"]);
-        $strHtml .= "<td class='detailProductQuantity' style='text-align:right;'>" . number_format($strDisplayValue) . "</td>";
-        //税抜金額
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["cursubtotalprice"]);
-        $strHtml .= "<td class='detailSubTotalPrice' style='text-align:right;'>" . number_format($strDisplayValue) . "</td>";
+        $detail_body_html .= "<td class='detailProductQuantity' style='text-align:right;'>" . number_format($strDisplayValue) . "</td>";
+        //単位
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductunitname"]);
+        $detail_body_html .= "<td class='detailProductUnitName'>" . $strDisplayValue . "</td>";
+        //単価
+        $strDisplayValue = toMoneyFormat($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], number_format($aryDetail[$i]["curproductprice"], 4));
+        // $strDisplayValue = "&yen". number_format($aryDetail[$i]["curproductprice"], 4);
+        $detail_body_html .= "<td class='detailProductPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
+        //税抜金額        
+        $strDisplayValue = toMoneyFormat($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], number_format($aryDetail[$i]["cursubtotalprice"]));
+        $detail_body_html .= "<td class='detailSubTotalPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
+        //顧客品番
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strgoodscode"]);
+        $detail_body_html .= "<td class='detailGoodsCode'>" . $strDisplayValue . "</td>";
+        //製品名（英語）
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductenglishname"]);
+        $detail_body_html .= "<td class='detailProductEnglishName'>" . $strDisplayValue . "</td>";
+        //営業部署
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strsalesdeptname"]);
+        $detail_body_html .= "<td class='detailSalesDeptName'>" . $strDisplayValue . "</td>";
         //受注番号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceiveno"]);
-        $strHtml .= "<td class='forEdit detailReceiveNo'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailReceiveNo'>" . $strDisplayValue . "</td>";
         //受注明細番号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceivedetailno"]);
-        $strHtml .= "<td class='forEdit detailReceiveDetailNo'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailReceiveDetailNo'>" . $strDisplayValue . "</td>";
         //リビジョン番号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceiverevisionno"]);
-        $strHtml .= "<td class='forEdit detailReceiveRevisionNo'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailReceiveRevisionNo'>" . $strDisplayValue . "</td>";
         //再販コード（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strrevisecode"]);
-        $strHtml .= "<td class='forEdit detailReviseCode'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailReviseCode'>" . $strDisplayValue . "</td>";
         //売上区分コード（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]);
-        $strHtml .= "<td class='forEdit detailSalesClassCode'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailSalesClassCode'>" . $strDisplayValue . "</td>";
         //製品単位コード（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngproductunitcode"]);
-        $strHtml .= "<td class='forEdit detailProductUnitCode'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailProductUnitCode'>" . $strDisplayValue . "</td>";
         //備考（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strnote"]);
-        $strHtml .= "<td class='forEdit detailNote'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailNote'>" . $strDisplayValue . "</td>";
         //通貨単位コード（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngmonetaryunitcode"]);
-        $strHtml .= "<td class='forEdit detailMonetaryUnitCode'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailMonetaryUnitCode'>" . $strDisplayValue . "</td>";
         //通貨レートコード（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngmonetaryratecode"]);
-        $strHtml .= "<td class='forEdit detailMonetaryRateCode'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailMonetaryRateCode'>" . $strDisplayValue . "</td>";
         //通貨単位記号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strmonetaryunitsign"]);
-        $strHtml .= "<td class='forEdit detailMonetaryUnitSign'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailMonetaryUnitSign'>" . $strDisplayValue . "</td>";
         //明細統一フラグ（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["bytdetailunifiedflg"]);
-        $strHtml .= "<td class='forEdit detailUnifiedFlg'>" . $strDisplayValue . "</td>";
+        $detail_body_html .= "<td class='forEdit detailUnifiedFlg'>" . $strDisplayValue . "</td>";
+        //単価
+        $strDisplayValue = htmlspecialchars(number_format($aryDetail[$i]["curproductprice"], 4));
+        $detail_body_html .= "<td class='forEdit detailProductPrice' style='text-align:right;'>" . $strDisplayValue . "</td>";
+        //税抜金額
+        $strDisplayValue = htmlspecialchars(number_format($aryDetail[$i]["cursubtotalprice"]));
+        $detail_body_html .= "<td class='forEdit detailSubTotalPrice' style='text-align:right;'>" . $strDisplayValue . "</td>";
 
-        $strHtml .= "</tr>";
+        $detail_body_html .= "</tr>";
     }
-    return $strHtml;
+
+    $aryResult["chkbox_body"] = $chkbox_body_html;
+    $aryResult["detail_body"] = $detail_body_html;
+    $aryResult["strmonetaryunitname"] = $aryDetail[0]["strmonetaryunitname"];
+    $aryResult["lngmonetaryunitcode"] = $aryDetail[0]["lngmonetaryunitcode"];
+    $aryResult["count"] = count($aryDetail);
+
+    return $aryResult;
 }
 
 // 納品伝票マスタより作成日を取得
@@ -704,17 +723,17 @@ function fncNotReceivedDetailExists($aryDetail, $objDB, $isNew)
         /* 更新前に締め済データ以外を2にリセットするため、一律2でチェック
         // 更新で受注状態コードが2,4以外の明細が存在するならtrueを返して検索打ち切り
         if(!$isNew){
-            if( isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB) 
-             && isReceiveModified($lngReceiveNo, DEF_RECEIVE_END, $objDB)){
-                return true;
-            }
+        if( isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)
+        && isReceiveModified($lngReceiveNo, DEF_RECEIVE_END, $objDB)){
+        return true;
         }
-        */
+        }
+         */
         // 新規で受注状態コードが2以外の明細が存在するならtrueを返して検索打ち切り
-        if(isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)){
+        if (isReceiveModified($lngReceiveNo, DEF_RECEIVE_ORDER, $objDB)) {
             return true;
         }
-        
+
     }
     return false;
 
@@ -1193,7 +1212,7 @@ function fncRegisterSalesAndSlip(
 
         // 納品伝票マスタ登録
         if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
-        $aryDrafter,$aryHeader, $aryDetail, $objDB, $objAuth)) {
+            $aryDrafter, $aryHeader, $aryDetail, $objDB, $objAuth)) {
             // 失敗
             $aryRegisterResult["result"] = false;
             return $aryRegisterResult;
@@ -1440,7 +1459,7 @@ function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngR
 
 // 納品伝票マスタ登録
 function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
-$aryDrafter, $aryHeader, $aryDetail, $objDB, $objAuth) {
+    $aryDrafter, $aryHeader, $aryDetail, $objDB, $objAuth) {
     // 仕入先コードの取得（空の場合は明示的にNullをセット）
     if (strlen($aryCustomerCompany["strstockcompanycode"]) != 0) {
         $strShipperCode = withQuote($aryCustomerCompany["strstockcompanycode"]);
@@ -1916,8 +1935,8 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
 
             }
         } else if ($lngSlipKindCode == 3) {
-                // // 日本語対応
-                ini_set('default_charset', 'EUC-JP');
+            // // 日本語対応
+            ini_set('default_charset', 'EUC-JP');
             $strTemplateHeaderPath = "list/result/slip_debit_header.html";
             $strTemplatePath = "list/result/slip_debit.html";
             // $strTemplateFooterPath = "list/result/slip_debit_footer.html";
@@ -1928,7 +1947,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["strcustomeraddress2"] = $aryCustomerCompany["straddress2"]; //9:顧客住所2
             $aryParts["strcustomeraddress3"] = $aryCustomerCompany["straddress3"]; //10:顧客住所3
             $aryParts["strcustomeraddress4"] = $aryCustomerCompany["straddress4"]; //11:顧客住所4
-            $aryParts["dtmdeliverydate"] = $aryHeader["dtmdeliverydate"];            
+            $aryParts["dtmdeliverydate"] = $aryHeader["dtmdeliverydate"];
             $lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];
             $strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"];
             // 顧客電話番号
@@ -1940,7 +1959,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             // 合計金額
             $curTotalPrice = ($lngmonetaryunitcode == 1 ? "&yen; " : $strmonetaryunitsign) . " " . number_format($aryHeader["curtotalprice"], 2, '.', ',');
 
-            $aryParts["curtotalprice"] = $curTotalPrice;            
+            $aryParts["curtotalprice"] = $curTotalPrice;
             $aryParts["strpaymentmethodname"] = $aryHeader["strpaymentmethodname"];
             $aryParts["nameofbank"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "MUFG BANK, LTD." : "";
             $aryParts["nameofbranch"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "ASAKUSA BRANCH" : "";
@@ -1962,18 +1981,18 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $objTemplate->strTemplate = $strTemplate;
 
             for ($i = 0; $i < count($aryDetail); $i++) {
-                $aryParts["strcustomersalescode". ($i)] = $aryDetail[$i]["strcustomerreceivecode"];
-                $aryParts["strproductenglishname". ($i)] = $aryDetail[$i]["strproductenglishname"];
-                $aryParts["lngproductquantity". ($i)] = number_format($aryDetail[$i]["lngproductquantity"]);
-                $aryParts["strproductunitname". ($i)] = $aryDetail[$i]["strproductunitname"];
-                $aryParts["curproductprice". ($i)] = number_format($aryDetail[$i]["curproductprice"], 2, '.', ',');
-                $aryParts["cursubtotalprice". ($i)] = number_format($aryDetail[$i]["cursubtotalprice"], 2, '.', ',');
-                $aryParts["strsalesclassname". ($i)] = $aryDetail[$i]["strsalesclassname"];
-                $aryParts["strnote". ($i)] = $aryDetail[$i]["strnote"];
+                $aryParts["strcustomersalescode" . ($i)] = $aryDetail[$i]["strcustomerreceivecode"];
+                $aryParts["strproductenglishname" . ($i)] = $aryDetail[$i]["strproductenglishname"];
+                $aryParts["lngproductquantity" . ($i)] = number_format($aryDetail[$i]["lngproductquantity"]);
+                $aryParts["strproductunitname" . ($i)] = $aryDetail[$i]["strproductunitname"];
+                $aryParts["curproductprice" . ($i)] = number_format($aryDetail[$i]["curproductprice"], 2, '.', ',');
+                $aryParts["cursubtotalprice" . ($i)] = number_format($aryDetail[$i]["cursubtotalprice"], 2, '.', ',');
+                $aryParts["strsalesclassname" . ($i)] = $aryDetail[$i]["strsalesclassname"];
+                $aryParts["strnote" . ($i)] = $aryDetail[$i]["strnote"];
 
                 // 顧客受注番号
-                if ($aryParts["strcustomersalescode". ($i)] != "") {
-                    $aryParts["strcustomersalescode". ($i)] = "(PO No:" . $aryParts["strcustomersalescode". ($i)] . ")";
+                if ($aryParts["strcustomersalescode" . ($i)] != "") {
+                    $aryParts["strcustomersalescode" . ($i)] = "(PO No:" . $aryParts["strcustomersalescode" . ($i)] . ")";
                 }
             }
 
@@ -2183,21 +2202,20 @@ function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
     $strQuery .= "    AND  mi_rev.min_lngrevisionno >= 0 ";
     $strQuery .= "WHERE tid.lngslipno = " . $lngSlipNo;
     $strQuery .= "AND tid.lngsliprevisionno = " . $lngRevisisonNo;
-    
-    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-    if ( !$lngResultNum )
-    {
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if (!$lngResultNum) {
         return false;
     }
     $objDB->freeResult($lngResultID);
     return true;
-    
+
 }
 
 // 更新前の明細に紐づく受注データのロック
 function fncLockReceiveByOldDetail($lngSlipNo, $lngRevisisonNo, $objDB)
 {
-    
+
     $strQuery = "SELECT lngreceiveno, lngrevisionno ";
     $strQuery .= "FROM m_receive";
     $strQuery .= " WHERE (lngreceiveno, lngrevisionno) IN ( ";
@@ -2206,14 +2224,13 @@ function fncLockReceiveByOldDetail($lngSlipNo, $lngRevisisonNo, $objDB)
     $strQuery .= "INNER JOIN t_slipdetail tsd ";
     $strQuery .= "ON tsd.lngslipno = ms.lngslipno ";
     $strQuery .= "AND tsd.lngrevisionno = ms.lngrevisionno ";
-    $strQuery .= "WHERE ms.lngslipno = " . (int)$lngSlipNo;
-    $strQuery .= " AND ms.lngrevisionno = " . (int)$lngRevisisonNo;
+    $strQuery .= "WHERE ms.lngslipno = " . (int) $lngSlipNo;
+    $strQuery .= " AND ms.lngrevisionno = " . (int) $lngRevisisonNo;
     $strQuery .= ") ";
     $strQuery .= "AND lngreceivestatuscode = " . DEF_RECEIVE_END;
     $strQuery .= " FOR UPDATE";
-    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-    if ( !$lngResultNum )
-    {
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if (!$lngResultNum) {
         return false;
     }
     $objDB->freeResult($lngResultID);
@@ -2223,7 +2240,7 @@ function fncLockReceiveByOldDetail($lngSlipNo, $lngRevisisonNo, $objDB)
 // 更新前の明細に紐づく受注データのステータスリセット（締め済は除外）
 function fncResetReceiveStatus($lngSlipNo, $lngRevisisonNo, $objDB)
 {
-    
+
     $strQuery = "UPDATE m_receive ";
     $strQuery .= "SET  lngreceivestatuscode = " . DEF_RECEIVE_ORDER;
     $strQuery .= " WHERE (lngreceiveno, lngrevisionno) IN ( ";
@@ -2232,16 +2249,14 @@ function fncResetReceiveStatus($lngSlipNo, $lngRevisisonNo, $objDB)
     $strQuery .= "INNER JOIN t_slipdetail tsd ";
     $strQuery .= "ON tsd.lngslipno = ms.lngslipno ";
     $strQuery .= "AND tsd.lngrevisionno = ms.lngrevisionno ";
-    $strQuery .= "WHERE ms.lngslipno = " . (int)$lngSlipNo;
-    $strQuery .= " AND ms.lngrevisionno = " . (int)$lngRevisisonNo;
+    $strQuery .= "WHERE ms.lngslipno = " . (int) $lngSlipNo;
+    $strQuery .= " AND ms.lngrevisionno = " . (int) $lngRevisisonNo;
     $strQuery .= ") ";
     $strQuery .= "AND lngreceivestatuscode = " . DEF_RECEIVE_END;
     $strQuery .= " ";
-    if ( !$objDB->execute($strQuery) )
-    {
+    if (!$objDB->execute($strQuery)) {
         return false;
     }
     $objDB->freeResult($lngResultID);
     return true;
 }
-

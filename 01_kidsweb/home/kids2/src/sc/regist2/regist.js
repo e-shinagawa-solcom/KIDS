@@ -47,7 +47,7 @@ function toggleRow(row) {
 }
 
 function selectRowsBetweenIndexes(indexes) {
-    var trs = document.getElementById("DetailTable").tBodies[0].getElementsByTagName("tr");
+    var trs = document.getElementById("tbl_detail").tBodies[0].getElementsByTagName("tr");
     indexes.sort(function (a, b) {
         return a - b;
     });
@@ -60,7 +60,7 @@ function selectRowsBetweenIndexes(indexes) {
 }
 
 function clearAllSelected() {
-    var trs = document.getElementById("DetailTable").tBodies[0].getElementsByTagName("tr");
+    var trs = document.getElementById("tbl_detail").tBodies[0].getElementsByTagName("tr");
     for (var i = 0; i < trs.length; i++) {
         trs[i].className = '';
     }
@@ -93,18 +93,29 @@ function SetSearchConditionWindowValue(search_condition) {
             },
             async: true,
         }).done(function (data) {
+            console.log(data);
             console.log("done:get-lngcountrycode");
             if (data == "81") {
                 // 81：「外税」を選択（他の項目も選択可能）
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
                 $("select[name='lngTaxClassCode']").val("2");
-                $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
+                $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
+
+                $("input[name='dtmPaymentLimit']").prop('readonly', true)
+                $("input[name='dtmPaymentLimit']").val("");
+                $("select[name='lngPaymentMethodCode']").val("0");
+                $("select[name='lngPaymentMethodCode'] option:not(:selected)").prop('disabled', true);
 
             } else {
                 // 81以外：「非課税」固定
                 $("select[name='lngTaxClassCode']").val("1");
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
+                $("select[name='lngPaymentMethodCode']").val("1");
+                $("select[name='lngPaymentMethodCode'] option[value=0]").prop('disabled', true);
+
                 $('select[name="lngTaxRate"]').val('');
+                $("select[name='lngTaxRate'] option[value=0]").prop('disabled', true);
+
             }
         }).fail(function (error) {
             console.log("fail:get-lngcountrycode");
@@ -115,6 +126,27 @@ function SetSearchConditionWindowValue(search_condition) {
         $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
     }
 }
+
+// $('input[name="lngCustomerCode"]').addEventListener("click",function(e){ 
+// 	e.preventDefault();
+// });
+// // 顧客コード変更の処理
+// $('input[name="lngCustomerCode"]').on("change", function () {
+//     var msg = '納品対象の明細をすべてクリアします。\nよろしいですか？';
+//     console.log(msg);
+//     var $tableA_rows = $('#tbl_detail tbody tr');
+//     var $tableA_rows_length = $tableA_rows.length;
+
+//     var warn = ($tableA_rows_length > 0) ? true : false;
+
+//     if (warn && window.confirm(msg) === false) {
+//         return;
+//     }
+
+//     $tableA_rows.remove();
+
+//     $('#tbl_detail tbody tr');
+// });
 
 // 明細検索
 function SearchReceiveDetail(search_condition) {
@@ -135,7 +167,22 @@ function SearchReceiveDetail(search_condition) {
         console.log("done:search-detail");
         console.log(data);
         // 検索結果をテーブルにセット
-        $('#DetailTableBody').html(data);
+
+        var data = JSON.parse(data);
+
+        $('#tbl_detail_chkbox tr').remove();
+        $('#tbl_detail tr').remove();
+        $('#tbl_edit_no_body tr').remove();
+        $('#tbl_edit_detail_body tr').remove();
+
+        $('#tbl_detail_chkbox').append(data.chkbox_body);
+        $('#tbl_detail').append(data.detail_body);
+
+        $('#tbl_detail_chkbox tbody tr td:nth-child(1)').width($('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
+        $('#tbl_detail_chkbox_head tr th:nth-child(1)').width($('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
+
+        resetTableAWidth();
+
         $("#DetailTable").trigger("update");
         // jQueryUIのtablesorterでソート設定
         $('#DetailTable').tablesorter({
@@ -144,43 +191,155 @@ function SearchReceiveDetail(search_condition) {
             }
         });
 
-        $('#DetailTableBodyAllCheck').on('change', function () {
+        $('input[name="allSel"]').on('change', function () {
             $('input[name="edit"]').prop('checked', this.checked);
             if (this.checked) {
-                // $("#DetailTableBody tr").addClass('selected');
+                // $("#DetailTableBody tr").css('background-color','#87cefa');
+                // $("#tbl_detail_chkbox tbody tr").css('background-color','#87cefa');
             } else {
-                $("#DetailTableBody tr").removeClass('selected');
+                $("#DetailTableBody tr").css('background-color', '#ffffff');
+                $("#tbl_detail_chkbox tbody tr").css('background-color', '#ffffff');
             }
         });
-        var checkboxclick = false;
-        $('input[name="edit"]').on('click', function () {
-            checkboxclick = true;
+
+        $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
+        $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
+
+        setTableAEvent();
+
+        // 通貨変更イベント
+        $('input[name="lngMonetaryUnitCode"]').on('change', function () {
+            // リクエスト送信
+            $.ajax({
+                url: '/pc/regist/getMonetaryRate.php',
+                type: 'post',
+                data: {
+                    'strSessionID': $.cookie('strSessionID'),
+                    'lngMonetaryUnitCode': $(this).val(),
+                    'lngMonetaryRateCode': $('select[name="lngMonetaryRateCode"]').val(),
+                    'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
+                }
+            })
+                .done(function (response) {
+                    console.log(response);
+                    var data = JSON.parse(response);
+                    $('input[name="curConversionRate"]').val(data.curconversionrate);
+                })
+                .fail(function (response) {
+                    alert(response);
+                    alert("fail");
+                })
         });
-        $("#DetailTableBody tr").on('click', function () {
-            var checked = $(this).find('input[name="edit"]').prop('checked');
-            if (checkboxclick) {
-                if (!checked) {
-                    $(this).addClass('selected');
-                } else {
-                    $(this).removeClass('selected');
+
+        // 通貨レート変更イベント
+        $('select[name="lngMonetaryRateCode"]').on('change', function () {
+            // リクエスト送信
+            $.ajax({
+                url: '/pc/regist/getMonetaryRate.php',
+                type: 'post',
+                data: {
+                    'strSessionID': $.cookie('strSessionID'),
+                    'lngMonetaryUnitCode': $('input[name="lngMonetaryUnitCode"]').val(),
+                    'lngMonetaryRateCode': $(this).val(),
+                    'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
                 }
-            } else {
-                if (checked) {
-                    $(this).addClass('selected');
-                } else {
-                    $(this).removeClass('selected');
-                }
-            }
-            checkboxclick = false;
+            })
+                .done(function (response) {
+                    console.log(response);
+                    var data = JSON.parse(response);
+                    $('input[name="curConversionRate"]').val(data.curconversionrate);
+                })
+                .fail(function (response) {
+                    alert("fail");
+                })
         });
 
     }).fail(function (error) {
         console.log("fail:search-detail");
         console.log(error);
     });
-
 }
 
+function setCheckBoxEvent() {
+    $('input[name="edit"]').on('click', function () {
+        var rowindex = $(this).parent().parent().index();
+        console.log(rowindex);
+        setRowBackGroundColor(rowindex, this.checked);
+        console.log(this.checked);
+        $(this).prop('checked', this.checked);
+    });
+
+}
+function resetTableAWidth() {
+    var thwidthArry = [];
+    var tdwidthArry = [];
+    var columnNum = $('#tbl_detail_head tr th').length;
+    console.log(columnNum);
+    for (var i = 1; i <= columnNum; i++) {
+        var thwidth = $('#tbl_detail_head tr th:nth-child(' + i + ')').width();
+        var tdwidth = $('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
+        thwidthArry.push(thwidth + 2);
+        tdwidthArry.push(tdwidth + 2);
+    }
+    console.log(thwidthArry);
+    console.log(tdwidthArry);
+
+
+    for (var i = 1; i <= columnNum; i++) {
+        if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+            $("#tbl_detail_head tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+            $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+        } else {
+            $("#tbl_detail_head tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+            $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+        }
+    }
+}
+
+function resetTableBWidth() {
+    var thwidthArry = [];
+    var tdwidthArry = [];
+    var columnNum = $('#tbl_edit_detail_head thead tr th').length;
+    console.log(columnNum);
+    for (var i = 1; i <= columnNum; i++) {
+        var thwidth = $('#tbl_edit_detail_head thead tr th:nth-child(' + i + ')').width();
+        var tdwidth = $('#tbl_edit_detail_body tbody tr td:nth-child(' + i + ')').width();
+        thwidthArry.push(thwidth + 1);
+        tdwidthArry.push(tdwidth + 1);
+    }
+
+    for (var i = 1; i <= columnNum; i++) {
+        if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+            $("#tbl_edit_detail_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+            $("#tbl_edit_detail_body tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+        } else {
+            $("#tbl_edit_detail_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+            $("#tbl_edit_detail_body tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+        }
+    }
+}
+function setTableAEvent() {
+    $("#DetailTableBody tr, #tbl_detail_chkbox tbody tr").on('click', function () {
+        var rowindex = $(this).index();
+        console.log(rowindex);
+        var checked = $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
+        console.log(checked);
+        setRowBackGroundColor(rowindex, checked);
+    });
+}
+
+function setRowBackGroundColor(rowindex, chkBoxStatus) {
+    if (!chkBoxStatus) {
+        $("#tbl_detail tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#87cefa');
+        $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#87cefa');
+        $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked', true);
+    } else {
+        $("#tbl_detail tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
+        $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
+        $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked', false);
+    }
+
+}
 // 出力明細をすべてクリア
 function ClearAllEditDetail() {
     // 全削除ボタンクリックを手動で起動
@@ -202,7 +361,7 @@ jQuery(function ($) {
     if (taxClassCode == 1) {
         $('select[name="lngTaxRate"]').val('');
     } else {
-        $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
+        $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
     }
 
 
@@ -217,9 +376,9 @@ jQuery(function ($) {
 
     // 画面名ヘッダ画像切り替え
     if ($('input[name="lngSlipNo"]').val()) {
-        SegAHeader.innerHTML = '<img src="/img/type01/sc/screnew_title_ja.gif" width="927" height="30" border="0" alt="売上（納品書）修正">';
+        $('#SegAHeader').text('売上（納品書）修正');
     } else {
-        SegAHeader.innerHTML = '<img src="/img/type01/sc/scr_title_ja.gif" width="927" height="30" border="0" alt="売上（納品書）登録">';
+        $('#SegAHeader').text('売上（納品書）登録');
     }
 
     // datepicker対象要素
@@ -303,118 +462,6 @@ jQuery(function ($) {
         return true;
     }
 
-    //出力明細一覧エリアに選択した明細を追加
-    function setEdit(tr) {
-
-        var editTable = $('#EditTable');
-        var tbody = $('#EditTableBody');
-        var editTr = $('<tr></tr>');
-
-        // 重複チェック
-        var rn1 = $(tr).children('td.detailReceiveNo').text();
-        var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
-        var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
-
-        var isSame = false;
-        $("#EditTableBody tr").each(function () {
-            var rn2 = $(this).children('td.detailReceiveNo').text();
-            var dn2 = $(this).children('td.detailReceiveDetailNo').text();
-            var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
-
-            isSame = (rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2);
-            if (isSame) {
-                return false;
-            }
-        });
-        if (!isSame) {
-
-            // No.
-            var i = $(tbody).find('tr').length;
-            var td = $('<td></td>').text(i + 1);
-            $(td).attr('name', 'rownum');
-            $(editTr).append($(td));
-            // 顧客受注番号
-            td = $(tr).find($('td.detailCustomerReceiveCode')).clone();
-            $(editTr).append($(td));
-            // 受注番号
-            td = $(tr).find($('td.detailReceiveCode')).clone();
-            $(editTr).append($(td));
-            // 顧客品番
-            td = $(tr).find($('td.detailGoodsCode')).clone();
-            $(editTr).append($(td));
-            // 製品コード
-            td = $(tr).find($('td.detailProductCode')).clone();
-            $(editTr).append($(td));
-            // 製品名
-            td = $(tr).find($('td.detailProductName')).clone();
-            $(editTr).append($(td));
-            // 製品名（英語）
-            td = $(tr).find($('td.detailProductEnglishName')).clone();
-            $(editTr).append($(td));
-            // 営業部署
-            td = $(tr).find($('td.detailSalesDeptName')).clone();
-            $(editTr).append($(td));
-            // 売上区分
-            td = $(tr).find($('td.detailSalesClassName')).clone();
-            $(editTr).append($(td));
-            // 納期
-            td = $(tr).find($('td.detailDeliveryDate')).clone();
-            $(editTr).append($(td));
-            // 入数
-            td = $(tr).find($('td.detailUnitQuantity')).clone();
-            $(editTr).append($(td));
-            // 単価
-            td = $(tr).find($('td.detailProductPrice')).clone();
-            $(editTr).append($(td));
-            // 単位
-            td = $(tr).find($('td.detailProductUnitName')).clone();
-            $(editTr).append($(td));
-            // 数量
-            td = $(tr).find($('td.detailProductQuantity')).clone();
-            $(editTr).append($(td));
-            // 税抜金額
-            td = $(tr).find($('td.detailSubTotalPrice')).clone();
-            $(editTr).append($(td));
-            //受注番号（明細登録用）
-            td = $(tr).find($('td.detailReceiveNo')).clone();
-            $(editTr).append($(td));
-            //受注明細番号（明細登録用）
-            td = $(tr).find($('td.detailReceiveDetailNo')).clone();
-            $(editTr).append($(td));
-            //リビジョン番号（明細登録用）
-            td = $(tr).find($('td.detailReceiveRevisionNo')).clone();
-            $(editTr).append($(td));
-            //再販コード（明細登録用）
-            td = $(tr).find($('td.detailReviseCode')).clone();
-            $(editTr).append($(td));
-            //売上区分コード（明細登録用）
-            td = $(tr).find($('td.detailSalesClassCode')).clone();
-            $(editTr).append($(td));
-            //製品単位コード（明細登録用）
-            td = $(tr).find($('td.detailProductUnitCode')).clone();
-            $(editTr).append($(td));
-            //備考（明細登録用）
-            td = $(tr).find($('td.detailNote')).clone();
-            $(editTr).append($(td));
-            //通貨単位コード（明細登録用）
-            td = $(tr).find($('td.detailMonetaryUnitCode')).clone();
-            $(editTr).append($(td));
-            //通貨レートコード（明細登録用）
-            td = $(tr).find($('td.detailMonetaryRateCode')).clone();
-            $(editTr).append($(td));
-            //通貨単位記号（明細登録用）
-            td = $(tr).find($('td.detailMonetaryUnitSign')).clone();
-            $(editTr).append($(td));
-            //明細統一フラグ（明細登録用）
-            td = $(tr).find($('td.detailUnifiedFlg')).clone();
-            $(editTr).append($(td));
-
-            // 出力明細テーブルに明細を追加
-            $(tbody).append($(editTr));
-            $(editTable).append($(tbody));
-        }
-    }
-
 
     // 合計金額・消費税額の更新
     function updateAmount() {
@@ -442,7 +489,7 @@ jQuery(function ($) {
         var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
 
         // 消費税率を取得
-        var taxRate = Number($('select[name="lngTaxRate"]').children('option:selected').text()) * 0.01;
+        var taxRate = Number($('select[name="lngTaxRate"]').children('option:selected').text().replace("%", "")) * 0.01;
 
         console.log(taxRate);
 
@@ -466,8 +513,8 @@ jQuery(function ($) {
         // ------------------
         // フォームに値を設定
         // ------------------
-        $('input[name="strTotalAmount"]').val(convertNumber(totalAmount,4));
-        $('input[name="strTaxAmount"]').val(convertNumber(taxAmount,4));
+        $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 4));
+        $('input[name="strTaxAmount"]').val(convertNumber(taxAmount, 4));
     }
 
     function getCheckedRows() {
@@ -555,13 +602,13 @@ jQuery(function ($) {
             //納品先担当者
             strdeliveryplaceusername: $('input[name="strDeliveryPlaceUserName"]').val(),
             //備考
-            strnote: $('textarea[name="strNote"]').val(),
+            strnote: $('input[name="strNote"]').val(),
             //消費税区分
             lngtaxclasscode: $('select[name="lngTaxClassCode"]').children('option:selected').val(),
             strtaxclassname: $('select[name="lngTaxClassCode"]').children('option:selected').text(),
             //消費税率
             lngtaxcode: $('select[name="lngTaxRate"]').children('option:selected').val(),
-            curtax: $('select[name="lngTaxRate"]').children('option:selected').text() * 0.01,
+            curtax: $('select[name="lngTaxRate"]').children('option:selected').text().replace("%", "") * 0.01,
             //消費税額
             strtaxamount: Number(($('input[name="strTaxAmount"]').val()).split(',').join('')),
             //支払期限
@@ -910,9 +957,9 @@ jQuery(function ($) {
         var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
         if (taxClassCode == 1) {
             // $('select[name="lngTaxRate"]').append('<option value=""></option>');
-            $('select[name="lngTaxRate"]').val('');
-        } else {
             $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
+        } else {
+            $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
         }
 
         updateAmount();
@@ -971,7 +1018,7 @@ jQuery(function ($) {
 
 
     // 検索条件入力ボタン押下
-    $('#SearchBt').on('click', function () {
+    $('img.search').on('click', function () {
 
         //出力明細一覧エリアの1行目の売上区分コードを取得する
         var firstRowSalesClassCode = "";
@@ -995,20 +1042,19 @@ jQuery(function ($) {
     });
 
     // 追加ボタン
-    $('#AddBt').on('click', function () {
+    $('img.add').on('click', function () {
 
         var trArray = [];
 
         // 選択行の追加
-        $("#DetailTableBody tr").each(function (index, tr) {
-            if ($(tr).attr('class') == "selected" ||
-                $(tr).find('input[name="edit"]').prop('checked') == true) {
+        $("#tbl_detail_chkbox tbody tr").each(function (index, tr) {
+            if ($(tr).find('input[name="edit"]').prop('checked') == true) {
                 trArray.push(tr);
             }
         });
 
         if (trArray.length < 1) {
-            //alert("明細行が選択されていません。");
+            // alert("明細行が選択されていません。");
             return false;
         }
 
@@ -1024,45 +1070,101 @@ jQuery(function ($) {
             return false;
         }
 
-        // 明細追加
-        $.each($(trArray), function (i, v) {
-            setEdit($(v));
+        // 明細追加        
+        $('#tbl_detail_chkbox tbody tr').each(function (i, e) {
+            var rownum = i + 1;
+            var chkbox = $(this).find('input[type="checkbox"]');
+            if (chkbox.prop("checked")) {
+                var rn1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveNo').text();
+                var dn1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveDetailNo').text();
+                var rev1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveRevisionNo').text();
+
+                console.log(rn1);
+                console.log(dn1);
+                console.log(rev1);
+                var addObj = true;
+                $('#tbl_edit_detail_body tbody tr').each(function (i, e) {
+                    var rn2 = $(this).find('td.detailReceiveNo').text();
+                    var dn2 = $(this).find('td.detailReceiveDetailNo').text();
+                    var rev2 = $(this).find('td.detailReceiveRevisionNo').text();
+
+                    if ((rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2)) {
+                        addObj = false;
+                        return false;
+                    }
+                });
+                console.log(addObj);
+                if (addObj) {
+                    // tableBの追加
+                    $("#tbl_edit_detail_body tbody").append('<tr>' + $('#tbl_detail tbody tr:nth-child(' + rownum + ')').html() + '</tr>');
+                    var no = $("#tbl_edit_no_body tbody").find('tr').length + 1;
+                    $("#tbl_edit_no_body tbody").append('<tr><td>' + no + '</td></tr>');
+
+                    var lasttr = $("#tbl_edit_detail_body").find('tr').last();
+                    lasttr.find('td:nth-child(1)').css('display', 'none');
+                }
+
+            }
         });
+
+        $('#tbl_edit_no_body tbody tr td').width($('#tbl_edit_no_head thead tr th').width());
+
+        resetTableBWidth();
+
+        // tableBのリセット
+        for (var i = $('#tbl_detail_chkbox tbody tr').length; i > 0; i--) {
+            var row = $('#tbl_detail_chkbox tbody tr:nth-child(' + i + ')');
+            var chkbox = row.find('input[type="checkbox"]');
+            if (chkbox.prop("checked")) {
+                row.remove();
+                $('#tbl_detail tbody tr:nth-child(' + i + ')').remove();
+            }
+        }
+
+        $('#tbl_detail tbody tr').each(function (i, e) {
+            $(this).find('td:nth-child(1)').text(i + 1);
+        });
+
+        selectRow($("#tbl_edit_no_body"), $("#tbl_edit_detail_body"));
 
         // 合計金額・消費税額の更新
         updateAmount();
+    });
 
-        
-        var rows = $('#EditTableBody tr');
+
+    // 行IDの再設定
+    function resetTableBRowid() {
+        var rownum = 0;
+        $("#tbl_edit_no_body tbody tr").each(function (i, e) {
+            rownum += 1;
+            $(this).find('td').first().text(rownum);
+        });
+    }
+
+
+
+    // 行IDの再設定
+    function resetTableARowid() {
+        var rownum = 0;
+        $("#tbl_detail tbody tr").each(function (i, e) {
+            rownum += 1;
+            $(this).find('td').first().text(rownum);
+        });
+    }
+
+    function selectRow(objA, objB) {
+        var rows = objA.find('tbody tr');
+        var rows = objB.find('tbody tr');
         var lastSelectedRow;
         /* Create 'click' event handler for rows */
-        rows.on('click', function (e) {
-            /* Get current row */
-            var row = $(this);
+        objA.find('tbody tr').on('click', function (e) {
+            lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+        });
 
-            /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
-             * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
-             * 'Shift' => is represented by 'e.shiftKey' */
-            if (e.ctrlKey || e.metaKey) {
-                /* If pressed highlight the other row that was clicked */
-                $("#EditTableBody tr:nth-child(" + (row.index() + 1) + ")").addClass('selected');
-                
-            } else if (e.shiftKey) {
-                /* If pressed highlight the other row that was clicked */
-                var indexes = [lastSelectedRow.index(), row.index()];
-                indexes.sort(function (a, b) {
-                    return a - b;
-                });
-                for (var i = indexes[0]; i <= indexes[1]; i++) {
-                    $("#EditTableBody tr:nth-child(" + (i + 1) + ")").addClass('selected');
-                }
-            } else {
-                /* Otherwise just highlight one row and clean others */
-                $("#EditTableBody tr").removeClass('selected');
-                $("#EditTableBody tr:nth-child(" + (row.index() + 1) + ")").addClass('selected');
-                lastSelectedRow = row;
-            }
 
+        /* Create 'click' event handler for rows */
+        objB.find('tbody tr').on('click', function (e) {
+            lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
         });
 
         /* This 'event' is used just to avoid that the table text 
@@ -1074,9 +1176,39 @@ jQuery(function ($) {
         $(document).bind('selectstart dragstart', function (e) {
             e.preventDefault(); return false;
         });
+    }
 
-    });
+    function trClickEvent(row, lastSelectedRow, e, objA, objB) {
 
+        /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
+         * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
+         * 'Shift' => is represented by 'e.shiftKey' */
+        if (e.ctrlKey || e.metaKey) {
+            /* If pressed highlight the other row that was clicked */
+            objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#87cefa");
+            objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#87cefa");
+
+        } else if (e.shiftKey) {
+            /* If pressed highlight the other row that was clicked */
+            var indexes = [lastSelectedRow.index(), row.index()];
+            indexes.sort(function (a, b) {
+                return a - b;
+            });
+            for (var i = indexes[0]; i <= indexes[1]; i++) {
+                objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#87cefa");
+                objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#87cefa");
+            }
+        } else {
+            /* Otherwise just highlight one row and clean others */
+            objA.find("tbody tr").css("background-color", "#ffffff");
+            objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#87cefa");
+            objB.find("tbody tr").css("background-color", "#ffffff");
+            objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#87cefa");
+            lastSelectedRow = row;
+        }
+
+        return lastSelectedRow;
+    }
 
     // $('body').on('click', '#EditTableBody tr', function (e) {
     //     var tds = $(e.currentTarget).children('td');
@@ -1089,6 +1221,86 @@ jQuery(function ($) {
     //         $(this).addClass('selected');
     //     }
     // });
+
+
+    // 全削除ボタンのイベント
+    $('img.alldelete').on('click', function () {
+
+        $("#tbl_edit_detail_body tbody tr").each(function (i, e) {
+            removeTableBToTableA($(this));
+        });
+
+        $("#tbl_edit_no_body tbody").empty();
+
+        resetTableARowid();
+        resetTableAWidth();
+
+        $('input[type="checkbox"][name="allSel"]').prop("checked", false);
+
+        setCheckBoxEvent();
+
+        setTableAEvent();
+    });
+
+    // 削除ボタンのイベント
+    $('img.delete').on('click', function () {
+        $("#tbl_edit_no_body tr").each(function (i, e) {
+            var backgroud = $(this).css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                $(this).remove();
+            }
+        });
+        $("#tbl_edit_detail_body tbody tr").each(function (i, e) {
+            var backgroud = $(this).css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                removeTableBToTableA($(this));
+            }
+        });
+
+        resetTableARowid();
+        resetTableBRowid();
+        resetTableAWidth();
+
+        $('input[type="checkbox"][name="allSel"]').prop("checked", false);
+
+        setCheckBoxEvent();
+
+        setTableAEvent();
+    });
+
+    function removeTableBToTableA(tableBRow) {
+        var trhtml = tableBRow.html();
+        var detailnoB = tableBRow.find('.detailReceiveNo').text();
+        console.log(detailnoB);
+        var rownum = 0;
+        $("#tbl_detail tbody tr").each(function (i, e) {
+            var detailnoA = $(this).find('.detailReceiveNo').text();
+            if (detailnoA > detailnoB) {
+                rownum = i + 1;
+                return false;
+            }
+        });
+        if (rownum == 0) {
+            $('#tbl_detail tbody').append('<tr>' + trhtml + '</tr>');
+            $('#tbl_detail_chkbox tbody').append('<tr><td style="text-align:center;"><input type="checkbox" name="edit" style="width: 10px;"></td></tr>');
+            rownum = $("#tbl_detail tbody tr").length;
+        } else {
+            $('#tbl_detail tbody tr:nth-child(' + rownum + ')').before('<tr>' + trhtml + '</tr>');
+            $('#tbl_detail_chkbox tbody tr:nth-child(' + rownum + ')').before('<tr><td style="text-align:center;"><input type="checkbox" name="edit" style="width: 10px;"></td></tr>');
+        }
+
+        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').width($("#tbl_detail_head thead tr th:nth-child(1)").width());
+        console.log($('#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').width());
+        console.log($('#tbl_detail_chkbox_head thead tr th:nth-child(1').width());
+
+        $('#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').width($("#tbl_detail_chkbox_head tr th:nth-child(1)").width());
+        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('td:nth-child(1)').css('display', '');
+
+        tableBRow.remove();
+    }
+
+
+
     $('#selectup').on('click', function () {
         var selected = getCheckedRows();
         if (!selected) { return false; }
@@ -1129,7 +1341,7 @@ jQuery(function ($) {
     });
 
     // プレビューボタン押下
-    $('#PreviewBt').on('click', function () {
+    $('img.preview').on('click', function () {
         // 納品先
         var lngDeliveryPlaceCode = $('input[name="lngDeliveryPlaceCode"]').val();
         if (lngDeliveryPlaceCode.length == 0) {
@@ -1199,4 +1411,5 @@ jQuery(function ($) {
             return "";
         }
     }
+
 });

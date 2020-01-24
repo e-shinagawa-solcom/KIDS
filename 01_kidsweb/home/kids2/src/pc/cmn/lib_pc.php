@@ -1071,6 +1071,7 @@ function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMon
     $aryQuery[] = "	AND mmr.lngMonetaryUnitCode = '" . $lngMonetaryUnitCode . "' ";
     $aryQuery[] = "GROUP BY mmr.curConversionRate ";
     $strQuery = implode("\n", $aryQuery);
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum > 0) {
         $objResult = $objDB->fetchObject($lngResultID, 0);
