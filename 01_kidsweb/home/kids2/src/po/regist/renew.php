@@ -45,12 +45,10 @@
 //	$aryData["dtmExpirationDate"]   = $_REQUEST["dtmExpirationDate"];
 	$aryData["lngPayConditionCode"] = $_REQUEST["lngPayConditionCode"];
 //	$aryData["strPayConditionName"] = $_REQUEST["strPayConditionName"];
-	$aryData["strPayConditionName"] = mb_convert_encoding($_REQUEST["strPayConditionName"], "EUC-JP", "auto");
+	$aryData["strPayConditionName"] = $_REQUEST["strPayConditionName"];
 	$aryData["lngLocationCode"]     = $_REQUEST["lngLocationCode"];
-//	$aryData["strLocationName"]     = $_REQUEST["strLocationName"];
-	$aryData["strLocationName"]     = mb_convert_encoding($_REQUEST["strLocationName"], "EUC-JP", "auto");
-//	$aryData["strNote"]             = $_REQUEST["strNote"];
-	$aryData["strNote"]             = mb_convert_encoding($_REQUEST["strNote"], "EUC-JP", "auto");
+	$aryData["strLocationName"]     = $_REQUEST["strLocationName"];
+	$aryData["strNote"]             = $_REQUEST["strNote"];
 	$aryData["strOrderCode"]        = $_REQUEST["strOrderCode"];
 	// $aryData["strProductCode"]      = $_REQUEST["strProductCode"];
 	// $aryData["strProductName"]      = $_REQUEST["strProductName"];
@@ -108,7 +106,7 @@
 		// テンプレート読み込み
 		$objTemplate = new clsTemplate();
 
-		header("Content-type: text/plain; charset=EUC-JP");
+		header("Content-type: text/plain; charset=UTF-8");
 		$objTemplate->getTemplate( "po/finish/parts.tmpl" );
 		
 		// テンプレート生成

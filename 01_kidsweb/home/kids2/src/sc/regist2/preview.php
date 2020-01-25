@@ -104,12 +104,10 @@
 		$aryData["aryDetailJson"] = EncodeToJson($aryDetail);
 
 		// --------------------------------
-		//  文字コード変換（UTF-8->EUC-JP）
+		//  文字コード変換（UTF-8->UTF-8）
 		// --------------------------------
 		//jQueryのajaxでPOSTすると文字コードが UTF-8 になって
-		//データ登録時にエラーになるため、DB処理前にEUC-JPに変換する
-//		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
-//		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
+		//データ登録時にエラーになるため、DB処理前にUTF-8に変換する
 
 		// --------------------------
 		//  プレビュー生成
@@ -167,12 +165,10 @@
 		$aryDetail = DecodeFromJson($_POST["aryDetailJson"]);
 
 		// --------------------------------
-		//  文字コード変換（UTF-8->EUC-JP）
+		//  文字コード変換（UTF-8->UTF-8）
 		// --------------------------------
 		// json変換時に文字コードが UTF-8 になって
-		// データ登録時にエラーになるため、EUC-JPに戻す
-		$aryHeader = fncConvertArrayHeaderToEucjp($aryHeader);
-		$aryDetail = fncConvertArrayDetailToEucjp($aryDetail);
+		// データ登録時にエラーになるため、UTF-8に戻す
 
 		// --------------------------
 		//  データベース処理

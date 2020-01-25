@@ -200,7 +200,7 @@ jQuery(function($){
         $.ajax({
             type: 'POST',
             url: '/po/confirm2/index.php?strSessionID=' + $('input[name="strSessionID"]').val(),
-            scriptCharset: 'EUC-JP',
+            scriptCharset: 'UTF-8',
             data: {
                 strSessionID:        $('input[name="strSessionID"]').val(),
                 strMode:             'renew',

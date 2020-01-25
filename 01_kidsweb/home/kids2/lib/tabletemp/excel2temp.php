@@ -2,7 +2,7 @@
 
 /**
 *
-*	@charset	: euc-jp
+*	@charset	: UTF-8
 */
 
 

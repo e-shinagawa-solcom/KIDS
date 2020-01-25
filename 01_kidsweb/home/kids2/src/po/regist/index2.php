@@ -108,7 +108,7 @@
 	// テンプレートに反映する文字列
 	$aryData["lngPONo"] = "$strOrderCode - $strReviseCode";
 
-	header("Content-type: text/plain; charset=EUC-JP");
+	header("Content-type: text/plain; charset=UTF-8");
 	$objTemplate->getTemplate( "po/finish/parts.tmpl" );
 	
 	// テンプレート生成

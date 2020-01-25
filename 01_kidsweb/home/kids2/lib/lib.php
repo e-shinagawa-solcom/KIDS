@@ -91,49 +91,6 @@ function fncCheckString( $str, $strCheckMode )
 			return "9001:$str";
 		}
 
-/*
-		// 制御文字、機種依存文字チェック( 共通チェック項目 )
-		if ( mb_ereg ( "(ad[a1-fc]|[00-1f])", bin2hex ( $str ) ) )
-		{
-			for ( $i = 0; $i < mb_strlen ( $str, "EUC" ); $i++ )
-			{
-				$str = preg_replace ( "/[\r\n]/", "", $str );
-				$dec = hexdec ( bin2hex ( mb_substr ( $str, $i, 1, "EUC" ) ) );
-//				if ( ( $dec > 0 && $dec < 32 ) || ( $dec > 44448 && $dec < 44540 ) )
-				//if ( ( $dec > 0 && $dec < 32 ) || ( $dec > 44478 && $dec < 44522 ) || ( $dec > 44524 && $dec < 45217 ) )
-				if ( $dec > 0 && $dec < 32 )
-				{
-					return "9002:$str";
-				}
-			}
-		}
-
-		// 数字チェック
-		if ( ereg ( "^number", $strCheckType ) && $str != "" )
-		{
-			// スペース除去
-			$str = mb_ereg_replace ( "\s", "", $str );
-
-			// 最大最小指定の取得
-			preg_match ( "/\((-?[0-9]*\.?[0-9]*),(-?[0-9]*\.?[0-9]*)\)/", $strCheckType , $lngRange );
-
-			// 数値チェック
-			if ( !ereg ( "^-?[0-9]*\.?[0-9]+$", $str ) || ereg ( "^(\.|-\.)", $str ) ) {
-				return "9003:$str";
-			}
-
-			// 最小値チェック
-			if ( $lngRange[1] != "" && $str < $lngRange[1] ) {
-				return "9004:$str";
-			}
-
-			// 最大値チェック
-			if ( $lngRange[2] != "" && $str > $lngRange[2] ) {
-				return "9005:$str";
-			}
-
-		}
-*/
 
 		// 数字チェック(エラーメッセージ指定可能チェックテスト運用)
 		if ( preg_match ( "/^number/", $strCheckType ) && $str != "" )
@@ -1186,8 +1143,8 @@ function fncGetMailMessage( $lngFunctionCode, $aryData, $objDB )
 	$objTemplate->complete();
 
 	// 文字コード変換(EUC->JIS)
-	$objTemplate->strTemplate = mb_convert_encoding( $objTemplate->strTemplate, "JIS", "EUC-JP" );
-	$objResult->strsubject    = mb_convert_encoding( $objResult->strsubject, "JIS", "EUC-JP" );
+	$objTemplate->strTemplate = mb_convert_encoding( $objTemplate->strTemplate, "JIS", "UTF-8" );
+	$objResult->strsubject    = mb_convert_encoding( $objResult->strsubject, "JIS", "UTF-8" );
 //	$objResult->strsubject    = mb_encode_mimeheader ( $objResult->strsubject , "iso-2022-jp", "B" );
 
 	return array ( $objResult->strsubject, $objTemplate->strTemplate );
@@ -1299,7 +1256,7 @@ function fncGetReplacedHtml( $strTemplatePath, $aryPost, $objAuth )
 
 	$objBaseTemplate->complete();
 
-	// header("Content-type: text/plain; charset=EUC-JP");
+	// header("Content-type: text/plain; charset=UTF-8");
 
 
 //require( LIB_DEBUGFILE );
@@ -1873,7 +1830,7 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 		if ( DEF_DEBUG_MODE == 1 )
 		{
 
-			//header("Content-Type: text/html;charset=euc-jp");
+			//header("Content-Type: text/html;charset=UTF-8");
 			mb_http_output($objDB->InputEncoding);
 
 			$strEcho = '<html>';
@@ -1894,7 +1851,7 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 		{
 
 		 	// /error/index.php で取り扱うエンコーディングへ変換する
-			$strErrorMessage = mb_convert_encoding($strErrorMessage, 'euc-jp', $objDB->InputEncoding);
+			$strErrorMessage = mb_convert_encoding($strErrorMessage, 'UTF-8', $objDB->InputEncoding);
 
 			// エラー画面へのリダイレクト
 			$strTopUrl = TOP_URL;
@@ -2416,7 +2373,7 @@ function deleteTempFile( $strTmpFile )
 
 function toUTF8($str)
 {
-    return htmlspecialchars(mb_convert_encoding($str, "utf-8", "eucjp-win"), ENT_QUOTES, 'utf-8');
+    return htmlspecialchars($str, ENT_QUOTES, 'utf-8');
 }
 
 

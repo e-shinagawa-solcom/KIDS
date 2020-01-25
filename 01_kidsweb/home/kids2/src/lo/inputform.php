@@ -6,8 +6,8 @@
 	require(FNC_LIBS_FILE);
 	require("./functions.php");
 
-	mb_internal_encoding("EUC-JP");
-	mb_http_output("EUC-JP");
+	mb_internal_encoding("UTF-8");
+	mb_http_output("UTF-8");
 
 	$aryGET = $_GET;
 

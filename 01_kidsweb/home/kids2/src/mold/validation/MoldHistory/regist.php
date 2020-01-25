@@ -301,8 +301,6 @@ else
 	// エラー結果配列のマージ
 	$errors = array_merge($errMstList, $errSemanticList);
 
-	// json変換の為、一時的にUTF-8へ変換
-	mb_convert_variables('UTF-8', 'EUC-JP', $errors);
 	// レスポンスヘッダ設定)(json)
 	header('Content-Type: application/json');
 	$json = json_encode($errors, JSON_PRETTY_PRINT);

@@ -10,7 +10,7 @@
 *
 */
 
-	mb_http_output ( 'EUC-JP' );
+	mb_http_output ( 'UTF-8' );
 
 
 	require_once ('conf.inc');
@@ -72,7 +72,6 @@ $objDB->transactionBegin();
 // 登録データの取得
 $registJson = str_replace('/quot/', '"', $aryData['registJson']);
 $regist = json_decode($registJson, true);
-mb_convert_variables('EUC-JP', 'UTF-8', $regist);
 
 unset($aryData['registJson']);
 unset($registJson);

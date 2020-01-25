@@ -844,7 +844,7 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["lngstockitemcode"];
                 $aryQueryDetail[] = "  ,'" . $aryOrderDetailUpdate[$i]["strstockitemname"] . "'";
                 $aryQueryDetail[] = "  ," . $aryOrderDetail[$i]["lngdeliverymethodcode"];
-                $aryQueryDetail[] = "  ,'" . mb_convert_encoding($aryOrderDetail[$i]["strdeliverymethodname"], "EUC-JP", "auto") . "'";
+                $aryQueryDetail[] = "  ,'" . $aryOrderDetail[$i]["strdeliverymethodname"] . "'";
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["curproductprice"];
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["lngproductquantity"];
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["lngproductunitcode"];

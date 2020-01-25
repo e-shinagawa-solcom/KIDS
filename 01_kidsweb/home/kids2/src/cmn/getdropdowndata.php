@@ -38,6 +38,4 @@ $strQuery = str_replace('_%strFormValue0%_', $aryData["strFormValue"], $strFile)
 $result["pulldown"] = fncGetPulldownQueryExec($strQuery, '', $objDB, 2);
 
 $objDB->close();
-//結果出力
-mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);

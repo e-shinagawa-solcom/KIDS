@@ -282,7 +282,7 @@ class FormCache extends WithQuery
 
 	public static function deserialize($str)
 	{
-		$converted = mb_convert_encoding($str, "utf-8", "eucjp-win");
+		$converted = $str;
 		return  unserialize($converted);
 	}
 
@@ -294,7 +294,7 @@ class FormCache extends WithQuery
 	 */
 	private function convertQueryableData($anyData)
 	{
-		return mb_convert_encoding(pg_escape_string(serialize($anyData)), "eucjp-win", "utf-8");
+		return pg_escape_string(serialize($anyData));
 	}
 
 	/**
@@ -305,6 +305,6 @@ class FormCache extends WithQuery
 	 */
 	private function convertQueryableHashcode($hashcode)
 	{
-		return mb_convert_encoding(pg_escape_string($hashcode), "eucjp-win", "utf-8");
+		return pg_escape_string($hashcode);
 	}
 }

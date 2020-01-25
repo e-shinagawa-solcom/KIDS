@@ -2,7 +2,7 @@
 
 /**
 *
-*	@charset	: EUC-JP
+*	@charset	: UTF-8
 */
 
 	require ( 'conf.inc' );										// 設定読み込み
@@ -22,7 +22,7 @@
 	$objAuth		= new clsAuth();
 	$objTemplate	= new clsTemplate();								// テンプレートオブジェクト生成
 
-	$charset = 'EUC-JP';
+	$charset = 'UTF-8';
     
 	$objReader      = new XlsxReader();
 	

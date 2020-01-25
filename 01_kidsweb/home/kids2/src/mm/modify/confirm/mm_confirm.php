@@ -62,9 +62,6 @@ if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 	$objTemplate = new clsTemplate ();
 	$objTemplate->getTemplate ( "/mm/confirm/mm_modify_confirm.html" );
 
-	// デシリアライズ時にUTF-8にしたものをEUC-JPに戻す
-	mb_convert_variables("eucjp-win", "utf-8", $workFormData);
-
 	// プレースホルダー置換
 	$objTemplate->replace(array_merge($replacement, $workFormData));
 	$objTemplate->complete();

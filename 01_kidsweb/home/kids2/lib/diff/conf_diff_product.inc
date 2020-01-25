@@ -4,7 +4,7 @@
 *	ファイル概要	: 製品マスタ・差分管理設定
 *
 *
-*	@charset	: euc-jp
+*	@charset	: UTF-8
 */
 
 

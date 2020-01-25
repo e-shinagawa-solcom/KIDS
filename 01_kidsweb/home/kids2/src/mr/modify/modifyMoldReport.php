@@ -50,9 +50,6 @@ if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 	// デシリアライズ
 	$workFormData = FormCache::deserialize($workCache["serializeddata"]);
 
-	// デシリアライズ時にUTF-8にしたものをEUC-JPに戻す
-	mb_convert_variables("euc-jp", "utf-8", $workFormData);
-
 	// 金型帳票情報の取得
 	$moldReportId = $workFormData[FormMoldReport::MoldReportId];
 	$revision = $workFormData[FormMoldReport::Revision];
@@ -158,7 +155,7 @@ if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 
 	// 業務コードユーティリティのインスタンス取得
 	$utilBussinesscode = UtilBussinesscode::getInstance();
-	// 帳票区分のコード説明(EUC-JP)を取得
+	// 帳票区分のコード説明(UTF-8)を取得
 	$result[TableMoldReport::ReportCategory] =
 		$utilBussinesscode->getDescription("帳票区分", $result[TableMoldReport::ReportCategory]);
 

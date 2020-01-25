@@ -79,7 +79,7 @@ if ($_POST["strMode"] == "insert") {
     $aryUpdate["lngpayconditioncode"] = $_POST["lngPayConditionCode"];
     $aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
     $aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
-    $aryUpdate["strnote"] = mb_convert_encoding($_POST["strNote"], "EUC-JP", "auto");
+    $aryUpdate["strnote"] = $_POST["strNote"];
     $aryUpdate["lngorderstatuscode"] = 2;
     for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
         $aryUpdateDetail[$i]["lngpurchaseorderdetailno"] = $i + 1;
@@ -130,7 +130,7 @@ if ($_POST["strMode"] == "insert") {
     // テンプレート読み込み
     $objTemplate = new clsTemplate();
 
-//        header("Content-type: text/plain; charset=EUC-JP");
+//        header("Content-type: text/plain; charset=UTF-8");
     $objTemplate->getTemplate("/po/finish/parts.tmpl");
 
     // テンプレート生成
@@ -195,7 +195,7 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
     $_POST["aryDetail"][$i]["strProductUnitName"] = fncGetMasterValue("m_productunit", "lngProductUnitCode", "strProductUnitName", $_POST["aryDetail"][$i]["lngProductUnitCode"], '', $objDB);
 
     // 明細行備考の特殊文字変換
-    $_POST["aryDetail"][$i]["strDetailNote"] = fncHTMLSpecialChars(mb_convert_encoding($_POST["aryDetail"][$i]["strDetailNote"], "EUC-JP", "auto"));
+    $_POST["aryDetail"][$i]["strDetailNote"] = fncHTMLSpecialChars($_POST["aryDetail"][$i]["strDetailNote"]);
 
     // 通貨記号
     $_POST["aryDetail"][$i]["strMonetarySign"] = ($_POST["aryDetail"][0]["lngMonetaryUnitCode"] == 1) ? "\\\\" : fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitsign", $_POST["aryDetail"][$i]["lngMonetaryUnitCode"], '', $objDB);
@@ -260,7 +260,7 @@ $aryData["strLocationName"] = fncGetMasterValue("m_company", "strcompanydisplayc
 $aryData["strAction"] = "/po/confirm/index.php?strSessionID=" . $aryData["strSessionID"];
 
 //ヘッダ備考の特殊文字変換
-$aryData["strNote"] = fncHTMLSpecialChars(mb_convert_encoding($aryData["strNote"], "EUC-JP", "auto"));
+$aryData["strNote"] = fncHTMLSpecialChars($aryData["strNote"]);
 
 // 通貨記号+合計金額
 $aryData["strMonetarySign"] = $_POST["aryDetail"][0]["strMonetarySign"];

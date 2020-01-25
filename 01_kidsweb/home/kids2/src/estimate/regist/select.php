@@ -258,8 +258,8 @@ if ($file["exc_tmp_name"]) {
 					// ワークシート表示用のデータを出力する
 					$viewData = $objSheet->makeDataOfSheet();
 
-					// ワークシート名を'EUC-JP'にエンコードする
-					$strWSName = mb_convert_encoding($sheetName, "EUC-JP", "UTF-8");
+					// ワークシート名を'UTF-8'にエンコードする
+					$strWSName = $sheetName;
 
 					$strExcel       .= "<div class=\"sheetHeader\" id=\"sheet". $sheetNumber. "\">";
 					$strExcel       .= makeHTML::makeDifferenceRateTable($difference, $differenceMessage);

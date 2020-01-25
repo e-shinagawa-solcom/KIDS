@@ -204,19 +204,19 @@ class estimateHeaderController {
                     case DEF_MESSAGE_CODE_NOT_ENTRY_ERROR:
                         $str = array(
                             "ヘッダ部",
-                            mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8')
+                            $headerTitleNameList[$key]
                         );
                         break;
                     case DEF_MESSAGE_CODE_FORMAT_ERROR:
                         $str = array(
                             "ヘッダ部",
-                            mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8')
+                            $headerTitleNameList[$key]
                         );
                         break;
                     case DEF_MESSAGE_CODE_MASTER_CHECK_ERROR:
                         $str = array(
                             "ヘッダ部",
-                            mb_convert_encoding($headerTitleNameList[$key], 'EUC-JP', 'UTF-8'),
+                            $headerTitleNameList[$key],
                         );
                         break;
                     default:

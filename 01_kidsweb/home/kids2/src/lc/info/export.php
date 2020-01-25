@@ -44,8 +44,6 @@ if ($data["getDataModeFlg"] == 1) {
 // t_lcinfoよりL/C情報を取得する
 $lcInfoArry = fncGetLcInfoData($objDB, $data);
 
-$lcInfoArry = mb_convert_encoding($lcInfoArry, 'UTF-8', 'EUC-JP');
-
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 

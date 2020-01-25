@@ -99,7 +99,6 @@
 		"logined_flg" => $logined_flg,
 		"login_user_auth"=> $login_user_auth
 	);
-	mb_convert_variables('UTF-8' , 'EUC-JP' , $arr );
 	echo "<script>$(function(){lcInit('". json_encode($arr) ."');});</script>";
 
 	return true;

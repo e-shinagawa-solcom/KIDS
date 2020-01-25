@@ -25,7 +25,7 @@ $objDB			= new estimateDB();
 $objAuth		= new clsAuth();
 $objTemplate	= new clsTemplate();								// テンプレートオブジェクト生成
 
-$charset = 'EUC-JP';
+$charset = 'UTF-8';
 
 $objReader      = new XlsxReader();
 

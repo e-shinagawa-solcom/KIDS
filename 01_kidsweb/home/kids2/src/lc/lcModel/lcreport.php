@@ -62,16 +62,16 @@ function reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $object
 
         // テンプレートへの出力情報を設定する
         if ($type == 1) {
-            $header['header'] = convertEncoding('L/C Open情報（Beneficiary・Bk別合計）Open月');
+            $header['header'] = 'L/C Open情報（Beneficiary・Bk別合計）Open月';
         } else {
-            $header['header'] = convertEncoding('L/C Open情報（Beneficiary・Bk別合計）船積月');
+            $header['header'] = 'L/C Open情報（Beneficiary・Bk別合計）船積月';
         }
-        $header['A4'] = convertEncoding(sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 5, 2)));
-        $header['F5'] = convertEncoding(sprintf('通貨区分:%s', $currencyClass));
-        $header['B7'] = convertEncoding($bankLst[0]["bankomitname"]);
-        $header['C7'] = convertEncoding($bankLst[1]["bankomitname"]);
-        $header['D7'] = convertEncoding($bankLst[2]["bankomitname"]);
-        $header['E7'] = convertEncoding($bankLst[3]["bankomitname"]);
+        $header['A4'] = sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 5, 2));
+        $header['F5'] = sprintf('通貨区分:%s', $currencyClass);
+        $header['B7'] = $bankLst[0]["bankomitname"];
+        $header['C7'] = $bankLst[1]["bankomitname"];
+        $header['D7'] = $bankLst[2]["bankomitname"];
+        $header['E7'] = $bankLst[3]["bankomitname"];
         $sumofBenebkTotal = fncGetSumofBeneBkPrice($objDB);
         $header['B27'] = $sumofBenebkTotal->sum_1;
         $header['C27'] = $sumofBenebkTotal->sum_2;
@@ -81,13 +81,9 @@ function reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $object
         $header['currencyclass'] = $currencyClass;
 
 
-        mb_convert_variables('UTF-8' , 'EUC-JP' , $header);
         $result['report_header'] = $header;
         $benebkTotalLst = fncGetReportByBenebktotal($objDB);
         
-        for ($i = 0; $i < count($benebkTotalLst); $i++) {
-            mb_convert_variables('UTF-8' , 'EUC-JP' , $benebkTotalLst[$i] );
-        }
         $result['report_main'] = $benebkTotalLst;
     }
 
@@ -133,21 +129,17 @@ function reportTwoOutput($objDB, $spreadsheet, $currencyClass, $objectYm)
         }
 
         // テンプレートの出力
-        $header['A1'] = convertEncoding(sprintf('(%d年%d月)', substr($objectYm, 0, 4), substr($objectYm, 5, 2)));
-        $header['H2'] = convertEncoding(sprintf('通貨区分:%s', $currencyClass));
+        $header['A1'] = sprintf('(%d年%d月)', substr($objectYm, 0, 4), substr($objectYm, 5, 2));
+        $header['H2'] = sprintf('通貨区分:%s', $currencyClass);
         $header['C2'] = $totalPrice;
         $header['currencyclass'] = $currencyClass;
 
-        mb_convert_variables('UTF-8' , 'EUC-JP' , $header);
         $result['report_header'] = $header;
 
         $lcTotalLst = fncGetReportByLcTotal($objDB);
 
         if ($lcTotalLst && count($lcTotalLst) > 0) {
             
-            for ($i = 0; $i < count($lcTotalLst); $i++) {
-                mb_convert_variables('UTF-8' , 'EUC-JP' , $lcTotalLst[$i] );
-            }
             $result['report_main'] = $lcTotalLst;
         }
 
@@ -204,19 +196,15 @@ function reportThreeOutput($objDB, $spreadsheet, $currencyClass, $objectYm)
         }
 
         // テンプレートの出力
-        $header['C1'] = convertEncoding(sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 5, 2)));
-        $header['Q1'] = convertEncoding(sprintf('通貨区分:%s', $currencyClass));
+        $header['C1'] = sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 5, 2));
+        $header['Q1'] = sprintf('通貨区分:%s', $currencyClass);
         $header['I1'] = $totalPrice;
         $header['currencyclass'] = $currencyClass;
         
-        mb_convert_variables('UTF-8' , 'EUC-JP' , $header);
         $result['report_header'] = $header;
         $lcDetailLst = fncGetReportByLcDetail($objDB);
         if ($lcDetailLst && count($lcDetailLst) > 0) {
             
-            for ($i = 0; $i < count($lcDetailLst); $i++) {
-                mb_convert_variables('UTF-8' , 'EUC-JP' , $lcDetailLst[$i] );
-            }
             $result['report_main'] = $lcDetailLst;
         }
 
@@ -331,24 +319,24 @@ function reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $type
 
         // テンプレートの出力
         if ($type == 3) {
-            $header['header'] = convertEncoding('Open月・Beneficiary別L/C発行予定集計表');
+            $header['header'] = 'Open月・Beneficiary別L/C発行予定集計表';
         } else if ($type == 4) {
-            $header['header'] = convertEncoding('船積月・Beneficiary別L/C発行予定集計表');
+            $header['header'] = '船積月・Beneficiary別L/C発行予定集計表';
         }
 
-        $header['M1'] = convertEncoding(sprintf('通貨区分:%s', $currencyClass));
+        $header['M1'] = sprintf('通貨区分:%s', $currencyClass);
         $objectYm = str_replace("/", "-", $objectYm) . "-01";
-        $header['B3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "-6 month")));
-        $header['C3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "-5 month")));
-        $header['D3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "-4 month")));
-        $header['E3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "-3 month")));
-        $header['F3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "-2 month")));
-        $header['G3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "-1 month")));
-        $header['H3'] = convertEncoding(date("Y年m月", strtotime($objectYm)));
-        $header['I3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "+1 month")));
-        $header['J3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "+2 month")));
-        $header['K3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "+3 month")));
-        $header['L3'] = convertEncoding(date("Y年m月", strtotime($objectYm . "+4 month")));
+        $header['B3'] = date("Y年m月", strtotime($objectYm . "-6 month"));
+        $header['C3'] = date("Y年m月", strtotime($objectYm . "-5 month"));
+        $header['D3'] = date("Y年m月", strtotime($objectYm . "-4 month"));
+        $header['E3'] = date("Y年m月", strtotime($objectYm . "-3 month"));
+        $header['F3'] = date("Y年m月", strtotime($objectYm . "-2 month"));
+        $header['G3'] = date("Y年m月", strtotime($objectYm . "-1 month"));
+        $header['H3'] = date("Y年m月", strtotime($objectYm));
+        $header['I3'] = date("Y年m月", strtotime($objectYm . "+1 month"));
+        $header['J3'] = date("Y年m月", strtotime($objectYm . "+2 month"));
+        $header['K3'] = date("Y年m月", strtotime($objectYm . "+3 month"));
+        $header['L3'] = date("Y年m月", strtotime($objectYm . "+4 month"));
 
         $sumofBeneMonthCal = fncGetSumofBeneMonCal($objDB);
         $header['B23'] = $sumofBeneMonthCal->sum_1;
@@ -365,15 +353,11 @@ function reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $type
         $header['M23'] = $sumofBeneMonthCal->sum_12;
         $header['currencyclass'] = $currencyClass;
         
-        mb_convert_variables('UTF-8' , 'EUC-JP' , $header);
         $result['report_header'] = $header;
 
         $beneMonthCalLst = fncGetReportByBeneMonthCal($objDB);
         if ($beneMonthCalLst && count($beneMonthCalLst) > 0) {
             
-            for ($i = 0; $i < count($beneMonthCalLst); $i++) {
-                mb_convert_variables('UTF-8' , 'EUC-JP' , $beneMonthCalLst[$i] );
-            }
             $result['report_main'] = $beneMonthCalLst;
         }
     }
@@ -506,17 +490,12 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
     if ($lcinfoLst && count($lcinfoLst) > 0) {
 
         // テンプレートの出力
-        $header['M3'] = convertEncoding("通貨区分：" . $currencyClass);
+        $header['M3'] = "通貨区分：" . $currencyClass;
         $header['B2'] = $data["startDate"];
         $header['B3'] = $data["endDate"];
 
         $unSettedLst = fncGetUnSettedLst($objDB);
-        if ($unSettedLst && count($unSettedLst) > 0) {            
-            for ($i = 0; $i < count($unSettedLst); $i++) {
-                mb_convert_variables('UTF-8' , 'EUC-JP' , $unSettedLst[$i] );
-            }            
-        }
-        $header['A5'] = convertEncoding($unSettedLst);
+        $header['A5'] = $unSettedLst;
 
         $unSettedTotal = fncGetUnSettedTotal($objDB);
         if ($unSettedTotal) {            
@@ -530,10 +509,10 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
 
         $header['A26'] = sprintf("%01.2f", $rate);
 
-        $header['B4'] = convertEncoding($bankLst[0]["bankomitname"]);
-        $header['C4'] = convertEncoding($bankLst[1]["bankomitname"]);
-        $header['D4'] = convertEncoding($bankLst[2]["bankomitname"]);
-        $header['E4'] = convertEncoding($bankLst[3]["bankomitname"]);
+        $header['B4'] = $bankLst[0]["bankomitname"];
+        $header['C4'] = $bankLst[1]["bankomitname"];
+        $header['D4'] = $bankLst[2]["bankomitname"];
+        $header['E4'] = $bankLst[3]["bankomitname"];
 
         $header['B26'] = $unSettedTotal->bank1total * $raterate;
         $header['C26'] = $unSettedTotal->bank2total * $raterate;
@@ -543,14 +522,10 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
         $header['G26'] = $unSettedTotal->benetotaltotal * $raterate;
         
         $header['currencyclass'] = $currencyClass;
-        mb_convert_variables('UTF-8' , 'EUC-JP' , $header);
         $result['report_header'] = $header;
         $unSettedPriceLst = fncGetReportUnSettedPrice($objDB);
 
         if ($unSettedPriceLst && count($unSettedPriceLst) > 0) {
-            for ($i = 0; $i < count($unSettedPriceLst); $i++) {
-                mb_convert_variables('UTF-8' , 'EUC-JP' , $unSettedPriceLst[$i] );
-            }
             $result['report_main'] = $unSettedPriceLst;
         }
     }
@@ -607,48 +582,44 @@ function reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
 
         // テンプレートの出力
         if (strcmp($currencyClass, '円') == 0) {
-            $header["H10"] = convertEncoding("金額（￥）");
+            $header["H10"] = "金額（￥）";
         }
-        $header["P9"] = convertEncoding("通貨区分：" . $currencyClass);
-        $header["B7"] = convertEncoding(sprintf('%d年%d月', substr($data["openYm"], 0, 4), substr($data["openYm"], 5, 2)));
-        $header["M8"] = convertEncoding(sprintf('%d年%d月', substr($data["shipYm"], 0, 4), substr($data["shipYm"], 5, 2)));
-        $header["D8"] = convertEncoding($data["payfName"]);
-        $header["H8"] = convertEncoding($data["bankname"]);
+        $header["P9"] = "通貨区分：" . $currencyClass;
+        $header["B7"] = sprintf('%d年%d月', substr($data["openYm"], 0, 4), substr($data["openYm"], 5, 2));
+        $header["M8"] = sprintf('%d年%d月', substr($data["shipYm"], 0, 4), substr($data["shipYm"], 5, 2));
+        $header["D8"] = $data["payfName"];
+        $header["H8"] = $data["bankname"];
         if (strcmp($data["bankname"], 'ALL') == 0) {
-            $header["P10"] = convertEncoding("予定銀行");
+            $header["P10"] = "予定銀行";
         }
-        $header["L8"] = convertEncoding($data["lcopen"]);
-        $header["O8"] = convertEncoding($data["portplace"]);
+        $header["L8"] = $data["lcopen"];
+        $header["O8"] = $data["portplace"];
 
         $sendLst = fncGetSendInfo($objDB);
 
         if ($sendLst && count($sendLst) > 0) {
-            $header["B3"] = convertEncoding($sendLst[0]["sendcarenote1"]);
-            $header["B4"] = convertEncoding($sendLst[0]["sendcarenote2"]);
-            $header["G2"] = convertEncoding($sendLst[0]["sendfromname"]);
-            $header["H3"] = convertEncoding($sendLst[0]["sendfromfax"]);
+            $header["B3"] = $sendLst[0]["sendcarenote1"];
+            $header["B4"] = $sendLst[0]["sendcarenote2"];
+            $header["G2"] = $sendLst[0]["sendfromname"];
+            $header["H3"] = $sendLst[0]["sendfromfax"];
         }
 
         $payfInfo = fncGetPayfInfoByPayfcd($objDB, $data["payfCode"]);
         if ($payfInfo != null) {
-            $header["B2"] = convertEncoding($payfInfo->payfsendname);
-            $header["H42"] = convertEncoding($payfInfo->payfsendfax);
+            $header["B2"] = $payfInfo->payfsendname;
+            $header["H42"] = $payfInfo->payfsendfax;
         }
 
         $header["H27"] = fncGetSumofImpLcOrderPrice($objDB);
 
         $header['currencyclass'] = $currencyClass;
         
-        mb_convert_variables('UTF-8' , 'EUC-JP' , $header);
 
         $result['report_header'] = $header;
 
         $ilopLst = fncGetReportImpLcOrderInfo($objDB);
 
         if ($ilopLst && count($ilopLst) > 0) {
-            for ($i = 0; $i < count($ilopLst); $i++) {
-                mb_convert_variables('UTF-8' , 'EUC-JP' , $ilopLst[$i] );
-            }
             $result['report_main'] = $ilopLst;
         }
 
@@ -656,11 +627,6 @@ function reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data)
     return $result;
 }
 
-function convertEncoding($str)
-{
-    // return mb_convert_encoding($str, 'UTF-8', 'EUC-JP');
-    return $str;
-}
 
 /**
  * 金額フォーマット変換

@@ -6,8 +6,8 @@
 	require(CLS_LO_FILE);
 	require("./functions.php");
 	
-	mb_internal_encoding("EUC-JP");
-	mb_http_output("EUC-JP");
+	mb_internal_encoding("UTF-8");
+	mb_http_output("UTF-8");
 
 	// ListOutputオブジェクト設定用、初期設定ファイルの取得
 	if( !isset($_POST["conf"]) )

@@ -222,7 +222,7 @@ fncDebug( 'bbb.txt', $strQuery, __FILE__, __LINE__);
 	if ( !empty($strMasterData) )
 	{
 		// マスターデータ出力
-		//echo "<html><head><meta http-equiv=content-type content=text/html; charset=euc-jp></head>";
+		//echo "<html><head><meta http-equiv=content-type content=text/html; charset=UTF-8></head>";
 
 		// データ表示
 		if ( $aryData["lngActionCode"] == 1 )
@@ -238,9 +238,9 @@ fncDebug( 'bbb.txt', $strQuery, __FILE__, __LINE__);
 			$strTmpFileName = tempnam ( "", "FOO" );
 			$fp = fopen ( $strTmpFileName, "w" );
 
-			// 文字コード変換(EUC->SJIS) UTF-8へ
+			// 文字コード変換(UTF-8->SJIS) 
 //文字化け対策20090610
-//			$strMasterData = mb_convert_encoding( $strMasterData, "SJIS", "EUC-JP" );
+//			$strMasterData = mb_convert_encoding( $strMasterData, "SJIS", "UTF-8" );
 
 			$strMasterData = mb_convert_encoding( $strMasterData, "sjis-win", "utf-8" );
 //まで

@@ -168,7 +168,7 @@ $doc = new DOMDocument();
 // パースエラー抑制
 libxml_use_internal_errors(true);
 // DOMパース
-$doc->loadHTML(mb_convert_encoding($strTemplate, "utf8", "eucjp-win"));
+$doc->loadHTML($strTemplate);
 // パースエラークリア
 libxml_clear_errors();
 // パースエラー抑制解除

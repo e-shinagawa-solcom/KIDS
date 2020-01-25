@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta http-equiv="content-type" content="text/html; charset=EUC-JP">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 </head>
 <?
 // 設定読み込み

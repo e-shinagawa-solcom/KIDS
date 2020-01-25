@@ -2,7 +2,7 @@
 
 /**
 *
-*	@charset	: EUC-JP
+*	@charset	: UTF-8
 */
 
 	require ( 'conf.inc' );										// 設定読み込み
@@ -32,7 +32,7 @@
 	$objAuth		= new clsAuth();
 	$objTemplate	= new clsTemplate();								// テンプレートオブジェクト生成
 
-	$charset = 'EUC-JP';
+	$charset = 'UTF-8';
     
 	$objReader      = new XlsxReader();
 
@@ -52,7 +52,7 @@
 	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
 
     // シート名取得
-    $sheetName = mb_convert_encoding($aryData['sheetname'], 'UTF-8', 'EUC-JP');
+    $sheetName = $aryData['sheetname'];
 
 	//-------------------------------------------------------------------------
 	// 入力文字列値・セッション・権限チェック
@@ -336,7 +336,6 @@
 
 		// バリデーションでエラーが発生した場合はエラーメッセージ出力画面に遷移する
 		if ($errorMessage) {
-			mb_convert_variables('EUC-JP', 'UTF-8', $errorMessage); // DBの文字コードをUTF-8に変換したため、画面出力文字をEUC-JPに変換
 			makeHTML::outputErrorWindow($errorMessage);
 		}
 

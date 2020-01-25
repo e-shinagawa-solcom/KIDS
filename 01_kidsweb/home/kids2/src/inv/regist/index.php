@@ -101,7 +101,6 @@
 
 
         // プレースホルダー置換
-        // mb_convert_variables("utf8", "eucjp-win", $recordMoldReport);
         $objTemplate->replace($aryPrevResult);
         $objTemplate->complete();
 

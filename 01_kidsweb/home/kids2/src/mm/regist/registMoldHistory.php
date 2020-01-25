@@ -55,9 +55,6 @@ if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 	// デシリアライズ
 	$workFormData = FormCache::deserialize($workCache["serializeddata"]);
 
-	// デシリアライズ時にUTF-8にしたものをEUC-JPに戻す
-	mb_convert_variables("euc-jp", "utf-8", $workFormData);
-
 	// フォームデータにユーザーコードを追加
 	$workFormData["UserCode"] = $objAuth->UserCode;
 

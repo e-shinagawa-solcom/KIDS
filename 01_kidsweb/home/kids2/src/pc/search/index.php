@@ -117,7 +117,7 @@ foreach ($TmpAry as $key => $value) {
 }
 
 $aryData["lngStockItemCodeValue"] = "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"</option>";
-$aryData["lngStockItemCodeDisp"] = mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"</option>", "EUC-JP", "auto");
+$aryData["lngStockItemCodeDisp"] = "<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"</option>";
 
 //　プルダウンリストの取得に失敗した場合エラー表示
 if (!$aryData["lngStockStatusCode"] or !$aryData["lngPayConditionCode"] or !$aryData["lngStockSubjectCode"] or !$aryData["lngStockItemCode"]) {

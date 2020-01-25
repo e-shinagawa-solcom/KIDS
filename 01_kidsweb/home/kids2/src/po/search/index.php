@@ -145,7 +145,7 @@ if ( !$aryData["lngStockSubjectCode"] or !$aryData["lngStockItemCode"] )
 }
 
 $aryData["lngStockItemCodeValue"]	= "<input type=\"hidden\" name=\"lngStockItemCodeValue\" value=\"" . $aryData["lngStockItemCodeValue"] . "\"></option>";
-$aryData["lngStockItemCodeDisp"]	= mb_convert_encoding("<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"></option>","EUC-JP","ASCII,JIS,UTF-8,EUC-JP,SJIS");
+$aryData["lngStockItemCodeDisp"]	= "<input type=\"hidden\" name=\"lngStockItemCodeDisp\" value=\"" . $aryData["lngStockItemCodeDisp"] . "\"></option>";
 
 // 文字列チェック
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";

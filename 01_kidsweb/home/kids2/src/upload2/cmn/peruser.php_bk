@@ -42,7 +42,7 @@
 //require_once 'reviser.php';
 define('This_Class_Name', 'Excel_Peruser');
 define('Peruser_Ver', 0.110);
-define('Default_CHARSET', 'eucJP-win');
+define('Default_CHARSET', 'UTF-8');
 define('Code_BIFF8', 0x600);
 define('Code_WorkbookGlobals', 0x5);
 define('Code_Worksheet', 0x10);
@@ -1151,14 +1151,14 @@ class Excel_Peruser
 		$this->recFORMAT[48]='##0.0E+0';
 		$this->recFORMAT[49]='@';
 		$this->recFORMAT[50]='[$-0411]GE.M.D';
-		$this->recFORMAT[51]=mb_convert_encoding('[$-0411]GGGE年M月D日',$this->charset,'EUC-JP');
-		$this->recFORMAT[52]=mb_convert_encoding('[$-0411]YYYY年M月',$this->charset,'EUC-JP');
-		$this->recFORMAT[53]=mb_convert_encoding('[$-0411]M月D日',$this->charset,'EUC-JP');
-		$this->recFORMAT[54]=mb_convert_encoding('[$-0411]GGGE年M月D日',$this->charset,'EUC-JP');
-		$this->recFORMAT[55]=mb_convert_encoding('[$-0411]YYYY年M月',$this->charset,'EUC-JP');
-		$this->recFORMAT[56]=mb_convert_encoding('[$-0411]M月D日',$this->charset,'EUC-JP');
+		$this->recFORMAT[51]=mb_convert_encoding('[$-0411]GGGE年M月D日',$this->charset,'UTF-8');
+		$this->recFORMAT[52]=mb_convert_encoding('[$-0411]YYYY年M月',$this->charset,'UTF-8');
+		$this->recFORMAT[53]=mb_convert_encoding('[$-0411]M月D日',$this->charset,'UTF-8');
+		$this->recFORMAT[54]=mb_convert_encoding('[$-0411]GGGE年M月D日',$this->charset,'UTF-8');
+		$this->recFORMAT[55]=mb_convert_encoding('[$-0411]YYYY年M月',$this->charset,'UTF-8');
+		$this->recFORMAT[56]=mb_convert_encoding('[$-0411]M月D日',$this->charset,'UTF-8');
 		$this->recFORMAT[57]='[$-0411]GE.M.D';
-		$this->recFORMAT[58]=mb_convert_encoding('[$-0411]GGGE年M月D日',$this->charset,'EUC-JP');
+		$this->recFORMAT[58]=mb_convert_encoding('[$-0411]GGGE年M月D日',$this->charset,'UTF-8');
 	}
 
 	function fontdeco($opt){
@@ -1674,7 +1674,7 @@ if (!isset($this->recXF[$cell['xf']]['formindex'])) $this->recXF[$cell['xf']]['f
 					if (isset($sval['dic'][$pval['propid']])) {
 						$name=trim($sval['dic'][$pval['propid']]);
 					} else if (isset($this->tag[$key][$pval['propid']])) {
-						$name=mb_convert_encoding(trim($this->tag[$key][$pval['propid']]), $this->charset, "EUC-JP");
+						$name=mb_convert_encoding(trim($this->tag[$key][$pval['propid']]), $this->charset, "UTF-8");
 					} else {
 	//					$name="NA(${key}-${pval['propid']})";
 						continue;

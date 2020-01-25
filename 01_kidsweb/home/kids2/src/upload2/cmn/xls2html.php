@@ -234,7 +234,7 @@ EOD;
 function putheader($charset){
 	$chr=strtolower ($charset);
 	if (substr($chr,0,4)=='sjis') $charset="Shift-JIS";
-	if (substr($chr,0,5)=='eucjp') $charset="EUC-JP";
+	if (substr($chr,0,5)=='utf-8') $charset="UTF-8";
 	if (substr($chr,0,3)=='jis') $charset="ISO-2022-JP";
 
 header("Content-Type: text/html; charset=${charset}");

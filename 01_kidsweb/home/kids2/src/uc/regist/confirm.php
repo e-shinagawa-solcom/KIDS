@@ -447,7 +447,7 @@ if ( $_FILES['binUserPic']['name'] != "" && preg_match ( "/image\/(" . USER_IMAG
 if( $lngErrorCount > 0 )
 {
 	//echo getArrayTable( $aryData, "TABLE" );exit;
-	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=euc-jp\">\n";
+	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n";
 	echo "<form action=\"/uc/regist/edit.php\" method=\"POST\">\n";
 	echo getArrayTable( fncToHTMLString( $aryData ), "HIDDEN" );
 	echo "</form>\n";
@@ -457,7 +457,7 @@ if( $lngErrorCount > 0 )
 else
 {
 	//echo getArrayTable( $aryData, "TABLE" );exit;
-	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=euc-jp\">\n";
+	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">\n";
 	echo "<form action=\"/uc/regist/action.php\" method=\"POST\">\n";
 	echo getArrayTable( fncToHTMLString( $aryData ), "HIDDEN" );
 	echo "</form>\n";

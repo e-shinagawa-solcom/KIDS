@@ -30,8 +30,6 @@ if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
 		// 検索条件を含んでいる場合
 		if(array_key_exists("Conditions", $_POST) && count($_POST["Conditions"]))
 		{
-			// EUC-JPへ変換
-			mb_convert_variables('eucjp-win', 'UTF-8', $_POST["Conditions"]);
 
 			// クエリパラメータの作成
 			foreach ($_POST["Conditions"] as $key=>$condition)
@@ -69,8 +67,6 @@ if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
 				}
 				// レスポンスヘッダ設定
 				header('Content-Type: application/json');
-				// json変換の為、一時的にUTF-8へ変換
-				mb_convert_variables('UTF-8', 'eucjp-win', $resultDataSet);
 
                 for ($i = 0; $i < $recordCount; $i++)
                 {

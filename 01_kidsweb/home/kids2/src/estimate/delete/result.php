@@ -10,7 +10,7 @@
 *
 */
 
-	mb_http_output ( 'EUC-JP' );
+	mb_http_output ( 'UTF-8' );
 
 
 	require_once ('conf.inc');

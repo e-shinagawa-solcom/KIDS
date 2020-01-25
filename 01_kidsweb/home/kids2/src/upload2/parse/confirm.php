@@ -122,8 +122,7 @@
 	}
 	else
 	{
-		//$strWorkFlow	= mb_convert_encoding( fncWorkFlow($lngUserCode , $objDB ,""), ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" );
-		$strWorkFlow	= mb_convert_encoding( fncWorkFlow($lngUserCode , $objDB ,""), 'utf-8', "utf-8" );
+		$strWorkFlow	= fncWorkFlow($lngUserCode , $objDB ,"");
 	}
 
 
@@ -171,7 +170,7 @@
 	$aryProductHeader	= getProductHeader2Array( $objMap, $aryWSData, PROC_DIFF );
 
 	// ワークシート(Excel)上、担当者表示名取得
-	$strSheetUserName	= mb_convert_encoding( fncGetMasterValue( "m_user", "struserdisplaycode", "struserdisplayname",  $aryProductHeader[DISP_INCHARGE_USER_CODE].":str", '', $objDB ), ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" );
+	$strSheetUserName	= fncGetMasterValue( "m_user", "struserdisplaycode", "struserdisplayname",  $aryProductHeader[DISP_INCHARGE_USER_CODE].":str", '', $objDB );
 
 
 	// 製品マスタに登録されているユーザーグループと
@@ -179,7 +178,6 @@
 	if( !fncCheckGroup( $objDB, $aryProductHeader, $lngUserDispCode ) )
 	{
 		$strErrMsg	= "（ログイン者とExcelデータ上の部門が異なります。）";
-		$strErrMsg	= mb_convert_encoding( $strErrMsg, "EUC-JP", "EUC-JP,UTF-8,SJIS,ASCII,JIS" );
 
 		// グループが違う場合、処理終了
 		fncOutputError( 1603, DEF_WARNING, $strErrMsg, TRUE, "", $objDB );
@@ -207,14 +205,12 @@ fncDebug( 'upload_parse_confirm_DiffProduct.txt', $aryDiffProduct, __FILE__, __L
 				case DISP_INCHARGE_USER_CODE:
 
 					// 表示コードへ変換
-//					$value	= fncGetMasterValue( "m_user", "lngusercode", "struserdisplaycode",  mb_convert_encoding( $value, ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" ), '', $objDB );
 					$value = fncGetMasterValue( "m_user", "lngusercode", "struserdisplaycode",  $value, '', $objDB );
 					// 製品マスタに登録されているユーザーグループと
 					// エクセル記載のユーザーグループが同一であるか、確認
 					if( !fncCheckGroup( $objDB, $aryProductHeader, $value ) )
 					{
 						$strErrMsg	= "（製品マスタとExcelデータ上の部門が異なります。）";
-						$strErrMsg = mb_convert_encoding( $strErrMsg, "utf-8", 'utf-8');
 
 						// グループが違う場合、処理終了
 						fncOutputError( 1603, DEF_WARNING, $strErrMsg, TRUE, "", $objDB );
@@ -224,33 +220,15 @@ fncDebug( 'upload_parse_confirm_DiffProduct.txt', $aryDiffProduct, __FILE__, __L
 					if( $value != $aryProductHeader[DISP_INCHARGE_USER_CODE] )
 					{
 						$strErrMsg	= "（製品マスタとExcelデータ上の担当者が異なります。）";
-						$strErrMsg = mb_convert_encoding( $strErrMsg, "utf-8", 'utf-8');
 
 						// 担当者が違う場合、処理終了
 						fncOutputError( 1602, DEF_WARNING, $strErrMsg, TRUE, "", $objDB );
 					}
 
-//39期対応の為					// ログインユーザーが「マネージャー」以下で、かつログインユーザーとExcel上の担当者が異なる場合、処理終了
-//使って					if( ($lngAuthorityGroupCode > DEF_DIRECT_REGIST_AUTHORITY_CODE) && ($value != $lngUserDispCode) )
-//					{
-//						$strErrMsg	= "（ログイン者とExcelデータ上の担当者が異なります。）";
-//						$strErrMsg = mb_convert_encoding( $strErrMsg, "utf-8", 'utf-8');
-//						// 担当者が違う場合、処理終了
-//						fncOutputError( 1602, DEF_WARNING, $strErrMsg, TRUE, "", $objDB );
-//					}
-/*
-					if( ($lngAuthorityGroupCode > DEF_DIRECT_REGIST_AUTHORITY_CODE) && ($value not in ('252','118','212','237'))
-					{
-						$strErrMsg	= "（ログイン者とExcelデータ上の担当者が異なりますtest2。）";
-						$strErrMsg	= mb_convert_encoding( $strErrMsg, "EUC-JP", "EUC-JP,UTF-8,SJIS,ASCII,JIS" );
-						// 担当者が違う場合、処理終了
-						fncOutputError( 1602, DEF_WARNING, $strErrMsg, TRUE, "", $objDB )
-					}
-*/					break;
 
 				// その他
 				default:
-					$aryMaster[$index]	= mb_convert_encoding( $value, ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" );
+					$aryMaster[$index]	= $value;
 					break;
 			}
 		}
@@ -372,14 +350,14 @@ fncDebug( 'upload_parse_confirm_01.txt', $aryExcelRate, __FILE__, __LINE__);
 		{
 			// 部門コード
 			case DISP_INCHARGE_GROUP_CODE:/*
-				$aryBuff["code"]	= fncGetMasterValue( "m_group", "lnggroupcode", "strgroupdisplaycode",  mb_convert_encoding( $value, ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" ), '', $objDB );
+				$aryBuff["code"]	= fncGetMasterValue( "m_group", "lnggroupcode", "strgroupdisplaycode",  $value, '', $objDB );
 
-				$aryBuff["name"]	= fncGetMasterValue( "m_group", "strgroupdisplaycode", "strgroupdisplayname",  mb_convert_encoding( $aryBuff["code"] . ":str", ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" ), '', $objDB );
+				$aryBuff["name"]	= fncGetMasterValue( "m_group", "strgroupdisplaycode", "strgroupdisplayname",  $aryBuff["code"] . ":str", '', $objDB );
 
 				$aryMaster[$index]	= $aryBuff["code"] . " : " . $aryBuff["name"];
 */
 
-				$aryMaster[$index]	= fncGetMasterValue( "m_group", "lnggroupcode", "strgroupdisplaycode",  mb_convert_encoding( $value, ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" ), '', $objDB );
+				$aryMaster[$index]	= fncGetMasterValue( "m_group", "lnggroupcode", "strgroupdisplaycode",  $value, '', $objDB );
 				break;
 
 
@@ -389,10 +367,10 @@ fncDebug( 'upload_parse_confirm_01.txt', $aryExcelRate, __FILE__, __LINE__);
 //				$aryBuff["code"]	= fncGetMasterValue( "m_user", "lngusercode", "struserdisplaycode",  $value, '', $objDB );
 //				$aryBuff["name"]	= fncGetMasterValue( "m_user", "struserdisplaycode", "struserdisplayname",  $aryBuff["code"], '', $objDB );
 
-//				$aryMaster[$index]	= $aryBuff["code"] . " : " . mb_convert_encoding( $aryBuff["name"], ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" );
+//				$aryMaster[$index]	= $aryBuff["code"] . " : " . $aryBuff["name"];
 
 
-				$aryMaster[$index]	= fncGetMasterValue( "m_user", "lngusercode", "struserdisplaycode",  mb_convert_encoding( $value, ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" ), '', $objDB );
+				$aryMaster[$index]	= fncGetMasterValue( "m_user", "lngusercode", "struserdisplaycode",  $value, '', $objDB );
 				break;
 
 /*
@@ -403,8 +381,8 @@ fncDebug( 'upload_parse_confirm_01.txt', $aryExcelRate, __FILE__, __LINE__);
 
 			// その他
 			default:
-//				$aryMaster[$index]	= mb_convert_encoding( $value, ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" );
-				$aryMaster[$index] = mb_convert_encoding( $value, ENC_CHARSET, "utf-8" );
+//				$aryMaster[$index]	= $value;
+				$aryMaster[$index] = $value;
 				break;
 		}
 	}
@@ -425,8 +403,8 @@ fncDebug( 'upload_parse_confirm_Master.txt', $aryMaster, __FILE__, __LINE__);
 		while( list($index, $value) = each($aryDiff) )
 		{
 			$strDiff	.= "\t<tr>\n";
-//			$strDiff	.= "\t\t<td bgcolor=\"#eeeeee\">" .mb_convert_encoding( $aryDiffProduct["display"][$index], ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" ). "</td><td>" .$aryMaster[$index]. "</td><td>" .$value. "</td>\n";
-			 $strDiff .= "\t\t<td bgcolor=\"#eeeeee\">" .mb_convert_encoding( $aryDiffProduct["display"][$index], ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" ). "</td><td>" .mb_convert_encoding($aryMaster[$index], ENC_CHARSET) . "</td><td>" .$value. "</td>\n";
+//			$strDiff	.= "\t\t<td bgcolor=\"#eeeeee\">" . $aryDiffProduct["display"][$index] . "</td><td>" .$aryMaster[$index]. "</td><td>" .$value. "</td>\n";
+			 $strDiff .= "\t\t<td bgcolor=\"#eeeeee\">" . $aryDiffProduct["display"][$index] . "</td><td>" . $aryMaster[$index] . "</td><td>" .$value. "</td>\n";
 			$strDiff	.= "\t</tr>\n";
 		}
 
@@ -454,7 +432,7 @@ fncDebug( 'upload_parse_confirm_Master.txt', $aryMaster, __FILE__, __LINE__);
 			}
 
 			$strDiff	.= "\t<tr>\n";
-			$strDiff	.= "\t\t<td bgcolor=\"#eeeeee\">" .mb_convert_encoding( $aryDiffProduct["display"][$index], ENC_CHARSET, "EUC-JP,UTF-8,SJIS,ASCII,JIS" ). "</td><td>" .$arySystemRate[$index]. "</td><td>" .$value. "</td>\n";
+			$strDiff	.= "\t\t<td bgcolor=\"#eeeeee\">" . $aryDiffProduct["display"][$index] . "</td><td>" .$arySystemRate[$index]. "</td><td>" .$value. "</td>\n";
 			$strDiff	.= "\t</tr>\n";
 		}
 

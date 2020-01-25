@@ -46,8 +46,8 @@ if ( array_count_values ( $_POST ) )
 		$strMailBody = $aryData["strSendMailUserName"] . " さんからの質問\n" . $aryData["strContents"];
 
 		// 文字コード変換(EUC->JIS)
-		$strMailBody = mb_convert_encoding( $strMailBody, "JIS", "EUC-JP" );
-		$strSubject  = mb_convert_encoding( "K.I.D.S HELP MAIL", "JIS", "EUC-JP" );
+		$strMailBody = mb_convert_encoding( $strMailBody, "JIS", "UTF-8" );
+		$strSubject  = mb_convert_encoding( "K.I.D.S HELP MAIL", "JIS", "UTF-8" );
 		$strSubject  = mb_encode_mimeheader ( $strSubject , "iso-2022-jp", "B" );
 
 		$strMessage = "問い合わせメールを送信しました。";
@@ -65,7 +65,7 @@ if ( array_count_values ( $_POST ) )
 <html lang="ja">
 <head>
 <title>K.I.D.S. - Online Help</title>
-<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 <link rel="stylesheet" type="text/css" media="screen" href="../cmn/styles.css">
 </head>

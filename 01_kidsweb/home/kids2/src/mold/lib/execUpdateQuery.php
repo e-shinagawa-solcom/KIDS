@@ -13,7 +13,7 @@ define("QUERY_FILE_SUFFIX", ".sql");
 $objDB   = new clsDB();
 $objDB->open("", "", "", "");
 
-$json_string = mb_convert_encoding(file_get_contents('php://input'), "UTF-8") ;
+$json_string = file_get_contents('php://input');
 $condition = json_decode($json_string, true);
 
 if (!$condition)
@@ -43,9 +43,6 @@ if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
 		// 検索条件を含んでいる場合
 		if(array_key_exists("Conditions", $_REQUEST) && count($_REQUEST["Conditions"]))
 		{
-			// EUC-JPへ変換
-			mb_convert_variables('eucjp-win', 'UTF-8', $_REQUEST["Conditions"]);
-
 			// クエリパラメータの作成
 			foreach ($_REQUEST["Conditions"] as $key=>$condition)
 			{
@@ -81,8 +78,6 @@ if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
 				}
 				// レスポンスヘッダ設定
 				header('Content-Type: application/json');
-				// json変換の為、一時的にUTF-8へ変換
-				mb_convert_variables('UTF-8', 'eucjp-win', $resultDataSet);
 				$json = json_encode($resultDataSet, JSON_PRETTY_PRINT);
 				echo $json;
 			}

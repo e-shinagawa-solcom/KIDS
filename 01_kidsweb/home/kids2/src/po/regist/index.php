@@ -100,7 +100,7 @@
 		$aryUpdate["dtmexpirationdate"]    = $_POST["dtmExpirationDate"];
 		$aryUpdate["lngpayconditioncode"]  = $_POST["lngPayConditionCode"];
 		$aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
-		$aryUpdate["strnote"] = mb_convert_encoding($_POST["strNote"], "EUC-JP", "auto");
+		$aryUpdate["strnote"] = $_POST["strNote"];
 		$aryUpdate["lngorderstatuscode"]   = 2;
 		for($i = 0; $i < count($_POST["aryDetail"]); $i++){
 			$aryUpdateDetail[$i]["lngpurchaseorderdetailno"] = $i + 1;
@@ -161,7 +161,7 @@
 
 		// テンプレート読み込み
 		$objTemplate = new clsTemplate();
-		header("Content-type: text/plain; charset=EUC-JP");
+		header("Content-type: text/plain; charset=UTF-8");
 		//$objTemplate->getTemplate( "po/confirm/parts.tmpl" );
 		// テンプレート生成
 		$objTemplate->replace($aryData);

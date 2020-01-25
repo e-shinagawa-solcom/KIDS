@@ -428,7 +428,7 @@ if ( $bytErrorFlag )
 {
 	//echo getArrayTable( $aryData, "TABLE" );exit;
 	//echo fncGetReplacedHtml( "m/regist/edit.tmpl", $aryData, $objAuth );
-	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=euc-jp\">";
+	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";
 	echo "<form action=\"/m/regist/co/edit.php\" method=\"POST\">";
 	echo getArrayTable( $aryData, "HIDDEN" );
 	echo "</form>";

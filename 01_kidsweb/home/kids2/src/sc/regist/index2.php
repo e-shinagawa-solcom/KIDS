@@ -1006,7 +1006,7 @@ fncDebug( 'pc_regist_index2.txt', $strQuery, __FILE__, __LINE__);
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
 	$objTemplate->getTemplate( "sc/finish/parts.tmpl" );
-	header("Content-type: text/plain; charset=EUC-JP");
+	header("Content-type: text/plain; charset=UTF-8");
 
 	// テンプレート生成
 	$objTemplate->replace( $aryData );

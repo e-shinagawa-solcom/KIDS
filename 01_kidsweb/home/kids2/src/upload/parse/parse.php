@@ -142,7 +142,7 @@
 	$aryData["FORM"]		= $strForm;
 	$aryData["FORM_NAME"]	= FORM_NAME;
 
-//	$aryData["DEBUG"]			= mb_convert_encoding( $_REQUEST['excel_file'], "EUC-JP","EUC-JP,UTF-8,SJIS,ASCII,JIS" );
+//	$aryData["DEBUG"]			= mb_convert_encoding( $_REQUEST['excel_file'], "UTF-8","UTF-8,UTF-8,SJIS,ASCII,JIS" );
 
 
 

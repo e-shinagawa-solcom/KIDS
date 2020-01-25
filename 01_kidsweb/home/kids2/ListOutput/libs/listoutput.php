@@ -1,547 +1,547 @@
 <?
 
 /*
-Ì¾¾Î: CListOutput ¥¯¥é¥¹
+åç§°: CListOutput ã‚¯ãƒ©ã‚¹
 
-³µÍ×: ÀßÄê¥Õ¥¡¥¤¥ë¤Ë´ğ¤Å¤­¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨¤Ä¤Ä½ĞÎÏ¤¹¤ë
+æ¦‚è¦: è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã«åŸºã¥ããƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆã¤ã¤å‡ºåŠ›ã™ã‚‹
 
 */
 
-	// ½èÍı¥¿¥¤¥×¤ÎÄêµÁ
-	define("CLISTOUTPUT_COMMENT",	"#");		// ¥³¥á¥ó¥È
-	define("CLISTOUTPUT_TYPE",		"%");		// ½èÍı¥¿¥¤¥×
-	define("CLISTOUTPUT_DATANAME",	"&");		// ¥Ç¡¼¥¿½èÍıÌ¾
-	define("CLISTOUTPUT_REFERENCE",	"@");		// ¥Ç¡¼¥¿»²¾È
-	define("CLISTOUTPUT_FILE",		"@@");		// ¥Õ¥¡¥¤¥ë»²¾È
-	define("CLISTOUTPUT_DATA",		"");		// ¥Ç¡¼¥¿
+	// å‡¦ç†ã‚¿ã‚¤ãƒ—ã®å®šç¾©
+	define("CLISTOUTPUT_COMMENT",	"#");		// ã‚³ãƒ¡ãƒ³ãƒˆ
+	define("CLISTOUTPUT_TYPE",		"%");		// å‡¦ç†ã‚¿ã‚¤ãƒ—
+	define("CLISTOUTPUT_DATANAME",	"&");		// ãƒ‡ãƒ¼ã‚¿å‡¦ç†å
+	define("CLISTOUTPUT_REFERENCE",	"@");		// ãƒ‡ãƒ¼ã‚¿å‚ç…§
+	define("CLISTOUTPUT_FILE",		"@@");		// ãƒ•ã‚¡ã‚¤ãƒ«å‚ç…§
+	define("CLISTOUTPUT_DATA",		"");		// ãƒ‡ãƒ¼ã‚¿
 	
-	// ÃÖ¤­´¹¤¨¥ê¥¹¥ÈÆ°ºîÄêµÁ
-	define("CLISTOUTPUT_REPLACE_ALL",	1);		// ÃÖ¤­´¹¤¨¥ê¥¹¥È¤ÇÀßÄê¥Õ¥¡¥¤¥ëÁ´ÂÎ¤òÃÖ¤­´¹¤¨¤ë
-	define("CLISTOUTPUT_REPLACE_SQL",	2);		// ÃÖ¤­´¹¤¨¥ê¥¹¥È¤ÇÀßÄê¥Õ¥¡¥¤¥ë¤ÎSQLÉôÊ¬¤Î¤ßÃÖ¤­´¹¤¨¤ë
+	// ç½®ãæ›ãˆãƒªã‚¹ãƒˆå‹•ä½œå®šç¾©
+	define("CLISTOUTPUT_REPLACE_ALL",	1);		// ç½®ãæ›ãˆãƒªã‚¹ãƒˆã§è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å…¨ä½“ã‚’ç½®ãæ›ãˆã‚‹
+	define("CLISTOUTPUT_REPLACE_SQL",	2);		// ç½®ãæ›ãˆãƒªã‚¹ãƒˆã§è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®SQLéƒ¨åˆ†ã®ã¿ç½®ãæ›ãˆã‚‹
 	
-	// EVAL¤Î¼Â¹Ô¥â¡¼¥É¤ÎÆ°ºîÄêµÁ
-	define("CLISTOUTPUT_EVAL_LINE",		1);		// ¹ÔËè¤Ëeval()¤ò¼Â¹Ô¤¹¤ë
-	define("CLISTOUTPUT_EVAL_CLASS",	2);		// ¥¯¥é¥¹¤òºîÀ®¤·¤Æeval()¤ò°ìÅÙ¤À¤±¼Â¹Ô¤¹¤ë
+	// EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰ã®å‹•ä½œå®šç¾©
+	define("CLISTOUTPUT_EVAL_LINE",		1);		// è¡Œæ¯ã«eval()ã‚’å®Ÿè¡Œã™ã‚‹
+	define("CLISTOUTPUT_EVAL_CLASS",	2);		// ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã—ã¦eval()ã‚’ä¸€åº¦ã ã‘å®Ÿè¡Œã™ã‚‹
 	
-	// EVAL¤Î¥­¥ã¥Ã¥·¥å¤ÎÆ°ºîÄêµÁ
-	define("CLISTOUTPUT_EVAL_CACHE_OFF",	1);		// ¥­¥ã¥Ã¥·¥å¤òÍøÍÑ¤·¤Ê¤¤
-	define("CLISTOUTPUT_EVAL_CACHE_ON",		2);		// ¥­¥ã¥Ã¥·¥å¤òÍøÍÑ¤¹¤ë
+	// EVALã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®å‹•ä½œå®šç¾©
+	define("CLISTOUTPUT_EVAL_CACHE_OFF",	1);		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆ©ç”¨ã—ãªã„
+	define("CLISTOUTPUT_EVAL_CACHE_ON",		2);		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆ©ç”¨ã™ã‚‹
 	
-	// EVAL¤Î¥­¥ã¥Ã¥·¥å¤Î¤Ş¤È¤áÀ¸À®¤ÎÆ°ºîÄêµÁ(LoadConfig()»ş¤Ë¤Ş¤È¤á¤ÆEVAL¤Î¥­¥ã¥Ã¥·¥å¤òºîÀ®¤¹¤ë)
-	define("CLISTOUTPUT_BIND_EVAL_CACHE_OFF",	1);		// ¤Ş¤È¤áÀ¸À®¤òÍøÍÑ¤·¤Ê¤¤
-	define("CLISTOUTPUT_BIND_EVAL_CACHE_ON",	2);		// ¤Ş¤È¤áÀ¸À®¤òÍøÍÑ¤¹¤ë
+	// EVALã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã¾ã¨ã‚ç”Ÿæˆã®å‹•ä½œå®šç¾©(LoadConfig()æ™‚ã«ã¾ã¨ã‚ã¦EVALã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ä½œæˆã™ã‚‹)
+	define("CLISTOUTPUT_BIND_EVAL_CACHE_OFF",	1);		// ã¾ã¨ã‚ç”Ÿæˆã‚’åˆ©ç”¨ã—ãªã„
+	define("CLISTOUTPUT_BIND_EVAL_CACHE_ON",	2);		// ã¾ã¨ã‚ç”Ÿæˆã‚’åˆ©ç”¨ã™ã‚‹
 	
-	// ¥Õ¥¡¥¤¥ë½ñ¤­¹ş¤ß¤Îºİ¤ÎVerify½èÍı¤Î¥ì¥Ù¥ë
-	// 0: Verify¤Ê¤·
-	// 1: ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¥Á¥§¥Ã¥¯
-	// 2: ¥Õ¥¡¥¤¥ëÆâÍÆ¥Á¥§¥Ã¥¯
+	// ãƒ•ã‚¡ã‚¤ãƒ«æ›¸ãè¾¼ã¿ã®éš›ã®Verifyå‡¦ç†ã®ãƒ¬ãƒ™ãƒ«
+	// 0: Verifyãªã—
+	// 1: ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºãƒã‚§ãƒƒã‚¯
+	// 2: ãƒ•ã‚¡ã‚¤ãƒ«å†…å®¹ãƒã‚§ãƒƒã‚¯
 	define("CLISTOUTPUT_WRITE_VERIFY_LEVEL", 2);
 
-	// ½èÍı¥¨¥ó¥³¡¼¥Ç¥£¥ó¥°
-	define("CLISTOUTPUT_HANDLINGENCODING", "EUC-JP");
+	// å‡¦ç†ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°
+	define("CLISTOUTPUT_HANDLINGENCODING", "UTF-8");
 
 
 //
-//	CListOutput¥¯¥é¥¹
+//	CListOutputã‚¯ãƒ©ã‚¹
 //
 class CListOutput{
-	var $strOutputDir;				// ½ĞÎÏÀè¥Ç¥£¥ì¥¯¥È¥ê
-	var $strOutputFile;				// ½ĞÎÏ¥Õ¥¡¥¤¥ë
-	var $aryConfig;					// ÀßÄêÆâÍÆ¤òÊİÂ¸
-	var $strConfigDir;				// ÀßÄê¥Õ¥¡¥¤¥ë¤ÎÆş¤Ã¤¿¥Ç¥£¥ì¥¯¥È¥ê
-	var $strConfigFile;				// ÀßÄê¥Õ¥¡¥¤¥ë
-	var $aryResult;					// DB¤«¤é¼èÆÀ¤·¤¿¥Ç¡¼¥¿¤ÎÇÛÎó
-	var $aryColumnResult;			// DB¤«¤é¼èÆÀ¤·¤¿¥Ç¡¼¥¿¤Î¥«¥é¥àÇÛÎó
-	var $aryReplaceList;			// ¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨ÍÑÇÛÎó
-	var $aryColumnList;				// ¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨ÍÑ¥«¥é¥àÇÛÎó
-	var $strTemplateDir;			// ¥Æ¥ó¥×¥ì¡¼¥È¤Î¤¢¤ë¥Ç¥£¥ì¥¯¥È¥ê
-	var $aryFileCache;				// ¥Æ¥ó¥×¥ì¡¼¥È¥Õ¥¡¥¤¥ë¤Î¥­¥ã¥Ã¥·¥å¤òÊİÂ¸
-	var $strErrorMessage;			// ºÇ¿·¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤òÊİÂ¸
-	var $lngMaxToken;				// ¤³¤Î¥¯¥é¥¹¤«¤é»ÈÍÑ²ÄÇ½¤ÊºÇÂç¥È¡¼¥¯¥ó
-	var $lngAlertToken;				// »Ä¤ê¥È¡¼¥¯¥ó¤¬¤³¤Î¿ô°Ê²¼¤Ë¤Ê¤Ã¤¿¤é·Ù¹ğ¤òÈ¯¤¹¤ë
-	var $lngCurrentToken;			// ¸½»şÅÀ¤Ç»ÈÍÑ¤·¤¿¥È¡¼¥¯¥ó
-	var $bytReplaceMode;			// ÃÖ¤­´¹¤¨Æ°ºî
-	var $bytEvalMode;				// EVAL¤Î¼Â¹Ô¥â¡¼¥É
-	var $bytEvalCacheMode;			// EVAL¤Î¥­¥ã¥Ã¥·¥åÆ°ºî¥â¡¼¥É
-	var $aryEvalCache;				// EVAL¤Î¥­¥ã¥Ã¥·¥å
-	var $bytBindEvalCacheMode;		// EVAL¥­¥ã¥Ã¥·¥å¤Î¤Ş¤È¤áÀ¸À®
-	var $objContext;				// ListOutput¤Î¥ª¥Ö¥¸¥§¥¯¥È¤¬À¸À®¤µ¤ì¤¿»şÅÀ¤«¤é»ı¤Ã¤Æ¤¤¤ë¥³¥ó¥Æ¥­¥¹¥È(ÃÍÅù¤òÊİÂ¸¤·¤Æ¤ª¤±¤ë)
+	var $strOutputDir;				// å‡ºåŠ›å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+	var $strOutputFile;				// å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«
+	var $aryConfig;					// è¨­å®šå†…å®¹ã‚’ä¿å­˜
+	var $strConfigDir;				// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®å…¥ã£ãŸãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+	var $strConfigFile;				// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«
+	var $aryResult;					// DBã‹ã‚‰å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã®é…åˆ—
+	var $aryColumnResult;			// DBã‹ã‚‰å–å¾—ã—ãŸãƒ‡ãƒ¼ã‚¿ã®ã‚«ãƒ©ãƒ é…åˆ—
+	var $aryReplaceList;			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆç”¨é…åˆ—
+	var $aryColumnList;				// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆç”¨ã‚«ãƒ©ãƒ é…åˆ—
+	var $strTemplateDir;			// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
+	var $aryFileCache;				// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ä¿å­˜
+	var $strErrorMessage;			// æœ€æ–°ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ä¿å­˜
+	var $lngMaxToken;				// ã“ã®ã‚¯ãƒ©ã‚¹ã‹ã‚‰ä½¿ç”¨å¯èƒ½ãªæœ€å¤§ãƒˆãƒ¼ã‚¯ãƒ³
+	var $lngAlertToken;				// æ®‹ã‚Šãƒˆãƒ¼ã‚¯ãƒ³ãŒã“ã®æ•°ä»¥ä¸‹ã«ãªã£ãŸã‚‰è­¦å‘Šã‚’ç™ºã™ã‚‹
+	var $lngCurrentToken;			// ç¾æ™‚ç‚¹ã§ä½¿ç”¨ã—ãŸãƒˆãƒ¼ã‚¯ãƒ³
+	var $bytReplaceMode;			// ç½®ãæ›ãˆå‹•ä½œ
+	var $bytEvalMode;				// EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰
+	var $bytEvalCacheMode;			// EVALã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥å‹•ä½œãƒ¢ãƒ¼ãƒ‰
+	var $aryEvalCache;				// EVALã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥
+	var $bytBindEvalCacheMode;		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã¾ã¨ã‚ç”Ÿæˆ
+	var $objContext;				// ListOutputã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒç”Ÿæˆã•ã‚ŒãŸæ™‚ç‚¹ã‹ã‚‰æŒã£ã¦ã„ã‚‹ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ(å€¤ç­‰ã‚’ä¿å­˜ã—ã¦ãŠã‘ã‚‹)
 	
-	//	´Ø¿ôÌ¾:		CListOutput
+	//	é–¢æ•°å:		CListOutput
 	//
-	//	³µÍ×:		¥³¥ó¥¹¥È¥é¥¯¥¿
+	//	æ¦‚è¦:		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//				
-	//	Ìá¤êÃÍ:		¤Ê¤·
+	//	æˆ»ã‚Šå€¤:		ãªã—
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function __construct(){
-		// ½ĞÎÏÀè¥Ç¥£¥ì¥¯¥È¥ê¤¬Ì¤ÄêµÁ¤Ê¤é¤Ğ¥Ç¥Õ¥©¥ë¥È¤òÄêµÁ¤¹¤ë
+		// å‡ºåŠ›å…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒæœªå®šç¾©ãªã‚‰ã°ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’å®šç¾©ã™ã‚‹
 		if(empty($this->strOutputDir)){
 			$this->strOutputDir = './';
 		}
 		
-		// ÀßÄê¥Ç¥£¥ì¥¯¥È¥ê¤¬Ì¤ÄêµÁ¤Ê¤é¤Ğ¥Ç¥Õ¥©¥ë¥È¤òÄêµÁ¤¹¤ë
+		// è¨­å®šãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒæœªå®šç¾©ãªã‚‰ã°ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’å®šç¾©ã™ã‚‹
 		if(empty($this->strConfigDir)){
 			$this->strConfigDir = './';
 		}
 
-		// ¥Æ¥ó¥×¥ì¡¼¥È¥Ç¥£¥ì¥¯¥È¥ê¤¬Ì¤ÄêµÁ¤Ê¤é¤Ğ¥Ç¥Õ¥©¥ë¥È¤òÄêµÁ¤¹¤ë
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒæœªå®šç¾©ãªã‚‰ã°ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’å®šç¾©ã™ã‚‹
 		if(empty($this->strTemplateDir)){
 			$this->strTemplateDir = './';
 		}
 		
-		// ÀßÄê¥Õ¥¡¥¤¥ë¤¬ÄêµÁ¤µ¤ì¤Æ¤¤¤ì¤Ğ¥Ç¡¼¥¿Å¸³«¤ò¹Ô¤¦
+		// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ãŒå®šç¾©ã•ã‚Œã¦ã„ã‚Œã°ãƒ‡ãƒ¼ã‚¿å±•é–‹ã‚’è¡Œã†
 		if(!empty($this->strConfigFile)){
-			// ÀßÄê¥Õ¥¡¥¤¥ë¤«¤é¥Ç¡¼¥¿Å¸³«
+			// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿å±•é–‹
 			$this->LoadConfigFile();
 		}
 		
-		// ÃÖ¤­´¹¤¨¥ê¥¹¥È¤Î½é´ü²½
+		// ç½®ãæ›ãˆãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
 		if(!is_array($this->aryReplaceList) or !is_array($this->aryColumnList)){
 			$this->ClearReplaceList();
 		}
 		
-		// ºÇÂç¥È¡¼¥¯¥ó¤ò¥»¥Ã¥È¤¹¤ë
+		// æœ€å¤§ãƒˆãƒ¼ã‚¯ãƒ³ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		$this->SetMaxToken(4000);
 		
-		// ·Ù¹ğ¤òÈ¯¤¹¤ë»Ä¤ê¥È¡¼¥¯¥ó¤ò¥»¥Ã¥È¤¹¤ë
+		// è­¦å‘Šã‚’ç™ºã™ã‚‹æ®‹ã‚Šãƒˆãƒ¼ã‚¯ãƒ³ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 		$this->lngAlertToken = 200;
 		
-		// »ÈÍÑºÑ¥È¡¼¥¯¥ó¤ò 0 ¤È¤¹¤ë
+		// ä½¿ç”¨æ¸ˆãƒˆãƒ¼ã‚¯ãƒ³ã‚’ 0 ã¨ã™ã‚‹
 		$this->SetCurrentToken(0);
 		
-		// ÃÖ¤­´¹¤¨¥ê¥¹¥È¤Î¥Ç¥Õ¥©¥ë¥ÈÆ°ºî
+		// ç½®ãæ›ãˆãƒªã‚¹ãƒˆã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå‹•ä½œ
 		$this->SetReplaceMode(CLISTOUTPUT_REPLACE_SQL);
 		
-		// EVAL¤Î¼Â¹Ô¥â¡¼¥É¤Î¥Ç¥Õ¥©¥ë¥ÈÆ°ºî
+		// EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰ã®ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå‹•ä½œ
 		$this->SetEvalMode(CLISTOUTPUT_EVAL_LINE);
 		
-		// EVAL¤Î¥­¥ã¥Ã¥·¥åÆ°ºî¥â¡¼¥É
+		// EVALã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥å‹•ä½œãƒ¢ãƒ¼ãƒ‰
 		$this->SetEvalCacheMode(CLISTOUTPUT_EVAL_CACHE_ON);
 		
-		// EVAL¥­¥ã¥Ã¥·¥å¤ÎÅı¹çÀ¸À®
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®çµ±åˆç”Ÿæˆ
 		$this->SetBindEvalCacheMode(CLISTOUTPUT_BIND_EVAL_CACHE_ON);
 		
-		// EVAL¥­¥ã¥Ã¥·¥å¤ò½é´ü²½¤¹¤ë
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆæœŸåŒ–ã™ã‚‹
 		$this->ClearEvalCache();
 
-		// ¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+		// ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 		$this->ClearContext();
 	}
 	
-	//	´Ø¿ôÌ¾:		ClearExecute
+	//	é–¢æ•°å:		ClearExecute
 	//
-	//	³µÍ×:		¼Â¹Ô·ë²Ì¤Î½é´ü²½¤ò¹Ô¤¦
+	//	æ¦‚è¦:		å®Ÿè¡Œçµæœã®åˆæœŸåŒ–ã‚’è¡Œã†
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ClearExecute(){
-		// ¼Â¹Ô·ë²Ì¤Î½é´ü²½
+		// å®Ÿè¡Œçµæœã®åˆæœŸåŒ–
 		$this->aryResult = array();
-		// ¼Â¹Ô·ë²Ì¤Î¥«¥é¥àÇÛÎó¤Î½é´ü²½
+		// å®Ÿè¡Œçµæœã®ã‚«ãƒ©ãƒ é…åˆ—ã®åˆæœŸåŒ–
 		$this->aryColumnResult = array();
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		ClearConfig
+	//	é–¢æ•°å:		ClearConfig
 	//
-	//	³µÍ×:		ÀßÄê¥Ç¡¼¥¿¤Î½é´ü²½¤ò¹Ô¤¦
+	//	æ¦‚è¦:		è¨­å®šãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–ã‚’è¡Œã†
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ClearConfig(){
-		// ÀßÄê¥Ç¡¼¥¿¤Î½é´ü²½
+		// è¨­å®šãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
 		unset($this->aryConfig);
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		ClearReplaceList
+	//	é–¢æ•°å:		ClearReplaceList
 	//
-	//	³µÍ×:		ÃÖ¤­´¹¤¨¥ê¥¹¥È¤Î½é´ü²½¤ò¹Ô¤¦
+	//	æ¦‚è¦:		ç½®ãæ›ãˆãƒªã‚¹ãƒˆã®åˆæœŸåŒ–ã‚’è¡Œã†
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ClearReplaceList(){
-		// ÃÖ¤­´¹¤¨¥ê¥¹¥È¤Î½é´ü²½
+		// ç½®ãæ›ãˆãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
 		$this->aryReplaceList = array();
-		// ÃÖ¤­´¹¤¨¤«¥é¥à¥ê¥¹¥È¤Î½é´ü²½
+		// ç½®ãæ›ãˆã‹ãƒ©ãƒ ãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
 		$this->aryColumnList = array();
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		ClearErrorMessage
+	//	é–¢æ•°å:		ClearErrorMessage
 	//
-	//	³µÍ×:		¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Î½é´ü²½¤ò¹Ô¤¦
+	//	æ¦‚è¦:		ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®åˆæœŸåŒ–ã‚’è¡Œã†
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ClearErrorMessage(){
-		// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Î½é´ü²½
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®åˆæœŸåŒ–
 		$this->strErrorMessage = '';
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		ClearEvalCache
+	//	é–¢æ•°å:		ClearEvalCache
 	//
-	//	³µÍ×:		EVAL¥­¥ã¥Ã¥·¥å¤ò½é´ü²½¤¹¤ë
+	//	æ¦‚è¦:		EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆæœŸåŒ–ã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ClearEvalCache(){
-		// EVAL¥­¥ã¥Ã¥·¥å¤ò½é´ü²½¤¹¤ë
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆæœŸåŒ–ã™ã‚‹
 		$this->aryEvalCache = array();
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾¡§	ClearContext
+	//	é–¢æ•°åï¼š	ClearContext
 	//
-	//	³µÍ×:		¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+	//	æ¦‚è¦:		ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ClearContext() {
-		// ¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+		// ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 		$this->objContext = new CListOutputContext();
 
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		GetErrorMessage
+	//	é–¢æ•°å:		GetErrorMessage
 	//
-	//	³µÍ×:		¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¼èÆÀ¤¹¤ë
+	//	æ¦‚è¦:		ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å–å¾—ã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		ºÇ¿·¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ÎÆâÍÆ
+	//	æˆ»ã‚Šå€¤:		æœ€æ–°ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å†…å®¹
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function GetErrorMessage(){
-		// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Î¼èÆÀ
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å–å¾—
 		return $this->strErrorMessage;
 	}
 	
-	//	´Ø¿ôÌ¾:		GetCurrentToken
+	//	é–¢æ•°å:		GetCurrentToken
 	//
-	//	³µÍ×:		»ÈÍÑºÑ¤ß¥È¡¼¥¯¥ó¿ô¤ò¼èÆÀ
+	//	æ¦‚è¦:		ä½¿ç”¨æ¸ˆã¿ãƒˆãƒ¼ã‚¯ãƒ³æ•°ã‚’å–å¾—
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		¥È¡¼¥¯¥ó¿ô
+	//	æˆ»ã‚Šå€¤:		ãƒˆãƒ¼ã‚¯ãƒ³æ•°
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function GetCurrentToken(){
-		// ¥È¡¼¥¯¥ó¿ô¤Î¼èÆÀ
+		// ãƒˆãƒ¼ã‚¯ãƒ³æ•°ã®å–å¾—
 		return $this->lngCurrentToken;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetCurrentToken
+	//	é–¢æ•°å:		SetCurrentToken
 	//
-	//	³µÍ×:		»ÈÍÑºÑ¤ß¥È¡¼¥¯¥ó¿ô¤ò¥»¥Ã¥È
+	//	æ¦‚è¦:		ä½¿ç”¨æ¸ˆã¿ãƒˆãƒ¼ã‚¯ãƒ³æ•°ã‚’ã‚»ãƒƒãƒˆ
 	//
-	//	°ú¿ô:		¥È¡¼¥¯¥ó¿ô
+	//	å¼•æ•°:		ãƒˆãƒ¼ã‚¯ãƒ³æ•°
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetCurrentToken($lngCurrentToken){
-		// ¥È¡¼¥¯¥ó¿ô¤Î¥»¥Ã¥È
+		// ãƒˆãƒ¼ã‚¯ãƒ³æ•°ã®ã‚»ãƒƒãƒˆ
 		$this->lngCurrentToken = $lngCurrentToken;
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		ExportEvalCache
+	//	é–¢æ•°å:		ExportEvalCache
 	//
-	//	³µÍ×:		EVAL¥­¥ã¥Ã¥·¥å¤ò¥¨¥¯¥¹¥İ¡¼¥È¤¹¤ë
+	//	æ¦‚è¦:		EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		EVAL¥­¥ã¥Ã¥·¥åÇÛÎó
+	//	æˆ»ã‚Šå€¤:		EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥é…åˆ—
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ExportEvalCache(){
-		// EVAL¥­¥ã¥Ã¥·¥åÇÛÎó¤ò¼èÆÀ¤¹¤ë
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥é…åˆ—ã‚’å–å¾—ã™ã‚‹
 		return $this->aryEvalCache;
 	}
 	
-	//	´Ø¿ôÌ¾:		ImportEvalCache
+	//	é–¢æ•°å:		ImportEvalCache
 	//
-	//	³µÍ×:		EVAL¥­¥ã¥Ã¥·¥å¤ò¥¤¥ó¥İ¡¼¥È¤¹¤ë
+	//	æ¦‚è¦:		EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$aryEvalCache	EVAL¥­¥ã¥Ã¥·¥åÇÛÎó
+	//	å¼•æ•°:		$aryEvalCache	EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥é…åˆ—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ImportEvalCache($aryEvalCache){
-		// EVAL¥­¥ã¥Ã¥·¥åÇÛÎó¤ò¥¤¥ó¥İ¡¼¥È¤¹¤ë
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥é…åˆ—ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹
 		$this->aryEvalCache = $aryEvalCache;
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		GetEvalCache
+	//	é–¢æ•°å:		GetEvalCache
 	//
-	//	³µÍ×:		EVAL¥­¥ã¥Ã¥·¥å¤«¤é¥ª¥Ö¥¸¥§¥¯¥È¤ò¼èÆÀ¤¹¤ë
+	//	æ¦‚è¦:		EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
 	//
-	//	°ú¿ô:		$strScript	¥¹¥¯¥ê¥×¥È
-	//				&$objEvalClass	¥¯¥é¥¹¥ª¥Ö¥¸¥§¥¯¥È(Ìá¤êÃÍ)
+	//	å¼•æ•°:		$strScript	ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+	//				&$objEvalClass	ã‚¯ãƒ©ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(æˆ»ã‚Šå€¤)
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¼èÆÀÀ®¸ù
-	//				FALSE:	¼èÆÀ¼ºÇÔ(¥¨¥é¡¼¤Ç¤Ï¤Ê¤¤¤Î¤Ç¸Æ¤Ó½Ğ¤·¸µ¤Ç¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®¤¹¤ë)
+	//	æˆ»ã‚Šå€¤:		TRUE:	å–å¾—æˆåŠŸ
+	//				FALSE:	å–å¾—å¤±æ•—(ã‚¨ãƒ©ãƒ¼ã§ã¯ãªã„ã®ã§å‘¼ã³å‡ºã—å…ƒã§ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹)
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function GetEvalCache($strScript, &$objEvalClass){
-		// ¥¹¥¯¥ê¥×¥È¤Î¥À¥¤¥¸¥§¥¹¥È¤ò¼èÆÀ¤¹¤ë
+		// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
 		$strScriptDigest = $this->GetDigest($strScript);
 		
 		if(isset($this->aryEvalCache[$strScriptDigest]['OBJECT']) == FALSE){
-			// Â¸ºß¤¹¤ë¤Ï¤º¤Î¥ª¥Ö¥¸¥§¥¯¥È¤Î¥­¥ã¥Ã¥·¥å¤¬Â¸ºß¤·¤Ê¤¤
+			// å­˜åœ¨ã™ã‚‹ã¯ãšã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒå­˜åœ¨ã—ãªã„
 			$this->strErrorMessage = 'No eval cache exist';
 			return FALSE;
 		}
 		
-		// EVAL¥­¥ã¥Ã¥·¥å¤«¤é¥ª¥Ö¥¸¥§¥¯¥È¤ò¼èÆÀ¤¹¤ë
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—ã™ã‚‹
 		$objEvalClass = $this->aryEvalCache[$strScriptDigest]['OBJECT'];
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetEvalCache
+	//	é–¢æ•°å:		SetEvalCache
 	//
-	//	³µÍ×:		EVAL¥­¥ã¥Ã¥·¥å¤«¤é¥ª¥Ö¥¸¥§¥¯¥È¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦:		EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$strScript	¥¹¥¯¥ê¥×¥È
-	//				&$objEvalClass	¥¯¥é¥¹¥ª¥Ö¥¸¥§¥¯¥È
+	//	å¼•æ•°:		$strScript	ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+	//				&$objEvalClass	ã‚¯ãƒ©ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetEvalCache($strScript, &$objEvalClass){
-		// EVAL¥­¥ã¥Ã¥·¥å¥â¡¼¥É¤¬Í­¸ú¤Ê¤é¤Ğ¥­¥ã¥Ã¥·¥å¤¹¤ë
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ¢ãƒ¼ãƒ‰ãŒæœ‰åŠ¹ãªã‚‰ã°ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹
 		if($this->bytEvalCacheMode == CLISTOUTPUT_EVAL_CACHE_ON){
-			// ¥¹¥¯¥ê¥×¥È¤Î¥À¥¤¥¸¥§¥¹¥È¤ò¼èÆÀ¤¹¤ë
+			// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
 			$strScriptDigest = $this->GetDigest($strScript);
 			
-			// ¥¯¥é¥¹¤Î¥¹¥¯¥ê¥×¥È¤ò¥»¥Ã¥È¤¹¤ë
+			// ã‚¯ãƒ©ã‚¹ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			$this->aryEvalCache[$strScriptDigest]['SCRIPT'] = $strScript;
 			
-			// ¥¯¥é¥¹¤Î¥ª¥Ö¥¸¥§¥¯¥È¤ò¥»¥Ã¥È¤¹¤ë
+			// ã‚¯ãƒ©ã‚¹ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			$this->aryEvalCache[$strScriptDigest]['OBJECT'] = $objEvalClass;
 		}
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		SetReplaceMode
+	//	é–¢æ•°å:		SetReplaceMode
 	//
-	//	³µÍ×:		ÃÖ¤­´¹¤¨¥ê¥¹¥ÈÆ°ºîÄêµÁ¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦:		ç½®ãæ›ãˆãƒªã‚¹ãƒˆå‹•ä½œå®šç¾©ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$bytReplaceMode	ÃÖ¤­´¹¤¨¥ê¥¹¥ÈÆ°ºîÄêµÁ
-	//					CLISTOUTPUT_REPLACE_ALL	ÃÖ¤­´¹¤¨¥ê¥¹¥È¤ÇÀßÄê¥Õ¥¡¥¤¥ëÁ´ÂÎ¤òÃÖ¤­´¹¤¨¤ë
-	//					CLISTOUTPUT_REPLACE_SQL	ÃÖ¤­´¹¤¨¥ê¥¹¥È¤ÇÀßÄê¥Õ¥¡¥¤¥ë¤ÎSQLÉôÊ¬¤Î¤ßÃÖ¤­´¹¤¨¤ë
+	//	å¼•æ•°:		$bytReplaceMode	ç½®ãæ›ãˆãƒªã‚¹ãƒˆå‹•ä½œå®šç¾©
+	//					CLISTOUTPUT_REPLACE_ALL	ç½®ãæ›ãˆãƒªã‚¹ãƒˆã§è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å…¨ä½“ã‚’ç½®ãæ›ãˆã‚‹
+	//					CLISTOUTPUT_REPLACE_SQL	ç½®ãæ›ãˆãƒªã‚¹ãƒˆã§è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®SQLéƒ¨åˆ†ã®ã¿ç½®ãæ›ãˆã‚‹
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetReplaceMode($bytReplaceMode){
-		// ÃÖ¤­´¹¤¨¥ê¥¹¥È¤ÎÆ°ºîÄêµÁ¤ò¥»¥Ã¥È
+		// ç½®ãæ›ãˆãƒªã‚¹ãƒˆã®å‹•ä½œå®šç¾©ã‚’ã‚»ãƒƒãƒˆ
 		$this->bytReplaceMode = $bytReplaceMode;
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		SetEvalMode
+	//	é–¢æ•°å:		SetEvalMode
 	//
-	//	³µÍ×:		EVAL¤Î¼Â¹Ô¥â¡¼¥É¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦:		EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$bytEvalMode	EVAL¤Î¼Â¹Ô¥â¡¼¥É
-	//					CLISTOUTPUT_EVAL_LINE	¹ÔËè¤Ëeval()¤ò¼Â¹Ô¤¹¤ë
-	//					CLISTOUTPUT_EVAL_CLASS	¥¯¥é¥¹¤òºîÀ®¤·¤Æeval()¤ò°ìÅÙ¤À¤±¼Â¹Ô¤¹¤ë
+	//	å¼•æ•°:		$bytEvalMode	EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰
+	//					CLISTOUTPUT_EVAL_LINE	è¡Œæ¯ã«eval()ã‚’å®Ÿè¡Œã™ã‚‹
+	//					CLISTOUTPUT_EVAL_CLASS	ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã—ã¦eval()ã‚’ä¸€åº¦ã ã‘å®Ÿè¡Œã™ã‚‹
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetEvalMode($bytEvalMode){
-		// EVAL¤Î¼Â¹Ô¥â¡¼¥É¤ò¥»¥Ã¥È
+		// EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
 		$this->bytEvalMode = $bytEvalMode;
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		SetEvalCacheMode
+	//	é–¢æ•°å:		SetEvalCacheMode
 	//
-	//	³µÍ×:		EVAL¤Î¥­¥ã¥Ã¥·¥åÆ°ºî¥â¡¼¥É¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦:		EVALã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥å‹•ä½œãƒ¢ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$bytEvalCacheMode	EVAL¤Î¼Â¹Ô¥â¡¼¥É
-	//					CLISTOUTPUT_EVAL_CACHE_OFF	¥­¥ã¥Ã¥·¥å¤òÍøÍÑ¤·¤Ê¤¤
-	//					CLISTOUTPUT_EVAL_CACHE_ON	¥­¥ã¥Ã¥·¥å¤òÍøÍÑ¤¹¤ë
+	//	å¼•æ•°:		$bytEvalCacheMode	EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰
+	//					CLISTOUTPUT_EVAL_CACHE_OFF	ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆ©ç”¨ã—ãªã„
+	//					CLISTOUTPUT_EVAL_CACHE_ON	ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆ©ç”¨ã™ã‚‹
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetEvalCacheMode($bytEvalCacheMode){
-		// EVAL¤Î¼Â¹Ô¥â¡¼¥É¤ò¥»¥Ã¥È
+		// EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
 		$this->bytEvalCacheMode = $bytEvalCacheMode;
 		
-		// EVAL¥­¥ã¥Ã¥·¥å¤ò½é´ü²½¤¹¤ë
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆæœŸåŒ–ã™ã‚‹
 		$this->ClearEvalCache();
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		SetBindEvalCacheMode
+	//	é–¢æ•°å:		SetBindEvalCacheMode
 	//
-	//	³µÍ×:		EVAL¥­¥ã¥Ã¥·¥å¤Î¤Ş¤È¤áÀ¸À®¥â¡¼¥É¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦:		EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã¾ã¨ã‚ç”Ÿæˆãƒ¢ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$bytBindEvalCacheMode	EVAL¤Î¤Ş¤È¤áÀ¸À®¥â¡¼¥É
-	//					CLISTOUTPUT_BIND_EVAL_CACHE_OFF	¤Ş¤È¤áÀ¸À®¤òÍøÍÑ¤·¤Ê¤¤
-	//					CLISTOUTPUT_BIND_EVAL_CACHE_ON	¤Ş¤È¤áÀ¸À®¤òÍøÍÑ¤¹¤ë
+	//	å¼•æ•°:		$bytBindEvalCacheMode	EVALã®ã¾ã¨ã‚ç”Ÿæˆãƒ¢ãƒ¼ãƒ‰
+	//					CLISTOUTPUT_BIND_EVAL_CACHE_OFF	ã¾ã¨ã‚ç”Ÿæˆã‚’åˆ©ç”¨ã—ãªã„
+	//					CLISTOUTPUT_BIND_EVAL_CACHE_ON	ã¾ã¨ã‚ç”Ÿæˆã‚’åˆ©ç”¨ã™ã‚‹
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetBindEvalCacheMode($bytBindEvalCacheMode){
-		// EVAL¥­¥ã¥Ã¥·¥å¤Î¤Ş¤È¤áÀ¸À®¥â¡¼¥É¤ò¥»¥Ã¥È
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã¾ã¨ã‚ç”Ÿæˆãƒ¢ãƒ¼ãƒ‰ã‚’ã‚»ãƒƒãƒˆ
 		$this->bytBindEvalCacheMode = $bytBindEvalCacheMode;
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		LoadConfig
+	//	é–¢æ•°å:		LoadConfig
 	//
-	//	³µÍ×:		ÀßÄê¥Æ¥­¥¹¥È¤«¤é¥Ç¡¼¥¿Å¸³«
+	//	æ¦‚è¦:		è¨­å®šãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰ãƒ‡ãƒ¼ã‚¿å±•é–‹
 	//
-	//	°ú¿ô:		$strConfig		ÆÉ¤ß¹ş¤àÀßÄê¥Æ¥­¥¹¥È
+	//	å¼•æ•°:		$strConfig		èª­ã¿è¾¼ã‚€è¨­å®šãƒ†ã‚­ã‚¹ãƒˆ
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function LoadConfig($strConfig){
-		// ÀßÄê¥Õ¥¡¥¤¥ë¤ËÂĞ¤¹¤ë½é´üÃÖ¤­´¹¤¨Æ°ºî
+		// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã«å¯¾ã™ã‚‹åˆæœŸç½®ãæ›ãˆå‹•ä½œ
 		switch($this->bytReplaceMode){
 			case CLISTOUTPUT_REPLACE_ALL:
-				// CLISTOUTPUT_REPLACE_ALL ¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¤éÀßÄê¥Æ¥­¥¹¥ÈÁ´ÂÎ¤òÃÖ¤­´¹¤¨¤ë
+				// CLISTOUTPUT_REPLACE_ALL ãŒæŒ‡å®šã•ã‚Œã¦ã„ãŸã‚‰è¨­å®šãƒ†ã‚­ã‚¹ãƒˆå…¨ä½“ã‚’ç½®ãæ›ãˆã‚‹
 				$strConfig = $this->ReplaceStrings($this->aryColumnList, $this->aryReplaceList, $strConfig);
 				break;
 		}
 		
-		// ÀßÄê¥Ç¡¼¥¿¤ò¾Ã¤¹
+		// è¨­å®šãƒ‡ãƒ¼ã‚¿ã‚’æ¶ˆã™
 		$this->DeleteConfig();
 		
-		// <CR><LF>, <CR>, <LF> ¤¤¤º¤ì¤«¤Ç¶èÀÚ¤ë
+		// <CR><LF>, <CR>, <LF> ã„ãšã‚Œã‹ã§åŒºåˆ‡ã‚‹
 		$aryConfigLine = explode("\x0D\x0A|\x0A|\x0A", $strConfig);
 		
-		// ¥Ç¥Õ¥©¥ë¥È¤Î½èÍı¥¿¥¤¥×¡¦½èÍıÌ¾¤ÎÀßÄê
+		// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®å‡¦ç†ã‚¿ã‚¤ãƒ—ãƒ»å‡¦ç†åã®è¨­å®š
 		$strNowType = 'DEFAULT';
 		$strNowName = 'DEFAULT';
 		
-		// Á´¤Æ¤Î¹Ô¤ò¼èÆÀ¤¹¤ë
+		// å…¨ã¦ã®è¡Œã‚’å–å¾—ã™ã‚‹
 		reset($aryConfigLine);
 		while(list($strKey, $strValue) = each($aryConfigLine)){
 			if(preg_match('/^[ \n\r\v\f]*$/', $strValue)){
-				// ¥¿¥Ö¤ÎÆş¤Ã¤Æ¤¤¤Ê¤¤¶õ¹Ô¤ÏÌµ»ë
+				// ã‚¿ãƒ–ã®å…¥ã£ã¦ã„ãªã„ç©ºè¡Œã¯ç„¡è¦–
 				continue;
 			}
 			
-			// ¹Ô¤Î¼èÆÀ
+			// è¡Œã®å–å¾—
 			list($strType, $strHandle) = explode("\t", $strValue, 2);
 			switch($strType){
 				case CLISTOUTPUT_COMMENT:
-					// ¥³¥á¥ó¥È
+					// ã‚³ãƒ¡ãƒ³ãƒˆ
 					break;
 				case CLISTOUTPUT_TYPE:
-					// ½èÍı¥¿¥¤¥×¤ÎÀßÄê
+					// å‡¦ç†ã‚¿ã‚¤ãƒ—ã®è¨­å®š
 					$strNowType = $strHandle;
 					break;
 				case CLISTOUTPUT_DATANAME:
-					// ¥Ç¡¼¥¿½èÍıÌ¾¤ÎÀßÄê
+					// ãƒ‡ãƒ¼ã‚¿å‡¦ç†åã®è¨­å®š
 					$strNowName = $strHandle;
-					// ½èÍı½çÈÖÍÑ¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤ÎºîÀ®
+					// å‡¦ç†é †ç•ªç”¨ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®ä½œæˆ
 					if(isset($this->aryConfig['INDEX'][$strNowName]) == FALSE){
 						$this->aryConfig['INDEX'][$strNowName] = 1;
 					}
 					break;
 				case CLISTOUTPUT_REFERENCE:
-					// ¥Ç¡¼¥¿»²¾È
-					// ÃÍ¤¬Æş¤Ã¤Æ¤¤¤¿¤é²ş¹Ô¤Ç¶èÀÚ¤ë
+					// ãƒ‡ãƒ¼ã‚¿å‚ç…§
+					// å€¤ãŒå…¥ã£ã¦ã„ãŸã‚‰æ”¹è¡Œã§åŒºåˆ‡ã‚‹
 					if(isset($this->aryConfig[$strNowType][$strNowName])){
 						$this->aryConfig[$strNowType][$strNowName] .= "\n";
 					}
-					// »²¾È¤·¤Æ¤¤¤ëÃÍ¤ò¼è½Ğ¤¹
+					// å‚ç…§ã—ã¦ã„ã‚‹å€¤ã‚’å–å‡ºã™
 					$this->aryConfig[$strNowType][$strNowName] .= $this->aryConfig[$strNowType][$strHandle];
 					break;
 				case CLISTOUTPUT_FILE:
-					// ¥Õ¥¡¥¤¥ë»²¾È
-					// »ØÄê¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤à
+					// ãƒ•ã‚¡ã‚¤ãƒ«å‚ç…§
+					// æŒ‡å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 					if(!$this->LoadFile($this->strConfigDir . trim($strHandle), $strSubConfig)){
-						// ¥¨¥é¡¼
-						// LoadConfigFile()¤¬¥¨¥é¡¼¤òÊÖ¤¹¤Î¤Ç¤³¤³¤Ç¤Ï¥¨¥é¡¼¤ÏÄêµÁ¤·¤Ê¤¤
+						// ã‚¨ãƒ©ãƒ¼
+						// LoadConfigFile()ãŒã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™ã®ã§ã“ã“ã§ã¯ã‚¨ãƒ©ãƒ¼ã¯å®šç¾©ã—ãªã„
 						return FALSE;
 					}
-					// ÀßÄê¥Õ¥¡¥¤¥ë¤ËÂĞ¤¹¤ë½é´üÃÖ¤­´¹¤¨Æ°ºî
+					// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã«å¯¾ã™ã‚‹åˆæœŸç½®ãæ›ãˆå‹•ä½œ
 					switch($this->bytReplaceMode){
 						case CLISTOUTPUT_REPLACE_ALL:
-							// ÀßÄê¥Õ¥¡¥¤¥ë¤Î¥­¡¼¥ï¡¼¥ÉÃÖ¤­´¹¤¨
+							// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ç½®ãæ›ãˆ
 							$strSubConfig = $this->ReplaceStrings($this->aryColumnList, $this->aryReplaceList, $strSubConfig);
 							break;
 					}
 					
-					// ÃÍ¤¬Æş¤Ã¤Æ¤¤¤¿¤é²ş¹Ô¤Ç¶èÀÚ¤ë
+					// å€¤ãŒå…¥ã£ã¦ã„ãŸã‚‰æ”¹è¡Œã§åŒºåˆ‡ã‚‹
 					if(isset($this->aryConfig[$strNowType][$strNowName])){
 						$this->aryConfig[$strNowType][$strNowName] .= "\n";
 					}
-					// ¥Õ¥¡¥¤¥ëÆâ¤ÎÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+					// ãƒ•ã‚¡ã‚¤ãƒ«å†…ã®å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 					$this->aryConfig[$strNowType][$strNowName] .= $strSubConfig;
 					break;
 				case CLISTOUTPUT_DATA:
-					// ¥Ç¡¼¥¿¤Î¥»¥Ã¥È
-					// ÃÍ¤¬Æş¤Ã¤Æ¤¤¤¿¤é²ş¹Ô¤Ç¶èÀÚ¤ë
+					// ãƒ‡ãƒ¼ã‚¿ã®ã‚»ãƒƒãƒˆ
+					// å€¤ãŒå…¥ã£ã¦ã„ãŸã‚‰æ”¹è¡Œã§åŒºåˆ‡ã‚‹
 					if(isset($this->aryConfig[$strNowType][$strNowName])){
 						$this->aryConfig[$strNowType][$strNowName] .= "\n";
 					}
@@ -552,68 +552,68 @@ class CListOutput{
 			}
 		}
 		
-		// EVAL¥­¥ã¥Ã¥·¥å¤Î¤Ş¤È¤áÀ¸À®¤ò¹Ô¤¦
+		// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã¾ã¨ã‚ç”Ÿæˆã‚’è¡Œã†
 		if($this->CreateBindEvalCache() == FALSE){
-			// CreateBindEvalCache()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤ŞÍøÍÑ¤¹¤ë
+			// CreateBindEvalCache()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾åˆ©ç”¨ã™ã‚‹
 			return FALSE;
 		}
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		LoadConfigFile
+	//	é–¢æ•°å:		LoadConfigFile
 	//
-	//	³µÍ×:		ÀßÄê¥Õ¥¡¥¤¥ë¤«¤é¥Ç¡¼¥¿Å¸³«
+	//	æ¦‚è¦:		è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿å±•é–‹
 	//
-	//	°ú¿ô:		$strCodeEncoding	ÆÉ¤ß¹ş¤àÀßÄê¥Æ¥­¥¹¥È
+	//	å¼•æ•°:		$strCodeEncoding	èª­ã¿è¾¼ã‚€è¨­å®šãƒ†ã‚­ã‚¹ãƒˆ
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function LoadConfigFile($strCodeEncoding = CLISTOUTPUT_HANDLINGENCODING){
 		if(!$this->LoadFile($this->strConfigDir . $this->strConfigFile, $strConfig, $strCodeEncoding)){
-			// ¥¨¥é¡¼
-			// LoadConfigFile()¤¬¥¨¥é¡¼¤òÊÖ¤¹¤Î¤Ç¤³¤³¤Ç¤Ï¥¨¥é¡¼¤ÏÄêµÁ¤·¤Ê¤¤
+			// ã‚¨ãƒ©ãƒ¼
+			// LoadConfigFile()ãŒã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™ã®ã§ã“ã“ã§ã¯ã‚¨ãƒ©ãƒ¼ã¯å®šç¾©ã—ãªã„
 			return FALSE;
 		}
 		
-		// ÆÉ¤ß¹ş¤ó¤ÀÆâÍÆ¤«¤é¥Ç¡¼¥¿Å¸³«
+		// èª­ã¿è¾¼ã‚“ã å†…å®¹ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿å±•é–‹
 		if(!$this->LoadConfig($strConfig)){
-			// LoadConfig()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
+			// LoadConfig()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
 			return FALSE;
 		}
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		DeleteConfig
+	//	é–¢æ•°å:		DeleteConfig
 	//
-	//	³µÍ×:		ÀßÄê¥Ç¡¼¥¿¤ò½é´ü²½
+	//	æ¦‚è¦:		è¨­å®šãƒ‡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function DeleteConfig(){
-		// ÀßÄê¥Ç¡¼¥¿¤ò½é´ü²½
+		// è¨­å®šãƒ‡ãƒ¼ã‚¿ã‚’åˆæœŸåŒ–
 		$this->aryConfig = array();
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		SetConfigDir
+	//	é–¢æ•°å:		SetConfigDir
 	//
-	//	³µÍ×:		ÀßÄê¥Õ¥¡¥¤¥ë¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦:		è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$strDir		¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
+	//	å¼•æ•°:		$strDir		ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetConfigDir($strDir){
 		$this->strConfigDir = $strDir;
@@ -621,15 +621,15 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetTemplateDir
+	//	é–¢æ•°å:		SetTemplateDir
 	//
-	//	³µÍ×:		¥Æ¥ó¥×¥ì¡¼¥È¤Î¥Ç¥£¥ì¥¯¥È¥ê¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦:		ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$strDir		¥Ç¥£¥ì¥¯¥È¥ê¥Ñ¥¹
+	//	å¼•æ•°:		$strDir		ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetTemplateDir($strDir){
 		$this->strTemplateDir = $strDir;
@@ -637,15 +637,15 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetMaxToken
+	//	é–¢æ•°å:		SetMaxToken
 	//
-	//	³µÍ×:		»ÈÍÑ²ÄÇ½¤ÊºÇÂç¥È¡¼¥¯¥ó¿ô¤òÀßÄê¤¹¤ë
+	//	æ¦‚è¦:		ä½¿ç”¨å¯èƒ½ãªæœ€å¤§ãƒˆãƒ¼ã‚¯ãƒ³æ•°ã‚’è¨­å®šã™ã‚‹
 	//
-	//	°ú¿ô:		$lngMaxToken		ºÇÂç¥È¡¼¥¯¥ó
+	//	å¼•æ•°:		$lngMaxToken		æœ€å¤§ãƒˆãƒ¼ã‚¯ãƒ³
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetMaxToken($lngMaxToken){
 		$this->lngMaxToken = $lngMaxToken;
@@ -653,30 +653,30 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		CreateChildObject
+	//	é–¢æ•°å:		CreateChildObject
 	//
-	//	³µÍ×:		»Ò¥ª¥Ö¥¸¥§¥¯¥È¤òºî¤ë
+	//	æ¦‚è¦:		å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		ºîÀ®¤·¤¿»Ò¥ª¥Ö¥¸¥§¥¯¥È
+	//	æˆ»ã‚Šå€¤:		ä½œæˆã—ãŸå­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function CreateChildObject(){
-		// »Ò¥ª¥Ö¥¸¥§¥¯¥È¤òºî¤ë
+		// å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œã‚‹
 		$objChildObject = $this;
 		
-		// ¼Â¹Ô·ë²Ì¤Î½é´ü²½
+		// å®Ÿè¡Œçµæœã®åˆæœŸåŒ–
 		$objChildObject->ClearExecute();
 		
-		// ¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤Î½é´ü²½
+		// ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®åˆæœŸåŒ–
 		$objChildObject->ClearErrorMessage();
 		
-		// ÀßÄê¥Ç¡¼¥¿¤Î½é´ü²½
+		// è¨­å®šãƒ‡ãƒ¼ã‚¿ã®åˆæœŸåŒ–
 		$objChildObject->ClearConfig();
 		
-		// ÃÖ¤­´¹¤¨¥ê¥¹¥È¤Î½é´ü²½
+		// ç½®ãæ›ãˆãƒªã‚¹ãƒˆã®åˆæœŸåŒ–
 		$objChildObject->ClearReplaceList();
 
 		return $objChildObject;
@@ -684,152 +684,152 @@ class CListOutput{
 	
 	
 	
-	//	´Ø¿ôÌ¾:		ListExecute
+	//	é–¢æ•°å:		ListExecute
 	//
-	//	³µÍ×:		SQL¡¦¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨½èÍı¤ò¼Â¹Ô
+	//	æ¦‚è¦:		SQLãƒ»ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆå‡¦ç†ã‚’å®Ÿè¡Œ
 	//
-	//	°ú¿ô:		&$objDatabase		¥Ç¡¼¥¿¥Ù¡¼¥¹Áàºî¥ª¥Ö¥¸¥§¥¯¥È
-	//				&$strPage			½ĞÎÏ·ë²Ì(Ìá¤êÃÍ)
-	//				$bytInitializePageContextFlag	¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤Î½é´ü²½¤ò¹Ô¤Ã¤Æ¤«¤é¼Â¹Ô¤¹¤ë(Default: TRUE)
+	//	å¼•æ•°:		&$objDatabase		ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æ“ä½œã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	//				&$strPage			å‡ºåŠ›çµæœ(æˆ»ã‚Šå€¤)
+	//				$bytInitializePageContextFlag	ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®åˆæœŸåŒ–ã‚’è¡Œã£ã¦ã‹ã‚‰å®Ÿè¡Œã™ã‚‹(Default: TRUE)
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function ListExecute(&$objDatabase, &$strPage, $bytInitializePageContextFlag = TRUE){
-		// Á°²ó¤Î¼Â¹Ô·ë²Ì¤Î¥¯¥ê¥¢
+		// å‰å›ã®å®Ÿè¡Œçµæœã®ã‚¯ãƒªã‚¢
 		$this->ClearExecute();
 		if($bytInitializePageContextFlag == TRUE) {
-			// ¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤Î½é´ü²½
+			// ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®åˆæœŸåŒ–
 			$this->objContext->initializePageContext();
 		}
 		
-		// ÊÖ¤¹ÃÍ¤Î½é´ü²½
+		// è¿”ã™å€¤ã®åˆæœŸåŒ–
 		$strPage = '';
 		
-		// ÇÛÎó¤Ç¤Ï¤Ê¤¤¡¢¤Ş¤¿¤Ï count() ¤¬ 0 ¤Ê¤é¤Ğ¥¨¥é¡¼
+		// é…åˆ—ã§ã¯ãªã„ã€ã¾ãŸã¯ count() ãŒ 0 ãªã‚‰ã°ã‚¨ãƒ©ãƒ¼
 		if(!is_array($this->aryConfig) or count($this->aryConfig) == 0){
-			// ÀßÄê¤¬Â¸ºß¤·¤Ê¤¤¥¨¥é¡¼
+			// è¨­å®šãŒå­˜åœ¨ã—ãªã„ã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'No config data exist';
 			return FALSE;
 		}
 		
-		// ¥Æ¥ó¥×¥ì¡¼¥È¤ÎÆÉ¤ß¹ş¤ß
+		// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®èª­ã¿è¾¼ã¿
 		reset($this->aryConfig['INDEX']);
 		while(list($strTempName) = each($this->aryConfig['INDEX'])){
-			// ÀèÆ¬¤Î½èÍıÌ¾¤Î¼è¤ê½Ğ¤·
+			// å…ˆé ­ã®å‡¦ç†åã®å–ã‚Šå‡ºã—
 			$aryName[] = $strName = $strTempName;
 			
 			if(empty($this->aryConfig['SQL'][$strName])){
-				// ¥Æ¥ó¥×¥ì¡¼¥È¤Ï¤¢¤ë¤¬¡¢SQL½èÍı¤¬Ì¤ÄêµÁ¤Ê¤Î¤Ç½èÍı¤Ê¤·
+				// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¯ã‚ã‚‹ãŒã€SQLå‡¦ç†ãŒæœªå®šç¾©ãªã®ã§å‡¦ç†ãªã—
 				continue;
 			}
 			
-			// ÊÑ¿ô¤Î½é´ü²½
+			// å¤‰æ•°ã®åˆæœŸåŒ–
 			unset($aryTemplate);
 			unset($intFinishLine);
 			unset($intLine);
 			while(1){
-				// ¥­¥ã¥Ã¥·¥å¤Î»ÈÍÑÀ©¸æ
+				// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ä½¿ç”¨åˆ¶å¾¡
 				$bolUseCache = ($this->aryConfig['CACHE'][$strName] == 1) ? TRUE : FALSE;
 				
-				// ¥Ú¡¼¥¸É½¼¨¤Ë»ÈÍÑ¤¹¤ë¥Æ¥ó¥×¥ì¡¼¥È¤ÎÆÉ¤ß¹ş¤ß
+				// ãƒšãƒ¼ã‚¸è¡¨ç¤ºã«ä½¿ç”¨ã™ã‚‹ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã®èª­ã¿è¾¼ã¿
 				if(empty($this->aryConfig['TEMPLATESTRING'][$strName]) == FALSE){
-					// ÀßÄê¥Õ¥¡¥¤¥ë¤ËÄ¾ÀÜ¤«¤«¤ì¤¿Ê¸»úÎó¤ò¥Æ¥ó¥×¥ì¡¼¥È¤È¤¹¤ë
+					// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã«ç›´æ¥ã‹ã‹ã‚ŒãŸæ–‡å­—åˆ—ã‚’ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¨ã™ã‚‹
 					$aryTemplate[] = empty($this->aryConfig['TEMPLATESTRING'][$strName]) ? '' : $this->aryConfig['TEMPLATESTRING'][$strName];
 				}
 				elseif(empty($this->aryConfig['RESULTTEMPLATE'][$strName]) == FALSE){
-					// ¼Â¹Ô·ë²Ì¤ò¥Æ¥ó¥×¥ì¡¼¥È¤È¤·¤ÆÍøÍÑ¤¹¤ë
+					// å®Ÿè¡Œçµæœã‚’ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã¨ã—ã¦åˆ©ç”¨ã™ã‚‹
 					$aryTemplate[] = empty($this->aryResult[$this->aryConfig['RESULTTEMPLATE'][$strName]]) ? '' : $this->aryResult[$this->aryConfig['RESULTTEMPLATE'][$strName]];
 				}
 				elseif(!$this->LoadFileWithCacheControl($this->strTemplateDir . trim($this->aryConfig['TEMPLATE'][$strName]), $aryTemplate[], $bolUseCache)){
-					// ¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß¥¨¥é¡¼
-					// LoadFileWithCacheControl()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò»ÈÍÑ¤¹¤ë
+					// ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼
+					// LoadFileWithCacheControl()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ä½¿ç”¨ã™ã‚‹
 					return FALSE;
 				}
 				
-				// ºÇ¾®¤ÎOFFSET¤Î¼è¤ê½Ğ¤·
+				// æœ€å°ã®OFFSETã®å–ã‚Šå‡ºã—
 				if(empty($this->aryConfig['OFFSET'][$strName])){
-					// OFFSETÌ¤ÄêµÁ
+					// OFFSETæœªå®šç¾©
 					$intLine = 0;
 				}
 				else{
-					// OFFSET¤¬ÄêµÁ¤µ¤ì¤Æ¤¤¤ë
-					// $intLine ¤¬ÄêµÁ¤µ¤ì¤Æ¤¤¤Ê¤¤¤Ş¤¿¤Ïº£²ó¤ÎOFFSET¤¬$intLine¤è¤ê¾®¤µ¤¤¾ì¹ç¤ÏOFFSET¤ò¥»¥Ã¥È¤¹¤ë
+					// OFFSETãŒå®šç¾©ã•ã‚Œã¦ã„ã‚‹
+					// $intLine ãŒå®šç¾©ã•ã‚Œã¦ã„ãªã„ã¾ãŸã¯ä»Šå›ã®OFFSETãŒ$intLineã‚ˆã‚Šå°ã•ã„å ´åˆã¯OFFSETã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 					if((isset($intLine) == FALSE) or ($intLine > $this->aryConfig['OFFSET'][$strName])){
-						// OFFSET¤Î¥»¥Ã¥È
+						// OFFSETã®ã‚»ãƒƒãƒˆ
 						$intLine = $this->aryConfig['OFFSET'][$strName];
 					}
 				}
 				
-				// ºÇÂç¼è¤ê½Ğ¤·¹Ô¿ôÀ©¸Â¤ÎÀßÄê
+				// æœ€å¤§å–ã‚Šå‡ºã—è¡Œæ•°åˆ¶é™ã®è¨­å®š
 				if(empty($this->aryConfig['LIMIT'][$strName])){
-					// ¼è¤ê½Ğ¤·¹Ô¿ôÀ©¸Â¤Ê¤·
+					// å–ã‚Šå‡ºã—è¡Œæ•°åˆ¶é™ãªã—
 					$intFinishLine = 0;
 				}
 				else{
-					// ¼è¤ê½Ğ¤·¹Ô¿ôÀ©¸Â¤¢¤ê
-					// º£²ó¤Î¥ª¥Õ¥»¥Ã¥È¤ò¼èÆÀ
+					// å–ã‚Šå‡ºã—è¡Œæ•°åˆ¶é™ã‚ã‚Š
+					// ä»Šå›ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’å–å¾—
 					$intThisOffset = (isset($this->aryConfig['OFFSET'][$strName]) == TRUE) ? $this->aryConfig['OFFSET'][$strName] : 0;
 					if((isset($intFinishLine) == FALSE) or ($intFinishLine != 0 and $intFinishLine < ($intThisOffset + $this->aryConfig['LIMIT'][$strName]))){
 						$intFinishLine = $intThisOffset + $this->aryConfig['LIMIT'][$strName];
 					}
 				}
 				
-				// ¥Ñ¥é¥ì¥ëSQL¤Î¸¡½Ğ
+				// ãƒ‘ãƒ©ãƒ¬ãƒ«SQLã®æ¤œå‡º
 				if($this->aryConfig['PARALLEL'][$strName] == 1){
 					if((list($strTempName) = each($this->aryConfig['INDEX'])) == FALSE){
-						// ¥Ñ¥é¥ì¥ëSQL¤Î¤Ï¤º¤¬¼¡¤Î¥Ö¥í¥Ã¥¯¤¬Â¸ºß¤·¤Ê¤¤
+						// ãƒ‘ãƒ©ãƒ¬ãƒ«SQLã®ã¯ãšãŒæ¬¡ã®ãƒ–ãƒ­ãƒƒã‚¯ãŒå­˜åœ¨ã—ãªã„
 						$this->strErrorMessage = 'Invalid parallel SQL : ' . $strName;
 						return FALSE;
 					}
 					
-					// ¼¡¤Î½èÍıÌ¾¤ò¥»¥Ã¥È
+					// æ¬¡ã®å‡¦ç†åã‚’ã‚»ãƒƒãƒˆ
 					$aryName[] = $strName = $strTempName;
 				}
 				else{
-					// ¥Ñ¥é¥ì¥ëSQL¤ÏÂ¸ºß¤·¤Ê¤¤¤Î¤Ç¥Æ¥ó¥×¥ì¡¼¥ÈÆÉ¤ß¹ş¤ß½ªÎ»
+					// ãƒ‘ãƒ©ãƒ¬ãƒ«SQLã¯å­˜åœ¨ã—ãªã„ã®ã§ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆèª­ã¿è¾¼ã¿çµ‚äº†
 					break;
 				}
 			}
 			
-			// ¥Ñ¥é¥ì¥ëSQL¤ÎÀèÆ¬¤Î½èÍıÌ¾¤ò¼è½Ğ¤¹
+			// ãƒ‘ãƒ©ãƒ¬ãƒ«SQLã®å…ˆé ­ã®å‡¦ç†åã‚’å–å‡ºã™
 			$strName = $aryName[0];
 			
-			// ÀßÄê¥Õ¥¡¥¤¥ë¤ËÂĞ¤¹¤ë½é´üÃÖ¤­´¹¤¨Æ°ºî
+			// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã«å¯¾ã™ã‚‹åˆæœŸç½®ãæ›ãˆå‹•ä½œ
 			switch($this->bytReplaceMode){
 				case CLISTOUTPUT_REPLACE_ALL:
 				case CLISTOUTPUT_REPLACE_SQL:
 				default:
-					// SQL¤Î¥­¡¼¥ï¡¼¥ÉÃÖ¤­´¹¤¨
+					// SQLã®ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ç½®ãæ›ãˆ
 					$strSQL = $this->ReplaceStrings($this->aryColumnList, $this->aryReplaceList, $this->aryConfig['SQL'][$strName]);
 					break;
 			}
 			
-			// SQL¤Î¥­¡¼¥ï¡¼¥ÉÃÖ¤­´¹¤¨¡Ê¾å¤Î¥Ö¥í¥Ã¥¯¤Ç¤Î¼Â¹Ô·ë²Ì¤ò¼èÆÀ¤¹¤ë¡Ë
+			// SQLã®ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ç½®ãæ›ãˆï¼ˆä¸Šã®ãƒ–ãƒ­ãƒƒã‚¯ã§ã®å®Ÿè¡Œçµæœã‚’å–å¾—ã™ã‚‹ï¼‰
 			if(is_array($this->aryColumnResult) and is_array($this->aryResult)){
 				$strSQL = $this->ReplaceStrings($this->aryColumnResult, $this->aryResult, $strSQL);
 			}
 			
-			// SQL¤Î¼Â¹Ô
+			// SQLã®å®Ÿè¡Œ
 			$strResultID = $objDatabase->Execute($strSQL);
 			if($strResultID == FALSE){
-				// SQL¼Â¹Ô¥¨¥é¡¼
+				// SQLå®Ÿè¡Œã‚¨ãƒ©ãƒ¼
 				$this->strErrorMessage = 'Invalid SQL : ' . $strSQL;
 				return FALSE;
 			}
-			// ¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+			// å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 			$this->objContext->initializeExecuteContext();
 			
-			// ¹Ô¤´¤È¤Ë¼è¤ê½Ğ¤·
+			// è¡Œã”ã¨ã«å–ã‚Šå‡ºã—
 			unset($aryReturnValue);
 			unset($arySQLResult);
 			unset($aryCount);
 			unset($aryNoRepeat);
 			unset($aryNoRepeatColumn);
 			
-			// NOREPEAT¤¬»ØÄê¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ï¥Æ¥ó¥×¥ì¡¼¥È¤òÍÑ°Õ¤·¤Æ¤ª¤¯
+			// NOREPEATãŒæŒ‡å®šã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ç”¨æ„ã—ã¦ãŠã
 			reset($aryTemplate);
 			while(list($intKey) = each($aryTemplate)){
 				if(trim($this->aryConfig['NOREPEAT'][$aryName[$intKey]]) == 1 or
@@ -838,16 +838,16 @@ class CListOutput{
 				}
 			}
 			
-			// EVAL¤Î¥¯¥é¥¹À¸À®¤¬»Ø¼¨¤µ¤ì¤Æ¤¤¤¿¤é¥¯¥é¥¹¤òºîÀ®¤¹¤ë¤³¤È¤¬¤Ç¤­¤ë
-			// ¤¿¤À¤·¡¢CheckClassToken()¤Ç¥¯¥é¥¹ÍÑ¤Î¥È¡¼¥¯¥ó¤¬»Ä¤Ã¤Æ¤¤¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ëÉ¬Í×¤¬¤¢¤ë
+			// EVALã®ã‚¯ãƒ©ã‚¹ç”ŸæˆãŒæŒ‡ç¤ºã•ã‚Œã¦ã„ãŸã‚‰ã‚¯ãƒ©ã‚¹ã‚’ä½œæˆã™ã‚‹ã“ã¨ãŒã§ãã‚‹
+			// ãŸã ã—ã€CheckClassToken()ã§ã‚¯ãƒ©ã‚¹ç”¨ã®ãƒˆãƒ¼ã‚¯ãƒ³ãŒæ®‹ã£ã¦ã„ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹å¿…è¦ãŒã‚ã‚‹
 			if($this->bytEvalMode == CLISTOUTPUT_EVAL_CLASS and $this->CheckClassToken() == TRUE){
-				// EVAL¤¬ÄêµÁ¤µ¤ì¤Æ¤¤¤¿¤éÇ¤°Õ¤ÎPHP¥½¡¼¥¹¤ò¸µ¤Ë¥¯¥é¥¹¤òÀ¸À®¤¹¤ë
+				// EVALãŒå®šç¾©ã•ã‚Œã¦ã„ãŸã‚‰ä»»æ„ã®PHPã‚½ãƒ¼ã‚¹ã‚’å…ƒã«ã‚¯ãƒ©ã‚¹ã‚’ç”Ÿæˆã™ã‚‹
 				if(strlen(trim($this->aryConfig['EVAL'][$strName])) > 0){
-					// EVAL¤Î¥¯¥é¥¹¥ª¥Ö¥¸¥§¥¯¥È¤òºîÀ®¤¹¤ë
+					// EVALã®ã‚¯ãƒ©ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œæˆã™ã‚‹
 					if($this->GetClassObject($this->aryConfig['EVAL'][$strName], $objEvalClass) == FALSE){
-						// ¥¨¥é¡¼È¯À¸
-						// GetClassObject()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
-						// ·ë²ÌID¤òÊÄ¤¸¤ë
+						// ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿ
+						// GetClassObject()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
+						// çµæœIDã‚’é–‰ã˜ã‚‹
 						$objDatabase->FreeResult($strResultID);
 						return FALSE;
 					}
@@ -855,154 +855,154 @@ class CListOutput{
 			}
 			
 			while($objDatabase->SafeFetch($strResultID, $arySQLResult, $intLine)){
-				// ¹Ô¥«¥¦¥ó¥È¤Î¥¤¥ó¥¯¥ê¥á¥ó¥È
+				// è¡Œã‚«ã‚¦ãƒ³ãƒˆã®ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 				$intLine++;
 				
-				// LIMIT¤Ë¤è¤ë½ªÎ»È½Äê
+				// LIMITã«ã‚ˆã‚‹çµ‚äº†åˆ¤å®š
 				if($intFinishLine != 0 and $intFinishLine < $intLine){
-					// LIMIT¤ÎÃÍ¤ËÃ£¤·¤¿¤Î¤Ç½ªÎ»
+					// LIMITã®å€¤ã«é”ã—ãŸã®ã§çµ‚äº†
 					break;
 				}
 				
-				// ¹Ô¿ô¼èÆÀ¤ÎÌ¿Îá
+				// è¡Œæ•°å–å¾—ã®å‘½ä»¤
 				if(empty($this->aryConfig['ROWNUM'][$strName]) == FALSE){
-					// ¹ÔÈÖ¹æ¼èÆÀ
+					// è¡Œç•ªå·å–å¾—
 					$arySQLResult[$this->aryConfig['ROWNUM'][$strName]] = $intLine;
 				}
 				
-				// EVAL¤¬ÄêµÁ¤µ¤ì¤Æ¤¤¤¿¤éÇ¤°Õ¤ÎPHP¥½¡¼¥¹¤ò¼Â¹Ô¤¹¤ë
+				// EVALãŒå®šç¾©ã•ã‚Œã¦ã„ãŸã‚‰ä»»æ„ã®PHPã‚½ãƒ¼ã‚¹ã‚’å®Ÿè¡Œã™ã‚‹
 				if(isset($objEvalClass) == TRUE){
 					if($objEvalClass->ExtendSQLResult($arySQLResult, $this->objContext) == FALSE){
-						// eval¤ÇÀ¸À®¤µ¤ì¤¿´Ø¿ôÆâ¤Ç¥¨¥é¡¼È¯À¸
+						// evalã§ç”Ÿæˆã•ã‚ŒãŸé–¢æ•°å†…ã§ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿ
 						$this->strErrorMessage = 'Eval script returns false : ' . $this->aryConfig['EVAL'][$strName];
-						// ·ë²ÌID¤òÊÄ¤¸¤ë
+						// çµæœIDã‚’é–‰ã˜ã‚‹
 						$objDatabase->FreeResult($strResultID);
 						return FALSE;
 					}
 				}
 				elseif(strlen(trim($this->aryConfig['EVAL'][$strName])) > 0){
-					// »ÈÍÑºÑ¥È¡¼¥¯¥ó¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+					// ä½¿ç”¨æ¸ˆãƒˆãƒ¼ã‚¯ãƒ³ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 					if($this->lngCurrentToken >= $this->lngMaxToken){
-						// ¥È¡¼¥¯¥ó¤Î»È¤¤¤¹¤®¥¨¥é¡¼
+						// ãƒˆãƒ¼ã‚¯ãƒ³ã®ä½¿ã„ã™ãã‚¨ãƒ©ãƒ¼
 						$this->strErrorMessage = 'Reach max token cache : ' . $this->lngMaxToken;
-						// ·ë²ÌID¤òÊÄ¤¸¤ë
+						// çµæœIDã‚’é–‰ã˜ã‚‹
 						$objDatabase->FreeResult($strResultID);
 						return FALSE;
 					}
 					
-					// ¥¨¥é¡¼½ªÎ»¥Õ¥é¥°¤òÎ©¤Æ¤ë
+					// ã‚¨ãƒ©ãƒ¼çµ‚äº†ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 					$bolErrorExit = TRUE;
 					eval($this->aryConfig['EVAL'][$strName] . "\n" . '$bolErrorExit = FALSE;');
-					// »ÈÍÑºÑ¥È¡¼¥¯¥ó¤ò¥¤¥ó¥¯¥ê¥á¥ó¥È
+					// ä½¿ç”¨æ¸ˆãƒˆãƒ¼ã‚¯ãƒ³ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 					$this->lngCurrentToken++;
 					
 					if($bolErrorExit == TRUE){
-						// evalÆâ¤Ç¥¨¥é¡¼È¯À¸
+						// evalå†…ã§ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿ
 						$this->strErrorMessage = 'Invalid script in eval : ' . $this->aryConfig['EVAL'][$strName];
-						// ·ë²ÌID¤òÊÄ¤¸¤ë
+						// çµæœIDã‚’é–‰ã˜ã‚‹
 						$objDatabase->FreeResult($strResultID);
 						return FALSE;
 					}
 				}
 				
-				// ENCODEPREFIX ¤¬ÄêµÁ¤µ¤ì¤Æ¤¤¤¿¤é¤¹¤Ù¤Æ¤Î·ë²Ì¤ËÂĞ¤·¤ÆHTML¤Î¥¨¥ó¥³¡¼¥É¤ò¹Ô¤¦
+				// ENCODEPREFIX ãŒå®šç¾©ã•ã‚Œã¦ã„ãŸã‚‰ã™ã¹ã¦ã®çµæœã«å¯¾ã—ã¦HTMLã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰ã‚’è¡Œã†
 				if(strlen(trim($this->aryConfig['ENCODEPREFIX'][$strName])) > 0){
-					// OVERWRITE¤È¤Ê¤Ã¤Æ¤¤¤¿¤é¹àÌÜ¤ò¾å½ñ¤­¤¹¤ë(¥¹¥Ô¡¼¥É¸ş¾å¤Î¤¿¤á¥í¡¼¥«¥ëÊÑ¿ô¤ËÂåÆş)
+					// OVERWRITEã¨ãªã£ã¦ã„ãŸã‚‰é …ç›®ã‚’ä¸Šæ›¸ãã™ã‚‹(ã‚¹ãƒ”ãƒ¼ãƒ‰å‘ä¸Šã®ãŸã‚ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ•°ã«ä»£å…¥)
 					$strEncodePrefix = (strcmp($this->aryConfig['ENCODEPREFIX'][$strName], 'OVERWRITE') == 0) ? '' : $this->aryConfig['ENCODEPREFIX'][$strName];
 					
 					reset($arySQLResult);
 					while(list($strSQLResultKey) = each($arySQLResult)){
 						if(strlen($strEncodePrefix) > 0 and strcmp(substr($strSQLResultKey, 0, strlen($strEncodePrefix)), $strEncodePrefix) == 0){
-							// ¤¹¤Ç¤Ë¥¨¥ó¥³¡¼¥ÉºÑ¤ß¤Î¤â¤Î¤ÏÈô¤Ğ¤¹
+							// ã™ã§ã«ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰æ¸ˆã¿ã®ã‚‚ã®ã¯é£›ã°ã™
 							continue;
 						}
-						// ÇÛÎó¤Ç¤Ï¤Ê¤«¤Ã¤¿¤é½èÍı¤ò¤¹¤ë
+						// é…åˆ—ã§ã¯ãªã‹ã£ãŸã‚‰å‡¦ç†ã‚’ã™ã‚‹
 						if(is_array($arySQLResult[$strSQLResultKey]) == FALSE){
 							$arySQLResult[$strEncodePrefix . $strSQLResultKey] = htmlspecialchars($arySQLResult[$strSQLResultKey], ENT_QUOTES);
 						}
 					}
 				}
 				
-				// CHILDOBJECT ¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¤é¾å¤Î·ë²Ì¤«¤é»Ò¥ª¥Ö¥¸¥§¥¯¥È¤òºî¤ë
+				// CHILDOBJECT ãŒæŒ‡å®šã•ã‚Œã¦ã„ãŸã‚‰ä¸Šã®çµæœã‹ã‚‰å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œã‚‹
 				if(strlen(trim($this->aryConfig['CHILDOBJECT'][$strName])) > 0){
-					// »ØÄê¤µ¤ì¤¿ÀßÄê¥Õ¥¡¥¤¥ë¤«¤é»Ò¥ª¥Ö¥¸¥§¥¯¥È¤òºî¤ë
+					// æŒ‡å®šã•ã‚ŒãŸè¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ä½œã‚‹
 					$objChildObject = $this->CreateChildObject();
 					
-					// ¥³¥ó¥Æ¥­¥¹¥È¤ò°ú¤­¾å¤²¤ë(ParentsExecute -> ChildPage, ParentsPage -> ChildSession)
+					// ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’å¼•ãä¸Šã’ã‚‹(ParentsExecute -> ChildPage, ParentsPage -> ChildSession)
 					$objChildObject->objContext->raise();
 
-					// »Ò¥ª¥Ö¥¸¥§¥¯¥È¤ËSQL¤Î·ë²Ì¤òÃÖ¤­´¹¤¨¥ê¥¹¥È¤È¤·¤Æ¥¤¥ó¥İ¡¼¥È¤¹¤ë
+					// å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«SQLã®çµæœã‚’ç½®ãæ›ãˆãƒªã‚¹ãƒˆã¨ã—ã¦ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹
 					
-					// CHILDOBJECTIMPORTREPLACELIST¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¾ì¹ç¤Ïimport¤¹¤ë(Í¥Àè½ç°Ì¤Ï¤É¤¦¤·¤è¤¦¡¦¡¦¡¦)
+					// CHILDOBJECTIMPORTREPLACELISTãŒæŒ‡å®šã•ã‚Œã¦ã„ãŸå ´åˆã¯importã™ã‚‹(å„ªå…ˆé †ä½ã¯ã©ã†ã—ã‚ˆã†ãƒ»ãƒ»ãƒ»)
 					if (trim($this->aryConfig['CHILDOBJECTIMPORTREPLACELIST'][$strName]) == 1) {
 						$objChildObject->ImportReplaceList($this->array_merge($this->aryReplaceList, $arySQLResult));
 					} else {
-						// ¤½¤ì°Ê³°¤Ï¤¤¤Ä¤â¤É¤ª¤ê
+						// ãã‚Œä»¥å¤–ã¯ã„ã¤ã‚‚ã©ãŠã‚Š
 						$objChildObject->ImportReplaceList($arySQLResult);
 					}
-					// »Ò¥ª¥Ö¥¸¥§¥¯¥È¤ËÀßÄê¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤à
+					// å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 					if($objChildObject->LoadConfig(trim($this->aryConfig['CHILDOBJECT'][$strName])) == FALSE){
-						// »Ò¥ª¥Ö¥¸¥§¥¯¥È¤Î¥¨¥é¡¼¤ò¤â¤È¤ËÀ¸À®¤¹¤ë
+						// å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¨ãƒ©ãƒ¼ã‚’ã‚‚ã¨ã«ç”Ÿæˆã™ã‚‹
 						$this->strErrorMessage = 'Child object returns : ' . $objChildObject->GetErrorMessage();
-						// ·ë²ÌID¤òÊÄ¤¸¤ë
+						// çµæœIDã‚’é–‰ã˜ã‚‹
 						$objDatabase->FreeResult($strResultID);
 						return FALSE;
 					}
 					
-					// »Ò¥ª¥Ö¥¸¥§¥¯¥È¤ò¼Â¹Ô¤¹¤ë
+					// å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å®Ÿè¡Œã™ã‚‹
 					if($objChildObject->ListExecute($objDatabase, $strChildPage, FALSE) == FALSE){
-						// »Ò¥ª¥Ö¥¸¥§¥¯¥È¤Î¥¨¥é¡¼¤ò¤â¤È¤ËÀ¸À®¤¹¤ë
+						// å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¨ãƒ©ãƒ¼ã‚’ã‚‚ã¨ã«ç”Ÿæˆã™ã‚‹
 						$this->strErrorMessage = 'Child object returns : ' . $objChildObject->GetErrorMessage();
-						// ·ë²ÌID¤òÊÄ¤¸¤ë
+						// çµæœIDã‚’é–‰ã˜ã‚‹
 						$objDatabase->FreeResult($strResultID);
 						return FALSE;
 					}
 					
-					// ·ë²Ì¤òÆÉ¤ß¹ş¤à
+					// çµæœã‚’èª­ã¿è¾¼ã‚€
 					$objChildObject->GetResult($aryChildResult);
 					$arySQLResult = $this->array_merge($arySQLResult, $aryChildResult);
 					
-					// »ÈÍÑºÑ¤ß¥È¡¼¥¯¥ó¿ô¤ò¼èÆÀ
+					// ä½¿ç”¨æ¸ˆã¿ãƒˆãƒ¼ã‚¯ãƒ³æ•°ã‚’å–å¾—
 					$this->lngCurrentToken = $objChildObject->GetCurrentToken();
 					
-					// »Ò¥ª¥Ö¥¸¥§¥¯¥È¤ÎEVAL¥­¥ã¥Ã¥·¥å¤ò¼èÆÀ¤·¤ÆÅ¬ÍÑ¤¹¤ë
+					// å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’å–å¾—ã—ã¦é©ç”¨ã™ã‚‹
 					$this->ImportEvalCache($objChildObject->ExportEvalCache());
 
-					// php¤Î¥Ğ¡¼¥¸¥ç¥ó¤¬4°Ê²¼¤Î¾ì¹ç¤Ï¥³¥ó¥Æ¥­¥¹¥È¤ò¥³¥Ô¡¼¤¹¤ë
+					// phpã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³ãŒ4ä»¥ä¸‹ã®å ´åˆã¯ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹
 					if (phpversion() < 4) {
-						// ¥³¥ó¥Æ¥­¥¹¥È¤ò¥³¥Ô¡¼¤¹¤ë
+						// ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’ã‚³ãƒ”ãƒ¼ã™ã‚‹
 						$this->objContext = $objChildObject->objContext;
 					}
-					// ¥³¥ó¥Æ¥­¥¹¥È¤ò°ú¤­²¼¤²¤ë(ChildSession -> ParentsPage, ChildPage ->ParentsExecute)
+					// ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’å¼•ãä¸‹ã’ã‚‹(ChildSession -> ParentsPage, ChildPage ->ParentsExecute)
 					$this->objContext->lower();
 					
-					// »Ò¥ª¥Ö¥¸¥§¥¯¥È¤òºï½ü¤¹¤ë
+					// å­ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤ã™ã‚‹
 					unset($objChildObject);
 				}
 				
-				// ÃÖ¤­´¹¤¨ÍÑ¥«¥é¥à¥ê¥¹¥È¤ò¼èÆÀ¤¹¤ë
+				// ç½®ãæ›ãˆç”¨ã‚«ãƒ©ãƒ ãƒªã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
 				$arySQLColumn = $this->GetKeyArray($arySQLResult, '/_%', '%_/');
 				
-				// ¥­¡¼¥ï¡¼¥ÉÃÖ¤­´¹¤¨¤ò¹Ô¤¦
+				// ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ç½®ãæ›ãˆã‚’è¡Œã†
 				reset($aryTemplate);
 				while(list($intKey) = each($aryTemplate)){
 					$lngLimit = $this->aryConfig['OFFSET'][$aryName[$intKey]] + $this->aryConfig['LIMIT'][$aryName[$intKey]];
 					
-					// LIMIT¤Ë¤è¤ë½ªÎ»È½Äê
+					// LIMITã«ã‚ˆã‚‹çµ‚äº†åˆ¤å®š
 					if($this->aryConfig['LIMIT'][$aryName[$intKey]] != '' and $lngLimit < $intLine){
-						// LIMIT¤ÎÃÍ¤ËÃ£¤·¤¿¤Î¤Ç½ªÎ»
+						// LIMITã®å€¤ã«é”ã—ãŸã®ã§çµ‚äº†
 						continue;
 					}
 					
-					// OFFSET¤Ë¤è¤ëÈ½Äê
+					// OFFSETã«ã‚ˆã‚‹åˆ¤å®š
 					if($this->aryConfig['OFFSET'][$aryName[$intKey]] >= $intLine){
-						// OFFSET°Ê²¼¤ÎÃÍ¤Ê¤Î¤Ç¼¡¤Ø
+						// OFFSETä»¥ä¸‹ã®å€¤ãªã®ã§æ¬¡ã¸
 						continue;
 					}
 					
-					// NOREPEAT == 1 ¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¤é¥Æ¥ó¥×¥ì¡¼¥È¤ò·«¤êÊÖ¤µ¤ºÆ±¤¸¥Æ¥ó¥×¥ì¡¼¥È¤ËÅ¬ÍÑ
+					// NOREPEAT == 1 ãŒæŒ‡å®šã•ã‚Œã¦ã„ãŸã‚‰ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚’ç¹°ã‚Šè¿”ã•ãšåŒã˜ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«é©ç”¨
 					if(trim($this->aryConfig['NOREPEAT'][$aryName[$intKey]]) == 1){
-						// ÇÛÎó¤ÎÍ×ÁÇ¤´¤È¤ËÃÖ¤­´¹¤¨¤¹¤ë¡ÊÆ±¤¸¥Æ¥ó¥×¥ì¡¼¥È¤ËÅ¬ÍÑ¤¹¤ë¡Ë
+						// é…åˆ—ã®è¦ç´ ã”ã¨ã«ç½®ãæ›ãˆã™ã‚‹ï¼ˆåŒã˜ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã«é©ç”¨ã™ã‚‹ï¼‰
 						$aryReturnValue[$intKey][0] = $this->ReplaceStrings($arySQLColumn, $arySQLResult, $aryReturnValue[$intKey][0]);
 					}
 					elseif(empty($this->aryConfig['NOREPEAT'][$aryName[$intKey]]) != TRUE and isset($this->aryConfig['NOREPEATVALUE'][$aryName[$intKey]])) {
@@ -1012,7 +1012,7 @@ class CListOutput{
 							}
 							$aryNoRepeat[$intKey][$this->ReplaceStrings($arySQLColumn, $arySQLResult, $this->aryConfig['NOREPEAT' . $intNoRepeatIndex][$aryName[$intKey]])] = $this->ReplaceStrings($arySQLColumn, $arySQLResult, $this->aryConfig['NOREPEATVALUE' . $intNoRepeatIndex][$aryName[$intKey]]);
 						}
-						// NOREPEATLIMIT ¤¬ÄêµÁ¤µ¤ì¤Æ¤¤¤ë¾ì¹ç¤Ï¤½¤ÎLIMITËè¤ËÃÖ¤­´¹¤¨¤ò¹Ô¤¦(¾Ê¥á¥â¥ê)
+						// NOREPEATLIMIT ãŒå®šç¾©ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ãã®LIMITæ¯ã«ç½®ãæ›ãˆã‚’è¡Œã†(çœãƒ¡ãƒ¢ãƒª)
 						if(isset($this->aryConfig['NOREPEATLIMIT'][$aryName[$intKey]]) and $intLine % $this->aryConfig['NOREPEATLIMIT'][$aryName[$intKey]] == 0) {
 							$aryNoRepeatColumn = $this->GetKeyArray($aryNoRepeat[$intKey], '/_%', '%_/');
 							$aryReturnValue[$intKey][0] = $this->ReplaceStrings($aryNoRepeatColumn, $aryNoRepeat[$intKey], $aryReturnValue[$intKey][0]);
@@ -1021,33 +1021,33 @@ class CListOutput{
 					}
 					else{
 						if(count($aryReturnValue[$intKey]) > 0){
-							// ¤¹¤Ç¤ËÃÍ¤¬Æş¤Ã¤Æ¤¤¤¿¤é¥»¥Ñ¥ì¡¼¥¿¤òÆş¤ì¤ë
+							// ã™ã§ã«å€¤ãŒå…¥ã£ã¦ã„ãŸã‚‰ã‚»ãƒ‘ãƒ¬ãƒ¼ã‚¿ã‚’å…¥ã‚Œã‚‹
 							$aryReturnValue[$intKey][] = $this->aryConfig['SEPARATOR'][$aryName[$intKey]];
 						}
-						// ÇÛÎó¤ÎÍ×ÁÇ¤´¤È¤ËÃÖ¤­´¹¤¨¤¹¤ë
+						// é…åˆ—ã®è¦ç´ ã”ã¨ã«ç½®ãæ›ãˆã™ã‚‹
 						$aryReturnValue[$intKey][] = $this->ReplaceStrings($arySQLColumn, $arySQLResult, $aryTemplate[$intKey]);
 					}
 					
-					// ¥«¥¦¥ó¥È¤ò¥¤¥ó¥¯¥ê¥á¥ó¥È
+					// ã‚«ã‚¦ãƒ³ãƒˆã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 					$aryCount[$intKey]++;
 				}
 				
-				// SQL¼Â¹Ô·ë²Ì¤Î¾Ãµî
+				// SQLå®Ÿè¡Œçµæœã®æ¶ˆå»
 				unset($arySQLResult);
 			}
 			
-			// EVALÍÑ¤ËºîÀ®¤·¤¿¥¯¥é¥¹¥ª¥Ö¥¸¥§¥¯¥È¤òºï½ü¤¹¤ë
+			// EVALç”¨ã«ä½œæˆã—ãŸã‚¯ãƒ©ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤ã™ã‚‹
 			unset($objEvalClass);
 			
-			// ¥«¥¦¥ó¥È¤¬ 0 ¤Î½èÍıÃ±°Ì¤ËÂĞ¤·¤Æ¤«¤é NORECORD ¤ÎÃÍ¤òÅ¬ÍÑ¤¹¤ë
+			// ã‚«ã‚¦ãƒ³ãƒˆãŒ 0 ã®å‡¦ç†å˜ä½ã«å¯¾ã—ã¦ã‹ã‚‰ NORECORD ã®å€¤ã‚’é©ç”¨ã™ã‚‹
 			reset($aryTemplate);
 			while(list($intKey) = each($aryTemplate)){
-				// NOREPEAT¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¾ì¹ç¤Ï¥ì¥³¡¼¥É¤ÎÍ­Ìµ¤Ë¤«¤«¤ï¤é¤Ê¤¤¤Î¤Ç½ü³°¤¹¤ë
+				// NOREPEATãŒæŒ‡å®šã•ã‚Œã¦ã„ãŸå ´åˆã¯ãƒ¬ã‚³ãƒ¼ãƒ‰ã®æœ‰ç„¡ã«ã‹ã‹ã‚ã‚‰ãªã„ã®ã§é™¤å¤–ã™ã‚‹
 				if($aryCount[$intKey] <= 0
 						and ($this->aryConfig['NOREPEAT'][$aryName[$intKey]] != 1 and (empty($this->aryConfig['NOREPEAT'][$aryName[$intKey]]) == TRUE or isset($this->aryConfig['NOREPEATVALUE'][$aryName[$intKey]]) != TRUE))){
 					$aryReturnValue[$intKey][0] = empty($this->aryConfig['NORECORD'][$aryName[$intKey]]) ? '' : $this->aryConfig['NORECORD'][$aryName[$intKey]];
 				}
-				// $intKey ¤ËÂĞ¤·¤Æ $aryNoRepeat ¤¬Â¸ºß¤·¤¿¤éNOREPEAT¤ÇÃÖ¤­´¹¤¨¤ëÊ¸»úÎó¤¬ÇÛÎóÆâ¤Ë¤¿¤Ş¤Ã¤Æ¤¤¤ë¡£
+				// $intKey ã«å¯¾ã—ã¦ $aryNoRepeat ãŒå­˜åœ¨ã—ãŸã‚‰NOREPEATã§ç½®ãæ›ãˆã‚‹æ–‡å­—åˆ—ãŒé…åˆ—å†…ã«ãŸã¾ã£ã¦ã„ã‚‹ã€‚
 				if(isset($aryNoRepeat[$intKey])) {
 					$aryNoRepeatColumn = $this->GetKeyArray($aryNoRepeat[$intKey], '/_%', '%_/');
 					$aryReturnValue[$intKey][0] = $this->ReplaceStrings($aryNoRepeatColumn, $aryNoRepeat[$intKey], $aryReturnValue[$intKey][0]);
@@ -1055,7 +1055,7 @@ class CListOutput{
 			}
 			
 			
-			// ·ë²ÌID¤òÊÄ¤¸¤ë
+			// çµæœIDã‚’é–‰ã˜ã‚‹
 			$objDatabase->FreeResult($strResultID);
 			
 			if(is_array($aryReturnValue) == TRUE){
@@ -1068,18 +1068,18 @@ class CListOutput{
 						$strReturnValue = $this->ReplaceStrings($this->aryColumnResult, $this->aryResult, $strReturnValue);
 					}
 					
-					// ÊÖ¤¹ÃÍ¤Î¹½ÃÛ
+					// è¿”ã™å€¤ã®æ§‹ç¯‰
 					$strPage = $strReturnValue;
 					
-					// ¥Ç¡¼¥¿ÅĞÏ¿
+					// ãƒ‡ãƒ¼ã‚¿ç™»éŒ²
 					$this->aryResult[$aryName[$intKey]] = $strReturnValue;
 					
-					// ¥«¥¦¥ó¥È¿ô¤Î¼èÆÀ
+					// ã‚«ã‚¦ãƒ³ãƒˆæ•°ã®å–å¾—
 					if(empty($this->aryConfig['COUNT'][$aryName[$intKey]]) == FALSE){
 						$this->aryResult[$this->aryConfig['COUNT'][$aryName[$intKey]]] = isset($aryCount[$intKey]) ? $aryCount[$intKey] : 0;
 					}
 					
-					// ¥Ç¡¼¥¿¤Î¥«¥é¥àÇÛÎó¤ÎºÆ¹½ÃÛ
+					// ãƒ‡ãƒ¼ã‚¿ã®ã‚«ãƒ©ãƒ é…åˆ—ã®å†æ§‹ç¯‰
 					$this->aryColumnResult = $this->GetKeyArray($this->aryResult, '/_%', '%_/');
 				}
 			}
@@ -1087,12 +1087,12 @@ class CListOutput{
 				reset($aryName);
 				while(list($intKey, $strName) = each($aryName)){
 					if(isset($this->aryConfig['COUNT'][$aryName[$intKey]]) == TRUE){
-						// ¥Ç¡¼¥¿ÅĞÏ¿
+						// ãƒ‡ãƒ¼ã‚¿ç™»éŒ²
 						if(empty($this->aryResult[$this->aryConfig['COUNT'][$aryName[$intKey]]]) == TRUE){
 							$this->aryResult[$this->aryConfig['COUNT'][$aryName[$intKey]]] = 0;
 						}
 						
-						// ¥Ç¡¼¥¿¤Î¥«¥é¥àÇÛÎó¤ÎºÆ¹½ÃÛ
+						// ãƒ‡ãƒ¼ã‚¿ã®ã‚«ãƒ©ãƒ é…åˆ—ã®å†æ§‹ç¯‰
 						$this->aryColumnResult = $this->GetKeyArray($this->aryResult, '/_%', '%_/');
 					}
 				}
@@ -1101,77 +1101,77 @@ class CListOutput{
 			
 			reset($aryName);
 			while(list($intKey, $strName) = each($aryName)){
-				// ¥Ç¡¼¥¿ÅĞÏ¿
+				// ãƒ‡ãƒ¼ã‚¿ç™»éŒ²
 				if(isset($this->aryResult[$strName]) == FALSE){
 					$this->aryResult[$strName] = '';
 				}
 				
-				// ¥Ç¡¼¥¿¤Î¥«¥é¥àÇÛÎó¤ÎºÆ¹½ÃÛ
+				// ãƒ‡ãƒ¼ã‚¿ã®ã‚«ãƒ©ãƒ é…åˆ—ã®å†æ§‹ç¯‰
 				$this->aryColumnResult = $this->GetKeyArray($this->aryResult, '/_%', '%_/');
 			}
 			
 			unset($aryName);
 		}
 		
-		// ½èÍı¤ËÀ®¸ù
+		// å‡¦ç†ã«æˆåŠŸ
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		GetResult
+	//	é–¢æ•°å:		GetResult
 	//
-	//	³µÍ×:		ListExecute(FileOutputExecute)¤ò¼Â¹Ô¤·¤¿¸å¤Ë³Æ¼Â¹Ô·ë²Ì¥Ç¡¼¥¿½èÍıÌ¾¤´¤È¤Ë¼èÆÀ¤¹¤ë
+	//	æ¦‚è¦:		ListExecute(FileOutputExecute)ã‚’å®Ÿè¡Œã—ãŸå¾Œã«å„å®Ÿè¡Œçµæœãƒ‡ãƒ¼ã‚¿å‡¦ç†åã”ã¨ã«å–å¾—ã™ã‚‹
 	//
-	//	°ú¿ô:		&$aryResult		Ìá¤êÃÍÇÛÎó
+	//	å¼•æ•°:		&$aryResult		æˆ»ã‚Šå€¤é…åˆ—
 	//
-	//	Ãí°Õ»ö¹à:	ListExecute(FileOutputExecute)¤ò¹Ô¤Ã¤¿Ä¾¸å¤Ë¹Ô¤ï¤Ê¤¤¤ÈÀµ¤·¤¯¼è¤ì¤Ê¤¤²ÄÇ½À­¤¬¤¢¤ê¤Ş¤¹¡£
+	//	æ³¨æ„äº‹é …:	ListExecute(FileOutputExecute)ã‚’è¡Œã£ãŸç›´å¾Œã«è¡Œã‚ãªã„ã¨æ­£ã—ãå–ã‚Œãªã„å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
 	function GetResult(&$aryResult){
-		// Ìá¤êÃÍ¤ËÂåÆş
+		// æˆ»ã‚Šå€¤ã«ä»£å…¥
 		$aryResult = $this->aryResult;
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		FileOutputExecute
+	//	é–¢æ•°å:		FileOutputExecute
 	//
-	//	³µÍ×:		SQL¡¦¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨½èÍı¤ò¼Â¹Ô¤·¤Æ¥Õ¥¡¥¤¥ë¤ËÊİÂ¸
+	//	æ¦‚è¦:		SQLãƒ»ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆå‡¦ç†ã‚’å®Ÿè¡Œã—ã¦ãƒ•ã‚¡ã‚¤ãƒ«ã«ä¿å­˜
 	//
-	//	°ú¿ô:		&$objDatabase		¥Ç¡¼¥¿¥Ù¡¼¥¹Áàºî¥ª¥Ö¥¸¥§¥¯¥È
+	//	å¼•æ•°:		&$objDatabase		ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹æ“ä½œã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function FileOutputExecute(&$objDatabase){
-		// ¤Ş¤º¤Ï½èÍı¼Â¹Ô
+		// ã¾ãšã¯å‡¦ç†å®Ÿè¡Œ
 		if(!$this->ListExecute($objDatabase, $strPage)){
-			// ¥¨¥é¡¼È¯À¸
-			// ListExecute()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
+			// ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿ
+			// ListExecute()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
 			return FALSE;
 		}
 		
 		if(!$this->WriteFile($this->strOutputDir . $this->strOutputFile, $strPage)){
-			// ½ñ¤­¹ş¤ß¥¨¥é¡¼
-			// WriteFile()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
+			// æ›¸ãè¾¼ã¿ã‚¨ãƒ©ãƒ¼
+			// WriteFile()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
 			return FALSE;
 		}
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		DeleteAnyConfig
+	//	é–¢æ•°å:		DeleteAnyConfig
 	//
-	//	³µÍ×:		Ç¤°Õ¤ÎÀßÄê¤òºï½ü¤¹¤ë
+	//	æ¦‚è¦:		ä»»æ„ã®è¨­å®šã‚’å‰Šé™¤ã™ã‚‹
 	//
-	//	°ú¿ô:		$strProcessType		½èÍı¥¿¥¤¥×
-	//				$strProcessName		¥Ç¡¼¥¿½èÍıÌ¾
+	//	å¼•æ•°:		$strProcessType		å‡¦ç†ã‚¿ã‚¤ãƒ—
+	//				$strProcessName		ãƒ‡ãƒ¼ã‚¿å‡¦ç†å
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function DeleteAnyConfig($strProcessType, $strProcessName){
 		unset($this->aryConfig[$strProcessType][$strProcessName]);
@@ -1179,15 +1179,15 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		DeleteFetchLimit
+	//	é–¢æ•°å:		DeleteFetchLimit
 	//
-	//	³µÍ×:		½èÍıÌ¾¤ËÂĞ±ş¤¹¤ëSQL¤Ç½ĞÎÏ¤¹¤ë¥ì¥³¡¼¥É¿ôÀ©¸Â¤òºï½ü¤¹¤ë
+	//	æ¦‚è¦:		å‡¦ç†åã«å¯¾å¿œã™ã‚‹SQLã§å‡ºåŠ›ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰æ•°åˆ¶é™ã‚’å‰Šé™¤ã™ã‚‹
 	//
-	//	°ú¿ô:		$strProcessName		¥Ç¡¼¥¿½èÍıÌ¾
+	//	å¼•æ•°:		$strProcessName		ãƒ‡ãƒ¼ã‚¿å‡¦ç†å
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function DeleteFetchLimit($strProcessName){
 		$this->DeleteAnyConfig('LIMIT', $strProcessName);
@@ -1195,15 +1195,15 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		DeleteFetchOffset
+	//	é–¢æ•°å:		DeleteFetchOffset
 	//
-	//	³µÍ×:		½èÍıÌ¾¤ËÂĞ±ş¤¹¤ëSQL¤Ç½ĞÎÏ¤¹¤ë¥ì¥³¡¼¥É¤Î¥ª¥Õ¥»¥Ã¥È¤òºï½ü¤¹¤ë
+	//	æ¦‚è¦:		å‡¦ç†åã«å¯¾å¿œã™ã‚‹SQLã§å‡ºåŠ›ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’å‰Šé™¤ã™ã‚‹
 	//
-	//	°ú¿ô:		$strProcessName		¥Ç¡¼¥¿½èÍıÌ¾
+	//	å¼•æ•°:		$strProcessName		ãƒ‡ãƒ¼ã‚¿å‡¦ç†å
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function DeleteFetchOffset($strProcessName){
 		$this->DeleteAnyConfig('OFFSET', $strProcessName);
@@ -1211,17 +1211,17 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetAnyConfig
+	//	é–¢æ•°å:		SetAnyConfig
 	//
-	//	³µÍ×:		Ç¤°Õ¤ÎÀßÄê¤òÀßÄê¤¹¤ë
+	//	æ¦‚è¦:		ä»»æ„ã®è¨­å®šã‚’è¨­å®šã™ã‚‹
 	//
-	//	°ú¿ô:		$strProcessType		½èÍı¥¿¥¤¥×
-	//				$strProcessName		¥Ç¡¼¥¿½èÍıÌ¾
-	//				$strSettingValue	ÀßÄê¤¹¤ëÃÍ
+	//	å¼•æ•°:		$strProcessType		å‡¦ç†ã‚¿ã‚¤ãƒ—
+	//				$strProcessName		ãƒ‡ãƒ¼ã‚¿å‡¦ç†å
+	//				$strSettingValue	è¨­å®šã™ã‚‹å€¤
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetAnyConfig($strProcessType, $strProcessName, $strSettingValue){
 		$this->aryConfig[$strProcessType][$strProcessName] = $strSettingValue;
@@ -1229,16 +1229,16 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetFetchLimit
+	//	é–¢æ•°å:		SetFetchLimit
 	//
-	//	³µÍ×:		½èÍıÌ¾¤ËÂĞ±ş¤¹¤ëSQL¤Ç½ĞÎÏ¤¹¤ë¥ì¥³¡¼¥É¿ôÀ©¸Â¤òÀßÄê¤¹¤ë
+	//	æ¦‚è¦:		å‡¦ç†åã«å¯¾å¿œã™ã‚‹SQLã§å‡ºåŠ›ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰æ•°åˆ¶é™ã‚’è¨­å®šã™ã‚‹
 	//
-	//	°ú¿ô:		$strProcessName		¥Ç¡¼¥¿½èÍıÌ¾
-	//				$intFetchLimit		½ĞÎÏÀ©¸Â¿ô
+	//	å¼•æ•°:		$strProcessName		ãƒ‡ãƒ¼ã‚¿å‡¦ç†å
+	//				$intFetchLimit		å‡ºåŠ›åˆ¶é™æ•°
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetFetchLimit($strProcessName, $intFetchLimit){
 		$this->SetAnyConfig('LIMIT', $strProcessName, $intFetchLimit);
@@ -1246,16 +1246,16 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetFetchOffset
+	//	é–¢æ•°å:		SetFetchOffset
 	//
-	//	³µÍ×:		½èÍıÌ¾¤ËÂĞ±ş¤¹¤ëSQL¤Ç½ĞÎÏ¤¹¤ë¥ì¥³¡¼¥É¤Î¥ª¥Õ¥»¥Ã¥È¤òÀßÄê¤¹¤ë
+	//	æ¦‚è¦:		å‡¦ç†åã«å¯¾å¿œã™ã‚‹SQLã§å‡ºåŠ›ã™ã‚‹ãƒ¬ã‚³ãƒ¼ãƒ‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è¨­å®šã™ã‚‹
 	//
-	//	°ú¿ô:		$strProcessName		¥Ç¡¼¥¿½èÍıÌ¾
-	//				$intFetchOffset		½ĞÎÏ¥ª¥Õ¥»¥Ã¥È
+	//	å¼•æ•°:		$strProcessName		ãƒ‡ãƒ¼ã‚¿å‡¦ç†å
+	//				$intFetchOffset		å‡ºåŠ›ã‚ªãƒ•ã‚»ãƒƒãƒˆ
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetFetchOffset($strProcessName, $intFetchOffset){
 		$this->SetAnyConfig('OFFSET', $strProcessName, $intFetchOffset);
@@ -1263,15 +1263,15 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetOutputFile
+	//	é–¢æ•°å:		SetOutputFile
 	//
-	//	³µÍ×:		½ĞÎÏ¥Õ¥¡¥¤¥ë¤ò¥»¥Ã¥È
+	//	æ¦‚è¦:		å‡ºåŠ›ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚»ãƒƒãƒˆ
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetOutputFile($strFileName){
 		$this->strOutputFile = $strFileName;
@@ -1279,48 +1279,48 @@ class CListOutput{
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetConfigFile
+	//	é–¢æ•°å:		SetConfigFile
 	//
-	//	³µÍ×:		ÀßÄê¥Õ¥¡¥¤¥ë¤ò¥»¥Ã¥È
+	//	æ¦‚è¦:		è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚»ãƒƒãƒˆ
 	//
-	//	°ú¿ô:		$strFileName	ÀßÄê¥Õ¥¡¥¤¥ëÌ¾
+	//	å¼•æ•°:		$strFileName	è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«å
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetConfigFile($strFileName){
 		if($this->strConfigFile == $strFileName){
-			// ÀßÄê¥Õ¥¡¥¤¥ëÌ¾¤¬Æ±¤¸¤Ê¤Î¤ÇÆÉ¤ß¹ş¤Ş¤Ê¤¤
+			// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«åãŒåŒã˜ãªã®ã§èª­ã¿è¾¼ã¾ãªã„
 			return TRUE;
 		}
 		
 		$this->strConfigFile = $strFileName;
 		
-		// ÀßÄê¥Õ¥¡¥¤¥ë¤òÅ¸³«
+		// è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã‚’å±•é–‹
 		if(!$this->LoadConfigFile()){
-			// LoadConfigFile()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
+			// LoadConfigFile()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
 			return FALSE;
 		}
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		GetKeyArray
+	//	é–¢æ•°å:		GetKeyArray
 	//
-	//	³µÍ×:		ÇÛÎó¤Î¥­¡¼Ì¾¤Î¤ßÃê½Ğ¤·¤¿ÇÛÎó¤ò¼èÆÀ
+	//	æ¦‚è¦:		é…åˆ—ã®ã‚­ãƒ¼åã®ã¿æŠ½å‡ºã—ãŸé…åˆ—ã‚’å–å¾—
 	//
-	//	°ú¿ô:		$aryOriginal		´ğ¤È¤Ê¤ëÇÛÎó
-	//				$strPrefix			¥­¡¼Ì¾¤ËÉÕ²Ã¤¹¤ëÀÜÆ¬¸ì
-	//				$strSuffix			¥­¡¼Ì¾¤ËÉÕ²Ã¤¹¤ëÀÜÈø¸ì
+	//	å¼•æ•°:		$aryOriginal		åŸºã¨ãªã‚‹é…åˆ—
+	//				$strPrefix			ã‚­ãƒ¼åã«ä»˜åŠ ã™ã‚‹æ¥é ­èª
+	//				$strSuffix			ã‚­ãƒ¼åã«ä»˜åŠ ã™ã‚‹æ¥å°¾èª
 	//
-	//	Ìá¤êÃÍ:		¥­¡¼Ì¾¤ÎÇÛÎó
+	//	æˆ»ã‚Šå€¤:		ã‚­ãƒ¼åã®é…åˆ—
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function GetKeyArray(&$aryOriginal, $strPrefix = '', $strSuffix = ''){
-		// Ìá¤êÃÍ¤Î½é´ü²½
+		// æˆ»ã‚Šå€¤ã®åˆæœŸåŒ–
 		$aryResult = array();
 
 		reset($aryOriginal);
@@ -1328,393 +1328,393 @@ class CListOutput{
 			$aryResult[] = $strPrefix . $strKey . $strSuffix;
 			$aryNew[$strKey] = $strValue;
 		}
-		// ¿®ÍêÀ­¤òÁı¤¹¤¿¤á¤ËÇÛÎó¤ÎºÆ¹½ÃÛ
+		// ä¿¡é ¼æ€§ã‚’å¢—ã™ãŸã‚ã«é…åˆ—ã®å†æ§‹ç¯‰
 		$aryOriginal = $aryNew;
 		return $aryResult;
 	}
 	
-	//	´Ø¿ôÌ¾:		LoadFileWithCacheControl
+	//	é–¢æ•°å:		LoadFileWithCacheControl
 	//
-	//	³µÍ×:		¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤à(¥Õ¥é¥°¤Ç¥­¥ã¥Ã¥·¥å¤ò»È¤¦¤«À©¸æ¤¹¤ë)
+	//	æ¦‚è¦:		ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€(ãƒ•ãƒ©ã‚°ã§ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ä½¿ã†ã‹åˆ¶å¾¡ã™ã‚‹)
 	//
-	//	°ú¿ô:		$strFileName			¥Õ¥¡¥¤¥ëÌ¾
-	//				&$strFileValue			ÆÉ¤ß¹ş¤ó¤À¥Õ¥¡¥¤¥ë¤ÎÆâÍÆ
-	//				$bolCacheControlFlag	¥­¥ã¥Ã¥·¥å¤ÎÀ©¸æ(TRUE: ON, FALSE: OFF)
-	//				$strCodeEncoding		¥Æ¥ó¥×¥ì¡¼¥È¥½¡¼¥¹Ê¸»ú¥³¡¼¥É
+	//	å¼•æ•°:		$strFileName			ãƒ•ã‚¡ã‚¤ãƒ«å
+	//				&$strFileValue			èª­ã¿è¾¼ã‚“ã ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹
+	//				$bolCacheControlFlag	ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®åˆ¶å¾¡(TRUE: ON, FALSE: OFF)
+	//				$strCodeEncoding		ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚½ãƒ¼ã‚¹æ–‡å­—ã‚³ãƒ¼ãƒ‰
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function LoadFileWithCacheControl($strFileName, &$strFileValue, $bolCacheControlFlag = FALSE, $strCodeEncoding = CLISTOUTPUT_HANDLINGENCODING){
 		
 		if($bolCacheControlFlag == TRUE){
-			// ¥­¥ã¥Ã¥·¥å»ÈÍÑ
+			// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ä½¿ç”¨
 			if($this->LoadFileUseCache($strFileName, $strFileValue, $strCodeEncoding) == FALSE){
-				// LoadFileUseCache()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
+				// LoadFileUseCache()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
 				return FALSE;
 			}
 		}
 		else{
-			// ¥­¥ã¥Ã¥·¥å»ÈÍÑ¤»¤º
+			// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ä½¿ç”¨ã›ãš
 			if($this->LoadFile($strFileName, $strFileValue, $strCodeEncoding) == FALSE){
-				// LoadFile()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
+				// LoadFile()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
 				return FALSE;
 			}
 		}
 		
-		// Àµ¾ï½ªÎ»
+		// æ­£å¸¸çµ‚äº†
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		LoadFileUseCache
+	//	é–¢æ•°å:		LoadFileUseCache
 	//
-	//	³µÍ×:		²ÄÇ½¤Ê¤é¥­¥ã¥Ã¥·¥å¤òÍÑ¤¤¤Æ¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤à
+	//	æ¦‚è¦:		å¯èƒ½ãªã‚‰ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ç”¨ã„ã¦ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 	//
-	//	°ú¿ô:		$strFileName		¥Õ¥¡¥¤¥ëÌ¾
-	//				&$strFileValue		ÆÉ¤ß¹ş¤ó¤À¥Õ¥¡¥¤¥ë¤ÎÆâÍÆ
-	//				$strCodeEncoding	¥Æ¥ó¥×¥ì¡¼¥È¥½¡¼¥¹Ê¸»ú¥³¡¼¥É
+	//	å¼•æ•°:		$strFileName		ãƒ•ã‚¡ã‚¤ãƒ«å
+	//				&$strFileValue		èª­ã¿è¾¼ã‚“ã ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹
+	//				$strCodeEncoding	ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚½ãƒ¼ã‚¹æ–‡å­—ã‚³ãƒ¼ãƒ‰
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function LoadFileUseCache($strFileName, &$strFileValue, $strCodeEncoding = CLISTOUTPUT_HANDLINGENCODING){
-		// ¥­¥ã¥Ã¥·¥å¤¬Â¸ºß¤¹¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 		if(empty($this->aryFileCache[$strFileName][$strCodeEncoding]) == FALSE){
-			// ¥­¥ã¥Ã¥·¥å¤Ë¥Ò¥Ã¥È¡ª
+			// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ãƒ’ãƒƒãƒˆï¼
 			
-			// ¥­¥ã¥Ã¥·¥å¤«¤éÆÉ¤ß¹ş¤ß
+			// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰èª­ã¿è¾¼ã¿
 			$strFileValue = $this->aryFileCache[$strFileName][$strCodeEncoding];
 			
-			// Àµ¾ï½ªÎ»
+			// æ­£å¸¸çµ‚äº†
 			return TRUE;
 		}
 		
-		// ¥­¥ã¥Ã¥·¥å¤Ë¥Ò¥Ã¥È¤·¤Ê¤«¤Ã¤¿¤¿¤á¤Ë¥Õ¥¡¥¤¥ë¤«¤éÆÉ¤ß¹ş¤à
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ãƒ’ãƒƒãƒˆã—ãªã‹ã£ãŸãŸã‚ã«ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰èª­ã¿è¾¼ã‚€
 		if($this->LoadFile($strFileName, $strFileValue, $strCodeEncoding) == FALSE){
-			// LoadFile()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
+			// LoadFile()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
 			return FALSE;
 		}
 		
-		// ¥­¥ã¥Ã¥·¥å¤ËÊİÂ¸
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«ä¿å­˜
 		$this->aryFileCache[$strFileName][$strCodeEncoding] = $strFileValue;
 		
-		// Àµ¾ï½ªÎ»
+		// æ­£å¸¸çµ‚äº†
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		LoadFile
+	//	é–¢æ•°å:		LoadFile
 	//
-	//	³µÍ×:		¥Õ¥¡¥¤¥ë¤òÆÉ¤ß¹ş¤à
+	//	æ¦‚è¦:		ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 	//
-	//	°ú¿ô:		$strFileName		¥Õ¥¡¥¤¥ëÌ¾
-	//				&$strFileValue		ÆÉ¤ß¹ş¤ó¤À¥Õ¥¡¥¤¥ë¤ÎÆâÍÆ
-	//				$strCodeEncoding	¥Æ¥ó¥×¥ì¡¼¥È¥½¡¼¥¹Ê¸»ú¥³¡¼¥É
+	//	å¼•æ•°:		$strFileName		ãƒ•ã‚¡ã‚¤ãƒ«å
+	//				&$strFileValue		èª­ã¿è¾¼ã‚“ã ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹
+	//				$strCodeEncoding	ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã‚½ãƒ¼ã‚¹æ–‡å­—ã‚³ãƒ¼ãƒ‰
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function LoadFile($strFileName, &$strFileValue, $strCodeEncoding = CLISTOUTPUT_HANDLINGENCODING){
-		// ¥Õ¥¡¥¤¥ë¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 		if(!file_exists($strFileName)){
-			// ¥Õ¥¡¥¤¥ëÂ¸ºß¤»¤º
+			// ãƒ•ã‚¡ã‚¤ãƒ«å­˜åœ¨ã›ãš
 			$this->strErrorMessage = 'No such file or directory : ' . $strFileName;
 			return FALSE;
 		}
-		// ÆÉ¤ß¤È¤ê¤Ç¥ª¡¼¥×¥ó
+		// èª­ã¿ã¨ã‚Šã§ã‚ªãƒ¼ãƒ—ãƒ³
 		$fp = fopen($strFileName, 'rb');
 		if($fp == FALSE){
-			// ¥ª¡¼¥×¥ó¥¨¥é¡¼
+			// ã‚ªãƒ¼ãƒ—ãƒ³ã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'File open failed : ' . $strFileName;
 			return FALSE;
 		}
 		
-		// ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤Î¥Á¥§¥Ã¥¯
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºã®ãƒã‚§ãƒƒã‚¯
 		$intFileSize = filesize($strFileName);
 		if($intFileSize == FALSE){
-			// ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤¬0¤Ş¤¿¤Ï¼èÆÀ¥¨¥é¡¼
+			// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºãŒ0ã¾ãŸã¯å–å¾—ã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'Invalid file size : ' . $strFileName;
 			return FALSE;
 		}
 
-		// ÆÉ¤ß¹ş¤ß
+		// èª­ã¿è¾¼ã¿
 		$strFileValue = fread($fp, $intFileSize);
 
-		// ¥Õ¥¡¥¤¥ë¤òÊÄ¤¸¤ë
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
 		fclose($fp);
 		
-		// ÆâÉô¥³¡¼¥É¤ØÊ¸»ú¥³¡¼¥ÉÊÑ´¹
+		// å†…éƒ¨ã‚³ãƒ¼ãƒ‰ã¸æ–‡å­—ã‚³ãƒ¼ãƒ‰å¤‰æ›
 		$strFileValue = i18n_convert($strFileValue, i18n_internal_encoding(), $strCodeEncoding);
 
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		WriteFile
+	//	é–¢æ•°å:		WriteFile
 	//
-	//	³µÍ×:		¥Õ¥¡¥¤¥ë¤ò½ñ¤­¹ş¤ßVerify¤ò¹Ô¤¦
+	//	æ¦‚è¦:		ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ›¸ãè¾¼ã¿Verifyã‚’è¡Œã†
 	//
-	//	°ú¿ô:		$strFileName		¥Õ¥¡¥¤¥ëÌ¾
-	//				$strFaileValue		½ñ¤­¹ş¤à¥Õ¥¡¥¤¥ë¤ÎÆâÍÆ
-	//				$strWriteEncoding	½ñ¤­¹ş¤àÊ¸»ú¥³¡¼¥É
+	//	å¼•æ•°:		$strFileName		ãƒ•ã‚¡ã‚¤ãƒ«å
+	//				$strFaileValue		æ›¸ãè¾¼ã‚€ãƒ•ã‚¡ã‚¤ãƒ«ã®å†…å®¹
+	//				$strWriteEncoding	æ›¸ãè¾¼ã‚€æ–‡å­—ã‚³ãƒ¼ãƒ‰
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function WriteFile($strFileName, $strFileValue, $strWriteEncoding = CLISTOUTPUT_HANDLINGENCODING){
-		// ¥Õ¥¡¥¤¥ë¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 		if(file_exists($strFileName)){
-			// ¤¹¤Ç¤Ë¥Õ¥¡¥¤¥ëÂ¸ºß¤¹¤ë¥¨¥é¡¼
+			// ã™ã§ã«ãƒ•ã‚¡ã‚¤ãƒ«å­˜åœ¨ã™ã‚‹ã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'Already exist : ' . $strFileName;
 			return FALSE;
 		}
 		
-		// ½ñ¤­¹ş¤ß¤Ç¥Õ¥¡¥¤¥ë¥ª¡¼¥×¥ó
+		// æ›¸ãè¾¼ã¿ã§ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³
 		$fp = fopen($strFileName, 'wb');
 		if($fp == FALSE){
-			// ¥ª¡¼¥×¥ó¥¨¥é¡¼
+			// ã‚ªãƒ¼ãƒ—ãƒ³ã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'Permission denied : ' . $strFileName;
 			return FALSE;
 		}
-		// ¥Õ¥¡¥¤¥ë¥í¥Ã¥¯
+		// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒƒã‚¯
 		if(!flock($fp, 2)){
-			// ¥Õ¥¡¥¤¥ë¥í¥Ã¥¯¥¨¥é¡¼
+			// ãƒ•ã‚¡ã‚¤ãƒ«ãƒ­ãƒƒã‚¯ã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'File lock failed : ' . $strFileName;
 			return FALSE;
 		}
 		
-		// ÆâÉô¥³¡¼¥É¤«¤éÊ¸»ú¥³¡¼¥ÉÊÑ´¹
+		// å†…éƒ¨ã‚³ãƒ¼ãƒ‰ã‹ã‚‰æ–‡å­—ã‚³ãƒ¼ãƒ‰å¤‰æ›
 		$strTempFileValue = i18n_convert($strFileValue, $strWriteEncoding, i18n_internal_encoding());
 		
-		// ½ñ¤­¹ş¤ß
+		// æ›¸ãè¾¼ã¿
 		if(!fputs($fp, $strTempFileValue)){
-			// ½ñ¤­¹ş¤ß¥¨¥é¡¼
+			// æ›¸ãè¾¼ã¿ã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'Write file failed : ' . $strFileName;
 			return FALSE;
 		}
 		
-		// ¥Õ¥¡¥¤¥ë¤òÊÄ¤¸¤ë
+		// ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‰ã˜ã‚‹
 		fclose($fp);
 		
 		switch(CLISTOUTPUT_WRITE_VERIFY_LEVEL){
 			case 0:
-				// ¥Á¥§¥Ã¥¯¤Ê¤·
+				// ãƒã‚§ãƒƒã‚¯ãªã—
 				break;
 			case 1:
-				// ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¥Á¥§¥Ã¥¯
+				// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºãƒã‚§ãƒƒã‚¯
 				$intFileSize = filesize($strFileName);
 				if($intFileSize == FALSE){
-					// ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤¬0¤Ş¤¿¤Ï¼èÆÀ¥¨¥é¡¼
+					// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºãŒ0ã¾ãŸã¯å–å¾—ã‚¨ãƒ©ãƒ¼
 					$this->strErrorMessage = 'Verify file size failed : ' . $strFileName;
 					return FALSE;
 				}
 				
 				if(strlen($strFileValue) != $intFileSize){
-					// ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤¬°ìÃ×¤·¤Ê¤¤¥¨¥é¡¼
+					// ãƒ•ã‚¡ã‚¤ãƒ«ã‚µã‚¤ã‚ºãŒä¸€è‡´ã—ãªã„ã‚¨ãƒ©ãƒ¼
 					$this->strErrorMessage = 'Verify file size unconformable : ' . $strFileName;
 					return FALSE;
 				}
 				break;
 			case 2:
 			default:
-				// ¥Õ¥¡¥¤¥ëÆâÍÆ¥Á¥§¥Ã¥¯
-				// ¥Õ¥¡¥¤¥ëÆÉ¤ß¹ş¤ß
+				// ãƒ•ã‚¡ã‚¤ãƒ«å†…å®¹ãƒã‚§ãƒƒã‚¯
+				// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 				if(!$this->LoadFile($strFileName, $strVerifyFileValue, $strWriteEncoding)){
-					// ÆÉ¤ß¹ş¤ß¥¨¥é¡¼
-					// LoadFile()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò»ÈÍÑ¤¹¤ë
+					// èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼
+					// LoadFile()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ä½¿ç”¨ã™ã‚‹
 					return FALSE;
 				}
 				
-				// ÆâÍÆ¤¬°ìÃ×¤¹¤ë¤«³ÎÇ§¤¹¤ë
+				// å†…å®¹ãŒä¸€è‡´ã™ã‚‹ã‹ç¢ºèªã™ã‚‹
 				if($strVerifyFileValue != $strFileValue){
-					// °ìÃ×¤·¤Ê¤¤¥¨¥é¡¼
+					// ä¸€è‡´ã—ãªã„ã‚¨ãƒ©ãƒ¼
 					$this->strErrorMessage = 'Verify file value unconformable : ' . $strFileName;
 					return FALSE;
 				}
 				break;
 		}
 		
-		// ½ñ¤­¹ş¤ß½èÍıµÚ¤Ó¤¹¤Ù¤Æ¤Î¥Á¥§¥Ã¥¯¹àÌÜ¥¯¥ê¥¢
+		// æ›¸ãè¾¼ã¿å‡¦ç†åŠã³ã™ã¹ã¦ã®ãƒã‚§ãƒƒã‚¯é …ç›®ã‚¯ãƒªã‚¢
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		SetReplaceList
+	//	é–¢æ•°å:		SetReplaceList
 	//
-	//	³µÍ×:		¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨¥ê¥¹¥È¤Ë¥­¡¼¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦:		ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆãƒªã‚¹ãƒˆã«ã‚­ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$strKeyName		¥»¥Ã¥È¤¹¤ë¥­¡¼(¤¹¤Ç¤Ë¤¢¤ë¾ì¹ç¤Ï¾å½ñ¤­)
-	//				$strValue		¥»¥Ã¥È¤¹¤ëÃÍ
+	//	å¼•æ•°:		$strKeyName		ã‚»ãƒƒãƒˆã™ã‚‹ã‚­ãƒ¼(ã™ã§ã«ã‚ã‚‹å ´åˆã¯ä¸Šæ›¸ã)
+	//				$strValue		ã‚»ãƒƒãƒˆã™ã‚‹å€¤
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¾ï¤Ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	å¸¸ã«
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function SetReplaceList($strKeyName, $strValue){
-		// ÃÍ¤ò¥»¥Ã¥È
+		// å€¤ã‚’ã‚»ãƒƒãƒˆ
 		$this->aryReplaceList[$strKeyName] = $strValue;
 		
-		// ¥«¥é¥à¤ÎÇÛÎó¤òºÆ¹½ÃÛ
+		// ã‚«ãƒ©ãƒ ã®é…åˆ—ã‚’å†æ§‹ç¯‰
 		$this->aryColumnList = $this->GetKeyArray($this->aryReplaceList, '/_%', '%_/');
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		ImportReplaceList
+	//	é–¢æ•°å:		ImportReplaceList
 	//
-	//	³µÍ×:		¥Æ¥ó¥×¥ì¡¼¥ÈÃÖ¤­´¹¤¨¥ê¥¹¥È¤Ë¥¤¥ó¥İ¡¼¥È¤¹¤ë(´ûÂ¸¤Î¥ê¥¹¥È¤Ï¤¹¤Ù¤Æ¾Ã¤¨¤ë)
+	//	æ¦‚è¦:		ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆç½®ãæ›ãˆãƒªã‚¹ãƒˆã«ã‚¤ãƒ³ãƒãƒ¼ãƒˆã™ã‚‹(æ—¢å­˜ã®ãƒªã‚¹ãƒˆã¯ã™ã¹ã¦æ¶ˆãˆã‚‹)
 	//
-	//	°ú¿ô:		$strKeyName		¥»¥Ã¥È¤¹¤ë¥­¡¼(¤¹¤Ç¤Ë¤¢¤ë¾ì¹ç¤Ï¾å½ñ¤­)
-	//				$strValue		¥»¥Ã¥È¤¹¤ëÃÍ
+	//	å¼•æ•°:		$strKeyName		ã‚»ãƒƒãƒˆã™ã‚‹ã‚­ãƒ¼(ã™ã§ã«ã‚ã‚‹å ´åˆã¯ä¸Šæ›¸ã)
+	//				$strValue		ã‚»ãƒƒãƒˆã™ã‚‹å€¤
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function ImportReplaceList($aryImportList){
 		if(!is_array($aryImportList)){
-			// ÇÛÎó¤Ç¤Ê¤¤¥¨¥é¡¼
+			// é…åˆ—ã§ãªã„ã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'Invalid import list argument';
 			return FALSE;
 		}
 		
-		// ÃÍ¤ò¥¤¥ó¥İ¡¼¥È
+		// å€¤ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 		$this->aryReplaceList = $aryImportList;
 		
-		// ¥«¥é¥à¤ÎÇÛÎó¤òºÆ¹½ÃÛ
+		// ã‚«ãƒ©ãƒ ã®é…åˆ—ã‚’å†æ§‹ç¯‰
 		$this->aryColumnList = $this->GetKeyArray($this->aryReplaceList, '/_%', '%_/');
 		
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		ReplaceStrings
+	//	é–¢æ•°å:		ReplaceStrings
 	//
-	//	³µÍ×:		preg_replace¤Î \0 ½ĞÎÏ¤ËÂĞ±ş¤·¤¿¥é¥Ã¥Ñ¡¼
+	//	æ¦‚è¦:		preg_replaceã® \0 å‡ºåŠ›ã«å¯¾å¿œã—ãŸãƒ©ãƒƒãƒ‘ãƒ¼
 	//
-	//	°ú¿ô:		$aryPattern			ÃÖ¤­´¹¤¨Á°ÇÛÎó(string¤Ç¤âOK)
-	//				$aryReplacement		ÃÖ¤­´¹¤¨¸åÇÛÎó(string¤Ç¤âOK)
-	//				$strSubject			ÃÖ¤­´¹¤¨ÂĞ¾İ
+	//	å¼•æ•°:		$aryPattern			ç½®ãæ›ãˆå‰é…åˆ—(stringã§ã‚‚OK)
+	//				$aryReplacement		ç½®ãæ›ãˆå¾Œé…åˆ—(stringã§ã‚‚OK)
+	//				$strSubject			ç½®ãæ›ãˆå¯¾è±¡
 	//
-	//	Ìá¤êÃÍ:		ÃÖ¤­´¹¤¨¸åÊ¸»úÎó
+	//	æˆ»ã‚Šå€¤:		ç½®ãæ›ãˆå¾Œæ–‡å­—åˆ—
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function ReplaceStrings($aryPattern, $aryReplacement, $strSubject){
-		// °ì»şÅª¤Ë \ ¤Î¸å¤Ë 0x01 ¤òÆş¤ì¤ë
+		// ä¸€æ™‚çš„ã« \ ã®å¾Œã« 0x01 ã‚’å…¥ã‚Œã‚‹
 		$aryReplacement = preg_replace('/' . '\x5C' . '/' , "\\0" . "\x01", $aryReplacement);
 		
-		// °ì»şÅª¤ËÁŞÆş¤·¤¿ 0x01 ¤ò¤¹¤Ù¤Æºï½ü¤¹¤ë
+		// ä¸€æ™‚çš„ã«æŒ¿å…¥ã—ãŸ 0x01 ã‚’ã™ã¹ã¦å‰Šé™¤ã™ã‚‹
 		return str_replace("\x01", '', preg_replace($aryPattern, $aryReplacement, $strSubject));
 	}
 	
-	//	´Ø¿ôÌ¾:		CheckToken
+	//	é–¢æ•°å:		CheckToken
 	//
-	//	³µÍ×:		¥È¡¼¥¯¥ó¿ô¤¬¥ª¡¼¥Ğ¡¼¤·¤Æ¤¤¤Ê¤¤¤«¥Á¥§¥Ã¥¯¤¹¤ë¡£
-	//				(¤³¤Î´Ø¿ô¤Ï lngAlertToken ¤ò¸µ¤ËÈ½ÃÇ¤¹¤ë)
+	//	æ¦‚è¦:		ãƒˆãƒ¼ã‚¯ãƒ³æ•°ãŒã‚ªãƒ¼ãƒãƒ¼ã—ã¦ã„ãªã„ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã€‚
+	//				(ã“ã®é–¢æ•°ã¯ lngAlertToken ã‚’å…ƒã«åˆ¤æ–­ã™ã‚‹)
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¥ª¡¼¥Ğ¡¼¤·¤Æ¤¤¤Ê¤¤
-	//				FALSE:	¥ª¡¼¥Ğ¡¼¤·¤Æ¤¤¤ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	ã‚ªãƒ¼ãƒãƒ¼ã—ã¦ã„ãªã„
+	//				FALSE:	ã‚ªãƒ¼ãƒãƒ¼ã—ã¦ã„ã‚‹
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function CheckToken(){
 		if($this->lngAlertToken >= ($this->lngMaxToken - $this->lngCurrentToken)){
-			// »Ä¤ê¥È¡¼¥¯¥ó¤¬·Ù¹ğ¥È¡¼¥¯¥ó°Ê²¼¤Ë¤Ê¤Ã¤Æ¤¤¤ë
+			// æ®‹ã‚Šãƒˆãƒ¼ã‚¯ãƒ³ãŒè­¦å‘Šãƒˆãƒ¼ã‚¯ãƒ³ä»¥ä¸‹ã«ãªã£ã¦ã„ã‚‹
 			return FALSE;
 		}
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		CheckClassToken
+	//	é–¢æ•°å:		CheckClassToken
 	//
-	//	³µÍ×:		¥¯¥é¥¹ÍÑ¤Î¥È¡¼¥¯¥ó¿ô¤¬¥ª¡¼¥Ğ¡¼¤·¤Æ¤¤¤Ê¤¤¤«¥Á¥§¥Ã¥¯¤¹¤ë¡£
-	//				(¤³¤Î´Ø¿ô¤Ï lngMaxToken ¤ò¸µ¤ËÈ½ÃÇ¤¹¤ë)
+	//	æ¦‚è¦:		ã‚¯ãƒ©ã‚¹ç”¨ã®ãƒˆãƒ¼ã‚¯ãƒ³æ•°ãŒã‚ªãƒ¼ãƒãƒ¼ã—ã¦ã„ãªã„ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹ã€‚
+	//				(ã“ã®é–¢æ•°ã¯ lngMaxToken ã‚’å…ƒã«åˆ¤æ–­ã™ã‚‹)
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¥ª¡¼¥Ğ¡¼¤·¤Æ¤¤¤Ê¤¤
-	//				FALSE:	¥ª¡¼¥Ğ¡¼¤·¤Æ¤¤¤ë
+	//	æˆ»ã‚Šå€¤:		TRUE:	ã‚ªãƒ¼ãƒãƒ¼ã—ã¦ã„ãªã„
+	//				FALSE:	ã‚ªãƒ¼ãƒãƒ¼ã—ã¦ã„ã‚‹
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function CheckClassToken(){
 		if($this->lngCurrentToken >= ((int) $this->lngMaxToken / 2)){
-			// eval()¤Ç¥¯¥é¥¹¤òÄêµÁ¤¹¤ë¾ì¹ç¤ÏºÇÂç¥È¡¼¥¯¥ó¿ô¤ÎÈ¾Ê¬°Ê¾å¤¬¶õ¤¤¤Æ¤¤¤ëÉ¬Í×¤¬¤¢¤ë¡£
+			// eval()ã§ã‚¯ãƒ©ã‚¹ã‚’å®šç¾©ã™ã‚‹å ´åˆã¯æœ€å¤§ãƒˆãƒ¼ã‚¯ãƒ³æ•°ã®åŠåˆ†ä»¥ä¸ŠãŒç©ºã„ã¦ã„ã‚‹å¿…è¦ãŒã‚ã‚‹ã€‚
 			return FALSE;
 		}
 		
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		CreateUniqueClassName
+	//	é–¢æ•°å:		CreateUniqueClassName
 	//
-	//	³µÍ×:		¥æ¥Ë¡¼¥¯¤Ê¥¯¥é¥¹Ì¾¤òÀ¸À®¤¹¤ë
+	//	æ¦‚è¦:		ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªã‚¯ãƒ©ã‚¹åã‚’ç”Ÿæˆã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		¥æ¥Ë¡¼¥¯¤Ê¥¯¥é¥¹Ì¾
+	//	æˆ»ã‚Šå€¤:		ãƒ¦ãƒ‹ãƒ¼ã‚¯ãªã‚¯ãƒ©ã‚¹å
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function CreateUniqueClassName(){
-		// uniqid()¤Ç°ì°Õ¤Ê¥¯¥é¥¹Ì¾¤òÀ¸À®¤¹¤ë
+		// uniqid()ã§ä¸€æ„ãªã‚¯ãƒ©ã‚¹åã‚’ç”Ÿæˆã™ã‚‹
 		return 'CLISTOUTPUT_' . uniqid('');
 	}
 
-	//	´Ø¿ôÌ¾:		CreateBindEvalCache
+	//	é–¢æ•°å:		CreateBindEvalCache
 	//
-	//	³µÍ×:		EVAL¥­¥ã¥Ã¥·¥å¤ò¤Ş¤È¤á¤ÆÀ¸À®¤¹¤ë(¥È¡¼¥¯¥ó¤ÎÀáÌó¤Î¤¿¤á)
+	//	æ¦‚è¦:		EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã¾ã¨ã‚ã¦ç”Ÿæˆã™ã‚‹(ãƒˆãƒ¼ã‚¯ãƒ³ã®ç¯€ç´„ã®ãŸã‚)
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function CreateBindEvalCache(){
-		// ¥¹¥¯¥ê¥×¥ÈÇÛÎó¤ò½é´ü²½¤¹¤ë
+		// ã‚¹ã‚¯ãƒªãƒ—ãƒˆé…åˆ—ã‚’åˆæœŸåŒ–ã™ã‚‹
 		$aryScript = array();
 		
-		// 1. EVAL¥­¥ã¥Ã¥·¥å¥â¡¼¥É¤¬¥­¥ã¥Ã¥·¥åÍ­¸ú(CLISTOUTPUT_EVAL_CACHE_ON)¤Ë¤Ê¤Ã¤Æ¤¤¤ë¤³¤È
-		// 2. EVAL¤Î¤Ş¤È¤áÀ¸À®¥â¡¼¥É¤¬Í­¸ú(CLISTOUTPUT_BIND_EVAL_CACHE_ON)¤Ë¤Ê¤Ã¤Æ¤¤¤ë¤³¤È
-		// 3. EVAL¤Î¼Â¹Ô¥â¡¼¥É¤¬¥¯¥é¥¹À¸À®(CLISTOUTPUT_EVAL_CLASS)¤Ë¤Ê¤Ã¤Æ¤¤¤ë¤³¤È
-		// °Ê¾å¤Î2¤Ä¤Î¤¤¤º¤ì¤«¤¬ FALSE ¤Ê¤é¤ĞEVAL¥­¥ã¥Ã¥·¥å¤Î¤Ş¤È¤áÀ¸À®¤òÍøÍÑ¤·¤Ê¤¤
+		// 1. EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ¢ãƒ¼ãƒ‰ãŒã‚­ãƒ£ãƒƒã‚·ãƒ¥æœ‰åŠ¹(CLISTOUTPUT_EVAL_CACHE_ON)ã«ãªã£ã¦ã„ã‚‹ã“ã¨
+		// 2. EVALã®ã¾ã¨ã‚ç”Ÿæˆãƒ¢ãƒ¼ãƒ‰ãŒæœ‰åŠ¹(CLISTOUTPUT_BIND_EVAL_CACHE_ON)ã«ãªã£ã¦ã„ã‚‹ã“ã¨
+		// 3. EVALã®å®Ÿè¡Œãƒ¢ãƒ¼ãƒ‰ãŒã‚¯ãƒ©ã‚¹ç”Ÿæˆ(CLISTOUTPUT_EVAL_CLASS)ã«ãªã£ã¦ã„ã‚‹ã“ã¨
+		// ä»¥ä¸Šã®2ã¤ã®ã„ãšã‚Œã‹ãŒ FALSE ãªã‚‰ã°EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã®ã¾ã¨ã‚ç”Ÿæˆã‚’åˆ©ç”¨ã—ãªã„
 		if($this->bytEvalCacheMode == CLISTOUTPUT_EVAL_CACHE_ON and $this->bytBindEvalCacheMode == CLISTOUTPUT_BIND_EVAL_CACHE_ON and $this->bytEvalMode == CLISTOUTPUT_EVAL_CLASS){
 			
 			if(is_array($this->aryConfig['EVAL']) == TRUE){
 				reset($this->aryConfig['EVAL']);
 				while(list($strProcessName) = each($this->aryConfig['EVAL'])){
-					// EVAL¥­¥ã¥Ã¥·¥å¤¬Â¸ºß¤·¤Ê¤¤¾ì¹ç¤Î¤ß¥­¥ã¥Ã¥·¥å¤òÀ¸À®¤¹¤ë(CheckEvalCache()¤¬FALSE¤òÊÖ¤¹)
+					// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒå­˜åœ¨ã—ãªã„å ´åˆã®ã¿ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ç”Ÿæˆã™ã‚‹(CheckEvalCache()ãŒFALSEã‚’è¿”ã™)
 					if($this->CheckEvalCache($this->aryConfig['EVAL'][$strProcessName]) == FALSE){
-						// ¥­¥ã¥Ã¥·¥å¤¬Â¸ºß¤·¤Ê¤¤¤Î¤ÇÀ¸À®¥ê¥¹¥È¤ËÆş¤ì¤ë
+						// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒå­˜åœ¨ã—ãªã„ã®ã§ç”Ÿæˆãƒªã‚¹ãƒˆã«å…¥ã‚Œã‚‹
 						$aryScript[] = $this->aryConfig['EVAL'][$strProcessName];
 					}
 				}
 			}
 		}
 		
-		// ÂĞ¾İ¥¹¥¯¥ê¥×¥È¤¬Â¸ºß¤¹¤ë¾ì¹ç¤Ï¥­¥ã¥Ã¥·¥å¤òÀ¸À®¤¹¤ë
+		// å¯¾è±¡ã‚¹ã‚¯ãƒªãƒ—ãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆã¯ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ç”Ÿæˆã™ã‚‹
 		if(count($aryScript) >= 1){
-			// ¥¯¥é¥¹¥ª¥Ö¥¸¥§¥¯¥È¤ÎÀ¸À®
+			// ã‚¯ãƒ©ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
 			if($this->CreateClassObject($aryScript, $objEvalClass) == FALSE){
-				// CreateClassObject()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò»ÈÍÑ¤¹¤ë
+				// CreateClassObject()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ä½¿ç”¨ã™ã‚‹
 				return FALSE;
 			}
 			
-			// ÂĞ¾İ¥¹¥¯¥ê¥×¥È¤Î¿ô¤ò¼èÆÀ
+			// å¯¾è±¡ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®æ•°ã‚’å–å¾—
 			$intMaxLoopIndex = count($aryScript);
 			for($intLoopIndex = 0; $intLoopIndex < $intMaxLoopIndex; ++$intLoopIndex){
-				// EVAL¥­¥ã¥Ã¥·¥å¤ò¥»¥Ã¥È¤¹¤ë
+				// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 				$this->SetEvalCache($aryScript[$intLoopIndex], $objEvalClass[$intLoopIndex]);
 			}
 		}
@@ -1722,45 +1722,45 @@ class CListOutput{
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		CreateClassObject
+	//	é–¢æ•°å:		CreateClassObject
 	//
-	//	³µÍ×:		¥¯¥é¥¹ÄêµÁ¤Î¥¹¥¯¥ê¥×¥È¤ò¸µ¤Ë¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®¤¹¤ë
+	//	æ¦‚è¦:		ã‚¯ãƒ©ã‚¹å®šç¾©ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å…ƒã«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 	//
-	//	°ú¿ô:		$aryScript		¥¹¥¯¥ê¥×¥È¤ÎÇÛÎó(Ê¸»úÎó¤Ë¤âÂĞ±ş)
-	//				&$objEvalClass	¥¯¥é¥¹¥ª¥Ö¥¸¥§¥¯¥È¤ÎÇÛÎó(Ìá¤êÃÍ)
+	//	å¼•æ•°:		$aryScript		ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®é…åˆ—(æ–‡å­—åˆ—ã«ã‚‚å¯¾å¿œ)
+	//				&$objEvalClass	ã‚¯ãƒ©ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®é…åˆ—(æˆ»ã‚Šå€¤)
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function CreateClassObject($aryScript, &$objEvalClass){
-		// ¥¯¥é¥¹ÍÑ¤Î¥È¡¼¥¯¥ó¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+		// ã‚¯ãƒ©ã‚¹ç”¨ã®ãƒˆãƒ¼ã‚¯ãƒ³ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 		if($this->CheckClassToken() == FALSE){
-			// ¥¯¥é¥¹ÍÑ¤Î¥È¡¼¥¯¥ó¤Î»È¤¤¤¹¤®¥¨¥é¡¼
+			// ã‚¯ãƒ©ã‚¹ç”¨ã®ãƒˆãƒ¼ã‚¯ãƒ³ã®ä½¿ã„ã™ãã‚¨ãƒ©ãƒ¼
 			$this->strErrorMessage = 'Reach max token cache for class : ' . (int) ($this->lngMaxToken / 2);
 			return FALSE;
 		}
 		
-		// ÇÛÎó¤Ç¤Ê¤±¤ì¤ĞÇÛÎó²½¤¹¤ë
+		// é…åˆ—ã§ãªã‘ã‚Œã°é…åˆ—åŒ–ã™ã‚‹
 		if(is_array($aryScript) == FALSE){
-			// Ê¸»úÎó¤ÇÅÏ¤µ¤ì¤¿¥Õ¥é¥°¤òÎ©¤Æ¤ë
+			// æ–‡å­—åˆ—ã§æ¸¡ã•ã‚ŒãŸãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 			$bolStringFlag = TRUE;
-			// ÇÛÎó²½
+			// é…åˆ—åŒ–
 			$aryScript = array($aryScript);
 		}
 		
-		// ÂĞ¾İ¥¹¥¯¥ê¥×¥È¤Î¿ô¤ò¼èÆÀ
+		// å¯¾è±¡ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®æ•°ã‚’å–å¾—
 		$intMaxLoopIndex = count($aryScript);
 		
-		// ¥¯¥é¥¹¥¹¥¯¥ê¥×¥È¤ò½é´ü²½¤¹¤ë
+		// ã‚¯ãƒ©ã‚¹ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 		$strClassScript = '';
 		
 		for($intLoopIndex = 0; $intLoopIndex < $intMaxLoopIndex; ++$intLoopIndex){
-			// »È¤¤¼Î¤Æ¤Î¥¯¥é¥¹Ì¾¤ò¼èÆÀ¤¹¤ë
+			// ä½¿ã„æ¨ã¦ã®ã‚¯ãƒ©ã‚¹åã‚’å–å¾—ã™ã‚‹
 			$strClassName = $this->CreateUniqueClassName();
 			
-			// ¥¯¥é¥¹ÄêµÁ¤òÀ¸À®¤¹¤ë
+			// ã‚¯ãƒ©ã‚¹å®šç¾©ã‚’ç”Ÿæˆã™ã‚‹
 			$strClassScript .= 'class ' . $strClassName . "{\n";
 			$strClassScript .= 'function ExtendSQLResult(&$arySQLResult, &$objContext)' . "{\n";
 			$strClassScript .= $aryScript[$intLoopIndex] . "\n";
@@ -1768,23 +1768,23 @@ class CListOutput{
 			$strClassScript .= "}\n";
 			$strClassScript .= "}\n";
 			if($bolStringFlag == TRUE){
-				// Ê¸»úÎó¤ÇÅÏ¤µ¤ì¤Æ¤¤¤ë¤Î¤ÇÊ¸»úÎó¤ÇÊÖ¤¹
+				// æ–‡å­—åˆ—ã§æ¸¡ã•ã‚Œã¦ã„ã‚‹ã®ã§æ–‡å­—åˆ—ã§è¿”ã™
 				$strClassScript .= '$objEvalClass = new ' . $strClassName . ";\n";
 			}
 			else{
-				// ÇÛÎó¤ÇÅÏ¤µ¤ì¤¿¤Î¤ÇÇÛÎó¤ÇÊÖ¤¹
+				// é…åˆ—ã§æ¸¡ã•ã‚ŒãŸã®ã§é…åˆ—ã§è¿”ã™
 				$strClassScript .= '$objEvalClass[' . $intLoopIndex . '] = new ' . $strClassName . ";\n";
 			}
 		}
 		
-		// ¥¨¥é¡¼½ªÎ»¥Õ¥é¥°¤òÎ©¤Æ¤ë
+		// ã‚¨ãƒ©ãƒ¼çµ‚äº†ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 		$bolErrorExit = TRUE;
 		eval($strClassScript . "\n" . '$bolErrorExit = FALSE;');
-		// »ÈÍÑºÑ¥È¡¼¥¯¥ó¤ò¥¤¥ó¥¯¥ê¥á¥ó¥È
+		// ä½¿ç”¨æ¸ˆãƒˆãƒ¼ã‚¯ãƒ³ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
 		$this->lngCurrentToken++;
 		
 		if($bolErrorExit == TRUE){
-			// evalÆâ¤Ç¥¨¥é¡¼È¯À¸
+			// evalå†…ã§ã‚¨ãƒ©ãƒ¼ç™ºç”Ÿ
 			$this->strErrorMessage = 'Invalid script in eval : ' . join("\n", $aryScript);
 			return FALSE;
 		}
@@ -1792,112 +1792,112 @@ class CListOutput{
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		GetClassObject
+	//	é–¢æ•°å:		GetClassObject
 	//
-	//	³µÍ×:		¥¯¥é¥¹ÄêµÁ¤Î¥¹¥¯¥ê¥×¥È¤ò¸µ¤Ë¥ª¥Ö¥¸¥§¥¯¥È¤òÀ¸À®¤¹¤ë(¥­¥ã¥Ã¥·¥å¤òÍøÍÑ)
+	//	æ¦‚è¦:		ã‚¯ãƒ©ã‚¹å®šç¾©ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã‚’å…ƒã«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹(ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆ©ç”¨)
 	//
-	//	°ú¿ô:		$strScript	¥¹¥¯¥ê¥×¥È
-	//				&$objEvalClass	¥¯¥é¥¹¥ª¥Ö¥¸¥§¥¯¥È(Ìá¤êÃÍ)
+	//	å¼•æ•°:		$strScript	ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+	//				&$objEvalClass	ã‚¯ãƒ©ã‚¹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ(æˆ»ã‚Šå€¤)
 	//
-	//	Ìá¤êÃÍ:		TRUE:	Àµ¾ï½ªÎ»
-	//				FALSE:	°Û¾ï½ªÎ»
+	//	æˆ»ã‚Šå€¤:		TRUE:	æ­£å¸¸çµ‚äº†
+	//				FALSE:	ç•°å¸¸çµ‚äº†
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤¹
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã™
 	//
 	function GetClassObject($strScript, &$objEvalClass){
-		// 1. EVAL¥­¥ã¥Ã¥·¥å¥â¡¼¥É¤¬¥­¥ã¥Ã¥·¥åÍ­¸ú(CLISTOUTPUT_EVAL_CACHE_ON)¤Ë¤Ê¤Ã¤Æ¤¤¤ë¤³¤È
-		// 2. EVAL¥­¥ã¥Ã¥·¥å¤¬Â¸ºß¤¹¤ë¤³¤È(CheckEvalCache()¤¬TRUE¤òÊÖ¤¹)
-		// 3. EVAL¥­¥ã¥Ã¥·¥å¤¬¼èÆÀ¤Ç¤­¤ë¤³¤È(GetEvalCache()¤¬TRUE¤òÊÖ¤¹)
-		// °Ê¾å¤Î3¤Ä¤Î¤¤¤º¤ì¤«¤¬ FALSE ¤Ê¤é¤Ğ¥­¥ã¥Ã¥·¥å¤òÍøÍÑ¤Ç¤­¤Ê¤¤¤Î¤ÇÀ¸À®¤¹¤ë
+		// 1. EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ãƒ¢ãƒ¼ãƒ‰ãŒã‚­ãƒ£ãƒƒã‚·ãƒ¥æœ‰åŠ¹(CLISTOUTPUT_EVAL_CACHE_ON)ã«ãªã£ã¦ã„ã‚‹ã“ã¨
+		// 2. EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒå­˜åœ¨ã™ã‚‹ã“ã¨(CheckEvalCache()ãŒTRUEã‚’è¿”ã™)
+		// 3. EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒå–å¾—ã§ãã‚‹ã“ã¨(GetEvalCache()ãŒTRUEã‚’è¿”ã™)
+		// ä»¥ä¸Šã®3ã¤ã®ã„ãšã‚Œã‹ãŒ FALSE ãªã‚‰ã°ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’åˆ©ç”¨ã§ããªã„ã®ã§ç”Ÿæˆã™ã‚‹
 		if((($this->bytEvalCacheMode == CLISTOUTPUT_EVAL_CACHE_ON) and ($this->CheckEvalCache($strScript) == TRUE) and ($this->GetEvalCache($strScript, $objEvalClass) == TRUE)) == FALSE){
-			// ¥­¥ã¥Ã¥·¥å¤ÏÍøÍÑ¤·¤Ê¤¤
+			// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¯åˆ©ç”¨ã—ãªã„
 			if($this->CreateClassObject($strScript, $objEvalClass) == FALSE){
-				// ¥¯¥é¥¹¤ÎºîÀ®¼ºÇÔ
-				// CreateClassObject()¤Î¥¨¥é¡¼¥á¥Ã¥»¡¼¥¸¤ò¤½¤Î¤Ş¤Ş»ÈÍÑ¤¹¤ë
+				// ã‚¯ãƒ©ã‚¹ã®ä½œæˆå¤±æ•—
+				// CreateClassObject()ã®ã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’ãã®ã¾ã¾ä½¿ç”¨ã™ã‚‹
 				return FALSE;
 			}
 			
-			// EVAL¥­¥ã¥Ã¥·¥å¤ò¥»¥Ã¥È¤¹¤ë
+			// EVALã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			$this->SetEvalCache($strScript, $objEvalClass);
 		}
 		
-		// Àµ¾ï½ªÎ»
+		// æ­£å¸¸çµ‚äº†
 		return TRUE;
 	}
 	
-	//	´Ø¿ôÌ¾:		CheckEvalCache
+	//	é–¢æ•°å:		CheckEvalCache
 	//
-	//	³µÍ×:		EVAL¤Î¥­¥ã¥Ã¥·¥å¤¬Â¸ºß¤¹¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+	//	æ¦‚è¦:		EVALã®ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 	//
-	//	°ú¿ô:		$strScript	¥¹¥¯¥ê¥×¥È
+	//	å¼•æ•°:		$strScript	ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 	//
-	//	Ìá¤êÃÍ:		TRUE:	¥­¥ã¥Ã¥·¥åÍøÍÑ²ÄÇ½
-	//				FALSE:	¥­¥ã¥Ã¥·¥åÍøÍÑÉÔ²ÄÇ½
+	//	æˆ»ã‚Šå€¤:		TRUE:	ã‚­ãƒ£ãƒƒã‚·ãƒ¥åˆ©ç”¨å¯èƒ½
+	//				FALSE:	ã‚­ãƒ£ãƒƒã‚·ãƒ¥åˆ©ç”¨ä¸å¯èƒ½
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function CheckEvalCache($strScript){
-		// ¥¹¥¯¥ê¥×¥È¤Î¥À¥¤¥¸¥§¥¹¥È¤ò¼èÆÀ¤¹¤ë
+		// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã‚’å–å¾—ã™ã‚‹
 		$strScriptDigest = $this->GetDigest($strScript);
 		
-		// ¥¹¥¯¥ê¥×¥È¤Î¥À¥¤¥¸¥§¥¹¥È¤ò¥­¡¼¤Ë¤·¤¿ÇÛÎó¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+		// ã‚¹ã‚¯ãƒªãƒ—ãƒˆã®ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã‚’ã‚­ãƒ¼ã«ã—ãŸé…åˆ—ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 		if(isset($this->aryEvalCache[$strScriptDigest]) == FALSE){
-			// ¥­¥ã¥Ã¥·¥å¤ÏÂ¸ºß¤·¤Ê¤¤
+			// ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã¯å­˜åœ¨ã—ãªã„
 			return FALSE;
 		}
 		
-		// ¥À¥¤¥¸¥§¥¹¥È¤Ï°ìÃ×¤·¤Æ¤¤¤ë¤Î¤Ç¼Âºİ¤ÎÆâÍÆ¤ò¥Á¥§¥Ã¥¯¤¹¤ë
+		// ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã¯ä¸€è‡´ã—ã¦ã„ã‚‹ã®ã§å®Ÿéš›ã®å†…å®¹ã‚’ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 		if(strcmp($this->aryEvalCache[$strScriptDigest]['SCRIPT'], $strScript) != 0){
-			// ÆâÍÆ¤¬°ìÃ×¤·¤Ê¤¤
+			// å†…å®¹ãŒä¸€è‡´ã—ãªã„
 			return FALSE;
 		}
 		
-		// ¥ª¥Ö¥¸¥§¥¯¥È¤ÎÂ¸ºß¥Á¥§¥Ã¥¯
+		// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 		if(isset($this->aryEvalCache[$strScriptDigest]['OBJECT']) == FALSE){
-			// ¥ª¥Ö¥¸¥§¥¯¥È¤¬Â¸ºß¤·¤Ê¤¤
+			// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå­˜åœ¨ã—ãªã„
 			return FALSE;
 		}
 		
-		// ¥­¥ã¥Ã¥·¥åÍøÍÑ²ÄÇ½
+		// ã‚­ãƒ£ãƒƒã‚·ãƒ¥åˆ©ç”¨å¯èƒ½
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		GetDigest
+	//	é–¢æ•°å:		GetDigest
 	//
-	//	³µÍ×:		¥À¥¤¥¸¥§¥¹¥È¤òÀ¸À®¤¹¤ë
+	//	æ¦‚è¦:		ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 	//
-	//	°ú¿ô:		$strTarget	¥À¥¤¥¸¥§¥¹¥È¤òÀ¸À®¤¹¤ëÂĞ¾İ
+	//	å¼•æ•°:		$strTarget	ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã‚’ç”Ÿæˆã™ã‚‹å¯¾è±¡
 	//
-	//	Ìá¤êÃÍ:		¥À¥¤¥¸¥§¥¹¥È
+	//	æˆ»ã‚Šå€¤:		ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆ
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function GetDigest($strTarget){
-		// MD5¤Ç¥À¥¤¥¸¥§¥¹¥È¤òÀ¸À®¤¹¤ë
+		// MD5ã§ãƒ€ã‚¤ã‚¸ã‚§ã‚¹ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 		return md5($strTarget);
 	}
 
-	//	´Ø¿ôÌ¾:		array_merge
+	//	é–¢æ•°å:		array_merge
 	// 
-	//	³µÍ×:		Æó¤Ä¤ÎÇÛÎó¤ò¥Ş¡¼¥¸¤¹¤ë
-	//				PHP4¤Î array_merge ¤ÈÆ±¤¸Æ°ºî
-	//				¤¿¤À¤·ÅÏ¤»¤ë°ú¿ô¤ÏÆó¤Ä
+	//	æ¦‚è¦:		äºŒã¤ã®é…åˆ—ã‚’ãƒãƒ¼ã‚¸ã™ã‚‹
+	//				PHP4ã® array_merge ã¨åŒã˜å‹•ä½œ
+	//				ãŸã ã—æ¸¡ã›ã‚‹å¼•æ•°ã¯äºŒã¤
 	//
-	//	°ú¿ô:		$Array			¥Ş¡¼¥¸¤¹¤ëÇÛÎó
-	//				$MergeArray		¥Ş¡¼¥¸¤¹¤ëÇÛÎó
+	//	å¼•æ•°:		$Array			ãƒãƒ¼ã‚¸ã™ã‚‹é…åˆ—
+	//				$MergeArray		ãƒãƒ¼ã‚¸ã™ã‚‹é…åˆ—
 	//
-	//	Ìá¤êÃÍ:		¥Ş¡¼¥¸ºÑ¤ß¤ÎÇÛÎó
+	//	æˆ»ã‚Šå€¤:		ãƒãƒ¼ã‚¸æ¸ˆã¿ã®é…åˆ—
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function array_merge($Array, $MergeArray){
-		// ÇÛÎó¤Ç¤Ê¤¤¾ì¹ç¤ÏÇÛÎó²½¤¹¤ë
+		// é…åˆ—ã§ãªã„å ´åˆã¯é…åˆ—åŒ–ã™ã‚‹
 		if(!is_array($Array)){
 			$Array = array($Array);
 		}
 		
-		// $MergeArray ¤¬ÇÛÎó¤Ç¤Ê¤±¤ì¤Ğ $Array ¤ò¤½¤Î¤Ş¤ŞÊÖ¤¹
-		// $Array ¤âÇÛÎó¤Ç¤Ï¤Ê¤¤¾ì¹ç¤ÏÇÛÎó²½¤¹¤ë
+		// $MergeArray ãŒé…åˆ—ã§ãªã‘ã‚Œã° $Array ã‚’ãã®ã¾ã¾è¿”ã™
+		// $Array ã‚‚é…åˆ—ã§ã¯ãªã„å ´åˆã¯é…åˆ—åŒ–ã™ã‚‹
 		if(!is_array($MergeArray)){
 			return $Array;
 		}
@@ -1916,113 +1916,113 @@ class CListOutputContext {
 	var $aryContext;
 	var $intOffset;
 
-	//	´Ø¿ôÌ¾:		CListOutputContext
+	//	é–¢æ•°å:		CListOutputContext
 	//
-	//	³µÍ×:		¥³¥ó¥¹¥È¥é¥¯¥¿
+	//	æ¦‚è¦:		ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//				
-	//	Ìá¤êÃÍ:		¤Ê¤·
+	//	æˆ»ã‚Šå€¤:		ãªã—
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function __construct() {
 		$this->initializeContext();
 	}
 
-	//	¥¢¥¯¥»¥µ:	private
+	//	ã‚¢ã‚¯ã‚»ã‚µ:	private
 	//
-	//	´Ø¿ôÌ¾:		getExecuteContextIndex
+	//	é–¢æ•°å:		getExecuteContextIndex
 	//
-	//	³µÍ×:		$aryContextÆâ¤Î¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò¼èÆÀ¤·¤Ş¤¹¡£
+	//	æ¦‚è¦:		$aryContextå†…ã®å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹
+	//	æˆ»ã‚Šå€¤:		å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function getExecuteContextIndex() {
 		return $this->intOffset + 2;
 	}
 
-	//	¥¢¥¯¥»¥µ:	private
+	//	ã‚¢ã‚¯ã‚»ã‚µ:	private
 	//
-	//	´Ø¿ôÌ¾:		getPageContextIndex
+	//	é–¢æ•°å:		getPageContextIndex
 	//
-	//	³µÍ×:		$aryContextÆâ¤Î¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò¼èÆÀ¤·¤Ş¤¹¡£
+	//	æ¦‚è¦:		$aryContextå†…ã®ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹
+	//	æˆ»ã‚Šå€¤:		ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function getPageContextIndex() {
 		return $this->intOffset + 1;
 	}
 
-	//	¥¢¥¯¥»¥µ:	private
+	//	ã‚¢ã‚¯ã‚»ã‚µ:	private
 	//
-	//	´Ø¿ôÌ¾:		getSessionContextIndex
+	//	é–¢æ•°å:		getSessionContextIndex
 	//
-	//	³µÍ×:		$aryContextÆâ¤Î¥»¥Ã¥·¥ç¥ó¥³¥ó¥Æ¥­¥¹¥È¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹¤ò¼èÆÀ¤·¤Ş¤¹¡£
+	//	æ¦‚è¦:		$aryContextå†…ã®ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–å¾—ã—ã¾ã™ã€‚
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		¥»¥Ã¥·¥ç¥ó¥³¥ó¥Æ¥­¥¹¥È¤Î¥¤¥ó¥Ç¥Ã¥¯¥¹
+	//	æˆ»ã‚Šå€¤:		ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function getSessionContextIndex() {
 		return $this->intOffset;
 	}
 
-	//	´Ø¿ôÌ¾:		raise
+	//	é–¢æ•°å:		raise
 	//
-	//	³µÍ×:		¥³¥ó¥Æ¥­¥¹¥È¤Î°ú¤­¾å¤²
+	//	æ¦‚è¦:		ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®å¼•ãä¸Šã’
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function raise() {
 		$this->intOffset++;
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		lower
+	//	é–¢æ•°å:		lower
 	//
-	//	³µÍ×:		¥³¥ó¥Æ¥­¥¹¥È¤Î°ú¤­²¼¤²
+	//	æ¦‚è¦:		ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã®å¼•ãä¸‹ã’
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE:	À®¸ù
-	//				FALSE:	¼ºÇÔ(¤½¤ì°Ê¾å°ú¤­²¼¤²¤é¤ì¤Ê¤¤¾ì¹ç)
+	//	æˆ»ã‚Šå€¤:		TRUE:	æˆåŠŸ
+	//				FALSE:	å¤±æ•—(ãã‚Œä»¥ä¸Šå¼•ãä¸‹ã’ã‚‰ã‚Œãªã„å ´åˆ)
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function lower() {
 		if ($this->intOffset <= 0) {
 			return FALSE;
 		}
-		// °ú¤­²¼¤²¤Ë¤è¤Ã¤Æ¥¹¥³¡¼¥×¤«¤é³°¤ì¤ë¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+		// å¼•ãä¸‹ã’ã«ã‚ˆã£ã¦ã‚¹ã‚³ãƒ¼ãƒ—ã‹ã‚‰å¤–ã‚Œã‚‹å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 		$this->initializeExecuteContext();
 		$this->intOffset--;
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		initializeContext
+	//	é–¢æ•°å:		initializeContext
 	//
-	//	³µÍ×:		¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+	//	æ¦‚è¦:		ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function initializeContext() {
 		$this->aryContext = array();
@@ -2034,222 +2034,222 @@ class CListOutputContext {
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		setExecuteContext
+	//	é–¢æ•°å:		setExecuteContext
 	//
-	//	³µÍ×¡§		¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤ËÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦ï¼š		å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
-	//				$Value		ÊÑ¿ôÃÍ
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
+	//				$Value		å¤‰æ•°å€¤
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function setExecuteContext($Name, $Value) {
 		$this->aryContext[$this->getExecuteContextIndex()][$Name] = $Value;
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		getExecuteContext
+	//	é–¢æ•°å:		getExecuteContext
 	//
-	//	³µÍ×¡§		¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤«¤éÃÍ¤ò¼èÆÀ¤¹¤ë
+	//	æ¦‚è¦ï¼š		å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰å€¤ã‚’å–å¾—ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		ÊÑ¿ôÃÍ(Â¸ºß¤·¤Ê¤¤¾ì¹ç¤Ï¶õÊ¸»ú)
+	//	æˆ»ã‚Šå€¤:		å¤‰æ•°å€¤(å­˜åœ¨ã—ãªã„å ´åˆã¯ç©ºæ–‡å­—)
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function getExecuteContext($Name) {
 		return $this->aryContext[$this->getExecuteContextIndex()][$Name];
 	}
 
-	//	´Ø¿ôÌ¾:		isSetExecuteContext
+	//	é–¢æ•°å:		isSetExecuteContext
 	//
-	//	³µÍ×:		¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤ËÊÑ¿ô¤¬Â¸ºß¤¹¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+	//	æ¦‚è¦:		å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã«å¤‰æ•°ãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		TRUE: Â¸ºß¤¹¤ë  FALSE: Â¸ºß¤·¤Ê¤¤
+	//	æˆ»ã‚Šå€¤:		TRUE: å­˜åœ¨ã™ã‚‹  FALSE: å­˜åœ¨ã—ãªã„
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function isSetExecuteContext($Name) {
 		return isset($this->aryContext[$this->getExecuteContextIndex()][$Name]);
 	}
 
-	//	´Ø¿ôÌ¾:		clearExecuteContext
+	//	é–¢æ•°å:		clearExecuteContext
 	//
-	//	³µÍ×:		¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤«¤éÊÑ¿ô¤òºï½ü¤¹¤ë
+	//	æ¦‚è¦:		å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰å¤‰æ•°ã‚’å‰Šé™¤ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function clearExecuteContext($Name) {
 		unset($this->aryContext[$this->getExecuteContextIndex()][$Name]);
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		initializeExecuteContext
+	//	é–¢æ•°å:		initializeExecuteContext
 	//
-	//	³µÍ×:		¼Â¹Ô¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+	//	æ¦‚è¦:		å®Ÿè¡Œã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function initializeExecuteContext() {
 		$this->aryContext[$this->getExecuteContextIndex()] = array();
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		setPageContext
+	//	é–¢æ•°å:		setPageContext
 	//
-	//	³µÍ×¡§		¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤ËÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦ï¼š		ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
-	//				$Value		ÊÑ¿ôÃÍ
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
+	//				$Value		å¤‰æ•°å€¤
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function setPageContext($Name, $Value) {
 		$this->aryContext[$this->getPageContextIndex()][$Name] = $Value;
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		getPageContext
+	//	é–¢æ•°å:		getPageContext
 	//
-	//	³µÍ×¡§		¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤«¤éÃÍ¤ò¼èÆÀ¤¹¤ë
+	//	æ¦‚è¦ï¼š		ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰å€¤ã‚’å–å¾—ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		ÊÑ¿ôÃÍ(Â¸ºß¤·¤Ê¤¤¾ì¹ç¤Ï¶õÊ¸»ú)
+	//	æˆ»ã‚Šå€¤:		å¤‰æ•°å€¤(å­˜åœ¨ã—ãªã„å ´åˆã¯ç©ºæ–‡å­—)
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function getPageContext($Name) {
 		return $this->aryContext[$this->getPageContextIndex()][$Name];
 	}
 
-	//	´Ø¿ôÌ¾:		isSetPageContext
+	//	é–¢æ•°å:		isSetPageContext
 	//
-	//	³µÍ×:		¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤ËÊÑ¿ô¤¬Â¸ºß¤¹¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+	//	æ¦‚è¦:		ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã«å¤‰æ•°ãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		TRUE: Â¸ºß¤¹¤ë  FALSE: Â¸ºß¤·¤Ê¤¤
+	//	æˆ»ã‚Šå€¤:		TRUE: å­˜åœ¨ã™ã‚‹  FALSE: å­˜åœ¨ã—ãªã„
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function isSetPageContext($Name) {
 		return isset($this->aryContext[$this->getPageContextIndex()][$Name]);
 	}
 
-	//	´Ø¿ôÌ¾:		clearPageContext
+	//	é–¢æ•°å:		clearPageContext
 	//
-	//	³µÍ×:		¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤«¤éÊÑ¿ô¤òºï½ü¤¹¤ë
+	//	æ¦‚è¦:		ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰å¤‰æ•°ã‚’å‰Šé™¤ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function clearPageContext($Name) {
 		unset($this->aryContext[$this->getPageContextIndex()][$Name]);
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		initializePageContext
+	//	é–¢æ•°å:		initializePageContext
 	//
-	//	³µÍ×:		¥Ú¡¼¥¸¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+	//	æ¦‚è¦:		ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function initializePageContext() {
 		$this->aryContext[$this->getPageContextIndex()] = array();
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		setSessionContext
+	//	é–¢æ•°å:		setSessionContext
 	//
-	//	³µÍ×¡§		¥»¥Ã¥·¥ç¥ó¥³¥ó¥Æ¥­¥¹¥È¤ËÃÍ¤ò¥»¥Ã¥È¤¹¤ë
+	//	æ¦‚è¦ï¼š		ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã«å€¤ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
-	//				$Value		ÊÑ¿ôÃÍ
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
+	//				$Value		å¤‰æ•°å€¤
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function setSessionContext($Name, $Value) {
 		$this->aryContext[$this->getSessionContextIndex()][$Name] = $Value;
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		getSessionContext
+	//	é–¢æ•°å:		getSessionContext
 	//
-	//	³µÍ×¡§		¥»¥Ã¥·¥ç¥ó¥³¥ó¥Æ¥­¥¹¥È¤«¤éÃÍ¤ò¼èÆÀ¤¹¤ë
+	//	æ¦‚è¦ï¼š		ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰å€¤ã‚’å–å¾—ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		ÊÑ¿ôÃÍ(Â¸ºß¤·¤Ê¤¤¾ì¹ç¤Ï¶õÊ¸»ú)
+	//	æˆ»ã‚Šå€¤:		å¤‰æ•°å€¤(å­˜åœ¨ã—ãªã„å ´åˆã¯ç©ºæ–‡å­—)
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function getSessionContext($Name) {
 		return $this->aryContext[$this->getSessionContextIndex()][$Name];
 	}
 
-	//	´Ø¿ôÌ¾:		isSetSessionContext
+	//	é–¢æ•°å:		isSetSessionContext
 	//
-	//	³µÍ×:		¥»¥Ã¥·¥ç¥ó¥³¥ó¥Æ¥­¥¹¥È¤ËÊÑ¿ô¤¬Â¸ºß¤¹¤ë¤«¥Á¥§¥Ã¥¯¤¹¤ë
+	//	æ¦‚è¦:		ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã«å¤‰æ•°ãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		TRUE: Â¸ºß¤¹¤ë  FALSE: Â¸ºß¤·¤Ê¤¤
+	//	æˆ»ã‚Šå€¤:		TRUE: å­˜åœ¨ã™ã‚‹  FALSE: å­˜åœ¨ã—ãªã„
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function isSetSessionContext($Name) {
 		return isset($this->aryContext[$this->getSessionContextIndex()][$Name]);
 	}
 
-	//	´Ø¿ôÌ¾:		clearSessionContext
+	//	é–¢æ•°å:		clearSessionContext
 	//
-	//	³µÍ×:		¥»¥Ã¥·¥ç¥ó¥³¥ó¥Æ¥­¥¹¥È¤«¤éÊÑ¿ô¤òºï½ü¤¹¤ë
+	//	æ¦‚è¦:		ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‹ã‚‰å¤‰æ•°ã‚’å‰Šé™¤ã™ã‚‹
 	//
-	//	°ú¿ô:		$Name		ÊÑ¿ôÌ¾
+	//	å¼•æ•°:		$Name		å¤‰æ•°å
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function clearSessionContext($Name) {
 		unset($this->aryContext[$this->getSessionContextIndex()][$Name]);
 		return TRUE;
 	}
 
-	//	´Ø¿ôÌ¾:		initializeSessionContext
+	//	é–¢æ•°å:		initializeSessionContext
 	//
-	//	³µÍ×:		¥»¥Ã¥·¥ç¥ó¥³¥ó¥Æ¥­¥¹¥È¤ò½é´ü²½¤¹¤ë
+	//	æ¦‚è¦:		ã‚»ãƒƒã‚·ãƒ§ãƒ³ã‚³ãƒ³ãƒ†ã‚­ã‚¹ãƒˆã‚’åˆæœŸåŒ–ã™ã‚‹
 	//
-	//	°ú¿ô:		¤Ê¤·
+	//	å¼•æ•°:		ãªã—
 	//
-	//	Ìá¤êÃÍ:		TRUE
+	//	æˆ»ã‚Šå€¤:		TRUE
 	//
-	//	¥¨¥é¡¼:		ÊÖ¤µ¤Ê¤¤
+	//	ã‚¨ãƒ©ãƒ¼:		è¿”ã•ãªã„
 	//
 	function initializeSessionContext() {
 		$this->aryContext[$this->getSessionContextIndex()] = array();

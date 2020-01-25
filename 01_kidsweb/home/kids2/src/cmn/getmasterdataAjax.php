@@ -29,18 +29,6 @@
 	//JSONクラスインスタンス化
 	$s = new Services_JSON();
 
-	//////////////////////////////////////////////////////////////
-	// メインルーチン
-	//////////////////////////////////////////////////////////////
-	for ( $i = 0; $i < count ( $strFormValue ); $i++ )
-	{
-		$strFormValue[$i] = mb_convert_encoding( $strFormValue[$i], "EUC-JP", "SJIS,EUC" );
-	}
-
-	//{
-	//	echo ",引数無し";
-	//	exit;
-	//}
 	// 外部ファイルよりクエリ取得、生成
 	if ( !$strQuery = file_get_contents ( LIB_ROOT . "sql/$lngProcessID.sql" ) )
 	{
@@ -69,7 +57,6 @@
 
 	// データ取得
 	$masterData = fncGetMasterData( $strQuery );
-	mb_convert_variables('UTF-8' , 'EUC-JP' , $masterData );
 	echo $s->encodeUnsafe($masterData);
 
 

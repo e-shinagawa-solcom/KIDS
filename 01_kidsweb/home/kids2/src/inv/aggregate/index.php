@@ -190,8 +190,8 @@
             // 行数カウント
             $writeRow++;
         }
-        // 書き込みデータのmb_convert_encoding
-        $writeData1_1 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
+        // 書き込みデータ
+        $writeData1_1 = $row;
         // 書き込み開始行 (D7)
         $writeCell1_1 = 'D'.'7';
         // 挿入行(157行)
@@ -243,8 +243,8 @@
                 }
             }
         }
-        // 書き込みデータのmb_convert_encoding
-        $writeData1_2 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
+        // 書き込みデータ
+        $writeData1_2 = $row;
         // 書き込み開始行 (E209)
         $writeCell1_2 = 'E' .(209+$addCellTotal);
         // 挿入行(6行)
@@ -255,12 +255,12 @@
         // 挿入行Total
         $addCellTotal += $addCell1_2;
 
-        // 書き込みデータのmb_convert_encoding
-        $writeData1_3 = mb_convert_encoding($row6102, 'UTF-8','EUC-JP' );
+        // 書き込みデータ
+        $writeData1_3 = $row6102;
         // 書き込み開始行 (E216)
         $writeCell1_3 = 'E' .(216+$addCellTotal);
-        // 書き込みデータのmb_convert_encoding
-        $writeData1_4 = mb_convert_encoding($row4410, 'UTF-8','EUC-JP' );
+        // 書き込みデータ
+        $writeData1_4 = $row4410;
         // 書き込み開始行 (E217)
         $writeCell1_4 = 'E' .(217+$addCellTotal);
 
@@ -298,9 +298,9 @@
             // 行数カウント
             $writeRow++;
         }
-        // 書き込みデータのmb_convert_encoding
+        // 書き込みデータ
         $row = [];
-        $writeData2_1 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
+        $writeData2_1 = $row;
         // 書き込み開始行 (D242)
         $writeCell2_1 = 'D'.(242+$addCellTotal);
         // 挿入行(31行)
@@ -352,9 +352,9 @@
                 }
             }
         }
-        // 書き込みデータのmb_convert_encoding
+        // 書き込みデータ
         $row = [];
-        $writeData2_2 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
+        $writeData2_2 = $row;
         // 書き込み開始行 (E298)
         $writeCell2_2 = 'E' .(298+$addCellTotal);
         // 挿入行(6行)
@@ -365,12 +365,12 @@
         // 挿入行Total
         $addCellTotal += $addCell2_2;
 
-        // 書き込みデータのmb_convert_encoding
-        $writeData2_3 = mb_convert_encoding($row6102, 'UTF-8','EUC-JP' );
+        // 書き込みデータ
+        $writeData2_3 = $row6102;
         // 書き込み開始行 (E305)
         $writeCell2_3 = 'E' .(305+$addCellTotal);
-        // 書き込みデータのmb_convert_encoding
-        $writeData2_4 = mb_convert_encoding($row4410, 'UTF-8','EUC-JP' );
+        // 書き込みデータ
+        $writeData2_4 = $row4410;
         // 書き込み開始行 (E306)
         $writeCell2_4 = 'E' .(306+$addCellTotal);
 
@@ -408,9 +408,9 @@
             // 行数カウント
             $writeRow++;
         }
-        // 書き込みデータのmb_convert_encoding
+        // 書き込みデータ
         $row = ['3-1ドル開始'];
-        $writeData3_1 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
+        $writeData3_1 = $row;
         // 書き込み開始行 (D316)
         $writeCell3_1 = 'D'.(316+$addCellTotal);
         // 挿入行(31行)
@@ -462,9 +462,9 @@
                 }
             }
         }
-        // 書き込みデータのmb_convert_encoding
+        // 書き込みデータ
         $row = [];
-        $writeData3_2 = mb_convert_encoding($row, 'UTF-8','EUC-JP' );
+        $writeData3_2 = $row;
         // 書き込み開始行 (E372)
         $writeCell3_2 = 'E' .(372+$addCellTotal);
         // 挿入行(6行)
@@ -475,12 +475,12 @@
         // 挿入行Total
         $addCellTotal += $addCell3_2;
 
-        // 書き込みデータのmb_convert_encoding
-        $writeData3_3 = mb_convert_encoding($row6102, 'UTF-8','EUC-JP' );
+        // 書き込みデータ
+        $writeData3_3 = $row6102;
         // 書き込み開始行 (E379)
         $writeCell3_3 = 'E' .(379+$addCellTotal);
-        // 書き込みデータのmb_convert_encoding
-        $writeData3_4 = mb_convert_encoding($row4410, 'UTF-8','EUC-JP' );
+        // 書き込みデータ
+        $writeData3_4 = $row4410;
         // 書き込み開始行 (E380)
         $writeCell3_4 = 'E' .(380+$addCellTotal);
 
@@ -503,7 +503,7 @@
         $time = new DateTime($invoiceMonth);
 //         $timeStamp = $time->getTimestamp();
 //         $excelDateValue = new PhpOffice\PhpSpreadsheet\Date::PHPToExcel( $timeStamp );
-        $title = mb_convert_encoding($time->format('Y/m/d'), 'UTF-8','EUC-JP' );
+        $title = $time->format('Y/m/d');
         $sheet->GetCell('D1')->SetValue($title);
 //         $sheet->getStyle('D1')->getNumberFormat()->setFormatCode('ggge年m月請求明細　（通貨＝￥）');
 
@@ -533,7 +533,7 @@
         $sheet->fromArray($writeData3_4,NULL,$writeCell3_4);
 
         $fileName = '請求集計_' .$time->format('Ym') .'_通貨名.xlsx';
-        $outFile  = mb_convert_encoding(FILE_UPLOAD_TMPDIR.$fileName, 'UTF-8','EUC-JP' );
+        $outFile  = FILE_UPLOAD_TMPDIR.$fileName;
 
         //データを書き込む
         $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($clonedSheet);
@@ -542,12 +542,12 @@
 
         // ダウンロード開始
         header('Content-Description: File Transfer');
-        header('Content-Disposition: attachment; filename="'.mb_convert_encoding($fileName, 'UTF-8','EUC-JP').'"');
+        header('Content-Disposition: attachment; filename="'.$fileName.'"');
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Transfer-Encoding: binary');
         $writer->save('php://output');
 
-        ini_set('default_charset','EUC-JP');
+        ini_set('default_charset','UTF-8');
 
         return;
 

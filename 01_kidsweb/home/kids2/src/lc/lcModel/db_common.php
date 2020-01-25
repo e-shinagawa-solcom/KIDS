@@ -81,12 +81,10 @@ class lcConnect
                 die('接続失敗です。' . pg_last_error());
             }
 
-            pg_set_client_encoding($link, "EUC_JP");
+            pg_set_client_encoding($link, "UTF-8");
 
             $this->ConnectID = $link;
 
-            //バインド配列の文字エンコード変更
-            // mb_convert_variables('EUC-JP', 'UTF-8', $params);
         } catch (Exception $e) {
             die($e->getMessage());
         }

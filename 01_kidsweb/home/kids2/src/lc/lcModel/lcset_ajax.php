@@ -61,7 +61,6 @@ $objDB->close();
 $lcModel->close();
 
 //結果出力
-mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);
 
 /**
@@ -90,7 +89,6 @@ function getLcSetting($objDB, $lcModel, $data)
 // LC設定情報更新
 function updateLcSetting($objDB, $lcModel, $data, $lgusrname)
 {
-    $data = mb_convert_encoding($data, 'EUC-JP', 'UTF-8');
     //送信データ取得
     //取引先銀行情報
     $bankInfoChk = $data["send_data"]["bankInfoChk"];

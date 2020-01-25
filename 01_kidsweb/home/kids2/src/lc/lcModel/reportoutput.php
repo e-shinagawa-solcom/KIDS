@@ -23,14 +23,14 @@ function fncSetReportOne($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
 
     if ($type == 1) {
-        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('L/C Open情報（Beneficiary・Bk別合計）Open月'));
+        $clonedWorksheet->getHeaderFooter()->setOddHeader('L/C Open情報（Beneficiary・Bk別合計）Open月');
         $copysheetname = $sheetname . "_" . $currencyClass . "Open月";
     } else {
-        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('L/C Open情報（Beneficiary・Bk別合計）船積月'));
+        $clonedWorksheet->getHeaderFooter()->setOddHeader('L/C Open情報（Beneficiary・Bk別合計）船積月');
         $copysheetname = $sheetname . "_" . $currencyClass . "船積月";
     }
     
-    $clonedWorksheet->setTitle(convertEncoding($copysheetname));
+    $clonedWorksheet->setTitle($copysheetname);
     $spreadsheet->addSheet($clonedWorksheet);
     //    $clonedWorksheet->getHeaderFooter()->setOddFooter('＆P／&N');
     //    $clonedWorksheet->getPageSetup()
@@ -38,12 +38,12 @@ function fncSetReportOne($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     //    $clonedWorksheet->getPageSetup()
     //        ->setPaperSize(PageSetup::PAPERSIZE_A4);
 
-    $clonedWorksheet->setCellValue('A4', convertEncoding(sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 4, 2))));
-    $clonedWorksheet->setCellValue('F5', convertEncoding(sprintf('通貨区分:%s', $currencyClass)));
-    $clonedWorksheet->setCellValue('B7', convertEncoding($bankLst[0]["bankomitname"]));
-    $clonedWorksheet->setCellValue('C7', convertEncoding($bankLst[1]["bankomitname"]));
-    $clonedWorksheet->setCellValue('D7', convertEncoding($bankLst[2]["bankomitname"]));
-    $clonedWorksheet->setCellValue('E7', convertEncoding($bankLst[3]["bankomitname"]));
+    $clonedWorksheet->setCellValue('A4', sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 4, 2)));
+    $clonedWorksheet->setCellValue('F5', sprintf('通貨区分:%s', $currencyClass));
+    $clonedWorksheet->setCellValue('B7', $bankLst[0]["bankomitname"]);
+    $clonedWorksheet->setCellValue('C7', $bankLst[1]["bankomitname"]);
+    $clonedWorksheet->setCellValue('D7', $bankLst[2]["bankomitname"]);
+    $clonedWorksheet->setCellValue('E7', $bankLst[3]["bankomitname"]);
 
     $sumofBenebkTotal = fncGetSumofBeneBkPrice($objDB);
     $clonedWorksheet->fromArray($sumofBenebkTotal, null, 'B27');
@@ -56,7 +56,6 @@ function fncSetReportOne($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
 
     $benebkTotalLst = fncGetReportByBenebktotal($objDB);
     if ($benebkTotalLst && count($benebkTotalLst) > 0) {
-        mb_convert_variables('UTF-8', 'EUC-JP', $benebkTotalLst);
         $clonedWorksheet->fromArray($benebkTotalLst, null, 'A8');
     }
 
@@ -77,10 +76,10 @@ function fncSetReportOne($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
 function fncSetReportTwo($objDB, $spreadsheet, $sheetname, $currencyClass, $objectYm, $totalPrice)
 {
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
-    $clonedWorksheet->setTitle(convertEncoding($sheetname . "_" . $currencyClass));
+    $clonedWorksheet->setTitle($sheetname . "_" . $currencyClass);
     $spreadsheet->addSheet($clonedWorksheet);
-    $clonedWorksheet->setCellValue('A1', convertEncoding(sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 5, 2))));
-    $clonedWorksheet->setCellValue('H2', convertEncoding(sprintf('通貨区分:%s', $currencyClass)));
+    $clonedWorksheet->setCellValue('A1', sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 5, 2)));
+    $clonedWorksheet->setCellValue('H2', sprintf('通貨区分:%s', $currencyClass));
 
     
     $numberFormat = getNumberFormat($currencyClass);
@@ -90,7 +89,6 @@ function fncSetReportTwo($objDB, $spreadsheet, $sheetname, $currencyClass, $obje
     $lcTotalLst = fncGetReportByLcTotal($objDB);
     
     if ($lcTotalLst && count($lcTotalLst) > 0) {
-        mb_convert_variables('UTF-8', 'EUC-JP', $lcTotalLst);
         $clonedWorksheet->fromArray($lcTotalLst, null, 'A5');
     }
     $clonedWorksheet->getStyle('C5:C40')->getNumberFormat()->setFormatCode($numberFormat);
@@ -111,11 +109,11 @@ function fncSetReportTwo($objDB, $spreadsheet, $sheetname, $currencyClass, $obje
 function fncSetReportThree($objDB, $spreadsheet, $sheetname, $currencyClass, $objectYm, $totalPrice)
 {
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
-    $clonedWorksheet->setTitle(convertEncoding($sheetname . "_" . $currencyClass));
+    $clonedWorksheet->setTitle($sheetname . "_" . $currencyClass);
     $spreadsheet->addSheet($clonedWorksheet);
     
-    $clonedWorksheet->setCellValue('C1', convertEncoding(sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 5, 2))));
-    $clonedWorksheet->setCellValue('Q1', convertEncoding(sprintf('通貨区分:%s', $currencyClass)));
+    $clonedWorksheet->setCellValue('C1', sprintf('%d年%d月', substr($objectYm, 0, 4), substr($objectYm, 5, 2)));
+    $clonedWorksheet->setCellValue('Q1', sprintf('通貨区分:%s', $currencyClass));
     
     $numberFormat = getNumberFormat($currencyClass);
     $clonedWorksheet->setCellValue('I1', $totalPrice);    
@@ -124,7 +122,6 @@ function fncSetReportThree($objDB, $spreadsheet, $sheetname, $currencyClass, $ob
     $lcDetailLst = fncGetReportByLcDetail($objDB);
     
     if ($lcDetailLst && count($lcDetailLst) > 0) {
-        mb_convert_variables('UTF-8', 'EUC-JP', $lcDetailLst);
         $clonedWorksheet->fromArray($lcDetailLst, null, 'A3');
     }
     
@@ -147,28 +144,28 @@ function fncSetReportFour($objDB, $spreadsheet, $sheetname, $currencyClass, $obj
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
 
     if ($type == 3) {
-        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('Open月・Beneficiary別L/C発行予定集計表'));
+        $clonedWorksheet->getHeaderFooter()->setOddHeader('Open月・Beneficiary別L/C発行予定集計表');
         $copysheetname = $sheetname . "_" . $currencyClass . "Open月";
     } else if ($type == 4) {
-        $clonedWorksheet->getHeaderFooter()->setOddHeader(convertEncoding('船積月・Beneficiary別L/C発行予定集計表'));
+        $clonedWorksheet->getHeaderFooter()->setOddHeader('船積月・Beneficiary別L/C発行予定集計表');
         $copysheetname = $sheetname . "_" . $currencyClass . "船積月";
     }
 
-    $clonedWorksheet->setTitle(convertEncoding($copysheetname));
+    $clonedWorksheet->setTitle($copysheetname);
     $spreadsheet->addSheet($clonedWorksheet);
-    $clonedWorksheet->setCellValue('M1', convertEncoding(sprintf('通貨区分:%s', $currencyClass)));    
+    $clonedWorksheet->setCellValue('M1', sprintf('通貨区分:%s', $currencyClass));    
     $objectYm = str_replace("/", "-", $objectYm) . "-01";
-    $clonedWorksheet->setCellValue('B3', convertEncoding(date("Y年m月", strtotime($objectYm . "-6 month"))));
-    $clonedWorksheet->setCellValue('C3', convertEncoding(date("Y年m月", strtotime($objectYm . "-5 month"))));
-    $clonedWorksheet->setCellValue('D3', convertEncoding(date("Y年m月", strtotime($objectYm . "-4 month"))));
-    $clonedWorksheet->setCellValue('E3', convertEncoding(date("Y年m月", strtotime($objectYm . "-3 month"))));
-    $clonedWorksheet->setCellValue('F3', convertEncoding(date("Y年m月", strtotime($objectYm . "-2 month"))));
-    $clonedWorksheet->setCellValue('G3', convertEncoding(date("Y年m月", strtotime($objectYm . "-1 month"))));
-    $clonedWorksheet->setCellValue('H3', convertEncoding(date("Y年m月", strtotime($objectYm . "0 month"))));
-    $clonedWorksheet->setCellValue('I3', convertEncoding(date("Y年m月", strtotime($objectYm . "+1 month"))));
-    $clonedWorksheet->setCellValue('J3', convertEncoding(date("Y年m月", strtotime($objectYm . "+2 month"))));
-    $clonedWorksheet->setCellValue('K3', convertEncoding(date("Y年m月", strtotime($objectYm . "+3 month"))));
-    $clonedWorksheet->setCellValue('L3', convertEncoding(date("Y年m月", strtotime($objectYm . "+4 month"))));
+    $clonedWorksheet->setCellValue('B3', date("Y年m月", strtotime($objectYm . "-6 month")));
+    $clonedWorksheet->setCellValue('C3', date("Y年m月", strtotime($objectYm . "-5 month")));
+    $clonedWorksheet->setCellValue('D3', date("Y年m月", strtotime($objectYm . "-4 month")));
+    $clonedWorksheet->setCellValue('E3', date("Y年m月", strtotime($objectYm . "-3 month")));
+    $clonedWorksheet->setCellValue('F3', date("Y年m月", strtotime($objectYm . "-2 month")));
+    $clonedWorksheet->setCellValue('G3', date("Y年m月", strtotime($objectYm . "-1 month")));
+    $clonedWorksheet->setCellValue('H3', date("Y年m月", strtotime($objectYm . "0 month")));
+    $clonedWorksheet->setCellValue('I3', date("Y年m月", strtotime($objectYm . "+1 month")));
+    $clonedWorksheet->setCellValue('J3', date("Y年m月", strtotime($objectYm . "+2 month")));
+    $clonedWorksheet->setCellValue('K3', date("Y年m月", strtotime($objectYm . "+3 month")));
+    $clonedWorksheet->setCellValue('L3', date("Y年m月", strtotime($objectYm . "+4 month")));
 
     $sumofBeneMonthCal = fncGetSumofBeneMonCal($objDB);
     $clonedWorksheet->setCellValue('B23', $sumofBeneMonthCal->sum_1);
@@ -188,7 +185,6 @@ function fncSetReportFour($objDB, $spreadsheet, $sheetname, $currencyClass, $obj
     $beneMonthCalLst = fncGetReportByBeneMonthCal($objDB);
     
     if ($beneMonthCalLst && count($beneMonthCalLst) > 0) {
-        mb_convert_variables('UTF-8', 'EUC-JP', $beneMonthCalLst);
         $clonedWorksheet->fromArray($beneMonthCalLst, null, 'A4');
     }
     
@@ -216,30 +212,29 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
     // $filepath = REPORT_TMPDIR . REPORT_LC_TMPFILE;
     // $spreadsheet = $reader->load($filepath); //template.xlsx 読込
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
-    $clonedWorksheet->setTitle(convertEncoding($sheetname . "_" . $currencyClass));
+    $clonedWorksheet->setTitle($sheetname . "_" . $currencyClass);
     $spreadsheet->addSheet($clonedWorksheet);
 
-    $clonedWorksheet->setCellValue('M3', convertEncoding("通貨区分：" . $currencyClass));
+    $clonedWorksheet->setCellValue('M3', "通貨区分：" . $currencyClass);
     $clonedWorksheet->setCellValue('B2', $startYmd);
     $clonedWorksheet->setCellValue('B3', $endYmd);
     $clonedWorksheet->setCellValue('B3', $endYmd);
 
     $unSettedLst = fncGetUnSettedLst($objDB);
     if ($unSettedLst && count($unSettedLst) > 0) {
-        $clonedWorksheet->fromArray(convertEncoding($unSettedLst), null, 'A5');
+        $clonedWorksheet->fromArray($unSettedLst, null, 'A5');
     }
     $unSettedTotal = fncGetUnSettedTotal($objDB);
     if ($unSettedTotal && count($unSettedTotal) > 0) {
-        // mb_convert_variables('UTF-8', 'EUC-JP', $unSettedTotal);
         $clonedWorksheet->fromArray($unSettedTotal, null, 'B23');
     }
 
     $clonedWorksheet->setCellValue('A26', sprintf("%01.2f", $rate));
 
-    $clonedWorksheet->setCellValue('B4', convertEncoding($bankLst[0]["bankomitname"]));
-    $clonedWorksheet->setCellValue('C4', convertEncoding($bankLst[1]["bankomitname"]));
-    $clonedWorksheet->setCellValue('D4', convertEncoding($bankLst[2]["bankomitname"]));
-    $clonedWorksheet->setCellValue('E4', convertEncoding($bankLst[3]["bankomitname"]));
+    $clonedWorksheet->setCellValue('B4', $bankLst[0]["bankomitname"]);
+    $clonedWorksheet->setCellValue('C4', $bankLst[1]["bankomitname"]);
+    $clonedWorksheet->setCellValue('D4', $bankLst[2]["bankomitname"]);
+    $clonedWorksheet->setCellValue('E4', $bankLst[3]["bankomitname"]);
 
     $clonedWorksheet->setCellValue('B26', moneyFormat($unSettedTotal[0]["bank1total"] * $raterate, $currencyClass));
     $clonedWorksheet->setCellValue('C26', moneyFormat($unSettedTotal[0]["bank2total"] * $raterate, $currencyClass));
@@ -252,7 +247,6 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
 
     if ($unSettedPriceLst && count($unSettedPriceLst) > 0) {
 
-        mb_convert_variables('UTF-8', 'EUC-JP', $unSettedPriceLst);
         $clonedWorksheet->fromArray($unSettedPriceLst, null, 'H5');
     }
     // $writer = new XlsWriter($spreadsheet);
@@ -287,41 +281,41 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
 function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bankLst, $data)
 {
     $clonedWorksheet = clone $spreadsheet->getSheetByName($sheetname);
-    $clonedWorksheet->setTitle(convertEncoding($sheetname . "_" . $currencyClass));
+    $clonedWorksheet->setTitle($sheetname . "_" . $currencyClass);
     $spreadsheet->addSheet($clonedWorksheet);
 
     if (strcmp($currencyClass, '円') == 0)
     {
-        $clonedWorksheet->setCellValue('H10', convertEncoding("金額（￥）"));
+        $clonedWorksheet->setCellValue('H10', "金額（￥）");
     }
-    $clonedWorksheet->setCellValue('P9', convertEncoding("通貨区分：" . $currencyClass));
-    $clonedWorksheet->setCellValue('B7', convertEncoding(sprintf('%d年%d月', substr($data["openYm"], 0, 4), substr($data["openYm"], 4, 2))));
-    $clonedWorksheet->setCellValue('M8', convertEncoding(sprintf('%d年%d月', substr($data["shipYm"], 0, 4), substr($data["shipYm"], 4, 2))));
+    $clonedWorksheet->setCellValue('P9', "通貨区分：" . $currencyClass);
+    $clonedWorksheet->setCellValue('B7', sprintf('%d年%d月', substr($data["openYm"], 0, 4), substr($data["openYm"], 4, 2)));
+    $clonedWorksheet->setCellValue('M8', sprintf('%d年%d月', substr($data["shipYm"], 0, 4), substr($data["shipYm"], 4, 2)));
 
-    $clonedWorksheet->setCellValue('D8', convertEncoding($data["payfName"]));
-    $clonedWorksheet->setCellValue('H8', convertEncoding($data["bankname"]));
+    $clonedWorksheet->setCellValue('D8', $data["payfName"]);
+    $clonedWorksheet->setCellValue('H8', $data["bankname"]);
 
     if (strcmp($data["bankname"], 'ALL') == 0)
     {  
-        $clonedWorksheet->setCellValue('P10', convertEncoding("予定銀行"));
+        $clonedWorksheet->setCellValue('P10', "予定銀行");
     }
-    $clonedWorksheet->setCellValue('L8', convertEncoding($data["lcopen"]));
-    $clonedWorksheet->setCellValue('O8', convertEncoding($data["portplace"]));
+    $clonedWorksheet->setCellValue('L8', $data["lcopen"]);
+    $clonedWorksheet->setCellValue('O8', $data["portplace"]);
 
     $sendLst = fncGetSendInfo($objDB); 
 
     if ($sendLst && count($sendLst) > 0) {
-        $clonedWorksheet->setCellValue('B3', convertEncoding($sendLst[0]["lccautionstatement1"]));
-        $clonedWorksheet->setCellValue('B4', convertEncoding($sendLst[0]["lccautionstatement2"]));
-        $clonedWorksheet->setCellValue('G2', convertEncoding($sendLst[0]["lcsender"]));
-        $clonedWorksheet->setCellValue('H3', convertEncoding($sendLst[0]["senderfax"]));
+        $clonedWorksheet->setCellValue('B3', $sendLst[0]["lccautionstatement1"]);
+        $clonedWorksheet->setCellValue('B4', $sendLst[0]["lccautionstatement2"]);
+        $clonedWorksheet->setCellValue('G2', $sendLst[0]["lcsender"]);
+        $clonedWorksheet->setCellValue('H3', $sendLst[0]["senderfax"]);
     }
 
     $payfInfo = fncGetPayfInfoByPayfcd($objDB, $data["payfCode"]);
     
     if ($payfInfo != null) {
-        $clonedWorksheet->setCellValue('B2', convertEncoding($payfInfo->payfsendname));
-        $clonedWorksheet->setCellValue('H42', convertEncoding($payfInfo->payfsendfax));
+        $clonedWorksheet->setCellValue('B2', $payfInfo->payfsendname);
+        $clonedWorksheet->setCellValue('H42', $payfInfo->payfsendfax);
     }
 
     $sumofILOP = fncGetSumofImpLcOrderPrice($objDB);
@@ -333,15 +327,10 @@ function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     $ilopLst = fncGetReportImpLcOrderInfo($objDB);
 
     if ($ilopLst && count($ilopLst) > 0) {
-        mb_convert_variables('UTF-8', 'EUC-JP', $ilopLst);
         $clonedWorksheet->fromArray($ilopLst, null, 'A12');
     }
     $clonedWorksheet->getStyle('H12:H26')->getNumberFormat()->setFormatCode($numberFormat);
 
-}
-function convertEncoding($str)
-{
-    return mb_convert_encoding($str, 'UTF-8', 'EUC-JP');
 }
 
 /**

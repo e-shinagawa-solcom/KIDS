@@ -168,7 +168,6 @@ if($moldReportId && (0 <= $revision) && (0 <= $version))
 		$objTemplate->getTemplate (PATH_TEMPLATE);
 
 		// プレースホルダー置換
-		// mb_convert_variables("utf8", "eucjp-win", $recordMoldReport);
 		$objTemplate->replace($recordMoldReport);
 		$objTemplate->complete();
 

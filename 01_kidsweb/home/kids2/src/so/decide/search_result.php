@@ -443,5 +443,4 @@ $aryResult["tblB_body_result"] = $tblB_body_html;
 $aryResult["count"] = count($aryDetailResult);
 
 //結果出力
-mb_convert_variables('UTF-8', 'EUC-JP', $aryResult);
 echo $s->encodeUnsafe($aryResult);

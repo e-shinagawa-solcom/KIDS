@@ -23,7 +23,7 @@
 	*
 	*	@event	: onClick
 	*
-	*	@charset : euc-jp
+	*	@charset : UTF-8
 	*/
 	//-------------------------------------------------------------------------
 	function fncOpenDialog( obj1 , obj2 , strUrl , strID , strScroll, strType )

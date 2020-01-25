@@ -1239,9 +1239,6 @@ function fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailName, $displa
         if ($aryTableDetailName != null) {
             foreach ($aryTableDetailName as $key => $value) {
                 if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
-                    if (!$isMaxData) {
-                        $value = mb_convert_encoding($value, "eucjp-win", "utf-8");
-                    }
                     $th = $doc->createElement("th", $value);
                     $trHead->appendChild($th);
                     $colspan += 1;

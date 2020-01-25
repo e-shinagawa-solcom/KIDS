@@ -129,7 +129,6 @@ if ($strMode == "search-detail") {
     // データ返却
 	// echo $strHtml;
 	//結果出力
-	mb_convert_variables('UTF-8', 'EUC-JP', $aryResult);
 	echo $s->encodeUnsafe($aryResult);
 
     // DB切断

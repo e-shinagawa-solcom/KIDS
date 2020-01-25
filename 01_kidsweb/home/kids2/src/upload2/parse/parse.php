@@ -192,7 +192,6 @@ fncDebug( 'upload_parse_parse_1.txt', $objExc, __FILE__, __LINE__);
 	$aryData["FORM"]		= $strForm;
 	$aryData["FORM_NAME"]	= FORM_NAME;
 
-//	$aryData["DEBUG"]			= mb_convert_encoding( $_REQUEST['excel_file'], "EUC-JP","EUC-JP,UTF-8,SJIS,ASCII,JIS" );
 
 
 

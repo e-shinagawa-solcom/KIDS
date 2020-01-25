@@ -74,9 +74,7 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($strTemplatePath);
 // データ設定用シートにデータの設定
 $worksheet = $spreadsheet->getSheetByName("データ設定用");
-mb_convert_variables('UTF-8', 'EUC-JP', $aryParts);
 $worksheet->fromArray($aryParts, null, 'B3');
-mb_convert_variables('UTF-8', 'EUC-JP', $aryDetail);
 $worksheet->fromArray($aryDetail, null, 'B6');
 
 if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {

@@ -46,7 +46,7 @@ $spreadsheet = $reader->load(FILE_UPLOAD_TMPDIR . $strTmpFileName);
 $sheetData = $spreadsheet->getActiveSheet()->toArray();
 $csvData = [];
 for ($i = 0; $i <= count($sheetData); $i++) {
-    $cells = explode("	", mb_convert_encoding($sheetData[$i][0], 'EUC-JP', 'UTF-8'));
+    $cells = explode("	", $sheetData[$i][0]);
     for ($j = 0; $j < count($cells); $j++) {
         $csvData[$i][$j+1] = rtrim(ltrim($cells[$j], '"'), '"');
     }

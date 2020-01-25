@@ -92,7 +92,7 @@
                     // 検索結果レコードをオブジェクトで取得し必要なjsonデータに加工する
                     foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                     {
-                        $json[$i][mb_convert_encoding($column,"UTF-8","EUC-JP")] = mb_convert_encoding($val,"UTF-8","EUC-JP");
+                        $json[$i][$column] = $val;
                     }
                 }
 			    $objDB->close();
@@ -103,7 +103,7 @@
             }
             else
             {
-            	$json[mb_convert_encoding("Message","UTF-8", "EUC-JP")] = mb_convert_encoding("該当するレコードが見つかりませんでした", "UTF-8", "EUC-JP");
+            	$json["Message"] = "該当するレコードが見つかりませんでした";
                 echo  json_encode($json);
             }
         }
@@ -139,7 +139,7 @@
                 foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                 {
                     // $json[$i][$column] = $val;
-                    $json[$i][mb_convert_encoding($column,"UTF-8","EUC-JP")] = mb_convert_encoding($val,"UTF-8","EUC-JP");
+                    $json[$i][$column] = $val;
                 }
             }
             

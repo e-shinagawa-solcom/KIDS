@@ -58,7 +58,7 @@ $doc = new DOMDocument("1.0","utf-8");
 // パースエラー抑制
 libxml_use_internal_errors(true);
 // DOMパース
-$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
+$doc->loadHTML($objTemplate->strTemplate);
 // パースエラークリア
 libxml_clear_errors();
 // パースエラー抑制解除
@@ -79,7 +79,7 @@ foreach ($aryData["detailData"] as $data) {
     $trBody->appendChild($td);
 
     // 顧客
-    $td = $doc->createElement("td", utf8_encode($data["strCompanyDisplayCode"]));
+    $td = $doc->createElement("td", $data["strCompanyDisplayCode"]);
     $trBody->appendChild($td);
 
     // 受注NO.

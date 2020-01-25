@@ -150,7 +150,7 @@ $lcModel->close();
 <html lang="ja">
 <head>
 <title>K.I.D.S.</title>
-<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <script src="/cmn/jquery/jquery-3.1.0.js"></script>
 	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
 	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>

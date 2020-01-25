@@ -42,5 +42,4 @@ $objDB->close();
 // 適用レート
 $result["curconversionrate"] = $curconversionrate;
 //結果出力
-mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);

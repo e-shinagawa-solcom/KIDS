@@ -62,9 +62,6 @@ if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 	$objTemplate = new clsTemplate ();
 	$objTemplate->getTemplate ( "/mm/confirm/mm_confirm.html" );
 
-	// デシリアライズ時にUTF-8にしたものをEUC-JPに戻す
-	mb_convert_variables("eucjp-win", "utf-8", $workFormData);
-
 	// プレースホルダー置換
 	$objTemplate->replace(array_merge($replacement, $workFormData));
 	$objTemplate->complete();
@@ -78,7 +75,7 @@ if($resultFormCache && pg_num_rows($resultFormCache) == 1)
 	// パースエラー抑制
 	libxml_use_internal_errors(true);
 	// DOMパース
-	$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
+	$doc->loadHTML($objTemplate->strTemplate);
 	// パースエラークリア
 	libxml_clear_errors();
 	// パースエラー抑制解除

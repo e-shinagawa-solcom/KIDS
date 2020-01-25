@@ -72,7 +72,7 @@ foreach ($aryData["detailData"] as $data) {
     $aryQuery[] = "set lngproductquantity = " . str_replace(",", "", $data["lngProductQuantity"]) . " ";
     $aryQuery[] = ", lngproductunitcode = '" . $data["lngProductUnitCode"] . "' ";
     $aryQuery[] = ", lngunitquantity = '" . str_replace(",", "", $data["lngUnitQuantity"]) . "' ";
-    $aryQuery[] = ", strnote = '" . mb_convert_encoding($data["strDetailNote"], "euc-jp", "UTF-8") . "' ";
+    $aryQuery[] = ", strnote = '" . $data["strDetailNote"] . "' ";
     $aryQuery[] = "where lngreceiveno = " . $data["lngReceiveNo"] . " ";
     $aryQuery[] = "and lngreceivedetailno = " . $data["lngReceiveDetailNo"] . " ";
     $aryQuery[] = "and lngrevisionno = " . $data["lngRevisionNo"] . " ";
@@ -113,7 +113,7 @@ $doc = new DOMDocument();
 // パースエラー抑制
 libxml_use_internal_errors(true);
 // DOMパース
-$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
+$doc->loadHTML($objTemplate->strTemplate);
 // パースエラークリア
 libxml_clear_errors();
 // パースエラー抑制解除

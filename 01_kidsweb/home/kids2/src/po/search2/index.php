@@ -144,7 +144,7 @@ if ( !$aryData["lngMonetaryunitCode"] or !$aryData["lngMonetaryrateCode"] )
 }
 
 $aryData["lngMonetaryRateCodeValue"]	= "<input type=\"hidden\" name=\"lngMonetaryRateCodeValue\" value=\"" . $aryData["lngMonetaryRateCodeValue"] . "\"></option>";
-$aryData["curConversionRate"]	= mb_convert_encoding("<input type=\"hidden\" name=\"curConversionRate\" value=\"" . $aryData["curConversionRate"] . "\"></option>","EUC-JP","ASCII,JIS,UTF-8,EUC-JP,SJIS");
+$aryData["curConversionRate"]	= "<input type=\"hidden\" name=\"curConversionRate\" value=\"" . $aryData["curConversionRate"] . "\"></option>";
 
 // 文字列チェック
 $aryCheck["strSessionID"]          = "null:numenglish(32,32)";

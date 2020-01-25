@@ -24,18 +24,6 @@
 	$strFormValue  = $_GET["strFormValue"];   // フィールド
 
 
-	//////////////////////////////////////////////////////////////
-	// メインルーチン
-	//////////////////////////////////////////////////////////////
-	for ( $i = 0; $i < count ( $strFormValue ); $i++ )
-	{
-		$strFormValue[$i] = mb_convert_encoding( $strFormValue[$i], "EUC-JP", "SJIS,EUC" );
-	}
-
-	//{
-	//	echo ",引数無し";
-	//	exit;
-	//}
 	// 外部ファイルよりクエリ取得、生成
 	if ( !$strQuery = file_get_contents ( LIB_ROOT . "sql/$lngProcessID.sql" ) )
 	{

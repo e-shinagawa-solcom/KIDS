@@ -302,7 +302,7 @@ function checkUniqueUser( $lngUserCode, $strUserID, $lngCompanyCode, $strUserDis
 		// ユーザーコードの重複チェック
 		$strQuery  = "SELECT lngUserCode FROM m_User " .
 	                 "WHERE lngUserCode = $lngUserCode";
-echo $strQuery;
+//echo $strQuery;
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 		if ( $lngResultNum > 0 )
 		{

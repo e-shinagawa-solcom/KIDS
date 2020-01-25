@@ -115,7 +115,7 @@ echo $objTemplate->strTemplate;
 <html lang="ja">
 <head>
 <title>K.I.D.S.</title>
-<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 </head>
 <body>
 <table border>

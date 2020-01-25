@@ -191,7 +191,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 消費税区分
             $detailDataResult["lngtaxclasscode"] = $aryDetailData[$i]["lngTaxClassCode"];
             // 消費税区分名称
-            $detailDataResult["strtaxclassname"] = mb_convert_encoding($aryDetailData[$i]["strTaxClassName"], 'EUC-JP', 'UTF-8');
+            $detailDataResult["strtaxclassname"] = $aryDetailData[$i]["strTaxClassName"];
             // 消費税額
             $detailDataResult["curtaxprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], number_format($aryDetailData[$i]["curTaxPrice"],2 ));
 
@@ -226,7 +226,6 @@ $aryNewResult["strinputusername"] = $strUserName;
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("pc/modify/pc_confirm_modify.html");
-mb_convert_variables('EUC-JP', 'UTF-8', $aryData);
 // テンプレート生成
 $objTemplate->replace($aryNewResult);
 $objTemplate->replace($aryData);
@@ -237,7 +236,7 @@ $doc = new DOMDocument();
 // パースエラー抑制
 libxml_use_internal_errors(true);
 // DOMパース
-$doc->loadHTML(mb_convert_encoding($objTemplate->strTemplate, "utf8", "eucjp-win"));
+$doc->loadHTML($objTemplate->strTemplate);
 // パースエラークリア
 libxml_clear_errors();
 // パースエラー抑制解除

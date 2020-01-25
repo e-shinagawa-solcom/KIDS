@@ -17,7 +17,6 @@ class makeHTML {
 		foreach($sheetNameList as $key => $sheetName) {
 			// シート名があればシート名を取得する
 			if (strlen($sheetName)) {
-				$sheetName = mb_convert_encoding($sheetName, "EUC-JP", "UTF-8");
 				$optionHTML .= "<option value = " .$key. ">" .$sheetName. "</option>\n";
 			} else {
 				return false;

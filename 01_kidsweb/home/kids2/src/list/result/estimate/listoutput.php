@@ -222,14 +222,12 @@ $customCSS .= "</style>";
 
 $output .= $customCSS;
 
-// 文字化け対策：エクセルの¥マークを置換文字列に置換(UTF-8 → EUC-JPの変換時に上手く変換できないため)
+// 文字化け対策：エクセルの¥マークを置換文字列に置換(UTF-8 → UTF-8の変換時に上手く変換できないため)
 $sheetData = str_replace('¥', $replace, $objWriter->generateSheetData());
 
 $output .= $sheetData;
 
 $output .= $objWriter->generateHTMLFooter();
-
-$output = mb_convert_encoding($output, 'EUC-JP', 'UTF-8');
 
 $strHtml = str_replace($replace, '&yen;', $output);
 }

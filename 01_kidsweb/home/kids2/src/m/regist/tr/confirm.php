@@ -121,7 +121,7 @@ $aryParts["dtmapplyenddate"] = $aryData["dtmapplyenddate"];
 if ( $bytErrorFlag )
 {
 	//echo fncGetReplacedHtml( "m/regist/edit.tmpl", $aryData, $objAuth );
-	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=euc-jp\">";
+	echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";
 	echo "<form action=/m/regist/tr/edit.php method=GET>";
 	echo getArrayTable( $aryData, "HIDDEN" );
 	echo "</form>";

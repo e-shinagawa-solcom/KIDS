@@ -735,7 +735,7 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngRevisionNo]\" value=\"".$aryData[$i]["lngRevisionNo"]."\">";
 				// 運搬方法
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngCarrierCode]\" value=\"".$aryData[$i]["lngDeliveryMethodCode"]."\">";
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDeliveryMethodName]\" value=\"".mb_convert_encoding($aryData[$i]["strDeliveryMethodName"],"EUC-JP","auto")."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDeliveryMethodName]\" value=\"". $aryData[$i]["strDeliveryMethodName"] ."\">";
 				// 単位
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngProductUnitCode]\" value=\"".$aryData[$i]["lngProductUnitCode"]."\">";
 				// 仕入科目
@@ -755,7 +755,7 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				// 納期
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][dtmDeliveryDate]\" value=\"".$aryData[$i]["dtmDeliveryDate"]."\">";
 				// 備考
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDetailNote]\" value=\"".fncHTMLSpecialChars(mb_convert_encoding($aryData[$i]["strDetailNote"],"EUC-JP","auto"))."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDetailNote]\" value=\"".fncHTMLSpecialChars($aryData[$i]["strDetailNote"])."\">";
 				
 				
 				

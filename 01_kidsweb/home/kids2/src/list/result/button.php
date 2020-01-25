@@ -62,7 +62,7 @@ if ($aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] == "slip") {
 <html lang="ja">
 	<head>
 	<title>K.I.D.S.</title>
-	<meta http-equiv="content-type" content="text/html; charset=euc-jp">
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 	<script type="text/javascript" language="javascript" src="/list/printset/functions.js"></script>

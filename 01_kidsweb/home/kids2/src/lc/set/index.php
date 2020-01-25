@@ -126,6 +126,5 @@ $arr = array(
     "lgoutymd" => $lgoutymd,
     "userAuth" => $userAuth,
 );
-mb_convert_variables('UTF-8', 'EUC-JP', $arr);
 echo "<script>$(function(){lcInit('" . json_encode($arr) . "');});</script>";
 return true;

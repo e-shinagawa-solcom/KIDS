@@ -115,7 +115,6 @@ $objDB->close();
 // テンプレート読み込み
 // $objTemplate = new clsTemplate();
 // $objTemplate->getTemplate("pc/modify/pc_modify.html");
-// mb_convert_variables('EUC-JP', 'UTF-8', $aryData);
 // // テンプレート生成
 // $objTemplate->replace($aryData);
 // $objTemplate->replace($aryNewResult);
@@ -134,7 +133,7 @@ $doc = new DOMDocument();
 // パースエラー抑制
 libxml_use_internal_errors(true);
 // DOMパース
-$doc->loadHTML(mb_convert_encoding($strTemplate, "utf8", "eucjp-win"));
+$doc->loadHTML($strTemplate);
 // $doc->loadHTML($strTemplate);
 // パースエラークリア
 libxml_clear_errors();
@@ -316,7 +315,6 @@ foreach ($aryOrderDetail as $orderDetail) {
         }
         $hidden->appendChild($select);
     }
-//    $doc->getElementById("taxList")->textContent = mb_convert_encoding("復元用","UTF-8","EUC-JP");
 
 /*    
     // 消費税率   $taxObj

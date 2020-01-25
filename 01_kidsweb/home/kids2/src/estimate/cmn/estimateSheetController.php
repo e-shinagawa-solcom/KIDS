@@ -565,7 +565,6 @@ class estimateSheetController {
 
             // 追加列のデフォルト値をセットする
             $defaultCellData = workSheetConst::WORK_SHEET_CELL_DEFAULT;
-            mb_convert_variables('UTF-8', 'EUC-JP', $defaultCellData); // UTF-8に変換
 
             $targetAreaRows = $this->targetAreaRows;
 
@@ -591,9 +590,9 @@ class estimateSheetController {
             }
 
             // 受注確定、発注確定、発注取消のチェックボックス、ボタンのセット
-            $receiveConfirm = mb_convert_encoding('確定', 'UTF-8', 'EUC-JP');
-            $orderConfirm = mb_convert_encoding('確', 'UTF-8', 'EUC-JP');
-            $orderCancel = mb_convert_encoding('消', 'UTF-8', 'EUC-JP');
+            $receiveConfirm = '確定';
+            $orderConfirm = '確';
+            $orderCancel = '消';
 
             foreach ($cellData as $tableRow => $rowData) {
                 $workSheetRow = $tableRow + $rowShiftValue; // ワークシートの行番号

@@ -2,7 +2,7 @@
 
 /**
 *
-*	@charset	: EUC-JP
+*	@charset	: UTF-8
 */
 
 	require ( 'conf.inc' );										// 設定読み込み
@@ -36,12 +36,12 @@
 	$objAuth		= new clsAuth();
 	$objTemplate	= new clsTemplate();								// テンプレートオブジェクト生成
 
-	$charset = 'EUC-JP';
+	$charset = 'UTF-8';
 
 	//-------------------------------------------------------------------------
 	// DBオープン
 	//-------------------------------------------------------------------------
-	$objDB->InputEncoding = 'EUC-JP';
+	$objDB->InputEncoding = 'UTF-8';
 	$objDB->open( "", "", "", "" );
 
 	//-------------------------------------------------------------------------
@@ -79,11 +79,10 @@
 
 
     // 入力データを取得
-	$postDataJson = mb_convert_encoding($aryData['postData'], 'UTF-8', 'EUC-JP'); // JSONデコード用にUTF8に変換
+	$postDataJson = $aryData['postData'];
 	$escapeJson = str_replace('/', '\\/', $postDataJson); // '/'（スラッシュ)をエスケープする
 
 	$postData = json_decode($escapeJson, true);
-	// mb_convert_variables('EUC-JP', 'UTF-8', $regist); // EUC-JPに変換
 
 
 	$value = $postData['value']; // 入力値
@@ -112,7 +111,7 @@
 			$nameList = $detailHeader[$areaCode];
 			foreach ($nameList as $index => $headerCellName) {
 				if (strpos($className, $index)) {
-					$param = mb_convert_encoding($value[$row][$col], 'EUC-JP', 'UTF-8');
+					$param = $value[$row][$col];
 					switch ($index) {
 						case 'monetary':						
 							if (!$param) { // 通貨コードがセットされていない場合はJPをセットする
@@ -138,7 +137,7 @@
 		} else { // その他のデータ取得
 			foreach ($headerNameList as $cellName) {
 				if (strpos($className, $cellName) !== false) {
-					$param = mb_convert_encoding($value[$row][$col], 'EUC-JP', 'UTF-8');
+					$param = $value[$row][$col];
 					if ($cellName === workSheetConst::RETAIL_PRICE) {
 						$param = str_replace('\\', '', $param);
 						$param = str_replace(',', '', $param);
@@ -281,7 +280,6 @@
 		$aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
 
 		// [strErrorMessage]書き出し
-//		$aryHtml["strErrorMessage"] = mb_convert_encoding($strMessage, 'EUC-JP', 'UTF-8');
 		$aryHtml["strErrorMessage"] = $strMessage;
 
 		// テンプレート読み込み

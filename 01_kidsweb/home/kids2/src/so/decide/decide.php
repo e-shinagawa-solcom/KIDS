@@ -139,6 +139,5 @@ $objDB->freeResult($lngResultID);
 $objDB->close();
 
 //結果出力
-mb_convert_variables('UTF-8', 'EUC-JP', $result);
 echo $s->encodeUnsafe($result);
 

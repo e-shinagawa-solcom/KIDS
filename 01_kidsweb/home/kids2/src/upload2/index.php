@@ -6,7 +6,7 @@
 /**
 *	ファイルアップロード画面
 *
-*	@charset	: euc-jp
+*	@charset	: UTF-8
 */
 
 

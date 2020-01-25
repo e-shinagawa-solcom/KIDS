@@ -58,9 +58,9 @@ $UserDisplayCode = trim($objAuth->UserID);
 // ここから追加ボタン押下処理
 if ($_POST["strMode"] == "update") {
 
-    $_POST["strPayConditionName"] = mb_convert_encoding($_POST["strPayConditionName"], "EUC-JP", "UTF-8");
-    $_POST["strLocationName"] = mb_convert_encoding($_POST["strLocationName"], "EUC-JP", "UTF-8");
-    $_POST["strNote"] = mb_convert_encoding($_POST["strNote"], "EUC-JP", "UTF-8");
+    $_POST["strPayConditionName"] = $_POST["strPayConditionName"];
+    $_POST["strLocationName"] = $_POST["strLocationName"];
+    $_POST["strNote"] = $_POST["strNote"];
 
 	$objDB->transactionBegin();
 	
@@ -99,7 +99,7 @@ fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
 
-	header("Content-type: text/plain; charset=EUC-JP");
+	header("Content-type: text/plain; charset=UTF-8");
 	$objTemplate->getTemplate( "po/finish/parts.tmpl" );
 		
 	// テンプレート生成
@@ -124,7 +124,7 @@ $aryData["strPayConditionName"] = $_POST["strPayConditionName"];
 $aryData["strLocationName"] = $_POST["strLocationName"];
 $aryData["strNote"] = $_POST["strNote"];
 $aryData["lngMonetaryUnitCode"] = $_POST["lngMonetaryUnitCode"];
-$aryData["strmonetaryunitname"] = mb_convert_encoding($_POST["strMonetaryUnitName"],"EUC-JP", "UTF-8");
+$aryData["strmonetaryunitname"] = $_POST["strMonetaryUnitName"];
 $aryData["aryDetail"] = $_POST["aryDetail"];
 
 // 明細行を除く
@@ -178,7 +178,7 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
     $_POST["aryDetail"][$i]["dtmdeliverydate"] = $_POST["aryDetail"][$i]["dtmDeliveryDate"];
     
 
-    $_POST["aryDetail"][$i]["strDetailNote"] = mb_convert_encoding($_POST["aryDetail"][$i]["strDetailNote"],"EUC-JP", "UTF-8");
+    $_POST["aryDetail"][$i]["strDetailNote"] = $_POST["aryDetail"][$i]["strDetailNote"];
     // 2004/03/11 number_format watanabe
     // 単価
     $_POST["aryDetail"][$i]["strMonetarySign"] = $aryData["lngMonetaryUnitCode"];
@@ -190,7 +190,7 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
 
     // 2004/03/19 watanabe update コード→名称は全て処理する。コードがない場合は[]を表示しない（必須項目も全て。処理だけ）
     $_POST["aryDetail"][$i]["strproductcode_DISCODE"] = ($_POST["strProductCode"] != "") ? "[" . $_POST["strProductCode"] . "]" : "";
-    $_POST["aryDetail"][$i]["strproductname"] = mb_convert_encoding($_POST["strProductName"], "EUC-JP", "UTF-8");
+    $_POST["aryDetail"][$i]["strproductname"] = $_POST["strProductName"];
     $_POST["aryDetail"][$i]["strstockitemcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockItemCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockItemCode"] . "]" : "";
     $_POST["aryDetail"][$i]["strstocksubjectcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockSubjectCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockSubjectCode"] . "]" : "";
 
@@ -234,7 +234,7 @@ $aryData["strAction"] = "/po/confirm2/index.php?strSessionID=" . $_POST["strSess
 $aryData["strMonetarySign"] = $aryData["lngMonetaryUnitCode"];
 
 //ヘッダ備考の特殊文字変換
-$aryData["strNote"] = fncHTMLSpecialChars(mb_convert_encoding($_POST["strNote"], "EUC-JP", "auto"));
+$aryData["strNote"] = fncHTMLSpecialChars($_POST["strNote"]);
 
 // 通貨記号+合計金額
 

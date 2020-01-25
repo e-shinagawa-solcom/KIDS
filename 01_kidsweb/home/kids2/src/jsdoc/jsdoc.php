@@ -26,7 +26,7 @@ function fncJSfile($jsdir)
 	global $index;
 
 	//windowsの環境で使用する場合のみ使用
-//	Mb_Convert_Variables("SJIS","EUC-JP", $jsdir);
+//	Mb_Convert_Variables("SJIS","UTF-8", $jsdir);
 	
 	//作業ディレクトリの移動
 	@ChDir($jsdir);
