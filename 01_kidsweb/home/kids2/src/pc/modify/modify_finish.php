@@ -39,12 +39,12 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 $lngUserCode = $objAuth->UserCode;
 // 700 仕入管理
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "pc/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 705 仕入管理（ 仕入修正）
 if (!fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, $strReturnPath, $objDB);
+    fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 $objDB->transactionBegin();
@@ -56,8 +56,13 @@ if(!lockStock($lngstockno, $objDB)){
     fncOutputError(9051, DEF_ERROR, "仕入データのロックに失敗しました", true, "", $objDB);
 }
 
+// 締めチェック
+if(isStockClosed($lngstockno, $objDB)){
+    fncOutputError(711, DEF_WARNING, "", true, "", $objDB);
+}
+// 更新チェック
 if(isStockModified($lngstockno, $lngrevisionno, $objDB)){
-    fncOutputError(9051, DEF_ERROR, "仕入データが更新または削除されています", true, "", $objDB);
+    fncOutputError(711, DEF_WARNING, "", true, "", $objDB);
 }
 
 // 仕入コードの設定

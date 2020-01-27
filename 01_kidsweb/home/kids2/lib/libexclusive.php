@@ -195,6 +195,11 @@ function lockStock($lngstockno, $objDB){
     return getLock("m_stock", "lngstockno", $lngstockno, $objDB);
 }
 
+// 仕入データ締めチェック
+function isStockClosed($lngstockno, $objDB){
+    return !isStatusModified("m_stock", "lngstockno", $lngstockno, DEF_STOCK_CLOSED, $objDB);
+}
+
 // 仕入データ更新有無チェック
 function isStockModified($lngstockno, $lngrevisionno, $objDB){
     return isModified("m_stock", "lngstockno", $lngstockno, $lngrevisionno, $objDB);
