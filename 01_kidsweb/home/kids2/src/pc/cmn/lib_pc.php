@@ -870,6 +870,8 @@ function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
     // SQL生成
     $aryQuery[] = " SELECT ";
 //    $aryQuery[] = " mpo.strordercode,";
+    $aryQuery[] = " mpo.lngpurchaseorderno,";  // 発注書ビジョン番号
+    $aryQuery[] = " mpo.lngrevisionno as lngpurchaseorderrevisionno,";  // 発注書ビジョン番号
     $aryQuery[] = " od.lngorderdetailno,";  // 発注番号
     $aryQuery[] = " od.lngorderno,";  // 発注明細番号
     $aryQuery[] = " od.lngrevisionno,";  // リビジョン番号
