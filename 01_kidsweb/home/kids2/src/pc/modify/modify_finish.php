@@ -14,6 +14,7 @@
 
 include 'conf.inc';
 require LIB_FILE;
+require LIB_EXCLUSIVEFILE;
 include 'JSON.php';
 
 //////////////////////////////////////////////////////////////////////////
@@ -48,34 +49,17 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
 
 $objDB->transactionBegin();
 
-// リビジョン番号の設定
-//リビジョン番号を現在の最大値をとるように修正する　その際にSELECT FOR UPDATEを使用して、同じ仕入に対してロック状態にする
-$strLockQuery = "SELECT lngRevisionNo FROM m_Stock WHERE strStockCode = '" . $aryData["strStockCode"] . "' FOR UPDATE";
+$lngstockno = $aryData["lngStockNo"];
+$lngrevisionno = $aryData["lngstockrevisionno"];
 
-// ロッククエリーの実行
-list ( $lngLockResultID, $lngLockResultNum ) = fncQuery( $strLockQuery, $objDB );
-
-$lngMaxRevision = 0;
-
-if ( $lngLockResultNum )
-{
-    for ( $i = 0; $i < $lngLockResultNum; $i++ )
-    {
-        $objRevision = $objDB->fetchObject( $lngLockResultID, $i );
-        if ( $lngMaxRevision < $objRevision->lngrevisionno )
-        {
-            $lngMaxRevision = $objRevision->lngrevisionno;
-        }
-    }
-
-    $lngrevisionno = $lngMaxRevision + 1;
-}
-else
-{
-    $lngrevisionno = $lngMaxRevision;
+if(!lockStock($lngstockno, $objDB)){
+    fncOutputError(9051, DEF_ERROR, "仕入データのロックに失敗しました", true, "", $objDB);
 }
 
-$objDB->freeResult( $lngLockResultID );
+if(isStockModified($lngstockno, $lngrevisionno, $objDB)){
+    fncOutputError(9051, DEF_ERROR, "仕入データが更新または削除されています", true, "", $objDB);
+}
+
 // 仕入コードの設定
 $strstockcode = $aryData["strStockCode"];
 // 仕入状態コードの設定
@@ -88,22 +72,21 @@ $aryData["lngDeliveryPlaceCode"] = fncGetMasterValue("m_company", "strcompanydis
 $aryData["lngGroupCode"] = fncGetMasterValue("m_group", "strgroupdisplaycode", "lnggroupcode", $aryData["lngGroupCode"] . ":str", '', $objDB);
 $aryData["lngUserCode"] = fncGetMasterValue("m_user", "struserdisplaycode", "lngusercode", $aryData["lngUserCode"] . ":str", '', $objDB);
 
-// 仕入修正対象となる発注書に紐づく発注のステータスを"本発注"に戻す
+// 仕入修正対象となる仕入に紐づく発注のステータスを"本発注"に戻す
 $aryQuery = array();
 
 $aryQuery[] = "UPDATE m_order ";
 $aryQuery[] = "SET lngorderstatuscode = " . DEF_ORDER_ORDER . " ";
 $aryQuery[] = "FROM (";
 $aryQuery[] = "    SELECT ";
-$aryQuery[] = "        t_purchaseorderdetail.lngorderno,";
-$aryQuery[] = "        t_purchaseorderdetail.lngorderrevisionno";
-$aryQuery[] = "    FROM m_purchaseorder";
-$aryQuery[] = "    INNER JOIN t_purchaseorderdetail";
-$aryQuery[] = "        ON t_purchaseorderdetail.lngpurchaseorderno = m_purchaseorder.lngpurchaseorderno";
-$aryQuery[] = "        AND t_purchaseorderdetail.lngrevisionno = m_purchaseorder.lngrevisionno";
-$aryQuery[] = "    where m_purchaseorder.strordercode = '" . $aryData["strOrderCode"] ."' ";
-$aryQuery[] = "        AND m_purchaseorder.lngrevisionno = ";
-$aryQuery[] = "        (SELECT MAX(lngrevisionno) FROM m_purchaseorder WHERE strordercode = '" . $aryData["strOrderCode"] ."')";
+$aryQuery[] = "        t_stockdetail.lngorderno,";
+$aryQuery[] = "        t_stockdetail.lngorderrevisionno";
+$aryQuery[] = "    FROM m_stock";
+$aryQuery[] = "    INNER JOIN t_stockdetail";
+$aryQuery[] = "        ON t_stockdetail.lngstockno = m_stock.lngstockno";
+$aryQuery[] = "        AND t_stockdetail.lngrevisionno = m_stock.lngrevisionno";
+$aryQuery[] = "    where m_stock.lngstockno = '" . $lngstockno ."' ";
+$aryQuery[] = "        AND m_stock.lngrevisionno = " . $lngrevisionno;
 $aryQuery[] = ") get_order_key ";
 $aryQuery[] = "WHERE m_order.lngorderno = get_order_key.lngorderno";
 $aryQuery[] = "    AND m_order.lngrevisionno = get_order_key.lngorderrevisionno";
@@ -144,7 +127,7 @@ $aryQuery[] = "bytinvalidflag, "; // 20:無効フラグ
 $aryQuery[] = "dtminsertdate "; // 21:登録日
 $aryQuery[] = " ) VALUES ( ";
 $aryQuery[] = $aryData["lngStockNo"] . ", "; // 1:仕入番号
-$aryQuery[] = $lngrevisionno . ","; // 2:リビジョン番号
+$aryQuery[] = intval($lngrevisionno) + 1 . ","; // 2:リビジョン番号
 $aryQuery[] = $strstockcode . ", "; // 3:仕入コード
 $aryQuery[] = "'" . $aryData["dtmStockAppDate"] . "', "; // 5:計上日
 $aryQuery[] = "'" . $aryData["lngCustomerCompanyCode"] . "', "; // 6:仕入先コード
@@ -173,6 +156,11 @@ if (!$lngResultID = $objDB->execute($strQuery)) {
 $objDB->freeResult($lngResultID);
 // 明細登録処理
 foreach ($aryDetailData as $data) {
+    // 明細に紐づく発注データのステータスチェック
+    if(isOrderModified($data["lngOrderNo"], DEF_ORDER_ORDER, $objDB))
+    {
+        fncOutputError(9051, DEF_ERROR, "明細データが確定取消されたか、仕入済みです。", true, "", $objDB);
+    }
     // 明細行
     $aryQuery = array();
     $aryQuery[] = "SELECT ";
@@ -297,7 +285,7 @@ foreach ($aryDetailData as $data) {
             $aryQuery[] = " ) VALUES ( ";
             $aryQuery[] = $aryData["lngStockNo"] . ", "; // 1:仕入番号
             $aryQuery[] = $data["lngStockDetailNo"] . ", "; // 2:仕入明細番号 行ごとの明細発注は持っている
-            $aryQuery[] = $lngrevisionno . ", "; // 3:リビジョン番号
+            $aryQuery[] = intval($lngrevisionno) + 1 . ", "; // 3:リビジョン番号
             $aryQuery[] = $data["lngOrderNo"] . ", "; // 4:発注番号
             $aryQuery[] = $data["lngOrderDetailNo"] . ", "; // 4:発注明細番号
             $aryQuery[] = $data["lngRevisionNo"] . ", "; // 4:発注明細番号

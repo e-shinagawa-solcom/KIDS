@@ -323,6 +323,8 @@ var taxList;
             formData.push({ name: "lngPayConditionCode", value: $('input[name="lngPayConditionCode"]').val() });
             formData.push({ name: "lngPurchaseOrderNo", value: $('input[name="lngPurchaseOrderNo"]').val() });
             formData.push({ name: "lngPurchaseOrderRevisionNo", value: $('input[name="lngpurchaserevisionno"]').val() });
+            formData.push({ name: "lngStockNo", value: $('input[name="lngStockNo"]').val() });
+            formData.push({ name: "lngStockRevisionNo", value: $('input[name="lngstockrevisionno"]').val() });
 
             var actionUrl = workForm.attr('action');
             //            alert(actionUrl);

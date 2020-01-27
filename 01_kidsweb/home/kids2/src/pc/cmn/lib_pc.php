@@ -865,7 +865,7 @@ function fncStockDeleteSetStatus($aryStockData, $objDB)
  * @param [DB] $objDB
  * @return void
  */
-function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
+function fncGetPoInfoSQL($strOrderCode, $objDB)
 {
     // SQL生成
     $aryQuery[] = " SELECT ";
@@ -964,15 +964,7 @@ function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
     $aryQuery[] = "  LEFT JOIN m_company c on c.lngcompanycode = mo.lngcustomercompanycode";
     $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mo.lngdeliveryplacecode";
     $aryQuery[] = "  LEFT JOIN m_paycondition dp_pc on dp_pc.lngpayconditioncode = mpo.lngpayconditioncode";
-    
-    if( $isAll == false )
-    {
-    	$aryQuery[] = " WHERE mo.lngorderstatuscode = 2";
-    }
-    else
-    {
-    	$aryQuery[] = " WHERE mo.lngorderstatuscode >= 2";
-    }
+    $aryQuery[] = " WHERE mo.lngorderstatuscode = 2";
     
     $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; // 
     $aryQuery[] = "  ORDER BY od.lngSortKey";
@@ -992,6 +984,141 @@ function fncGetPoInfoSQL($strOrderCode, $objDB, $isAll = false)
 
     return $aryOrderDetail;
 }
+
+/**
+ * 仕入により発注情報を取得する
+ *
+ * @param [String] $strOrderCode
+ * @param [DB] $objDB
+ * @return void
+ */
+function fncGetPoInfoSQLByStock($lngStockNo, $lngRevisionNo, $strOrderCode, $objDB)
+{
+    // SQL生成
+    $aryQuery[] = " SELECT ";
+//    $aryQuery[] = " mpo.strordercode,";
+    $aryQuery[] = " mpo.lngpurchaseorderno,";  // 発注書ビジョン番号
+    $aryQuery[] = " mpo.lngrevisionno as lngpurchaseorderrevisionno,";  // 発注書ビジョン番号
+    $aryQuery[] = " od.lngorderdetailno,";  // 発注番号
+    $aryQuery[] = " od.lngorderno,";  // 発注明細番号
+    $aryQuery[] = " od.lngrevisionno,";  // リビジョン番号
+    $aryQuery[] = " od.strproductcode,";  // 製品コード
+    $aryQuery[] = " p.strproductname,";  // 製品名称
+    $aryQuery[] = " od.lngstocksubjectcode,";  // 仕入科目コード
+    $aryQuery[] = " ss.strstocksubjectname,";  // 仕入科目名称
+    $aryQuery[] = " c.strcompanydisplaycode,";  // 仕入先コード
+    $aryQuery[] = " c.strcompanydisplayname,";  // 仕入先名称
+    $aryQuery[] = " dp_c.strcompanydisplaycode as lnglocationcode,";  // 納品場所コード
+    $aryQuery[] = " dp_c.strcompanydisplayname as strlocationname,";  // 納品場所名称
+    $aryQuery[] = " od.lngstockitemcode,";  // 仕入部品コード
+    $aryQuery[] = " si.strstockitemname,";  // 仕入部品名称
+    $aryQuery[] = " To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate,";  // 納品日
+    $aryQuery[] = " od.lngdeliverymethodcode as lngCarrierCode,";  // 運搬方法コード
+    $aryQuery[] = " od.lngconversionclasscode,";  // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
+    $aryQuery[] = " od.curproductprice as curproductprice,";  // 製品価格
+    $aryQuery[] = " od.lngproductquantity,";  // 製品数量
+    $aryQuery[] = " od.lngproductunitcode,";  // 製品単位コード
+    $aryQuery[] = " pu.strproductunitname,";  // 製品単位名称
+/*
+    $aryQuery[] = " od.lngtaxclasscode,";  // 消費税区分コード
+    $aryQuery[] = " od.lngtaxcode,";  // 消費税コード
+    $aryQuery[] = " od.curtaxprice,";  // 消費税金額
+*/
+    $aryQuery[] = " od.cursubtotalprice as cursubtotalprice,";  // 小計金額
+    $aryQuery[] = " od.strnote,";  // 備考
+    $aryQuery[] = " od.strmoldno as strSerialNo,";  // シリアル
+    $aryQuery[] = " mo.lngorderstatuscode as lngorderstatuscode,";  // 発注ステータス
+    $aryQuery[] = " os.strorderstatusname as strorderstatusname,";  // 発注ステータス
+    $aryQuery[] = " mo.lngmonetaryunitcode as lngmonetaryunitcode,";  // 通貨単位コード
+    $aryQuery[] = " mu.strmonetaryunitname as strmonetaryunitname,";  // 通貨単位名称
+    $aryQuery[] = " mu.strmonetaryunitsign as strmonetaryunitsign,";  // 通貨単位名称
+    $aryQuery[] = " c.lngcountrycode as lngcountrycode,";  // 国コード
+    $aryQuery[] = " mo.lngmonetaryratecode as lngmonetaryratecode,";  // 通貨レートコード
+    $aryQuery[] = " mpo.lngpayconditioncode as lngpayconditioncode,";  // 支払条件
+    $aryQuery[] = " dp_pc.strpayconditionname as strpayconditionname";  // 支払条件名
+    $aryQuery[] = " FROM t_orderdetail od";
+    $aryQuery[] = " inner join m_order mo";
+    $aryQuery[] = " on mo.lngorderno = od.lngorderno";
+    $aryQuery[] = " and mo.lngrevisionno = od.lngrevisionno";
+    $aryQuery[] = " inner join t_purchaseorderdetail pod";
+    $aryQuery[] = " on pod.lngorderno = od.lngorderno";
+    $aryQuery[] = " and pod.lngorderdetailno = od.lngorderdetailno";
+    $aryQuery[] = " and pod.lngorderrevisionno = od.lngrevisionno";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      mpo1.lngpurchaseorderno";
+    $aryQuery[] = "      , mpo1.lngrevisionno";
+    $aryQuery[] = "      , mpo1.strordercode ";
+    $aryQuery[] = "      , mpo1.lngpayconditioncode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_purchaseorder mpo1 ";
+    $aryQuery[] = "      inner join ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          lngpurchaseorderno";
+    $aryQuery[] = "          , max(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_purchaseorder ";
+    $aryQuery[] = "        group by";
+    $aryQuery[] = "          lngpurchaseorderno";
+    $aryQuery[] = "      ) max_rev ";
+    $aryQuery[] = "        on max_rev.lngpurchaseorderno = mpo1.lngpurchaseorderno ";
+    $aryQuery[] = "        and max_rev.lngrevisionno = mpo1.lngrevisionno ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      not exists ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          mpo2.lngpurchaseorderno ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_purchaseorder mpo2 ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          mpo2.lngpurchaseorderno = mpo1.lngpurchaseorderno ";
+    $aryQuery[] = "          and mpo2.lngrevisionno = - 1";
+    $aryQuery[] = "      )";
+    $aryQuery[] = "  ) mpo ";
+    $aryQuery[] = "    on mpo.lngpurchaseorderno = pod.lngpurchaseorderno ";
+    $aryQuery[] = "    and mpo.lngrevisionno = pod.lngrevisionno ";
+    $aryQuery[] = "  LEFT JOIN (";
+    $aryQuery[] = "    select p1.*  from m_product p1 ";
+    $aryQuery[] = "    inner join (select max(lngrevisionno) lngrevisionno, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
+    $aryQuery[] = "    on p1.lngrevisionno = p2.lngrevisionno and p1.strproductcode = p2.strproductcode and p1.strrevisecode = p2.strrevisecode";
+    $aryQuery[] = " ) p ";
+    $aryQuery[] = "  on p.strproductcode = od.strproductcode";
+    $aryQuery[] = "  and p.strrevisecode = od.strrevisecode";
+    $aryQuery[] = "  LEFT JOIN m_stocksubject ss on ss.lngstocksubjectcode = od.lngstocksubjectcode";
+    $aryQuery[] = "  LEFT JOIN m_stockitem si on si.lngstocksubjectcode = od.lngstocksubjectcode and si.lngstockitemcode = od.lngstockitemcode";
+    $aryQuery[] = "  LEFT JOIN m_monetaryunit mu on mu.lngmonetaryunitcode = mo.lngmonetaryunitcode";
+    $aryQuery[] = "  LEFT JOIN m_orderstatus os on os.lngorderstatuscode = mo.lngorderstatuscode";
+    $aryQuery[] = "  LEFT JOIN m_productunit pu on pu.lngproductunitcode = od.lngproductunitcode";
+    $aryQuery[] = "  LEFT JOIN m_company c on c.lngcompanycode = mo.lngcustomercompanycode";
+    $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mo.lngdeliveryplacecode";
+    $aryQuery[] = "  LEFT JOIN m_paycondition dp_pc on dp_pc.lngpayconditioncode = mpo.lngpayconditioncode";
+    $aryQuery[] = "  LEFT JOIN (select lngstockno, lngrevisionno, lngorderno, lngorderdetailno, lngorderrevisionno from t_stockdetail where lngstockno = ". $lngStockNo;
+    $aryQuery[] = "  and lngrevisionno = " . $lngRevisionNo . ") tsd";
+    $aryQuery[] = "  on tsd.lngorderno = od.lngorderno AND tsd.lngorderdetailno = od.lngorderdetailno AND tsd.lngorderrevisionno = od.lngrevisionno";
+    
+    $aryQuery[] = " WHERE (";
+    $aryQuery[] = " mo.lngorderstatuscode = 2";
+    $aryQuery[] = " or (tsd.lngstockno = " . $lngStockNo . " AND tsd.lngrevisionno = " . $lngRevisionNo . ")";
+    $aryQuery[] = " )";
+    
+    $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; // 
+    $aryQuery[] = "  ORDER BY od.lngSortKey";
+
+    $strQuery = implode("\n", $aryQuery);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+    $aryOrderDetail = array();
+
+    if ($lngResultNum) {
+        for ($i = 0; $i < $lngResultNum; $i++) {
+            $aryOrderDetail[] = $objDB->fetchArray($lngResultID, $i);
+        }
+    }
+
+    $objDB->freeResult($lngResultID);
+
+    return $aryOrderDetail;
+}
+
 
 /**
  * 消費税情報を取得する
