@@ -44,20 +44,17 @@ class deleteInsertData extends estimateInsertData {
             $estimateNo = $this->estimateNo;
             $revisionNo = $this->revisionNo;
 
+            // 受発注のステータスチェック様に明細取得
             $estimateDetail = $this->objDB->getEstimateDetail($estimateNo);
             
             $firstRecord = $estimateDetail[0];
-
-            // リビジョンチェック
-            if ($firstRecord->lngrevisionno !== $revisionNo) {
-                return fncOutputError ( DEF_MESSAGE_CODE_CURRENT_REVISION_ERROR, DEF_WARNING, "", FALSE, "", $this->objDB );
-            }
-
+            
+/*
             // 削除済みチェック
             if ((int)$firstRecord->minrevisionno === -1) {
                 return fncOutputError ( DEF_MESSAGE_CODE_DELETED_ERROR, DEF_WARNING, "", FALSE, "", $this->objDB );
             }
-
+*/
             // ステータスチェック
             foreach ($estimateDetail as $record) {
                 if (isset($record->lngreceivestatuscode)) {
@@ -73,12 +70,12 @@ class deleteInsertData extends estimateInsertData {
                 }
             }
 
+/*
             // 見積原価修正の機能コード取得
             $editFunctionCode = DEF_FUNCTION_E3;
 
             $productCode = $firstRecord->strproductcode;
             $reviseCode = $firstRecord->strrevisecode;
-/*
             // 排他テーブルチェック（見積原価修正中でないことを確認)
             $check = $this->objDB->checkExclusiveStatus($editFunctionCode, $productCode, $reviseCode);
             if ($check !== false) { // 排他制御が有効な場合
