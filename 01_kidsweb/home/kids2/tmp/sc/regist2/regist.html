@@ -30,13 +30,14 @@
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/table-decide.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/table-box.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/form-buttons.css">
+		<!-- msw 表示 -->
+		<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+		<!-- <script src="/search/cmn/js/invoke-master-search.js" defer></script> -->
+		<script src="/sc/regist2/js/invoke-master-search.js" defer></script>
 		<!-- datepickerの要素指定 -->
 		<script src="/sc/regist2/js/datepicker.js" defer></script>
 		<script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
 		<script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
-		<!-- msw 表示 -->
-		<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
-		<script src="/search/cmn/js/invoke-master-search.js" defer></script>
 	</header3>
 
 	<bodyonload>
@@ -215,6 +216,38 @@
 
 									<div id="data">
 										<table class="table-decide-description" name="T" id="tbl_detail">
+											<thead>
+												<!-- 水平ヘッダ -->
+												<tr>
+													<th class="not-sortable">No.</th>
+													<th class="sortable">顧客受注番号</th>
+													<th class="sortable">製品コード</th>
+													<th class="sortable">製品名</th>
+													<th class="sortable">売上区分</th>
+													<th class="sortable">納期</th>
+													<th class="sortable">入数</th>
+													<th class="sortable">数量</th>
+													<th class="sortable">単位</th>
+													<th class="sortable">単価</th>
+													<th class="sortable">税抜金額</th>
+													<th class="sortable">顧客品番</th>
+													<th class="sortable">製品名（英語）</th>
+													<th class="sortable">営業部署</th>
+													<th class="forEdit">受注番号（非表示）</th>
+													<th class="forEdit">受注明細番号（非表示）</th>
+													<th class="forEdit">リビジョン番号（非表示）</th>
+													<th class="forEdit">再販コード（非表示）</th>
+													<th class="forEdit">売上区分コード（非表示）</th>
+													<th class="forEdit">製品単位コード（非表示）</th>
+													<th class="forEdit">備考（非表示）</th>
+													<th class="forEdit">通貨単位コード（非表示）</th>
+													<th class="forEdit">通貨レートコード（非表示）</th>
+													<th class="forEdit">通貨単位記号（非表示）</th>
+													<th class="forEdit">明細統一フラグ（非表示）</th>
+													<th class="forEdit">単価（非表示）</th>
+													<th class="forEdit">税抜金額（非表示）</th>
+												</tr>
+											</thead>
 											<tbody id="DetailTableBody"></tbody>
 										</table>
 									</div>
@@ -322,6 +355,7 @@
 				</div>
 			</div>
 			<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+			<input type="hidden" name="monetaryunitCount">
 			<!-- 修正対象に紐づく納品伝票番号 -->
 			<input type="hidden" name="lngSlipNo" value="_%lngSlipNo%_">
 			<!-- 修正対象に紐づく納品伝票コード -->
@@ -331,7 +365,7 @@
 			<!-- 修正対象に紐づく売上コード -->
 			<input type="hidden" name="strSalesCode" value="_%strSalesCode%_">
 			<!-- Ajax POST先 -->
-			<input type="hidden" name="ajaxPostTarget" value = "_%ajaxPostTarget%_">
+			<input type="hidden" name="ajaxPostTarget" value="_%ajaxPostTarget%_">
 			<div class="msw-loadpoints">
 				<!-- MSW 顧客マスタ検索 -->
 				<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">

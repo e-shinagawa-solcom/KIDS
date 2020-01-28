@@ -39,6 +39,12 @@ function RowClick(currenttr, lock) {
 
 function toggleRow(row) {
     row.className = row.className == 'selected' ? '' : 'selected';
+    var backgroud = row.css("background-color");
+    if (backgroud != 'rgb(255, 255, 255)') {
+        row.css("background-color", "#ffffff");
+    } else {
+        row.css("background-color", "#87cefa");
+    }
     // TODO:同じ行のチェックボックスのON/OFFを切り替える
     var checked = $(row).find('input[name="edit"]').prop('checked');
     $(row).find('input[name="edit"]').prop('checked', !checked);
@@ -53,17 +59,15 @@ function selectRowsBetweenIndexes(indexes) {
     });
 
     for (var i = indexes[0]; i <= indexes[1]; i++) {
-        trs[i - 1].className = 'selected';
+        trs[i - 1].css("background-color", "#87cefa");
         var checked = $(trs[i - 1]).find('input[name="edit"]').prop('checked');
         $(trs[i - 1]).find('input[name="edit"]').prop('checked', !checked);
     }
 }
 
 function clearAllSelected() {
-    var trs = document.getElementById("tbl_detail").tBodies[0].getElementsByTagName("tr");
-    for (var i = 0; i < trs.length; i++) {
-        trs[i].className = '';
-    }
+    $("#tbl_detail tbody tr").css("background-color", "#ffffff");
+    $("#tbl_detail_chkbox tbody tr").css("background-color", "#ffffff");
 }
 // ------------------------------------------------------------------
 
@@ -73,40 +77,48 @@ function clearAllSelected() {
 //
 // ------------------------------------------------------------------
 // 検索条件入力画面で入力された値の設定
-function SetSearchConditionWindowValue(search_condition) {
+function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayName) {
+    // console.log($('input[name="monetaryunitCount"]').val());
+    // if ($('input[name="monetaryunitCount"]').val() != 1)
+    // {
+    //     return false;   
+    // }
     // POST先
     var postTarget = $('input[name="ajaxPostTarget"]').val();
 
     // 顧客
-    $('input[name="lngCustomerCode"]').val(search_condition.strCompanyDisplayCode);
-    $('input[name="strCustomerName"]').val(search_condition.strCompanyDisplayName);
+    $('input[name="lngCustomerCode"]').val(strCompanyDisplayCode);
+    $('input[name="strCustomerName"]').val(strCompanyDisplayName);
 
     // 顧客に紐づく国コードによって消費税区分のプルダウンを変更する
-    if (search_condition.strCompanyDisplayCode != "") {
+    if (strCompanyDisplayCode != "") {
         $.ajax({
             type: 'POST',
             url: postTarget,
             data: {
                 strMode: "get-lngcountrycode",
                 strSessionID: $('input[name="strSessionID"]').val(),
-                strcompanydisplaycode: search_condition.strCompanyDisplayCode,
+                strcompanydisplaycode: strCompanyDisplayCode,
             },
             async: true,
         }).done(function (data) {
             console.log(data);
             console.log("done:get-lngcountrycode");
             if (data == "81") {
+                console.log("81：「外税」");
                 // 81：「外税」を選択（他の項目も選択可能）
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
                 $("select[name='lngTaxClassCode']").val("2");
                 $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
 
-                $("input[name='dtmPaymentLimit']").prop('readonly', true)
+                $("input[name='dtmPaymentLimit']").prop('disabled', true);
                 $("input[name='dtmPaymentLimit']").val("");
+                $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "none");
                 $("select[name='lngPaymentMethodCode']").val("0");
                 $("select[name='lngPaymentMethodCode'] option:not(:selected)").prop('disabled', true);
 
             } else {
+                console.log("81以外：「非課税」固定");
                 // 81以外：「非課税」固定
                 $("select[name='lngTaxClassCode']").val("1");
                 $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
@@ -114,150 +126,174 @@ function SetSearchConditionWindowValue(search_condition) {
                 $("select[name='lngPaymentMethodCode'] option[value=0]").prop('disabled', true);
 
                 $('select[name="lngTaxRate"]').val('');
-                $("select[name='lngTaxRate'] option[value=0]").prop('disabled', true);
-
+                $("select[name='lngTaxRate'] option:not(:selected)").prop('disabled', true);
+                // 支払期限の設定
+                $("input[name='dtmPaymentLimit']").prop('disabled', false);
+                $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "");
+                var now = new Date();
+                now.setMonth(now.getMonth() + 1);
+                $('input[name="dtmPaymentLimit"]').val(now.getFullYear() + "/" + ("00" + (now.getMonth() + 1)).slice(-2) + "/" + ("00" + now.getDate()).slice(-2));
             }
         }).fail(function (error) {
             console.log("fail:get-lngcountrycode");
             console.log(error);
         });
+
     } else {
         // 顧客コードが空なら固定解除
         $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
     }
 }
-
-// $('input[name="lngCustomerCode"]').addEventListener("click",function(e){ 
-// 	e.preventDefault();
-// });
-// // 顧客コード変更の処理
-// $('input[name="lngCustomerCode"]').on("change", function () {
-//     var msg = '納品対象の明細をすべてクリアします。\nよろしいですか？';
-//     console.log(msg);
-//     var $tableA_rows = $('#tbl_detail tbody tr');
-//     var $tableA_rows_length = $tableA_rows.length;
-
-//     var warn = ($tableA_rows_length > 0) ? true : false;
-
-//     if (warn && window.confirm(msg) === false) {
-//         return;
-//     }
-
-//     $tableA_rows.remove();
-
-//     $('#tbl_detail tbody tr');
-// });
+// 国コードの取得
+function GetLngCountryCode(postTarget, strCompanyDisplayCode, strSessionID) {
+    console.log("国コード取得：" + strCompanyDisplayCode);
+    if (strCompanyDisplayCode != "") {
+        $.ajax({
+            type: 'POST',
+            url: postTarget,
+            data: {
+                strMode: "get-lngcountrycode",
+                strSessionID: strSessionID,
+                strcompanydisplaycode: strCompanyDisplayCode,
+            },
+            async: true,
+        }).done(function (data) {
+            console.log(data);
+            console.log("done:get-lngcountrycode");
+            return data;
+        }).fail(function (error) {
+            console.log("fail:get-lngcountrycode");
+            console.log(error);
+        });
+    } else {
+        return "";
+    }
+}
 
 // 明細検索
-function SearchReceiveDetail(search_condition) {
-    // POST先
-    var postTarget = $('input[name="ajaxPostTarget"]').val();
+function SearchReceiveDetail(data) {
+    // // POST先
+    // var postTarget = $('input[name="ajaxPostTarget"]').val();
+    // var resultCode = 0;
+    // // 部分書き換えのためajaxでPOST
+    // $.ajax({
+    //     type: 'POST',
+    //     url: postTarget,
+    //     data: {
+    //         strMode: "search-detail",
+    //         strSessionID: $('input[name="strSessionID"]').val(),
+    //         condition: search_condition,
+    //     },
+    //     async: true,
+    // }).done(function (data) {
+    //     console.log("done:search-detail");
+    //     console.log(data);
+    //     // 検索結果をテーブルにセット
 
-    // 部分書き換えのためajaxでPOST
-    $.ajax({
-        type: 'POST',
-        url: postTarget,
-        data: {
-            strMode: "search-detail",
-            strSessionID: $('input[name="strSessionID"]').val(),
-            condition: search_condition,
-        },
-        async: true,
-    }).done(function (data) {
-        console.log("done:search-detail");
-        console.log(data);
-        // 検索結果をテーブルにセット
+    //     var data = JSON.parse(data);
 
-        var data = JSON.parse(data);
+    //     if (data.monetaryunitCount != 1) {
+    //         // $('input[name="monetaryunitCount"]').val(data.monetaryunitCount);
+    //         // alert("複数の顧客が候補にありますので、顧客を指定してください。");
+    //             return true;
+    //     }
+    //     console.log("ddddsss");
 
-        $('#tbl_detail_chkbox tr').remove();
-        $('#tbl_detail tr').remove();
-        $('#tbl_edit_no_body tr').remove();
-        $('#tbl_edit_detail_body tr').remove();
+    $('#tbl_detail_chkbox tbody tr').remove();
+    $('#tbl_detail tbody tr').remove();
+    $('#tbl_edit_no_body tbody tr').remove();
+    $('#tbl_edit_detail_body tbody tr').remove();
+    $('#tbl_detail tbody tr td').width('');
+    $('#tbl_detail_head thead tr th').width('');
+    $('#tbl_edit_detail_body tbody tr td').width('');
+    $('#tbl_edit_detail_head thead tr th').width('');
 
-        $('#tbl_detail_chkbox').append(data.chkbox_body);
-        $('#tbl_detail').append(data.detail_body);
+    $('#tbl_detail_chkbox').append(data.chkbox_body);
+    $('#tbl_detail').append(data.detail_body);
 
-        $('#tbl_detail_chkbox tbody tr td:nth-child(1)').width($('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
-        $('#tbl_detail_chkbox_head tr th:nth-child(1)').width($('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
+    $('#tbl_detail_chkbox tbody tr td:nth-child(1)').width($('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
+    $('#tbl_detail_chkbox_head tr th:nth-child(1)').width($('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
 
-        resetTableAWidth();
+    resetTableAWidth();
 
-        $("#DetailTable").trigger("update");
-        // jQueryUIのtablesorterでソート設定
-        $('#DetailTable').tablesorter({
-            headers: {
-                0: { sorter: false }
-            }
-        });
-
-        $('input[name="allSel"]').on('change', function () {
-            $('input[name="edit"]').prop('checked', this.checked);
-            if (this.checked) {
-                // $("#DetailTableBody tr").css('background-color','#87cefa');
-                // $("#tbl_detail_chkbox tbody tr").css('background-color','#87cefa');
-            } else {
-                $("#DetailTableBody tr").css('background-color', '#ffffff');
-                $("#tbl_detail_chkbox tbody tr").css('background-color', '#ffffff');
-            }
-        });
-
-        $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
-        $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
-
-        setTableAEvent();
-
-        // 通貨変更イベント
-        $('input[name="lngMonetaryUnitCode"]').on('change', function () {
-            // リクエスト送信
-            $.ajax({
-                url: '/pc/regist/getMonetaryRate.php',
-                type: 'post',
-                data: {
-                    'strSessionID': $.cookie('strSessionID'),
-                    'lngMonetaryUnitCode': $(this).val(),
-                    'lngMonetaryRateCode': $('select[name="lngMonetaryRateCode"]').val(),
-                    'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
-                }
-            })
-                .done(function (response) {
-                    console.log(response);
-                    var data = JSON.parse(response);
-                    $('input[name="curConversionRate"]').val(data.curconversionrate);
-                })
-                .fail(function (response) {
-                    alert(response);
-                    alert("fail");
-                })
-        });
-
-        // 通貨レート変更イベント
-        $('select[name="lngMonetaryRateCode"]').on('change', function () {
-            // リクエスト送信
-            $.ajax({
-                url: '/pc/regist/getMonetaryRate.php',
-                type: 'post',
-                data: {
-                    'strSessionID': $.cookie('strSessionID'),
-                    'lngMonetaryUnitCode': $('input[name="lngMonetaryUnitCode"]').val(),
-                    'lngMonetaryRateCode': $(this).val(),
-                    'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
-                }
-            })
-                .done(function (response) {
-                    console.log(response);
-                    var data = JSON.parse(response);
-                    $('input[name="curConversionRate"]').val(data.curconversionrate);
-                })
-                .fail(function (response) {
-                    alert("fail");
-                })
-        });
-
-    }).fail(function (error) {
-        console.log("fail:search-detail");
-        console.log(error);
+    $("#tbl_detail_head").trigger("update");
+    $("#tbl_detail").trigger("update");
+    // jQueryUIのtablesorterでソート設定
+    $('#tbl_detail_head').tablesorter({
+        headers: {
+            0: { sorter: false }
+        }
     });
+
+    $('input[name="allSel"]').on('change', function () {
+        $('input[name="edit"]').prop('checked', this.checked);
+        if (this.checked) {
+            // $("#DetailTableBody tr").css('background-color','#87cefa');
+            // $("#tbl_detail_chkbox tbody tr").css('background-color','#87cefa');
+        } else {
+            $("#DetailTableBody tr").css('background-color', '#ffffff');
+            $("#tbl_detail_chkbox tbody tr").css('background-color', '#ffffff');
+        }
+    });
+
+    $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
+    $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
+
+    setTableAEvent();
+
+    // 通貨変更イベント
+    $('input[name="lngMonetaryUnitCode"]').on('change', function () {
+        // リクエスト送信
+        $.ajax({
+            url: '/pc/regist/getMonetaryRate.php',
+            type: 'post',
+            data: {
+                'strSessionID': $.cookie('strSessionID'),
+                'lngMonetaryUnitCode': $(this).val(),
+                'lngMonetaryRateCode': $('select[name="lngMonetaryRateCode"]').val(),
+                'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
+            }
+        })
+            .done(function (response) {
+                console.log(response);
+                var data = JSON.parse(response);
+                $('input[name="curConversionRate"]').val(data.curconversionrate);
+            })
+            .fail(function (response) {
+                alert(response);
+                alert("fail");
+            })
+    });
+
+    // 通貨レート変更イベント
+    $('select[name="lngMonetaryRateCode"]').on('change', function () {
+        // リクエスト送信
+        $.ajax({
+            url: '/pc/regist/getMonetaryRate.php',
+            type: 'post',
+            data: {
+                'strSessionID': $.cookie('strSessionID'),
+                'lngMonetaryUnitCode': $('input[name="lngMonetaryUnitCode"]').val(),
+                'lngMonetaryRateCode': $(this).val(),
+                'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
+            }
+        })
+            .done(function (response) {
+                console.log(response);
+                var data = JSON.parse(response);
+                $('input[name="curConversionRate"]').val(data.curconversionrate);
+            })
+            .fail(function (response) {
+                alert("fail");
+            })
+    });
+
+    // }).fail(function (error) {
+    //     console.log("fail:search-detail");
+    //     console.log(error);
+    // });
+
+    // return resultCode;
 }
 
 function setCheckBoxEvent() {
@@ -271,55 +307,77 @@ function setCheckBoxEvent() {
 
 }
 function resetTableAWidth() {
+    $("#tbl_detail thead").css('display', '');
+    $("#tbl_detail tbody tr td").width('');
+    $("#tbl_detail thead tr th").width('');
+    $("#tbl_detail_head tr th").width('');
     var thwidthArry = [];
     var tdwidthArry = [];
+    var width = 0;
     var columnNum = $('#tbl_detail_head tr th').length;
-    console.log(columnNum);
     for (var i = 1; i <= columnNum; i++) {
         var thwidth = $('#tbl_detail_head tr th:nth-child(' + i + ')').width();
         var tdwidth = $('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
-        thwidthArry.push(thwidth + 2);
-        tdwidthArry.push(tdwidth + 2);
+        thwidthArry.push(thwidth + 20);
+        tdwidthArry.push(tdwidth + 20);
     }
-    console.log(thwidthArry);
-    console.log(tdwidthArry);
-
 
     for (var i = 1; i <= columnNum; i++) {
-        if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-            $("#tbl_detail_head tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-            $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-        } else {
-            $("#tbl_detail_head tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-            $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+        if ($("#tbl_detail_head tr th:nth-child(" + i + ")").css("display") != "none") {
+            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+                $("#tbl_detail_head tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                width += thwidthArry[i - 1];
+            } else {
+                $("#tbl_detail_head tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                width += tdwidthArry[i - 1];
+            }
         }
     }
+    $("#tbl_detail_head").width(width + 100);
+    $("#tbl_detail").width(width + 100);
+
+    $("#tbl_detail thead").css('display', 'none');
 }
 
+
 function resetTableBWidth() {
+    $("#tbl_edit_detail_body tbody tr td").width('');
+    $("#tbl_edit_detail_head tr th").width('');
     var thwidthArry = [];
     var tdwidthArry = [];
     var columnNum = $('#tbl_edit_detail_head thead tr th').length;
     console.log(columnNum);
+    var width = 0;
     for (var i = 1; i <= columnNum; i++) {
         var thwidth = $('#tbl_edit_detail_head thead tr th:nth-child(' + i + ')').width();
         var tdwidth = $('#tbl_edit_detail_body tbody tr td:nth-child(' + i + ')').width();
-        thwidthArry.push(thwidth + 1);
-        tdwidthArry.push(tdwidth + 1);
+        thwidthArry.push(thwidth + 20);
+        tdwidthArry.push(tdwidth + 20);
     }
 
     for (var i = 1; i <= columnNum; i++) {
-        if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-            $("#tbl_edit_detail_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-            $("#tbl_edit_detail_body tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-        } else {
-            $("#tbl_edit_detail_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-            $("#tbl_edit_detail_body tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+        if ($("#tbl_edit_detail_head tr th:nth-child(" + i + ")").css("display") != "none") {
+            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+                $("#tbl_edit_detail_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                $("#tbl_edit_detail_body tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                width += thwidthArry[i - 1];
+            } else {
+                $("#tbl_edit_detail_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                $("#tbl_edit_detail_body tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                width += tdwidthArry[i - 1];
+            }
         }
     }
+
+    $("#tbl_edit_detail_head").width(width + 100);
+    $("#tbl_edit_detail_body").width(width + 100);
+
+
 }
 function setTableAEvent() {
-    $("#DetailTableBody tr, #tbl_detail_chkbox tbody tr").on('click', function () {
+    $("#tbl_detail tbody tr, #tbl_detail_chkbox tbody tr").on('click', function () {
         var rowindex = $(this).index();
         console.log(rowindex);
         var checked = $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
@@ -329,6 +387,7 @@ function setTableAEvent() {
 }
 
 function setRowBackGroundColor(rowindex, chkBoxStatus) {
+    console.log(rowindex);
     if (!chkBoxStatus) {
         $("#tbl_detail tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#87cefa');
         $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#87cefa');
@@ -352,10 +411,27 @@ function ClearAllEditDetail() {
 // ------------------------------------------
 jQuery(function ($) {
 
-    // 支払期限の設定
-    var now = new Date();
-    now.setMonth(now.getMonth() + 1);
-    $('input[name="dtmPaymentLimit"]').val(now.getFullYear() + "/" + ("00" + (now.getMonth() + 1)).slice(-2) + "/" + ("00" + now.getDate()).slice(-2));
+    $("#tbl_detail thead").css('display', 'none');
+
+    var sortval = 0;
+    $('#tbl_detail_head thead tr th').on('click', function () {
+
+        clearAllSelected();
+
+        $('input[name="edit"]').prop('checked', false);
+
+
+        var sortkey = $(this)[0].cellIndex;
+        console.log(sortkey);
+        if (sortval == 1) {
+            sortval = 0;
+        } else {
+            sortval = 1;
+        }
+        var r = $('#tbl_detail').tablesorter();
+        r.trigger('sorton', [[[(sortkey), sortval]]]);
+    });
+
     // 消費税率の設定
     var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
     if (taxClassCode == 1) {
@@ -409,11 +485,21 @@ jQuery(function ($) {
     // ------------------------------------------
     // 追加バリデーションチェック
     function validateAdd(tr) {
+        console.log($(tr));
+        console.log($(tr).children('td'));
+        console.log($(tr).children('td.detailDeliveryDate').text());
+        console.log($('input[name="dtmDeliveryDate"]').val());
         //明細選択エリアの納期
         var detailDeliveryDate = new Date($(tr).children('td.detailDeliveryDate').text());
 
         //ヘッダ・フッタ部の納品日と比較（同月以外は不正）
         var headerDeliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
+        console.log(detailDeliveryDate);
+        console.log(headerDeliveryDate);
+
+
+        console.log(headerDeliveryDate.getYear() + "/" + headerDeliveryDate.getMonth());
+        console.log(detailDeliveryDate.getYear() + "/" + detailDeliveryDate.getMonth());
         var sameMonth = (headerDeliveryDate.getYear() == detailDeliveryDate.getYear())
             && (headerDeliveryDate.getMonth() == detailDeliveryDate.getMonth());
         if (!sameMonth) {
@@ -1048,8 +1134,10 @@ jQuery(function ($) {
 
         // 選択行の追加
         $("#tbl_detail_chkbox tbody tr").each(function (index, tr) {
+
             if ($(tr).find('input[name="edit"]').prop('checked') == true) {
-                trArray.push(tr);
+
+                trArray.push($("#tbl_detail tbody tr:nth-child(" + (index + 1) + ")"));
             }
         });
 
@@ -1129,6 +1217,16 @@ jQuery(function ($) {
 
         // 合計金額・消費税額の更新
         updateAmount();
+
+
+        $("#tbl_detail_head").trigger("update");
+        $("#tbl_detail").trigger("update");
+
+        if ($('#tbl_detail_chkbox tbody tr').length == 0) {
+            $("#tbl_detail tbody tr td").width('');
+            $("#tbl_detail thead tr th").width('');
+            $("#tbl_detail_head tr th").width('');
+        }
     });
 
 
@@ -1235,11 +1333,17 @@ jQuery(function ($) {
         resetTableARowid();
         resetTableAWidth();
 
+        $("#tbl_detail_head").trigger("update");
+        $("#tbl_detail").trigger("update");
+
         $('input[type="checkbox"][name="allSel"]').prop("checked", false);
 
-        setCheckBoxEvent();
+        // setCheckBoxEvent();
 
-        setTableAEvent();
+        // setTableAEvent();
+
+        // 合計金額・消費税額の更新
+        updateAmount();
     });
 
     // 削除ボタンのイベント
@@ -1256,6 +1360,8 @@ jQuery(function ($) {
                 removeTableBToTableA($(this));
             }
         });
+        $("#tbl_detail_head").trigger("update");
+        $("#tbl_detail").trigger("update");
 
         resetTableARowid();
         resetTableBRowid();
@@ -1263,9 +1369,12 @@ jQuery(function ($) {
 
         $('input[type="checkbox"][name="allSel"]').prop("checked", false);
 
-        setCheckBoxEvent();
+        // setCheckBoxEvent();
 
-        setTableAEvent();
+        // setTableAEvent();
+
+        // 合計金額・消費税額の更新
+        updateAmount();
     });
 
     function removeTableBToTableA(tableBRow) {
@@ -1297,48 +1406,168 @@ jQuery(function ($) {
         $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('td:nth-child(1)').css('display', '');
 
         tableBRow.remove();
+
+        $('#tbl_detail tbody tr:nth-child(' + (rownum) + '),#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') ').on('click', function () {
+            var rowindex = $(this).index();
+            console.log(rowindex);
+            var checked = $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
+            console.log(checked);
+            setRowBackGroundColor(rowindex, checked);
+        });
+
+        $('#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').find('input[name="edit"]').on('click', function () {
+            var rowindex = $(this).parent().parent().index();
+            console.log(rowindex);
+            setRowBackGroundColor(rowindex, this.checked);
+            console.log(this.checked);
+            $(this).prop('checked', this.checked);
+        });
     }
 
 
+    // 行を一つ上に移動するボタン
+    $('img.rowup').click(function () {
+        var len = $("#tbl_edit_detail_body tbody tr").length;
+        for (var i = 1; i <= len; i++) {
+            var row = $("#tbl_edit_detail_body tbody tr:nth-child(" + (i) + ")");
+            var backgroud = row.css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                for (var j = i - 1; j >= 1; j--) {
+                    var row_prev = $("#tbl_edit_detail_body tbody tr:nth-child(" + (j) + ")");
+                    var row_prev_backgroud = row_prev.css("background-color");
+                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                        row.insertBefore(row_prev);
+                        break;
+                    }
+                }
+            }
+        }
 
-    $('#selectup').on('click', function () {
-        var selected = getCheckedRows();
-        if (!selected) { return false; }
-        executeSort(0);
-    });
-    $('#selectup1').on('click', function () {
-        var selected = getCheckedRows();
-        if (!selected) { return false; }
-        executeSort(1);
-    });
-    $('#selectdown1').on('click', function () {
-        var selected = getCheckedRows();
-        if (!selected) { return false; }
-        executeSort(2);
-    });
-    $('#selectdown').on('click', function () {
-        var selected = getCheckedRows();
-        if (!selected) { return false; }
-        executeSort(3);
-    });
-    $("#DeleteBt").on('click', function () {
-        var selected = getSelectedRows();
-        if (!selected.length) { return false; }
-        $(selected).remove();
-        changeRowNum();
-        updateAmount();
-    });
-    $('#AllDeleteBt').on('click', function () {
-        $('#EditTableBody').empty();
-        updateAmount();
+        var len = $("#tbl_edit_no_body tbody tr").length;
+        for (var i = 1; i <= len; i++) {
+            var row = $("#tbl_edit_no_body tbody tr:nth-child(" + (i) + ")");
+            var backgroud = row.css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                for (var j = i - 1; j >= 1; j--) {
+                    var row_prev = $("#tbl_edit_no_body tbody tr:nth-child(" + (j) + ")");
+                    var row_prev_backgroud = row_prev.css("background-color");
+                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                        row.insertBefore(row_prev);
+                        break;
+                    }
+                }
+            }
+        }
+
+        resetTableBRowid();
+
     });
 
-    $('#DateBtB').on('click', function () {
-        $('input[name="dtmDeliveryDate"]').focus();
+    // 行を一つ下に移動するボタン
+    $('img.rowdown').click(function () {
+        var len = $("#tbl_edit_detail_body tbody tr").length;
+        for (var i = len; i >= 1; i--) {
+            var row = $("#tbl_edit_detail_body tbody tr:nth-child(" + (i) + ")");
+            var backgroud = row.css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                for (var j = i + 1; j <= len; j++) {
+                    var row_prev = $("#tbl_edit_detail_body tbody tr:nth-child(" + (j) + ")");
+                    var row_prev_backgroud = row_prev.css("background-color");
+                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                        row.insertAfter(row_prev);
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        var len = $("#tbl_edit_no_body tbody tr").length;
+        for (var i = len; i >= 1; i--) {
+            var row = $("#tbl_edit_no_body tbody tr:nth-child(" + (i) + ")");
+            var backgroud = row.css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                for (var j = i + 1; j <= len; j++) {
+                    var row_prev = $("#tbl_edit_no_body tbody tr:nth-child(" + (j) + ")");
+                    var row_prev_backgroud = row_prev.css("background-color");
+                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                        row.insertAfter(row_prev);
+                        break;
+                    }
+                }
+            }
+        }
+
+        resetTableBRowid();
+
     });
-    $('#DateBtC').on('click', function () {
-        $('input[name="dtmPaymentLimit"]').focus();
+
+    // 行を一番上に移動する
+    $('img.rowtop').click(function () {
+        var firsttr = $("#tbl_edit_detail_body").find('tr').first();
+        $("#tbl_edit_detail_body tr").each(function (i, e) {
+            var backgroud = $(this).css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                $(this).insertBefore(firsttr);
+            }
+        });
+
+        firsttr = $("#tbl_edit_no_body").find('tr').first();
+        $("#tbl_edit_no_body tr").each(function (i, e) {
+            var backgroud = $(this).css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                $(this).insertBefore(firsttr);
+            }
+        });
+
+        resetTableBRowid();
+
     });
+
+    // 行を一番下に移動する
+    $('img.rowbottom').click(function () {
+        var lasttr = $("#tbl_edit_detail_body").find('tr').last();
+        $("#tbl_edit_detail_body tr").each(function (i, e) {
+            var backgroud = $(this).css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                $(this).insertAfter(lasttr);
+            }
+        });
+
+        lasttr = $("#tbl_edit_no_body").find('tr').last();
+        $("#tbl_edit_no_body tr").each(function (i, e) {
+            var backgroud = $(this).css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                $(this).insertAfter(lasttr);
+            }
+        });
+
+        resetTableBRowid();
+    });
+
+
+
+    // $('#selectup').on('click', function () {
+    //     var selected = getCheckedRows();
+    //     if (!selected) { return false; }
+    //     executeSort(0);
+    // });
+    // $('#selectup1').on('click', function () {
+    //     var selected = getCheckedRows();
+    //     if (!selected) { return false; }
+    //     executeSort(1);
+    // });
+    // $('#selectdown1').on('click', function () {
+    //     var selected = getCheckedRows();
+    //     if (!selected) { return false; }
+    //     executeSort(2);
+    // });
+    // $('#selectdown').on('click', function () {
+    //     var selected = getCheckedRows();
+    //     if (!selected) { return false; }
+    //     executeSort(3);
+    // });
+
 
     // プレビューボタン押下
     $('img.preview').on('click', function () {

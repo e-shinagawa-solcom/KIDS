@@ -50,7 +50,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
 $strQuery = fncGetCopyFilePathQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-var_dump($lngResultNum);
+
 if ($lngResultNum === 1) {
     $objResult = $objDB->fetchObject($lngResultID, 0);
     $strListOutputPath = $objResult->strreportpathname;
@@ -165,6 +165,7 @@ elseif ($lngResultNum === 0) {
         $aryParts["swiftcode"] = $aryParts["lngpaymentmethodcode"] == 1 ? "BOTKJPJT" : "";
         $aryParts["accountname"] = $aryParts["lngpaymentmethodcode"] == 1 ? "KUWAGATA CO.,LTD." : "";
         $aryParts["accountno"] = $aryParts["lngpaymentmethodcode"] == 1 ? "1063143" : "";
+        $aryParts["dtmpaymentlimit"] = $aryParts["lngpaymentmethodcode"] == 1 ? ("on " . $aryParts["dtmpaymentlimit"]) : "";
     }
 
     // HTML出力

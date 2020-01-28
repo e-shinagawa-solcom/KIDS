@@ -39,7 +39,7 @@ function fncDebug($strOutFile, $objValue, $strFile="", $strLine="", $mode="w")
 	// ディレクトリの存在確認
 	if( !file_exists( dirname($strOutFile) ) )
 	{
-		echo "test";
+		// echo "test";
 		return false;
 	}
 	

@@ -303,6 +303,8 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  r.strcustomerreceivecode,"; //顧客受注番号
     $arySelect[] = "  r.strreceivecode,"; //受注番号
     $arySelect[] = "  r.lngreceivestatuscode,"; //受注ステータス
+    $arySelect[] = "  c.strcompanydisplaycode,"; //顧客コード
+    $arySelect[] = "  c.strcompanydisplayname,"; //顧客名称
     $arySelect[] = "  p.strgoodscode,"; //顧客品番
     $arySelect[] = "  rd.strproductcode,"; //製品コード
     $arySelect[] = "  rd.strrevisecode,"; //リバイズコード（再販コード）
@@ -452,6 +454,12 @@ function fncGetReceiveDetail($aryCondition, $objDB)
         $aryWhere[] = " AND g.strgroupdisplaycode = '" . $aryCondition["lngInChargeGroupCode"] . "'";
     }
 
+    // 通貨単位（コードで検索）
+    if ($aryCondition["lngMonetaryUnitCode"]) {
+        $aryWhere[] = " AND r.lngMonetaryUnitCode = " . $aryCondition["lngMonetaryUnitCode"];
+    }
+
+
     // 売上区分（コードで検索）
     if ($aryCondition["lngSalesClassCode"]) {
         $aryWhere[] = " AND rd.lngsalesclasscode = " . $aryCondition["lngSalesClassCode"];
@@ -503,7 +511,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // クエリ実行
     // -------------------
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-
+    // echo $strQuery;
     // 結果を配列に格納
     $aryResult = []; //空の配列で初期化
     if (0 < $lngResultNum) {
@@ -521,12 +529,23 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
     $aryResult = array();
     $chkbox_body_html = "";
     $detail_body_html = "";
+    $monetaryunitCount = 0;
     for ($i = 0; $i < count($aryDetail); $i++) {
+        if ($i == 0) {
+            $monetaryunitcode = $aryDetail[$i]["lngmonetaryunitcode"];
+            $monetaryunitCount = 1;
+        } else {
+            if ($monetaryunitcode != $aryDetail[$i]["lngmonetaryunitcode"])
+            {
+                $monetaryunitcode = $aryDetail[$i]["lngmonetaryunitcode"];
+                $monetaryunitCount += 1;
+            }
+        }
         $strDisplayValue = "";
         // 明細選択エリアはチェックボックスあり、出力明細一覧エリアはチェックボックスなしのためこのようなスイッチを用意
         if ($isCreateNew) {
 
-            $chkbox_body_html .= "<tr onmousedown='RowClick(this,false);'>";
+            $chkbox_body_html .= "<tr>";
             // データ登録時、明細選択エリアには選択チェックボックスが必要（データ修正時、出力明細一覧エリアにチェックボックスは不要）
             $chkbox_body_html .= "<td style='text-align:center;'><input type='checkbox' name='edit' style='width:10px;'></td>";
 
@@ -534,7 +553,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         }
 
         //行選択スクリプト埋め込み
-        $detail_body_html .= "<tr onmousedown='RowClick(this,false);'>";
+        $detail_body_html .= "<tr>";
 
         //NO.
         // データ修正時、出力明細一覧エリアのNo.は明細の配列のインデックス+1とする（行番号）
@@ -630,7 +649,10 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
     $aryResult["detail_body"] = $detail_body_html;
     $aryResult["strmonetaryunitname"] = $aryDetail[0]["strmonetaryunitname"];
     $aryResult["lngmonetaryunitcode"] = $aryDetail[0]["lngmonetaryunitcode"];
+    $aryResult["strcompanydisplaycode"] = $aryDetail[0]["strcompanydisplaycode"];
+    $aryResult["strcompanydisplayname"] = $aryDetail[0]["strcompanydisplayname"];
     $aryResult["count"] = count($aryDetail);
+    $aryResult["monetaryunitCount"] = $monetaryunitCount;
 
     return $aryResult;
 }
@@ -1877,6 +1899,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["dtmdeliverydate"] = $aryHeader["dtmdeliverydate"];
             $lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];
             $strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"];
+            $aryParts["strmonetaryunitsign"] = $strmonetaryunitsign;
             // 顧客電話番号
             $aryParts["strcustomertel"] = "Tel:" . $aryCustomerCompany["strtel1"] . " " . $aryCustomerCompany["strtel2"];
 
@@ -1895,6 +1918,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["swiftcode"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "BOTKJPJT" : "";
             $aryParts["accountname"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "KUWAGATA CO.,LTD." : "";
             $aryParts["accountno"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "1063143" : "";
+            $aryParts["dtmpaymentlimit"] = $aryHeader["lngpaymentmethodcode"] == 1 ? ("on " . $aryHeader["dtmpaymentlimit"]) : "";
 
             // HTML出力
             $objTemplateHeader = new clsTemplate();

@@ -51,6 +51,13 @@
 	$optSalesClass .= fncGetPulldown("m_salesclass", "lngsalesclasscode","strsalesclassname", "", "", $objDB);
 	$aryData["optSalesClass"] = $optSalesClass;
 
+	// 通貨単位プルダウン
+	$optMonetaryUnitCode = "<option value=''> </option>"; 
+	$optMonetaryUnitCode .= fncGetPulldown("m_monetaryunit", "lngmonetaryunitcode","strmonetaryunitname", "", "", $objDB);
+	$aryData["optMonetaryUnitCode"] = $optMonetaryUnitCode;
+
+	
+	$aryData["strSessionID"] = $_POST["strSessionID"];
 	// --------------------------
 	//  画面表示
 	// --------------------------

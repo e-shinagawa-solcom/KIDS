@@ -179,7 +179,7 @@ else {
 
         // 顧客FAX番号
         $aryParts["strcustomerfax"] = "Fax.:" . $aryParts["strcustomerfaxno"];
-
+        
         // 合計金額
         $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["curtotalprice"];
 
@@ -191,6 +191,7 @@ else {
         $aryParts["swiftcode"] = $aryParts["lngpaymentmethodcode"] == 1 ? "BOTKJPJT" : "";
         $aryParts["accountname"] = $aryParts["lngpaymentmethodcode"] == 1 ? "KUWAGATA CO.,LTD." : "";
         $aryParts["accountno"] = $aryParts["lngpaymentmethodcode"] == 1 ? "1063143" : "";
+        $aryParts["dtmpaymentlimit"] = $aryParts["lngpaymentmethodcode"] == 1 ? ("on " . $aryParts["dtmpaymentlimit"]) : "";
     }
 
     // HTML出力

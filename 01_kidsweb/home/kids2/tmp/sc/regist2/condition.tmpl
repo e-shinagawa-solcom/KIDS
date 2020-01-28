@@ -4,6 +4,7 @@
 	<link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
 	<link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
 	<script src="/search/cmn/form/js/tab-function.js" defer></script>
+    <script src="/search/cmn/js/date.js" defer></script>
 	<script src="/search/cmn/form/js/util-selectbox.js" defer></script>
     <!-- チェックボックスの切り替え処理 -->
     <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
@@ -67,21 +68,21 @@
             <div class="regist-line">
                 <span class="regist-label">
                     <span class="regist-label__text">顧客受注番号</span>
-                    <input class="TxtStyle06L" name="strCustomerReceiveCode" value="" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                    <input class="TxtStyle06L" name="strCustomerReceiveCode" value="" type="text">
                 </span>
             </div>
 
             <div class="regist-line">
                 <span class="regist-label">
                     <span class="regist-label__text">受注番号</span>
-                    <input class="TxtStyle06L" name="strReceiveCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                    <input class="TxtStyle06L" name="strReceiveCode" type="text">
                 </span>
             </div>
 
             <div class="regist-line">
                 <span class="regist-label">
                     <span class="regist-label__text">製品コード</span>
-                    <input class="TxtStyle06L" name="strReceiveDetailProductCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                    <input class="TxtStyle06L" name="strReceiveDetailProductCode" type="text" >
                 </span>
             </div>
 
@@ -91,6 +92,15 @@
                     <input class="TxtStyle05L" name="lngInChargeGroupCode"  type="text" alt="InChargeGroup">
                     <input class="disTxt46L" name="strInChargeGroupName"  type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                </span>
+            </div>
+                
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">通貨単位</span>
+                    <select name="lngMonetaryUnitCode" class="Slt20">
+                        _%optMonetaryUnitCode%_
+                    </select>
                 </span>
             </div>
                 
@@ -106,22 +116,22 @@
             <div class="regist-line">
                 <span class="regist-label">
                     <span class="regist-label__text">顧客品番</span>
-                    <input class="TxtStyle06L" name="strGoodsCode" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                    <input class="TxtStyle06L" name="strGoodsCode" type="text">
                 </span>
             </div>
 
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">納期</span>
-                    FROM <input class="TxtStyle05L" name="From_dtmDeliveryDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmDeliveryDate );" tabindex="" maxlength="10">
-                    TO <input class="TxtStyle05L" name="To_dtmDeliveryDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+                    <span class="regist-label__text">納期</span>                    
+                    FROM <input class="TxtStyle05L is-from-date" name="From_dtmDeliveryDate" alt="dtmDeliveryDate" type="text" value=""  tabindex="" maxlength="10">
+                    TO <input class="TxtStyle05L is-date" name="To_dtmDeliveryDate" type="text" value=""  tabindex="" maxlength="10">
                 </span>
             </div>
 
             <div class="regist-line">
                 <span class="regist-label">
                     <span class="regist-label__text">明細備考</span>
-                    <input class="TxtStyle06L" name="strNote" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                    <input class="TxtStyle06L" name="strNote" type="text">
                 </span>
             </div>
 

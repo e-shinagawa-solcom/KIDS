@@ -138,7 +138,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 			{
 				if ( $arySearchDataColumn["lngInsertUserCode"] )
 				{
-					$aryQuery[] = " AND insert_u.struserdisplaycode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
+					$aryQuery[] = " AND u.struserdisplaycode ~* '" . $arySearchDataColumn["lngInsertUserCode"] . "'";
 				}
 //				if ( $arySearchDataColumn["strInsertUserName"] )
 //				{
