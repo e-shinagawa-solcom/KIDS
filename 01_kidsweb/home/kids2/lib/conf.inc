@@ -352,7 +352,7 @@ define ( "DEF_FUNCTION_SC9",	609 );     //  609 売上管理（売上の受注No
 define ( "DEF_FUNCTION_SC10",	610 );     //  610 売上管理（行追加・行削除）
 define ( "DEF_FUNCTION_SC11",	611 );     //  611 売上管理（売上詳細表示）
 define ( "DEF_FUNCTION_SC12",	612 );     //  612 売上管理（売上納品書検索）
-define ( "DEF_FUNCTION_SC12",	613 );     //  613 売上管理（売上納品書検索　管理モード）
+define ( "DEF_FUNCTION_SC13",	613 );     //  613 売上管理（売上納品書検索　管理モード）
 
 
 define ( "DEF_FUNCTION_PC0",	700 );     //  700 仕入管理
