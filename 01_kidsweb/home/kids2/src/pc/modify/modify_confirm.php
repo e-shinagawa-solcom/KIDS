@@ -31,6 +31,11 @@ if ($aryData == null) {
 }
 $aryDetailData = json_decode($aryData["detailData"], true);
 
+// 仕入番号の取得
+$lngStockNo = $aryData["lngStockNo"];
+$lngRevisionNo = $aryData["lngStockRevisionNo"];
+
+
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
@@ -200,7 +205,6 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
         }
     }
 
-
     // テンプレート読み込み
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("pc/modify/pc_parts_confirm_modify.html");
@@ -227,6 +231,11 @@ $aryNewResult["strinputusername"] = $strUserName;
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("pc/modify/pc_confirm_modify.html");
 // テンプレート生成
+
+$aryData["lngStockNo"] = $lngStockNo;
+$aryData["lngstockrevisionno"] = $lngRevisionNo;
+
+
 $objTemplate->replace($aryNewResult);
 $objTemplate->replace($aryData);
 $objTemplate->complete();

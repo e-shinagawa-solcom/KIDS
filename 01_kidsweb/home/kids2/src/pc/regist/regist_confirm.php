@@ -30,6 +30,8 @@ if ($aryData == null) {
     $aryData = $_POST;
 }
 $aryDetailData = json_decode($aryData["detailData"], true);
+$lngPurchaseOrderNo = json_decode($aryData["lngPurchaseOrderNo"], true);
+$lngPurchaseOrderRevisionNo = json_decode($aryData["lngPurchaseOrderRevisionNo"], true);
 
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
@@ -200,6 +202,9 @@ $aryData["dtminsertdate"] = date('Y/m/d', time());
 $aryData["lnginputusercode"] = $lngUserCode;
 // 入力者名称
 $aryNewResult["strinputusername"] = $strUserName;
+
+$aryData["lngPurchaseOrderNo"] = $lngPurchaseOrderNo;
+$aryData["lngpurchaserevisionno"] = $lngPurchaseOrderRevisionNo;
 
 // テンプレート読み込み
 $objTemplate = new clsTemplate();

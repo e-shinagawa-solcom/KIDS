@@ -17,6 +17,7 @@ include_once 'conf.inc';
 
 // ライブラリ読み込み
 require LIB_FILE;
+require LIB_EXCLUSIVEFILE;
 require SRC_ROOT . "pc/cmn/lib_pc.php";
 // DB接続
 $objDB = new clsDB();
@@ -46,8 +47,27 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth)) {
 // 仕入番号の取得
 $lngStockNo = $aryData["lngStockNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
+// トランザクション開始
+$objDB->transactionBegin();
+
 // エラー画面での戻りURL
 $strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
+
+// 対象データロック
+if(!lockStock($lngStockNo, $objDB)){
+    fncOutputError(703, DEF_ERROR, "該当データのロックに失敗しました", true, $strReturnPath, $objDB);
+}
+
+// 締めチェック
+if(isStockClosed($lngStockNo, $objDB)){
+    fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
+}
+
+// 更新有無チェック
+if(isStockModified($lngStockNo, $lngRevisionNo, $objDB)){
+    fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
+}
+
 // 削除対象の仕入NOの仕入情報取得
 $strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 
@@ -55,10 +75,6 @@ list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     if ($lngResultNum == 1) {
         $aryStockResult = $objDB->fetchArray($lngResultID, 0);
-        // 該当仕入の状態が「締め済」の状態であれば
-        if ($aryStockResult["lngstockstatuscode"] == DEF_STOCK_CLOSED) {
-            fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
-        }
     } else {
         fncOutputError(703, DEF_ERROR, "該当データの取得に失敗しました", true, $strReturnPath, $objDB);
     }
@@ -68,31 +84,13 @@ if ($lngResultNum) {
 
 $objDB->freeResult($lngResultID);
 
-// トランザクション開始
-$objDB->transactionBegin();
-
-// 最小リビジョン番号の取得
 $strStockCode = $aryStockResult["strstockcode"];
-$strRevisionGetQuery = "SELECT MIN(lngRevisionNo) as minrevision FROM m_Stock WHERE strStockCode = '" . $strStockCode . "'";
-
-list($lngResultID, $lngResultNum) = fncQuery($strRevisionGetQuery, $objDB);
-if ($lngResultNum) {
-    $objResult = $objDB->fetchObject($lngResultID, 0);
-    $lngMinRevisionNo = $objResult->minrevision;
-    if ($lngMinRevisionNo > 0) {
-        $lngMinRevisionNo = 0;
-    }
-} else {
-    $lngMinRevisionNo = 0;
-}
-$objDB->freeResult($lngResultID);
-$lngMinRevisionNo--;
 
 $aryQuery[] = "INSERT INTO m_stock (lngStockNo, lngRevisionNo, "; // 仕入NO、リビジョン番号
 $aryQuery[] = "strStockCode, lngInputUserCode, bytInvalidFlag, dtmInsertDate"; // 仕入コード、入力者コード、無効フラグ、登録日
 $aryQuery[] = ") values (";
 $aryQuery[] = $lngStockNo . ", "; // 1:仕入番号
-$aryQuery[] = $lngMinRevisionNo . ", "; // 2:リビジョン番号
+$aryQuery[] = -1 . ", "; // 2:リビジョン番号
 $aryQuery[] = "'" . $strStockCode . "', "; // 3:仕入コード．
 $aryQuery[] = $objAuth->UserCode . ", "; // 4:入力者コード
 $aryQuery[] = "false, "; // 5:無効フラグ

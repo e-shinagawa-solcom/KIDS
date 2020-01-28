@@ -51,6 +51,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
 $lngStockNo = $aryData["lngStockNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
 
+$lngStockRevisionNo = $aryData["lngStockRevisionNo"];
 // 修正対象の仕入NOの仕入情報取得
 $strQuery = fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo);
 
@@ -86,8 +87,8 @@ if ($lngResultNum) {
 
 $objDB->freeResult($lngResultID);
 
-// 発注情報を取得
-$aryOrderDetail = fncGetPoInfoSQL($aryStock["strrealordercode"], $objDB, true);
+// 発注情報を仕入情報から取得
+$aryOrderDetail = fncGetPoInfoSQLByStock($lngStockNo, $lngRevisionNo, $aryStock["strrealordercode"], $objDB);
 
 // 消費税情報を取得
 $taxObj = fncGetTaxInfo($aryStock["dtmstockappdate"], $objDB);
@@ -111,6 +112,9 @@ $aryStock["lngmonetaryratecode"] = fncGetPulldown("m_monetaryrateclass", "lngmon
 $aryStock["actionUrl"] = "/pc/modify/modify_confirm.php";
 $objDB->close();
 // $aryStock["strnote"] = $aryStock["strnote"]!='' ? $aryStock["strnote"] : " ";
+
+$aryStock["lngStockNo"] = $lngStockNo;
+$aryStock["lngstockrevisionno"] = $lngRevisionNo;
 
 // テンプレート読み込み
 // $objTemplate = new clsTemplate();

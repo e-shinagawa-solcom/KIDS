@@ -14,6 +14,7 @@
 
 include 'conf.inc';
 require LIB_FILE;
+require LIB_EXCLUSIVEFILE;
 include 'JSON.php';
 
 //////////////////////////////////////////////////////////////////////////
@@ -47,7 +48,20 @@ if (fncCheckAuthority(DEF_FUNCTION_PC1, $objAuth)) {
     $aryData["strRegistURL"] = "pc/regist/index.php?strSessionID=" . $aryData["strSessionID"];
 }
 
+$lngpurchaseorderno = $aryData["lngPurchaseOrderNo"];
+$lngrevisionno = $aryData["lngpurchaserevisionno"];
+
 $objDB->transactionBegin();
+
+// 発注書データロック
+if(!lockOrder($lngpurchaseorderno, $objDB)){
+    fncOutputError(9051, DEF_ERROR, "発注書データのロックに失敗しました", true, "", $objDB);
+}
+
+// 発注書データ更新有無
+if(isPurchaseOrderModified($lngpurchaseorderno, $lngrevisionno, $objDB)){
+    fncOutputError(9051, DEF_ERROR, "発注書データが更新または削除されています", true, "", $objDB);
+}
 
 // 仕入番号の設定
 $sequence_m_stock = fncGetSequence('m_stock.lngStockNo', $objDB);
@@ -121,6 +135,13 @@ if (!$lngResultID = $objDB->execute($strQuery)) {
 $objDB->freeResult($lngResultID);
 // 明細登録処理
 foreach ($aryDetailData as $data) {
+
+    // 明細に紐づく発注データのステータスチェック
+    if(isOrderModified($data["lngOrderNo"], DEF_ORDER_ORDER, $objDB))
+    {
+        fncOutputError(9051, DEF_ERROR, "明細データが確定取消されたか、仕入済みです。", true, "", $objDB);
+    }
+    
     // 明細行
     $aryQuery = array();
     $aryQuery[] = "SELECT ";

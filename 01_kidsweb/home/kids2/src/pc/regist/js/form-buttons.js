@@ -76,6 +76,8 @@ var taxList;
                         $('input[name="strLocationName"]').val(row.strlocationname);
                         $('input[name="dtmExpirationDate"]').val(row.dtmexpirationdate);
                         $('input[name="lngOrderNo"]').val(row.lngorderno);
+                        $('input[name="lngPurchaseOrderNo"]').val(row.lngpurchaseorderno);
+                        $('input[name="lngpurchaserevisionno"]').val(row.lngpurchaseorderrevisionno);
                         // 国コードの取得
                         var lngcountrycode = row.lngcountrycode;
                         var curtax = 0;
@@ -319,8 +321,10 @@ var taxList;
             formData.push({ name: "strMonetaryRateName", value: $('select[name="lngMonetaryRateCode"] option:selected').text() });
             formData.push({ name: "lngMonetaryUnitCode", value: $('input[name="lngMonetaryUnitCode"]').val() });
             formData.push({ name: "lngPayConditionCode", value: $('input[name="lngPayConditionCode"]').val() });
-            formData.push({ name: "strMonetaryUnitName", value: $('input[name="strMonetaryUnitName"]').val() });
-            formData.push({ name: "strPayConditionName", value: $('input[name="strPayConditionName"]').val() });
+            formData.push({ name: "lngPurchaseOrderNo", value: $('input[name="lngPurchaseOrderNo"]').val() });
+            formData.push({ name: "lngPurchaseOrderRevisionNo", value: $('input[name="lngpurchaserevisionno"]').val() });
+            formData.push({ name: "lngStockNo", value: $('input[name="lngStockNo"]').val() });
+            formData.push({ name: "lngStockRevisionNo", value: $('input[name="lngstockrevisionno"]').val() });
 
             var actionUrl = workForm.attr('action');
             //            alert(actionUrl);

@@ -18,6 +18,7 @@
 
 	// ライブラリ読み込み
 	require_once ( LIB_FILE );
+    require_once ( LIB_EXCLUSIVEFILE );
 
 	// 見積原価用クラス読み込み
 	require_once ( SRC_ROOT . "estimate/cmn/const/workSheetConst.php");
@@ -80,6 +81,17 @@ $estimate = $objDB->getEstimateDetail($estimateNo);
 // DB処理開始
 //////////////////////////////////////////////////////////////////////
 $objDB->transactionBegin();
+
+// 排他ロック取得
+if(!lockEstimateEdit($estimateNo, DEF_FUNCTION_E4, $objDB, $objAuth))
+{
+    fncOutputError ( 9051, DEF_ERROR, "見積原価計算書のロックに失敗しました。", TRUE, "", $objDB );
+}
+
+// リビジョンと削除済みチェック
+if (isEstimateModified($estimateNo, $revisionNo, $objDB)) {
+    fncOutputError ( DEF_MESSAGE_CODE_CURRENT_REVISION_ERROR, DEF_WARNING, "", TRUE, "", $objDB );
+}
 
 $objRegist = new deleteInsertData();
 
