@@ -169,13 +169,13 @@ INSERT INTO t_goodsplan
 SELECT * FROM dblink('con111',
     'select ' ||
     'lnggoodsplancode,' ||
-    'lngrevisionno,' ||
-    'lngproductno,' ||
+    't_goodsplan.lngrevisionno,' ||
+    't_goodsplan.lngproductno,' ||
     'dtmcreationdate,' ||
     'dtmrevisiondate,' ||
     'lnggoodsplanprogresscode,' ||
     'lnginputusercode' ||
-    ' from t_goodsplan' ||
+    ' from t_goodsplan ' ||
     'inner join ( select lngproductno, max(lngrevisionno) as lngrevisionno from t_goodsplan group by lngproductno ) rev_max' ||
     ' on rev_max.lngproductno = t_goodsplan.lngproductno and rev_max.lngrevisionno = t_goodsplan.lngrevisionno'
     ) 
