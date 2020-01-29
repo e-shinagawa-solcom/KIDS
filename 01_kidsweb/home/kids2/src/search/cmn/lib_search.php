@@ -1073,8 +1073,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  sd.lngSalesNo";
         $aryQuery[] = "  , sd.lngSalesDetailNo";
         $aryQuery[] = "  , sd.lngSalesDetailNo as lngdetailno";
-        $aryQuery[] = "  , p.strProductCode";
-        $aryQuery[] = "  , p.strrevisecode";
+        $aryQuery[] = "  , p.strProductCode || '_' || p.strrevisecode as strProductCode";
         $aryQuery[] = "  , mg.strGroupDisplayCode";
         $aryQuery[] = "  , mg.strGroupDisplayName";
         $aryQuery[] = "  , mu.struserdisplaycode";
