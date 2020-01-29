@@ -10,9 +10,7 @@ window.document.onkeydown = fncEnterKeyDown;
 function fncEnterKeyDown(e) {
     // Enterキー押下で明細追加
     if (window.event.keyCode == 13) {
-        if (document.activeElement.id == "BaseBack") {
-            $("#AddBt").trigger('click');
-        }
+        $("img.add").trigger('click');
     }
 }
 
