@@ -1189,7 +1189,7 @@ function fncGetTaxClassAry($objDB)
 function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMonetaryUnitCode, $objDB)
 {
 	if( $lngMonetaryUnitCode == 1 ){
-	    return 1;
+	    return 1.000000;
 	}
     $aryQuery = array();
     $aryQuery[] = "SELECT mmr.curConversionRate ";

@@ -215,9 +215,17 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  s.curtax, "; //消費税率（数値）
     $aryQuery[] = "  Null as lngtaxcode, "; //消費税率（コード値）
     $aryQuery[] = "  Null as strtaxamount, "; //消費税額
-    $aryQuery[] = "  s.curtotalprice "; //合計金額
+    $aryQuery[] = "  s.curtotalprice, "; //合計金額
+    $aryQuery[] = "  ms.lngmonetaryunitcode, "; //通貨単位コード
+    $aryQuery[] = "  mu.strmonetaryunitname, "; //通貨単位名称
+    $aryQuery[] = "  ms.lngmonetaryratecode, "; //通貨レート
+    $aryQuery[] = "  mr.strmonetaryratename, "; //通貨レート名称
+    $aryQuery[] = "  ms.curconversionrate "; //換算レート
     $aryQuery[] = " FROM m_slip s ";
+    $aryQuery[] = "   LEFT JOIN m_sales ms ON s.lngsalesno = ms.lngsalesno and s.lngrevisionno = ms.lngrevisionno";
     $aryQuery[] = "   LEFT JOIN m_user u_ins ON s.lngusercode = u_ins.lngusercode ";
+    $aryQuery[] = "  LEFT JOIN m_monetaryunit mu ON ms.lngmonetaryunitcode = mu.lngmonetaryunitcode ";
+    $aryQuery[] = "  LEFT JOIN m_monetaryrateclass mr ON ms.lngmonetaryratecode = mr.lngmonetaryratecode ";
     $aryQuery[] = "   LEFT JOIN m_company c_cust ON s.lngcustomercode = c_cust.lngcompanycode ";
     $aryQuery[] = "   LEFT JOIN m_company c_deli ON s.lngdeliveryplacecode = c_deli.lngcompanycode ";
     $aryQuery[] = " WHERE ";
@@ -326,6 +334,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.strnote,"; //備考（明細登録用）
     $arySelect[] = "  r.lngmonetaryunitcode,"; //通貨単位コード（明細登録用）
     $arySelect[] = "  r.lngmonetaryratecode,"; //通貨レートコード（明細登録用）
+    $arySelect[] = "  mr.strmonetaryratename,"; //通貨レート名称
     $arySelect[] = "  mu.strmonetaryunitsign,"; //通貨単位記号（明細登録用）
     $arySelect[] = "  mu.strmonetaryunitname,"; //通貨単位
     $arySelect[] = "  sc.bytdetailunifiedflg"; //明細統一フラグ（明細登録用）
@@ -403,6 +412,8 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "    ON p.lnginchargegroupcode = g.lnggroupcode ";
     $arySelect[] = "  LEFT JOIN m_monetaryunit mu ";
     $arySelect[] = "    ON r.lngmonetaryunitcode = mu.lngmonetaryunitcode ";
+    $arySelect[] = "  LEFT JOIN m_monetaryrateclass mr ";
+    $arySelect[] = "    ON r.lngmonetaryratecode = mr.lngmonetaryratecode ";
 
     // -------------------
     //  検索条件設定
@@ -550,6 +561,10 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
             $chkbox_body_html .= "<td style='text-align:center;'><input type='checkbox' name='edit' style='width:10px;'></td>";
 
             $chkbox_body_html .= "</tr>";
+        } else {
+            $chkbox_body_html .= "<tr>";
+            $chkbox_body_html .= "<td>" .($i + 1) . "</td>";
+            $chkbox_body_html .= "</tr>";
         }
 
         //行選択スクリプト埋め込み
@@ -647,12 +662,9 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
 
     $aryResult["chkbox_body"] = $chkbox_body_html;
     $aryResult["detail_body"] = $detail_body_html;
-    $aryResult["strmonetaryunitname"] = $aryDetail[0]["strmonetaryunitname"];
-    $aryResult["lngmonetaryunitcode"] = $aryDetail[0]["lngmonetaryunitcode"];
-    $aryResult["strcompanydisplaycode"] = $aryDetail[0]["strcompanydisplaycode"];
-    $aryResult["strcompanydisplayname"] = $aryDetail[0]["strcompanydisplayname"];
     $aryResult["count"] = count($aryDetail);
     $aryResult["monetaryunitCount"] = $monetaryunitCount;
+
 
     return $aryResult;
 }
@@ -979,7 +991,6 @@ function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo,
         . "   ON r.lngmonetaryunitcode = mr.lngmonetaryunitcode AND r.lngmonetaryratecode = mr.lngmonetaryratecode"
         . " WHERE r.lngreceiveno=" . $lngReceiveNo . " AND r.lngrevisionno = " . $lngReceiveRevisionNo
     ;
-
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
         for ($i = 0; $i < $lngResultNum; $i++) {
@@ -1109,7 +1120,7 @@ function fncRegisterSalesAndSlip(
     // 顧客の会社コードに紐づく会社情報を取得
     $aryCustomerCompany = fncGetCompanyInfoByCompanyCode($lngCustomerCompanyCode, $objDB);
     // 換算レートの取得
-    $aryConversionRate = fncGetConversionRateByReceiveData($aryDetail[0]["lngreceiveno"], $aryDetail[0]["lngreceiverevisionno"], $dtmAppropriationDate, $objDB);
+    // $aryConversionRate = fncGetConversionRateByReceiveData($aryDetail[0]["lngreceiveno"], $aryDetail[0]["lngreceiverevisionno"], $dtmAppropriationDate, $objDB);
 
     // 起票者に紐づくユーザー情報を取得
     if ($aryHeader["strdrafteruserdisplaycode"]) {
@@ -1295,12 +1306,12 @@ function nullIfEmptyWithQuote($source)
 // 売上マスタ登録
 function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryConversionRate, $aryCustomerCompany, $aryDrafter,
     $aryHeader, $aryDetail, $objDB, $objAuth) {
-    // 換算レートの設定
-    if (strlen($aryConversionRate["curconversionrate"]) == 0) {
-        $curConversionRate = "Null";
-    } else {
-        $curConversionRate = $aryConversionRate["curconversionrate"];
-    }
+    // // 換算レートの設定
+    // if (strlen($aryConversionRate["curconversionrate"]) == 0) {
+    //     $curConversionRate = "Null";
+    // } else {
+    //     $curConversionRate = $aryConversionRate["curconversionrate"];
+    // }
 
     // 登録データのセット
     $v_lngsalesno = $lngSalesNo; //1:売上番号
@@ -1313,7 +1324,7 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     $v_lngsalesstatuscode = "4"; //8:売上状態コード
     $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //9:通貨単位コード
     $v_lngmonetaryratecode = $aryDetail[0]["lngmonetaryratecode"]; //10:通貨レートコード
-    $v_curconversionrate = $curConversionRate; //11:換算レート
+    $v_curconversionrate = $aryHeader["curconversionrate"]; //11:換算レート
     $v_strslipcode = withQuote($strSlipCode); //12:納品書NO
     $v_lnginvoiceno = "Null"; //13:請求書番号
     $v_curtotalprice = $aryHeader["curtotalprice"]; //14:合計金額

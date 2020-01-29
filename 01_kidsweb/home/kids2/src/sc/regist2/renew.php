@@ -27,7 +27,11 @@ include 'conf.inc';
 require LIB_FILE;
 require SRC_ROOT . "sc/cmn/lib_scr.php";
 require SRC_ROOT . "sc/cmn/lib_scd1.php";
+require SRC_ROOT . "pc/cmn/lib_pc.php";
+//PHP標準のJSON変換メソッドはエラーになるので外部のライブラリ(恐らくエンコードの問題)
+include 'JSON.php';
 
+$s = new Services_JSON();
 $objDB = new clsDB();
 $objAuth = new clsAuth();
 
@@ -131,13 +135,34 @@ if ($strMode == "get-closedday") {
 // 【ajax】明細検索
 //-------------------------------------------------------------------------
 if ($strMode == "search-detail") {
+    // 検索条件の取得
+    $aryCondition = $_POST["condition"];
+    // 固定検索条件の追加
+    $aryCondition["lngreceivestatuscode"] = 2; //受注状態コード=2:受注
     // DBから明細を検索
-    $aryReceiveDetail = fncGetReceiveDetail($_POST["condition"], $objDB);
+    $aryDetail = fncGetReceiveDetail($aryCondition, $objDB);
     // 明細選択エリアに出力するHTMLの作成
     $withCheckBox = true;
-    $strHtml = fncGetReceiveDetailHtml($aryReceiveDetail, $withCheckBox);
-    // データ返却
-    echo $strHtml;
+    $aryResult = fncGetReceiveDetailHtml($aryDetail, $withCheckBox);
+    
+    // 通貨単位
+    $aryResult["strmonetaryunitname"] = $aryDetail[0]["strmonetaryunitname"];
+    $aryResult["lngmonetaryunitcode"] = $aryDetail[0]["lngmonetaryunitcode"];
+    // レートタイプ
+    $aryResult["lngmonetaryratecode"] = $aryDetail[0]["lngmonetaryratecode"];
+    $aryResult["strmonetaryratename"] = $aryDetail[0]["strmonetaryratename"];
+    // 顧客
+    $aryResult["strcompanydisplaycode"] = $aryDetail[0]["strcompanydisplaycode"];
+    $aryResult["strcompanydisplayname"] = $aryDetail[0]["strcompanydisplayname"];
+
+    // 換算レートの取得
+    $curconversionrate = fncGetCurConversionRate($aryData["dtmDeliveryDate"], $aryDetail[0]["lngmonetaryratecode"],
+    $aryDetail[0]["lngmonetaryunitcode"], $objDB);
+    $aryResult["curconversionrate"] = $curconversionrate;
+
+	//結果出力
+	echo $s->encodeUnsafe($aryResult);
+
     // DB切断
     $objDB->close();
     // 処理終了
@@ -193,16 +218,16 @@ if ($aryLockInfo["isLock"] == 1) {
 // 修正対象データ取得
 //-------------------------------------------------------------------------
 // 納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
- 
+$revisionNo = fncGetSlipMaxRevisionNo($lngSlipNo, $objDB);
 $aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $revisionNo, $objDB);
-$lngRevisionNo = $aryHeader["lngrevisionno"];
+// $lngRevisionNo = $aryHeader["lngrevisionno"];
 // 納品伝票番号に紐づく受注明細情報を取得する
-$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB);
+$aryDetail = fncGetDetailBySlipNo($lngSlipNo, $revisionNo, $objDB);
 
 // 明細部のHTMLを生成
 $isCreateNew = false; //修正モード用
 
-$strDetailHtml = fncGetReceiveDetailHtml($aryDetail, $isCreateNew);
+$aryDetailResult = fncGetReceiveDetailHtml($aryDetail, $isCreateNew);
 
 //-------------------------------------------------------------------------
 // フォーム初期値設定
@@ -212,7 +237,7 @@ $strDetailHtml = fncGetReceiveDetailHtml($aryDetail, $isCreateNew);
 // -------------------------
 // 納品伝票番号（この値がセットされていたら修正とみなす）
 $aryData["lngSlipNo"] = $lngSlipNo;
-$aryData["lngRevisionNo"] = $lngRevisionNo;
+$aryData["lngRevisionNo"] = $revisionNo;
 // 納品伝票コード
 $aryData["strSlipCode"] = $strSlipCode;
 // 売上番号
@@ -224,7 +249,8 @@ $aryData["strSalesCode"] = $strSalesCode;
 //  出力明細一覧エリア
 // -------------------------
 // 明細部のHTMLをセット
-$aryData["strEditTableBody"] = $strDetailHtml;
+$aryData["strEditTableBody"] = $aryDetailResult["detail_body"];
+$aryData["strEditTableNo"] = $aryDetailResult["chkbox_body"];
 
 // -------------------------
 //  ヘッダ・フッダ部
@@ -278,6 +304,13 @@ $aryData["strTaxAmount"] = "0";
 
 // 合計金額
 $aryData["strTotalAmount"] = $aryHeader["curtotalprice"];
+
+// 通貨単位
+$aryData["strMonetaryUnitName"] = $aryHeader["strmonetaryunitname"];
+// レートタイプ
+$aryData["strMonetaryRateName"] = $aryHeader["strmonetaryratename"];
+// 適用レート
+$aryData["curConversionRate"] = $aryHeader["curconversionrate"];
 
 //-------------------------------------------------------------------------
 // 画面表示

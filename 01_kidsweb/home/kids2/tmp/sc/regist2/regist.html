@@ -77,7 +77,7 @@
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text_80">顧客側担当者</span>
-						<input style="ime-mode:disabled;" class="disTxt08L" type="text" name="strCustomerUserName" value="_%strCustomerUserName%_">
+						<input style="ime-mode:disabled;" class="Txt08L" type="text" name="strCustomerUserName" value="_%strCustomerUserName%_">
 						<span class="regist-label__text_15">様</span>
 					</span>
 					<span class="regist-label">
@@ -99,14 +99,13 @@
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text_80">納品先担当者</span>
-						<input style="ime-mode:disabled;" class="disTxt08L" type="text" name="strDeliveryPlaceUserName" value="_%strDeliveryPlaceUserName%_">
+						<input style="ime-mode:disabled;" class="Txt08L" type="text" name="strDeliveryPlaceUserName" value="_%strDeliveryPlaceUserName%_">
 						<span class="regist-label__text_15">様</span>
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text_60">レート</span>
-						<select name="lngMonetaryRateCode" tabindex="14" class="Slt80">
-							_%optMonetaryRate%_
-						</select>
+						<input style="ime-mode:disabled;" class="disTxt05L" type="text" readonly name="strMonetaryRateName" tabindex="13" class="Slt93">
+						<input type="hidden" name="lngMonetaryRateCode">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -137,7 +136,6 @@
 					<span class="regist-label">
 						<span class="regist-label__text_60">適用レート</span>
 						<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="curConversionRate" tabindex="15" readonly>
-						<input type="hidden" name="curConversionRate">
 					</span>
 				</div>
 				<div class="regist-line">

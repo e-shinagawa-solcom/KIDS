@@ -46,6 +46,7 @@ jQuery(function ($) {
             lngMonetaryUnitCode: $('select[name="lngMonetaryUnitCode"]').children('option:selected').val(),
             From_dtmDeliveryDate: $('input[name="From_dtmDeliveryDate"]').val(),
             To_dtmDeliveryDate: $('input[name="To_dtmDeliveryDate"]').val(),
+            dtmDeliveryDate: window.opener.$('input[name="dtmDeliveryDate"]').val(),
             strNote: $('input[name="strNote"]').val(),
             IsIncludingResale: $('input[name="IsIncludingResale"]').prop("checked") ? 'On' : 'Off',
         };
@@ -56,6 +57,9 @@ jQuery(function ($) {
         if (!validateCondition(search_condition)) {
             return false;
         }
+        console.log(search_condition);
+        console.log(postTarget);
+        console.log(postTarget);
 
         // --------------------------------------------------------------
         //   顧客コードまたは売上区分が初期値と異なる場合のチェック
@@ -117,6 +121,7 @@ jQuery(function ($) {
             window.opener.SearchReceiveDetail(data);
             // 検索条件値設定
             window.opener.SetSearchConditionWindowValue(data.strcompanydisplaycode, data.strcompanydisplayname);
+
             // 本画面を閉じる
             window.close();
         });

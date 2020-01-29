@@ -201,12 +201,12 @@ function SearchReceiveDetail(data) {
 
     $('#tbl_detail_chkbox tbody tr').remove();
     $('#tbl_detail tbody tr').remove();
-    $('#tbl_edit_no_body tbody tr').remove();
-    $('#tbl_edit_detail_body tbody tr').remove();
+    // $('#tbl_edit_no_body tbody tr').remove();
+    // $('#tbl_edit_detail_body tbody tr').remove();
     $('#tbl_detail tbody tr td').width('');
     $('#tbl_detail_head thead tr th').width('');
-    $('#tbl_edit_detail_body tbody tr td').width('');
-    $('#tbl_edit_detail_head thead tr th').width('');
+    // $('#tbl_edit_detail_body tbody tr td').width('');
+    // $('#tbl_edit_detail_head thead tr th').width('');
 
     $('#tbl_detail_chkbox').append(data.chkbox_body);
     $('#tbl_detail').append(data.detail_body);
@@ -235,58 +235,15 @@ function SearchReceiveDetail(data) {
             $("#tbl_detail_chkbox tbody tr").css('background-color', '#ffffff');
         }
     });
-
     $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
     $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
+    $('input[name="strMonetaryRateName"]').val(data.strmonetaryratename);
+    $('input[name="lngMonetaryRateCode"]').val(data.lngmonetaryratecode);
+    $('input[name="curConversionRate"]').val(data.curconversionrate);
 
     setTableAEvent();
 
-    // 通貨変更イベント
-    $('input[name="lngMonetaryUnitCode"]').on('change', function () {
-        // リクエスト送信
-        $.ajax({
-            url: '/pc/regist/getMonetaryRate.php',
-            type: 'post',
-            data: {
-                'strSessionID': $.cookie('strSessionID'),
-                'lngMonetaryUnitCode': $(this).val(),
-                'lngMonetaryRateCode': $('select[name="lngMonetaryRateCode"]').val(),
-                'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
-            }
-        })
-            .done(function (response) {
-                console.log(response);
-                var data = JSON.parse(response);
-                $('input[name="curConversionRate"]').val(data.curconversionrate);
-            })
-            .fail(function (response) {
-                alert(response);
-                alert("fail");
-            })
-    });
-
-    // 通貨レート変更イベント
-    $('select[name="lngMonetaryRateCode"]').on('change', function () {
-        // リクエスト送信
-        $.ajax({
-            url: '/pc/regist/getMonetaryRate.php',
-            type: 'post',
-            data: {
-                'strSessionID': $.cookie('strSessionID'),
-                'lngMonetaryUnitCode': $('input[name="lngMonetaryUnitCode"]').val(),
-                'lngMonetaryRateCode': $(this).val(),
-                'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
-            }
-        })
-            .done(function (response) {
-                console.log(response);
-                var data = JSON.parse(response);
-                $('input[name="curConversionRate"]').val(data.curconversionrate);
-            })
-            .fail(function (response) {
-                alert("fail");
-            })
-    });
+    setCheckBoxEvent();
 
     // }).fail(function (error) {
     //     console.log("fail:search-detail");
@@ -412,6 +369,13 @@ function ClearAllEditDetail() {
 jQuery(function ($) {
 
     $("#tbl_detail thead").css('display', 'none');
+
+    if ($('#tbl_edit_detail_body tbody tr').length > 0) {
+        $('#tbl_edit_detail_body tbody tr td:nth-child(1)').css('display', 'none');        
+        $('#tbl_edit_no_body tbody tr td').width($('#tbl_edit_no_head thead tr th').width());
+        resetTableBWidth();
+        selectRow($("#tbl_edit_no_body"), $("#tbl_edit_detail_body"));
+    }
 
     var sortval = 0;
     $('#tbl_detail_head thead tr th').on('click', function () {
@@ -697,6 +661,8 @@ jQuery(function ($) {
             curtax: $('select[name="lngTaxRate"]').children('option:selected').text().replace("%", "") * 0.01,
             //消費税額
             strtaxamount: Number(($('input[name="strTaxAmount"]').val()).split(',').join('')),
+            //適用レート
+            curconversionrate: $('input[name="curConversionRate"]').val(),
             //支払期限
             dtmpaymentlimit: $('input[name="dtmPaymentLimit"]').val(),
             //支払方法
@@ -1088,6 +1054,31 @@ jQuery(function ($) {
             console.log(error);
         });
 
+        var lngMonetaryUnitCode = $('input[name="lngMonetaryUnitCode"]').val();
+        var lngMonetaryRateCode = $('input[name="lngMonetaryUnitCode"]').val();
+        // 適用レートの取得
+        if (lngMonetaryUnitCode != "" && lngMonetaryRateCode != "") {
+        // リクエスト送信
+        $.ajax({
+            url: '/pc/regist/getMonetaryRate.php',
+            type: 'post',
+            data: {
+                'strSessionID': $.cookie('strSessionID'),
+                'lngMonetaryUnitCode': lngMonetaryUnitCode,
+                'lngMonetaryRateCode': lngMonetaryRateCode,
+                'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
+            }
+        })
+            .done(function (response) {
+                console.log(response);
+                var data = JSON.parse(response);
+                $('input[name="curConversionRate"]').val(data.curconversionrate);
+            })
+            .fail(function (response) {
+                alert("fail");
+            })
+        }
+
     });
 
 
@@ -1166,10 +1157,6 @@ jQuery(function ($) {
                 var rn1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveNo').text();
                 var dn1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveDetailNo').text();
                 var rev1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveRevisionNo').text();
-
-                console.log(rn1);
-                console.log(dn1);
-                console.log(rev1);
                 var addObj = true;
                 $('#tbl_edit_detail_body tbody tr').each(function (i, e) {
                     var rn2 = $(this).find('td.detailReceiveNo').text();
@@ -1640,5 +1627,15 @@ jQuery(function ($) {
             return "";
         }
     }
+
+    
+    // 閉じた際の処理
+    $(window).on('beforeunload', function(){
+        window.opener.location.reload();
+    });
+
+    $("img.close").on('click', function () {
+        window.close();
+    });
 
 });

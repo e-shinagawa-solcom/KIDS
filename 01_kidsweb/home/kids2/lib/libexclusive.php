@@ -289,6 +289,7 @@ function unlockExclusive($objAuth, $objDB){
 */
 function isModified($table, $keyname, $key, $lngrevisionno, $objDB){
     $strQuery = "SELECT MAX(lngrevisionno) AS max_revisionno, MIN(lngrevisionno) AS min_revisionno FROM " . $table . " WHERE " . $keyname . " = " . $key;
+
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
     if ( !$lngResultNum )

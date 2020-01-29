@@ -24,7 +24,7 @@
 <span id="FinishRegist"></span>
 <span id="BackSpace"></span>
 <!-- 閉じるボタン -->
-<span id="CloseBt" onclick="window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"></span>
+<span id="CloseBt" onclick="window.opener.location.reload();window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"></span>
 
 </p>
 

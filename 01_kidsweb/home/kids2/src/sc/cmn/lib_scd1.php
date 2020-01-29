@@ -604,9 +604,10 @@ function fncUpdateReceiveStatus($lngSlipNo, $lngRevisionNo, $objDB)
 	{
 		// 受注番号
 		$lngReceiveNo = $aryDetailResult[$i]["lngreceiveno"];
+		$lngReceiveRevisionNo = $aryDetailResult[$i]["lngreceiverevisionno"];
 
 		// 受注マスタより受注コードを取得
-		$strReceiveCodeQuery = "SELECT strreceivecode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo;
+		$strReceiveCodeQuery = "SELECT strreceivecode FROM m_Receive WHERE lngReceiveNo = " . $lngReceiveNo ." AND lngRevisionNo = " .$lngReceiveRevisionNo;
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strReceiveCodeQuery, $objDB );
 		if ( $lngResultNum )
 		{
@@ -622,9 +623,8 @@ function fncUpdateReceiveStatus($lngSlipNo, $lngRevisionNo, $objDB)
 
 		// 受注マスタの更新対象レコード選択条件
 		$strWhere = "WHERE ";
-		$strWhere .= "strReceiveCode = '" . $strReceiveCode . "'";
-		$strWhere .= " and lngRevisionNo = (SELECT MAX(lngRevisionNo) FROM m_Receive WHERE strReceiveCode = '" . $strReceiveCode . "')";
-
+		$strWhere .= "lngReceiveNo = " . $lngReceiveNo . " ";
+		$strWhere .= " and lngRevisionNo = " . $lngReceiveRevisionNo . "";
 		// 更新対象レコードの行ロック（選択したレコードに対し現在のトランザクションを終了するまで他のトランザクションによるUPDATEを禁止する）
 		$strLockQuery = "SELECT * FROM m_Receive ";
 		$strLockQuery .= $strWhere;

@@ -26,6 +26,7 @@
 include 'conf.inc';
 require LIB_FILE;
 require SRC_ROOT . "sc/cmn/lib_scr.php";
+require SRC_ROOT . "pc/cmn/lib_pc.php";
 //PHP標準のJSON変換メソッドはエラーになるので外部のライブラリ(恐らくエンコードの問題)
 include 'JSON.php';
 
@@ -122,10 +123,25 @@ if ($strMode == "search-detail") {
     // 固定検索条件の追加
     $aryCondition["lngreceivestatuscode"] = 2; //受注状態コード=2:受注
     // DBから明細を検索
-    $aryReceiveDetail = fncGetReceiveDetail($aryCondition, $objDB);
+    $aryDetail = fncGetReceiveDetail($aryCondition, $objDB);
     // 明細選択エリアに出力するHTMLの作成
     $isCreateNew = true;
-    $aryResult = fncGetReceiveDetailHtml($aryReceiveDetail, $isCreateNew);
+    $aryResult = fncGetReceiveDetailHtml($aryDetail, $isCreateNew);
+    
+    // 通貨単位
+    $aryResult["strmonetaryunitname"] = $aryDetail[0]["strmonetaryunitname"];
+    $aryResult["lngmonetaryunitcode"] = $aryDetail[0]["lngmonetaryunitcode"];
+    // レートタイプ
+    $aryResult["lngmonetaryratecode"] = $aryDetail[0]["lngmonetaryratecode"];
+    $aryResult["strmonetaryratename"] = $aryDetail[0]["strmonetaryratename"];
+    // 顧客
+    $aryResult["strcompanydisplaycode"] = $aryDetail[0]["strcompanydisplaycode"];
+    $aryResult["strcompanydisplayname"] = $aryDetail[0]["strcompanydisplayname"];
+
+    // 換算レートの取得
+    $curconversionrate = fncGetCurConversionRate($aryData["dtmDeliveryDate"], $aryDetail[0]["lngmonetaryratecode"],
+    $aryDetail[0]["lngmonetaryunitcode"], $objDB);
+    $aryResult["curconversionrate"] = $curconversionrate;
     // データ返却
 	// echo $strHtml;
 	//結果出力
@@ -176,9 +192,9 @@ $aryData["optTaxClass"] = $optTaxClass;
 $optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], "", $objDB);
 $aryData["optTaxRate"] = $optTaxRate;
 
-// レートタイププルダウン
-$optMonetaryRate .= fncGetPulldown("m_monetaryrateclass", "lngmonetaryratecode", "strmonetaryratename", "", "", $objDB);
-$aryData["optMonetaryRate"] = $optMonetaryRate;
+// // レートタイププルダウン
+// $optMonetaryRate .= fncGetPulldown("m_monetaryrateclass", "lngmonetaryratecode", "strmonetaryratename", "", "", $objDB);
+// $aryData["optMonetaryRate"] = $optMonetaryRate;
 
 // 消費税額
 $aryData["strTaxAmount"] = "0";

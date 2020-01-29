@@ -325,7 +325,10 @@ img.toggle-display
 	background-color : #ffffff ;
 	text-align : left ;
 }
-
+.Txt08L { /* 8byte */
+	width : 102px ;
+	text-align : left ;
+}
 
 .disTxt08L { /* 8byte */
 	width : 102px ;

@@ -156,7 +156,6 @@
 		// 修正対象に紐づく売上コード（登録の場合は空）
 		$strRenewTargetSalesCode = $_POST["strRenewTargetSalesCode"];
 		$lngrevisionno = $_POST["lngRevisionNo"];
-
 		// 登録か修正か（true:登録、false:修正）
 		$isCreateNew = strlen($lngRenewTargetSlipNo) == 0;
 		
