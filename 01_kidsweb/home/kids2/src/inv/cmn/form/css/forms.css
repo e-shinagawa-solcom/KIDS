@@ -443,7 +443,7 @@ img.margin-30pxL
 {
     display: inline;
     position: absolute;
-    top: 483px;
+    top: 493px;
     left: 865px;
 }
 
@@ -591,35 +591,6 @@ img.margin-30pxL
   outline: none;
 }
 
-table {
-  border-collapse: separate;
-  border-spacing: 0;
-  table-layout: fixed;
-  font-size: 12px;
-}
-thead tr {
-  background-color: #5f9ea0;
-  color: #fff;
-}
-th {
-  height: 25px;
-}
-td {
-  background-color: #fff;
-}
-th,
-td {
-  white-space: nowrap;
-  /* padding-left: .25em;
-  padding-right: .25em; */
-  border-right: 1px solid #999;
-  /* border-bottom: 1px solid #999; */
-  user-select: none;
-}
-tr:last-child td {
-  border-bottom: none;
-}
-
 .tablesorter-headerAsc span::before {
   content: '▲';
 }
@@ -638,36 +609,11 @@ th label {
   text-align: center;
 }
 
-.checkbox,
-.serial {
+.checkbox {
   width: 30px;
 }
 input[type=checkbox] {
   width: 30px;
-}
-.slipcode {
-  width: 120px;
-}
-.customer {
-  width: 160px;
-}
-.deliverydate {
-  width: 80px;
-}
-.price {
-  width: 200px;
-}
-.taxclass {
-  width: 90px;
-}
-.tax {
-  width: 40px;
-}
-.taxamount {
-  width: 180px;
-}
-.remarks {
-  width: 240px;
 }
 
 .btn {
@@ -731,6 +677,13 @@ input[type=checkbox] {
 #tableA tbody tr td.serial span::before {
   counter-increment: serialA;
   content: counter(serialA);
+}
+#tableB_no {
+  counter-reset: serialB_no;
+}
+#tableB_no tbody tr td.serial span::before {
+  counter-increment: serialB_no;
+  content: counter(serialB_no);
 }
 #tableB {
   counter-reset: serialB;

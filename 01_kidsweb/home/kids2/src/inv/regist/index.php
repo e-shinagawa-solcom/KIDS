@@ -90,11 +90,12 @@
         $aryNewResult['strSessionID'] = $aryData["strSessionID"];
         $aryNewResult['actionName']   = 'index.php';
         $aryNewResult['strMode']      = 'insert';
-//var_dump($aryNewResult['slipNoList']);
-//var_dump($aryNewResult['revisionNoList']);
+var_dump($aryData);
+var_dump($aryNewResult);
 
         $aryPrevResult = array_merge($aryNewResult, fncSetPreviewTableData($aryData, null, $objDB));
 
+        var_dump($aryPrevResult);
         // テンプレート読み込み
         $objTemplate = new clsTemplate ();
         $objTemplate->getTemplate ("inv/base_preview.html");
@@ -129,7 +130,7 @@
 
         // トランザクション開始
         $objDB->transactionBegin();
-
+var_dump($aryData);
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
         // 出力明細が1件もない場合
@@ -271,7 +272,7 @@
         $aryData["invConditionUrl"] = '/inv/regist/condition.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . $aryData["lngFunctionCode"] . '&lngApplicantUserCodeVisible=1&lngInputUserCodeVisible=1&dtmStartDateVisible=1&lngInChargeCodeVisible=1&lngWorkflowStatusCodeVisible=1&lngWorkflowStatusCodeConditions=1&lngSelectFunctionCode=500';
 
         // テンプレート読み込み
-        echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/regist/index.tmpl", $aryData ,$objAuth );
+        echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/regist/index.html", $aryData ,$objAuth );
 
     }
 

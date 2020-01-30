@@ -298,14 +298,14 @@
         // $aryNewResult['curLastMonthBalance'] = (int)preg_replace('/,/', '', $aryNewResult['curLastMonthBalance']);
         // $aryNewResult['curSubTotal1'] = (int)preg_replace('/,/', '', $aryNewResult['curSubTotal1']);
         // $aryNewResult['curTaxPrice1'] = (int)preg_replace('/,/', '', $aryNewResult['curTaxPrice1']);
-        $aryNewResult['curThisMonthAmount']  = trim($aryNewResult['curThisMonthAmount']);
+        $aryNewResult['noTaxCurtTisMonthAmount'] = trim($aryNewResult['curThisMonthAmount']);
+        $aryNewResult['curThisMonthAmount']  = trim($aryNewResult['curSubTotal1']);
         $aryNewResult['curLastMonthBalance'] = trim($aryNewResult['curLastMonthBalance']);
-        $aryNewResult['curSubTotal1'] = trim($aryNewResult['curSubTotal1']);
         $aryNewResult['curTaxPrice1'] = trim($aryNewResult['curTaxPrice1']);
 
         // テンプレート読み込み
         $objTemplate = new clsTemplate();
-        $objTemplate->getTemplate( "inv/regist/renew.tmpl" );
+        $objTemplate->getTemplate( "inv/regist/renew.html" );
         
         // テンプレート生成
         $objTemplate->replace( $aryNewResult );

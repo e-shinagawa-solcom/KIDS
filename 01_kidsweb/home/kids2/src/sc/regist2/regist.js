@@ -328,8 +328,6 @@ function resetTableBWidth() {
 
     $("#tbl_edit_detail_head").width(width + 100);
     $("#tbl_edit_detail_body").width(width + 100);
-
-
 }
 function setTableAEvent() {
     $("#tbl_detail tbody tr, #tbl_detail_chkbox tbody tr").on('click', function () {
@@ -369,7 +367,7 @@ jQuery(function ($) {
     $("#tbl_detail thead").css('display', 'none');
 
     if ($('#tbl_edit_detail_body tbody tr').length > 0) {
-        $('#tbl_edit_detail_body tbody tr td:nth-child(1)').css('display', 'none');        
+        $('#tbl_edit_detail_body tbody tr td:nth-child(1)').css('display', 'none');
         $('#tbl_edit_no_body tbody tr td').width($('#tbl_edit_no_head thead tr th').width());
         resetTableBWidth();
         selectRow($("#tbl_edit_no_body"), $("#tbl_edit_detail_body"));
@@ -1056,25 +1054,25 @@ jQuery(function ($) {
         var lngMonetaryRateCode = $('input[name="lngMonetaryUnitCode"]').val();
         // 適用レートの取得
         if (lngMonetaryUnitCode != "" && lngMonetaryRateCode != "") {
-        // リクエスト送信
-        $.ajax({
-            url: '/pc/regist/getMonetaryRate.php',
-            type: 'post',
-            data: {
-                'strSessionID': $.cookie('strSessionID'),
-                'lngMonetaryUnitCode': lngMonetaryUnitCode,
-                'lngMonetaryRateCode': lngMonetaryRateCode,
-                'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
-            }
-        })
-            .done(function (response) {
-                console.log(response);
-                var data = JSON.parse(response);
-                $('input[name="curConversionRate"]').val(data.curconversionrate);
+            // リクエスト送信
+            $.ajax({
+                url: '/pc/regist/getMonetaryRate.php',
+                type: 'post',
+                data: {
+                    'strSessionID': $.cookie('strSessionID'),
+                    'lngMonetaryUnitCode': lngMonetaryUnitCode,
+                    'lngMonetaryRateCode': lngMonetaryRateCode,
+                    'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
+                }
             })
-            .fail(function (response) {
-                alert("fail");
-            })
+                .done(function (response) {
+                    console.log(response);
+                    var data = JSON.parse(response);
+                    $('input[name="curConversionRate"]').val(data.curconversionrate);
+                })
+                .fail(function (response) {
+                    alert("fail");
+                })
         }
 
     });
@@ -1626,9 +1624,9 @@ jQuery(function ($) {
         }
     }
 
-    
+
     // 閉じた際の処理
-    $(window).on('beforeunload', function(){
+    $(window).on('beforeunload', function () {
         window.opener.location.reload();
     });
 
