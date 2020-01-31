@@ -74,7 +74,8 @@ $aryNewResult = fncSetProductTableData($aryResult, $objDB);
 // 表示対象が削除データの場合はプレビューボタンを表示しない
 // なお権限を持ってない場合もプレビューボタンを表示しない
 if (!$aryResult["bytInvalidFlag"] && fncCheckAuthority(DEF_FUNCTION_LO1, $objAuth)) {
-    $aryNewResult["strPreviewAction"] = "../../list/result/frameset.php?strSessionID=" . $aryData["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_PRODUCT . "&strReportKeyCode=" . $lngProductNo . "&bytCopyFlag=TRUE";
+    $aryNewResult["strPreviewAction"] = "../../list/result/frameset.php?strSessionID=" . $aryData["strSessionID"] 
+    . "&lngReportClassCode=" . DEF_REPORT_PRODUCT . "&strReportKeyCode=" . $aryResult["lnggoodsplancode"] . "&bytCopyFlag=TRUE";
 
     $aryNewResult["listview"] = 'style="visibility: visible"';
 } else {

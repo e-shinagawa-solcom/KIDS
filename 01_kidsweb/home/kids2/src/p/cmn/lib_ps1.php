@@ -22,6 +22,7 @@ function fncGetProductNoToInfoSQL ( $lngProductNo, $lngRevisionNo )
 	$aryQuery[] = ", t_gp.strgoodsplanprogressname as strgoodsplanprogressname\n";
 	// 改訂番号
 	$aryQuery[] = ", t_gp.lngRevisionNo as lngRevisionNo\n";
+	$aryQuery[] = ", t_gp.lnggoodsplancode as lnggoodsplancode\n";
 	// 改訂日時
 	$aryQuery[] = ", to_char( p.dtmUpdateDate, 'YYYY/MM/DD' ) as dtmRevisionDate\n";
 	// 製品コード
