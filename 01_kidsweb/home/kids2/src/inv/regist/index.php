@@ -90,12 +90,9 @@
         $aryNewResult['strSessionID'] = $aryData["strSessionID"];
         $aryNewResult['actionName']   = 'index.php';
         $aryNewResult['strMode']      = 'insert';
-var_dump($aryData);
-var_dump($aryNewResult);
 
         $aryPrevResult = array_merge($aryNewResult, fncSetPreviewTableData($aryData, null, $objDB));
 
-        var_dump($aryPrevResult);
         // テンプレート読み込み
         $objTemplate = new clsTemplate ();
         $objTemplate->getTemplate ("inv/base_preview.html");
@@ -130,7 +127,7 @@ var_dump($aryNewResult);
 
         // トランザクション開始
         $objDB->transactionBegin();
-var_dump($aryData);
+        
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
         // 出力明細が1件もない場合

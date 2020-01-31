@@ -559,7 +559,7 @@ function fncGetMonetaryunitSign( $monetaryUnitCode ,$objDB)
  *    @return Array     $strSQL 検索用SQL文 OR Boolean FALSE
  *    @access public
  */
-function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $strSessionID)
+function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $strSessionID, $optionColumns)
 {
     // -----------------------------
     //  検索条件の動的設定
@@ -768,8 +768,8 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
 
     // 顧客
     $arySelectQuery[] = ", cust_c.strcompanydisplaycode as strcustomerdisplaycode";               // 顧客コード
-    $arySelectQuery[] = ", inv.strcustomername as strcustomername";               // 顧客名
-    $arySelectQuery[] = ", inv.strcustomercompanyname as strcustomerdisplayname"; // 顧客社名
+    $arySelectQuery[] = ", inv.strcustomercompanyname || '　' || inv.strcustomername as strcustomerdisplayname";               // 顧客名
+    $arySelectQuery[] = ", inv.strcustomername as strcustomername"; // 顧客社名
     // 顧客の国
     $arySelectQuery[] = ", cust_c.lngCountryCode as lngcountrycode";
     // 請求書コード
@@ -866,10 +866,11 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     $aryOutQuery[] = " AND inv.lngrevisionno = ( "
                     . "SELECT MAX( inv1.lngrevisionno ) FROM m_invoice inv1 WHERE inv1.strinvoicecode = inv.strinvoicecode AND inv1.bytinvalidflag = false )";
 
-    // 削除データは対象外
-    $aryOutQuery[] = " AND 0 <= ( "
-            . "SELECT MIN( inv2.lngrevisionno ) FROM m_invoice inv2 WHERE inv2.bytinvalidflag = false AND inv2.strinvoicecode = inv.strinvoicecode )";
-
+    if (!array_key_exists("admin", $optionColumns)) {
+        // 削除データは対象外
+        $aryOutQuery[] = " AND 0 <= ( "
+                . "SELECT MIN( inv2.lngrevisionno ) FROM m_invoice inv2 WHERE inv2.bytinvalidflag = false AND inv2.strinvoicecode = inv.strinvoicecode )";
+    }
     // ソート条件設定
     $aryOutQuery[] = " ORDER BY inv.lnginvoiceno DESC";
 
@@ -952,7 +953,7 @@ function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
     // From句 の生成
     $aryFromQuery = array();
     $aryFromQuery[] = " FROM t_invoicedetail inv_d ";
-    $aryFromQuery[] = " LEFT JOIN m_slip slip_m ON inv_d.lngslipno = slip_m.lngslipno";
+    $aryFromQuery[] = " LEFT JOIN m_slip slip_m ON inv_d.lngslipno = slip_m.lngslipno and inv_d.lngsliprevisionno = slip_m.lngrevisionno";
 //     $aryFromQuery[] = " LEFT JOIN m_Company cust_c ON inv_d.lngdeliveryplacecode = cust_c.lngdeliveryplacecode";
     $aryFromQuery[] = " LEFT JOIN m_Company delv_c ON inv_d.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
     // From句 クエリー連結

@@ -103,7 +103,7 @@ if (!$bytSearchFlag) {
 reset($aryData);
 
 // 検索SQLを実行し検索（ヒット）件数を取得する
-$strQuery = fncGetSearchInvoiceSQL($arySearchColumn, $aryData, $objDB, $aryData["strSessionID"]);
+$strQuery = fncGetSearchInvoiceSQL($arySearchColumn, $aryData, $objDB, $aryData["strSessionID"], $optionColumns);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 

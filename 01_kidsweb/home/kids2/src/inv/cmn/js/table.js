@@ -3,7 +3,9 @@ $(function () {
   $('body').on('keydown', function (e) {
     console.log('enter');
     if (e.which == 13) {
+      console.log('122');
       $('img.add').click();
+      console.log('1444');
     }
   });
 
@@ -286,18 +288,23 @@ $(function () {
     $.createSkeletonTable(data, $tableB_row, domB, $tableB_tbody);
     $.createSkeletonTable(data, $tableB_no_row, domB, $tableB_no_tbody);
     $.each(data, function (i) {
-      temp.push(data[i]);     
-      data.splice(i, 1);
+      console.log(i);
+      console.log(data[i]);
+      temp.push(data[i]);
     });
     $.addDataTableB();
     // テーブルソート機能設定
     $.setTableSorter();
     // スキャンチェックボックス
     $.scanAllCheckbox();
-
+    // テーブルBの幅をリセットする
     $.resetTableBWidth();
-
+    // テーブルB行イベントの追加
     selectRow($("#tableB_no"), $("#tableB"));
+    // 顧客名称の取得
+    $('input[name="lngCustomerCode"]').trigger('change');
+　　// テーブルAデータの初期化
+    data = [];
   };
 
   /**
@@ -438,6 +445,7 @@ $(function () {
     $.resetTableBWidth();
 
     selectRow($("#tableA_chkbox"), $("#tableA"));
+    selectRow($("#tableB_no"), $("#tableB"));
   });
 
   // テーブルB 全削除ボタン
@@ -871,7 +879,7 @@ $(function () {
     return false;
   };
 
-
+  // テーブルAの幅をリセットする
   $.resetTableAWidth = function () {
     $("#tableA thead").css('display', '');
     $("#tableA tbody tr td").width('');
@@ -908,6 +916,7 @@ $(function () {
   }
 
 
+  // テーブルBの幅をリセットする
   $.resetTableBWidth = function () {
     $("#tableB_no tbody tr td").width($("#tableB_no_head thead tr th").width() + 1);
     $("#tableB tbody tr td").width('');
@@ -941,6 +950,8 @@ $(function () {
     $("#tbl_edit_detail_head").width(width + 100);
     $("#tbl_edit_detail_body").width(width + 100);
   }
+
+  // テーブルの行をクリックする時のイベント
   function selectRow(objA, objB) {
     var rows = objA.find('tbody tr');
     var rows = objB.find('tbody tr');

@@ -165,36 +165,43 @@
             return [false, false];
         }
 
-        // 請求日
-        var yyyy = parseInt(dateLength[1]);
-        var mm = parseInt(dateLength[2]);
-        var dd = parseInt(dateLength[3]);
-        // 締め日 (close)
-        close = parseInt(close);
-        isCloseDay = close;
-        if (close === 0) {
-            // 末日締めの対応
-            var date1 = new Date(yyyy, mm, dd);
-            date1.setMonth(date1.getMonth() - 2);
-            date1.setDate(1);
-            var start = date1.getFullYear() + '/' + (date1.getMonth() + 1) + '/' + date1.getDate();
-            var date2 = new Date(date1.getFullYear(), date1.getMonth() + 1, 0);
-            var end = date2.getFullYear() + '/' + (date2.getMonth() + 1) + '/' + date2.getDate();
-        }
-        else {
-            // 至 ：請求日の日 <= 締め日の場合、請求月先月の締め日、それ以外の場合は、請求月の締め日            
-            var date1 = new Date(yyyy, mm, dd);
-            if (dd <= close) {
-                date1.setMonth(date1.getMonth() - 1);
-                var end = date1.getFullYear() + '/' + date1.getMonth() + '/' + close;
-            } else {
-                var end = date1.getFullYear() + '/' + date1.getMonth() + '/' + close;
-            }
+        console.log(close);
+        console.log(close === 0);
+        console.log(close == 0);
+        if (close == 0) {
+            var date1 = new Date(billingDate.val() + ' 02:00');
+            // 先月初日
+            var first_date = new Date(date1.getFullYear(), date1.getMonth()-1, 1);
+            // 先月末日
+            var last_date = new Date(date1.getFullYear(), date1.getMonth(), 0);
+            // 自の取得
+            var start = first_date.getFullYear() + '/' + (first_date.getMonth() + 1) + '/' + first_date.getDate();
+            // 至の取得
+            var end = last_date.getFullYear() + '/' + (last_date.getMonth() + 1) + '/' + last_date.getDate();
+        } else {            
+            var date1 = new Date(billingDate.val() + ' 00:00'); 
+            console.log(date1.getDate());  
+            if (date1.getDate() <= close) {              
+                // 先月の取得
+                var last_month = new Date(date1.getFullYear(), date1.getMonth()-1, 1);
+                // 先先月の取得
+                var before_last_month = new Date(date1.getFullYear(), date1.getMonth()-2, close);
+                before_last_month.setDate(before_last_month.getDate() + 1);  
 
-            var date2 = new Date(date1.getFullYear(), date1.getMonth(), close);
-            date2.setMonth(date2.getMonth() - 1);
-            date2.setDate(date2.getDate() + 1);
-            var start = date2.getFullYear() + '/' + date2.getMonth() + '/' + date2.getDate();
+                // 自の取得
+                var start = before_last_month.getFullYear() + '/' + (before_last_month.getMonth() + 1) + '/' + before_last_month.getDate();
+                // 至の取得
+                var end = last_month.getFullYear() + '/' + (last_month.getMonth() + 1) + '/' + close;
+            } else {
+                // 先月の取得
+                var last_month = new Date(date1.getFullYear(), date1.getMonth()-1, close);
+                last_month.setDate(last_month.getDate() + 1);  
+                // 自の取得
+                var start = last_month.getFullYear() + '/' + (last_month.getMonth() + 1) + '/' + last_month.getDate();
+                // 至の取得
+                var end = date1.getFullYear() + '/' + (date1.getMonth() + 1) + '/' + close;
+
+            }
         }
         // 返却
         return [start, end];
@@ -399,6 +406,7 @@
     // PREVIEWボタン押下処理 (preview)
     $('img.preview-button').on({
         'click': function () {
+            console.log("previw valid");
             // validationキック
             if ($('form[name="Invoice"]').valid() == false) {
                 return;

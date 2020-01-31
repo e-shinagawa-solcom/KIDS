@@ -59,7 +59,7 @@
     <!-- COOKIE 表示チェックボックス 保存/復元 -->
     <script src="/search/cmn/js/cookie-display-items.js" defer></script>
     <!-- キーバインド -->
-    <script src="/search/cmn/js/key-bind.js" defer></script>
+    <!-- <script src="/search/cmn/js/key-bind.js" defer></script> -->
     <!-- 請求日設定 -->
     <script src="/inv/cmn/js/msw-regist.js" defer></script>
     <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
@@ -77,7 +77,7 @@
         <!-- フォームコンテンツ -->
         <div class="form-box__contents--with-scroll">
             <form name="Invoice" method="post">
-                <input type="submit">
+                <!-- <input type="submit"> -->
                 <div class="regist-box-area">
                     <div class="regist-box1">
                         <div class="regist-line regist-float">
@@ -124,8 +124,7 @@
                     <div class="regist-box2">
                         <span class="regist-label regist-label-w190">
                             <span class="regist-label__text50">自</span>
-                            <input class="TxtStyle04L" name="dtmchargeternstart" type="text" value="_%dtmChargeternStart%_" maxlength="10" onfocus="chColorOn(this);"
-                                onblur="chColorOff(this);" tabindex="">
+                            <input class="TxtStyle04L" name="dtmchargeternstart" type="text" value="_%dtmChargeternStart%_" maxlength="10" tabindex="">
                         </span>
 
                     </div>
@@ -151,15 +150,14 @@
                                 <br>
                                 <br>
                                 <span class="regist-label__text50"></span>
-                                <input class="Txt54L" name="strnote" type="text" value="_%strNote%_" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                                <input class="Txt54L" name="strnote" type="text" value="_%strNote%_">
                             </span>
                         </div>
                     </div>
                     <div class="regist-box2">
                         <span class="regist-label regist-label-w190">
                             <span class="regist-label__text50">至</span>
-                            <input class="TxtStyle04L" name="dtmchargeternend" type="text" value="_%dtmChargeternEnd%_" maxlength="10" onfocus="chColorOn(this);"
-                                onblur="chColorOff(this);" tabindex="">
+                            <input class="TxtStyle04L" name="dtmchargeternend" type="text" value="_%dtmChargeternEnd%_" maxlength="10" tabindex="">
                         </span>
 
                     </div>
