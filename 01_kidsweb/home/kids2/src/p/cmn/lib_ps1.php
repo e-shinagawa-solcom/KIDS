@@ -134,7 +134,7 @@ function fncGetProductNoToInfoSQL ( $lngProductNo, $lngRevisionNo )
 	$aryQuery[] = " LEFT JOIN m_User input_u ON p.lngInputUserCode = input_u.lngUserCode\n";
 	$aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lngInChargeGroupCode = inchg_g.lngGroupCode\n";
 	$aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lngInChargeUserCode = inchg_u.lngUserCode\n";
-	$aryQuery[] = " LEFT JOIN m_User devp_u ON p.lngInChargeUserCode = devp_u.lngUserCode\n";
+	$aryQuery[] = " LEFT JOIN m_User devp_u ON p.lngdevelopusercode = devp_u.lngUserCode\n";
 	$aryQuery[] = " LEFT JOIN m_Category mc ON mc.lngCategoryCode = p.lngCategoryCode\n";
 	$aryQuery[] = " LEFT JOIN m_Company cust_c ON p.lngCustomerCompanyCode = cust_c.lngCompanyCode\n";
 	$aryQuery[] = " LEFT JOIN m_User cust_u ON p.lngCustomerUserCode = cust_u.lngUserCode\n";
@@ -262,6 +262,20 @@ function fncSetProductTableData ( $aryResult, $objDB )
 				$strText = "     ";
 			}
 			$strText .= " " . $aryResult["strinchargeuserdisplayname"];
+			$aryNewResult[$strColumnName] = $strText;
+		}
+		// 開発担当者
+		else if ( $strColumnName == "lngdevelopusercode" )
+		{
+			if ( $aryResult["strdevelopuserdisplaycode"] )
+			{
+				$strText = "[" . $aryResult["strdevelopuserdisplaycode"] ."]";
+			}
+			else
+			{
+				$strText = "     ";
+			}
+			$strText .= " " . $aryResult["strdevelopuserdisplayname"];
 			$aryNewResult[$strColumnName] = $strText;
 		}
 		// 顧客
