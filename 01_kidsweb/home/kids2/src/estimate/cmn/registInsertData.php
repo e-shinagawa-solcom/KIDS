@@ -557,7 +557,7 @@ class registInsertData extends estimateInsertData {
             'lnggoodsplancode' => $this->goodsPlanCode,
             'lngrevisionno' => $this->revisionNo,
             'lngproductno' => $this->productNo,
-            'strrevisecode' => $this->reviseCode,
+            'strrevisecode' => "'" .$this->reviseCode . "'",
             'dtmcreationdate' => 'NOW()',
             'dtmrevisiondate' => 'NULL',
             'lnggoodsplanprogresscode' => DEF_GOODSPLAN_AFOOT,

@@ -84,17 +84,17 @@ $aryQuery[] = "  m_product p ";
 $aryQuery[] = "  inner join ( ";
 $aryQuery[] = "    select";
 $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
-$aryQuery[] = "      , strproductcode ";
+$aryQuery[] = "      , lngproductno ";
 $aryQuery[] = "      , strrevisecode ";
 $aryQuery[] = "    from";
 $aryQuery[] = "      m_Product ";
 $aryQuery[] = "    where";
 $aryQuery[] = "      bytInvalidFlag = false ";
 $aryQuery[] = "    group by";
-$aryQuery[] = "      strProductCode";
+$aryQuery[] = "      lngproductno";
 $aryQuery[] = "      ,strrevisecode";
 $aryQuery[] = "  ) p1 ";
-$aryQuery[] = "    on p.strProductCode = p1.strProductCode ";
+$aryQuery[] = "    on p.lngproductno = p1.lngproductno ";
 $aryQuery[] = "    and p.lngrevisionno = p1.lngrevisionno ";
 $aryQuery[] = "    and p.strrevisecode = p1.strrevisecode ";
 $aryQuery[] = " LEFT JOIN m_User u1 ON p.lngInputUserCode = u1.lngUserCode";
@@ -224,7 +224,6 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = join("\n", $aryQuery);
-
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);
