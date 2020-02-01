@@ -153,6 +153,7 @@
 			$aryExportDataInfo[5]["filename"] = "estimate";
 			$aryData["lngExportConditions"] =1;
 			$aryExportDataInfo[5]["strProductCode"][1] = $aryData["strProductCode"];
+			$aryExportDataInfo[5]["strReviseCode"][1] = $aryData["strReviseCode"];
 	
 			break;
 	}

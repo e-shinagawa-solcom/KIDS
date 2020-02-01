@@ -30,9 +30,9 @@ select '02'
 union
 select '03'
 	,'製品コード'
-	,'_%strProductCode%_'
+	,(select mp.strproductcode || '_' || mp.strrevisecode from m_product mp where mp.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
 	,'製品名'
-	,(select mp.strproductname from m_product mp where mp.strproductcode = '_%strProductCode%_')
+	,(select mp.strproductname from m_product mp where mp.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
 	,''
 	,''
 	,''
@@ -41,11 +41,11 @@ select '03'
 union
 select '04'
 	,'部門コード'
-	,(select mg.strgroupdisplaycode from m_product mp, m_group mg where mp.lngInChargeGroupCode = mg.lnggroupcode and mp.strproductcode =  '_%strProductCode%_')
+	,(select mg.strgroupdisplaycode from m_product mp, m_group mg where mp.lngInChargeGroupCode = mg.lnggroupcode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
 	,'部門名称'
-	,(select mg.strgroupdisplayname from m_product mp, m_group mg where mp.lngInChargeGroupCode = mg.lnggroupcode and mp.strproductcode =  '_%strProductCode%_')
+	,(select mg.strgroupdisplayname from m_product mp, m_group mg where mp.lngInChargeGroupCode = mg.lnggroupcode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
 	,'カテゴリ'
-	,(select mcg.strcategoryname from m_product mp, m_category mcg where mp.lngcategorycode = mcg.lngcategorycode and mp.strproductcode =  '_%strProductCode%_')
+	,(select mcg.strcategoryname from m_product mp, m_category mcg where mp.lngcategorycode = mcg.lngcategorycode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
 	,''
 	,''
 	,''
@@ -63,7 +63,7 @@ select '05'
 from
 	m_product mp
 where
-	mp.strproductcode =  '_%strProductCode%_'
+	mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_'
 union
 select '06'
 	,''
@@ -98,14 +98,17 @@ select
 	end as bytPayOffTargetFlag
 	,trim(to_char(tet.lngProductQuantity, '9999,999,999'))
 	,substr(mmu.strmonetaryunitsign, length(mmu.strmonetaryunitsign)) || ' ' ||trim(to_char(tet.curProductPrice, '9999,999,999'))
-	, '\\ ' ||trim(to_char(tet.curSubTotalPrice, '9999,999,999'))
+	, '\ ' ||trim(to_char(tet.curSubTotalPrice, '9999,999,999'))
 	,tet.strNote
 	,''
 from
 	m_estimate me
+	inner join m_estimatehistory meh
+	    on meh.lngestimateno = me.lngestimateno
+	    and meh.lngrevisionno = me.lngrevisionno
 	left join t_estimatedetail tet
-		on tet.lngestimateno = me.lngestimateno
-		and tet.lngrevisionno = me.lngrevisionno
+		on tet.lngestimateno = meh.lngestimateno
+		and tet.lngrevisionno = meh.lngestimatedetailrevisionno
 	left join 
 		m_stocksubject mss
 		on mss.lngstocksubjectcode = tet.lngstocksubjectcode
@@ -118,6 +121,7 @@ from
 		on mc.lngcompanycode = tet.lngcustomercompanycode
 	,m_product mp
 where
-me.strproductcode = '_%strProductCode%_'
+me.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_'
 and me.lngrevisionno = (select max(lngrevisionno) from m_estimate where lngestimateno = me.lngestimateno)
 and me.strproductcode = mp.strproductcode
+and me.strrevisecode = mp.strrevisecode
