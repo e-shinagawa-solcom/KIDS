@@ -40,6 +40,7 @@ $aryQuery[] = "SELECT ";
 $aryQuery[] = "rd.lngReceiveNo as lngReceiveNo, rd.lngRevisionNo as lngRevisionNo";
 $aryQuery[] = ", r.strReceiveCode";
 $aryQuery[] = ", r.strcustomerreceivecode";
+$aryQuery[] = ", r.lngMonetaryUnitCode";
 $aryQuery[] = ", r.strMonetaryUnitSign";
 $aryQuery[] = ", rd.lngreceivedetailno as lngreceivedetailno";
 $aryQuery[] = ", rd.strProductCode as strProductCode"; // 製品コード・名称

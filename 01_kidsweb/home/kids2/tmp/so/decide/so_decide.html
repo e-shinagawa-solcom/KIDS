@@ -87,14 +87,14 @@
 					<div class="regist-line">
 						<table class="table-box" style="height: 205px;">
 							<tr>
-								<td width: 800px;>
+								<td style="width: 800px;">
 									<div class="regist-label div-table">
 										<table class="table-fix">
 											<thead id="tbl_detail_chkbox_head">
 												<tr>
 													<th>選択
 														<br>
-														<input name="allSel" type="checkbox" style="width: 10px;">
+														<input name="allSel" id="allChecked" type="checkbox" style="width: 10px;">
 													</th>
 												</tr>
 											</thead>
@@ -155,9 +155,9 @@
 					<div class="regist-line">
 						<table class="table-box">
 							<tr>
-								<td>
+								<td style="width: 800px;">
 									<div class="regist-label div-decide-table">
-										<table class="table-decide-fix">
+										<table class="table-decide-fix" id="tbl_decide_no_head">
 											<thead>
 												<tr>
 													<th>No.</th>
@@ -166,7 +166,7 @@
 											<!-- 固定ヘッダ -->
 										</table>
 										<div id="header_decide_h">
-											<table class="table-decide-description" name="DECIDE_T">
+											<table class="table-decide-description" name="DECIDE_T" id="tbl_decide_head">
 												<thead>
 													<tr>
 														<th style="display:none">No.</th>
