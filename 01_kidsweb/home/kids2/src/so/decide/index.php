@@ -256,12 +256,14 @@ foreach ($aryDetailResult as $detailResult) {
     // 顧客受注番号
     $td = $doc->createElement("td");
     $td->setAttribute("id", "strcustomerreceivecode");
+    $td->setAttribute("style", "text-align:center;");
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
     $text->setAttribute("class", "form-control form-control-sm txt-kids");
-    $text->setAttribute("style", "width:90px;");
+    // $text->setAttribute("style", "width:90px;");
     $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
     $td->appendChild($text);
+
     // if (!$isdecideObj) {
     //     $td->setAttribute("style", "display:none");
     // }
@@ -269,7 +271,7 @@ foreach ($aryDetailResult as $detailResult) {
 
     // 顧客
     if ($aryResult[0]["strcustomerdisplaycode"] != "") {
-        $textContent = "[" . $aryResult[0]["strcustomerdisplaycode"] . "]" . " " . $aryResult[0]["strcustomerdisplayname"];
+        $textContent = "[" . $detailResult["strcustomerdisplaycode"] . "]" . " " . $detailResult["strcustomerdisplayname"];
     } else {
         $textContent = "";
     }
@@ -295,7 +297,7 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
     // 単価
-    $textContent = toMoneyFormat($aryResult[0]["lngmonetaryunitcode"], $aryResult[0]["strmonetaryunitsign"], $detailResult["curproductprice"]);
+    $textContent = toMoneyFormat($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["curproductprice"]);
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "curproductprice");
     $trBody->appendChild($td);
@@ -345,7 +347,7 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
     // 小計
-    $textContent = toMoneyFormat($aryResult[0]["lngmonetaryunitcode"], $aryResult[0]["strmonetaryunitsign"], $detailResult["cursubtotalprice"]);
+    $textContent = toMoneyFormat($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["cursubtotalprice"]);
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "cursubtotalprice");
     $trBody->appendChild($td);

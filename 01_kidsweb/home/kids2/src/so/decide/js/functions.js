@@ -1,18 +1,16 @@
 (function () {
-
-    resetAllTableColumnWidth();
     resetTableADisplayStyle();
     resetTableAWidth();
     resetTableBWidth();
+    selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
     selectRow($("#tbl_decide_no"), $("#tbl_decide_body"));
 
-    if ($('input[name="strGoodsCode"]').val() != "")
-    {
-        $('input[name="strGoodsCode"]').attr('readonly',true);
+    if ($('input[name="strGoodsCode"]').val() != "") {
+        $('input[name="strGoodsCode"]').attr('readonly', true);
     } else {
-        $('input[name="strGoodsCode"]').attr('readonly',false);
+        $('input[name="strGoodsCode"]').attr('readonly', false);
     }
-    
+
     var lockId = "lockId";
     // ウィンドウクローズ処理
     window.onbeforeunload = unLock;
@@ -24,6 +22,14 @@
             $('input[type="checkbox"]')
                 .each(function () {
                     this.checked = status;
+                    if (status) {
+                        $("#tbl_detail_chkbox tbody tr").css("background-color", "#bbbbbb");
+                        $("#tbl_detail tbody tr").css("background-color", "#bbbbbb");
+                    } else {
+
+                        $("#tbl_detail_chkbox tbody tr").css("background-color", "#ffffff");
+                        $("#tbl_detail tbody tr").css("background-color", "#ffffff");
+                    }
                 });
         }
     });
@@ -68,13 +74,6 @@
 
                     var lasttr = $("#tbl_decide_body").find('tr').last();
                     lasttr.find('td:nth-child(1)').css('display', 'none');
-                    lasttr.find('#strcustomerreceivecode').css('display', '');
-                    lasttr.find('#curproductprice').css('display', '');
-                    lasttr.find('#lngproductunitcode').css('display', '');
-                    lasttr.find('#lngunitquantity').css('display', '');
-                    lasttr.find('#cursubtotalprice').css('display', '');
-                    lasttr.find('#lngproductquantity_re').css('display', '');
-                    lasttr.find('#strdetailnote').css('display', '');
                 }
 
             }
@@ -90,14 +89,17 @@
             }
         }
 
-        $('#tbl_detail tbody tr').each(function (i, e) {
-            $(this).find('td:nth-child(1)').text(i + 1);
-        });
+        resetTableBRowid();
+
+        resetTableBWidth();
+        
+        resetTableBDisplayStyle();
 
         selectRow($("#tbl_decide_no"), $("#tbl_decide_body"));
 
-
         selectChange();
+
+        scanAllCheckbox();
     });
 
     // 全削除ボタンのイベント
@@ -111,7 +113,15 @@
 
         resetTableARowid();
 
-        $('input[type="checkbox"][name="allSel"]').prop("checked", false);
+        resetTableAWidth();
+        
+        resetTableADisplayStyle();
+
+        resetTableBWidth();
+
+        scanAllCheckbox();
+        
+        selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
     });
 
     // 削除ボタンのイベント
@@ -130,9 +140,18 @@
         });
 
         resetTableARowid();
+
         resetTableBRowid();
 
-        $('input[type="checkbox"][name="allSel"]').prop("checked", false);
+        resetTableAWidth();
+        
+        resetTableADisplayStyle();
+
+        resetTableBWidth();
+
+        scanAllCheckbox();
+        
+        selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
     });
 
     function removeTableBToTableA(tableBRow) {
@@ -141,7 +160,10 @@
         var rownum = 0;
         $("#tbl_detail tbody tr").each(function (i, e) {
             var detailnoA = $(this).find('#lngreceivedetailno').text();
-            if (detailnoA > detailnoB) {
+            console.log("detailnoA:" + detailnoA);
+            console.log("detailnoB:" + detailnoB);
+            console.log(parseInt(detailnoA) > parseInt(detailnoB));
+            if (parseInt(detailnoA) > parseInt(detailnoB)) {
                 rownum = i + 1;
                 return false;
             }
@@ -155,16 +177,7 @@
             $('#tbl_detail_chkbox tbody tr:nth-child(' + rownum + ')').before('<tr><td style="text-align:center;"><input type="checkbox" style="width: 10px;"></td></tr>');
         }
 
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').width($(".table-decide-description").eq(1).find("thead tr th:nth-child(1)").width());
-        $('#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').width($(".table-decide-description").eq(0).find("thead tr th:nth-child(1)").width());
         $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('td:nth-child(1)').css('display', '');
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('#strcustomerreceivecode').css('display', 'none');
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('#curproductprice').css('display', 'none');
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('#lngproductunitcode').css('display', 'none');
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('#lngunitquantity').css('display', 'none');
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('#cursubtotalprice').css('display', 'none');
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('#lngproductquantity_re').css('display', 'none');
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('#strdetailnote').css('display', 'none');
 
         tableBRow.remove();
     }
@@ -376,8 +389,7 @@
         // 画面操作を無効する
         // lockScreen("lockId");
         var strGoodsCode = "";
-        if (!$('input[name="strGoodsCode"]').attr('readonly'))
-        {   
+        if (!$('input[name="strGoodsCode"]').attr('readonly')) {
             strGoodsCode = $('input[name="strGoodsCode"]').val();
         }
 
@@ -555,56 +567,205 @@ function resetAllTableColumnWidth() {
 }
 
 function resetTableADisplayStyle() {
-    $(".table-decide-description").eq(2).find("tbody tr td:nth-child(1)").css('display', '');
-    $(".table-decide-description").eq(0).find("thead tr th:nth-child(3)").css('display', 'none');
-    $(".table-decide-description").eq(2).find("tbody tr td:nth-child(3)").css('display', 'none');
-    $(".table-decide-description").eq(0).find("thead tr th:nth-child(8)").css('display', 'none');
-    $(".table-decide-description").eq(2).find("tbody tr td:nth-child(8)").css('display', 'none');
-    $(".table-decide-description").eq(0).find("thead tr th:nth-child(9)").css('display', 'none');
-    $(".table-decide-description").eq(2).find("tbody tr td:nth-child(9)").css('display', 'none');
-    $(".table-decide-description").eq(0).find("thead tr th:nth-child(10)").css('display', 'none');
-    $(".table-decide-description").eq(2).find("tbody tr td:nth-child(10)").css('display', 'none');
-    $(".table-decide-description").eq(0).find("thead tr th:nth-child(11)").css('display', 'none');
-    $(".table-decide-description").eq(2).find("tbody tr td:nth-child(11)").css('display', 'none');
-    $(".table-decide-description").eq(0).find("thead tr th:nth-child(12)").css('display', 'none');
-    $(".table-decide-description").eq(2).find("tbody tr td:nth-child(12)").css('display', 'none');
-    $(".table-decide-description").eq(0).find("thead tr th:nth-child(13)").css('display', 'none');
-    $(".table-decide-description").eq(2).find("tbody tr td:nth-child(13)").css('display', 'none');
+    $("#tbl_detail tbody tr").each(function (i, e) {
+        $(this).find("#strcustomerreceivecode").find('input:text').prop('disabled', true);
+        $(this).find("#lngproductunitcode").find('select').prop('disabled', true);
+        $(this).find("#lngunitquantity").find('input:text').prop('disabled', true);
+        $(this).find("#strdetailnote").find('input:text').prop('disabled', true);
+    });
+
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(1)").css('display', '');
+
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(3)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(3)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(8)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(8)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(9)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(9)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(10)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(10)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(11)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(11)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(12)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(12)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(13)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(13)").css('display', 'none');
 }
+
+function resetTableBDisplayStyle() {
+    $("#tbl_decide_body tbody tr").each(function (i, e) {
+        $(this).find("#strcustomerreceivecode").find('input:text').prop('disabled', false);
+        $(this).find("#lngproductunitcode").find('select').prop('disabled', false);
+        $(this).find("#lngunitquantity").find('input:text').prop('disabled', false);
+        $(this).find("#strdetailnote").find('input:text').prop('disabled', false);
+    });
+
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(1)").css('display', '');
+
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(3)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(3)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(8)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(8)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(9)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(9)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(10)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(10)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(11)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(11)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(12)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(12)").css('display', 'none');
+    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(13)").css('display', 'none');
+    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(13)").css('display', 'none');
+}
+
+// function resetTableAWidth() {
+//     var width = 0;
+//     var columnNum = $(".table-decide-description").eq(0).find("thead tr th").length;
+//     for (var i = 1; i <= columnNum; i++) {
+//         if ($(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
+//             // $(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('width', '');
+//             // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(" + i + ")").css('width', '');
+//         } else {
+//             width += $(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").width();
+//         }
+//     }
+//     $(".table-decide-description").eq(0).width(width + 25);
+//     $(".table-decide-description").eq(2).width(width + 25);
+// }
+
 
 function resetTableAWidth() {
+    $("#tbl_detail_chkbox tbody tr td").width($("#tbl_detail_chkbox_head tr th").width());
+    $("#tbl_detail thead").css('display', '');
+    $("#tbl_detail tbody tr td").width('');
+    $("#tbl_detail thead tr th").width('');
+    $("#tbl_detail_head thead tr th").width('');
+    var thwidthArry = [];
+    var tdwidthArry = [];
     var width = 0;
-    var columnNum = $(".table-decide-description").eq(0).find("thead tr th").length;
+    var columnNum = $('#tbl_detail_head thead tr th').length;
     for (var i = 1; i <= columnNum; i++) {
-        if ($(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-            // $(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('width', '');
-            // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(" + i + ")").css('width', '');
-        } else {
-            width += $(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").width();
+        var thwidth = $('#tbl_detail_head thead tr th:nth-child(' + i + ')').width();
+        var tdwidth = $('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
+        thwidthArry.push(thwidth + 20);
+        tdwidthArry.push(tdwidth + 20);
+    }
+
+    for (var i = 1; i <= columnNum; i++) {
+        if ($("#tbl_detail_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
+            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+                $("#tbl_detail_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                width += thwidthArry[i - 1];
+            } else {
+                $("#tbl_detail_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                width += tdwidthArry[i - 1];
+            }
         }
     }
-    $(".table-decide-description").eq(0).width(width + 25);
-    $(".table-decide-description").eq(2).width(width + 25);
-}
+    $("#tbl_detail_head").width(width + 100);
+    $("#tbl_detail").width(width + 100);
 
+    $("#tbl_detail thead").css('display', 'none');
+}
 
 
 function resetTableBWidth() {
+    $("#tbl_decide_no tbody tr td").width($("#tbl_decide_no_head thead tr th").width());
+    $("#tbl_decide_body tbody tr td").width('');
+    $("#tbl_decide_head thead tr th").width('');
+    var thwidthArry = [];
+    var tdwidthArry = [];
+    var columnNum = $('#tbl_decide_head thead tr th').length;
+    console.log(columnNum);
     var width = 0;
-    var columnNum = $(".table-decide-description").eq(3).find("thead tr th").length;
     for (var i = 1; i <= columnNum; i++) {
-        if ($(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-            // $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('width', '');
-            // $(".table-decide-description").eq(5).find("tbody tr td:nth-child(" + i + ")").css('width', '');
-        } else {
-            console.log(i + ":" + $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width());
-            width += $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width();
+        var thwidth = $('#tbl_decide_head thead tr th:nth-child(' + i + ')').width();
+        var tdwidth = $('#tbl_decide_body tbody tr td:nth-child(' + i + ')').width();
+        thwidthArry.push(thwidth + 20);
+        tdwidthArry.push(tdwidth + 20);
+    }
+
+    for (var i = 1; i <= columnNum; i++) {
+        if ($("#tbl_decide_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
+            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+                $("#tbl_decide_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                $("#tbl_decide_body tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                width += thwidthArry[i - 1];
+            } else {
+                $("#tbl_decide_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                $("#tbl_decide_body tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                width += tdwidthArry[i - 1];
+            }
         }
     }
-    console.log(width);
-    $(".table-decide-description").eq(3).width(width + 50);
-    $(".table-decide-description").eq(5).width(width + 50);
+
+    $("#tbl_decide_head").width(width + 100);
+    $("#tbl_decide_body").width(width + 100);
 }
+// function resetTableBWidth() {
+//     var width = 0;
+//     var columnNum = $(".table-decide-description").eq(3).find("thead tr th").length;
+//     for (var i = 1; i <= columnNum; i++) {
+//         if ($(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
+//             // $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('width', '');
+//             // $(".table-decide-description").eq(5).find("tbody tr td:nth-child(" + i + ")").css('width', '');
+//         } else {
+//             console.log(i + ":" + $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width());
+//             width += $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width();
+//         }
+//     }
+//     console.log(width);
+//     $(".table-decide-description").eq(3).width(width + 50);
+//     $(".table-decide-description").eq(5).width(width + 50);
+// }
+
+
+  /**
+   * @method scanAllCheckbox スキャンチェックボックス
+   */
+  function scanAllCheckbox() {
+
+    var $all_rows = $('#tbl_detail tbody tr');
+    var $all_chkbox_rows = $('#tbl_detail_chkbox tbody tr');
+    var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
+
+    // 有効 <tr> ＊選択可能行
+    var count_checked = 0;
+    var count_disabled = 0;
+
+    // data がない場合、全選択／解除チェックボックスを寝かせて無効化
+    if (!$all_rows.length) {
+      $('#allChecked').prop({ 'checked': false, 'disabled': true });
+    } else {
+      $('#allChecked').prop('disabled', false);
+    }
+
+    $.each($all_checkbox, function (i) {
+      // チェックボックスがひとつでも外れている場合、全選択／解除チェックボックスを寝かす
+      if (!($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)')) {
+        $('#allChecked').prop('checked', false);
+      }
+
+      // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
+      if ($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)') {
+        ++count_checked;
+      }
+      if ($all_rows.length === count_checked) {
+        $('#allChecked').prop('checked', true);
+      }
+
+      // すべてのチェックボックスが無効化された場合、全選択／解除チェックボックスを寝かせて無効化
+      if ($(this).prop('disabled')) {
+        ++count_disabled;
+      }
+      if (data.length === count_disabled) {
+        $('#allChecked').prop({ 'checked': false, 'disabled': true });
+      }
+    });
+  };
+
 
 function selectRow(objA, objB) {
     var rows = objA.find('tbody tr');
@@ -640,6 +801,7 @@ function trClickEvent(row, lastSelectedRow, e, objA, objB) {
     if (e.ctrlKey || e.metaKey) {
         /* If pressed highlight the other row that was clicked */
         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
         objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
 
     } else if (e.shiftKey) {
@@ -650,12 +812,15 @@ function trClickEvent(row, lastSelectedRow, e, objA, objB) {
         });
         for (var i = indexes[0]; i <= indexes[1]; i++) {
             objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
+            objA.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
             objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
         }
     } else {
         /* Otherwise just highlight one row and clean others */
         objA.find("tbody tr").css("background-color", "#ffffff");
+        objA.find("tbody tr").find('input[type="checkbox"]').prop('checked', false);
         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
         objB.find("tbody tr").css("background-color", "#ffffff");
         objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
         lastSelectedRow = row;

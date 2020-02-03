@@ -129,28 +129,28 @@
                         window.opener.$('#tbl_detail_chkbox tbody tr td:nth-child(1)').width(window.opener.$('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
 
                         
-                        var thwidthArry = [];
-                        var tdwidthArry = [];
-                        var columnNum = window.opener.$('#tbl_detail_head tr th').length;
-                        for (var i = 1; i <= columnNum; i++) {
-                            var thwidth = Number(window.opener.$(".table-decide-description").eq(3).find('thead tr th:nth-child(' + i + ')').css('width').replace('px', ''));
-                            var tdwidth = window.opener.$('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
-                            thwidthArry.push(thwidth + 1);
-                            tdwidthArry.push(tdwidth + 1);
-                        }
+                        // var thwidthArry = [];
+                        // var tdwidthArry = [];
+                        // var columnNum = window.opener.$('#tbl_detail_head tr th').length;
+                        // for (var i = 1; i <= columnNum; i++) {
+                        //     var thwidth = Number(window.opener.$(".table-decide-description").eq(3).find('thead tr th:nth-child(' + i + ')').css('width').replace('px', ''));
+                        //     var tdwidth = window.opener.$('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
+                        //     thwidthArry.push(thwidth + 1);
+                        //     tdwidthArry.push(tdwidth + 1);
+                        // }
 
-                        for (var i = 1; i <= columnNum; i++) {
-                            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-                                window.opener.$(".table-decide-description thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                                window.opener.$(".table-decide-description tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                            } else {
-                                window.opener.$(".table-decide-description thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                                window.opener.$(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                            }
-                        }
-                        resetTableADisplayStyle();
-                        resetTableAWidth();
-                        resetTableBWidth();
+                        // for (var i = 1; i <= columnNum; i++) {
+                        //     if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+                        //         window.opener.$(".table-decide-description thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                        //         window.opener.$(".table-decide-description tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+                        //     } else {
+                        //         window.opener.$(".table-decide-description thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                        //         window.opener.$(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+                        //     }
+                        // }
+                        window.opener.resetTableADisplayStyle();
+                        window.opener.resetTableAWidth();
+                        window.opener.resetTableBWidth();
                     })
                     .fail(function (response) {
                         console.log("処理結果：" + JSON.stringify(response));
@@ -175,50 +175,50 @@
 
 
 
-function resetTableADisplayStyle() {
-    window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(1)").css('display', '');
-    window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(3)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(3)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(8)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(8)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(9)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(9)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(10)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(10)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(11)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(11)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(12)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(12)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(13)").css('display', 'none');
-    window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(13)").css('display', 'none');
-}
+// function resetTableADisplayStyle() {
+//     window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(1)").css('display', '');
+//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(3)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(3)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(8)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(8)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(9)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(9)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(10)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(10)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(11)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(11)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(12)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(12)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(13)").css('display', 'none');
+//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(13)").css('display', 'none');
+// }
 
-function resetTableAWidth() {
-    var width = 0;
-    var columnNum = window.opener.$(".table-decide-description").eq(0).find("thead tr th").length;
-    for (var i = 1; i <= columnNum; i++) {
-        if (window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-        } else {
-            width += window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").width();
-        }
-    }
-    window.opener.$(".table-decide-description").eq(0).width(width + 25);
-    window.opener.$(".table-decide-description").eq(2).width(width + 25);
-}
+// function resetTableAWidth() {
+//     var width = 0;
+//     var columnNum = window.opener.$(".table-decide-description").eq(0).find("thead tr th").length;
+//     for (var i = 1; i <= columnNum; i++) {
+//         if (window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
+//         } else {
+//             width += window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").width();
+//         }
+//     }
+//     window.opener.$(".table-decide-description").eq(0).width(width + 25);
+//     window.opener.$(".table-decide-description").eq(2).width(width + 25);
+// }
 
 
-function resetTableBWidth() {
-    var width = 0;
-    var columnNum = window.opener.$(".table-decide-description").eq(3).find("thead tr th").length;
-    for (var i = 1; i <= columnNum; i++) {
-        if (window.opener.$(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-        } else {
-            width += window.opener.$(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width();
-        }
-    }
-    window.opener.$(".table-decide-description").eq(3).width(width + 50);
-    window.opener.$(".table-decide-description").eq(5).width(width + 50);
-}
+// function resetTableBWidth() {
+//     var width = 0;
+//     var columnNum = window.opener.$(".table-decide-description").eq(3).find("thead tr th").length;
+//     for (var i = 1; i <= columnNum; i++) {
+//         if (window.opener.$(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
+//         } else {
+//             width += window.opener.$(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width();
+//         }
+//     }
+//     window.opener.$(".table-decide-description").eq(3).width(width + 50);
+//     window.opener.$(".table-decide-description").eq(5).width(width + 50);
+// }
 
 $(window).on("beforeunload", function (e) {
     // 親ウィンドウのロックを解除する
