@@ -28,7 +28,7 @@ SELECT
 	,ss.strStockSubjectName
 	,sd.lngStockItemCode
 	,si.strStockItemName
-	,sd.strProductCode
+	,sd.strProductCode || '_' || sd.strReviseCode as strProductCode
 	,p.strProductEnglishName
 	,sd.curProductPrice
 	,pu.strProductUnitName
@@ -37,9 +37,10 @@ SELECT
 	,sd.strNote
 FROM
 	m_Stock s
-	LEFT JOIN m_Order o
-		ON s.lngOrderNo = o.lngOrderNo
 	,t_StockDetail sd
+	LEFT JOIN m_Order o
+		ON sd.lngOrderNo = o.lngOrderNo
+		AND sd.lngOrderRevisionNo = o.lngRevisionNo
 	,m_Product p
 	,m_Company c
 	,m_Group g
@@ -60,11 +61,20 @@ WHERE
 	(
 	  SELECT MIN ( s3.lngRevisionNo ) FROM m_Stock s3 WHERE s.strStockCode = s3.strStockCode AND s3.bytInvalidFlag = false
 	)
+	AND p.lngrevisionno =
+	(
+	  SELECT MAX ( p2.lngRevisionNo ) FROM m_Product p2 WHERE p2.lngProductNo = p.lngProductNo
+	)
+	 AND 0 <=
+	(
+	  SELECT MIN ( p3.lngRevisionNo ) FROM m_Product p3 WHERE p3.lngProductNo = p.lngProductNo AND p3.bytInvalidFlag = false
+	)
 	AND date_trunc ( 'day', s.dtmAppropriationDate ) >= '_%dtmAppropriationDateFrom%_'
 	AND date_trunc ( 'day', s.dtmAppropriationDate ) <= '_%dtmAppropriationDateTo%_'
 	AND p.bytInvalidFlag        = FALSE
 	AND s.bytInvalidFlag        = FALSE
 	AND s.lngStockNo             = sd.lngStockNo
+	AND s.lngRevisionNo             = sd.lngRevisionNo
 	AND s.lngCustomerCompanyCode = c.lngCompanyCode
 	/* AND s.lngGroupCode           = g.lngGroupCode */
 	and p.lnginchargegroupcode   = g.lngGroupCode
@@ -77,6 +87,7 @@ WHERE
 	AND sd.lngStockSubjectCode   = si.lngStockSubjectCode
 	AND sd.lngStockSubjectCode   = ss.lngStockSubjectCode
 	AND sd.strProductCode        = p.strProductCode
+	AND sd.strReviseCode        = p.strReviseCode
 	AND sd.lngProductUnitCode    = pu.lngProductUnitCode
 	and p.lngcategorycode = mcg.lngcategorycode
 
