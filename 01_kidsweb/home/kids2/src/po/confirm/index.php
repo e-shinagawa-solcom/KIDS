@@ -75,12 +75,12 @@ if ($_POST["strMode"] == "insert") {
     // 更新データ取得
     $aryUpdate["lngorderno"] = $_POST["lngOrderNo"];
     $aryUpdate["lngrevisionno"] = $_POST["lngRevisionNo"];
-    $aryUpdate["dtmexpirationdate"] = $_POST["dtmExpirationDate"];
+    // $aryUpdate["dtmexpirationdate"] = $_POST["dtmExpirationDate"];
     $aryUpdate["lngpayconditioncode"] = $_POST["lngPayConditionCode"];
-    $aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
     $aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
     $aryUpdate["strnote"] = $_POST["strNote"];
     $aryUpdate["lngorderstatuscode"] = 2;
+    
     for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
         $aryUpdateDetail[$i]["lngpurchaseorderdetailno"] = $i + 1;
         $aryUpdateDetail[$i]["lngorderdetailno"] = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
@@ -98,12 +98,12 @@ if ($_POST["strMode"] == "insert") {
         $aryUpdateDetail[$i]["lngproductquantity"] = $_POST["aryDetail"][$i]["lngProductQuantity"];
         $aryUpdateDetail[$i]["cursubtotalprice"] = $_POST["aryDetail"][$i]["curSubtotalPrice"];
         $aryUpdateDetail[$i]["dtmseliverydate"] = $_POST["aryDetail"][$i]["dtmDeliveryDate"];
+        $aryUpdateDetail[$i]["strnote"] = $_POST["aryDetail"][$i]["strDetailNote"];
     }
 
     $objDB->transactionBegin();
 
     // リビジョンチェック
-
     // 発注マスタ更新
     if (!fncUpdateOrder($aryUpdate, $aryUpdateDetail, $objDB)) {return false;}
     // 発注明細更新

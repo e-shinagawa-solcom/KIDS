@@ -229,7 +229,7 @@
             }
         }
 
-        resetRowid();
+        resetTableBRowid();
 
     });
 
@@ -268,7 +268,7 @@
             }
         }
 
-        resetRowid();
+        resetTableBRowid();
 
     });
 
@@ -288,7 +288,7 @@
             }
         });
 
-        resetRowid();
+        resetTableBRowid();
 
     });
 
@@ -310,7 +310,7 @@
             }
         });
 
-        resetRowid();
+        resetTableBRowid();
     });
 
     // 確定登録イベント

@@ -34,9 +34,9 @@ define ( "EXECUTE_HOST_NAME_DEV",	"kids.devs.biz" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
-//define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
 //define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" ); // EUC-JPのDBサーバー（後で消したい）
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.114" ); // UTF-8のDBサーバー
+//define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.114" ); // UTF-8のDBサーバー
 //define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
 
 // 実行サーバー名称の取得

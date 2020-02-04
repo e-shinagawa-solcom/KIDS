@@ -4,6 +4,14 @@
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
+	<!-- jQuery -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<!-- jQuery Cookie -->
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<!-- jQuery UI -->
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
+	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
 
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
@@ -41,7 +49,6 @@
 				<input type="hidden" name="strMode" value="_%strMode%_">
 				<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_"><!-- 発注ＮＯ． -->
 				<input type="hidden" name="lngPayConditionCode" value="_%lngPayConditionCode%_"><!-- 支払条件 -->
-				<input type="hidden" name="dtmExpirationDate" value="_%dtmExpirationDate%_"><!-- 発注有効期限日 -->
 				<input type="hidden" name="lngLocationCode" value="_%lngLocationCode%_"><!-- 納品場所 -->
 				<input type="hidden"  name="strNote" value="_%strNote%_"><!-- 備考 -->
 				<input type="hidden" name="strProductCode" value="_%strProductCode%_">
@@ -122,13 +129,6 @@
 					<td id="PayCondition" class="SegColumn">_%CNlngPayConditionCode%_</td>
 					<td class="Segs">_%strpayconditionname%_</td>
 				</tr>
-				
-				_%strPayConditionTable%_ 
-
-				<tr> 
-					<td id="ExpirationDate" class="SegColumn">_%CNdtmExpirationDate%_</td>
-					<td class="Segs">_%dtmexpirationdate%_</td>
-				</tr>
 				<tr> 
 					<td id="Remark" class="SegColumn">_%CNstrNote%_</td>
 					<td class="Segs">_%strnote%_</td>
@@ -167,9 +167,9 @@ _%strDetailTable%_
 	<tr>
         <td id="ButtonArea">
             <span id="CancelBt">
-                <img src="/img/type01/cmn/seg/close_off_ja_bt.gif" onclick="window.close();"
-                    onmouseover="this.src='/img/type01/cmn/seg/close_on_ja_bt.gif'"
-                    onmouseout="this.src='/img/type01/cmn/seg/close_off_ja_bt.gif'">
+                <img src="/img/type01/cmn/querybt/back_gray_off_ja_bt.gif" onclick="window.close();"
+                    onmouseover="this.src='/img/type01/cmn/querybt/back_gray_on_ja_bt.gif'"
+                    onmouseout="this.src='/img/type01/cmn/querybt/back_gray_off_ja_bt.gif'">
             </span>
             <span id="OkBt">
                     <img src="/img/type01/cmn/seg/regist_off_ja_bt.gif" onclick="RegistPO();"

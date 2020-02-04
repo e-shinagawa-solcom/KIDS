@@ -259,73 +259,124 @@ function fncGetPayCondition($lngpayconditioncode, $objDB)
  */
 function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
 {
-    $aryQuery[] = "SELECT DISTINCT ON (mo.strordercode, mo.lngrevisionno, od.lngorderdetailno) ";
-    $aryQuery[] = "   mo.strordercode || '_' || TO_CHAR(mo.lngrevisionno,'FM00') AS strordercode";
-    $aryQuery[] = "  ,od.lngorderdetailno";
-    $aryQuery[] = "  ,od.strproductcode";
-    $aryQuery[] = "  ,mp.strproductname";
-    $aryQuery[] = "  ,od.dtmdeliverydate";
-    $aryQuery[] = "  ,mc.strcompanydisplaycode";
-    $aryQuery[] = "  ,mc.strcompanydisplayname";
-    $aryQuery[] = "  ,od.lngstocksubjectcode";
-    $aryQuery[] = "  ,mss.strstocksubjectname";
-    $aryQuery[] = "  ,od.lngstockitemcode";
-    $aryQuery[] = "  ,msi.strstockitemname";
-    $aryQuery[] = "  ,od.lngdeliverymethodcode";
-    $aryQuery[] = "  ,od.lngproductunitcode";
-    $aryQuery[] = "  ,od.lngsortkey";
-    $aryQuery[] = "  ,mmu.strmonetaryunitsign";
-    $aryQuery[] = "  ,od.curproductprice";
-    $aryQuery[] = "  ,od.lngproductquantity";
-    $aryQuery[] = "  ,od.cursubtotalprice";
-//    $aryQuery[] = "  ,od.curtaxprice";
-    $aryQuery[] = "  ,mpu.strproductunitname";
-    $aryQuery[] = "  ,od.lngdeliverymethodcode";
-    $aryQuery[] = "  ,od.strnote";
-    $aryQuery[] = "  ,mo.lngrevisionno";
-    $aryQuery[] = "  ,mo.lngorderno";
-    $aryQuery[] = "  ,mo.lngmonetaryunitcode";
-    $aryQuery[] = "  ,mo.lngcustomercompanycode";
-    $aryQuery[] = "FROM m_order m_key ";
-    $aryQuery[] = "INNER JOIN m_order mo";
-    $aryQuery[] = "  ON mo.strordercode = m_key.strordercode";
-    $aryQuery[] = "  AND mo.lngrevisionno = m_key.lngrevisionno";
-    $aryQuery[] = "  AND mo.lngcustomercompanycode = m_key.lngcustomercompanycode";
-    $aryQuery[] = "  AND mo.lngmonetaryunitcode = m_key.lngmonetaryunitcode ";
-    $aryQuery[] = "INNER JOIN t_orderdetail od";
-    $aryQuery[] = "  ON  mo.lngorderno = od.lngorderno";
-    $aryQuery[] = "  AND mo.lngrevisionno = od.lngrevisionno";
-    $aryQuery[] = "LEFT JOIN (";
-    $aryQuery[] = "    SELECT m_product.* FROM m_product ";
-    $aryQuery[] = "     INNER JOIN (";
-    $aryQuery[] = "         SELECT ";
-    $aryQuery[] = "             lngproductno,strrevisecode,MAX(lngrevisionno) as lngrevisionno ";
-    $aryQuery[] = "         FROM m_product GROUP BY lngproductno,strrevisecode";
-    $aryQuery[] = "     ) mp1 ON mp1.lngproductno = m_product.lngproductno";
-    $aryQuery[] = "     AND mp1.strrevisecode = m_product.strrevisecode";
-    $aryQuery[] = "     AND mp1.lngrevisionno = m_product.lngrevisionno";
-    $aryQuery[] = ") mp ON  od.strproductcode = mp.strproductcode ";
-    $aryQuery[] = "  AND mp.strrevisecode = od.strrevisecode ";
-//    $aryQuery[] = "  and mp.lngrevisionno = od.lngrevisionno";
-    $aryQuery[] = "LEFT JOIN m_company mc";
-    $aryQuery[] = "  ON  mo.lngcustomercompanycode = mc.lngcompanycode";
-    $aryQuery[] = "LEFT JOIN m_stocksubject mss";
-    $aryQuery[] = "  ON  od.lngstocksubjectcode = mss.lngstocksubjectcode";
-    $aryQuery[] = "LEFT JOIN m_stockitem msi";
-    $aryQuery[] = "  ON  od.lngstockitemcode = msi.lngstockitemcode";
-    $aryQuery[] = "  AND od.lngstocksubjectcode = msi.lngstocksubjectcode";
-    $aryQuery[] = "LEFT JOIN m_productprice mpp";
-    $aryQuery[] = "  ON  mp.lngproductno = mpp.lngproductno";
-    $aryQuery[] = "  AND od.lngstockitemcode = mpp.lngstockitemcode";
-    $aryQuery[] = "  AND od.lngstocksubjectcode = mpp.lngstocksubjectcode";
-    $aryQuery[] = "LEFT JOIN m_monetaryunit mmu";
-    $aryQuery[] = "  ON  mo.lngmonetaryunitcode = mmu.lngmonetaryunitcode";
-    $aryQuery[] = "LEFT JOIN m_productunit mpu";
-    $aryQuery[] = "  ON  od.lngproductunitcode = mpu.lngproductunitcode";
-    $aryQuery[] = "WHERE mo.lngorderstatuscode = 1";
-    $aryQuery[] = " AND m_key.lngorderno in (" . $aryOrderNo . ") AND m_key.lngrevisionno = " . $lngRevisionNo . "";
- 
+    $aryQuery[] = "SELECT DISTINCT";
+    $aryQuery[] = "    ON ( ";
+    $aryQuery[] = "      mo.strordercode";
+    $aryQuery[] = "      , mo.lngrevisionno";
+    $aryQuery[] = "      , od.lngorderdetailno";
+    $aryQuery[] = "    ) mo.strordercode || '_' || TO_CHAR(mo.lngrevisionno, 'FM00') AS strordercode";
+    $aryQuery[] = "  , od.lngorderdetailno";
+    $aryQuery[] = "  , mo.lngorderstatuscode";
+    $aryQuery[] = "  , od.strproductcode";
+    $aryQuery[] = "  , mp.strproductname";
+    $aryQuery[] = "  , od.dtmdeliverydate";
+    $aryQuery[] = "  , mc.strcompanydisplaycode";
+    $aryQuery[] = "  , mc.strcompanydisplayname";
+    $aryQuery[] = "  , od.lngstocksubjectcode";
+    $aryQuery[] = "  , mss.strstocksubjectname";
+    $aryQuery[] = "  , od.lngstockitemcode";
+    $aryQuery[] = "  , msi.strstockitemname";
+    $aryQuery[] = "  , od.lngdeliverymethodcode";
+    $aryQuery[] = "  , od.lngproductunitcode";
+    $aryQuery[] = "  , od.lngsortkey";
+    $aryQuery[] = "  , mmu.strmonetaryunitsign";
+    $aryQuery[] = "  , od.curproductprice";
+    $aryQuery[] = "  , od.lngproductquantity";
+    $aryQuery[] = "  , od.cursubtotalprice";
+    $aryQuery[] = "  , mpu.strproductunitname";
+    $aryQuery[] = "  , mdm.strdeliverymethodname";
+    $aryQuery[] = "  , od.strnote";
+    $aryQuery[] = "  , mo.lngrevisionno";
+    $aryQuery[] = "  , mo.lngorderno";
+    $aryQuery[] = "  , mo.lngmonetaryunitcode";
+    $aryQuery[] = "  , mo.lngcustomercompanycode ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  m_order mo ";
+    $aryQuery[] = "  INNER JOIN t_orderdetail od ";
+    $aryQuery[] = "    ON mo.lngorderno = od.lngorderno ";
+    $aryQuery[] = "    AND mo.lngrevisionno = od.lngrevisionno ";
+    $aryQuery[] = "  LEFT JOIN ( ";
+    $aryQuery[] = "    SELECT";
+    $aryQuery[] = "      m_product.* ";
+    $aryQuery[] = "    FROM";
+    $aryQuery[] = "      m_product ";
+    $aryQuery[] = "      INNER JOIN ( ";
+    $aryQuery[] = "        SELECT";
+    $aryQuery[] = "          lngproductno";
+    $aryQuery[] = "          , strrevisecode";
+    $aryQuery[] = "          , MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "        FROM";
+    $aryQuery[] = "          m_product ";
+    $aryQuery[] = "        GROUP BY";
+    $aryQuery[] = "          lngproductno";
+    $aryQuery[] = "          , strrevisecode";
+    $aryQuery[] = "      ) mp1 ";
+    $aryQuery[] = "        ON mp1.lngproductno = m_product.lngproductno ";
+    $aryQuery[] = "        AND mp1.strrevisecode = m_product.strrevisecode ";
+    $aryQuery[] = "        AND mp1.lngrevisionno = m_product.lngrevisionno";
+    $aryQuery[] = "  ) mp ";
+    $aryQuery[] = "    ON od.strproductcode = mp.strproductcode ";
+    $aryQuery[] = "    AND mp.strrevisecode = od.strrevisecode ";
+    $aryQuery[] = "  LEFT JOIN m_company mc ";
+    $aryQuery[] = "    ON mo.lngcustomercompanycode = mc.lngcompanycode ";
+    $aryQuery[] = "  LEFT JOIN m_deliverymethod mdm ";
+    $aryQuery[] = "    ON od.lngdeliverymethodcode = mdm.lngdeliverymethodcode ";
+    $aryQuery[] = "  LEFT JOIN m_stocksubject mss ";
+    $aryQuery[] = "    ON od.lngstocksubjectcode = mss.lngstocksubjectcode ";
+    $aryQuery[] = "  LEFT JOIN m_stockitem msi ";
+    $aryQuery[] = "    ON od.lngstockitemcode = msi.lngstockitemcode ";
+    $aryQuery[] = "    AND od.lngstocksubjectcode = msi.lngstocksubjectcode ";
+    $aryQuery[] = "  LEFT JOIN m_productprice mpp ";
+    $aryQuery[] = "    ON mp.lngproductno = mpp.lngproductno ";
+    $aryQuery[] = "    AND od.lngstockitemcode = mpp.lngstockitemcode ";
+    $aryQuery[] = "    AND od.lngstocksubjectcode = mpp.lngstocksubjectcode ";
+    $aryQuery[] = "  LEFT JOIN m_monetaryunit mmu ";
+    $aryQuery[] = "    ON mo.lngmonetaryunitcode = mmu.lngmonetaryunitcode ";
+    $aryQuery[] = "  LEFT JOIN m_productunit mpu ";
+    $aryQuery[] = "    ON od.lngproductunitcode = mpu.lngproductunitcode ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      mo.strordercode";
+    $aryQuery[] = "      , mo.lngrevisionno";
+    $aryQuery[] = "      , od.strproductcode";
+    $aryQuery[] = "      , mo.lngcustomercompanycode";
+    $aryQuery[] = "      , mo.lngmonetaryunitcode";
+    $aryQuery[] = "      , msi.lngestimateareaclassno ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_order mo ";
+    // $aryQuery[] = "      inner join ( ";
+    // $aryQuery[] = "        select";
+    // $aryQuery[] = "          max(lngRevisionNo) lngRevisionNo";
+    // $aryQuery[] = "          , lngorderno ";
+    // $aryQuery[] = "        from";
+    // $aryQuery[] = "          m_order ";
+    // $aryQuery[] = "        group by";
+    // $aryQuery[] = "          lngorderno";
+    // $aryQuery[] = "      ) mo1 ";
+    // $aryQuery[] = "        on mo.lngrevisionno = mo1.lngRevisionNo ";
+    // $aryQuery[] = "        and mo.lngorderno = mo1.lngorderno ";
+    $aryQuery[] = "      LEFT JOIN t_orderdetail od ";
+    $aryQuery[] = "        ON mo.lngorderno = od.lngorderno ";
+    $aryQuery[] = "        AND mo.lngrevisionno = od.lngrevisionno ";
+    $aryQuery[] = "      LEFT JOIN m_stocksubject mss ";
+    $aryQuery[] = "        ON od.lngstocksubjectcode = mss.lngstocksubjectcode ";
+    $aryQuery[] = "      LEFT JOIN m_stockitem msi ";
+    $aryQuery[] = "        ON od.lngstockitemcode = msi.lngstockitemcode ";
+    $aryQuery[] = "        AND od.lngstocksubjectcode = msi.lngstocksubjectcode ";
+    $aryQuery[] = "    WHERE";
+    $aryQuery[] = "      mo.lngorderno in (" .$aryOrderNo .") AND mo.lngrevisionno = ". $lngRevisionNo."";
+    $aryQuery[] = "  ) m_key ";
+    $aryQuery[] = "    ON od.strproductcode = m_key.strproductcode ";
+    $aryQuery[] = "    AND mo.lngrevisionno = m_key.lngrevisionno ";
+    $aryQuery[] = "    AND mo.lngcustomercompanycode = m_key.lngcustomercompanycode ";
+    $aryQuery[] = "    AND mo.lngmonetaryunitcode = m_key.lngmonetaryunitcode ";
+    $aryQuery[] = "    AND msi.lngestimateareaclassno = m_key.lngestimateareaclassno ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  mo.lngorderstatuscode = 1";
+
     $strQuery = implode("\n", $aryQuery);
+
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if (!$lngResultNum) {
         return false;
@@ -446,13 +497,33 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
  * @access  public
  *
  */
-function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery)
+function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery, $aryData)
 {
-    $strHtml = "";
+    $aryResult = array();
+    $tableA_chkbox_body_html = "";
+    $tableA_body_html = "";
+    $tableB_no_body_html = "";
+    $tableB_body_html = "";
+
+    $lngOrderNos = explode(",", $aryData["lngOrderNo"]);
+    if ($lngOrderNos) {
+        // 表示項目の抽出
+        foreach ($lngOrderNos as $key) {
+            $lngOrderNos[$key] = $key;
+        }
+    }
+
     for ($i = 0; $i < count($aryOrderDetail); $i++) {
+        $strHtml = "";
+        if (array_key_exists($aryOrderDetail[$i]["lngorderno"], $lngOrderNos)) {
+            $tableB_no_body_html .= "<tr><td>" . ($i + 1) . "</td></tr>";
+        } else {
+            $tableA_chkbox_body_html .= "<tr>";
+            // 確定選択(チェックボックス)
+            $tableA_chkbox_body_html .= "<td class=\"detailCheckbox\" style=\"width:20px;align-items: center;\"><input type=\"checkbox\" name=\"edit\"></td>";
+            $tableA_chkbox_body_html .= "</tr>";
+        }
         $strHtml .= "<tr>";
-        // 確定選択(チェックボックス)
-        $strHtml .= "<td class=\"detailCheckbox\" style=\"width:20px;align-items: center;\"><input type=\"checkbox\" name=\"edit\"></td>";
         $strDisplayValue = "";
         // 発注NO.
         $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strordercode"]);
@@ -468,25 +539,26 @@ function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery)
         $strDisplayCode = htmlspecialchars($aryOrderDetail[$i]["lngstockitemcode"]);
         $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strstockitemname"]);
         $strHtml .= "<td class=\"detailStockItemName\">[" . $strDisplayCode . "] " . $strDisplayValue . "</td>";
-        // 仕入先
-        $strDisplayCode = htmlspecialchars($aryOrderDetail[$i]["strcompanydisplaycode"]);
-        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strcompanydisplayname"]);
-        $strHtml .= "<td class=\"detailCompanyDisplayCode\">[" . $strDisplayCode . "] " . $strDisplayValue . "</td>";
+        // 運搬方法
+        $strDisplayCode = htmlspecialchars($aryOrderDetail[$i]["lngstockitemcode"]);
+        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strstockitemname"]);
+        $strHtml .= "<td class=\"detailStockItemName\">[" . $strDisplayCode . "] " . $strDisplayValue . "</td>";
         // 単価
-        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["curproductprice"]);
-        $strHtml .= "<td class=\"detailProductPrice\" style=\"text-align:right;\">" . number_format($strDisplayValue, 4) . "</td>";
+        $strDisplayValue = toMoneyFormat($aryOrderDetail[$i]["lngmonetaryunitcode"], $aryOrderDetail[$i]["strmonetaryunitsign"], number_format($aryOrderDetail[$i]["curproductprice"], 4));
+        $strHtml .= "<td class=\"detailProductPrice\" style=\"text-align:right;\">" . $strDisplayValue . "</td>";
         // 数量
         $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["lngproductquantity"]);
         $strHtml .= "<td class=\"detailProductQuantity\" style=\"text-align:right;\">" . number_format($strDisplayValue) . "</td>";
         // 税抜金額
-        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["cursubtotalprice"]);
-        $strHtml .= "<td class=\"detailSubtotalPrice\" style=\"text-align:right;\">" . number_format($strDisplayValue, 4) . "</td>";
+        
+        $strDisplayValue = toMoneyFormat($aryOrderDetail[$i]["lngmonetaryunitcode"], $aryOrderDetail[$i]["strmonetaryunitsign"], number_format($aryOrderDetail[$i]["cursubtotalprice"], 4));
+        $strHtml .= "<td class=\"detailSubtotalPrice\" style=\"text-align:right;\">" . $strDisplayValue . "</td>";
         // 納期
         $strDisplayValue = str_replace("-", "/", htmlspecialchars($aryOrderDetail[$i]["dtmdeliverydate"]));
         $strHtml .= "<td class=\"detailDeliveryDate\">" . $strDisplayValue . "</td>";
         // 備考
         $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strnote"]);
-        $strHtml .= "<td class=\"detailNote\">" . $strDisplayValue . "</td>";
+        $strHtml .= "<td class=\"detailNote\"><input type='text' class='form-control form-control-sm txt-kids' style='width: 240px;' value='". $strDisplayValue . "'</td>";
         // 運搬方法(明細入力用)
         $strHtml .= "<td class=\"forEdit detailDeliveryMethod\"><select name=\"optDelivery\">" . $strDelivery . "</select></td>";
         // 単位コード(明細登録用)
@@ -510,10 +582,21 @@ function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery)
         // 仕入先コード(明細登録用)
         $strDisplayCode = htmlspecialchars($aryOrderDetail[$i]["lngcustomercompanycode"]);
         $strHtml .= "<td class=\"forEdit detailCustomerCompanyCode\">" . $strDisplayCode . "</td>";
-
         $strHtml .= "</tr>";
+
+        if (array_key_exists($aryOrderDetail[$i]["lngorderno"], $lngOrderNos)) {
+            $tableB_body_html .= $strHtml;
+        } else {
+            $tableA_body_html .= $strHtml;
+        }
     }
-    return $strHtml;
+
+    $aryResult["tableB_no_body"] = $tableB_no_body_html;
+    $aryResult["tableA_chkbox_body"] = $tableA_chkbox_body_html;
+    $aryResult["tableB_body"] = $tableB_body_html;
+    $aryResult["tableA_body"] = $tableA_body_html;
+
+    return $aryResult;
 }
 
 /**
@@ -665,9 +748,10 @@ function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB)
         $aryDetailQuery[] = "   lngdeliverymethodcode = " . intval($aryDetail[$i]["lngdeliverymethodcode"]);
         $aryDetailQuery[] = "  ,lngsortkey = " . intval($aryDetail[$i]["lngsortkey"]);
         $aryDetailQuery[] = "  ,lngproductunitcode = " . intval($aryDetail[$i]["lngproductunitcode"]);
+        $aryDetailQuery[] = "  ,strnote = '" . $aryDetail[$i]["strnote"]. "'";
         $aryDetailQuery[] = "WHERE lngorderno = " . intval($aryDetail[$i]["lngorderno"]);
         $aryDetailQuery[] = "AND   lngorderdetailno = " . intval($aryDetail[$i]["lngorderdetailno"]);
-        $aryDetailQuery[] = "AND   lngrevisionno = " . intval($aryUpdate["lngrevisionno"]);
+        $aryDetailQuery[] = "AND   lngrevisionno = " . intval($aryDetail[$i]["lngrevisionno"]);
 
         $strDetailQuery = "";
         $strDetailQuery = implode("\n", $aryDetailQuery);
@@ -727,7 +811,7 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $year = date('y');
                     $month = date('m');
 //fncDebug("kids2.log", $year . "/" . $month, __FILE__, __LINE__, "a");
-//                    $lngorderno = fncGetSequence("m_purchaseorder.strordercode." . $ym, $objDB);
+                    //                    $lngorderno = fncGetSequence("m_purchaseorder.strordercode." . $ym, $objDB);
                     $lngorderno = fncGetDateSequence($year, $month, "m_purchaseorder.strordercode", $objDB);
 //fncDebug("kids2.log", $lngorderno, __FILE__, __LINE__, "a");
                     $customer = fncGetCompany($aryOrderDetailUpdate[$i]["lngcustomercompanycode"], $objDB);
@@ -747,7 +831,7 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $aryQuery[] = "  ,strrevisecode";
                     $aryQuery[] = "  ,strproductname";
                     $aryQuery[] = "  ,strproductenglishname";
-                    $aryQuery[] = "  ,dtmexpirationdate";
+                    // $aryQuery[] = "  ,dtmexpirationdate";
                     $aryQuery[] = "  ,lngmonetaryunitcode";
                     $aryQuery[] = "  ,strmonetaryunitname";
                     $aryQuery[] = "  ,strmonetaryunitsign";
@@ -779,7 +863,7 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $aryQuery[] = "  ,'" . sprintf("%02d", $lngrevisionno) . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductname"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductenglishname"] . "'";
-                    $aryQuery[] = "  ,'" . $aryOrder["dtmexpirationdate"] . "'";
+                    // $aryQuery[] = "  ,'" . $aryOrder["dtmexpirationdate"] . "'";
                     $aryQuery[] = "  ," . $aryOrderDetailUpdate[$i]["lngmonetaryunitcode"];
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strmonetaryunitname"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strmonetaryunitsign"] . "'";
@@ -851,11 +935,12 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                 $aryQueryDetail[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductunitname"] . "'";
                 $aryQueryDetail[] = "  ," . $aryOrderDetailUpdate[$i]["cursubtotalprice"];
                 $aryQueryDetail[] = "  ,'" . $aryOrderDetailUpdate[$i]["dtmdeliverydate"] . "'";
-                $aryQueryDetail[] = "  ,'" . $aryOrderDetailUpdate[$i]["strnote"] . "'";
+                $aryQueryDetail[] = "  ,'" . $aryOrderDetail[$i]["strnote"] . "'";
                 $aryQueryDetail[] = "  ," . ($i + 1);
                 $aryQueryDetail[] = ")";
 
                 $strQueryDetail = implode("\n", $aryQueryDetail);
+
                 if (!$lngResultID = $objDB->execute($strQueryDetail)) {
                     fncOutputError(9051, DEF_ERROR, "発注書明細への更新処理に失敗しました。", true, "", $objDB);
                     return null;
@@ -893,9 +978,12 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder, $strSessionID)
                 $strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryPurchaseOrder[$i]["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
                 $aryHtml[] = "<table class=\"ordercode\">";
                 $aryHtml[] = "  <tr>";
+                $aryHtml[] = "    <td class=\"SegColumn\">PO番号</td>";
                 $aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryPurchaseOrder[$i]["strordercode"], $aryPurchaseOrder[$i]["lngrevisionno"]) . "</td>";
-                $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.open('" . $strUrl . "', 'listWin', 'width=800,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no')\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
-                $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.opener.location.reload();window.close();return false;\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"close\"></a></td>";
+                $aryHtml[] = "  </tr>";
+                $aryHtml[] = "  <tr>";
+                $aryHtml[] = "    <td class=\"orderbuttontd\" colspan=\"2\"><a href=\"#\" onclick=\"window.open('" . $strUrl . "', 'listWin', 'width=800,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no')\"><img src=\"/img/type01/cmn/querybt/blownpreview_off_bt.gif\" alt=\"preview\"></a>";
+                $aryHtml[] = "    <a href=\"#\" onclick=\"window.opener.opener.location.reload();window.opener.close();window.close();\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"close\"></a></td>";
                 $aryHtml[] = "  </tr>";
                 $aryHtml[] = "</table> ";
                 $aryHtml[] = "<br>";
@@ -1029,7 +1117,7 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
     $aryQuery[] = "LEFT JOIN m_stockitem msi ON pd.lngstockitemcode = msi.lngstockitemcode AND pd.lngstocksubjectcode = msi.lngstocksubjectcode";
     $aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $lngpurchaseorderno;
-	$aryQuery[] = "AND   mp.lngrevisionno = " . intval($lngrevisionno);
+    $aryQuery[] = "AND   mp.lngrevisionno = " . intval($lngrevisionno);
     $aryQuery[] = " ORDER BY";
     $aryQuery[] = "   pd.lngsortkey";
 
@@ -1087,7 +1175,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
  */
 function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
 {
-    $lngcompanycode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryPurchaseOrder["lngLocationCode"]  . ":str", '',$objDB);
+    $lngcompanycode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryPurchaseOrder["lngLocationCode"] . ":str", '', $objDB);
     $aryQuery[] = "INSERT INTO m_purchaseorder(";
     $aryQuery[] = "    lngpurchaseorderno,";
     $aryQuery[] = "    lngrevisionno,";
@@ -1142,21 +1230,21 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    strmonetaryunitsign,";
     $aryQuery[] = "    lngmonetaryratecode,";
     $aryQuery[] = "    strmonetaryratename,";
-    $aryQuery[] =      $aryPurchaseOrder["lngPayConditionCode"] . ",";
+    $aryQuery[] = $aryPurchaseOrder["lngPayConditionCode"] . ",";
     $aryQuery[] = "    '" . $aryPurchaseOrder["strPayConditionName"] . "',";
     $aryQuery[] = "    lnggroupcode,";
     $aryQuery[] = "    strgroupname,";
     $aryQuery[] = "    txtsignaturefilename,";
     $aryQuery[] = "    lngusercode,";
     $aryQuery[] = "    strusername,";
-    $aryQuery[] =     $lngcompanycode . ",";
+    $aryQuery[] = $lngcompanycode . ",";
     $aryQuery[] = "    '" . $aryPurchaseOrder["strLocationName"] . "',";
     $aryQuery[] = "    curtotalprice,";
     $aryQuery[] = "    CURRENT_TIMESTAMP,";
-    $aryQuery[] =      $objAuth->UserCode . ",";
+    $aryQuery[] = $objAuth->UserCode . ",";
     $aryQuery[] = "    '" . $objAuth->UserDisplayName . "',";
     $aryQuery[] = "    '" . $aryPurchaseOrder["strNote"] . "',";
-    $aryQuery[] =      0 . " ";
+    $aryQuery[] = 0 . " ";
     $aryQuery[] = "FROM m_purchaseorder po";
     $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
     $aryQuery[] = "    AND   lngrevisionno = (SELECT MAX( po1.lngRevisionNo ) FROM m_purchaseorder po1 WHERE po1.lngpurchaseorderno = po.lngpurchaseorderno )";
@@ -1216,9 +1304,9 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
         $aryQuery[] = "    lngstocksubjectcode,";
         $aryQuery[] = "    lngstockitemcode,";
         $aryQuery[] = "    strstockitemname,";
-        $aryQuery[] =      $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"] . ",";
+        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"] . ",";
 //        $aryQuery[] =      "'" . $aryPurchaseOrder["aryDetail"][$i]["strDeliveryMethodName"] . "',";
-        $aryQuery[] =      "'" . $strDeliveryMethodName . "',";
+        $aryQuery[] = "'" . $strDeliveryMethodName . "',";
         $aryQuery[] = "    curproductprice,";
         $aryQuery[] = "    lngproductquantity,";
         $aryQuery[] = "    lngproductunitcode,";
@@ -1226,7 +1314,7 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
         $aryQuery[] = "    cursubtotalprice,";
         $aryQuery[] = "    dtmdeliverydate,";
         $aryQuery[] = "    strnote,";
-        $aryQuery[] =      $aryPurchaseOrder["aryDetail"][$i]["lngSortKey"] . " ";
+        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngSortKey"] . " ";
         $aryQuery[] = "FROM t_purchaseorderdetail pod";
         $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
         $aryQuery[] = "AND   lngpurchaseorderdetailno = " . $aryPurchaseOrder["aryDetail"][$i]["lngPurchaseOrderDetailNo"];

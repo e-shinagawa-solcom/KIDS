@@ -1,5 +1,5 @@
-<!--
-window.onbeforeunload = unLock;
+// <!--
+// window.onbeforeunload = unLock;
 
 function RegistPO(){
     $.ajax({
@@ -11,7 +11,6 @@ function RegistPO(){
             strMode: "insert",
             lngRevisionNo: $('input[name="lngRevisionNo"]').val(),
             lngPayConditionCode: $('input[name="lngPayConditionCode"]').val(),
-            dtmExpirationDate: $('input[name="dtmExpirationDate"]').val(),
             lngLocationCode: $('input[name="lngLocationCode"]').val(),
             strNote: $('input[name="strNote"]').val(),
             strProductCode: $('input[name="strProductCode"]').val(),
@@ -52,6 +51,7 @@ function getUpdateDetail() {
             lngProductQuantity: $(getDetailName('lngProductQuantity' ,i)).val(),
             curSubtotalPrice: $(getDetailName('curSubtotalPrice' ,i)).val(),
             dtmDeliveryDate: $(getDetailName('dtmDeliveryDate' ,i)).val(),
+            strDetailNote: $(getDetailName('strDetailNote' ,i)).val()
         };
         var msg = 
         "lngOrderDetailNo=" + param.lngOrderDetailNo + "\n" +
@@ -68,7 +68,8 @@ function getUpdateDetail() {
             "curProductPrice=" + param.curProductPrice + "\n" +
             "lngProductQuantity=" + param.lngProductQuantity + "\n" +
             "curSubtotalPrice=" + param.curSubtotalPrice + "\n" +
-            "dtmDeliveryDate=" + param.dtmDeliveryDate + "\n";
+            "dtmDeliveryDate=" + param.dtmDeliveryDate + "\n" +
+            "strDetailNote=" + param.strDetailNote + "\n";
         result.push(param);
     }
     
