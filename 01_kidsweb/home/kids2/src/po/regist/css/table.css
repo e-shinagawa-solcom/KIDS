@@ -1,0 +1,147 @@
+
+.div-table
+{
+    position:relative;
+    width:99.5%;
+    height:130px;
+    top: -5px;
+}
+.table-description
+{
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 140%;
+    max-width: 140%;
+    margin-bottom: 0rem;
+}
+.table-description thead
+{
+    
+    font-size: 9pt;
+    color: white;
+    font-weight: normal;
+}
+
+.table-description thead > tr
+{
+    display: block;
+    height: 100%;
+    background-color: #799797;
+}
+
+.table-description tbody
+{
+    font-size: 9pt;
+    display: block;
+    background-color: #f1f1f1;
+}
+
+.table-description tbody > tr
+{
+    height: 20px;
+    
+    background-color: #ffffff;
+}
+.table-description th{
+    height:30px;
+    text-align: center;
+}
+.table-description th,
+.table-description td{
+    border: 1px solid #798787;
+}
+/* .table-description th:nth-of-type(1),
+.table-description td:nth-of-type(1),
+.table-description th:nth-of-type(2),
+.table-description td:nth-of-type(2)
+{
+    text-align: center;
+    width: 25px;
+}
+.table-description th:nth-of-type(3),
+.table-description td:nth-of-type(3)
+{
+    width: 250px;
+}
+
+.table-description th:nth-of-type(4),
+.table-description td:nth-of-type(4),
+.table-description th:nth-of-type(5),
+.table-description td:nth-of-type(5)
+{
+    width: 120px;
+}
+
+.table-description th:nth-of-type(6),
+.table-description td:nth-of-type(6)
+{
+    width: 120px;
+} */
+
+.table-fix
+{
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
+    width:35px;
+    height: 25px;
+    position:absolute;
+    left:-1px;top:0px;
+}
+
+.table-fix thead
+{
+    
+    font-size: 8pt;
+    color: white;
+    font-weight: normal;
+}
+
+.table-fix thead > tr
+{
+    display: block;
+    background-color: #799797;
+}
+.table-fix th{
+    height:20px;
+    width: 30px;
+    border: 1px solid #798787;
+    text-align: center;
+}
+
+[name="T"] {
+    width: 100%;
+}
+
+[name="TV"] th {
+    width: 30px
+}
+
+#header_h {
+    position: absolute;
+    left: 29px;
+    top: 0px;
+    width: 96.4%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#header_v {
+    position: absolute;
+    left: -1px;
+    top: 22px;
+    width: 30px;
+    height: 105px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#data {
+    position: absolute;
+    left: 29px;
+    top: 22px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    width: 98.5%;
+    height: 122px;
+}

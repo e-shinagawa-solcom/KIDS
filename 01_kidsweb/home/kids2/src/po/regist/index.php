@@ -193,8 +193,8 @@
 	$aryData["strProductCode"]        = $aryOrderHeader[0]["strproductcode"];
 	$aryData["strReviseCode"]        = $aryOrderHeader[0]["strrevisecode"];
 	$aryData["strNote"]               = $aryOrderHeader[0]["strnote"];
-	// $aryData["lngCustomerCode"]       = $aryOrderHeader[0]["strcompanydisplaycode"];
-	// $aryData["strCustomerName"]       = $aryOrderHeader[0]["strcompanydisplayname"];
+	$aryData["lngCustomerCode"]       = $aryOrderHeader[0]["strcompanydisplaycode"];
+	$aryData["strCustomerName"]       = $aryOrderHeader[0]["strcompanydisplayname"];
 	$aryData["lngInChargeGroupCode"]   = $aryOrderHeader[0]["strgroupdisplaycode"];
 	$aryData["strInChargeGroupName"]   = $aryOrderHeader[0]["strgroupdisplayname"];
 	$aryData["strProductName"]        = $aryOrderHeader[0]["strproductname"];
@@ -202,27 +202,18 @@
 	$aryData["lngCountryCode"]        = $aryOrderHeader[0]["lngcountrycode"];
 	$aryData["lngLocationCode"]       = $aryOrderHeader[0]["strcompanydisplaycode2"];
 	$aryData["strLocationName"]       = $aryOrderHeader[0]["strcompanydisplayname2"];
+
 	$aryData["lngRevisionNo"]         = $aryOrderHeader[0]["lngrevisionno"];
 	
 
 	if($aryOrderHeader[0]["lngcountrycode"] != 81){
-	    $aryData["inputPayCondition"] = "select";
 		$aryData["lngPayConditionCode"]      = fncPulldownMenu(2, 0, "", $objDB);
-	}
-	else{
-	    $aryData["inputPayCondition"] = "select";
-//	    $aryData["PayConditionDisabled"] = "readonly";
+	} else{
 		$aryData["lngPayConditionCode"]      = fncPulldownMenu(2, 0, "where lngPayConditionCode=0", $objDB);
 	}
 	// 明細
-	// $aryDetail = [];
-	// for($i = 0; $i < count($aryOrderHeader); $i++){
-	// 	$aryDetail[] = fncGetOrderDetail($aryOrderHeader[$i], $objDB);
-	// }
-//fncDebug("kids2.log", $lngOrderNo[0], __FILE__, __LINE__, "a" );
-	//$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $objDB);
 	$aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $aryData["lngRevisionNo"], $objDB);
-//var_dump($aryDetail);
+
     if( $aryDetail == null || count($aryDetail) == 0 )
     {
 echo "pass-1<br>";
@@ -244,7 +235,12 @@ echo "pass-2<br>";
 	// 運搬方法プルダウン
 	$strPulldownDeliveryMethod = fncPulldownMenu(6, null, "", $objDB);
 
-	$aryData["strOrderDetail"] = fncGetOrderDetailHtml($aryDetail, $strPulldownDeliveryMethod);
+	$aryResult = fncGetOrderDetailHtml($aryDetail, $strPulldownDeliveryMethod, $aryData);
+	
+    $aryData["tableB_no_body"] = $aryResult["tableB_no_body"];
+    $aryData["tableA_chkbox_body"] = $aryResult["tableA_chkbox_body"];
+    $aryData["tableB_body"] = $aryResult["tableB_body"];
+    $aryData["tableA_body"] = $aryResult["tableA_body"];
 
 	$aryData["strMode"] = "update";				// モード（次の動作）check→renew
 	$aryData["strActionUrl"] = "index2.php";		// formのaction

@@ -192,7 +192,7 @@ table.ordercode{
 	 padding-bottom: 5px;
  }
  td.orderbuttontd{
-	border: 1px solid;
+	/* border: 1px solid; */
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
