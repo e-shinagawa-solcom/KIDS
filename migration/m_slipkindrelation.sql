@@ -5,10 +5,10 @@ declare
         m_company.lngcompanycode
        ,case m_company.lngcountrycode 
            when 81 then 
-               case when strpos(m_company.strcompanyname,'Ž–‹Æ•”') > 0
+               case when strpos(m_company.strcompanyname,'äº‹æ¥­éƒ¨') > 0
                    then 1
                else 
-                   case when strpos(m_company.strcompanyname,'ƒoƒ“ƒ_ƒC') > 0
+                   case when strpos(m_company.strcompanyname,'ãƒãƒ³ãƒ€ã‚¤') > 0
                        then 1
                    else
                        case when strpos(upper(m_company.strcompanyname),'BANDAI') > 0

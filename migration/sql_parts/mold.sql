@@ -445,7 +445,7 @@ begin
     set strmoldno = substring(strmoldno,1,5) || '_00-' || substring(strmoldno,7,2)
     where (strmoldno is not null) or (strmoldno = '');
     
-    -- t_sequence‚Ì‹àŒ^”Ô†ˆÚs
+    -- t_sequenceã®é‡‘å‹ç•ªå·ç§»è¡Œ
     update t_sequence 
     set strsequencename = strsequencename || '_00'
     where strsequencename like 'm_OrderDetail.strMoldNo._____';

@@ -1,6 +1,6 @@
 --BEGIN TRANSACTION;
 
---»•iƒ}ƒXƒ^ˆÚs
+--è£½å“ãƒã‚¹ã‚¿ç§»è¡Œ
 delete from m_estimate;
 
 INSERT INTO m_estimate
@@ -70,7 +70,7 @@ SELECT * FROM dblink('con111',
    ,lngproductrevisionno integer
 );
 
---Œ©ÏŒ´‰¿–¾×ƒe[ƒuƒ‹ˆÚs
+--è¦‹ç©åŸä¾¡æ˜ç´°ãƒ†ãƒ¼ãƒ–ãƒ«ç§»è¡Œ
 delete from t_estimatedetail;
 
 INSERT INTO t_estimatedetail

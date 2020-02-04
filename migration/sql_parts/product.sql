@@ -1,6 +1,6 @@
 --BEGIN TRANSACTION;
 
---»•iƒ}ƒXƒ^ˆÚs
+--è£½å“ãƒžã‚¹ã‚¿ç§»è¡Œ
 delete from m_product;
 
 INSERT INTO m_product
@@ -152,7 +152,7 @@ SELECT * FROM dblink('con111',
 
 );
 
---¤•i‰»Šé‰æƒe[ƒuƒ‹ˆÚs
+--å•†å“åŒ–ä¼ç”»ãƒ†ãƒ¼ãƒ–ãƒ«ç§»è¡Œ
 delete from t_goodsplan;
 
 INSERT INTO t_goodsplan

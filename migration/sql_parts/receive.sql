@@ -2,7 +2,7 @@
 DO $$
 
 --BEGIN TRANSACTION;
---”­’ƒ}ƒXƒ^ƒJ[ƒ\ƒ‹
+--ç™ºæ³¨ãƒã‚¹ã‚¿ã‚«ãƒ¼ã‚½ãƒ«
 declare
     receiveno integer;
     cur_header CURSOR(receiveno integer, revisionno integer) FOR
@@ -49,7 +49,7 @@ declare
     );
 
 
---ˆÚsŒ³”­’–¾×ƒe[ƒuƒ‹ƒJ[ƒ\ƒ‹
+--ç§»è¡Œå…ƒç™ºæ³¨æ˜ç´°ãƒ†ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ã‚½ãƒ«
     cur_detail CURSOR FOR
     SELECT * FROM dblink('con111',
         'select ' || 
@@ -97,49 +97,6 @@ declare
        ,strnote	text
        ,lngsortkey	integer
     );
-/*
--- ”[•i‘ƒ}ƒXƒ^ƒL[ŒŸõ—pƒJ[ƒ\ƒ‹
-    cur_po_key CURSOR FOR
-    select distinct
-        strreceivecode
-       ,lngrevisionno
-    from m_receive
-    where lngreceivestatuscode >= 4
-    order by strreceivecode, lngrevisionno;
-    cur_po_detail CURSOR(receivecode text, revisionno integer) FOR
-    select
-        t_receivedetail.lngreceivedetailno
-       ,t_receivedetail.lngrevisionno
-       ,t_receivedetail.lngreceiveno
-       ,t_receivedetail.lngstocksubjectcode
-       ,t_receivedetail.lngstockitemcode
-       ,m_stockitem.strstockitemname
-       ,t_receivedetail.lngdeliverymethodcode
-       ,m_deliverymethod.strdeliverymethodname
-       ,t_receivedetail.curproductprice
-       ,t_receivedetail.lngproductquantity
-       ,t_receivedetail.lngproductunitcode
-       ,m_productunit.strproductunitname
-       ,t_receivedetail.cursubtotalprice
-       ,t_receivedetail.dtmdeliverydate
-       ,t_receivedetail.strnote
-       ,t_receivedetail.lngsortkey
-       ,t_receivedetail.strproductcode
-    from t_receivedetail
-    inner join m_receive
-        on m_receive.lngreceiveno = t_receivedetail.lngreceiveno
-        and m_receive.lngrevisionno = t_receivedetail.lngrevisionno
-    left outer join m_stockitem
-        on m_stockitem.lngstockitemcode = t_receivedetail.lngstockitemcode
-        and m_stockitem.lngstocksubjectcode = t_receivedetail.lngstocksubjectcode
-    left outer join m_deliverymethod
-        on m_deliverymethod.lngdeliverymethodcode = t_receivedetail.lngdeliverymethodcode
-    left outer join m_productunit
-        on m_productunit.lngproductunitcode = t_receivedetail.lngproductunitcode
-    where m_receive.strreceivecode = receivecode
-        and m_receive.lngrevisionno = revisionno
-    order by t_receivedetail.lngreceivedetailno;
-*/
     detail RECORD;
     header RECORD;
     po_key RECORD;
@@ -174,7 +131,7 @@ BEGIN
        ,detailno  integer
        ,new_receive integer
     );
---”­’–¾×ƒJ[ƒ\ƒ‹ƒI[ƒvƒ“iğŒF”­’”Ô† = “Ç‚İ‚ñ‚¾”­’ƒ}ƒXƒ^‚Ì”­’”Ô†j
+--ç™ºæ³¨æ˜ç´°ã‚«ãƒ¼ã‚½ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ï¼ˆæ¡ä»¶ï¼šç™ºæ³¨ç•ªå· = èª­ã¿è¾¼ã‚“ã ç™ºæ³¨ãƒã‚¹ã‚¿ã®ç™ºæ³¨ç•ªå·ï¼‰
 
     open cur_detail;
     LOOP
@@ -183,13 +140,14 @@ BEGIN
         open cur_header(detail.lngreceiveno,detail.lngrevisionno);
         FETCH cur_header INTO header;
         close cur_header;
-        IF current_receive <> header.strreceivecode OR detail.lngreceivedetailno <> last_detail THEN
+        IF current_receive <> header.strreceivecode or 
+        ( detail.lngreceivedetailno is not null and detail.lngreceivedetailno >= 0 and last_detail <> detail.lngreceivedetailno) THEN
             write_count = write_count + 1;
             last_detail = detail.lngreceivedetailno;
             current_receive = header.strreceivecode;
         END IF;
 --        RAISE INFO '% % % % % ', header.strreceivecode, header.lngrevisionno, detail.lngreceivedetailno, detail.lngreceiveno, write_count;
--- ó’–¾×Œ”•ªAó’ƒ}ƒXƒ^‚ğ“o˜^
+-- å—æ³¨æ˜ç´°ä»¶æ•°åˆ†ã€å—æ³¨ãƒã‚¹ã‚¿ã‚’ç™»éŒ²
         insert into m_receive(
             lngreceiveno
            ,lngrevisionno
@@ -226,7 +184,7 @@ BEGIN
            ,header.dtminsertdate
            ,header.strcustomerreceivecode
         );
--- ”­’–¾×‚ğ“o˜^
+-- ç™ºæ³¨æ˜ç´°ã‚’ç™»éŒ²
         IF detail.lngrevisionno >= 0 THEN
             insert into t_receivedetail
             (
@@ -264,7 +222,7 @@ BEGIN
                ,detail.strnote
                ,detail.lngsortkey
             );
--- V‹Œ•ÏŠ·ƒf[ƒ^‚ğì¬
+-- æ–°æ—§å¤‰æ›ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
             insert into receive_conversion
             (
                 old_receive
@@ -281,199 +239,6 @@ BEGIN
         END IF;
     END LOOP;
     close cur_detail;
-/*
-    po_count = 0;
-    last_receive = '';
-    open cur_po_key;
-    LOOP
-        -- ”­’ƒ}ƒXƒ^‚ÌƒL[€–Ú‚Åƒ‹[ƒv
-        FETCH cur_po_key INTO po_key;
-        EXIT WHEN NOT FOUND;
-        IF last_receive <> po_key.strreceivecode THEN
-            last_receive = po_key.strreceivecode;
-            po_count = po_count + 1;
-            max_revision = 0;
-            last_revision = po_key.lngrevisionno;
-        END IF;
-        IF po_key.lngrevisionno <> last_revision THEN
-            last_revision = po_key.lngrevisionno;
-            max_revision = max_revision + 1;
-        END IF ;
-        total_price = 0;
-        -- ƒL[€–Ú‚Åæ“¾‚µ‚½”­’–¾×‚Ì‚Åƒ‹[ƒv
-        open cur_po_detail(po_key.strreceivecode, po_key.lngrevisionno);
-        LOOP
-            FETCH cur_po_detail into detail;
-            EXIT WHEN NOT FOUND;
-            select count(*) + 1 into max_detail from t_purchasereceivedetail where lngpurchasereceiveno = po_count;
-            --RAISE INFO '% % % % % ', po_key.strreceivecode, po_key.lngrevisionno, po_count, max_revision, max_detail;
-            -- ”­’‘–¾×“o˜^
-            insert into t_purchasereceivedetail
-            (
-                lngpurchasereceiveno
-               ,lngpurchasereceivedetailno
-               ,lngrevisionno
-               ,lngreceiveno
-               ,lngreceivedetailno
-               ,lngreceiverevisionno
-               ,lngstocksubjectcode
-               ,lngstockitemcode
-               ,strstockitemname
-               ,lngdeliverymethodcode
-               ,strdeliverymethodname
-               ,curproductprice
-               ,lngproductquantity
-               ,lngproductunitcode
-               ,strproductunitname
-               ,cursubtotalprice
-               ,dtmdeliverydate
-               ,strnote
-               ,lngsortkey
-            )
-            values(
-                po_count
-               ,max_detail
-               ,max_revision
-               ,detail.lngreceiveno
-               ,detail.lngreceivedetailno
-               ,detail.lngrevisionno
-               ,detail.lngstocksubjectcode
-               ,detail.lngstockitemcode
-               ,detail.strstockitemname
-               ,detail.lngdeliverymethodcode
-               ,detail.strdeliverymethodname
-               ,detail.curproductprice
-               ,detail.lngproductquantity
-               ,detail.lngproductunitcode
-               ,detail.strproductunitname
-               ,detail.cursubtotalprice
-               ,detail.dtmdeliverydate
-               ,detail.strnote
-               ,detail.lngsortkey
-            );
-            total_price = total_price + detail.cursubtotalprice;
-            last_receiveno = detail.lngreceiveno;
-            last_revision = detail.lngrevisionno;
-            product_code = detail.strproductcode;
-        END LOOP;
-        close cur_po_detail;
-        
---        RAISE INFO '% % %', last_receiveno, last_revision, product_code;
-        -- ”­’‘ƒ}ƒXƒ^“o˜^
-        insert into m_purchasereceive
-        (
-            lngpurchasereceiveno
-           ,lngrevisionno
-           ,strreceivecode
-           ,lngcustomercode
-           ,strcustomername
-           ,strcustomercompanyaddreess
-           ,strcustomercompanytel
-           ,strcustomercompanyfax
-           ,strproductcode
-           ,strrevisecode
-           ,strproductname
-           ,strproductenglishname
-           ,dtmexpirationdate
-           ,lngmonetaryunitcode
-           ,strmonetaryunitsign
-           ,strmonetaryunitname
-           ,lngmonetaryratecode
-           ,strmonetaryratename
-           ,lngpayconditioncode
-           ,strpayconditionname
-           ,lnggroupcode
-           ,strgroupname
-           ,lngusercode
-           ,strusername
-           ,lngdeliveryplacecode
-           ,strdeliveryplacename
-           ,curtotalprice
-           ,dtminsertdate
-           ,lnginsertusercode
-           ,strinsertusername
-           ,strnote
-           ,lngprintcount
-        )
-        select
-            po_count
-           ,max_revision
-           ,m_receive.strreceivecode
-           ,m_receive.lngcustomercompanycode
-           ,customer.strcompanyname
-           ,case customer.lngcountrycode
-               when 81 then trim(customer.straddress1 || ' ' || customer.straddress2 || ' ' || customer.straddress3 || ' ' || customer.straddress4)
-               else trim(customer.straddress4 || ' ' || customer.straddress3 || ' ' || customer.straddress2 || ' ' || customer.straddress1)
-            END
-           ,customer.strtel1
-           ,customer.strfax1
-           ,product_code
-           ,m_product.strrevisecode
-           ,m_product.strproductname
-           ,m_product.strproductenglishname
-           ,(select dtmexpirationdate from expire_date where lngreceiveno = last_receiveno and lngrevisionno = last_revision)
-           ,m_receive.lngmonetaryunitcode
-           ,m_monetaryunit.strmonetaryunitsign
-           ,m_monetaryunit.strmonetaryunitname
-           ,m_receive.lngmonetaryratecode
-           ,m_monetaryrateclass.strmonetaryratename
-           ,m_receive.lngpayconditioncode
-           ,m_paycondition.strpayconditionname
-           ,m_receive.lnggroupcode
-           ,m_group.strgroupname
-           ,m_receive.lngusercode
-           ,m_user.struserdisplayname
-           ,m_receive.lngdeliveryplacecode
-           ,delivery.strcompanyname
-           ,total_price
-           ,m_receive.dtminsertdate
-           ,m_receive.lnginputusercode
-           ,m_user.struserdisplayname
-           ,null
-           ,0
-        from m_receive
-        left outer join m_company customer
-            on customer.lngcompanycode = m_receive.lngcustomercompanycode
-        left outer join m_monetaryunit
-            on m_monetaryunit.lngmonetaryunitcode = m_receive.lngmonetaryunitcode
-        left outer join m_monetaryrateclass
-            on m_monetaryrateclass.lngmonetaryratecode = m_receive.lngmonetaryratecode
-        left outer join m_paycondition
-            on m_paycondition.lngpayconditioncode = m_receive.lngpayconditioncode
-        left outer join m_group
-            on m_group.lnggroupcode = m_receive.lnggroupcode
-        left outer join m_user
-            on m_user.lngusercode = m_receive.lnginputusercode
-        left outer join m_company delivery
-            on delivery.lngcompanycode = m_receive.lngdeliveryplacecode
-        left outer join m_product
-            on  m_product.lngrevisionno = 0
-            and m_product.strrevisecode = '00'
-         where m_receive.lngreceiveno = last_receiveno
-             and m_receive.lngrevisionno = last_revision
-             and m_product.strproductcode = product_code
-        ;
-        -- ”­’‘ƒ}ƒXƒ^íœƒ`ƒFƒbƒN
-        IF EXISTS( 
-            select * 
-            from m_receive 
-            where strreceivecode = ( select strreceivecode from m_receive where lngreceiveno = last_receiveno and lngrevisionno = last_revision )
-                and lngrevisionno = -1 ) THEN
-            RAISE INFO 'data deleted % %', product_code, last_revision;
-            insert into m_purchasereceive
-            (
-                lngpurchasereceiveno
-                ,lngrevisionno
-                ,strreceivecode
-            )
-            values
-            (
-                last_receiveno
-               ,-1
-               ,(select strreceivecode from m_receive where lngreceiveno = lngreceiveno and lngrevisionno = last_revision)
-            );
-        END IF;
-    END LOOP;
-*/
+
 END $$
 

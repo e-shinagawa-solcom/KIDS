@@ -1,3 +1,4 @@
+delete from m_estimatehistory;
 insert into m_estimatehistory(
 lngestimateno,
 lngrevisionno,

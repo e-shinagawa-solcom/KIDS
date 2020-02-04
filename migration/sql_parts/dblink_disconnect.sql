@@ -1,4 +1,4 @@
---kidscore‚ÉƒX[ƒp[ƒ†[ƒU[Œ ŒÀ‚ð‚ ‚½‚¦‚é‚©AƒX[ƒp[ƒ†[ƒU[‚ÅŽÀs
---Œ»sƒT[ƒo‚©‚çØ’f
+--kidscoreã«ã‚¹ãƒ¼ãƒ‘ãƒ¼ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™ã‚’ã‚ãŸãˆã‚‹ã‹ã€ã‚¹ãƒ¼ãƒ‘ãƒ¼ãƒ¦ãƒ¼ã‚¶ãƒ¼ã§å®Ÿè¡Œ
+--ç¾è¡Œã‚µãƒ¼ãƒã‹ã‚‰åˆ‡æ–­
 select dblink_disconnect('con111');
 

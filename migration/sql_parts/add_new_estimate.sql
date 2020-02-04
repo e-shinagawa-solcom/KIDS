@@ -1,13 +1,13 @@
 DO $$
--- Œ©ÏŒ´‰¿ƒ}ƒXƒ^AŽó’ƒ}ƒXƒ^E–¾×A”­’ƒ}ƒXƒ^E–¾×‚ðŠî‚É
--- Œ©ÏŒ´‰¿ƒ}ƒXƒ^AŒ©ÏŒ´‰¿–¾×‚ðƒŠƒrƒWƒ‡ƒ“ƒAƒbƒv‚·‚éB
+-- è¦‹ç©åŽŸä¾¡ãƒžã‚¹ã‚¿ã€å—æ³¨ãƒžã‚¹ã‚¿ãƒ»æ˜Žç´°ã€ç™ºæ³¨ãƒžã‚¹ã‚¿ãƒ»æ˜Žç´°ã‚’åŸºã«
+-- è¦‹ç©åŽŸä¾¡ãƒžã‚¹ã‚¿ã€è¦‹ç©åŽŸä¾¡æ˜Žç´°ã‚’ãƒªãƒ“ã‚¸ãƒ§ãƒ³ã‚¢ãƒƒãƒ—ã™ã‚‹ã€‚
 
 
 declare 
     me_r RECORD;
     tr_r RECORD;
     detailno integer;
-    -- Œ©ÏŒ´‰¿ƒ}ƒXƒ^ƒJ[ƒ\ƒ‹
+    -- è¦‹ç©åŽŸä¾¡ãƒžã‚¹ã‚¿ã‚«ãƒ¼ã‚½ãƒ«
     cur_me cursor for
         select 
             me.lngestimateno
@@ -30,6 +30,12 @@ declare
            ,me.strnote
     from m_estimate me
     inner join (
+        select substr(strproductcode,1,5) as strproductcode, strrevisecode, max(lngestimateno) as lngestimateno
+        from m_estimate
+        group by substr(strproductcode,1,5), strrevisecode
+    ) me_act
+        on me_act.lngestimateno = me.lngestimateno
+    inner join (
         select
             lngestimateno
            ,max(lngrevisionno) as lngrevisionno
@@ -38,7 +44,7 @@ declare
     ) me_max
         on me_max.lngestimateno = me.lngestimateno
         and me_max.lngrevisionno = me.lngrevisionno;
-    -- Žó’–¾×ƒJ[ƒ\ƒ‹
+    -- å—æ³¨æ˜Žç´°ã‚«ãƒ¼ã‚½ãƒ«
     cur_tr cursor( productcode text ) for
         select
             me.lngestimateno
@@ -69,11 +75,13 @@ declare
             select 
                 strreceivecode
                ,MAX(lngrevisionno) as lngrevisionno
+               ,MIN(lngrevisionno) as min_rev
             from m_receive
             group by strreceivecode
         ) mr_max
             on mr_max.strreceivecode = mr.strreceivecode
             and  mr_max.lngrevisionno = mr.lngrevisionno
+            and mr_max.min_rev >= 0
         inner join t_receivedetail tr
             on tr.lngreceiveno = mr.lngreceiveno
             and tr.lngrevisionno = mr.lngrevisionno
@@ -96,7 +104,7 @@ declare
            ,tr.lngreceiveno
            ,tr.lngreceivedetailno;
 
-    -- ”­’–¾×ƒJ[ƒ\ƒ‹
+    -- ç™ºæ³¨æ˜Žç´°ã‚«ãƒ¼ã‚½ãƒ«
     cur_to cursor( productcode text ) for
         select
             me.lngestimateno
@@ -127,11 +135,13 @@ declare
             select 
                 strordercode
                ,MAX(lngrevisionno) as lngrevisionno
+               ,MIN(lngrevisionno) as min_rev
             from m_order
             group by strordercode
         ) mr_max
             on mr_max.strordercode = mr.strordercode
             and  mr_max.lngrevisionno = mr.lngrevisionno
+            and  mr_max.min_rev >= 0
         inner join t_orderdetail tr
             on tr.lngorderno = mr.lngorderno
             and tr.lngrevisionno = mr.lngrevisionno
@@ -184,6 +194,16 @@ declare
 
 
 begin
+    update t_receivedetail
+    set
+        lngestimateno = null,
+        lngestimatedetailno = null,
+        lngestimaterevisionno = null;
+    update t_orderdetail
+    set
+        lngestimateno = null,
+        lngestimatedetailno = null,
+        lngestimaterevisionno = null;
     open cur_me;
     LOOP
         FETCH cur_me into me_r;
@@ -193,7 +213,7 @@ begin
         LOOP
             FETCH cur_tr into tr_r;
             EXIT WHEN NOT FOUND;
-            -- Žó’–¾×‚©‚çŒ©ÏŒ´‰¿–¾×iŽó’•ªj‚ðì¬
+            -- å—æ³¨æ˜Žç´°ã‹ã‚‰è¦‹ç©åŽŸä¾¡æ˜Žç´°ï¼ˆå—æ³¨åˆ†ï¼‰ã‚’ä½œæˆ
             insert into t_estimatedetail
             (
                 lngestimateno
@@ -239,7 +259,7 @@ begin
                ,tr_r.lngsalesdivisioncode
                ,tr_r.lngsalesclasscode
             );
-            -- ì¬‚µ‚½Œ©ÏŒ´‰¿‚ðŽó’–¾×‚Æ˜AŒg
+            -- ä½œæˆã—ãŸè¦‹ç©åŽŸä¾¡ã‚’å—æ³¨æ˜Žç´°ã¨é€£æº
 --            RAISE INFO '(r)% % % -> % % %', tr_r.lngreceiveno, tr_r.lngreceivedetailno, tr_r.r_lngrevisionno, tr_r.lngestimateno, detailno, tr_r.lngestimaterevisionno;
             update t_receivedetail
             set 
@@ -262,7 +282,7 @@ begin
         LOOP
             FETCH cur_to into tr_r;
             EXIT WHEN NOT FOUND;
-            -- ”­’–¾×‚©‚çŒ©ÏŒ´‰¿–¾×iŽó’•ªj‚ðì¬
+            -- ç™ºæ³¨æ˜Žç´°ã‹ã‚‰è¦‹ç©åŽŸä¾¡æ˜Žç´°ï¼ˆå—æ³¨åˆ†ï¼‰ã‚’ä½œæˆ
             insert into t_estimatedetail
             (
                 lngestimateno
@@ -308,7 +328,7 @@ begin
                ,null
                ,null
             );
-            -- ì¬‚µ‚½Œ©ÏŒ´‰¿‚ð”­’–¾×‚Æ˜AŒg
+            -- ä½œæˆã—ãŸè¦‹ç©åŽŸä¾¡ã‚’ç™ºæ³¨æ˜Žç´°ã¨é€£æº
 --            RAISE INFO '(o)% % % -> % % %', tr_r.lngorderno, tr_r.lngorderdetailno, tr_r.r_lngrevisionno, tr_r.lngestimateno, detailno, tr_r.lngestimaterevisionno;
             update t_orderdetail
             set 
@@ -325,7 +345,7 @@ begin
             detailno = detailno + 1;
         END LOOP;
         close cur_to;
-        -- Žó”­’–¾×‚Ì‚È‚¢Œ©ÏŒ´‰¿‚ðˆÚs‚·‚éB
+        -- å—ç™ºæ³¨æ˜Žç´°ã®ãªã„è¦‹ç©åŽŸä¾¡ã‚’ç§»è¡Œã™ã‚‹ã€‚
         open cur_cost(me_r.lngestimateno, me_r.lngrevisionno);
         LOOP
             FETCH cur_cost into tr_r;
@@ -378,7 +398,7 @@ begin
             detailno = detailno + 1;
         END LOOP;
         close cur_cost;
-        -- Œ©ÏŒ´‰¿ƒ}ƒXƒ^‚ð’Ç‰Á
+        -- è¦‹ç©åŽŸä¾¡ãƒžã‚¹ã‚¿ã‚’è¿½åŠ 
         insert into m_estimate(
             lngestimateno
            ,lngrevisionno
@@ -422,7 +442,8 @@ begin
            ,0
         );
         
-        -- »•iƒ}ƒXƒ^(ƒŠƒrƒWƒ‡ƒ“’Ç]•ªj‚ð’Ç‰Á
+        -- è£½å“ãƒžã‚¹ã‚¿(ãƒªãƒ“ã‚¸ãƒ§ãƒ³è¿½å¾“åˆ†ï¼‰ã‚’è¿½åŠ 
+--RAISE INFO '% % % % ', me_r.lngestimateno, me_r.strproductcode, me_r.lngrevisionno, me_r.strrevisecode; 
         insert into m_product(
             lngproductno
            ,strproductcode
@@ -521,6 +542,11 @@ begin
         from m_product
         inner join m_estimate
         on substr(m_estimate.strproductcode,1,5) = m_product.strproductcode
+        and m_estimate.strrevisecode = m_product.strrevisecode
+        inner join (
+            select lngestimateno,MAX(lngrevisionno) as lngrevisionno from m_estimate group by lngestimateno
+        ) me_max on me_max.lngestimateno = m_estimate.lngestimateno
+            and me_max.lngrevisionno = m_estimate.lngrevisionno
         where m_estimate.lngestimateno = me_r.lngestimateno
             and m_product.lngrevisionno = 0
             and m_estimate.lngrevisionno > 0;

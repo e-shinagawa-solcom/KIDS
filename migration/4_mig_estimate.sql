@@ -1,5 +1,7 @@
---Ü•iŠÇ— ƒf[ƒ^ˆÚs
+--å•†å“ç®¡ç† ãƒ‡ãƒ¼ã‚¿ç§»è¡Œ
+
 \i ./sql_parts/dblink.sql
 \i ./sql_parts/estimate.sql
 \i ./sql_parts/dblink_disconnect.sql
 \i ./sql_parts/add_new_estimate.sql
+\i ./add_m_estimatehistory.sql

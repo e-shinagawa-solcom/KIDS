@@ -2,7 +2,7 @@
 DO $$
 
 --BEGIN TRANSACTION;
---”­’ƒ}ƒXƒ^ƒJ[ƒ\ƒ‹
+--ç™ºæ³¨ãƒã‚¹ã‚¿ã‚«ãƒ¼ã‚½ãƒ«
 declare
     orderno integer;
     cur_header CURSOR(orderno integer, revisionno integer) FOR
@@ -53,7 +53,7 @@ declare
     );
 
 
---ˆÚsŒ³”­’–¾×ƒe[ƒuƒ‹ƒJ[ƒ\ƒ‹
+--ç§»è¡Œå…ƒç™ºæ³¨æ˜ç´°ãƒ†ãƒ¼ãƒ–ãƒ«ã‚«ãƒ¼ã‚½ãƒ«
     cur_detail CURSOR FOR
     SELECT * FROM dblink('con111',
         'select ' || 
@@ -107,7 +107,7 @@ declare
        ,strnote text
        ,strmoldno text
     );
--- ”­’‘ƒ}ƒXƒ^ƒL[ŒŸõ—pƒJ[ƒ\ƒ‹
+-- ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ã‚­ãƒ¼æ¤œç´¢ç”¨ã‚«ãƒ¼ã‚½ãƒ«
     cur_po_key CURSOR FOR
     select distinct
         strordercode
@@ -189,7 +189,7 @@ BEGIN
            ,dtmexpirationdate date
         );
 
---”­’–¾×ƒJ[ƒ\ƒ‹ƒI[ƒvƒ“iğŒF”­’”Ô† = “Ç‚İ‚ñ‚¾”­’ƒ}ƒXƒ^‚Ì”­’”Ô†j
+--ç™ºæ³¨æ˜ç´°ã‚«ãƒ¼ã‚½ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³ï¼ˆæ¡ä»¶ï¼šç™ºæ³¨ç•ªå· = èª­ã¿è¾¼ã‚“ã ç™ºæ³¨ãƒã‚¹ã‚¿ã®ç™ºæ³¨ç•ªå·ï¼‰
 
     open cur_detail;
     LOOP
@@ -198,12 +198,12 @@ BEGIN
         open cur_header(detail.lngorderno,detail.lngrevisionno);
         FETCH cur_header INTO header;
         close cur_header;
-        IF current_order <> header.strordercode OR detail.lngorderdetailno <> last_detail THEN
+        IF current_order <> header.strordercode OR (detail.lngorderdetailno is not null and detail.lngorderdetailno <> last_detail) THEN
             write_count = write_count + 1;
             last_detail = detail.lngorderdetailno;
             current_order = header.strordercode;
         END IF;
--- ”­’–¾×Œ”•ªA”­’ƒ}ƒXƒ^‚ğ“o˜^
+-- ç™ºæ³¨æ˜ç´°ä»¶æ•°åˆ†ã€ç™ºæ³¨ãƒã‚¹ã‚¿ã‚’ç™»éŒ²
         insert into m_order(
             lngorderno
            ,lngrevisionno
@@ -242,7 +242,7 @@ BEGIN
            ,header.bytinvalidflag
            ,header.dtminsertdate
         );
--- ”­’–¾×‚ğ“o˜^
+-- ç™ºæ³¨æ˜ç´°ã‚’ç™»éŒ²
         IF detail.lngrevisionno >= 0 THEN
 --        RAISE INFO '% % % % % ', header.strordercode, header.lngrevisionno, detail.lngorderdetailno, detail.lngorderno, write_count;
             insert into t_orderdetail
@@ -317,7 +317,7 @@ BEGIN
                 product_code = detail.strproductcode;
             END IF;
         END IF;
--- V‹Œ•ÏŠ·ƒf[ƒ^‚ğì¬
+-- æ–°æ—§å¤‰æ›ãƒ‡ãƒ¼ã‚¿ã‚’ä½œæˆ
     END LOOP;
     close cur_detail;
 RAISE INFO 'complete order';
@@ -325,7 +325,7 @@ RAISE INFO 'complete order';
     last_order = '';
     open cur_po_key;
     LOOP
-        -- ”­’ƒ}ƒXƒ^‚ÌƒL[€–Ú‚Åƒ‹[ƒv
+        -- ç™ºæ³¨ãƒã‚¹ã‚¿ã®ã‚­ãƒ¼é …ç›®ã§ãƒ«ãƒ¼ãƒ—
         FETCH cur_po_key INTO po_key;
         EXIT WHEN NOT FOUND;
         IF last_order <> po_key.strordercode THEN
@@ -339,14 +339,14 @@ RAISE INFO 'complete order';
             max_revision = max_revision + 1;
         END IF ;
         total_price = 0;
-        -- ƒL[€–Ú‚Åæ“¾‚µ‚½”­’–¾×‚Ì‚Åƒ‹[ƒv
+        -- ã‚­ãƒ¼é …ç›®ã§å–å¾—ã—ãŸç™ºæ³¨æ˜ç´°ã®ã§ãƒ«ãƒ¼ãƒ—
         open cur_po_detail(po_key.strordercode, po_key.lngrevisionno);
         LOOP
             FETCH cur_po_detail into detail;
             EXIT WHEN NOT FOUND;
             select count(*) + 1 into max_detail from t_purchaseorderdetail where lngpurchaseorderno = po_count;
 --RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, max_revision, max_detail;
-            -- ”­’‘–¾×“o˜^
+            -- ç™ºæ³¨æ›¸æ˜ç´°ç™»éŒ²
             insert into t_purchaseorderdetail
             (
                 lngpurchaseorderno
@@ -397,8 +397,8 @@ RAISE INFO 'complete order';
         END LOOP;
         close cur_po_detail;
         
---        RAISE INFO '% % %', last_orderno, last_revision, product_code;
-        -- ”­’‘ƒ}ƒXƒ^“o˜^
+        RAISE INFO '% % %', last_orderno, last_revision, product_code;
+        -- ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿ç™»éŒ²
         insert into m_purchaseorder
         (
             lngpurchaseorderno
@@ -492,7 +492,7 @@ RAISE INFO 'complete order';
              and m_order.lngrevisionno = last_revision
              and m_product.strproductcode = product_code
         ;
-        -- ”­’‘ƒ}ƒXƒ^íœƒ`ƒFƒbƒN
+        -- ç™ºæ³¨æ›¸ãƒã‚¹ã‚¿å‰Šé™¤ãƒã‚§ãƒƒã‚¯
         IF EXISTS( 
             select * 
             from m_order 
@@ -513,6 +513,7 @@ RAISE INFO 'complete order';
             );
         END IF;
     END LOOP;
+    close cur_po_key;
 RAISE INFO 'complete po';
 END $$
 

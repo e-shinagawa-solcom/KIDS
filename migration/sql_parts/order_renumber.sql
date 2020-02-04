@@ -28,7 +28,7 @@ LOOP
         last_order = detail.strordercode;
     END IF;
     detail_no = detail_no + 1;
-    -- ”­’–¾×‚Ì–¾×”Ô†ÄÌ”Ô
+    -- ç™ºæ³¨æ˜ç´°ã®æ˜ç´°ç•ªå·å†æ¡ç•ª
     update t_orderdetail
     set lngorderdetailno = detail_no
        ,lngsortkey = detail_no

@@ -51,7 +51,7 @@ declare
        ,dtminsertdate timestamp(6) without time zone
     );
     cur_detail cursor(salesno integer, revisionno integer, receiveno integer) FOR
-        select OLD2NEW.new_receive, OLD2NEW_SUB.new_receive as new_receive_sub, T1.* from dblink('con111',
+        select OLD2NEW_SUB.new_receive as new_receive_sub, T1.* from dblink('con111',
             'select ' ||
             'lngsalesno ' ||
            ',lngsalesdetailno ' ||
@@ -100,46 +100,37 @@ declare
                ,detailno
                ,new_receive
             from receive_conversion
-            where old_receive = receiveno
-        ) OLD2NEW
-            on OLD2NEW.detailno = lngsalesdetailno
-        left outer join (
-            select
-                old_receive
-               ,detailno
-               ,new_receive
-            from receive_conversion
         ) OLD2NEW_SUB
-            on OLD2NEW_SUB.detailno = lngsalesdetailno
+            on OLD2NEW_SUB.detailno = T1.lngreceivedetailno
             and OLD2NEW_SUB.old_receive = T1.lngreceiveno
 
         ;
     
     cur_slip_head cursor for
         select
-            m_sales.lngrevisionno    -- ƒŠƒrƒWƒ‡ƒ“”Ô†
-           ,m_sales.strslipcode    -- ”[•i“`•[ƒR[ƒh
-           ,m_sales.lngsalesno    -- ”„ã”Ô†
-           ,m_sales.lngcustomercompanycode as lngcustomercode     -- ŒÚ‹qƒR[ƒh
-           ,m_company.strcompanyname as strcustomername    -- ŒÚ‹q–¼
-           ,null as strcustomerusername    -- ŒÚ‹q’S“–Ò–¼
-           ,m_sales.dtmappropriationdate as dtmdeliverydate    -- ”[•i“ú
-           ,null as strdeliveryplacename    -- ”[•iêŠ–¼
-           ,null as strdeliveryplaceusername    -- ”[•iêŠ’S“–Ò–¼
-           ,t_salesdetail.lngtaxclasscode as lngtaxclasscode    -- ‰ÛÅ‹æ•ªƒR[ƒh
-           ,m_taxclass.strtaxclassname as strtaxclassname    -- ‰ÛÅ‹æ•ª
-           ,m_tax.curtax as curtax    -- Á”ïÅ—¦
-           ,seller.lngusercode as lngusercode    -- ’S“–ÒƒR[ƒh
-           ,seller.struserdisplayname as strusername    -- ’S“–Ò–¼
-           ,m_sales.curtotalprice    -- ‡Œv‹àŠz
-           ,m_sales.lngmonetaryunitcode    -- ’Ê‰İ’PˆÊƒR[ƒh
-           ,m_monetaryunit.strmonetaryunitsign as strmonetaryunitsign    -- ’Ê‰İ’PˆÊ
-           ,m_sales.dtminsertdate    -- ì¬“ú
-           ,register.lngusercode as lnginsertusercode    -- “ü—ÍÒƒR[ƒh
-           ,register.struserdisplayname as strinsertusername    -- “ü—ÍÒ–¼
-           ,m_sales.strnote    -- ”õl
-           ,0 as lngprintcount    -- ˆóü‰ñ”
-           ,m_sales.bytinvalidflag    -- –³Œøƒtƒ‰ƒO
+            m_sales.lngrevisionno    -- ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+           ,m_sales.strslipcode    -- ç´å“ä¼ç¥¨ã‚³ãƒ¼ãƒ‰
+           ,m_sales.lngsalesno    -- å£²ä¸Šç•ªå·
+           ,m_sales.lngcustomercompanycode as lngcustomercode     -- é¡§å®¢ã‚³ãƒ¼ãƒ‰
+           ,m_company.strcompanyname as strcustomername    -- é¡§å®¢å
+           ,null as strcustomerusername    -- é¡§å®¢æ‹…å½“è€…å
+           ,m_sales.dtmappropriationdate as dtmdeliverydate    -- ç´å“æ—¥
+           ,null as strdeliveryplacename    -- ç´å“å ´æ‰€å
+           ,null as strdeliveryplaceusername    -- ç´å“å ´æ‰€æ‹…å½“è€…å
+           ,t_salesdetail.lngtaxclasscode as lngtaxclasscode    -- èª²ç¨åŒºåˆ†ã‚³ãƒ¼ãƒ‰
+           ,m_taxclass.strtaxclassname as strtaxclassname    -- èª²ç¨åŒºåˆ†
+           ,m_tax.curtax as curtax    -- æ¶ˆè²»ç¨ç‡
+           ,seller.lngusercode as lngusercode    -- æ‹…å½“è€…ã‚³ãƒ¼ãƒ‰
+           ,seller.struserdisplayname as strusername    -- æ‹…å½“è€…å
+           ,m_sales.curtotalprice    -- åˆè¨ˆé‡‘é¡
+           ,m_sales.lngmonetaryunitcode    -- é€šè²¨å˜ä½ã‚³ãƒ¼ãƒ‰
+           ,m_monetaryunit.strmonetaryunitsign as strmonetaryunitsign    -- é€šè²¨å˜ä½
+           ,m_sales.dtminsertdate    -- ä½œæˆæ—¥
+           ,register.lngusercode as lnginsertusercode    -- å…¥åŠ›è€…ã‚³ãƒ¼ãƒ‰
+           ,register.struserdisplayname as strinsertusername    -- å…¥åŠ›è€…å
+           ,m_sales.strnote    -- å‚™è€ƒ
+           ,0 as lngprintcount    -- å°åˆ·å›æ•°
+           ,m_sales.bytinvalidflag    -- ç„¡åŠ¹ãƒ•ãƒ©ã‚°
         from m_sales
         left outer join m_company
             on m_company.lngcompanycode = m_sales.lngcustomercompanycode
@@ -242,30 +233,13 @@ begin
         LOOP
             FETCH cur_detail INTO detail;
             EXIT WHEN NOT FOUND;
-            -- ó’”Ô†Ì‘ği–¾×‚©ƒwƒbƒ_‚©j
-            IF header.lngreceiveno is null THEN
-                IF detail.lngreceiveno is not null THEN
-                    --RAISE INFO '% % use receive no on detail % -> %', detail.lngsalesno, detail.lngsalesdetailno, detail.lngreceiveno, detail.new_receive_sub;
-                    new_receiveno = detail.new_receive_sub;
-                    IF new_receiveno is null THEN
-                        RAISE INFO '% % no receiveno matched from detail', detail.lngsalesno, detail.lngsalesdetailno;
-                    END IF;
-                ELSE
-                    RAISE INFO '% % receive no not found', detail.lngsalesno, detail.lngsalesdetailno;
-                    new_receiveno = null;
-                END IF;
-            ELSE
+            -- å—æ³¨ç•ªå·æ¡æŠï¼ˆæ˜ç´°ã‹ãƒ˜ãƒƒãƒ€ã‹ï¼‰
                 --RAISE INFO '% % use receive no on header % -> %', detail.lngsalesno, detail.lngsalesdetailno, header.lngreceiveno, detail.new_receive;
-                new_receiveno = detail.new_receive;
+                new_receiveno = detail.new_receive_sub;
                 IF new_receiveno is null THEN
                     RAISE INFO '% % no receiveno matched from header', detail.lngsalesno, detail.lngsalesdetailno;
                 END IF;
-            END IF;
-            IF header.lngreceiveno is not null and  detail.lngreceiveno is not null AND header.lngreceiveno <> detail.lngreceiveno THEN
-                -- ƒwƒbƒ_‚Æ–¾×‚Åw‚·ó’”Ô†‚ªˆÙ‚È‚Á‚½‚çƒGƒ‰[
-                RAISE INFO '% % different receive no  betweeen header(%) and detail(%)', detail.lngsalesno, detail.lngsalesdetailno, header.lngreceiveno, detail.lngreceiveno;
-            ELSE
-                -- ”„ã–¾×ˆÚs
+                -- å£²ä¸Šæ˜ç´°ç§»è¡Œ
                 insert into t_salesdetail
                 (
                     lngsalesno
@@ -296,11 +270,11 @@ begin
                    ,detail.lngsalesdetailno
                    ,detail.lngrevisionno
                    ,detail.strproductcode
-                   ,'00'   -- Ä”ÌƒR[ƒh
+                   ,'00'   -- å†è²©ã‚³ãƒ¼ãƒ‰
                    ,detail.lngsalesclasscode
 --                   ,detail.dtmdeliverydate
                    ,detail.lngconversionclasscode
-                   ,1      -- “ü”‚Ì‹tZ•s‰Â
+                   ,1      -- å…¥æ•°ã®é€†ç®—ä¸å¯
                    ,detail.curproductprice
                    ,detail.lngproductquantity
                    ,detail.lngproductunitcode
@@ -310,17 +284,16 @@ begin
                    ,detail.cursubtotalprice
                    ,detail.strnote
                    ,detail.lngsortkey
-                   ,new_receiveno    --ˆÚsŒã‚Ìó’”Ô†
+                   ,detail.new_receive_sub    --ç§»è¡Œå¾Œã®å—æ³¨ç•ªå·
                    ,detail.lngreceivedetailno
-                   ,(select lngrevisionno from t_receivedetail where lngreceiveno = new_receiveno and lngreceivedetailno = detail.lngreceivedetailno and lngrevisionno = detail.lngrevisionno)
+                   ,(select lngrevisionno from t_receivedetail where lngreceiveno = detail.new_receive_sub and lngreceivedetailno = detail.lngreceivedetailno and lngrevisionno = (select MAX(lngrevisionno) from t_receivedetail where lngreceiveno = detail.new_receive_sub and lngreceivedetailno = detail.lngreceivedetailno))
                 );
-            END IF;
         END LOOP;
         close cur_detail;
     END LOOP;
     close cur_header;
     last_no = -1;
-    -- ”[•i‘ƒf[ƒ^ì¬
+    -- ç´å“æ›¸ãƒ‡ãƒ¼ã‚¿ä½œæˆ
     slip_count = 0;
     open cur_slip_head;
     LOOP
@@ -437,28 +410,28 @@ begin
            ,lngsortkey
         )
         select
-            slip_count    --  ”[•i“`•[”Ô†
-           ,t_salesdetail.lngsalesdetailno    --  ”[•i“`•[–¾×”Ô†
-           ,t_salesdetail.lngrevisionno    --  ƒŠƒrƒWƒ‡ƒ“”Ô†
-           ,m_receive.strcustomerreceivecode    --  ŒÚ‹qó’”Ô†
-           ,t_salesdetail.lngsalesclasscode    --  ”„ã‹æ•ªƒR[ƒh
-           ,m_salesclass.strsalesclassname    --  ”„ã‹æ•ª–¼
-           ,m_product.strgoodscode    --  ŒÚ‹q•i”Ô
-           ,t_salesdetail.strproductcode    --  »•iƒR[ƒh
-           ,t_salesdetail.strrevisecode    --  Ä”ÌƒR[ƒh
-           ,m_product.strproductname    --  »•i–¼
-           ,m_product.strproductenglishname    --  »•i–¼i‰pŒêj
-           ,t_salesdetail.curproductprice    --  ’P‰¿
-           ,t_salesdetail.lngquantity    --  “ü”
-           ,t_salesdetail.lngproductquantity    --  ”—Ê
-           ,t_salesdetail.lngproductunitcode    --  ’PˆÊƒR[ƒh
-           ,m_productunit.strproductunitname    --  ’PˆÊ
-           ,t_salesdetail.cursubtotalprice    --  ¬Œv
-           ,t_salesdetail.strnote    --  –¾×”õl
-           ,t_salesdetail.lngreceiveno    --  ó’”Ô†
-           ,t_salesdetail.lngreceivedetailno    --  ó’–¾×”Ô†
-           ,t_receivedetail.lngrevisionno    --  ó’ƒŠƒrƒWƒ‡ƒ“”Ô†
-           ,t_salesdetail.lngsortkey    --  •\¦—pƒ\[ƒgƒL[
+            slip_count    --  ç´å“ä¼ç¥¨ç•ªå·
+           ,t_salesdetail.lngsalesdetailno    --  ç´å“ä¼ç¥¨æ˜ç´°ç•ªå·
+           ,t_salesdetail.lngrevisionno    --  ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+           ,m_receive.strcustomerreceivecode    --  é¡§å®¢å—æ³¨ç•ªå·
+           ,t_salesdetail.lngsalesclasscode    --  å£²ä¸ŠåŒºåˆ†ã‚³ãƒ¼ãƒ‰
+           ,m_salesclass.strsalesclassname    --  å£²ä¸ŠåŒºåˆ†å
+           ,m_product.strgoodscode    --  é¡§å®¢å“ç•ª
+           ,t_salesdetail.strproductcode    --  è£½å“ã‚³ãƒ¼ãƒ‰
+           ,t_salesdetail.strrevisecode    --  å†è²©ã‚³ãƒ¼ãƒ‰
+           ,m_product.strproductname    --  è£½å“å
+           ,m_product.strproductenglishname    --  è£½å“åï¼ˆè‹±èªï¼‰
+           ,t_salesdetail.curproductprice    --  å˜ä¾¡
+           ,t_salesdetail.lngquantity    --  å…¥æ•°
+           ,t_salesdetail.lngproductquantity    --  æ•°é‡
+           ,t_salesdetail.lngproductunitcode    --  å˜ä½ã‚³ãƒ¼ãƒ‰
+           ,m_productunit.strproductunitname    --  å˜ä½
+           ,t_salesdetail.cursubtotalprice    --  å°è¨ˆ
+           ,t_salesdetail.strnote    --  æ˜ç´°å‚™è€ƒ
+           ,t_salesdetail.lngreceiveno    --  å—æ³¨ç•ªå·
+           ,t_salesdetail.lngreceivedetailno    --  å—æ³¨æ˜ç´°ç•ªå·
+           ,t_receivedetail.lngrevisionno    --  å—æ³¨ãƒªãƒ“ã‚¸ãƒ§ãƒ³ç•ªå·
+           ,t_salesdetail.lngsortkey    --  è¡¨ç¤ºç”¨ã‚½ãƒ¼ãƒˆã‚­ãƒ¼
         from t_salesdetail
         left outer join m_product
             on m_product.strproductcode = t_salesdetail.strproductcode

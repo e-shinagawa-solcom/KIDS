@@ -1,4 +1,4 @@
---Ü•iŠÇ— ƒf[ƒ^ˆÚs
+--è³å“ç®¡ç† ãƒ‡ãƒ¼ã‚¿ç§»è¡Œ
 \i ./sql_parts/dblink.sql
 \i ./sql_parts/order.sql
 \i ./sql_parts/dblink_disconnect.sql

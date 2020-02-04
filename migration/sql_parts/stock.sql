@@ -51,7 +51,7 @@ declare
         lngstockno integer
        ,lngrevisionno integer
        ,strstockcode text
-       ,lngorderno integer   -- ���ׂֈړ�
+       ,lngorderno integer   -- 明細へ移動
        ,dtmappropriationdate date
        ,lngcustomercompanycode integer
        ,lnggroupcode integer
@@ -73,37 +73,66 @@ declare
     
     cur_detail cursor(stockno integer, revisionno integer, orderno integer) for
     select 
-        T1.*
-       ,order_info.lngorderno
-       ,order_info.lngorderdetailno
-       ,order_info.lngrevisionno as lngorderrevisionno
+        t_orderdetail.lngorderno
+       ,t_orderdetail.lngorderdetailno
+       ,t_orderdetail.lngrevisionno as lngorderrevisionno
+       ,T1.*
     from dblink('con111',
-        'select '
-            't_stockdetail.lngstockno ' ||
-           ',t_stockdetail.lngstockdetailno ' ||
-           ',t_stockdetail.lngrevisionno ' ||
-           ',t_stockdetail.strproductcode ' ||
-           ',t_stockdetail.lngstocksubjectcode ' ||
-           ',t_stockdetail.lngstockitemcode ' ||
-           ',t_stockdetail.dtmdeliverydate ' ||
-           ',t_stockdetail.lngdeliverymethodcode ' ||
-           ',t_stockdetail.lngconversionclasscode ' ||
-           ',t_stockdetail.curproductprice ' ||
-           ',t_stockdetail.lngproductquantity ' ||
-           ',t_stockdetail.lngproductunitcode ' ||
-           ',t_stockdetail.lngtaxclasscode ' ||
-           ',t_stockdetail.lngtaxcode ' ||
-           ',t_stockdetail.curtaxprice ' ||
-           ',t_stockdetail.cursubtotalprice ' ||
-           ',t_stockdetail.strnote ' ||
-           ',t_stockdetail.strmoldno ' ||
-           ',t_stockdetail.lngsortkey ' ||
-        'from t_stockdetail ' ||
-        'where lngstockno = ' || stockno || ' ' ||
-        'and lngrevisionno = ' || revisionno
+        'select 
+ms.lngorderno as old_order,
+tod.lngorderdetailno as old_orderdetail ,
+
+tsd.lngstockno,
+tsd.lngstockdetailno,
+tsd.lngrevisionno,
+tsd.strproductcode,
+tsd.lngstocksubjectcode,
+tsd.lngstockitemcode,
+tsd.dtmdeliverydate,
+tsd.lngdeliverymethodcode,
+tsd.lngconversionclasscode,
+tsd.curproductprice,
+tsd.lngproductquantity,
+tsd.lngproductunitcode,
+tsd.lngtaxclasscode,
+tsd.lngtaxcode,
+tsd.curtaxprice,
+tsd.cursubtotalprice,
+tsd.strnote,
+tsd.strmoldno,
+tsd.lngsortkey 
+
+from t_stockdetail tsd 
+inner join m_stock ms 
+on ms.lngstockno = tsd.lngstockno 
+and ms.lngrevisionno = tsd.lngrevisionno 
+inner join (
+select 
+strstockcode,
+MAX(lngrevisionno) as lngrevisionno 
+from m_stock
+group by strstockcode 
+) ms_rev 
+on ms_rev.strstockcode = ms.strstockcode 
+and ms_rev.lngrevisionno = ms.lngrevisionno 
+left join t_orderdetail tod 
+on tod.lngorderno = ms.lngorderno   
+and tod.strproductcode = tsd.strproductcode 
+and tod.lngstocksubjectcode = tsd.lngstocksubjectcode 
+and tod.lngstockitemcode = tsd.lngstockitemcode 
+and tod.lngproductquantity = tsd.lngproductquantity 
+and tod.curproductprice = tsd.curproductprice 
+and tod.lngproductunitcode = tsd.lngproductunitcode 
+and tod.lngorderdetailno = tsd.lngstockdetailno ' ||
+        'where ms.lngstockno = ' || stockno || ' ' ||
+        'and ms.lngrevisionno = ' || revisionno || ' ' ||
+
+'order by tsd.lngstockno,tsd.lngstockdetailno,tsd.lngrevisionno'
         
     ) AS T1(
-        lngstockno integer
+        old_order integer
+       ,old_orderdetail integer
+       ,lngstockno integer
        ,lngstockdetailno integer
        ,lngrevisionno integer
        ,strproductcode text
@@ -123,13 +152,25 @@ declare
        ,strmoldno text
        ,lngsortkey integer
     )
+    left outer join order_conversion
+    on order_conversion.old_order = T1.old_order
+    and order_conversion.detailno = T1.old_orderdetail
+    left outer join t_orderdetail
+    on t_orderdetail.lngorderno = order_conversion.new_order
+    and t_orderdetail.lngorderdetailno = T1.lngstockdetailno
+    inner join (
+        select lngorderno, MAX(lngrevisionno) as lngrevisionno from t_orderdetail group by lngorderno
+    )tod_rev
+    on tod_rev.lngorderno = t_orderdetail.lngorderno
+    and tod_rev.lngrevisionno = t_orderdetail.lngrevisionno
+/*
     left outer join (
         select 
             order_conversion.old_order, t_orderdetail.* 
         from order_conversion
         inner join t_orderdetail
             on t_orderdetail.lngorderno = order_conversion.new_order
-            and t_orderdetail.lngorderdetailno = order_conversion.detailno
+ --           and t_orderdetail.lngorderdetailno = order_conversion.detailno
         inner join (
             select 
                 lngorderno
@@ -152,7 +193,7 @@ declare
         and order_info.cursubtotalprice = T1.cursubtotalprice
         and order_info.lngorderdetailno = T1.lngstockdetailno
 --    where order_info.lngsortkey = T1.lngsortkey
-
+*/
     ;
 
     header RECORD;
@@ -223,7 +264,7 @@ begin
         LOOP
             FETCH cur_detail into detail;
             EXIT WHEN NOT FOUND;
---            RAISE INFO '% % % % %' , stockno, detail.lngstockdetailno, header.lngorderno, detail.lngorderno, detail.lngorderdetailno;
+            RAISE INFO '% % % % % %' , stockno, detail.lngstockno, detail.lngstockdetailno, header.lngorderno, detail.lngorderno, detail.lngorderdetailno;
 
                 insert into t_stockdetail
                 (
@@ -256,7 +297,7 @@ begin
                     stockno
                    ,detail.lngstockdetailno
                    ,detail.lngrevisionno
-                   ,(select new_order from order_conversion where old_order = header.lngorderno and detailno = detail.lngorderdetailno)
+                   ,detail.lngorderno
                    ,detail.lngorderdetailno
                    ,detail.lngorderrevisionno
                    ,detail.strproductcode

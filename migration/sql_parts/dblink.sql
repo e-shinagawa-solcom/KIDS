@@ -1,4 +1,4 @@
---kidscore‚ÉƒX[ƒp[ƒ†[ƒU[Œ ŒÀ‚ğ‚ ‚½‚¦‚é‚©AƒX[ƒp[ƒ†[ƒU[‚ÅÀs
---Œ»sƒT[ƒo‚ÉÚ‘±
+--kidscoreã«ã‚¹ãƒ¼ãƒ‘ãƒ¼ãƒ¦ãƒ¼ã‚¶ãƒ¼æ¨©é™ã‚’ã‚ãŸãˆã‚‹ã‹ã€ã‚¹ãƒ¼ãƒ‘ãƒ¼ãƒ¦ãƒ¼ã‚¶ãƒ¼ã§å®Ÿè¡Œ
+--ç¾è¡Œã‚µãƒ¼ãƒã«æ¥ç¶š
 select dblink_connect('con111','hostaddr=192.168.1.111 port=5432 dbname=kidscore2 user=kids password=kids');
 
