@@ -751,11 +751,11 @@ function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB)
         $aryDetailQuery[] = "  ,strnote = '" . $aryDetail[$i]["strnote"]. "'";
         $aryDetailQuery[] = "WHERE lngorderno = " . intval($aryDetail[$i]["lngorderno"]);
         $aryDetailQuery[] = "AND   lngorderdetailno = " . intval($aryDetail[$i]["lngorderdetailno"]);
-        $aryDetailQuery[] = "AND   lngrevisionno = " . intval($aryUpdate["lngrevisionno"]);
+        $aryDetailQuery[] = "AND   lngrevisionno = " . intval($aryDetail[$i]["lngrevisionno"]);
 
         $strDetailQuery = "";
         $strDetailQuery = implode("\n", $aryDetailQuery);
-        
+
         if (!$lngResultID = $objDB->execute($strDetailQuery)) {
             fncOutputError(9051, DEF_ERROR, "発注明細テーブルへの更新処理に失敗しました。", true, "", $objDB);
             return false;

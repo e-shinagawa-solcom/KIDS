@@ -433,9 +433,9 @@ jQuery(function ($) {
             url: '/po/confirm/index.php?strSessionID=' + $('input[type="hidden"][name="strSessionID"]').val(),
             data: {
                 strSessionID: $('input[type="hidden"][name="strSessionID"]').val(),
-                lngOrderNo: $('input[name="lngOrderNo"]').val(),
+                // lngOrderNo: $('input[name="lngOrderNo"]').val(),
                 strMode: $('input[name="strMode"]').val(),
-                lngRevisionNo: $('input[name="lngRevisionNo"]').val(),
+                // lngRevisionNo: $('input[name="lngRevisionNo"]').val(),
                 lngPayConditionCode: $('select[name="lngPayConditionCode"]').val(),
                 lngLocationCode: $('input[name="lngLocationCode"]').val(),
                 strNote: $('input[name="strNote"]').val(),
