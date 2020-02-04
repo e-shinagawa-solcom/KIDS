@@ -30,9 +30,9 @@ select '02'
 union
 select '03'
 	,'製品コード'
-	,(select mp.strproductcode || '_' || mp.strrevisecode from m_product mp where mp.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
+	,(select mp.strproductcode || '_' || mp.strrevisecode from m_product mp where mp.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_' and mp.lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode = '_%strProductCode%_' and strrevisecode='_%strReviseCode%_'))
 	,'製品名'
-	,(select mp.strproductname from m_product mp where mp.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
+	,(select mp.strproductname from m_product mp where mp.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_' and mp.lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode = '_%strProductCode%_' and strrevisecode='_%strReviseCode%_'))
 	,''
 	,''
 	,''
@@ -41,11 +41,11 @@ select '03'
 union
 select '04'
 	,'部門コード'
-	,(select mg.strgroupdisplaycode from m_product mp, m_group mg where mp.lngInChargeGroupCode = mg.lnggroupcode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
+	,(select mg.strgroupdisplaycode from m_product mp, m_group mg where mp.lngInChargeGroupCode = mg.lnggroupcode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_' and mp.lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode = '_%strProductCode%_' and strrevisecode='_%strReviseCode%_'))
 	,'部門名称'
-	,(select mg.strgroupdisplayname from m_product mp, m_group mg where mp.lngInChargeGroupCode = mg.lnggroupcode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
+	,(select mg.strgroupdisplayname from m_product mp, m_group mg where mp.lngInChargeGroupCode = mg.lnggroupcode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_' and mp.lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode = '_%strProductCode%_' and strrevisecode='_%strReviseCode%_'))
 	,'カテゴリ'
-	,(select mcg.strcategoryname from m_product mp, m_category mcg where mp.lngcategorycode = mcg.lngcategorycode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_')
+	,(select mcg.strcategoryname from m_product mp, m_category mcg where mp.lngcategorycode = mcg.lngcategorycode and mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_' and mp.lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode = '_%strProductCode%_' and strrevisecode='_%strReviseCode%_'))
 	,''
 	,''
 	,''
@@ -63,7 +63,7 @@ select '05'
 from
 	m_product mp
 where
-	mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_'
+	mp.strproductcode =  '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_' and mp.lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode = '_%strProductCode%_' and strrevisecode='_%strReviseCode%_')
 union
 select '06'
 	,''
@@ -121,7 +121,7 @@ from
 		on mc.lngcompanycode = tet.lngcustomercompanycode
 	,m_product mp
 where
-me.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_'
+me.strproductcode = '_%strProductCode%_' and mp.strrevisecode='_%strReviseCode%_' and mp.lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode = '_%strProductCode%_' and strrevisecode='_%strReviseCode%_')
 and me.lngrevisionno = (select max(lngrevisionno) from m_estimate where lngestimateno = me.lngestimateno)
 and me.strproductcode = mp.strproductcode
 and me.strrevisecode = mp.strrevisecode
