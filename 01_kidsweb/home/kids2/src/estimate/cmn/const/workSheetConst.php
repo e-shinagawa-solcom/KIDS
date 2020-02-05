@@ -99,6 +99,9 @@ class workSheetConst {
     // 売上区分チェック用
     const RECEIVE_PRODUCT_CLASS_CHECK = 'receive_p_class_check';
 
+    // 売上区分チェック用
+    const RECEIVE_PRODUCT_COMPANY_CHECK = 'receive_p_company_check';
+
 
     // 固定費売上
     // 売上分類
@@ -133,6 +136,8 @@ class workSheetConst {
     // 売上区分チェック用
     const RECEIVE_FIXED_COST_CLASS_CHECK = 'receive_f_class_check';
 
+    // 売上区分チェック用
+    const RECEIVE_FIXED_COST_COMPANY_CHECK = 'receive_f_company_check';
 
     // 発注明細
     // 固定費
@@ -170,6 +175,8 @@ class workSheetConst {
     // 仕入部品チェック用
     const ORDER_FIXED_COST_ITEM_CHECK = 'order_f_item_check';
 
+    // 仕入部品チェック用
+    const ORDER_FIXED_COST_COMPANY_CHECK = 'order_f_company_check';
 
     // 部材費
     // 仕入科目
@@ -202,6 +209,8 @@ class workSheetConst {
     // 仕入部品チェック用
     const ORDER_ELEMENTS_COST_ITEM_CHECK = 'order_e_item_check';
 
+    // 仕入部品チェック用
+    const ORDER_ELEMENTS_COST_COMPANY_CHECK = 'order_e_company_check';
 
     // 計算結果
     // 製品売上高タイトル
@@ -453,7 +462,13 @@ class workSheetConst {
         DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENTS_COST_CLASS_CHECK
     ];
 
-
+    // 対象エリアで使用する顧客・仕入先比較用のセル
+    const CLASS_COMPANY_CHECK_CELL = [
+        DEF_AREA_PRODUCT_SALES => self::RECEIVE_PRODUCT_COMPANY_CHECK,
+        DEF_AREA_FIXED_COST_SALES => self::RECEIVE_FIXED_COST_COMPANY_CHECK,
+        DEF_AREA_FIXED_COST_ORDER => self::ORDER_FIXED_COST_COMPANY_CHECK,
+        DEF_AREA_PARTS_COST_ORDER => self::ORDER_ELEMENTS_COST_COMPANY_CHECK
+    ];
     // 名称リスト（項目別の括り) -------------------------------------------------------------------------------------------
 
     // 明細部ヘッダーセル名称リスト
@@ -478,7 +493,8 @@ class workSheetConst {
         'subtotal' => self::RECEIVE_PRODUCT_SUBTOTAL_PRICE,
         'delivery' => self::RECEIVE_PRODUCT_DELIVERY_DATE,
         'note' => self::RECEIVE_PRODUCT_NOTE,
-        'classItemCheck' => self::RECEIVE_PRODUCT_CLASS_CHECK
+        'classItemCheck' => self::RECEIVE_PRODUCT_CLASS_CHECK,
+        'companyItemCheck' => self::RECEIVE_PRODUCT_COMPANY_CHECK
     ];
 
     // 製品売上計算結果名称リスト
@@ -501,7 +517,8 @@ class workSheetConst {
         'subtotal' => self::RECEIVE_FIXED_COST_SUBTOTAL_PRICE,
         'delivery' => self::RECEIVE_FIXED_COST_DELIVERY_DATE,
         'note' => self::RECEIVE_FIXED_COST_NOTE,
-        'classItemCheck' => self::RECEIVE_FIXED_COST_CLASS_CHECK
+        'classItemCheck' => self::RECEIVE_FIXED_COST_CLASS_CHECK,
+        'companyItemCheck' => self::RECEIVE_FIXED_COST_COMPANY_CHECK
     ];
 
     // 固定費売上計算結果セル名称リスト
@@ -525,7 +542,8 @@ class workSheetConst {
         'subtotal' => self::ORDER_FIXED_COST_SUBTOTAL_PRICE,
         'delivery' => self::ORDER_FIXED_COST_DELIVERY_DATE,
         'note' => self::ORDER_FIXED_COST_NOTE,
-        'classItemCheck' => self::ORDER_FIXED_COST_ITEM_CHECK
+        'classItemCheck' => self::ORDER_FIXED_COST_ITEM_CHECK,
+        'companyItemCheck' => self::ORDER_FIXED_COST_COMPANY_CHECK
     ];
 
     // 固定費計算結果セル名称リスト
@@ -549,7 +567,8 @@ class workSheetConst {
         'price' => self::ORDER_ELEMENTS_COST_PRODUCT_PRICE,
         'delivery' => self::ORDER_ELEMENTS_COST_DELIVERY_DATE,
         'note' => self::ORDER_ELEMENTS_COST_NOTE,
-        'classItemCheck' => self::ORDER_ELEMENTS_COST_ITEM_CHECK
+        'classItemCheck' => self::ORDER_ELEMENTS_COST_ITEM_CHECK,
+        'companyItemCheck' => self::ORDER_ELEMENTS_COST_COMPANY_CHECK
     ];
 
     // 部材費フッターセル名称リスト

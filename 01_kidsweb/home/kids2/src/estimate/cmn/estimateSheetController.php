@@ -2,6 +2,9 @@
 
 // 読み込まれていなければ必要ファイルを読み込む
 require_once ('conf.inc');
+require_once ( LIB_FILE );
+require_once ( LIB_DEBUGFILE );
+
 
 // Composerのオートロードファイル読み込み
 require_once ( VENDOR_AUTOLOAD_FILE );
@@ -1888,6 +1891,7 @@ class estimateSheetController {
 
             // ブランクセルの設定
             $blankCell = '$'. $clsItmCol. '$'. $clsItmRow;
+fncDebug("dl.log", $blankCell, __FILE__, __LINE__, "a");
 
             // 売上分類 or 仕入科目のドロップダウンリストの最後のセル
             $endDivSubCell = '$'. $divSubCol. '$'. $divSubRow;
@@ -1918,6 +1922,7 @@ class estimateSheetController {
             $clsItmCheckFomula .= ',""';
             $clsItmCheckFomula .= str_repeat(')', $branch);
             $clsItmCheckFomula .= ',""),"")';
+fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
 
             $orderAttribute = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA;
 
@@ -1952,6 +1957,9 @@ class estimateSheetController {
             $detailClsItmCol = $columnNumber['classItem'];        // 売上区分 or 仕入部品の列番号
             $detailCompanyCol = $columnNumber['customerCompany']; // 顧客先 or 仕入先の列番号
             $detailCheckCol = $columnNumber['classItemCheck']; // チェック列の列番号
+            $detailCompanyCheckCol = $columnNumber['companyItemCheck']; // チェック列の列番号
+fncDebug("dl.log", $detailCheckCol, __FILE__, __LINE__, "a");
+fncDebug("dl.log", $detailCompanyCheckCol, __FILE__, __LINE__, "a");
             $detailNoteCol = $columnNumber['note']; // チェック列の列番号
 
             // 明細行に入力規則を適用
@@ -1960,6 +1968,8 @@ class estimateSheetController {
                 $detailClsItmCell = $detailClsItmCol. $row;
                 $detailCompanyCell = $detailCompanyCol. $row;
                 $clsItmCheckCell = $detailCheckCol. $row;
+//                $clsCompanyCheckCell = $detailCompanyCheckCol. $row;
+                
                 $noteCell = $detailCheckCol. $row;
 
                 $this->setDataValidationForCell($detailDivSubCell, $divSubFomula);  // 売上分類 or 仕入科目
@@ -1969,13 +1979,17 @@ class estimateSheetController {
 
                 $this->setDataValidationForCell($detailClsItmCell, $inputClsItmFomula);  // 売上区分 or 仕入部品
 
+fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
                 // 置換文字列を売上分類or仕入科目のセルに置換
                 $inputClsItmCheckFomula = str_replace($divSubPattern, $detailDivSubCell, $clsItmCheckFomula);
+fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
                 // 置換文字列を売上区分or仕入部品のセルに置換
                 $inputClsItmCheckFomula = str_replace($clsItmPattern, $detailClsItmCell, $inputClsItmCheckFomula);
 
                 // 売上区分 or 仕入部品チェック用セルに計算式をセットする
+fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
                 $this->sheet->getCell($clsItmCheckCell)->setValue($inputClsItmCheckFomula);
+//                $this->sheet->getCell($clsCompanyCheckCell)->setValue($inputClsItmCheckFomula);
 
                 if ($companyFomula) {
                     $this->setDataValidationForCell($detailCompanyCell, $companyFomula);  // 顧客先 or 仕入先
