@@ -318,38 +318,38 @@ error_reporting(E_ALL);
 	if( $aryData["lngExportData"] != 8)
 	{
 
-	/* ダウンロード実行の場合 */
-	$result = false;
-	$lngResultRows = 0;
-	$lngFieldNum = 0;
-	if( $aryData["lngActionCode"] == 2 )
-	{
-		// マスタ取得クエリ実行
-		if ( !$result = $objDB->execute( $strQuery ) )
+		/* ダウンロード実行の場合 */
+		$result = false;
+		$lngResultRows = 0;
+		$lngFieldNum = 0;
+		if( $aryData["lngActionCode"] == 2 )
 		{
-			echo "id\tname1\nマスターデータの結果取得に失敗しました。\n";
-		    exit;
-		}
+			// マスタ取得クエリ実行
+			if ( !$result = $objDB->execute( $strQuery ) )
+			{
+				echo "id\tname1\nマスターデータの結果取得に失敗しました。\n";
+		    	exit;
+			}
 
-		// 行数の取得
-		$lngResultRows = pg_Num_Rows( $result );
-		if( $lngResultRows == 0 )
-		{
-			echo '結果データが0件です。条件を再設定して下さい。<br />';
-			if( $aryData["preview"] )
+			// 行数の取得
+			$lngResultRows = pg_Num_Rows( $result );
+			if( $lngResultRows == 0 )
 			{
-				echo '<a href="javascript:window.close();">閉じる</a>';
+				echo '結果データが0件です。条件を再設定して下さい。<br />';
+				if( $aryData["preview"] )
+				{
+					echo '<a href="javascript:window.close();">閉じる</a>';
+				}
+				else
+				{
+					echo '<a href="javascript:history.back();">戻る</a>';
+				}
+				exit;
 			}
-			else
-			{
-				echo '<a href="javascript:history.back();">戻る</a>';
-			}
-			exit;
-		}
+			
+			$lngFieldNum = $objDB->getFieldsCount( $result );
 		
-		$lngFieldNum = $objDB->getFieldsCount( $result );
-	
-	}
+		}
 	}
 
 //var_dump($aryData);

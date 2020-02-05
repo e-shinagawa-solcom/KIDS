@@ -234,10 +234,11 @@ begin
             FETCH cur_detail INTO detail;
             EXIT WHEN NOT FOUND;
             -- 受注番号採択（明細かヘッダか）
-                --RAISE INFO '% % use receive no on header % -> %', detail.lngsalesno, detail.lngsalesdetailno, header.lngreceiveno, detail.new_receive;
                 new_receiveno = detail.new_receive_sub;
                 IF new_receiveno is null THEN
-                    RAISE INFO '% % no receiveno matched from header', detail.lngsalesno, detail.lngsalesdetailno;
+RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailno;
+                ELSE
+--RAISE INFO '% % use receive no on detail % -> %', detail.lngsalesno, detail.lngsalesdetailno, detail.lngreceiveno, detail.new_receive_sub;
                 END IF;
                 -- 売上明細移行
                 insert into t_salesdetail
@@ -286,12 +287,21 @@ begin
                    ,detail.lngsortkey
                    ,detail.new_receive_sub    --移行後の受注番号
                    ,detail.lngreceivedetailno
-                   ,(select lngrevisionno from t_receivedetail where lngreceiveno = detail.new_receive_sub and lngreceivedetailno = detail.lngreceivedetailno and lngrevisionno = (select MAX(lngrevisionno) from t_receivedetail where lngreceiveno = detail.new_receive_sub and lngreceivedetailno = detail.lngreceivedetailno))
+                   ,(select 
+                         lngrevisionno 
+                     from t_receivedetail 
+                     where lngreceiveno = detail.new_receive_sub 
+                         and lngreceivedetailno = detail.lngreceivedetailno 
+                         and lngrevisionno = (
+                             select MAX(lngrevisionno) from t_receivedetail where lngreceiveno = detail.new_receive_sub and lngreceivedetailno = detail.lngreceivedetailno
+                         )
+                    )
                 );
         END LOOP;
         close cur_detail;
     END LOOP;
     close cur_header;
+
     last_no = -1;
     -- 納品書データ作成
     slip_count = 0;
@@ -306,6 +316,8 @@ begin
             slip_count = slip_count + 1;
             last_no = slip_header.lngsalesno;
         END IF;
+--RAISE INFO '% % % %', slip_count, slip_header.lngrevisionno, slip_header.strslipcode, slip_header.lngsalesno;
+     
         insert into m_slip
         (
             lngslipno
@@ -385,6 +397,8 @@ begin
             on m_companyprintname.lngcompanycode = A.lngcustomercode
         left outer join m_stockcompanycode
             on m_stockcompanycode.lngcompanyno = A.lngcustomercode;
+--RAISE INFO '% % %', slip_count, slip_header.lngsalesno, slip_header.lngrevisionno;
+
         insert into t_slipdetail(
             lngslipno
            ,lngslipdetailno
@@ -436,6 +450,12 @@ begin
         left outer join m_product
             on m_product.strproductcode = t_salesdetail.strproductcode
             and m_product.strrevisecode = t_salesdetail.strrevisecode
+        inner join (
+            select lngproductno,strrevisecode, MAX(lngrevisionno) as lngrevisionno from m_product group by lngproductno,strrevisecode
+        ) mp_rev
+            on mp_rev.lngproductno = m_product.lngproductno
+            and mp_rev.strrevisecode = m_product.strrevisecode
+            and mp_rev.lngrevisionno = m_product.lngrevisionno
         left outer join m_salesclass
             on m_salesclass.lngsalesclasscode = t_salesdetail.lngsalesclasscode
         left outer join m_productunit

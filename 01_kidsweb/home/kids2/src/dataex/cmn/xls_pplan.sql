@@ -1,17 +1,21 @@
 SELECT DISTINCT
 _%PPLAN_SELECT_CONDITION%_
 FROM m_product mp
+INNER JOIN (
+	SELECT lngproductno, MAX(lngrevisionno) as lngrevisionno from m_product group by lngproductno
+) mp_rev
+	on mp_rev.lngproductno = mp.lngproductno
+	AND mp_rev.lngrevisionno = mp.lngrevisionno
 LEFT OUTER JOIN t_goodsplan tgp ON tgp.lngProductNo = mp.lngProductNo AND tgp.lngRevisionNo = ( 
 	SELECT MAX ( tgp2.lngRevisionNo )
 	FROM t_GoodsPlan tgp2
 	WHERE tgp.lngProductNo = tgp2.lngProductNo
 	)
 	AND (tgp.lngGoodsPlanProgressCode = 1 OR tgp.lngGoodsPlanProgressCode = 4)
-LEFT OUTER JOIN m_estimate me ON me.strProductCode = mp.strProductCode AND me.lngRevisionNo = (
-	SELECT MAX ( me2.lngRevisionNo )
-	FROM m_estimate me2
-	WHERE me.strProductCode = me2.strProductCode AND me2.bytInvalidFlag = false
-	)
+LEFT OUTER JOIN m_estimate me 
+	ON me.strProductCode = mp.strProductCode 
+	AND me.strrevisecode = mp.strrevisecode 
+	AND me.lngRevisionNo = mp.lngrevisionno
 LEFT OUTER JOIN m_Company mc ON mc.lngCompanyCode = mp.lngFactoryCode
 LEFT OUTER JOIN m_Company mc2 ON mc2.lngCompanyCode = mp.lngCustomerCompanyCode
 LEFT OUTER JOIN m_Group mg on mg.lngGroupCode = mp.lngInchargeGroupCode
