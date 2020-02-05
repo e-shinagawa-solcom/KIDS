@@ -226,9 +226,9 @@ $(function(){
     }).join(",");
 
     if (target) {
-      var text = '選択された受注を確定します。\nよろしいですか？';
-      var result = confirm(text);
-      if (result) {
+//      var text = '選択された受注を確定します。\nよろしいですか？';
+//      var result = confirm(text);
+//      if (result) {
         var sessionID = $('input[name="strSessionID"]').val();
 
         var baseUrl = "/so/decide/index.php";
@@ -242,9 +242,9 @@ $(function(){
 
         return false;
 
-      } else {
-        return false;
-      }
+//      } else {
+//        return false;
+//      }
     } else {
       alert('受注を確定する明細行を選択してください。');
     }
@@ -307,9 +307,9 @@ $(function(){
     }).join(",");
 
     if (target) {
-      var text = '選択された発注を確定します。\nよろしいですか？';
-      var result = confirm(text);
-      if (result) {
+//      var text = '選択された発注を確定します。\nよろしいですか？';
+//      var result = confirm(text);
+//      if (result) {
         var sessionID = $('input[name="strSessionID"]').val();
 
         var baseUrl = "/po/regist/index.php";
@@ -325,9 +325,9 @@ $(function(){
         
         return false;
 
-      } else {
-        return false;
-      }
+//      } else {
+//        return false;
+//      }
     } else {
       alert('発注を確定する明細行を選択してください。');
     }
