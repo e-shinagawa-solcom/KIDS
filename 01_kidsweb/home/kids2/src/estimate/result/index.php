@@ -316,15 +316,30 @@ if (!count($strErrorMessage)) {
                         $search .= " OR ";
                     }
                     if (strpos($strProductCode, '-') !== false) {
-                        $search .= "(mp.strProductCode" .
-                        " between '" . explode("-", $strProductCode)[0] . "'" .
-                        " AND " . "'" . explode("-", $strProductCode)[1] . "')";
+                        if (!array_key_exists("admin", $optionColumns)) {
+                            $search .= "(mp.strProductCode";
+                        }
+                        else{
+                            $search .= "(substr(me.strproductcode, 1, 5)";
+                        }
+                        $search .=" between '" . explode("-", $strProductCode)[0] . "'";
+                        $search .=" AND " . "'" . explode("-", $strProductCode)[1] . "')";
                     } else {
                         if (strpos($strProductCode, '_') !== false) {
-                            $search .= "mp.strProductCode = '" . explode("_", $strProductCode)[0] . "'";
+                            if (!array_key_exists("admin", $optionColumns)) {
+                                $search .= "mp.strProductCode = '" . explode("_", $strProductCode)[0] . "'";
+                            }
+                            else{
+                                $search .= "substr(me.strproductcode, 1, 5) = '" . explode("_", $strProductCode)[0] . "'";
+                            }
                             $search .= " AND mp.strrevisecode = '" . explode("_", $strProductCode)[1] . "'";
                         } else {
-                            $search .= "mp.strProductCode = '" . $strProductCode . "'";
+                            if (!array_key_exists("admin", $optionColumns)) {
+                                $search .= "mp.strProductCode = '" . $strProductCode . "'";
+                            }
+                            else{
+                                $search .= "substr(me.strproductcode, 1, 5) = '" . $strProductCode . "'";
+                            }
                         }
                     }
                 }
