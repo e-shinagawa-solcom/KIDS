@@ -118,7 +118,6 @@ $aryData["lngCustomerCompanyCode"] = $_POST["lngCustomerCompanyCode"];
 $aryData["lngOrderNo"] = $_POST["lngOrderNo"];
 $aryData["lngPurchaseOrderNo"] = $_POST["lngPurchaseOrderNo"];
 $aryData["lngRevisionNo"] = $_POST["lngRevisionNo"];
-$aryData["dtmExpirationDate"] = $_POST["dtmExpirationDate"];
 $aryData["lngPayConditionCode"] = $_POST["lngPayConditionCode"];
 $aryData["strPayConditionName"] = $_POST["strPayConditionName"];
 $aryData["strLocationName"] = $_POST["strLocationName"];

@@ -599,40 +599,7 @@ function resetTableBDisplayStyle() {
         $(this).find("#lngunitquantity").find('input:text').prop('disabled', false);
         $(this).find("#strdetailnote").find('input:text').prop('disabled', false);
     });
-
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(1)").css('display', '');
-
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(3)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(3)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(8)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(8)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(9)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(9)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(10)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(10)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(11)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(11)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(12)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(12)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(13)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(13)").css('display', 'none');
 }
-
-// function resetTableAWidth() {
-//     var width = 0;
-//     var columnNum = $(".table-decide-description").eq(0).find("thead tr th").length;
-//     for (var i = 1; i <= columnNum; i++) {
-//         if ($(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-//             // $(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('width', '');
-//             // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(" + i + ")").css('width', '');
-//         } else {
-//             width += $(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").width();
-//         }
-//     }
-//     $(".table-decide-description").eq(0).width(width + 25);
-//     $(".table-decide-description").eq(2).width(width + 25);
-// }
-
 
 function resetTableAWidth() {
     $("#tbl_detail_chkbox tbody tr td").width($("#tbl_detail_chkbox_head tr th").width());

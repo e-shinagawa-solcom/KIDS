@@ -156,8 +156,11 @@
 	}
 
 	// 明細
-	$aryNewResult["strPurchaseOrderDetail"] = fncGetPurchaseOrderDetailHtml($aryResult, $objDB);
+	$aryHtmlResult = fncGetPurchaseOrderDetailHtml($aryResult, $objDB);
 
+	$aryNewResult["purchaseOrderDetail"] = $aryHtmlResult["purchaseOrderDetail"];
+	$aryNewResult["purchaseOrderDetailNo"] = $aryHtmlResult["purchaseOrderDetailNo"];
+	
 	$objDB->close();
 	$objDB->freeResult( $lngResultID );
 	

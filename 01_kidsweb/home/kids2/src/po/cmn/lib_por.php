@@ -1145,24 +1145,31 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
  */
 function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
 {
+    $result = array();
     for ($i = 0; $i < count($aryResult); $i++) {
+        $aryNoHtml[] = "  <tr>";
+        $aryNoHtml[] = "      <td name=\"rownum\">" . ($i + 1) . "</td>";
+        $aryNoHtml[] = "  </tr>";
+
         $aryHtml[] = "  <tr>";
-        $aryHtml[] = "      <td name=\"rownum\">" . ($i + 1) . "</td>";
         $aryHtml[] = "      <td class=\"detailOrderCode\">" . sprintf("%s_%02d", $aryResult[$i]["order_strordercode"], $aryResult[$i]["order_lngrevisionno"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailPurchaseorderDetailNo\">" . $aryResult[$i]["lngpurchaseorderdetailno"] . "</td>";
         $aryHtml[] = "      <td class=\"detailStockSubjectCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstocksubjectcode"], $aryResult[$i]["strstocksubjectname"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailStockItemCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstockitemcode"], $aryResult[$i]["strstockitemname"]) . "</td>";
-        $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . fncGetPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) . "</select></td>";
-        $aryHtml[] = "      <td class=\"detailProductPrice\">" . sprintf("%s %s", $aryResult[$i]["strmonetaryunitsign"], number_format($aryResult[$i]["curproductprice"], 4)) . "</td>";
+        $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . fncGetPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) . "</select></td>";    
+        $aryHtml[] = "      <td class=\"detailProductPrice\">" . toMoneyFormat($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], number_format($aryResult[$i]["curproductprice"], 4)) . "</td>";
         $aryHtml[] = "      <td class=\"detailProductQuantity\">" . number_format($aryResult[$i]["lngproductquantity"], 0) . "</td>";
-        $aryHtml[] = "      <td class=\"detailSubtotalPrice\">" . sprintf("%s %s", $aryResult[$i]["strmonetaryunitsign"], number_format($aryResult[$i]["cursubtotalprice"], 2)) . "</td>";
+        $aryHtml[] = "      <td class=\"detailSubtotalPrice\">" . toMoneyFormat($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], number_format($aryResult[$i]["cursubtotalprice"], 4)) . "</td>";
         $aryHtml[] = "      <td class=\"detailDeliveryDate\">" . $aryResult[$i]["dtmdeliverydate"] . "</td>";
         $aryHtml[] = "      <td class=\"detailDetailNote\">" . $aryResult[$i]["strdetailnote"] . "</td>";
         $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"strProductUnitName\" value=\"" . $aryResult[$i]["strproductunitname"] . "\"></td>";
         $aryHtml[] = "  </tr>";
     }
 
-    return implode("\n", $aryHtml);
+    $result["purchaseOrderDetail"] = implode("\n", $aryHtml);
+    $result["purchaseOrderDetailNo"] = implode("\n", $aryNoHtml);
+
+    return $result;
 }
 
 /**
@@ -1189,7 +1196,7 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    strrevisecode,";
     $aryQuery[] = "    strproductname,";
     $aryQuery[] = "    strproductenglishname,";
-    $aryQuery[] = "    dtmexpirationdate,";
+    // $aryQuery[] = "    dtmexpirationdate,";
     $aryQuery[] = "    lngmonetaryunitcode,";
     $aryQuery[] = "    strmonetaryunitname,";
     $aryQuery[] = "    strmonetaryunitsign,";
@@ -1224,7 +1231,7 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    strrevisecode,";
     $aryQuery[] = "    strproductname,";
     $aryQuery[] = "    strproductenglishname,";
-    $aryQuery[] = "    '" . $aryPurchaseOrder["dtmExpirationDate"] . "',";
+    // $aryQuery[] = "    '" . $aryPurchaseOrder["dtmExpirationDate"] . "',";
     $aryQuery[] = "    lngmonetaryunitcode,";
     $aryQuery[] = "    strmonetaryunitname,";
     $aryQuery[] = "    strmonetaryunitsign,";
@@ -1347,8 +1354,8 @@ function fncCreatePurchaseOrderUpdateHtml($aryPurchaseOrder, $strSessionID)
     $aryHtml[] = "<p class=\"caption\">発注書NO " . $aryPurchaseOrder[0]["strordercode"] . "の修正が完了しました。</p>";
     $aryHtml[] = "<table class=\"ordercode\">";
     $aryHtml[] = "  <tr>";
-    $aryHtml[] = "    <td class=\"orderbuttontd\" id=\"btnClose\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"\" onclick=\"window.opener.location.reload();window.open('about:blank','_self').close()\"></td>";
-    $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
+    $aryHtml[] = "    <td class=\"orderbuttontd\" id=\"btnClose\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"\" onclick=\"window.opener.opener.location.reload();window.opener.close();window.close();\"></td>";
+    $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/blownpreview_off_bt.gif\" alt=\"preview\"></a></td>";
     $aryHtml[] = "  </tr>";
     $aryHtml[] = "</table> ";
     $aryHtml[] = "<br>";

@@ -7,7 +7,7 @@
 {
     position:relative;
     width:99.5%;
-    height:130px;
+    height:250px;
     top:5px;
 }
 /* 入力フォーム 確定テーブル */
@@ -123,7 +123,7 @@
     left: -1px;
     top: 20px;
     width: 30px;
-    height: 107px;
+    height: 227px;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -135,34 +135,5 @@
     overflow-x: scroll;
     overflow-y: scroll;
     width: 99.7%;
-    height: 124px;
-}
-
-#renew_header_decide_v {
-    position: absolute;
-    left: -1px;
-    top: 20px;
-    width: 30px;
-    height: 227px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
-
-#renew_decide_data {
-    position: absolute;
-    left: 19px;
-    top: 20px;
-    overflow-x: scroll;
-    overflow-y: scroll;
-    width: 99.7%;
     height: 244px;
-}
-
-
-.renew-div-decide-table
-{
-    position:relative;
-    width:99.5%;
-    height:250px;
-    top:5px;
 }
