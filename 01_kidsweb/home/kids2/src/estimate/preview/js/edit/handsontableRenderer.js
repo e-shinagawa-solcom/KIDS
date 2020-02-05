@@ -339,9 +339,6 @@ $(function() {
       }
     }
     
-    // rendererをセットする（セルの罫線や背景色等の書式設定、入力形式の指定等）
-    cellProperties.renderer = firstRenderer;
-
     // 読み取り専用セルを設定する
     var readOnlyRow = readOnlyDetailRow.some(function(value){
       return value = row;
@@ -349,9 +346,15 @@ $(function() {
     
     if (readOnlyDetailRow.indexOf(row) > -1) {
       cellProperties.readOnly = true;
+      cellData[row][col]['emphasis']['bold'] = false;
     } else {
       cellProperties.readOnly = cellData[row][col]['readOnly'];
+      cellData[row][col]['emphasis']['bold'] = true;
     }    
+
+    // rendererをセットする（セルの罫線や背景色等の書式設定、入力形式の指定等）
+    cellProperties.renderer = firstRenderer;
+
     
     return cellProperties;
   }
