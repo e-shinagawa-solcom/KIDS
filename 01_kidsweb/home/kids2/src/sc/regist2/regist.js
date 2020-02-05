@@ -479,32 +479,6 @@ jQuery(function ($) {
             }
         }
 
-        // //重複する明細の追加を禁止（重複判定：受注明細のキー）
-        // var existsSameKey = false;
-        // var isSame = false;
-        // var rn1 = $(tr).children('td.detailReceiveNo').text();
-        // var dn1 = $(tr).children('td.detailReceiveDetailNo').text();
-        // var rev1 = $(tr).children('td.detailReceiveRevisionNo').text();
-
-        // $("#EditTableBody tr").each(function () {
-        //     var rn2 = $(this).children('td.detailReceiveNo').text();
-        //     var dn2 = $(this).children('td.detailReceiveDetailNo').text();
-        //     var rev2 = $(this).children('td.detailReceiveRevisionNo').text();
-
-        //     if ((rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2)) {
-        //         isSame = true;
-        //     } else {
-        //         existsSameKey = false;
-        //     }
-        //     var isSame = (rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2);
-        //     existsSameKey = existsSameKey || isSame;
-        // });
-
-        // if (existsSameKey) {
-        //     alert("重複する明細は選択できません。");
-        //     return false;
-        // }
-
         return true;
     }
 
@@ -1222,8 +1196,6 @@ jQuery(function ($) {
         });
     }
 
-
-
     // 行IDの再設定
     function resetTableARowid() {
         var rownum = 0;
@@ -1290,18 +1262,6 @@ jQuery(function ($) {
 
         return lastSelectedRow;
     }
-
-    // $('body').on('click', '#EditTableBody tr', function (e) {
-    //     var tds = $(e.currentTarget).children('td');
-    //     var checked = $(tds).hasClass('selected');
-    //     if (checked) {
-    //         $(tds).removeClass('selected');
-    //         $(this).removeClass('selected');
-    //     } else {
-    //         $(tds).addClass('selected');
-    //         $(this).addClass('selected');
-    //     }
-    // });
 
 
     // 全削除ボタンのイベント
@@ -1527,29 +1487,6 @@ jQuery(function ($) {
 
         resetTableBRowid();
     });
-
-
-
-    // $('#selectup').on('click', function () {
-    //     var selected = getCheckedRows();
-    //     if (!selected) { return false; }
-    //     executeSort(0);
-    // });
-    // $('#selectup1').on('click', function () {
-    //     var selected = getCheckedRows();
-    //     if (!selected) { return false; }
-    //     executeSort(1);
-    // });
-    // $('#selectdown1').on('click', function () {
-    //     var selected = getCheckedRows();
-    //     if (!selected) { return false; }
-    //     executeSort(2);
-    // });
-    // $('#selectdown').on('click', function () {
-    //     var selected = getCheckedRows();
-    //     if (!selected) { return false; }
-    //     executeSort(3);
-    // });
 
 
     // プレビューボタン押下

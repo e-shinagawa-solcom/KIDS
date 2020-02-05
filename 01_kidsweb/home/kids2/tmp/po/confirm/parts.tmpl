@@ -1,8 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="ja">
+
 <head>
-<title>K.I.D.S.</title>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>K.I.D.S.</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 	<!-- jQuery -->
 	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
@@ -13,75 +14,91 @@
 	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
 	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
 
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 
-<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
-<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
-<link rel="stylesheet" type="text/css" media="screen" href="/po/confirm/layout.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/po/confirm/layout.css">
 
-<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
-<script type="text/javascript" language="javascript" src="/po/confirm/regist-confirm.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
+	<script type="text/javascript" language="javascript" src="/po/confirm/regist-confirm.js"></script>
 
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
 
 </head>
-<body oncontextmenu="return false;"> 
-<p id="ConfirmOverFlowBox">
+
+<body oncontextmenu="return false;">
+	<p id="ConfirmOverFlowBox">
 
 
-<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
-	<tr class="SegColumn">
-		<td id="ControlTitle">発注確定確認</td>
-	</tr>
-</table>
+		<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
+			<tr class="SegColumn">
+				<td id="ControlTitle">発注確定確認</td>
+			</tr>
+		</table>
 
-<br>
+		<br>
 
-<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
-	<tr>
-		<td>
-<!--日本語 -->
-			<form name="form1">
-				<span id="objQuery"></span>
-				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
-				<input type="hidden" name="lngOrderNo" value="_%lngOrderNo%_"><!-- 発注ＮＯ． -->
-				<input type="hidden" name="strMode" value="_%strMode%_">
-				<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_"><!-- 発注ＮＯ． -->
-				<input type="hidden" name="lngPayConditionCode" value="_%lngPayConditionCode%_"><!-- 支払条件 -->
-				<input type="hidden" name="lngLocationCode" value="_%lngLocationCode%_"><!-- 納品場所 -->
-				<input type="hidden"  name="strNote" value="_%strNote%_"><!-- 備考 -->
-				<input type="hidden" name="strProductCode" value="_%strProductCode%_">
-				<input type="hidden" name="lngDetailCount" value="_%lngDetailCount%_"><!-- 明細件数 -->
-
-
-
-				<input type="hidden" name="strSubmit" value="true">
-				
-				<input type="hidden" name="strOrderCode" value="_%strOrderCode%_"><!-- 発注ＮＯ． -->
-				<input type="hidden" name="lngCustomerCode" value="_%lngCustomerCode%_"><!-- 仕入先  -->
-				<input type="hidden" name="lngMonetaryUnitCode" value="_%lngMonetaryUnitCode%_"><!-- 通貨 -->
-
-				<input type="hidden" name="strReviseCode" value="_%strReviseCode%_"><!-- リビジョン番号 -->
-				<input type="hidden"  name="curAllTotalPrice" value="_%curAllTotalPrice%_"><!-- 合計金額 -->
-				<input type="hidden" name="isPayConditionMatch" value="_%isPayConditionMatch%_"><!-- 支払条件照合結果 -->
-				<input type="hidden" name="lngMatchResult1" value="_%lngMatchResult1%_"><!-- 支払条件照合結果 -->
-				<input type="hidden" name="lngMatchResult2" value="_%lngMatchResult2%_"><!-- 支払条件照合結果 -->
-				<input type="hidden" name="lngMatchResult3" value="_%lngMatchResult3%_"><!-- 支払条件照合結果 -->
-				
-				_%strDetailHidden%_
-			</form>
-
-		</td>
-	</tr>
-</table>
-
-<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
-	<tr>
-		<td>
+		<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+			<tr>
+				<td>
+					<!--日本語 -->
+					<form name="form1">
+						<span id="objQuery"></span>
+						<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+						<input type="hidden" name="lngOrderNo" value="_%lngOrderNo%_">
+						<!-- 発注ＮＯ． -->
+						<input type="hidden" name="strMode" value="_%strMode%_">
+						<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
+						<!-- 発注ＮＯ． -->
+						<input type="hidden" name="lngPayConditionCode" value="_%lngPayConditionCode%_">
+						<!-- 支払条件 -->
+						<input type="hidden" name="lngLocationCode" value="_%lngLocationCode%_">
+						<!-- 納品場所 -->
+						<input type="hidden" name="strNote" value="_%strNote%_">
+						<!-- 備考 -->
+						<input type="hidden" name="strProductCode" value="_%strProductCode%_">
+						<input type="hidden" name="lngDetailCount" value="_%lngDetailCount%_">
+						<!-- 明細件数 -->
 
 
-<!-- メッセージ 
+
+						<input type="hidden" name="strSubmit" value="true">
+
+						<input type="hidden" name="strOrderCode" value="_%strOrderCode%_">
+						<!-- 発注ＮＯ． -->
+						<input type="hidden" name="lngCustomerCode" value="_%lngCustomerCode%_">
+						<!-- 仕入先  -->
+						<input type="hidden" name="lngMonetaryUnitCode" value="_%lngMonetaryUnitCode%_">
+						<!-- 通貨 -->
+
+						<input type="hidden" name="strReviseCode" value="_%strReviseCode%_">
+						<!-- リビジョン番号 -->
+						<input type="hidden" name="curAllTotalPrice" value="_%curAllTotalPrice%_">
+						<!-- 合計金額 -->
+						<input type="hidden" name="isPayConditionMatch" value="_%isPayConditionMatch%_">
+						<!-- 支払条件照合結果 -->
+						<input type="hidden" name="lngMatchResult1" value="_%lngMatchResult1%_">
+						<!-- 支払条件照合結果 -->
+						<input type="hidden" name="lngMatchResult2" value="_%lngMatchResult2%_">
+						<!-- 支払条件照合結果 -->
+						<input type="hidden" name="lngMatchResult3" value="_%lngMatchResult3%_">
+						<!-- 支払条件照合結果 -->
+
+						_%strDetailHidden%_
+					</form>
+
+				</td>
+			</tr>
+		</table>
+
+		<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+			<tr>
+				<td>
+
+
+					<!-- メッセージ 
 			<div style="display:_%strWorkflowMessage_visibility%_">
 				<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
 					<tr>
@@ -97,89 +114,86 @@
 			</div>
 メッセージ -->
 
-			<!-- 発注書ヘッダ部 // -->
-			<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
-				<tr> 
-					<td id="CreationDate" class="SegColumn">_%CNdtmInsertDate%_</td>
-					<td class="Segs">_%dtminsertdate%_</td>
-				</tr>
-				<tr> 
-					<td id="POrderCode" class="SegColumn">_%CNstrOrderCode%_</td>
-					<td class="Segs">_%strordercode%_</td>
-				</tr>
-				<tr> 
-					<td id="InputUser" class="SegColumn">_%CNlngInputUserCode%_</td>
-					<td class="Segs">_%lngInputUserCode_DISCODE%_ _%strInputUserName%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">_%CNlngCustomerCode%_</td>
-					<td class="Segs">_%lngCustomerCode_DISCODE%_ _%strCustomerName%_</td>
-				</tr>
+					<!-- 発注書ヘッダ部 // -->
+					<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+						<tr>
+							<td id="CreationDate" class="SegColumn">_%CNdtmInsertDate%_</td>
+							<td class="Segs">_%dtminsertdate%_</td>
+						</tr>
+						<tr>
+							<td id="POrderCode" class="SegColumn">_%CNstrOrderCode%_</td>
+							<td class="Segs">_%strordercode%_</td>
+						</tr>
+						<tr>
+							<td id="InputUser" class="SegColumn">_%CNlngInputUserCode%_</td>
+							<td class="Segs">_%lngInputUserCode_DISCODE%_ _%strInputUserName%_</td>
+						</tr>
+						<tr>
+							<td id="Customer" class="SegColumn">_%CNlngCustomerCode%_</td>
+							<td class="Segs">_%lngCustomerCode_DISCODE%_ _%strCustomerName%_</td>
+						</tr>
 
 
-				<tr> 
-					<td id="DeliveryPlace" class="SegColumn">_%CNlngDeliveryPlaceCode%_</td>
-					<td class="Segs">_%lngLocationCode_DISCODE%_ _%strLocationName%_</td>
-				</tr>
-				<tr> 
-					<td id="MonetaryUnit" class="SegColumn">_%CNlngMOnetaryUnitCode%_</td>
-					<td class="Segs">_%strmonetaryunitname%_</td>
-				</tr>
-				<tr> 
-					<td id="PayCondition" class="SegColumn">_%CNlngPayConditionCode%_</td>
-					<td class="Segs">_%strpayconditionname%_</td>
-				</tr>
-				<tr> 
-					<td id="Remark" class="SegColumn">_%CNstrNote%_</td>
-					<td class="Segs">_%strnote%_</td>
-				</tr>
-				<tr> 
-					<td id="TotalPrice" class="SegColumn">_%CNcurTotalPrice%_</td>
-					<td class="Segs">_%strMonetarySign%_ _%curalltotalprice_DIS%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">_%lngPayConditionCodeMatch%_　_%CNlngWorkflowOrderCode%_</td>
-					<td class="Segs">_%strworkflowordername%_</td>
-				</tr>
-			</table>
-			<!-- 発注書ヘッダ部 // -->
+						<tr>
+							<td id="DeliveryPlace" class="SegColumn">_%CNlngDeliveryPlaceCode%_</td>
+							<td class="Segs">_%lngLocationCode_DISCODE%_ _%strLocationName%_</td>
+						</tr>
+						<tr>
+							<td id="MonetaryUnit" class="SegColumn">_%CNlngMOnetaryUnitCode%_</td>
+							<td class="Segs">_%strmonetaryunitname%_</td>
+						</tr>
+						<tr>
+							<td id="PayCondition" class="SegColumn">_%CNlngPayConditionCode%_</td>
+							<td class="Segs">_%strpayconditionname%_</td>
+						</tr>
+						_%strPayConditionTable%_
+						<tr>
+							<td id="Remark" class="SegColumn">_%CNstrNote%_</td>
+							<td class="Segs">_%strnote%_</td>
+						</tr>
+						<tr>
+							<td id="TotalPrice" class="SegColumn">_%CNcurTotalPrice%_</td>
+							<td class="Segs">_%strMonetarySign%_ _%curalltotalprice_DIS%_</td>
+						</tr>
+						<tr>
+							<td class="SegColumn">_%lngPayConditionCodeMatch%_　_%CNlngWorkflowOrderCode%_</td>
+							<td class="Segs">_%strworkflowordername%_</td>
+						</tr>
+					</table>
+					<!-- 発注書ヘッダ部 // -->
 
 
-			<!-- 発注書明細部 // -->
-			<br>
-
-_%strDetailTable%_
+					<!-- 発注書明細部 // -->
+					<br> _%strDetailTable%_
 
 
-			<br>
-			<!-- 発注書明細部 // -->
+					<br>
+					<!-- 発注書明細部 // -->
 
 
-		</td>
-	</tr>
-</table>
+				</td>
+			</tr>
+		</table>
 
-</p>
-<table id="SegMessage" cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
-	<tr>
-		<td id="Confirmation">上記の内容で登録しますか?</span>
-	</tr>
-	<tr>
-        <td id="ButtonArea">
-            <span id="CancelBt">
-                <img src="/img/type01/cmn/querybt/back_gray_off_ja_bt.gif" onclick="window.close();"
-                    onmouseover="this.src='/img/type01/cmn/querybt/back_gray_on_ja_bt.gif'"
-                    onmouseout="this.src='/img/type01/cmn/querybt/back_gray_off_ja_bt.gif'">
-            </span>
-            <span id="OkBt">
-                    <img src="/img/type01/cmn/seg/regist_off_ja_bt.gif" onclick="RegistPO();"
-                      onmouseover="this.src='/img/type01/cmn/seg/regist_on_ja_bt.gif'"
-                      onmouseout="this.src='/img/type01/cmn/seg/regist_off_ja_bt.gif'">
-            </span>
-        </td>
-	</tr>
-</table>
-_%strOptionalScript%_
+	</p>
+	<table id="SegMessage" cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+		<tr>
+			<td id="Confirmation">上記の内容で登録しますか?</span>
+		</tr>
+		<tr>
+			<td id="ButtonArea">
+				<span id="CancelBt">
+					<img src="/img/type01/cmn/querybt/back_gray_off_ja_bt.gif" onclick="window.close();" onmouseover="this.src='/img/type01/cmn/querybt/back_gray_on_ja_bt.gif'"
+					 onmouseout="this.src='/img/type01/cmn/querybt/back_gray_off_ja_bt.gif'">
+				</span>
+				<span id="OkBt">
+					<img src="/img/type01/cmn/seg/regist_off_ja_bt.gif" onclick="RegistPO();" onmouseover="this.src='/img/type01/cmn/seg/regist_on_ja_bt.gif'"
+					 onmouseout="this.src='/img/type01/cmn/seg/regist_off_ja_bt.gif'">
+				</span>
+			</td>
+		</tr>
+	</table>
+	_%strOptionalScript%_
 </body>
 
 

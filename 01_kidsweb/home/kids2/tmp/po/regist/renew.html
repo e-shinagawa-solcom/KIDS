@@ -15,10 +15,8 @@
 
     <!-- スタイル初期化 & 各種コントロールスタイル -->
 
-    <link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms-confirm.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/po/regist/css/forms.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
-    <link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-confirm.css">
     <!-- jQuery -->
     <script src="/cmn/jquery/jquery-3.1.0.js"></script>
     <!-- jQuery Cookie -->
@@ -27,6 +25,8 @@
     <script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
     <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
     <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
     <!-- jQuery UI datepickerローカライズ用スクリプト -->
     <script src="/cmn/jquery/ui/datepicker-ja.js"></script>
     <!-- jQuery Validation Plugin -->
@@ -40,6 +40,9 @@
     <link rel="stylesheet" href="/pc/regist/css/msw.css">
     <link rel="stylesheet" href="/po/regist/renewlayout.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/po/regist/css/table.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/po/regist/css/renew-table-decide.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/po/regist/css/table-box.css">
     <!-- <link rel="stylesheet" href="/po/regist/layout.css"> -->
     <!-- msw 表示 -->
     <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
@@ -76,32 +79,8 @@
                         </span>
                         <span class="regist-label">
                             <span class="regist-label__text">仕入先</span>
-                            <input class="TxtStyle05L" name="strCustomerCode" value="_%strCustomerCode%_" type="text" readonly>
+                            <input class="disTxt05L" name="strCustomerCode" value="_%strCustomerCode%_" type="text" readonly>
                             <input class="disTxt46L" name="strCustomerName" type="text" value="_%strCustomerName%_" readonly>
-                        </span>
-                    </div>
-                    <div class="regist-line">
-                        <span class="regist-label" style="width: 272px;">
-                            <span class="regist-label__text">発注有効期限日</span>
-                            <input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" value="_%dtmExpirationDate%_" maxlength="10"
-                                tabindex="1">
-                        </span>
-                        <span class="regist-label">
-                            <span class="regist-label__text">営業部署</span>
-                            <input class="TxtStyle05L" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" type="text" readonly>
-                            <input class="disTxt46L" name="strGroupDisplayName" type="text" value="_%strGroupDisplayName%_" readonly>
-                        </span>
-                    </div>
-                    <div class="regist-line">
-                        <span class="regist-label" style="width: 272px;">
-                            <span class="regist-label__text">製品コード</span>
-                            <input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strProductCode" value="_%strProductCode%_" maxlength="5"
-                                readonly>
-                            <input type="hidden" name="strProductCode" value="_%strProductCode%_">
-                        </span>
-                        <span class="regist-label">
-                            <span class="regist-label__text">製品名</span>
-                            <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" readonly>
                         </span>
                     </div>
                     <div class="regist-line">
@@ -109,12 +88,13 @@
                             <span class="regist-label__text">支払条件</span>
                             <_%inputPayCondition%_ name="lngPayConditionCode" _%PayConditionDisabled%_>
                                 _%lngPayConditionCode%_
-                            </select>
+                                </select>
                         </span>
                         <span class="regist-label">
-                            <span class="regist-label__text">製品名（英語）</span>
-                            <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_"
-                                readonly>
+                            <span class="regist-label__text">営業部署</span>
+                            <input class="disTxt05L" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" type="text" readonly>
+                            <input class="disTxt46L" name="strGroupDisplayName" type="text" value="_%strGroupDisplayName%_" readonly>
+                        </span>
                     </div>
                     <div class="regist-line">
                         <span class="regist-label" style="width: 272px;">
@@ -123,6 +103,23 @@
                                 _%lngMonetaryUnitCode%_
                             </select>
                         </span>
+                        <span class="regist-label">
+                            <span class="regist-label__text">製品</span>
+                            <input style="ime-mode:disabled;" class="disTxt05L" type="text" name="strProductCode" value="_%strProductCode%_" maxlength="5"
+                                readonly>
+                            <input type="hidden" name="strProductCode" value="_%strProductCode%_">
+                            <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" readonly>
+                        </span>
+                    </div>
+                    <div class="regist-line">
+                        <span style="display: inline-block;width: 272px;">&nbsp;</span>
+                        <span class="regist-label">
+                            <span class="regist-label__text">製品名（英語）</span>
+                            <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_"
+                                readonly>
+                    </div>
+                    <div class="regist-line">
+                        <span style="display: inline-block;width: 272px;">&nbsp;</span>
                         <span class="regist-label">
                             <span class="regist-label__text">納品場所</span>
                             <input class="TxtStyle05L" name="lngLocationCode" type="text" value="_%lngLocationCode%_" alt="Location">
@@ -140,45 +137,89 @@
                         <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
                         <input type="hidden" name="lngPayConditionCodeOrign" value="_%lngPayConditionCodeOrign%_">
                     </div>
-                    <div class="regist-line" id="InputDetail">
-                        <table id="DetailTable" cellpadding="0" cellspacing="1" border="0">
-                            <thead id="DetailTableHead">
-                                <tr class="TrSegs">
-                                    <th>No.</th>
-                                    <th>発注No.</th>
-                                    <th>明細行番号</th>
-                                    <th>仕入科目</th>
-                                    <th>仕入部品</th>
-                                    <th>運搬方法</th>
-                                    <th>単価</th>
-                                    <th>数量</th>
-                                    <th>税抜価格</th>
-                                    <th>納期</th>
-                                    <th>備考</th>
-                                </tr>
-                            </thead>
-                            <tbody id="DetailTableBody">_%strPurchaseOrderDetail%_</tbody>
+
+                    <div class="regist-line">
+                        <table class="table-box">
+                            <tr>
+                                <td style="vertical-align: top;width: 800px;">
+                                    <div class="regist-label div-decide-table">
+                                        <table class="table-decide-fix" id="tableB_no_head">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                </tr>
+                                            </thead>
+                                            <!-- 固定ヘッダ -->
+                                        </table>
+                                        <div id="header_decide_h">
+                                            <table class="table-decide-description" name="DECIDE_T" id="tableB_head">
+                                                <thead>
+                                                    <tr>
+                                                        <th>発注No.</th>
+                                                        <th>明細行番号</th>
+                                                        <th>仕入科目</th>
+                                                        <th>仕入部品</th>
+                                                        <th>運搬方法</th>
+                                                        <th>単価</th>
+                                                        <th>数量</th>
+                                                        <th>税抜価格</th>
+                                                        <th>納期</th>
+                                                        <th>備考</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div id="header_decide_v">
+                                            <table class="table-decide-description" name="DECIDE_TV" id="tableB_no">
+                                                <tbody>
+                                                    _%purchaseOrderDetailNo%_
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <div id="decide_data">
+                                            <table class="table-decide-description" name="DECIDE_T" id="tableB">
+                                                <thead style="display: none;">
+                                                    <tr>
+                                                        <th>発注No.</th>
+                                                        <th>明細行番号</th>
+                                                        <th>仕入科目</th>
+                                                        <th>仕入部品</th>
+                                                        <th>運搬方法</th>
+                                                        <th>単価</th>
+                                                        <th>数量</th>
+                                                        <th>税抜価格</th>
+                                                        <th>納期</th>
+                                                        <th>備考</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    _%purchaseOrderDetail%_
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <div style="height: 25px;">
+                                    </div>
+                                    <div>
+                                        <img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top">
+                                    </div>
+                                    <div>
+                                        <img class="rowup button" src="/img/type01/so/up.gif" alt="form row up">
+                                    </div>
+                                    <div style="height: 132px;"></div>
+                                    <div>
+                                        <img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down">
+                                    </div>
+                                    <div>
+                                        <img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom">
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
                     </div>
-
-                    <!-- 明細行替えボタン -->
-                    <!-- 最上行へ移動 -->
-                    <div id="selectup">
-                        <img onclick="" src="/img/type01/so/top.gif" alt="form row top">
-                    </div>
-                    <!-- 上の行へ移動 -->
-                    <div id="selectup1">
-                        <img onclick="" src="/img/type01/so/up.gif" alt="form row up">
-                    </div>
-                    <!-- 下の行へ移動 -->
-                    <div id="selectdown1">
-                        <img onclick="" src="/img/type01/so/down.gif" alt="form row down">
-                    </div>
-                    <!-- 最下行へ移動 -->
-                    <div id="selectdown">
-                        <img onclick="" src="/img/type01/so/bottom.gif" alt="form row button">
-                    </div>
-
                     <!-- 確定登録ボタン -->
                     <div id="FixEntryBtn">
                         <img src="/img/type01/cmn/querybt/regist_blown_off_ja_bt.gif" alt="" style="width: 78px; height: 20px;">
@@ -201,6 +242,14 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function $E(name) { return document.getElementById(name); }
+        function decide_scroll() {
+            $E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
+            $E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
+        }
+        $E("decide_data").onscroll = decide_scroll;
+    </script>
 </body>
 
 </html>

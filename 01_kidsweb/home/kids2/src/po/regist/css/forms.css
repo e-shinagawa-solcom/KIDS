@@ -341,3 +341,8 @@ img.toggle-display
     padding: 0px;
     font-size: x-small;
 }
+
+.Txt100L {
+    width: 719px;
+    text-align: left;
+}
