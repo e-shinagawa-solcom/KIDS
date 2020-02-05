@@ -24,7 +24,7 @@ SELECT
 	,mcg.strcategoryname
 	,sa.strSlipCode
 	,sc.strSalesClassName
-	,sd.strProductCode
+	,sd.strProductCode || '_' || sd.strReviseCode as strProductCode
 	,p.strProductName
 	,p.strGoodsCode
 	,mu.strmonetaryunitname
@@ -80,8 +80,10 @@ FROM
 	m_Sales sa
 		left join t_SalesDetail sd
 			on sd.lngsalesno = sa.lngsalesno
+			and sd.lngrevisionno = sa.lngrevisionno
 			left join m_Receive r
 				on r.lngreceiveno = sd.lngReceiveNo
+				and r.lngrevisionno = sd.lngreceiverevisionno
 	,m_Company c
 	,m_Group g
 	,m_SalesClass sc
@@ -96,7 +98,15 @@ WHERE
 	)
 	 AND 0 <=
 	(
-	  SELECT MIN ( sa3.lngRevisionNo ) FROM m_Sales sa3 WHERE sa.strSalesCode = sa3.strSalesCode AND sa3.bytInvalidFlag = false
+	  SELECT MIN ( sa3.lngRevisionNo ) FROM m_Sales sa3 WHERE sa3.strSalesCode = sa.strSalesCode AND sa3.bytInvalidFlag = false
+	)
+	AND p.lngrevisionno =
+	(
+	  SELECT MAX ( p2.lngRevisionNo ) FROM m_Product p2 WHERE p2.lngProductNo = p.lngProductNo
+	)
+	 AND 0 <=
+	(
+	  SELECT MIN ( p3.lngRevisionNo ) FROM m_Product p3 WHERE p3.lngProductNo = p.lngProductNo AND p3.bytInvalidFlag = false
 	)
 	AND date_trunc ( 'day', sa.dtmAppropriationDate ) >= '_%dtmAppropriationDateFrom%_'
 	AND date_trunc ( 'day', sa.dtmAppropriationDate ) <= '_%dtmAppropriationDateTo%_'
@@ -109,6 +119,7 @@ WHERE
 	AND sd.lngSalesClassCode     = sc.lngSalesClassCode
 	AND sa.lngSalesNo            = sd.lngSalesNo
 	AND sd.strProductCode        = p.strProductCode
+	AND sd.strReviseCode        = p.strReviseCode
 	AND sd.lngProductUnitCode    = pu.lngProductUnitCode
 	AND sa.lngmonetaryunitcode = mu.lngmonetaryunitcode
 	and p.lngcategorycode = mcg.lngcategorycode
