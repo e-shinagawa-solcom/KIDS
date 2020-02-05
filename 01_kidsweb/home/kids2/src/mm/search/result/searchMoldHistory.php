@@ -482,7 +482,7 @@ if ($lngResultNum > 0) {
     // }
 } else {
     $errorFlag = true;
-    $lngErrorCode = 603;
+    $lngErrorCode = 9068;
     $aryErrorMessage = "";
 }
 if ($errorFlag) {
