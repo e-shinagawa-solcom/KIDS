@@ -7,11 +7,11 @@ function fncWindowClose() {
 }
 
 function fncFileProcess() {
-    var res = confirm("見積原価計算書を登録してもよろしいですか？");
-    if( res == true ) {
+//    var res = confirm("見積原価計算書を登録してもよろしいですか？");
+//    if( res == true ) {
         // OKなら移動       
         document.formAction.submit();
-    }
+//    }
 }
 
 function fncAlphaOff( obj )
