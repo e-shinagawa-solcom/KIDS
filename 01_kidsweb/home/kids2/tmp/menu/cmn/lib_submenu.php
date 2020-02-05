@@ -73,7 +73,7 @@
 		$aryData["lngSubRef_so_1"]		= '/so/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 発注管理
-		$aryData["lngSubRef_po_0"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_po_0"]		= '/po/search2/index.php?strSessionID=' . $aryData["strSessionID"];
 		$aryData["lngSubRef_po_1"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 売上管理

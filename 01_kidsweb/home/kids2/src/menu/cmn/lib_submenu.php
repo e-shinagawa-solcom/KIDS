@@ -19,8 +19,8 @@
 
 		$aryData["lngSubFlag_so_1"]		= 1;	// 受注検索
 
-		$aryData["lngSubFlag_po_0"]		= 1;	// 発注検索
-		$aryData["lngSubFlag_po_1"]		= 1;	// 発注書修正
+		$aryData["lngSubFlag_po_1"]		= 1;	// 発注検索
+		$aryData["lngSubFlag_po_0"]		= 1;	// 発注書修正
 
 		$aryData["lngSubFlag_sc_0"]		= 1;	// 売上(納品書)登録
 		$aryData["lngSubFlag_sc_1"]		= 1;	// 納品書検索
@@ -61,8 +61,8 @@
 		$aryData["lngSubRef_so_1"]		= '/so/search/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 発注管理
-		$aryData["lngSubRef_po_0"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
-		$aryData["lngSubRef_po_1"]		= '/po/search2/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_po_1"]		= '/po/search/index.php?strSessionID=' . $aryData["strSessionID"];
+		$aryData["lngSubRef_po_0"]		= '/po/search2/index.php?strSessionID=' . $aryData["strSessionID"];
 
 		// 売上管理
 		$aryData["lngSubRef_sc_0"]		= '/sc/regist2/index.php?strSessionID=' . $aryData["strSessionID"];
@@ -144,13 +144,13 @@
 		// 501 発注検索
 		if( !fncCheckAuthority( DEF_FUNCTION_PO1, $objAuth ) )
 		{
-			$aryData["lngSubFlag_po_0"] = 0;
+			$aryData["lngSubFlag_po_1"] = 0;
 		}
 
 		// 502 発注書検索
 		if( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
 		{
-			$aryData["lngSubFlag_po_1"] = 0;
+			$aryData["lngSubFlag_po_0"] = 0;
 		}
 		//-------------------------------------------------------------------------
 
