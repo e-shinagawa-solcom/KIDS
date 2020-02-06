@@ -78,6 +78,8 @@ if ($_POST["strMode"] == "insert") {
     // $aryUpdate["dtmexpirationdate"] = $_POST["dtmExpirationDate"];
     $aryUpdate["lngpayconditioncode"] = $_POST["lngPayConditionCode"];
     $aryUpdate["lngdeliveryplacecode"] = $_POST["lngLocationCode"];
+    $aryUpdate["strProductCode"] = $_POST["strProductCode"];
+    $aryUpdate["strReviseCode"] = $_POST["strReviseCode"];
     $aryUpdate["strnote"] = $_POST["strNote"];
     $aryUpdate["lngorderstatuscode"] = 2;
     
@@ -85,6 +87,10 @@ if ($_POST["strMode"] == "insert") {
         $aryUpdateDetail[$i]["lngpurchaseorderdetailno"] = $i + 1;
         $aryUpdateDetail[$i]["lngorderdetailno"] = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
         $aryUpdateDetail[$i]["lngsortkey"] = $_POST["aryDetail"][$i]["lngSortKey"];
+
+        $aryUpdateDetail[$i]["strproductcode"] = $_POST["strProductCode"];
+        $aryUpdateDetail[$i]["strrevisecode"] = $_POST["strReviseCode"];
+        
         $aryUpdateDetail[$i]["lngdeliverymethodcode"] = $_POST["aryDetail"][$i]["lngDeliveryMethodCode"];
         $aryUpdateDetail[$i]["strdeliverymethodname"] = $_POST["aryDetail"][$i]["strDeliveryMethodName"];
         $aryUpdateDetail[$i]["lngproductunitcode"] = $_POST["aryDetail"][$i]["lngProductUnitCode"];

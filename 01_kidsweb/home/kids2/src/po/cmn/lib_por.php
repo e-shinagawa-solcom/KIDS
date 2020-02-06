@@ -30,6 +30,7 @@
  *    @return String     $strQuery   発注データ(ヘッダ)
  *    @access public
  */
+
 function fncGetOrder_r($lngOrderNo, $objDB)
 {
     $aryQuery = array();
@@ -749,13 +750,26 @@ function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB)
         $aryDetailQuery[] = "  ,lngsortkey = " . intval($aryDetail[$i]["lngsortkey"]);
         $aryDetailQuery[] = "  ,lngproductunitcode = " . intval($aryDetail[$i]["lngproductunitcode"]);
         $aryDetailQuery[] = "  ,strnote = '" . $aryDetail[$i]["strnote"]. "'";
+        if (
+            ($aryDetail[$i]["lngstocksubjectcode"] == 433 and $aryDetail[$i]["lngstockitemcode"] == 1)
+            or 
+            ($aryDetail[$i]["lngstocksubjectcode"] == 431 and $aryDetail[$i]["lngstockitemcode"] == 8)
+        ) {
+            $strmoldno = fncGetMoldNo( 
+                             $aryUpdate["strProductCode"], 
+                             $aryUpdate["strReviseCode"], 
+                             $aryDetail[$i]["lngstocksubjectcode"], 
+                             $aryDetail[$i]["lngstockitemcode"],
+                             $objDB
+                         );
+            $aryDetailQuery[] = "  ,strmoldno = '" . $strmoldno . "'";
+        }
         $aryDetailQuery[] = "WHERE lngorderno = " . intval($aryDetail[$i]["lngorderno"]);
         $aryDetailQuery[] = "AND   lngorderdetailno = " . intval($aryDetail[$i]["lngorderdetailno"]);
         $aryDetailQuery[] = "AND   lngrevisionno = " . intval($aryDetail[$i]["lngrevisionno"]);
 
         $strDetailQuery = "";
         $strDetailQuery = implode("\n", $aryDetailQuery);
-
         if (!$lngResultID = $objDB->execute($strDetailQuery)) {
             fncOutputError(9051, DEF_ERROR, "発注明細テーブルへの更新処理に失敗しました。", true, "", $objDB);
             return false;

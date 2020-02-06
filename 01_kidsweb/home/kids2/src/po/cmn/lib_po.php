@@ -756,6 +756,8 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][dtmDeliveryDate]\" value=\"".$aryData[$i]["dtmDeliveryDate"]."\">";
 				// 備考
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDetailNote]\" value=\"".fncHTMLSpecialChars($aryData[$i]["strDetailNote"])."\">";
+				// 金型番号
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strMoldNo]\" value=\"".fncHTMLSpecialChars($aryData[$i]["strMoldNo"])."\">";
 				
 				
 				
