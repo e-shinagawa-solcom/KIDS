@@ -989,7 +989,7 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder, $strSessionID)
         for ($i = 0; $i < count($aryPurchaseOrder); $i++) {
             if ($aryPurchaseOrder[$i]["lngpurchaseorderno"] != $orderno) {continue;}
             if ($i == 0) {
-                $strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryPurchaseOrder[$i]["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
+                $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $aryPurchaseOrder[$i]["lngpurchaseorderno"] . "&lngReportClassCode=2&strSessionID=" . $strSessionID;
                 $aryHtml[] = "<table class=\"ordercode\">";
                 $aryHtml[] = "  <tr>";
                 $aryHtml[] = "    <td class=\"SegColumn\">PO番号</td>";
