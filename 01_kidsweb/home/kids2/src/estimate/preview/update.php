@@ -9,6 +9,7 @@
 	require ( LIB_DEBUGFILE );									// Debugモジュール
 
 	require ( LIB_FILE );										// ライブラリ読み込み
+	require ( LIB_EXCLUSIVEFILE );										// ライブラリ読み込み
 
 	require ( SRC_ROOT . "estimate/cmn/makeHTML.php" );
 
@@ -344,6 +345,7 @@
 	// 登録に必要なデータをセットする
 	$objRegist->setUpdateParam($update, $lngUserCode, $productCode, $reviseCode, $revisionNo, $objDB);
 	$objRegist->update();
+	unlockExclusive($objAuth, $objDB);
 
 	$objDB->transactionCommit();
 	
@@ -377,6 +379,7 @@
 	echo $objTemplate->strTemplate;
 
 
+/*
 	// 排他テーブル削除処理
 	$strQuery = "DELETE";
 	$strQuery .= " FROM t_exclusivecontrol";
@@ -385,5 +388,5 @@
 	$strQuery .= " AND strexclusivekey2 = '". $reviseCode. "'";
 
 	$result = pg_query($objDB->ConnectID, $strQuery);
-
+*/
 	$objDB->close();
