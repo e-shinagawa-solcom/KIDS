@@ -216,13 +216,11 @@
 
     if( $aryDetail == null || count($aryDetail) == 0 )
     {
-echo "pass-1<br>";
-         fncOutputError(501, DEF_ERROR, "対象データの一部またはすべてが確定済みです。", TRUE, "", $objDB );
+        fncOutputError(501, DEF_ERROR, "対象データの一部またはすべてが確定済みです。", TRUE, "", $objDB );
     }
     $checkList = null;
     foreach($lngOrderNo as $row){
         if( isOrderModified($row, DEF_ORDER_APPLICATE, $objDB) ){
-echo "pass-2<br>";
          fncOutputError(501, DEF_ERROR, "対象データの一部またはすべてが確定済みです。", TRUE, "", $objDB );
         }
     }
