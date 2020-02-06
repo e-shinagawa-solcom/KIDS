@@ -32,6 +32,8 @@
 	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
 	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
 	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
 	<!-- jQuery UI datepickerローカライズ用スクリプト -->
 	<script src="/cmn/jquery/ui/datepicker-ja.js"></script>
 	<!-- jQuery Validation Plugin -->
@@ -267,6 +269,28 @@
 
 										<div id="decide_data">
 											<table class="table-decide-description" name="DECIDE_T" id="tableB">
+												<thead style="display: none;">
+													<tr>
+														<th>発注NO.</th>
+														<th>明細行番号</th>
+														<th>仕入科目</th>
+														<th>仕入部品</th>
+														<th>運搬方法</th>
+														<th>単価</th>
+														<th>数量</th>
+														<th>税抜価格</th>
+														<th>納期</th>
+														<th>明細備考</th>
+														<th class="forEdit"></th>
+														<th class="forEdit"></th>
+														<th class="forEdit"></th>
+														<th class="forEdit"></th>
+														<th class="forEdit"></th>
+														<th class="forEdit"></th>
+														<th class="forEdit"></th>
+														<th class="forEdit"></th>
+													</tr>
+												</thead>
 												<tbody>
 													_%tableB_body%_
 												</tbody>

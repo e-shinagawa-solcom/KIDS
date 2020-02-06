@@ -937,7 +937,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  me.lngrevisionno DESC";
     }
     $strQuery = implode("\n", $aryQuery);
-    echo $strQuery;
+    
     // 値をとる =====================================
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 

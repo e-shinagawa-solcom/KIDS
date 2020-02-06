@@ -959,12 +959,14 @@ $(function () {
     /* Create 'click' event handler for rows */
     objA.find('tbody tr').on('click', function (e) {
       lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+      scanAllCheckbox();
     });
 
 
     /* Create 'click' event handler for rows */
     objB.find('tbody tr').on('click', function (e) {
       lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+      scanAllCheckbox();
     });
 
     /* This 'event' is used just to avoid that the table text 
