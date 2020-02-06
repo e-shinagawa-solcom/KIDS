@@ -408,8 +408,8 @@ function fncSetStockDetailTabelData($aryDetailResult, $aryHeadResult)
             // 仕入科目が４３３　金型海外償却　仕入部品が１ Injection Moldの場合
             // 仕入科目が４３１　金型償却高　　仕入部品が８ 金型の場合
             if ($aryDetailResult["strmoldno"]
-                and ($aryDetailResult["lngstocksubjectcode"] = 433 and $aryDetailResult["lngstockitemcode"] = 1)
-                or ($aryDetailResult["lngstocksubjectcode"] = 431 and $aryDetailResult["lngstockitemcode"] = 8)) {
+                and ($aryDetailResult["lngstocksubjectcode"] == 433 and $aryDetailResult["lngstockitemcode"] == 1)
+                or ($aryDetailResult["lngstocksubjectcode"] == 431 and $aryDetailResult["lngstockitemcode"] == 8)) {
                 $aryNewDetailResult[$strColumnName] = $aryDetailResult["strmoldno"];
             }
         }
