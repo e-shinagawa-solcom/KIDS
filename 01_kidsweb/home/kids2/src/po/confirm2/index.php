@@ -80,12 +80,9 @@ if ($_POST["strMode"] == "update") {
     
     
 	// 発注書マスタ更新
-fncDebug("kids2.log", "pass-2", __FILE__, __LINE__, "a" );
 	if(!fncUpdatePurchaseOrder($_POST, $objDB, $objAuth)) { return false; }
-fncDebug("kids2.log", "pass-3", __FILE__, __LINE__, "a" );
 	// 発注書明細更新
 	if(!fncUpdatePurchaseOrderDetail($_POST, $objDB)) { return false; }
-fncDebug("kids2.log", "pass-4", __FILE__, __LINE__, "a" );
 
 	// 更新後のデータを再度読み込む
 	$updatedPurchaseOrder = fncGetPurchaseOrderEdit($_POST["lngPurchaseOrderNo"], $_POST["lngRevisionNo"], $objDB);
