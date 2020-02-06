@@ -189,6 +189,7 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
     $_POST["aryDetail"][$i]["strproductname"] = $_POST["strProductName"];
     $_POST["aryDetail"][$i]["strstockitemcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockItemCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockItemCode"] . "]" : "";
     $_POST["aryDetail"][$i]["strstocksubjectcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockSubjectCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockSubjectCode"] . "]" : "";
+    $_POST["aryDetail"][$i]["strStockItemCode"] = $_POST["aryDetail"][$i]["lngStockItemCode"];
 
     // テンプレート読み込み
     $objTemplate = new clsTemplate();
@@ -251,8 +252,10 @@ $aryData["lngLocationCode_DISCODE"] = ($aryData["lngLocationCode"] != "") ? "[" 
 // watanabe update end
 
 // 支払条件整合性チェック
-//$aryData["lngMonetaryUnitCode"] = $aryData["lngMonetaryUnitCode"];
-$aryData["lngCustomerCode"] = $aryData["lngCustomerCompanyCode"];
+$aryData["lngMonetaryUnitCode"] = fncGetMasterValue( "m_monetaryunit", "strmonetaryunitsign", "lngmonetaryunitcode", $aryData["lngMonetaryUnitCode"].":str", '', $objDB);
+//$aryData["lngCustomerCode"] = $aryData["lngCustomerCompanyCode"];
+$aryData["lngCustomerCode"] = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcompanycode",  $aryData["lngCustomerCompanyCode"].":str", '', $objDB);
+//$aryData["lngCustomerCode"] = fncGetMasterValue( "m_company", "lngcompanycode", "strcompanydisplaycode",  $aryData["lngCustomerCompanyCode"], '', $objDB);
 $aryData = fncPayConditionCodeMatch($aryData, $aryHeadColumnNames, $_POST["aryDetail"], $objDB);
 
 $objDB->close();
