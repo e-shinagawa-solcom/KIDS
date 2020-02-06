@@ -145,7 +145,8 @@ libxml_clear_errors();
 libxml_use_internal_errors(false);
 
 // 検索結果テーブルの取得
-$tbodyDetail = $doc->getElementById("tbl_order_detail");
+$tbodyChkbox = $doc->getElementById("tableB_chkbox")->getElementsByTagName("tbody")->item(0);
+$tbodyDetail = $doc->getElementById("tableB")->getElementsByTagName("tbody")->item(0);
 // $tbodyDetail = $tableDetail->getElementsByTagName("tbody")->item(0);
 
 $aryData["lngGroupCode"] = $aryNewResult["lngGroupCode"];
@@ -196,28 +197,42 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody = $doc->createElement("tr");
     $trBody->setAttribute("class", "row".$num);
 
-    // No.
-    $td = $doc->createElement("td", $num);
-    $td->setAttribute("class", "col1");
-    $trBody->appendChild($td);
+    // // No.
+    // $td = $doc->createElement("td", $num);
+    // $td->setAttribute("class", "col1");
+    // $trBody->appendChild($td);
 
     // 対象
     $td = $doc->createElement("td");
     $td->setAttribute("class", "col2");
+    $td->setAttribute("style", "text-align: center;");
     $chkBox = $doc->createElement("input");
     $chkBox->setAttribute("type", "checkbox");
+    $chkBox->setAttribute("name", "edit");
     $chkBox->setAttribute("style", "width: 10px;");
     if ($isStocked) {
         $chkBox->setAttribute('checked', 'checked');
     }
     $td->appendChild($chkBox);
+    $trBody->appendChild($td);   
+    // tbody > tr
+    $tbodyChkbox->appendChild($trBody);
+
+    // tbody > tr要素作成
+    $trBody = $doc->createElement("tr");
+    $trBody->setAttribute("class", "row".$num);
+
+    // No.
+    $td = $doc->createElement("td", $num);
+    $td->setAttribute("style", "text-align: center;");
+    $td->setAttribute("class", "col1");
     $trBody->appendChild($td);
 
-    // 製品
-    $textContent = "[". $orderDetail["strproductcode"]. "] ". $orderDetail["strproductname"];
-    $td = $doc->createElement("td", toUTF8($textContent));
-    $td->setAttribute("class", "col3");
-    $trBody->appendChild($td);
+    // // 製品
+    // $textContent = "[". $orderDetail["strproductcode"]. "] ". $orderDetail["strproductname"];
+    // $td = $doc->createElement("td", toUTF8($textContent));
+    // $td->setAttribute("class", "col3");
+    // $trBody->appendChild($td);
 
     // 仕入科目
     $textContent = "[". $orderDetail["lngstocksubjectcode"]. "] ". $orderDetail["strstocksubjectname"];
@@ -333,7 +348,7 @@ foreach ($aryOrderDetail as $orderDetail) {
 
     // 納期
     $td = $doc->createElement("td", toUTF8($orderDetail["dtmdeliverydate"]));
-    $td->setAttribute("class", "col13");
+    $td->setAttribute("class", "dtmdeliverydate");
     $trBody->appendChild($td);
 
     // 備考

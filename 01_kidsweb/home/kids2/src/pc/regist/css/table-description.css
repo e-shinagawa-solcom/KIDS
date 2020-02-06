@@ -1,117 +1,139 @@
-/* 入力フォーム 金型説明テーブル */
-.table-description
+.highlight { background: yellow; }
+
+.forEdit{
+    display: none;
+}
+.div-decide-table
 {
-    table-layout: fixed;
+    position:relative;
+    width:99.5%;
+    height:170px;
+    top:5px;
+}
+/* 入力フォーム 確定テーブル */
+.table-decide-description
+{
+    /* table-layout: fixed; */
 
     border-collapse: collapse;
-
-    width: 185%;
+    width: 100%;
+    
+    /* border: 1px solid #ddd */
 }
 
-/* 入力フォーム 金型説明テーブル thead */
-.table-description thead
+.table-decide-description {
+    width: 180%;
+    /* max-width: 180%; */
+    margin-bottom: 0rem;
+}
+/* 入力フォーム 確定テーブル thead */
+.table-decide-description thead
 {
-    color: #ffffff;
+    
+    font-size: 9pt;
+    color: white;
+    font-weight: normal;
 }
 
-/* 入力フォーム 金型説明テーブル thead > tr */
-.table-description thead > tr
+/* 入力フォーム 確定テーブル thead > tr */
+.table-decide-description thead > tr
 {
     display: block;
-    height: 100%;
-
     background-color: #799797;
+    text-align: center;
 }
 
-/* 入力フォーム 金型説明テーブル tbody */
-.table-description tbody
+/* 入力フォーム 確定テーブル tbody */
+.table-decide-description tbody
 {
     display: block;
+    
+    font-size: 9pt;
 
-    height: 150px;
-
-    border-style: solid;
-    border-width: 1px;
-    border-color: #798787;
-
-    overflow-y: scroll;
+    /* height: 150px; */
 
     background-color: #f1f1f1;
 }
 
-/* 入力フォーム 金型説明テーブル tbody > tr */
-.table-description tbody > tr
+/* 入力フォーム 確定テーブル tbody > tr */
+.table-decide-description tbody > tr
 {
-    height: 20px;
+    height: 23px;
+    
+    background-color: #ffffff;
 }
-.table-description th,
-.table-description td
+.table-decide-description th
 {
-    border-style: solid;
-    border-width: 1px;
-    border-color: #798787;
+    height: 26px;
 }
-.table-description th
-{    
-    text-align: center;
+.table-decide-description th,
+.table-decide-description td{
+    white-space: nowrap;
+    border: 1px solid #798787;
 }
-.table-description th:nth-of-type(1),
-.col1
+.table-decide-fix
 {
-    text-align: center;
-}
-
-.table-description th:nth-of-type(2),
-.col2
-{
-    text-align: center;
-}
-
-.table-description th:nth-of-type(1),
-.col1
-{
-    width:20px;
-    text-align: center;
-}
-
-.table-description th:nth-of-type(2),
-.col2
-{
+    table-layout: fixed;
+    border-collapse: collapse;
     width:30px;
-    text-align: center;
-}
-.table-description th:nth-of-type(3),
-.table-description th:nth-of-type(4),
-.table-description th:nth-of-type(5),
-.col3,
-.col4,
-.col5
-{
-    width:200px;
+    position:absolute;
+    left:-1px;top:-1px;
 }
 
-.table-description th:nth-of-type(6),
-.table-description th:nth-of-type(7),
-.table-description th:nth-of-type(8),
-.table-description th:nth-of-type(9),
-.table-description th:nth-of-type(10),
-.table-description th:nth-of-type(11),
-.table-description th:nth-of-type(12),
-.table-description th:nth-of-type(13),
-.col6,
-.col7,
-.col8,
-.col9,
-.col10,
-.col11,
-.col12,
-.col13
+/* 入力フォーム 確定テーブル thead */
+.table-decide-fix thead
 {
-    width:100px;
+    
+    font-size: 8pt;
+    color: white;
+    font-weight: normal;
 }
 
-.table-description th:nth-of-type(14),
-.col14
+/* 入力フォーム 確定テーブル thead > tr */
+.table-decide-fix thead > tr
 {
-    width:200px;
+    display: block;
+    background-color: #799797;
+}
+.table-decide-fix th{
+    
+    height: 25px;
+    border: 1px solid #798787;
+}
+
+[name="DECIDE_T"] {
+    width: 180%;
+}
+
+[name="DECIDE_TV"] th {
+    width: 30px
+}
+
+#header_decide_h {
+    position: absolute;
+    left: 24px;
+    top: -1px;
+    width: 97.5%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#header_decide_v {
+    position: absolute;
+    left: -1px;
+    top: 25px;
+    width: 30px;
+    height: 143px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+#decide_data {
+    position: absolute;
+    left: 24px;
+    top: 25px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    width: 99.1%;
+    height: 160px;
 }

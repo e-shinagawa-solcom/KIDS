@@ -563,7 +563,6 @@ function resetAllTableColumnWidth() {
             $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1] + 10);
         }
     }
-    // $(".table-decide-description").css('table-layout', 'fixed');
 }
 
 function resetTableADisplayStyle() {
@@ -573,23 +572,6 @@ function resetTableADisplayStyle() {
         $(this).find("#lngunitquantity").find('input:text').prop('disabled', true);
         $(this).find("#strdetailnote").find('input:text').prop('disabled', true);
     });
-
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(1)").css('display', '');
-
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(3)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(3)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(8)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(8)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(9)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(9)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(10)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(10)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(11)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(11)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(12)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(12)").css('display', 'none');
-    // $(".table-decide-description").eq(0).find("thead tr th:nth-child(13)").css('display', 'none');
-    // $(".table-decide-description").eq(2).find("tbody tr td:nth-child(13)").css('display', 'none');
 }
 
 function resetTableBDisplayStyle() {
@@ -727,7 +709,7 @@ function resetTableBWidth() {
       if ($(this).prop('disabled')) {
         ++count_disabled;
       }
-      if (data.length === count_disabled) {
+      if ($all_rows.length === count_disabled) {
         $('#allChecked').prop({ 'checked': false, 'disabled': true });
       }
     });
@@ -741,12 +723,14 @@ function selectRow(objA, objB) {
     /* Create 'click' event handler for rows */
     objA.find('tbody tr').on('click', function (e) {
         lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+        scanAllCheckbox();
     });
 
 
     /* Create 'click' event handler for rows */
     objB.find('tbody tr').on('click', function (e) {
         lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+        scanAllCheckbox();
     });
 
     /* This 'event' is used just to avoid that the table text 

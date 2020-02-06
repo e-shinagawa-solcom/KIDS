@@ -1,4 +1,5 @@
 var taxList;
+var chkbox = [];
 (function () {
     // フォーム
     var workForm = $('form');
@@ -42,16 +43,17 @@ var taxList;
                     var data = JSON.parse(response);
                     if (data.orderdetail.length == 0) {
                         alert("該当する発注データがありません。");
-                        exit;
+                        return false;
                     }
 
-                    $("#tbl_order_detail").empty();
+                    $("#tableB tbody").empty();
+                    $("#tableB_chkbox tbody").empty();
                     for (var i = 0; i < data.orderdetail.length; i++) {
                         var row = data.orderdetail[i];
                         // 発注ステータスが納品済の場合、エラーを出す
                         if (row.lngorderstatuscode == 4) {
                             alert("指定された発注番号は「納品済み」です。");
-                            exit;
+                            return false;
                         }
                     }
 
@@ -69,6 +71,8 @@ var taxList;
                         $('input[name="curConversionRate"]').val(row.curconversionrate);
                         $('input[name="lngPayConditionCode"]').val(row.lngpayconditioncode);
                         $('input[name="strPayConditionName"]').val(row.strpayconditionname);
+                        $('input[name="strProductCode"]').val(row.strproductcode);
+                        $('input[name="strProductName"]').val(row.strproductname);
                         $('input[name="lngCustomerCode"]').val(row.strcompanydisplaycode);
                         $('input[name="strCustomerName"]').val(row.strcompanydisplayname);
                         $('input[name="strReviseCode"]').val(row.strrevisecode);
@@ -111,11 +115,20 @@ var taxList;
                             }
                             curtaxList = taxList;
                             lngtaxclasscode = 2;
+
+                            $("select[name='lngMonetaryRateCode']").val("0");
+                            $('select[name="lngMonetaryRateCode"]').change();
+                            
                         } else {
                             curtax = 0;
                             curtaxList = 0;
-                            lngtaxclasscode = 1;
+                            lngtaxclasscode = 1;          
+                            console.log("tdd");                  
+                            $("select[name='lngMonetaryRateCode']").val("1");
                         }
+
+                        $('select[name="lngMonetaryRateCode"]').change();
+                        $("select[name='lngMonetaryRateCode'] option:not(:selected)").prop('disabled', true);
 
                         var curtaxprice = 0;
                         // １：非課税
@@ -144,10 +157,13 @@ var taxList;
                             }
                         }
                         select += '</select>';
+                        var detail_chkbox_body = '<tr class="row' + rowNum + '">'
+                            + '<td style="text-align:center;"><input type="checkbox" name="edit" style="width:10px;"></td>'
+                            + '</tr>';
                         var detail_body = '<tr class="row' + rowNum + '">'
                             + '<td class="col1">' + rowNum + '</td>'
-                            + '<td class="col2"><input type="checkbox" style="width:10px;"></td>'
-                            + '<td class="col3">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname).substring(0, 28) + '</td>'
+                            // + '<td class="col2"><input type="checkbox" style="width:10px;"></td>'
+                            // + '<td class="col3">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname).substring(0, 28) + '</td>'
                             + '<td class="col4">[' + convertNull(row.lngstocksubjectcode) + '] ' + convertNull(row.strstocksubjectname) + '</td>'
                             + '<td class="col5">[' + convertNull(row.lngstockitemcode) + '] ' + convertNull(row.strstockitemname) + '</td>'
                             + '<td class="col6">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice) + '</td>'
@@ -160,8 +176,8 @@ var taxList;
                             + '<td class="col11">' + curtaxList + '</td>'
                             // 消費税額
                             + '<td class="col12">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice) + '</td>'
-                            + '<td class="col13">' + row.dtmdeliverydate + '</td>'
-                            + '<td class="col14">' + convertNull(row.strnote) + '</td>'
+                            + '<td class="dtmdeliverydate">' + row.dtmdeliverydate + '</td>'
+                            + '<td>' + convertNull(row.strnote) + '</td>'
                             + '<td class="cursubtotalprice" style="display:none">' + row.cursubtotalprice + '</td>'
                             + '<td class="curtax" style="display:none">' + curtax + '</td>'
                             + '<td class="lngmonetaryunitcode" style="display:none">' + row.lngmonetaryunitcode + '</td>'
@@ -173,22 +189,20 @@ var taxList;
                             + '<td class="lngtaxcode" style="display:none">' + lngtaxcode + '</td>'
                             + '<td class="lngtaxclasscode" style="display:none">' + lngtaxclasscode + '</td>'
                             + '</tr>';
-                        $("#tbl_order_detail").append(detail_body);
+                        $("#tableB tbody").append(detail_body);
+                        $("#tableB_chkbox tbody").append(detail_chkbox_body);
                     }
 
-                    var row = $(".table-description tbody tr:nth-child(1)");
-                    var columnNum = row.find('td').length;
-                    var widthArry = [];
-                    var theadwidth = $(".table-description tbody").width();
-                    for (var i = 1; i <= columnNum; i++) {
-                        var width = $(".table-description tbody tr:nth-child(1) td:nth-child(" + i + ")").width();
-                        widthArry.push(width);
-                    }
-                    $(".table-description thead").width($(".table-description tbody").width() + columnNum + 10);
-                    for (var i = 1; i <= columnNum; i++) {
-                        $(".table-description thead tr th:nth-child(" + i + ")").width(widthArry[i - 1] + 1);
-                    }
-                    $('select[name="lngMonetaryRateCode"]').change();
+                    // テーブル各セルの幅をリセットする
+                    resetTableWidth($("#tableB_chkbox_head"), $("#tableB_chkbox"), $("#tableB"), $("#tableB_head"));
+                    // テーブル行クリックイベントの設定
+                    selectRow('hasChkbox', $("#tableB_chkbox"), $("#tableB"), $("#allChecked"));
+                    // 対象チェックボックスチェック状態の設定
+                    scanAllCheckbox($("#tableB_chkbox"), $("#allChecked"));
+                    // チェックボックスクリックイベントの設定
+                    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableB"), $("#tableB_chkbox"), $("#allChecked"));
+                    // 対象チェックボックスクリックイベントの設定
+                    setAllCheckClickEvent($("#allChecked"), $("#tableB"), $("#tableB_chkbox"));
 
                 })
                 .fail(function (response) {
@@ -198,7 +212,6 @@ var taxList;
         }
 
     });
-
 
     // 通貨変更イベント
     $('input[name="lngMonetaryUnitCode"]').on('change', function () {
@@ -256,25 +269,23 @@ var taxList;
 
             var detaildata = new Array();
             var len = 0;
-            $("#tbl_order_detail tr").each(function (i, e) {
-                // 明細行番号
-                var strReceiveCode = $(this).find('td:nth-child(1)').text();
+            $("#tableB tbody tr").each(function (i, e) {
                 // 発注明細行番号
                 // 受注明細番号
-                var chkbox = $(this).find('td:nth-child(2)').find('input:checkbox');
+                var chkbox = $("#tableB_chkbox tbody tr:nth-child(" + (i + 1) + ") td").find('input:checkbox');
                 if (chkbox.prop("checked")) {
                     len += 1;
                     // 発注番号                
-                    var lngOrderNo = $(this).find('td:nth-child(20)').text();
+                    var lngOrderNo = $(this).find('.lngorderno').text();
                     // 発注リビジョン番号                
-                    var lngRevisionNo = $(this).find('td:nth-child(21)').text();
+                    var lngRevisionNo = $(this).find('.lngrevisionno').text();
                     // 発注明細番号                
-                    var lngOrderDetailNo = $(this).find('td:nth-child(22)').text();
+                    var lngOrderDetailNo = $(this).find('.lngorderdetailno').text();
                     // 仕入明細番号
                     var lngStockDetailNo = len;
                     // 消費税区分
-                    var lngTaxClassCode = $(this).find('td:nth-child(10)').find('select').val();
-                    var strTaxClassName = $(this).find('td:nth-child(10)').find('select option:selected').text();
+                    var lngTaxClassCode = $(this).find('.col10').find('select').val();
+                    var strTaxClassName = $(this).find('.col10').find('select option:selected').text();
                     // 消費率
                     var curTax = 0;
                     var lngTaxCode = null;
@@ -283,13 +294,13 @@ var taxList;
                         curTax = 0;
                     }
                     else {
-                        lngTaxCode = $(this).find('td:nth-child(11)').find('select').val();
-                        curTax = $(this).find('td:nth-child(11)').find('select option:selected').text();
+                        lngTaxCode = $(this).find('.col10').find('select').val();
+                        curTax = $(this).find('.col11').find('select option:selected').text();
                     }
                     // 消費税額                
-                    var curTaxPrice = $(this).find('td:nth-child(19)').text();
+                    var curTaxPrice = $(this).find('.curtaxprice').text();
                     // 納期
-                    var dtmDeliveryDate = $(this).find('td:nth-child(13)').text();
+                    var dtmDeliveryDate = $(this).find('.dtmdeliverydate').text();
                     // 消費税コード                
                     //                    var lngTaxCode = $(this).find('td:nth-child(23)').text();
 
@@ -313,6 +324,7 @@ var taxList;
             });
 
             if (len == 0) {
+                alert("発注明細を一つ以上選択してください。")
                 exit;
             }
             var formData = workForm.serializeArray();
@@ -463,3 +475,4 @@ function convertNumber(str, fracctiondigits) {
         return "";
     }
 }
+

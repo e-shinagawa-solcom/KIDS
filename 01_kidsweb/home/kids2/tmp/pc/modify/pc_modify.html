@@ -56,7 +56,9 @@
 	<!-- フォーム検証 -->
 	<script src="/pc/regist/js/validate-form.js" defer></script>
 	<!-- 明細一覧幅指定 -->
-	<script src="/pc/cmn/js/table.js" defer></script>
+	<script src="/cmn/js/table.js" defer></script>
+	<!-- フォーム ボタン -->
+	<script src="/pc/modify/js/modify.js" defer></script>
 
 
 </head>
@@ -87,7 +89,7 @@
 							<input type="hidden" name="lngrevisionno" value="_%lngrevisionno%_">
 							<input type="hidden" name="lngOrderNo" value="_%lngorderno%_">
 							<input type="hidden" name="lngStockNo" value="_%lngStockNo%_">
-							<input type="hidden" name="lngstockrevisionno" value="_%lngstockrevisionno%_">						
+							<input type="hidden" name="lngstockrevisionno" value="_%lngstockrevisionno%_">
 							<!-- <input type="hidden" name="strOrderCode" value="_%strrealordercode%_">			
 						<input type="hidden" name="strReviseCode" value="_%strrevisecode%_"> -->
 						</span>
@@ -109,6 +111,11 @@
 							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strSlipCode" value="_%strslipcode%_" maxlength="10" tabindex="5">
 						</span>
 
+						<span class="regist-label">
+							<span class="regist-label__text">製品到着日</span>
+							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" value="_%dtmexpirationdate%_" maxlength="10"
+							 tabindex="1">
+						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">通貨</span>
 							<input class="disTxt07L" type="text" readonly name="strMonetaryUnitName" value="_%strMonetaryUnitName%_" tabindex="13">
@@ -117,9 +124,9 @@
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__required-text">仕入先</span>
-							<input class="TxtStyle05L" name="lngCustomerCode" type="text" readonly value="_%strcustomerdisplaycode%_">
-							<input class="disTxt46L" name="strCustomerName" type="text" value="_%strcustomerdisplayname%_" readonly>
+							<span class="regist-label__text">製品</span>
+							<input class="disTxt05L" name="strProductCode" type="text" value="_%strproductcode%_" readonly>
+							<input class="disTxt46L" name="strProductName" type="text" value="_%strproductname%_" readonly>
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">レートタイプ</span>
@@ -129,10 +136,11 @@
 						</span>
 					</div>
 					<div class="regist-line">
+
 						<span class="regist-label">
-							<span class="regist-label__required-text">納品場所</span>
-							<input class="TxtStyle05L" name="lngLocationCode" type="text" readonly value="_%strdeliverydisplaycode%_">
-							<input class="disTxt46L" name="strLocationName" type="text" value="_%strdeliverydisplayname%_" readonly>
+							<span class="regist-label__text">仕入先</span>
+							<input class="TxtStyle05L" name="lngCustomerCode" type="text" readonly value="_%strcustomerdisplaycode%_">
+							<input class="disTxt46L" name="strCustomerName" type="text" value="_%strcustomerdisplayname%_" readonly>
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">適用レート</span>
@@ -143,9 +151,9 @@
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__text">製品到着日</span>
-							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" value="_%dtmexpirationdate%_" maxlength="10"
-							 tabindex="1">
+							<span class="regist-label__text">納品場所</span>
+							<input class="TxtStyle05L" name="lngLocationCode" type="text" readonly value="_%strdeliverydisplaycode%_">
+							<input class="disTxt46L" name="strLocationName" type="text" value="_%strdeliverydisplayname%_" readonly>
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">支払条件</span>
@@ -172,7 +180,62 @@
 			</div>
 			<!-- フォームコンテンツ -->
 			<div class="form-box__contents">
-				<div class="regist-line" style="width: 100%;white-space: nowrap; overflow: auto;">
+				
+			<div class="regist-line">
+					<table class="table-box">
+						<tr>
+							<td style="vertical-align: top;width: 900px;">
+								<div class="regist-label div-decide-table">
+									<table class="table-decide-fix" id="tableB_chkbox_head">
+										<thead>
+											<tr>
+												<th>対象
+													<br>
+													<input name="allSel" id="allChecked" type="checkbox" style="width: 10px;">
+												</th>
+											</tr>
+										</thead>
+										<!-- 固定ヘッダ -->
+									</table>
+									<div id="header_decide_h">
+										<table class="table-decide-description" name="DECIDE_T" id="tableB_head">
+											<thead>
+												<tr>
+													<th>No.</th>
+													<th>仕入科目</th>
+													<th>仕入部品</th>
+													<th>単価</th>
+													<th>単位</th>
+													<th>数量</th>
+													<th>税抜金額</th>
+													<th>消費税区分</th>
+													<th>消費税率(%)</th>
+													<th>消費税額</th>
+													<th>納期</th>
+													<th>備考</th>
+												</tr>
+											</thead>
+										</table>
+									</div>
+									<div id="header_decide_v">
+										<table class="table-decide-description" name="DECIDE_TV" id="tableB_chkbox">
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+	
+									<div id="decide_data">
+										<table class="table-decide-description" name="DECIDE_T" id="tableB">
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!-- <div class="regist-line" style="width: 100%;white-space: nowrap; overflow: auto;">
 					<table class="table-description">
 						<thead>
 							<tr>
@@ -197,7 +260,7 @@
 						<tfoot>
 						</tfoot>
 					</table>
-				</div>
+				</div> -->
 				<div class="regist-line">
 				</div>
 			</div>
@@ -216,6 +279,15 @@
 	<div class="form-buttons">
 		<img class="regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
 	</div>
+
+	<script type="text/javascript">
+		function $E(name) { return document.getElementById(name); }
+		function decide_scroll() {
+			$E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
+			$E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
+		}
+		$E("decide_data").onscroll = decide_scroll;
+	</script>
 </body>
 
 </html>

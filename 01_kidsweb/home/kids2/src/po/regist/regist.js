@@ -17,6 +17,24 @@ jQuery(function ($) {
     // $("#tableB").on('sortstop', function () {
     //     resetTableBRowid();
     // });
+
+    tableBSort();
+
+    function tableBSort() {
+        var sortval = 0;
+        $('#tableB_head thead tr th').on('click', function () {
+            var sortkey = $(this)[0].cellIndex;
+            console.log(sortkey);
+            if (sortval == 1) {
+                sortval = 0;
+            } else {
+                sortval = 1;
+            }
+            var r = $('#tableB').tablesorter();
+            r.trigger('sorton', [[[(sortkey), sortval]]]);
+        });
+    }
+
     function addHiddenValue(i, tr) {
         var hidden = $('#SegHidden');
         var orderNo = $(tr).find($('td.detailOrderCode')).text();
@@ -349,6 +367,11 @@ jQuery(function ($) {
         selectRow($("#tableB_no"), $("#tableB"));
 
         scanAllCheckbox();
+        
+        $("#tableA").trigger("update");
+        $("#tableB").trigger("update");
+
+        tableBSort();
     });
 
     // 全削除ボタンのイベント
@@ -367,6 +390,11 @@ jQuery(function ($) {
         resetTableBWidth();
 
         scanAllCheckbox();
+        
+        $("#tableA").trigger("update");
+        $("#tableB").trigger("update");
+
+        tableBSort();
 
         selectRow($("#tableA_chkbox"), $("#tableA"));
     });
@@ -395,6 +423,11 @@ jQuery(function ($) {
         resetTableBWidth();
 
         scanAllCheckbox();
+        
+        $("#tableA").trigger("update");
+        $("#tableB").trigger("update");
+
+        tableBSort();
 
         selectRow($("#tableA_chkbox"), $("#tableA"));
     });
@@ -449,7 +482,7 @@ jQuery(function ($) {
             console.log(data);
             //$('html').html(data);
             // document.write(data);
-            
+
             var w = window.open("", 'Decide Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
             w.document.open();
             w.document.write(data);
@@ -623,12 +656,14 @@ jQuery(function ($) {
         /* Create 'click' event handler for rows */
         objA.find('tbody tr').on('click', function (e) {
             lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+            scanAllCheckbox();
         });
 
 
         /* Create 'click' event handler for rows */
         objB.find('tbody tr').on('click', function (e) {
             lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+            scanAllCheckbox();
         });
 
         /* This 'event' is used just to avoid that the table text 

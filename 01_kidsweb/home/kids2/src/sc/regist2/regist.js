@@ -223,14 +223,32 @@ function SearchReceiveDetail(data) {
         }
     });
 
-    $('input[name="allSel"]').on('change', function () {
-        $('input[name="edit"]').prop('checked', this.checked);
-        if (this.checked) {
-            // $("#DetailTableBody tr").css('background-color','#87cefa');
-            // $("#tbl_detail_chkbox tbody tr").css('background-color','#87cefa');
-        } else {
-            $("#DetailTableBody tr").css('background-color', '#ffffff');
-            $("#tbl_detail_chkbox tbody tr").css('background-color', '#ffffff');
+    // $('input[name="allSel"]').on('change', function () {
+    //     $('input[name="edit"]').prop('checked', this.checked);
+    //     if (this.checked) {
+    //         $("#DetailTableBody tr").css('background-color', '#87cefa');
+    //         $("#tbl_detail_chkbox tbody tr").css('background-color', '#87cefa');
+    //     } else {
+    //         $("#DetailTableBody tr").css('background-color', '#ffffff');
+    //         $("#tbl_detail_chkbox tbody tr").css('background-color', '#ffffff');
+    //     }
+    // });
+    // チェックボックスの切り替え処理のバインド
+    $('input[type="checkbox"][name="allSel"]').on({
+        'click': function () {
+            var status = this.checked;
+            $('input[type="checkbox"]')
+                .each(function () {
+                    this.checked = status;
+                    if (status) {
+                        $("#tbl_detail_chkbox tbody tr").css("background-color", "#bbbbbb");
+                        $("#tbl_detail tbody tr").css("background-color", "#bbbbbb");
+                    } else {
+
+                        $("#tbl_detail_chkbox tbody tr").css("background-color", "#ffffff");
+                        $("#tbl_detail tbody tr").css("background-color", "#ffffff");
+                    }
+                });
         }
     });
     $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
@@ -239,9 +257,13 @@ function SearchReceiveDetail(data) {
     $('input[name="lngMonetaryRateCode"]').val(data.lngmonetaryratecode);
     $('input[name="curConversionRate"]').val(data.curconversionrate);
 
-    setTableAEvent();
+    // setTableAEvent();
+
 
     setCheckBoxEvent();
+    scanAllCheckbox();
+
+    selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
 
     // }).fail(function (error) {
     //     console.log("fail:search-detail");
@@ -261,6 +283,116 @@ function setCheckBoxEvent() {
     });
 
 }
+
+function selectRow(objA, objB) {
+    var rows = objA.find('tbody tr');
+    var rows = objB.find('tbody tr');
+    var lastSelectedRow;
+    /* Create 'click' event handler for rows */
+    objA.find('tbody tr').on('click', function (e) {
+        lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+        scanAllCheckbox();
+    });
+
+
+    /* Create 'click' event handler for rows */
+    objB.find('tbody tr').on('click', function (e) {
+        lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+        scanAllCheckbox();
+    });
+
+    /* This 'event' is used just to avoid that the table text 
+     * gets selected (just for styling). 
+     * For example, when pressing 'Shift' keyboard key and clicking 
+     * (without this 'event') the text of the 'table' will be selected.
+     * You can remove it if you want, I just tested this in 
+     * Chrome v30.0.1599.69 */
+    $(document).bind('selectstart dragstart', function (e) {
+        e.preventDefault(); return false;
+    });
+}
+
+function trClickEvent(row, lastSelectedRow, e, objA, objB) {
+
+    /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
+     * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
+     * 'Shift' => is represented by 'e.shiftKey' */
+    if (e.ctrlKey || e.metaKey) {
+        /* If pressed highlight the other row that was clicked */
+        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
+        objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+
+    } else if (e.shiftKey) {
+        /* If pressed highlight the other row that was clicked */
+        var indexes = [lastSelectedRow.index(), row.index()];
+        indexes.sort(function (a, b) {
+            return a - b;
+        });
+        for (var i = indexes[0]; i <= indexes[1]; i++) {
+            objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
+            objA.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
+            objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
+        }
+    } else {
+        /* Otherwise just highlight one row and clean others */
+        objA.find("tbody tr").css("background-color", "#ffffff");
+        objA.find("tbody tr").find('input[type="checkbox"]').prop('checked', false);
+        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
+        objB.find("tbody tr").css("background-color", "#ffffff");
+        objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+        lastSelectedRow = row;
+    }
+
+    return lastSelectedRow;
+}
+
+
+/**
+ * @method scanAllCheckbox スキャンチェックボックス
+ */
+function scanAllCheckbox() {
+
+    var $all_rows = $('#tbl_detail tbody tr');
+    var $all_chkbox_rows = $('#tbl_detail_chkbox tbody tr');
+    var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
+
+    // 有効 <tr> ＊選択可能行
+    var count_checked = 0;
+    var count_disabled = 0;
+
+    // data がない場合、全選択／解除チェックボックスを寝かせて無効化
+    if (!$all_rows.length) {
+        $('#allChecked').prop({ 'checked': false, 'disabled': true });
+    } else {
+        $('#allChecked').prop('disabled', false);
+    }
+
+    $.each($all_checkbox, function (i) {
+        // チェックボックスがひとつでも外れている場合、全選択／解除チェックボックスを寝かす
+        if (!($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)')) {
+            $('#allChecked').prop('checked', false);
+        }
+
+        // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
+        if ($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)') {
+            ++count_checked;
+        }
+        if ($all_rows.length === count_checked) {
+            $('#allChecked').prop('checked', true);
+        }
+
+        // すべてのチェックボックスが無効化された場合、全選択／解除チェックボックスを寝かせて無効化
+        if ($(this).prop('disabled')) {
+            ++count_disabled;
+        }
+        if ($all_rows.length === count_disabled) {
+            $('#allChecked').prop({ 'checked': false, 'disabled': true });
+        }
+    });
+};
+
 function resetTableAWidth() {
     $("#tbl_detail thead").css('display', '');
     $("#tbl_detail tbody tr td").width('');
@@ -1187,6 +1319,7 @@ jQuery(function ($) {
     });
 
 
+
     // 行IDの再設定
     function resetTableBRowid() {
         var rownum = 0;
@@ -1205,65 +1338,6 @@ jQuery(function ($) {
         });
     }
 
-    function selectRow(objA, objB) {
-        var rows = objA.find('tbody tr');
-        var rows = objB.find('tbody tr');
-        var lastSelectedRow;
-        /* Create 'click' event handler for rows */
-        objA.find('tbody tr').on('click', function (e) {
-            lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-        });
-
-
-        /* Create 'click' event handler for rows */
-        objB.find('tbody tr').on('click', function (e) {
-            lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-        });
-
-        /* This 'event' is used just to avoid that the table text 
-         * gets selected (just for styling). 
-         * For example, when pressing 'Shift' keyboard key and clicking 
-         * (without this 'event') the text of the 'table' will be selected.
-         * You can remove it if you want, I just tested this in 
-         * Chrome v30.0.1599.69 */
-        $(document).bind('selectstart dragstart', function (e) {
-            e.preventDefault(); return false;
-        });
-    }
-
-    function trClickEvent(row, lastSelectedRow, e, objA, objB) {
-
-        /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
-         * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
-         * 'Shift' => is represented by 'e.shiftKey' */
-        if (e.ctrlKey || e.metaKey) {
-            /* If pressed highlight the other row that was clicked */
-            objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#87cefa");
-            objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#87cefa");
-
-        } else if (e.shiftKey) {
-            /* If pressed highlight the other row that was clicked */
-            var indexes = [lastSelectedRow.index(), row.index()];
-            indexes.sort(function (a, b) {
-                return a - b;
-            });
-            for (var i = indexes[0]; i <= indexes[1]; i++) {
-                objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#87cefa");
-                objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#87cefa");
-            }
-        } else {
-            /* Otherwise just highlight one row and clean others */
-            objA.find("tbody tr").css("background-color", "#ffffff");
-            objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#87cefa");
-            objB.find("tbody tr").css("background-color", "#ffffff");
-            objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#87cefa");
-            lastSelectedRow = row;
-        }
-
-        return lastSelectedRow;
-    }
-
-
     // 全削除ボタンのイベント
     $('img.alldelete').on('click', function () {
 
@@ -1279,11 +1353,9 @@ jQuery(function ($) {
         $("#tbl_detail_head").trigger("update");
         $("#tbl_detail").trigger("update");
 
-        $('input[type="checkbox"][name="allSel"]').prop("checked", false);
+        selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
 
-        // setCheckBoxEvent();
-
-        // setTableAEvent();
+        scanAllCheckbox();
 
         // 合計金額・消費税額の更新
         updateAmount();
@@ -1310,11 +1382,9 @@ jQuery(function ($) {
         resetTableBRowid();
         resetTableAWidth();
 
-        $('input[type="checkbox"][name="allSel"]').prop("checked", false);
+        selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
 
-        // setCheckBoxEvent();
-
-        // setTableAEvent();
+        scanAllCheckbox();
 
         // 合計金額・消費税額の更新
         updateAmount();

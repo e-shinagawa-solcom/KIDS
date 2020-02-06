@@ -131,7 +131,7 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 
 ////////// 明細行の取得 ////////////////////
 // 指定受注番号の受注明細データ取得用SQL文の作成
-$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $aryResult[0]["lngrevisionno"]);
+$strQuery = fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, "");
 // echo $strQuery;
 // 明細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

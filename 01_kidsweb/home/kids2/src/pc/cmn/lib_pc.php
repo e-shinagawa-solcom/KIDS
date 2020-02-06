@@ -44,7 +44,9 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = ", tsd.lngorderrevisionno as lngorderrevisionno";
     // 発注コード
     $aryQuery[] = ", mp.strordercode as strRealOrderCode";
-
+    // 製品
+    $aryQuery[] = ", p.strproductcode";
+    $aryQuery[] = ", p.strproductname";
     // 伝票コード
     $aryQuery[] = ", s.strSlipCode as strSlipCode";
     // 入力者
@@ -93,7 +95,13 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = "INNER JOIN t_stockdetail tsd ";
     $aryQuery[] = "    on tsd.lngstockno = s.lngstockno ";
     $aryQuery[] = "    and tsd.lngrevisionno = s.lngrevisionno ";
-
+    $aryQuery[] = " inner JOIN m_Product p ";
+    $aryQuery[] = "     on p.strproductcode =  tsd.strproductcode";
+    $aryQuery[] = " and p.strrevisecode = tsd.strrevisecode ";
+    $aryQuery[] = " inner join( select lngproductno, strrevisecode, max(lngrevisionno) as lngrevisionno from m_product group by lngproductno, strrevisecode) p_rev";
+    $aryQuery[] = "     on p_rev.lngproductno = p.lngproductno";
+    $aryQuery[] = " and p_rev.strrevisecode = p.strrevisecode";
+    $aryQuery[] = " and p_rev.lngrevisionno = p.lngrevisionno";
     $aryQuery[] = "INNER JOIN t_purchaseorderdetail tpd ";
     $aryQuery[] = "    on tpd.lngorderno = tsd.lngorderno ";
     $aryQuery[] = "    and tpd.lngorderdetailno = tsd.lngorderdetailno ";
