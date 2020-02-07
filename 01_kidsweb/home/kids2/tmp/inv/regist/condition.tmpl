@@ -48,13 +48,20 @@
             var parentCustomerName = window.opener.document.getElementsByClassName('input-name')[0].value;
             $('input[name="strCustomerName"]').val(parentCustomerName);
             // From(システム日付の月初) To(システム日付の月末)
-            var toDay = new Date();
-            var start = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/01';
-            var lastDay = new Date(toDay.getFullYear(), toDay.getMonth() + 1, 0);
-            var end = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/' + lastDay.getDate();
-            $('input[name="From_dtmDeliveryDate"]').val(start);
-            $('input[name="To_dtmDeliveryDate"]').val(end);
-
+            var dtmchargeternstart = window.opener.document.getElementsByName('dtmchargeternstart')[0].value;
+            var dtmchargeternend = window.opener.document.getElementsByName('dtmchargeternend')[0].value;
+            if (dtmchargeternstart != "" && dtmchargeternend !="")
+            {
+                $('input[name="From_dtmDeliveryDate"]').val(dtmchargeternstart);
+                $('input[name="To_dtmDeliveryDate"]').val(dtmchargeternend);
+            } else {
+                var toDay = new Date();
+                var start = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/01';
+                var lastDay = new Date(toDay.getFullYear(), toDay.getMonth() + 1, 0);
+                var end = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/' + lastDay.getDate();
+                $('input[name="From_dtmDeliveryDate"]').val(start);
+                $('input[name="To_dtmDeliveryDate"]').val(end);
+            }    
         }
 
     });
@@ -94,8 +101,8 @@
             <div class="regist-line">
                 <span class="regist-label">
                     <span class="regist-label__text">納品日</span>
-                    FROM <input class="TxtStyle05L"   name="From_dtmDeliveryDate"  type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" maxlength="10">
-                    TO <input   class="TxtStyle05L"   name="To_dtmDeliveryDate"    type="text"  onfocus="chColorOn(this);" onblur="chColorOff(this);" tabindex="" maxlength="10">
+                    FROM <input class="TxtStyle05L"   name="From_dtmDeliveryDate"  type="text" tabindex="" maxlength="10">
+                    TO <input   class="TxtStyle05L"   name="To_dtmDeliveryDate"    type="text" tabindex="" maxlength="10">
                 </span>
             </div>
             <div class="regist-line">
