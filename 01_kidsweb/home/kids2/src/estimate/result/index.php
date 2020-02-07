@@ -151,7 +151,7 @@ if (!count($strErrorMessage)) {
     $selectQuery =
         "SELECT
 			TO_CHAR(me.dtmInsertDate, 'YYYY/MM/DD') AS dtminsertdate,
-			mp.strproductcode,
+			mp.strproductcode || '_' || mp.strrevisecode as strproductcode,
 			mp.strproductname,
 			mp.strproductenglishname,
 			'[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname AS lnginchargegroupcode,

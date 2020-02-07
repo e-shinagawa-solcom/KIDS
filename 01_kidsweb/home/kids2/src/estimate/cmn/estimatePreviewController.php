@@ -126,7 +126,7 @@ class estimatePreviewController {
         $groupDisplayName = $this->groupDisplayList[$product->lnginchargegroupcode]['strgroupdisplayname'];
         
         $data = array(
-            workSheetConst::PRODUCT_CODE => $product->strproductcode,
+            workSheetConst::PRODUCT_CODE => $product->strproductcode . "_" . $product->strrevisecode,
             workSheetConst::PRODUCT_NAME => $product->strproductname,
             workSheetConst::PRODUCT_ENGLISH_NAME => $product->strproductenglishname,
             workSheetConst::RETAIL_PRICE => $product->curretailprice,

@@ -45,18 +45,20 @@ class registInsertData extends estimateInsertData {
 
     // 見積原価登録時に必要なデータを作成し、セットする
     protected function setEstimateRegistParam() {
-        // ワークシート上の製品コードの取得
+        // ワークシート上の製品コードを取得
         $productCode = $this->headerData[workSheetConst::PRODUCT_CODE];
 
 		// 製品コードが存在する場合は再販
 		if ($productCode) {
-
+            $productCode = substr($productCode,0,5);
 			// 指定製品のコードが製品マスタに存在するか確認し、リバイスコードの最大値を取得する
             $currentRecord = $this->objDB->getCurrentRecordForProductCode($productCode);
 
 			if ($currentRecord !== false) {
                 // 製品番号を取得
-                $productNo = $currentRecord->lngproductno;
+//                $productNo = $currentRecord->lngproductno;
+                // t_goodplanがPK違反となるため、製品番号は新規に取得する。  
+                $productNo = fncGetSequence("m_product.lngproductno", $this->objDB);
                 
                 // 最大のリバイスコードを取得
                 $maxReviceCode = (int)$currentRecord->strrevisecode;
