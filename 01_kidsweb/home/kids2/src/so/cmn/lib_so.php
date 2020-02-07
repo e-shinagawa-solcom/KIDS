@@ -308,7 +308,7 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = "rd.lngReceiveNo as lngReceiveNo, rd.lngRevisionNo as lngRevisionNo";
     $aryQuery[] = ", rd.lngreceivedetailno";
     // 製品コード・名称
-    $aryQuery[] = ", rd.strProductCode as strProductCode";
+    $aryQuery[] = ", rd.strProductCode || '_' || rd.strReviseCode as strProductCode";
     $aryQuery[] = ", p.strProductName as strProductName";
     $aryQuery[] = ", p.strproductenglishname as strproductenglishname";
     $aryQuery[] = ", me.lngProductQuantity as lngProductQuantity_est";

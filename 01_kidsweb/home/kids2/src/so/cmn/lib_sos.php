@@ -38,7 +38,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "  , r.lngRevisionNo as lngRevisionNo";
     $aryQuery[] = "  , rd.lngReceiveDetailNo";
     $aryQuery[] = "  , rd.lngReceiveDetailNo as lngdetailno";
-    $aryQuery[] = "  , rd.strProductCode";
+    $aryQuery[] = "  , rd.strProductCode as strProductCode";
     $aryQuery[] = "  , rd.strGroupDisplayCode";
     $aryQuery[] = "  , rd.strGroupDisplayName";
     $aryQuery[] = "  , rd.strUserDisplayCode";
@@ -95,7 +95,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "        , rd1.lngReceiveDetailNo";
     $aryQuery[] = "        , rd1.lngRevisionNo";
     $aryQuery[] = "        , rd1.lngEstimateNo";
-    $aryQuery[] = "        , p.strProductCode";
+    $aryQuery[] = "        , p.strProductCode || '_' || p.strReviseCode as strProductCode";
     $aryQuery[] = "        , p.lngRevisionNo as estimateRevisionNo";
     $aryQuery[] = "        , mg.strGroupDisplayCode";
     $aryQuery[] = "        , mg.strGroupDisplayName";
