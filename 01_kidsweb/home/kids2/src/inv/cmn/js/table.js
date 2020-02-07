@@ -172,65 +172,13 @@ $(function () {
   };
 
   /**
-   * @method scanAllCheckbox スキャンチェックボックス
-   */
-  $.scanAllCheckbox = function () {
-
-    var $all_rows = $('tbody tr', $tableA);
-    var $all_chkbox_rows = $('tbody tr', $tableA_chkbox);
-    var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
-
-    // 有効 <tr> ＊選択可能行
-    var count_checked = 0;
-    var count_disabled = 0;
-
-    console.log(data.length);
-    console.log(!data.length);
-
-    // data がない場合、全選択／解除チェックボックスを寝かせて無効化
-    if (!data.length) {
-      $('#allChecked').prop({ 'checked': false, 'disabled': true });
-    } else {
-      $('#allChecked').prop('disabled', false);
-    }
-
-    // <tr> に data-id 属性が存在しない場合、該当チェックボックスを無効化
-    $.each($all_rows, function () {
-      if (!$(this).data('id')) {
-        $all_checkbox.prop({ 'checked': false, 'disabled': true });
-      }
-    });
-
-    $.each($all_checkbox, function (i) {
-      // チェックボックスがひとつでも外れている場合、全選択／解除チェックボックスを寝かす
-      if (!($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)')) {
-        $('#allChecked').prop('checked', false);
-      }
-
-      // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
-      if ($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)') {
-        ++count_checked;
-      }
-      if ($all_rows.length === count_checked) {
-        $('#allChecked').prop('checked', true);
-      }
-
-      // すべてのチェックボックスが無効化された場合、全選択／解除チェックボックスを寝かせて無効化
-      if ($(this).prop('disabled')) {
-        ++count_disabled;
-      }
-      if (data.length === count_disabled) {
-        $('#allChecked').prop({ 'checked': false, 'disabled': true });
-      }
-    });
-  };
-
-  /**
    * @method initTableA テーブルA 初期化
    */
   $.initTableA = function () {
     // スキャンチェックボックス
-    $.scanAllCheckbox();
+    scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
     data = [];
     $.createSkeletonTable(dataEmpty, $tableA_row, domA, $tableA_tbody);
   };
@@ -260,7 +208,9 @@ $(function () {
    */
 
   // スキャンチェックボックス
-  $.scanAllCheckbox();
+  scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+  // チェックボックスクリックイベントの設定
+  setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
   $.createTable = function (response) {
     data = (response === undefined || response && !response.length) ? dataEmpty : Array.from(new Set(response));
@@ -274,11 +224,14 @@ $(function () {
     $.setTableSorter();
 
     // スキャンチェックボックス
-    $.scanAllCheckbox();
+    scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
 
-    $.resetTableAWidth();
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
-    selectRow($("#tableA_chkbox"), $("#tableA"));
+    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
+
+    selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
   };
 
   $.createTableRenew = function (response) {
@@ -296,14 +249,16 @@ $(function () {
     // テーブルソート機能設定
     $.setTableSorter();
     // スキャンチェックボックス
-    $.scanAllCheckbox();
+    scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
     // テーブルBの幅をリセットする
-    $.resetTableBWidth();
+    resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
     // テーブルB行イベントの追加
-    selectRow($("#tableB_no"), $("#tableB"));
+    selectRow("", $("#tableB_no"), $("#tableB"), "");
     // 顧客名称の取得
     $('input[name="lngCustomerCode"]').trigger('change');
-　　// テーブルAデータの初期化
+    // テーブルAデータの初期化
     data = [];
   };
 
@@ -314,23 +269,8 @@ $(function () {
    */
 
   // テーブルA 全選択／解除チェックボックス
-  $(document).on('change', '#allChecked', function (e) {
-    e.preventDefault();
-
-    var $all_rows = $('tbody tr', $tableA);
-    var $all_chkbox_rows = $('tbody tr', $tableA_chkbox);
-    var $all_chkbox_rows_checkbox = $('input[type="checkbox"]', $tableA_chkbox);
-
-    if (e.target.checked) {
-      $all_rows.css("background-color", "#bbbbbb");
-      $all_chkbox_rows.css("background-color", "#bbbbbb");
-      $all_chkbox_rows_checkbox.not(':disabled').prop('checked', true);
-    } else {
-      $all_rows.css("background-color", "#ffffff");
-      $all_chkbox_rows.css("background-color", "#ffffff");
-      $all_chkbox_rows_checkbox.prop('checked', false);
-    }
-  });
+  // 対象チェックボックスクリックイベントの設定
+  setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
 
   // テーブルA 追加ボタン
   $('img.add').on('click', function (e) {
@@ -384,19 +324,18 @@ $(function () {
     $.setTableSorter();
 
     // スキャンチェックボックス
-    $.scanAllCheckbox();
+    scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
 
     // 金額計算
     billingAmount();
 
     // テーブルA 幅再設定
-    $.resetTableAWidth();
-
+    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
     // テーブルB 幅再設定
-    $.resetTableBWidth();
+    resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
 
-    selectRow($("#tableA_chkbox"), $("#tableA"));
-    selectRow($("#tableB_no"), $("#tableB"));
+    selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
+    selectRow("", $("#tableB_no"), $("#tableB"), "");
   });
 
   // テーブルB 削除ボタン
@@ -433,19 +372,19 @@ $(function () {
     $.setTableSorter();
 
     // スキャンチェックボックス
-    $.scanAllCheckbox();
-
+    scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
     // 金額計算
     billingAmount();
 
     // テーブルA 幅再設定
-    $.resetTableAWidth();
+    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
 
     // テーブルB 幅再設定
-    $.resetTableBWidth();
-
-    selectRow($("#tableA_chkbox"), $("#tableA"));
-    selectRow($("#tableB_no"), $("#tableB"));
+    resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
+    selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
+    selectRow("", $("#tableB_no"), $("#tableB"), "");
   });
 
   // テーブルB 全削除ボタン
@@ -479,18 +418,21 @@ $(function () {
     $.setTableSorter();
 
     // スキャンチェックボックス
-    $.scanAllCheckbox();
+    scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
     // 金額計算
     billingAmount();
 
     // テーブルA 幅再設定
-    $.resetTableAWidth();
+    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
+
 
     // テーブルB 幅再設定
-    $.resetTableBWidth();
+    resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
 
-    selectRow($("#tableA_chkbox"), $("#tableA"));
+    selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
   });
 
   // 検索条件入力ボタン
@@ -525,206 +467,6 @@ $(function () {
     sub_win = window.open(url, 'winSearch', "width=800,height=500,scrollbars=yes");
     // 請求書検索ウィンドウをポップアップ表示
   });
-
-  /**
-   * ----------------------------------------------------------------------------------------------------
-   * 特殊キー + click イベント処理
-   * ----------------------------------------------------------------------------------------------------
-   */
-
-  // ctrl + 左 click コンテクストメニュー非表示
-  // $(document).on('contextmenu', function (e) {
-  //   if (e.which === 1) return false;
-  // });
-
-  // // ctrl, shift キーイベントを document に設定
-  // var isCtrlKey = false;
-  // var isShiftKey = false;
-
-  // $(document).on({
-  //   'keydown': function (e) {
-  //     if (e.ctrlKey) isCtrlKey = true;
-  //     if (e.shiftKey) isShiftKey = true;
-  //   },
-  //   'keyup': function (e) {
-  //     isCtrlKey = false;
-  //     isShiftKey = false;
-  //   }
-  // });
-
-  // // テーブルA イベント処理
-  // $(document).on('mousedown', '#tableA tbody tr', function (e) {
-  //   e.preventDefault();
-
-  //   var $tableA_rows = $('#tableA tbody tr');
-  //   var $tableA_rows_length = $tableA_rows.length;
-
-  //   // テーブルA <tr> ctrl + click -> テーブルBにデータを追加
-  //   if (isCtrlKey && e.which === 1) {
-  //     var $data_id = $(this).data('id');
-  //     var data_index = data.findIndex(function (value) { return value.strslipcode == $data_id });
-  //     if (data_index !== -1) {
-  //       temp.push(data[data_index]);
-  //       // 該当データを data から削除
-  //       data.splice(data_index, 1);
-  //     }
-
-  //     // テーブルBにデータを追加
-  //     $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
-  //     $.addDataTableB();
-
-  //     // テーブルA 再生成
-  //     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
-  //     $.addDataTableA();
-
-  //     // テーブルソート機能設定
-  //     $.setTableSorter();
-
-  //   }
-
-  //   // テーブルA <input type="checkbox">
-  //   if (e.target.nodeName === 'INPUT') {
-  //     if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
-  //       var $row_index = $(this).index();
-
-  //       // 選択された行インデックスを selectedRowIndexes に格納
-  //       selectedRowIndexes.push($row_index);
-
-  //       // 昇順ソート
-  //       selectedRowIndexes.sort(function (a, b) { return a - b });
-
-  //       var min = selectedRowIndexes[0] + 1;
-  //       var max = selectedRowIndexes[1] - 1;
-  //       var array_range = [];
-  //       for (var i = min; i <= max; ++i) {
-  //         array_range.push(i);
-  //       }
-
-  //       // 複数選択
-  //       if (!e.target.checked) {
-  //         $(this).addClass('selected').children('td').addClass('current');
-
-  //         $.each(array_range, function (i, v) {
-  //           $tableA_rows.eq(v).addClass('selected').children('td').addClass('current');
-  //           $tableA_rows.eq(v).find('input[type="checkbox"]').prop('checked', true);
-  //         });
-  //       }
-  //       // 複数選択解除
-  //       else {
-  //         $(this).removeClass('selected').children('td').removeClass('current');
-
-  //         $.each(array_range, function (i, v) {
-  //           $tableA_rows.eq(v).removeClass('selected').children('td').removeClass('current');
-  //           $tableA_rows.eq(v).find('input[type="checkbox"]').prop('checked', false);
-  //         });
-  //       }
-
-  //       // selectedRowIndexes 初期化
-  //       if (selectedRowIndexes.length >= 2) selectedRowIndexes = [];
-  //     } else {
-  //       if (!e.target.checked) {
-  //         $(this).addClass('selected').children('td').addClass('current');
-  //       } else {
-  //         $(this).removeClass('selected').children('td').removeClass('current');
-  //       }
-  //     }
-  //   }
-
-  //   // テーブルA <tr> shift + click -> 複数選択／解除
-  //   else if ($tableA_rows_length !== 1 && isShiftKey && e.which === 1) {
-  //     var $row_index = $(this).index();
-
-  //     // 選択された行インデックスを selectedRowIndexes に格納
-  //     selectedRowIndexes.push($row_index);
-
-  //     // 昇順ソート
-  //     selectedRowIndexes.sort(function (a, b) { return a - b });
-
-  //     // 複数選択
-  //     if (!$(this).hasClass('selected')) {
-  //       $(this).addClass('selected').children('td').addClass('current');
-  //       $(this).find('input[type="checkbox"]').prop('checked', true);
-
-  //       var i = selectedRowIndexes[0];
-  //       while (i <= selectedRowIndexes[1]) {
-  //         $tableA_rows.eq(i).addClass('selected').children('td').addClass('current');
-  //         $tableA_rows.eq(i).find('input[type="checkbox"]').prop('checked', true);
-  //         ++i;
-  //       }
-  //     }
-  //     // 複数選択解除
-  //     else {
-  //       $(this).removeClass('selected').children('td').removeClass('current');
-  //       $(this).find('input[type="checkbox"]').prop('checked', false);
-
-  //       var i = selectedRowIndexes[0];
-  //       while (i <= selectedRowIndexes[1]) {
-  //         $tableA_rows.eq(i).removeClass('selected').children('td').removeClass('current');
-  //         $tableA_rows.eq(i).find('input[type="checkbox"]').prop('checked', false);
-  //         ++i;
-  //       }
-  //     }
-
-  //     // selectedRowIndexes 初期化
-  //     if (selectedRowIndexes.length >= 2) selectedRowIndexes = [];
-  //   }
-
-  //   // selectedRowIndexes 初期化
-  //   if ($tableA_rows_length === 1) selectedRowIndexes = [];
-
-  //   // スキャンチェックボックス
-  //   $.scanAllCheckbox();
-  // });
-
-  // // テーブルB <tr> 特殊キー + click イベント処理
-  // $(document).on('mousedown', '#tableB tbody tr', function (e) {
-  //   e.preventDefault();
-
-  //   var $tableB_rows = $('#tableB tbody tr');
-  //   var $tableB_rows_length = $tableB_rows.length;
-
-  //   // テーブルB <tr> shift + click -> 複数選択／解除
-  //   if ($tableB_rows_length !== 1 && isShiftKey && e.which === 1) {
-  //     var $row_index = $(this).index();
-
-  //     // 選択された行インデックスを selectedRowIndexes に格納
-  //     selectedRowIndexes.push($row_index);
-
-  //     // 昇順ソート
-  //     selectedRowIndexes.sort(function (a, b) { return a - b });
-
-  //     // 複数選択
-  //     if (!$(this).hasClass('selected')) {
-  //       $(this).addClass('selected').children('td').addClass('current');
-
-  //       var i = selectedRowIndexes[0];
-  //       while (i <= selectedRowIndexes[1]) {
-  //         $tableB_rows.eq(i).addClass('selected').children('td').addClass('current');
-  //         ++i;
-  //       }
-  //     }
-  //     // 複数選択解除
-  //     else {
-  //       $(this).removeClass('selected').children('td').removeClass('current');
-
-  //       var i = selectedRowIndexes[0];
-  //       while (i <= selectedRowIndexes[1]) {
-  //         $tableB_rows.eq(i).removeClass('selected').children('td').removeClass('current');
-  //         ++i;
-  //       }
-  //     }
-
-  //     // selectedRowIndexes 初期化
-  //     if (i === selectedRowIndexes[1] + 1) selectedRowIndexes = [];
-  //   }
-  //   else {
-  //     if ($(this).hasClass('selected')) {
-  //       $(this).removeClass('selected').children('td').removeClass('current');
-  //     } else {
-  //       $(this).addClass('selected').children('td').addClass('current');
-  //     }
-  //   }
-  // });
 
   function convertNumber(str) {
     if (str != "" && str != undefined && str != "null") {
@@ -878,144 +620,4 @@ $(function () {
 
     return false;
   };
-
-  // テーブルAの幅をリセットする
-  $.resetTableAWidth = function () {
-    $("#tableA thead").css('display', '');
-    $("#tableA tbody tr td").width('');
-    $("#tableA thead tr th").width('');
-    $("#tableA_head tr th").width('');
-    var thwidthArry = [];
-    var tdwidthArry = [];
-    var width = 0;
-    var columnNum = $('#tableA_head thead tr th').length;
-    for (var i = 1; i <= columnNum; i++) {
-      var thwidth = $('#tableA_head thead tr th:nth-child(' + i + ')').width();
-      var tdwidth = $('#tableA tbody tr td:nth-child(' + i + ')').width();
-      thwidthArry.push(thwidth + 20);
-      tdwidthArry.push(tdwidth + 20);
-    }
-
-    for (var i = 1; i <= columnNum; i++) {
-      if ($("#tableA_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
-        if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-          $("#tableA_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-          $("#tableA tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-          width += thwidthArry[i - 1];
-        } else {
-          $("#tableA_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-          $("#tableA tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-          width += tdwidthArry[i - 1];
-        }
-      }
-    }
-    $("#tableA_head").width(width + 110);
-    $("#tableA").width(width + 110);
-
-    $("#tableA thead").css('display', 'none');
-  }
-
-
-  // テーブルBの幅をリセットする
-  $.resetTableBWidth = function () {
-    $("#tableB_no tbody tr td").width($("#tableB_no_head thead tr th").width() + 1);
-    $("#tableB tbody tr td").width('');
-    $("#tableB_head thead tr th").width('');
-    var thwidthArry = [];
-    var tdwidthArry = [];
-    var columnNum = $('#tableB_head thead tr th').length;
-    console.log(columnNum);
-    var width = 0;
-    for (var i = 1; i <= columnNum; i++) {
-      var thwidth = $('#tableB_head thead tr th:nth-child(' + i + ')').width();
-      var tdwidth = $('#tableB tbody tr td:nth-child(' + i + ')').width();
-      thwidthArry.push(thwidth + 20);
-      tdwidthArry.push(tdwidth + 20);
-    }
-
-    for (var i = 1; i <= columnNum; i++) {
-      if ($("#tableB tr th:nth-child(" + i + ")").css("display") != "none") {
-        if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-          $("#tableB_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-          $("#tableB tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-          width += thwidthArry[i - 1];
-        } else {
-          $("#tableB_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-          $("#tableB tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-          width += tdwidthArry[i - 1];
-        }
-      }
-    }
-
-    $("#tbl_edit_detail_head").width(width + 100);
-    $("#tbl_edit_detail_body").width(width + 100);
-  }
-
-  // テーブルの行をクリックする時のイベント
-  function selectRow(objA, objB) {
-    var rows = objA.find('tbody tr');
-    var rows = objB.find('tbody tr');
-    var lastSelectedRow;
-    /* Create 'click' event handler for rows */
-    objA.find('tbody tr').on('click', function (e) {
-      lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-      scanAllCheckbox();
-    });
-
-
-    /* Create 'click' event handler for rows */
-    objB.find('tbody tr').on('click', function (e) {
-      lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-      scanAllCheckbox();
-    });
-
-    /* This 'event' is used just to avoid that the table text 
-     * gets selected (just for styling). 
-     * For example, when pressing 'Shift' keyboard key and clicking 
-     * (without this 'event') the text of the 'table' will be selected.
-     * You can remove it if you want, I just tested this in 
-     * Chrome v30.0.1599.69 */
-    $(document).bind('selectstart dragstart', function (e) {
-      e.preventDefault(); return false;
-    });
-  }
-
-  function trClickEvent(row, lastSelectedRow, e, objA, objB) {
-
-    /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
-     * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
-     * 'Shift' => is represented by 'e.shiftKey' */
-    if (e.ctrlKey || e.metaKey) {
-      /* If pressed highlight the other row that was clicked */
-      objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-      objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-      console.log(objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]'));
-      objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-
-    } else if (e.shiftKey) {
-      /* If pressed highlight the other row that was clicked */
-      var indexes = [lastSelectedRow.index(), row.index()];
-      indexes.sort(function (a, b) {
-        return a - b;
-      });
-      for (var i = indexes[0]; i <= indexes[1]; i++) {
-        objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
-        objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
-        console.log(objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]'));
-        objA.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-      }
-    } else {
-      /* Otherwise just highlight one row and clean others */
-      objA.find("tbody tr").css("background-color", "#ffffff");
-      objA.find("tbody tr").find('input[type="checkbox"]').prop('checked', false);
-      objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-      objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-
-      objB.find("tbody tr").css("background-color", "#ffffff");
-      objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-      lastSelectedRow = row;
-    }
-
-    return lastSelectedRow;
-  }
 });

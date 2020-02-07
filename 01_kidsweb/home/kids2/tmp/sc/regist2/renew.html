@@ -40,6 +40,7 @@
 	<script src="/sc/regist2/js/invoke-master-search.js" defer></script>
 	<!-- datepickerの要素指定 -->
 	<script src="/sc/regist2/js/datepicker.js" defer></script>
+	<script type="text/javascript" language="javascript" src="/cmn/js/table.js"></script>
 	<script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
 	<script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
 </head>
@@ -155,8 +156,8 @@
 							<tr>
 								<td style="width: 800px;">
 									<div class="regist-label div-table">
-										<table class="table-fix">
-											<thead id="tbl_detail_chkbox_head">
+										<table class="table-fix" id="tableA_chkbox_head">
+											<thead>
 												<tr>
 													<th>
 														<input name="allSel" type="checkbox" style="width: 10px;">
@@ -166,7 +167,7 @@
 											<!-- 固定ヘッダ -->
 										</table>
 										<div id="header_h">
-											<table class="table-decide-description" name="T" id="tbl_detail_head">
+											<table class="table-decide-description" name="T" id="tableA_head">
 												<thead>
 													<!-- 水平ヘッダ -->
 													<tr>
@@ -202,14 +203,14 @@
 											</table>
 										</div>
 										<div id="header_v">
-											<table class="table-decide-description" name="TV" id="tbl_detail_chkbox">
+											<table class="table-decide-description" name="TV" id="tableA_chkbox">
 												<tbody>
 												</tbody>
 											</table>
 										</div>
 
 										<div id="data">
-											<table class="table-decide-description" name="T" id="tbl_detail">
+											<table class="table-decide-description" name="T" id="tableA">
 												<thead>
 													<!-- 水平ヘッダ -->
 													<tr>
@@ -264,7 +265,7 @@
 							<tr>
 								<td style="vertical-align: top;width: 800px;">
 									<div class="regist-label div-decide-table">
-										<table class="table-decide-fix" id="tbl_edit_no_head">
+										<table class="table-decide-fix" id="tableB_no_head">
 											<thead>
 												<tr>
 													<th>No.</th>
@@ -273,7 +274,7 @@
 											<!-- 固定ヘッダ -->
 										</table>
 										<div id="header_decide_h">
-											<table class="table-decide-description" name="DECIDE_T" id="tbl_edit_detail_head">
+											<table class="table-decide-description" name="DECIDE_T" id="tableB_head">
 												<thead>
 													<tr>
 														<th class="forEdit">No.</th>
@@ -308,14 +309,14 @@
 											</table>
 										</div>
 										<div id="header_decide_v">
-											<table class="table-decide-description" name="DECIDE_TV" id="tbl_edit_no_body">
+											<table class="table-decide-description" name="DECIDE_TV" id="tableB_no">
 												<tbody>_%strEditTableNo%_
 												</tbody>
 											</table>
 										</div>
 
 										<div id="decide_data">
-											<table class="table-decide-description" name="DECIDE_T" id="tbl_edit_detail_body">
+											<table class="table-decide-description" name="DECIDE_T" id="tableB">
 												<tbody id="EditTableBody">_%strEditTableBody%_</tbody>
 											</table>
 										</div>

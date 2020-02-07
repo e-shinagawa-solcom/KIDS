@@ -7,7 +7,7 @@ function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj) {
             tableA_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#bbbbbb');
             tableA_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked', true);
         } else {
-            $("#tableB tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
+            tableA.find("tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
             tableA_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
             tableA_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked', false);
         }
@@ -154,7 +154,7 @@ function trClickEvent(row, lastSelectedRow, e, tableA_fix, tableA) {
 
 
 // テーブルの幅をリセットする
-function resetTableWidth(table_fix_head, table_fix, table, table_head) {
+function resetTableWidth(table_fix_head, table_fix, table_head, table) {
     table_fix.find("tbody tr td").width(table_fix_head.find("thead tr th").width() + 1);
     table.find("tbody tr td").width('');
     table_head.find("thead tr th").width('');
@@ -188,3 +188,223 @@ function resetTableWidth(table_fix_head, table_fix, table, table_head) {
     table.width(width + 100);
 }
 
+
+// 行IDの再設定
+function resetTableRowid(tableObj) {
+    var rownum = 0;
+    tableObj.find("tbody tr").each(function (i, e) {
+        rownum += 1;
+        $(this).find('td').first().text(rownum);
+    });
+}
+
+function deleteAllRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tableB, tableB_fix, allCheckObj, key) {
+
+    // tableB.find('tbody tr').find('td:nth-child(1)').css('display', '');
+    tableB.find("tbody tr").each(function (i, e) {
+        $(this).find('td:nth-child(1)').css('display', '');
+        removeTableBToTableA($(this), tableA, tableA_chkbox, allCheckObj, key);
+    });
+
+    tableB_fix.find("tbody").empty();
+
+    resetTableRowid(tableA);
+
+    resetTableWidth(tableA_chkbox_head, tableA_chkbox, tableA_head, tableA);
+
+    selectRow('hasChkbox', tableA_chkbox, tableA, allCheckObj);
+
+    // 対象チェックボックスチェック状態の設定
+    scanAllCheckbox(tableA_chkbox, allCheckObj);
+}
+
+function deleteRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tableB, tableB_fix, allCheckObj, key) {
+    tableB_fix.find("tbody tr").each(function (i, e) {
+        var backgroud = $(this).css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            $(this).remove();
+        }
+    });
+    tableB.find("tbody tr").each(function (i, e) {
+        var backgroud = $(this).css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+
+            tableB.find('tbody tr').find('td:nth-child(1)').css('display', '');
+            removeTableBToTableA($(this), tableA, tableA_chkbox, allCheckObj, key);
+        }
+    });
+
+    resetTableRowid(tableA);
+    resetTableRowid(tableB_fix);
+    resetTableWidth(tableA_chkbox_head, tableA_chkbox, tableA_head, tableA);
+
+    selectRow('hasChkbox', tableA_chkbox, tableA, allCheckObj);
+
+    // 対象チェックボックスチェック状態の設定
+    scanAllCheckbox(tableA_chkbox, allCheckObj);
+}
+
+
+function removeTableBToTableA(tableBRow, tableA, tableA_chkbox, allCheckObj, key) {
+    var trhtml = tableBRow.html();
+    var detailnoB = tableBRow.find(key).text();
+    var rownum = 0;
+    tableA.find("tbody tr").each(function (i, e) {
+        var detailnoA = $(this).find(key).text();
+        if (detailnoA > detailnoB) {
+            rownum = i + 1;
+            return false;
+        }
+    });
+    if (rownum == 0) {
+        tableA.find("tbody").append('<tr>' + trhtml + '</tr>');
+        tableA_chkbox.find("tbody").append('<tr><td style="text-align:center;"><input type="checkbox" name="edit" style="width: 10px;"></td></tr>');
+        rownum = tableA.find("tbody tr").length;
+    } else {
+        tableA.find('tbody tr:nth-child(' + rownum + ')').before('<tr>' + trhtml + '</tr>');
+        tableA_chkbox.find('tbody tr:nth-child(' + rownum + ')').before('<tr><td style="text-align:center;"><input type="checkbox" name="edit" style="width: 10px;"></td></tr>');
+    }
+
+    tableBRow.remove();
+
+    tableA.find('tbody tr:nth-child(' + (rownum) + ')').on('click', function () {
+        var rowindex = $(this).index();
+        var checked = tableA_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
+        setRowBackGroundColor(tableA, tableA_chkbox, rowindex, checked);
+    });
+
+    tableA_chkbox.find('tbody tr:nth-child(' + (rownum) + ') ').on('click', function () {
+        var rowindex = $(this).index();
+        var checked = tableA_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
+        setRowBackGroundColor(tableA, tableA_chkbox, rowindex, checked);
+    });
+
+    var chkboxObj = tableA_chkbox.find('tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').find('input[name="edit"]');
+    setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj)
+}
+
+function setRowBackGroundColor(table, table_chkbox, rowindex, chkBoxStatus) {
+    if (!chkBoxStatus) {
+        table.find("tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#bbbbbb');
+        table_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#bbbbbb');
+        table_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked', true);
+    } else {
+        table.find("tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
+        table_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
+        table_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked', false);
+    }
+}
+
+function rowUp(table, table_fix) {
+    var len = table.find("tbody tr").length;
+    for (var i = 1; i <= len; i++) {
+        var row = table.find("tbody tr:nth-child(" + (i) + ")");
+        var backgroud = row.css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            for (var j = i - 1; j >= 1; j--) {
+                var row_prev = table.find("tbody tr:nth-child(" + (j) + ")");
+                var row_prev_backgroud = row_prev.css("background-color");
+                if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                    row.insertBefore(row_prev);
+                    break;
+                }
+            }
+        }
+    }
+
+    len = table_fix.find("tbody tr").length;
+    for (var i = 1; i <= len; i++) {
+        var row = table_fix.find("tbody tr:nth-child(" + (i) + ")");
+        var backgroud = row.css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            for (var j = i - 1; j >= 1; j--) {
+                var row_prev = table_fix.find("tbody tr:nth-child(" + (j) + ")");
+                var row_prev_backgroud = row_prev.css("background-color");
+                if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                    row.insertBefore(row_prev);
+                    break;
+                }
+            }
+        }
+    }
+
+    resetTableRowid(table_fix);
+}
+
+function rowDown(table, table_fix) {
+    var len = table.find("tbody tr").length;
+        for (var i = len; i >= 1; i--) {
+            var row = table.find("tbody tr:nth-child(" + (i) + ")");
+            var backgroud = row.css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                for (var j = i + 1; j <= len; j++) {
+                    var row_prev = table.find("tbody tr:nth-child(" + (j) + ")");
+                    var row_prev_backgroud = row_prev.css("background-color");
+                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                        row.insertAfter(row_prev);
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        var len = table_fix.find("tbody tr").length;
+        for (var i = len; i >= 1; i--) {
+            var row = table_fix.find("tbody tr:nth-child(" + (i) + ")");
+            var backgroud = row.css("background-color");
+            if (backgroud != 'rgb(255, 255, 255)') {
+                for (var j = i + 1; j <= len; j++) {
+                    var row_prev = table_fix.find("tbody tr:nth-child(" + (j) + ")");
+                    var row_prev_backgroud = row_prev.css("background-color");
+                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                        row.insertAfter(row_prev);
+                        break;
+                    }
+                }
+            }
+        }
+
+        resetTableRowid(table_fix);
+}
+
+function rowTop(table, table_fix) {
+    var firsttr = table.find("tbody").find('tr').first();
+    table.find("tbody").find('tr').each(function (i, e) {
+        var backgroud = $(this).css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            $(this).insertBefore(firsttr);
+        }
+    });
+
+    firsttr = table_fix.find("tbody").find('tr').first();
+    table_fix.find("tbody").find('tr').each(function (i, e) {
+        var backgroud = $(this).css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            $(this).insertBefore(firsttr);
+        }
+    });
+
+    resetTableRowid(table_fix);
+}
+
+
+function rowBottom(table, table_fix) {
+    var lasttr = table.find("tbody").find('tr').last();
+    table.find('tr').each(function (i, e) {
+        var backgroud = $(this).css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            $(this).insertAfter(lasttr);
+        }
+    });
+
+    lasttr = table_fix.find("tbody").find('tr').last();
+    table_fix.find('tr').each(function (i, e) {
+        var backgroud = $(this).css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            $(this).insertAfter(lasttr);
+        }
+    });
+
+    resetTableRowid(table_fix);
+}

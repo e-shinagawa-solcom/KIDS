@@ -64,6 +64,7 @@
     <script src="/inv/cmn/js/msw-regist.js" defer></script>
     <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
     <script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
+    <script src="/cmn/js/table.js" defer></script>
     <script src="/inv/cmn/js/table.js" defer></script>
 </head>
 
@@ -404,6 +405,22 @@
             </iframe>
         </div>
     </div>
+
+    <script type="text/javascript">
+        function $E(name) { return document.getElementById(name); }
+        function scroll() {
+            $E("header_h").scrollLeft = $E("data").scrollLeft;// データ部のスクロールをヘッダに反映
+            $E("header_v").scrollTop = $E("data").scrollTop;// データ部のスクロールをヘッダに反映
+        }
+        $E("data").onscroll = scroll;
+    
+    
+        function decide_scroll() {
+            $E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
+            $E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
+        }
+        $E("decide_data").onscroll = decide_scroll;
+    </script>
     <script>
         // 修正初期状態
         var renewInit = function (invoiceNo, revisionNo) {
