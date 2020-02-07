@@ -103,7 +103,7 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	// 顧客品番
 	$aryQuery[] = ", sd.strGoodsCode as strgoodscode";
 	// 製品コード・名称
-	$aryQuery[] = ", sd.strProductCode as strproductcode";	//製品コード
+	$aryQuery[] = ", sd.strProductCode || '_' || sd.strReviseCode as strproductcode";	//製品コード
 	$aryQuery[] = ", sd.strProductName as strproductname";	//製品名
 	// 名称（英語）
 	$aryQuery[] = ", sd.strProductEnglishName as strproductenglishname";	//製品名（英語）

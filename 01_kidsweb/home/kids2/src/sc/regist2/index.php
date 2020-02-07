@@ -139,8 +139,8 @@ if ($strMode == "search-detail") {
     $aryResult["strcompanydisplayname"] = $aryDetail[0]["strcompanydisplayname"];
 
     // 換算レートの取得
-    $curconversionrate = fncGetCurConversionRate($aryData["dtmDeliveryDate"], $aryDetail[0]["lngmonetaryratecode"],
-    $aryDetail[0]["lngmonetaryunitcode"], $objDB);
+    $curconversionrate = fncGetCurConversionRate($aryData["dtmDeliveryDate"], intval($aryDetail[0]["lngmonetaryratecode"]),
+    intval($aryDetail[0]["lngmonetaryunitcode"]), $objDB);
     $aryResult["curconversionrate"] = $curconversionrate;
     // データ返却
 	// echo $strHtml;

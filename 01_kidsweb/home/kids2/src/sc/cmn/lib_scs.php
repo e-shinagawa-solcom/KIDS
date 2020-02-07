@@ -126,7 +126,7 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 	$aryQuery[] = "sd.lngSalesNo as lngSalesNo, sd.lngRevisionNo as lngRevisionNo";
 
 	// 製品コード・名称
-	$aryQuery[] = ", sd.strProductCode as strProductCode";
+	$aryQuery[] = ", sd.strProductCode || '_' || sd.strReviseCode as strProductCode";
 	$aryQuery[] = ", p.strProductName as strProductName";
 	// 売上区分
 	$aryQuery[] = ", sd.lngSalesClassCode as lngSalesClassCode";

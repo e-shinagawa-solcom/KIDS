@@ -522,7 +522,8 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // クエリ実行
     // -------------------
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    // echo $strQuery;
+//echo $strQuery;
+//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
     // 結果を配列に格納
     $aryResult = []; //空の配列で初期化
     if (0 < $lngResultNum) {
@@ -791,7 +792,7 @@ function fncUpdateReceiveMaster($aryDetail, $objDB)
             . "  lngreceiveno = " . $lngReceiveNo
             . "  AND lngrevisionno = " . $lngRevisionNo
         ;
-echo $strQuery;
+//echo $strQuery;
         // 更新実行
         if (!$lngResultID = $objDB->execute($strQuery)) {
             fncOutputError(9051, DEF_ERROR, "受注マスタ更新失敗。", true, "", $objDB);

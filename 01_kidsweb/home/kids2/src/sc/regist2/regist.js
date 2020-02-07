@@ -409,7 +409,7 @@ jQuery(function ($) {
                 //顧客品番
                 strgoodscode: $(tr).children('.detailGoodsCode').text(),
                 //製品コード
-                strproductcode: $(tr).children('.detailProductCode').text(),
+                strproductcode: $(tr).children('.detailProductCode').text().substr(0,5),
                 //製品名
                 strproductname: $(tr).children('.detailProductName').text(),
                 //製品名（英語）
