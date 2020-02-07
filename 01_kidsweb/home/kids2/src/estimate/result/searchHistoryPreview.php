@@ -42,7 +42,7 @@ foreach ($aryData["displayColumns"] as $key) {
 // 請求コードにより仕入履歴取得SQL
 $aryQuery[] = "SELECT";
 $aryQuery[] = "  TO_CHAR(me.dtmInsertDate, 'YYYY/MM/DD') AS dtminsertdate";
-$aryQuery[] = "  , mp.strproductcode";
+$aryQuery[] = "  , mp.strproductcode || '_' || mp.strrevisecode as strproductcode";
 $aryQuery[] = "  , mp.strproductname";
 $aryQuery[] = "  , mp.strproductenglishname";
 $aryQuery[] = "  , '[' || mg.strgroupdisplaycode || ']' || mg.strgroupdisplayname AS lnginchargegroupcode";

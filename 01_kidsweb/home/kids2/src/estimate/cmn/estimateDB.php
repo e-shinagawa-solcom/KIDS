@@ -530,6 +530,7 @@ class estimateDB extends clsDB {
             $strQuery .= " lngproductno,";
             $strQuery .= " lngrevisionno,";
             $strQuery .= " strproductcode,";
+            $strQuery .= " strrevisecode,";
             $strQuery .= " strproductname,";
             $strQuery .= " strproductenglishname,";
             $strQuery .= " lnginchargegroupcode,";
