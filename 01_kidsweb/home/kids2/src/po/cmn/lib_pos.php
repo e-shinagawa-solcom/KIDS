@@ -422,7 +422,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
 
         // 製品
         if ($strViewColumnName == "strProductCode") {
-            $arySelectQuery[] = "  ,mp.strproductcode as strProductCode";
+            $arySelectQuery[] = "  ,mp.strproductcode || '_' || mp.strrevisecode as strProductCode";
             $arySelectQuery[] = "  ,mp.strproductname as strProductName";
             $arySelectQuery[] = "  ,mp.strproductenglishname as strProductEnglishName";
         }

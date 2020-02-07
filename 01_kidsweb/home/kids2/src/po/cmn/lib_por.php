@@ -419,6 +419,7 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
     $aryQuery[] = "  ,mo.lngcustomercompanycode ";
     $aryQuery[] = "  ,mo.lngdeliveryplacecode ";
     $aryQuery[] = "  ,od.strproductcode ";
+    $aryQuery[] = "  ,od.strrevisecode ";
     $aryQuery[] = "  ,mp.strproductname ";
     $aryQuery[] = "  ,mp.strproductenglishname ";
     $aryQuery[] = "  ,mo.lngmonetaryunitcode ";
@@ -448,7 +449,17 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
     $aryQuery[] = "LEFT JOIN m_product mp ";
     $aryQuery[] = "  ON  od.strproductcode = mp.strproductcode ";
     $aryQuery[] = "  AND  od.strrevisecode = mp.strrevisecode ";
-    $aryQuery[] = "  AND  od.lngrevisionno = mp.lngrevisionno ";
+    $aryQuery[] = "INNER JOIN(";
+    $aryQuery[] = "  SELECT strproductcode, ";    
+    $aryQuery[] = "         strrevisecode, ";    
+    $aryQuery[] = "         MAX(lngrevisionno) as lngrevisionno ";    
+    $aryQuery[] = "  FROM m_product ";    
+    $aryQuery[] = "  GROUP BY strproductcode,strrevisecode";    
+    $aryQuery[] = ") mp_rev ";    
+    $aryQuery[] = "  ON mp_rev.strproductcode = mp.strproductcode ";    
+    $aryQuery[] = "  AND mp_rev.strrevisecode = mp.strrevisecode ";    
+    $aryQuery[] = "  AND mp_rev.lngrevisionno = mp.lngrevisionno ";    
+//    $aryQuery[] = "  AND  od.lngrevisionno = mp.lngrevisionno ";
     $aryQuery[] = "LEFT JOIN m_monetaryunit mm ";
     $aryQuery[] = "  ON  mo.lngmonetaryunitcode = mm.lngmonetaryunitcode ";
     $aryQuery[] = "LEFT JOIN m_group mg ";
@@ -469,7 +480,6 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
     $aryQuery[] = "AND   mo.lngrevisionno = " . $lngRevisioNno;
 
     $strQuery = implode("\n", $aryQuery);
-
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if (!$lngResultNum) {
         return false;
@@ -619,6 +629,7 @@ function fncGetPurchaseOrder($aryPurchaseOrderNo, $objDB)
         $aryQuery[] = "  ,mp.strordercode";
         $aryQuery[] = "  ,mp.strcustomername";
         $aryQuery[] = "  ,mp.strproductcode";
+        $aryQuery[] = "  ,mp.strrevisecode";
         $aryQuery[] = "  ,mp.strproductname";
         $aryQuery[] = "  ,mp.strdeliveryplacename";
         $aryQuery[] = "  ,mp.strmonetaryunitsign";
@@ -874,7 +885,7 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $aryQuery[] = "  ,'" . $customer["strtel1"] . "'";
                     $aryQuery[] = "  ,'" . $customer["strfax1"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductcode"] . "'";
-                    $aryQuery[] = "  ,'" . sprintf("%02d", $lngrevisionno) . "'";
+                    $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strrevisecode"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductname"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductenglishname"] . "'";
                     // $aryQuery[] = "  ,'" . $aryOrder["dtmexpirationdate"] . "'";
@@ -1009,7 +1020,7 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder, $strSessionID)
                 $aryHtml[] = "    <th class=\"SegColumn\">納品場所</th>";
                 $aryHtml[] = "  </tr>";
                 $aryHtml[] = "  <tr>";
-                $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[$i]["strproductcode"] . "</td>";
+                $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[$i]["strproductcode"] . "_" . $aryPurchaseOrder[$i]["strrevisecode"] . "</td>";
                 $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[$i]["strproductname"] . "</td>";
                 $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[$i]["strcustomername"] . "</td>";
                 $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[$i]["strdeliveryplacename"] . "</td>";
@@ -1381,7 +1392,7 @@ function fncCreatePurchaseOrderUpdateHtml($aryPurchaseOrder, $strSessionID)
     $aryHtml[] = "    <th class=\"SegColumn\">納品場所</th>";
     $aryHtml[] = "  </tr>";
     $aryHtml[] = "  <tr>";
-    $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[0]["strproductcode"] . "</td>";
+    $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[0]["strproductcode"] . "_" . $aryPurchaseOrder[0]["strrevisecode"] . "</td>";
     $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[0]["strproductname"] . "</td>";
     $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryPurchaseOrder[0]["strcustomercode"], $aryPurchaseOrder[0]["strcustomername"]) . "</td>";
     $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryPurchaseOrder[0]["strdeliveryplacecode"], $aryPurchaseOrder[0]["strdeliveryplacename"]) . "</td>";

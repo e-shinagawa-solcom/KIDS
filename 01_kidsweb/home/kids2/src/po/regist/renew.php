@@ -129,6 +129,7 @@
 	$aryNewResult["lngRevisionNo"]            = sprintf("%02d", $aryResult[0]["lngrevisionno"]);
 	$aryNewResult["dtmExpirationDate"]        = $aryResult[0]["dtmexpirationdate"];
 	$aryNewResult["strProductCode"]           = $aryResult[0]["strproductcode"];
+	$aryNewResult["strReviseCode"]           = $aryResult[0]["strrevisecode"];
 //	$aryNewResult["lngPayConditionCode"]      = fncPulldownMenu(2, $aryResult[0]["lngpayconditioncode"], "", $objDB);
 	$aryNewResult["PayConditionDisabled"]     = "";
 	$aryNewResult["lngMonetaryUnitCode"]      = fncPulldownMenu(0, $aryResult[0]["lngmonetaryunitcode"], "where lngmonetaryunitcode =" . $aryResult[0]["lngmonetaryunitcode"] , $objDB);

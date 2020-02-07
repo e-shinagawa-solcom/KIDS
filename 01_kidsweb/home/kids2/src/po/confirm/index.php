@@ -26,6 +26,7 @@
 // 読み込み
 include 'conf.inc';
 require LIB_FILE;
+require_once LIB_DEBUGFILE;
 require_once LIB_EXCLUSIVEFILE;
 require SRC_ROOT . "po/cmn/lib_po.php";
 //2007.07.23 matsuki update start
@@ -207,7 +208,14 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
     $_POST["aryDetail"][$i]["strMonetarySign"] = ($_POST["aryDetail"][0]["lngMonetaryUnitCode"] == 1) ? "\\\\" : fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitsign", $_POST["aryDetail"][$i]["lngMonetaryUnitCode"], '', $objDB);
     //2004/03/17 watanabe update start
     $strProductName = "";
-    if ($strProductName = fncGetMasterValue("m_product", "strproductcode", "strproductname", $_POST["strProductCode"] . ":str", '', $objDB)) {
+    $strProductCode_wk = substr($_POST["strProductCode"],0,5);
+    $subCondition = "strrevisecode='".$_POST["strReviseCode"]."' AND lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode ='".$strProductCode_wk."'and strrevisecode='".$_POST["strReviseCode"]."')";
+    if ($strProductName = fncGetMasterValue("m_product", 
+                                            "strproductcode", 
+                                            "strproductname", 
+                                            $strProductCode_wk . ":str", 
+                                            $subCondition,
+                                             $objDB)) {
         $_POST["aryDetail"][$i]["strproductname"] = $strProductName;
     }
     // watanabe end

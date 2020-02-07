@@ -84,7 +84,7 @@ function fncGetPurchaseHeadNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	// 合計金額
 	$aryQuery[] = ", To_char( ot.curSubTotalPrice, '9,999,999,990.99' ) as curSubTotalPrice";
 	// 製品コード・製品名
-	$aryQuery[] = ", ot.strProductCode as strProductCode";
+	$aryQuery[] = ", ot.strProductCode || '_' || ot.strReviseCode as strProductCode";
 	$aryQuery[] = ", p.strProductName as strProductName";
 
 	$aryQuery[] = " FROM m_Order o INNER JOIN t_OrderDetail ot on ot.lngOrderNo = o.lngorderno and ot.lngrevisionno = o.lngrevisionno";
@@ -174,7 +174,7 @@ function fncGetPurchaseDetailNoToInfo ( $lngOrderNo, $lngRevisionNo, $objDB )
 	$aryQuery[] = "od.lngOrderNo as lngOrderNo, od.lngRevisionNo as lngRevisionNo";
 
 	// 製品コード・名称
-	$aryQuery[] = ", od.strProductCode as strProductCode";
+	$aryQuery[] = ", od.strProductCode || '_' || od.strReviseCode as strProductCode";
 	$aryQuery[] = ", p.strProductName as strProductName";
 	// 仕入科目
 	$aryQuery[] = ", od.lngStockSubjectCode as lngStockSubjectCode";
@@ -1385,7 +1385,7 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB){
 	$aryQuery[] = "  ,TO_CHAR(po.dtmexpirationdate, 'YYYY/MM/DD') AS dtmexpirationdate";
 	$aryQuery[] = "  ,mo.strordercode";
 	$aryQuery[] = "  ,mo.lngrevisionno";
-	$aryQuery[] = "  ,od.strproductcode";
+	$aryQuery[] = "  ,od.strproductcode || '_' || od.strrevisecode as strproductcode";
 	$aryQuery[] = "  ,mp.strproductname";
 	$aryQuery[] = "  ,mo.lnggroupcode";
 	$aryQuery[] = "  ,mg.strgroupdisplaycode";
@@ -1467,7 +1467,7 @@ function fncCancelOrderHtml($aryOrder){
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <td class=\"SegColumn\">製品コード</td>";
-		$aryHtml[] = "    <td class=\"Segs\">[" . $row["strproductcode"] . "]</td>";
+		$aryHtml[] = "    <td class=\"Segs\">[" . $row["strproductcode"] . $row["strrevisecode"] . "]</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <td class=\"SegColumn\">製品名</td>";
@@ -1563,7 +1563,7 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">製品名</th>";
-		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strproductcode"], $aryOrder["strproductname"]) . "</td>";
+		$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("[%s_%s] %s", $aryOrder["strproductcode"], $aryOrder["strrevisecode"], $aryOrder["strproductname"]) . "</td>";
 		$aryHtml[] = "  </tr>";
 		$aryHtml[] = "  <tr>";
 		$aryHtml[] = "    <th class=\"SegColumn\">営業部門</th>";
@@ -1645,7 +1645,7 @@ function fncDeletePurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID){
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "  <tr>";
 	$aryHtml[] = "    <th class=\"SegColumn\">製品名</th>";
-	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strproductcode"], $aryOrder["strproductname"]) . "</td>";
+	$aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . sprintf("[%s_%s] %s", $aryOrder["strproductcode"], $aryOrder["strrevisecode"], $aryOrder["strproductname"]) . "</td>";
 	$aryHtml[] = "  </tr>";
 	$aryHtml[] = "  <tr>";
 	$aryHtml[] = "    <th class=\"SegColumn\">営業部門</th>";
