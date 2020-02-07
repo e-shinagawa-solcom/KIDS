@@ -71,7 +71,7 @@
 {
     table-layout: fixed;
     border-collapse: collapse;
-    width:20px;
+    width:21px;
     position:absolute;
     left:-1px;top:-1px;
 }
