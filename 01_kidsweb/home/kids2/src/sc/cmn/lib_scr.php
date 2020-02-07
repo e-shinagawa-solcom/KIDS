@@ -791,7 +791,7 @@ function fncUpdateReceiveMaster($aryDetail, $objDB)
             . "  lngreceiveno = " . $lngReceiveNo
             . "  AND lngrevisionno = " . $lngRevisionNo
         ;
-
+echo $strQuery;
         // 更新実行
         if (!$lngResultID = $objDB->execute($strQuery)) {
             fncOutputError(9051, DEF_ERROR, "受注マスタ更新失敗。", true, "", $objDB);

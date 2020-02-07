@@ -1,6 +1,6 @@
 (function () {
     // テーブル各セルの幅をリセットする
-    resetTableWidth($("#tableB_chkbox_head"), $("#tableB_chkbox"), $("#tableB"), $("#tableB_head"));
+    resetTableWidth($("#tableB_chkbox_head"), $("#tableB_chkbox"), $("#tableB_head"), $("#tableB"));
     // テーブル行クリックイベントの設定
     selectRow('hasChkbox', $("#tableB_chkbox"), $("#tableB"), $("#allChecked"));
     // 対象チェックボックスチェック状態の設定

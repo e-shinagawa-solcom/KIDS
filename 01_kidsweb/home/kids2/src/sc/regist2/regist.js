@@ -14,58 +14,9 @@ function fncEnterKeyDown(e) {
     }
 }
 
-// ------------------------------------------------------------------
-//   明細選択エリアの選択処理
-// ------------------------------------------------------------------
-var lastSelectedRow;
-function RowClick(currenttr, lock) {
-    if (window.event.ctrlKey) {
-        toggleRow(currenttr);
-    }
-
-    if (window.event.button === 0) {
-        if (!window.event.ctrlKey && !window.event.shiftKey) {
-            clearAllSelected();
-            toggleRow(currenttr);
-        }
-
-        if (window.event.shiftKey) {
-            selectRowsBetweenIndexes([lastSelectedRow.rowIndex, currenttr.rowIndex])
-        }
-    }
-}
-
-function toggleRow(row) {
-    row.className = row.className == 'selected' ? '' : 'selected';
-    var backgroud = row.css("background-color");
-    if (backgroud != 'rgb(255, 255, 255)') {
-        row.css("background-color", "#ffffff");
-    } else {
-        row.css("background-color", "#87cefa");
-    }
-    // TODO:同じ行のチェックボックスのON/OFFを切り替える
-    var checked = $(row).find('input[name="edit"]').prop('checked');
-    $(row).find('input[name="edit"]').prop('checked', !checked);
-
-    lastSelectedRow = row;
-}
-
-function selectRowsBetweenIndexes(indexes) {
-    var trs = document.getElementById("tbl_detail").tBodies[0].getElementsByTagName("tr");
-    indexes.sort(function (a, b) {
-        return a - b;
-    });
-
-    for (var i = indexes[0]; i <= indexes[1]; i++) {
-        trs[i - 1].css("background-color", "#87cefa");
-        var checked = $(trs[i - 1]).find('input[name="edit"]').prop('checked');
-        $(trs[i - 1]).find('input[name="edit"]').prop('checked', !checked);
-    }
-}
-
 function clearAllSelected() {
-    $("#tbl_detail tbody tr").css("background-color", "#ffffff");
-    $("#tbl_detail_chkbox tbody tr").css("background-color", "#ffffff");
+    $("#tableA tbody tr").css("background-color", "#ffffff");
+    $("#tableA_chkbox tbody tr").css("background-color", "#ffffff");
 }
 // ------------------------------------------------------------------
 
@@ -170,318 +121,38 @@ function GetLngCountryCode(postTarget, strCompanyDisplayCode, strSessionID) {
 
 // 明細検索
 function SearchReceiveDetail(data) {
-    // // POST先
-    // var postTarget = $('input[name="ajaxPostTarget"]').val();
-    // var resultCode = 0;
-    // // 部分書き換えのためajaxでPOST
-    // $.ajax({
-    //     type: 'POST',
-    //     url: postTarget,
-    //     data: {
-    //         strMode: "search-detail",
-    //         strSessionID: $('input[name="strSessionID"]').val(),
-    //         condition: search_condition,
-    //     },
-    //     async: true,
-    // }).done(function (data) {
-    //     console.log("done:search-detail");
-    //     console.log(data);
-    //     // 検索結果をテーブルにセット
+    $('#tableA_chkbox tbody tr').remove();
+    $('#tableA tbody tr').remove();
+    $('#tableA tbody tr td').width('');
+    $('#tableA_head thead tr th').width('');
 
-    //     var data = JSON.parse(data);
+    $('#tableA_chkbox').append(data.chkbox_body);
+    $('#tableA').append(data.detail_body);
 
-    //     if (data.monetaryunitCount != 1) {
-    //         // $('input[name="monetaryunitCount"]').val(data.monetaryunitCount);
-    //         // alert("複数の顧客が候補にありますので、顧客を指定してください。");
-    //             return true;
-    //     }
-    //     console.log("ddddsss");
+    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
+    // テーブル行クリックイベントの設定
+    selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
+    // 対象チェックボックスチェック状態の設定
+    scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
+    // 対象チェックボックスクリックイベントの設定
+    setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
 
-    $('#tbl_detail_chkbox tbody tr').remove();
-    $('#tbl_detail tbody tr').remove();
-    // $('#tbl_edit_no_body tbody tr').remove();
-    // $('#tbl_edit_detail_body tbody tr').remove();
-    $('#tbl_detail tbody tr td').width('');
-    $('#tbl_detail_head thead tr th').width('');
-    // $('#tbl_edit_detail_body tbody tr td').width('');
-    // $('#tbl_edit_detail_head thead tr th').width('');
-
-    $('#tbl_detail_chkbox').append(data.chkbox_body);
-    $('#tbl_detail').append(data.detail_body);
-
-    $('#tbl_detail_chkbox tbody tr td:nth-child(1)').width($('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
-    $('#tbl_detail_chkbox_head tr th:nth-child(1)').width($('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
-
-    resetTableAWidth();
-
-    $("#tbl_detail_head").trigger("update");
-    $("#tbl_detail").trigger("update");
+    $("#tableA_head").trigger("update");
+    $("#tableA").trigger("update");
     // jQueryUIのtablesorterでソート設定
-    $('#tbl_detail_head').tablesorter({
+    $('#tableA_head').tablesorter({
         headers: {
             0: { sorter: false }
         }
     });
 
-    // $('input[name="allSel"]').on('change', function () {
-    //     $('input[name="edit"]').prop('checked', this.checked);
-    //     if (this.checked) {
-    //         $("#DetailTableBody tr").css('background-color', '#87cefa');
-    //         $("#tbl_detail_chkbox tbody tr").css('background-color', '#87cefa');
-    //     } else {
-    //         $("#DetailTableBody tr").css('background-color', '#ffffff');
-    //         $("#tbl_detail_chkbox tbody tr").css('background-color', '#ffffff');
-    //     }
-    // });
-    // チェックボックスの切り替え処理のバインド
-    $('input[type="checkbox"][name="allSel"]').on({
-        'click': function () {
-            var status = this.checked;
-            $('input[type="checkbox"]')
-                .each(function () {
-                    this.checked = status;
-                    if (status) {
-                        $("#tbl_detail_chkbox tbody tr").css("background-color", "#bbbbbb");
-                        $("#tbl_detail tbody tr").css("background-color", "#bbbbbb");
-                    } else {
-
-                        $("#tbl_detail_chkbox tbody tr").css("background-color", "#ffffff");
-                        $("#tbl_detail tbody tr").css("background-color", "#ffffff");
-                    }
-                });
-        }
-    });
     $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
     $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
     $('input[name="strMonetaryRateName"]').val(data.strmonetaryratename);
     $('input[name="lngMonetaryRateCode"]').val(data.lngmonetaryratecode);
     $('input[name="curConversionRate"]').val(data.curconversionrate);
-
-    // setTableAEvent();
-
-
-    setCheckBoxEvent();
-    scanAllCheckbox();
-
-    selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
-
-    // }).fail(function (error) {
-    //     console.log("fail:search-detail");
-    //     console.log(error);
-    // });
-
-    // return resultCode;
-}
-
-function setCheckBoxEvent() {
-    $('input[name="edit"]').on('click', function () {
-        var rowindex = $(this).parent().parent().index();
-        console.log(rowindex);
-        setRowBackGroundColor(rowindex, this.checked);
-        console.log(this.checked);
-        $(this).prop('checked', this.checked);
-    });
-
-}
-
-function selectRow(objA, objB) {
-    var rows = objA.find('tbody tr');
-    var rows = objB.find('tbody tr');
-    var lastSelectedRow;
-    /* Create 'click' event handler for rows */
-    objA.find('tbody tr').on('click', function (e) {
-        lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-        scanAllCheckbox();
-    });
-
-
-    /* Create 'click' event handler for rows */
-    objB.find('tbody tr').on('click', function (e) {
-        lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-        scanAllCheckbox();
-    });
-
-    /* This 'event' is used just to avoid that the table text 
-     * gets selected (just for styling). 
-     * For example, when pressing 'Shift' keyboard key and clicking 
-     * (without this 'event') the text of the 'table' will be selected.
-     * You can remove it if you want, I just tested this in 
-     * Chrome v30.0.1599.69 */
-    $(document).bind('selectstart dragstart', function (e) {
-        e.preventDefault(); return false;
-    });
-}
-
-function trClickEvent(row, lastSelectedRow, e, objA, objB) {
-
-    /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
-     * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
-     * 'Shift' => is represented by 'e.shiftKey' */
-    if (e.ctrlKey || e.metaKey) {
-        /* If pressed highlight the other row that was clicked */
-        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-        objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-
-    } else if (e.shiftKey) {
-        /* If pressed highlight the other row that was clicked */
-        var indexes = [lastSelectedRow.index(), row.index()];
-        indexes.sort(function (a, b) {
-            return a - b;
-        });
-        for (var i = indexes[0]; i <= indexes[1]; i++) {
-            objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
-            objA.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-            objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
-        }
-    } else {
-        /* Otherwise just highlight one row and clean others */
-        objA.find("tbody tr").css("background-color", "#ffffff");
-        objA.find("tbody tr").find('input[type="checkbox"]').prop('checked', false);
-        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-        objB.find("tbody tr").css("background-color", "#ffffff");
-        objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-        lastSelectedRow = row;
-    }
-
-    return lastSelectedRow;
-}
-
-
-/**
- * @method scanAllCheckbox スキャンチェックボックス
- */
-function scanAllCheckbox() {
-
-    var $all_rows = $('#tbl_detail tbody tr');
-    var $all_chkbox_rows = $('#tbl_detail_chkbox tbody tr');
-    var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
-
-    // 有効 <tr> ＊選択可能行
-    var count_checked = 0;
-    var count_disabled = 0;
-
-    // data がない場合、全選択／解除チェックボックスを寝かせて無効化
-    if (!$all_rows.length) {
-        $('#allChecked').prop({ 'checked': false, 'disabled': true });
-    } else {
-        $('#allChecked').prop('disabled', false);
-    }
-
-    $.each($all_checkbox, function (i) {
-        // チェックボックスがひとつでも外れている場合、全選択／解除チェックボックスを寝かす
-        if (!($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)')) {
-            $('#allChecked').prop('checked', false);
-        }
-
-        // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
-        if ($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)') {
-            ++count_checked;
-        }
-        if ($all_rows.length === count_checked) {
-            $('#allChecked').prop('checked', true);
-        }
-
-        // すべてのチェックボックスが無効化された場合、全選択／解除チェックボックスを寝かせて無効化
-        if ($(this).prop('disabled')) {
-            ++count_disabled;
-        }
-        if ($all_rows.length === count_disabled) {
-            $('#allChecked').prop({ 'checked': false, 'disabled': true });
-        }
-    });
-};
-
-function resetTableAWidth() {
-    $("#tbl_detail thead").css('display', '');
-    $("#tbl_detail tbody tr td").width('');
-    $("#tbl_detail thead tr th").width('');
-    $("#tbl_detail_head tr th").width('');
-    var thwidthArry = [];
-    var tdwidthArry = [];
-    var width = 0;
-    var columnNum = $('#tbl_detail_head tr th').length;
-    for (var i = 1; i <= columnNum; i++) {
-        var thwidth = $('#tbl_detail_head tr th:nth-child(' + i + ')').width();
-        var tdwidth = $('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
-        thwidthArry.push(thwidth + 20);
-        tdwidthArry.push(tdwidth + 20);
-    }
-
-    for (var i = 1; i <= columnNum; i++) {
-        if ($("#tbl_detail_head tr th:nth-child(" + i + ")").css("display") != "none") {
-            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-                $("#tbl_detail_head tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                width += thwidthArry[i - 1];
-            } else {
-                $("#tbl_detail_head tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                width += tdwidthArry[i - 1];
-            }
-        }
-    }
-    $("#tbl_detail_head").width(width + 100);
-    $("#tbl_detail").width(width + 100);
-
-    $("#tbl_detail thead").css('display', 'none');
-}
-
-
-function resetTableBWidth() {
-    $("#tbl_edit_detail_body tbody tr td").width('');
-    $("#tbl_edit_detail_head tr th").width('');
-    var thwidthArry = [];
-    var tdwidthArry = [];
-    var columnNum = $('#tbl_edit_detail_head thead tr th').length;
-    console.log(columnNum);
-    var width = 0;
-    for (var i = 1; i <= columnNum; i++) {
-        var thwidth = $('#tbl_edit_detail_head thead tr th:nth-child(' + i + ')').width();
-        var tdwidth = $('#tbl_edit_detail_body tbody tr td:nth-child(' + i + ')').width();
-        thwidthArry.push(thwidth + 20);
-        tdwidthArry.push(tdwidth + 20);
-    }
-
-    for (var i = 1; i <= columnNum; i++) {
-        if ($("#tbl_edit_detail_head tr th:nth-child(" + i + ")").css("display") != "none") {
-            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-                $("#tbl_edit_detail_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                $("#tbl_edit_detail_body tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                width += thwidthArry[i - 1];
-            } else {
-                $("#tbl_edit_detail_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                $("#tbl_edit_detail_body tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                width += tdwidthArry[i - 1];
-            }
-        }
-    }
-
-    $("#tbl_edit_detail_head").width(width + 100);
-    $("#tbl_edit_detail_body").width(width + 100);
-}
-function setTableAEvent() {
-    $("#tbl_detail tbody tr, #tbl_detail_chkbox tbody tr").on('click', function () {
-        var rowindex = $(this).index();
-        console.log(rowindex);
-        var checked = $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
-        console.log(checked);
-        setRowBackGroundColor(rowindex, checked);
-    });
-}
-
-function setRowBackGroundColor(rowindex, chkBoxStatus) {
-    console.log(rowindex);
-    if (!chkBoxStatus) {
-        $("#tbl_detail tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#87cefa');
-        $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#87cefa');
-        $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked', true);
-    } else {
-        $("#tbl_detail tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
-        $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").css('background-color', '#ffffff');
-        $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked', false);
-    }
 
 }
 // 出力明細をすべてクリア
@@ -496,23 +167,21 @@ function ClearAllEditDetail() {
 // ------------------------------------------
 jQuery(function ($) {
 
-    $("#tbl_detail thead").css('display', 'none');
+    $("#tableA thead").css('display', 'none');
 
-    if ($('#tbl_edit_detail_body tbody tr').length > 0) {
-        $('#tbl_edit_detail_body tbody tr td:nth-child(1)').css('display', 'none');
-        $('#tbl_edit_no_body tbody tr td').width($('#tbl_edit_no_head thead tr th').width());
-        resetTableBWidth();
-        selectRow($("#tbl_edit_no_body"), $("#tbl_edit_detail_body"));
+    if ($('#tableB tbody tr').length > 0) {
+        $('#tableB tbody tr td:nth-child(1)').css('display', 'none');
+        $('#tableB_no tbody tr td').width($('#tableB_no_head thead tr th').width());
+        resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
+
+        // テーブル行クリックイベントの設定
+        selectRow("", $("#tableB_no"), $("#tableB"), "");
     }
 
     var sortval = 0;
-    $('#tbl_detail_head thead tr th').on('click', function () {
-
+    $('#tableA_head thead tr th').on('click', function () {
         clearAllSelected();
-
         $('input[name="edit"]').prop('checked', false);
-
-
         var sortkey = $(this)[0].cellIndex;
         console.log(sortkey);
         if (sortval == 1) {
@@ -520,8 +189,10 @@ jQuery(function ($) {
         } else {
             sortval = 1;
         }
-        var r = $('#tbl_detail').tablesorter();
+        var r = $('#tableA').tablesorter();
         r.trigger('sorton', [[[(sortkey), sortval]]]);
+
+        resetTableRowid($('#tableA'));
     });
 
     // 消費税率の設定
@@ -536,11 +207,6 @@ jQuery(function ($) {
     if ($('input[name="lngSlipNo"]').val().length > 0) {
         window.opener.$('input[name="locked"]').val("1");
     }
-    // // 出力明細部の設定
-    // $("#EditTableBody").sortable();
-    // $("#EditTableBody").on('sortstop', function () {
-    //     changeRowNum();
-    // });
 
     // 画面名ヘッダ画像切り替え
     if ($('input[name="lngSlipNo"]').val()) {
@@ -667,57 +333,6 @@ jQuery(function ($) {
         // ------------------
         $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 4));
         $('input[name="strTaxAmount"]').val(convertNumber(taxAmount, 4));
-    }
-
-    function getCheckedRows() {
-        var selected = getSelectedRows();
-        var cnt = $(selected).length;
-        if (cnt === 0) {
-            console.log("なにもしない");
-            return false;
-        }
-        if (cnt > 1) {
-            //console.log("なにもしない。ただし後で処理が追加になるかもしれない。");
-            alert("移動対象は1行のみ選択してください");
-            return false;
-        }
-        return true;
-    }
-    function getSelectedRows() {
-        return $('#EditTableBody tr.selected');
-    }
-    function executeSort(mode) {
-        var row = $('#EditTableBody').children('.selected');
-        switch (mode) {
-            case 0:
-                $('#EditTableBody tr:first').before($(row));
-                break;
-            case 1:
-                var rowPreview = $(row).prev('tr');
-                if (row.prev.length) {
-                    row.insertBefore(rowPreview);
-                    var td = rowPreview.children('td[name="rownum"]')
-                }
-                break;
-            case 2:
-                var rowNext = $(row).next('tr');
-                if (rowNext.length) {
-                    row.insertAfter(rowNext);
-                    var td = rowNext.children('td[name="rownum"]')
-                }
-                break;
-            case 3:
-                $('#EditTableBody').append($(row));
-                break;
-            default:
-                break;
-        }
-        changeRowNum();
-    }
-    function changeRowNum() {
-        $('#EditTableBody').find('[name="rownum"]').each(function (idx) {
-            $(this).html(idx + 1);
-        });
     }
 
     function isDate(d) {
@@ -1226,11 +841,11 @@ jQuery(function ($) {
         var trArray = [];
 
         // 選択行の追加
-        $("#tbl_detail_chkbox tbody tr").each(function (index, tr) {
+        $("#tableA_chkbox tbody tr").each(function (index, tr) {
 
             if ($(tr).find('input[name="edit"]').prop('checked') == true) {
 
-                trArray.push($("#tbl_detail tbody tr:nth-child(" + (index + 1) + ")"));
+                trArray.push($("#tableA tbody tr:nth-child(" + (index + 1) + ")"));
             }
         });
 
@@ -1252,19 +867,20 @@ jQuery(function ($) {
         }
 
         // 明細追加        
-        $('#tbl_detail_chkbox tbody tr').each(function (i, e) {
+        $('#tableA_chkbox tbody tr').each(function (i, e) {
             var rownum = i + 1;
+            console.log(rownum);
             var chkbox = $(this).find('input[type="checkbox"]');
             if (chkbox.prop("checked")) {
-                var rn1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveNo').text();
-                var dn1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveDetailNo').text();
-                var rev1 = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('td.detailReceiveRevisionNo').text();
+                var row = $('#tableA tbody tr:nth-child(' + rownum + ')');
+                var rn1 = row.find('td.detailReceiveNo').text();
+                var dn1 = row.find('td.detailReceiveDetailNo').text();
+                var rev1 = row.find('td.detailReceiveRevisionNo').text();
                 var addObj = true;
-                $('#tbl_edit_detail_body tbody tr').each(function (i, e) {
+                $('#tableB tbody tr').each(function (i, e) {
                     var rn2 = $(this).find('td.detailReceiveNo').text();
                     var dn2 = $(this).find('td.detailReceiveDetailNo').text();
                     var rev2 = $(this).find('td.detailReceiveRevisionNo').text();
-
                     if ((rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2)) {
                         addObj = false;
                         return false;
@@ -1273,89 +889,62 @@ jQuery(function ($) {
                 console.log(addObj);
                 if (addObj) {
                     // tableBの追加
-                    $("#tbl_edit_detail_body tbody").append('<tr>' + $('#tbl_detail tbody tr:nth-child(' + rownum + ')').html() + '</tr>');
-                    var no = $("#tbl_edit_no_body tbody").find('tr').length + 1;
-                    $("#tbl_edit_no_body tbody").append('<tr><td>' + no + '</td></tr>');
+                    $("#tableB tbody").append('<tr>' + $('#tableA tbody tr:nth-child(' + rownum + ')').html() + '</tr>');
+                    var no = $("#tableB_no tbody").find('tr').length + 1;
+                    $("#tableB_no tbody").append('<tr><td>' + no + '</td></tr>');
 
-                    var lasttr = $("#tbl_edit_detail_body").find('tr').last();
+                    var lasttr = $("#tableB tbody").find('tr').last();
                     lasttr.find('td:nth-child(1)').css('display', 'none');
                 }
 
             }
         });
 
-        $('#tbl_edit_no_body tbody tr td').width($('#tbl_edit_no_head thead tr th').width());
+        $('#tableB_no tbody tr td').width($('#tableB_no_head thead tr th').width());
 
-        resetTableBWidth();
+        resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
 
         // tableBのリセット
-        for (var i = $('#tbl_detail_chkbox tbody tr').length; i > 0; i--) {
-            var row = $('#tbl_detail_chkbox tbody tr:nth-child(' + i + ')');
+        for (var i = $('#tableA_chkbox tbody tr').length; i > 0; i--) {
+            var row = $('#tableA_chkbox tbody tr:nth-child(' + i + ')');
             var chkbox = row.find('input[type="checkbox"]');
             if (chkbox.prop("checked")) {
                 row.remove();
-                $('#tbl_detail tbody tr:nth-child(' + i + ')').remove();
+                $('#tableA tbody tr:nth-child(' + i + ')').remove();
             }
         }
 
-        $('#tbl_detail tbody tr').each(function (i, e) {
+        $('#tableA tbody tr').each(function (i, e) {
             $(this).find('td:nth-child(1)').text(i + 1);
         });
 
-        selectRow($("#tbl_edit_no_body"), $("#tbl_edit_detail_body"));
-
+        // selectRow($("#tableB_no"), $("#tableB"));
+        selectRow("", $("#tableB_no"), $("#tableB"), "");
         // 合計金額・消費税額の更新
         updateAmount();
 
 
-        $("#tbl_detail_head").trigger("update");
-        $("#tbl_detail").trigger("update");
+        $("#tableA_head").trigger("update");
+        $("#tableA").trigger("update");
 
-        if ($('#tbl_detail_chkbox tbody tr').length == 0) {
-            $("#tbl_detail tbody tr td").width('');
-            $("#tbl_detail thead tr th").width('');
-            $("#tbl_detail_head tr th").width('');
+        if ($('#tableA_chkbox tbody tr').length == 0) {
+            $("#tableA tbody tr td").width('');
+            $("#tableA thead tr th").width('');
+            $("#tableA_head tr th").width('');
         }
     });
-
-
-
-    // 行IDの再設定
-    function resetTableBRowid() {
-        var rownum = 0;
-        $("#tbl_edit_no_body tbody tr").each(function (i, e) {
-            rownum += 1;
-            $(this).find('td').first().text(rownum);
-        });
-    }
-
-    // 行IDの再設定
-    function resetTableARowid() {
-        var rownum = 0;
-        $("#tbl_detail tbody tr").each(function (i, e) {
-            rownum += 1;
-            $(this).find('td').first().text(rownum);
-        });
-    }
 
     // 全削除ボタンのイベント
     $('img.alldelete').on('click', function () {
 
-        $("#tbl_edit_detail_body tbody tr").each(function (i, e) {
-            removeTableBToTableA($(this));
-        });
+        // テーブルBのデータをすべてテーブルAに移動する
+        deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allCheckObj"), '.detailReceiveNo')
 
-        $("#tbl_edit_no_body tbody").empty();
+        // テーブル行クリックイベントの設定
+        selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
 
-        resetTableARowid();
-        resetTableAWidth();
-
-        $("#tbl_detail_head").trigger("update");
-        $("#tbl_detail").trigger("update");
-
-        selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
-
-        scanAllCheckbox();
+        $("#tableA_head").trigger("update");
+        $("#tableA").trigger("update");
 
         // 合計金額・消費税額の更新
         updateAmount();
@@ -1363,199 +952,36 @@ jQuery(function ($) {
 
     // 削除ボタンのイベント
     $('img.delete').on('click', function () {
-        $("#tbl_edit_no_body tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).remove();
-            }
-        });
-        $("#tbl_edit_detail_body tbody tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                removeTableBToTableA($(this));
-            }
-        });
-        $("#tbl_detail_head").trigger("update");
-        $("#tbl_detail").trigger("update");
 
-        resetTableARowid();
-        resetTableBRowid();
-        resetTableAWidth();
-
-        selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
-
-        scanAllCheckbox();
+        // テーブルBの選択されたデータをテーブルAに移動する
+        deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allCheckObj"), '.detailReceiveNo');
+        $("#tableA_head").trigger("update");
+        $("#tableA").trigger("update");
+        // テーブル行クリックイベントの設定
+        selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
 
         // 合計金額・消費税額の更新
         updateAmount();
     });
 
-    function removeTableBToTableA(tableBRow) {
-        var trhtml = tableBRow.html();
-        var detailnoB = tableBRow.find('.detailReceiveNo').text();
-        console.log(detailnoB);
-        var rownum = 0;
-        $("#tbl_detail tbody tr").each(function (i, e) {
-            var detailnoA = $(this).find('.detailReceiveNo').text();
-            if (detailnoA > detailnoB) {
-                rownum = i + 1;
-                return false;
-            }
-        });
-        if (rownum == 0) {
-            $('#tbl_detail tbody').append('<tr>' + trhtml + '</tr>');
-            $('#tbl_detail_chkbox tbody').append('<tr><td style="text-align:center;"><input type="checkbox" name="edit" style="width: 10px;"></td></tr>');
-            rownum = $("#tbl_detail tbody tr").length;
-        } else {
-            $('#tbl_detail tbody tr:nth-child(' + rownum + ')').before('<tr>' + trhtml + '</tr>');
-            $('#tbl_detail_chkbox tbody tr:nth-child(' + rownum + ')').before('<tr><td style="text-align:center;"><input type="checkbox" name="edit" style="width: 10px;"></td></tr>');
-        }
-
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').width($("#tbl_detail_head thead tr th:nth-child(1)").width());
-        console.log($('#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').width());
-        console.log($('#tbl_detail_chkbox_head thead tr th:nth-child(1').width());
-
-        $('#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').width($("#tbl_detail_chkbox_head tr th:nth-child(1)").width());
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('td:nth-child(1)').css('display', '');
-
-        tableBRow.remove();
-
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + '),#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') ').on('click', function () {
-            var rowindex = $(this).index();
-            console.log(rowindex);
-            var checked = $("#tbl_detail_chkbox tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
-            console.log(checked);
-            setRowBackGroundColor(rowindex, checked);
-        });
-
-        $('#tbl_detail_chkbox tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').find('input[name="edit"]').on('click', function () {
-            var rowindex = $(this).parent().parent().index();
-            console.log(rowindex);
-            setRowBackGroundColor(rowindex, this.checked);
-            console.log(this.checked);
-            $(this).prop('checked', this.checked);
-        });
-    }
-
-
     // 行を一つ上に移動するボタン
     $('img.rowup').click(function () {
-        var len = $("#tbl_edit_detail_body tbody tr").length;
-        for (var i = 1; i <= len; i++) {
-            var row = $("#tbl_edit_detail_body tbody tr:nth-child(" + (i) + ")");
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i - 1; j >= 1; j--) {
-                    var row_prev = $("#tbl_edit_detail_body tbody tr:nth-child(" + (j) + ")");
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertBefore(row_prev);
-                        break;
-                    }
-                }
-            }
-        }
-
-        var len = $("#tbl_edit_no_body tbody tr").length;
-        for (var i = 1; i <= len; i++) {
-            var row = $("#tbl_edit_no_body tbody tr:nth-child(" + (i) + ")");
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i - 1; j >= 1; j--) {
-                    var row_prev = $("#tbl_edit_no_body tbody tr:nth-child(" + (j) + ")");
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertBefore(row_prev);
-                        break;
-                    }
-                }
-            }
-        }
-
-        resetTableBRowid();
-
+        rowUp($("#tableB"), $("#tableB_no"));
     });
 
     // 行を一つ下に移動するボタン
     $('img.rowdown').click(function () {
-        var len = $("#tbl_edit_detail_body tbody tr").length;
-        for (var i = len; i >= 1; i--) {
-            var row = $("#tbl_edit_detail_body tbody tr:nth-child(" + (i) + ")");
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i + 1; j <= len; j++) {
-                    var row_prev = $("#tbl_edit_detail_body tbody tr:nth-child(" + (j) + ")");
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertAfter(row_prev);
-                        break;
-                    }
-                }
-            }
-        }
-
-
-        var len = $("#tbl_edit_no_body tbody tr").length;
-        for (var i = len; i >= 1; i--) {
-            var row = $("#tbl_edit_no_body tbody tr:nth-child(" + (i) + ")");
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i + 1; j <= len; j++) {
-                    var row_prev = $("#tbl_edit_no_body tbody tr:nth-child(" + (j) + ")");
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertAfter(row_prev);
-                        break;
-                    }
-                }
-            }
-        }
-
-        resetTableBRowid();
-
+        rowDown($("#tableB"), $("#tableB_no"));
     });
 
     // 行を一番上に移動する
     $('img.rowtop').click(function () {
-        var firsttr = $("#tbl_edit_detail_body").find('tr').first();
-        $("#tbl_edit_detail_body tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).insertBefore(firsttr);
-            }
-        });
-
-        firsttr = $("#tbl_edit_no_body").find('tr').first();
-        $("#tbl_edit_no_body tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).insertBefore(firsttr);
-            }
-        });
-
-        resetTableBRowid();
-
+        rowTop($("#tableB"), $("#tableB_no"));
     });
 
     // 行を一番下に移動する
     $('img.rowbottom').click(function () {
-        var lasttr = $("#tbl_edit_detail_body").find('tr').last();
-        $("#tbl_edit_detail_body tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).insertAfter(lasttr);
-            }
-        });
-
-        lasttr = $("#tbl_edit_no_body").find('tr').last();
-        $("#tbl_edit_no_body tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).insertAfter(lasttr);
-            }
-        });
-
-        resetTableBRowid();
+        rowBottom($("#tableB"), $("#tableB_no"));
     });
 
 
