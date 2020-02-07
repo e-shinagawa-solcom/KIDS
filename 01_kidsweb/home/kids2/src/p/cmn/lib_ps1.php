@@ -26,7 +26,7 @@ function fncGetProductNoToInfoSQL ( $lngProductNo, $lngRevisionNo )
 	// 改訂日時
 	$aryQuery[] = ", to_char( p.dtmUpdateDate, 'YYYY/MM/DD' ) as dtmRevisionDate\n";
 	// 製品コード
-	$aryQuery[] = ", p.strProductCode as strProductCode\n";
+	$aryQuery[] = ", p.strProductCode || '_' || p.strReviseCode as strProductCode\n";
 	// 製品名称
 	$aryQuery[] = ", p.strProductName as strProductName\n";
 	// 製品名称（英語）

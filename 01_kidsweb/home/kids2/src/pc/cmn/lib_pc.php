@@ -45,7 +45,7 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     // 発注コード
     $aryQuery[] = ", mp.strordercode as strRealOrderCode";
     // 製品
-    $aryQuery[] = ", p.strproductcode";
+    $aryQuery[] = ", p.strproductcode || '_' || p.strReviseCode as strProductCode";
     $aryQuery[] = ", p.strproductname";
     // 伝票コード
     $aryQuery[] = ", s.strSlipCode as strSlipCode";
@@ -149,7 +149,7 @@ function fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = ", sd.lngorderno as lngorderno";
     $aryQuery[] = ", sd.lngorderdetailno as lngorderdetailno";
     // 製品コード・名称
-    $aryQuery[] = ", sd.strProductCode as strProductCode";
+    $aryQuery[] = ", sd.strProductCode || '_' || sd.strReviseCode as strProductCode";
     $aryQuery[] = ", p.strProductName as strProductName";
     // 仕入科目
     $aryQuery[] = ", sd.lngStockSubjectCode as lngStockSubjectCode";

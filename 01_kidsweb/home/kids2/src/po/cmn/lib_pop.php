@@ -280,7 +280,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 	
 	if( $bytcompanyforeignflag == "t")
 	{
-//echo "仕入先は海外<br>";
+echo "仕入先は海外<br>";
 	    //取引先海外フラグtrue
 		//以下は明細登録の内容
 				
@@ -298,9 +298,12 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		
 		if($flgForeignTable)
 		{
-//echo "チェック対象仕入先<br>";
+echo "チェック対象仕入先<br>";
+
 			for( $i = 0; $i < $cnt; $i++ )
 			{
+echo "lngStockSubjectCode". $aryPoDitail[$i]["lngStockSubjectCode"] . "<br>";
+echo "strStockItemCode". $aryPoDitail[$i]["strStockItemCode"] . "<br>";
 				$Code[$i]= "2";//初期値2(T/T)にセット
 				if(  $aryPoDitail[$i]["lngStockSubjectCode"] == "402")
 				{
@@ -310,7 +313,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 						if( $aryPoDitail[$i]["strStockItemCode"] == $arystockitemcode[$j])
 						{
 							$Code[$i]="1";//L/Cにセット
-//echo "L/C推奨明細検出<br>";
+echo "L/C推奨明細検出<br>";
 							break;
 						}
 					}
@@ -320,21 +323,22 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		
 		else
 		{//該当テーブルに存在しない発注先の場合、推奨される支払い条件は全てT/T
-//echo "チェック不要仕入先。推奨はT/T<br>";
+echo "チェック不要仕入先。推奨はT/T<br>";
 			for( $i = 0; $i < $cnt; $i++ )
 			{
 				$Code[$i]= "2";
 			}
 		}
 	
-				
+echo "lngMonetaryUnitCode" . $aryData["lngMonetaryUnitCode"] . "<br>";
 		if ( $aryData["lngMonetaryUnitCode"] == 2 )
 		{
-//echo "USドルのためチェック必要<br>";
+echo "USドルのためチェック必要<br>";
 		    //USドルの場合に限る
+echo "curAllTotalPrice". $aryData["curAllTotalPrice"] . "<br>";
 			if( in_array("1", $Code) && $aryData["curAllTotalPrice"] < 30000 )
 			{
-//echo "L/C推奨明細検出、かつUSドル 30000未満のためT/T推奨<br>";
+echo "L/C推奨明細検出、かつUSドル 30000未満のためT/T推奨<br>";
 				//一度L/Cにセットしたが戻す
 				for( $i = 0; $i < $cnt; $i++ )
 				{
@@ -351,7 +355,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		}
 		else
 		{
-//echo "USドル以外のためT/T推奨<br>";
+echo "USドル以外のためT/T推奨<br>";
 			$Code[0]="2";//USドルの場合以外はT/T推奨
 		}	
 		if( $cnt >1 )
@@ -377,7 +381,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 		}
 		else
 		{
-//echo "修正を推奨<br>";
+echo "修正を推奨<br>";
 			$strhtml= fncPulldownMenu( 2, 0, '', $objDB );//第二引数がselected 今のところonloadで適宜設定している
 			$frmPayConditionTable = '<span id="VarsA10">
 						<select id="lngPayConditionCodeList" tabindex="3" onchange = "fncPayConditionFrmChanged();">
@@ -405,7 +409,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 			$aryData["lngMatchResult1"] = $strPayMode;
 			$aryData["lngMatchResult2"] = $aryData["lngPayConditionCode"];
 			$aryData["lngMatchResult3"] = $Code[0];
-//			$aryData["strOnloadfnc"] = "fncPayConditionConfirm( '".$strPayMode."' , '".$aryData["lngPayConditionCode"]."' , '".$Code[0]."' )";
+			$aryData["strOnloadfnc"] = "fncPayConditionConfirm( '".$strPayMode."' , '".$aryData["lngPayConditionCode"]."' , '".$Code[0]."' )";
 			$aryData["strOptionalScript"] = '	<script type="text/javascript" language="javascript" src="/po/cmn/resultexstr.js"></script>
 	<script>
     	if( $(\'input[name="isPayConditionMatch"]\') && $(\'input[name="isPayConditionMatch"]\').val() == "false" )
@@ -418,7 +422,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 			
 	}
 	else{
-//echo "仕入先は国内<br>";
+echo "仕入先は国内<br>";
 		 //海外取引先でない場合は上記の処理を行わない
 		$frmPayConditionTable = $aryData["strPayConditionName"];
 	}		
