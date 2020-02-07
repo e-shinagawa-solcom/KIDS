@@ -83,7 +83,7 @@
 
         resetTableBDisplayStyle();
 
-        resetTableRowid($('#tableB'));
+        resetTableRowid($('#tableB_no'));
         // テーブルBの幅をリセットする
         resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
         // テーブルB行イベントの追加
@@ -92,7 +92,7 @@
         selectChange();
 
         scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
-        
+
         // チェックボックスクリックイベントの設定
         setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
@@ -104,6 +104,8 @@
         // テーブルBのデータをすべてテーブルAに移動する
         deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
 
+        resetTableRowid($("#tableA"));
+        
         $("#tableA_head").trigger("update");
 
         $("#tableA").trigger("update");
@@ -114,6 +116,8 @@
         // テーブルBの選択されたデータをテーブルAに移動する
         deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
 
+        resetTableRowid($("#tableA"));
+        
         $("#tableA_head").trigger("update");
 
         $("#tableA").trigger("update");

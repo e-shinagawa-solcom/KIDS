@@ -96,10 +96,14 @@ else
 
 $objDB->freeResult( $lngResultID );
 
-// 通貨記号の設定
-if ($aryResult["lngmonetaryunitcode"] == 1) {
-    $aryResult["strmonetaryunitsign"] = "&yen;";
-}
+// // 通貨記号の設定
+// if ($aryResult["lngmonetaryunitcode"] == 1) {
+//     $aryResult["strmonetaryunitsign"] = "&yen;";
+// }
+
+$aryDetailResult["curproductprice"] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["curproductprice"], "unitprice");
+$aryDetailResult["cursubtotalprice"] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["cursubtotalprice"], "price");
+
 $aryDetailResult["strdetailnote"] = ($aryDetailResult["strdetailnote"] == null) ? " ":$aryDetailResult["strdetailnote"];
 // テンプレート読み込み
 $objTemplate = new clsTemplate();

@@ -940,6 +940,8 @@ jQuery(function ($) {
         // テーブルBのデータをすべてテーブルAに移動する
         deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailReceiveNo')
 
+        resetTableRowid($("#tableA"));
+        
         // テーブル行クリックイベントの設定
         selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
 
@@ -955,7 +957,11 @@ jQuery(function ($) {
 
         // テーブルBの選択されたデータをテーブルAに移動する
         deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailReceiveNo');
+        
+        resetTableRowid($("#tableA"));
+
         $("#tableA_head").trigger("update");
+        
         $("#tableA").trigger("update");
         // テーブル行クリックイベントの設定
         selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));

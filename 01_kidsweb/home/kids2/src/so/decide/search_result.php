@@ -71,11 +71,11 @@ $aryQuery[] = ", delp_u.strUserDisplayCode as strdevelopuserdisplaycode";
 $aryQuery[] = ", delp_u.strUserDisplayName as strdevelopuserdisplayname";
 
 $aryQuery[] = ", rd.dtmDeliveryDate as dtmDeliveryDate"; // 納期
-$aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice"; // 単価
+$aryQuery[] = ", rd.curProductPrice"; // 単価
 $aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode"; // 単位
 $aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
 $aryQuery[] = ", p.lngcartonquantity"; // カートン入数
-$aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice"; // 税抜金額
+$aryQuery[] = ", rd.curSubTotalPrice"; // 税抜金額
 $aryQuery[] = ", rd.strNote as strDetailNote"; // 明細備考
 $aryQuery[] = ", ed.lngproductquantity as lngproductquantity"; // 製品数量
 $aryQuery[] = " FROM t_ReceiveDetail rd";
@@ -288,7 +288,7 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
     // 単価
-    $textContent = toMoneyFormat($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["curproductprice"]);
+    $textContent = convertPrice($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["curproductprice"], "unitprice");
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "curproductprice");
     $trBody->appendChild($td);
@@ -338,7 +338,7 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
     // 小計
-    $textContent = toMoneyFormat($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["cursubtotalprice"]);
+    $textContent = convertPrice($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["cursubtotalprice"], "price");
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "cursubtotalprice");
     $trBody->appendChild($td);

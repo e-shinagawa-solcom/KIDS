@@ -407,7 +407,7 @@ abstract class estimateRowController {
         $price = $strInt.'.'. $strDecimal;
 
         // 単価の小数点以下の処理
-        $price = number_format($price, 4, '.', '');
+        $price = ormat($price, 4, '.', '');
 
         // 再計算結果をセットする
         $this->price = $price;

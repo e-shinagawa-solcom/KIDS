@@ -214,10 +214,10 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
 
     // 2004/03/11 number_format watanabe
     // 単価
-    $_POST["aryDetail"][$i]["curproductprice_DIS"] = ($_POST["aryDetail"][$i]["curProductPrice"] != "") ? number_format((double) (str_replace(",", "", $_POST["aryDetail"][$i]["curProductPrice"])), 4) : "";
+    $_POST["aryDetail"][$i]["curproductprice_DIS"] = ($_POST["aryDetail"][$i]["curProductPrice"] != "") ? number_format((double) (str_replace(",", "", explode(" ", $_POST["aryDetail"][$i]["curProductPrice"])[1])), 4) : "";
     $_POST["aryDetail"][$i]["lnggoodsquantity_DIS"] = ($_POST["aryDetail"][$i]["lngProductQuantity"] != "") ? number_format(str_replace(",", "", $_POST["aryDetail"][$i]["lngProductQuantity"])) : "";
-    $_POST["aryDetail"][$i]["curtotalprice_DIS"] = ($_POST["aryDetail"][$i]["curSubtotalPrice"] != "") ? number_format((double) (str_replace(",", "", $_POST["aryDetail"][$i]["curSubtotalPrice"])), 4) : "";
-    $allPrice = $allPrice + (double) (str_replace(",", "", $_POST["aryDetail"][$i]["curSubtotalPrice"]));
+    $_POST["aryDetail"][$i]["curtotalprice_DIS"] = ($_POST["aryDetail"][$i]["curSubtotalPrice"] != "") ? number_format((double) (str_replace(",", "", explode(" ", $_POST["aryDetail"][$i]["curSubtotalPrice"])[1])), 4) : "";
+    $allPrice = $allPrice + (double) (str_replace(",", "", explode(" ", $_POST["aryDetail"][$i]["curSubtotalPrice"])[1]));
     // watanabe update end
 
     // 2004/03/19 watanabe update コード→名称は全て処理する。コードがない場合は[]を表示しない（必須項目も全て。処理だけ）

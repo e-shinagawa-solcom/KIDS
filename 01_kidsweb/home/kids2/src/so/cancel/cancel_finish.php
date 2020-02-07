@@ -125,11 +125,9 @@ $objDB->freeResult($lngResultID);
 
 
 $objDB->transactionCommit();
-// 通貨記号の設定
-if ($aryResult["lngmonetaryunitcode"] == 1) {
-    $aryResult["strmonetaryunitsign"] = "&yen;";
-}
 
+$aryDetailResult["curproductprice"] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["curproductprice"], "unitprice");
+$aryDetailResult["cursubtotalprice"] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["cursubtotalprice"], "price");
 $aryDetailResult["lngproductquantity"] = $aryDetailResult["lngproductquantity_est2"];
 
 // テンプレート読み込み

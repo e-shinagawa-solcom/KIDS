@@ -329,7 +329,7 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     // 納期
     $aryQuery[] = ", rd.dtmDeliveryDate as dtmDeliveryDate";
     // 単価
-    $aryQuery[] = ", To_char( rd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
+    $aryQuery[] = ", rd.curProductPrice";
     // 単位
     $aryQuery[] = ", rd.lngProductUnitCode as lngProductUnitCode";
     $aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
@@ -343,7 +343,7 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     // 入数
     $aryQuery[] = ", rd.lngunitquantity as lngunitquantity_pre";
     // 税抜金額
-    $aryQuery[] = ", To_char( rd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
+    $aryQuery[] = ", rd.curSubTotalPrice";
     // 明細備考
     $aryQuery[] = ", rd.strNote as strDetailNote";
 
@@ -576,11 +576,10 @@ function fncSetReceiveDetailTabelData($aryDetailResult, $aryHeadResult)
 
         // 単価
         else if ($strColumnName == "curproductprice") {
-            $aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
             if (!$aryDetailResult["curproductprice"]) {
-                $aryNewDetailResult[$strColumnName] .= "0.00";
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], 0, "unitprice");
             } else {
-                $aryNewDetailResult[$strColumnName] .= $aryDetailResult["curproductprice"];
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["curproductprice"], "unitprice");
             }
         }
 
@@ -591,11 +590,10 @@ function fncSetReceiveDetailTabelData($aryDetailResult, $aryHeadResult)
 
         // 税抜金額
         else if ($strColumnName == "cursubtotalprice") {
-            $aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
             if (!$aryDetailResult["cursubtotalprice"]) {
-                $aryNewDetailResult[$strColumnName] .= "0.00";
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], 0, "price");
             } else {
-                $aryNewDetailResult[$strColumnName] .= $aryDetailResult["cursubtotalprice"];
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["cursubtotalprice"], "price");;
             }
         }
 
