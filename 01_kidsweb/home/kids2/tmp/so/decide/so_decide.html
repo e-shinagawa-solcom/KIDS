@@ -32,8 +32,8 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-decide.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-box.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/form-buttons.css">
+	<script src="/cmn/js/table.js" defer></script>
 	<script src="/so/decide/js/functions.js" defer></script>
-	<script src="/so/decide/js/table.js" defer></script>
 </head>
 
 <body class="background">
@@ -89,8 +89,8 @@
 							<tr>
 								<td style="width: 800px;">
 									<div class="regist-label div-table">
-										<table class="table-fix">
-											<thead id="tbl_detail_chkbox_head">
+										<table class="table-fix" id="tableA_chkbox_head">
+											<thead>
 												<tr>
 													<th>選択
 														<br>
@@ -101,7 +101,7 @@
 											<!-- 固定ヘッダ -->
 										</table>
 										<div id="header_h">
-											<table class="table-decide-description" name="T" id="tbl_detail_head">
+											<table class="table-decide-description" name="T" id="tableA_head">
 												<thead>
 													<!-- 水平ヘッダ -->
 													<tr>
@@ -127,14 +127,14 @@
 											</table>
 										</div>
 										<div id="header_v">
-											<table class="table-decide-description" name="TV" id="tbl_detail_chkbox">
+											<table class="table-decide-description" name="TV" id="tableA_chkbox">
 												<tbody>
 												</tbody>
 											</table>
 										</div>
 
 										<div id="data">
-											<table class="table-decide-description" name="T" id="tbl_detail">
+											<table class="table-decide-description" name="T" id="tableA">
 												<tbody>
 												</tbody>
 											</table>
@@ -157,7 +157,7 @@
 							<tr>
 								<td style="width: 800px;">
 									<div class="regist-label div-decide-table">
-										<table class="table-decide-fix" id="tbl_decide_no_head">
+										<table class="table-decide-fix" id="tableB_no_head">
 											<thead>
 												<tr>
 													<th>No.</th>
@@ -166,7 +166,7 @@
 											<!-- 固定ヘッダ -->
 										</table>
 										<div id="header_decide_h">
-											<table class="table-decide-description" name="DECIDE_T" id="tbl_decide_head">
+											<table class="table-decide-description" name="DECIDE_T" id="tableB_head">
 												<thead>
 													<tr>
 														<th style="display:none">No.</th>
@@ -192,14 +192,14 @@
 											</table>
 										</div>
 										<div id="header_decide_v">
-											<table class="table-decide-description" name="DECIDE_TV" id="tbl_decide_no">
+											<table class="table-decide-description" name="DECIDE_TV" id="tableB_no">
 												<tbody id="table_decide_no">
 												</tbody>
 											</table>
 										</div>
 
 										<div id="decide_data">
-											<table class="table-decide-description" name="DECIDE_T" id="tbl_decide_body">
+											<table class="table-decide-description" name="DECIDE_T" id="tableB">
 												<tbody id="table_decide_body">
 												</tbody>
 											</table>

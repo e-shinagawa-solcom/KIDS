@@ -71,9 +71,6 @@ function scanAllCheckbox(tableA_chkbox, allCheckObj) {
         if ($(this).prop('disabled')) {
             ++count_disabled;
         }
-        console.log(count_disabled);
-        console.log(count_checked);
-        console.log($all_chkbox_rows.length);
         if ($all_chkbox_rows.length === count_disabled) {
             allCheckObj.prop({ 'checked': false, 'disabled': true });
         }
@@ -248,10 +245,12 @@ function deleteRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tabl
 function removeTableBToTableA(tableBRow, tableA, tableA_chkbox, allCheckObj, key) {
     var trhtml = tableBRow.html();
     var detailnoB = tableBRow.find(key).text();
+    console.log(detailnoB);
     var rownum = 0;
     tableA.find("tbody tr").each(function (i, e) {
         var detailnoA = $(this).find(key).text();
-        if (detailnoA > detailnoB) {
+        console.log(detailnoA);
+        if (parseInt(detailnoA) > parseInt(detailnoB)) {
             rownum = i + 1;
             return false;
         }

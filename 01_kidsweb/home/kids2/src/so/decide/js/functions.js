@@ -1,9 +1,13 @@
 (function () {
     resetTableADisplayStyle();
-    resetTableAWidth();
-    resetTableBWidth();
-    selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
-    selectRow($("#tbl_decide_no"), $("#tbl_decide_body"));
+    // テーブルAの幅をリセットする
+    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
+    // テーブルBの幅をリセットする
+    resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
+    // テーブルAの行クリックイベントの設定
+    selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
+    // テーブルB行イベントの追加
+    selectRow("", $("#tableB_no"), $("#tableB"), "");
 
     if ($('input[name="strGoodsCode"]').val() != "") {
         $('input[name="strGoodsCode"]').attr('readonly', true);
@@ -16,23 +20,10 @@
     window.onbeforeunload = unLock;
 
     // チェックボックスの切り替え処理のバインド
-    $('input[type="checkbox"][name="allSel"]').on({
-        'click': function () {
-            var status = this.checked;
-            $('input[type="checkbox"]')
-                .each(function () {
-                    this.checked = status;
-                    if (status) {
-                        $("#tbl_detail_chkbox tbody tr").css("background-color", "#bbbbbb");
-                        $("#tbl_detail tbody tr").css("background-color", "#bbbbbb");
-                    } else {
+    setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
 
-                        $("#tbl_detail_chkbox tbody tr").css("background-color", "#ffffff");
-                        $("#tbl_detail tbody tr").css("background-color", "#ffffff");
-                    }
-                });
-        }
-    });
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
     // 追加ボタンのイベント
     $('img.add').on('click', function () {
@@ -53,13 +44,13 @@
             return;
         }
 
-        $('#tbl_detail_chkbox tbody tr').each(function (i, e) {
+        $('#tableA_chkbox tbody tr').each(function (i, e) {
             var rownum = i + 1;
             var chkbox = $(this).find('input[type="checkbox"]');
             if (chkbox.prop("checked")) {
-                var lngreceivedetailnoA = $('#tbl_detail tbody tr:nth-child(' + rownum + ')').find('#lngreceivedetailno').text();
+                var lngreceivedetailnoA = $('#tableA tbody tr:nth-child(' + rownum + ')').find('#lngreceivedetailno').text();
                 var addObj = true;
-                $('#tbl_decide_body tbody tr').each(function (i, e) {
+                $('#tableB tbody tr').each(function (i, e) {
                     var lngreceivedetailnoB = $(this).find('#lngreceivedetailno').text();
                     if (lngreceivedetailnoA == lngreceivedetailnoB) {
                         addObj = false;
@@ -68,11 +59,11 @@
                 });
                 if (addObj) {
                     // tableBの追加
-                    $("#tbl_decide_body tbody").append('<tr>' + $('#tbl_detail tbody tr:nth-child(' + rownum + ')').html() + '</tr>');
-                    var no = $("#tbl_decide_no tbody").find('tr').length + 1;
-                    $("#tbl_decide_no tbody").append('<tr><td>' + no + '</td></tr>');
+                    $("#tableB tbody").append('<tr>' + $('#tableA tbody tr:nth-child(' + rownum + ')').html() + '</tr>');
+                    var no = $("#tableB_no tbody").find('tr').length + 1;
+                    $("#tableB_no tbody").append('<tr><td>' + no + '</td></tr>');
 
-                    var lasttr = $("#tbl_decide_body").find('tr').last();
+                    var lasttr = $("#tableB").find('tr').last();
                     lasttr.find('td:nth-child(1)').css('display', 'none');
                 }
 
@@ -80,107 +71,83 @@
         });
 
         // tableBのリセット
-        for (var i = $('#tbl_detail_chkbox tbody tr').length; i > 0; i--) {
-            var row = $('#tbl_detail_chkbox tbody tr:nth-child(' + i + ')');
+        for (var i = $('#tableA_chkbox tbody tr').length; i > 0; i--) {
+            var row = $('#tableA_chkbox tbody tr:nth-child(' + i + ')');
             var chkbox = row.find('input[type="checkbox"]');
             if (chkbox.prop("checked")) {
                 row.remove();
-                $('#tbl_detail tbody tr:nth-child(' + i + ')').remove();
+                $('#tableA tbody tr:nth-child(' + i + ')').remove();
             }
         }
 
-        resetTableBRowid();
 
-        resetTableBWidth();
-        
         resetTableBDisplayStyle();
 
-        selectRow($("#tbl_decide_no"), $("#tbl_decide_body"));
+        resetTableRowid($('#tableB'));
+        // テーブルBの幅をリセットする
+        resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
+        // テーブルB行イベントの追加
+        selectRow("", $("#tableB_no"), $("#tableB"), "");
 
         selectChange();
 
-        scanAllCheckbox();
+        scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+        
+        // チェックボックスクリックイベントの設定
+        setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
+
     });
 
     // 全削除ボタンのイベント
     $('img.alldelete').on('click', function () {
 
-        $("#table_decide_body tr").each(function (i, e) {
-            removeTableBToTableA($(this));
-        });
+        // テーブルBのデータをすべてテーブルAに移動する
+        deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
 
-        $("#table_decide_no").empty();
+        $("#tableA_head").trigger("update");
 
-        resetTableARowid();
-
-        resetTableAWidth();
-        
-        resetTableADisplayStyle();
-
-        resetTableBWidth();
-
-        scanAllCheckbox();
-        
-        selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
+        $("#tableA").trigger("update");
     });
 
     // 削除ボタンのイベント
     $('img.delete').on('click', function () {
-        $("#table_decide_no tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).remove();
-            }
-        });
-        $("#table_decide_body tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                removeTableBToTableA($(this));
-            }
-        });
+        // テーブルBの選択されたデータをテーブルAに移動する
+        deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
 
-        resetTableARowid();
+        $("#tableA_head").trigger("update");
 
-        resetTableBRowid();
+        $("#tableA").trigger("update");
 
-        resetTableAWidth();
-        
-        resetTableADisplayStyle();
-
-        resetTableBWidth();
-
-        scanAllCheckbox();
-        
-        selectRow($("#tbl_detail_chkbox"), $("#tbl_detail"));
+        resetTableBDisplayStyle();
     });
 
-    function removeTableBToTableA(tableBRow) {
-        var trhtml = tableBRow.html();
-        var detailnoB = tableBRow.find('#lngreceivedetailno').text();
-        var rownum = 0;
-        $("#tbl_detail tbody tr").each(function (i, e) {
-            var detailnoA = $(this).find('#lngreceivedetailno').text();
-            console.log("detailnoA:" + detailnoA);
-            console.log("detailnoB:" + detailnoB);
-            console.log(parseInt(detailnoA) > parseInt(detailnoB));
-            if (parseInt(detailnoA) > parseInt(detailnoB)) {
-                rownum = i + 1;
-                return false;
-            }
-        });
-        if (rownum == 0) {
-            $('#tbl_detail tbody').append('<tr>' + trhtml + '</tr>');
-            $('#tbl_detail_chkbox tbody').append('<tr><td style="text-align:center;"><input type="checkbox" style="width: 10px;"></td></tr>');
-            rownum = $("#tbl_detail tbody tr").length;
-        } else {
-            $('#tbl_detail tbody tr:nth-child(' + rownum + ')').before('<tr>' + trhtml + '</tr>');
-            $('#tbl_detail_chkbox tbody tr:nth-child(' + rownum + ')').before('<tr><td style="text-align:center;"><input type="checkbox" style="width: 10px;"></td></tr>');
-        }
+    // function removeTableBToTableA(tableBRow) {
+    //     var trhtml = tableBRow.html();
+    //     var detailnoB = tableBRow.find('#lngreceivedetailno').text();
+    //     var rownum = 0;
+    //     $("#tbl_detail tbody tr").each(function (i, e) {
+    //         var detailnoA = $(this).find('#lngreceivedetailno').text();
+    //         console.log("detailnoA:" + detailnoA);
+    //         console.log("detailnoB:" + detailnoB);
+    //         console.log(parseInt(detailnoA) > parseInt(detailnoB));
+    //         if (parseInt(detailnoA) > parseInt(detailnoB)) {
+    //             rownum = i + 1;
+    //             return false;
+    //         }
+    //     });
+    //     if (rownum == 0) {
+    //         $('#tbl_detail tbody').append('<tr>' + trhtml + '</tr>');
+    //         $('#tbl_detail_chkbox tbody').append('<tr><td style="text-align:center;"><input type="checkbox" style="width: 10px;"></td></tr>');
+    //         rownum = $("#tbl_detail tbody tr").length;
+    //     } else {
+    //         $('#tbl_detail tbody tr:nth-child(' + rownum + ')').before('<tr>' + trhtml + '</tr>');
+    //         $('#tbl_detail_chkbox tbody tr:nth-child(' + rownum + ')').before('<tr><td style="text-align:center;"><input type="checkbox" style="width: 10px;"></td></tr>');
+    //     }
 
-        $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('td:nth-child(1)').css('display', '');
+    //     $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('td:nth-child(1)').css('display', '');
 
-        tableBRow.remove();
-    }
+    //     tableBRow.remove();
+    // }
 
     // 検索条件変更ボタンのイベント
     $('img.search').on('click', function () {
@@ -197,120 +164,22 @@
 
     // 行を一つ上に移動するボタン
     $('img.rowup').click(function () {
-        var len = $("#table_decide_body").children().length;
-        for (var i = 1; i <= len; i++) {
-            var row = $("#decide_detail_" + i);
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i - 1; j >= 1; j--) {
-                    var row_prev = $("#decide_detail_" + j);
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertBefore(row_prev);
-                        break;
-                    }
-                }
-            }
-        }
-
-        var len = $("#table_decide_no").children().length;
-        for (var i = 1; i <= len; i++) {
-            var row = $("#decide_no_" + i);
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i - 1; j >= 1; j--) {
-                    var row_prev = $("#decide_no_" + j);
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertBefore(row_prev);
-                        break;
-                    }
-                }
-            }
-        }
-
-        resetTableBRowid();
-
+        rowUp($("#tableB"), $("#tableB_no"));
     });
 
     // 行を一つ下に移動するボタン
     $('img.rowdown').click(function () {
-        var len = $("#table_decide_body").children().length;
-        for (var i = len; i >= 1; i--) {
-            var row = $("#decide_detail_" + i);
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i + 1; j <= len; j++) {
-                    var row_prev = $("#decide_detail_" + j);
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertAfter(row_prev);
-                        break;
-                    }
-                }
-            }
-        }
-
-
-        var len = $("#table_decide_no").children().length;
-        for (var i = len; i >= 1; i--) {
-            var row = $("#decide_no_" + i);
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i + 1; j <= len; j++) {
-                    var row_prev = $("#decide_no_" + j);
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertAfter(row_prev);
-                        break;
-                    }
-                }
-            }
-        }
-
-        resetTableBRowid();
-
+        rowDown($("#tableB"), $("#tableB_no"));
     });
 
     // 行を一番上に移動する
     $('img.rowtop').click(function () {
-        $("#table_decide_body tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).insertBefore($("#decide_detail_1"));
-            }
-        });
-
-        $("#table_decide_no tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).insertBefore($("#decide_no_1"));
-            }
-        });
-
-        resetTableBRowid();
-
+        rowTop($("#tableB"), $("#tableB_no"));
     });
 
     // 行を一番下に移動する
     $('img.rowbottom').click(function () {
-        var lasttr = $("#table_decide_body").find('tr').last();
-        $("#table_decide_body tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).insertAfter(lasttr);
-            }
-        });
-
-        lasttr = $("#table_decide_no").find('tr').last();
-        $("#table_decide_no tr").each(function (i, e) {
-            var backgroud = $(this).css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                $(this).insertAfter(lasttr);
-            }
-        });
-
-        resetTableBRowid();
+        rowBottom($("#tableB"), $("#tableB_no"));
     });
 
     // 確定登録イベント
@@ -425,25 +294,6 @@
 
 })();
 
-// 行IDの再設定
-function resetTableBRowid() {
-    var rownum = 0;
-    $("#table_decide_no tr").each(function (i, e) {
-        rownum += 1;
-        $(this).find('td').first().text(rownum);
-    });
-}
-
-
-
-// 行IDの再設定
-function resetTableARowid() {
-    var rownum = 0;
-    $("#tbl_detail tbody tr").each(function (i, e) {
-        rownum += 1;
-        $(this).find('td').first().text(rownum);
-    });
-}
 
 selectChange();
 
@@ -544,29 +394,30 @@ function unlockScreen(id) {
     $("#" + id).remove();
 }
 
-function resetAllTableColumnWidth() {
-    // $(".table-decide-description").css('table-layout', '');
-    var row = $(".table-decide-description tbody tr");
-    var columnNum = row.find('td').length;
-    var thwidthArry = [];
-    var tdwidthArry = [];
-    for (var i = 1; i <= columnNum; i++) {
-        thwidthArry.push($(".table-decide-description thead tr th:nth-child(" + i + ")").width());
-        tdwidthArry.push($(".table-decide-description tbody tr td:nth-child(" + i + ")").width());
-    }
-    for (var i = 1; i <= columnNum; i++) {
-        if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-            $(".table-decide-description thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1] + 10);
-            $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1] + 10);
-        } else {
-            $(".table-decide-description thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1] + 10);
-            $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1] + 10);
-        }
-    }
-}
+// function resetAllTableColumnWidth() {
+//     // $(".table-decide-description").css('table-layout', '');
+//     var row = $(".table-decide-description tbody tr");
+//     var columnNum = row.find('td').length;
+//     var thwidthArry = [];
+//     var tdwidthArry = [];
+//     for (var i = 1; i <= columnNum; i++) {
+//         thwidthArry.push($(".table-decide-description thead tr th:nth-child(" + i + ")").width());
+//         tdwidthArry.push($(".table-decide-description tbody tr td:nth-child(" + i + ")").width());
+//     }
+//     for (var i = 1; i <= columnNum; i++) {
+//         if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+//             $(".table-decide-description thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1] + 10);
+//             $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1] + 10);
+//         } else {
+//             $(".table-decide-description thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1] + 10);
+//             $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1] + 10);
+//         }
+//     }
+// }
 
 function resetTableADisplayStyle() {
-    $("#tbl_detail tbody tr").each(function (i, e) {
+    $("#tableA tbody tr").each(function (i, e) {
+        $(this).find("td:nth-child(1)").css("display", "");
         $(this).find("#strcustomerreceivecode").find('input:text').prop('disabled', true);
         $(this).find("#lngproductunitcode").find('select').prop('disabled', true);
         $(this).find("#lngunitquantity").find('input:text').prop('disabled', true);
@@ -575,7 +426,8 @@ function resetTableADisplayStyle() {
 }
 
 function resetTableBDisplayStyle() {
-    $("#tbl_decide_body tbody tr").each(function (i, e) {
+    $("#tableB tbody tr").each(function (i, e) {
+        $(this).find("td:nth-child(1)").css("display", "none");
         $(this).find("#strcustomerreceivecode").find('input:text').prop('disabled', false);
         $(this).find("#lngproductunitcode").find('select').prop('disabled', false);
         $(this).find("#lngunitquantity").find('input:text').prop('disabled', false);
@@ -583,76 +435,76 @@ function resetTableBDisplayStyle() {
     });
 }
 
-function resetTableAWidth() {
-    $("#tbl_detail_chkbox tbody tr td").width($("#tbl_detail_chkbox_head tr th").width());
-    $("#tbl_detail thead").css('display', '');
-    $("#tbl_detail tbody tr td").width('');
-    $("#tbl_detail thead tr th").width('');
-    $("#tbl_detail_head thead tr th").width('');
-    var thwidthArry = [];
-    var tdwidthArry = [];
-    var width = 0;
-    var columnNum = $('#tbl_detail_head thead tr th').length;
-    for (var i = 1; i <= columnNum; i++) {
-        var thwidth = $('#tbl_detail_head thead tr th:nth-child(' + i + ')').width();
-        var tdwidth = $('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
-        thwidthArry.push(thwidth + 20);
-        tdwidthArry.push(tdwidth + 20);
-    }
+// function resetTableAWidth() {
+//     $("#tbl_detail_chkbox tbody tr td").width($("#tbl_detail_chkbox_head tr th").width());
+//     $("#tbl_detail thead").css('display', '');
+//     $("#tbl_detail tbody tr td").width('');
+//     $("#tbl_detail thead tr th").width('');
+//     $("#tbl_detail_head thead tr th").width('');
+//     var thwidthArry = [];
+//     var tdwidthArry = [];
+//     var width = 0;
+//     var columnNum = $('#tbl_detail_head thead tr th').length;
+//     for (var i = 1; i <= columnNum; i++) {
+//         var thwidth = $('#tbl_detail_head thead tr th:nth-child(' + i + ')').width();
+//         var tdwidth = $('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
+//         thwidthArry.push(thwidth + 20);
+//         tdwidthArry.push(tdwidth + 20);
+//     }
 
-    for (var i = 1; i <= columnNum; i++) {
-        if ($("#tbl_detail_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
-            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-                $("#tbl_detail_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                width += thwidthArry[i - 1];
-            } else {
-                $("#tbl_detail_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                width += tdwidthArry[i - 1];
-            }
-        }
-    }
-    $("#tbl_detail_head").width(width + 100);
-    $("#tbl_detail").width(width + 100);
+//     for (var i = 1; i <= columnNum; i++) {
+//         if ($("#tbl_detail_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
+//             if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+//                 $("#tbl_detail_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+//                 $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+//                 width += thwidthArry[i - 1];
+//             } else {
+//                 $("#tbl_detail_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+//                 $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+//                 width += tdwidthArry[i - 1];
+//             }
+//         }
+//     }
+//     $("#tbl_detail_head").width(width + 100);
+//     $("#tbl_detail").width(width + 100);
 
-    $("#tbl_detail thead").css('display', 'none');
-}
+//     $("#tbl_detail thead").css('display', 'none');
+// }
 
 
-function resetTableBWidth() {
-    $("#tbl_decide_no tbody tr td").width($("#tbl_decide_no_head thead tr th").width());
-    $("#tbl_decide_body tbody tr td").width('');
-    $("#tbl_decide_head thead tr th").width('');
-    var thwidthArry = [];
-    var tdwidthArry = [];
-    var columnNum = $('#tbl_decide_head thead tr th').length;
-    console.log(columnNum);
-    var width = 0;
-    for (var i = 1; i <= columnNum; i++) {
-        var thwidth = $('#tbl_decide_head thead tr th:nth-child(' + i + ')').width();
-        var tdwidth = $('#tbl_decide_body tbody tr td:nth-child(' + i + ')').width();
-        thwidthArry.push(thwidth + 20);
-        tdwidthArry.push(tdwidth + 20);
-    }
+// function resetTableBWidth() {
+//     $("#tbl_decide_no tbody tr td").width($("#tbl_decide_no_head thead tr th").width());
+//     $("#tbl_decide_body tbody tr td").width('');
+//     $("#tbl_decide_head thead tr th").width('');
+//     var thwidthArry = [];
+//     var tdwidthArry = [];
+//     var columnNum = $('#tbl_decide_head thead tr th').length;
+//     console.log(columnNum);
+//     var width = 0;
+//     for (var i = 1; i <= columnNum; i++) {
+//         var thwidth = $('#tbl_decide_head thead tr th:nth-child(' + i + ')').width();
+//         var tdwidth = $('#tbl_decide_body tbody tr td:nth-child(' + i + ')').width();
+//         thwidthArry.push(thwidth + 20);
+//         tdwidthArry.push(tdwidth + 20);
+//     }
 
-    for (var i = 1; i <= columnNum; i++) {
-        if ($("#tbl_decide_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
-            if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-                $("#tbl_decide_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                $("#tbl_decide_body tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                width += thwidthArry[i - 1];
-            } else {
-                $("#tbl_decide_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                $("#tbl_decide_body tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                width += tdwidthArry[i - 1];
-            }
-        }
-    }
+//     for (var i = 1; i <= columnNum; i++) {
+//         if ($("#tbl_decide_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
+//             if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
+//                 $("#tbl_decide_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+//                 $("#tbl_decide_body tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
+//                 width += thwidthArry[i - 1];
+//             } else {
+//                 $("#tbl_decide_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+//                 $("#tbl_decide_body tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
+//                 width += tdwidthArry[i - 1];
+//             }
+//         }
+//     }
 
-    $("#tbl_decide_head").width(width + 100);
-    $("#tbl_decide_body").width(width + 100);
-}
+//     $("#tbl_decide_head").width(width + 100);
+//     $("#tbl_decide_body").width(width + 100);
+// }
 // function resetTableBWidth() {
 //     var width = 0;
 //     var columnNum = $(".table-decide-description").eq(3).find("thead tr th").length;
@@ -671,114 +523,114 @@ function resetTableBWidth() {
 // }
 
 
-  /**
-   * @method scanAllCheckbox スキャンチェックボックス
-   */
-  function scanAllCheckbox() {
+//   /**
+//    * @method scanAllCheckbox スキャンチェックボックス
+//    */
+//   function scanAllCheckbox() {
 
-    var $all_rows = $('#tbl_detail tbody tr');
-    var $all_chkbox_rows = $('#tbl_detail_chkbox tbody tr');
-    var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
+//     var $all_rows = $('#tbl_detail tbody tr');
+//     var $all_chkbox_rows = $('#tbl_detail_chkbox tbody tr');
+//     var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
 
-    // 有効 <tr> ＊選択可能行
-    var count_checked = 0;
-    var count_disabled = 0;
+//     // 有効 <tr> ＊選択可能行
+//     var count_checked = 0;
+//     var count_disabled = 0;
 
-    // data がない場合、全選択／解除チェックボックスを寝かせて無効化
-    if (!$all_rows.length) {
-      $('#allChecked').prop({ 'checked': false, 'disabled': true });
-    } else {
-      $('#allChecked').prop('disabled', false);
-    }
+//     // data がない場合、全選択／解除チェックボックスを寝かせて無効化
+//     if (!$all_rows.length) {
+//       $('#allChecked').prop({ 'checked': false, 'disabled': true });
+//     } else {
+//       $('#allChecked').prop('disabled', false);
+//     }
 
-    $.each($all_checkbox, function (i) {
-      // チェックボックスがひとつでも外れている場合、全選択／解除チェックボックスを寝かす
-      if (!($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)')) {
-        $('#allChecked').prop('checked', false);
-      }
+//     $.each($all_checkbox, function (i) {
+//       // チェックボックスがひとつでも外れている場合、全選択／解除チェックボックスを寝かす
+//       if (!($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)')) {
+//         $('#allChecked').prop('checked', false);
+//       }
 
-      // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
-      if ($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)') {
-        ++count_checked;
-      }
-      if ($all_rows.length === count_checked) {
-        $('#allChecked').prop('checked', true);
-      }
+//       // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
+//       if ($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)') {
+//         ++count_checked;
+//       }
+//       if ($all_rows.length === count_checked) {
+//         $('#allChecked').prop('checked', true);
+//       }
 
-      // すべてのチェックボックスが無効化された場合、全選択／解除チェックボックスを寝かせて無効化
-      if ($(this).prop('disabled')) {
-        ++count_disabled;
-      }
-      if ($all_rows.length === count_disabled) {
-        $('#allChecked').prop({ 'checked': false, 'disabled': true });
-      }
-    });
-  };
-
-
-function selectRow(objA, objB) {
-    var rows = objA.find('tbody tr');
-    var rows = objB.find('tbody tr');
-    var lastSelectedRow;
-    /* Create 'click' event handler for rows */
-    objA.find('tbody tr').on('click', function (e) {
-        lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-        scanAllCheckbox();
-    });
+//       // すべてのチェックボックスが無効化された場合、全選択／解除チェックボックスを寝かせて無効化
+//       if ($(this).prop('disabled')) {
+//         ++count_disabled;
+//       }
+//       if ($all_rows.length === count_disabled) {
+//         $('#allChecked').prop({ 'checked': false, 'disabled': true });
+//       }
+//     });
+//   };
 
 
-    /* Create 'click' event handler for rows */
-    objB.find('tbody tr').on('click', function (e) {
-        lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-        scanAllCheckbox();
-    });
+// function selectRow(objA, objB) {
+//     var rows = objA.find('tbody tr');
+//     var rows = objB.find('tbody tr');
+//     var lastSelectedRow;
+//     /* Create 'click' event handler for rows */
+//     objA.find('tbody tr').on('click', function (e) {
+//         lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+//         scanAllCheckbox();
+//     });
 
-    /* This 'event' is used just to avoid that the table text 
-     * gets selected (just for styling). 
-     * For example, when pressing 'Shift' keyboard key and clicking 
-     * (without this 'event') the text of the 'table' will be selected.
-     * You can remove it if you want, I just tested this in 
-     * Chrome v30.0.1599.69 */
-    $(document).bind('selectstart dragstart', function (e) {
-        e.preventDefault(); return false;
-    });
-}
 
-function trClickEvent(row, lastSelectedRow, e, objA, objB) {
+//     /* Create 'click' event handler for rows */
+//     objB.find('tbody tr').on('click', function (e) {
+//         lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
+//         scanAllCheckbox();
+//     });
 
-    /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
-     * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
-     * 'Shift' => is represented by 'e.shiftKey' */
-    if (e.ctrlKey || e.metaKey) {
-        /* If pressed highlight the other row that was clicked */
-        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-        objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+//     /* This 'event' is used just to avoid that the table text 
+//      * gets selected (just for styling). 
+//      * For example, when pressing 'Shift' keyboard key and clicking 
+//      * (without this 'event') the text of the 'table' will be selected.
+//      * You can remove it if you want, I just tested this in 
+//      * Chrome v30.0.1599.69 */
+//     $(document).bind('selectstart dragstart', function (e) {
+//         e.preventDefault(); return false;
+//     });
+// }
 
-    } else if (e.shiftKey) {
-        /* If pressed highlight the other row that was clicked */
-        var indexes = [lastSelectedRow.index(), row.index()];
-        indexes.sort(function (a, b) {
-            return a - b;
-        });
-        for (var i = indexes[0]; i <= indexes[1]; i++) {
-            objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
-            objA.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-            objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
-        }
-    } else {
-        /* Otherwise just highlight one row and clean others */
-        objA.find("tbody tr").css("background-color", "#ffffff");
-        objA.find("tbody tr").find('input[type="checkbox"]').prop('checked', false);
-        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-        objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-        objB.find("tbody tr").css("background-color", "#ffffff");
-        objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-        lastSelectedRow = row;
-    }
+// function trClickEvent(row, lastSelectedRow, e, objA, objB) {
 
-    return lastSelectedRow;
-}
+//     /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
+//      * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
+//      * 'Shift' => is represented by 'e.shiftKey' */
+//     if (e.ctrlKey || e.metaKey) {
+//         /* If pressed highlight the other row that was clicked */
+//         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+//         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
+//         objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+
+//     } else if (e.shiftKey) {
+//         /* If pressed highlight the other row that was clicked */
+//         var indexes = [lastSelectedRow.index(), row.index()];
+//         indexes.sort(function (a, b) {
+//             return a - b;
+//         });
+//         for (var i = indexes[0]; i <= indexes[1]; i++) {
+//             objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
+//             objA.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
+//             objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
+//         }
+//     } else {
+//         /* Otherwise just highlight one row and clean others */
+//         objA.find("tbody tr").css("background-color", "#ffffff");
+//         objA.find("tbody tr").find('input[type="checkbox"]').prop('checked', false);
+//         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+//         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
+//         objB.find("tbody tr").css("background-color", "#ffffff");
+//         objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+//         lastSelectedRow = row;
+//     }
+
+//     return lastSelectedRow;
+// }
 
 
 function unLock() {

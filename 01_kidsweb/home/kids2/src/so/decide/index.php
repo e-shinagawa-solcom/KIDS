@@ -175,10 +175,10 @@ libxml_clear_errors();
 libxml_use_internal_errors(false);
 
 // 検索結果テーブルの取得
-$tableChkBox = $doc->getElementById("tbl_detail_chkbox");
+$tableChkBox = $doc->getElementById("tableA_chkbox");
 $tbodyChkBox = $tableChkBox->getElementsByTagName("tbody")->item(0);
 
-$tableDetail = $doc->getElementById("tbl_detail");
+$tableDetail = $doc->getElementById("tableA");
 $tbodyDetail = $tableDetail->getElementsByTagName("tbody")->item(0);
 
 $lngReceiveNos = explode(",", $aryData["lngReceiveNo"]);
@@ -191,10 +191,10 @@ if ($lngReceiveNos) {
 }
 
 // 検索結果テーブルの取得
-$tabledecideno = $doc->getElementById("tbl_decide_no");
+$tabledecideno = $doc->getElementById("tableB_no");
 $tbodyDecideNO = $tabledecideno->getElementsByTagName("tbody")->item(0);
 
-$tabledecidebody = $doc->getElementById("tbl_decide_body");
+$tabledecidebody = $doc->getElementById("tableB");
 $tbodyDecideBody = $tabledecidebody->getElementsByTagName("tbody")->item(0);
 
 // 明細情報の出力
@@ -213,6 +213,7 @@ foreach ($aryDetailResult as $detailResult) {
         // 選択チェックボックス
         $chkBox = $doc->createElement("input");
         $chkBox->setAttribute("type", "checkbox");
+        $chkBox->setAttribute("name", "edit");
         $id = $detailResult["lngreceiveno"] . "_" . $detailResult["lngreceivedetailno"] . "_" . $detailResult["lngrevisionno"];
         $chkBox->setAttribute("id", $id);
         $chkBox->setAttribute("style", "width: 10px;");

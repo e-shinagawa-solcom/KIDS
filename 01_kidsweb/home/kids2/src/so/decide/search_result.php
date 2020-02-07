@@ -90,14 +90,14 @@ $aryQuery[] = "      m_Receive r1 ";
 $aryQuery[] = "      inner join ( ";
 $aryQuery[] = "        select";
 $aryQuery[] = "          max(lngrevisionno) lngrevisionno";
-$aryQuery[] = "          , strReceiveCode ";
+$aryQuery[] = "          , lngReceiveNo ";
 $aryQuery[] = "        from";
 $aryQuery[] = "          m_Receive ";
 $aryQuery[] = "        group by";
-$aryQuery[] = "          strReceiveCode";
+$aryQuery[] = "          lngReceiveNo";
 $aryQuery[] = "      ) r2 ";
 $aryQuery[] = "        on r1.lngrevisionno = r2.lngrevisionno ";
-$aryQuery[] = "        and r1.strReceiveCode = r2.strReceiveCode ";
+$aryQuery[] = "        and r1.lngReceiveNo = r2.lngReceiveNo ";
 $aryQuery[] = "      LEFT JOIN m_MonetaryUnit ";
 $aryQuery[] = "        USING (lngMonetaryUnitCode) ";
 $aryQuery[] = "      LEFT JOIN m_Company cust_c ";
@@ -108,7 +108,7 @@ if ($aryData["lngCustomerCode"] != "") {
     $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $aryData["lngCustomerCode"] . "' ";
 }
 $aryQuery[] = "     and r1.lngcustomercompanycode != 0 ";
-$aryQuery[] = " ) r USING (lngReceiveNo, lngRevisionNo)";    
+$aryQuery[] = " ) r on rd.lngReceiveNo = r.lngReceiveNo and rd.lngRevisionNo = r.lngRevisionNo";    
 $aryQuery[] = "        LEFT JOIN (";
 $aryQuery[] = "            select p1.*  from m_product p1 ";
 $aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
@@ -118,13 +118,14 @@ $aryQuery[] = "          ON rd.strProductCode = p.strProductCode AND rd.strrevis
 $aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lnginchargegroupcode = inchg_g.lngGroupCode";
 $aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lnginchargeusercode = inchg_u.lngUserCode";
 $aryQuery[] = " LEFT JOIN m_User delp_u ON p.lngdevelopusercode = delp_u.lngUserCode";
-$aryQuery[] = " LEFT JOIN m_SalesClass ss on rd.lngSalesClassCode = ss.lngSalesClassCode";
-$aryQuery[] = " LEFT JOIN m_salesclassdivisonlink ssdl on ssdl.lngSalesClassCode = ss.lngSalesClassCode";
-$aryQuery[] = " LEFT JOIN m_salesdivision sd on sd.lngsalesdivisioncode = ssdl.lngsalesdivisioncode";
-$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
 $aryQuery[] = " LEFT JOIN t_estimatedetail ed on ed.lngestimateno = rd.lngestimateno";
 $aryQuery[] = " and ed.lngrevisionno = rd.lngestimaterevisionno";
 $aryQuery[] = " and ed.lngestimatedetailno = rd.lngestimatedetailno";
+$aryQuery[] = " LEFT JOIN m_SalesClass ss on rd.lngSalesClassCode = ss.lngSalesClassCode";
+$aryQuery[] = " LEFT JOIN m_salesclassdivisonlink ssdl on ssdl.lngSalesClassCode = ed.lngSalesClassCode";
+$aryQuery[] = " and ssdl.lngsalesdivisioncode = ed.lngsalesdivisioncode";
+$aryQuery[] = " LEFT JOIN m_salesdivision sd on sd.lngsalesdivisioncode = ssdl.lngsalesdivisioncode";
+$aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
 $aryQuery[] = " WHERE not exists (select strreceivecode from m_receive where lngrevisionno < 0  and strreceivecode = r.strreceivecode)";
 
 if ($aryData["strProductCode"] != "") {
@@ -204,6 +205,7 @@ foreach ($aryDetailResult as $detailResult) {
         // 選択チェックボックス
         $chkBox = $doc->createElement("input");
         $chkBox->setAttribute("type", "checkbox");
+        $chkBox->setAttribute("name", "edit");
         $id = $detailResult["lngreceiveno"] . "_" . $detailResult["lngreceivedetailno"] . "_" . $detailResult["lngrevisionno"];
         $chkBox->setAttribute("id", $id);
         $chkBox->setAttribute("style", "width: 10px;");
@@ -247,10 +249,10 @@ foreach ($aryDetailResult as $detailResult) {
     // 顧客受注番号
     $td = $doc->createElement("td");
     $td->setAttribute("id", "strcustomerreceivecode");
+    $td->setAttribute("style", "text-align:center;");
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
     $text->setAttribute("class", "form-control form-control-sm txt-kids");
-    $text->setAttribute("style", "width:90px;");
     $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
     $td->appendChild($text);
     // if (!$isdecideObj) {

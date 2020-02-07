@@ -87,13 +87,13 @@
 
                         if (parentStrProductCode != strProductCode) {
                             var msg = '選択された明細を全てクリアしますが、よろしいですか？';
-                            var $tableA_rows = window.opener.$('#tbl_detail tbody tr');
+                            var $tableA_rows = window.opener.$('#tableA tbody tr');
                             var $tableA_rows_length = $tableA_rows.length;
                             var warn = ($tableA_rows_length > 0) ? true : false;
                             if (warn && window.confirm(msg) === false) {
                                 exit;
                             }
-                            window.opener.$('input[name="strProductCode"]').val(response.strProductCode);                            
+                            window.opener.$('input[name="strProductCode"]').val(response.strProductCode);
                             window.opener.$('input[name="strProductName"]').val(response.strProductName);
                             window.opener.$('input[name="lngProductNo"]').val(response.lngProductNo);
                             window.opener.$('input[name="lngProductRevisionNo"]').val(response.lngProductRevisionNo);
@@ -107,50 +107,44 @@
                             window.opener.$('input[name="strDevelopUserName"]').val(response.strDevelopUserName);
 
                             if (response.strGoodsCode != "") {
-                                window.opener.$('input[name="strGoodsCode"]').attr('readonly',true);
+                                window.opener.$('input[name="strGoodsCode"]').attr('readonly', true);
                             } else {
-                                window.opener.$('input[name="strGoodsCode"]').attr('readonly',false);
+                                window.opener.$('input[name="strGoodsCode"]').attr('readonly', false);
                             }
 
-                            window.opener.$('#table_decide_body tr').remove();
-                            window.opener.$('#table_decide_no tr').remove();
+                            window.opener.$('#tableB tbody tr').remove();
+                            window.opener.$('#tableB_no tbody tr').remove();
                         }
 
                         window.opener.$('input[name="allSel"]').prop('checked', false);
-                        window.opener.$('#tbl_detail tbody tr').remove();
-                        window.opener.$('#tbl_detail_chkbox tbody tr').remove();
+                        window.opener.$('#tableA tbody tr').remove();
+                        window.opener.$('#tableA_chkbox tbody tr').remove();
 
                         var data = response.result;
-                        var tblchkbox = window.opener.$("#tbl_detail_chkbox");
-                        window.opener.$('#tbl_detail_chkbox tbody').append(response.tblA_chkbox_result);
-                        window.opener.$('#tbl_detail tbody').append(response.tblA_detail_result);
+                        var tblchkbox = window.opener.$("#tableA_chkbox");
+                        window.opener.$('#tableA_chkbox tbody').append(response.tblA_chkbox_result);
+                        window.opener.$('#tableA tbody').append(response.tblA_detail_result);
                         window.opener.$('input[name="strProductName"]').val(response.strProductName);
                         window.opener.$('input[name="strProductCode"]').val(response.strProductCode);
-                        window.opener.$('#tbl_detail_chkbox tbody tr td:nth-child(1)').width(window.opener.$('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
+                        // window.opener.$('#tableA_chkbox tbody tr td:nth-child(1)').width(window.opener.$('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
 
-                        
-                        // var thwidthArry = [];
-                        // var tdwidthArry = [];
-                        // var columnNum = window.opener.$('#tbl_detail_head tr th').length;
-                        // for (var i = 1; i <= columnNum; i++) {
-                        //     var thwidth = Number(window.opener.$(".table-decide-description").eq(3).find('thead tr th:nth-child(' + i + ')').css('width').replace('px', ''));
-                        //     var tdwidth = window.opener.$('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
-                        //     thwidthArry.push(thwidth + 1);
-                        //     tdwidthArry.push(tdwidth + 1);
-                        // }
-
-                        // for (var i = 1; i <= columnNum; i++) {
-                        //     if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-                        //         window.opener.$(".table-decide-description thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                        //         window.opener.$(".table-decide-description tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-                        //     } else {
-                        //         window.opener.$(".table-decide-description thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                        //         window.opener.$(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-                        //     }
-                        // }
                         window.opener.resetTableADisplayStyle();
-                        window.opener.resetTableAWidth();
-                        window.opener.resetTableBWidth();
+
+                        // テーブルAの幅をリセットする
+                        resetTableWidth(window.opener.$("#tableA_chkbox_head"), window.opener.$("#tableA_chkbox"), window.opener.$("#tableA_head"), window.opener.$("#tableA"));
+                        // テーブルBの幅をリセットする
+                        resetTableWidth(window.opener.$("#tableB_no_head"), window.opener.$("#tableB_no"), window.opener.$("#tableB_head"), window.opener.$("#tableB"));
+                        // チェックボックスクリックイベントの設定
+                        setCheckBoxClickEvent(window.opener.$('input[name="edit"]'), window.opener.$("#tableA"), window.opener.$("#tableA_chkbox"), window.opener.$("#allChecked"));
+
+                        // テーブルAの行クリックイベントの設定
+                        selectRow('hasChkbox', window.opener.$("#tableA_chkbox"), window.opener.$("#tableA"), window.opener.$("#allChecked"));
+
+                        // 対象チェックボックスチェック状態の設定
+                        scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+
+                        // window.opener.resetTableAWidth();
+                        // window.opener.resetTableBWidth();
                     })
                     .fail(function (response) {
                         console.log("処理結果：" + JSON.stringify(response));
