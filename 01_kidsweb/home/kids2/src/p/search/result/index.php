@@ -327,7 +327,6 @@ foreach ($records as $i => $record) {
             }
         }
     }
-
     $objDB->freeResult($lngResultID);
 
     // 背景色設定

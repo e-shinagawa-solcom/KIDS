@@ -107,11 +107,11 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     $aryQuery[] = "        , ms.strsalesclassname";
     $aryQuery[] = "        , p.strGoodsCode";
     $aryQuery[] = "        , rd1.dtmDeliveryDate";
-    $aryQuery[] = "        , to_char(rd1.curProductPrice, '9,999,999,990.99') as curProductPrice";
+    $aryQuery[] = "        , rd1.curProductPrice";
     $aryQuery[] = "        , mp.lngProductUnitCode";
     $aryQuery[] = "        , mp.strproductunitname";
     $aryQuery[] = "        , rd1.lngProductQuantity";
-    $aryQuery[] = "        , to_char(rd1.curSubTotalPrice, '9,999,999,990.99') as curSubTotalPrice";
+    $aryQuery[] = "        , rd1.curSubTotalPrice";
     $aryQuery[] = "        , rd1.strNote ";
     $aryQuery[] = "      FROM";
     $aryQuery[] = "        t_ReceiveDetail rd1 ";

@@ -298,7 +298,7 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
     // 単価
-    $textContent = toMoneyFormat($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["curproductprice"]);
+    $textContent = convertPrice($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["curproductprice"], "unitprice");
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "curproductprice");
     $trBody->appendChild($td);
@@ -348,7 +348,7 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
     // 小計
-    $textContent = toMoneyFormat($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["cursubtotalprice"]);
+    $textContent = convertPrice($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["cursubtotalprice"], "price");
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "cursubtotalprice");
     $trBody->appendChild($td);

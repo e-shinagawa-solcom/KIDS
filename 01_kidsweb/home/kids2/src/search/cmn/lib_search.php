@@ -383,9 +383,9 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "        , od1.lngStockItemCode as lngStockItemCode";
         $aryQuery[] = "        , si.strstockitemname as strstockitemname";
         $aryQuery[] = "        , to_char(od1.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
-        $aryQuery[] = "        , to_char(od1.curProductPrice, '9,999,999,990.9999') as curProductPrice";
+        $aryQuery[] = "        , od1.curProductPrice";
         $aryQuery[] = "        , to_char(od1.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
-        $aryQuery[] = "        , to_char(od1.curSubTotalPrice, '9,999,999,990.99') as curSubTotalPrice";
+        $aryQuery[] = "        , od1.curSubTotalPrice";
         $aryQuery[] = "        , od1.strNote as strDetailNote ";
         $aryQuery[] = "      from";
         $aryQuery[] = "        t_orderdetail od1 ";
@@ -484,11 +484,11 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "        , ms.strsalesclassname";
         $aryQuery[] = "        , p.strGoodsCode";
         $aryQuery[] = "        , rd1.dtmDeliveryDate";
-        $aryQuery[] = "        , to_char(rd1.curProductPrice, '9,999,999,990.99') as curProductPrice";
+        $aryQuery[] = "        , rd1.curProductPrice";
         $aryQuery[] = "        , mp.lngProductUnitCode";
         $aryQuery[] = "        , mp.strproductunitname";
         $aryQuery[] = "        , rd1.lngProductQuantity";
-        $aryQuery[] = "        , to_char(rd1.curSubTotalPrice, '9,999,999,990.99') as curSubTotalPrice";
+        $aryQuery[] = "        , rd1.curSubTotalPrice";
         $aryQuery[] = "        , rd1.strNote ";
         $aryQuery[] = "      FROM";
         $aryQuery[] = "        t_ReceiveDetail rd1 ";
@@ -538,7 +538,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , ss.strSalesStatusName as strSalesStatusName";
         $aryQuery[] = "  , ss.strSalesStatusName as strStatusName";
         $aryQuery[] = "  , s.strNote as strNote";
-        $aryQuery[] = "  , To_char(s.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
+        $aryQuery[] = "  , s.curTotalPrice";
         $aryQuery[] = "  , mu.strMonetaryUnitSign as strMonetaryUnitSign ";
         $aryQuery[] = "  , s.lngMonetaryUnitCode as lngMonetaryUnitCode ";
         $aryQuery[] = "FROM";
@@ -630,7 +630,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , u.struserdisplaycode as strusercode";
         $aryQuery[] = "  , s.strusername as strusername";
         $aryQuery[] = "  , s.strNote as strNote";
-        $aryQuery[] = "  , To_char(s.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
+        $aryQuery[] = "  , s.curTotalPrice";
         $aryQuery[] = "  , sa.strSalesCode as strSalesCode";
         $aryQuery[] = "  , sa.lngSalesStatusCode as lngSalesStatusCode";
         $aryQuery[] = "  , ss.strSalesStatusName as strSalesStatusName";
@@ -681,7 +681,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , s.lngpayconditioncode as lngpayconditioncode";
         $aryQuery[] = "  , mp.strpayconditionname as strpayconditionname";
         $aryQuery[] = "  , s.strNote as strNote";
-        $aryQuery[] = "  , To_char(s.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
+        $aryQuery[] = "  , s.curTotalPrice";
         $aryQuery[] = "  , mu.strMonetaryUnitSign as strMonetaryUnitSign";
         $aryQuery[] = "  , mu.lngmonetaryunitcode as lngmonetaryunitcode ";
         $aryQuery[] = "FROM";
@@ -733,15 +733,15 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , to_char(inv.dtminvoicedate, 'YYYY/MM/DD') as dtminvoicedate";
         $aryQuery[] = "  , to_char(inv.dtmchargeternstart, 'YYYY/MM/DD') as dtmchargeternstart";
         $aryQuery[] = "  , to_char(inv.dtmchargeternend, 'YYYY/MM/DD') as dtmchargeternend";
-        $aryQuery[] = "  , To_char(inv.curlastmonthbalance, '9,999,999,990.99') as curlastmonthbalance";
-        $aryQuery[] = "  , To_char(inv.curthismonthamount, '9,999,999,990.99') as curthismonthamount";
+        $aryQuery[] = "  , inv.curlastmonthbalance as curlastmonthbalance";
+        $aryQuery[] = "  , inv.curthismonthamount as curthismonthamount";
         $aryQuery[] = "  , inv.lngmonetaryunitcode as lngmonetaryunitcode";
         $aryQuery[] = "  , inv.strmonetaryunitsign as strmonetaryunitsign";
         $aryQuery[] = "  , inv.lngtaxclasscode as lngtaxclasscode";
         $aryQuery[] = "  , inv.strtaxclassname as strtaxclassname";
-        $aryQuery[] = "  , To_char(inv.cursubtotal1, '9,999,999,990.99') as cursubtotal";
+        $aryQuery[] = "  , inv.cursubtotal1 as cursubtotal";
         $aryQuery[] = "  , inv.curtax1 as curtax1";
-        $aryQuery[] = "  , To_char(inv.curtaxprice1, '9,999,999,990.99') as curtaxprice";
+        $aryQuery[] = "  , inv.curtaxprice1 as curtaxprice";
         $aryQuery[] = "  , u.struserdisplaycode as strusercode";
         $aryQuery[] = "  , inv.strusername as strusername";
         $aryQuery[] = "  , insert_u.struserdisplaycode as strinsertusercode";
@@ -975,8 +975,8 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , to_char(inv_d.dtmdeliverydate, 'YYYY/MM/DD HH:MI:SS') as dtmdeliverydate";
         $aryQuery[] = "  , delv_c.strcompanydisplaycode as strdeliveryplacecode";
         $aryQuery[] = "  , inv_d.strdeliveryplacename as strdeliveryplacename";
-        $aryQuery[] = "  , To_char(inv_d.cursubtotalprice, '9,999,999,990.99') as cursubtotalprice";
-        $aryQuery[] = "  , To_char(inv_d.curtax * inv_d.cursubtotalprice, '9,999,999,990.99') as curtaxprice";
+        $aryQuery[] = "  , inv_d.cursubtotalprice as cursubtotalprice";
+        $aryQuery[] = "  , inv_d.curtax * inv_d.cursubtotalprice as curtaxprice";
         $aryQuery[] = "  , inv_d.lngtaxclasscode as lngtaxclasscode";
         $aryQuery[] = "  , inv_d.strtaxclassname as strtaxclassname";
         $aryQuery[] = "  , inv_d.curtax as curtax";
@@ -1023,7 +1023,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , sd.lngTaxClassCode";
         $aryQuery[] = "  , mtc.strTaxClassName";
         $aryQuery[] = "  , mt.curtax";
-        $aryQuery[] = "  , to_char(sd.curTaxPrice, '9,999,999,990.99') as curTaxPrice";
+        $aryQuery[] = "  , sd.curTaxPrice";
         $aryQuery[] = "  , sd.strNote as strdetailnote";
         $aryQuery[] = "FROM";
         $aryQuery[] = "  t_StockDetail sd ";
@@ -1083,11 +1083,11 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , sd.lngSalesClassCode";
         $aryQuery[] = "  , ms.strSalesClassName";
         $aryQuery[] = "  , p.strGoodsCode";
-        $aryQuery[] = "  , To_char(sd.curProductPrice, '9,999,999,990.99') as curProductPrice";
+        $aryQuery[] = "  , sd.curProductPrice";
         $aryQuery[] = "  , sd.lngProductUnitCode";
         $aryQuery[] = "  , mp.strproductunitname";
         $aryQuery[] = "  , To_char(sd.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
-        $aryQuery[] = "  , To_char(sd.curSubTotalPrice, '9,999,999,990') as curSubTotalPrice";
+        $aryQuery[] = "  , sd.curSubTotalPrice";
         $aryQuery[] = "  , sd.lngTaxClassCode";
         $aryQuery[] = "  , mtc.strtaxclassname";
         $aryQuery[] = "  , mt.curtax";
@@ -1141,11 +1141,11 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , sd.strProductName";
         $aryQuery[] = "  , sd.lngsalesclasscode";
         $aryQuery[] = "  , sd.strSalesClassName";
-        $aryQuery[] = "  , to_char(sd.curProductPrice, '9,999,999,990.99') as curProductPrice";
-        $aryQuery[] = "  , to_char(sd.lngQuantity, '9,999,999,990.99') as lngQuantity";
-        $aryQuery[] = "  , to_char(sd.lngProductQuantity, '9,999,999,990.99') as lngProductQuantity";
+        $aryQuery[] = "  , curProductPrice";
+        $aryQuery[] = "  , to_char(sd.lngQuantity, '9,999,999,990') as lngQuantity";
+        $aryQuery[] = "  , to_char(sd.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
         $aryQuery[] = "  , sd.strProductUnitName";
-        $aryQuery[] = "  , to_char(sd.curSubTotalPrice, '9,999,999,990.99') as curSubTotalPrice";
+        $aryQuery[] = "  , sd.curSubTotalPrice";
         $aryQuery[] = "  , sd.strNote ";
         $aryQuery[] = "from";
         $aryQuery[] = "  t_slipdetail sd ";
@@ -1698,7 +1698,7 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         // 合計金額
         case "curtotalprice":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curtotalprice"]);
+            $textContent = convertPrice($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curtotalprice"], "price");
             break;
         // 通貨
         case "lngmonetaryunitcode":
@@ -1709,11 +1709,11 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         // 先月請求残額
         case "curlastmonthbalance":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curlastmonthbalance"]);
+            $textContent = convertPrice($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curlastmonthbalance"], "price");
             break;
         // 当月請求金額.
         case "curthismonthamount":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curthismonthamount"]);
+            $textContent = convertPrice($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curthismonthamount"], "price");
             break;
         // 税区分
         case "lngtaxclasscode":
@@ -1801,7 +1801,7 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         // 単価
         case "curproductprice":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]);
+            $textContent = convertPrice($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"], "unitprice");
             break;
         // 入数
         case "lngquantity":
@@ -1820,14 +1820,14 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         // 税抜金額
         case "cursubtotalprice":
             if ($record["cursubtotalprice"] == '') {
-                $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], "0.00");
+                $textContent = convertPrice($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], "0", "price");
             } else {
-                $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]);
+                $textContent = convertPrice($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"], "price");
             }
             break;
         // 消費税額
         case "cursubtotal":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotal"]);
+            $textContent = convertPrice($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotal"], "taxprice");
             break;
         // 明細備考
         case "strdetailnote":
@@ -1910,11 +1910,8 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
             break;
         // 税額
         case "curtaxprice":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curtaxprice"]);
+            $textContent = convertPrice($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curtaxprice"], "taxprice");
             break;
-        // 単価
-        case "curproductprice":
-            $textContent = toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]);
             break;
         // 入数
         case "lngquantity":
