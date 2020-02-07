@@ -205,7 +205,7 @@ function deleteAllRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, t
 
     tableB_fix.find("tbody").empty();
 
-    resetTableRowid(tableA);
+    // resetTableRowid(tableA);
 
     resetTableWidth(tableA_chkbox_head, tableA_chkbox, tableA_head, tableA);
 
@@ -231,7 +231,6 @@ function deleteRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tabl
         }
     });
 
-    resetTableRowid(tableA);
     resetTableRowid(tableB_fix);
     resetTableWidth(tableA_chkbox_head, tableA_chkbox, tableA_head, tableA);
 
@@ -265,18 +264,6 @@ function removeTableBToTableA(tableBRow, tableA, tableA_chkbox, allCheckObj, key
     }
 
     tableBRow.remove();
-
-    tableA.find('tbody tr:nth-child(' + (rownum) + ')').on('click', function () {
-        var rowindex = $(this).index();
-        var checked = tableA_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
-        setRowBackGroundColor(tableA, tableA_chkbox, rowindex, checked);
-    });
-
-    tableA_chkbox.find('tbody tr:nth-child(' + (rownum) + ') ').on('click', function () {
-        var rowindex = $(this).index();
-        var checked = tableA_chkbox.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[name="edit"]').prop('checked');
-        setRowBackGroundColor(tableA, tableA_chkbox, rowindex, checked);
-    });
 
     var chkboxObj = tableA_chkbox.find('tbody tr:nth-child(' + (rownum) + ') td:nth-child(1)').find('input[name="edit"]');
     setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj)
