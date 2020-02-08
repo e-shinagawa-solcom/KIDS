@@ -278,7 +278,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , mp.strordercode as strOrderCode";
         $aryQuery[] = "  , mp.strordercode as strCode";
         $aryQuery[] = "  , to_char(mp.dtmexpirationdate, 'YYYY/MM/DD') as dtmExpirationDate";
-        $aryQuery[] = "  , mp.strproductcode as strProductCode";
+        $aryQuery[] = "  , mp.strproductcode || '_' || mp.strrevisecode as strProductCode";
         $aryQuery[] = "  , mp.strproductname as strProductName";
         $aryQuery[] = "  , mp.strproductenglishname as strProductEnglishName";
         $aryQuery[] = "  , to_char(mp.dtminsertdate, 'YYYY/MM/DD') as dtmInsertDate";
@@ -473,7 +473,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "      SELECT rd1.lngReceiveNo";
         $aryQuery[] = "        , rd1.lngReceiveDetailNo";
         $aryQuery[] = "        , rd1.lngRevisionNo";
-        $aryQuery[] = "        , p.strProductCode";
+        $aryQuery[] = "        , p.strProductCode || '_' || p.strReviseCode as strProductCode";
         $aryQuery[] = "        , mg.strGroupDisplayCode";
         $aryQuery[] = "        , mg.strGroupDisplayName";
         $aryQuery[] = "        , mu.struserdisplaycode";
