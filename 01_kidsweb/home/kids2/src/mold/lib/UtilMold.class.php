@@ -2134,7 +2134,8 @@ class UtilMold extends WithQuery
 		{
 			// RETURNING結果を取得
 			$result = pg_fetch_array($pgResult);
-			// 結果配列に製品名称を追加
+			// 結果配列に再販コード、製品名称を追加
+			$result[FormMoldReport::ReviseCode] = $formData[FormMoldReport::ReviseCode];
 			$result[FormMoldReport::ProductName] = $formData[FormMoldReport::ProductName];
 		}
 		// クエリ実行結果が得られなかった場合

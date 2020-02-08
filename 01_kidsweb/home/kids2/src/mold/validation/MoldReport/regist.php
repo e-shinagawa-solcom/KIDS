@@ -326,12 +326,12 @@ if (!count($errMstList))
 				// 有効な金型履歴が存在しない金型は仕入れ元を現在の保管工場として扱う
 				$currentFactory = $utilMold->selectMoldVender($moldNo);
 			}
-
+//echo "currentFactory:" . $currentFactory ."<br>";
 			// 現在の保管工場と入力された保管工場が一致しない場合
 			if ($currentFactory != $utilCompany->
 					selectCompanyCodeByDisplayCompanyCode($_REQUEST[FormMoldReport::SourceFactory]))
 			{
-				$message = "[保管元工場]指定された保管工場と金型NO:".$moldNo."の現在の保管工場が一致しませんでした。\n";
+				$message = "[保管元工場]指定された保管工場と金型NO:".$moldNo."の現在の保管工場(" . $currentFactory . ")が一致しませんでした。\n";
 				array_key_exists(FormMoldReport::SourceFactory, $errSemanticList) ?
 				$errSemanticList[FormMoldReport::SourceFactory] += $message:
 				$errSemanticList[FormMoldReport::SourceFactory] = $message;
