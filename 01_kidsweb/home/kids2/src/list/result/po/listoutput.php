@@ -127,9 +127,14 @@ else {
     $aryQuery[] = "  , to_char(pod.cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
     $aryQuery[] = "  , to_char(pod.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
     $aryQuery[] = "  , pod.strnote";
+    $aryQuery[] = "  , od.strmoldno";
     $aryQuery[] = "  , pod.lngsortkey ";
     $aryQuery[] = "from";
     $aryQuery[] = "  t_purchaseorderdetail pod ";
+    $aryQuery[] = "inner join t_orderdetail od ";
+    $aryQuery[] = "  on od.lngorderno = pod.lngorderno ";
+    $aryQuery[] = "  and od.lngrevisionno = pod.lngorderrevisionno ";
+    
     $aryQuery[] = "WHERE";
     $aryQuery[] = "  pod.lngpurchaseorderno = " . $aryData["strReportKeyCode"];
     $aryQuery[] = "  AND pod.lngrevisionno = " . $aryParts["lngrevisionno"];
