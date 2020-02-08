@@ -348,25 +348,25 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "      inner join ( ";
     $arySelect[] = "        select";
     $arySelect[] = "          max(lngrevisionno) lngrevisionno";
-    $arySelect[] = "          , strreceivecode ";
+    $arySelect[] = "          , lngreceiveno ";
     $arySelect[] = "        from";
     $arySelect[] = "          m_receive r2 ";
     $arySelect[] = "        where";
     $arySelect[] = "          bytinvalidflag = false ";
     $arySelect[] = "          and not exists ( ";
     $arySelect[] = "            select";
-    $arySelect[] = "              strreceivecode ";
+    $arySelect[] = "              lngreceiveno ";
     $arySelect[] = "            from";
     $arySelect[] = "              m_receive r3 ";
     $arySelect[] = "            where";
     $arySelect[] = "              lngrevisionno < 0 ";
-    $arySelect[] = "              and r3.strreceivecode = r2.strreceivecode";
+    $arySelect[] = "              and r3.lngreceiveno = r2.lngreceiveno";
     $arySelect[] = "          ) ";
     $arySelect[] = "        group by";
-    $arySelect[] = "          strreceivecode";
+    $arySelect[] = "          lngreceiveno";
     $arySelect[] = "      ) r2 ";
     $arySelect[] = "        ON r1.lngrevisionno = r2.lngrevisionno ";
-    $arySelect[] = "        and r1.strreceivecode = r2.strreceivecode ";
+    $arySelect[] = "        and r1.lngreceiveno = r2.lngreceiveno ";
     $arySelect[] = "  ) r ";
     $arySelect[] = "    on rd.lngreceiveno = r.lngreceiveno ";
     $arySelect[] = "    AND rd.lngrevisionno = r.lngrevisionno ";
@@ -523,7 +523,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // -------------------
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 //echo $strQuery;
-//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
+fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
     // 結果を配列に格納
     $aryResult = []; //空の配列で初期化
     if (0 < $lngResultNum) {
