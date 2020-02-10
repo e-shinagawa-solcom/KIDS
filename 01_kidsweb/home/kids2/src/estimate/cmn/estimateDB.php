@@ -975,6 +975,25 @@ class estimateDB extends clsDB {
         return $ret;
     }
 
+    public function getDropdownForMonetaryUnit(){
+/*
+        if (!$this->isOpen()) {
+			return false;
+		} else {
+            $strQuery = "SELECT strmonetaryunitname FROM m_monetaryunit";
+        }
+        $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
+    
+        for ($i = 0; $i < $queryResult[1]; ++$i) {
+            $result = pg_fetch_array($queryResult[0], $i, PGSQL_ASSOC);
+            $monetaryUnitCode = $result['lngmonetaryunitcode'];
+            $monetaryUnitList[$monetaryUnitCode] = $result['strmonetaryunitname'];
+        }
+        $this->freeResult($queryResult[0]);
+*/
+        $monetaryUnitList = MONETARY_DISPLAY_CODE;
+        return $monetaryUnitList;
+    }
 
     /**
     *

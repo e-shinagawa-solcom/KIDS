@@ -44,6 +44,8 @@ class estimateSheetController {
     protected $startColumn;
     protected $endColumn;
 
+    protected $monetaryUnitFormula;
+
     protected $targetAreaRows;
 
     protected $excelErrorList;
@@ -52,7 +54,6 @@ class estimateSheetController {
 
     public $errorMessage;
     public $difference;
-    
 
     // 仕入科目 1224:チャージ計算用変数
     protected $overSeasMoldDepreciation;       // 仕入科目 403:海外金型償却の合計
@@ -1557,6 +1558,7 @@ class estimateSheetController {
 
     // 明細部に値をセットする
     public function inputEstimateDetailData($estimateData) {
+        $this->initMonetaryList();
         $targetAreaRows = $this->targetAreaRows;
         foreach ($estimateData as $areaCode => $data) {
             $this->inputEstimateDetailToTargetArea($areaCode, $data);
@@ -1564,6 +1566,25 @@ class estimateSheetController {
         return true;
     }
 
+    protected function initMonetaryList()
+    {
+        $cellAddress = $this->getRowAndColumnFromCellName(workSheetConst::JPYEN_DISPLAY);
+        $moneraryUnitCellRow = $cellAddress["row"];
+        $moneraryUnitCellColumn = $cellAddress["column"];
+        $rowCount = 0;
+        $cellAddress=$moneraryUnitCellColumn.$moneraryUnitCellRow;
+        $cellAddressFrom = $cellAddress;
+//fncDebug("kids2.log", $cellAddress , __FILE__, __LINE__, "a");
+//fncDebug("kids2.log", is_null($this->sheet->getCell($cellAddress)) , __FILE__, __LINE__, "a");
+        while(!is_null($this->sheet->getCell($cellAddress)->getValue())){
+            $rowCount++;
+            $cellAddress=$moneraryUnitCellColumn.($moneraryUnitCellRow+$rowCount);
+//fncDebug("kids2.log", $cellAddress , __FILE__, __LINE__, "a");
+        }
+        
+        $this->monetaryUnitFormula = "$" . $moneraryUnitCellColumn ."$" . ($moneraryUnitCellRow-1) . ":$" .$moneraryUnitCellColumn . "$" .($moneraryUnitCellRow+$rowCount-1);
+//fncDebug("kids2.log", $this->monetaryUnitFormula, __FILE__, __LINE__, "a");
+    }
 
     // 対象エリアに見積原価明細情報をセットする
     protected function inputEstimateDetailToTargetArea($areaCode, $datas) {
@@ -1642,6 +1663,13 @@ class estimateSheetController {
         if (!$this->dropdownDevUser) {
             $this->setDropdownForDevelopUser();
         }
+        /*
+        if (!$this->monetaryiunit) {
+            $this->setDropdownForMonetaryUnit();
+        }
+        */
+        
+        
         return;
     }
 
@@ -1680,6 +1708,11 @@ class estimateSheetController {
 
     protected function setDropdownForDevelopUser() {
         $this->dropdownDevUser = $this->objDB->getDropdownForDevelopUser();
+        return;
+    }
+
+    protected function setDropdownForMonetaryUnit() {
+        $this->monetaryiunit = $this->objDB->getDropdownForMonetaryUnit();
         return;
     }
 
@@ -1891,7 +1924,7 @@ class estimateSheetController {
 
             // ブランクセルの設定
             $blankCell = '$'. $clsItmCol. '$'. $clsItmRow;
-fncDebug("dl.log", $blankCell, __FILE__, __LINE__, "a");
+//fncDebug("dl.log", $blankCell, __FILE__, __LINE__, "a");
 
             // 売上分類 or 仕入科目のドロップダウンリストの最後のセル
             $endDivSubCell = '$'. $divSubCol. '$'. $divSubRow;
@@ -1922,7 +1955,7 @@ fncDebug("dl.log", $blankCell, __FILE__, __LINE__, "a");
             $clsItmCheckFomula .= ',""';
             $clsItmCheckFomula .= str_repeat(')', $branch);
             $clsItmCheckFomula .= ',""),"")';
-fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
+//fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
 
             $orderAttribute = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA;
 
@@ -1956,10 +1989,11 @@ fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
             $detailDivSubCol = $columnNumber['divisionSubject'];  // 売上分類 or 仕入科目の列番号
             $detailClsItmCol = $columnNumber['classItem'];        // 売上区分 or 仕入部品の列番号
             $detailCompanyCol = $columnNumber['customerCompany']; // 顧客先 or 仕入先の列番号
+            $detailMonetaryUnitCol = $columnNumber['monetaryDisplay']; // 通貨の列番号
             $detailCheckCol = $columnNumber['classItemCheck']; // チェック列の列番号
             $detailCompanyCheckCol = $columnNumber['companyItemCheck']; // チェック列の列番号
-fncDebug("dl.log", $detailCheckCol, __FILE__, __LINE__, "a");
-fncDebug("dl.log", $detailCompanyCheckCol, __FILE__, __LINE__, "a");
+//fncDebug("dl.log", $detailCheckCol, __FILE__, __LINE__, "a");
+//fncDebug("dl.log", $detailCompanyCheckCol, __FILE__, __LINE__, "a");
             $detailNoteCol = $columnNumber['note']; // チェック列の列番号
 
             // 明細行に入力規則を適用
@@ -1967,6 +2001,7 @@ fncDebug("dl.log", $detailCompanyCheckCol, __FILE__, __LINE__, "a");
                 $detailDivSubCell = $detailDivSubCol. $row;
                 $detailClsItmCell = $detailClsItmCol. $row;
                 $detailCompanyCell = $detailCompanyCol. $row;
+                $detailMonetaryUnitCell = $detailMonetaryUnitCol . $row;
                 $clsItmCheckCell = $detailCheckCol. $row;
 //                $clsCompanyCheckCell = $detailCompanyCheckCol. $row;
                 
@@ -1979,15 +2014,19 @@ fncDebug("dl.log", $detailCompanyCheckCol, __FILE__, __LINE__, "a");
 
                 $this->setDataValidationForCell($detailClsItmCell, $inputClsItmFomula);  // 売上区分 or 仕入部品
 
-fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
+//fncDebug("kids2.log", $detailMonetaryUnitCell, __FILE__, __LINE__, "a");
+//fncDebug("kids2.log", $this->monetaryUnitFormula, __FILE__, __LINE__, "a");
+                $this->setDataValidationForCell($detailMonetaryUnitCell, $this->monetaryUnitFormula);  // 通貨
+
+//fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
                 // 置換文字列を売上分類or仕入科目のセルに置換
                 $inputClsItmCheckFomula = str_replace($divSubPattern, $detailDivSubCell, $clsItmCheckFomula);
-fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
+//fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
                 // 置換文字列を売上区分or仕入部品のセルに置換
                 $inputClsItmCheckFomula = str_replace($clsItmPattern, $detailClsItmCell, $inputClsItmCheckFomula);
 
                 // 売上区分 or 仕入部品チェック用セルに計算式をセットする
-fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
+//fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
                 $this->sheet->getCell($clsItmCheckCell)->setValue($inputClsItmCheckFomula);
 //                $this->sheet->getCell($clsCompanyCheckCell)->setValue($inputClsItmCheckFomula);
 
@@ -2281,9 +2320,12 @@ fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
         $this->setRowRangeOfTargetArea();
     }
 
-    // 売上区分 or 仕入部品に条件付き書式を設定する（売上分類 or 仕入科目 ⇔ 売上区分 or 仕入部品の関係チェック用）
+    // 売上区分 or 仕入部品に条件付き書式を設定する
+    //（売上分類 or 仕入科目 ⇔ 売上区分 or 仕入部品の関係チェック用）
+    //（通貨とレート関係チェック用）
     protected function setConditionsForClassItemCell($areaCode) {
 
+        // 売上分類 or 仕入科目 ⇔ 売上区分 or 仕入部品の関係チェック
         $columnNumber = $this->getColumnNumberList($areaCode);
 
         if (!$columnNumber) {
@@ -2313,6 +2355,53 @@ fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
 
         // 比較セルの設定
         $conditional->addCondition($compareCell);
+
+        // 書式の設定
+        $conditional->getStyle()->getFont()->getColor()->setARGB(Color::COLOR_RED); // 文字色
+        $conditional->getStyle()->getFont()->setBold(true); // 太字
+        $conditional->getStyle()->getFont()->setItalic(true); // 斜体
+        $conditional->getStyle()->getFont()->setUnderline(true); // 下線
+        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB(Color::COLOR_YELLOW); // 背景色
+
+        $conditionalStyles[] = $conditional;
+
+        // 条件付き書式をセルにセットする
+        $this->sheet->getStyle($clsItmCellRange)->setConditionalStyles($conditionalStyles);
+        
+        unset($conditionalStyles);
+
+        // 通貨と金額の関係チェック
+        $columnNumber = $this->getColumnNumberList($areaCode);
+
+        if (!$columnNumber) {
+            return false;
+        }
+
+        $targetAreaRows = $this->targetAreaRows;
+
+        $firstRow = $targetAreaRows[$areaCode]['firstRow'];
+        $lastRow = $targetAreaRows[$areaCode]['lastRow'];
+
+        $checkCol = $columnNumber['monetaryDisplay'];        // 通貨の列番号
+        $clsItmCol = $columnNumber['conversionRate'];    // チェック列（レート）の列番号
+
+        $firstClsItmCell = $clsItmCol. $firstRow;
+        $lastClsItmCell = $clsItmCol. $lastRow;
+
+        $clsItmCellRange = $firstClsItmCell. ':'. $lastClsItmCell;
+
+//        $compareCell = $checkCol. $firstRow;
+
+        $expression = 'AND('.$checkCol.$firstRow.'<>"JP",'.$clsItmCol.$firstRow.'<=1,LEN('.$clsItmCol.$firstRow.')<>0)=TRUE';
+//fncDebug("kids2.log", $expression, __FILE__, __LINE__, "a");
+        $conditional = new Conditional();
+        $conditional->setConditionType(Conditional::CONDITION_EXPRESSION);
+
+        // 処理内容のセット（等しい）
+        $conditional->setOperatorType(Conditional::OPERATOR_EQUAL);
+
+        // 比較セルの設定
+        $conditional->addCondition($expression);
 
         // 書式の設定
         $conditional->getStyle()->getFont()->getColor()->setARGB(Color::COLOR_RED); // 文字色
