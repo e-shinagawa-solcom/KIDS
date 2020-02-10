@@ -11,8 +11,12 @@
 
     if ($('input[name="strGoodsCode"]').val() != "") {
         $('input[name="strGoodsCode"]').attr('readonly', true);
+        $('input[name="strGoodsCode"]').removeClass('TxtStyle05L');
+        $('input[name="strGoodsCode"]').addClass('disTxt05L');
     } else {
         $('input[name="strGoodsCode"]').attr('readonly', false);
+        $('input[name="strGoodsCode"]').removeClass('disTxt05L');
+        $('input[name="strGoodsCode"]').addClass('TxtStyle05L');
     }
 
     var lockId = "lockId";
@@ -105,6 +109,8 @@
         deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
 
         resetTableRowid($("#tableA"));
+
+        resetTableADisplayStyle();
         
         $("#tableA_head").trigger("update");
 
@@ -122,7 +128,7 @@
 
         $("#tableA").trigger("update");
 
-        resetTableBDisplayStyle();
+        resetTableADisplayStyle();
     });
 
     // function removeTableBToTableA(tableBRow) {
