@@ -338,7 +338,8 @@ foreach ($records as $i => $record) {
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
-    $trBody->setAttribute("id", $record["strproductcode"]);
+//    $trBody->setAttribute("id", $record["strproductcode"] . "_" . $record["strrevisecode"]);
+    $trBody->setAttribute("id", $record["strproductcode"]. "_" . $record["strrevisecode"] );
     // if (!$isMaxproduct) {
     //     $trBody->setAttribute("id", $record["strproductcode"] . "_" . $record["lngrevisionno"]);
     //     $trBody->setAttribute("style", "display: none;");
@@ -396,6 +397,7 @@ foreach ($records as $i => $record) {
             $imgHistory->setAttribute("id", $record["strproductcode"]);
             $imgHistory->setAttribute("rownum", $index);
             $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
+            $imgHistory->setAttribute("strrevisecode", $record["strrevisecode"]);
             $imgHistory->setAttribute("class", "history button");
             // td > img
             $tdHistory->appendChild($imgHistory);
