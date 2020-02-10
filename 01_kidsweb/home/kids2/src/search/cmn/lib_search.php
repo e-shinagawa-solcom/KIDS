@@ -65,6 +65,7 @@ $aryTableHeaderName_PO["lnginchargeusercode"] = "開発担当者";
 $aryTableHeaderName_PO["lngcustomercode"] = "仕入先";
 $aryTableHeaderName_PO["lngstocksubjectcode"] = "仕入科目";
 $aryTableHeaderName_PO["lngstockitemcode"] = "仕入部品";
+$aryTableHeaderName_PO["strmoldno"] = "NO";
 $aryTableHeaderName_PO["dtmdeliverydate"] = "納期";
 $aryTableHeaderName_PO["lngorderstatuscode"] = "状態";
 $aryTableHeaderName_PO["strgoodscode"] = "顧客品番";
@@ -353,6 +354,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , od.strstockitemname";
         $aryQuery[] = "  , od.dtmDeliveryDate";
         $aryQuery[] = "  , od.curProductPrice";
+        $aryQuery[] = "  , od.strmoldno";
         $aryQuery[] = "  , od.lngProductQuantity";
         $aryQuery[] = "  , od.curSubTotalPrice";
         $aryQuery[] = "  , od.strDetailNote ";
@@ -386,6 +388,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "        , od1.curProductPrice";
         $aryQuery[] = "        , to_char(od1.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
         $aryQuery[] = "        , od1.curSubTotalPrice";
+        $aryQuery[] = "        , od1.strmoldno";
         $aryQuery[] = "        , od1.strNote as strDetailNote ";
         $aryQuery[] = "      from";
         $aryQuery[] = "        t_orderdetail od1 ";
@@ -1574,6 +1577,8 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         case "dtmdeliverydate":
         // 請求日
         case "dtminvoicedate":
+        // 金型番号
+        case "strmoldno":
         // 製品コード
         case "strproductcode":
         // 顧客受注番号

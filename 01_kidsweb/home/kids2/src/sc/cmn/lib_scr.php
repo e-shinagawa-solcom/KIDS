@@ -200,6 +200,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  u_ins.lngusercode as lngdrafterusercode,  "; //起票者（ユーザーコード）
     $aryQuery[] = "  u_ins.struserdisplaycode as strdrafteruserdisplaycode,  "; //起票者（表示用ユーザーコード）
     $aryQuery[] = "  u_ins.struserdisplayname as strdrafteruserdisplayname, "; //起票者（表示用ユーザー名）
+    $aryQuery[] = "  c_cust.lngcountrycode, "; //国コード
     $aryQuery[] = "  c_cust.strcompanydisplaycode as strcompanydisplaycode, "; //顧客（表示用会社コード）
     $aryQuery[] = "  c_cust.strcompanydisplayname as strcompanydisplayname, "; //顧客（表示用会社名）
     $aryQuery[] = "  s.strcustomerusername, "; //顧客担当者
@@ -318,6 +319,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  rd.strrevisecode,"; //リバイズコード（再販コード）
     $arySelect[] = "  p.strproductname,"; //製品名
     $arySelect[] = "  p.strproductenglishname,"; //製品名（英語）
+    $arySelect[] = "  g.strgroupdisplaycode as strsalesdeptcode,"; //営業部署（名称）
     $arySelect[] = "  g.strgroupdisplayname as strsalesdeptname,"; //営業部署（名称）
     $arySelect[] = "  rd.lngsalesclasscode,"; //売上区分コード
     $arySelect[] = "  sc.strsalesclassname,"; //売上区分（名称）
@@ -603,11 +605,10 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductunitname"]);
         $detail_body_html .= "<td class='detailProductUnitName'>" . $strDisplayValue . "</td>";
         //単価
-        $strDisplayValue = toMoneyFormat($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], number_format($aryDetail[$i]["curproductprice"], 4));
-        // $strDisplayValue = "&yen". number_format($aryDetail[$i]["curproductprice"], 4);
+        $strDisplayValue = convertPrice($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], $aryDetail[$i]["curproductprice"], 'unitprice');
         $detail_body_html .= "<td class='detailProductPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
         //税抜金額        
-        $strDisplayValue = toMoneyFormat($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], number_format($aryDetail[$i]["cursubtotalprice"]));
+        $strDisplayValue = convertPrice($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], $aryDetail[$i]["cursubtotalprice"], 'price');
         $detail_body_html .= "<td class='detailSubTotalPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
         //顧客品番
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strgoodscode"]);
@@ -616,7 +617,11 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductenglishname"]);
         $detail_body_html .= "<td class='detailProductEnglishName'>" . $strDisplayValue . "</td>";
         //営業部署
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strsalesdeptname"]);
+        if ($aryDetail[$i]["strsalesdeptcode"] != "") {
+            $strDisplayValue = htmlspecialchars( "[" .$aryDetail[$i]["strsalesdeptcode"]. "] " .$aryDetail[$i]["strsalesdeptname"]);
+        } else {
+            $strDisplayValue = "";
+        }
         $detail_body_html .= "<td class='detailSalesDeptName'>" . $strDisplayValue . "</td>";
         //受注番号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceiveno"]);

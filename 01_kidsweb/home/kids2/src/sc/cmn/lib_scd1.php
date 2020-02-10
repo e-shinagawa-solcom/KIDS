@@ -44,9 +44,10 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	// 課税区分
 	$aryQuery[] = ", s.strTaxClassName as strtaxclassname";
 	// 通貨記号。ヘッダ部の合計金額、明細部の単価と税抜価格に付与される
+	$aryQuery[] = ", s.lngMonetaryUnitCode";
 	$aryQuery[] = ", s.strMonetaryUnitSign as strmonetaryunitsign";
 	// 合計金額
-	$aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curtotalprice";
+	$aryQuery[] = ", s.curTotalPrice";
 	// 通貨（この項目だけマスタを紐づけて取得）
 	$aryQuery[] = ", mu.strMonetaryUnitName as strmonetaryunitname";
 	// 備考
@@ -108,13 +109,13 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	// 名称（英語）
 	$aryQuery[] = ", sd.strProductEnglishName as strproductenglishname";	//製品名（英語）
 	// 単価
-	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curproductprice";
+	$aryQuery[] = ", sd.curProductPrice";
 	// 数量
 	$aryQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngproductquantity";
 	// 単位
 	$aryQuery[] = ", sd.strProductUnitName as strproductunitname";
 	// 税抜金額
-	$aryQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as cursubtotalprice";
+	$aryQuery[] = ", sd.curSubTotalPrice";
 	// 明細備考
 	$aryQuery[] = ", sd.strNote as strDetailNote";
 	// 受注番号
@@ -179,17 +180,17 @@ function fncSetSlipHeadTableData ( $aryResult )
 	// 通貨記号。ヘッダ部の合計金額、明細部の単価と税抜価格に付与される
 	$aryNewResult["strMonetaryUnitSign"] = $aryResult["strmonetaryunitsign"];
 	// 合計金額
-	$aryNewResult["curTotalPrice"] = $aryNewResult["strMonetaryUnitSign"] . " ";
 	if ( !$aryResult["curtotalprice"] )
 	{
-		$aryNewResult["curTotalPrice"] .= "0.00";
+		$aryNewResult["curTotalPrice"] = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], 0, "price");
 	}
 	else
 	{
-		$aryNewResult["curTotalPrice"] .= $aryResult["curtotalprice"];
+		$aryNewResult["curTotalPrice"] = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["curtotalprice"], "price");
 	}
 
 	// 通貨
+	$aryNewResult["lngmonetaryunitcode"] = $aryResult["lngmonetaryunitcode"];
 	$aryNewResult["strMonetaryUnitName"] = $aryResult["strmonetaryunitname"];
 
 	// 備考
@@ -278,15 +279,14 @@ function fncSetSlipDetailTableData ( $aryDetailResult, $aryHeadResult )
 	// 名称（英語）
 	$aryNewDetailResult["strProductEnglishName"] = $aryDetailResult["strproductenglishname"];
 
-	// 単価
-	$aryNewDetailResult["curProductPrice"] = $aryHeadResult["strMonetaryUnitSign"] . " ";
+	// 単価	
 	if ( !$aryDetailResult["curproductprice"] )
 	{
-		$aryNewDetailResult["curProductPrice"] .= "0.00";
+		$aryNewDetailResult["curproductprice"] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], 0, "unitprice");
 	}
 	else
 	{
-		$aryNewDetailResult["curProductPrice"] .= $aryDetailResult["curproductprice"];
+		$aryNewDetailResult["curproductprice"] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult["curproductprice"], "unitprice");
 	}
 
 	// 数量
@@ -294,15 +294,14 @@ function fncSetSlipDetailTableData ( $aryDetailResult, $aryHeadResult )
 	// 単位
 	$aryNewDetailResult["strProductUnitName"] = $aryDetailResult["strproductunitname"];
 
-	// 税抜金額
-	$aryNewDetailResult["curSubTotalPrice"] = $aryHeadResult["strMonetaryUnitSign"] . " ";
+	// 税抜金額	
 	if ( !$aryDetailResult["cursubtotalprice"] )
 	{
-		$aryNewDetailResult["curSubTotalPrice"] .= "0.00";
+		$aryNewDetailResult["cursubtotalprice"] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], 0, "price");
 	}
 	else
 	{
-		$aryNewDetailResult["curSubTotalPrice"] .= $aryDetailResult["cursubtotalprice"];
+		$aryNewDetailResult["cursubtotalprice"] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult["cursubtotalprice"], "price");
 	}
 
 	// 明細備考

@@ -143,7 +143,7 @@ var chkbox = [];
                         }
                         console.log("消費税区分：" + lngtaxclasscode);
                         console.log("消費税額：" + curtaxprice);
-                        console.log(money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice));
+                        console.log(money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice, 'taxprice'));
                         var select = '<select style="width:90px;" onchange="resetTaxPrice(this, 1)">';
                         for (var j = 0; j < data.taxclass.length; j++) {
                             var taxclassRow = data.taxclass[j];
@@ -166,16 +166,16 @@ var chkbox = [];
                             // + '<td class="col3">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname).substring(0, 28) + '</td>'
                             + '<td class="col4">[' + convertNull(row.lngstocksubjectcode) + '] ' + convertNull(row.strstocksubjectname) + '</td>'
                             + '<td class="col5">[' + convertNull(row.lngstockitemcode) + '] ' + convertNull(row.strstockitemname) + '</td>'
-                            + '<td class="col6">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice) + '</td>'
+                            + '<td class="col6">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice, 'unitprice') + '</td>'
                             + '<td class="col7">' + row.strproductunitname + '</td>'
                             + '<td class="col8">' + convertNumber(row.lngproductquantity, 0) + '</td>'
-                            + '<td class="col9">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice) + '</td>'
+                            + '<td class="col9">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice, 'price') + '</td>'
                             // 消費税区分
                             + '<td class="col10">' + select + '</td>'
                             // 消費税率
                             + '<td class="col11">' + curtaxList + '</td>'
                             // 消費税額
-                            + '<td class="col12">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice) + '</td>'
+                            + '<td class="col12">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice, 'taxprice') + '</td>'
                             + '<td class="dtmdeliverydate">' + row.dtmdeliverydate + '</td>'
                             + '<td>' + convertNull(row.strnote) + '</td>'
                             + '<td class="cursubtotalprice" style="display:none">' + row.cursubtotalprice + '</td>'
@@ -425,7 +425,7 @@ function resetTaxPrice(objID, type) {
     } else {
         curtaxprice = Math.floor((cursubtotalprice / (1 + (curtax / 100))) * (curtax / 100));
     }
-    $('.' + rowClass).find('.col12').text(money_format(lngmonetaryunitcode, strmonetaryunitsign, String(curtaxprice)));
+    $('.' + rowClass).find('.col12').text(money_format(lngmonetaryunitcode, strmonetaryunitsign, String(curtaxprice), 'taxprice'));
     $('.' + rowClass).find('.curtax').text(curtax);
     $('.' + rowClass).find('.curtaxprice').text(curtaxprice);
     $('.' + rowClass).find('.lngtaxclasscode').text(lngtaxclasscode);
@@ -454,11 +454,25 @@ function convertNullToZero(str) {
     }
 }
 
-function money_format(lngmonetaryunitcode, strmonetaryunitsign, price) {
+function money_format(lngmonetaryunitcode, strmonetaryunitsign, price, type) {
     if (lngmonetaryunitcode == 1) {
-        return '\xA5' + " " + convertNumber(price, 4);
+        if (type == 'unitprice') {
+            return '\xA5' + " " + convertNumber(price, 4);
+        } else if (type == 'price') {
+            return '\xA5' + " " + convertNumber(price, 0);
+        } else if (type == 'taxprice') {            
+            return '\xA5' + " " + convertNumber(price, 0);
+        }
+        return '\xA5' + " " + convertNumber(price, 0);
     } else {
-        return strmonetaryunitsign + " " + convertNumber(price, 4);
+        if (type == 'unitprice') {
+            return strmonetaryunitsign + " " + convertNumber(price, 4);
+        } else if (type == 'price') {
+            return strmonetaryunitsign + " " + convertNumber(price, 2);
+        } else if (type == 'taxprice') {            
+            return strmonetaryunitsign + " " + convertNumber(price, 0);
+        }
+        return strmonetaryunitsign + " " + convertNumber(price, 2);
     }
 }
 

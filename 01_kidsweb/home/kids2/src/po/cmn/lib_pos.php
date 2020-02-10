@@ -70,6 +70,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "  , od.lngStockItemCode";
     $aryQuery[] = "  , od.strstockitemname";
     $aryQuery[] = "  , od.dtmDeliveryDate";
+    $aryQuery[] = "  , od.strmoldno";
     $aryQuery[] = "  , od.curProductPrice";
     $aryQuery[] = "  , od.lngProductQuantity";
     $aryQuery[] = "  , od.curSubTotalPrice";
@@ -114,9 +115,10 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "        , od1.lngStockItemCode as lngStockItemCode";
     $aryQuery[] = "        , si.strstockitemname as strstockitemname";
     $aryQuery[] = "        , to_char(od1.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
-    $aryQuery[] = "        , to_char(od1.curProductPrice, '9,999,999,990.9999') as curProductPrice";
+    $aryQuery[] = "        , od1.curProductPrice";
+    $aryQuery[] = "        , od1.strmoldno";
     $aryQuery[] = "        , to_char(od1.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
-    $aryQuery[] = "        , to_char(od1.curSubTotalPrice, '9,999,999,990.99') as curSubTotalPrice";
+    $aryQuery[] = "        , od1.curSubTotalPrice";
     $aryQuery[] = "        , od1.strNote as strDetailNote ";
     $aryQuery[] = "      from";
     $aryQuery[] = "        t_orderdetail od1 ";
@@ -472,7 +474,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
 
         // 合計金額
         if ($strViewColumnName == "curTotalPrice") {
-            $arySelectQuery[] = "  ,To_char(mp.curtotalprice, '9,999,999,990.99') as curtotalprice";
+            $arySelectQuery[] = "  ,mp.curtotalprice";
         }
 
         // 備考

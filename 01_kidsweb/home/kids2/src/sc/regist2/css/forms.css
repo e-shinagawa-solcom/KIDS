@@ -430,3 +430,17 @@ img.toggle-display
     padding: 0px;
     font-size: x-small;
 }
+
+
+
+input[type="text"][disabled]{
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+}
+
+select[disabled]{
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+}

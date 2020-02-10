@@ -89,7 +89,7 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     // 備考
     $aryQuery[] = ", s.strNote as strNote";
     // 合計金額
-    $aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice ";
+    $aryQuery[] = ", s.curTotalPrice ";
 
     $aryQuery[] = "FROM m_Stock s ";
     $aryQuery[] = "INNER JOIN t_stockdetail tsd ";
@@ -110,7 +110,7 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = "INNER JOIN m_purchaseorder mp ";
     $aryQuery[] = "    on mp.lngpurchaseorderno = tpd.lngpurchaseorderno ";
     $aryQuery[] = "    and mp.lngrevisionno = tpd.lngrevisionno ";
-    
+
     $aryQuery[] = "LEFT JOIN m_User input_u ON s.lngInputUserCode = input_u.lngUserCode";
     $aryQuery[] = "LEFT JOIN m_Company cust_c ON s.lngCustomerCompanyCode = cust_c.lngCompanyCode";
     $aryQuery[] = "LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
@@ -167,14 +167,14 @@ function fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo)
     // 納期
     $aryQuery[] = ", tod.dtmdeliverydate as dtmDeliveryDate";
     // 単価
-    $aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
+    $aryQuery[] = ", sd.curProductPrice";
     // 単位
     $aryQuery[] = ", sd.lngProductUnitCode as lngProductUnitCode";
     $aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
     // 数量
     $aryQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
     // 税抜金額
-    $aryQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
+    $aryQuery[] = ", sd.curSubTotalPrice";
     // 税区分
     $aryQuery[] = ", sd.lngTaxClassCode as lngTaxClassCode";
     $aryQuery[] = ", tc.strTaxClassName as strTaxClassName";
@@ -182,7 +182,7 @@ function fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = ", sd.lngTaxCode as lngTaxCode";
     $aryQuery[] = ", To_char( t.curTax, '9,999,999,990.9999' ) as curTax";
     // 税額
-    $aryQuery[] = ", To_char( sd.curTaxPrice, '9,999,999,990.99' )  as curTaxPrice";
+    $aryQuery[] = ", sd.curTaxPrice";
     $aryQuery[] = ", sd.curTaxPrice as curTaxPrice_comm";
     // 明細備考
     $aryQuery[] = ", sd.strNote as strDetailNote";
@@ -304,11 +304,10 @@ function fncSetStockHeadTabelData($aryResult)
 
         // 合計金額
         else if ($strColumnName == "curtotalprice") {
-            $aryNewResult[$strColumnName] = $aryResult["strmonetaryunitsign"] . " ";
             if (!$aryResult["curtotalprice"]) {
-                $aryNewResult[$strColumnName] .= "0.00";
+                $aryNewResult[$strColumnName] = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], 0, "price");
             } else {
-                $aryNewResult[$strColumnName] .= $aryResult["curtotalprice"];
+                $aryNewResult[$strColumnName] = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["curtotalprice"], "price");
             }
         }
 
@@ -434,11 +433,10 @@ function fncSetStockDetailTabelData($aryDetailResult, $aryHeadResult)
 
         // 単価
         else if ($strColumnName == "curproductprice") {
-            $aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
             if (!$aryDetailResult["curproductprice"]) {
-                $aryNewDetailResult[$strColumnName] .= "0.00";
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], 0, "unitprice");
             } else {
-                $aryNewDetailResult[$strColumnName] .= $aryDetailResult["curproductprice"];
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult["curproductprice"], "unitprice");
             }
         }
 
@@ -449,11 +447,10 @@ function fncSetStockDetailTabelData($aryDetailResult, $aryHeadResult)
 
         // 税抜金額
         else if ($strColumnName == "cursubtotalprice") {
-            $aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
             if (!$aryDetailResult["cursubtotalprice"]) {
-                $aryNewDetailResult[$strColumnName] .= "0.00";
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], 0, "price");
             } else {
-                $aryNewDetailResult[$strColumnName] .= $aryDetailResult["cursubtotalprice"];
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult["cursubtotalprice"], "price");
             }
         }
 
@@ -473,11 +470,10 @@ function fncSetStockDetailTabelData($aryDetailResult, $aryHeadResult)
 
         // 税額
         else if ($strColumnName == "curtaxprice") {
-            $aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
             if (!$aryDetailResult["curtaxprice"]) {
-                $aryNewDetailResult[$strColumnName] .= "0.00";
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], 0, "taxprice");
             } else {
-                $aryNewDetailResult[$strColumnName] .= $aryDetailResult["curtaxprice"];
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult["curtaxprice"], "taxprice");
             }
         }
 
@@ -878,45 +874,45 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     // SQL生成
     $aryQuery[] = " SELECT ";
 //    $aryQuery[] = " mpo.strordercode,";
-    $aryQuery[] = " mpo.lngpurchaseorderno,";  // 発注書ビジョン番号
-    $aryQuery[] = " mpo.lngrevisionno as lngpurchaseorderrevisionno,";  // 発注書ビジョン番号
-    $aryQuery[] = " od.lngorderdetailno,";  // 発注番号
-    $aryQuery[] = " od.lngorderno,";  // 発注明細番号
-    $aryQuery[] = " od.lngrevisionno,";  // リビジョン番号
-    $aryQuery[] = " od.strproductcode || '_' || od.strrevisecode as strproductcode,";  // 製品コード
-    $aryQuery[] = " p.strproductname,";  // 製品名称
-    $aryQuery[] = " od.lngstocksubjectcode,";  // 仕入科目コード
-    $aryQuery[] = " ss.strstocksubjectname,";  // 仕入科目名称
-    $aryQuery[] = " c.strcompanydisplaycode,";  // 仕入先コード
-    $aryQuery[] = " c.strcompanydisplayname,";  // 仕入先名称
-    $aryQuery[] = " dp_c.strcompanydisplaycode as lnglocationcode,";  // 納品場所コード
-    $aryQuery[] = " dp_c.strcompanydisplayname as strlocationname,";  // 納品場所名称
-    $aryQuery[] = " od.lngstockitemcode,";  // 仕入部品コード
-    $aryQuery[] = " si.strstockitemname,";  // 仕入部品名称
-    $aryQuery[] = " To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate,";  // 納品日
-    $aryQuery[] = " od.lngdeliverymethodcode as lngCarrierCode,";  // 運搬方法コード
-    $aryQuery[] = " od.lngconversionclasscode,";  // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
-    $aryQuery[] = " od.curproductprice as curproductprice,";  // 製品価格
-    $aryQuery[] = " od.lngproductquantity,";  // 製品数量
-    $aryQuery[] = " od.lngproductunitcode,";  // 製品単位コード
-    $aryQuery[] = " pu.strproductunitname,";  // 製品単位名称
-/*
+    $aryQuery[] = " mpo.lngpurchaseorderno,"; // 発注書ビジョン番号
+    $aryQuery[] = " mpo.lngrevisionno as lngpurchaseorderrevisionno,"; // 発注書ビジョン番号
+    $aryQuery[] = " od.lngorderdetailno,"; // 発注番号
+    $aryQuery[] = " od.lngorderno,"; // 発注明細番号
+    $aryQuery[] = " od.lngrevisionno,"; // リビジョン番号
+    $aryQuery[] = " od.strproductcode || '_' || od.strrevisecode as strproductcode,"; // 製品コード
+    $aryQuery[] = " p.strproductname,"; // 製品名称
+    $aryQuery[] = " od.lngstocksubjectcode,"; // 仕入科目コード
+    $aryQuery[] = " ss.strstocksubjectname,"; // 仕入科目名称
+    $aryQuery[] = " c.strcompanydisplaycode,"; // 仕入先コード
+    $aryQuery[] = " c.strcompanydisplayname,"; // 仕入先名称
+    $aryQuery[] = " dp_c.strcompanydisplaycode as lnglocationcode,"; // 納品場所コード
+    $aryQuery[] = " dp_c.strcompanydisplayname as strlocationname,"; // 納品場所名称
+    $aryQuery[] = " od.lngstockitemcode,"; // 仕入部品コード
+    $aryQuery[] = " si.strstockitemname,"; // 仕入部品名称
+    $aryQuery[] = " To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate,"; // 納品日
+    $aryQuery[] = " od.lngdeliverymethodcode as lngCarrierCode,"; // 運搬方法コード
+    $aryQuery[] = " od.lngconversionclasscode,"; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
+    $aryQuery[] = " od.curproductprice as curproductprice,"; // 製品価格
+    $aryQuery[] = " od.lngproductquantity,"; // 製品数量
+    $aryQuery[] = " od.lngproductunitcode,"; // 製品単位コード
+    $aryQuery[] = " pu.strproductunitname,"; // 製品単位名称
+    /*
     $aryQuery[] = " od.lngtaxclasscode,";  // 消費税区分コード
     $aryQuery[] = " od.lngtaxcode,";  // 消費税コード
     $aryQuery[] = " od.curtaxprice,";  // 消費税金額
-*/
-    $aryQuery[] = " od.cursubtotalprice as cursubtotalprice,";  // 小計金額
-    $aryQuery[] = " od.strnote,";  // 備考
-    $aryQuery[] = " od.strmoldno as strSerialNo,";  // シリアル
-    $aryQuery[] = " mo.lngorderstatuscode as lngorderstatuscode,";  // 発注ステータス
-    $aryQuery[] = " os.strorderstatusname as strorderstatusname,";  // 発注ステータス
-    $aryQuery[] = " mo.lngmonetaryunitcode as lngmonetaryunitcode,";  // 通貨単位コード
-    $aryQuery[] = " mu.strmonetaryunitname as strmonetaryunitname,";  // 通貨単位名称
-    $aryQuery[] = " mu.strmonetaryunitsign as strmonetaryunitsign,";  // 通貨単位名称
-    $aryQuery[] = " c.lngcountrycode as lngcountrycode,";  // 国コード
-    $aryQuery[] = " mo.lngmonetaryratecode as lngmonetaryratecode,";  // 通貨レートコード
-    $aryQuery[] = " mpo.lngpayconditioncode as lngpayconditioncode,";  // 支払条件
-    $aryQuery[] = " dp_pc.strpayconditionname as strpayconditionname";  // 支払条件名
+     */
+    $aryQuery[] = " od.cursubtotalprice as cursubtotalprice,"; // 小計金額
+    $aryQuery[] = " od.strnote,"; // 備考
+    $aryQuery[] = " od.strmoldno as strSerialNo,"; // シリアル
+    $aryQuery[] = " mo.lngorderstatuscode as lngorderstatuscode,"; // 発注ステータス
+    $aryQuery[] = " os.strorderstatusname as strorderstatusname,"; // 発注ステータス
+    $aryQuery[] = " mo.lngmonetaryunitcode as lngmonetaryunitcode,"; // 通貨単位コード
+    $aryQuery[] = " mu.strmonetaryunitname as strmonetaryunitname,"; // 通貨単位名称
+    $aryQuery[] = " mu.strmonetaryunitsign as strmonetaryunitsign,"; // 通貨単位名称
+    $aryQuery[] = " c.lngcountrycode as lngcountrycode,"; // 国コード
+    $aryQuery[] = " mo.lngmonetaryratecode as lngmonetaryratecode,"; // 通貨レートコード
+    $aryQuery[] = " mpo.lngpayconditioncode as lngpayconditioncode,"; // 支払条件
+    $aryQuery[] = " dp_pc.strpayconditionname as strpayconditionname"; // 支払条件名
     $aryQuery[] = " FROM t_orderdetail od";
     $aryQuery[] = " inner join m_order mo";
     $aryQuery[] = " on mo.lngorderno = od.lngorderno";
@@ -973,8 +969,8 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mo.lngdeliveryplacecode";
     $aryQuery[] = "  LEFT JOIN m_paycondition dp_pc on dp_pc.lngpayconditioncode = mpo.lngpayconditioncode";
     $aryQuery[] = " WHERE mo.lngorderstatuscode = 2";
-    
-    $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; // 
+
+    $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; //
     $aryQuery[] = "  ORDER BY od.lngSortKey";
 
     $strQuery = implode("\n", $aryQuery);
@@ -1005,45 +1001,45 @@ function fncGetPoInfoSQLByStock($lngStockNo, $lngRevisionNo, $strOrderCode, $obj
     // SQL生成
     $aryQuery[] = " SELECT ";
 //    $aryQuery[] = " mpo.strordercode,";
-    $aryQuery[] = " mpo.lngpurchaseorderno,";  // 発注書ビジョン番号
-    $aryQuery[] = " mpo.lngrevisionno as lngpurchaseorderrevisionno,";  // 発注書ビジョン番号
-    $aryQuery[] = " od.lngorderdetailno,";  // 発注番号
-    $aryQuery[] = " od.lngorderno,";  // 発注明細番号
-    $aryQuery[] = " od.lngrevisionno,";  // リビジョン番号
-    $aryQuery[] = " od.strproductcode,";  // 製品コード
-    $aryQuery[] = " p.strproductname,";  // 製品名称
-    $aryQuery[] = " od.lngstocksubjectcode,";  // 仕入科目コード
-    $aryQuery[] = " ss.strstocksubjectname,";  // 仕入科目名称
-    $aryQuery[] = " c.strcompanydisplaycode,";  // 仕入先コード
-    $aryQuery[] = " c.strcompanydisplayname,";  // 仕入先名称
-    $aryQuery[] = " dp_c.strcompanydisplaycode as lnglocationcode,";  // 納品場所コード
-    $aryQuery[] = " dp_c.strcompanydisplayname as strlocationname,";  // 納品場所名称
-    $aryQuery[] = " od.lngstockitemcode,";  // 仕入部品コード
-    $aryQuery[] = " si.strstockitemname,";  // 仕入部品名称
-    $aryQuery[] = " To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate,";  // 納品日
-    $aryQuery[] = " od.lngdeliverymethodcode as lngCarrierCode,";  // 運搬方法コード
-    $aryQuery[] = " od.lngconversionclasscode,";  // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
-    $aryQuery[] = " od.curproductprice as curproductprice,";  // 製品価格
-    $aryQuery[] = " od.lngproductquantity,";  // 製品数量
-    $aryQuery[] = " od.lngproductunitcode,";  // 製品単位コード
-    $aryQuery[] = " pu.strproductunitname,";  // 製品単位名称
-/*
+    $aryQuery[] = " mpo.lngpurchaseorderno,"; // 発注書ビジョン番号
+    $aryQuery[] = " mpo.lngrevisionno as lngpurchaseorderrevisionno,"; // 発注書ビジョン番号
+    $aryQuery[] = " od.lngorderdetailno,"; // 発注番号
+    $aryQuery[] = " od.lngorderno,"; // 発注明細番号
+    $aryQuery[] = " od.lngrevisionno,"; // リビジョン番号
+    $aryQuery[] = " od.strproductcode,"; // 製品コード
+    $aryQuery[] = " p.strproductname,"; // 製品名称
+    $aryQuery[] = " od.lngstocksubjectcode,"; // 仕入科目コード
+    $aryQuery[] = " ss.strstocksubjectname,"; // 仕入科目名称
+    $aryQuery[] = " c.strcompanydisplaycode,"; // 仕入先コード
+    $aryQuery[] = " c.strcompanydisplayname,"; // 仕入先名称
+    $aryQuery[] = " dp_c.strcompanydisplaycode as lnglocationcode,"; // 納品場所コード
+    $aryQuery[] = " dp_c.strcompanydisplayname as strlocationname,"; // 納品場所名称
+    $aryQuery[] = " od.lngstockitemcode,"; // 仕入部品コード
+    $aryQuery[] = " si.strstockitemname,"; // 仕入部品名称
+    $aryQuery[] = " To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate,"; // 納品日
+    $aryQuery[] = " od.lngdeliverymethodcode as lngCarrierCode,"; // 運搬方法コード
+    $aryQuery[] = " od.lngconversionclasscode,"; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
+    $aryQuery[] = " od.curproductprice as curproductprice,"; // 製品価格
+    $aryQuery[] = " od.lngproductquantity,"; // 製品数量
+    $aryQuery[] = " od.lngproductunitcode,"; // 製品単位コード
+    $aryQuery[] = " pu.strproductunitname,"; // 製品単位名称
+    /*
     $aryQuery[] = " od.lngtaxclasscode,";  // 消費税区分コード
     $aryQuery[] = " od.lngtaxcode,";  // 消費税コード
     $aryQuery[] = " od.curtaxprice,";  // 消費税金額
-*/
-    $aryQuery[] = " od.cursubtotalprice as cursubtotalprice,";  // 小計金額
-    $aryQuery[] = " od.strnote,";  // 備考
-    $aryQuery[] = " od.strmoldno as strSerialNo,";  // シリアル
-    $aryQuery[] = " mo.lngorderstatuscode as lngorderstatuscode,";  // 発注ステータス
-    $aryQuery[] = " os.strorderstatusname as strorderstatusname,";  // 発注ステータス
-    $aryQuery[] = " mo.lngmonetaryunitcode as lngmonetaryunitcode,";  // 通貨単位コード
-    $aryQuery[] = " mu.strmonetaryunitname as strmonetaryunitname,";  // 通貨単位名称
-    $aryQuery[] = " mu.strmonetaryunitsign as strmonetaryunitsign,";  // 通貨単位名称
-    $aryQuery[] = " c.lngcountrycode as lngcountrycode,";  // 国コード
-    $aryQuery[] = " mo.lngmonetaryratecode as lngmonetaryratecode,";  // 通貨レートコード
-    $aryQuery[] = " mpo.lngpayconditioncode as lngpayconditioncode,";  // 支払条件
-    $aryQuery[] = " dp_pc.strpayconditionname as strpayconditionname";  // 支払条件名
+     */
+    $aryQuery[] = " od.cursubtotalprice as cursubtotalprice,"; // 小計金額
+    $aryQuery[] = " od.strnote,"; // 備考
+    $aryQuery[] = " od.strmoldno as strSerialNo,"; // シリアル
+    $aryQuery[] = " mo.lngorderstatuscode as lngorderstatuscode,"; // 発注ステータス
+    $aryQuery[] = " os.strorderstatusname as strorderstatusname,"; // 発注ステータス
+    $aryQuery[] = " mo.lngmonetaryunitcode as lngmonetaryunitcode,"; // 通貨単位コード
+    $aryQuery[] = " mu.strmonetaryunitname as strmonetaryunitname,"; // 通貨単位名称
+    $aryQuery[] = " mu.strmonetaryunitsign as strmonetaryunitsign,"; // 通貨単位名称
+    $aryQuery[] = " c.lngcountrycode as lngcountrycode,"; // 国コード
+    $aryQuery[] = " mo.lngmonetaryratecode as lngmonetaryratecode,"; // 通貨レートコード
+    $aryQuery[] = " mpo.lngpayconditioncode as lngpayconditioncode,"; // 支払条件
+    $aryQuery[] = " dp_pc.strpayconditionname as strpayconditionname"; // 支払条件名
     $aryQuery[] = " FROM t_orderdetail od";
     $aryQuery[] = " inner join m_order mo";
     $aryQuery[] = " on mo.lngorderno = od.lngorderno";
@@ -1099,16 +1095,16 @@ function fncGetPoInfoSQLByStock($lngStockNo, $lngRevisionNo, $strOrderCode, $obj
     $aryQuery[] = "  LEFT JOIN m_company c on c.lngcompanycode = mo.lngcustomercompanycode";
     $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mo.lngdeliveryplacecode";
     $aryQuery[] = "  LEFT JOIN m_paycondition dp_pc on dp_pc.lngpayconditioncode = mpo.lngpayconditioncode";
-    $aryQuery[] = "  LEFT JOIN (select lngstockno, lngrevisionno, lngorderno, lngorderdetailno, lngorderrevisionno from t_stockdetail where lngstockno = ". $lngStockNo;
+    $aryQuery[] = "  LEFT JOIN (select lngstockno, lngrevisionno, lngorderno, lngorderdetailno, lngorderrevisionno from t_stockdetail where lngstockno = " . $lngStockNo;
     $aryQuery[] = "  and lngrevisionno = " . $lngRevisionNo . ") tsd";
     $aryQuery[] = "  on tsd.lngorderno = od.lngorderno AND tsd.lngorderdetailno = od.lngorderdetailno AND tsd.lngorderrevisionno = od.lngrevisionno";
-    
+
     $aryQuery[] = " WHERE (";
     $aryQuery[] = " mo.lngorderstatuscode = 2";
     $aryQuery[] = " or (tsd.lngstockno = " . $lngStockNo . " AND tsd.lngrevisionno = " . $lngRevisionNo . ")";
     $aryQuery[] = " )";
-    
-    $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; // 
+
+    $aryQuery[] = " and mpo.strordercode = '" . $strOrderCode . "'"; //
     $aryQuery[] = "  ORDER BY od.lngSortKey";
 
     $strQuery = implode("\n", $aryQuery);
@@ -1126,7 +1122,6 @@ function fncGetPoInfoSQLByStock($lngStockNo, $lngRevisionNo, $strOrderCode, $obj
 
     return $aryOrderDetail;
 }
-
 
 /**
  * 消費税情報を取得する
@@ -1196,9 +1191,9 @@ function fncGetTaxClassAry($objDB)
  */
 function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMonetaryUnitCode, $objDB)
 {
-	if( $lngMonetaryUnitCode == 1 ){
-	    return 1.000000;
-	}
+    if ($lngMonetaryUnitCode == 1) {
+        return "1.000000";
+    }
     $aryQuery = array();
     $aryQuery[] = "SELECT mmr.curConversionRate ";
     $aryQuery[] = "FROM m_MonetaryRate mmr ";
@@ -1208,7 +1203,7 @@ function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMon
     $aryQuery[] = "	AND mmr.lngMonetaryUnitCode = '" . $lngMonetaryUnitCode . "' ";
     $aryQuery[] = "GROUP BY mmr.curConversionRate ";
     $strQuery = implode("\n", $aryQuery);
-    
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum > 0) {
         $objResult = $objDB->fetchObject($lngResultID, 0);

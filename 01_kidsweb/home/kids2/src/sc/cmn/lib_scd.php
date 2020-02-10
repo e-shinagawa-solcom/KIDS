@@ -262,7 +262,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	// 備考
 	$arySelectQuery[] = ", s.strNote as strNote";
 	// 合計金額
-	$arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
+	$arySelectQuery[] = ", s.curTotalPrice";
 	//// 売上Ｎｏ
 	$arySelectQuery[] = ", sa.strSalesCode as strSalesCode";
 	// 売上状態コード

@@ -80,7 +80,7 @@ function fncGetSalesHeadNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 	// 備考
 	$aryQuery[] = ", s.strNote as strNote";
 	// 合計金額
-	$aryQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
+	$aryQuery[] = ", s.curTotalPrice";
 
 	$aryQuery[] = " FROM m_Sales s ";
 	$aryQuery[] = " left join t_salesdetail tsd on tsd.lngsalesno = s.lngsalesno ";
@@ -140,14 +140,14 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 	// 顧客品番
 	$aryQuery[] = ", p.strGoodsCode as strGoodsCode";
 	// 単価
-	$aryQuery[] = ", To_char( sd.curProductPrice, '9,999,999,990.9999' )  as curProductPrice";
+	$aryQuery[] = ", sd.curProductPrice";
 	// 単位
 	$aryQuery[] = ", sd.lngProductUnitCode as lngProductUnitCode";
 	$aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
 	// 数量
 	$aryQuery[] = ", To_char( sd.lngProductQuantity, '9,999,999,990' )  as lngProductQuantity";
 	// 税抜金額
-	$aryQuery[] = ", To_char( sd.curSubTotalPrice, '9,999,999,990.99' )  as curSubTotalPrice";
+	$aryQuery[] = ", sd.curSubTotalPrice";
 	// 税区分
 	$aryQuery[] = ", sd.lngTaxClassCode as lngTaxClassCode";
 	$aryQuery[] = ", tc.strTaxClassName as strTaxClassName";
@@ -155,7 +155,7 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 	$aryQuery[] = ", sd.lngTaxCode as lngTaxCode";
 	$aryQuery[] = ", To_char( t.curTax, '9,999,999,990.9999' ) as curTax";
 	// 税額
-	$aryQuery[] = ", To_char( sd.curTaxPrice, '9,999,999,990.99' )  as curTaxPrice";
+	$aryQuery[] = ", sd.curTaxPrice";
 	// 明細備考
 	$aryQuery[] = ", sd.strNote as strDetailNote";
 
@@ -280,16 +280,12 @@ function fncSetSalesHeadTabelData ( $aryResult )
 
 		// 合計金額
 		else if ( $strColumnName == "curtotalprice" )
-		{
-			$aryNewResult[$strColumnName] = $aryResult["strmonetaryunitsign"] . " ";
-			if ( !$aryResult["curtotalprice"] )
-			{
-				$aryNewResult[$strColumnName] .= "0.00";
-			}
-			else
-			{
-				$aryNewResult[$strColumnName] .= $aryResult["curtotalprice"];
-			}
+		{			
+            if (!$aryResult["curtotalprice"]) {
+                $aryNewResult[$strColumnName] = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], 0, "price");
+            } else {
+                $aryNewResult[$strColumnName] = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["curtotalprice"], "price");
+            }
 		}
 
 		// 状態
@@ -428,15 +424,11 @@ function fncSetSalesDetailTabelData ( $aryDetailResult, $aryHeadResult )
 		// 単価
 		else if ( $strColumnName == "curproductprice" )
 		{
-			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
-			if ( !$aryDetailResult["curproductprice"] )
-			{
-				$aryNewDetailResult[$strColumnName] .= "0.00";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["curproductprice"];
-			}
+			if (!$aryDetailResult["curproductprice"]) {
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], 0, "unitprice");
+            } else {
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult["curproductprice"], "unitprice");
+            }
 		}
 
 		// 単位
@@ -448,15 +440,11 @@ function fncSetSalesDetailTabelData ( $aryDetailResult, $aryHeadResult )
 		// 税抜金額
 		else if ( $strColumnName == "cursubtotalprice" )
 		{
-			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
-			if ( !$aryDetailResult["cursubtotalprice"] )
-			{
-				$aryNewDetailResult[$strColumnName] .= "0.00";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["cursubtotalprice"];
-			}
+			if (!$aryDetailResult["cursubtotalprice"]) {
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], 0, "price");
+            } else {
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult["cursubtotalprice"], "price");
+            }
 		}
 
 		// 税区分
@@ -481,15 +469,11 @@ function fncSetSalesDetailTabelData ( $aryDetailResult, $aryHeadResult )
 		// 税額
 		else if ( $strColumnName == "curtaxprice" )
 		{
-			$aryNewDetailResult[$strColumnName] = $aryHeadResult["strmonetaryunitsign"] . " ";
-			if ( !$aryDetailResult["curtaxprice"] )
-			{
-				$aryNewDetailResult[$strColumnName] .= "0.00";
-			}
-			else
-			{
-				$aryNewDetailResult[$strColumnName] .= $aryDetailResult["curtaxprice"];
-			}
+			if (!$aryDetailResult["curtaxprice"]) {
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], 0, "taxprice");
+            } else {
+                $aryNewDetailResult[$strColumnName] = convertPrice($aryHeadResult["lngmonetaryunitcode"], $aryHeadResult["strmonetaryunitsign"], $aryDetailResult["curtaxprice"], "taxprice");
+            }
 		}
 
 		// 明細備考
