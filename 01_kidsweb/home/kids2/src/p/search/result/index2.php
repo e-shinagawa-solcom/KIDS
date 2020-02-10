@@ -38,8 +38,12 @@ foreach ($aryData["displayColumns"] as $key) {
 // セッション確認
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
+//echo "strReviseCode:" . $aryData["strReviseCode"] . "<br>";
+
 // 検索項目から一致する最新の仕入データを取得するSQL文の作成関数
-$strQuery = fncGetProductsByStrProductCodeSQL($aryData["strProductCode"], $aryData["lngRevisionNo"]);
+$strQuery = fncGetProductsByStrProductCodeSQL($aryData["strProductCode"], $aryData["strReviseCode"] ,$aryData["lngRevisionNo"]);
+
+//echo $strQuery . "<br>";
 
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -125,7 +129,7 @@ foreach ($records as $i => $record) {
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
-    $trBody->setAttribute("id", $record["strproductcode"]. "_" . $record["lngrevisionno"] );
+    $trBody->setAttribute("id", $record["strproductcode"]. "_" . $record["strrevisecode"] .  "_" . sprintf("%02d",$record["lngrevisionno"]) );
     
     // 項番
     $index +=1;
@@ -148,7 +152,7 @@ foreach ($records as $i => $record) {
             $imgDetail->setAttribute("id", $record["lngproductno"]);
             $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgDetail->setAttribute("class", "detail button");
-            $imgDetail->setAttribute("onclick", "alert('test');");
+//            $imgDetail->setAttribute("onclick", "alert('test');");
             // td > img
             $tdDetail->appendChild($imgDetail);
         }

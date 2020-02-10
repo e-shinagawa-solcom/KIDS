@@ -114,14 +114,14 @@ $aryQuery[] = "  m_Product p ";
 $aryQuery[] = "  inner join ( ";
 $aryQuery[] = "    select";
 $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
-$aryQuery[] = "      , strProductCode ";
+$aryQuery[] = "      , lngProductNo ";
 $aryQuery[] = "    from";
 $aryQuery[] = "      m_Product ";
 $aryQuery[] = "    group by";
-$aryQuery[] = "      strProductCode";
+$aryQuery[] = "      lngProductNo";
 $aryQuery[] = "  ) p1 ";
 $aryQuery[] = "    on p.lngrevisionno = p1.lngrevisionno ";
-$aryQuery[] = "    and p.strProductCode = p1.strProductCode ";
+$aryQuery[] = "    and p.lngProductNo = p1.lngProductNo ";
 $aryQuery[] = "  LEFT JOIN m_User input_u ";
 $aryQuery[] = "    ON p.lngInputUserCode = input_u.lngUserCode ";
 $aryQuery[] = "  LEFT JOIN m_Group inchg_g ";
@@ -168,13 +168,14 @@ $aryQuery[] = "  t_goodsplan AS t_gp ";
 $aryQuery[] = "  INNER JOIN ( ";
 $aryQuery[] = "    SELECT";
 $aryQuery[] = "      max(lnggoodsplancode) AS lnggoodsplancode";
-$aryQuery[] = "      , lngproductno ";
+$aryQuery[] = "      , lngproductno, strrevisecode ";
 $aryQuery[] = "    FROM";
 $aryQuery[] = "      t_goodsplan t_gp1 ";
 $aryQuery[] = "    group by";
-$aryQuery[] = "      lngproductno";
+$aryQuery[] = "      lngproductno, strrevisecode";
 $aryQuery[] = "  ) t_gp2 ";
 $aryQuery[] = "    ON t_gp.lngproductno = t_gp2.lngproductno ";
+$aryQuery[] = "    AND t_gp.strrevisecode = t_gp2.strrevisecode ";
 $aryQuery[] = "    AND t_gp.lnggoodsplancode = t_gp2.lnggoodsplancode ";
 $aryQuery[] = "  LEFT JOIN m_goodsplanprogress m_gpp ";
 $aryQuery[] = "    ON t_gp.lnggoodsplanprogresscode = m_gpp.lnggoodsplanprogresscode";
@@ -361,7 +362,7 @@ return $strQuery;
 }
 
 
-function fncGetProductsByStrProductCodeSQL($strProductCode, $lngRevisionNo)
+function fncGetProductsByStrProductCodeSQL($strProductCode, $strReviseCode, $lngRevisionNo)
 {
 // クエリの組立て
 $aryQuery = array();
@@ -489,20 +490,23 @@ $aryQuery[] = "  t_goodsplan AS t_gp ";
 $aryQuery[] = "  INNER JOIN ( ";
 $aryQuery[] = "    SELECT";
 $aryQuery[] = "      max(lnggoodsplancode) AS lnggoodsplancode";
-$aryQuery[] = "      , lngproductno ";
+$aryQuery[] = "      , lngproductno ,strrevisecode";
 $aryQuery[] = "    FROM";
 $aryQuery[] = "      t_goodsplan t_gp1 ";
 $aryQuery[] = "    group by";
-$aryQuery[] = "      lngproductno";
+$aryQuery[] = "      lngproductno,strrevisecode";
 $aryQuery[] = "  ) t_gp2 ";
 $aryQuery[] = "    ON t_gp.lngproductno = t_gp2.lngproductno ";
+$aryQuery[] = "    AND t_gp.strrevisecode = t_gp2.strrevisecode ";
 $aryQuery[] = "    AND t_gp.lnggoodsplancode = t_gp2.lnggoodsplancode ";
 $aryQuery[] = "  LEFT JOIN m_goodsplanprogress m_gpp ";
 $aryQuery[] = "    ON t_gp.lnggoodsplanprogresscode = m_gpp.lnggoodsplanprogresscode";
 $aryQuery[] = " ) gp ON p.lngproductno = gp.lngproductno ";
+
 $aryQuery[] = "WHERE";
 $aryQuery[] = "  p.lngProductNo >= 0 ";
 $aryQuery[] = " AND p.strProductCode = '" . $strProductCode . "'";
+$aryQuery[] = " AND p.strReviseCode = '" . $strReviseCode . "'";
 $aryQuery[] = "  AND p.bytInvalidFlag = FALSE ";
 $aryQuery[] = "  AND p.lngRevisionNo <> " . $lngRevisionNo . "";
 $aryQuery[] = "ORDER BY";
