@@ -177,11 +177,12 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
     $_POST["aryDetail"][$i]["strDetailNote"] = $_POST["aryDetail"][$i]["strDetailNote"];
     // 2004/03/11 number_format watanabe
     // 単価
-    $_POST["aryDetail"][$i]["strMonetarySign"] = $aryData["lngMonetaryUnitCode"];
-    $_POST["aryDetail"][$i]["curproductprice_DIS"] = ($_POST["aryDetail"][$i]["curProductPrice"] != "") ? number_format((double) (str_replace(",", "", $_POST["aryDetail"][$i]["curProductPrice"])), 4) : "";
-    $_POST["aryDetail"][$i]["lnggoodsquantity_DIS"] = ($_POST["aryDetail"][$i]["lngProductQuantity"] != "") ? number_format(str_replace(",", "", $_POST["aryDetail"][$i]["lngProductQuantity"])) : "";
-    $_POST["aryDetail"][$i]["curtotalprice_DIS"] = ($_POST["aryDetail"][$i]["curSubtotalPrice"] != "") ? number_format((double) (str_replace(",", "", $_POST["aryDetail"][$i]["curSubtotalPrice"])), 2) : "";
-    $allPrice = $allPrice + (double) (str_replace(",", "", $_POST["aryDetail"][$i]["curSubtotalPrice"]));
+    $aryData["strMonetarySign"] = fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitsign", $aryData["lngMonetaryUnitCode"], '', $objDB);
+
+    $_POST["aryDetail"][$i]["curproductprice_DIS"] = convertPrice($aryData["lngMonetaryUnitCode"], $aryData["strMonetarySign"], str_replace(",", "", $_POST["aryDetail"][$i]["curProductPrice"]), 'unitprice');
+    $_POST["aryDetail"][$i]["lnggoodsquantity_DIS"] = $_POST["aryDetail"][$i]["lngProductQuantity"];
+    $_POST["aryDetail"][$i]["curtotalprice_DIS"] = convertPrice($aryData["lngMonetaryUnitCode"], $aryData["strMonetarySign"], str_replace(",", "", $_POST["aryDetail"][$i]["curSubtotalPrice"]), 'price');
+    $allPrice = $allPrice + (double)(str_replace(",", "", $_POST["aryDetail"][$i]["curSubtotalPrice"]));
     // watanabe update end
 
     // 2004/03/19 watanabe update コード→名称は全て処理する。コードがない場合は[]を表示しない（必須項目も全て。処理だけ）
@@ -228,14 +229,13 @@ $aryData["strLocationName"] = fncGetMasterValue("m_company", "strcompanydisplayc
 
 // 状態
 $aryData["strAction"] = "/po/confirm2/index.php?strSessionID=" . $_POST["strSessionID"];
-$aryData["strMonetarySign"] = $aryData["lngMonetaryUnitCode"];
 
 //ヘッダ備考の特殊文字変換
 $aryData["strNote"] = fncHTMLSpecialChars($_POST["strNote"]);
 
 // 通貨記号+合計金額
 
-$aryData["curAllTotalPrice_DIS"] = number_format($aryData["curAllTotalPrice"], 2); // 合計金額
+$aryData["curAllTotalPrice_DIS"] = convertPrice($aryData["lngMonetaryUnitCode"], $aryData["strMonetarySign"], $aryData["curAllTotalPrice"], "price"); // 合計金額
 
 // コード→名称は全て処理する。コードがない場合は[]を表示しない（必須項目も全て。処理だけ）
 

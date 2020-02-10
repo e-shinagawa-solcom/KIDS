@@ -22,15 +22,3 @@
     display: none;
     float: right;
 }
-
-input[type="text"][disabled]{
-	border-width : 1px ;
-	border-style : solid ;
-	border-color : #cdcdcd ;
-}
-
-select[disabled]{
-	border-width : 1px ;
-	border-style : solid ;
-	border-color : #cdcdcd ;
-}

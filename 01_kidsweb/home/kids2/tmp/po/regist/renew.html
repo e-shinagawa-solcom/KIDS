@@ -48,7 +48,7 @@
     <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
     <!-- マスタ検索呼び出し -->
     <script src="/search/cmn/js/invoke-master-search.js" defer></script>
-	<script type="text/javascript" language="javascript" src="/cmn/js/table.js"></script>
+    <script type="text/javascript" language="javascript" src="/cmn/js/table.js"></script>
     <script type="text/javascript" language="javascript" src="/po/regist/functions.js"></script>
     <script type="text/javascript" language="javascript" src="/po/regist/regist2.js"></script>
     <!-- マスタ検索呼び出し -->
@@ -87,9 +87,9 @@
                     <div class="regist-line">
                         <span class="regist-label" style="width: 272px;">
                             <span class="regist-label__text">支払条件</span>
-                            <_%inputPayCondition%_ name="lngPayConditionCode" _%PayConditionDisabled%_>
+                            <select name="lngPayConditionCode" _%PayConditionDisabled%_>
                                 _%lngPayConditionCode%_
-                                </select>
+                            </select>
                         </span>
                         <span class="regist-label">
                             <span class="regist-label__text">営業部署</span>
@@ -106,8 +106,8 @@
                         </span>
                         <span class="regist-label">
                             <span class="regist-label__text">製品</span>
-                            <input style="ime-mode:disabled;" class="disTxt05L" type="text" name="strProductCode" value="_%strProductCode%___%strReviseCode%_" maxlength="8"
-                                readonly>
+                            <input style="ime-mode:disabled;" class="disTxt05L" type="text" name="strProductCode" value="_%strProductCode%___%strReviseCode%_"
+                                maxlength="8" readonly>
                             <input type="hidden" name="strProductCode" value="_%strProductCode%_">
                             <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" readonly>
                         </span>
