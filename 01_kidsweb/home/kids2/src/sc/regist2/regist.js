@@ -65,6 +65,8 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
                 $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "none");
                 $("select[name='lngPaymentMethodCode']").val("0");
                 $("select[name='lngPaymentMethodCode'] option:not(:selected)").prop('disabled', true);
+                $('input[name="strMonetaryRateName"]').val("－");
+                $('input[name="lngMonetaryRateCode"]').val("0");
 
             } else {
                 console.log("81以外：「非課税」固定");
@@ -79,6 +81,8 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
                 // 支払期限の設定
                 $("input[name='dtmPaymentLimit']").prop('disabled', false);
                 $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "");
+                $('input[name="strMonetaryRateName"]').val("TTM");
+                $('input[name="lngMonetaryRateCode"]').val("1");
                 var now = new Date();
                 now.setMonth(now.getMonth() + 1);
                 $('input[name="dtmPaymentLimit"]').val(now.getFullYear() + "/" + ("00" + (now.getMonth() + 1)).slice(-2) + "/" + ("00" + now.getDate()).slice(-2));
@@ -150,8 +154,8 @@ function SearchReceiveDetail(data) {
 
     $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
     $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
-    $('input[name="strMonetaryRateName"]').val(data.strmonetaryratename);
-    $('input[name="lngMonetaryRateCode"]').val(data.lngmonetaryratecode);
+    // $('input[name="strMonetaryRateName"]').val(data.strmonetaryratename);
+    // $('input[name="lngMonetaryRateCode"]').val(data.lngmonetaryratecode);
     $('input[name="curConversionRate"]').val(data.curconversionrate);
 
 }
@@ -215,7 +219,8 @@ jQuery(function ($) {
             $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "none");
             $("select[name='lngPaymentMethodCode']").val("0");
             $("select[name='lngPaymentMethodCode'] option:not(:selected)").prop('disabled', true);
-
+            $('input[name="strMonetaryRateName"]').val("－");
+            $('input[name="lngMonetaryRateCode"]').val("0");
         } else {
             console.log("81以外：「非課税」固定");
             // 81以外：「非課税」固定
@@ -226,6 +231,8 @@ jQuery(function ($) {
 
             $('select[name="lngTaxRate"]').val('');
             $("select[name='lngTaxRate'] option:not(:selected)").prop('disabled', true);
+            $('input[name="strMonetaryRateName"]').val("TTM");
+            $('input[name="lngMonetaryRateCode"]').val("1");
         }
     }
 

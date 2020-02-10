@@ -162,10 +162,10 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 数量
             $detailDataResult["lngproductquantity"] = number_format($detailDataResult["lngproductquantity"]);
             // 単価
-            $detailDataResult["curproductprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], number_format($detailDataResult["curproductprice"],2 ));
+            $detailDataResult["curproductprice"] = convertPrice($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["curproductprice"], 'unitprice');
             // 小計金額
             $cursubtotalprice = $detailDataResult["cursubtotalprice"];
-            $detailDataResult["cursubtotalprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], number_format($detailDataResult["cursubtotalprice"],2 ));
+            $detailDataResult["cursubtotalprice"] = convertPrice($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $detailDataResult["cursubtotalprice"], 'price');
             // 税率
             $detailDataResult["curTax"] = $aryDetailData[$i]["curTax"];
             // 消費税区分
@@ -173,7 +173,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
             // 消費税区分名称
             $detailDataResult["strtaxclassname"] = $aryDetailData[$i]["strTaxClassName"];
             // 消費税額
-            $detailDataResult["curtaxprice"] = toMoneyFormat($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], number_format($aryDetailData[$i]["curTaxPrice"],2 ));
+            $detailDataResult["curtaxprice"] = convertPrice($detailDataResult["lngmonetaryunitcode"], $detailDataResult["strmonetaryunitsign"], $aryDetailData[$i]["curTaxPrice"], 'taxprice');
             // 合計金額の設定(小計金額の合計)
             $curtotalprice += $cursubtotalprice;
         }
@@ -193,7 +193,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 
 // 合計金額の設定
 $strmonetaryunitsign = fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitsign", $aryData["lngMonetaryUnitCode"], '', $objDB);
-$aryNewResult["curtotalprice"] = toMoneyFormat($aryData["lngMonetaryUnitCode"], $strmonetaryunitsign, number_format($curtotalprice,2 ));
+$aryNewResult["curtotalprice"] = convertPrice($aryData["lngMonetaryUnitCode"], $strmonetaryunitsign, $curtotalprice, 'price');
 $aryData["curTotalPrice"] =   $curtotalprice;        
 $aryNewResult["strDetailTable"] = implode ("\n", $aryDetailTable );
 // 作成日

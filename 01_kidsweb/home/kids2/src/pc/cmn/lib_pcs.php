@@ -50,7 +50,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "   , s.lngpayconditioncode as lngpayconditioncode";
     $aryQuery[] = "   , mp.strpayconditionname as strpayconditionname";
     $aryQuery[] = "   , s.strNote as strNote";
-    $aryQuery[] = "   , To_char(s.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
+    $aryQuery[] = "   , s.curTotalPrice";
     $aryQuery[] = "   , mu.strMonetaryUnitSign as strMonetaryUnitSign";
     $aryQuery[] = "   , mu.lngmonetaryunitcode as lngmonetaryunitcode ";
 //    $aryQuery[] = " s.strStockCode";
