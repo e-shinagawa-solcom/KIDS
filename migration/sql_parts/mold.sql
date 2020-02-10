@@ -199,6 +199,13 @@ declare
 
 begin
 
+alter table m_mold DISABLE TRIGGER ALL ;
+alter table m_moldreport DISABLE TRIGGER ALL ;
+alter table t_moldhistory DISABLE TRIGGER ALL ;
+alter table t_moldreportdetail DISABLE TRIGGER ALL ;
+alter table t_moldreportrelation DISABLE TRIGGER ALL ;
+
+
     delete from m_mold;
     open cur_m_mold;
     LOOP
@@ -238,6 +245,7 @@ begin
     LOOP
         FETCH cur_m_moldreport into r;
         EXIT WHEN NOT FOUND;
+RAISE INFO '%', r.moldreportid;
         insert into m_moldreport
         (
             moldreportid,
@@ -449,5 +457,12 @@ begin
     update t_sequence 
     set strsequencename = strsequencename || '_00'
     where strsequencename like 'm_OrderDetail.strMoldNo._____';
+    
+alter table m_mold ENABLE TRIGGER ALL ;
+alter table m_moldreport ENABLE TRIGGER ALL ;
+alter table t_moldhistory ENABLE TRIGGER ALL ;
+alter table t_moldreportdetail ENABLE TRIGGER ALL ;
+alter table t_moldreportrelation ENABLE TRIGGER ALL ;
+
 
 END $$
