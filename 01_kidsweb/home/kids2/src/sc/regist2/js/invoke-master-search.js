@@ -50,8 +50,8 @@
             // ------------------
             // フォームに値を設定
             // ------------------
-            $('input[name="strTotalAmount"]').val("0.0000");
-            $('input[name="strTaxAmount"]').val("0.0000");
+            $('input[name="strTotalAmount"]').val("0");
+            $('input[name="strTaxAmount"]').val("0");
         }
     });
 

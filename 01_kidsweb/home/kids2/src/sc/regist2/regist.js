@@ -56,8 +56,8 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
             if (data == "81") {
                 console.log("81：「外税」");
                 // 81：「外税」を選択（他の項目も選択可能）
-                $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
                 $("select[name='lngTaxClassCode']").val("2");
+                $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
                 $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
 
                 $("input[name='dtmPaymentLimit']").prop('disabled', true);
@@ -203,6 +203,31 @@ jQuery(function ($) {
         $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
     }
 
+    if ($('input[name="lngCountryCode"').val().length > 0) {
+        if ($('input[name="lngCountryCode"').val() == "81") {
+            console.log("81：「外税」");
+            // 81：「外税」を選択（他の項目も選択可能）
+            $("select[name='lngTaxClassCode']").val("2");
+            $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
+            $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
+            $("input[name='dtmPaymentLimit']").prop('disabled', true);
+            $("input[name='dtmPaymentLimit']").val("");
+            $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "none");
+            $("select[name='lngPaymentMethodCode']").val("0");
+            $("select[name='lngPaymentMethodCode'] option:not(:selected)").prop('disabled', true);
+
+        } else {
+            console.log("81以外：「非課税」固定");
+            // 81以外：「非課税」固定
+            $("select[name='lngTaxClassCode']").val("1");
+            $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
+            $("select[name='lngPaymentMethodCode']").val("1");
+            $("select[name='lngPaymentMethodCode'] option[value=0]").prop('disabled', true);
+
+            $('select[name="lngTaxRate"]').val('');
+            $("select[name='lngTaxRate'] option:not(:selected)").prop('disabled', true);
+        }
+    }
 
     if ($('input[name="lngSlipNo"]').val().length > 0) {
         window.opener.$('input[name="locked"]').val("1");
@@ -331,8 +356,13 @@ jQuery(function ($) {
         // ------------------
         // フォームに値を設定
         // ------------------
-        $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 4));
-        $('input[name="strTaxAmount"]').val(convertNumber(taxAmount, 4));
+        if ($('input[name="lngMonetaryUnitCode"]').val() == "1" || $('input[name="lngMonetaryUnitCode"]').val() == "" )
+        {
+            $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 0));
+        } else {
+            $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 2));
+        }
+        $('input[name="strTaxAmount"]').val(convertNumber(taxAmount, 0));
     }
 
     function isDate(d) {
@@ -643,10 +673,10 @@ jQuery(function ($) {
         var deliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
 
         // 納品日の月が締済みである
-        if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)) {
-            alert("締済みのため、指定された納品日は無効です");
-            return false;
-        }
+        // if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)) {
+        //     alert("締済みのため、指定された納品日は無効です");
+        //     return false;
+        // }
 
         // 納品日がシステム日付の前後一ヶ月以内にない
         if (!withinOneMonthBeforeAndAfter(deliveryDate)) {
@@ -918,7 +948,6 @@ jQuery(function ($) {
             $(this).find('td:nth-child(1)').text(i + 1);
         });
 
-        // selectRow($("#tableB_no"), $("#tableB"));
         selectRow("", $("#tableB_no"), $("#tableB"), "");
         // 合計金額・消費税額の更新
         updateAmount();

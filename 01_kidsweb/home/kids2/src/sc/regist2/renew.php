@@ -311,7 +311,8 @@ $aryData["strMonetaryUnitName"] = $aryHeader["strmonetaryunitname"];
 $aryData["strMonetaryRateName"] = $aryHeader["strmonetaryratename"];
 // 適用レート
 $aryData["curConversionRate"] = $aryHeader["curconversionrate"];
-
+// 国コード
+$aryData["lngCountryCode"] = $aryHeader["lngcountrycode"];
 //-------------------------------------------------------------------------
 // 画面表示
 //-------------------------------------------------------------------------

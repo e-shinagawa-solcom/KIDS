@@ -50,7 +50,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "  , s.lngSalesStatusCode as lngSalesStatusCode";
     $aryQuery[] = "  , ss.strSalesStatusName as strSalesStatusName";
     $aryQuery[] = "  , s.strNote as strNote";
-    $aryQuery[] = "  , To_char(s.curTotalPrice, '9,999,999,990.99') as curTotalPrice";
+    $aryQuery[] = "  , s.curTotalPrice";
     $aryQuery[] = "  , mu.strMonetaryUnitSign as strMonetaryUnitSign";
     $aryQuery[] = "  , s.lngMonetaryUnitCode as lngMonetaryUnitCode ";
     $aryQuery[] = "FROM";
