@@ -80,12 +80,12 @@
 							<span class="regist-label__required-mark">◎</span>
 							<span class="regist-label__required-text">仕入日</span>
 							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmStockAppDate" value="_%dtmstockappdate%_" maxlength="10"
-							 tabindex="1">
+							>
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__required-text">発注書NO.</span>
 							<input style="ime-mode:disabled;" class="disTxt10L" type="text" name="strOrderCode" value="_%strrealordercode%_" maxlength="10"
-							 tabindex="3" readonly>
+							 readonly>
 							<input type="hidden" name="lngrevisionno" value="_%lngrevisionno%_">
 							<input type="hidden" name="lngOrderNo" value="_%lngorderno%_">
 							<input type="hidden" name="lngStockNo" value="_%lngStockNo%_">
@@ -108,17 +108,17 @@
 						<span class="regist-label" style="margin-left: 19px;">
 							<span class="regist-label__required-mark">◎</span>
 							<span class="regist-label__required-text">納品書NO.</span>
-							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strSlipCode" value="_%strslipcode%_" maxlength="10" tabindex="5">
+							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strSlipCode" value="_%strslipcode%_" maxlength="10">
 						</span>
 
 						<span class="regist-label">
 							<span class="regist-label__text">製品到着日</span>
 							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" value="_%dtmexpirationdate%_" maxlength="10"
-							 tabindex="1">
+							 >
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">通貨</span>
-							<input class="disTxt07L" type="text" readonly name="strMonetaryUnitName" value="_%strMonetaryUnitName%_" tabindex="13">
+							<input class="disTxt07L" type="text" readonly name="strMonetaryUnitName" value="_%strMonetaryUnitName%_">
 							<input type="hidden" name="lngMonetaryUnitCode" value="_%lngMonetaryUnitCode%_">
 						</span>
 					</div>
@@ -130,7 +130,7 @@
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">レートタイプ</span>
-							<select name="lngMonetaryRateCode" tabindex="14" class="Slt93">
+							<select name="lngMonetaryRateCode" class="Slt93">
 								_%lngMonetaryRateCode%_
 							</select>
 						</span>
@@ -145,7 +145,7 @@
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">適用レート</span>
 							<input style="ime-mode:disabled;" class="disTxt07R" type="text" name="curConversionRate" value="_%curconversionrate%_"
-							 tabindex="15" readonly>
+							readonly>
 							<input type="hidden" name="curConversionRate" value="_%curConversionRate%_">
 						</span>
 					</div>
@@ -157,7 +157,7 @@
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">支払条件</span>
-							<input class="disTxt07L" type="text" readonly name="strPayConditionName" value="_%strPayConditionName%_" tabindex="16">
+							<input class="disTxt07L" type="text" readonly name="strPayConditionName" value="_%strPayConditionName%_">
 							<input type="hidden" name="lngPayConditionCode" value="_%lngPayConditionCode%_">
 						</span>
 						<span style="visibility:hidden" id="taxList">
@@ -166,7 +166,7 @@
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">備考</span>
-							<input class="Txt100L" type="text" name="strNote" value="_%strnote%_" tabindex="19">
+							<input class="Txt100L" type="text" name="strNote" value="_%strnote%_">
 						</span>
 					</div>
 				</div>
