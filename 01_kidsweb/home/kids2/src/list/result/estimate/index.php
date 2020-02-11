@@ -62,7 +62,7 @@ $strCopyQuery = "SELECT strReportKeyCode, lngReportCode FROM t_Report WHERE lngR
 
 // 見積原価書取得クエリ生成
 $detailConditionCount = 0;
-$aryQuery[] = "SELECT";
+$aryQuery[] = "SELECT DISTINCT";
 $aryQuery[] = " e.lngestimatestatuscode,";
 $aryQuery[] = " e.lngrevisionno,";
 $aryQuery[] = " e.lngEstimateNo AS strReportKeyCode,";
@@ -78,20 +78,14 @@ $aryQuery[] = " u1.strUserDisplayName AS strInchargeUserDisplayName,";
 $aryQuery[] = " u2.strUserDisplayCode AS strInputUserDisplayCode,";
 $aryQuery[] = " u2.strUserDisplayName AS strInputUserDisplayName";
 $aryQuery[] = "FROM m_Estimate e";
-$aryQuery[] = " INNER JOIN m_estimatehistory emh on emh.lngestimateno = e.lngestimateno and emh.lngrevisionno = e,lngrevisionno";
-$aryQuery[] = " INNER JOIN ( ";
-$aryQuery[] = " select p1.*  from m_product p1 ";
-$aryQuery[] = " inner join (select max(lngrevisionno) lngrevisionno, strproductcode,strrevisecode from m_Product group by strProductCode,strrevisecode) p2";
-$aryQuery[] = " on p1.strproductcode = p2.strproductcode";
-$aryQuery[] = " and p1.lngrevisionno = p2.lngrevisionno";
-$aryQuery[] = " and p1.strrevisecode = p2.strrevisecode";
-$aryQuery[] = " ) p ON p.strProductCode       = e.strProductCode";
+$aryQuery[] = " INNER JOIN m_estimatehistory emh on emh.lngestimateno = e.lngestimateno and emh.lngrevisionno = e.lngrevisionno";
+$aryQuery[] = " INNER JOIN m_product p ";
+$aryQuery[] = " ON p.strProductCode       = e.strProductCode";
+$aryQuery[] = " AND p.lngrevisionno       = e.lngrevisionno";
 $aryQuery[] = " AND p.strrevisecode       = e.strrevisecode";
 $aryQuery[] = "  AND p.bytInvalidFlag = FALSE";
-$aryQuery[] = "  LEFT OUTER JOIN ( ";
-$aryQuery[] = "    select distinct";
-$aryQuery[] = "      lngestimateno";
-$aryQuery[] = "      , lngrevisionno ";
+$aryQuery[] = "  INNER JOIN ( ";
+$aryQuery[] = "    select lngestimateno, lngestimatedetailno, lngrevisionno, dtmdelivery";
 $aryQuery[] = "    from";
 $aryQuery[] = "      t_estimatedetail ";
 // 納期_from
@@ -173,7 +167,7 @@ $aryQueryWhere[] = " e.lngRevisionNo = ( SELECT MAX ( e2.lngRevisionNo ) FROM m_
 $aryQueryWhere[] = " 0 <= ( SELECT MIN ( e3.lngRevisionNo ) FROM m_Estimate e3 WHERE e.lngEstimateNo = e3.lngEstimateNo )";
 $aryQuery[] = " WHERE " . join(" AND ", $aryQueryWhere);
 unset($aryQueryWhere);
-$aryQuery[] = "ORDER BY p.strProductCode DESC";
+$aryQuery[] = "ORDER BY e.strProductCode DESC";
 
 // ナンバーをキーとする連想配列に帳票コードを取得
 list($lngResultID, $lngResultNum) = fncQuery($strCopyQuery, $objDB);
