@@ -25,6 +25,7 @@
         var displayColumns = $('input[name="displayColumns"]').val().split(',');
 
         if ($('tr[id^="' + strProductCode+ '_' + strReviseCode + '_"]').length) {
+            $(this).attr('src','/img/type01/cmn/seg/p_history_open_off.gif');
             $('tr[id^="' + strProductCode+ '_' + strReviseCode + '_"]').remove();
         } else {
 
@@ -60,6 +61,7 @@
                     console.log(response);
                     alert("fail");
                 })
+            $(this).attr('src','/img/type01/cmn/seg/p_history_close_off.gif');
 
         }
 

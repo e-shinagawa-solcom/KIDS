@@ -157,6 +157,7 @@ $(function () {
 		var rownum = $(this).attr('rownum');
 		var sessionID = $('input[name="strSessionID"]').val();
 		if ($('tr[id^="' + lngEstimateNo + '_"]').length) {
+            $(this).attr('src','/img/type01/cmn/seg/history_open_off.gif');
 			$('tr[id^="' + lngEstimateNo + '_"]').remove();
 		} else {
 			// リクエスト送信
@@ -179,6 +180,7 @@ $(function () {
 					console.log(response);
 					alert("fail");
 				})
+            $(this).attr('src','/img/type01/cmn/seg/history_close_off.gif');
 		}
 	});
 });

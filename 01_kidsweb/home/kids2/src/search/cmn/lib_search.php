@@ -1375,7 +1375,7 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     if ($isMaxData and $record["lngrevisionno"] != 0) {
                         // 履歴ボタン
                         $imgHistory = $doc->createElement("img");
-                        $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
+                        $imgHistory->setAttribute("src", "/img/type01/cmn/seg/history_open_off.gif");
                         if ($type == 'so') {
                             $imgHistory->setAttribute("id", $record["strcode"] . "_" . $record["lngdetailno"]);
                         } else if ($type == 'sc') {
