@@ -267,7 +267,7 @@ for ($i = 0; $i < $lngResultNum; ++$i) {
 
 	$result = pg_fetch_array($lngResultID, $i, PGSQL_ASSOC);
     
-	$bgcolor = fncSetBgColor('estimate', $result["lngestimateno"], true, $objDB);
+	$bgcolor = fncSetBgColor('estimate', $result["lngestimateno"], false, $objDB);
 	
 	$estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
