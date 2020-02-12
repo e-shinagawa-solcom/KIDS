@@ -383,6 +383,7 @@
 
                         // 通貨変更
                         var lngMoneyClassCode = $('select[name="lngMoneyClassCode"] option:selected').val();
+                        window.opener.$('input[name="lngmonetaryunitcode"]').val(lngMoneyClassCode);
                         if (lngMoneyClassCode == '1') {
                             window.opener.$('span.moneyclass').text("\xA5");
                         } else {

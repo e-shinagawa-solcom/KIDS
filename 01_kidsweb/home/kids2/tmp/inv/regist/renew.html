@@ -61,6 +61,7 @@
     <!-- キーバインド -->
     <!-- <script src="/search/cmn/js/key-bind.js" defer></script> -->
     <!-- 請求日設定 -->
+    <script src="/cmn/js/functions.js" defer></script>
     <script src="/inv/cmn/js/msw-regist.js" defer></script>
     <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
     <script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
@@ -137,6 +138,7 @@
                         </span>
                     </div>
                     <div class="regist-clear"></div>
+                    <input type="hidden" name="lngmonetaryunitcode" value="">
                 </div>
 
                 <div class="regist-box-area">
@@ -245,7 +247,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="checkbox center">
-                                                        <input type="checkbox" class="check" />
+                                                        <input type="checkbox" name="edit" class="check" />
                                                     </td>
                                                 </tr>
                                             </tbody>

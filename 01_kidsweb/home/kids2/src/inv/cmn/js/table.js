@@ -3,9 +3,7 @@ $(function () {
   $('body').on('keydown', function (e) {
     console.log('enter');
     if (e.which == 13) {
-      console.log('122');
       $('img.add').click();
-      console.log('1444');
     }
   });
 
@@ -104,6 +102,8 @@ $(function () {
       var slipcode = v.strslipcode;
       var customercode = v.lngdeliveryplacecode;
       var customername = v.strdeliveryplacename;
+      var strmonetaryunitsign = v.strmonetaryunitsign;
+      var lngmonetaryunitcode = v.lngmonetaryunitcode;
       var deliverydate = v.dtmdeliverydate.replace(/-/g, '/');
       var curtotalprice = Number(v.curtotalprice);
       var taxclasscode = v.lngtaxclasscode;
@@ -122,11 +122,13 @@ $(function () {
       $('.customer .customercode', $target_row).html('[' + customercode + '] ');
       $('.customer .customername', $target_row).html(customername);
       $('.deliverydate', $target_row).html(deliverydate);
-      $('.price', $target_row).html(convertNumber(curtotalprice));
+      // $('.price', $target_row).html(convertNumber(curtotalprice));
+      $('.price', $target_row).html(money_format(lngmonetaryunitcode, strmonetaryunitsign, curtotalprice, 'price'));
       $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + '] ');
       $('.taxclass .taxclassname', $target_row).html(taxclassname);
       $('.tax', $target_row).html(tax * 100 + '％');
-      $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
+      // $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
+      $('.taxamount', $target_row).html(money_format(lngmonetaryunitcode, strmonetaryunitsign, taxamount, 'taxprice'));
       $('.remarks', $target_row).html(strnote);
 
 
@@ -144,6 +146,8 @@ $(function () {
       var customername = v.strdeliveryplacename;
       var deliverydate = v.dtmdeliverydate.replace(/-/g, '/');
       var curtotalprice = Number(v.curtotalprice);
+      var strmonetaryunitsign = v.strmonetaryunitsign;
+      var lngmonetaryunitcode = v.lngmonetaryunitcode;
       var taxclasscode = v.lngtaxclasscode;
       var taxclassname = v.strtaxclassname;
       var tax = Number(v.curtax);
@@ -162,11 +166,13 @@ $(function () {
       $('.customer .customercode', $target_row).html('[' + customercode + '] ');
       $('.customer .customername', $target_row).html(customername);
       $('.deliverydate', $target_row).html(deliverydate);
-      $('.price', $target_row).html(convertNumber(curtotalprice));
+      // $('.price', $target_row).html(convertNumber(curtotalprice));
+      $('.price', $target_row).html(money_format(lngmonetaryunitcode, strmonetaryunitsign, curtotalprice, 'price'));
       $('.taxclass .taxclasscode', $target_row).html('[' + taxclasscode + '] ');
       $('.taxclass .taxclassname', $target_row).html(taxclassname);
       $('.tax', $target_row).html(tax * 100 + '％');
-      $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
+      // $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
+      $('.taxamount', $target_row).html(money_format(lngmonetaryunitcode, strmonetaryunitsign, taxamount, 'taxprice'));
       $('.remarks', $target_row).html(strnote);
     });
   };
@@ -280,6 +286,12 @@ $(function () {
     var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
     var checked = [];
 
+    var tax = "";
+    if ($('#tableB tbody tr').length > 0) {
+      console.log($('#tableB tbody tr:nth-child(1)').find('.tax').text());
+      tax = $('#tableB tbody tr:nth-child(1)').find('.tax').text();
+    }
+
     $.each($all_chkbox_rows, function () {
       var $isChecked = $(this).find('input[type="checkbox"]').prop('checked');
       checked.push($isChecked);
@@ -293,6 +305,17 @@ $(function () {
       if ($(this).prop('checked')) {
         var rowindex = $(this).closest('tr').index();
         console.log(rowindex);
+
+        var tmptax =  $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').find('.tax').text();
+        console.log(tmptax);
+        if (tax != "" && tmptax != tax)
+        {
+          alert('消費税率の異なる納品書は請求書の明細に混在できません');
+          return false;
+        }
+
+
+
         var $data_id = $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').data('id');
         console.log($data_id);
         var data_index = data.findIndex(function (value) { return value.strslipcode == $data_id });
@@ -468,16 +491,16 @@ $(function () {
     // 請求書検索ウィンドウをポップアップ表示
   });
 
-  function convertNumber(str) {
-    if (str != "" && str != undefined && str != "null") {
-      return Number(str).toLocaleString(undefined, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      });
-    } else {
-      return "0";
-    }
-  }
+  // function convertNumber(str) {
+  //   if (str != "" && str != undefined && str != "null") {
+  //     return Number(str).toLocaleString(undefined, {
+  //       minimumFractionDigits: 0,
+  //       maximumFractionDigits: 0
+  //     });
+  //   } else {
+  //     return "0";
+  //   }
+  // }
 
 
   // 金額計算
@@ -548,7 +571,7 @@ $(function () {
 
             console.log(tableB_row[i].cells[j].innerText);
             // 税抜金
-            price = tableB_row[i].cells[j].innerText.replace(/,/g, '');
+            price = (tableB_row[i].cells[j].innerText.replace(/,/g, '')).split(' ')[1];
           }
         }
         console.log(price);
@@ -579,9 +602,16 @@ $(function () {
       noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice;
       // 結果を繁栄
       // $('input[name="curlastmonthbalance"]').val(convertNumber(Math.round(curLastMonthBalance))).change();
-      $('input[name="curthismonthamount"]').val(convertNumber(thisMonthAmount)).change();
-      $('input[name="curtaxprice"]').val(convertNumber(Math.round(taxPrice))).change();
-      $('input[name="notaxcurthismonthamount"]').val(convertNumber(Math.round(noTaxMonthAmount))).change();
+      console.log($('input[name="lngmonetaryunitcode"]').val());
+      var fracctiondigits = 0
+      if ($('input[name="lngmonetaryunitcode"]').val() == '1') {
+        fracctiondigits = 0;
+      } else {
+        fracctiondigits = 2;
+      }
+      $('input[name="curthismonthamount"]').val(convertNumber(thisMonthAmount, fracctiondigits)).change();
+      $('input[name="curtaxprice"]').val(convertNumber(Math.round(taxPrice), 0)).change();
+      $('input[name="notaxcurthismonthamount"]').val(convertNumber(Math.round(noTaxMonthAmount), fracctiondigits)).change();
     };
     var result = setTimeout(chargetern, 500);
 

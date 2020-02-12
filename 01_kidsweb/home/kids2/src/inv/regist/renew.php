@@ -117,7 +117,6 @@
         $aryNewResult['strMode']      = 'insertRenew';
         $aryNewResult['slipNoList'] = $aryData["slipNoList"];
         $aryNewResult['revisionNoList'] = $aryData["revisionNoList"];
-
         $aryPrevResult = array_merge($aryNewResult, fncSetPreviewTableData($aryData, $lngInvoiceNo, $objDB));
         // テンプレート読み込み
         $objTemplate = new clsTemplate ();
@@ -294,14 +293,10 @@
         $aryNewResult["invConditionUrl"] = '/inv/regist/condition.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . $aryData["lngFunctionCode"] . '&lngApplicantUserCodeVisible=1&lngInputUserCodeVisible=1&dtmStartDateVisible=1&lngInChargeCodeVisible=1&lngWorkflowStatusCodeVisible=1&lngWorkflowStatusCodeConditions=1&lngSelectFunctionCode=500';
 
         // 入力値用に変換
-        // $aryNewResult['curThisMonthAmount']  = (int)preg_replace('/,/', '', $aryNewResult['curThisMonthAmount']);
-        // $aryNewResult['curLastMonthBalance'] = (int)preg_replace('/,/', '', $aryNewResult['curLastMonthBalance']);
-        // $aryNewResult['curSubTotal1'] = (int)preg_replace('/,/', '', $aryNewResult['curSubTotal1']);
-        // $aryNewResult['curTaxPrice1'] = (int)preg_replace('/,/', '', $aryNewResult['curTaxPrice1']);
-        $aryNewResult['noTaxCurtTisMonthAmount'] = trim($aryNewResult['curThisMonthAmount']);
-        $aryNewResult['curThisMonthAmount']  = trim($aryNewResult['curSubTotal1']);
-        $aryNewResult['curLastMonthBalance'] = trim($aryNewResult['curLastMonthBalance']);
-        $aryNewResult['curTaxPrice1'] = trim($aryNewResult['curTaxPrice1']);
+        $aryNewResult['noTaxCurtTisMonthAmount'] = explode(" ", $aryNewResult['curThisMonthAmount'])[1];
+        $aryNewResult['curThisMonthAmount']  = explode(" ", $aryNewResult['curSubTotal1'])[1];
+        $aryNewResult['curLastMonthBalance'] = explode(" ", $aryNewResult['curLastMonthBalance'])[1];
+        $aryNewResult['curTaxPrice1'] = explode(" ", $aryNewResult['curTaxPrice1'])[1];
 
         // テンプレート読み込み
         $objTemplate = new clsTemplate();
