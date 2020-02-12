@@ -1,4 +1,11 @@
 (function () {
+    $('body').on('keydown', function (e) {
+        console.log('enter');
+        if (e.which == 13) {
+            $('img.search-condition').click();
+        }
+    }
+    );
     // フォームサブミット抑止
     $('document').on('submit', 'form', function (e) {
         e.preventDefault();
@@ -171,22 +178,22 @@
         if (close == 0) {
             var date1 = new Date(billingDate.val() + ' 02:00');
             // 先月初日
-            var first_date = new Date(date1.getFullYear(), date1.getMonth()-1, 1);
+            var first_date = new Date(date1.getFullYear(), date1.getMonth() - 1, 1);
             // 先月末日
             var last_date = new Date(date1.getFullYear(), date1.getMonth(), 0);
             // 自の取得
             var start = first_date.getFullYear() + '/' + (first_date.getMonth() + 1) + '/' + first_date.getDate();
             // 至の取得
             var end = last_date.getFullYear() + '/' + (last_date.getMonth() + 1) + '/' + last_date.getDate();
-        } else {            
-            var date1 = new Date(billingDate.val() + ' 00:00'); 
-            console.log(date1.getDate());  
-            if (date1.getDate() <= close) {              
+        } else {
+            var date1 = new Date(billingDate.val() + ' 00:00');
+            console.log(date1.getDate());
+            if (date1.getDate() <= close) {
                 // 先月の取得
-                var last_month = new Date(date1.getFullYear(), date1.getMonth()-1, 1);
+                var last_month = new Date(date1.getFullYear(), date1.getMonth() - 1, 1);
                 // 先先月の取得
-                var before_last_month = new Date(date1.getFullYear(), date1.getMonth()-2, close);
-                before_last_month.setDate(before_last_month.getDate() + 1);  
+                var before_last_month = new Date(date1.getFullYear(), date1.getMonth() - 2, close);
+                before_last_month.setDate(before_last_month.getDate() + 1);
 
                 // 自の取得
                 var start = before_last_month.getFullYear() + '/' + (before_last_month.getMonth() + 1) + '/' + before_last_month.getDate();
@@ -194,8 +201,8 @@
                 var end = last_month.getFullYear() + '/' + (last_month.getMonth() + 1) + '/' + close;
             } else {
                 // 先月の取得
-                var last_month = new Date(date1.getFullYear(), date1.getMonth()-1, close);
-                last_month.setDate(last_month.getDate() + 1);  
+                var last_month = new Date(date1.getFullYear(), date1.getMonth() - 1, close);
+                last_month.setDate(last_month.getDate() + 1);
                 // 自の取得
                 var start = last_month.getFullYear() + '/' + (last_month.getMonth() + 1) + '/' + last_month.getDate();
                 // 至の取得
@@ -437,7 +444,7 @@
         var tax = false;
         // 税率が同じかをチェックするフラグ
         var isSameTax = true;
-        tableB_row.each( function(){
+        tableB_row.each(function () {
             slipNoList.push($(this).attr('slipno'));
             revisionNoList.push($(this).attr('revisionno'));
         }
@@ -447,24 +454,24 @@
             for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
                 if (!tableB_row[i].cells[j].innerText) continue;
 
-                if (tableB_row[i].cells[j].className.substr(0,'slipcode'.length) == 'slipcode') {
+                if (tableB_row[i].cells[j].className.substr(0, 'slipcode'.length) == 'slipcode') {
                     // 納品書No
                     slipCodeList.push(tableB_row[i].cells[j].innerText);
                 }
-                if (tableB_row[i].cells[j].className.substr(0,'tax right'.length) == 'tax right' && !tax) {
+                if (tableB_row[i].cells[j].className.substr(0, 'tax right'.length) == 'tax right' && !tax) {
                     // 消費税
                     tax = tableB_row[i].cells[j].innerText;
                     console.log('消費税セット');
                 }
-                if (tableB_row[i].cells[j].className.substr(0,'taxclass'.length) == 'taxclass' && !taxclass) {
+                if (tableB_row[i].cells[j].className.substr(0, 'taxclass'.length) == 'taxclass' && !taxclass) {
                     // 税抜き金額
                     taxclass = tableB_row[i].cells[j].innerText;
                 }
-                if (tableB_row[i].cells[j].className.substr(0,'deliverydate'.length) == 'deliverydate') {
+                if (tableB_row[i].cells[j].className.substr(0, 'deliverydate'.length) == 'deliverydate') {
                     // 納品日
                     deliveryDate.push(tableB_row[i].cells[j].innerText);
                 }
-                if (tableB_row[i].cells[j].className.substr(0,'tax right'.length) == 'tax right' && tax) {
+                if (tableB_row[i].cells[j].className.substr(0, 'tax right'.length) == 'tax right' && tax) {
                     console.log('消費税率チェック');
                     if (tableB_row[i].cells[j].innerText != tax) {
                         console.log('消費税NG');
@@ -529,44 +536,38 @@
 
         // 既存フォーム削除
         var delold = document.getElementsByName('slipCodeList');
-        if( delold.length > 0 )
-        {
-            for( var i = 0; i < delold.length; i++ ){
+        if (delold.length > 0) {
+            for (var i = 0; i < delold.length; i++) {
                 delold[i].parentNode.removeChild(delold[i]);
             }
         }
         delold = document.getElementsByName('slipNoList');
-        if( delold.length > 0 )
-        {
-            for( var i = 0; i < delold.length; i++ ){
+        if (delold.length > 0) {
+            for (var i = 0; i < delold.length; i++) {
                 delold[i].parentNode.removeChild(delold[i]);
             }
         }
         delold = document.getElementsByName('revisionNoList');
-        if( delold.length > 0 )
-        {
-            for( var i = 0; i < delold.length; i++ ){
+        if (delold.length > 0) {
+            for (var i = 0; i < delold.length; i++) {
                 delold[i].parentNode.removeChild(delold[i]);
             }
         }
         delold = document.getElementsByName('mode');
-        if( delold.length > 0 )
-        {
-            for( var i = 0; i < delold.length; i++ ){
+        if (delold.length > 0) {
+            for (var i = 0; i < delold.length; i++) {
                 delold[i].parentNode.removeChild(delold[i]);
             }
         }
         delold = document.getElementsByName('taxclass');
-        if( delold.length > 0 )
-        {
-            for( var i = 0; i < delold.length; i++ ){
+        if (delold.length > 0) {
+            for (var i = 0; i < delold.length; i++) {
                 delold[i].parentNode.removeChild(delold[i]);
             }
         }
         delold = document.getElementsByName('tax');
-        if( delold.length > 0 )
-        {
-            for( var i = 0; i < delold.length; i++ ){
+        if (delold.length > 0) {
+            for (var i = 0; i < delold.length; i++) {
                 delold[i].parentNode.removeChild(delold[i]);
             }
         }
