@@ -752,16 +752,16 @@
     };
 
 
-    function convertNumber(str) {
-        if (str != "" && str != undefined && str != "null") {
-            return Number(str).toLocaleString(undefined, {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            });
-        } else if (str == "0") {
-            return str;
-        } else {
-            return "";
-        }
-    }
+    // function convertNumber(str) {
+    //     if (str != "" && str != undefined && str != "null") {
+    //         return Number(str).toLocaleString(undefined, {
+    //             minimumFractionDigits: 0,
+    //             maximumFractionDigits: 0
+    //         });
+    //     } else if (str == "0") {
+    //         return str;
+    //     } else {
+    //         return "";
+    //     }
+    // }
 })();

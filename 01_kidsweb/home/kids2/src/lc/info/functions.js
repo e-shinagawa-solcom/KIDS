@@ -116,10 +116,10 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productcd) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productrevisecd) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.productname) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');text-align:right;">' + convertNumber(row.productnumber, "", 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');text-align:right;">' + convertNumberByClass(row.productnumber, "", 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.unitname) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.unitprice, "", 4) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');text-align:right;">' + convertNumber(row.moneyprice, row.currencyclass, 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.unitprice, "", 4) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');text-align:right;">' + convertNumberByClass(row.moneyprice, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.currencyclass) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipstartdate) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipenddate) + '</td>' +
@@ -134,13 +134,13 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcno) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.lcamopen) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.validmonth) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.usancesettlement, row.currencyclass, 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.usancesettlement, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail1date) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail1money, row.currencyclass, 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.bldetail1money, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail2date) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail2money, row.currencyclass, 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.bldetail2money, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail3date) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNumber(row.bldetail3money, row.currencyclass, 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.bldetail3money, row.currencyclass, 0) + '</td>' +
 			'<td style="display:none;">' + row.lcstate + '</td>' +
 			'</tr>';
 		$("#lc_table_body").append(lc_table_body);
@@ -587,7 +587,7 @@ function exportFile() {
 		'&getDataModeFlg=' + getDataModeFlg;
 }
 
-function convertNumber(str, currencyclass, fracctiondigits) {
+function convertNumberByClass(str, currencyclass, fracctiondigits) {
 	if (str != "" && str != undefined && str != "null") {
 		if (currencyclass != "") {
 			if (currencyclass == '円') {

@@ -424,11 +424,11 @@ function setReport1Data(reportData, startIndex, endIndex) {
 	var total = 0;
 	for (var i=startIndex; i<endIndex+1; i++) {
 		tblTbody.rows[row].cells[0].innerHTML = convertNull(reportmain[i].beneficiary);
-		tblTbody.rows[row].cells[1].innerHTML = convertNumber(reportmain[i].bank1, currencyclass);
-		tblTbody.rows[row].cells[2].innerHTML = convertNumber(reportmain[i].bank2, currencyclass);
-		tblTbody.rows[row].cells[3].innerHTML = convertNumber(reportmain[i].bank3, currencyclass);
-		tblTbody.rows[row].cells[4].innerHTML = convertNumber(reportmain[i].bank4, currencyclass);
-		tblTbody.rows[row].cells[5].innerHTML = convertNumber(reportmain[i].total, currencyclass);
+		tblTbody.rows[row].cells[1].innerHTML = convertNumberByClass(reportmain[i].bank1, currencyclass);
+		tblTbody.rows[row].cells[2].innerHTML = convertNumberByClass(reportmain[i].bank2, currencyclass);
+		tblTbody.rows[row].cells[3].innerHTML = convertNumberByClass(reportmain[i].bank3, currencyclass);
+		tblTbody.rows[row].cells[4].innerHTML = convertNumberByClass(reportmain[i].bank4, currencyclass);
+		tblTbody.rows[row].cells[5].innerHTML = convertNumberByClass(reportmain[i].total, currencyclass);
 		row += 1;
 		bank1total += Number(reportmain[i].bank1);
 		bank2total += Number(reportmain[i].bank2);
@@ -438,11 +438,11 @@ function setReport1Data(reportData, startIndex, endIndex) {
 	}
 
 	
-	tblTbody.rows[26].cells[1].innerHTML = convertNumber(bank1total, currencyclass);
-	tblTbody.rows[26].cells[2].innerHTML = convertNumber(bank2total, currencyclass);
-	tblTbody.rows[26].cells[3].innerHTML = convertNumber(bank3total, currencyclass);
-	tblTbody.rows[26].cells[4].innerHTML = convertNumber(bank4total, currencyclass);
-	tblTbody.rows[26].cells[5].innerHTML = convertNumber(total, currencyclass);
+	tblTbody.rows[26].cells[1].innerHTML = convertNumberByClass(bank1total, currencyclass);
+	tblTbody.rows[26].cells[2].innerHTML = convertNumberByClass(bank2total, currencyclass);
+	tblTbody.rows[26].cells[3].innerHTML = convertNumberByClass(bank3total, currencyclass);
+	tblTbody.rows[26].cells[4].innerHTML = convertNumberByClass(bank4total, currencyclass);
+	tblTbody.rows[26].cells[5].innerHTML = convertNumberByClass(total, currencyclass);
 }
 
 
@@ -462,7 +462,7 @@ function setReport2Data(reportData, startIndex, endIndex) {
 	for (var i=startIndex; i<endIndex+1; i++) {
 		tblTbody.rows[row].cells[0].innerHTML = convertNull(reportmain[i].lcno);
 		tblTbody.rows[row].cells[1].innerHTML = convertNull(reportmain[i].factoryname);
-		tblTbody.rows[row].cells[2].innerHTML = convertNumber(reportmain[i].price, currencyclass);
+		tblTbody.rows[row].cells[2].innerHTML = convertNumberByClass(reportmain[i].price, currencyclass);
 		tblTbody.rows[row].cells[3].innerHTML = convertNull(reportmain[i].shipterm);
 		tblTbody.rows[row].cells[4].innerHTML = convertNull(reportmain[i].validterm);
 		tblTbody.rows[row].cells[5].innerHTML = convertNull(reportmain[i].bankname);
@@ -472,7 +472,7 @@ function setReport2Data(reportData, startIndex, endIndex) {
 		total += Number(reportmain[i].price);
 	}
 
-	tblTbody.rows[1].cells[2].innerHTML = convertNumber(total, currencyclass);
+	tblTbody.rows[1].cells[2].innerHTML = convertNumberByClass(total, currencyclass);
 
 }
 
@@ -501,7 +501,7 @@ function setReport3Data(reportData, startIndex, endIndex) {
 		tblTbody.rows[row].cells[5].innerHTML = convertNull(reportmain[i].productnumber);
 		tblTbody.rows[row].cells[6].innerHTML = convertNull(reportmain[i].unitname);
 		tblTbody.rows[row].cells[7].innerHTML = convertNull(reportmain[i].unitprice);
-		tblTbody.rows[row].cells[8].innerHTML = convertNumber(reportmain[i].moneyprice, currencyclass);
+		tblTbody.rows[row].cells[8].innerHTML = convertNumberByClass(reportmain[i].moneyprice, currencyclass);
 		tblTbody.rows[row].cells[9].innerHTML = convertNull(reportmain[i].shipstartdate);
 		tblTbody.rows[row].cells[10].innerHTML = convertNull(reportmain[i].shipenddate);
 		tblTbody.rows[row].cells[11].innerHTML = convertNull(reportmain[i].portplace);
@@ -513,7 +513,7 @@ function setReport3Data(reportData, startIndex, endIndex) {
 		row += 1;
 		total += Number(reportmain[i].moneyprice);
 	}
-	tblThead.rows[0].cells[7].innerHTML = convertNumber(total, currencyclass);
+	tblThead.rows[0].cells[7].innerHTML = convertNumberByClass(total, currencyclass);
 }
 
 /**
@@ -555,18 +555,18 @@ function setReport4Data(reportData, startIndex, endIndex) {
 	var total = 0;
 	for (var i=0; i<reportmain.length; i++) {
 		tblTbody.rows[row].cells[0].innerHTML = convertNull(reportmain[i].beneficiary);
-		tblTbody.rows[row].cells[1].innerHTML = convertNumber(reportmain[i].date1, currencyclass);
-		tblTbody.rows[row].cells[2].innerHTML = convertNumber(reportmain[i].date2, currencyclass);
-		tblTbody.rows[row].cells[3].innerHTML = convertNumber(reportmain[i].date3, currencyclass);
-		tblTbody.rows[row].cells[4].innerHTML = convertNumber(reportmain[i].date4, currencyclass);
-		tblTbody.rows[row].cells[5].innerHTML = convertNumber(reportmain[i].date5, currencyclass);
-		tblTbody.rows[row].cells[6].innerHTML = convertNumber(reportmain[i].date6, currencyclass);
-		tblTbody.rows[row].cells[7].innerHTML = convertNumber(reportmain[i].date7, currencyclass);
-		tblTbody.rows[row].cells[8].innerHTML = convertNumber(reportmain[i].date8, currencyclass);
-		tblTbody.rows[row].cells[9].innerHTML = convertNumber(reportmain[i].date9, currencyclass);
-		tblTbody.rows[row].cells[10].innerHTML = convertNumber(reportmain[i].date10, currencyclass);
-		tblTbody.rows[row].cells[11].innerHTML = convertNumber(reportmain[i].date11, currencyclass);
-		tblTbody.rows[row].cells[12].innerHTML = convertNumber(reportmain[i].total, currencyclass);
+		tblTbody.rows[row].cells[1].innerHTML = convertNumberByClass(reportmain[i].date1, currencyclass);
+		tblTbody.rows[row].cells[2].innerHTML = convertNumberByClass(reportmain[i].date2, currencyclass);
+		tblTbody.rows[row].cells[3].innerHTML = convertNumberByClass(reportmain[i].date3, currencyclass);
+		tblTbody.rows[row].cells[4].innerHTML = convertNumberByClass(reportmain[i].date4, currencyclass);
+		tblTbody.rows[row].cells[5].innerHTML = convertNumberByClass(reportmain[i].date5, currencyclass);
+		tblTbody.rows[row].cells[6].innerHTML = convertNumberByClass(reportmain[i].date6, currencyclass);
+		tblTbody.rows[row].cells[7].innerHTML = convertNumberByClass(reportmain[i].date7, currencyclass);
+		tblTbody.rows[row].cells[8].innerHTML = convertNumberByClass(reportmain[i].date8, currencyclass);
+		tblTbody.rows[row].cells[9].innerHTML = convertNumberByClass(reportmain[i].date9, currencyclass);
+		tblTbody.rows[row].cells[10].innerHTML = convertNumberByClass(reportmain[i].date10, currencyclass);
+		tblTbody.rows[row].cells[11].innerHTML = convertNumberByClass(reportmain[i].date11, currencyclass);
+		tblTbody.rows[row].cells[12].innerHTML = convertNumberByClass(reportmain[i].total, currencyclass);
 		row ++;
 		date1total += Number(reportmain[i].date1);
 		date2total += Number(reportmain[i].date2);
@@ -582,18 +582,18 @@ function setReport4Data(reportData, startIndex, endIndex) {
 		total += Number(reportmain[i].total);
 	}
 
-	tblTbody.rows[22].cells[1].innerHTML = convertNumber(date1total, currencyclass);
-	tblTbody.rows[22].cells[2].innerHTML = convertNumber(date2total, currencyclass);
-	tblTbody.rows[22].cells[3].innerHTML = convertNumber(date3total, currencyclass);
-	tblTbody.rows[22].cells[4].innerHTML = convertNumber(date4total, currencyclass);
-	tblTbody.rows[22].cells[5].innerHTML = convertNumber(date5total, currencyclass);
-	tblTbody.rows[22].cells[6].innerHTML = convertNumber(date6total, currencyclass);
-	tblTbody.rows[22].cells[7].innerHTML = convertNumber(date7total, currencyclass);
-	tblTbody.rows[22].cells[8].innerHTML = convertNumber(date8total, currencyclass);
-	tblTbody.rows[22].cells[9].innerHTML = convertNumber(date9total, currencyclass);
-	tblTbody.rows[22].cells[10].innerHTML = convertNumber(date10total, currencyclass);
-	tblTbody.rows[22].cells[11].innerHTML = convertNumber(date11total, currencyclass);
-	tblTbody.rows[22].cells[12].innerHTML = convertNumber(total, currencyclass);
+	tblTbody.rows[22].cells[1].innerHTML = convertNumberByClass(date1total, currencyclass);
+	tblTbody.rows[22].cells[2].innerHTML = convertNumberByClass(date2total, currencyclass);
+	tblTbody.rows[22].cells[3].innerHTML = convertNumberByClass(date3total, currencyclass);
+	tblTbody.rows[22].cells[4].innerHTML = convertNumberByClass(date4total, currencyclass);
+	tblTbody.rows[22].cells[5].innerHTML = convertNumberByClass(date5total, currencyclass);
+	tblTbody.rows[22].cells[6].innerHTML = convertNumberByClass(date6total, currencyclass);
+	tblTbody.rows[22].cells[7].innerHTML = convertNumberByClass(date7total, currencyclass);
+	tblTbody.rows[22].cells[8].innerHTML = convertNumberByClass(date8total, currencyclass);
+	tblTbody.rows[22].cells[9].innerHTML = convertNumberByClass(date9total, currencyclass);
+	tblTbody.rows[22].cells[10].innerHTML = convertNumberByClass(date10total, currencyclass);
+	tblTbody.rows[22].cells[11].innerHTML = convertNumberByClass(date11total, currencyclass);
+	tblTbody.rows[22].cells[12].innerHTML = convertNumberByClass(total, currencyclass);
 }
 
 /**
@@ -611,22 +611,22 @@ function setReport5Data(reportData, startIndex, endIndex) {
 	var row = 4;
 	for (var i=0; i<A5.length; i++) {
 		tblTbody.rows[row].cells[0].innerHTML = convertNull(A5[i].Beneficiary);
-		tblTbody.rows[row].cells[1].innerHTML = convertNumber(A5[i].bank1, currencyclass);
-		tblTbody.rows[row].cells[2].innerHTML = convertNumber(A5[i].bank2, currencyclass);
-		tblTbody.rows[row].cells[3].innerHTML = convertNumber(A5[i].bank3, currencyclass);
-		tblTbody.rows[row].cells[4].innerHTML = convertNumber(A5[i].bank4, currencyclass);
-		tblTbody.rows[row].cells[5].innerHTML = convertNumber(A5[i].unapprovaltotal, currencyclass);
-		tblTbody.rows[row].cells[6].innerHTML = convertNumber(A5[i].benetotal, currencyclass);
+		tblTbody.rows[row].cells[1].innerHTML = convertNumberByClass(A5[i].bank1, currencyclass);
+		tblTbody.rows[row].cells[2].innerHTML = convertNumberByClass(A5[i].bank2, currencyclass);
+		tblTbody.rows[row].cells[3].innerHTML = convertNumberByClass(A5[i].bank3, currencyclass);
+		tblTbody.rows[row].cells[4].innerHTML = convertNumberByClass(A5[i].bank4, currencyclass);
+		tblTbody.rows[row].cells[5].innerHTML = convertNumberByClass(A5[i].unapprovaltotal, currencyclass);
+		tblTbody.rows[row].cells[6].innerHTML = convertNumberByClass(A5[i].benetotal, currencyclass);
 		row ++;
 	}
 
-	tblTbody.rows[22].cells[1].innerHTML = convertNumber(reportData.report_header.B23, currencyclass);
-	tblTbody.rows[22].cells[2].innerHTML = convertNumber(reportData.report_header.C23, currencyclass);
-	tblTbody.rows[22].cells[3].innerHTML = convertNumber(reportData.report_header.D23, currencyclass);
-	tblTbody.rows[22].cells[4].innerHTML = convertNumber(reportData.report_header.E23, currencyclass);
-	tblTbody.rows[22].cells[5].innerHTML = convertNumber(reportData.report_header.F23, currencyclass);
-	tblTbody.rows[22].cells[6].innerHTML = convertNumber(reportData.report_header.G23, currencyclass);
-	tblTbody.rows[25].cells[0].innerHTML = convertNumber(reportData.report_header.A26, currencyclass);
+	tblTbody.rows[22].cells[1].innerHTML = convertNumberByClass(reportData.report_header.B23, currencyclass);
+	tblTbody.rows[22].cells[2].innerHTML = convertNumberByClass(reportData.report_header.C23, currencyclass);
+	tblTbody.rows[22].cells[3].innerHTML = convertNumberByClass(reportData.report_header.D23, currencyclass);
+	tblTbody.rows[22].cells[4].innerHTML = convertNumberByClass(reportData.report_header.E23, currencyclass);
+	tblTbody.rows[22].cells[5].innerHTML = convertNumberByClass(reportData.report_header.F23, currencyclass);
+	tblTbody.rows[22].cells[6].innerHTML = convertNumberByClass(reportData.report_header.G23, currencyclass);
+	tblTbody.rows[25].cells[0].innerHTML = convertNumberByClass(reportData.report_header.A26, currencyclass);
 
 	
 	tblTbody.rows[3].cells[1].innerHTML = convertNull(reportData.report_header.B4);
@@ -635,12 +635,12 @@ function setReport5Data(reportData, startIndex, endIndex) {
 	tblTbody.rows[3].cells[4].innerHTML = convertNull(reportData.report_header.E4);
 
 	
-	tblTbody.rows[25].cells[1].innerHTML = convertNumber(reportData.report_header.B26, currencyclass);
-	tblTbody.rows[25].cells[2].innerHTML = convertNumber(reportData.report_header.C26, currencyclass);
-	tblTbody.rows[25].cells[3].innerHTML = convertNumber(reportData.report_header.D26, currencyclass);
-	tblTbody.rows[25].cells[4].innerHTML = convertNumber(reportData.report_header.E26, currencyclass);
-	tblTbody.rows[25].cells[5].innerHTML = convertNumber(reportData.report_header.F26, currencyclass);
-	tblTbody.rows[25].cells[6].innerHTML = convertNumber(reportData.report_header.G26, currencyclass);
+	tblTbody.rows[25].cells[1].innerHTML = convertNumberByClass(reportData.report_header.B26, currencyclass);
+	tblTbody.rows[25].cells[2].innerHTML = convertNumberByClass(reportData.report_header.C26, currencyclass);
+	tblTbody.rows[25].cells[3].innerHTML = convertNumberByClass(reportData.report_header.D26, currencyclass);
+	tblTbody.rows[25].cells[4].innerHTML = convertNumberByClass(reportData.report_header.E26, currencyclass);
+	tblTbody.rows[25].cells[5].innerHTML = convertNumberByClass(reportData.report_header.F26, currencyclass);
+	tblTbody.rows[25].cells[6].innerHTML = convertNumberByClass(reportData.report_header.G26, currencyclass);
 
 	var reportmain = reportData.report_main;
 	row = 4;
@@ -650,7 +650,7 @@ function setReport5Data(reportData, startIndex, endIndex) {
 		tblTbody.rows[row].cells[10].innerHTML = convertNull(reportmain[i].shipstartdate);
 		tblTbody.rows[row].cells[11].innerHTML = convertNull(reportmain[i].lcno);
 		tblTbody.rows[row].cells[12].innerHTML = convertNull(reportmain[i].productcode);
-		tblTbody.rows[row].cells[13].innerHTML = convertNumber(reportmain[i].usancesettlement, currencyclass);
+		tblTbody.rows[row].cells[13].innerHTML = convertNumberByClass(reportmain[i].usancesettlement, currencyclass);
 		row += 1;
 	}
 }
@@ -696,7 +696,7 @@ function setReport6Data(reportData, startIndex, endIndex) {
 		tblTbody.rows[row].cells[4].innerHTML = convertNull(reportmain[i].productnumber);
 		tblTbody.rows[row].cells[5].innerHTML = convertNull(reportmain[i].unitname);
 		tblTbody.rows[row].cells[6].innerHTML = convertNull(reportmain[i].unitprice);
-		tblTbody.rows[row].cells[7].innerHTML = convertNumber(reportmain[i].moneyprice, currencyclass);
+		tblTbody.rows[row].cells[7].innerHTML = convertNumberByClass(reportmain[i].moneyprice, currencyclass);
 		tblTbody.rows[row].cells[8].innerHTML = convertNull(reportmain[i].shipstartdate);
 		tblTbody.rows[row].cells[9].innerHTML = convertNull(reportmain[i].shipenddate);
 		tblTbody.rows[row].cells[10].innerHTML = convertNull(reportmain[i].shipterm);
@@ -708,7 +708,7 @@ function setReport6Data(reportData, startIndex, endIndex) {
 		row += 1;
 		totalprice += Number(reportmain[i].moneyprice);
 	}
-	tblTbody.rows[26].cells[7].innerHTML = convertNumber(totalprice, currencyclass);
+	tblTbody.rows[26].cells[7].innerHTML = convertNumberByClass(totalprice, currencyclass);
 
 }
 
@@ -724,7 +724,7 @@ function convertNull(str) {
 	}
 }
 
-function convertNumber(str, currencyclass) {
+function convertNumberByClass(str, currencyclass) {
 	if (str != "" && str != undefined && str != "null") {
 		if (currencyclass == '円') {			
 			return Number(str).toLocaleString(undefined, {
