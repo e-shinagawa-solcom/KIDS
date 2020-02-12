@@ -319,6 +319,7 @@ foreach ($aryDetailResult as $detailResult) {
         $td = $doc->createElement("td");
         $text = $doc->createElement("input");
         $text->setAttribute("type", "text");
+        $text->setAttribute("name", "unitQuantity");
         $text->setAttribute("class", "form-control form-control-sm txt-kids");
         $text->setAttribute("style", "width:90px;");
         $text->setAttribute("value", $lngunitquantity);

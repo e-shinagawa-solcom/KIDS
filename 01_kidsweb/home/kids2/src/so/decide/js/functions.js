@@ -95,6 +95,8 @@
 
         selectChange();
 
+        unitQuantityChange();
+
         scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
 
         // チェックボックスクリックイベントの設定
@@ -111,7 +113,7 @@
         resetTableRowid($("#tableA"));
 
         resetTableADisplayStyle();
-        
+
         $("#tableA_head").trigger("update");
 
         $("#tableA").trigger("update");
@@ -123,41 +125,13 @@
         deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
 
         resetTableRowid($("#tableA"));
-        
+
         $("#tableA_head").trigger("update");
 
         $("#tableA").trigger("update");
 
         resetTableADisplayStyle();
     });
-
-    // function removeTableBToTableA(tableBRow) {
-    //     var trhtml = tableBRow.html();
-    //     var detailnoB = tableBRow.find('#lngreceivedetailno').text();
-    //     var rownum = 0;
-    //     $("#tbl_detail tbody tr").each(function (i, e) {
-    //         var detailnoA = $(this).find('#lngreceivedetailno').text();
-    //         console.log("detailnoA:" + detailnoA);
-    //         console.log("detailnoB:" + detailnoB);
-    //         console.log(parseInt(detailnoA) > parseInt(detailnoB));
-    //         if (parseInt(detailnoA) > parseInt(detailnoB)) {
-    //             rownum = i + 1;
-    //             return false;
-    //         }
-    //     });
-    //     if (rownum == 0) {
-    //         $('#tbl_detail tbody').append('<tr>' + trhtml + '</tr>');
-    //         $('#tbl_detail_chkbox tbody').append('<tr><td style="text-align:center;"><input type="checkbox" style="width: 10px;"></td></tr>');
-    //         rownum = $("#tbl_detail tbody tr").length;
-    //     } else {
-    //         $('#tbl_detail tbody tr:nth-child(' + rownum + ')').before('<tr>' + trhtml + '</tr>');
-    //         $('#tbl_detail_chkbox tbody tr:nth-child(' + rownum + ')').before('<tr><td style="text-align:center;"><input type="checkbox" style="width: 10px;"></td></tr>');
-    //     }
-
-    //     $('#tbl_detail tbody tr:nth-child(' + (rownum) + ')').find('td:nth-child(1)').css('display', '');
-
-    //     tableBRow.remove();
-    // }
 
     // 検索条件変更ボタンのイベント
     $('img.search').on('click', function () {
@@ -219,6 +193,12 @@
             var lngproductquantity = $(this).find('#lngproductquantity_re').text();
             if (lngproductquantity.indexOf('.') != -1) {
                 alert(len + "行目の見積原価計算書上の数量が入数で割り切れません。");
+                isError = true;
+                return false;
+            }
+
+            if (!lngproductquantity.match(/^[0-9]+$/)) {
+                alert(len + "行目の入数は半角数字で入力してください。");
                 isError = true;
                 return false;
             }
@@ -307,6 +287,8 @@
 
 selectChange();
 
+unitQuantityChange();
+
 function selectChange() {
     // 単位セレクトボックスの変更イベント
     $('select').on({
@@ -323,13 +305,35 @@ function selectChange() {
                 lngunitquantitynew = lngcartonquantity;
                 // 数量 = 製品数量/カートン入数
                 lngproductquantitynew = lngproductquantity / lngunitquantitynew;
-                var html = '<input type="text" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + lngunitquantitynew + '">';
+                var html = '<input type="text" name="unitQuantity" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + lngunitquantitynew + '">';
                 $(this).parent().parent().find('#lngunitquantity').html(html);
             } else {
                 $(this).parent().parent().find('#lngunitquantity').text(lngunitquantitynew);
             }
             $(this).parent().parent().find('#lngproductquantity_re').text(lngproductquantitynew);
 
+            // テーブルBの幅をリセットする
+            resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
+
+            unitQuantityChange();
+        }
+    });
+}
+
+function unitQuantityChange() {
+    $('input[name="unitQuantity"]').on({
+        'change': function () {
+            var val = $(this).val();
+            if (!val.match(/^[0-9]+$/)) {
+                alert("入数は半角数字で入力してください。");
+                return false;
+            }
+            var lngproductquantity = $(this).parent().parent().find('#lngproductquantity').text();
+            
+            console.log(lngproductquantity);
+            // 数量 = 製品数量/カートン入数
+            var lngproductquantitynew = lngproductquantity / val;
+            $(this).parent().parent().find('#lngproductquantity_re').text(lngproductquantitynew);
         }
     });
 }
@@ -404,27 +408,6 @@ function unlockScreen(id) {
     $("#" + id).remove();
 }
 
-// function resetAllTableColumnWidth() {
-//     // $(".table-decide-description").css('table-layout', '');
-//     var row = $(".table-decide-description tbody tr");
-//     var columnNum = row.find('td').length;
-//     var thwidthArry = [];
-//     var tdwidthArry = [];
-//     for (var i = 1; i <= columnNum; i++) {
-//         thwidthArry.push($(".table-decide-description thead tr th:nth-child(" + i + ")").width());
-//         tdwidthArry.push($(".table-decide-description tbody tr td:nth-child(" + i + ")").width());
-//     }
-//     for (var i = 1; i <= columnNum; i++) {
-//         if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-//             $(".table-decide-description thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1] + 10);
-//             $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1] + 10);
-//         } else {
-//             $(".table-decide-description thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1] + 10);
-//             $(".table-decide-description tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1] + 10);
-//         }
-//     }
-// }
-
 function resetTableADisplayStyle() {
     $("#tableA tbody tr").each(function (i, e) {
         $(this).find("td:nth-child(1)").css("display", "");
@@ -444,204 +427,6 @@ function resetTableBDisplayStyle() {
         $(this).find("#strdetailnote").find('input:text').prop('disabled', false);
     });
 }
-
-// function resetTableAWidth() {
-//     $("#tbl_detail_chkbox tbody tr td").width($("#tbl_detail_chkbox_head tr th").width());
-//     $("#tbl_detail thead").css('display', '');
-//     $("#tbl_detail tbody tr td").width('');
-//     $("#tbl_detail thead tr th").width('');
-//     $("#tbl_detail_head thead tr th").width('');
-//     var thwidthArry = [];
-//     var tdwidthArry = [];
-//     var width = 0;
-//     var columnNum = $('#tbl_detail_head thead tr th').length;
-//     for (var i = 1; i <= columnNum; i++) {
-//         var thwidth = $('#tbl_detail_head thead tr th:nth-child(' + i + ')').width();
-//         var tdwidth = $('#tbl_detail tbody tr td:nth-child(' + i + ')').width();
-//         thwidthArry.push(thwidth + 20);
-//         tdwidthArry.push(tdwidth + 20);
-//     }
-
-//     for (var i = 1; i <= columnNum; i++) {
-//         if ($("#tbl_detail_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
-//             if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-//                 $("#tbl_detail_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-//                 $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-//                 width += thwidthArry[i - 1];
-//             } else {
-//                 $("#tbl_detail_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-//                 $("#tbl_detail tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-//                 width += tdwidthArry[i - 1];
-//             }
-//         }
-//     }
-//     $("#tbl_detail_head").width(width + 100);
-//     $("#tbl_detail").width(width + 100);
-
-//     $("#tbl_detail thead").css('display', 'none');
-// }
-
-
-// function resetTableBWidth() {
-//     $("#tbl_decide_no tbody tr td").width($("#tbl_decide_no_head thead tr th").width());
-//     $("#tbl_decide_body tbody tr td").width('');
-//     $("#tbl_decide_head thead tr th").width('');
-//     var thwidthArry = [];
-//     var tdwidthArry = [];
-//     var columnNum = $('#tbl_decide_head thead tr th').length;
-//     console.log(columnNum);
-//     var width = 0;
-//     for (var i = 1; i <= columnNum; i++) {
-//         var thwidth = $('#tbl_decide_head thead tr th:nth-child(' + i + ')').width();
-//         var tdwidth = $('#tbl_decide_body tbody tr td:nth-child(' + i + ')').width();
-//         thwidthArry.push(thwidth + 20);
-//         tdwidthArry.push(tdwidth + 20);
-//     }
-
-//     for (var i = 1; i <= columnNum; i++) {
-//         if ($("#tbl_decide_head thead tr th:nth-child(" + i + ")").css("display") != "none") {
-//             if (thwidthArry[i - 1] > tdwidthArry[i - 1]) {
-//                 $("#tbl_decide_head thead tr th:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-//                 $("#tbl_decide_body tbody tr td:nth-child(" + i + ")").width(thwidthArry[i - 1]);
-//                 width += thwidthArry[i - 1];
-//             } else {
-//                 $("#tbl_decide_head thead tr th:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-//                 $("#tbl_decide_body tbody tr td:nth-child(" + i + ")").width(tdwidthArry[i - 1]);
-//                 width += tdwidthArry[i - 1];
-//             }
-//         }
-//     }
-
-//     $("#tbl_decide_head").width(width + 100);
-//     $("#tbl_decide_body").width(width + 100);
-// }
-// function resetTableBWidth() {
-//     var width = 0;
-//     var columnNum = $(".table-decide-description").eq(3).find("thead tr th").length;
-//     for (var i = 1; i <= columnNum; i++) {
-//         if ($(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-//             // $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('width', '');
-//             // $(".table-decide-description").eq(5).find("tbody tr td:nth-child(" + i + ")").css('width', '');
-//         } else {
-//             console.log(i + ":" + $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width());
-//             width += $(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width();
-//         }
-//     }
-//     console.log(width);
-//     $(".table-decide-description").eq(3).width(width + 50);
-//     $(".table-decide-description").eq(5).width(width + 50);
-// }
-
-
-//   /**
-//    * @method scanAllCheckbox スキャンチェックボックス
-//    */
-//   function scanAllCheckbox() {
-
-//     var $all_rows = $('#tbl_detail tbody tr');
-//     var $all_chkbox_rows = $('#tbl_detail_chkbox tbody tr');
-//     var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
-
-//     // 有効 <tr> ＊選択可能行
-//     var count_checked = 0;
-//     var count_disabled = 0;
-
-//     // data がない場合、全選択／解除チェックボックスを寝かせて無効化
-//     if (!$all_rows.length) {
-//       $('#allChecked').prop({ 'checked': false, 'disabled': true });
-//     } else {
-//       $('#allChecked').prop('disabled', false);
-//     }
-
-//     $.each($all_checkbox, function (i) {
-//       // チェックボックスがひとつでも外れている場合、全選択／解除チェックボックスを寝かす
-//       if (!($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)')) {
-//         $('#allChecked').prop('checked', false);
-//       }
-
-//       // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
-//       if ($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)') {
-//         ++count_checked;
-//       }
-//       if ($all_rows.length === count_checked) {
-//         $('#allChecked').prop('checked', true);
-//       }
-
-//       // すべてのチェックボックスが無効化された場合、全選択／解除チェックボックスを寝かせて無効化
-//       if ($(this).prop('disabled')) {
-//         ++count_disabled;
-//       }
-//       if ($all_rows.length === count_disabled) {
-//         $('#allChecked').prop({ 'checked': false, 'disabled': true });
-//       }
-//     });
-//   };
-
-
-// function selectRow(objA, objB) {
-//     var rows = objA.find('tbody tr');
-//     var rows = objB.find('tbody tr');
-//     var lastSelectedRow;
-//     /* Create 'click' event handler for rows */
-//     objA.find('tbody tr').on('click', function (e) {
-//         lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-//         scanAllCheckbox();
-//     });
-
-
-//     /* Create 'click' event handler for rows */
-//     objB.find('tbody tr').on('click', function (e) {
-//         lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, objA, objB);
-//         scanAllCheckbox();
-//     });
-
-//     /* This 'event' is used just to avoid that the table text 
-//      * gets selected (just for styling). 
-//      * For example, when pressing 'Shift' keyboard key and clicking 
-//      * (without this 'event') the text of the 'table' will be selected.
-//      * You can remove it if you want, I just tested this in 
-//      * Chrome v30.0.1599.69 */
-//     $(document).bind('selectstart dragstart', function (e) {
-//         e.preventDefault(); return false;
-//     });
-// }
-
-// function trClickEvent(row, lastSelectedRow, e, objA, objB) {
-
-//     /* Check if 'Ctrl', 'cmd' or 'Shift' keyboard key was pressed
-//      * 'Ctrl' => is represented by 'e.ctrlKey' or 'e.metaKey'
-//      * 'Shift' => is represented by 'e.shiftKey' */
-//     if (e.ctrlKey || e.metaKey) {
-//         /* If pressed highlight the other row that was clicked */
-//         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-//         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-//         objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-
-//     } else if (e.shiftKey) {
-//         /* If pressed highlight the other row that was clicked */
-//         var indexes = [lastSelectedRow.index(), row.index()];
-//         indexes.sort(function (a, b) {
-//             return a - b;
-//         });
-//         for (var i = indexes[0]; i <= indexes[1]; i++) {
-//             objA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
-//             objA.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-//             objB.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
-//         }
-//     } else {
-//         /* Otherwise just highlight one row and clean others */
-//         objA.find("tbody tr").css("background-color", "#ffffff");
-//         objA.find("tbody tr").find('input[type="checkbox"]').prop('checked', false);
-//         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-//         objA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
-//         objB.find("tbody tr").css("background-color", "#ffffff");
-//         objB.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
-//         lastSelectedRow = row;
-//     }
-
-//     return lastSelectedRow;
-// }
-
 
 function unLock() {
     $.ajax({
