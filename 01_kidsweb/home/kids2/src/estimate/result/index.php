@@ -539,7 +539,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
         } else if ($column === 'btnHistory') { // 履歴
             if ($result["lngrevisionno"] <> 0) {
                 $body .= "<td align=\"center\" onmouseout=\"trClickFlg='on';\" onclick=\"trClickFlg='off';fncNoSelectSomeTrColor( this, 'TD" . $resultNum . "_',1 );\">";
-                $body .= "<img src=\"/img/type01/pc/renew_off_bt.gif\" class=\"history button\"  width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\"  rownum=\"" . $number . "\" estimateNo=\"" . $estimateNo . "\" revisionNo=\"" . $result['lngrevisionno'] . "\">";
+                $body .= "<img src=\"/img/type01/cmn/seg/history_open_off.gif\" class=\"history button\"  width=\"15\" height=\"15\" border=\"0\" alt=\"HISTORY\"  rownum=\"" . $number . "\" estimateNo=\"" . $estimateNo . "\" revisionNo=\"" . $result['lngrevisionno'] . "\">";
                 $body .= "</button></td>";
             } else {
                 $body .= "<td nowrap align=\"left\"></td>";

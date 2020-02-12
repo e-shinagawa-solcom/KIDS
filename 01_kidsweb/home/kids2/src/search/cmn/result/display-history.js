@@ -119,6 +119,12 @@
         $('th').on('click', function () {
             // $('tr.detail').remove();
         });
+        if (!removeFlag) {
+                    $(this).attr('src','/img/type01/cmn/seg/history_close_off.gif');
+        }
+        else{
+                    $(this).attr('src','/img/type01/cmn/seg/history_open_off.gif');
+        }
 
         window.resetTable = function () {    
             var widthArry = [];
@@ -184,4 +190,5 @@
             $("#result").css('table-layout', 'fixed');
           }
     });
+
 })();

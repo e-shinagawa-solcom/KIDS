@@ -393,7 +393,7 @@ foreach ($records as $i => $record) {
         if ($historyFlag) {
             // 履歴ボタン
             $imgHistory = $doc->createElement("img");
-            $imgHistory->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
+            $imgHistory->setAttribute("src", "/img/type01/cmn/seg/p_history_open_off.gif");
             $imgHistory->setAttribute("id", $record["strproductcode"]);
             $imgHistory->setAttribute("rownum", $index);
             $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
