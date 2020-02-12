@@ -23,7 +23,7 @@
         // 納品書修正画面を別ウィンドウで表示
         var w = open(url,
             'display-renew',
-            'width=1011, height=650, resizable=yes, scrollbars=yes, menubar=no');
+            'width=1011, height=520, resizable=yes, scrollbars=yes, menubar=no');
         // サブウインドウズを閉じる前のイベント
         w.addEventListener("beforeunload", function (event) {
             var locked = $('input[name="locked"]').val();

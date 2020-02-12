@@ -7,7 +7,7 @@
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lngslipno + '&' + lngrevisionno + '&' + sessionID, 'display-detail', 'width=800px, height=900px,resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lngslipno + '&' + lngrevisionno + '&' + sessionID, 'display-detail', 'width=800, height=900,resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

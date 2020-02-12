@@ -786,6 +786,17 @@ textarea {
 	text-align : left ;
 }
 
+.disTxt05R { /* 10byte */
+	width : 77px ;
+	font-family : monospace ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+	margin : 0 4px 0 0 ;
+	color : #666666 ;
+	background-color : #ffffff ;
+	text-align : right ;
+}
 .extends-disTxt05L { /* 10byte */
 	width : 77px ;
 	font-family : monospace ;

@@ -107,7 +107,7 @@
                         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
                         url = url + '?' + sessionID + '&' + lngPkNo + '&' + lngRevisionNo;
                         // 別ウィンドウで表示
-                        open(url, 'display-detail', 'width=1000, height=600, resizable=yes, scrollbars=yes, menubar=no');
+                        open(url, 'display-detail', 'width=800, height=900, resizable=yes, scrollbars=yes, menubar=no');
                     });
                 })
                 .fail(function (response) {
