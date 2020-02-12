@@ -23,4 +23,11 @@
             maxlength: "10"
         });
     });
+
+    // 開始日時フォーカスを取ったときの処理
+    $('input[name="dtmStockAppDate"], input[name="dtmExpirationDate"]').on('blur', function () {        
+        blurDate($(this));
+    });
 })();
+
+

@@ -59,6 +59,12 @@
         selectClosedDay();
     });
 
+    
+    // 開始日時フォーカスを取ったときの処理
+    $('input[name="ActionDate"]').on('blur', function () {        
+        blurDate($(this));
+    });
+
     // 顧客コード変更の処理
     $('input[name="lngCustomerCode"]').on("change", function () {
         var msg = '請求対象の明細をすべてクリアします。\nよろしいですか？';
@@ -72,6 +78,7 @@
         }
 
         $tableA_rows.remove();
+        $('#tableA_chkbox tbody tr').remove();
 
         selectClosedDay();
     });
@@ -182,9 +189,9 @@
             // 先月末日
             var last_date = new Date(date1.getFullYear(), date1.getMonth(), 0);
             // 自の取得
-            var start = first_date.getFullYear() + '/' + (first_date.getMonth() + 1) + '/' + first_date.getDate();
+            var start = first_date.getFullYear() + '/' + ("00" + (first_date.getMonth() + 1)).slice( -2 )  + '/' + ("00" + first_date.getDate()).slice( -2 );
             // 至の取得
-            var end = last_date.getFullYear() + '/' + (last_date.getMonth() + 1) + '/' + last_date.getDate();
+            var end = last_date.getFullYear() + '/' + ("00" + (last_date.getMonth() + 1)).slice( -2 ) + '/' + ("00" + last_date.getDate()).slice( -2 );
         } else {
             var date1 = new Date(billingDate.val() + ' 00:00');
             console.log(date1.getDate());
@@ -196,17 +203,17 @@
                 before_last_month.setDate(before_last_month.getDate() + 1);
 
                 // 自の取得
-                var start = before_last_month.getFullYear() + '/' + (before_last_month.getMonth() + 1) + '/' + before_last_month.getDate();
+                var start = before_last_month.getFullYear() + '/' + ("00" + (before_last_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + before_last_month.getDate()).slice( -2 );
                 // 至の取得
-                var end = last_month.getFullYear() + '/' + (last_month.getMonth() + 1) + '/' + close;
+                var end = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + close).slice( -2 );
             } else {
                 // 先月の取得
                 var last_month = new Date(date1.getFullYear(), date1.getMonth() - 1, close);
                 last_month.setDate(last_month.getDate() + 1);
                 // 自の取得
-                var start = last_month.getFullYear() + '/' + (last_month.getMonth() + 1) + '/' + last_month.getDate();
+                var start = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + last_month.getDate()).slice( -2 );
                 // 至の取得
-                var end = date1.getFullYear() + '/' + (date1.getMonth() + 1) + '/' + close;
+                var end = date1.getFullYear() + '/' + ("00" + (date1.getMonth() + 1)).slice( -2 ) + '/' + ("00" + close).slice( -2 );
 
             }
         }

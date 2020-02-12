@@ -61,6 +61,7 @@
     <!-- キーバインド -->
     <!-- <script src="/search/cmn/js/key-bind.js" defer></script> -->
     <!-- 請求日設定 -->
+    <script src="/search/cmn/js/date.js" defer></script>
     <script src="/cmn/js/functions.js" defer></script>
     <script src="/inv/cmn/js/msw-regist.js" defer></script>
     <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
@@ -85,7 +86,8 @@
                         <div class="regist-line regist-float">
                             <span class="regist-label w-465">
                                 <span class="regist-label__text50">顧客</span>
-                                <input class="disTxt05L input-code" name="lngCustomerCode" type="text" value="_%strCustomerCode%_" iscustomer="yes" alt="Customer" readonly>
+                                <input class="disTxt05L input-code" name="lngCustomerCode" type="text" value="_%strCustomerCode%_" iscustomer="yes" alt="Customer"
+                                    readonly>
                                 <input class="disTxt2xL input-name" name="strCustomerName" type="text" readonly value="_%strCustomerName%_">
                             </span>
                         </div>
@@ -415,8 +417,8 @@
             $E("header_v").scrollTop = $E("data").scrollTop;// データ部のスクロールをヘッダに反映
         }
         $E("data").onscroll = scroll;
-    
-    
+
+
         function decide_scroll() {
             $E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
             $E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
