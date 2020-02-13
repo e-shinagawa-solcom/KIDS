@@ -196,11 +196,13 @@
                 isError = true;
                 return false;
             }
-
-            if (!lngproductquantity.match(/^[0-9]+$/)) {
-                alert(len + "行目の入数は半角数字で入力してください。");
-                isError = true;
-                return false;
+            var lngunitquantity = $(this).find('#lngunitquantity').find('input:text').val();
+            if (lngunitquantity != undefined) {                
+                if (!lngunitquantity.match(/^[0-9]+$/)) {
+                    alert(len + "行目の入数は半角数字で入力してください。");
+                    isError = true;
+                    return false;
+                }
             }
 
             var strDetailNote = $(this).find('#strdetailnote').find('input:text').val();
