@@ -478,7 +478,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
     elseif ($lngClassCode == DEF_REPORT_ORDER) {
         $aryQuery[] = "select";
         $aryQuery[] = "  po.lngpurchaseorderno";
-        $aryQuery[] = "  , po.lngrevisionno";
+        $aryQuery[] = "  , trim(to_char(po.lngrevisionno,'09')) as lngrevisionno";
         $aryQuery[] = "  , po.strordercode";
         $aryQuery[] = "  , po.lngcustomercode";
         $aryQuery[] = "  , po.strcustomername";

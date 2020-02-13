@@ -120,11 +120,11 @@ else {
     $aryQuery[] = "  , pod.strstockitemname";
     $aryQuery[] = "  , pod.lngdeliverymethodcode";
     $aryQuery[] = "  , pod.strdeliverymethodname";
-    $aryQuery[] = "  , to_char(pod.curproductprice, '9,999,999,990') AS curproductprice";
+    $aryQuery[] = "  , to_char(pod.curproductprice, '9,999,999,990.9999') AS curproductprice";
     $aryQuery[] = "  , to_char(pod.lngproductquantity, '9,999,999,990') AS lngproductquantity";
     $aryQuery[] = "  , pod.lngproductunitcode";
     $aryQuery[] = "  , pod.strproductunitname";
-    $aryQuery[] = "  , to_char(pod.cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
+    $aryQuery[] = "  , to_char(pod.cursubtotalprice, '9,999,999,990.99') AS cursubtotalprice";
     $aryQuery[] = "  , to_char(pod.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
     $aryQuery[] = "  , pod.strnote";
     $aryQuery[] = "  , od.strmoldno";
@@ -166,7 +166,7 @@ else {
     $objDB->freeResult($lngResultID);
 
     // 合計金額処理(最後のページだけに表示)別変数に保存
-    $curTotalPrice = $aryParts["strmonetaryunitsign"] . " " . $aryParts["curtotalprice"];
+    $curTotalPrice = $aryParts["strmonetaryunitsign"] . " " . sprintf("%1.2f",$aryParts["curtotalprice"]);
     unset($aryParts["curtotalprice"]);
 
     // ページ処理
