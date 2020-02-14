@@ -277,7 +277,7 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 }
 
 $aryParts["strColumn"] = "
-						<td id=\"Column0\" nowrap>発注 No.</td>
+						<td id=\"Column0\" nowrap>発注書No.</td>
 						<td id=\"Column1\" nowrap>入力者</td>
 						<td id=\"Column2\" nowrap>仕入先</td>
 						<td id=\"Column3\" nowrap>部門</td>
