@@ -79,7 +79,7 @@ if (isset($_POST['revisionNo'])) {
 $firstEstimateDetail = current($estimate);
 
 if (!isset($revisionNo)) {
-	$revisionNo = $firstEstimateDetail->lngrevisionno;
+	$revisionNo = $firstEstimateDetail->masterrevisionno;
 }
 
 // 最大のリビジョン番号の取得
