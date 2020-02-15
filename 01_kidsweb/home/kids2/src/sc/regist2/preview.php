@@ -126,7 +126,7 @@
 		// テンプレートから構築したHTMLを出力
 		$aryData["PREVIEW_STYLE"] = $aryGenerateResult["PreviewStyle"];
 		$aryData["PREVIEW_DATA"] = $aryGenerateResult["PreviewData"];
-		$aryData["strComfirmMessage"] = "以下の内容で売上（納品書）を登録します。よろしいですか？";
+		$aryData["strComfirmMessage"] = "上記の内容で売上（納品書）を登録します。よろしいですか？";
 		$objTemplate = new clsTemplate();
 		$objTemplate->getTemplate( "sc/regist2/preview.tmpl" );
 		$objTemplate->replace( $aryData );

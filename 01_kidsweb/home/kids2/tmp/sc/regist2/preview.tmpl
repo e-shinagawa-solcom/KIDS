@@ -23,21 +23,22 @@ _%PREVIEW_STYLE%_
     }
     .site-header{
         background:#f1f1f1;
-        position: fixed;
+        position: absolute;
         width: 100%;
         height:75px;
+        padding-top:10px;
         border-bottom: 1px;
         border-bottom-style: solid;
         border-bottom-color: black;
         
     }
     .content{
-		padding-top: 100px;
-		padding-left: 100px;
+		padding-top: 5px;
+		padding-left: 50px;
     }
     .form-buttons{
         text-align: center;
-        padding-top:15px;
+        padding-top:7px;
     }
     #CancelBt{
         margin-right: 20px;
@@ -57,7 +58,10 @@ _%PREVIEW_STYLE%_
         <input type="hidden" name="aryHeaderJson" value="_%aryHeaderJson%_">
         <input type="hidden" name="aryDetailJson" value="_%aryDetailJson%_">
 	</form>
-    <header class="site-header">
+	<div class="content">
+        _%PREVIEW_DATA%_
+    </div>
+    <div class="site-header">
         <span id="ConfirmMsg"><p>_%strComfirmMessage%_</p></span>
         <div class="form-buttons">
             <span id="CancelBt">
@@ -71,9 +75,6 @@ _%PREVIEW_STYLE%_
                       onmouseout="this.src='/img/type01/cmn/seg/regist_off_ja_bt.gif'">
             </span>
         </div>
-	</header>
-	<div class="content">
-        _%PREVIEW_DATA%_
-    </div>
+	</div>
 </body>
 </html>

@@ -1711,22 +1711,8 @@
 
 <body>
 
-    <div class="box_area">
-        <div class="form-box__header__box-title">請求書プレビュー</div>
-        <div style="width:100%; display:inline-flex;">
-            <div class="col-sm-2 mt-2"  style="width:130px; margin: 5px 5px 5px 300px; ">
-                <button type="button" id="btnClosePrev" class="btnprev"  onclick="closed();">
-                    閉じる
-                </button>
-            </div>
-            <div class="col-sm-2 mt-2"  style="width:130px; margin: 5px;">
-                <button type="button" id="btnRegist" class="btnprev"  onclick="regist();">
-                確定
-                </button>
-            </div>
-        </div>
-    </div>
 
+    <div class="form-box__header__box-title">登録確認</div>
     <form name="invInsert" method="POST" action="_%actionName%_">
         <!-- 請求日 -->
         <input type="hidden" name="dtminvoicedate"             value="_%dtmInvoiceDate%_"  >
@@ -2490,6 +2476,21 @@
     <!----------------------------->
     <!--Excel の Web ページとして発行 ウィザードのアウトプットの終わり-->
     <!----------------------------->
+    <div class="box_area">
+        <div class="form-box__header__box-title">上記の内容で登録しますか？</div>
+        <div style="width:100%; display:inline-flex;">
+            <div class="col-sm-2 mt-2"  style="width:130px; margin: 5px 5px 5px 300px; ">
+                <button type="button" id="btnClosePrev" class="btnprev"  onclick="closed();">
+                    閉じる
+                </button>
+            </div>
+            <div class="col-sm-2 mt-2"  style="width:130px; margin: 5px;">
+                <button type="button" id="btnRegist" class="btnprev"  onclick="regist();">
+                登録
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

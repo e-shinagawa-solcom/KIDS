@@ -22,7 +22,7 @@
 /* 閉じる/登録 選択BOX */
 .confirm-box
 {
-    margin: 20px 5px;
+    margin: 10px 5px;
 
     border: 1px solid black;
 }
@@ -52,7 +52,7 @@
 /* データ部 */
 .confirm-data
 {
-    margin: 20px 5px;
+    margin: 10px 5px;
 }
 
 /* データ部 セクション */

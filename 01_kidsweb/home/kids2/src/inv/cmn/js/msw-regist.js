@@ -643,7 +643,7 @@
             }
 
             // フォーム設定
-            var windowPrev = open('about:blank', windowName, 'scrollbars=yes, resizable=yes');
+            var windowPrev = open('about:blank', windowName, 'width=900, height=900, scrollbars=yes, resizable=yes');
             invForm.attr('action', url);
             invForm.attr('method', 'post');
             invForm.attr('target', windowName);

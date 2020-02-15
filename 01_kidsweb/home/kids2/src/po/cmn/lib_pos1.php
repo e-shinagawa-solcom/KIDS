@@ -1398,7 +1398,6 @@ function fncCancelOrderHtml($aryOrder)
         $aryHtml[] = "    <td class=\"Segs\">" . $row["strdetailnote"] . "</td>";
         $aryHtml[] = "  </tr>";
         $aryHtml[] = "</table>";
-        $aryHtml[] = "<br>";
     }
 
     $strHtml = implode("\n", $aryHtml);
