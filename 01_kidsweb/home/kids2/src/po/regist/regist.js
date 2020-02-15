@@ -381,7 +381,6 @@ jQuery(function ($) {
             .fail(function (response) {
             });
 
-        return false;
     }
 
     function resetTableADisplayStyle() {

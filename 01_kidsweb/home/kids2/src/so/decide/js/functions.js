@@ -445,5 +445,4 @@ function unLock() {
         .fail(function (response) {
         });
 
-    return false;
 }
