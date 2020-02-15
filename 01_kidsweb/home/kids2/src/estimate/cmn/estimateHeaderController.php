@@ -249,11 +249,12 @@ class estimateHeaderController {
         $productCode = $this->productCode;
         // バリデーション条件
         if (isset($productCode) && $productCode !=='') {
-            if(!preg_match("/\A[0-9]{5}_[0-9]{2}\z/", $productCode)) {
+            if(!preg_match("/\A[0-9]{5}_[0-9]{2}\z/", $productCode) && !preg_match("/\A[0-9]{5}\z/", $productCode)) {
                 // エラー処理
                 $this->messageCode['productCode'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else {
-                $record = $this->objDB->getRecordValue('m_product', "strproductcode || '_' || strrevisecode", $productCode);
+                $searchKey = substr($productCode,0,5);
+                $record = $this->objDB->getRecordValue('m_product', "strproductcode", $searchKey);
                 if ($record == false) {
                     // マスターチェックエラー
                     $this->messageCode['productCode'] = DEF_MESSAGE_CODE_PRODUCT_CODE_ERROR;
