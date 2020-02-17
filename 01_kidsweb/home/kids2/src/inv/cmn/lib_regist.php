@@ -1566,7 +1566,7 @@ function fncUpdateInvoicenoToMSales($lngInvoiceNo, $objDB)
     // 更新対象レコードの請求書番号をNULLに更新
     $strWhere  = "WHERE ";
     $strWhere .= "lnginvoiceno = " . $lngInvoiceNo . " ";
-    $strWhere .= "and lngrevisionno = (SELECT MAX(lngrevisionno) FROM m_sales WHERE lnginvoiceno = " . $lngInvoiceNo . ")";
+//    $strWhere .= "and (lngsalesno,lngrevisionno) in  (SELECT lngsalesno, MAX(lngrevisionno) FROM m_sales WHERE lnginvoiceno = " . $lngInvoiceNo . "group by lngsalesno)";
     $strUpdateQuery  = "UPDATE m_sales ";
     $strUpdateQuery .= "SET lnginvoiceno = NULL " ;
     $strUpdateQuery .= $strWhere;
