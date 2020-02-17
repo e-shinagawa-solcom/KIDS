@@ -130,8 +130,33 @@ function SearchReceiveDetail(data) {
     $('#tableA tbody tr td').width('');
     $('#tableA_head thead tr th').width('');
 
-    $('#tableA_chkbox').append(data.chkbox_body);
-    $('#tableA').append(data.detail_body);
+    var subElements = $(data.detail_body);
+    subElements.each(function (i, e) {
+        var checkElements = $(data.chkbox_body).eq($(this).index());
+        var rn1 = $(this).find('td.detailReceiveNo').text();
+        var dn1 = $(this).find('td.detailReceiveDetailNo').text();
+        var rev1 = $(this).find('td.detailReceiveRevisionNo').text();
+        var addObj = true;
+
+    
+        $('#tableB tbody tr').each(function (i, e) {
+            var rn2 = $(this).find('td.forEdit.detailReceiveNo').text();
+            var dn2 = $(this).find('td.forEdit.detailReceiveDetailNo').text();
+            var rev2 = $(this).find('td.forEdit.detailReceiveRevisionNo').text();
+            if ((rn1 == rn2) && (dn1 == dn2) && (rev1 == rev2)) {
+                addObj = false;
+                return false;
+            }
+        });
+        console.log(addObj);
+        if (addObj) {
+            // tableAの追加
+            $('#tableA_chkbox').append(checkElements);
+            $('#tableA').append($(this));
+        }
+    });
+    
+    
 
     resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
     // テーブル行クリックイベントの設定

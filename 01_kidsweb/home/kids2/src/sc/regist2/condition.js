@@ -88,7 +88,7 @@ jQuery(function ($) {
                 strSessionID: $('input[name="strSessionID"]').val(),
                 condition: search_condition,
             },
-            async: true,
+            async: false,
         }).done(function (data) {
             console.log("done:search-detail");
             console.log(data);
@@ -236,5 +236,22 @@ jQuery(function ($) {
             $("select[name='lngMonetaryUnitCode']").val("");
         }
     }
+
+    // ------------------------------------------------------------------
+    //   Enterキー押下イベント
+    // ------------------------------------------------------------------
+    window.document.onkeydown = fncEnterKeyDown;
+
+    function fncEnterKeyDown(e) {
+        // Enterキー押下で明細追加
+        if (window.event.keyCode == 13) {
+            $('#OkBt').trigger('click');
+            return false;
+        }
+        else{
+            document.dispatchEvent(e);
+        }
+    }
+
 
 });
