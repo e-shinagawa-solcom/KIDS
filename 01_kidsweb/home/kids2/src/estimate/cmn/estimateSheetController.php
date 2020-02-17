@@ -297,7 +297,6 @@ class estimateSheetController {
         $endRow = $this->endRow;
         $startColumn = $this->startColumn;
         $endColumn = $this->endColumn;
-
         // ワークシートの行高さと列幅の情報を取得する
         // 行高さ
         $rowHeight = $this->getRowHeight();
@@ -821,6 +820,10 @@ class estimateSheetController {
 
         // キー（行番号）の昇順ソート
         ksort($newMergeCellsList);
+
+        if(!is_array($hiddenList)){
+            $hiddenList[] = $hiddenList;
+        }
 
         // 無効行を削除する
         foreach ($hiddenList as $row => $bool) {
@@ -1429,7 +1432,7 @@ class estimateSheetController {
                         'lastRow' => $lastRow
                     );
                     // 部材費エリアの終了行を再セットする
-                    $rows[DEF_AREA_PARTS_COST_ORDER]['lastRow'] = $row - 1;
+                    $rows[DEF_AREA_PARTS_COST_ORDER]['lastRow'] = intval($row) - 1;
                     break;
                 }
             } else {
@@ -2296,6 +2299,24 @@ class estimateSheetController {
                 }
 
                 $difTotal += $difference;
+            }
+            else if($linage > $inputRowCount + $marginCell){
+                $difference = $linage - ($inputRowCount + $marginCell) ;
+    
+                $selectedRow = (int)$firstRow; // 先頭行を起点に(指定した行数を)削除する
+    
+                $this->sheet->removeRow($selectedRow, $difference); // 行挿入実行
+
+                foreach ($targetAreaRows as $key => $code) {
+                    if ($key > $areaCode) {
+                        $targetAreaRows[$key]['firstRow'] -= $difference;
+                        $targetAreaRows[$key]['lastRow'] -= $difference;
+                    } else if ($key === $areaCode) {
+                        $targetAreaRows[$key]['lastRow'] -= $difference;
+                    }
+                }
+
+                $difTotal -= $difference;
             }
         }
         $this->endRow += $difTotal;
