@@ -6,6 +6,9 @@ $(window).on('load',function(){
 	$('.grid').css({'margin-left': width + 'px'});
 });
 
+window.onbeforeunload = unLock;
+
+
 // 編集中止
 function cancelEdit() {
 	var text = '編集内容を破棄して閲覧モードに戻ります。\nよろしいですか？';
@@ -69,26 +72,34 @@ function cancelEdit() {
 	}
 }
 
-// 編集モードから離れるときの処理
-window.onbeforeunload = function() {
-    // 排他テーブルのレコード削除
+function unLock(){
+	// 排他テーブルのレコード削除
 	$("<input>", {
 		type: 'hidden',
 		class: 'addElements',
 		name: 'processMode',
 		value: 'close'
 	}).appendTo('#formData');
-	
+
 	var formData = $('#formData');
-	
+
 	$.ajax({
 		url: "/estimate/preview/editExclusive.php",
 		type: "post",
 		dataType: "json",
-		async: false,
+//		async: false,
 		data: formData.serialize()
+	}).done(function (response) {
+		console.log("unLock:success")
+	}).fail(function (xhr,textStatus,errorThrown) {
+        console.log("ajax通信に失敗しました");
+        console.log("XMLHttpRequest : " + xhr.status);
+        console.log("textStatus     : " + textStatus);
+        console.log("errorThrown    : " + errorThrown.message);
+		console.log("unLock:fail")
 	});
 }
+
 
 // 閲覧モードへの遷移処理
 function previewModeTransition (actionUrl) {
