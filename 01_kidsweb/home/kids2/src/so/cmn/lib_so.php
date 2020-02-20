@@ -406,6 +406,7 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = " LEFT JOIN m_salesdivision sd on sd.lngsalesdivisioncode = ssdl.lngsalesdivisioncode";
     $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON rd.lngProductUnitCode = pu.lngProductUnitCode";
     $aryQuery[] = " WHERE rd.lngReceiveNo in (" . $lngReceiveNo . ") ";
+    $aryQuery[] = " AND r.lngReceiveNo not in (select lngReceiveNo from m_receive where lngrevisionno < 0) ";
     if ($lngRevisionNo != "") {
         $aryQuery[] = " AND rd.lngRevisionNo = " . $lngRevisionNo . "";
     }
