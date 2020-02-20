@@ -1010,48 +1010,6 @@ function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo,
     return $aryResult[0];
 }
 
-// 納品書NOの発行
-function fncPublishSlipCode($dtmPublishDate, $objDB)
-{
-    $strYYYYMM = substr($dtmPublishDate, 0, 4) . substr($dtmPublishDate, 5, 2);
-
-    $strQuery = ""
-        . "SELECT"
-        . "  MAX(strslipcode) as yyyymmnn,"
-        . "  SUBSTR(MAX(strslipcode),7,8) as nn"
-        . " FROM"
-        . "  m_slip"
-        . " WHERE"
-        . "  strslipcode IS NOT NULL "
-        . "  AND LENGTH(strslipcode) = 8"
-        . "  AND strslipcode LIKE '" . $strYYYYMM . "__'"
-    ;
-
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    if ($lngResultNum) {
-        for ($i = 0; $i < $lngResultNum; $i++) {
-            $aryResult[] = $objDB->fetchArray($lngResultID, $i);
-        }
-    } else {
-        fncOutputError(9501, DEF_FATAL, "納品書NOの発行に失敗", true, "", $objDB);
-    }
-    $objDB->freeResult($lngResultID);
-
-    // 納品書NOの生成
-    if ($lngResultNum != 0) {
-        $lngNumber = intval($aryResult[0]["nn"]);
-        $lngNumber += 1;
-    } else {
-        // 当日1件目は nn='01' で開始
-        $lngNumber = 1;
-    }
-
-    $strNN = sprintf("%02d", $lngNumber);
-    $strPublishdSlipCode = $strYYYYMM . $strNN;
-
-    return $strPublishdSlipCode;
-}
-
 // 消費税額の計算
 function fncCalcTaxPrice($curPrice, $lngTaxClassCode, $curTax)
 {
@@ -1217,7 +1175,11 @@ function fncRegisterSalesAndSlip(
         // 納品伝票コード
         if ($isCreateNew) {
             // 登録：当日に紐づく納品伝票コードの発番
-            $strSlipCode = fncPublishSlipCode($dtmNowDate, $objDB);
+            $strSlipCode = fncGetDateSequence(
+                               date('y', strtotime($dtmNowDate)),
+                               date('m', strtotime($dtmNowDate)), 
+                               "m_sales.strSlipCode", $objDB
+                           );
         } else {
             // 修正：修正対象に紐づく値
             $strSlipCode = $strRenewTargetSlipCode;
