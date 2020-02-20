@@ -1875,7 +1875,8 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     $aryPrevResult['dtmInvoiceDate'] = $dtmInvoiceDate;
     // 表示用請求日
     $printInvDate = fncGetJapaneseDate($dtmInvoiceDate);
-    $aryPrevResult['printInvDate']  = $printInvDate[0] . $printInvDate[1] .'年 ' .$printInvDate[2] .'月' .$printInvDate[3] .'日';
+//    $aryPrevResult['printInvDate']  = $printInvDate[0] . $printInvDate[1] .'年 ' .$printInvDate[2] .'月' .$printInvDate[3] .'日';
+   $aryPrevResult['printInvDate']  = date('Y年n月j日', strtotime($aryResult['ActionDate']));
 
     // 請求書コード
     $aryPrevResult['strInvoiceCode'] = fncGetStrInvoiceCode($lngInvoiceNo, true, $objDB);
@@ -1923,7 +1924,7 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     }
 
     // 作成日(R Y.M.D)
-    $aryPrevResult['prevDate'] = "R." .((int)date('Y')-2018) . "." .(int)date('m') ."." .(int)date('d');
+    $aryPrevResult['prevDate'] = date('Y.n.j');
 
     // ユーザー名取得
     $aryPrevResult['lngUserName'] = $objAuth->UserFullName;

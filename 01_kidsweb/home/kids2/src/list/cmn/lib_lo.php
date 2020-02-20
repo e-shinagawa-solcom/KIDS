@@ -580,7 +580,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , i.strinvoicecode";
         $aryQuery[] = "  , i.lngprintcount";
         $aryQuery[] = "  , to_char(i.dtminvoicedate, 'yyyy/mm/dd') as dtminvoicedate";
-        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'dd日') as dtminvoicedate_day";
+        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'd日') as dtminvoicedate_day";
         $aryQuery[] = "  , i.strcustomername";
         $aryQuery[] = "  , i.strcustomercompanyname";
         $aryQuery[] = "  , i.lngmonetaryunitcode";

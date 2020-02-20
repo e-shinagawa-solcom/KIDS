@@ -97,8 +97,10 @@ if ($lngResultNum === 1) {
     $objTemplate = new clsTemplate();
     $objTemplate->getTemplate("list/result/inv.html");
     $aryParts["totalprice_unitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["totalprice"];
-    $aryParts["dtminvoicedate"] = convert_jpdt($aryParts["dtminvoicedate"], '年m月');
-    $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"], '.m.d', false);
+//    $aryParts["dtminvoicedate"] = convert_jpdt($aryParts["dtminvoicedate"], '年m月');
+//    $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"], '.m.d', false);
+    $aryParts["dtminvoicedate"] = date("Y年n月" ,$aryParts["dtminvoicedate"]);
+    $aryParts["dtminsertdate"] = date("Y.n.j", $aryParts["dtminsertdate"]);
     if ($aryData["reprintFlag"]) {
         $aryParts["reprintMsg"] = "再印刷";
     } else {
