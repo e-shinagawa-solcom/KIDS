@@ -188,13 +188,12 @@ class estimateHeaderController {
         if (!$this->messageCode['inchargeGroupCode'] && $inchargeGroupCodeNumber) {
             $result = $this->objDB->userCodeAffiliateCheck($loginUserCode, $inchargeGroupCodeNumber);
             if (!$result) {
-                $this->messageCode['loginUser'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
+                $this->messageCode['loginUser'] = DEF_MESSAGE_CODE_INCORRECT_GROUP_USER;
             }
         }
         
         $messageCodeList = $this->messageCode;
         $headerTitleNameList = $this->headerTitleNameList;
-
         if ($messageCodeList) {
             $str = '';
             // メッセージに出力する項目をセットする
