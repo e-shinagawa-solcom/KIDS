@@ -58,7 +58,7 @@ function fncGetSumOfMoneypriceByPayfAndBank($objDB, $data, $type)
  */
 function fncGetSumOfMoneypriceByPayfAndOpenDate($objDB, $data)
 {
-        $sql = "
+    $sql = "
 			SELECT
                 payfcd,
                 opendate,
@@ -645,7 +645,7 @@ function fncInsertReportByBenebktotal($objDB, $data)
  *
  * @return array
  */
-function fncGetReportByBenebktotal($objDB)
+function fncGetReportByBenebktotal($objDB, $offset, $limit)
 {
     //クエリの生成
     $sql = "
@@ -658,9 +658,14 @@ function fncGetReportByBenebktotal($objDB)
                     total
 				from
                     t_reportbybenebktotal
+                    order by beneficiary
+                    LIMIT $1 OFFSET $2
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limit, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票BeneBk別合計の取得失敗しました。\n";
@@ -675,7 +680,7 @@ function fncGetReportByBenebktotal($objDB)
  *
  * @return array
  */
-function fncGetReportByBeneMonthCal($objDB)
+function fncGetReportByBeneMonthCal($objDB, $offset, $limit)
 {
     //クエリの生成
     $sql = "
@@ -695,9 +700,14 @@ function fncGetReportByBeneMonthCal($objDB)
                     total
 				from
                     t_reportbybenemonthcalculation
+                    order by beneficiary
+                    LIMIT $1 OFFSET $2
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limit, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票Bene月別集計の取得失敗しました。\n";
@@ -712,7 +722,7 @@ function fncGetReportByBeneMonthCal($objDB)
  *
  * @return array
  */
-function fncGetReportByLcDetail($objDB)
+function fncGetReportByLcDetail($objDB, $offset, $limit)
 {
     //クエリの生成
     $sql = "
@@ -720,8 +730,7 @@ function fncGetReportByLcDetail($objDB)
                     lcno,
                     pono,
                     substr(factoryname, 0 ,24) as factoryname,
-                    productcd,
-                    productrevisecd,
+                    productcd || '_' || productrevisecd,
                     substr(productname, 0 ,22) as productname,
                     productnumber,
                     unitname,
@@ -737,9 +746,13 @@ function fncGetReportByLcDetail($objDB)
                     to_char(lcamopen, 'MM/DD') as lcamopen
 				from
                     t_reportbylcdetail
+                    LIMIT $1 OFFSET $2
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limit, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票LC別明細の取得失敗しました。\n";
@@ -754,7 +767,7 @@ function fncGetReportByLcDetail($objDB)
  *
  * @return array
  */
-function fncGetReportByLcTotal($objDB)
+function fncGetReportByLcTotal($objDB, $offset, $limit)
 {
     //クエリの生成
     $sql = "
@@ -769,9 +782,13 @@ function fncGetReportByLcTotal($objDB)
                     to_char(lcamopen, 'MM月DD日') as lcamopen
 				from
                     t_reportbylctotal
+                    LIMIT $1 OFFSET $2
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limit, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票LC別合計の取得失敗しました。\n";
@@ -786,15 +803,14 @@ function fncGetReportByLcTotal($objDB)
  *
  * @return array
  */
-function fncGetReportImpLcOrderInfo($objDB)
+function fncGetReportImpLcOrderInfo($objDB, $offset, $limit)
 {
     //クエリの生成
     $sql = "
 				select
                     to_char(bankreqdate, 'MM月DD日') as bankreqdate,
                     pono,
-                    productcd,
-                    productrevisecd,
+                    productcd || '_' || productrevisecd,
                     substr(productname, 0, 24) as productname,
                     productnumber,
                     unitname,
@@ -812,9 +828,13 @@ function fncGetReportImpLcOrderInfo($objDB)
 				from
                     t_reportimportlcorderinfo
                 order by productcd, productrevisecd, pono
+                LIMIT $1 OFFSET $2
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limit, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票輸入信用状発行情報の取得失敗しました。\n";
@@ -854,7 +874,7 @@ function fncGetReportUnSettedPriceUnapproval($objDB)
  *
  * @return array
  */
-function fncGetReportUnSettedPrice($objDB)
+function fncGetReportUnSettedPrice($objDB, $offset, $limit)
 {
     //クエリの生成
     $sql = "
@@ -868,9 +888,13 @@ function fncGetReportUnSettedPrice($objDB)
                     usancesettlement
 				from
                     t_reportunsettedprice
+                    LIMIT $1 OFFSET $2
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limit, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票未決済額の取得失敗しました。\n";
@@ -892,7 +916,7 @@ function fncGetSumofUnSettedPriceByPayfAndBank($objDB)
 				select
                     payeeformalname,
                     bankname,
-                    sum(usancesettlement)
+                    sum(usancesettlement) as totalmoneyprice
 				from
                     t_reportunsettedprice
                 group by payeeformalname, bankname
@@ -920,7 +944,7 @@ function fncGetSumofUnSettedPriceByPayf($objDB)
     $sql = "
 				select
                     payeeformalname,
-                    sum(usancesettlement)
+                    sum(usancesettlement) as totalmoneyprice
 				from
                     t_reportunsettedprice
                 group by payeeformalname
@@ -946,6 +970,49 @@ function fncGetSumofUnSettedPriceByPayf($objDB)
  * @return array
  */
 function fncGetLcInfoForReportTwo($objDB, $opendate, $currencyclass)
+{
+    //クエリの生成
+    $sql = "
+        select
+            lcno,
+            payfnameformal,
+            moneyprice,
+            shipterm,
+            validterm,
+            bankcd,
+            bankname,
+            bankreqdate,
+            lcamopen
+        from
+            t_lcinfo
+        WHERE
+            opendate = $1
+            and currencyclass = $2
+            and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
+            order by lcno, payfnameformal, bankcd
+        ";
+
+    // クエリへの設定値の定義
+    $bind = array($opendate, $currencyclass);
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+
+    if (!$result) {
+        echo "帳票2出力用のL/C別合計の取得失敗しました。\n";
+        exit;
+    } else {
+        return pg_fetch_all($result);
+    }
+}
+
+/**
+ * 帳票出力用のL/C別合計
+ *
+ * @param [object] $objDB
+ * @param [string] $opendate
+ * @param [string] $currencyclass
+ * @return array
+ */
+function fncGetLcInfoForReportThree($objDB, $opendate, $currencyclass)
 {
     //クエリの生成
     $sql = "
@@ -1005,7 +1072,7 @@ function fncGetLcInfoForReportTwo($objDB, $opendate, $currencyclass)
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
-        echo "帳票2出力用のL/C別合計の取得失敗しました。\n";
+        echo "帳票2出力用のL/C別明細の取得失敗しました。\n";
         exit;
     } else {
         return pg_fetch_all($result);
@@ -1153,13 +1220,13 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
         $where .= " and bankcd = '" . $data["bankcd"] . "'";
     }
     // L/CopenがALL以外の場合、検索条件となる
-    if ($data["lcopen"] == "未発行") {
+    if (trim($data["lcopen"]) == "未発行") {
         $where .= " and lcno = ''";
-    } else if ($data["lcopen"] == "既発行") {
+    } else if (trim($data["lcopen"]) == "既発行") {
         $where .= " and lcno <> ''";
     }
     // 荷揚地がALL以外の場合、検索条件となる
-    if ($data["portplace"] != "ALL") {
+    if (trim($data["portplace"]) != "ALL") {
         $where .= " and portplace = '" . $data["portplace"] . "'";
     }
     //クエリの生成
@@ -1168,9 +1235,9 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
             payfnameomit,
             opendate,
             portplace,
-            pono,
-            polineno,
-            poreviseno,
+            tlc.pono,
+            tlc.polineno,
+            tlc.poreviseno,
             postate,
             payfcd,
             productcd,
@@ -1207,7 +1274,21 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
             bankcd,
             shipym
         from
-            t_lcinfo
+            t_lcinfo tlc
+            INNER JOIN (
+                select
+                  pono
+                  , polineno
+                  , max(poreviseno) as poreviseno
+                from
+                  t_lcinfo
+                group by
+                  pono
+                  , polineno
+              ) tlc1
+                on tlc.pono = tlc1.pono
+                and tlc.polineno = tlc1.polineno
+                and tlc.poreviseno = tlc1.poreviseno
         WHERE
             opendate = $1
             and shipstartdate between to_date($2,'YYYY/MM/DD') and to_date($3,'YYYY/MM/DD')
@@ -1215,14 +1296,12 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
         . $where .
         "   and currencyclass = $5
             and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
-        order by productcd, productrevisecd, pono, polineno
+        order by productcd, productrevisecd, tlc.pono, tlc.polineno
         ";
     // クエリへの設定値の定義
     $bind = array(str_replace("/", "", $data["openYm"]),
         $firstDate, $lastDate, $data["payfCode"], $currencyclass);
-
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
-
     if (!$result) {
         echo "帳票6出力用のL/C別合計の取得失敗しました。\n";
         exit;
@@ -1236,63 +1315,79 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
  * @param [type] $objDB
  * @return void
  */
-function fncGetUnSettedTotal($objDB)
+function fncGetUnSettedTotal($objDB, $offset, $limt)
 {
     $sql = "
         SELECT
-            SUM(bkunapproval.bank1) AS bank1total
-            , SUM(bkunapproval.bank2) AS bank2total
-            , SUM(bkunapproval.bank3) AS bank3total
-            , SUM(bkunapproval.bank4) AS bank4total
-            , SUM(bkunapproval.unapprovaltotal) AS unapprovaltotaltotal
-            , SUM(bkunapproval.benetotal) AS benetotaltotal
+            SUM(tmp.bank1) AS bank1total
+            , SUM(tmp.bank2) AS bank2total
+            , SUM(tmp.bank3) AS bank3total
+            , SUM(tmp.bank4) AS bank4total
+            , SUM(tmp.unapprovaltotal) AS unapprovaltotaltotal
+            , SUM(tmp.benetotal) AS benetotaltotal
         FROM
             (
-            SELECT
-                t_reportbybenebktotal.Beneficiary
-                , t_reportbybenebktotal.bank1
-                , t_reportbybenebktotal.bank2
-                , t_reportbybenebktotal.bank3
-                , t_reportbybenebktotal.bank4
-                , unapproval.unapprovalprice AS unapprovaltotal
-                , COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0) AS benetotal
-            FROM
-                (
                 SELECT
-                    t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
-                    , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
+                    bkunapproval.Beneficiary
+                    , bkunapproval.bank1
+                    , bkunapproval.bank2
+                    , bkunapproval.bank3
+                    , bkunapproval.bank4
+                    , bkunapproval.unapprovaltotal
+                    , bkunapproval.benetotal
                 FROM
-                    t_reportunsettedpriceunapproval
-                GROUP BY
-                    t_reportunsettedpriceunapproval.payeeformalname
-                ) AS unapproval
-                RIGHT JOIN t_reportbybenebktotal
-                ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
-            UNION
-            SELECT
-                unapproval.payeeformal
-                , t_reportbybenebktotal.bank1
-                , t_reportbybenebktotal.bank2
-                , t_reportbybenebktotal.bank3
-                , t_reportbybenebktotal.bank4
-                , unapproval.unapprovalprice AS unapprovaltotal
-                , COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0) AS benetotal
-            FROM
-                (
-                SELECT
-                    t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
-                    , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
-                FROM
-                    t_reportunsettedpriceunapproval
-                GROUP BY
-                    t_reportunsettedpriceunapproval.payeeformalname
-                ) AS unapproval
-                LEFT JOIN t_reportbybenebktotal
-                ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
-            ) AS bkunapproval
+                    (
+                    SELECT
+                        t_reportbybenebktotal.Beneficiary
+                        , t_reportbybenebktotal.bank1
+                        , t_reportbybenebktotal.bank2
+                        , t_reportbybenebktotal.bank3
+                        , t_reportbybenebktotal.bank4
+                        , unapproval.unapprovalprice AS unapprovaltotal
+                        , COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0) AS benetotal
+                    FROM
+                        (
+                        SELECT
+                            t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
+                            , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
+                        FROM
+                            t_reportunsettedpriceunapproval
+                        GROUP BY
+                            t_reportunsettedpriceunapproval.payeeformalname
+                        ) AS unapproval
+                        RIGHT JOIN t_reportbybenebktotal
+                        ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
+                    UNION
+                    SELECT
+                        unapproval.payeeformal as Beneficiary
+                        , t_reportbybenebktotal.bank1
+                        , t_reportbybenebktotal.bank2
+                        , t_reportbybenebktotal.bank3
+                        , t_reportbybenebktotal.bank4
+                        , unapproval.unapprovalprice AS unapprovaltotal
+                        , COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0) AS benetotal
+                    FROM
+                        (
+                        SELECT
+                            t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
+                            , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
+                        FROM
+                            t_reportunsettedpriceunapproval
+                        GROUP BY
+                            t_reportunsettedpriceunapproval.payeeformalname
+                        ) AS unapproval
+                        LEFT JOIN t_reportbybenebktotal
+                        ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
+                    ) AS bkunapproval
+                LIMIT $1 OFFSET $2
+            ) as tmp
         ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+
+    //バインドの設定
+    $bind = array($limt, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票5未決済リスト合計の取得失敗しました。\n";
@@ -1309,53 +1404,67 @@ function fncGetUnSettedTotal($objDB)
  * @param [type] $objDB
  * @return void
  */
-function fncGetUnSettedLst($objDB)
+function fncGetUnSettedLst($objDB, $offset, $limt)
 {
     $sql = "
         SELECT
-            t_reportbybenebktotal.Beneficiary
-            , t_reportbybenebktotal.bank1
-            , t_reportbybenebktotal.bank2
-            , t_reportbybenebktotal.bank3
-            , t_reportbybenebktotal.bank4
-            , to_char(unapproval.unapprovalprice, 'FM9,999,999.00') AS unapprovaltotal
-            , to_char(COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0), 'FM9,999,999.00') AS benetotal
-            FROM
+            tmp.Beneficiary
+            , tmp.bank1
+            , tmp.bank2
+            , tmp.bank3
+            , tmp.bank4
+            , tmp.unapprovaltotal
+            , tmp.benetotal
+        FROM
             (
-                SELECT
-                t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
-                , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
-                FROM
-                t_reportunsettedpriceunapproval
-                GROUP BY
-                t_reportunsettedpriceunapproval.payeeformalname
-            ) AS unapproval
-            RIGHT JOIN t_reportbybenebktotal
-                ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
-            UNION
             SELECT
-            unapproval.payeeformal
-            , t_reportbybenebktotal.bank1
-            , t_reportbybenebktotal.bank2
-            , t_reportbybenebktotal.bank3
-            , t_reportbybenebktotal.bank4
-            , to_char(unapproval.unapprovalprice, 'FM9,999,999.00') AS unapprovaltotal
-            , to_char(COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0), 'FM9,999,999.00') AS Benebenetotal
-            FROM
-            (
-                SELECT
-                t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
-                , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
+                t_reportbybenebktotal.Beneficiary
+                , t_reportbybenebktotal.bank1
+                , t_reportbybenebktotal.bank2
+                , t_reportbybenebktotal.bank3
+                , t_reportbybenebktotal.bank4
+                , to_char(unapproval.unapprovalprice, 'FM9,999,999.00') AS unapprovaltotal
+                , to_char(COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0), 'FM9,999,999.00') AS benetotal
                 FROM
-                t_reportunsettedpriceunapproval
-                GROUP BY
-                t_reportunsettedpriceunapproval.payeeformalname
-            ) AS unapproval
-            LEFT JOIN t_reportbybenebktotal
-                ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
+                (
+                    SELECT
+                    t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
+                    , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
+                    FROM
+                    t_reportunsettedpriceunapproval
+                    GROUP BY
+                    t_reportunsettedpriceunapproval.payeeformalname
+                ) AS unapproval
+                RIGHT JOIN t_reportbybenebktotal
+                    ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
+                UNION
+                SELECT
+                unapproval.payeeformal as Beneficiary
+                , t_reportbybenebktotal.bank1
+                , t_reportbybenebktotal.bank2
+                , t_reportbybenebktotal.bank3
+                , t_reportbybenebktotal.bank4
+                , to_char(unapproval.unapprovalprice, 'FM9,999,999.00') AS unapprovaltotal
+                , to_char(COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0), 'FM9,999,999.00') AS benetotal
+                FROM
+                (
+                    SELECT
+                    t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
+                    , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
+                    FROM
+                    t_reportunsettedpriceunapproval
+                    GROUP BY
+                    t_reportunsettedpriceunapproval.payeeformalname
+                ) AS unapproval
+                LEFT JOIN t_reportbybenebktotal
+                    ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
+            ) as tmp
+            LIMIT $1 OFFSET $2
         ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limt, $offset);
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票5未決済リストデータの取得失敗しました。\n";
@@ -1371,21 +1480,36 @@ function fncGetUnSettedLst($objDB)
  *
  * @return array
  */
-function fncGetSumofBeneBkPrice($objDB)
+function fncGetSumofBeneBkPrice($objDB, $offset, $limt)
 {
     //クエリの生成
     $sql = "
 				select
-                    sum(bank1) as sum_1,
-                    sum(bank2) as sum_2,
-                    sum(bank3) as sum_3,
-                    sum(bank4) as sum_4,
-                    sum(total) as sum_5
-				from
-                    t_reportbybenebktotal
+                    sum(tmp.bank1) as sum_1,
+                    sum(tmp.bank2) as sum_2,
+                    sum(tmp.bank3) as sum_3,
+                    sum(tmp.bank4) as sum_4,
+                    sum(tmp.total) as sum_5
+                from
+                    (
+                    select
+                        beneficiary,
+                        bank1,
+                        bank2,
+                        bank3,
+                        bank4,
+                        total
+                    from
+                        t_reportbybenebktotal
+                        order by beneficiary
+                        LIMIT $1 OFFSET $2
+                    ) as tmp
+
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limt, $offset);
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票BeneBKの合計金額の取得失敗しました。\n";
@@ -1400,28 +1524,50 @@ function fncGetSumofBeneBkPrice($objDB)
  *
  * @return array
  */
-function fncGetSumofBeneMonCal($objDB)
+function fncGetSumofBeneMonCal($objDB, $offset, $limt)
 {
     //クエリの生成
     $sql = "
 				select
-                    sum(date1) as sum_1,
-                    sum(date2) as sum_2,
-                    sum(date3) as sum_3,
-                    sum(date4) as sum_4,
-                    sum(date5) as sum_5,
-                    sum(date6) as sum_6,
-                    sum(date7) as sum_7,
-                    sum(date8) as sum_8,
-                    sum(date9) as sum_9,
-                    sum(date10) as sum_10,
-                    sum(date11) as sum_11,
-                    sum(total) as sum_12
+                    sum(tmp.date1) as sum_1,
+                    sum(tmp.date2) as sum_2,
+                    sum(tmp.date3) as sum_3,
+                    sum(tmp.date4) as sum_4,
+                    sum(tmp.date5) as sum_5,
+                    sum(tmp.date6) as sum_6,
+                    sum(tmp.date7) as sum_7,
+                    sum(tmp.date8) as sum_8,
+                    sum(tmp.date9) as sum_9,
+                    sum(tmp.date10) as sum_10,
+                    sum(tmp.date11) as sum_11,
+                    sum(tmp.total) as sum_12
 				from
-                    t_reportbybenemonthcalculation
+                    (
+                    select
+                        beneficiary,
+                        date1,
+                        date2,
+                        date3,
+                        date4,
+                        date5,
+                        date6,
+                        date7,
+                        date8,
+                        date9,
+                        date10,
+                        date11,
+                        total
+                    from
+                        t_reportbybenemonthcalculation
+                        order by beneficiary
+                        LIMIT $1 OFFSET $2
+                    ) as tmp
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limt, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票Bene月別集計の合計金額の取得失敗しました。\n";
@@ -1461,7 +1607,6 @@ function fncGetSendInfo($objDB)
     }
 }
 
-
 /**
  * 支払先コードにより支払先マスタ情報を取得する
  *
@@ -1496,23 +1641,35 @@ function fncGetPayfInfoByPayfcd($objDB, $payfcd)
     }
 }
 
-
 /**
  * 帳票輸入信用状発行情報の合計金額を取得する
  *
  * @return array
  */
-function fncGetSumofImpLcOrderPrice($objDB)
+function fncGetSumofImpLcOrderPrice($objDB, $offset, $limt)
 {
     //クエリの生成
     $sql = "
-				select
-                    sum(moneyprice) totalprice
-				from
-                    t_reportimportlcorderinfo
+        select
+            sum(tmp.moneyprice) as totalprice
+        from
+            (
+            select
+                *
+            from
+                t_reportimportlcorderinfo
+            order by
+                productcd
+                , productrevisecd
+                , pono
+            LIMIT $1 OFFSET $2
+            ) as tmp
             ";
 
-    $result = pg_query($objDB->ConnectID, $sql);
+    //バインドの設定
+    $bind = array($limt, $offset);
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "帳票輸入信用状発行情報の合計金額の取得失敗しました。\n";

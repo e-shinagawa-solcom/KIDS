@@ -231,8 +231,8 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
         }
         $lcModel->updateAcLcOpendate($pono, $opendate);
     }
-    // リバイズ情報があった場合、リバイズ情報継承処理を行う
 
+    // リバイズ情報があった場合、リバイズ情報継承処理を行う
     if (count($reviseDataArry) > 0) {
         foreach ($reviseDataArry as $reviseData) {
             fncSetRevData($lcModel, $reviseData);
@@ -343,13 +343,16 @@ function fncSetRevData($lcModel, $reviseData)
 function fncUpdRevState($lcModel, $reviseDataArry)
 {
     $orderno = "";
-    foreach ($reviseDataArry as $reviseData) {
+    $len = count($reviseDataArry);
+    
+    for ($i = count($reviseDataArry) -1; $i > 0; $i--)
+    {
         // 発注番号 <> リバイズ情報のponoの場合
-        if ($orderno != $reviseData["pono"]) {
+        if ($orderno != $reviseDataArry[$i]["pono"]) {
             // t_aclcinfoにデータを更新する
-            $lcModel->updateAcLcStateToRevise($reviseData["pono"], $reviseData["poreviseno"]);
+            $lcModel->updateAcLcStateToRevise($reviseDataArry[$i]["pono"], $reviseDataArry[$i]["poreviseno"]);
 
-            $orderno = $reviseData["pono"];
+            $orderno = $reviseDataArry[$i]["pono"];
         }
     }
     return true;
