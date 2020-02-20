@@ -34,9 +34,9 @@ define ( "EXECUTE_HOST_NAME_DEV",	"kids.devs.biz" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
-//define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
 //define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" ); // EUC-JPのDBサーバー（後で消したい）
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.114" ); // UTF-8のDBサーバー
+//define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.114" ); // UTF-8のDBサーバー
 //define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
 
 // 実行サーバー名称の取得
@@ -630,6 +630,13 @@ define ( "REPORT_SLIP_DEBIT",	"slip_debitnote.xlsx" );
 define ( "REPORT_LC_TMPFILE",	"帳票テンプレート.xls" );
 // L/C帳票テンプレートファイル
 define ( "REPORT_LC_OUTPUTFILE",	"帳票テンプレート_copy.xls" );
+define ( "REPORT_LC_ONE_PAGE_REPORT_NUM_1",	19);
+define ( "REPORT_LC_ONE_PAGE_REPORT_NUM_2",	42);
+define ( "REPORT_LC_ONE_PAGE_REPORT_NUM_3",	45);
+define ( "REPORT_LC_ONE_PAGE_REPORT_NUM_4",	19);
+define ( "REPORT_LC_ONE_PAGE_REPORT_NUM_5_1", 18);
+define ( "REPORT_LC_ONE_PAGE_REPORT_NUM_5_2", 45);
+define ( "REPORT_LC_ONE_PAGE_REPORT_NUM_6",	15);
 
 // ワークシートテンプレートディレクトリパス
 define ( "EXCEL_TMP_ROOT", PATH_HOME . "/excel_tmp/");

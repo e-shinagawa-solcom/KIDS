@@ -38,7 +38,7 @@
 	$aryData["strSessionID"]    = $_REQUEST["strSessionID"];   // セッションID
 	$aryData["lngLanguageCode"] = 1; // 言語コード
 
-	setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
+	// setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
 	// セッション確認
 	// $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
@@ -72,7 +72,7 @@
 	//ログイン者の有無
 	$loginCount = $lcModel->getUserCount();
 
-	echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/report/parts.tmpl", $aryData ,$objAuth );
+	echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/report/parts.html", $aryData ,$objAuth );
 	
 	//初期処理実行
 	//jsへの引き渡しデータ

@@ -604,7 +604,7 @@ function fncGetPurchaseOrderData($objDB, $date)
     ";
     //バインドの設定
     $bind = array($date);
-
+    
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
