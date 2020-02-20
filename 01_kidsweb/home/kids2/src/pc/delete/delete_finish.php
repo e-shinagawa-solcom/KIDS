@@ -109,8 +109,14 @@ $objDB->freeResult($lngResultID);
 $aryQuery = array();
 $aryQuery[] = "UPDATE m_order ";
 $aryQuery[] = "set lngorderstatuscode = " . DEF_ORDER_ORDER . " ";
-$aryQuery[] = "where lngorderno = " . $aryStockResult["lngorderno"] . " ";
-$aryQuery[] = "AND lngrevisionno = " . $aryStockResult["lngorderrevisionno"] . " ";
+$aryQuery[] = "WHERE (lngorderno, lngrevisionno) in ( ";
+$aryQuery[] = "SELECT  ";
+$aryQuery[] = "lngorderno,  ";
+$aryQuery[] = "lngorderrevisionno ";
+$aryQuery[] = "FROM t_stockdetail ";
+$aryQuery[] = "WHERE lngstockno = " . $lngStockNo . " ";
+$aryQuery[] = "AND lngrevisionno =" . $lngRevisionNo . " ";
+$aryQuery[] = ")";
 $strQuery = implode("\n", $aryQuery);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
