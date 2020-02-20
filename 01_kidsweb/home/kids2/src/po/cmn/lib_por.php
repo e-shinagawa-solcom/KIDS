@@ -114,7 +114,6 @@ function fncGetOrder_r($lngOrderNo, $objDB)
     $aryQuery[] = "WHERE mo.lngorderno IN (" . $lngOrderNo . ")";
 
     $strQuery = implode("\n", $aryQuery);
-
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if (!$lngResultNum) {
         return false;
@@ -261,11 +260,12 @@ function fncGetPayCondition($lngpayconditioncode, $objDB)
 function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
 {
     $aryQuery[] = "SELECT DISTINCT";
-    $aryQuery[] = "    ON ( ";
-    $aryQuery[] = "      mo.strordercode";
-    $aryQuery[] = "      , mo.lngrevisionno";
-    $aryQuery[] = "      , od.lngorderdetailno";
-    $aryQuery[] = "    ) mo.strordercode || '_' || TO_CHAR(mo.lngrevisionno, 'FM00') AS strordercode";
+//    $aryQuery[] = "    ON ( ";
+//    $aryQuery[] = "      mo.strordercode";
+//    $aryQuery[] = "      , mo.lngrevisionno";
+//    $aryQuery[] = "      , od.lngorderdetailno";
+//    $aryQuery[] = "    ) mo.strordercode || '_' || TO_CHAR(mo.lngrevisionno, 'FM00') AS strordercode";
+    $aryQuery[] = "    mo.strordercode || '_' || TO_CHAR(mo.lngrevisionno, 'FM00') AS strordercode";
     $aryQuery[] = "  , od.lngorderdetailno";
     $aryQuery[] = "  , mo.lngorderstatuscode";
     $aryQuery[] = "  , od.strproductcode";
@@ -340,22 +340,23 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "      mo.strordercode";
     $aryQuery[] = "      , mo.lngrevisionno";
     $aryQuery[] = "      , od.strproductcode";
+    $aryQuery[] = "      , od.strrevisecode";
     $aryQuery[] = "      , mo.lngcustomercompanycode";
     $aryQuery[] = "      , mo.lngmonetaryunitcode";
     $aryQuery[] = "      , msi.lngestimateareaclassno ";
     $aryQuery[] = "    from";
     $aryQuery[] = "      m_order mo ";
-    // $aryQuery[] = "      inner join ( ";
-    // $aryQuery[] = "        select";
-    // $aryQuery[] = "          max(lngRevisionNo) lngRevisionNo";
-    // $aryQuery[] = "          , lngorderno ";
-    // $aryQuery[] = "        from";
-    // $aryQuery[] = "          m_order ";
-    // $aryQuery[] = "        group by";
-    // $aryQuery[] = "          lngorderno";
-    // $aryQuery[] = "      ) mo1 ";
-    // $aryQuery[] = "        on mo.lngrevisionno = mo1.lngRevisionNo ";
-    // $aryQuery[] = "        and mo.lngorderno = mo1.lngorderno ";
+//    $aryQuery[] = "      inner join ( ";
+//    $aryQuery[] = "        select";
+//    $aryQuery[] = "          max(lngRevisionNo) lngRevisionNo";
+//    $aryQuery[] = "          , lngorderno ";
+//    $aryQuery[] = "        from";
+//    $aryQuery[] = "          m_order ";
+//    $aryQuery[] = "        group by";
+//    $aryQuery[] = "          lngorderno";
+//    $aryQuery[] = "      ) mo1 ";
+//    $aryQuery[] = "        on mo.lngrevisionno = mo1.lngRevisionNo ";
+//    $aryQuery[] = "        and mo.lngorderno = mo1.lngorderno ";
     $aryQuery[] = "      LEFT JOIN t_orderdetail od ";
     $aryQuery[] = "        ON mo.lngorderno = od.lngorderno ";
     $aryQuery[] = "        AND mo.lngrevisionno = od.lngrevisionno ";
@@ -368,10 +369,21 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "      mo.lngorderno in (" .$aryOrderNo .") AND mo.lngrevisionno = ". $lngRevisionNo."";
     $aryQuery[] = "  ) m_key ";
     $aryQuery[] = "    ON od.strproductcode = m_key.strproductcode ";
-    $aryQuery[] = "    AND mo.lngrevisionno = m_key.lngrevisionno ";
+    $aryQuery[] = "    AND od.strrevisecode = m_key.strrevisecode ";
+    $aryQuery[] = "    AND mo.strordercode = m_key.strordercode ";
     $aryQuery[] = "    AND mo.lngcustomercompanycode = m_key.lngcustomercompanycode ";
     $aryQuery[] = "    AND mo.lngmonetaryunitcode = m_key.lngmonetaryunitcode ";
     $aryQuery[] = "    AND msi.lngestimateareaclassno = m_key.lngestimateareaclassno ";
+    $aryQuery[] = "inner join ( ";
+    $aryQuery[] = "    select ";
+    $aryQuery[] = "        lngorderno  ";
+    $aryQuery[] = "       ,MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "    from m_order ";
+    $aryQuery[] = "    where lngorderno not in (select lngorderno from m_order where lngrevisionno < 0) ";
+    $aryQuery[] = "    group by lngorderno ";
+    $aryQuery[] = ") mo_rev ";
+    $aryQuery[] = "    on mo_rev.lngorderno = mo.lngorderno ";
+    $aryQuery[] = "    and mo_rev.lngrevisionno = mo.lngrevisionno ";
     $aryQuery[] = "WHERE";
     $aryQuery[] = "  mo.lngorderstatuscode = 1";
 
