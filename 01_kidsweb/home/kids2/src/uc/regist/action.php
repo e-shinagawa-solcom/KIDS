@@ -330,9 +330,9 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 	}
 
 	// 所属を離れたグループがワークフローオーダーに存在していた場合、エラー
-	/*
 	if ( $flgUpdate )
 	{
+/*
 		$strQuery = "SELECT lngWorkflowOrderGroupCode FROM m_WorkflowOrder WHERE lngInChargeCode = " . $aryUserData["lngUserCode"] . " AND (" . join ( " OR", $aryGroupCodeDelete ) . ") AND bytWorkflowOrderDisplayFlag = TRUE\n";
 		list ( $lngResultId, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 		if ( $lngResultNum )
@@ -342,11 +342,13 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 || $aryData["lngFunctionCod
 		}
 		else
 		{
+*/
 			$aryQuery[0] = "DELETE FROM m_GroupRelation WHERE lngUserCode = " . $aryUserData["lngUserCode"] . " AND (" . join ( " OR", $aryGroupCodeDelete ) . ")\n";
 			$aryQuery[0] = preg_replace ( "/lngWorkflowOrderGroupCode/", "lngGroupCode", $aryQuery[0] );
+/*
 		}
+*/
 	}
-	*/
 
 	// ユーザー修正の場合、ログイン許可・権限グループ変更チェック
 	// ログイン許可を外し、ワークフロー順番に含まれていてた場合
