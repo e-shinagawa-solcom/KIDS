@@ -587,6 +587,7 @@ define ( "DEF_MESSAGE_CODE_CURRENT_REVISION_ERROR",    9209); // 最新リビジ
 define ( "DEF_MESSAGE_CODE_EXCLUSIVE_CHECK_ERROR",     9210); // 排他チェックエラー
 define ( "DEF_MESSAGE_CODE_DELETE_CHECK_ERROR",        9211); // 削除チェックエラー
 define ( "DEF_MESSAGE_CODE_DELETED_ERROR",             9212); // 削除済エラー
+define ( "DEF_MESSAGE_CODE_INCORRECT_GROUP_USER",      9216); // 削除済エラー
 
 // 仕入区分マスタコード
 define ("DEF_STOCK_CLASS_CODE_PARTS",      1); // 材料費
