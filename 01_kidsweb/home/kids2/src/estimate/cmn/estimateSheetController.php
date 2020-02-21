@@ -2194,14 +2194,22 @@ class estimateSheetController {
 
                 $copyValue = $sheet->getCell($copyAddress)->getValue();
                 $copyStyle = $sheet->getStyle($copyAddress);
-    
+
+                
                 $cellPattern = '/(\$?[A-Z]+)'. $copyRow. '(\D?)/';
                 $replace = '${1}'.$newRow. '${2}';
                 
                 $insertValue = preg_replace($cellPattern, $replace, $copyValue);
     
                 $sheet->setCellValue($newAddress, $insertValue);
+
                 $sheet->duplicateStyle($copyStyle, $newAddress);
+                if( $col <= workSheetConst::WORK_SHEET_COLUMN_NUMBER ){
+                    // コピー元のbottomは太いため、細い線をセット
+                    $sheet->getStyle($newAddress)->getBorders()->getBottom()->setBorderStyle("thin");
+                }
+                
+                
             }
     
             // 行の高さ複製
@@ -2266,7 +2274,7 @@ class estimateSheetController {
 
         $difTotal = 0;
 
-        if ($this->mode === workSheetConst::MODE_ESTIMATE_EDIT) {
+        if ($this->mode === workSheetConst::MODE_ESTIMATE_EDIT || $this->mode === workSheetConst::MODE_ESTIMATE_DOWNLOAD) {
             $marginCell = 1; // 挿入する空行数
         } else {
             $marginCell = 0; // 挿入する空行数
@@ -2285,7 +2293,7 @@ class estimateSheetController {
     
                 $difference = $inputRowCount + $marginCell - $linage;
     
-                $selectedRow = $lastRow - 1; // 最終行の1行前に(指定した行数を)挿入する
+                $selectedRow = $lastRow; // 最終行の1行前に(指定した行数を)挿入する
     
                 $this->insertCopyRowBefore($selectedRow, $difference); // 行挿入実行
 

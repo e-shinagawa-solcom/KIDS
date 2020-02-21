@@ -130,7 +130,6 @@ if ($file["exc_tmp_name"]) {
 
 				$difference = array();
 				$hiddenList = array();
-				
 				if ($sheetInfo['displayInvalid']) {
 					continue;
 				} else {
@@ -154,7 +153,6 @@ if ($file["exc_tmp_name"]) {
 					$targetAreaRows = $objSheet->outputTargetAreaRows();
 					$startRowOfDetail = $targetAreaRows[DEF_AREA_PRODUCT_SALES]['firstRow']; // 明細の開始行
 					$endRowOfDetail = $targetAreaRows[DEF_AREA_OTHER_COST_ORDER]['lastRow']; // 明細の終了行
-				
 					for ($row = $startRowOfDetail; $row <= $endRowOfDetail; ++$row) {
 
 						$objRow = null;
@@ -189,6 +187,9 @@ if ($file["exc_tmp_name"]) {
 								$objRowList[$row] = $objRow;
 								if ($objRow->invalidFlag === true) {
 									$hiddenList[$row] = true;
+								}
+								else{
+									$hiddenList[$row] = false;
 								}							
 							}
 						}
