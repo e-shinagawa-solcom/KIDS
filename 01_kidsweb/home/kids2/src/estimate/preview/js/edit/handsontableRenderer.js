@@ -180,6 +180,11 @@ $(function() {
     }   
   }
 
+    // カレンダー入力のlocaleを日本に設定
+    moment.locale('ja');
+    
+
+
   // Handsontableでタグに表を埋め込む
   table[0] = new Handsontable(grid[0], {
     data: cellValue,
@@ -318,7 +323,19 @@ $(function() {
 
         } else if (className.includes('delivery')) { // 納期          
           cellProperties.type = 'date';
-          cellProperties.dateFormat = 'YYYY/MM/DD'
+          cellProperties.datePickerConfig = {
+            yearSuffix: '年',
+            showMonthAfterYear: true,
+            showDaysInNextAndPreviousMonths: true,
+            i18n: {
+                previousMonth: '前月',
+                nextMonth: '次月',
+                months: moment.localeData()._monthsShort,
+                weekdays: moment.localeData()._weekdays,
+                weekdaysShort: moment.localeData()._weekdaysShort
+            },
+          };
+          cellProperties.dateFormat = 'YYYY/MM/DD';
 
         } else if (className.includes('price')) { // 単価
           cellProperties.type = 'numeric';

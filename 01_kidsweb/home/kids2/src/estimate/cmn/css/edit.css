@@ -1,0 +1,13 @@
+/*
+見積原価プレビューカレンダースタイル
+*/
+
+.pika-lendar th:first-child,
+.pika-lendar td:first-child .pika-button {
+    color: #f00;
+}
+.pika-lendar th:last-child,
+.pika-lendar td:last-child .pika-button {
+    color: #00f;
+}
+
