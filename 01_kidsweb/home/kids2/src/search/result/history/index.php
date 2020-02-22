@@ -124,8 +124,9 @@ foreach ($records as $i => $record) {
 
     $aryTableHeaderName;
     // 項番
-    $index = $index + 1;
-    $subindex = $aryData["rownum"] . "." . $index;
+    // $index = $index + 1;
+    // $subindex = $aryData["rownum"] . "." . $index;
+    $subindex = $aryData["rownum"] . "." . $lngrevisionno;
 
     // 先頭ボタンの設定
     fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, false, false, $subindex, 'sc', null);

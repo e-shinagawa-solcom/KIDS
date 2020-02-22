@@ -705,10 +705,10 @@ jQuery(function ($) {
         var deliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
 
         // 納品日の月が締済みである
-        // if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)) {
-        //     alert("締済みのため、指定された納品日は無効です");
-        //     return false;
-        // }
+        if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)) {
+            alert("締済みのため、指定された納品日は無効です");
+            return false;
+        }
 
         // 納品日がシステム日付の前後一ヶ月以内にない
         if (!withinOneMonthBeforeAndAfter(deliveryDate)) {
@@ -1055,11 +1055,11 @@ jQuery(function ($) {
     // プレビューボタン押下
     $('img.preview').on('click', function () {
         // 納品先
-        var lngDeliveryPlaceCode = $('input[name="lngDeliveryPlaceCode"]').val();
-        if (lngDeliveryPlaceCode.length == 0) {
-            alert("納品先を設定してください。");
-            return;
-        }
+        // var lngDeliveryPlaceCode = $('input[name="lngDeliveryPlaceCode"]').val();
+        // if (lngDeliveryPlaceCode.length == 0) {
+        //     alert("納品先を設定してください。");
+        //     return;
+        // }
         // POST先
         var postTarget = $('input[name="ajaxPostTarget"]').val();
 

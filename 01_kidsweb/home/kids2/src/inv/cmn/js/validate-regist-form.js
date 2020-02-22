@@ -180,6 +180,12 @@
                 checkDateFormat: true,
                 required: true
             },
+            dtmchargeternstart: {
+                checkDateFormat: true
+            },
+            dtmchargeternend: {
+                checkDateFormat: true
+            },
             // ただし
             description: {
             	required: true

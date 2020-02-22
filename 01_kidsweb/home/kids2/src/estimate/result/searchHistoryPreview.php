@@ -273,9 +273,9 @@ for ($i = 0; $i < $lngResultNum; ++$i) {
 
 	$body .= "<tr id=\"". ($estimateNo."_".$result["lngrevisionno"]). "\" class=\"estimate_search_result\" style=\"" . $bgcolor . "\ onclick=\"fncSelectTrColor( this );\">";
 
-	$number = $i + 1;
+	// $number = $i + 1;
 
-	$body .= "<td nowrap>". $aryData["rownum"] . "." .$number. "</td>";	
+	$body .= "<td nowrap>". $aryData["rownum"] . "." .$result["lngrevisionno"]. "</td>";	
 
 	foreach ($displayColumns as $column) {
 		 // 詳細、履歴、削除

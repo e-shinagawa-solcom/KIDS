@@ -133,7 +133,7 @@ foreach ($records as $i => $record) {
     
     // 項番
     $index +=1;
-    $tdIndex = $doc->createElement("td", $aryData["rownum"]. "." . $index);
+    $tdIndex = $doc->createElement("td", $aryData["rownum"]. "." . $record["lngrevisionno"]);
     $tdIndex->setAttribute("style", $bgcolor);
     $trBody->appendChild($tdIndex);
 
