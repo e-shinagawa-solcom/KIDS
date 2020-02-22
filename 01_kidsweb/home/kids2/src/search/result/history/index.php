@@ -58,6 +58,7 @@ $aryAuthority = fncGetAryAuthority('so', $objAuth);
 // ヘッダーの設定
 if ($type == 'purchaseorder') { // 発注書
     $aryTableHeaderName = $aryTableHeaderName_PURORDER;
+    $aryTableDetailHeaderName = $aryTableDetailHeaderName_PURORDER;
 } else if ($type == 'po') { // 発注
     $aryTableHeaderName = $aryTableHeaderName_PO;
 } else if ($type == 'so') { // 受注
@@ -82,6 +83,7 @@ if ($type == 'purchaseorder') { // 発注書
     $displayColumns = null;
 } else if ($type == 'estimate') {
 }
+
 // -------------------------------------------------------
 // テーブルセル作成
 // -------------------------------------------------------
@@ -102,7 +104,7 @@ foreach ($records as $i => $record) {
     $rowspan == 0;
 
     // 請求書・仕入・売上・納品書の場合詳細データを取得する
-    if ($type == 'inv' || $type == 'pc' || $type == 'sc' || $type == 'slip') {
+    if ($type == 'inv' || $type == 'pc' || $type == 'sc' || $type == 'slip'|| $type == 'purchaseorder') {
         $detailData = fncGetDetailData($type, $lngpkno, $lngrevisionno, $objDB);
         $rowspan = count($detailData);
     }

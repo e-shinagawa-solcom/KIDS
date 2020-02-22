@@ -239,6 +239,7 @@ $tbody = $table->getElementsByTagName("tbody")->item(0);
 
 // キー文字列を小文字に変換
 $displayColumns = array_change_key_case($displayColumns, CASE_LOWER);
+//var_dump($displayColumns);
 // -------------------------------------------------------
 // 各種ボタン表示チェック/権限チェック
 // -------------------------------------------------------
@@ -252,7 +253,7 @@ $aryAuthority = fncGetAryAuthority('purchaseorder', $objAuth);
 // -------------------------------------------------------
 // thead > tr要素作成
 $trHead = $doc->createElement("tr");
-fncSetTheadData($doc, $trHead, $aryTableHeadBtnName, $aryTableBackBtnName, $aryTableHeaderName_PURORDER, null, $displayColumns);
+fncSetTheadData($doc, $trHead, $aryTableHeadBtnName, $aryTableBackBtnName, $aryTableHeaderName_PURORDER, $aryTableDetailHeaderName_PURORDER, $displayColumns);
 $thead->appendChild($trHead);
 // return;
 // -------------------------------------------------------
@@ -263,6 +264,8 @@ foreach ($records as $i => $record) {
     $index = $index + 1;
     $bgcolor = fncSetBgColor('purchaseorder', $record["strordercode"], true, $objDB);
 
+    $detailData = fncGetDetailData('purchaseorder', $record["lngpurchaseorderno"], $record["lngrevisionno"], $objDB);
+fncDebug("kids2.log", sprintf("detail count=%d", count($detailData)), __FILE__, __LINE__, "a");
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 
@@ -273,6 +276,9 @@ foreach ($records as $i => $record) {
 
     // ヘッダー部データ設定
     fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PURORDER, $displayColumns, $record, true);
+
+    // 明細部データ設定
+    fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_PURORDER, $displayColumns, $record, $detailData, true, true);
 
     // フッターボタン表示
     fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, 'purchaseorder');

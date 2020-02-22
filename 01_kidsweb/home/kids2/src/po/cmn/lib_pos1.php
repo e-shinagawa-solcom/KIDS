@@ -800,31 +800,33 @@ function fncGetPurchaseOrder2($lngPurchaseOrderCode, $lngRevisionNo, $objDB)
 function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo)
 {
     $arySql[] = "SELECT";
-    $arySql[] = "   lngpurchaseorderno";
-    $arySql[] = "  ,lngpurchaseorderdetailno";
-    $arySql[] = "  ,lngrevisionno";
-    $arySql[] = "  ,lngorderno";
-    $arySql[] = "  ,lngorderdetailno";
-    $arySql[] = "  ,lngorderrevisionno";
+    $arySql[] = "   pd.lngpurchaseorderno";
+    $arySql[] = "  ,pd.lngpurchaseorderdetailno";
+    $arySql[] = "  ,pd.lngrevisionno";
+    $arySql[] = "  ,pd.lngorderno";
+    $arySql[] = "  ,pd.lngorderdetailno";
+    $arySql[] = "  ,pd.lngorderrevisionno";
     $arySql[] = "  ,pd.lngstocksubjectcode";
     $arySql[] = "  ,mss.strstocksubjectname";
-    $arySql[] = "  ,lngstockitemcode";
-    $arySql[] = "  ,strstockitemname";
-    $arySql[] = "  ,lngdeliverymethodcode";
-    $arySql[] = "  ,strdeliverymethodname";
-    $arySql[] = "  ,curproductprice";
-    $arySql[] = "  ,lngproductquantity";
-    $arySql[] = "  ,lngproductunitcode";
-    $arySql[] = "  ,strproductunitname";
-    $arySql[] = "  ,cursubtotalprice";
-    $arySql[] = "  ,to_char(dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
-    $arySql[] = "  ,strnote";
-    $arySql[] = "  ,strnote as strdetailnote";
-    $arySql[] = "  ,lngsortkey";
+    $arySql[] = "  ,pd.lngstockitemcode";
+    $arySql[] = "  ,pd.strstockitemname";
+    $arySql[] = "  ,pd.lngdeliverymethodcode";
+    $arySql[] = "  ,pd.strdeliverymethodname";
+    $arySql[] = "  ,pd.curproductprice";
+    $arySql[] = "  ,pd.lngproductquantity";
+    $arySql[] = "  ,pd.lngproductunitcode";
+    $arySql[] = "  ,pd.strproductunitname";
+    $arySql[] = "  ,pd.cursubtotalprice";
+    $arySql[] = "  ,to_char(pd.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
+    $arySql[] = "  ,pd.strnote";
+    $arySql[] = "  ,pd.strnote as strdetailnote";
+    $arySql[] = "  ,pd.lngsortkey";
+    $arySql[] = "  ,od.strmoldno";
     $arySql[] = "FROM t_purchaseorderdetail pd";
+    $arySql[] = "INNER JOIN t_orderdetail od ON od.lngorderno = pd.lngorderno AND od.lngrevisionno = pd.lngorderrevisionno";
     $arySql[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
-    $arySql[] = "WHERE lngpurchaseorderno = " . intval($lngOrderNo);
-    $arySql[] = "AND   lngrevisionno = " . intval($lngRevisionNo);
+    $arySql[] = "WHERE pd.lngpurchaseorderno = " . intval($lngOrderNo);
+    $arySql[] = "AND   pd.lngrevisionno = " . intval($lngRevisionNo);
 
     return implode("\n", $arySql);
 }
