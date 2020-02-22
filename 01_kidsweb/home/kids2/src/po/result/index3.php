@@ -99,6 +99,7 @@ if($_POST){
 
         // 発注書明細から発注書Noを取得
         $lngpurchaseorderno = $aryPurchaseOrderDetail[0]["lngpurchaseorderno"];
+        $lngpurchaseorderrevisionno = $aryPurchaseOrderDetail[0]["lngrevisionno"];
         
         // 発注書ロック
         if(!lockOrder($lngpurchaseorderno, $objDB)){
@@ -106,7 +107,7 @@ if($_POST){
         }
 
         // 発注書更新有無チェック
-        if( isPurchaseOrderModified($lngpurchaseorderno, $lngrevisionno, $objDB) )
+        if( isPurchaseOrderModified($lngpurchaseorderno, $lngpurchaseorderrevisionno, $objDB) )
         {
             fncOutputError(9051, DEF_ERROR, "他ユーザーが発注書を更新または削除しています。", true, "", $objDB);
             return false;
