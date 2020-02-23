@@ -484,7 +484,7 @@ function fncGetCurDate($objDB)
 {
     //クエリの生成
     $sql = "
-            SELECT CURRENT_TIMESTAMP;
+            SELECT CURRENT_TIMESTAMP as nowtime;
         ";
 
     $result = pg_query($objDB->ConnectID, $sql);
@@ -493,7 +493,7 @@ function fncGetCurDate($objDB)
         echo "現在時刻取得失敗しました。\n";
         exit;
     } else {
-        return pg_fetch_object($result)->current_timestamp;
+        return pg_fetch_object($result)->nowtime;
     }
 }
 

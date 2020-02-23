@@ -1883,7 +1883,7 @@ class lcModel
             . "," . ($data["bldetail2money"] == null ? "NULL" : $data["bldetail2money"])
             . "," . ($data["bldetail3date"] == null ? "NULL" : "'" . $data["bldetail3date"] . "'")
             . "," . ($data["bldetail3money"] == null ? "NULL" : $data["bldetail3money"])
-            . "," . ($data["lcstate"] == null ? "NULL" : $data["lcstate"])
+            . "," . $data["lcstate"]
             . "," . ($data["entryuser"] == null ? "NULL" : "'" . $data["entryuser"] . "'")
             . "," . ($data["entrydate"] == null ? "NULL" : "'" . $data["entrydate"] . "'")
             . "," . ($data["entrytime"] == null ? "NULL" : "'" . $data["entrytime"] . "'")
@@ -1892,10 +1892,8 @@ class lcModel
             . "," . ($data["updatetime"] == null ? "NULL" : "'" . $data["updatetime"] . "'")
             . "," . ($data["shipym"] == null ? "NULL" : "'" . $data["shipym"] . "'")
             . ")";
-
         //バインドの設定
         $bind = array();
-
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 

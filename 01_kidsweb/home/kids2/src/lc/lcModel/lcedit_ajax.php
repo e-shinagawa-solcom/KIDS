@@ -150,7 +150,7 @@ function releaseLcEdit($objDB, $data)
             $poreviseno = intval($data["poreviseno"]);
             do {
                 $param = $data;
-                $param["poreviseno"] = sprintf("%02d", $poreviseno + 1);
+                $param["poreviseno"] = sprintf("%02d", $poreviseno - 1);
                 // 同一POの直近リバイズデータを取得する
                 $lcinfo = fncGetLcInfoSingle($objDB, $param);
                 // 取得したデータの銀行依頼日が空の場合、

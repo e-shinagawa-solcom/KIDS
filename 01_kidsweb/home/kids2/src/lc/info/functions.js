@@ -121,25 +121,25 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.unitprice, "", 4) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');text-align:right;">' + convertNumberByClass(row.moneyprice, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.currencyclass) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipstartdate) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipenddate) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.sumdate) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.poupdatedate) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.deliveryplace) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipstartdate, 'yy/mm/dd') + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipenddate, 'yy/mm/dd') + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.sumdate, 'yy/mm/dd') + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.poupdatedate, 'yy/mm/dd') + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.deliveryplace, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcnote) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipterm) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.validterm) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.shipterm, 'yy/mm/dd') + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.validterm, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.bankname) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bankreqdate) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bankreqdate, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcno) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.lcamopen) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.validmonth) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.lcamopen, 'yy/mm/dd') + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.validmonth, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.usancesettlement, row.currencyclass, 0) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail1date) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail1date, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.bldetail1money, row.currencyclass, 0) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail2date) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail2date, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.bldetail2money, row.currencyclass, 0) + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail3date) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail3date, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.bldetail3money, row.currencyclass, 0) + '</td>' +
 			'<td style="display:none;">' + row.lcstate + '</td>' +
 			'</tr>';
@@ -328,7 +328,7 @@ function openEdit() {
 	var polineno = row.find('td:nth-child(5)').text();
 	var poreviseno = row.find('td:nth-child(6)').text();
 	var lcstate = row.find('td:nth-child(37)').text();
-	
+	console.log(lcstate);
 	if (lcstate != 0 &&
 		lcstate != 3 &&
 		lcstate != 4 &&
