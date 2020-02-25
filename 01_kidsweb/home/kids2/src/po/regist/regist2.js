@@ -3,6 +3,14 @@
 //
 jQuery(function ($) {
 
+    window.onbeforeunload = unLock;
+    // チェックボックスの切り替え処理のバインド
+    setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
+
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
+    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
+
     // テーブルBの幅をリセットする
     resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
 
@@ -72,12 +80,15 @@ jQuery(function ($) {
                 lngStockSubjectCode: $(tr).find('.detailStockSubjectCode').text().split("]")[0].replace("[", ""),
                 lngStockItemCode: $(tr).find('.detailStockItemCode').text().split("]")[0].replace("[", ""),
                 lngDeliveryMethodCode: $(tr).find('option:selected').val(),
-                strDeliveryMethodName: $(tr).find('option:selected').text(),
+                strDeliveryMethodName: $(tr).find('option:selected').text().trim(),
                 curProductPrice: $(tr).find('.detailProductPrice').text().split(" ")[1],
                 lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
                 curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text().split(" ")[1],
                 dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
                 strDetailNote: $(tr).find('.detailDetailNote').text(),
+                lngOrderNo: $(tr).find('input[name="lngorderno"]').val(),
+                lngOrderRevisionNo: $(tr).find('input[name="lngorderrevisionno"]').val(),
+                lngOrderDetailNo: $(tr).find('input[name="lngorderdetailno"]').val(),
             };
             result.push(param);
         });
@@ -235,7 +246,7 @@ jQuery(function ($) {
     $(document).on('click', '#btnClose', function () {
         window.open('about:blank', '_self').close();
     });
-    $('#FixEntryBtn').on('click', function () {
+    $('img.decideRegist').on('click', function () {
         // console.log('確定登録ボタンクリック');
         if (!validationCheck()) {
             console.log("バリデーションエラーのため処理継続中止。")
@@ -279,4 +290,147 @@ jQuery(function ($) {
             console.log(error);
         });
     });
+
+    // 追加ボタンのイベント
+    $('img.add').on('click', function () {
+        var isChecked = false;
+        $('input[type="checkbox"]')
+            .each(function () {
+                if (this.checked) {
+                    if ($(this).attr('name') != "allSel") {
+                        isChecked = true;
+                        return false;
+                    }
+                }
+            });
+
+        // 行が選択されてない場合
+        if (!isChecked) {
+            alert("発注確定する明細データが指定されていません。");
+            return;
+        }
+
+        $('#tableA_chkbox tbody tr').each(function (i, e) {
+            var rownum = i + 1;
+            var chkbox = $(this).find('input[type="checkbox"]');
+            if (chkbox.prop("checked")) {
+                // tableBの追加
+                $("#tableB tbody").append('<tr>' + $('#tableA tbody tr:nth-child(' + rownum + ')').html() + '</tr>');
+                var no = $("#tableB_no tbody").find('tr').length + 1;
+                $("#tableB_no tbody").append('<tr><td>' + no + '</td></tr>');
+            }
+
+        });
+
+        // tableBのリセット
+        for (var i = $('#tableA_chkbox tbody tr').length; i > 0; i--) {
+            var row = $('#tableA_chkbox tbody tr:nth-child(' + i + ')');
+            var chkbox = row.find('input[type="checkbox"]');
+            if (chkbox.prop("checked")) {
+                row.remove();
+                $('#tableA tbody tr:nth-child(' + i + ')').remove();
+            }
+        }
+
+        resetTableRowid($('#tableB_no'));
+
+        // テーブルBの幅をリセットする
+        resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
+
+        resetTableBDisplayStyle();
+
+        // テーブル行クリックイベントの設定
+        selectRow('', $("#tableB_no"), $("#tableB"), '');
+
+        scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+
+        $("#tableA").trigger("update");
+        $("#tableB").trigger("update");
+
+        tableBSort();
+    });
+
+
+    // 全削除ボタンのイベント
+    $('img.alldelete').on('click', function () {
+
+        // テーブルBのデータをすべてテーブルAに移動する
+        deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
+
+        $("#tableA_head").trigger("update");
+
+        $("#tableA").trigger("update");
+
+        $("#tableB_no").trigger("update");
+
+        $("#tableB").trigger("update");
+
+        resetTableADisplayStyle();
+
+        tableBSort();
+    });
+
+    // 削除ボタンのイベント
+    $('img.delete').on('click', function () {
+
+        // テーブルBの選択されたデータをテーブルAに移動する
+        deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
+
+        $("#tableA_head").trigger("update");
+
+        $("#tableA").trigger("update");
+
+        $("#tableB_no").trigger("update");
+
+        $("#tableB").trigger("update");
+
+        resetTableADisplayStyle();
+
+        tableBSort();
+    });
+
 });
+
+function resetTableADisplayStyle() {
+    $("#tableA tbody tr").each(function (i, e) {
+        $(this).find(".detailNote").find('input:text').prop('disabled', true);
+    });
+}
+
+function resetTableBDisplayStyle() {
+    $("#tableB tbody tr").each(function (i, e) {
+        $(this).find(".detailNote").find('input:text').prop('disabled', false);
+    });
+}
+function tableBSort() {
+    var sortval = 0;
+    $('#tableB_head thead tr th').on('click', function () {
+        var sortkey = $(this)[0].cellIndex;
+        console.log(sortkey);
+        if (sortval == 1) {
+            sortval = 0;
+        } else {
+            sortval = 1;
+        }
+        var r = $('#tableB').tablesorter();
+        r.trigger('sorton', [[[(sortkey), sortval]]]);
+    });
+}
+
+function unLock() {
+    $.ajax({
+        url: '/po/regist/modify.php',
+        type: 'post',
+        // dataType: 'json',
+        type: 'POST',
+        //            async: false,
+        data: {
+            'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
+            'strMode': 'cancel',
+        }
+    })
+        .done(function (response) {
+        })
+        .fail(function (response) {
+        });
+}

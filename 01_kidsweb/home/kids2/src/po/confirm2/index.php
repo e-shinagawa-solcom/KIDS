@@ -77,21 +77,63 @@ if ($_POST["strMode"] == "update") {
         fncOutputError(9051, DEF_ERROR, "他ユーザーが発注書を更新または削除しています。", true, "", $objDB);
         return false;
     }
-    
+    // 対象の追加明細を取得
+    $arrayAdd = GetAdditionalOrderDetail($_POST, $objAuth, $objDB);
+    foreach($arrayAdd as $add){
+//echo sprintf("add:lngorderno=%s,lngrevisionno=%s", $add["lngorderno"], $add["lngrevisionno"]) . "<br>";
+        // 追加対象明細発注マスタ状態チェック（明細取得とロック取得の隙間に更新される可能性を考慮して）
+        $errorMsg = CanOrder($add["lngorderno"], $add["lngrevisionno"], $objDB);
+        if($errorMsg){
+            fncOutputError(9051, DEF_ERROR, $errorMsg, true, "", $objDB);
+            return false;
+        }
+        // 発注マスタ更新（追加明細のみ）
+        if(!FixOrder($add["lngorderno"], $add["lngrevisionno"], $objDB)){
+            fncOutputError(9051, DEF_ERROR, "発注マスタの確定処理に失敗しました。", true, "", $objDB);
+            return false;
+        }
+    }
+
+    // 対象の削除明細を取得
+    $arrayDel = GetRemovalOrderDetail($_POST, $objAuth, $objDB);
+//var_dump($arrayDel);
+
+    if(!is_array($arrayDel)){
+        $arrayDel[] = $arrayDel;
+    }
+    foreach($arrayDel as $del){
+//echo sprintf("del:lngorderno=%s,lngrevisionno=%s", $del["lngorderno"], $del["lngrevisionno"]) . "<br>";
+        // 削除対象明細発注マスタ状態チェック（明細削除対応）
+        $errorMsg = CanDeletePurchaseOrderDetail($del["lngorderno"], $del["lngrevisionno"], $objDB);
+        if($errorMsg){
+            fncOutputError(9051, DEF_ERROR, $errorMsg, true, "", $objDB);
+            return false;
+        }
+        // 削除対象明細発注マスタ状態リセット（明細削除対応）
+        if(!CancelOrder($del["lngorderno"], $del["lngrevisionno"], $objDB)){
+            fncOutputError(9051, DEF_ERROR, "発注マスタの取消処理に失敗しました。", true, "", $objDB);
+            return false;
+        }
+    }
+
     
 	// 発注書マスタ更新
 	if(!fncUpdatePurchaseOrder($_POST, $objDB, $objAuth)) { return false; }
-	// 発注書明細更新
+	// 発注書明細登録（追加分も含めて）
 	if(!fncUpdatePurchaseOrderDetail($_POST, $objDB)) { return false; }
 
+    // 排他制御ロック解放
+    $result = unlockExclusive($objAuth, $objDB);
+
+//    $objDB->transactionRollback();
+	$objDB->transactionCommit();
+
 	// 更新後のデータを再度読み込む
-	$updatedPurchaseOrder = fncGetPurchaseOrderEdit($_POST["lngPurchaseOrderNo"], $_POST["lngRevisionNo"], $objDB);
+	$updatedPurchaseOrder = fncGetPurchaseOrderEdit($_POST["lngPurchaseOrderNo"], intval($_POST["lngRevisionNo"]) + 1, $objDB);
 
 	$strHtml = fncCreatePurchaseOrderUpdateHtml($updatedPurchaseOrder, $aryData["strSessionID"]);
 	$aryData["aryPurchaseOrder"] = $strHtml;
 
-	// $objDB->transactionRollback();
-	$objDB->transactionCommit();
 
 	// テンプレート読み込み
 	$objTemplate = new clsTemplate();
@@ -130,7 +172,6 @@ for ($i = 0; $i < count($_POST); $i++) {
         $aryData[$strKeys] = $strValues;
     }
 }
-
 // 明細行処理 ===========================================================================================
 // 明細行のhidden生成
 if (is_array($_POST["aryDetail"])) {
@@ -190,7 +231,7 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
     $_POST["aryDetail"][$i]["strproductname"] = $_POST["strProductName"];
     $_POST["aryDetail"][$i]["strstockitemcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockItemCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockItemCode"] . "]" : "";
     $_POST["aryDetail"][$i]["strstocksubjectcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockSubjectCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockSubjectCode"] . "]" : "";
-    $_POST["aryDetail"][$i]["strStockItemCode"] = $_POST["aryDetail"][$i]["lngStockItemCode"];
+    $_POST["aryDetail"][$i]["lngStockItemCode"] = $_POST["aryDetail"][$i]["lngStockItemCode"];
 
     // テンプレート読み込み
     $objTemplate = new clsTemplate();

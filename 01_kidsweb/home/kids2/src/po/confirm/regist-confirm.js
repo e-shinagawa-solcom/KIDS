@@ -45,7 +45,7 @@ function getUpdateDetail() {
             lngOrderNo: $(getDetailName('lngOrderNo' ,i)).val(),
             lngRevisionNo: $(getDetailName('lngRevisionNo' ,i)).val(),
             lngStockSubjectCode: $(getDetailName('lngStockSubjectCode' ,i)).val(),
-            lngStockItemCode: $(getDetailName('strStockItemCode' ,i)).val(),
+            lngStockItemCode: $(getDetailName('lngStockItemCode' ,i)).val(),
             lngMonetaryUnitCode: $(getDetailName('lngMonetaryUnitCode' ,i)).val(),
             lngCustomerCompanyCode: $(getDetailName('lngCustomerCompanyCode' ,i)).val(),
             curProductPrice: $(getDetailName('curProductPrice' ,i)).val(),

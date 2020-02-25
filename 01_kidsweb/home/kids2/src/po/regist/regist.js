@@ -146,14 +146,14 @@ jQuery(function ($) {
                 lngOrderNo: $(tr).find('.detailOrderNo').text(),
                 lngRevisionNo: $(tr).find('.detailRevisionNo').text(),
                 lngStockSubjectCode: $(tr).find('.detailStockSubjectCode').text(),
-                strStockItemCode: $(tr).find('.detailStockItemCode').text(),
+                lngStockItemCode: $(tr).find('.detailStockItemCode').text(),
                 lngMonetaryUnitCode: $(tr).find('.detailMonetaryUnitCode').text(),
                 lngCustomerCompanyCode: $(tr).find('.detailCustomerCompanyCode').text(),
                 curProductPrice: $(tr).find('.detailProductPrice').text(),
                 lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
                 curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text(),
                 dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
-                strDetailNote: $(tr).find('.detailNote').find('input:text').val(),
+                strDetailNote: $(tr).find('.detailNote').text(),
                 strMoldNo: null,
             };
             result.push(param);

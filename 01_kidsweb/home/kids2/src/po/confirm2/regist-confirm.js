@@ -45,6 +45,7 @@ function getUpdateDetail() {
             lngProductUnitCode: $(getDetailName('lngProductUnitCode', i)).val(),
             lngOrderNo: $(getDetailName('lngOrderNo' ,i)).val(),
             lngRevisionNo: $(getDetailName('lngRevisionNo' ,i)).val(),
+            lngOrderRevisionNo: $(getDetailName('lngOrderRevisionNo' ,i)).val(),
             lngStockSubjectCode: $(getDetailName('lngStockSubjectCode' ,i)).val(),
             lngStockItemCode: $(getDetailName('lngStockItemCode' ,i)).val(),
             lngMonetaryUnitCode: $(getDetailName('lngStockItemCode' ,i)).val(),
@@ -53,6 +54,8 @@ function getUpdateDetail() {
             lngProductQuantity: $(getDetailName('lngProductQuantity' ,i)).val(),
             curSubtotalPrice: $(getDetailName('curSubtotalPrice' ,i)).val(),
             dtmDeliveryDate: $(getDetailName('dtmDeliveryDate' ,i)).val(),
+            strDetailNote: $(getDetailName('strDetailNote' ,i)).val(),
+            lngOrderDetailNo: $(getDetailName('lngOrderDetailNo' ,i)).val(),
         };
         var msg = 
         "lngOrderDetailNo=" + param.lngOrderDetailNo + "\n" +

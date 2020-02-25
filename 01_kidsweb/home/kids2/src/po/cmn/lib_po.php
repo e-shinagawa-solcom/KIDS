@@ -600,8 +600,8 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 		else
 		{
 			$aryCheck["strProductCode"]					= "null";				// 製品
-			$aryCheck["strStockSubjectCode"]			= "number(1,999999999)";				// 仕入科目
-			$aryCheck["strStockItemCode"]				= "number(1,999999999)";				// 仕入部品
+			$aryCheck["lngStockSubjectCode"]			= "number(1,999999999)";				// 仕入科目
+			$aryCheck["lngStockItemCode"]				= "number(1,999999999)";				// 仕入部品
 			$aryCheck["lngConversionClassCode"]			= "null";				// 製品単位計上
 			$aryCheck["lngProductUnitCode"]				= "null";				// 荷姿単位
 			$aryCheck["lngGoodsQuantity"]				= "null";				// 製品数量
@@ -733,6 +733,7 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngOrderDetailNo]\" value=\"".$aryData[$i]["lngOrderDetailNo"]."\">";
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngSortKey]\" value=\"".$aryData[$i]["lngSortKey"]."\">";
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngRevisionNo]\" value=\"".$aryData[$i]["lngRevisionNo"]."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngOrderRevisionNo]\" value=\"".$aryData[$i]["lngOrderRevisionNo"]."\">";
 				// 運搬方法
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngCarrierCode]\" value=\"".$aryData[$i]["lngDeliveryMethodCode"]."\">";
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strDeliveryMethodName]\" value=\"". $aryData[$i]["strDeliveryMethodName"] ."\">";
@@ -741,7 +742,7 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				// 仕入科目
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngStockSubjectCode]\" value=\"".$aryData[$i]["lngStockSubjectCode"]."\">";
 				// 仕入部品
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strStockItemCode]\" value=\"".$aryData[$i]["strStockItemCode"]."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngStockItemCode]\" value=\"".$aryData[$i]["lngStockItemCode"]."\">";
 				// 通貨
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngMonetaryUnitCode]\" value=\"".$aryData[$i]["lngMonetaryUnitCode"]."\">";
 				// 仕入先
@@ -764,9 +765,9 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				// 製品
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strProductCode]\" value=\"".$aryData[$i]["strProductCode"]."\">";
 				//$strStockSubjectName = "";
-				//$strStockSubjectName = fncGetMasterValue( "m_stocksubject", "lngstocksubjectcode", "strstocksubjectname", $aryData[$i]["strStockSubjectCode"],'', $objDB );
+				//$strStockSubjectName = fncGetMasterValue( "m_stocksubject", "lngstocksubjectcode", "strstocksubjectname", $aryData[$i]["lngStockSubjectCode"],'', $objDB );
 				//$strStockItemName = "";
-				//$strStockItemName = fncGetMasterValue( "m_stockitem", "lngstockitemcode","strstockitemname" , $aryData[$i]["strStockItemCode"], "lngstocksubjectcode = ".$aryData[$i]["strStockSubjectCode"],$objDB );
+				//$strStockItemName = fncGetMasterValue( "m_stockitem", "lngstockitemcode","strstockitemname" , $aryData[$i]["lngStockItemCode"], "lngstocksubjectcode = ".$aryData[$i]["lngStockSubjectCode"],$objDB );
 				// 換算区分コード
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngConversionClassCode]\" value=\"".$aryData[$i]["lngConversionClassCode"]."\">";
 				// ForList
@@ -779,7 +780,7 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				// 単価リストの表示用value
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngProductUnitCodeName]\" value=\"".$aryData[$i]["lngProductUnitCodeName"]."\">";
 				// 仕入科目の表示用value
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strStockSubjectCodeName]\" value=\"".$aryData[$i]["strStockSubjectCodeName"]."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngStockSubjectCodeName]\" value=\"".$aryData[$i]["lngStockSubjectCodeName"]."\">";
 				// 仕入部品の表示用value
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strStockItemCodeName]\" value=\"".$aryData[$i]["strStockItemCodeName"]."\">";
 			
@@ -800,9 +801,9 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 				// 製品コード
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strproductcode]\" value=\"".$aryData[$i]["strproductcode"]."\">";
 				// 仕入科目コード
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strstocksubjectcode]\" value=\"".$aryData[$i]["lngstocksubjectcode"]."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngstocksubjectcode]\" value=\"".$aryData[$i]["lngstocksubjectcode"]."\">";
 				// 仕入部品コード
-				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][strstockitemcode]\" value=\"".$aryData[$i]["lngstockitemcode"]."\">";
+				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngstockitemcode]\" value=\"".$aryData[$i]["lngstockitemcode"]."\">";
 				// 換算区分コード
 				$aryDetailHidden[] = "<input type=\"hidden\" name=\"aryPoDitail[$i][lngconversionclasscode]\" value=\"$lngConversionClassCode\">";
 				// ForList

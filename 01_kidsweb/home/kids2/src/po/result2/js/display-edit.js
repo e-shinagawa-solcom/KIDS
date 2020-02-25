@@ -1,7 +1,8 @@
 
 (function(){
     $('img.fix.button').on('click', function(){
-        url = '/po/regist/renew.php';
+//        url = '/po/regist/renew.php';
+        url = '/po/regist/modify.php';
         lngorderno = 'lngPurchaseOrderNo=' + $(this).attr('id');
         lngrevisionno = 'lngRevisionNo=' + $(this).attr('revisionno');
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
@@ -23,3 +24,4 @@ function getUrlVars(){
     } 
     return vars; 
 }
+

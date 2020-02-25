@@ -101,9 +101,9 @@ function fncCheckSetProduct ( $aryOrderDetail, $lngMonetaryUnitCode, $objDB )
 		// 製品番号
 		$lngProductNo = intval($aryOrderDetail[$i]["strProductCode"]);
 		// 仕入科目コード
-		$lngStockSubjectCode = $aryOrderDetail[$i]["strStockSubjectCode"];
+		$lngStockSubjectCode = $aryOrderDetail[$i]["lngStockSubjectCode"];
 		// 仕入部品コード
-		$lngStockItemCode = $aryOrderDetail[$i]["strStockItemCode"];
+		$lngStockItemCode = $aryOrderDetail[$i]["lngStockItemCode"];
 		// 製品価格
 		$curProductPrice = $aryOrderDetail[$i]["curProductPrice"];
 		if ( $curProductPrice == "" )
@@ -303,14 +303,14 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 			for( $i = 0; $i < $cnt; $i++ )
 			{
 //echo "lngStockSubjectCode". $aryPoDitail[$i]["lngStockSubjectCode"] . "<br>";
-//echo "strStockItemCode". $aryPoDitail[$i]["strStockItemCode"] . "<br>";
+//echo "strStockItemCode". $aryPoDitail[$i]["lngStockItemCode"] . "<br>";
 				$Code[$i]= "2";//初期値2(T/T)にセット
 				if(  $aryPoDitail[$i]["lngStockSubjectCode"] == "402")
 				{
 					for( $j = 0; $j < count( $arystockitemcode ); $j++ )
 					{
 							
-						if( $aryPoDitail[$i]["strStockItemCode"] == $arystockitemcode[$j])
+						if( $aryPoDitail[$i]["lngStockItemCode"] == $arystockitemcode[$j])
 						{
 							$Code[$i]="1";//L/Cにセット
 //echo "L/C推奨明細検出<br>";
@@ -345,7 +345,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 					for( $j = 0; $j < count( $arystockitemcode ); $j++ )
 					{
 							
-						if( $aryPoDitail[$i]["strStockItemCode"] == $arystockitemcode[$j])
+						if( $aryPoDitail[$i]["lngStockItemCode"] == $arystockitemcode[$j])
 						{
 							$Code[$i]="2";
 						}

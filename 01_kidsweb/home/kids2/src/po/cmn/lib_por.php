@@ -512,6 +512,147 @@ function fncGetOrderDetail2($lngOrderNo, $lngOrderDetailNo, $lngRevisioNno, $obj
     return $aryResult;
 }
 
+function fncGetOtherOrderDetail($lngorderNo, $lngrevisionno, $objDB)
+{
+    $aryQuery[] = "SELECT DISTINCT";
+    $aryQuery[] = "    mo.strordercode || '_' || TO_CHAR(mo.lngrevisionno, 'FM00') AS strordercode";
+    $aryQuery[] = "  , null as lngpurchaseorderdetailno";
+    $aryQuery[] = "  , mo.lngorderstatuscode";
+    $aryQuery[] = "  , od.strproductcode";
+    $aryQuery[] = "  , mp.strproductname";
+    $aryQuery[] = "  , od.dtmdeliverydate";
+    $aryQuery[] = "  , mc.strcompanydisplaycode";
+    $aryQuery[] = "  , mc.strcompanydisplayname";
+    $aryQuery[] = "  , od.lngstocksubjectcode";
+    $aryQuery[] = "  , mss.strstocksubjectname";
+    $aryQuery[] = "  , od.lngstockitemcode";
+    $aryQuery[] = "  , msi.strstockitemname";
+    $aryQuery[] = "  , od.lngdeliverymethodcode";
+    $aryQuery[] = "  , od.lngproductunitcode";
+    $aryQuery[] = "  , od.lngsortkey";
+    $aryQuery[] = "  , mmu.strmonetaryunitsign";
+    $aryQuery[] = "  , od.curproductprice";
+    $aryQuery[] = "  , od.lngproductquantity";
+    $aryQuery[] = "  , od.cursubtotalprice";
+    $aryQuery[] = "  , mpu.strproductunitname";
+    $aryQuery[] = "  , mdm.strdeliverymethodname";
+    $aryQuery[] = "  , od.strnote";
+    $aryQuery[] = "  , od.lngorderdetailno";
+    $aryQuery[] = "  , mo.lngrevisionno as lngorderrevisionno";
+    $aryQuery[] = "  , mo.lngorderno";
+    $aryQuery[] = "  , mo.lngmonetaryunitcode";
+    $aryQuery[] = "  , mo.lngcustomercompanycode ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  m_order mo ";
+    $aryQuery[] = "  INNER JOIN t_orderdetail od ";
+    $aryQuery[] = "    ON mo.lngorderno = od.lngorderno ";
+    $aryQuery[] = "    AND mo.lngrevisionno = od.lngrevisionno ";
+    $aryQuery[] = "  LEFT JOIN ( ";
+    $aryQuery[] = "    SELECT";
+    $aryQuery[] = "      m_product.* ";
+    $aryQuery[] = "    FROM";
+    $aryQuery[] = "      m_product ";
+    $aryQuery[] = "      INNER JOIN ( ";
+    $aryQuery[] = "        SELECT";
+    $aryQuery[] = "          lngproductno";
+    $aryQuery[] = "          , strrevisecode";
+    $aryQuery[] = "          , MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "        FROM";
+    $aryQuery[] = "          m_product ";
+    $aryQuery[] = "        GROUP BY";
+    $aryQuery[] = "          lngproductno";
+    $aryQuery[] = "          , strrevisecode";
+    $aryQuery[] = "      ) mp1 ";
+    $aryQuery[] = "        ON mp1.lngproductno = m_product.lngproductno ";
+    $aryQuery[] = "        AND mp1.strrevisecode = m_product.strrevisecode ";
+    $aryQuery[] = "        AND mp1.lngrevisionno = m_product.lngrevisionno";
+    $aryQuery[] = "  ) mp ";
+    $aryQuery[] = "    ON od.strproductcode = mp.strproductcode ";
+    $aryQuery[] = "    AND mp.strrevisecode = od.strrevisecode ";
+    $aryQuery[] = "  LEFT JOIN m_company mc ";
+    $aryQuery[] = "    ON mo.lngcustomercompanycode = mc.lngcompanycode ";
+    $aryQuery[] = "  LEFT JOIN m_deliverymethod mdm ";
+    $aryQuery[] = "    ON od.lngdeliverymethodcode = mdm.lngdeliverymethodcode ";
+    $aryQuery[] = "  LEFT JOIN m_stocksubject mss ";
+    $aryQuery[] = "    ON od.lngstocksubjectcode = mss.lngstocksubjectcode ";
+    $aryQuery[] = "  LEFT JOIN m_stockitem msi ";
+    $aryQuery[] = "    ON od.lngstockitemcode = msi.lngstockitemcode ";
+    $aryQuery[] = "    AND od.lngstocksubjectcode = msi.lngstocksubjectcode ";
+    $aryQuery[] = "  LEFT JOIN m_productprice mpp ";
+    $aryQuery[] = "    ON mp.lngproductno = mpp.lngproductno ";
+    $aryQuery[] = "    AND od.lngstockitemcode = mpp.lngstockitemcode ";
+    $aryQuery[] = "    AND od.lngstocksubjectcode = mpp.lngstocksubjectcode ";
+    $aryQuery[] = "  LEFT JOIN m_monetaryunit mmu ";
+    $aryQuery[] = "    ON mo.lngmonetaryunitcode = mmu.lngmonetaryunitcode ";
+    $aryQuery[] = "  LEFT JOIN m_productunit mpu ";
+    $aryQuery[] = "    ON od.lngproductunitcode = mpu.lngproductunitcode ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      mo.strordercode";
+    $aryQuery[] = "      , mo.lngrevisionno";
+    $aryQuery[] = "      , od.strproductcode";
+    $aryQuery[] = "      , od.strrevisecode";
+    $aryQuery[] = "      , mo.lngcustomercompanycode";
+    $aryQuery[] = "      , mo.lngmonetaryunitcode";
+    $aryQuery[] = "      , msi.lngestimateareaclassno ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_order mo ";
+    $aryQuery[] = "      LEFT JOIN t_orderdetail od ";
+    $aryQuery[] = "        ON mo.lngorderno = od.lngorderno ";
+    $aryQuery[] = "        AND mo.lngrevisionno = od.lngrevisionno ";
+    $aryQuery[] = "      LEFT JOIN m_stocksubject mss ";
+    $aryQuery[] = "        ON od.lngstocksubjectcode = mss.lngstocksubjectcode ";
+    $aryQuery[] = "      LEFT JOIN m_stockitem msi ";
+    $aryQuery[] = "        ON od.lngstockitemcode = msi.lngstockitemcode ";
+    $aryQuery[] = "        AND od.lngstocksubjectcode = msi.lngstocksubjectcode ";
+    $aryQuery[] = "    WHERE";
+    $aryQuery[] = "      mo.lngorderno = " . $lngorderNo ." AND mo.lngrevisionno = ". $lngrevisionno."";
+    $aryQuery[] = "  ) m_key ";
+    $aryQuery[] = "    ON od.strproductcode = m_key.strproductcode ";
+    $aryQuery[] = "    AND od.strrevisecode = m_key.strrevisecode ";
+    $aryQuery[] = "    AND mo.strordercode = m_key.strordercode ";
+    $aryQuery[] = "    AND mo.lngcustomercompanycode = m_key.lngcustomercompanycode ";
+    $aryQuery[] = "    AND mo.lngmonetaryunitcode = m_key.lngmonetaryunitcode ";
+    $aryQuery[] = "    AND msi.lngestimateareaclassno = m_key.lngestimateareaclassno ";
+    $aryQuery[] = "inner join ( ";
+    $aryQuery[] = "    select ";
+    $aryQuery[] = "        lngorderno  ";
+    $aryQuery[] = "       ,MAX(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "    from m_order ";
+    $aryQuery[] = "    where lngorderno not in (select lngorderno from m_order where lngrevisionno < 0) ";
+    $aryQuery[] = "    group by lngorderno ";
+    $aryQuery[] = ") mo_rev ";
+    $aryQuery[] = "    on mo_rev.lngorderno = mo.lngorderno ";
+    $aryQuery[] = "    and mo_rev.lngrevisionno = mo.lngrevisionno ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  mo.lngorderstatuscode = 1";
+
+    $strQuery = implode("\n", $aryQuery);
+
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if (!$lngResultNum) {
+        return array();
+    }
+
+    $lngFieldsCount = $objDB->getFieldsCount($lngResultID);
+
+    if ($lngMaxFieldsCount) {
+        if ($lngFieldsCount > $lngMaxFieldsCount) {
+            $lngFieldsCount = $lngMaxFieldsCount;
+        }
+
+    }
+
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $aryResult[] = $objDB->fetchArray($lngResultID, $i);
+    }
+
+    $objDB->freeResult($lngResultID);
+    return $aryResult;
+}
+
+
 /**
  * 発注明細HTMLデータ作成
  *
@@ -565,7 +706,7 @@ function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery, $aryData)
         // 運搬方法
         $strDisplayCode = htmlspecialchars($aryOrderDetail[$i]["lngstockitemcode"]);
         $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strstockitemname"]);
-        $strHtml .= "<td class=\"detailStockItemName\">[" . $strDisplayCode . "] " . $strDisplayValue . "</td>";
+        $strHtml .= "<td class=\"detailStockItemName\"><select name=\"optDelivery\">" . $strDelivery . "</select></td>";
         // 単価        
         if (!$aryOrderDetail[$i]["curproductprice"]) {
             $strDisplayValue = convertPrice($aryOrderDetail[$i]["lngmonetaryunitcode"], $aryOrderDetail[$i]["strmonetaryunitsign"], 0, "unitprice");
@@ -588,9 +729,9 @@ function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery, $aryData)
         $strHtml .= "<td class=\"detailDeliveryDate\">" . $strDisplayValue . "</td>";
         // 備考
         $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strnote"]);
-        $strHtml .= "<td class=\"detailNote\"><input type='text' class='form-control form-control-sm txt-kids' style='width: 240px;' value='". $strDisplayValue . "'</td>";
-        // 運搬方法(明細入力用)
-        $strHtml .= "<td class=\"forEdit detailDeliveryMethod\"><select name=\"optDelivery\">" . $strDelivery . "</select></td>";
+        $strHtml .= "<td class=\"detailNote\">". $strDisplayValue . "</td>";
+//       // 運搬方法(明細入力用)
+//        $strHtml .= "<td class=\"forEdit detailDeliveryMethod\"><select name=\"optDelivery\">" . $strDelivery . "</select></td>";
         // 単位コード(明細登録用)
         $strDisplayCode = htmlspecialchars($aryOrderDetail[$i]["lngproductunitcode"]);
         $strHtml .= "<td class=\"forEdit detailProductUnitCode\">" . $strDisplayCode . "</td>";
@@ -619,6 +760,96 @@ function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery, $aryData)
         } else {
             $tableA_body_html .= $strHtml;
         }
+    }
+
+    $aryResult["tableB_no_body"] = $tableB_no_body_html;
+    $aryResult["tableA_chkbox_body"] = $tableA_chkbox_body_html;
+    $aryResult["tableB_body"] = $tableB_body_html;
+    $aryResult["tableA_body"] = $tableA_body_html;
+
+    return $aryResult;
+}
+
+/**
+ * 発注明細HTMLデータ作成
+ *
+ * @param   Array   $aryOrderDetail     発注明細データ
+ * @param   String  $strDelivery        運搬方法
+ * @access  public
+ *
+ */
+function fncGetOtherOrderDetailHtml($aryOrderDetail, $strDelivery, $aryData)
+{
+    $aryResult = array();
+    $tableA_chkbox_body_html = "";
+    $tableA_body_html = "";
+
+    $lngOrderNos = explode(",", $aryData["lngOrderNo"]);
+    if ($lngOrderNos) {
+        // 表示項目の抽出
+        foreach ($lngOrderNos as $key) {
+            $lngOrderNos[$key] = $key;
+        }
+    }
+
+    for ($i = 0; $i < count($aryOrderDetail); $i++) {
+        $strHtml = "";
+        if (array_key_exists($aryOrderDetail[$i]["lngorderno"], $lngOrderNos)) {
+            $tableB_no_body_html .= "<tr><td>" . ($i + 1) . "</td></tr>";
+        } else {
+            $tableA_chkbox_body_html .= "<tr>";
+            // 確定選択(チェックボックス)
+            $tableA_chkbox_body_html .= "<td class=\"detailCheckbox\" style=\"width:20px;align-items: center;\"><input type=\"checkbox\" name=\"edit\"></td>";
+            $tableA_chkbox_body_html .= "</tr>";
+        }
+        $strHtml .= "<tr>";
+        $strDisplayValue = "";
+        // 発注NO.
+        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strordercode"]);
+        $strHtml .= "<td class=\"detailOrderCode\">" . $strDisplayValue . "</td>";
+        // 明細行番号
+        $strHtml .= "<td class=\"detailPurchaseorderDetailNo\">" . "</td>";
+        // 仕入科目
+        $strDisplayCode = htmlspecialchars($aryOrderDetail[$i]["lngstocksubjectcode"]);
+        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strstocksubjectname"]);
+        $strHtml .= "<td class=\"detailStockSubjectCode\">[" . $strDisplayCode . "] " . $strDisplayValue . "</td>";
+        // 仕入部品
+        $strDisplayCode = htmlspecialchars($aryOrderDetail[$i]["lngstockitemcode"]);
+        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strstockitemname"]);
+        $strHtml .= "<td class=\"detailStockItemCode\">[" . $strDisplayCode . "] " . $strDisplayValue . "</td>";
+        // 運搬方法
+        $strHtml .= "<td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . $strDelivery . "</select></td>";
+
+        // 単価        
+        if (!$aryOrderDetail[$i]["curproductprice"]) {
+            $strDisplayValue = convertPrice($aryOrderDetail[$i]["lngmonetaryunitcode"], $aryOrderDetail[$i]["strmonetaryunitsign"], 0, "unitprice");
+        } else {
+            $strDisplayValue = convertPrice($aryOrderDetail[$i]["lngmonetaryunitcode"], $aryOrderDetail[$i]["strmonetaryunitsign"], $aryOrderDetail[$i]["curproductprice"], "unitprice");
+        }
+        $strHtml .= "<td class=\"detailProductPrice\" style=\"text-align:right;\">" . $strDisplayValue . "</td>";
+        // 数量
+        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["lngproductquantity"]);
+        $strHtml .= "<td class=\"detailProductQuantity\" style=\"text-align:right;\">" . number_format($strDisplayValue) . "</td>";
+        // 税抜金額        
+        if (!$aryOrderDetail[$i]["cursubtotalprice"]) {
+            $strDisplayValue = convertPrice($aryOrderDetail[$i]["lngmonetaryunitcode"], $aryOrderDetail[$i]["strmonetaryunitsign"], 0, "price");
+        } else {
+            $strDisplayValue = convertPrice($aryOrderDetail[$i]["lngmonetaryunitcode"], $aryOrderDetail[$i]["strmonetaryunitsign"], $aryOrderDetail[$i]["cursubtotalprice"], "price");
+        }       
+        $strHtml .= "<td class=\"detailSubtotalPrice\" style=\"text-align:right;\">" . $strDisplayValue . "</td>";
+        // 納期
+        $strDisplayValue = str_replace("-", "/", htmlspecialchars($aryOrderDetail[$i]["dtmdeliverydate"]));
+        $strHtml .= "<td class=\"detailDeliveryDate\">" . $strDisplayValue . "</td>";
+        // 備考
+        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strnote"]);
+        $strHtml .= "<td class=\"detailDetailNote\">". $strDisplayValue . "</td>";
+        $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"strProductUnitName\" value=\"" . $aryOrderDetail[$i]["strproductunitname"] . "\"></td>";
+        $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderno\" value=\"" . $aryOrderDetail[$i]["lngorderno"] . "\"></td>";
+        $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderrevisionno\" value=\"" . $aryOrderDetail[$i]["lngorderrevisionno"] . "\"></td>";
+        $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $aryOrderDetail[$i]["lngorderdetailno"] . "\"></td>";
+        $strHtml .= "</tr>";
+
+        $tableA_body_html .= $strHtml;
     }
 
     $aryResult["tableB_no_body"] = $tableB_no_body_html;
@@ -1151,6 +1382,9 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "  ,TO_CHAR(pd.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
     $aryQuery[] = "  ,pd.strnote as strdetailnote";
     $aryQuery[] = "  ,pd.lngsortkey";
+    $aryQuery[] = "  ,pd.lngorderno";
+    $aryQuery[] = "  ,pd.lngorderdetailno";
+    $aryQuery[] = "  ,pd.lngorderrevisionno";
     $aryQuery[] = "FROM m_purchaseorder mp";
     $aryQuery[] = "LEFT JOIN t_purchaseorderdetail pd ON mp.lngpurchaseorderno = pd.lngpurchaseorderno AND mp.lngrevisionno = pd.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_order mo ON pd.lngorderno = mo.lngorderno AND pd.lngorderrevisionno = mo.lngrevisionno";
@@ -1202,12 +1436,15 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
         $aryHtml[] = "      <td class=\"detailStockSubjectCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstocksubjectcode"], $aryResult[$i]["strstocksubjectname"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailStockItemCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstockitemcode"], $aryResult[$i]["strstockitemname"]) . "</td>";
         $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . fncGetPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) . "</select></td>";    
-        $aryHtml[] = "      <td class=\"detailProductPrice\">" . convertPrice($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], $aryResult[$i]["curproductprice"], 'unitprice') . "</td>";
-        $aryHtml[] = "      <td class=\"detailProductQuantity\">" . number_format($aryResult[$i]["lngproductquantity"], 0) . "</td>";
-        $aryHtml[] = "      <td class=\"detailSubtotalPrice\">" . convertPrice($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], $aryResult[$i]["cursubtotalprice"], 'price') . "</td>";
+        $aryHtml[] = "      <td class=\"detailProductPrice\" style=\"text-align:right;\">" . convertPrice($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], $aryResult[$i]["curproductprice"], 'unitprice') . "</td>";
+        $aryHtml[] = "      <td class=\"detailProductQuantity\" style=\"text-align:right;\">" . number_format($aryResult[$i]["lngproductquantity"], 0) . "</td>";
+        $aryHtml[] = "      <td class=\"detailSubtotalPrice\" style=\"text-align:right;\">" . convertPrice($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], $aryResult[$i]["cursubtotalprice"], 'price') . "</td>";
         $aryHtml[] = "      <td class=\"detailDeliveryDate\">" . $aryResult[$i]["dtmdeliverydate"] . "</td>";
         $aryHtml[] = "      <td class=\"detailDetailNote\">" . $aryResult[$i]["strdetailnote"] . "</td>";
         $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"strProductUnitName\" value=\"" . $aryResult[$i]["strproductunitname"] . "\"></td>";
+        $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderno\" value=\"" . $aryResult[$i]["lngorderno"] . "\"></td>";
+        $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderrevisionno\" value=\"" . $aryResult[$i]["lngorderrevisionno"] . "\"></td>";
+        $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $aryResult[$i]["lngorderdetailno"] . "\"></td>";
         $aryHtml[] = "  </tr>";
     }
 
@@ -1322,6 +1559,8 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
  */
 function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
 {
+    $lngpurchaseorderno = $aryPurchaseOrder["lngPurchaseOrderNo"];
+    $lngrevisionno = intval($aryPurchaseOrder["lngRevisionNo"]) + 1;
     for ($i = 0; $i < count($aryPurchaseOrder["aryDetail"]); $i++) {
         $aryQuery = [];
         $strDeliveryMethodName = fncGetMasterValue("m_deliverymethod", "lngdeliverymethodcode", "strdeliverymethodname", $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"] . ":str", '', $objDB);
@@ -1346,6 +1585,36 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
         $aryQuery[] = "    strnote,";
         $aryQuery[] = "    lngsortkey";
         $aryQuery[] = ")";
+        $aryQuery[] = "VALUES(";
+        $aryQuery[] = $lngpurchaseorderno . ",";                                                  // lngpurchaseorderno
+        $aryQuery[] = (intval($i) + 1) . ",";                                                     // lngpurchaseorderdetailno
+        $aryQuery[] = $lngrevisionno . ",";                                                       // lngrevisionno
+        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngOrderNo"] . ",";                     // lngorderno
+        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngOrderDetailNo"] . ",";               // lngorderdetailno
+        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngOrderRevisionNo"] . ",";             // lngorderrevisionno
+
+        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngStockSubjectCode"] . ",";            // lngstocksubjectcode;
+        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngStockItemCode"] . ",";               // lngstockitemcode
+        $aryQuery[] = "'" . fncGetMasterValue(
+                                "m_stockitem", "lngstockitemcode", "strstockitemname",
+                                $_POST["aryDetail"][$i]["lngStockItemCode"],
+                                "lngstocksubjectcode = " . $_POST["aryDetail"][$i]["lngStockSubjectCode"],
+                                $objDB) . "',";                                                   // strstockitemname
+        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"] . ",";          // lngdeliverymethodcode
+        $aryQuery[] = "'" . $strDeliveryMethodName . "',";   // strdeliverymethodname
+        $aryQuery[] = (real)$aryPurchaseOrder["aryDetail"][$i]["curProductPrice"] . ",";                // curproductprice
+        $aryQuery[] = (int)$aryPurchaseOrder["aryDetail"][$i]["lngProductQuantity"] . ",";             // lngproductquantity
+        $aryQuery[] = 1 . ",";                                                                    // lngproductunitcode
+        $aryQuery[] = "'" . fncGetMasterValue(
+                                "m_productunit", "lngproductunitcode", "strProductUnitName", 
+                                1, "", $objDB ) . "',";                                           // strproductunitname
+        $aryQuery[] = (real)$aryPurchaseOrder["aryDetail"][$i]["curSubtotalPrice"] . ",";               // cursubtotalprice
+        $aryQuery[] = "'" . $aryPurchaseOrder["aryDetail"][$i]["dtmDeliveryDate"] . "',";         // dtmdeliverydate
+        $aryQuery[] = "'" . $aryPurchaseOrder["aryDetail"][$i]["strDetailNote"] . "',";           // strnote
+        $aryQuery[] = (intval($i) + 1);                                                           // lngsortkey
+
+        $aryQuery[] = ")";
+/*
         $aryQuery[] = "SELECT";
         $aryQuery[] = "    lngpurchaseorderno,";
         $aryQuery[] = "    lngpurchaseorderdetailno,";
@@ -1371,10 +1640,10 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
         $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
         $aryQuery[] = "AND   lngpurchaseorderdetailno = " . $aryPurchaseOrder["aryDetail"][$i]["lngPurchaseOrderDetailNo"];
         $aryQuery[] = "AND   lngrevisionno = (SELECT MAX( pod1.lngRevisionNo ) FROM t_purchaseorderdetail pod1 WHERE pod1.lngPurchaseOrderNo = pod.lngPurchaseOrderNo and  pod1.lngpurchaseorderdetailno = pod.lngpurchaseorderdetailno)";
-
+*/
         $strQuery = "";
         $strQuery = implode("\n", $aryQuery);
-
+//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
         if (!$lngResultID = $objDB->execute($strQuery)) {
             fncOutputError(9051, DEF_ERROR, "発注書明細への更新処理に失敗しました。", true, "", $objDB);
             return null;
@@ -1445,4 +1714,143 @@ function fncCreatePurchaseOrderUpdateHtml($aryPurchaseOrder, $strSessionID)
     $strHtml = implode("\n", $aryHtml);
 
     return $strHtml;
+}
+
+
+function GetAdditionalOrderDetail($param, $objAuth, $objDB)
+{
+    foreach($param["aryDetail"] as $detail)
+    {
+        $lngorderno[] = $detail["lngOrderNo"];
+    }
+    $in = implode( ',', $lngorderno);
+    $aryQuery[] = "select ";
+    $aryQuery[] = "    mo.lngorderno";
+    $aryQuery[] = "   ,mo.lngrevisionno";
+    $aryQuery[] = "from m_order mo";
+    $aryQuery[] = "inner join (";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "        lngorderno,";
+    $aryQuery[] = "        max(lngrevisionno) as lngrevisionnno";
+    $aryQuery[] = "    from m_order";
+    $aryQuery[] = "    where lngorderno not in (select lngorderno from  m_order where lngrevisionno < 0)";
+    $aryQuery[] = "    group by lngorderno";
+    $aryQuery[] = ") mo_rev";
+    $aryQuery[] = "    on mo_rev.lngorderno = mo.lngorderno";
+    $aryQuery[] = "    and mo_rev.lngrevisionnno = mo.lngrevisionno";
+    $aryQuery[] = "inner join t_exclusivecontrol tex";
+    $aryQuery[] = "    on tex.strexclusivekey1 = cast(mo.lngorderno as text)";
+    $aryQuery[] = "where tex.strsessionid = '" . $objAuth->SessionID . "'";
+    $aryQuery[] = "    and mo.lngorderno in (" . $in . ")";
+    $strQuery = "";
+    $strQuery = implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if (!$lngResultNum) {
+        $aryResult = array();
+        return $aryResult;
+    }
+
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $aryResult[] = $objDB->fetchArray($lngResultID, $i);
+    }
+
+    $objDB->freeResult($lngResultID);
+
+    return $aryResult;
+}
+
+// 削除対象発注書明細の取得
+function GetRemovalOrderDetail($param, $objAuth, $objDB){
+    foreach($param["aryDetail"] as $detail)
+    {
+        $lngorderno[] = $detail["lngOrderNo"];
+    }
+    $in = implode( ',', $lngorderno);
+     
+    $aryQuery[] = "select ";
+    $aryQuery[] = "    lngorderno, lngorderrevisionno as lngrevisionno";
+    $aryQuery[] = "    from t_purchaseorderdetail";
+    $aryQuery[] = "    where lngpurchaseorderno = " . $param["lngPurchaseOrderNo"];
+    $aryQuery[] = "    and lngrevisionno = " . $param["lngRevisionNo"];
+    $aryQuery[] = "    and lngorderno not in (" . $in . ")";
+    $strQuery = "";
+    $strQuery = implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if (!$lngResultNum) {
+        $aryResult = array();
+        return $aryResult;
+    }
+
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $aryResult[] = $objDB->fetchArray($lngResultID, $i);
+    }
+
+    $objDB->freeResult($lngResultID);
+
+    return $aryResult;
+}
+
+// 削除対象発注書明細の発注ステータスチェック
+function CanDeletePurchaseOrderDetail($lngorderno, $revisionno, $objDB){
+    if(!CheckOrderStatus($lngorderno, $revisionno, 2, $objDB)){
+        return "削除対象明細が納品済または締め済です。";
+    }
+    return null;
+}
+
+// 発注書追加対象発注マスタステータスチェック
+function CanOrder($lngorderno, $revisionno, $objDB){
+    if(!CheckOrderStatus($lngorderno, $revisionno, 1, $objDB)){
+        return "削除対象明細が確定済または削除済です。";
+    }
+    return null;
+}
+
+// 削除対象発注書明細の発注ステータス更新
+function CancelOrder($lngorderno, $revisionno, $objDB){
+    return UpdateOrderStatus($lngorderno, $revisionno, 1, $objDB);
+}
+
+// 追加対象発注書明細の発注ステータス更新
+function FixOrder($lngorderno, $revisionno, $objDB){
+    return UpdateOrderStatus($lngorderno, $revisionno, 2, $objDB);
+}
+// 発注ステータス取得
+function CheckOrderStatus($lngorderno, $revisionno, $status, $objDB){
+    $aryQuery[] = "select ";
+    $aryQuery[] = "    lngorderstatuscode";
+    $aryQuery[] = "    from m_order";
+    $aryQuery[] = "    where lngorderno = " . $lngorderno;
+    $aryQuery[] = "    and lngrevisionno = " . $revisionno;
+    $strQuery = "";
+    $strQuery = implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if (!$lngResultNum) {
+        return false;
+    }
+
+    $result = $objDB->fetchArray($lngResultID, 0);
+    $objDB->freeResult($lngResultID);
+    if(intval($result[0]) != $status){
+        return false;
+    }
+    return true;
+}
+
+function UpdateOrderStatus($lngorderno, $revisionno, $status, $objDB){
+    $aryQuery[] = "update m_order";
+    $aryQuery[] = "set lngorderstatuscode = " . $status;
+    $aryQuery[] = "where lngorderno = " . $lngorderno;
+    $aryQuery[] = "    and lngrevisionno = " . $revisionno;
+    $strQuery = "";
+    $strQuery = implode("\n", $aryQuery);
+
+    if (!$lngResultID = $objDB->execute($strQuery)) {
+        return false;
+    }
+    $objDB->freeResult($lngResultID);
+    return true;
 }
