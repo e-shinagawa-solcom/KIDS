@@ -150,7 +150,7 @@ $(function () {
 
 
 	// 履歴ボタンのイベント
-	$('img.history.button').on('click', function () {
+	$('img.history.button').on('click', function (e) {
 		var lngEstimateNo = $(this).attr('estimateNo');
 		var lngRevisionNo = $(this).attr('revisionNo');
 		var displayColumns = $('input[name="displayColumns"]').val().split(',');
@@ -175,6 +175,8 @@ $(function () {
 				.done(function (response) {
 					console.log(response);
 					$('tr[id="' + lngEstimateNo + '"]').after(response);
+
+                    historyTrClickSelectRow();
 				})
 				.fail(function (response) {
 					console.log(response);

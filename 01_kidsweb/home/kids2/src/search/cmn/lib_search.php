@@ -2122,12 +2122,12 @@ function fncSetBgColor($type, $strCode, $isMaxData, $objDB)
     }
 
     if ($result) {
-        $bgcolor = "background-color: #B3E0FF;";
+        $bgcolor = "#B3E0FF";
     } else {
         if ($isMaxData) {
-            $bgcolor = "background-color: #FFB2B2;";
+            $bgcolor = "#FFB2B2";
         } else {
-            $bgcolor = "background-color: #FEEF8B;";
+            $bgcolor = "#FEEF8B";
         }
     }
 

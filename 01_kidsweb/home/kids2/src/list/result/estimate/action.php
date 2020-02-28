@@ -31,7 +31,6 @@ require_once SRC_ROOT . "/estimate/cmn/estimatePreviewController.php";
 require_once SRC_ROOT . "estimate/cmn/estimateSheetController.php";
 require_once SRC_ROOT . "estimate/cmn/makeHTML.php";
 
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx as XlsxReader;
 use PhpOffice\PhpSpreadsheet\Writer\Html as HtmlWriter;
 
 $objDB = new estimateDB();
@@ -63,19 +62,6 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 // 権限確認
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
     fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
-}
-
-// 指定キーコードの帳票データを取得
-$strQuery = fncGetCopyFilePathQuery(DEF_REPORT_ESTIMATE, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
-
-list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-
-if ($lngResultNum === 1) {
-    $objResult = $objDB->fetchObject($lngResultID, 0);
-    $strListOutputPath = $objResult->strreportpathname;
-    unset($objResult);
-    $objDB->freeResult($lngResultID);
-    //echo "コピーファイル有り。";
 }
 
 // GETパラメータよりパラメータを取得
@@ -110,139 +96,9 @@ $aryParts["lngestimateno"] = $firstEstimateDetail->lngestimateno;
 $aryParts["lngrevisionno"] = $maxRevisionNo;
 $aryParts["lngprintcount"] = $firstEstimateDetail->lngprintcount;
 
-if ($lngResultNum === 1) {
-    // 印刷回数を更新する
-    fncUpdatePrintCount(DEF_REPORT_ESTIMATE, $aryParts, $objDB);
-// 帳票が存在しない場合、コピー帳票ファイルを生成、保存
-}
-// 帳票が存在しない場合、コピー帳票ファイルを生成、保存
-elseif ($lngResultNum === 0) {
-    $productCode = $firstEstimateDetail->strproductcode;
-    $reviseCode = $firstEstimateDetail->strrevisecode;
-    $productRevisionNo = $firstEstimateDetail->lngproductrevisionno;
+// 印刷回数を更新する
+fncUpdatePrintCount(DEF_REPORT_ESTIMATE, $aryParts, $objDB);
 
-    // 製品マスタの情報取得
-    $product = $objDB->getProduct($productCode, $reviseCode, $productRevisionNo);
-
-    $objPreview = new estimatePreviewController();
-    $objPreview->dataInitialize($product, $estimate, $objDB);
-
-    $productData = $objPreview->getProduct();
-
-    $estimateData = $objPreview->getEstimate();
-
-    $tempFilePath = EXCEL_TMP_ROOT . 'workSheetPrintTmp.xlsx';
-
-    $objReader = new XlsxReader();
-
-    $spreadSheet = $objReader->load($tempFilePath);
-
-    // 必要な定数を取得する
-    $nameList = workSheetConst::getAllNameListForDownload();
-    $rowCheckNameList = workSheetConst::DETAIL_HEADER_CELL_NAME_LIST;
-    $targetAreaList = workSheetConst::TARGET_AREA_DISPLAY_NAME_LIST;
-
-    // phpSpreadSheetオブジェクトからシートの情報を取得
-    $allSheetInfo = estimateSheetController::getSheetInfo($spreadSheet, $nameList, $rowCheckNameList);
-
-    $sheetInfo = estimateSheetController::getFirstElement($allSheetInfo);
-
-    if ($sheetInfo['displayInvalid']) {
-        // テンプレート用のシートが無効になっていない場合、エラーを出力する
-        if (!$sheetDataList) {
-            $strMessage = 'テンプレート異常';
-
-            // [strErrorMessage]書き出し
-            $aryHtml["strErrorMessage"] = $strMessage;
-
-            // テンプレート読み込み
-            $objTemplate = new clsTemplate();
-            $objTemplate->getTemplate("/result/error/parts.tmpl");
-
-            // テンプレート生成
-            $objTemplate->replace($aryHtml);
-            $objTemplate->complete();
-
-            // HTML出力
-            echo $objTemplate->strTemplate;
-
-            $objDB->close();
-
-            exit;
-        }
-    }
-
-    $objSheet = null;
-
-    // シートが表示無効でない場合はワークシート処理オブジェクトのインスタンス生成
-    $objSheet = new estimateSheetController();
-
-    // オブジェクトにデータをセットする
-    $objSheet->dataInitialize($sheetInfo, $objDB);
-
-    // phpSpreadSheetで生成したシートオブジェクトをグローバル参照用にセットする
-    $sheet = $sheetInfo['sheet'];
-    $cellAddressList = $sheetInfo['cellAddress'];
-
-    // ワークシートオブジェクトに必要な値をセット
-    $objSheet->setDBEstimateData($productData, $estimateData);
-
-    $objWriter = new HtmlWriter($spreadSheet);
-
-    // 置換文字列生成
-    $time = new DateTime();
-    $replace = '_%' . md5($time->format('YmdHisu')) . '%_';
-
-    $output = $objWriter->generateHTMLHeader();
-    $output .= $objWriter->generateStyles();
-
-    $customCSS = "<style>";
-    $customCSS .= "table {table-layout: fixed; width: 950px; white-space:nowrap;}";
-    $customCSS .= "td {overflow: hidden;}";
-    $customCSS .= "</style>";
-
-    $output .= $customCSS;
-
-    // 文字化け対策：エクセルの¥マークを置換文字列に置換(UTF-8 → UTF-8の変換時に上手く変換できないため)
-    $sheetData = str_replace('¥', $replace, $objWriter->generateSheetData());
-
-    $output .= $sheetData;
-
-    $output .= $objWriter->generateHTMLFooter();
-
-    $strHtml = str_replace($replace, '&yen;', $output);
-
-    $objDB->transactionBegin();
-
-    // シーケンス発行
-    $lngSequence = fncGetSequence("t_Report.lngReportCode", $objDB);
-
-    // 帳票テーブルにINSERT
-    $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_ESTIMATE . ", " . $aryData["strReportKeyCode"] . ", '', '$lngSequence' )";
-
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-
-	$objDB->freeResult($lngResultID);
-	
-    // 印刷回数を更新する
-    fncUpdatePrintCount(DEF_REPORT_ESTIMATE, $aryParts, $objDB);
-
-    // 帳票ファイルオープン
-    if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {
-        list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
-        fncOutputError(9059, DEF_FATAL, "帳票ファイルのオープンに失敗しました。", true, "", $objDB);
-    }
-
-    // 帳票ファイルへの書き込み
-    if (!fwrite($fp, $strHtml)) {
-        list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
-        fncOutputError(9059, DEF_FATAL, "帳票ファイルの書き込みに失敗しました。", true, "", $objDB);
-    }
-
-    $objDB->transactionCommit();
-    //echo "コピーファイル作成";
-}
-//echo "<script language=javascript>window.form1.submit();window.returnValue=true;window.close();</script>";
 echo "<script language=javascript>parent.window.close();</script>";
 
 $objDB->close();

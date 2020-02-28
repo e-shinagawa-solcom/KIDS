@@ -200,6 +200,9 @@ foreach ($records as $i => $record) {
     $trBody = $doc->createElement("tr");
 
     $trBody->setAttribute("id", $record["strreceivecode"] . "_" . $record["lngreceivedetailno"]);
+    $trBody->setAttribute("before-click-bgcolor", $bgcolor);
+
+    $bgcolor = "background-color: " .$bgcolor . ";";
 
     // 先頭ボタン設定
     fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, $index, 'so', null);

@@ -16,17 +16,19 @@
     // });
 
     // 詳細ボタンのイベント
-    $('img.history.button').on('click', function () {
-        var strProductCode = $(this).attr('id').substr(0,5);
+    $('img.history.button').on('click', function (e) {
+        // e.stopPropagation();
+        var strProductCode = $(this).attr('id').substr(0, 5);
         var lngrevisionno = $(this).attr('lngrevisionno');
         var strReviseCode = $(this).attr('strrevisecode');
 
         var rownum = $(this).attr('rownum');
         var displayColumns = $('input[name="displayColumns"]').val().split(',');
 
-        if ($('tr[id^="' + strProductCode+ '_' + strReviseCode + '_"]').length) {
-            $(this).attr('src','/img/type01/cmn/seg/p_history_open_off.gif');
-            $('tr[id^="' + strProductCode+ '_' + strReviseCode + '_"]').remove();
+        if ($('tr[id^="' + strProductCode + '_' + strReviseCode + '_"]').length) {
+            $(this).attr('src', '/img/type01/cmn/seg/p_history_open_off.gif');
+            $('tr[id^="' + strProductCode + '_' + strReviseCode + '_"]').remove();
+            $("#result").trigger("update");
         } else {
 
             // リクエスト送信
@@ -46,11 +48,14 @@
                     console.log(response);
                     var row = $('tr[id="' + strProductCode + '_' + strReviseCode + '"]');
                     row.after(response);
+
+                    historyTrClickSelectRow();
+                    
                     // 詳細ボタンのイベント
                     $('img.detail.button').on('click', function () {
                         url = '/p/detail/index.php';
                         sessionID = 'strSessionID=' + $.cookie('strSessionID');
-                        lngProductNo = 'lngProductNo=' + $(this).attr('id').substr(0,5);
+                        lngProductNo = 'lngProductNo=' + $(this).attr('id').substr(0, 5);
                         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
 
                         // 別ウィンドウで表示
@@ -61,9 +66,8 @@
                     console.log(response);
                     alert("fail");
                 })
-            $(this).attr('src','/img/type01/cmn/seg/p_history_close_off.gif');
+            $(this).attr('src', '/img/type01/cmn/seg/p_history_close_off.gif');
 
         }
-
     });
 })();

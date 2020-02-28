@@ -137,9 +137,9 @@ foreach ($aryData["detailData"] as $data) {
     $td = $doc->createElement("td", $data["strCompanyDisplayCode"]);
     $trBody->appendChild($td);
 
-    // 受注NO.
-    $td = $doc->createElement("td", $data["strReceiveCode"]);
-    $trBody->appendChild($td);
+    // // 受注NO.
+    // $td = $doc->createElement("td", $data["strReceiveCode"]);
+    // $trBody->appendChild($td);
 
     // 明細行番号
     $td = $doc->createElement("td", $data["lngReceiveDetailNo"]);

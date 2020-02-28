@@ -225,6 +225,9 @@ foreach ($records as $i => $record) {
     $trBody = $doc->createElement("tr");
 
     $trBody->setAttribute("id", $record["lngslipno"]);
+    $trBody->setAttribute("before-click-bgcolor", $bgcolor);
+
+    $bgcolor = "background-color: " .$bgcolor . ";";
 
     $maxdetailno = $detailData[$rowspan - 1]["lngslipdetailno"];
 

@@ -146,7 +146,7 @@ $aryQuery[] = ($aryData["lngPayConditionCode"] == "" ? "null" : $aryData["lngPay
 $aryQuery[] = "'" . $aryData["strSlipCode"] . "', "; // 14:伝票コード
 $aryQuery[] = $aryData["curTotalPrice"] . ", "; // 15:合計金額
 $aryQuery[] = $aryData["lngDeliveryPlaceCode"] . ", "; // 16:納品場所
-$aryQuery[] = "'" . $aryData["dtmExpirationDate"] . "', "; // 17:製品到着日
+$aryQuery[] = ($aryData["dtmExpirationDate"] == "" ? "null" : "'" . $aryData["dtmExpirationDate"] . "'") .", "; // 17:製品到着日
 $aryQuery[] = "'" . $aryData["strNote"]. "', "; // 18:備考
 $aryQuery[] = $lngUserCode . ", "; // 19:入力者コード
 $aryQuery[] = "false, "; // 20:無効フラグ

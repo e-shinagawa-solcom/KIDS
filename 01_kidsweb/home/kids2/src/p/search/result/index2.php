@@ -122,15 +122,19 @@ $index = 0;
 foreach ($records as $i => $record) {
     // 背景色設定
     if ($record["strgroupdisplaycolor"]) {
-        $bgcolor = "background-color: " . $record["strgroupdisplaycolor"] . ";";
+        $bgcolor = $record["strgroupdisplaycolor"];
     } else {
-        $bgcolor = "background-color: #FFFFFF;";
+        $bgcolor = "#FFFFFF";
     }
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
     $trBody->setAttribute("id", $record["strproductcode"]. "_" . $record["strrevisecode"] .  "_" . sprintf("%02d",$record["lngrevisionno"]) );
     
+    $trBody->setAttribute("before-click-bgcolor", $bgcolor);
+    $trBody->setAttribute("class", "history");
+
+    $bgcolor = "background-color: " .$bgcolor . ";";
     // 項番
     $index +=1;
     $tdIndex = $doc->createElement("td", $aryData["rownum"]. "." . $record["lngrevisionno"]);

@@ -46,84 +46,48 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUN
     fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
-// 帳票出力コピーファイルパス取得クエリ生成
-//===================================================================
+// データ取得クエリ
+$strQuery = fncGetListOutputQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $objDB);
 
-$strQuery = fncGetCopyFilePathQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
+$objMaster = new clsMaster();
+$objMaster->setMasterTableData($strQuery, $objDB);
+$aryParts = &$objMaster->aryData[0];
+
+unset($aryQuery);
+
+// 詳細取得
+$strQuery = fncGetInvDetailQuery($aryData["strReportKeyCode"], $aryParts["lngrevisionno"]);
 
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-
-if ($lngResultNum > 0) {
-    $objResult = $objDB->fetchObject($lngResultID, 0);
-    $strReportPathName = $objResult->strreportpathname;
-    unset($objResult);
+if ($lngResultNum < 1) {
+    fncOutputError(9051, DEF_FATAL, "帳票詳細データが存在しませんでした。", true, "", $objDB);
 }
 
-///////////////////////////////////////////////////////////////////////////
-// 帳票コードが真の場合、ファイルデータを取得
-///////////////////////////////////////////////////////////////////////////
-if ($aryData["lngReportCode"]) {
-    if (!$lngResultNum) {
-        fncOutputError(9056, DEF_FATAL, "帳票コピーがありません。", true, "", $objDB);
-    }
-
-    if (!$strHtml = file_get_contents(SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl")) {
-        fncOutputError(9059, DEF_FATAL, "帳票データファイルが開けませんでした。", true, "", $objDB);
-    }
-    $objDB->freeResult($lngResultID);
+// フィールド名取得
+for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
+    $aryKeys[] = pg_field_name($lngResultID, $i);
 }
 
-///////////////////////////////////////////////////////////////////////////
-// テンプレートと置き換えデータ取得
-///////////////////////////////////////////////////////////////////////////
-else {
-    // データ取得クエリ
-    $strQuery = fncGetListOutputQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $objDB);
-
-    $objMaster = new clsMaster();
-    $objMaster->setMasterTableData($strQuery, $objDB);
-    $aryParts = &$objMaster->aryData[0];
-
-    unset($aryQuery);
-
-    // 詳細取得
-    $strQuery = fncGetInvDetailQuery($aryData["strReportKeyCode"], $aryParts["lngrevisionno"]);
-
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    if ($lngResultNum < 1) {
-        fncOutputError(9051, DEF_FATAL, "帳票詳細データが存在しませんでした。", true, "", $objDB);
+// 行数だけデータ取得、配列に代入
+for ($i = 0; $i < $lngResultNum; $i++) {
+    $aryResult = $objDB->fetchArray($lngResultID, $i);
+    for ($j = 0; $j < count($aryKeys); $j++) {
+        $aryParts[$aryKeys[$j] . $i] = $aryResult[$j];
     }
-
-    // フィールド名取得
-    for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
-        $aryKeys[] = pg_field_name($lngResultID, $i);
-    }
-
-    // 行数だけデータ取得、配列に代入
-    for ($i = 0; $i < $lngResultNum; $i++) {
-        $aryResult = $objDB->fetchArray($lngResultID, $i);
-        for ($j = 0; $j < count($aryKeys); $j++) {
-            $aryParts[$aryKeys[$j] . $i] = $aryResult[$j];
-        }
-    }
-    $objDB->freeResult($lngResultID);
-
-    $objDB->close();
-
-    // HTML出力
-    $objTemplate = new clsTemplate();
-    $objTemplate->getTemplate("list/result/inv.html");
-    $aryParts["totalprice_unitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["totalprice"];
-//    $aryParts["dtminvoicedate"] = convert_jpdt($aryParts["dtminvoicedate"], '年m月');
-//    $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"],'.m.d',false);
-    $aryParts["dtminvoicedate"] = date("Y年n月", strtotime($aryParts["dtminvoicedate"]));
-    $aryParts["dtminsertdate"] = date("Y.n.j", strtotime($aryParts["dtminsertdate"]));
-    // 置き換え
-    $objTemplate->replace($aryParts);
-    $objTemplate->complete();
-    $strHtml = $objTemplate->strTemplate;
-
 }
+$objDB->freeResult($lngResultID);
+
+$objDB->close();
+
+// HTML出力
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("list/result/inv.html");
+$aryParts["totalprice_unitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["totalprice"];
+$aryParts["dtminvoicedate"] = date("Y年n月", strtotime($aryParts["dtminvoicedate"]));
+$aryParts["dtminsertdate"] = date("Y.n.j", strtotime($aryParts["dtminsertdate"]));
+// 置き換え
+$objTemplate->replace($aryParts);
+$objTemplate->complete();
+$strHtml = $objTemplate->strTemplate;
 
 echo $strHtml;
-

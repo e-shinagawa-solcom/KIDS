@@ -48,7 +48,6 @@ $(document).ready(function () {
       var index1 = $(this)[0].cellIndex;
       var index2 = $(".tablesorter-child").parent()[0].cellIndex;
       var index3 = index1 + index2 + 1;
-      console.log(index3);
       if (endindex == 0) {
         endindex = index3;
       }

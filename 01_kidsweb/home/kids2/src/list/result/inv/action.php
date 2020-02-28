@@ -45,18 +45,6 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
     fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
-// 指定キーコードの帳票データを取得
-$strQuery = fncGetCopyFilePathQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $aryData["lngReportCode"]);
-
-list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-
-if ($lngResultNum === 1) {
-    $objResult = $objDB->fetchObject($lngResultID, 0);
-    $strListOutputPath = $objResult->strreportpathname;
-    unset($objResult);
-    $objDB->freeResult($lngResultID);
-}
-
 // データ取得クエリ
 $strQuery = fncGetListOutputQuery(DEF_REPORT_INV, $aryData["strReportKeyCode"], $objDB);
 
@@ -67,80 +55,8 @@ $aryParts = &$objMaster->aryData[0];
 
 unset($aryQuery);
 
-if ($lngResultNum === 1) {
-    // 印刷回数を更新する
-    fncUpdatePrintCount(DEF_REPORT_INV, $aryParts, $objDB);
-// 帳票が存在しない場合、コピー帳票ファイルを生成、保存
-} else if ($lngResultNum === 0) {
-    // 詳細取得
-    $strQuery = fncGetInvDetailQuery($aryData["strReportKeyCode"], $aryParts["lngrevisionno"]);
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    if ($lngResultNum < 1) {
-        fncOutputError(9051, DEF_FATAL, "帳票詳細データが存在しませんでした。", true, "", $objDB);
-    }
-
-    // フィールド名取得
-    for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
-        $aryKeys[] = pg_field_name($lngResultID, $i);
-    }
-
-    // 行数だけデータ取得、配列に代入
-    for ($i = 0; $i < $lngResultNum; $i++) {
-        $aryResult = $objDB->fetchArray($lngResultID, $i);
-        for ($j = 0; $j < count($aryKeys); $j++) {
-            $aryParts[$aryKeys[$j] . $i] = $aryResult[$j];
-        }
-    }
-    $objDB->freeResult($lngResultID);
-
-    // HTML出力
-    $objTemplate = new clsTemplate();
-    $objTemplate->getTemplate("list/result/inv.html");
-    $aryParts["totalprice_unitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["totalprice"];
-//    $aryParts["dtminvoicedate"] = convert_jpdt($aryParts["dtminvoicedate"], '年m月');
-//    $aryParts["dtminsertdate"] = convert_jpdt($aryParts["dtminsertdate"], '.m.d', false);
-    $aryParts["dtminvoicedate"] = date("Y年n月" ,$aryParts["dtminvoicedate"]);
-    $aryParts["dtminsertdate"] = date("Y.n.j", $aryParts["dtminsertdate"]);
-    if ($aryData["reprintFlag"]) {
-        $aryParts["reprintMsg"] = "再印刷";
-    } else {
-        $aryParts["reprintMsg"] = "";
-    }
-    // 置き換え
-    $objTemplate->replace($aryParts);
-    $objTemplate->complete();
-
-    $strHtml = $objTemplate->strTemplate;
-
-    $objDB->transactionBegin();
-
-    // シーケンス発行
-    $lngSequence = fncGetSequence("t_Report.lngReportCode", $objDB);
-
-    // 帳票テーブルにINSERT
-    $strQuery = "INSERT INTO t_Report VALUES ( $lngSequence, " . DEF_REPORT_INV . ", " . $aryParts["lnginvoiceno"] . ", '', '$lngSequence' )";
-
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-
-    $objDB->freeResult($lngResultID);
-
-    // 印刷回数を更新する
-    fncUpdatePrintCount(DEF_REPORT_INV, $aryParts, $objDB);
-
-    // 帳票ファイルオープン
-    if (!$fp = fopen(SRC_ROOT . "list/result/cash/" . $lngSequence . ".tmpl", "w")) {
-        list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
-        fncOutputError(9059, DEF_FATAL, "帳票ファイルのオープンに失敗しました。", true, "", $objDB);
-    }
-
-    // 帳票ファイルへの書き込み
-    if (!fwrite($fp, $strHtml)) {
-        list($lngResultID, $lngResultNum) = fncQuery("ROLLBACK", $objDB);
-        fncOutputError(9059, DEF_FATAL, "帳票ファイルの書き込みに失敗しました。", true, "", $objDB);
-    }
-
-    $objDB->transactionCommit();
-}
+// 印刷回数を更新する
+fncUpdatePrintCount(DEF_REPORT_INV, $aryParts, $objDB);
 
 echo "<script language=javascript>parent.window.close();</script>";
 

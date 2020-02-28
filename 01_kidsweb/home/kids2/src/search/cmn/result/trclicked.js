@@ -1,71 +1,56 @@
-<!--
+$(document).ready(function () {
+	trClickSelectRow();
+});
 
-/************************************************************/
-var g_SelectColor  = '#bbbbbb'; // 選択したときの色
-var g_DefaultColor_odd = '#F0F0F6';
-var g_DefaultColor_even = '#FFF';
-
-/************************************************************/
-
-////////// TR選択行の背景色変更関数 //////////
-(function(){
-	$('tr.odd').on('click', function(){
-		var $cur_tr = $(this)[0];
-		var $cur_tds = $cur_tr.children;
-		
-		if ($cur_tds[0].style.backgroundColor != "") {
-			ToDefault($cur_tr);
-			return true;
-		}
-		
-		ToDefault($cur_tr);
-		
-		for (var i = 0; i < $cur_tds.length; i++){
-			if ($cur_tds[i].style.backgroundColor  == "") {
-				$cur_tds[i].style.backgroundColor  = g_SelectColor;
-			}
-			else {
-				$cur_tds[i].style.backgroundColor  = "";
-			}
+function historyTrClickSelectRow() {
+	$('.history').on('click', function () {
+		var bgcolor = $(this).find('td').css("background-color");
+		$('#result tbody tr').each(function (i, tr) {
+			$(this).find('td').css("background-color", $(this).attr('before-click-bgcolor'));
+		});
+		var beforeClickBgcolor = $(this).attr('before-click-bgcolor');
+		if (bgcolor != 'rgb(187, 187, 187)') {
+			$(this).find('td').css("background-color", "#bbbbbb");
+		} else {
+			$(this).find('td').css("background-color", beforeClickBgcolor);
 		}
 	});
-	
-	$('tr.even').on('click', function(){
-		var $cur_tr = $(this)[0];
-		var $cur_tds = $cur_tr.children;
-		
-		if ($cur_tds[0].style.backgroundColor != "") {
-			ToDefault($cur_tr);
-			return true;
-		}
-		
-		ToDefault($cur_tr);
-		
-		for (var i = 0; i < $cur_tds.length; i++){
-			if ($cur_tds[i].style.backgroundColor  == "") {
-				$cur_tds[i].style.backgroundColor  = g_SelectColor;
-			}
-			else {
-				$cur_tds[i].style.backgroundColor  = "";
-			}
-		}
-	});
-})();
-
-function ToDefault($target_tr) {
-	var $parent_table = $target_tr.parentNode;
-	var $trs = $parent_table.children;
-	
-	for (var i = 0; i < $trs.length; i++){
-		var $cur_tds = $trs[i].children;
-		
-		if ($cur_tds[0].style.backgroundColor != "") {
-			for (var j = 0; j < $cur_tds.length; j++){
-				$cur_tds[j].style.backgroundColor  = "";
-			}
-			break;
-		}
-	}
 }
 
-//-->
+function trClickSelectRow() {
+	console.log($('#result tbody tr').length);
+	$('#result tbody tr').on('click', function (e) {
+		// e.preventDefault();
+		console.log("bgcolor");
+		var index = $(this).index();
+		var bgcolor = $(this).find('td').css("background-color");
+
+		$('#result tbody tr').each(function (i, tr) {
+			$(this).find('td').css("background-color", $(this).attr('before-click-bgcolor'));
+		});
+
+		var beforeClickBgcolor = $(this).attr('before-click-bgcolor');
+		if (bgcolor != 'rgb(187, 187, 187)') {
+			$(this).find('td').css("background-color", "#bbbbbb");
+		} else {
+			$(this).find('td').css("background-color", beforeClickBgcolor);
+		}
+	});
+
+	$('.tablesorter-child tbody tr').on('click', function (e) {
+		var bgcolor = $(this).find('td').css("background-color");
+		console.log(bgcolor);
+		$('#result tbody tr').each(function (i, tr) {
+			$(this).find('td').css("background-color", $(this).attr('before-click-bgcolor'));
+		});
+
+		var beforeClickBgcolor = $(this).parent().parent().parent().parent().attr('before-click-bgcolor');
+		console.log(beforeClickBgcolor);
+		if (bgcolor != 'rgb(187, 187, 187)') {
+			$(this).parent().parent().parent().parent().find('td').css("background-color", "#bbbbbb");
+		} else {
+			$(this).parent().parent().parent().parent().find('td').css("background-color", beforeClickBgcolor);
+		}
+
+	});
+}

@@ -21,8 +21,6 @@ $objMaster = new clsMaster();
 $objMaster->setMasterTableData($strQuery, $objDB);
 $aryParts = &$objMaster->aryData[0];
 
-$aryParts["copyDisabled"] = $copyDisabled;
-
 // 納品伝票種別取得
 $strQuery = fncGetSlipKindQuery($aryParts["lngcustomercode"]);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

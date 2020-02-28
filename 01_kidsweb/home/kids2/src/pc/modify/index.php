@@ -212,6 +212,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $chkBox->setAttribute("style", "width: 10px;");
     if ($isStocked) {
         $chkBox->setAttribute('checked', 'checked');
+        $trBody->setAttribute("style", "background-color: #bbbbbb;");
     }
     $td->appendChild($chkBox);
     $trBody->appendChild($td);   
@@ -221,7 +222,9 @@ foreach ($aryOrderDetail as $orderDetail) {
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
     $trBody->setAttribute("class", "row".$num);
-
+    if ($isStocked) {
+        $trBody->setAttribute("style", "background-color: #bbbbbb;");
+    }
     // No.
     $td = $doc->createElement("td", $num);
     $td->setAttribute("style", "text-align: center;");

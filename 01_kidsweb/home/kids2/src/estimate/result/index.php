@@ -520,10 +520,13 @@ for ($i = 0; $i < $resultNum; ++$i) {
     $result = pg_fetch_array($resultID, $i, PGSQL_ASSOC);
     
     $bgcolor = fncSetBgColor('estimate', $result["lngestimateno"], true, $objDB);
+    $beforeClickBgcolor = $bgcolor;
+
+    $bgcolor = "background-color: " .$bgcolor . ";";
 
     $estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
-    $body .= "<tr id=\"" . $estimateNo . "\" class=\"estimate_search_result\" style=\"" . $bgcolor . "\" onclick=\"fncSelectTrColor( this );\">";
+    $body .= "<tr id=\"" . $estimateNo . "\" before-click-bgcolor=\"". $beforeClickBgcolor . "\"  class=\"estimate_search_result\" style=\"" . $bgcolor . "\" onclick=\"fncSelectTrColor( this );\">";
 
     $number = $i + 1;
 

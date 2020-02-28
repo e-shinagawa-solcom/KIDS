@@ -249,7 +249,7 @@ foreach ($aryDetailResult as $detailResult) {
     // 顧客受注番号
     $td = $doc->createElement("td");
     $td->setAttribute("id", "strcustomerreceivecode");
-    $td->setAttribute("style", "text-align:center;");
+    $td->setAttribute("style", "text-align:center;ime-mode:disabled;");
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
     $text->setAttribute("class", "form-control form-control-sm txt-kids");

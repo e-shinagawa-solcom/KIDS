@@ -331,29 +331,17 @@ foreach ($records as $i => $record) {
 
     // 背景色設定
     if ($record["strgroupdisplaycolor"]) {
-        $bgcolor = "background-color: " . $record["strgroupdisplaycolor"] . ";";
+        $bgcolor = $record["strgroupdisplaycolor"];
     } else {
-        $bgcolor = "background-color: #FFFFFF;";
+        $bgcolor = "#FFFFFF";
     }
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
-//    $trBody->setAttribute("id", $record["strproductcode"] . "_" . $record["strrevisecode"]);
     $trBody->setAttribute("id", $record["strproductcode"]. "_" . $record["strrevisecode"] );
-    // if (!$isMaxproduct) {
-    //     $trBody->setAttribute("id", $record["strproductcode"] . "_" . $record["lngrevisionno"]);
-    //     $trBody->setAttribute("style", "display: none;");
-    // }
+    $trBody->setAttribute("before-click-bgcolor", $bgcolor);
 
-    // 項番
-    // if ($isMaxproduct) {
-    //     $index = $index + 1;
-    //     $subnum = 1;
-    //     $tdIndex = $doc->createElement("td", $index);
-    // } else {
-    //     $subindex = $index . "." . ($subnum++);
-    //     $tdIndex = $doc->createElement("td", $subindex);
-    // }
+    $bgcolor = "background-color: " .$bgcolor . ";";
     $index = $index + 1;
     $tdIndex = $doc->createElement("td", $index);
     $tdIndex->setAttribute("class", $exclude);

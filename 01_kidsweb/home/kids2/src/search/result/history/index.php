@@ -120,7 +120,10 @@ foreach ($records as $i => $record) {
     } else {
         $trBody->setAttribute("id", $strcode . "_" . $lngrevisionno);
     }
-    $trBody->setAttribute("class", 'detail');
+    $trBody->setAttribute("class", 'detail history');
+    $trBody->setAttribute("before-click-bgcolor", $bgcolor);
+
+    $bgcolor = "background-color: " .$bgcolor . ";";
 
     $aryTableHeaderName;
     // 項番

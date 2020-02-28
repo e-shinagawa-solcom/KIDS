@@ -29,3 +29,14 @@
 	top: 405px;
 	left: 350px;
 }
+
+
+
+/* 入力フォーム ラベルテキスト */
+.regist-label__required-text
+{
+    display: inline-block;
+    width: 107px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+}

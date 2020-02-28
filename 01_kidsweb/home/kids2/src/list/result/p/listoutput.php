@@ -12,8 +12,7 @@
 */
 // 帳票出力 印刷プレビュー画面
 // frameset.php -> strSessionID     -> listoutput.php
-// frameset.php -> lngReportCode    -> listoutput.php
-// frameset.php -> lngReportKeyCode -> listoutput.php
+// frameset.php -> strReportKeyCode -> listoutput.php
 
 // 設定読み込み
 include_once('conf.inc');
@@ -43,7 +42,6 @@ elseif ( $_GET )
 // 文字列チェック
 $aryCheck["strSessionID"]       = "null:numenglish(32,32)";
 $aryCheck["strReportKeyCode"]   = "null";
-$aryCheck["lngReportCode"]      = "ascii(1,7)";
 $aryCheck["strReportKeyCode"]   = "null:number(0,9999999)";
 
 
@@ -59,37 +57,37 @@ if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) || !fncCheckAuthority( DEF
 	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 帳票出力コピーファイルパス取得クエリ生成
-$strQuery = fncGetCopyFilePathQuery( DEF_REPORT_PRODUCT, $aryData["strReportKeyCode"], $aryData["lngReportCode"] );
-list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-if ( $lngResultNum > 0 )
-{
-	$objResult = $objDB->fetchObject( $lngResultID, 0 );
-	$strReportPathName = $objResult->strreportpathname;
-	unset ( $objResult );
-}
+// // 帳票出力コピーファイルパス取得クエリ生成
+// $strQuery = fncGetCopyFilePathQuery( DEF_REPORT_PRODUCT, $aryData["strReportKeyCode"], $aryData["lngReportCode"] );
+// list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+// if ( $lngResultNum > 0 )
+// {
+// 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
+// 	$strReportPathName = $objResult->strreportpathname;
+// 	unset ( $objResult );
+// }
 
 ///////////////////////////////////////////////////////////////////////////
 // 帳票コードが真の場合、ファイルデータを取得
 ///////////////////////////////////////////////////////////////////////////
-if ( $aryData["lngReportCode"] )
-{
-	if ( !$lngResultNum )
-	{
-		fncOutputError ( 9056, DEF_FATAL, "帳票コピーがありません。", TRUE, "", $objDB );
-	}
+// if ( $aryData["lngReportCode"] )
+// {
+// 	if ( !$lngResultNum )
+// 	{
+// 		fncOutputError ( 9056, DEF_FATAL, "帳票コピーがありません。", TRUE, "", $objDB );
+// 	}
 
-	if ( !$strHtml =  file_get_contents ( SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl" ) )
-	{
-		fncOutputError ( 9059, DEF_FATAL, "帳票データファイルが開けませんでした。", TRUE, "", $objDB );
-	}
-	$objDB->freeResult( $lngResultID );
-}
+// 	if ( !$strHtml =  file_get_contents ( SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl" ) )
+// 	{
+// 		fncOutputError ( 9059, DEF_FATAL, "帳票データファイルが開けませんでした。", TRUE, "", $objDB );
+// 	}
+// 	$objDB->freeResult( $lngResultID );
+// }
 
 ///////////////////////////////////////////////////////////////////////////
 // テンプレートと置き換えデータ取得
 ///////////////////////////////////////////////////////////////////////////
-else
+if ( $aryData["strReportKeyCode"] )
 {
 	// データ取得クエリ
 	$strQuery = fncGetListOutputQuery( DEF_REPORT_PRODUCT, $aryData["strReportKeyCode"], $objDB );

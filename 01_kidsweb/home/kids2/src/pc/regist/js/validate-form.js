@@ -132,7 +132,9 @@
             },
             // 製品到着日
             dtmExpirationDate: {
-                checkDateFormat: true
+                checkDateFormat: function () {
+                    return $('input[name="dtmExpirationDate"]').val() != "";
+                }
             }
         },
         // -----------------------------------------------

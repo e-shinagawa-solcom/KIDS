@@ -269,9 +269,13 @@ for ($i = 0; $i < $lngResultNum; ++$i) {
     
 	$bgcolor = fncSetBgColor('estimate', $result["lngestimateno"], false, $objDB);
 	
+    $beforeClickBgcolor = $bgcolor;
+
+    $bgcolor = "background-color: " .$bgcolor . ";";
+	
 	$estimateNo = htmlspecialchars($result['lngestimateno'], ENT_QUOTES);
 
-	$body .= "<tr id=\"". ($estimateNo."_".$result["lngrevisionno"]). "\" class=\"estimate_search_result\" style=\"" . $bgcolor . "\ onclick=\"fncSelectTrColor( this );\">";
+	$body .= "<tr id=\"". ($estimateNo."_".$result["lngrevisionno"]). "\" before-click-bgcolor=\"". $beforeClickBgcolor . "\"   class=\"estimate_search_result history\" style=\"" . $bgcolor . "\">";
 
 	// $number = $i + 1;
 

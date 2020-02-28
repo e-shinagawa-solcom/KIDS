@@ -265,7 +265,7 @@ var chkbox = [];
 
         if (workForm.valid()) {
 
-            var dtmExpirationDate = $('input[name="dtmExpirationDate"]').val();
+            var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
 
             var detaildata = new Array();
             var len = 0;
@@ -304,9 +304,9 @@ var chkbox = [];
                     // 消費税コード                
                     //                    var lngTaxCode = $(this).find('td:nth-child(23)').text();
 
-                    // 納期がヘッダ部で入力した製品到着日と同月でない行が存在した場合
-                    if (dtmDeliveryDate.substring(1, 7) != dtmExpirationDate.substring(1, 7)) {
-                        alert("発注確定時の納期と納品日と一致しません。発注データを修正してください。");
+                    // 納期がヘッダ部で入力した仕入日と同月でない行が存在した場合
+                    if (dtmDeliveryDate.substring(1, 7) != dtmStockAppDate.substring(1, 7)) {
+                        alert("発注確定時の納期と仕入日と一致しません。発注データを修正してください。");
                         exit;
                     }
                     detaildata[len - 1] = {

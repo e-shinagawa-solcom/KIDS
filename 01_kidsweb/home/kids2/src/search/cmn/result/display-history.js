@@ -66,6 +66,8 @@
 
                     var row = $('tr[id="' + id + '"]');
                     row.after(response);
+                    
+                    historyTrClickSelectRow();
 
                     $("#result").trigger("update");
                     $(".tablesorter-child").trigger("update");

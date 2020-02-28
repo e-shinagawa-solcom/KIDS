@@ -270,6 +270,9 @@ fncDebug("kids2.log", sprintf("detail count=%d", count($detailData)), __FILE__, 
     $trBody = $doc->createElement("tr");
 
     $trBody->setAttribute("id", $record["strordercode"]);
+    $trBody->setAttribute("before-click-bgcolor", $bgcolor);
+
+    $bgcolor = "background-color: " .$bgcolor . ";";
 
     // 先頭ボタン設定
     fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, $index, 'purchaseorder', null);
