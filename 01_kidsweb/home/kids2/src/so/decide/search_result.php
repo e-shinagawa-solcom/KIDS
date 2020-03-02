@@ -103,12 +103,12 @@ $aryQuery[] = "        USING (lngMonetaryUnitCode) ";
 $aryQuery[] = "      LEFT JOIN m_Company cust_c ";
 $aryQuery[] = "        ON r1.lngCustomerCompanyCode = cust_c.lngCompanyCode ";
 $aryQuery[] = "    WHERE";
-$aryQuery[] = "      r1.lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE ." ";
+$aryQuery[] = "      r1.lngreceivestatuscode = " . DEF_RECEIVE_APPLICATE . " ";
 if ($aryData["lngCustomerCode"] != "") {
     $aryQuery[] = " AND cust_c.strCompanyDisplayCode = '" . $aryData["lngCustomerCode"] . "' ";
 }
 $aryQuery[] = "     and r1.lngcustomercompanycode != 0 ";
-$aryQuery[] = " ) r on rd.lngReceiveNo = r.lngReceiveNo and rd.lngRevisionNo = r.lngRevisionNo";    
+$aryQuery[] = " ) r on rd.lngReceiveNo = r.lngReceiveNo and rd.lngRevisionNo = r.lngRevisionNo";
 $aryQuery[] = "        LEFT JOIN (";
 $aryQuery[] = "            select p1.*  from m_product p1 ";
 $aryQuery[] = "        	inner join (select max(lngrevisionno) lngrevisionno, strproductcode, strrevisecode from m_Product group by strProductCode, strrevisecode) p2";
@@ -160,7 +160,6 @@ if ($lngResultNum) {
     }
 }
 $objDB->freeResult($lngResultID);
-
 
 $strQuery = "SELECT lngproductunitcode, strproductunitname FROM m_productunit";
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -231,19 +230,12 @@ foreach ($aryDetailResult as $detailResult) {
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 
-    // if (!$isdecideObj) {
-        // No.
-        $td = $doc->createElement("td", $detailNum);
-        $td->setAttribute("style", "width: 25px;");
-        if ($isdecideObj) {
-            $td->setAttribute("style", "display:none");
-        }
-        $trBody->appendChild($td);
-    // }
-
-    // 明細行番号
-    $td = $doc->createElement("td", $detailResult["lngreceivedetailno"]);
-    $td->setAttribute("id", "lngreceivedetailno");
+    // No.
+    $td = $doc->createElement("td", $detailNum);
+    $td->setAttribute("style", "width: 25px;");
+    if ($isdecideObj) {
+        $td->setAttribute("style", "display:none");
+    }
     $trBody->appendChild($td);
 
     // 顧客受注番号
@@ -255,9 +247,6 @@ foreach ($aryDetailResult as $detailResult) {
     $text->setAttribute("class", "form-control form-control-sm txt-kids");
     $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
     $td->appendChild($text);
-    // if (!$isdecideObj) {
-    //     $td->setAttribute("style", "display:none");
-    // }
     $trBody->appendChild($td);
 
     // 顧客
@@ -315,7 +304,7 @@ foreach ($aryDetailResult as $detailResult) {
     $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
     if ($detailResult["lngproductunitcode"] == 2) {
         $lngunitquantity = $detailResult["lngcartonquantity"];
-        $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;   
+        $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
         $td = $doc->createElement("td");
         $text = $doc->createElement("input");
         $text->setAttribute("type", "text");
@@ -330,7 +319,6 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("id", "lngunitquantity");
     $td->setAttribute("style", "width:100px;");
     $trBody->appendChild($td);
-
 
     // 数量
     $textContent = number_format($lngproductquantity);
@@ -376,6 +364,12 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
+    // 明細行番号
+    $td = $doc->createElement("td", $detailResult["lngreceivedetailno"]);
+    $td->setAttribute("id", "lngreceivedetailno");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
     // 受注コード
     $textContent = $detailResult["strreceivecode"];
     $td = $doc->createElement("td", $textContent);
@@ -410,16 +404,16 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("id", "strrevisecode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
-    
+
     if (!$isdecideObj) {
         // tbody > tr
         // $tbodyDetail->appendChild($trBody);
-        
+
         $tblA_detail_body_html .= $doc->saveXML($trBody);
     } else {
         // tbody > tr
         // $tbodyDecideBody->appendChild($trBody);
-        
+
         $tblB_body_html .= $doc->saveXML($trBody);
 
     }

@@ -235,7 +235,7 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
 
     // テンプレート読み込み
     $objTemplate = new clsTemplate();
-    $objTemplate->getTemplate("po/result/parts_detail2.tmpl");
+    $objTemplate->getTemplate("po/confirm/parts_detail.tmpl");
 
     // テンプレート生成
     $objTemplate->replace($aryDetailColumnNames);

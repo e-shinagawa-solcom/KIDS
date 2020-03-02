@@ -353,7 +353,7 @@ var chkbox = [];
                         document.write(response);
                         document.close();
                     } else {
-                        var w = window.open("", 'Regist Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
+                        var w = window.open("", 'Regist Confirm', "width=1011, height=700, scrollbars=yes, resizable=yes");
                         w.document.open();
                         w.document.write(response);
                         w.document.close();

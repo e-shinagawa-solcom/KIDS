@@ -40,18 +40,12 @@ $objAuth = new clsAuth();
 $aryData["strSessionID"] = $_REQUEST["strSessionID"];
 $aryData["lngPurchaseOrderNo"] = $_REQUEST["lngPurchaseOrderNo"];
 $aryData["lngRevisionNo"] = $_REQUEST["lngRevisionNo"];
-//    $aryData["dtmExpirationDate"]   = $_REQUEST["dtmExpirationDate"];
 $aryData["lngPayConditionCode"] = $_REQUEST["lngPayConditionCode"];
-//    $aryData["strPayConditionName"] = $_REQUEST["strPayConditionName"];
 $aryData["strPayConditionName"] = $_REQUEST["strPayConditionName"];
 $aryData["lngLocationCode"] = $_REQUEST["lngLocationCode"];
 $aryData["strLocationName"] = $_REQUEST["strLocationName"];
 $aryData["strNote"] = $_REQUEST["strNote"];
 $aryData["strOrderCode"] = $_REQUEST["strOrderCode"];
-// $aryData["strProductCode"]      = $_REQUEST["strProductCode"];
-// $aryData["strProductName"]      = $_REQUEST["strProductName"];
-// $aryData["strCustomerCode"]     = $_REQUEST["strCustomerCode"];
-// $aryData["strCustomerName"]     = $_REQUEST["strCustomerName"];
 $aryData["aryDetail"] = $_REQUEST["aryDetail"];
 
 //var_dump($_REQUEST);

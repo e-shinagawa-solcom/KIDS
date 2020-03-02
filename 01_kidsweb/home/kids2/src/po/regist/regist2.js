@@ -13,6 +13,8 @@ jQuery(function ($) {
 
     // テーブルBの幅をリセットする
     resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
+    // テーブル行クリックイベントの設定
+    selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
 
     // テーブル行クリックイベントの設定
     selectRow('', $("#tableB_no"), $("#tableB"), '');
@@ -116,133 +118,6 @@ jQuery(function ($) {
         rowBottom($("#tableB"), $("#tableB_no"));
     });
 
-    // // 行を一つ上に移動するボタン
-    // $('img.rowup').click(function () {
-    //     var len = $("#tableB tbody tr").length;
-    //     for (var i = 1; i <= len; i++) {
-    //         var row = $("#tableB tbody tr:nth-child(" + i + ")");
-    //         var backgroud = row.css("background-color");
-    //         if (backgroud != 'rgb(255, 255, 255)') {
-    //             for (var j = i - 1; j >= 1; j--) {
-    //                 var row_prev = $("#tableB tbody tr:nth-child(" + j + ")");
-    //                 var row_prev_backgroud = row_prev.css("background-color");
-    //                 if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-    //                     row.insertBefore(row_prev);
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     var len = $("#tableB_no tbody tr").length;
-    //     for (var i = 1; i <= len; i++) {
-    //         var row = $("#tableB_no tbody tr:nth-child(" + i + ")");
-    //         var backgroud = row.css("background-color");
-    //         if (backgroud != 'rgb(255, 255, 255)') {
-    //             for (var j = i - 1; j >= 1; j--) {
-    //                 var row_prev = $("#tableB_no tbody tr:nth-child(" + j + ")");
-    //                 var row_prev_backgroud = row_prev.css("background-color");
-    //                 if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-    //                     row.insertBefore(row_prev);
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     resetTableBRowid();
-
-    // });
-
-    // // 行を一つ下に移動するボタン
-    // $('img.rowdown').click(function () {
-    //     var len = $("#tableB tbody tr").length;
-    //     for (var i = len; i >= 1; i--) {
-    //         var row = $("#tableB tbody tr:nth-child(" + i + ")");
-    //         var backgroud = row.css("background-color");
-    //         if (backgroud != 'rgb(255, 255, 255)') {
-    //             for (var j = i + 1; j <= len; j++) {
-    //                 var row_prev = $("#tableB tbody tr:nth-child(" + j + ")");
-    //                 var row_prev_backgroud = row_prev.css("background-color");
-    //                 if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-    //                     row.insertAfter(row_prev);
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-
-
-    //     var len = $("#tableB_no tbody tr").length;
-    //     for (var i = len; i >= 1; i--) {
-    //         var row = $("#tableB_no tbody tr:nth-child(" + i + ")");
-    //         var backgroud = row.css("background-color");
-    //         if (backgroud != 'rgb(255, 255, 255)') {
-    //             for (var j = i + 1; j <= len; j++) {
-    //                 var row_prev = $("#tableB_no tbody tr:nth-child(" + j + ")");
-    //                 var row_prev_backgroud = row_prev.css("background-color");
-    //                 if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-    //                     row.insertAfter(row_prev);
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-
-    //     resetTableBRowid();
-
-    // });
-
-    // // 行を一番上に移動する
-    // $('img.rowtop').click(function () {
-    //     var firsttr = $("#tableB tbody").find('tr').first();
-    //     $("#tableB tbody tr").each(function (i, e) {
-    //         var backgroud = $(this).css("background-color");
-    //         if (backgroud != 'rgb(255, 255, 255)') {
-    //             $(this).insertBefore(firsttr);
-    //         }
-    //     });
-
-    //     firsttr = $("#tableB_no tbody").find('tr').first();
-    //     $("#tableB_no tbody tr").each(function (i, e) {
-    //         var backgroud = $(this).css("background-color");
-    //         if (backgroud != 'rgb(255, 255, 255)') {
-    //             $(this).insertBefore(firsttr);
-    //         }
-    //     });
-
-    //     resetTableBRowid();
-
-    // });
-
-    // // 行を一番下に移動する
-    // $('img.rowbottom').click(function () {
-    //     var lasttr = $("#tableB tbody").find('tr').last();
-    //     $("#tableB tbody tr").each(function (i, e) {
-    //         var backgroud = $(this).css("background-color");
-    //         if (backgroud != 'rgb(255, 255, 255)') {
-    //             $(this).insertAfter(lasttr);
-    //         }
-    //     });
-
-    //     lasttr = $("#tableB_no tbody").find('tr').last();
-    //     $("#tableB_no tbody tr").each(function (i, e) {
-    //         var backgroud = $(this).css("background-color");
-    //         if (backgroud != 'rgb(255, 255, 255)') {
-    //             $(this).insertAfter(lasttr);
-    //         }
-    //     });
-
-    //     resetTableBRowid();
-    // });
-    // // 行IDの再設定
-    // function resetTableBRowid() {
-    //     var rownum = 0;
-    //     $("#tableB_no tbody tr").each(function (i, e) {
-    //         rownum += 1;
-    //         $(this).find('td').first().text(rownum);
-    //     });
-    // }
     $(document).on('click', '#btnClose', function () {
         window.open('about:blank', '_self').close();
     });
@@ -280,7 +155,7 @@ jQuery(function ($) {
         }).done(function (data) {
             console.log("done");
 
-            var w = window.open("", 'Renew Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
+            var w = window.open("", 'Renew Confirm', "width=1011, height=600, scrollbars=yes, resizable=yes");
             w.document.open();
             w.document.write(data);
             w.document.close();

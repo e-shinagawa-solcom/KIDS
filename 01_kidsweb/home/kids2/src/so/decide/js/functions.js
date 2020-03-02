@@ -143,7 +143,7 @@
         sessionID = 'strSessionID=' + $('input[type="hidden"][name="strSessionID"]').val();
         param = 'strproductcode=' + $('input[name="strProductCode"]').val();
         // 別ウィンドウで表示
-        window.open(url + '?' + sessionID + '&' + param, '_blank', 'width=730, height=570, resizable=yes, scrollbars=yes, menubar=no');
+        window.open(url + '?' + sessionID + '&' + param, '_blank', 'width=730, height=768, resizable=yes, scrollbars=yes, menubar=no');
     });
 
     // 行を一つ上に移動するボタン
@@ -270,7 +270,7 @@
             }
         })
             .done(function (response) {
-                var w = window.open("", 'Decide Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
+                var w = window.open("", 'Decide Confirm', "width=1011, height=600, scrollbars=yes, resizable=yes");
                 w.document.open();
                 w.document.write(response);
                 w.document.close();

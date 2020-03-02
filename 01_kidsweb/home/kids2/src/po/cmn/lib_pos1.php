@@ -1157,6 +1157,7 @@ function fncInsertPurchaseOrderDetail($aryDetail, $objDB)
 
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
+    
     if (!$lngResultID = $objDB->execute($strQuery)) {
         fncOutputError(9051, DEF_ERROR, "発注書明細への更新処理に失敗しました。", true, "", $objDB);
         return false;
@@ -1417,12 +1418,13 @@ function fncCancelOrderHtml($aryOrder)
 function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDeleted = false)
 {
 //    for($i = 0; $i < count($aryDetail); $i++) {
-    $strUrl = "/list/result/po/listoutput.php?strReportKeyCode=" . $aryDetail["lngpurchaseorderno"] . "&strSessionID=" . $strSessionID;
+    $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $aryDetail["lngpurchaseorderno"] . "&lngReportClassCode=2&strSessionID=" . $strSessionID;
     $aryHtml[] = "<table class=\"ordercode\">";
     $aryHtml[] = "  <tr>";
     $aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";
     if (!$isDeleted) {
-        $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"" . $strUrl . "\"><img src=\"/img/type01/cmn/querybt/preview_off_ja_bt.gif\" alt=\"preview\"></a></td>";
+        $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.open('" . $strUrl . "', 'listWin', 'width=800,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no')\"><img src=\"/img/type01/cmn/querybt/blownpreview_off_bt.gif\" alt=\"preview\"></a>";
+    
     }
     $aryHtml[] = "    <td class=\"orderbuttontd\"><a href=\"#\" onclick=\"window.opener.location.reload();window.close();return false;\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"close\"></a></td>";
     $aryHtml[] = "  </tr>";

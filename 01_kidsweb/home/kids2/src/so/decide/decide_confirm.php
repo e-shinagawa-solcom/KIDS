@@ -86,10 +86,6 @@ foreach ($aryData["detailData"] as $data) {
     $td = $doc->createElement("td", $data["strReceiveCode"]);
     $trBody->appendChild($td);
 
-    // 明細行番号
-    $td = $doc->createElement("td", $data["lngReceiveDetailNo"]);
-    $trBody->appendChild($td);
-
     // 顧客受注番号.
     $td = $doc->createElement("td", $data["strCustomerReceiveCode"]);
     $trBody->appendChild($td);
@@ -135,6 +131,11 @@ foreach ($aryData["detailData"] as $data) {
 
     // 受注番号
     $td = $doc->createElement("td", $data["lngReceiveNo"]);
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 明細行番号
+    $td = $doc->createElement("td", $data["lngReceiveDetailNo"]);
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
