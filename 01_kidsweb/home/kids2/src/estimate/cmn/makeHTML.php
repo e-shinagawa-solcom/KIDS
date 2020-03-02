@@ -259,22 +259,21 @@ class makeHTML {
 			$revisionNo = $maxRevisionNo;
 		}
 		$strHTML = "<div class = \"sheetPreviewHeader\" id = \"preview\">\n";
-		$strHTML .= "<div class = \"data-buttons\">\n";
+		$strHTML .= "<div class = \"data-buttons flex-container\">\n";
 		for ($i = $maxRevisionNo; $i >= 0; --$i) {
 			if ($i == $revisionNo) {
 				$strHTML .= "<button type=\"button\" id=\"btnSelected\" class=\"btnSwitch\" value=\"". $i."\">\n";
-				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\">\n";
-				$strHTML .= "<p>データ".$i ."</p>";
+				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\" alt=\"ver." . $i . "\">\n";
+				$strHTML .= "<p>ver.".$i ."</p>";
 				$strHTML .=	"</button>\n";
 			} else {
 				$strHTML .= "<button type=\"button\" class=\"btnSwitch\" value=\"". $i."\">\n";
-				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\">\n";
-				$strHTML .= "<p>データ".$i ."</p>";
+				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\" alt=\"ver." . $i . "\">\n";
+				$strHTML .= "<p>ver.".$i ."</p>";
 				$strHTML .=	"</button>\n";
 			}
 		}
 		$strHTML .=	"</div>\n";
-		
 		$strHTML .= "<div class = \"action-buttons\">\n";
 
 		// URLコピー
@@ -312,17 +311,17 @@ class makeHTML {
 			$revisionNo = $maxRevisionNo;
 		}
 		$strHTML = "<div class = \"sheetEditHeader\" id = \"edit\">\n";
-		$strHTML .= "<div class = \"data-buttons\">\n";
+		$strHTML .= "<div class = \"data-buttons flex-container\">\n";
 		for ($i = $maxRevisionNo; $i >= 0; --$i) {
 			if ($i == $revisionNo) {
 				$strHTML .= "<button type=\"button\" id=\"btnSelected\" class=\"btnSwitch\">\n";
-				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\">\n";
-				$strHTML .= "<p>データ".$i ."</p>";
+				$strHTML .= "<img class= \"selected_button\" src=\"/img/type01/estimate/preview/data_selected_preview.gif\" alt=\"ver." . $i . "\">\n";
+				$strHTML .= "<p>ver.".$i ."</p>";
 				$strHTML .=	"</button>\n";
 			} else {
 				$strHTML .= "<button type=\"button\" class=\"btnSwitch\">\n";
-				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\">\n";
-				$strHTML .= "<p>データ".$i ."</p>";
+				$strHTML .= "<img class= \"switch_button\" src=\"/img/type01/estimate/preview/data_others_preview.gif\" alt=\"ver." . $i . "\">\n";
+				$strHTML .= "<p>ver.".$i ."</p>";
 				$strHTML .=	"</button>\n";
 			}
 		}
