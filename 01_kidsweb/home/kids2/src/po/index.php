@@ -67,33 +67,6 @@
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_PO0;
 
-
-
-	// ユーザーコード取得
-	$lngUserCode = $objAuth->UserCode;
-
-	// 権限グループコード(ユーザー以下)チェック
-	$blnAG = fncCheckUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-	// 「ユーザー」以下の場合
-	if( $blnAG )
-	{
-		// 承認ルート存在チェック
-		$blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-		// 承認ルートが存在しない場合
-		if( !$blnWF )
-		{
-			$aryData["registview"] = 'hidden';
-		}
-		else
-		{
-			$aryData["registview"] = 'visible';
-		}
-	}
-
-
-
 	echo fncGetReplacedHtml( "po/parts.tmpl", $aryData ,$objAuth );
 //	echo $_COOKIE["lngLanguageCode"];
 

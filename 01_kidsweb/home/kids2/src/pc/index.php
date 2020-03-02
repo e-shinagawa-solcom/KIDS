@@ -77,18 +77,6 @@
 	// 「ユーザー」以下の場合
 	if( $blnAG )
 	{
-		// 承認ルート存在チェック
-		$blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-		// 承認ルートが存在しない場合
-		if( !$blnWF )
-		{
-			$aryData["registview"] = 'hidden';
-		}
-		else
-		{
-			$aryData["registview"] = 'visible';
-		}
 		// 701 仕入登録
 		if( !fncCheckAuthority( DEF_FUNCTION_PC1, $objAuth ) )
 		{

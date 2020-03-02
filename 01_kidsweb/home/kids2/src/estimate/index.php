@@ -60,32 +60,8 @@ if ( !fncCheckAuthority( DEF_FUNCTION_UP0, $objAuth ) )
 	$aryData["upload_visibility"]	= 'hidden';
 }
 
-
-
-
-
-	// ユーザーコード取得
-	$lngUserCode = $objAuth->UserCode;
-
-	// 権限グループコード(ユーザー以下)チェック
-	$blnAG = fncCheckUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-	// 「ユーザー」以下の場合
-	if( $blnAG )
-	{
-		// 承認ルート存在チェック
-		$blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-		// 承認ルートが存在しない場合
-		if( !$blnWF )
-		{
-			$aryData["visibility1"] = 'hidden';
-		}
-		else
-		{
-			$aryData["visibility1"] = 'visible';
-		}
-	}
+// ユーザーコード取得
+$lngUserCode = $objAuth->UserCode;
 
 
 $objDB->close();

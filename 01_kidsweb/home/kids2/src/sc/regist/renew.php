@@ -866,29 +866,6 @@
 
 	}
 
-
-
-
-	// 権限グループコード(ユーザー以下)チェック
-	$blnAG = fncCheckUserAuthorityGroupCode( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-	// 「ユーザー」以下の場合
-	if( $blnAG )
-	{
-		// 承認ルート存在チェック
-		$blnWF = fncCheckWorkFlowRoot( $lngUserCode, $aryData["strSessionID"], $objDB );
-
-		// 承認ルートが存在しない場合
-		if( !$blnWF )
-		{
-			fncOutputError( 9060, DEF_WARNING, "", TRUE, "", $objDB );
-		}
-	}
-
-
-
-
-
 	//-------------------------------------------------------------------------
 	// ■ 初期表示 -> 初期値設定
 	//-------------------------------------------------------------------------
