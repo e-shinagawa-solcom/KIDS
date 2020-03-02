@@ -53,36 +53,32 @@ $lngestimateno = $aryData["estimateNo"];
 
 $lngReceiveNoList = explode(",", $lngReceiveNo);
 
-if( !is_null($aryData["mode"] ) )
-{
+if (!is_null($aryData["mode"])) {
     // 排他ロックの解放
     $objDB->transactionBegin();
     $result = unlockExclusive($objAuth, $objDB);
     $objDB->transactionCommit();
-    return true; 
+    return true;
 }
-
 
 // 排他ロックの取得
 $objDB->transactionBegin();
-if( isEstimateModified($lngestimateno, $lngRevisionNo, $objDB) )
-{
-    fncOutputError(401, DEF_ERROR,  "他のユーザによって更新または削除されています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+if (isEstimateModified($lngestimateno, $lngRevisionNo, $objDB)) {
+    fncOutputError(401, DEF_ERROR, "他のユーザによって更新または削除されています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 // 受注データロック
-if(!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)){
+if (!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)) {
     fncOutputError(401, DEF_ERROR, "該当データがロックされています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
-foreach($lngReceiveNoList as $eachLngReceiveNo)
-{
-    if( !lockReceive($eachLngReceiveNo, $objDB)){
-	    fncOutputError( 401, DEF_ERROR, "該当データのロックに失敗しました", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+foreach ($lngReceiveNoList as $eachLngReceiveNo) {
+    if (!lockReceive($eachLngReceiveNo, $objDB)) {
+        fncOutputError(401, DEF_ERROR, "該当データのロックに失敗しました", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
     }
     // 受注データ更新有無チェック
-    if( isReceiveModified($eachLngReceiveNo, DEF_RECEIVE_APPLICATE, $objDB)){
-	    fncOutputError( 404, DEF_ERROR, "", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+    if (isReceiveModified($eachLngReceiveNo, DEF_RECEIVE_APPLICATE, $objDB)) {
+        fncOutputError(404, DEF_ERROR, "", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
     }
 }
 
@@ -239,19 +235,12 @@ foreach ($aryDetailResult as $detailResult) {
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 
-    // if (!$isdecideObj) {
-        // No.
-        $td = $doc->createElement("td", $detailNum);
-        $td->setAttribute("style", "width: 25px;");
-        if ($isdecideObj) {
-            $td->setAttribute("style", "display:none");
-        }
-        $trBody->appendChild($td);
-    // }
-
-    // 明細行番号
-    $td = $doc->createElement("td", $detailResult["lngreceivedetailno"]);
-    $td->setAttribute("id", "lngreceivedetailno");
+    // No.
+    $td = $doc->createElement("td", $detailNum);
+    $td->setAttribute("style", "width: 25px;");
+    if ($isdecideObj) {
+        $td->setAttribute("style", "display:none");
+    }
     $trBody->appendChild($td);
 
     // 顧客受注番号
@@ -263,10 +252,7 @@ foreach ($aryDetailResult as $detailResult) {
     $text->setAttribute("class", "form-control form-control-sm txt-kids");
     $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
     $td->appendChild($text);
-
-    // if (!$isdecideObj) {
-    //     $td->setAttribute("style", "display:none");
-    // }
+    
     $trBody->appendChild($td);
 
     // 顧客
@@ -324,7 +310,7 @@ foreach ($aryDetailResult as $detailResult) {
     $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
     if ($detailResult["lngproductunitcode"] == 2) {
         $lngunitquantity = $detailResult["lngcartonquantity"];
-        $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;   
+        $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
         $td = $doc->createElement("td");
         $text = $doc->createElement("input");
         $text->setAttribute("type", "text");
@@ -339,7 +325,6 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("id", "lngunitquantity");
     $td->setAttribute("style", "width:100px;");
     $trBody->appendChild($td);
-
 
     // 数量
     $textContent = number_format($lngproductquantity);
@@ -385,6 +370,12 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
+    // 明細行番号
+    $td = $doc->createElement("td", $detailResult["lngreceivedetailno"]);
+    $td->setAttribute("id", "lngreceivedetailno");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
     // 受注コード
     $textContent = $aryResult[0]["strreceivecode"];
     $td = $doc->createElement("td", toUTF8($textContent));
@@ -419,7 +410,7 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("id", "strrevisecode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
-    
+
     if (!$isdecideObj) {
         // tbody > tr
         $tbodyDetail->appendChild($trBody);

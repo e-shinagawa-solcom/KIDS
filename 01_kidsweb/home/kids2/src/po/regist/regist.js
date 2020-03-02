@@ -18,11 +18,6 @@ jQuery(function ($) {
     
     resetTableRowid($('#tableB_no'));
 
-    // $("#tableB").sortable();
-    // $("#tableB").on('sortstop', function () {
-    //     resetTableBRowid();
-    // });
-
     tableBSort();
 
     function tableBSort() {
@@ -42,8 +37,8 @@ jQuery(function ($) {
 
     function addHiddenValue(i, tr) {
         var hidden = $('#SegHidden');
-        var orderNo = $(tr).find($('td.detailOrderCode')).text();
-        $(hidden).append($("<input>").attr("type", "hidden").attr("name", "detail[" + (i + 1) + "][orderNo]").val(orderNo));
+        // var orderNo = $(tr).find($('td.detailOrderCode')).text();
+        // $(hidden).append($("<input>").attr("type", "hidden").attr("name", "detail[" + (i + 1) + "][orderNo]").val(orderNo));
         var orderDetailNo = $(tr).find($('td.detailOrderDetailNo')).text();
         $(hidden).append($("<input>").attr("type", "hidden").attr("name", "detail[" + (i + 1) + "][orderDetailNo]").val(orderDetailNo));
         var stockSubjectName = $(tr).find($('td.detailStockSubjectName')).text();
@@ -168,26 +163,6 @@ jQuery(function ($) {
     // チェックボックスクリックイベントの設定
     setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
-    // // テーブルA 全選択／解除チェックボックス
-    // $(document).on('change', '#allChecked', function (e) {
-    //     e.preventDefault();
-
-    //     var $all_rows = $('#tableA tbody tr');
-    //     var $all_chkbox_rows = $('#tableA_chkbox tbody tr');
-    //     var $all_chkbox_rows_checkbox = $('#tableA_chkbox tbody tr').find('input[type="checkbox"]');
-
-    //     if (e.target.checked) {
-    //         $all_rows.css("background-color", "#bbbbbb");
-    //         $all_chkbox_rows.css("background-color", "#bbbbbb");
-    //         $all_chkbox_rows_checkbox.not(':disabled').prop('checked', true);
-    //     } else {
-    //         $all_rows.css("background-color", "#ffffff");
-    //         $all_chkbox_rows.css("background-color", "#ffffff");
-    //         $all_chkbox_rows_checkbox.prop('checked', false);
-    //     }
-    // });
-
-
     // 行を一つ上に移動するボタン
     $('img.rowup').click(function () {
         rowUp($("#tableB"), $("#tableB_no"));
@@ -207,27 +182,6 @@ jQuery(function ($) {
     $('img.rowbottom').click(function () {
         rowBottom($("#tableB"), $("#tableB_no"));
     });
-
-
-    // // 行IDの再設定
-    // function resetTableARowid() {
-    //     var rownum = 0;
-    //     $("#tableA tbody tr").each(function (i, e) {
-    //         rownum += 1;
-    //         $(this).find('td').first().text(rownum);
-    //     });
-    // }
-
-
-    // // 行IDの再設定
-    // function resetTableBRowid() {
-    //     var rownum = 0;
-    //     $("#tableB_no tbody tr").each(function (i, e) {
-    //         rownum += 1;
-    //         $(this).find('td').first().text(rownum);
-    //     });
-    // }
-
 
     // 追加ボタンのイベント
     $('img.add').on('click', function () {
@@ -335,9 +289,7 @@ jQuery(function ($) {
             url: '/po/confirm/index.php?strSessionID=' + $('input[type="hidden"][name="strSessionID"]').val(),
             data: {
                 strSessionID: $('input[type="hidden"][name="strSessionID"]').val(),
-                // lngOrderNo: $('input[name="lngOrderNo"]').val(),
                 strMode: $('input[name="strMode"]').val(),
-                // lngRevisionNo: $('input[name="lngRevisionNo"]').val(),
                 lngPayConditionCode: $('select[name="lngPayConditionCode"]').val(),
                 lngLocationCode: $('input[name="lngLocationCode"]').val(),
                 strNote: $('input[name="strNote"]').val(),
@@ -349,10 +301,8 @@ jQuery(function ($) {
         }).done(function (data) {
             console.log("done");
             console.log(data);
-            //$('html').html(data);
-            // document.write(data);
 
-            var w = window.open("", 'Decide Confirm', "width=1011px, height=600px, scrollbars=yes, resizable=yes");
+            var w = window.open("", 'Decide Confirm', "width=1011, height=600, scrollbars=yes, resizable=yes");
             w.document.open();
             w.document.write(data);
             w.document.close();
@@ -368,9 +318,7 @@ jQuery(function ($) {
         $.ajax({
             url: '/po/regist/index.php',
             type: 'post',
-            // dataType: 'json',
             type: 'POST',
-            //            async: false,
             data: {
                 'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
                 'strMode': 'cancel',

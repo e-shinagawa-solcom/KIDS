@@ -122,14 +122,6 @@
             strSlipCode: {
                 required: true
             },
-            // 仕入先.            
-            lngCustomerCode: {
-                required: true
-            },
-            // 納品工場.            
-            lngLocationCode: {
-                required: true
-            },
             // 製品到着日
             dtmExpirationDate: {
                 checkDateFormat: function () {
@@ -151,14 +143,6 @@
             },
             // 納品書NO.           
             strSlipCode: {
-                required: msgRequired
-            },
-            // 仕入先.                          
-            lngCustomerCode: {
-                required: msgRequired
-            },
-            // 納品工場. 
-            lngLocationCode: {
                 required: msgRequired
             }
         }

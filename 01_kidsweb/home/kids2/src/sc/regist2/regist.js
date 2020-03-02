@@ -737,7 +737,7 @@ jQuery(function ($) {
 
         // プレビュー画面のウィンドウ属性の定義
         var target = "previewWin";
-        var features = "width=900,height=800,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
+        var features = "width=900,height=768,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
 
         // 先に空のウィンドウを開いておく
         var emptyWin = window.open('', target, features);

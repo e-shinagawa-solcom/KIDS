@@ -126,8 +126,7 @@
                         window.opener.$('#tableA tbody').append(response.tblA_detail_result);
                         window.opener.$('input[name="strProductName"]').val(response.strProductName);
                         window.opener.$('input[name="strProductCode"]').val(response.strProductCode);
-                        // window.opener.$('#tableA_chkbox tbody tr td:nth-child(1)').width(window.opener.$('#tbl_detail_chkbox_head tr th:nth-child(1)').width());
-
+                        
                         window.opener.resetTableADisplayStyle();
 
                         // テーブルAの幅をリセットする
@@ -142,9 +141,6 @@
 
                         // 対象チェックボックスチェック状態の設定
                         scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
-
-                        // window.opener.resetTableAWidth();
-                        // window.opener.resetTableBWidth();
                     })
                     .fail(function (response) {
                         console.log("処理結果：" + JSON.stringify(response));
@@ -166,53 +162,6 @@
         }
     });
 })();
-
-
-
-// function resetTableADisplayStyle() {
-//     window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(1)").css('display', '');
-//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(3)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(3)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(8)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(8)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(9)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(9)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(10)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(10)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(11)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(11)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(12)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(12)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(13)").css('display', 'none');
-//     // window.opener.$(".table-decide-description").eq(2).find("tbody tr td:nth-child(13)").css('display', 'none');
-// }
-
-// function resetTableAWidth() {
-//     var width = 0;
-//     var columnNum = window.opener.$(".table-decide-description").eq(0).find("thead tr th").length;
-//     for (var i = 1; i <= columnNum; i++) {
-//         if (window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-//         } else {
-//             width += window.opener.$(".table-decide-description").eq(0).find("thead tr th:nth-child(" + i + ")").width();
-//         }
-//     }
-//     window.opener.$(".table-decide-description").eq(0).width(width + 25);
-//     window.opener.$(".table-decide-description").eq(2).width(width + 25);
-// }
-
-
-// function resetTableBWidth() {
-//     var width = 0;
-//     var columnNum = window.opener.$(".table-decide-description").eq(3).find("thead tr th").length;
-//     for (var i = 1; i <= columnNum; i++) {
-//         if (window.opener.$(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").css('display') == "none") {
-//         } else {
-//             width += window.opener.$(".table-decide-description").eq(3).find("thead tr th:nth-child(" + i + ")").width();
-//         }
-//     }
-//     window.opener.$(".table-decide-description").eq(3).width(width + 50);
-//     window.opener.$(".table-decide-description").eq(5).width(width + 50);
-// }
 
 $(window).on("beforeunload", function (e) {
     // 親ウィンドウのロックを解除する

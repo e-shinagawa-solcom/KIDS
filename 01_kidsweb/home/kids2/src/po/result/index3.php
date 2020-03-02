@@ -141,7 +141,7 @@ if($_POST){
 					$aryInsertPurchaseOrderDetail[$count]["lngdeliverymethodcode"] = $aryPurchaseOrderDetail[$j]["lngdeliverymethodcode"];
 					$aryInsertPurchaseOrderDetail[$count]["strdeliverymethodname"] = $aryPurchaseOrderDetail[$j]["strdeliverymethodname"];
 					$aryInsertPurchaseOrderDetail[$count]["curproductprice"] = $aryPurchaseOrderDetail[$j]["curproductprice"];
-					$aryInsertPurchaseOrderDetail[$count]["lngproductquantity"] = $aryPurchaseOrderDetail[$j]["lngproductquantity"];
+					$aryInsertPurchaseOrderDetail[$count]["lngproductquantity"] = str_replace(',', '', $aryPurchaseOrderDetail[$j]["lngproductquantity"]);
 					$aryInsertPurchaseOrderDetail[$count]["lngproductunitcode"] = $aryPurchaseOrderDetail[$j]["lngproductunitcode"];
 					$aryInsertPurchaseOrderDetail[$count]["strproductunitname"] = $aryPurchaseOrderDetail[$j]["strproductunitname"];
 					$aryInsertPurchaseOrderDetail[$count]["cursubtotalprice"] = $aryPurchaseOrderDetail[$j]["cursubtotalprice"];

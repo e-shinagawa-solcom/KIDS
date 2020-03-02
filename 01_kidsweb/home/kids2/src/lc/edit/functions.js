@@ -90,6 +90,41 @@ function lcInit(json_obj) {
 				$("#bldetail3date").val(convertDate(lc_data.bldetail3date));
 				$("#bldetail3money").val(lc_data.bldetail3money);
 
+				if (lc_data.lcstate == 3) {
+					$("#opendate").prop("disabled", true);
+					$("#portplace").prop("disabled", true);
+					$("#bankname").prop("disabled", true);					
+					$("#bankreqdate").prop("disabled", true);
+					$("#lcno").prop("disabled", true);					
+					$("#lcamopen").prop("disabled", true);
+					$("#validmonth").prop("disabled", true);
+					$("#bldetail1date").prop("disabled", true);
+					$("#bldetail1money").prop("disabled", true);
+					$("#bldetail2date").prop("disabled", true);
+					$("#bldetail2money").prop("disabled", true);
+					$("#bldetail3date").prop("disabled", true);
+					$("#bldetail3money").prop("disabled", true);
+					$("#bldetail3money").prop("disabled", true);
+					$("#updateBtn").prop("disabled", true);
+					$("#releaseBtn").prop("disabled", false);
+				} else {
+					$("#opendate").prop("disabled", false);
+					$("#portplace").prop("disabled", false);
+					$("#bankname").prop("disabled", false);					
+					$("#bankreqdate").prop("disabled", false);
+					$("#lcno").prop("disabled", false);					
+					$("#lcamopen").prop("disabled", false);
+					$("#validmonth").prop("disabled", false);
+					$("#bldetail1date").prop("disabled", false);
+					$("#bldetail1money").prop("disabled", false);
+					$("#bldetail2date").prop("disabled", false);
+					$("#bldetail2money").prop("disabled", false);
+					$("#bldetail3date").prop("disabled", false);
+					$("#bldetail3money").prop("disabled", false);
+					$("#bldetail3money").prop("disabled", false);
+					$("#updateBtn").prop("disabled", false);
+					$("#releaseBtn").prop("disabled", true);
+				}
 				// $("#bankreqdate").val(lc_data.bankreqdate);
 				// $("#lcno").val(lc_data.lcno);
 				// $("#lcamopen").val(lc_data.lcamopen);
@@ -266,8 +301,8 @@ function releaseBtn() {
 				// Ajaxリクエストが成功
 				var data = JSON.parse(data);
 
-				//LC情報画面に遷移
-				returnBtn();
+				//編集画面リロード
+				window.location.reload();
 
 				//ローダー非表示
 				$("#masking_loader").css("display", "none");

@@ -7,7 +7,7 @@
         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
 
         // 別ウィンドウで表示
-        var w = window.open(url + '?' + sessionID + '&' + lngStockNo + '&' + lngRevisionNo, 'display-detail', 'width=1000, height=550, resizable=yes, scrollbars=yes, menubar=no');
+        var w = window.open(url + '?' + sessionID + '&' + lngStockNo + '&' + lngRevisionNo, 'display-detail', 'width=1000, height=768, resizable=yes, scrollbars=yes, menubar=no');
         // w.onunload = function () {
         //     window.opener.location.reload();
         // }

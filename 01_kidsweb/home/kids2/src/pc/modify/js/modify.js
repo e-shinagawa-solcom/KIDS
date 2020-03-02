@@ -10,23 +10,6 @@
     // 対象チェックボックスクリックイベントの設定
     setAllCheckClickEvent($("#allChecked"), $("#tableB"), $("#tableB_chkbox"));
 
-    // $("#allChecked").prop('checked', true);
-
     $("select[name='lngMonetaryRateCode'] option:not(:selected)").prop('disabled', true);
-
-    // $("#tableB_chkbox").find("tbody tr").css("background-color", "#bbbbbb");
-    // $("#tableB").find("tbody tr").css("background-color", "#bbbbbb");
-    // $("#tableB_chkbox tbody tr").each(function () {
-    //     var status = $(this).find('input[type="checkbox"]').checked;
-    //     if (status) {
-    //         $(this).css("background-color", "#bbbbbb");
-    //         var rowindex = $(this).index();
-    //         console.log(rowindex);
-    //         $("#tableB tbody tr:nth-child(" + rowindex + ")").css("background-color", "#bbbbbb");
-    //     } else {
-    //         $(this).css("background-color", "#ffffff");
-    //         $("#tableB tbody tr:nth-child(" + rowindex + ")").css("background-color", "#ffffff");
-    //     }
-    // });
 
 })();
