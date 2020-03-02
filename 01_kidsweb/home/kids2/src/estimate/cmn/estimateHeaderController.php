@@ -282,10 +282,12 @@ class estimateHeaderController {
         $productEnglishName = $this->productEnglishName;
         // 文字列チェック(半角英数字記号 ASCIIの0x20～0x7e)
         if (isset($productEnglishName) && $productEnglishName !=='') {
+/*
             if(!preg_match("/\A[ -~]+\z/", $productEnglishName)) {
                 // エラー処理
                 $this->messageCode['productEnglishName'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
+*/
         } else {
             $this->messageCode['productEnglishName'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須チェック
         }
