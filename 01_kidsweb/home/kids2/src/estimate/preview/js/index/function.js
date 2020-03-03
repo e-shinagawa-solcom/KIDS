@@ -1,4 +1,5 @@
 $(function(){
+    window.onbeforeunload = ReloadParent;
 	$('.btnSwitch').on('click', function(){
 		var sessionID = $('input[name="strSessionID"]').val();
 		var estimateNo = $('input[name="estimateNo"]').val();
@@ -212,4 +213,8 @@ function addPostData(name, value, formElement) {
 	return;
 }
 
+function ReloadParent()
+{
+	window.opener.location.reload();
+}
 

@@ -17,7 +17,7 @@ $aryHtml["strErrorMessage"] = "ERROR! ". $message;
 
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "/result/error/parts.tmpl" );
+$objTemplate->getTemplate( "/estimate/error/parts.tmpl" );
 
 // テンプレート生成
 $objTemplate->replace( $aryHtml );
