@@ -133,8 +133,6 @@ if ($file["exc_tmp_name"]) {
 				if ($sheetInfo['displayInvalid']) {
 					continue;
 				} else {
-					$sheetExistFlag = true;
-
 					// 輸入費用計算用変数（関税の小計の合計）
 					$tariffTotal = 0;
 					
@@ -190,11 +188,18 @@ if ($file["exc_tmp_name"]) {
 								}
 								else{
 									$hiddenList[$row] = false;
+                				    $validRowCount++;
 								}							
 							}
 						}
 					}
-
+					if($validRowCount == 0){
+						// 有効な行がない場合は以降のチェック不要
+						continue;
+					}
+					
+					// 有効行がある（=有効なシートである）
+					$sheetExistFlag = true;
 					// 行オブジェクトを基にした処理
 					foreach ($objRowList as $row => $objRow) {
 						$columnList = $objRow->columnNumberList;
