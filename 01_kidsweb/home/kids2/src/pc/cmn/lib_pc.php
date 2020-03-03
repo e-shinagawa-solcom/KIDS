@@ -1136,8 +1136,8 @@ function fncGetTaxInfo($dtmStockAppDate, $objDB)
         . "FROM m_tax "
         . "WHERE dtmapplystartdate <= to_date('" . $dtmStockAppDate . "', 'yyyy/mm/dd') "
         . "AND dtmapplyenddate >= to_date('" . $dtmStockAppDate . "', 'yyyy/mm/dd') "
-        . "GROUP BY lngtaxcode, curtax ";
-        // . "ORDER BY lngpriority ";
+        . "GROUP BY lngtaxcode, curtax, lngpriority "
+        . "ORDER BY lngpriority ";
 
     $objResult = array();
 

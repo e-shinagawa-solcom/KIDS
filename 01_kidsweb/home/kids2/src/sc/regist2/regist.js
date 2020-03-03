@@ -57,9 +57,7 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
                 console.log("81：「外税」");
                 // 81：「外税」を選択（他の項目も選択可能）
                 $("select[name='lngTaxClassCode']").val("2");
-                $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
-                $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
-
+                $("select[name='lngTaxClassCode']").prop('disabled', false);
                 $("input[name='dtmPaymentLimit']").prop('disabled', true);
                 $("input[name='dtmPaymentLimit']").val("");
                 $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "none");
@@ -72,12 +70,9 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
                 console.log("81以外：「非課税」固定");
                 // 81以外：「非課税」固定
                 $("select[name='lngTaxClassCode']").val("1");
-                $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
+                $("select[name='lngTaxClassCode']").prop('disabled', true);
                 $("select[name='lngPaymentMethodCode']").val("1");
-                $("select[name='lngPaymentMethodCode'] option[value=0]").prop('disabled', true);
-
-                $('select[name="lngTaxRate"]').val('');
-                $("select[name='lngTaxRate'] option:not(:selected)").prop('disabled', true);
+                $("select[name='lngPaymentMethodCode']").prop('disabled', true);
                 // 支払期限の設定
                 $("input[name='dtmPaymentLimit']").prop('disabled', false);
                 $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "");
@@ -87,6 +82,8 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
                 now.setMonth(now.getMonth() + 1);
                 $('input[name="dtmPaymentLimit"]').val(now.getFullYear() + "/" + ("00" + (now.getMonth() + 1)).slice(-2) + "/" + ("00" + now.getDate()).slice(-2));
             }
+            setTaxRate();
+
         }).fail(function (error) {
             console.log("fail:get-lngcountrycode");
             console.log(error);
@@ -94,8 +91,40 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
 
     } else {
         // 顧客コードが空なら固定解除
-        $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', false);
+        $("select[name='lngTaxClassCode']").val("");
+        $('select[name="lngTaxRate"]').val("");
+        $("select[name='lngTaxClassCode']").prop('disabled', false);
     }
+}
+// 消費税率の設定
+function setTaxRate() {
+    // 消費税区分を取得
+    var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
+    if (taxClassCode == 1) {
+        if (checkTaxRate()) {
+            $('select[name="lngTaxRate"]').prepend('<option value="0">0%</option>');
+        }
+        $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
+        $("select[name='lngTaxRate']").prop('disabled', true);
+    } else {
+        $("select[name='lngTaxRate']").prop('disabled', false);
+        if (!checkTaxRate()) {
+            $('select[name="lngTaxRate"]').children('option[value="0"]').remove();
+        }
+        $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
+    }
+}
+// 消費税率プルダウンに0％あるかどうかを確認する
+function checkTaxRate() {
+    var result = true;
+    $('select[name="lngTaxRate"] option').each(function (index, element) {
+        if (element.text === '0%') {
+            result = false;
+            return false;
+        }
+        return true;
+    });
+    return result;
 }
 // 国コードの取得
 function GetLngCountryCode(postTarget, strCompanyDisplayCode, strSessionID) {
@@ -129,7 +158,7 @@ function SearchReceiveDetail(data) {
     $('#tableA tbody tr').remove();
     $('#tableA tbody tr td').width('');
     $('#tableA_head thead tr th').width('');
-
+    console.log(data.detail_body);
     var subElements = $(data.detail_body);
     subElements.each(function (i, e) {
         var checkElements = $(data.chkbox_body).eq($(this).index());
@@ -138,7 +167,7 @@ function SearchReceiveDetail(data) {
         var rev1 = $(this).find('td.detailReceiveRevisionNo').text();
         var addObj = true;
 
-    
+
         $('#tableB tbody tr').each(function (i, e) {
             var rn2 = $(this).find('td.forEdit.detailReceiveNo').text();
             var dn2 = $(this).find('td.forEdit.detailReceiveDetailNo').text();
@@ -155,8 +184,8 @@ function SearchReceiveDetail(data) {
             $('#tableA').append($(this));
         }
     });
-    
-    
+
+
 
     resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
     // テーブル行クリックイベントの設定
@@ -177,6 +206,9 @@ function SearchReceiveDetail(data) {
         }
     });
 
+
+    resetTableRowid($('#tableA'));
+
     $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
     $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
     // $('input[name="strMonetaryRateName"]').val(data.strmonetaryratename);
@@ -188,6 +220,19 @@ function SearchReceiveDetail(data) {
 function ClearAllEditDetail() {
     // 全削除ボタンクリックを手動で起動
     $("#AllDeleteBt").trigger('click');
+}
+
+
+function resetTableADisplayStyle() {
+    $("#tableA tbody tr").each(function (i, e) {
+        $(this).find("td:nth-child(1)").css("display", "");
+    });
+}
+
+function resetTableBDisplayStyle() {
+    $("#tableB tbody tr").each(function (i, e) {
+        $(this).find("td:nth-child(1)").css("display", "none");
+    });
 }
 // ------------------------------------------------------------------
 
@@ -224,41 +269,35 @@ jQuery(function ($) {
         resetTableRowid($('#tableA'));
     });
 
-    // 消費税率の設定
-    var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
-    if (taxClassCode == 1) {
-        $('select[name="lngTaxRate"]').val('');
-    } else {
-        $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
-    }
+    // 消費税率の設定    
+    setTaxRate();
 
     if ($('input[name="lngCountryCode"').val().length > 0) {
         if ($('input[name="lngCountryCode"').val() == "81") {
             console.log("81：「外税」");
             // 81：「外税」を選択（他の項目も選択可能）
             $("select[name='lngTaxClassCode']").val("2");
-            $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
-            $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
+            $("select[name='lngTaxClassCode']").prop('disabled', false);
             $("input[name='dtmPaymentLimit']").prop('disabled', true);
             $("input[name='dtmPaymentLimit']").val("");
             $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "none");
             $("select[name='lngPaymentMethodCode']").val("0");
-            $("select[name='lngPaymentMethodCode'] option:not(:selected)").prop('disabled', true);
+            $("select[name='lngPaymentMethodCode']").prop('disabled', true);
             $('input[name="strMonetaryRateName"]').val("－");
             $('input[name="lngMonetaryRateCode"]').val("0");
         } else {
             console.log("81以外：「非課税」固定");
             // 81以外：「非課税」固定
             $("select[name='lngTaxClassCode']").val("1");
-            $("select[name='lngTaxClassCode'] option:not(:selected)").prop('disabled', true);
+            $("select[name='lngTaxClassCode']").prop('disabled', true);
             $("select[name='lngPaymentMethodCode']").val("1");
-            $("select[name='lngPaymentMethodCode'] option[value=0]").prop('disabled', true);
-
-            $('select[name="lngTaxRate"]').val('');
-            $("select[name='lngTaxRate'] option:not(:selected)").prop('disabled', true);
+            $("select[name='lngPaymentMethodCode']").prop('disabled', true);
             $('input[name="strMonetaryRateName"]').val("TTM");
             $('input[name="lngMonetaryRateCode"]').val("1");
         }
+    } else {
+        $("select[name='lngTaxClassCode']").val("");
+        $("select[name='lngTaxRate']").val("");
     }
 
     if ($('input[name="lngSlipNo"]').val().length > 0) {
@@ -388,8 +427,7 @@ jQuery(function ($) {
         // ------------------
         // フォームに値を設定
         // ------------------
-        if ($('input[name="lngMonetaryUnitCode"]').val() == "1" || $('input[name="lngMonetaryUnitCode"]').val() == "" )
-        {
+        if ($('input[name="lngMonetaryUnitCode"]').val() == "1" || $('input[name="lngMonetaryUnitCode"]').val() == "") {
             $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 0));
         } else {
             $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 2));
@@ -471,7 +509,7 @@ jQuery(function ($) {
                 //顧客品番
                 strgoodscode: $(tr).children('.detailGoodsCode').text(),
                 //製品コード
-                strproductcode: $(tr).children('.detailProductCode').text().substr(0,5),
+                strproductcode: $(tr).children('.detailProductCode').text().substr(0, 5),
                 //製品名
                 strproductname: $(tr).children('.detailProductName').text(),
                 //製品名（英語）
@@ -784,14 +822,8 @@ jQuery(function ($) {
     //   events
     // ------------------------------------------
     $("select[name='lngTaxClassCode']").on('change', function () {
-        // 消費税区分を取得
-        var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
-        if (taxClassCode == 1) {
-            // $('select[name="lngTaxRate"]').append('<option value=""></option>');
-            $('select[name="lngTaxRate"]').prop("selectedIndex", 0);
-        } else {
-            $('select[name="lngTaxRate"]').prop("selectedIndex", 1);
-        }
+
+        setTaxRate();
 
         updateAmount();
 
@@ -824,6 +856,8 @@ jQuery(function ($) {
             //消費税率の選択項目更新
             $('select[name="lngTaxRate"] > option').remove();
             $('select[name="lngTaxRate"]').append(data);
+
+            setTaxRate();
 
             //金額の更新
             updateAmount();
@@ -860,17 +894,6 @@ jQuery(function ($) {
 
     });
 
-
-    // $('input[id="DetailTableBodyAllCheck"').on({
-    //     'click': function () {
-    //         alert("test");
-    //         var status = this.checked;
-    //         $('input[type="checkbox"][name="edit"]')
-    //             .each(function () {
-    //                 this.checked = status;
-    //             });
-    //     }
-    // });
 
 
     // 検索条件入力ボタン押下
@@ -993,6 +1016,10 @@ jQuery(function ($) {
             $("#tableA thead tr th").width('');
             $("#tableA_head tr th").width('');
         }
+
+        // 対象チェックボックスチェック状態の設定
+        scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+
     });
 
     // 全削除ボタンのイベント
@@ -1001,13 +1028,18 @@ jQuery(function ($) {
         // テーブルBのデータをすべてテーブルAに移動する
         deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailReceiveNo')
 
-        resetTableRowid($("#tableA"));
-        
         // テーブル行クリックイベントの設定
         selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
 
+        resetTableADisplayStyle();
+
+        resetTableBDisplayStyle();
+
+
         $("#tableA_head").trigger("update");
         $("#tableA").trigger("update");
+
+        resetTableRowid($("#tableA"));
 
         // 合計金額・消費税額の更新
         updateAmount();
@@ -1018,12 +1050,17 @@ jQuery(function ($) {
 
         // テーブルBの選択されたデータをテーブルAに移動する
         deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailReceiveNo');
-        
-        resetTableRowid($("#tableA"));
+
+        resetTableADisplayStyle();
+
+        resetTableBDisplayStyle();
 
         $("#tableA_head").trigger("update");
-        
+
         $("#tableA").trigger("update");
+
+        resetTableRowid($("#tableA"));
+
         // テーブル行クリックイベントの設定
         selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
 

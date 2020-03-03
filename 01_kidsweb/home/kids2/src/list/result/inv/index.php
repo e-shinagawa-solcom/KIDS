@@ -232,7 +232,7 @@ if ($lngResultNum > 0) {
     }
 } else {
     $errorFlag = true;
-    $lngErrorCode = 9214;
+    $lngErrorCode = 9215;
     $aryErrorMessage = "";
 }
 if ($errorFlag) {

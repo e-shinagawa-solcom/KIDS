@@ -15,6 +15,7 @@
     // エラーメッセージ（書式誤り）
     var msgSpecialFormat = "書式に誤りがあります。";
     var msgLessThantToDate = "FROMにTOより未来の日付が指定されました。";
+    var msgLessThanToday = "未来の日付が指定されました。";
 
 
     // validationキック
@@ -112,6 +113,53 @@
         msgDateFormat
     );
 
+
+    // 日付が未来日でないか ActionDate
+    $.validator.addMethod(
+        "isLessThanToday",
+        function (value, element, params) {
+            if (params && value != '') {
+                if (/^[0-9]{8}$/.test(value)) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
+                var regResult = regDate.exec(value);
+                var yyyy = regResult[1];
+                var mm = regResult[2];
+                var dd = regResult[3];
+                var di = new Date(yyyy, mm - 1, dd);
+                // 現在の日時と比較
+                var nowDi = new Date();
+                // 入力した年が現在より小さければ正
+                if (nowDi.getFullYear() > di.getFullYear()) {
+                    return true;
+                    // 入力した年が現在より大きければエラー
+                } else if (nowDi.getFullYear() < di.getFullYear()) {
+                    return false;
+                    // 入力した年が現在と同じ場合
+                } else if (nowDi.getFullYear() == di.getFullYear()) {
+                    // 入力した月が現在より小さければ正
+                    if (nowDi.getMonth() > di.getMonth()) {
+                        return true;
+                        // 入力した月が現在より大きければエラー
+                    } else if (nowDi.getMonth() < di.getMonth()) {
+                        return false;
+                    } else if (nowDi.getMonth() == di.getMonth()) {
+                        // 入力した日が現在と同じかそれより小さければ正
+                        if (nowDi.getDate() >= di.getDate()) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+            } return true;
+        },
+        msgLessThanToday
+    );
 
     // FROM_XXXXがTO_XXXXより小さいか(同日不可)
     $.validator.addMethod(
@@ -230,6 +278,9 @@
                     return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked && $('input[name="To_dtmInsertDate"]').val() == "";
                 },
                 checkDateFormat: function () {
+                    return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked;
+                },
+                isLessThanToday: function () {
                     return $('input[name="IsSearch_dtmInsertDate"]').get(0).checked;
                 }
             },
