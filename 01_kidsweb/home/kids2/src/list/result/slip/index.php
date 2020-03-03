@@ -132,6 +132,18 @@ $aryQuery[] = "  ) ";
 /////////////////////////////////////////////////////////////////
 // 検索条件
 /////////////////////////////////////////////////////////////////
+// 登録日_from
+if (array_key_exists("dtmInsertDate", $searchColumns) &&
+array_key_exists("dtmInsertDate", $from) && $from["dtmInsertDate"] != '') {
+$aryQuery[] = " AND date_trunc('day', s.dtmInsertDate )" .
+" >= '" . pg_escape_string($from["dtmInsertDate"]) . "'";
+}
+// 登録日_to
+if (array_key_exists("dtmInsertDate", $searchColumns) &&
+array_key_exists("dtmInsertDate", $to) && $to["dtmInsertDate"] != '') {
+$aryQuery[] = " AND date_trunc('day', s.dtmInsertDate )" .
+" <= " . "'" . pg_escape_string($to["dtmInsertDate"]) . "'";
+}
 // 納品日_from
 if (array_key_exists("dtmDeliveryDate", $searchColumns) &&
     array_key_exists("dtmDeliveryDate", $from) && $from["dtmDeliveryDate"] != '') {

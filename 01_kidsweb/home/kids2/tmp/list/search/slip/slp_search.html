@@ -74,6 +74,17 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmInsertDate" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">登録日</span>
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" value="" alt="dtmInsertDate" tabindex="" maxlength="10"> TO
+                    <input class="TxtStyle05L is-date" name="To_dtmInsertDate" type="text" value="" tabindex="" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
                     <input name="IsSearch_lngCustomerCompanyCode" class="is-search" type="checkbox">
                 </span>
                 <span class="regist-label">
@@ -122,8 +133,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">納品日</span>
                     FROM
-                    <input class="TxtStyle05L is-from-date" name="From_dtmDeliveryDate" type="text" value="" alt="dtmDeliveryDate"
-                        tabindex="" maxlength="10"> TO
+                    <input class="TxtStyle05L is-from-date" name="From_dtmDeliveryDate" type="text" value="" alt="dtmDeliveryDate" tabindex=""
+                        maxlength="10"> TO
                     <input class="TxtStyle05L is-date" name="To_dtmDeliveryDate" type="text" value="" tabindex="" maxlength="10">
                 </span>
             </div>
@@ -136,7 +147,7 @@
                     <input class="TxtStyle05L" name="lngDeliveryPlaceCode" type="text" alt="DeliveryPlace">
                     <input class="disTxt46L" name="strDeliveryPlaceName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
-				</span>
+                </span>
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
@@ -146,7 +157,8 @@
                     <span class="regist-label__text">起票者</span>
                     <input class="TxtStyle05L" name="lngInsertUserCode" type="text" alt="InsertUser" displayFlagLimit="0">
                     <input class="disTxt46L" name="strInsertUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif"
+                        alt="msw">
                 </span>
             </div>
             <div class="regist-line">
@@ -174,9 +186,9 @@
         </form>
     </div>
     <div class="msw-loadpoints">
-		<!-- MSW 納品場所マスタ検索 -->
-		<iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
-		</iframe>
+        <!-- MSW 納品場所マスタ検索 -->
+        <iframe class="msw-location" src="/search/cmn/msw/location/mswlocation.html" frameborder="0">
+        </iframe>
         <!-- MSW 入力者マスタ検索 -->
         <iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
         </iframe>

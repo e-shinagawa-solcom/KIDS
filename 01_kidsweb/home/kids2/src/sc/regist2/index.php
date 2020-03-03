@@ -185,7 +185,7 @@ $optPaymentMethod .= fncGetPulldown("m_paymentmethod", "lngpaymentmethodcode", "
 $aryData["optPaymentMethod"] = $optPaymentMethod;
 
 // 消費税区分プルダウン
-$optTaxClass .= fncGetPulldown("m_taxclass", "lngtaxclasscode", "strtaxclassname", "", "", $objDB);
+$optTaxClass = fncGetPulldown("m_taxclass", "lngtaxclasscode", "strtaxclassname", "", "", $objDB);
 $aryData["optTaxClass"] = $optTaxClass;
 
 // 消費税率プルダウン

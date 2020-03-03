@@ -104,6 +104,21 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 				}
 			}
 
+			// 登録日
+			if ( $strSearchColumnName == "dtmInsertDate" )
+			{
+				if ( $arySearchDataColumn["dtmInsertDateFrom"] )
+				{
+					$dtmSearchDate = $arySearchDataColumn["dtmInsertDateFrom"] . " 00:00:00";
+					$aryQuery[] = " AND s.dtminsertdate >= '" . $dtmSearchDate . "'";
+				}
+				if ( $arySearchDataColumn["dtmInsertDateTo"] )
+				{
+					$dtmSearchDate = $arySearchDataColumn["dtmInsertDateTo"] . " 23:59:59.99999";
+					$aryQuery[] = " AND s.dtminsertdate <= '" . $dtmSearchDate . "'";
+				}
+			}
+
 			// 納品日
 			if ( $strSearchColumnName == "dtmDeliveryDate" )
 			{
@@ -239,7 +254,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$aryOutQuery[] = "	,s.lngSlipNo as lngpkno";			    //売上番号
 	$aryOutQuery[] = "	,s.lngSalesNo as lngSalesNo";			    //売上番号
 	$aryOutQuery[] = "	,s.lngRevisionNo as lngRevisionNo";			//リビジョン番号
-	$aryOutQuery[] = "	,s.dtmInsertDate as dtmInsertDate";			//作成日
+	$aryOutQuery[] = "	,to_char(s.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";			//作成日
 	// 顧客
 	$arySelectQuery[] = ", cust_c.strcompanydisplaycode as strCustomerDisplayCode";
 	$arySelectQuery[] = ", s.strcustomername as strCustomerDisplayName";

@@ -109,6 +109,7 @@ $aryTableHeadBtnName_SLIP["btnfix"] = "修正";
 $aryTableHeadBtnName_SLIP["btnhistory"] = "履歴";
 $aryTableBackBtnName_SLIP["btndelete"] = "削除";
 // ヘッダ部
+$aryTableHeaderName_SLIP["dtminsertdate"] = "登録日";
 $aryTableHeaderName_SLIP["lngcustomercode"] = "顧客";
 $aryTableHeaderName_SLIP["lngtaxclasscode"] = "課税区分";
 $aryTableHeaderName_SLIP["strslipcode"] = "納品書NO";

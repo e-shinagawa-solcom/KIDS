@@ -173,7 +173,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
     $objDB->freeResult($lngResultID);
 
     // 選択項目作成
-    $strHtml = "<OPTION VALUE=\"\" SELECTED>0%</OPTION>\n";
+    $strHtml = "<OPTION VALUE=\"0\">0%</OPTION>\n";
     for ($i = 0; $i < count($aryResult); $i++) {
         $optionValue = $aryResult[$i]["lngtaxcode"];
         $displayText = $aryResult[$i]["curtax"] * 1 . "%"; // 小数点末尾の0をカット

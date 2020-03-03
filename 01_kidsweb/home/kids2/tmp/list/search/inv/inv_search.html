@@ -74,6 +74,18 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
+                    <input name="IsSearch_dtmInsertDate" class="is-search" type="checkbox">
+                </span>
+                <span class="regist-label">
+                    <span class="regist-label__text">登録日</span>
+                    FROM
+                    <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" value="" alt="dtmDeliveryDate"
+                        tabindex="" maxlength="10"> TO
+                    <input class="TxtStyle05L is-date" name="To_dtmInsertDate" type="text" value="" tabindex="" maxlength="10">
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
                     <input name="IsSearch_lngCustomerCompanyCode" class="is-search" type="checkbox">
                 </span>
                 <span class="regist-label">
@@ -147,18 +159,6 @@
                     <input class="TxtStyle05L" name="lngInputUserCode" type="text" alt="InputUser" displayFlagLimit="0">
                     <input class="disTxt46L" name="strInputUserName" type="text" readonly>
                     <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_dtmInsertDate" class="is-search" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label__text">入力日</span>
-                    FROM
-                    <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" value="" alt="dtmDeliveryDate"
-                        tabindex="" maxlength="10"> TO
-                    <input class="TxtStyle05L is-date" name="To_dtmInsertDate" type="text" value="" tabindex="" maxlength="10">
                 </span>
             </div>
             <input type="hidden" name="ActionScriptName" value="/list/slip/result/index.php">
