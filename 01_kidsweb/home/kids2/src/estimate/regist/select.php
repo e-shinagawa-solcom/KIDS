@@ -135,7 +135,7 @@ if ($file["exc_tmp_name"]) {
 				} else {
 					// 輸入費用計算用変数（関税の小計の合計）
 					$tariffTotal = 0;
-					
+					$validRowCount = 0;
 					// シートが表示無効でない場合はワークシート処理オブジェクトのインスタンス生成
 					$objSheet = new estimateSheetController();
 

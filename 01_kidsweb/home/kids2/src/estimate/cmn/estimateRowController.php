@@ -274,8 +274,8 @@ abstract class estimateRowController {
            return true;
         }
 
-        // （プレビュー画面用）金額がセットされていない場合、登録対象外として無視する。（以降のチェックはしない）
-        if($this->quantity == '' && $this->price == 0 )
+        // （プレビュー画面用）数量がセットされていない場合、登録対象外として無視する。（以降のチェックはしない）
+        if($this->quantity == '' || $this->quantity == 0)
         {
            return true;
         }
