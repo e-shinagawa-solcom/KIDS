@@ -1046,10 +1046,16 @@ function fncUpdateLcinfo($objDB, $data)
                     lcno = $6,
                     lcamopen = $7,
                     validmonth = $8,
-                    lcstate = $9
+                    lcstate = $9,
+                    bldetail1date = $10,
+                    bldetail1money = $11,
+                    bldetail2date = $12,
+                    bldetail2money = $13,
+                    bldetail3date = $14,
+                    bldetail3money = $15
                 where
-                    pono = $10
-                    and poreviseno = $11
+                    pono = $16
+                    and poreviseno = $17
             ";
     $bind = array(($data["opendate"] == "") ? null : $data["opendate"],
         ($data["portplace"] == "") ? null : $data["portplace"],
@@ -1059,7 +1065,14 @@ function fncUpdateLcinfo($objDB, $data)
         ($data["lcno"] == "") ? null : $data["lcno"],
         ($data["lcamopen"] == "") ? null : date($data["lcamopen"]),
         ($data["validmonth"] == "") ? null : str_replace("/", "", $data["validmonth"]),
-        $data["lcstate"], $data["pono"], $data["poreviseno"],
+        $data["lcstate"], 
+        ($data["bldetail1date"] == "") ? null : date($data["bldetail1date"]),
+        ($data["bldetail1money"] == "") ? null : date($data["bldetail1money"]),
+        ($data["bldetail2date"] == "") ? null : date($data["bldetail2date"]),
+        ($data["bldetail2money"] == "") ? null : date($data["bldetail2money"]),
+        ($data["bldetail3date"] == "") ? null : date($data["bldetail3date"]),
+        ($data["bldetail3money"] == "") ? null : date($data["bldetail3money"]),
+        $data["pono"], $data["poreviseno"],
     );
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
@@ -1090,10 +1103,16 @@ function fncUpdateLcinfoToAmandCancel($objDB, $data)
                     bankreqdate = $3,
                     lcamopen = $4,
                     validmonth = $5,
-                    lcstate = 8
+                    lcstate = 8,
+                    bldetail1date = $6,
+                    bldetail1money = $7,
+                    bldetail2date = $8,
+                    bldetail2money = $9,
+                    bldetail3date = $10,
+                    bldetail3money = $11
                 where
-                    pono = $6
-                    and poreviseno = $7
+                    pono = $12
+                    and poreviseno = $13
             ";
 
     $bind = array(($data["opendate"] == "") ? null : $data["opendate"],
@@ -1101,6 +1120,12 @@ function fncUpdateLcinfoToAmandCancel($objDB, $data)
         ($data["bankreqdate"] == "") ? null : $data["bankreqdate"],
         ($data["lcamopen"] == "") ? null : $data["lcamopen"],
         ($data["validmonth"] == "") ? null : $data["validmonth"],
+        ($data["bldetail1date"] == "") ? null : date($data["bldetail1date"]),
+        ($data["bldetail1money"] == "") ? null : date($data["bldetail1money"]),
+        ($data["bldetail2date"] == "") ? null : date($data["bldetail2date"]),
+        ($data["bldetail2money"] == "") ? null : date($data["bldetail2money"]),
+        ($data["bldetail3date"] == "") ? null : date($data["bldetail3date"]),
+        ($data["bldetail3money"] == "") ? null : date($data["bldetail3money"]),
         $data["pono"], $data["poreviseno"]);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);

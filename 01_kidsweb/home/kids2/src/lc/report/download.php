@@ -29,6 +29,11 @@ $data = $_POST;
 
 $data["bankname"] = $_REQUEST["bankname"];
 
+foreach ($data as $key => $value) {
+    $data[$key] = trim($value);
+}
+
+
 // セッション確認
 $objAuth = fncIsSession($data["strSessionID"], $objAuth, $objDB);
 
@@ -216,37 +221,37 @@ function reportTwoOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $pageN
 {
     $insertData = array();
     $priceTotal = 0;
+    $itemTotal = 0;
+    $opendate = str_replace("/", "", $objectYm);
     // 帳票出力用のL/C別合計
-    $lcinfoLst = fncGetLcInfoForReportTwo($objDB, str_replace("/", "", $objectYm), $currencyClass);
+    $lcinfoSumLst = fncGetSumMoneyPriceForReportTwo($objDB, $opendate, $currencyClass);
 
     // （臨時テーブル）帳票LC別合計テーブルのデータを全件削除する
     fncDeleteReportByLcTotal($objDB);
 
-    if ($lcinfoLst && count($lcinfoLst) > 0) {
-        $lcno = "";
-        $bankcd = "";
-        $benecode = "";
-        $count = 0;
-        foreach ($lcinfoLst as $lcinfo) {
-            if ($lcno == $lcinfo["lcno"] && $bankcd == $lcinfo["bankcd"] && $benecode == $lcinfo["payfnameformal"]) {
-                continue;
-            }
-            $count += 1;
-            $lcno = $lcinfo["lcno"];
-            $bankcd = $lcinfo["bankcd"];
-            $benecode = $lcinfo["payfnameformal"];
+    if ($lcinfoSumLst && count($lcinfoSumLst) > 0) {
+        $count = count($lcinfoSumLst);
+        foreach ($lcinfoSumLst as $lcinfosum) {
+            $data["lcno"] = $lcinfosum["lcno"];
+            $data["bankcd"] = $lcinfosum["bankcd"];
+            $data["payfnameformal"] = $lcinfosum["payfnameformal"];
+            $data["opendate"] = $opendate;
+            $data["currencyclass"] = $currencyClass;
+
+            $lcinfoLst = fncGetLcInfoForReportTwo($objDB, $data);
 
             // 帳票LC別合計データの設定
-            $insertData["lcno"] = $lcinfo["lcno"];
-            $insertData["factoryname"] = $lcinfo["payfnameformal"];
-            $insertData["price"] = $lcinfo["moneyprice"];
-            $insertData["shipterm"] = $lcinfo["shipterm"];
-            $insertData["validterm"] = $lcinfo["validterm"];
-            $insertData["bankname"] = $lcinfo["bankname"];
-            $insertData["bankreqdate"] = $lcinfo["bankreqdate"];
-            $insertData["lcamopen"] = $lcinfo["lcamopen"];
+            $insertData["lcno"] = $lcinfoLst[0]["lcno"];
+            $insertData["factoryname"] = $lcinfoLst[0]["payfnameformal"];
+            $insertData["price"] = $lcinfosum["itemprice"];
+            $insertData["shipterm"] = $lcinfoLst[0]["shipterm"];
+            $insertData["validterm"] = $lcinfoLst[0]["validterm"];
+            $insertData["bankname"] = $lcinfoLst[0]["bankname"];
+            $insertData["bankreqdate"] = $lcinfoLst[0]["bankreqdate"];
+            $insertData["lcamopen"] = $lcinfoLst[0]["lcamopen"];
+
             // 合計金額の設定
-            $priceTotal += $lcinfo["moneyprice"];
+            $priceTotal += $lcinfosum["itemprice"];
 
             // （臨時テーブル）帳票LC別合計テーブルにデータを登録する
             fncInsertReportByLcTotal($objDB, $insertData);
@@ -607,6 +612,7 @@ function reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data, 
     $insertData = array();
     // L/C情報を取得する
     $lcinfoLst = fncGetLcInfoForReportSix($objDB, $currencyClass, $data);
+
     // （臨時テーブル）帳票輸入信用状発行情報テーブルよりデータを全件削除する
     fncDeleteReportImpLcOrderInfo($objDB);
 

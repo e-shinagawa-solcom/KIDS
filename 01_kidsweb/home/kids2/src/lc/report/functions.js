@@ -151,7 +151,7 @@ function printBtn() {
 			alert("円価換算額が空です。");
 			return false;
 		}
-		if ($('input[name="rate"]').val().match(/^[0-9]+$/)) {
+		if (!$.isNumeric($('input[name="rate"]').val())) {
 			alert("円価換算額は半角数字で入力してください。");
 			return false;
 		}

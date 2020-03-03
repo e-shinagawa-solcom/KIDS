@@ -193,14 +193,50 @@ function updateBtn() {
 		return false;
 	}
 
+	//決済1日付の形式が日付形式（yyyy/mm/dd）になってない
+	if ($("#bldetail1date").val() != "" && !$("#bldetail1date").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+		alert("決済1日付の形式を確認してください。");
+		$("#bldetail1date").focus();
+		return false;
+	}
+
+	//決済2日付の形式が日付形式（yyyy/mm/dd）になってない
+	if ($("#bldetail2date").val() != "" && !$("#bldetail2date").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+		alert("決済2日付の形式を確認してください。");
+		$("#bldetail2date").focus();
+		return false;
+	}
+
+	//決済3日付の形式が日付形式（yyyy/mm/dd）になってない
+	if ($("#bldetail3date").val() != "" && !$("#bldetail3date").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+		alert("決済3日付の形式を確認してください。");
+		$("#bldetail3date").focus();
+		return false;
+	}
+
+	if ($("#bldetail1money").val() != "" && !$.isNumeric($("#bldetail1money").val())) {
+		alert("決済1金額の形式を確認してください。");
+		$("#bldetail1money").focus();
+		return false;
+	}
+
+	if ($("#bldetail2money").val() != "" && !$.isNumeric($("#bldetail2money").val())) {
+		alert("決済2金額の形式を確認してください。");
+		$("#bldetail2money").focus();
+		return false;
+	}
+
+	if ($("#bldetail2money").val() != "" && !$.isNumeric($("#bldetail3money").val())) {
+		alert("決済3金額の形式を確認してください。");
+		$("#bldetail3money").focus();
+		return false;
+	}
+
 	//発行日が空ではなくて、発行日の年 < 現在日付の年の場合
 	var lcamopen_d = new Date($("#lcamopen").val());
 	console.log(lcamopen_d);
 	var now = new Date();
 	now.setMonth(now.getMonth() - 12);
-	console.log(now);
-	console.log(lcamopen_d.getFullYear);
-	console.log(now.getFullYear);
 	if (lcamopen_d.getFullYear() < now.getFullYear()) {
 		alert("過去年が設定されています。");
 		$("#lcamopen").focus();
@@ -264,6 +300,12 @@ function updateBtn() {
 			'lcno': $("#lcno").val(),
 			'lcamopen': $("#lcamopen").val(),
 			'validmonth': $("#validmonth").val(),
+			'bldetail1date': $("#bldetail1date").val(),
+			'bldetail1money': $("#bldetail1money").val(),
+			'bldetail2date': $("#bldetail2date").val(),
+			'bldetail2money': $("#bldetail2money").val(),
+			'bldetail3date': $("#bldetail3date").val(),
+			'bldetail3money': $("#bldetail3money").val(),
 			'lcstate': lc_data.lcstate,
 			'sessionid': phpData["session_id"]
 		}
