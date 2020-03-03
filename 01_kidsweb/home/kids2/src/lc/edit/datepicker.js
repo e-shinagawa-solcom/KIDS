@@ -7,7 +7,10 @@ $(document).ready(function () {
     var ymdElements = [
         $("#bankreqdate"),
         $("#lcamopen"),
-        $("#validmonth")
+        $("#validmonth"),
+        $("#bldetail1date"),
+        $("#bldetail2date"),
+        $("#bldetail3date")
     ];
 
     // datepickerの設定
@@ -45,7 +48,7 @@ $(document).ready(function () {
                 inst.dpDiv.removeClass('datepicker-month-year');
             }
         }).attr({
-            maxlength: "8"
+            maxlength: "10"
         });
     });
     

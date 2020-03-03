@@ -594,7 +594,6 @@ function fncInsertReportByBeneMonthCal($objDB, $data)
         , $data["date10"]
         , $data["date11"]
         , $data["total"]);
-
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
@@ -969,7 +968,46 @@ function fncGetSumofUnSettedPriceByPayf($objDB)
  * @param [string] $currencyclass
  * @return array
  */
-function fncGetLcInfoForReportTwo($objDB, $opendate, $currencyclass)
+function fncGetSumMoneyPriceForReportTwo($objDB, $opendate, $currencyclass)
+{
+    //クエリの生成
+    $sql = "
+        select
+            lcno,
+            payfnameformal,
+            bankcd,
+            sum(moneyprice) as itemprice
+        from
+            t_lcinfo
+        WHERE
+            opendate = $1
+            and currencyclass = $2
+            and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
+            group by lcno, payfnameformal, bankcd
+        ";
+
+    // クエリへの設定値の定義
+    $bind = array($opendate, $currencyclass);
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+
+    if (!$result) {
+        echo "帳票2出力用のL/C別合計の取得失敗しました。\n";
+        exit;
+    } else {
+        return pg_fetch_all($result);
+    }
+}
+
+
+/**
+ * 帳票出力用のL/C別合計
+ *
+ * @param [object] $objDB
+ * @param [string] $opendate
+ * @param [string] $currencyclass
+ * @return array
+ */
+function fncGetLcInfoForReportTwo($objDB, $data)
 {
     //クエリの生成
     $sql = "
@@ -986,18 +1024,29 @@ function fncGetLcInfoForReportTwo($objDB, $opendate, $currencyclass)
         from
             t_lcinfo
         WHERE
-            opendate = $1
-            and currencyclass = $2
-            and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
-            order by lcno, payfnameformal, bankcd
-        ";
+            opendate = '". $data["opendate"] ."'";
+    $sql .= " and currencyclass = '". $data["currencyclass"] ."'";
+    $sql .= " and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)";
+    if ($data["lcno"] == null) {
+        $sql .= " and lcno is null ";
+    } else {        
+        $sql .= " and lcno = '". $data["lcno"] ."'";
+    }
+    if ($data["payfnameformal"] == null) {
+        $sql .= " and payfnameformal is null ";
+    } else {        
+        $sql .= " and payfnameformal = '". $data["payfnameformal"] ."'";
+    }
+    if ($data["bankcd"] == null) {
+        $sql .= " and bankcd is null ";
+    } else {        
+        $sql .= " and bankcd = '". $data["bankcd"] ."'";
+    }
 
-    // クエリへの設定値の定義
-    $bind = array($opendate, $currencyclass);
-    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+    $result = pg_query($objDB->ConnectID, $sql);
 
     if (!$result) {
-        echo "帳票2出力用のL/C別合計の取得失敗しました。\n";
+        echo "帳票2出力用のL/C別情報の取得失敗しました。\n";
         exit;
     } else {
         return pg_fetch_all($result);
