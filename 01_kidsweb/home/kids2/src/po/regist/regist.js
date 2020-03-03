@@ -148,7 +148,7 @@ jQuery(function ($) {
                 lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
                 curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text(),
                 dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
-                strDetailNote: $(tr).find('.detailNote').text(),
+                strDetailNote: $(tr).find('.detailNote').find('input:text').val(),
                 strMoldNo: null,
             };
             result.push(param);
@@ -333,12 +333,14 @@ jQuery(function ($) {
 
     function resetTableADisplayStyle() {
         $("#tableA tbody tr").each(function (i, e) {
+            $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
             $(this).find(".detailNote").find('input:text').prop('disabled', true);
         });
     }
 
     function resetTableBDisplayStyle() {
         $("#tableB tbody tr").each(function (i, e) {
+            $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
             $(this).find(".detailNote").find('input:text').prop('disabled', false);
         });
     }
