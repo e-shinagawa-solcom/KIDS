@@ -9,10 +9,17 @@ jQuery(function ($) {
 
     // チェックボックスクリックイベントの設定
     setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
+    
+    // テーブルAの幅をリセットする
     resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
 
     // テーブルBの幅をリセットする
     resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
+
+    resetTableADisplayStyle();
+
+    resetTableBDisplayStyle();
+
     // テーブル行クリックイベントの設定
     selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
 
@@ -87,7 +94,7 @@ jQuery(function ($) {
                 lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
                 curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text().split(" ")[1],
                 dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
-                strDetailNote: $(tr).find('.detailDetailNote').text(),
+                strDetailNote: $(tr).find('.detailDetailNote').find('input:text').val(),
                 lngOrderNo: $(tr).find('input[name="lngorderno"]').val(),
                 lngOrderRevisionNo: $(tr).find('input[name="lngorderrevisionno"]').val(),
                 lngOrderDetailNo: $(tr).find('input[name="lngorderdetailno"]').val(),
@@ -268,13 +275,15 @@ jQuery(function ($) {
 
 function resetTableADisplayStyle() {
     $("#tableA tbody tr").each(function (i, e) {
-        $(this).find(".detailNote").find('input:text').prop('disabled', true);
+        $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
+        $(this).find(".detailDetailNote").find('input:text').prop('disabled', true);
     });
 }
 
 function resetTableBDisplayStyle() {
     $("#tableB tbody tr").each(function (i, e) {
-        $(this).find(".detailNote").find('input:text').prop('disabled', false);
+        $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
+        $(this).find(".detailDetailNote").find('input:text').prop('disabled', false);
     });
 }
 function tableBSort() {
