@@ -38,13 +38,13 @@ class updateOtherCellsController extends estimateOtherCellsController {
         $memberCost = 0;
 
         foreach ($objRowList as $objRow) {
-
+/*
             if ($objRow->invalidFlag) {
                 // 無効フラグがセットされていない場合
                 $objRow->invalidFlag === false;
             }
-
-            if ($objRow->invalidFlag === false) {
+*/
+            if ($objRow->invalidFlag != true) {
                 $areaCode = $objRow->areaCode;
                 // 再計算結果がない場合は取得値を参照する
                 $subtotal = isset($objRow->calculatedSubtotalJP) ? $objRow->calculatedSubtotalJP : $objRow->subtotal;

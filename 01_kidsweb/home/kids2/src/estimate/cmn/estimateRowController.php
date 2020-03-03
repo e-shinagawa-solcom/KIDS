@@ -55,8 +55,9 @@ abstract class estimateRowController {
     public $calculatedSubtotal; // 小計の再計算結果
     public $percentInputFlag; // パーセント入力フラグ
 
-    public $invalidFlag;
-    public $messageCode;
+    public $invalidFlag; // 無効フラグ（エラーとはしないが、登録対象外）
+    public $errorFlag;   // エラーフラグ（無視できないエラー）
+    public $message;
 
     protected $salesOrder;
 
@@ -238,7 +239,7 @@ abstract class estimateRowController {
         $this->price = isset($data['price']) ? $data['price'] : 0; // 単価は未入力を0とする
         $this->divisionSubject = isset($data['divisionSubject']) ? $data['divisionSubject'] : '';
         $this->classItem = isset($data['classItem']) ? $data['classItem'] : '';
-        $this->subtotal = isset($data['subtotal']) ? $data['subtotal'] : 0; /// 小計は未入力を0とする
+        $this->subtotal = isset($data['subtotal']) ? $data['subtotal'] : ''; /// 小計は未入力を''とする
         $this->conversionRate = isset($data['conversionRate']) ? $data['conversionRate'] : '';
         $this->monetaryDisplay = isset($data['monetaryDisplay']) ? $data['monetaryDisplay'] : '';
         $this->monetary = isset($data['monetary']) ? (int)$data['monetary'] : ''; // 比較するのでint型で取得
@@ -262,45 +263,63 @@ abstract class estimateRowController {
         return true;
     }
 
-    // 無効フラグを取得する
+    // 無効フラグ・エラーフラグを取得する
     public function getInvalidFlag() {
         // 全てのエラーメッセージを取得したい場合は$retを使用すること
         // $ret = false;
 
+        // 金額がセットされていない場合、登録対象外として無視する。（以降のチェックはしない）
+        if($this->subtotal == '')
+        {
+           return true;
+        }
+
+        // （プレビュー画面用）金額がセットされていない場合、登録対象外として無視する。（以降のチェックはしない）
+        if($this->quantity == '' && $this->price == 0 )
+        {
+           return true;
+        }
+
+        // 金額がセットされている場合、無効なエラー行とする。
+
         // 売上分類 or 仕入科目のチェック
         $this->validateDivisionSubject();
 
-        if ($this->messageCode['divisionSubject']) {
+        if ($this->message['divisionSubject']) {
             // 売上分類 or 仕入科目の入力が正確でない場合は表示しない
-            return true;
-            // $ret = true;
+            $this->errorFlag = true;
+            // return true;
+            $ret = true;
         }
 
         // 売上区分、仕入部品のチェック
         $this->validateClassItem();
 
-        if ($this->messageCode['classItem']) {
+        if ($this->message['classItem']) {
             // 売上区分 or 仕入部品の入力が正確でない場合は表示しない
-            return true;
-            // $ret = true;
+            $this->errorFlag = true;
+            //return true;
+            $ret = true;
         }
 
         // 数量のチェック
         $this->validateQuantity();
 
-        if ($this->messageCode['quantity']) {
+        if ($this->message['quantity']) {
             // 数量の入力が正確でない場合
-            return true;
-            // $ret = true;
+            $this->errorFlag = true;
+            // return true;
+            $ret = true;
         }
 
         // 単価のバリデーション
         $this->validatePrice();
 
-        if ($this->messageCode['price']) {
+        if ($this->message['price']) {
             // 単価の入力が正確でない場合
-            return true;
-            // $ret = true;
+            $this->errorFlag = true;
+            //return true;
+            $ret = true;
         }
 
         // 輸入費用、関税フラグを設定する
@@ -309,10 +328,11 @@ abstract class estimateRowController {
         // 納期のチェック
         $this->validateDelivery();
 
-        if ($this->messageCode['delivery']) {
+        if ($this->message['delivery']) {
             // 納期の入力が正確でない場合は非表示にする
-            return true;
-            // $ret = true;
+            $this->errorFlag = true;
+            //return true;
+            $ret = true;
         }
 
 
@@ -325,8 +345,8 @@ abstract class estimateRowController {
                         $this->percentInputFlag = true;
                     } else {
                         // 単価が数式の場合、顧客先に数値が入っていない場合は無効にする
-                        return true;
-                        // $ret = true;
+                        //return true;
+                        $ret = true;
                     }
                 }
             } else {
@@ -334,28 +354,30 @@ abstract class estimateRowController {
                     $this->percentInputFlag = true;
                 } else if (!is_numeric($this->price)) {
                     // 単価が数式の場合、顧客先に数値が入っていない場合は無効にする
-                    return true;
-                    // $ret = true;
+                    //return true;
+                    $ret = true;
                 }
             }
 
         } else { // 輸入費用、関税以外の場合
             // 顧客先のチェックを行う
             $this->validateCustomerCompany();
-            if ($this->messageCode['customerCompany']) {
+            if ($this->message['customerCompany']) {
                 // 顧客先の入力が正確でない場合非表示
-                return true;
-                // $ret = true;
+                $this->errorFlag = true;
+                //return true;
+                $ret = true;
             }
         }
 
         // 通貨レートのチェックを行う
         $this->validateConversionRate();
 
-        if ($this->messageCode['conversionRate']) {
+        if ($this->message['conversionRate']) {
             // 通貨レートが正常でない場合
-            return true;
-            // $ret = true;
+            $this->errorFlag = true;
+            //return true;
+            $ret = true;
         }
 
         // 輸入費用と関税以外の場合は小計を再計算し、チェックする
@@ -363,29 +385,19 @@ abstract class estimateRowController {
             // 単価の小数点以下の桁数を整え、小計を再計算する
             $this->resettingPriceAndSubtotal();
 
-            if ($this->messageCode['subtotal']) {
+            if ($this->message['subtotal']) {
                 // 小計の値が正常でない場合
-                return true;
-                // $ret = true;
+                $this->errorFlag = true;
+                //return true;
+                $ret = true;
             }
         }
  
-        return false;
-        // return $ret;
+        //return false;
+        return $ret;
     }
 
 
-
-    // 単価の再計算を行う
-    protected function calcuratePrice() {
-        $quantity = $this->quantity;
-        $subtotal = $this->subtotal;
-        $conversionRate = $this->conversionRate;
-        if($quantity || $subtotal || $conversionRate) {
-            $recalculatedPrice = $subtotal / $quantity / $conversionRate;
-        }
-        return $recalculatedPrice;
-    }
 
     // 単価の桁数調整、小計の再計算を行う
     protected function resettingPriceAndSubtotal() {
@@ -427,7 +439,7 @@ abstract class estimateRowController {
         $price = $this->price;
         $conversionRate = $this->conversionRate;
 
-        if(is_numeric($quantity) || is_numeric($price) || is_numeric($conversionRate)) {
+        if(is_numeric($quantity) && is_numeric($price) && is_numeric($conversionRate)) {
             $calculatedSubtotal = $quantity * $price;
             $calculatedSubtotalJP = $quantity * $price * $conversionRate;
         }
@@ -514,7 +526,7 @@ abstract class estimateRowController {
     // 登録画面移行時のバリデーション処理
     public function workSheetRegistCheck() {
         $this->setInvalidFlag();
-        if ($this->invalidFlag === false) {
+        if ($this->invalidFlag != true) {
             if (!$this->importCostFlag && !$this->tariffFlag) {
                 // 単価の桁数再設定と小計の再計算
                 $this->resettingPriceAndSubtotal();
@@ -525,11 +537,11 @@ abstract class estimateRowController {
     
     // 仕入科目、仕入部品による区別フラグの設定（チャージ、経費）
     protected function setDistinctionFlag() {
-        $messageCodeList = $this->messageCodeList;
+        $messageList = $this->message;
         $divisionSubjectCode = $this->divisionSubjectCode;
         $classItemCode = $this->classItemCode;
         
-        if (!$messageCodeList['divisionSubject'] && !$messageCodeList['classItem']) {
+        if (!$messageList['divisionSubject'] && !$messageList['classItem']) {
             switch ($divisionSubjectCode) {
                 case DEF_STOCK_SUBJECT_CODE_CHARGE:
                     switch ($classItemCode) {
@@ -628,39 +640,50 @@ abstract class estimateRowController {
 
     // 納期のバリデーション
     protected function validateDelivery() {
+        $key = 'delivery';
         $delivery = $this->delivery;
         if (isset($delivery) && $delivery !=='') {
             if (preg_match("/\A(\d{4})\/(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\z/", $delivery)) {
                 list ($year, $month, $day) = explode('/', $delivery);
                 if (!checkdate($month, $day, $year)) {
                     // 存在しない日付エラー
-                    $this->messageCode['delivery'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+                    $message = DEF_MESSAGE_CODE_FORMAT_ERROR;
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['delivery'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+                $message = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['delivery'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
+            $message = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
+        }
+        if( $message ){
+            $str = array("明細部",$this->columnDisplayNameList[$key]);
+            $str = array("明細部",strlen($this->columnDisplayNameList[$key]) > 0 ? $this->columnDisplayNameList[$key] : "納期");
+            $this->message[$key]  = fncOutputError($message, DEF_WARNING, $str, FALSE, '', $this->objDB);
         }
         return true;
     }
 
     // 数量の入力値をバリデーションする
     protected function validateQuantity() {
+        $key = 'quantity';
         $quantity = $this->quantity;
         // バリデーション条件
         if (isset($quantity) && $quantity !=='') {
             if(!preg_match("/\A\d+\z/", $quantity) || $quantity <= 0) {
                 // 自然数でない場合はエラー処理
-                $this->messageCode['quantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+                $message = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else if ((int)$quantity > DEF_DB_INTEGER_MAX_LIMIT) {
                 // オーバーフローする場合はエラー処理
-                $this->messageCode['quantity'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+                $message = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
-            $this->messageCode['quantity'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須チェック
+            $message = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR; // 必須チェック
+        }
+        if( $message ){
+            $str = array("明細部",strlen($this->columnDisplayNameList[$key]) > 0 ? $this->columnDisplayNameList[$key] : "数量");
+            $this->message[$key]  = fncOutputError($message, DEF_WARNING, $str, FALSE, '', $this->objDB);
         }
         return true;
     }
@@ -672,7 +695,8 @@ abstract class estimateRowController {
         if (isset($price) && $price !=='') {
             if (!preg_match("/\A-?\d{0,14}(\.[0-9]+)?\z/", $price)) { // 整数部が14桁まで許容
                 // エラー処理
-                $this->messageCode['price'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+                $str = array("明細部",strlen($this->columnDisplayNameList['price']) > 0 ? $this->columnDisplayNameList['price'] : "単価");
+                $this->message['price']  = fncOutputError(DEF_MESSAGE_CODE_FORMAT_ERROR, DEF_WARNING, $str, FALSE, '', $this->objDB);
             }
         } else {
             // 未入力の場合は0をセットする
@@ -694,6 +718,7 @@ abstract class estimateRowController {
 
     // 売上分類、仕入科目
     protected function validateDivisionSubject() {
+        $key = 'divisionSubject';
         $divisionSubject = $this->divisionSubject;
         if (isset($divisionSubject) && $divisionSubject !=='') {
             // 文字列チェック
@@ -706,22 +731,26 @@ abstract class estimateRowController {
                 // マスターチェック
                 if (!isset($masterData[(int)$divisionSubjectCode])) {
                     // マスターチェックエラー
-                    $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
+                    $message = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
 
             } else {
                 // 書式エラー
-                $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+                $message = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['divisionSubject'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
+            $message = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
         }
-        return true;
+        if( $message ){
+            $str = array("明細部",strlen($this->columnDisplayNameList[$key]) > 0 ? $this->columnDisplayNameList[$key] : "売上分類または仕入科目");
+            $this->message[$key]  = fncOutputError($message, DEF_WARNING, $str, FALSE, '', $this->objDB);
+        }
     }
 
     // 売上区分、仕入部品
     protected function validateClassItem() {
+        $key = 'classItem';
         $classItem = $this->classItem;
         // バリデーション条件
         if (isset($classItem) && $classItem !=='') {
@@ -732,15 +761,19 @@ abstract class estimateRowController {
                 $this->classItemCode = (int)$classItemCode;
                 // マスターチェック
                 if (!isset($masterData[$divisionSubjectCode][(int)$classItemCode])) {
-                    $this->messageCode['classItem'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
+                    $message = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
             } else {
                 // 入力形式不正
-                $this->messageCode['classItem'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+                $message = DEF_MESSAGE_CODE_FORMAT_ERROR;
             }
         } else {
             // 必須エラー
-            $this->messageCode['classItem'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
+            $message = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
+        }
+        if( $message ){
+            $str = array("明細部",strlen($this->columnDisplayNameList[$key]) > 0 ? $this->columnDisplayNameList[$key] : "売上区分または仕入部品");
+            $this->message[$key]  = fncOutputError($message, DEF_WARNING, $str, FALSE, '', $this->objDB);
         }
         return true;
     }
@@ -750,13 +783,15 @@ abstract class estimateRowController {
     protected function validateConversionRate() {
         $conversionRate = $this->conversionRate;
         if (!$conversionRate) {
-            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_NOT_ENTRY_ERROR;
+            $str = array("明細部",strlen($this->columnDisplayNameList['conversionRate']) > 0 ? $this->columnDisplayNameList['conversionRate'] : "通貨レート");
+            $this->message['conversionRate']  = fncOutputError(DEF_MESSAGE_CODE_NOT_ENTRY_ERROR, DEF_WARNING, $str, FALSE, '', $this->objDB);
             return true;
         }
         if (preg_match("/\A\d{0,15}(\.[0-9]+)?\z/", $conversionRate) && $conversionRate > 0) { // 整数部分が15ケタ以内か確認
             return true;
         } else {
-            $this->messageCode['conversionRate'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+            $str = array("明細部",strlen($this->columnDisplayNameList['conversionRate']) > 0 ? $this->columnDisplayNameList['conversionRate'] : "通貨レート");
+            $this->message['conversionRate']  = fncOutputError(DEF_MESSAGE_CODE_FORMAT_ERROR, DEF_WARNING, $str, FALSE, '', $this->objDB);
         }
 
         return true;
@@ -772,13 +807,15 @@ abstract class estimateRowController {
                 $this->customerCompanyCode = (string)$customerCompanyCode;
                 // マスターチェック
                 if (!isset($masterData[$customerCompanyCode])) {
-                    $this->messageCode['customerCompany'] = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
+                $str = array("明細部",strlen($this->columnDisplayNameList['customerCompany']) > 0 ? $this->columnDisplayNameList['customerCompany'] : "顧客または仕入先");
+                    $this->message['customerCompany']  = fncOutputError(DEF_MESSAGE_CODE_MASTER_CHECK_ERROR, DEF_WARNING, $str, FALSE, '', $this->objDB);
                 }
                 $display = $masterData[$customerCompanyCode]['shortName'];
                 $this->customerCompany = $customerCompanyCode. ':'. $display;
             } else {
                 // 入力形式不正
-                $this->messageCode['customerCompany'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+                $str = array("明細部",strlen($this->columnDisplayNameList['customerCompany']) > 0 ? $this->columnDisplayNameList['customerCompany'] : "顧客または仕入先");
+                $this->message['customerCompany']  = fncOutputError(DEF_MESSAGE_CODE_FORMAT_ERROR, DEF_WARNING, $str, FALSE, '', $this->objDB);
             }
         } else {
             // 空欄の場合は'0000'をセット
@@ -799,7 +836,8 @@ abstract class estimateRowController {
         // バリデーション条件
         if (!preg_match("/\A-?\d{0,14}(\.[0-9]+)?\z/", $subtotal)) {
             // エラー処理
-            $this->messageCode['subtotal'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
+            $str = array("明細部",strlen($this->columnDisplayNameList['subtotal']) > 0 ? $this->columnDisplayNameList['subtotal'] : "金額");
+            $this->message['subtotal']  = fncOutputError(DEF_MESSAGE_CODE_FORMAT_ERROR, DEF_WARNING, $str, FALSE, '', $this->objDB);
         }
 
         return true;

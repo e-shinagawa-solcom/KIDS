@@ -185,7 +185,7 @@ if ($file["exc_tmp_name"]) {
 								$objRow->workSheetSelectCheck();
 
 								$objRowList[$row] = $objRow;
-								if ($objRow->invalidFlag === true) {
+								if ($objRow->invalidFlag == true || $objRow->errorFlag == true) {
 									$hiddenList[$row] = true;
 								}
 								else{
@@ -198,33 +198,9 @@ if ($file["exc_tmp_name"]) {
 					// 行オブジェクトを基にした処理
 					foreach ($objRowList as $row => $objRow) {
 						$columnList = $objRow->columnNumberList;
-						
-						// メッセージコードの取得
-						$messageOfConversionRate = $objRow->messageCode['conversionRate'];
-
-						// ブックの適用レートがDBの通貨レートと異なる場合、またはブックの小計が計算結果と異なる場合
-						if ($messageOfConversionRate) {
-						// ブックの適用レートがDBの通貨レートと異なる場合は差分表のデータを作成する
-							$delivery = $objRow->delivery;
-							$monetary = $objRow->monetary;
-							$acquiredRate = $objRow->acquiredRate;
-							$conversionRate = $objRow->conversionRate;
-							$monetaryUnit = $monetaryUnitList[$monetary];
-							if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
-								// 通貨レート差分表のデータ生成
-								$difference[] = array(
-									'delivery' => $delivery,
-									'monetary' => $monetaryUnit,
-									'temporaryRate' => $acquiredRate ? $acquiredRate : '-',
-									'sheetRate' => $conversionRate ? $conversionRate : '-',
-								);
-							} else if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_UNCAUGHT_WARNING) {
-								$notFound[] = array(
-									'delivery' => $delivery,
-									'monetary' => $monetaryUnit,
-									'sheetRate' => $conversionRate ? $conversionRate : '-',
-								);						                        
-							}
+						if( $objRow->errorFlag == true )
+						foreach($objRow->message as $message){
+						    $outputMessage[] = $message;
 						}
 					}
 
@@ -263,11 +239,11 @@ if ($file["exc_tmp_name"]) {
 					$strWSName = $sheetName;
 
 					$strExcel       .= "<div class=\"sheetHeader\" id=\"sheet". $sheetNumber. "\">";
-					$strExcel       .= makeHTML::makeDifferenceRateTable($difference, $differenceMessage);
-					$strExcel       .= "<br>";
-					$strExcel       .= makeHTML::makeNotFoundRateTable($notFound, $notFoundMessage);
-					$strExcel       .= "<br>";
-					// $strExcel       .= makeHTML::makeWarningHTML($outputMessage);
+					//$strExcel       .= makeHTML::makeDifferenceRateTable($difference, $differenceMessage);
+					//$strExcel       .= "<br>";
+					//$strExcel       .= makeHTML::makeNotFoundRateTable($notFound, $notFoundMessage);
+					//$strExcel       .= "<br>";
+					$strExcel       .= makeHTML::makeWarningHTML($outputMessage);
 					$strExcel       .= "<br>";
 					$strExcel		.= makeHTML::getWorkSheet2HTML($strWSName, $sheetNumber, "select"); // ヘッダー
 					$strExcel       .= "</div>";

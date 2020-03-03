@@ -159,7 +159,7 @@
 	if ($message) {
 		$outputMessage[] = $message;
 	}
-
+    $errorFlag = false;
 	// 明細行の処理
 	foreach ($rowParam as $areaCode => $rowParams) {
 		foreach ($rowParams as $row => $params) {
@@ -187,6 +187,13 @@
 			// 行のチェック、再計算を行う
 			$objRow->workSheetRegistCheck();
 
+            $errorFlag = $errorFlag || $objRow->errorFlag;
+            if($objRow->errorFlag){
+                foreach($objRow->message as $message){
+                    $rowErrorMessage[] = $message;
+                }
+                //$rowErrorMessage[] = "****";
+            }
 			$divisionSubjectCode = $objRow->divisionSubjectCode;
 			$classItemCode = $objRow->classItemCode;
 
@@ -196,7 +203,7 @@
 					$tariff = $tariff + $objRow->calculatedSubtotalJP;
 			}
 			// 輸入費用、関税については個別処理を行う為、対象の行番号を配列に格納する
-			if ($objRow->invalidFlag === false) {
+			if ($objRow->invalidFlag != true) {
 				if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_CHARGE) {
 					if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_IMPORT_COST) {
 						$importCostRowList[] = $row;
@@ -209,7 +216,9 @@
 			$objRowList[$row] = $objRow;
 		}	
 	}
-
+	if(isset($rowErrorMessage)){
+        $outputMessage[] = $rowErrorMessage;
+    }
 	// 行番号でソートする
 	ksort($objRowList);
 
@@ -222,7 +231,7 @@
 			$tariffObjRow = &$objRowList[$rowIndex];
 			$tariffObjRow->chargeCalculate($tariff);
 	
-			if ($tariffObjRow->invalidFlag === false) {
+			if ($tariffObjRow->invalidFlag != true) {
 				// 単価出力
 				$priceColumn = $tariffObjRow->columnNumberList['price'];
 				$priceCell =  $priceColumn. $rowIndex;
@@ -248,7 +257,7 @@
 			$importCostObjRow = &$objRowList[$rowIndex];
 			$importCostObjRow->chargeCalculate($importCost);
 	
-			if ($importCostObjRow->invalidFlag === false) {
+			if ($importCostObjRow->invalidFlag != true) {
 				// 単価出力	
 				$priceColumn =  $importCostObjRow->columnNumberList['price'];
 				$priceCell =  $priceColumn. $rowIndex;
@@ -267,6 +276,10 @@
 	if ( $outputMessage ) {
 		$strMessage = '';
 		foreach ($outputMessage as $messageList) {
+		    if( !is_array($messageList))
+		    {
+		        $messageList[] = $messageList;
+		    }
 			foreach ($messageList as $message) {
 				if (!$strMessage) {
 					$strMessage = "<div>". $message. "</div>";
@@ -311,7 +324,7 @@
 	// 行データ
 	$index = 0;
 	foreach ($objRowList as $objRow) {
-		if ($objRow->invalidFlag === false) {
+		if ($objRow->invalidFlag != true) {
 			++$index;
 			$row = $objRow->outputRow();
 			$rowData = $objRow->outputRegistData();

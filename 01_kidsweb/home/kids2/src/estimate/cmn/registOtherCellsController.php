@@ -41,7 +41,7 @@ class registOtherCellsController extends estimateOtherCellsController {
         $memberCost = 0;
 
         foreach ($objRowList as $objRow) {
-            if ($objRow->invalidFlag === false) {
+            if ($objRow->invalidFlag != true) {
                 $areaCode = $objRow->areaCode;
                 // 再計算結果がない場合は0を代入する
                 $subtotal = isset($objRow->calculatedSubtotalJP) ? $objRow->calculatedSubtotalJP : 0;

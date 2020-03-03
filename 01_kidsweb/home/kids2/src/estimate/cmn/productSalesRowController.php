@@ -45,7 +45,7 @@ class productSalesRowController extends estimateRowController {
 
     // 償却数に本荷の数量を加算する
     protected function addProductionQuantity() {
-        if ($this->invalidFlag !== true) {
+        if ($this->invalidFlag != true) {
             if ($this->divisionSubjectCode === DEF_SALES_DIVISION_CODE_PRODUCT_SALES
                 && $this->classItemCode === DEF_SALES_CLASS_CODE_MAIN_PRODUCT) {
 

@@ -87,8 +87,9 @@ class makeHTML {
 	public static function makeWarningHTML($warning = false) {
 		$strWarning = '';
 		if ($warning) {
+			$strWarning .= "<div style=\"color: red;\">以下の警告により、登録されない非表示行があります。情報表示ボタンを押下して非表示行の内容を確認して下さい。</div>";
 			foreach($warning as $warningMessage) {
-			$strWarning .= "<div>".$warningMessage."</div><br>";
+			$strWarning .= "<div>" . $warningMessage . "</div>";
 			}
 		}
 		return $strWarning;

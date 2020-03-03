@@ -208,7 +208,7 @@
 						    $tariff = $tariff + $objRow->calculatedSubtotalJP;
 					}
 					// 輸入費用、関税については個別処理を行う為、対象の行番号を配列に格納する
-					if ($objRow->invalidFlag === false) {
+					if ($objRow->invalidFlag != true) {
 						if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_CHARGE) {
 							if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_IMPORT_COST) {
 								$importCostRowList[] = $row;
@@ -219,7 +219,7 @@
 					}
 
 					$objRowList[$row] = $objRow;
-					if ($objRow->invalidFlag === true) {
+					if ($objRow->invalidFlag == true) {
 						$hiddenList[$row] = true;
 					}
 				}
@@ -235,7 +235,7 @@
 				$tariffObjRow = &$objRowList[$rowIndex];
 				$tariffObjRow->chargeCalculate($tariff);
 	
-				if ($tariffObjRow->invalidFlag === false) {
+				if ($tariffObjRow->invalidFlag != true) {
 					// 単価出力
 					$price = $tariffObjRow->price;
 					$priceColumn = $tariffObjRow->columnNumberList['price'];
@@ -264,7 +264,7 @@
 				$importCostObjRow = &$objRowList[$rowIndex];
 				$importCostObjRow->chargeCalculate($importCost);
 	
-				if ($importCostObjRow->invalidFlag === false) {
+				if ($importCostObjRow->invalidFlag != true) {
 					// 単価出力
 					$price = $importCostObjRow->price;
 	
@@ -304,7 +304,7 @@
 			$columnList = $objRow->columnNumberList;
 			
 			// // メッセージコードの取得
-			// $messageOfConversionRate = $objRow->messageCode['conversionRate'];
+			// $messageOfConversionRate = $objRow->message['conversionRate'];
 
 			// ブックの適用レートがDBの通貨レートと異なる場合
 			// if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
@@ -375,7 +375,7 @@
 		// 行データ
 		$index = 0;
 		foreach ($objRowList as $objRow) {
-			if ($objRow->invalidFlag === false) {
+			if ($objRow->invalidFlag != true) {
 				++$index;
 				$rowData = $objRow->outputRegistData();
 				$rowDataList[$index] = $rowData;
