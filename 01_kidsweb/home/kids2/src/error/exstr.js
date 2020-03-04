@@ -75,6 +75,7 @@ function fncClickEvent( strEvent )
 	}
 	else if( strEvent == 'close' )
 	{
+		window.opener.location.reload();
 		window.parent.close();
 	}
 

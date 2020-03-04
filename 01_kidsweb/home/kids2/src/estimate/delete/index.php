@@ -78,6 +78,11 @@ if (isset($_POST['revisionNo'])) {
 	$estimate = $objDB->getEstimateDetail($estimateNo);
 }
 
+if($estimate == false)
+{
+	fncOutputError ( 1507, DEF_WARNING, "", TRUE, "", $objDB );
+}
+
 $firstEstimateDetail = current($estimate);
 
 if (!isset($revisionNo)) {

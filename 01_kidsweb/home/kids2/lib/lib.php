@@ -1820,7 +1820,6 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 			break;
 	}
 
-
 	// エラー画面出力制御
 	if ( $bytOutputFlag )
 	{
@@ -1857,7 +1856,7 @@ function fncOutputError ( $lngErrorCode, $lngErrorClass, $aryErrorMessage, $bytO
 			$strTopUrl = TOP_URL;
 			$strRedirectHTML = "
 			<script language=javascript>
-			if ( opener )
+			if ( !window.opener )
 			{
 				openerLocation = '$strTopUrl';
 			}
