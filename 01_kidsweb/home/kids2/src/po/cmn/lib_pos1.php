@@ -1433,9 +1433,7 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
     $aryHtml[] = "<table class=\"orderdetail\">";
     $aryHtml[] = "  <tr>";
     $aryHtml[] = "    <th class=\"SegColumn\">登録日</th>";
-    $aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtminsertdate"] . "</td>";
-    $aryHtml[] = "    <th class=\"SegColumn\">発注有効期限日</th>";
-    $aryHtml[] = "    <td class=\"Segs\">" . $aryOrder["dtmexpirationdate"] . "</td>";
+    $aryHtml[] = "    <td colspan=\"3\" class=\"Segs\">" . $aryOrder["dtminsertdate"] . "</td>";
     $aryHtml[] = "  </tr>";
     $aryHtml[] = "  <tr>";
     $aryHtml[] = "    <th class=\"SegColumn\">発注NO.</th>";
