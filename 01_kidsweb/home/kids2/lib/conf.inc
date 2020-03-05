@@ -31,10 +31,10 @@ else
 // 実行サーバー名
 define ( "EXECUTE_HOST_NAME_DEV",	"kids.devs.biz" );
 //define ( "EXECUTE_HOST_NAME_KWG_WEBv2",       "192.168.10.229" );
-define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.228" );
+define ( "EXECUTE_HOST_NAME_KWG_WEBv2",	"192.168.10.218" );
 define ( "EXECUTE_HOST_NAME_KWG_WEBv1",	"192.168.10.235" );
 define ( "EXECUTE_HOST_NAME_KWG_BACK",	"192.168.10.230" );
-define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.82" );
+define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.10.219" );
 //define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.113" ); // EUC-JPのDBサーバー（後で消したい）
 //define ( "EXECUTE_HOST_NAME_KWG_DB",	"192.168.1.114" ); // UTF-8のDBサーバー
 //define ( "EXECUTE_HOST_NAME_KWG_DB",	"127.0.0.1" ); // ローカル確認用
@@ -78,6 +78,37 @@ switch( $strExcuteHttpHostName )
 		define ( "DB_LOGIN_USERNAME", "kids" );
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore2" );
+		define ( "LC_POSTGRESQL_HOSTNAME", "localhost" );
+		define ( "LC_POSTGRESQL_HOSTPORT", "9999" );
+		define ( "LC_DB_LOGIN_USERNAME", "ackids" );
+		define ( "LC_DB_LOGIN_PASSWORD", "x7zv1jid" );
+		define ( "LC_DB_NAME", "ackids" );
+		// エラーメール送信先
+		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
+		define ( "SEND_MAIL_FLAG", true);
+		// 各ルートパス
+		define ( "PATH_HOME",	"/home/kids2" );
+		// 通貨(日本円)記号コード
+		//define ( "DEF_MONETARY_CODE_YEN", "\\\\" );
+		define ( "DEF_MONETARY_CODE_YEN", "\\" );
+		break;
+
+	case EXECUTE_HOST_NAME_KWG_DB:
+		// URL
+//		define ( "TOP_URL", "https://".EXECUTE_HOST_NAME_KWG_DB."/" );
+		// DB設定
+//		define ( "POSTGRESQL_HOSTNAME", EXECUTE_HOST_NAME_KWG_DB );
+		define ( "POSTGRESQL_HOSTNAME", "localhost" );
+//                define ( "POSTGRESQL_HOSTPORT", "5432" );
+		define ( "POSTGRESQL_HOSTPORT", "9999" );
+		define ( "DB_LOGIN_USERNAME", "kids" );
+		define ( "DB_LOGIN_PASSWORD", "kids" );
+		define ( "DB_NAME", "kidscore2" );
+		define ( "LC_POSTGRESQL_HOSTNAME", "localhost" );
+		define ( "LC_POSTGRESQL_HOSTPORT", "9999" );
+		define ( "LC_DB_LOGIN_USERNAME", "ackids" );
+		define ( "LC_DB_LOGIN_PASSWORD", "x7zv1jid" );
+		define ( "LC_DB_NAME", "ackids" );
 		// エラーメール送信先
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
@@ -140,8 +171,8 @@ switch( $strExcuteHttpHostName )
 		define ( "ERROR_MAIL_TO", "kids@kuwagata.co.jp" );
 		define ( "SEND_MAIL_FLAG", true);
 		// 各ルートパス
-		define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
-		//define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
+		//define ( "PATH_HOME",	"/Users/solcom/Desktop/Git/KIDS/01_kidsweb/home/kids2" );
+		define ( "PATH_HOME",	"/Users/solcom-ad/Desktop/Git/KIDS/01_kidsweb/home/kids2" ); // ローカル確認用
 		// define ( "PATH_HOME",	"E:/Source/Repos/solcom-net/KIDS/01_kidsweb/home/kids2" );
         // define ( "PATH_HOME",    "/Users/esash/Desktop/solcom/git/KIDS2/01_kidsweb/home/kids2" ); // ローカル確認用
         //define ( "LOG_FILE",     PATH_HOME ."/src/logs/debug.log" ); // ローカル確認用
