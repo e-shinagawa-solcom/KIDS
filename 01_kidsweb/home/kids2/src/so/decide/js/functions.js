@@ -185,7 +185,6 @@
             console.log(lngReceiveDetailNo);
             // 顧客受注番号
             var strCustomerReceiveCode = $(this).find('#strcustomerreceivecode').find('input:text').val();
-console.log(strCustomerReceiveCode);
             if (strCustomerReceiveCode == "") {
                 alert(len + "行目の顧客受注番号が入力されていません。");
                 isError = true;

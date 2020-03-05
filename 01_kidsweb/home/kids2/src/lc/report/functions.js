@@ -754,3 +754,9 @@ function convertNumberByClass(str, currencyclass) {
 	}
 }
 
+
+(function () {
+    $(window).on("beforeunload", function(e) {
+        window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';	
+    });
+})();
