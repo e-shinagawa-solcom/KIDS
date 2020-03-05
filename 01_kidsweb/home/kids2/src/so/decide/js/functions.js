@@ -143,7 +143,7 @@
         sessionID = 'strSessionID=' + $('input[type="hidden"][name="strSessionID"]').val();
         param = 'strproductcode=' + $('input[name="strProductCode"]').val();
         // 別ウィンドウで表示
-        window.open(url + '?' + sessionID + '&' + param, '_blank', 'width=730, height=768, resizable=yes, scrollbars=yes, menubar=no');
+        window.open(url + '?' + sessionID + '&' + param, '_blank', 'width=730, height=500, resizable=yes, scrollbars=yes, menubar=no');
     });
 
     // 行を一つ上に移動するボタン

@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
     <link rel="stylesheet" href="/search/cmn/navigate/css/navigate.css">
     <script src="/search/cmn/form/js/tab-function.js" defer></script>
+    <script src="/search/cmn/js/date.js" defer></script>
     <script src="/search/cmn/form/js/util-selectbox.js" defer></script>
     <!-- チェックボックスの切り替え処理 -->
     <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
@@ -85,8 +86,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">登録日</span>
-                    FROM <input class="TxtStyle05L" name="From_dtmInsertDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmInsertDate );" tabindex="" maxlength="10">
-                    TO <input class="TxtStyle05L" name="To_dtmInsertDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+                    FROM <input class="TxtStyle05L is-from-date" name="From_dtmInsertDate" type="text" value="" tabindex="" maxlength="10">
+                    TO <input class="TxtStyle05L is-date" name="To_dtmInsertDate" type="text" value="" tabindex="" maxlength="10">
                 </span>
             </div>
 
@@ -116,8 +117,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">請求日</span>
-                    FROM <input class="TxtStyle05L" name="From_dtmInvoiceDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);fncCopyValue( this , document.all.To_dtmDeliveryDate );" tabindex="" maxlength="10">
-                    TO <input class="TxtStyle05L" name="To_dtmInvoiceDate" type="text" value="" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this);" tabindex="" maxlength="10">
+                    FROM <input class="TxtStyle05L is-from-date" name="From_dtmInvoiceDate" type="text" value="" tabindex="" maxlength="10">
+                    TO <input class="TxtStyle05L is-date" name="To_dtmInvoiceDate" type="text" value="" tabindex="" maxlength="10">
                 </span>
             </div>
             <div class="regist-line">
