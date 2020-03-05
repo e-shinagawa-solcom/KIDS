@@ -241,9 +241,10 @@ foreach ($aryDetailResult as $detailResult) {
     // 顧客受注番号
     $td = $doc->createElement("td");
     $td->setAttribute("id", "strcustomerreceivecode");
-    $td->setAttribute("style", "text-align:center;ime-mode:disabled;");
+    $td->setAttribute("style", "text-align:center;");
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
+    $text->setAttribute("style", "ime-mode:disabled;");
     $text->setAttribute("class", "form-control form-control-sm txt-kids");
     $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
     $td->appendChild($text);

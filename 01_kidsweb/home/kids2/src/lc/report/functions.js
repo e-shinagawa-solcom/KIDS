@@ -80,8 +80,10 @@ function lcInit(json_obj) {
 //---------------------------------------------------
 // 戻るボタン処理
 //---------------------------------------------------
-function returnBtn() {
-	location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+function closeBtn() {
+	// location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+	window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';	
+	window.close();
 }
 
 //---------------------------------------------------
@@ -166,52 +168,8 @@ function printBtn() {
 	window.open("", "_self", "width=1011, height=700, scrollbars=yes, resizable=yes");
 	$('form').attr('action', url);
 	$('form').attr('method', 'post');
-	// $('form').attr('target', windowName);
 	$('form').submit();
 
-	// $('form').submit();
-
-	// location.href = '/lc/report/download.php';
-
-	// $.ajax({
-	// 	url:'../lcModel/lcreport_ajax.php',
-	// 	// url: '/lc/report/frameset.php',
-	// 	type: 'POST',
-	// 	data: {
-	// 		'method': 'exportLcReport',
-	// 		'impletterChk': $("#impletterChk").prop("checked"),//輸入信用状出力フラグ
-	// 		'setChk': $("#setChk").prop("checked"),            //帳票セット出力フラグ
-	// 		'unsetChk': $("#unsetChk").prop("checked"),        //未決済リスト出力フラグ	
-	// 		'openYm': $("#openYm").val(),        			   //オープン月
-	// 		'shipYm': $("#shipYm").val(),                      //船積月
-	// 		'payfCode': $("#payfCode").val(),                  //支払先コード
-	// 		'payfName': $("#payfName").val(),                  //支払先名
-	// 		'bankcd': $("#bankcd option:selected").val(),                      //銀行名コード
-	// 		'bankname': $("#bankcd option:selected").text(),                      //銀行名コード
-	// 		'lcopen': $("#lcopen option:selected").text(),                      //L/Copen
-	// 		'portplace': $("#portplace").val(),                //荷揚地
-	// 		'objectYm': $("#objectYm").val(),                  //対象年月
-	// 		'startDate': $("#startDate").val(),                //開始年月
-	// 		'endDate': $("#endDate").val(),                    //終了年月
-	// 		'rate': $("#rate").val(),                          //円価換算額,
-	// 		'sessionid': phpData["session_id"]
-	// 	}
-	// })
-	// 	.done(function (data) {
-	// 		console.log(data);
-	// 		var w = window.open("", "L/C帳票", "width=700,height=250,scrollbars=yes,resizable=yes,status=yes");	
-	// 		// var w = window.open();				
-	// 		w.document.open();
-	// 		w.document.write(data);
-	// 		w.document.close();
-
-
-
-	// 	})
-	// 	.fail(function (data) {
-	// 		// Ajaxリクエストが失敗
-	// 		alert(data);
-	// 	});
 
 	//ローダー非表示
 	$("#masking_loader").css("display", "none");

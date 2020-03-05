@@ -75,21 +75,30 @@ function initLcinfo(sessionId)
 	.done(function(data) {
 		// Ajaxリクエストが成功
 		var data = JSON.parse(data);
+		var strURL = "";
 		if (data.lcgetdate != "" && data.lcgetdate != null) {
 			if( res = confirm("既にL/C情報の取得を行っています。最新の情報を取得しますか。")) 
 			{
-				location.href="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=true"
+				strURL="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=true"
 			} else {
-				location.href="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=false"			
+				strURL="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=false"			
 			}
 		}
 		else
 		{
-			location.href="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=true"
+			strURL="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=true"
 		}
+
+		window.open(strURL, 'LC INFO', 'width=1000, height=650, resizable=yes, scrollbars=yes, menubar=no');   
 	})
 	.fail(function() {
 		alert("fail");
 		// Ajaxリクエストが失敗
 	});
+}
+
+function initLcset(sessionId)
+{
+	var strURL = "/lc/set/index.php?strSessionID=" + sessionId
+	window.open(strURL, 'LC INFO', 'width=1000, height=650, resizable=yes, scrollbars=yes, menubar=no');   
 }

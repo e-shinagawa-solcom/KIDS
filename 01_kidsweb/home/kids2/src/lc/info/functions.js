@@ -28,6 +28,7 @@ var tableData;//テーブルデータ確保配列
 //---------------------------------------------------
 function lcInit(json_obj) {
 	phpData = $.parseJSON(json_obj);
+	console.log(phpData.reSearchFlg);
 	if (phpData.reSearchFlg == "true" && $.cookie("lcInfoSearchConditions") != undefined) {
 		//他画面からの戻りなどで、移動前の検索条件で再検索する場合
 		//抽出条件をcookieから取得
@@ -103,7 +104,7 @@ function setLcInfoTable(data, phpData) {
 			'</tr>';
 		$("#lc_table_radio").append(lc_table_radio);
 
-		var lc_table_body = '<tr id="' + i + '">' +
+		var lc_table_body = '<tr id="' + i + '" before-click-bgcolor="rgb(' + background_color + ')">' +
 			// '<td style="text-align: left;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm"></td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfnameomit) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + strIns(row.opendate, 4, '/') + '</td>' +
@@ -172,7 +173,7 @@ function setLcInfoTable(data, phpData) {
 	
 	$("#lc_head").trigger("update");
 	$("#lc_table").trigger("update");
-
+	trClickSelectRow();
 
 	//0件の場合はエラー
 	lcInfoHit = true;
@@ -337,8 +338,11 @@ function openEdit() {
 		lcstate != 9) {
 		alert("選択されたL/C情報は編集することが出来ません。");
 	} else {
-		location.href = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
-		 + polineno + '&poreviseno=' + poreviseno;
+		var strURL  = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
+		+ polineno + '&poreviseno=' + poreviseno;
+		window.open(strURL, 'LC EDIT', 'width=1000, height=550, resizable=yes, scrollbars=yes, menubar=no'); 
+		// location.href = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
+		//  + polineno + '&poreviseno=' + poreviseno;
 	}
 }
 
@@ -532,7 +536,8 @@ function delSearchConditions() {
 // 帳票出力ボタン処理
 //---------------------------------------------------
 function reportOutputBtn() {
-	location.href = '/lc/report/index.php?strSessionID=' + phpData["session_id"] + '&openDate=' + $("#simulateYm").val();
+	var strURL = '/lc/report/index.php?strSessionID=' + phpData["session_id"];
+	window.open(strURL, 'LC REPORT', 'width=1000, height=550, resizable=yes, scrollbars=yes, menubar=no');
 }
 
 /**
@@ -587,27 +592,66 @@ function exportFile() {
 		'&getDataModeFlg=' + getDataModeFlg;
 }
 
-function convertNumberByClass(str, currencyclass, fracctiondigits) {
-	if (str != "" && str != undefined && str != "null") {
-		if (currencyclass != "") {
-			if (currencyclass == '円') {
-				return Number(str).toLocaleString(undefined, {
-					minimumFractionDigits: 0,
-					maximumFractionDigits: 0
-				});
-			} else {
-				return Number(str).toLocaleString(undefined, {
-					minimumFractionDigits: 2,
-					maximumFractionDigits: 2
-				});
-			}
+// function convertNumberByClass(str, currencyclass, fracctiondigits) {
+// 	if (str != "" && str != undefined && str != "null") {
+// 		if (currencyclass != "") {
+// 			if (currencyclass == '円') {
+// 				return Number(str).toLocaleString(undefined, {
+// 					minimumFractionDigits: 0,
+// 					maximumFractionDigits: 0
+// 				});
+// 			} else {
+// 				return Number(str).toLocaleString(undefined, {
+// 					minimumFractionDigits: 2,
+// 					maximumFractionDigits: 2
+// 				});
+// 			}
+// 		} else {
+// 			return Number(str).toLocaleString(undefined, {
+// 				minimumFractionDigits: fracctiondigits,
+// 				maximumFractionDigits: fracctiondigits
+// 			});
+// 		}
+// 	} else {
+// 		return "";
+// 	}
+// }
+
+function trClickSelectRow() {
+	console.log($('#lc_table_body tr').length);
+	$('#lc_table_body tr').on('click', function (e) {
+		var index = $(this).index();
+		var bgcolor = $(this).find('td').css("background-color");
+
+		$('#lc_table_body tr').each(function (i, tr) {
+			$(this).find('td').css("background-color", $(this).attr('before-click-bgcolor'));
+		});
+
+		var beforeClickBgcolor = $(this).attr('before-click-bgcolor');
+		if (bgcolor != 'rgb(187, 187, 187)') {
+			$(this).find('td').css("background-color", "#bbbbbb");
+			$('#lc_table_radio tr:nth-child(' + (index + 1)+ ')').find('input[type="radio"]').prop('checked', true);
 		} else {
-			return Number(str).toLocaleString(undefined, {
-				minimumFractionDigits: fracctiondigits,
-				maximumFractionDigits: fracctiondigits
-			});
+			$(this).find('td').css("background-color", beforeClickBgcolor);
+			$('#lc_table_radio tr:nth-child(' + (index + 1)+ ')').find('input[type="radio"]').prop('checked', false);
 		}
-	} else {
-		return "";
-	}
+	});
+
+	
+	$('input[type="radio"]').on('click', function (e) {
+		var rowindex = $(this).parent().parent().index(); 
+		
+		$('#lc_table_body tr').each(function (i, tr) {
+			$(this).find('td').css("background-color", $(this).attr('before-click-bgcolor'));
+		});
+
+		var beforeClickBgcolor = $("#lc_table_body tr:nth-child(" + (rowindex + 1) + ")").attr('before-click-bgcolor');
+		if (this.checked) {
+            $("#lc_table_body tr:nth-child(" + (rowindex + 1) + ")").find('td').css('background-color', '#bbbbbb');
+            $("#lc_table_radio tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[type="radio"]').prop('checked', true);
+        } else {
+            $("#lc_table_body tr:nth-child(" + (rowindex + 1) + ")").find('td').css('background-color', beforeClickBgcolor);
+            $("#lc_table_radio tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[type="radio"]').prop('checked', false);
+		}
+	});
 }

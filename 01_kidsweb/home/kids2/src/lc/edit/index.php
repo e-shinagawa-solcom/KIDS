@@ -77,7 +77,18 @@ $lcModel->close();
 //HTMLへの引き渡しデータ
 $aryData["login_state"] = $login_state;
 
-echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/edit/parts.tmpl", $aryData, $objAuth);
+// echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/edit/parts.tmpl", $aryData, $objAuth);
+
+// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("lc/edit/parts.html");
+
+// テンプレート生成
+$objTemplate->replace($aryData);
+$objTemplate->complete();
+
+// HTML出力
+echo $objTemplate->strTemplate;
 
 //初期処理実行
 //jsへの引き渡しデータ

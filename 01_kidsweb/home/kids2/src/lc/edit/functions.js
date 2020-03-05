@@ -70,7 +70,7 @@ function lcInit(json_obj) {
 				$("#productrevisecd").val(lc_data.productrevisecd);
 				$("#productname").val(lc_data.productname);
 				$("#opendate").val(lc_data.opendate);
-				$("#moneyprice").val(lc_data.moneyprice);
+				$("#moneyprice").val(convertNumberByClass(lc_data.moneyprice, lc_data.currencyclass, 0));
 				//テーブル
 				$('#portplace option').filter(function (index) {
 					return $(this).text() === lc_data.portplace;
@@ -84,18 +84,18 @@ function lcInit(json_obj) {
 				$("#lcamopen").val(convertDate(lc_data.lcamopen));
 				$("#validmonth").val(convertDate(lc_data.validmonth));
 				$("#bldetail1date").val(convertDate(lc_data.bldetail1date));
-				$("#bldetail1money").val(lc_data.bldetail1money);
+				$("#bldetail1money").val(convertNumberByClass(lc_data.bldetail1money, lc_data.currencyclass, 0));
 				$("#bldetail2date").val(convertDate(lc_data.bldetail2date));
-				$("#bldetail2money").val(lc_data.bldetail2money);
+				$("#bldetail2money").val(convertNumberByClass(lc_data.bldetail2money, lc_data.currencyclass, 0));
 				$("#bldetail3date").val(convertDate(lc_data.bldetail3date));
-				$("#bldetail3money").val(lc_data.bldetail3money);
+				$("#bldetail3money").val(convertNumberByClass(lc_data.bldetail3money, lc_data.currencyclass, 0));
 
 				if (lc_data.lcstate == 3) {
 					$("#opendate").prop("disabled", true);
 					$("#portplace").prop("disabled", true);
-					$("#bankname").prop("disabled", true);					
+					$("#bankname").prop("disabled", true);
 					$("#bankreqdate").prop("disabled", true);
-					$("#lcno").prop("disabled", true);					
+					$("#lcno").prop("disabled", true);
 					$("#lcamopen").prop("disabled", true);
 					$("#validmonth").prop("disabled", true);
 					$("#bldetail1date").prop("disabled", true);
@@ -110,9 +110,9 @@ function lcInit(json_obj) {
 				} else {
 					$("#opendate").prop("disabled", false);
 					$("#portplace").prop("disabled", false);
-					$("#bankname").prop("disabled", false);					
+					$("#bankname").prop("disabled", false);
 					$("#bankreqdate").prop("disabled", false);
-					$("#lcno").prop("disabled", false);					
+					$("#lcno").prop("disabled", false);
 					$("#lcamopen").prop("disabled", false);
 					$("#validmonth").prop("disabled", false);
 					$("#bldetail1date").prop("disabled", false);
@@ -136,11 +136,18 @@ function lcInit(json_obj) {
 				// $("#bldetail3date").val(lc_data.bldetail3date);
 				// $("#bldetail3money").val(lc_data.bldetail3money);
 
+				// 開始日時フォーカスを失ったときの処理
+				$('#bldetail1money, #bldetail2money, #bldetail3money').on('blur', function () {
+					var val = $(this).val();
+					console.log(val);
+					$(this).val(convertNumberByClass(val, lc_data.currencyclass, 0));
+				});
+
 				//ローダー解除
 				$("#masking_loader").css("display", "none");
 			} else {
 				alert("L/C情報が取得できませんでした。L/C情報画面に戻ります。");
-				returnBtn();
+				closeBtn();
 			}
 		})
 		.fail(function () {
@@ -152,8 +159,9 @@ function lcInit(json_obj) {
 //---------------------------------------------------
 // 戻るボタン処理
 //---------------------------------------------------
-function returnBtn() {
-	location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+function closeBtn() {
+	window.opener.document.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+	window.close();
 }
 
 //---------------------------------------------------

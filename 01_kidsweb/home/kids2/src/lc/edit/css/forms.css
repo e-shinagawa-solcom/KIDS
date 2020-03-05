@@ -103,7 +103,8 @@
     font-size: x-small;
 }
 .form-box__footer{
-	margin: 20px;
+    margin: 20px;
+    width: 900px;
 }
 .form-box__main {
     overflow-x: hidden;

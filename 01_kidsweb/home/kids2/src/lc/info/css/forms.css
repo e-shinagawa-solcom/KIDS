@@ -1,3 +1,15 @@
+.form-box__main {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 958px;
+    height: 615px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 15px;
+    background-color: #d6d0b1;
+}
 .datepicker-month-year .ui-datepicker-calendar {
     display: none;
 }
@@ -136,7 +148,7 @@ table.tablesorter>thead>tr>th {
     position: absolute;
     left: 30px;
     top: 0px;
-    width: 95.6%;
+    width: 96.5%;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -146,7 +158,7 @@ table.tablesorter>thead>tr>th {
     left: 0px;
     top: 22px;
     width: 30px;
-    height: 328px;
+    height: 468px;
     overflow-x: hidden;
     overflow-y: hidden;
 }
@@ -157,8 +169,8 @@ table.tablesorter>thead>tr>th {
     top: 22px;
     overflow-x: scroll;
     overflow-y: scroll;
-    width: 97.5%;
-    height: 345px;
+    width: 98.5%;
+    height: 485px;
 }
 .form-box > div > button {
     margin-bottom: 10px;

@@ -166,7 +166,20 @@ $lcModel->close();
 //HTMLへの引き渡しデータ
 //$aryData["chkEpRes"] = $chkEpRes;
 $aryData["lc_info_date"] = date('Y/m/d H:i:s',  strtotime($lcgetdate->lcgetdate));
-echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/info/parts.tmpl", $aryData, $objAuth);
+// echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "", $aryData, $objAuth);
+
+
+// echo fncGetReplacedHtml( "lc/info/parts.html", $c, $objAuth );
+// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("lc/info/parts.html");
+
+// テンプレート生成
+$objTemplate->replace($aryData);
+$objTemplate->complete();
+
+// HTML出力
+echo $objTemplate->strTemplate;
 
 //初期処理実行
 //jsへの引き渡しデータ
