@@ -43,13 +43,6 @@ if (!fncCheckAuthority(DEF_FUNCTION_SO2, $objAuth)) {
 if (!fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
-
-// 排他制御チェック
-/*
-if (fncCheckExclusiveControl(DEF_FUNCTION_E3, $aryData["detailData"][0]["strProductCode_product"], $aryData["detailData"][0]["strReviseCode"], $objDB)) {
-    fncOutputError(9213, DEF_ERROR, "", true, "../so/decide/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
-}
-*/
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/so/decide/so_confirm_decide.html");
 $objTemplate->replace($aryData);

@@ -97,7 +97,7 @@ foreach ($searchValue as $key => $item) {
 
 // 検索表示項目取得
 if (empty($isDisplay)) {
-    $strMessage = fncOutputError(9058, DEF_WARNING, "", false, "../so/search2/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    $strMessage = fncOutputError(9058, DEF_WARNING, "", false, "", $objDB);
 
     // [lngLanguageCode]書き出し
     $aryHtml["lngLanguageCode"] = 1;
@@ -167,7 +167,7 @@ list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     // 検索件数が指定数以上の場合エラーメッセージを表示する
     if ($lngResultNum > DEF_SEARCH_MAX) {
-        $strMessage = fncOutputError(9057, DEF_WARNING, DEF_SEARCH_MAX, false, "../po/search2/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+        $strMessage = fncOutputError(9057, DEF_WARNING, DEF_SEARCH_MAX, false, "", $objDB);
 
         // [strErrorMessage]書き出し
         $aryHtml["strErrorMessage"] = $strMessage;
@@ -191,7 +191,7 @@ if ($lngResultNum) {
         $records[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    $strMessage = fncOutputError(503, DEF_WARNING, "", false, "../po/search2/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    $strMessage = fncOutputError(503, DEF_WARNING, "", false, "", $objDB);
 
     // [strErrorMessage]書き出し
     $aryHtml["strErrorMessage"] = $strMessage;

@@ -202,6 +202,20 @@ $strQuery = implode("\n", $aryQuery);
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
+if ($lngResultNum == 0) {
+
+    $strMessage = fncOutputError(9061, DEF_WARNING, "該当履歴がありません。", false,  "", $objDB);
+
+    $alterStrMessage = "
+			<script language=javascript>
+                alert('$strMessage');
+            </script>
+			";
+    // HTML出力
+    echo $alterStrMessage;
+
+    exit;
+}
 
 // 取得した検索結果を変換するための配列
 // カンマ区切りにする項目

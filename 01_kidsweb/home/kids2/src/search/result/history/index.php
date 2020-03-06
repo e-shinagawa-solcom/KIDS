@@ -47,6 +47,21 @@ $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 // コード、履歴データにより履歴取得SQL
 $records = fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo, $objDB);
 
+if (count($records) == 0) {
+
+    $strMessage = fncOutputError(9061, DEF_WARNING, "該当履歴がありません。", false,  "", $objDB);
+
+    $alterStrMessage = "
+			<script language=javascript>
+                alert('$strMessage');
+            </script>
+			";
+    // HTML出力
+    echo $alterStrMessage;
+
+    exit;
+}
+
 // 検索結果テーブル生成の為DOMDocumentを使用
 $doc = new DOMDocument();
 

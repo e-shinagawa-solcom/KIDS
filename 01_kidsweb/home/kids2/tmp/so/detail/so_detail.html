@@ -4,8 +4,13 @@
 <head>
 	<title>K.I.D.S.</title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+
 	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+    <script src="/cmn/js/openerreload.js" defer></script>
 	<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
     <!-- ボタン画像の共通の振る舞い CSS -->
@@ -96,7 +101,7 @@
 					<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
 						<tr>
 							<td bgcolor="#f1f1f1">
-								<a href="#" onclick="window.close();">
+								<a href="#" onclick="window.opener.location.reload();window.close();">
 									<img class="button" src="/img/type01/cmn/seg/close_off_ja_bt.gif"
 									 width="72" height="20" border="0" alt="CLOSE">
 								</a>

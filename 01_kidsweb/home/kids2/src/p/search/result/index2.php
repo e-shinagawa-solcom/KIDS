@@ -38,12 +38,8 @@ foreach ($aryData["displayColumns"] as $key) {
 // セッション確認
 $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
-//echo "strReviseCode:" . $aryData["strReviseCode"] . "<br>";
-
 // 検索項目から一致する最新の仕入データを取得するSQL文の作成関数
 $strQuery = fncGetProductsByStrProductCodeSQL($aryData["strProductCode"], $aryData["strReviseCode"] ,$aryData["lngRevisionNo"]);
-
-//echo $strQuery . "<br>";
 
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -51,6 +47,21 @@ list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 指定数以内であれば通常処理
 for ($i = 0; $i < $lngResultNum; $i++) {
     $records = pg_fetch_all($lngResultID);
+}
+
+if ($lngResultNum == 0) {
+
+    $strMessage = fncOutputError(9061, DEF_WARNING, "該当履歴がありません。", false,  "", $objDB);
+
+    $alterStrMessage = "
+			<script language=javascript>
+                alert('$strMessage');
+            </script>
+			";
+    // HTML出力
+    echo $alterStrMessage;
+
+    exit;
 }
 
 $objDB->freeResult($lngResultID);

@@ -64,21 +64,21 @@ if (!is_null($aryData["mode"])) {
 // 排他ロックの取得
 $objDB->transactionBegin();
 if (isEstimateModified($lngestimateno, $lngRevisionNo, $objDB)) {
-    fncOutputError(401, DEF_ERROR, "他のユーザによって更新または削除されています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(401, DEF_ERROR, "他のユーザによって更新または削除されています。", true, "", $objDB);
 }
 
 // 受注データロック
 if (!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)) {
-    fncOutputError(401, DEF_ERROR, "該当データがロックされています。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(401, DEF_ERROR, "該当データがロックされています。", true, "", $objDB);
 }
 
 foreach ($lngReceiveNoList as $eachLngReceiveNo) {
     if (!lockReceive($eachLngReceiveNo, $objDB)) {
-        fncOutputError(401, DEF_ERROR, "該当データのロックに失敗しました", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+        fncOutputError(401, DEF_ERROR, "該当データのロックに失敗しました", true, "", $objDB);
     }
     // 受注データ更新有無チェック
     if (isReceiveModified($eachLngReceiveNo, DEF_RECEIVE_APPLICATE, $objDB)) {
-        fncOutputError(404, DEF_ERROR, "", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+        fncOutputError(404, DEF_ERROR, "", true, "", $objDB);
     }
 }
 
@@ -97,7 +97,7 @@ if ($lngResultNum) {
         $aryResult = pg_fetch_all($lngResultID);
     }
 } else {
-    fncOutputError(403, DEF_ERROR, "該当データの取得に失敗しました", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(403, DEF_ERROR, "該当データの取得に失敗しました", true, "", $objDB);
 }
 
 $objDB->freeResult($lngResultID);
@@ -137,7 +137,7 @@ if ($lngResultNum) {
         $aryDetailResult[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    fncOutputError(403, DEF_WARNING, "受注番号に対する明細情報が見つかりません。", true, "../so/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(403, DEF_WARNING, "受注番号に対する明細情報が見つかりません。", true, "", $objDB);
 }
 
 $objDB->freeResult($lngResultID);

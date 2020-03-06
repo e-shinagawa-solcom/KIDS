@@ -53,6 +53,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SO3, $objAuth ) )
 //詳細画面の表示
 $lngReceiveNo = $aryData["lngReceiveNo"];
 $lngRevisionNo = $aryData["lngRevisionNo"];
+
 // 指定受注番号の受注データ取得用SQL文の作成
 $strQuery = fncGetReceiveHeadNoToInfoSQL( $lngReceiveNo, $lngRevisionNo, null);
 // 詳細データの取得
@@ -65,12 +66,12 @@ if ( $lngResultNum )
 	}
 	else
 	{
-		fncOutputError( 403, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError( 403, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "", $objDB );
 	}
 }
 else
 {
-	fncOutputError( 403, DEF_ERROR, "データが異常です", TRUE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	fncOutputError( 403, DEF_ERROR, "データが異常です", TRUE, "", $objDB );
 }
 
 $objDB->freeResult( $lngResultID );
@@ -90,13 +91,11 @@ if ( $lngResultNum )
 	for ( $i = 0; $i < $lngResultNum; $i++ )
 	{
 		$aryDetailResult[] = $objDB->fetchArray( $lngResultID, $i );
-		// var_dump($aryDetailResult);
-		// echo "tst";
 	}
 }
 else
 {
-	$strMessage = fncOutputError( 403, DEF_WARNING, "受注番号に対する明細情報が見つかりません。", FALSE, "../so/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	$strMessage = fncOutputError( 403, DEF_WARNING, "受注番号に対する明細情報が見つかりません。", FALSE, "", $objDB );
 }
 
 $objDB->freeResult( $lngResultID );

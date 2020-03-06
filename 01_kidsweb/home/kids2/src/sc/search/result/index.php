@@ -104,10 +104,8 @@ if ($lngResultNum > 0) {
 }
 
 if ($errorFlag) {
-    // エラー画面の戻り先
-    $strReturnPath = "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 
-    $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, $strReturnPath, $objDB);
+    $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, "", $objDB);
 
     // [strErrorMessage]書き出し
     $aryHtml["strErrorMessage"] = $strMessage;
