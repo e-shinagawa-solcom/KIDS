@@ -49,7 +49,7 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 402 受注管理（受注検索）
 if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // 売上分類

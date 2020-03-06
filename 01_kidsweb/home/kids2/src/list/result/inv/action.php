@@ -42,7 +42,7 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 // 権限確認
 if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // データ取得クエリ

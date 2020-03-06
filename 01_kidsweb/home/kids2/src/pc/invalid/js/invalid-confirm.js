@@ -27,7 +27,13 @@
     
     // 閉じるボタンのイベント
     $('img.close').on('click', function () {
+        window.opener.location.reload();
         //ウィンドウを閉じる
         window.close();
+    });
+    
+
+    $(window).on("beforeunload", function(e) {
+        window.opener.location.reload();
     });
 })();

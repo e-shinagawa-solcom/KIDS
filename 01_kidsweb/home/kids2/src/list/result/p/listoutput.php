@@ -54,35 +54,8 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 権限確認
 if ( !fncCheckAuthority( DEF_FUNCTION_LO0, $objAuth ) || !fncCheckAuthority( DEF_FUNCTION_P0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
-
-// // 帳票出力コピーファイルパス取得クエリ生成
-// $strQuery = fncGetCopyFilePathQuery( DEF_REPORT_PRODUCT, $aryData["strReportKeyCode"], $aryData["lngReportCode"] );
-// list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-// if ( $lngResultNum > 0 )
-// {
-// 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
-// 	$strReportPathName = $objResult->strreportpathname;
-// 	unset ( $objResult );
-// }
-
-///////////////////////////////////////////////////////////////////////////
-// 帳票コードが真の場合、ファイルデータを取得
-///////////////////////////////////////////////////////////////////////////
-// if ( $aryData["lngReportCode"] )
-// {
-// 	if ( !$lngResultNum )
-// 	{
-// 		fncOutputError ( 9056, DEF_FATAL, "帳票コピーがありません。", TRUE, "", $objDB );
-// 	}
-
-// 	if ( !$strHtml =  file_get_contents ( SRC_ROOT . "list/result/cash/" . $strReportPathName . ".tmpl" ) )
-// 	{
-// 		fncOutputError ( 9059, DEF_FATAL, "帳票データファイルが開けませんでした。", TRUE, "", $objDB );
-// 	}
-// 	$objDB->freeResult( $lngResultID );
-// }
 
 ///////////////////////////////////////////////////////////////////////////
 // テンプレートと置き換えデータ取得

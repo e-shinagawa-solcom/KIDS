@@ -68,7 +68,7 @@
 	// 見積原価削除以外の場合
 	//////////////////////////////////////////////////////////////////////////
 	if (!$functionCode == DEF_FUNCTION_E4 || !fncCheckAuthority( $functionCode, $objAuth )) {
-		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 
 // 削除する見積原価の情報を取得

@@ -52,7 +52,7 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 1400 締め処理
 if ( !fncCheckAuthority( DEF_FUNCTION_CLD0, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // HTML出力

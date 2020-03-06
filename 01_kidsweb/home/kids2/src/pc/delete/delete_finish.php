@@ -38,7 +38,7 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 // 権限確認
 // 700 仕入管理
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 // 706 仕入管理（削除）
 if (!fncCheckAuthority(DEF_FUNCTION_PC6, $objAuth)) {
@@ -50,22 +50,19 @@ $lngRevisionNo = $aryData["lngRevisionNo"];
 // トランザクション開始
 $objDB->transactionBegin();
 
-// エラー画面での戻りURL
-$strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
-
 // 対象データロック
 if(!lockStock($lngStockNo, $objDB)){
-    fncOutputError(703, DEF_ERROR, "該当データのロックに失敗しました", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_ERROR, "該当データのロックに失敗しました", true, "", $objDB);
 }
 
 // 締めチェック
 if(isStockClosed($lngStockNo, $objDB)){
-    fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
+    fncOutputError(711, DEF_WARNING, "", true, "", $objDB);
 }
 
 // 更新有無チェック
 if(isStockModified($lngStockNo, $lngRevisionNo, $objDB)){
-    fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
+    fncOutputError(711, DEF_WARNING, "", true, "", $objDB);
 }
 
 // 削除対象の仕入NOの仕入情報取得
@@ -76,10 +73,10 @@ if ($lngResultNum) {
     if ($lngResultNum == 1) {
         $aryStockResult = $objDB->fetchArray($lngResultID, 0);
     } else {
-        fncOutputError(703, DEF_ERROR, "該当データの取得に失敗しました", true, $strReturnPath, $objDB);
+        fncOutputError(703, DEF_ERROR, "該当データの取得に失敗しました", true, "", $objDB);
     }
 } else {
-    fncOutputError(703, DEF_ERROR, "データが異常です", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_ERROR, "データが異常です", true, "", $objDB);
 }
 
 $objDB->freeResult($lngResultID);
@@ -101,7 +98,7 @@ unset($strQuery);
 $strQuery = implode("\n", $aryQuery);
 
 if (!list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB)) {
-    fncOutputError(702, DEF_FATAL, "削除処理に伴うマスタ処理失敗", true, $strReturnPath, $objDB);
+    fncOutputError(702, DEF_FATAL, "削除処理に伴うマスタ処理失敗", true, "", $objDB);
 }
 $objDB->freeResult($lngResultID);
 

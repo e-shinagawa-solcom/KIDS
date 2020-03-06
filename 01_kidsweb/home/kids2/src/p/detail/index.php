@@ -39,11 +39,11 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 // 権限確認
 // 302 商品管理（商品検索）
 if (!fncCheckAuthority(DEF_FUNCTION_P2, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 // 304 商品管理（詳細表示）
 if (!fncCheckAuthority(DEF_FUNCTION_P4, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 $lngProductNo = $aryData["lngProductNo"];

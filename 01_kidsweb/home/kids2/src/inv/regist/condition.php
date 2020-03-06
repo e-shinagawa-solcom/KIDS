@@ -57,13 +57,13 @@
     // 2200 請求管理
     if ( !fncCheckAuthority( DEF_FUNCTION_INV0, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+        fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
     }
 
     // 2201 請求書発行
     if ( !fncCheckAuthority( DEF_FUNCTION_INV1, $objAuth ) )
     {
-        fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+        fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
     }
     // ajax 検索
     if(isset($aryData["mode"]) && $aryData["mode"] == 'ajax')

@@ -39,12 +39,12 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 $lngUserCode = $objAuth->UserCode;
 // 700 仕入管理
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 705 仕入管理（ 仕入修正）
 if (!fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 $objDB->transactionBegin();

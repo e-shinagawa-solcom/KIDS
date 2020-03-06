@@ -35,18 +35,15 @@ if ($_GET) {
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// エラー画面での戻りURL
-$strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
-
 // 権限確認
 // 700 仕入管理
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, $strReturnPath, $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 // 707 仕入管理（仕入無効化）
 if ( !fncCheckAuthority( DEF_FUNCTION_PC7, $objAuth ) )
 {
-	fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, $strReturnPath, $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 // 仕入番号の取得
 $lngStockNo = $aryData["lngStockNo"];
@@ -59,13 +56,13 @@ if ($lngResultNum) {
         $aryResult = $objDB->fetchArray($lngResultID, 0);
 		// 該当仕入の状態が「締め済」の状態であれば
         if ($aryResult["lngstockstatuscode"] == DEF_STOCK_CLOSED) {
-            fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
+            fncOutputError(711, DEF_WARNING, "", true, "", $objDB);
         }
     } else {
-        fncOutputError(703, DEF_ERROR, "該当データの取得に失敗しました", true, $strReturnPath, $objDB);
+        fncOutputError(703, DEF_ERROR, "該当データの取得に失敗しました", true, "", $objDB);
     }
 } else {
-    fncOutputError(703, DEF_ERROR, "データが異常です", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_ERROR, "データが異常です", true, "", $objDB);
 }
 
 $objDB->freeResult($lngResultID);
@@ -83,7 +80,7 @@ if ($lngResultNum) {
         $aryDetailResult[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    $strMessage = fncOutputError(703, DEF_WARNING, "仕入番号に対する明細情報が見つかりません。", false, $strReturnPath, $objDB);
+    $strMessage = fncOutputError(703, DEF_WARNING, "仕入番号に対する明細情報が見つかりません。", false, "", $objDB);
 }
 
 $objDB->freeResult($lngResultID);

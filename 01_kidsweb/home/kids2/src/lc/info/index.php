@@ -51,13 +51,13 @@ $usrName = trim($objAuth->UserDisplayName);
 // // 2100 LC管理
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+//         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 // }
 
 // // 2101 LC情報
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC1, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+//         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 // }
 
 //経理サブシステムDB接続

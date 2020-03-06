@@ -59,7 +59,7 @@ $functionCode = DEF_FUNCTION_E4;
 // 権限確認
 if( !fncCheckAuthority( $functionCode, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 

@@ -56,7 +56,7 @@
 
 	// 権限確認
 	if( !fncCheckAuthority( DEF_FUNCTION_E3, $objAuth )) {
-		fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+		fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 
 	// 権限グループコードの取得

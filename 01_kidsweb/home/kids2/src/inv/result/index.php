@@ -87,11 +87,11 @@ $lngInputUserCode = $objAuth->UserCode;
 // 権限確認
 // 2200 請求管理
 if (!fncCheckAuthority(DEF_FUNCTION_INV0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 // 2202 請求書検索
 if (!fncCheckAuthority(DEF_FUNCTION_INV2, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 検索項目  $arySearchColumnに格納

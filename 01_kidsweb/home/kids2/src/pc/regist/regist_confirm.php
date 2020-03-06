@@ -38,7 +38,7 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 // 700 仕入管理
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "pc/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 701 仕入管理（ 仕入登録）

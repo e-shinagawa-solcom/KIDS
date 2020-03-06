@@ -34,16 +34,14 @@ setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// エラー画面での戻りURL
-$strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
 // 700 仕入管理
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, $strReturnPath, $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 701 仕入管理（ 仕入登録）
 if (!fncCheckAuthority(DEF_FUNCTION_PC1, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, $strReturnPath, $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 通貨

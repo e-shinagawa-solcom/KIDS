@@ -28,13 +28,13 @@ $objAuth = fncIsSession ($_REQUEST["strSessionID"], $objAuth, $objDB);
 // 1800 金型帳票管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // 1805 金型管理(削除)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM5, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // パラメータ取得

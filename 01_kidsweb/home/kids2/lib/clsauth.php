@@ -396,7 +396,7 @@ class clsAuth
 			}
 			if ( !$objDB->freeResult( $lngResultID ) )
 			{
-				fncOutputError ( 9017, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+				fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 			}
 		}
 	}

@@ -85,7 +85,7 @@ $lngUserGroup = $objAuth->AuthorityGroupCode;
 
 // 600 売上管理
 if (!fncCheckAuthority(DEF_FUNCTION_SC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "sc/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "sc/regist/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
 }
 
 // 601 売上管理（売上登録）

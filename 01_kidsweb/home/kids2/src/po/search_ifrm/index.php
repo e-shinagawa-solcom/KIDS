@@ -51,7 +51,7 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 502 発注管理（発注検索）
 if ( !fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 // 503 発注管理（発注検索　管理モード）
 if ( fncCheckAuthority( DEF_FUNCTION_PO3, $objAuth ) )

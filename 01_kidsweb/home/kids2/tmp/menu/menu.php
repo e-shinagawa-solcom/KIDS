@@ -45,7 +45,7 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 権限確認（メインメニュー画面）
 if ( !fncCheckAuthority( DEF_FUNCTION_MENU0, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", FALSE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", FALSE, "", $objDB );
 }
 
 // 商品管理メニュー

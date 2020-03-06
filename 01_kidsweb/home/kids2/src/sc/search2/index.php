@@ -58,7 +58,7 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 602 売上管理（売上検索）
 if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // 603 売上管理（売上検索　管理モード）

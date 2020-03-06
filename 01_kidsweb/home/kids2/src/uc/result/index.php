@@ -126,7 +126,7 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 権限確認
 if ( $aryData["lngFunctionCode"] != DEF_FUNCTION_UC3 || !fncCheckAuthority( $aryData["lngFunctionCode"], $objAuth ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // ログイン許可フラグがNULLの場合の設定

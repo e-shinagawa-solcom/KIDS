@@ -72,12 +72,12 @@ if ($_POST["strMode"] == "cancel") {
 
 // 500    発注管理
 if (!fncCheckAuthority(DEF_FUNCTION_PO0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 512 発注管理（発注書修正）
 if (!fncCheckAuthority(DEF_FUNCTION_PO12, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // check

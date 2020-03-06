@@ -48,7 +48,7 @@
 	// 300 商品管理
 	if ( !fncCheckAuthority( DEF_FUNCTION_P0, $objAuth ) )
 	{
-	        fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	        fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 
 

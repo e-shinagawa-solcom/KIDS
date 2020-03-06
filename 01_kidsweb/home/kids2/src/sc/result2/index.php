@@ -94,7 +94,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_SC2, $objAuth)) {
 }
 // 602 売上管理（売上検索）
 if (!fncCheckAuthority(DEF_FUNCTION_SC2, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 // 検索項目  $arySearchColumnに格納
 $arySearchColumn = $isSearch;

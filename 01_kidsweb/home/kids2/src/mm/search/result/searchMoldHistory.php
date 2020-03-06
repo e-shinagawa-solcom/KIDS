@@ -35,13 +35,13 @@ $objAuth = fncIsSession( $_REQUEST["strSessionID"], $objAuth, $objDB );
 // 1800 金型履歴管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MM0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // 1802 金型履歴管理(検索)
 if ( !fncCheckAuthority( DEF_FUNCTION_MM2, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // フォームデータから各カテゴリの振り分けを行う

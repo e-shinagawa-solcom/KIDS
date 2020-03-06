@@ -49,13 +49,13 @@ $usrId = trim($objAuth->UserID);
 // // 2100 LC管理
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+//         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 // }
 
 // // 2101 LC編集
 // if ( !fncCheckAuthority( DEF_FUNCTION_LC2, $objAuth ) )
 // {
-//         fncOutputError ( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+//         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 // }
 
 $objDB->close();

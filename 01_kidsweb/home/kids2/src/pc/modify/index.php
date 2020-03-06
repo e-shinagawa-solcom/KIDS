@@ -34,17 +34,14 @@ setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
-// エラー画面での戻りURL
-$strReturnPath = "../pc/search/index.php?strSessionID=" . $aryData["strSessionID"];
-
 // 700 仕入管理
 if (!fncCheckAuthority(DEF_FUNCTION_PC0, $objAuth)) {
-    fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, $strReturnPath, $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 705 仕入管理（ 仕入修正）
 if (!fncCheckAuthority(DEF_FUNCTION_PC5, $objAuth)) {
-    fncOutputError(9018, DEF_WARNING, "アクセス権限がありません。", true, $strReturnPath, $objDB);
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // 仕入番号の取得
@@ -62,13 +59,13 @@ if ($lngResultNum) {
         $aryStock = $objDB->fetchArray($lngResultID, 0);
         // 該当仕入の状態が「締め済」の状態であれば
         if ($aryStock["lngstockstatuscode"] == DEF_STOCK_CLOSED) {
-            fncOutputError(711, DEF_WARNING, "", true, $strReturnPath, $objDB);
+            fncOutputError(711, DEF_WARNING, "", true, "", $objDB);
         }
     } else {
-        fncOutputError(703, DEF_ERROR, "該当データの取得に失敗しました", true, $strReturnPath, $objDB);
+        fncOutputError(703, DEF_ERROR, "該当データの取得に失敗しました", true, "", $objDB);
     }
 } else {
-    fncOutputError(703, DEF_ERROR, "データが異常です", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_ERROR, "データが異常です", true, "", $objDB);
 }
 
 // 指定仕入番号の仕入明細データ取得用SQL文の作成
@@ -82,7 +79,7 @@ if ($lngResultNum) {
         $aryStockDetail[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    fncOutputError(703, DEF_WARNING, "仕入番号に対する明細情報が見つかりません。", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_WARNING, "仕入番号に対する明細情報が見つかりません。", true, "", $objDB);
 }
 
 $objDB->freeResult($lngResultID);
@@ -97,7 +94,7 @@ $taxObj = fncGetTaxInfo($aryStock["dtmstockappdate"], $objDB);
 $aryTaxclass = fncGetTaxClassAry($objDB);
 
 if ($taxObj == null) {
-    fncOutputError(703, DEF_ERROR, "消費税情報の取得に失敗しました。", true, $strReturnPath, $objDB);
+    fncOutputError(703, DEF_ERROR, "消費税情報の取得に失敗しました。", true, "", $objDB);
 }
 
 //$aryTaxclass = fncGetTaxClassAry($objDB);

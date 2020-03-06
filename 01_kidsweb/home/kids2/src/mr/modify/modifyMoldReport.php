@@ -26,13 +26,13 @@ $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 // 1900 金型帳票管理
 if ( !fncCheckAuthority( DEF_FUNCTION_MR0, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // 1904 金型帳票管理(登録)
 if ( !fncCheckAuthority( DEF_FUNCTION_MR4, $objAuth ) )
 {
-	fncOutputError( 9018, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+	fncOutputError( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
 // キャッシュインスタンスの取得
