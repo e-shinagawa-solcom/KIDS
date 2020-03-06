@@ -58,10 +58,10 @@ if ($lngResultNum) {
     if ($lngResultNum == 1) {
         $aryResult = $objDB->fetchArray($lngResultID, 0);
     } else {
-        fncOutputError(603, DEF_ERROR, "該当データの取得に失敗しました", true, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+        fncOutputError(603, DEF_ERROR, "該当データの取得に失敗しました", true, "", $objDB);
     }
 } else {
-    fncOutputError(603, DEF_ERROR, "データが異常です", true, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(603, DEF_ERROR, "データが異常です", true, "", $objDB);
 }
 
 $objDB->freeResult($lngResultID);
@@ -80,7 +80,7 @@ if ($lngResultNum) {
         $aryDetailResult[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    $strMessage = fncOutputError(603, DEF_WARNING, "売上番号に対する明細情報が見つかりません。", false, "../sc/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+    fncOutputError(603, DEF_WARNING, "売上番号に対する明細情報が見つかりません。", true, "", $objDB);
 }
 
 $objDB->freeResult($lngResultID);

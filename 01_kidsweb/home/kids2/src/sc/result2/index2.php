@@ -86,12 +86,12 @@
 		}
 		else
 		{
-			fncOutputError( 603, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+			fncOutputError( 603, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "", $objDB );
 		}
 	}
 	else
 	{
-		fncOutputError( 603, DEF_ERROR, "データが異常です", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		fncOutputError( 603, DEF_ERROR, "データが異常です", TRUE, "", $objDB );
 	}
 
 	$objDB->freeResult( $lngResultID );
@@ -121,7 +121,7 @@
 	}
 	else
 	{
-		$strMessage = fncOutputError( 603, DEF_WARNING, "納品伝票番号に対する明細情報が見つかりません。", FALSE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+		$strMessage = fncOutputError( 603, DEF_WARNING, "納品伝票番号に対する明細情報が見つかりません。", FALSE, "", $objDB );
 	}
 
 	$objDB->freeResult( $lngResultID );
