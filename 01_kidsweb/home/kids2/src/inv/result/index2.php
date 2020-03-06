@@ -92,12 +92,12 @@
         }
         else
         {
-            fncOutputError( 603, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+            fncOutputError( 603, DEF_ERROR, "該当データの取得に失敗しました", TRUE, "", $objDB );
         }
     }
     else
     {
-        fncOutputError( 603, DEF_ERROR, "データが異常です", TRUE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+        fncOutputError( 603, DEF_ERROR, "データが異常です", TRUE, "", $objDB );
     }
 
     $objDB->freeResult( $lngResultID );
@@ -128,7 +128,7 @@
     }
     else
     {
-        $strMessage = fncOutputError( 603, DEF_WARNING, "請求書番号に対する明細情報が見つかりません。", FALSE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+        fncOutputError( 603, DEF_WARNING, "請求書番号に対する明細情報が見つかりません。", true, "", $objDB );
     }
 
     $objDB->freeResult( $lngResultID );

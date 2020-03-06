@@ -280,9 +280,6 @@
     // エラー画面への遷移
     function MoveToErrorPage($strMessage){
 
-        // 言語コード：日本語
-        $aryHtml["lngLanguageCode"] = 1;
-
         // エラーメッセージの設定
         $aryHtml["strErrorMessage"] = $strMessage;
 

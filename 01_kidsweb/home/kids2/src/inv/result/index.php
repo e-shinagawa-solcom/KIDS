@@ -110,7 +110,7 @@ list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     // 検索件数が指定数以上の場合エラーメッセージを表示する
     if ($lngResultNum > DEF_SEARCH_MAX) {
-        $strMessage = fncOutputError(9057, DEF_WARNING, DEF_SEARCH_MAX, false, "../inv/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
+        $strMessage = fncOutputError(9057, DEF_WARNING, DEF_SEARCH_MAX, false, "", $objDB);
 
         // [lngLanguageCode]書き出し
         $aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];

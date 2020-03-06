@@ -154,9 +154,6 @@
         $aryDeleteData["strAction"] = "/inv/search/index.php?strSessionID=";
         $aryDeleteData["strSessionID"] = $aryData["strSessionID"];
 
-        // 言語コード：日本語
-        $aryDeleteData["lngLanguageCode"] = 1;
-
         // テンプレート読み込み
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate( "inv/result/delete_result.tmpl" );
@@ -199,7 +196,7 @@
     }
     else
     {
-        $strMessage = fncOutputError( 603, DEF_WARNING, "請求書番号に対する明細情報が見つかりません。", FALSE, "../inv/search/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+        fncOutputError( 603, DEF_WARNING, "請求書番号に対する明細情報が見つかりません。", true, "", $objDB );
     }
 
     $objDB->freeResult( $lngResultID );
@@ -253,9 +250,6 @@
 
     // エラー画面への遷移
     function MoveToErrorPage($strMessage){
-
-        // 言語コード：日本語
-        $aryHtml["lngLanguageCode"] = 1;
 
         // エラーメッセージの設定
         $aryHtml["strErrorMessage"] = $strMessage;
