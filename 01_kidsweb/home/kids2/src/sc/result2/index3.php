@@ -83,7 +83,7 @@ if ( $lngResultNum == 1 )
 }
 else
 {
-	fncOutputError( 603, DEF_ERROR, "データが異常です", TRUE, "../sc/search2/index.php?strSessionID=".$aryData["strSessionID"], $objDB );
+	fncOutputError( 603, DEF_ERROR, "データが異常です", TRUE, "", $objDB );
 }
 $objDB->freeResult( $lngResultID );
 
