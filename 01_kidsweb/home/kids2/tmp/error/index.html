@@ -1,24 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="ja">
+
 <head>
-<title>K.I.D.S.</title>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>K.I.D.S.</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<!-- jQuery -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/js/openerreload.js"></script>
 
-<link rel="stylesheet" type="text/css" media="screen" href="/error/layout.css">
-<script type="text/javascript" language="javascript" src="/error/exstr.js"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/error/layout.css">
+	<script type="text/javascript" language="javascript" src="/error/exstr.js"></script>
 
 </head>
-<body id="Backs" oncontextmenu="return false;"  onload="fncObjQuery( 1 , _%lngEventCode%_ );initLayout();">
 
-<p id="ErrorSet" align="center">
-	<!-- エラーメッセージ -->
-	<span id="strMessage">_%strMessage%_</span><br><br><br>
-	<!-- [閉じる][戻る]イベントボタン -->
-	<span id="objQuery" onclick="fncClickEvent( '_%strEvent%_' );return false;"></span>
-</p>
+<body id="Backs" oncontextmenu="return false;" onload="fncObjQuery( 1 , _%lngEventCode%_ );initLayout();">
+
+	<p id="ErrorSet" align="center">
+		<!-- エラーメッセージ -->
+		<span id="strMessage">_%strMessage%_</span>
+		<br>
+		<br>
+		<br>
+		<!-- [閉じる][戻る]イベントボタン -->
+		<span id="objQuery" onclick="fncClickEvent( '_%strEvent%_' );return false;"></span>
+	</p>
 
 </body>
+
 </html>

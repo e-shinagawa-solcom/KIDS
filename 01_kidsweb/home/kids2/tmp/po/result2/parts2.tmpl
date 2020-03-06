@@ -1,198 +1,183 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html lang="ja">
+
 <head>
-<title>K.I.D.S.</title>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<title>K.I.D.S.</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<!-- jQuery -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+	<script src="/cmn/js/openerreload.js" defer></script>
 
-<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
+	<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
+	<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
 
-<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
-<script type="text/javascript" language="javascript" src="/po/cmn/resultexstr.js"></script>
-<script type="text/javascript" language="javascript" src="/list/result/cmn/functions.js"></script>
+	<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
+	<script type="text/javascript" language="javascript" src="/po/cmn/resultexstr.js"></script>
+	<script type="text/javascript" language="javascript" src="/list/result/cmn/functions.js"></script>
 
 </head>
+
 <body onload="fncChgEtoJ( '_%strMode%_' );">
 
-<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
-	<tr class="SegColumn">
-		<td id="ControlTitle"></td>
-	</tr>
-</table>
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#6f8180" align="center">
+		<tr class="SegColumn">
+			<td id="ControlTitle"></td>
+		</tr>
+	</table>
 
 
-<br>
+	<br>
 
 
-<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
-	<tr>
-		<td>
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+		<tr>
+			<td>
 
 
-			<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
-				<tr> 
-					<td class="SegColumn">作成日</td>
-					<td class="Segs">_%dtminsertdate%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">発注コード</td>
-					<td class="Segs">_%strordercode%_</td>
-				</tr>
-				<tr> 
-					<td id="InputUser" class="SegColumn">入力者</td>
-					<td class="Segs">_%lnginputusercode%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">仕入先</td>
-					<td class="Segs">_%lngcustomercode%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">仕入先住所</td>
-					<td class="Segs">_%strcustomercompanyaddreess%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">仕入先電話番号</td>
-					<td class="Segs">_%strcustomercompanytel%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">仕入先FAX番号</td>
-					<td class="Segs">_%strcustomercompanyfax%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">製品コード</td>
-					<td class="Segs">_%strproductcode%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">再販コード</td>
-					<td class="Segs">_%strrevisecode%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">製品名</td>
-					<td class="Segs">_%strproductname%_</td>
-				</tr>
-				<tr> 
-					<td id="Customer" class="SegColumn">製品名（英語）</td>
-					<td class="Segs">_%strproductenglishname%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">営業部署</td>
-					<td class="Segs">_%lnginchargegroupcode%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">開発担当者</td>
-					<td class="Segs">_%lnginchargeusercode%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">納品場所</td>
-					<td class="Segs">_%lngdeliveryplacecode%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">通貨</td>
-					<td class="Segs">_%lngmonetaryunitcode%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">通貨レート</td>
-					<td class="Segs">_%lngmonetaryratecode%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">支払条件</td>
-					<td class="Segs">_%lngpayconditioncode%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">備考</td>
-					<td class="Segs">_%strnote%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">合計金額</td>
-					<td class="Segs">_%curtotalprice%_</td>
-				</tr>
-				<tr> 
-					<td class="SegColumn">印刷回数</td>
-					<td class="Segs">_%lngprintcount%_</td>
-				</tr>
-			</table>
+				<table width="100%" cellpadding="0" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+					<tr>
+						<td class="SegColumn">作成日</td>
+						<td class="Segs">_%dtminsertdate%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">発注コード</td>
+						<td class="Segs">_%strordercode%_</td>
+					</tr>
+					<tr>
+						<td id="InputUser" class="SegColumn">入力者</td>
+						<td class="Segs">_%lnginputusercode%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">仕入先</td>
+						<td class="Segs">_%lngcustomercode%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">仕入先住所</td>
+						<td class="Segs">_%strcustomercompanyaddreess%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">仕入先電話番号</td>
+						<td class="Segs">_%strcustomercompanytel%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">仕入先FAX番号</td>
+						<td class="Segs">_%strcustomercompanyfax%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">製品コード</td>
+						<td class="Segs">_%strproductcode%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">再販コード</td>
+						<td class="Segs">_%strrevisecode%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">製品名</td>
+						<td class="Segs">_%strproductname%_</td>
+					</tr>
+					<tr>
+						<td id="Customer" class="SegColumn">製品名（英語）</td>
+						<td class="Segs">_%strproductenglishname%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">営業部署</td>
+						<td class="Segs">_%lnginchargegroupcode%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">開発担当者</td>
+						<td class="Segs">_%lnginchargeusercode%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">納品場所</td>
+						<td class="Segs">_%lngdeliveryplacecode%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">通貨</td>
+						<td class="Segs">_%lngmonetaryunitcode%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">通貨レート</td>
+						<td class="Segs">_%lngmonetaryratecode%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">支払条件</td>
+						<td class="Segs">_%lngpayconditioncode%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">備考</td>
+						<td class="Segs">_%strnote%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">合計金額</td>
+						<td class="Segs">_%curtotalprice%_</td>
+					</tr>
+					<tr>
+						<td class="SegColumn">印刷回数</td>
+						<td class="Segs">_%lngprintcount%_</td>
+					</tr>
+				</table>
 
 
-			<br>
+				<br> _%strDetailTable%_
 
 
-_%strDetailTable%_
+				<br>
 
 
-			<br>
+			</td>
+		</tr>
+	</table>
+
+	<br>
+
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center" style="visibility:_%listview%_">
+		<tr>
+			<td>
+
+				<span id="PreviewBt">
+					<a href="#">
+						<img onclick="fncListOutput('_%strPreviewAction%_');return false;" onmouseover="fncGrayPreviewButton('on' , this);"
+						 onmouseout="fncGrayPreviewButton('off', this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );"
+						 src="/img/type01/cmn/querybt/graypreview_off_bt.gif" width="72" height="20" border="0" alt="PREVIEW">
+					</a>
+				</span>
+
+			</td>
+		</tr>
+	</table>
+
+	<br>
+
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+		<tr>
+			<td>
+				<span id="objQuery">
+					<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+						<tr>
+							<td bgcolor="#f1f1f1">
+								<a href="#" onclick="window.opener.location.reload();window.close();">
+									<img class="button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE">
+								</a>
+							</td>
+						</tr>
+					</table>
+				</span>
+			</td>
+		</tr>
+	</table>
 
 
-		</td>
-	</tr>
-</table>
-
-<br>
-
-<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center" style="visibility:_%listview%_">
-	<tr>
-		<td>
-
-			<span id="PreviewBt">
-				<a href="#"><img onclick="fncListOutput('_%strPreviewAction%_');return false;" onmouseover="fncGrayPreviewButton( \'on\' , this );" onmouseout="fncGrayPreviewButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="/img/type01/cmn/querybt/graypreview_off_bt.gif" width="72" height="20" border="0" alt="PREVIEW"></a>
-			</span>
-
-		</td>
-	</tr>
-</table>
-
-<br>
-
-<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
-	<tr>
-		<td>
-
-			<form name="form1" action="_%strAction%_" method="POST">
-				<span id="objQuery"></span>
-				<input type="hidden" name="strSubmit" value="_%strSubmit%_">
-				
-				<input type="hidden" name="dtmOrderAppDate" value="_%dtmInsertDate%_"><!-- 作成日 -->
-				<input type="hidden" name="strOrderCode" value="_%strOrderCode%_"><!-- 発注ＮＯ．  -->
-				<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_"><!-- リビジョン番号 -->
-				<input type="hidden" name="lngCustomerCode" value="_%lngCustomerCode%_"><!-- 仕入先  -->
-				<input type="hidden" name="strCustomerCompanyAddreess" value="_%strCustomerCompanyAddreess%_"><!-- 仕入先住所  -->
-				<input type="hidden" name="strCustomerCompanyTel" value="_%strCustomerCompanyTel%_"><!-- 仕入先電話番号  -->
-				<input type="hidden" name="strCustomerCompanyFax" value="_%strCustomerCompanyFax%_"><!-- 仕入先電話番号  -->
-				<input type="hidden" name="strProductCode" value="_%strProductCode%_"><!-- 製品コード  -->
-				<input type="hidden" name="strReviseCode" value="_%strReviseCode%_"><!-- 再販コード  -->
-				<input type="hidden" name="strProductName" value="_%strProductName%_"><!-- 製品名  -->
-				<input type="hidden" name="strProductEnglishName" value="_%strProductEnglishName%_"><!-- 製品名（英語）  -->
-				<input type="hidden" name="lngGroupCode" value="_%lngGroupCode%_"><!-- 部門コード -->
-				<input type="hidden" name="lngUserCode" value="_%lngUserCode%_"><!-- 担当者 -->
-				<input type="hidden" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_"><!-- 納品場所 -->
-				<input type="hidden" name="dtmExpirationDate" value="_%dtmExpirationDate%_"><!-- 発注有効期限日 -->
-				<input type="hidden" name="lngMonetaryUnitCode" value="_%lngMonetaryUnitCode%_"><!-- 通貨 -->
-				<input type="hidden" name="lngMonetaryRateCode" value="_%lngMonetaryRateCode%_"><!-- レートタイプ -->
-				<input type="hidden"  name="lngPayConditionCode" value="_%lngPayConditionCode%_"><!-- 支払条件 -->
-				<input type="hidden"  name="strNote" value="_%strNote%_"><!-- 備考 -->
-				<input type="hidden"  name="curAllTotalPrice" value="_%curAllTotalPrice%_"><!-- 合計金額 -->
-
-				<input type="hidden"  name="strSessionID" value="_%strSessionID%_">
-				<input type="hidden"  name="lngOrderNo" value="_%lngOrderNo%_">
-				<input type="hidden"  name="strMode" value="_%strMode%_">
-
-				_%strHidden%_
-			</form>
-
-		</td>
-	</tr>
-</table>
-
-
-<br>
+	<br>
 
 
 </body>
 
 <script language=javascript>
-fncShowHidePreload( 1 );
+	fncShowHidePreload(1);
 </script>
 
 

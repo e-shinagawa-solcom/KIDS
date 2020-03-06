@@ -182,13 +182,14 @@ if($_POST){
 // 発注書削除確認画面
 // 発注書マスタを取得
 $aryResult = fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB);
-
+if (!$aryResult || count($aryResult) == 0) {
+    fncOutputError(503, DEF_ERROR, "該当データの取得に失敗しました。", true, "", $objDB);
+}
 // 取得データの調整
 $aryNewResult = fncSetPurchaseHeadTabelData($aryResult[0]);
 
 ////////// 明細行の取得 ////////////////////
 // 発注書明細を取得
-
 $strQuery = fncGetPurchaseOrderDetailSQL($lngpurchaseorderno, $lngrevisionno);
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 if ( $lngResultNum )
@@ -197,6 +198,8 @@ if ( $lngResultNum )
 	{
 		$aryDetailResult[$i] = $objDB->fetchArray( $lngResultID, $i );
 	}
+} else {
+    fncOutputError(503, DEF_ERROR, "発注番号に対する明細情報が見つかりません。", true, "", $objDB);
 }
 $objDB->freeResult( $lngResultID );
 if(!is_array($aryDetailResult)){

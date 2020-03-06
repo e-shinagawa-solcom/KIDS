@@ -31,6 +31,7 @@
  */
 function fncGetPurchaseHeadNoToInfo($lngOrderNo, $lngRevisionNo, $objDB)
 {
+    $aryOrderResult = array();
     // SQL文の作成
     $aryQuery[] = "SELECT o.lngOrderNo as lngOrderNo, o.lngRevisionNo as lngRevisionNo";
 
@@ -163,11 +164,9 @@ function fncGetPurchaseHeadNoToInfo($lngOrderNo, $lngRevisionNo, $objDB)
  */
 function fncGetPurchaseDetailNoToInfo($lngOrderNo, $lngRevisionNo, $objDB)
 {
-    // 2004.03.29 suzukaze update start
+    $aryDetailResult = array();
     // SQL文の作成
-    //    $aryQuery[] = "SELECT distinct on (od.lngOrderDetailNo) od.lngOrderDetailNo as lngRecordNo, ";
     $aryQuery[] = "SELECT od.lngOrderDetailNo as lngRecordNo, ";
-    // 2004.03.29 suzukaze update end
     $aryQuery[] = "od.lngOrderNo as lngOrderNo, od.lngRevisionNo as lngRevisionNo";
 
     // 製品コード・名称
@@ -188,11 +187,8 @@ function fncGetPurchaseDetailNoToInfo($lngOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = ", dm.strDeliveryMethodName as strDeliveryMethodName";
     // 納期
     $aryQuery[] = ", to_char(od.dtmDeliveryDate, 'YYYY/MM/DD' ) as dtmDeliveryDate";
-    // 2004.03.17 suzukaze update start
     // 単価
     $aryQuery[] = ", od.curProductPrice";
-    //    $aryQuery[] = ", To_char( od.curProductPrice, '9,999,999,990.99' )  as curProductPrice";
-    // 2004.03.17 suzukaze update start
     // 単位
     $aryQuery[] = ", od.lngProductUnitCode as lngProductUnitCode";
     $aryQuery[] = ", pu.strProductUnitName as strProductUnitName";
@@ -217,7 +213,6 @@ function fncGetPurchaseDetailNoToInfo($lngOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
     $aryQuery[] = " ) p ON od.strproductCode = p.strproductCode and od.strrevisecode = p.strrevisecode";
     $aryQuery[] = " LEFT JOIN m_StockSubject ss USING (lngStockSubjectCode)";
-    //    $aryQuery[] = " LEFT JOIN m_StockItem si USING (lngStockItemCode)";
     $aryQuery[] = " LEFT JOIN m_DeliveryMethod dm USING (lngDeliveryMethodCode)";
     $aryQuery[] = " LEFT JOIN m_ProductUnit pu ON od.lngProductUnitCode = pu.lngProductUnitCode";
     $aryQuery[] = ", m_StockItem si ";
@@ -226,9 +221,7 @@ function fncGetPurchaseDetailNoToInfo($lngOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "AND si.lngStockSubjectCode = ss.lngStockSubjectCode ";
     $aryQuery[] = "AND od.lngStockItemCode = si.lngStockItemCode ";
 
-    // 2004.03.29 suzukaze update start
     $aryQuery[] = " ORDER BY od.lngSortKey ASC ";
-    // 2004.03.29 suzukaze update end
 
     $strQuery = implode("\n", $aryQuery);
     // 明細データの取得
@@ -236,6 +229,8 @@ function fncGetPurchaseDetailNoToInfo($lngOrderNo, $lngRevisionNo, $objDB)
 
     if ($lngResultNum) {
         $aryDetailResult = $objDB->fetchArray($lngResultID, 0);
+    } else {
+        fncOutputError(503, DEF_ERROR, "発注番号に対する明細情報が見つかりません。", true, "", $objDB);
     }
 
     $objDB->freeResult($lngResultID);

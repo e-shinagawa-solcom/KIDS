@@ -1315,6 +1315,7 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder, $strSessionID)
  */
 function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
 {
+    $aryResult = array();
     $aryQuery[] = "SELECT";
     $aryQuery[] = "   mp.lngpurchaseorderno";
     $aryQuery[] = "  ,mp.lngrevisionno";

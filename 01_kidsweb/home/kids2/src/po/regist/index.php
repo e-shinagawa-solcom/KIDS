@@ -158,7 +158,6 @@ if ($_POST["strMode"] == "update") {
 
     // HTML出力
     echo $objTemplate->strTemplate;
-    // echo fncGetReplacedHtml( "/po/regist/parts.tmpl", $aryData, $objAuth );
 
     return true;
 }

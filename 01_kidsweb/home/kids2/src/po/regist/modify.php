@@ -62,14 +62,13 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 $lngUserCode = $objAuth->UserCode;
 
-if($_POST["strMode"] == "cancel"){
+if ($_POST["strMode"] == "cancel") {
     // 排他ロックの解放
     $objDB->transactionBegin();
     unlockExclusive($objAuth, $objDB);
     $objDB->transactionCommit();
-    return true; 
+    return true;
 }
-
 
 // 500    発注管理
 if (!fncCheckAuthority(DEF_FUNCTION_PO0, $objAuth)) {
@@ -81,13 +80,12 @@ if (!fncCheckAuthority(DEF_FUNCTION_PO12, $objAuth)) {
     fncOutputError(9052, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
-
 // check
 if ($_POST["strMode"] == "check" || $_POST["strMode"] == "renew") {
     $objDB->transactionBegin();
     // 発注書マスタ更新
     if (!fncUpdatePurchaseOrder($aryData, $objDB, $objAuth)) {return false;}
-    
+
     // 発注書明細更新
     if (!fncUpdatePurchaseOrderDetail($aryData, $objDB)) {return false;}
 
@@ -97,7 +95,6 @@ if ($_POST["strMode"] == "check" || $_POST["strMode"] == "renew") {
     $strHtml = fncCreatePurchaseOrderUpdateHtml($updatedPurchaseOrder, $aryData["strSessionID"]);
     $aryData["aryPurchaseOrder"] = $strHtml;
 
-    // $objDB->transactionRollback();
     $objDB->transactionCommit();
 
     // テンプレート読み込み
@@ -119,8 +116,9 @@ if ($_POST["strMode"] == "check" || $_POST["strMode"] == "renew") {
 // 発注書
 $aryResult = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"], $objDB);
 
-if (!$aryResult) {return false;}
-
+if (!$aryResult || count($aryResult) == 0) {
+    fncOutputError(503, DEF_ERROR, "該当データの取得に失敗しました。", true, "", $objDB);
+}
 // ヘッダ
 $aryNewResult["strOrderCode"] = $aryResult[0]["strordercode"];
 $aryNewResult["lngRevisionNo"] = sprintf("%02d", $aryResult[0]["lngrevisionno"]);
@@ -153,15 +151,16 @@ if ($aryResult[0]["lngcountrycode"] != 81) {
 // 運搬方法プルダウン（候補用）
 $strPulldownDeliveryMethod = fncPulldownMenu(6, 0, "", $objDB);
 $objDB->transactionBegin();
-
 // 明細（候補の発注）
 $aryOtherDetail = fncGetOtherOrderDetail($aryResult[0]["lngorderno"], $aryResult[0]["lngorderrevisionno"], $objDB);
 
+if (!$aryOtherDetail || count($aryOtherDetail) == 0) {
+    fncOutputError(503, DEF_ERROR, "発注書番号に対する明細情報が見つかりません。", true, "", $objDB);
+}
 // ロック（候補の発注）
-foreach($aryOtherDetail as $otherDetail)
-{
-    if(!lockExclusive($otherDetail["lngorderno"], DEF_FUNCTION_PO5, $objAuth, $objDB)){
-        fncOutputError(501, DEF_ERROR, "該当データが見積原価修正または発注確定でロックされています。", TRUE, "", $objDB );
+foreach ($aryOtherDetail as $otherDetail) {
+    if (!lockExclusive($otherDetail["lngorderno"], DEF_FUNCTION_PO5, $objAuth, $objDB)) {
+        fncOutputError(501, DEF_ERROR, "該当データが見積原価修正または発注確定でロックされています。", true, "", $objDB);
     }
 }
 
@@ -172,7 +171,6 @@ $aryOtherHtmlResult = fncGetOtherOrderDetailHtml($aryOtherDetail, $strPulldownDe
 
 // 明細（発注書）
 $aryHtmlResult = fncGetPurchaseOrderDetailHtml($aryResult, $objDB);
-
 
 $aryNewResult["purchaseOrderDetail"] = $aryHtmlResult["purchaseOrderDetail"];
 $aryNewResult["purchaseOrderDetailNo"] = $aryHtmlResult["purchaseOrderDetailNo"];
