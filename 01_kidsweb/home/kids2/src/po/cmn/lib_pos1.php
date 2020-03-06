@@ -1235,7 +1235,7 @@ function fncInsertPurchaseOrder($aryOrder, $objDB)
     $aryQuery[] = "  ," . ($aryOrder["lngdeliveryplacecode"] ? $aryOrder["lngdeliveryplacecode"] : 'null');
     $aryQuery[] = "  ," . ($aryOrder["strdeliveryplacename"] ? "'" . $aryOrder["strdeliveryplacename"] . "'" : 'null');
     $aryQuery[] = "  ," . ($aryOrder["curtotalprice"] ? $aryOrder["curtotalprice"] : 'null');
-    $aryQuery[] = "  ," . "NOW()";
+    $aryQuery[] = "  ,'" . fncGetDateTimeString() . "'";
     $aryQuery[] = "  ," . $aryOrder["lnginsertusercode"];
     $aryQuery[] = "  ," . ($aryOrder["strinsertusername"] ? "'" . $aryOrder["strinsertusername"] . "'" : 'null');
     $aryQuery[] = "  ," . ($aryOrder["strnote"] ? "'" . $aryOrder["strnote"] . "'" : 'null');

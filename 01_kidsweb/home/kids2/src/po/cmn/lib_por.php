@@ -1090,6 +1090,7 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $delivery = fncGetCompany($aryOrderDetailUpdate[$i]["lngdeliveryplacecode"], $objDB);
                     $payconditioncode = $aryOrder["lngpayconditioncode"];
                     $paycondition = fncGetPayCondition($payconditioncode, $objDB);
+                    $datestring = "'" . fncGetDateTimeString() . "'";
                     $aryQuery[] = "INSERT INTO m_purchaseorder (";
                     $aryQuery[] = "   lngpurchaseorderno";
                     $aryQuery[] = "  ,lngrevisionno";
@@ -1143,13 +1144,13 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $aryQuery[] = "  ,'" . $paycondition["strpayconditionname"] . "'";
                     $aryQuery[] = "  ," . $aryOrderDetailUpdate[$i]["lnggroupcode"];
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strgroupdisplayname"] . "'";
-                    $aryQuery[] = "  , (select txtsignaturefilename from m_signature where lnggroupcode = " . $aryOrderDetailUpdate[$i]["lnggroupcode"] . " and dtmapplystartdate <= NOW() and dtmapplyenddate >= NOW())";
+                    $aryQuery[] = "  , (select txtsignaturefilename from m_signature where lnggroupcode = " . $aryOrderDetailUpdate[$i]["lnggroupcode"] . " and dtmapplystartdate <= " . $datestring . " and dtmapplyenddate >= " . $datestring .")";
                     $aryQuery[] = "  ," . $aryOrderDetailUpdate[$i]["lngusercode"];
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["struserdisplayname"] . "'";
                     $aryQuery[] = "  ," . $delivery["lngcompanycode"];
                     $aryQuery[] = "  ,'" . $delivery["strcompanydisplayname"] . "'";
                     $aryQuery[] = "  ," . $curTotalPrice; //  . $aryOrderDetailUpdate[$i][0]["curtotalprice"];
-                    $aryQuery[] = "  ,NOW()";
+                    $aryQuery[] = "  ,'" . fncGetDateTimeString() . "'";
                     $aryQuery[] = "  ,'" . $objAuth->UserCode . "'";
                     $aryQuery[] = "  ,'" . $objAuth->UserDisplayName . "'";
                     $aryQuery[] = "  ,'" . $aryOrder["strnote"] . "'";
@@ -1528,7 +1529,7 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = $lngcompanycode . ",";
     $aryQuery[] = "    '" . $aryPurchaseOrder["strLocationName"] . "',";
     $aryQuery[] = "    curtotalprice,";
-    $aryQuery[] = "    CURRENT_TIMESTAMP,";
+    $aryQuery[] = "    '" . fncGetDateTimeString() . "',";
     $aryQuery[] = $objAuth->UserCode . ",";
     $aryQuery[] = "    '" . $objAuth->UserDisplayName . "',";
     $aryQuery[] = "    '" . $aryPurchaseOrder["strNote"] . "',";
