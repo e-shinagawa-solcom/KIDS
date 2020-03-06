@@ -1137,7 +1137,7 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     $insertAry['curtaxprice1'] = $aryData['curtaxprice'];
 
     // 作成日
-    $insertAry['dtminsertdate'] = 'now()';
+    $insertAry['dtminsertdate'] = "'" . fncGetDateTimeString() . "'";
 
     // 担当者コード
     $insertAry['strusercode'] = $aryData['strusercode'];
@@ -1231,7 +1231,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $aryQuery[] =  $insertAry['cursubtotal1'] .",";                                   // 税抜き金額1
     $aryQuery[] = $insertAry['curtax1'] / 100 .",";                                          // 消費税率1
     $aryQuery[] = (int)$insertAry['curtaxprice1'] .",";                                     // 消費税額1
-    $aryQuery[] = "now() ,";                                                                // 作成日
+    $aryQuery[] = "'" . fncGetDateTimeString() . "' ,";                                    // 作成日
     $aryQuery[] = "(select lngusercode from m_user where struserdisplaycode = '". $insertAry['strusercode'] ."')  ,";                                   // 担当者コード
     $aryQuery[] = "'". $insertAry['strusername'] ."'  ,";                                   // 担当者名
     $aryQuery[] = $objAuth->UserCode . " ,";                              // 作成者コード
@@ -1524,7 +1524,7 @@ function fncDeleteInvoice($lngInvoiceNo, $lngRevisionNo, $objDB, $objAuth)
     $aryQuery[] = "" .$objAuth->UserCode . ", ";      // 4:入力者コード
     $aryQuery[] = "'" .$objAuth->UserFullName . "', ";  // 4:入力者名
     $aryQuery[] = "false, ";                            // 5:無効フラグ
-    $aryQuery[] = "now()";                              // 6:登録日
+    $aryQuery[] = "'" . fncGetDateTimeString() . "'";   // 6:登録日
     $aryQuery[] = ")";
 
     unset($strQuery);
