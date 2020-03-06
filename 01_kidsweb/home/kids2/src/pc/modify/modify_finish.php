@@ -150,7 +150,7 @@ $aryQuery[] = ($aryData["dtmExpirationDate"] == "" ? "null" : "'" . $aryData["dt
 $aryQuery[] = "'" . $aryData["strNote"]. "', "; // 18:備考
 $aryQuery[] = $lngUserCode . ", "; // 19:入力者コード
 $aryQuery[] = "false, "; // 20:無効フラグ
-$aryQuery[] = "now()"; // 21:登録日
+$aryQuery[] = "'" . fncGetDateTimeString() . "'"; // 21:登録日
 $aryQuery[] = " )";
 
 $strQuery = implode("\n", $aryQuery);

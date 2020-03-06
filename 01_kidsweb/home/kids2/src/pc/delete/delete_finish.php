@@ -91,7 +91,7 @@ $aryQuery[] = -1 . ", "; // 2:リビジョン番号
 $aryQuery[] = "'" . $strStockCode . "', "; // 3:仕入コード．
 $aryQuery[] = $objAuth->UserCode . ", "; // 4:入力者コード
 $aryQuery[] = "false, "; // 5:無効フラグ
-$aryQuery[] = "now()"; // 6:登録日
+$aryQuery[] = "'" .  fncGetDateTimeString() . "'"; // 6:登録日
 $aryQuery[] = ")";
 
 unset($strQuery);
