@@ -4,7 +4,10 @@
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
-
+<!-- jQuery -->
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+<script src="/inv/regist/js/finish.js" defer></script>
 <script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
@@ -41,7 +44,7 @@
                 <!-- previewボタン -->
                 <span class="p-btn" id="Prev" onclick="fncListOutput('_%strPreviewUrl%_');return false;"><a href="#"><img  src="/img/type01/cmn/querybt/blownpreview_off_bt.gif" width="72" height="20" border="0" alt="閉じる"></a></span>
                 <!-- 閉じるボタン -->
-                <span class="p-btn" id="Close" onclick="if(window.opener.location.href.indexOf('renew') >= 0){window.opener.close();}else{window.opener.location.reload();}window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"><a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" width="72" height="20" border="0" alt="閉じる"></a></span>
+                <span class="p-btn" id="Close" onclick="if(window.opener.location.href.indexOf('renew') >= 0){window.opener.opener.location.reload();window.opener.close();}else{window.opener.location.reload();}window.close();window.returnValue=Array( '_%strAction%_', '_%strSessionID%_' );return false;"><a href="#"><img onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" onmouseover="BlownCloseJOn(this);" onmouseout="BlownCloseJOff(this);" src="/img/type01/cmn/querybt/close_blown_off_ja_bt.gif" width="72" height="20" border="0" alt="閉じる"></a></span>
             </div>
         </div>
     </div>
