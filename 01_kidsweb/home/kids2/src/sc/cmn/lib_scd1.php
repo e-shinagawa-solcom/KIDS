@@ -487,7 +487,7 @@ function fncDeleteSales($lngSalesNo, $objDB, $objAuth)
 	$aryQuery[] = "'" . $strSalesCode . "', ";	// 3:売上コード．
 	$aryQuery[] = $objAuth->UserCode . ", ";	// 4:入力者コード
 	$aryQuery[] = "false, ";					// 5:無効フラグ
-	$aryQuery[] = "now()";						// 6:登録日
+	$aryQuery[] = "'" . fncGetDateTimeString() . "'";	// 6:登録日
 	$aryQuery[] = ")";
 
 	unset($strQuery);
@@ -555,7 +555,7 @@ function fncDeleteSlip($lngSlipNo, $objDB, $objAuth)
 	$aryQuery[] = "-1, ";			// 2:リビジョン番号
 	$aryQuery[] = "'" . $objAuth->UserCode . "', ";	// 4:入力者コード
 	$aryQuery[] = "false, ";						// 5:無効フラグ
-	$aryQuery[] = "now()";							// 6:登録日
+	$aryQuery[] = "'" . fncGetDateTimeString() . "'";							// 6:登録日
 	$aryQuery[] = ")";
 
 	unset($strQuery);

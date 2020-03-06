@@ -80,7 +80,7 @@ function fncTakeExclusiveLock($lngFunctionCode, $strSlipCode, $objAuth, $objDB)
     $v_strexclusivekey1 = withQuote($strSlipCode); //2:排他キー1
     $v_lngusercode = $objAuth->UserCode; //5:ユーザコード
     $v_stripaddress = withQuote($objAuth->AccessIP); //6:端末IPアドレス
-    $v_dtminsertdate = "now()"; //7:登録日
+    $v_dtminsertdate = "'" . fncGetDateTimeString() . "'"; //7:登録日
 
     $aryInsert[] = "INSERT  ";
     $aryInsert[] = " INTO t_exclusivecontrol(  ";
@@ -1299,7 +1299,7 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     $v_strnote = withQuote($aryHeader["strnote"]); //15:備考
     $v_lnginputusercode = $objAuth->UserCode; //16:入力者コード
     $v_bytinvalidflag = "FALSE"; //17:無効フラグ
-    $v_dtminsertdate = "now()"; //18:登録日
+    $v_dtminsertdate = "'" . fncGetDateTimeString() . "'"; //18:登録日
 
     // 登録クエリ作成
     $aryInsert = [];
@@ -1504,7 +1504,7 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $v_curtotalprice = $aryHeader["curtotalprice"]; //27:合計金額
     $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //28:通貨単位コード
     $v_strmonetaryunitsign = withQuote($aryDetail[0]["strmonetaryunitsign"]); //29:通貨単位
-    $v_dtminsertdate = "now()"; //30:作成日
+    $v_dtminsertdate = "'" . fncGetDateTimeString() . "'"; //30:作成日
     $v_lnginsertusercode = nullIfEmpty($objAuth->UserCode); //31:入力者コード
     $v_strinsertusername = withQuote($objAuth->UserDisplayName); //32:入力者名
     $v_strnote = withQuote($aryHeader["strnote"]); //33:備考
