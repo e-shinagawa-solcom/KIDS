@@ -2465,4 +2465,14 @@ function unlockExclusiveBySessionID($sessionID, $objDB){
     return true;
 
 }
+
+// 現在時刻の文字列をミリ秒単位で取得(pgpoolで使用する更新SQL用）
+// 引数指定時はその時刻の文字列
+function fncGetDateTimeString($dateTime = null){
+    if(is_null($dateTime))
+    {
+        $dateTime = new DateTime();
+    }
+    return $dateTime->format('Y/m/d H:i:s.v');
+}
 ?>
