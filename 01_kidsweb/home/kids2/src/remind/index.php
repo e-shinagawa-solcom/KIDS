@@ -138,7 +138,7 @@ if ( $aryData["lngUserCode"] == "" )
 // ログインセッション管理テーブルに書き込み
 $strQuery = "INSERT INTO t_LoginSession VALUES (" .
             " '" . $strSessionID . "', " . $aryData["lngUserCode"] . ", '" . $aryData["strUserID"] . "', '" . $aryBase["strMailAddress"] .
-			"', now(), '" . $objAuth->AccessIP . "', " . $SuccessFlag . ")";
+			"','" . fncGetDateTimeString() . "', '" . $objAuth->AccessIP . "', " . $SuccessFlag . ")";
 
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
