@@ -553,7 +553,7 @@ function fncGetAdminFunction( $strClass, $objDB )
 	}
 
 	$objResult = $objDB->fetchObject( $lngResultID, 0 );
-	$strValue  = strtolower ( strValue );
+	$strValue  = strtolower ( $strValue );
 	$strValue = $objResult->$strValue;
 	$objDB->freeResult( $lngResultID );
 
