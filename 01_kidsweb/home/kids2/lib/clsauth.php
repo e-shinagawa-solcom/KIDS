@@ -185,7 +185,7 @@ class clsAuth
 
 		// アクセス日時の更新
 		$strQuery = "UPDATE t_LoginSession " .
-		            "SET dtmLoginTime = now() " .
+		            "SET dtmLoginTime = '" . fncGetDateTimeString() . "'" .
 		            "WHERE trim(from strSessionID) = '$strSessionID'";
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
@@ -284,8 +284,7 @@ class clsAuth
 		}
 
 		// ログインセッション管理テーブルに書き込み
-		$strQuery = "INSERT INTO t_LoginSession VALUES (" .
-		            " '$strSessionID', " . $this->UserCode . ", '$strUserID', '$strPasswordHash', now(), '" . $this->AccessIP . "', $bytSuccessFlag )";
+		$strQuery = "INSERT INTO t_LoginSession VALUES ('" . $strSessionID. "', " . $this->UserCode . ", '" . $strUserID . "', '" . $strPasswordHash. "', '" . fncGetDateTimeString() . "', '" . $this->AccessIP . "','" . $bytSuccessFlag . "')";
 		list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
 		if ( !$objDB->freeResult( $lngResultID ) )
