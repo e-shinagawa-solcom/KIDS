@@ -488,7 +488,8 @@ class estimateDB extends clsDB {
         if (!$this->isOpen()) {
             return false;
         } else {
-            list($resultID, $resultNumber) = fncQuery("SELECT curstandardrate FROM m_estimatestandardrate WHERE dtmApplyStartDate <= NOW() AND dtmApplyEndDate >= NOW()", $this);
+            $timeString = fncGetDateTimeString();
+            list($resultID, $resultNumber) = fncQuery("SELECT curstandardrate FROM m_estimatestandardrate WHERE dtmApplyStartDate <= '" . $timeString ."' AND dtmApplyEndDate >= '" . $timeString . "'", $this);
 
             if ($resultNumber < 1) {
                 // もし当月の標準割合が参照できない場合最新の日付の標準割合を参照

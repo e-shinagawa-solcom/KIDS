@@ -73,7 +73,8 @@ fncDebug( 'getEstimateQuery_01.txt', $aryData, __FILE__, __LINE__,'a');
 	//////////////////////////////////////////////////////////////////////////
 	// 取得項目
 	//////////////////////////////////////////////////////////////////////////
-	list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT curStandardRate FROM m_EstimateStandardRate WHERE dtmApplyStartDate <= NOW() AND dtmApplyEndDate >= NOW()", $objDB );
+	$timeString = "'" . fncGetDateTimeString() . "'";
+	list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT curStandardRate FROM m_EstimateStandardRate WHERE dtmApplyStartDate <= '" . $timeString . "' AND dtmApplyEndDate >= '" . $timeString ."'", $objDB );
 	if ( $lngResultNum < 1 )
 	{
 // 2004.10.01 suzukaze update start
@@ -413,7 +414,8 @@ function fncGetURL( $aryData )
 */
 function fncGetEstimateDefault( $objDB )
 {
-	list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT To_char( curstandardrate, '990.9999' ) as curstandardrate FROM m_EstimateStandardRate WHERE dtmApplyStartDate < NOW() AND dtmApplyEndDate > NOW()", $objDB );
+    $timeString = "'" . fncGetDateTimeString() . "'";
+	list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT To_char( curstandardrate, '990.9999' ) as curstandardrate FROM m_EstimateStandardRate WHERE dtmApplyStartDate < '" . $timeString . "' AND dtmApplyEndDate > '" . $timeString . "'", $objDB );
 
 	if ( $lngResultNum < 1 )
 	{
@@ -522,11 +524,11 @@ function fncGetEstimateDefaultValue( $lngProductionQuantity, $curProductPrice, $
 	global $g_aryTemp;
 
 
-
+    $timeString = "'" . fncGetDateTimeString() . "'";
 	$aryQuery[] = "SELECT *";
 	$aryQuery[] = "FROM m_EstimateDefault e";
 	$aryQuery[] = " LEFT JOIN m_Company c ON ( e.lngCustomerCompanyCode = c.lngCompanyCode )";
-	$aryQuery[] = "WHERE e.dtmApplyStartDate < NOW() AND e.dtmApplyEndDate > NOW()";
+	$aryQuery[] = "WHERE e.dtmApplyStartDate < '" . $timeString . "' AND e.dtmApplyEndDate > '" . $timeString . "'";
 
 	list ( $lngResultID, $lngResultNum ) = fncQuery( join ( " ", $aryQuery ), $objDB );
 	unset ( $aryQuery );
@@ -693,8 +695,8 @@ function fncGetMonetaryRate( $objDB )
 	$aryQuery[] = "SELECT mmr.lngMonetaryUnitCode, mmr.curConversionRate ";
 	$aryQuery[] = "FROM m_MonetaryRate mmr ";
 	$aryQuery[] = "JOIN m_monetaryunit mmu on mmr.lngmonetaryunitcode = mmu.lngmonetaryunitcode ";
-	$aryQuery[] = "WHERE mmr.dtmapplystartdate <= 'now()' ";
-	$aryQuery[] = "	AND mmr.dtmapplyenddate >= 'now()' ";
+	$aryQuery[] = "WHERE mmr.dtmapplystartdate <= '" . fncGetDateTimeString() . "' ";
+	$aryQuery[] = "	AND mmr.dtmapplyenddate >= '" . fncGetDateTimeString() . "' ";
 	$aryQuery[] = "	AND mmr.lngmonetaryratecode = '" . DEF_MONETARYCLASS_SHANAI . "' ";
 	$aryQuery[] = "GROUP BY mmr.lngMonetaryUnitCode, mmr.curConversionRate ";
 	$aryQuery[] = "ORDER BY 1 ";

@@ -225,7 +225,7 @@ class estimateInsertData {
             'strrevisecode' => 'strrevisecode',
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
-            'dtminsertdate' => 'NOW()',
+            'dtminsertdate' => "'" . fncGetDateTimeString() . "'",
         );
 
         $condition = "WHERE lngreceiveNo = ". $receiveNo;
@@ -266,7 +266,7 @@ class estimateInsertData {
             'strordercode' => 'strordercode',
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
-            'dtminsertdate' => 'NOW()'
+            'dtminsertdate' => "'" . fncGetDateTimeString() . "'"
         );
 
         $condition = "WHERE lngorderno = ". $orderNo;

@@ -197,7 +197,7 @@ class registInsertData extends estimateInsertData {
     protected function registMasterProduct() {
 
         $table = 'm_product';
-
+        $timeString = "'" . fncGetDateTimeString() . "'";
         $data = array(
             'lngproductno' => $this->productNo,
             'strproductcode' => "'". $this->productCode. "'",
@@ -212,8 +212,8 @@ class registInsertData extends estimateInsertData {
             // 'curproductprice' => '',
             'curretailprice' => $this->headerData[workSheetConst::RETAIL_PRICE],
             'bytinvalidflag' => 'false',
-            'dtminsertdate' => 'NOW()',
-            'dtmupdatedate' => 'NOW()',
+            'dtminsertdate' => $timeString,
+            'dtmupdatedate' => $timeString,
             'lngrevisionno' => $this->productRevisionNo,
             'strrevisecode' => "'". $this->reviseCode. "'"
         );
@@ -236,7 +236,7 @@ class registInsertData extends estimateInsertData {
     */
     protected function registMasterEstimate() {
         $table = 'm_estimate';
-
+        $timeString = "'" . fncGetDateTimeString() . "'";
         // 上代
         $retailPrice = $this->headerData[workSheetConst::RETAIL_PRICE];
         // 償却数
@@ -257,7 +257,7 @@ class registInsertData extends estimateInsertData {
             'curprofit' => $this->calculatedData[workSheetConst::OPERATING_PROFIT],
             'lnginputusercode'=> $this->inputUserCode,
             'bytinvalidflag' => 'false',
-            'dtminsertdate' => 'NOW()',
+            'dtminsertdate' => $timeString,
             'lngproductionquantity' => $productionQuantity,
             'lngtempno' => 'NULL',
             'strnote' => 'NULL',
@@ -377,14 +377,14 @@ class registInsertData extends estimateInsertData {
     protected function registMasterReceive($rowData, $receiveNo, $receiveCode) {
         // テーブルの設定 
         $table = 'm_receive';
-
+        $timeString = "'" . fncGetDateTimeString() . "'";
         // 登録データの作成
         $data = array(
             'lngreceiveno' => $receiveNo,
             'lngrevisionno' => $this->revisionNo,
             'strreceivecode' => "'". $receiveCode. "'",
             'strrevisecode' => "'". $this->reviseCode. "'",
-            'dtmappropriationdate' => 'NOW()',
+            'dtmappropriationdate' => $timeString,
             'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
             'lnggroupcode' => $this->groupCode,
             'lngusercode' => $this->inchargeUserCode,
@@ -394,7 +394,7 @@ class registInsertData extends estimateInsertData {
             'curconversionrate' => $rowData['conversionRate'],
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
-            'dtminsertdate' => 'NOW()',
+            'dtminsertdate' => $timeString,
             'strcustomerreceivecode' => 'NULL'
         );
 
@@ -467,12 +467,12 @@ class registInsertData extends estimateInsertData {
     protected function registMasterOrder($rowData, $orderNo, $orderCode) {
         // テーブルの設定
         $table = 'm_order';
-
+        $timeString = "'" . fncGetDateTimeString() . "'";
         $data = array(
             'lngorderno' => $orderNo,
             'lngrevisionno' => $this->revisionNo,
             'strordercode' => "'". $orderCode. "'",
-            'dtmappropriationdate' => 'NOW()',
+            'dtmappropriationdate' => $timeString,
             'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
             'lnggroupcode' => $this->groupCode,
             'lngusercode' => $this->inchargeUserCode,
@@ -484,7 +484,7 @@ class registInsertData extends estimateInsertData {
             'lngdeliveryplacecode' => 'NULL',
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
-            'dtminsertdate' => 'NOW()'
+            'dtminsertdate' => $timeString
         );
 
         // クエリの生成
@@ -560,7 +560,7 @@ class registInsertData extends estimateInsertData {
             'lngrevisionno' => $this->revisionNo,
             'lngproductno' => $this->productNo,
             'strrevisecode' => "'" .$this->reviseCode . "'",
-            'dtmcreationdate' => 'NOW()',
+            'dtmcreationdate' => "'" . fncGetDateTimeString() . "'",
             'dtmrevisiondate' => 'NULL',
             'lnggoodsplanprogresscode' => DEF_GOODSPLAN_AFOOT,
             'lnginputusercode' => $this->inputUserCode

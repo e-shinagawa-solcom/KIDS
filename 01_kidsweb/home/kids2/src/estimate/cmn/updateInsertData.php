@@ -299,7 +299,7 @@ class updateInsertData extends estimateInsertData {
             'strnote' => $table. ".strnote",
             'bytinvalidflag' => $table. ".bytinvalidflag",
             'dtminsertdate' => $table. ".dtminsertdate",
-            'dtmupdatedate' => "NOW()",
+            'dtmupdatedate' => "'" . fncGetDateTimeString() . "'",
             'strcopyrightnote' => $table. ".strcopyrightnote",
             'lngcategorycode' => $table. ".lngcategorycode",
             'lngrevisionno' => $table. ".lngrevisionno + 1",
@@ -380,7 +380,7 @@ class updateInsertData extends estimateInsertData {
             'curprofit' => $this->calculatedData[workSheetConst::OPERATING_PROFIT],
             'lnginputusercode'=> $this->inputUserCode,
             'bytinvalidflag' => $table. '.bytinvalidflag',
-            'dtminsertdate' => 'NOW()',
+            'dtminsertdate' => "'" . fncGetDateTimeString() . "'",
             'lngproductionquantity' => $productionQuantity,
             'lngtempno' => $table. '.lngtempno',
             'strnote' => $table. '.strnote',
@@ -679,7 +679,7 @@ class updateInsertData extends estimateInsertData {
                 'curconversionrate' => $rowData['conversionRate'],
                 'lnginputusercode' => $this->inputUserCode,
                 'bytinvalidflag' => 'bytinvalidflag',
-                'dtminsertdate' => 'NOW()',
+                'dtminsertdate' => "'" . fncGetDateTimeString() . "'",
                 'strcustomerreceivecode' => 'strcustomerreceivecode'
             );
 
@@ -710,7 +710,7 @@ class updateInsertData extends estimateInsertData {
                 'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strreceivecode' => "'". $this->receiveCode. "'",
                 'strrevisecode' => "'". $this->reviseCode. "'",
-                'dtmappropriationdate' => 'NOW()',
+                'dtmappropriationdate' => "'" . fncGetDateTimeString() . "'",
                 'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
                 'lnggroupcode' => $this->groupCode,
                 'lngusercode' => $this->inchargeUserCode,
@@ -720,7 +720,7 @@ class updateInsertData extends estimateInsertData {
                 'curconversionrate' => $rowData['conversionRate'],
                 'lnginputusercode' => $this->inputUserCode,
                 'bytinvalidflag' => 'false',
-                'dtminsertdate' => 'NOW()',
+                'dtminsertdate' => "'" . fncGetDateTimeString() . "'",
                 'strcustomerreceivecode' => 'NULL'
             );
 
@@ -889,7 +889,7 @@ class updateInsertData extends estimateInsertData {
                 'lngdeliveryplacecode' => 'lngdeliveryplacecode',
                 'lnginputusercode' => $this->inputUserCode,
                 'bytinvalidflag' => 'bytinvalidflag',
-                'dtminsertdate' => 'NOW()'
+                'dtminsertdate' => "'" . fncGetDateTimeString() . "'"
             );
 
             $condition = "WHERE lngorderno =". $orderNo;
@@ -914,11 +914,12 @@ class updateInsertData extends estimateInsertData {
     
             return true;
         } else {
+            $timeString = "'" . fncGetDateTimeString() . "'";
             $data = array(
                 'lngorderno' => $orderNo,
                 'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
                 'strordercode' => "'". $this->orderCode. "'",
-                'dtmappropriationdate' => 'NOW()',
+                'dtmappropriationdate' => $timeString,
                 'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
                 'lnggroupcode' => $this->groupCode,
                 'lngusercode' => $this->inchargeUserCode,
@@ -930,7 +931,7 @@ class updateInsertData extends estimateInsertData {
                 'lngdeliveryplacecode' => 'NULL',
                 'lnginputusercode' => $this->inputUserCode,
                 'bytinvalidflag' => 'false',
-                'dtminsertdate' => 'NOW()'
+                'dtminsertdate' => $timeString
             );
     
             // クエリの生成
@@ -969,7 +970,7 @@ class updateInsertData extends estimateInsertData {
             'lngrevisionno' => $this->productRevisionNo,
             'lngproductno' => 'lngproductno',
             'strrevisecode' => 'strrevisecode',
-            'dtmcreationdate' => 'NOW()',
+            'dtmcreationdate' => "'" . fncGetDateTimeString() . "'",
             'dtmrevisiondate' => 'dtmrevisiondate',
             'lnggoodsplanprogresscode' => 'lnggoodsplanprogresscode',
             'lnginputusercode' => $this->inputUserCode
@@ -1400,7 +1401,7 @@ class updateInsertData extends estimateInsertData {
         $strQuery .= " mr.strreceivecode,";
         $strQuery .= " ". $this->inputUserCode. ",";
         $strQuery .= " false,";
-        $strQuery .= " now(),";
+        $strQuery .= " '" . fncGetDateTimeString() . "',";
         $strQuery .= " mr.strrevisecode";
 
         $strQuery .= " FROM t_receivedetail trd";
@@ -1457,7 +1458,7 @@ class updateInsertData extends estimateInsertData {
         $strQuery .= " mo.strordercode,";
         $strQuery .= " ". $this->inputUserCode. ",";
         $strQuery .= " false,";
-        $strQuery .= " now()";
+        $strQuery .= " '" . fncGetDateTimeString() . "'";
 
         $strQuery .= " FROM t_orderdetail tod";
         $strQuery .= " INNER JOIN m_order mo";

@@ -160,7 +160,7 @@ class deleteInsertData extends estimateInsertData {
             'strproductcode' => "CASE WHEN strproductcode LIKE '%_del' THEN strproductcode ELSE strproductcode || '_del' END",
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'true',
-            'dtminsertdate' => 'NOW()',
+            'dtminsertdate' => "'" . fncGetDateTimeString() . "'",
             'lngrevisionno' => -1,
             'strrevisecode' => 'strrevisecode'
         );
@@ -229,7 +229,7 @@ class deleteInsertData extends estimateInsertData {
             'strrevisecode' => 'strrevisecode',
             'lnginputusercode' => $this->inputUserCode,
             'bytinvalidflag' => 'false',
-            'dtminsertdate' => 'NOW()',
+            'dtminsertdate' => "'" . fncGetDateTimeString() ."'",
         );
 
         $condition = "WHERE lngestimateno = ". $this->estimateNo;
