@@ -72,7 +72,7 @@ $objDB->transactionBegin();
 
 // 更新対象仕入データをロックする
 $strLockQuery = "SELECT lngStockNo FROM m_Stock WHERE lngStockNo = " . $aryData["lngStockNo"] . " AND lngRevisionNo = " . $aryData["lngRevisionNo"] . " AND bytInvalidFlag = FALSE FOR UPDATE";
-echo $strLockQuery;
+
 list ( $lngResultID, $lngResultNum ) = fncQuery( $strLockQuery, $objDB );
 if ( !$lngResultNum )
 {

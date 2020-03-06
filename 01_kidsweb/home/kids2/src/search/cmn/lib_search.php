@@ -1568,7 +1568,7 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
                     // 無効ボタンの表示
-                    if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngstockstatuscode"] != DEF_STOCK_CLOSED) {
+                    if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngstockstatuscode"] != DEF_STOCK_CLOSED  && $record["bytinvalidflag"] == false) {
                         // 無効ボタン
                         $imgInvalid = $doc->createElement("img");
                         $imgInvalid->setAttribute("src", "/img/type01/pc/invalid_off_bt.gif");

@@ -53,7 +53,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "   , s.curTotalPrice";
     $aryQuery[] = "   , mu.strMonetaryUnitSign as strMonetaryUnitSign";
     $aryQuery[] = "   , mu.lngmonetaryunitcode as lngmonetaryunitcode ";
-//    $aryQuery[] = " s.strStockCode";
+    $aryQuery[] = "   ,s.bytInvalidFlag";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  m_Stock s ";
     $aryQuery[] = "  inner join ( ";
@@ -324,7 +324,8 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         array_key_exists("lngPayConditionCode", $searchValue)) {
         $aryQuery[] = " AND s.lngPayConditionCode = '" . $searchValue["lngPayConditionCode"] . "'";
     }
-	if (!array_key_exists("admin", $optionColumns)) {
+	if (!array_key_exists("admin", $optionColumns)) {        
+		$aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
 		$aryQuery[] = "  AND not exists ( ";
 		$aryQuery[] = "    select";
 		$aryQuery[] = "      s2.strStockCode ";
