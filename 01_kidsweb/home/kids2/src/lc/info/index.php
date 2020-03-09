@@ -78,7 +78,9 @@ $maxLgno = $lcModel->getMaxLoginStateNum();
 if ($aryData["aclcinitFlg"] == "true") {
     // t_aclcinfoデータの登録・更新処理
     // kidscore2から時間と日付を取得する
-    $curDate = fncGetCurDate($objDB);
+    // $curDate = fncGetCurDate($objDB);
+    $curDate = fncGetDateTimeString();
+    
 //    $date = explode(" ", $curDate)[0];
 //    $time = explode(" ", $curDate)[1];
 

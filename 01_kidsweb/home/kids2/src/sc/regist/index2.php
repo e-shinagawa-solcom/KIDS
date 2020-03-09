@@ -390,7 +390,7 @@
 	$aryQuery[] = "$strNote, ";												// 15:備考
 	$aryQuery[] = "$lngUserCode, ";											// 16:入力者コード
 	$aryQuery[] = "false, ";												// 17:無効フラグ
-	$aryQuery[] = "now() ";													// 18:登録日
+	$aryQuery[] = "'". fncGetDateTimeString() ."'";													// 18:登録日
 	$aryQuery[] = ")";
 
 	$strQuery = "";

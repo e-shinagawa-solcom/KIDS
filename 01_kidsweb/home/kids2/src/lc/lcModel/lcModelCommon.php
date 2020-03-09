@@ -274,18 +274,18 @@ class lcModel
                     $sql = "update
 		                        m_acloginstate
 		                    set
-		                        lgoutymd = to_char(now(), 'YYYYMMDD'),
-								lgouttime = to_char(now(), 'HH24:MI:SS'),
+		                        lgoutymd = $1,
+							    lgouttime = $2,
 								lgstate = null
 		                    where
 		                    	lginymd is not null and
 								lgintime is not null and
 								lgoutymd is null and
 								lgouttime is null and
-								lgusrname in(select lgusrname from m_acloginstate where lgno = $1)
+								lgusrname in(select lgusrname from m_acloginstate where lgno = $3)
 		                ";
                     //バインドの設定
-                    $bind = array($lgno);
+                    $bind = array(fncGetDateString(), fncGetTimeString(), $lgno);
 
                     //クエリ実行
                     $result = $db->executeNonQuery($sql, $bind);
@@ -429,18 +429,18 @@ class lcModel
         $sql = "update
 					m_acloginstate
 				set
-					lgoutymd = to_char(now(), 'YYYYMMDD'),
-					lgouttime = to_char(now(), 'HH24:MI:SS'),
+					lgoutymd = $1,
+					lgouttime = $2,
 					lgstate = null
 				where
 					lginymd is not null and
 					lgintime is not null and
 					lgoutymd is null and
 					lgouttime is null and
-					lgusrname in(select lgusrname from m_acloginstate where lgno = $1)
+					lgusrname in(select lgusrname from m_acloginstate where lgno = $3)
 		    ";
         //バインドの設定
-        $bind = array($param["lgno"]);
+        $bind = array(fncGetDateString(), fncGetTimemString(), $param["lgno"]);
 
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
@@ -578,12 +578,12 @@ class lcModel
 				) VALUES (
 					$1,
 					$2,
-					to_char(now(), 'YYYYMMDD'),
-					to_char(now(), 'HH24:MI:SS')
+					$3,
+					$4
 				);
             ";
         //バインドの設定
-        $bind = array(sprintf('%08d', ($lgno + 1)), $lgusrname);
+        $bind = array(sprintf('%08d', ($lgno + 1)), $lgusrname, fncGetDateString(), fncGetTimeString());
 
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
@@ -860,12 +860,12 @@ class lcModel
 					m_acbaseopendate
 				set
 					updateuser = $1,
-					updatedate = to_char(now(), 'YYYYMMDD'),
-					updatetime = to_char(now(), 'HH24:MI:SS'),
+					updatedate = $2,
+					updatetime = $3,
 					invalidflag = TRUE
 			";
         //バインドの設定
-        $bind = array($lgusrname);
+        $bind = array($lgusrname, fncGetDateString(), fncGetTimeString());
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 
@@ -895,11 +895,11 @@ class lcModel
 					$1 ,
 					$2 ,
 					$3 ,
-					to_char(now(), 'YYYYMMDD'),
-					to_char(now(), 'HH24:MI:SS'),
 					$4 ,
-					to_char(now(), 'YYYYMMDD'),
-					to_char(now(), 'HH24:MI:SS'),
+					$5 ,
+					$6 ,
+					$7 ,
+					$8 ,
 					FALSE
 				);
 			";
@@ -909,6 +909,10 @@ class lcModel
             $data,
             $lgusrname,
             $lgusrname,
+            fncGetDateString(),
+            fncGetTimeString(),
+            fncGetDateString(),
+            fncGetTimeString()
         );
 
         //クエリ実行
@@ -1021,10 +1025,10 @@ class lcModel
 							bankdivrate = $4 ,
 							invalidflag = $5 ,
 							updateuser = $6 ,
-							updatedate = to_char(now(), 'YYYYMMDD'),
-							updatetime = to_char(now(), 'HH24:MI:SS')
+							updatedate = $7,
+							updatetime = $8
 						where
-							bankcd =  $7
+							bankcd =  $9
 					";
                 //バインドの設定
                 $bind = array(
@@ -1034,7 +1038,9 @@ class lcModel
                     $data[$i]["bankdivrate"],
                     $data[$i]["invalidflag"],
                     $lgusrname,
-                    $data[$i]["bankcd"],
+                    fncGetDateString(),
+                    fncGetTimeString(),
+                    $data[$i]["bankcd"]
                 );
                 //クエリ実行
                 $result = $db->executeNonQuery($sql, $bind);
@@ -1072,11 +1078,11 @@ class lcModel
 							$5 ,
 							$6 ,
 							$7 ,
-							to_char(now(), 'YYYYMMDD'),
-							to_char(now(), 'HH24:MI:SS'),
 							$8 ,
-							to_char(now(), 'YYYYMMDD'),
-							to_char(now(), 'HH24:MI:SS')
+							$9 ,
+							$10 ,
+							$11 ,
+							$12
 						);
 					";
                 //バインドの設定
@@ -1088,7 +1094,11 @@ class lcModel
                     $data[$i]["bankdivrate"],
                     $data[$i]["invalidflag"],
                     $lgusrname,
+                    fncGetDateString(),
+                    fncGetTimeString(),
                     $lgusrname,
+                    fncGetDateString(),
+                    fncGetTimeString()
                 );
 
                 //クエリ実行
@@ -1170,10 +1180,10 @@ class lcModel
 								payfsendfax = $5,
 								invalidflag = $6,
 								updateuser = $7,
-								updatedate = to_char(now(), 'YYYYMMDD'),
-								updatetime = to_char(now(), 'HH24:MI:SS')
+								updatedate = $8,
+								updatetime = $9
 							where
-								payfcd =  $8
+								payfcd =  $10
 						";
                     //バインドの設定
                     $bind = array(
@@ -1184,7 +1194,9 @@ class lcModel
                         $data[$i]["payfsendfax"],
                         $data[$i]["invalidflag"],
                         $lgusrname,
-                        $data[$i]["payfcd"],
+                        fncGetDateString(),
+                        fncGetTimeString(),
+                        $data[$i]["payfcd"]
                     );
 
                     //クエリ実行
@@ -1245,11 +1257,11 @@ class lcModel
 								$6 ,
 								$7 ,
 								$8 ,
-								to_char(now(), 'YYYYMMDD'),
-								to_char(now(), 'HH24:MI:SS'),
 								$9 ,
-								to_char(now(), 'YYYYMMDD'),
-								to_char(now(), 'HH24:MI:SS')
+								$10 ,
+								$11 ,
+								$12 ,
+								$13
 							);
 						";
                     //バインドの設定
@@ -1262,7 +1274,11 @@ class lcModel
                         $data[$i]["payfsendfax"],
                         $data[$i]["invalidflag"],
                         $lgusrname,
+                        fncGetDateString(),
+                        fncGetTimeString(),
                         $lgusrname,
+                        fncGetDateString(),
+                        fncGetTimeString()
                     );
 
                     //クエリ実行
@@ -2487,18 +2503,21 @@ class lcModel
         $sql = "update
 					m_acloginstate
 				set
-					lgoutymd = to_char(now(), 'YYYYMMDD'),
-					lgouttime = to_char(now(), 'HH24:MI:SS'),
+					lgoutymd = $1,
+					lgouttime = $2,
 					lgstate = null
 				where
 					lginymd is not null and
 					lgintime is not null and
 					lgoutymd is null and
 					lgouttime is null and
-					lgusrname in(select lgusrname from m_acloginstate where lgno = $1)
+					lgusrname in(select lgusrname from m_acloginstate where lgno = $3)
 		    ";
         //バインドの設定
-        $bind = array($param["lgno"]);
+        $bind = array(
+            fncGetDateString(),
+            fncGetTimeString(), 
+            $param["lgno"]);
 
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);

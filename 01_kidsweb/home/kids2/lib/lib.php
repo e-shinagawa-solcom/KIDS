@@ -2475,4 +2475,14 @@ function fncGetDateTimeString($dateTime = null){
     }
     return $dateTime->format('Y/m/d H:i:s.v');
 }
+
+// 現在時刻をYYYYMMDD形式の文字列で取得
+function fncGetDateString(){
+    return date('Ymd', strtotime('now'));
+}
+
+// 現在時刻をhh:mm:ss.s形式の文字列で取得
+function fncGetTimeString(){
+    return date('H:i:s', strtotime('now'));
+}
 ?>
