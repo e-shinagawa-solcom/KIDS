@@ -1139,7 +1139,7 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     // $aryQuery[] = "  ,'" . $aryOrder["dtmexpirationdate"] . "'";
                     $aryQuery[] = "  ," . $aryOrderDetailUpdate[$i]["lngmonetaryunitcode"];
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strmonetaryunitname"] . "'";
-                    $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strmonetaryunitsign"] . "'";
+                    $aryQuery[] = "  ,'" . (($aryOrderDetailUpdate[$i]["lngmonetaryunitcode"] == 1) ? "\\\\" : $aryOrderDetailUpdate[$i]["strmonetaryunitsign"]) . "'";
                     $aryQuery[] = "  ," . $payconditioncode;
                     $aryQuery[] = "  ,'" . $paycondition["strpayconditionname"] . "'";
                     $aryQuery[] = "  ," . $aryOrderDetailUpdate[$i]["lnggroupcode"];
