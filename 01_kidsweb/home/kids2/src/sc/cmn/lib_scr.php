@@ -1503,7 +1503,7 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $v_strusername = withQuote($aryDrafter["struserdisplayname"]); //26:担当者名
     $v_curtotalprice = $aryHeader["curtotalprice"]; //27:合計金額
     $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //28:通貨単位コード
-    $v_strmonetaryunitsign = withQuote($aryDetail[0]["strmonetaryunitsign"]); //29:通貨単位
+    $v_strmonetaryunitsign = ($aryDetail[0]["lngmonetaryunitcode"] == 1) ? withQuote("\\\\") : withQuote($aryDetail[0]["strmonetaryunitsign"]); //29:通貨単位
     $v_dtminsertdate = "'" . fncGetDateTimeString() . "'"; //30:作成日
     $v_lnginsertusercode = nullIfEmpty($objAuth->UserCode); //31:入力者コード
     $v_strinsertusername = withQuote($objAuth->UserDisplayName); //32:入力者名
@@ -1590,7 +1590,7 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $aryInsert[] = ") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
-
+    
     // 登録実行
     if (!$lngResultID = $objDB->execute($strQuery)) {
         fncOutputError(9051, DEF_ERROR, "納品伝票マスタ登録失敗。", true, "", $objDB);
