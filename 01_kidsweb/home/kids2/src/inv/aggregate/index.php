@@ -501,11 +501,17 @@
         // ブックに値を設定する
         // 日付(D1)
         $time = new DateTime($invoiceMonth);
-//         $timeStamp = $time->getTimestamp();
-//         $excelDateValue = new PhpOffice\PhpSpreadsheet\Date::PHPToExcel( $timeStamp );
-        $title = $time->format('Y/m/d');
-        $sheet->GetCell('D1')->SetValue($title);
-//         $sheet->getStyle('D1')->getNumberFormat()->setFormatCode('ggge年m月請求明細　（通貨＝￥）');
+        $time->modify('last day of this month');
+        $title = $time->format('Y年m月');
+        $sheet->GetCell('D1')->SetValue($title ."請求明細　（通貨＝￥）");
+        $sheet->GetCell('D237')->SetValue($title. "請求明細　（通貨＝ＵＳ＄）");
+        $sheet->GetCell('D311')->SetValue($title. "請求明細　（通貨＝ＨＫ＄）");
+
+        $time2 = $time->modify('last day of this month')->modify('+15 days')->format('Y年m月');
+        $sheet->GetCell('D2')->SetValue($time2. "回収予定");
+        $sheet->GetCell('D238')->SetValue($time2. "回収予定");
+        $sheet->GetCell('D312')->SetValue($time2. "回収予定");
+
 
         // シートの行数調整
         if($addCell1_1 > 0) {
