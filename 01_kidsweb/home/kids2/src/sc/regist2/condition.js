@@ -249,7 +249,7 @@ jQuery(function ($) {
             return false;
         }
         else{
-            document.dispatchEvent(e);
+            // document.dispatchEvent(e);
         }
     }
 

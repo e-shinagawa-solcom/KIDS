@@ -748,12 +748,6 @@ jQuery(function ($) {
             return false;
         }
 
-        // 納品日がシステム日付の前後一ヶ月以内にない
-        if (!withinOneMonthBeforeAndAfter(deliveryDate)) {
-            alert("納品日は今月の前後1ヶ月の間を指定してください");
-            return false;
-        }
-
         // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在する
         if (existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay)) {
             alert("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
@@ -835,7 +829,6 @@ jQuery(function ($) {
     });
 
     $('input[name="dtmDeliveryDate"]').on('change', function () {
-
         // POST先
         var postTarget = $('input[name="ajaxPostTarget"]').val();
 

@@ -347,7 +347,7 @@ function fncJapaneseInvoiceExists($lngCustomerCode, $lngSalesNo, $objDB)
 	else
 	{
 		// 国コード取得失敗⇒DBエラー
-		fncOutputError ( 9501, DEF_FATAL, "削除前チェック処理に伴う国コード取得失敗", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "削除前チェック処理に伴う国コード取得失敗", TRUE, "", $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
@@ -362,7 +362,7 @@ function fncJapaneseInvoiceExists($lngCustomerCode, $lngSalesNo, $objDB)
 	else
 	{
 		// 請求書番号取得失敗→チェック失敗⇒DBエラー
-		fncOutputError ( 9501, DEF_FATAL, "削除前チェック処理に伴う請求書番号取得失敗", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "削除前チェック処理に伴う請求書番号取得失敗", TRUE, "", $objDB );
 	}
 	$objDB->freeResult( $lngResultID );
 
@@ -387,7 +387,7 @@ function fncReceiveStatusIsClosed($lngSlipNo, $objDB)
 	else
 	{
 		// 納品伝票番号に紐づく納品伝票明細が見つからない⇒DBエラー
-		fncOutputError ( 9501, DEF_FATAL, "削除前チェック処理に伴う納品伝票番号取得失敗", TRUE, "", $objDB );
+		fncOutputError ( 9051, DEF_FATAL, "削除前チェック処理に伴う納品伝票番号取得失敗", TRUE, "", $objDB );
 	}
 
 	// 納品伝票明細に紐づく受注のステータスが「締め済」かどうか

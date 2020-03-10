@@ -118,12 +118,12 @@ var chkbox = [];
 
                             $("select[name='lngMonetaryRateCode']").val("0");
                             $('select[name="lngMonetaryRateCode"]').change();
-                            
+
                         } else {
                             curtax = 0;
                             curtaxList = 0;
-                            lngtaxclasscode = 1;          
-                            console.log("tdd");                  
+                            lngtaxclasscode = 1;
+                            console.log("tdd");
                             $("select[name='lngMonetaryRateCode']").val("1");
                         }
 
@@ -266,6 +266,13 @@ var chkbox = [];
         if (workForm.valid()) {
 
             var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
+
+            // 仕入日が一年後である
+            if (isOneYearLater(new Date(dtmStockAppDate))) {
+                alert("仕入日はシステム日付の1年後以上となっている。");
+                return false;
+            }
+
 
             var detaildata = new Array();
             var len = 0;
@@ -460,7 +467,7 @@ function money_format(lngmonetaryunitcode, strmonetaryunitsign, price, type) {
             return '\xA5' + " " + convertNumber(price, 4);
         } else if (type == 'price') {
             return '\xA5' + " " + convertNumber(price, 0);
-        } else if (type == 'taxprice') {            
+        } else if (type == 'taxprice') {
             return '\xA5' + " " + convertNumber(price, 0);
         }
         return '\xA5' + " " + convertNumber(price, 0);
@@ -469,7 +476,7 @@ function money_format(lngmonetaryunitcode, strmonetaryunitsign, price, type) {
             return strmonetaryunitsign + " " + convertNumber(price, 4);
         } else if (type == 'price') {
             return strmonetaryunitsign + " " + convertNumber(price, 2);
-        } else if (type == 'taxprice') {            
+        } else if (type == 'taxprice') {
             return strmonetaryunitsign + " " + convertNumber(price, 0);
         }
         return strmonetaryunitsign + " " + convertNumber(price, 2);

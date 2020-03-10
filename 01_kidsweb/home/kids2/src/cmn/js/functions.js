@@ -2,7 +2,7 @@
 //---------------------------------------------------
 //テーブル表示用日付成型関数
 //---------------------------------------------------
-function convertDate(str, type='yyyy/mm/dd') {
+function convertDate(str, type = 'yyyy/mm/dd') {
 	if (type == 'yy/mm/dd') {
 		if (str != "" && str != undefined && str != "null") {
 			if (str.length == 8) {
@@ -75,4 +75,35 @@ function convertNumber(str, fracctiondigits) {
 		console.log("nullの場合：" + str);
 		return "";
 	}
+}
+
+/**
+ * 一年後の日付になっているかどうかを確認する
+ * @param {} date 
+ */
+function isHalfYearLater(date) {
+	// 一年後の日付を取得
+	var now = new Date();
+	now.setMonth(now.getMonth() + 6);
+	// 一年後の日付の年、月、日を取得
+	var year1 = now.getFullYear();
+	var month1 = now.getMonth() + 1;
+	var day1 = now.getDate();
+
+	// 比較対象の年、月、日を取得
+	var year2 = date.getFullYear();
+	var month2 = date.getMonth() + 1;
+	var day2 = date.getDate();
+
+	if (year1 == year2) {
+		if (month1 == month2) {
+			return day1 < day2;
+		}
+		else {
+			return month1 < month2;
+		}
+	} else {
+		return year1 < year2;
+	}
+
 }

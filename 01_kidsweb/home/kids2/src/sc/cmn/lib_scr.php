@@ -168,7 +168,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "消費税情報の取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "消費税情報の取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -242,7 +242,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "納品書データの取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "納品書データの取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -294,7 +294,7 @@ function fncGetDetailKeyBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "明細のキー項目の取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "明細のキー項目の取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -693,7 +693,7 @@ function fncGetInsertDateBySlipCode($strSlipCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "納品伝票の作成日の取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "納品伝票の作成日の取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -718,7 +718,7 @@ function fncGetSalesNoBySlipCode($strSlipCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "納品伝票の売上番号の取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "納品伝票の売上番号の取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -743,7 +743,7 @@ function fncIncrementPrintCountBySlipCode($strSlipCode, $objDB)
     // 登録実行
     if (!$lngResultID = $objDB->execute($strQuery)) {
         // 失敗
-        fncOutputError(9501, DEF_FATAL, "納品伝票の印刷回数の更新に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "納品伝票の印刷回数の更新に失敗", true, "", $objDB);
     } else {
         // 成功
         $objDB->freeResult($lngResultID);
@@ -845,7 +845,7 @@ function fncGetClosedDay($strCompanyDisplayCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "締め日の取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "締め日の取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -882,7 +882,7 @@ function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "帳票伝票種別の取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "帳票伝票種別の取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -923,7 +923,7 @@ function fncGetCompanyInfoByCompanyCode($lngCompanyCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "会社情報の取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "会社情報の取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -973,7 +973,7 @@ function fncGetUserInfoByUserCode($lngUserCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "ユーザー情報の取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "ユーザー情報の取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -1003,7 +1003,7 @@ function fncGetConversionRateByReceiveData($lngReceiveNo, $lngReceiveRevisionNo,
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "換算レートの取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "換算レートの取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
@@ -1052,7 +1052,7 @@ function fncGetSlipMaxRevisionNo($lngSlipNo, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9501, DEF_FATAL, "納品伝票マスタのリビジョン番号取得に失敗", true, "", $objDB);
+        fncOutputError(9051, DEF_FATAL, "納品伝票マスタのリビジョン番号取得に失敗", true, "", $objDB);
     }
     $objDB->freeResult($lngResultID);
 
