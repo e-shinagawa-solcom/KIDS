@@ -1,53 +1,30 @@
 
 <config>
-<header1>
+	<header1>
+		<!-- 機能選択画面 共通CSS -->
+		<link rel="stylesheet"  href="/cmn/css/select-function/select-function-border.css">
+	</header1>
 
-</header1>
+	<header2>
+	</header2>
 
+	<header3>
+		<!-- ボタン押下時の遷移先の設定 -->
+		<script src="/so/set-location.js" defer></script>
+    	<link rel="stylesheet" href="/cmn/css/navigate/navigate.css">
+	</header3>
 
-<header2>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/so/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/so/initlayout.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/so/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/cmn/images.js"></script>
-</header2>
-
-
-<header3>
-<link rel="stylesheet" type="text/css" media="screen" href="/so/layout.css">
-</header3>
-
-
-
-<bodyonload>
-initLayoutBase();initLayoutSO();Loading();
-</bodyonload>
+	<bodyonload>
+	</bodyonload>
 </config>
 
-<p id="Preload">
-	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
-</p>
-
-<!-- ヘッダ -->
-
-<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
-<span id="MainTitle"></span>
-<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
-
-<span id="strSelectFunctions">機能選択</span>
-<span id="MenuBackBorder"></span>
-<span id="MenuBack"></span>
-
-
-<p id="TopNavi">
-	<span id="SearchNaviBt1" onclick="javascript:location='_%strSearchURL%_';">
-		<a href="#">
-			<img width="151" height="25" style="filter: none;" onmouseover="SchJOn(this);" onmouseout="SchJOff(this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" alt="受注検索" src="/img/type01/so/search_off_ja_bt.gif" border="0">
-		</a>
-	</span>
-</p>
-
-
-<span id="OverLayer"></span>
+<!-- ラベル　機能選択 -->
+<div class="label-select-function">機能選択</div>
+<!-- 機能ボタンを囲む外枠 -->
+<div class="menu-back-border">
+	<!-- 各種機能ボタン -->
+	<div class="function-buttons">
+		<!-- 検索 -->
+		<button type="button" class="function-buttons__search btn btn-light" _%Search_visibility%_>受注検索</button>
+	</div>
+</div>

@@ -16,7 +16,10 @@ jQuery(function ($) {
     var strSessionID = $('input[name="strSessionID"]').val();
     var strCompanyDisplayCode = $('input[name="lngCustomerCode"]').val();
 
-    SetMonetaryUnitCode(postTarget, strCompanyDisplayCode, strSessionID);
+    var lngDefaultMonetaryUnitCode = $('#lngDefaultMonetaryUnitCode').val();
+    if (0 == lngDefaultMonetaryUnitCode.length) {
+        SetMonetaryUnitCode(postTarget, strCompanyDisplayCode, strSessionID);
+    }
 
     // 顧客名称-表示会社コード イベント登録
     $('input[name="strCustomerName"]').on({
@@ -66,14 +69,14 @@ jQuery(function ($) {
         // --------------------------------------------------------------
         // 初期値の取得
         var strDefaultCompanyDisplayCode = $('#strDefaultCompanyDisplayCode').val();
-        var lngDefaultSalesClassCode = $('#lngDefaultSalesClassCode').val();
+        var lngDefaultMonetaryUnitCode = $('#lngDefaultMonetaryUnitCode').val();
 
         // チェックを必要とする条件を満たしているかどうか
         var needConfirm = ((0 < strDefaultCompanyDisplayCode.length)
             && (strDefaultCompanyDisplayCode != search_condition.strCompanyDisplayCode))
             ||
-            ((0 < lngDefaultSalesClassCode.length)
-                && (lngDefaultSalesClassCode != search_condition.lngSalesClassCode));
+            ((0 < lngDefaultMonetaryUnitCode.length)
+                && (lngDefaultMonetaryUnitCode != search_condition.lngMonetaryUnitCode));
 
         // --------------------------------------------------------------
         //   親画面に子画面の値を引き継いで明細検索を実行

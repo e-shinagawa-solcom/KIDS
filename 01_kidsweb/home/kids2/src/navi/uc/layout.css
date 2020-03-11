@@ -40,10 +40,18 @@
 	border-width: 1px ;
 	background-color: #ffffff ;
 }
+#UserInfoNaviBt2 {
+	position : absolute ;
+	left : 9px ;
+	top : 60px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
 #UserInfoNaviBt3 {
 	position : absolute ;
 	left : 9px ;
-	top : 20px ;
+	top : 100px ;
 	z-index : 2 ;
 	border-width: 1px ;
 	background-color: #ffffff ;
@@ -51,6 +59,14 @@
 
 
 #RegistNaviBt1 {
+	position : absolute ;
+	left : 9px ;
+	top : 20px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
+#RegistNaviBt2 {
 	position : absolute ;
 	left : 9px ;
 	top : 60px ;
@@ -61,7 +77,7 @@
 #RegistNaviBt3 {
 	position : absolute ;
 	left : 9px ;
-	top : 60px ;
+	top : 100px ;
 	z-index : 2 ;
 	border-width: 1px ;
 	background-color: #ffffff ;
@@ -70,7 +86,15 @@
 #SearchNaviBt1 {
 	position : absolute ;
 	left : 9px ;
-	top : 100px ;
+	top : 20px ;
+	z-index : 2 ;
+	border-width: 1px ;
+	background-color: #ffffff ;
+}
+#SearchNaviBt2 {
+	position : absolute ;
+	left : 9px ;
+	top : 60px ;
 	z-index : 2 ;
 	border-width: 1px ;
 	background-color: #ffffff ;

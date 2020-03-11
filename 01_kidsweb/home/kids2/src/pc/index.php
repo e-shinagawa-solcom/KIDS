@@ -52,17 +52,19 @@
 	// 701 仕入管理（ 仕入登録）
 	if ( fncCheckAuthority( DEF_FUNCTION_PC1, $objAuth ) )
 	{
-		$aryData["strRegistURL"]   = "regist/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["Regist_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Regist_visibility"] = 'style="visibility: hidden"';
 	}
 	
 	// 702 仕入管理（ 仕入検索）
 	if ( fncCheckAuthority( DEF_FUNCTION_PC2, $objAuth ) )
 	{
-		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["Search_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Search_visibility"] = 'style="visibility: hidden"';
 	}
 
-	//echo "button : ".$aryData["strRegist"]."<br>";
-	//echo "button : ".$aryData["strSearch"]."<br>";
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_PC0;
 
@@ -80,21 +82,18 @@
 		// 701 仕入登録
 		if( !fncCheckAuthority( DEF_FUNCTION_PC1, $objAuth ) )
 		{
-			$aryData["registview"] = 'hidden';
+			$aryData["Regist_visibility"] = 'style="visibility: hidden"';
 		}
 		else
 		{
-			$aryData["registview"] = 'visible';
+			$aryData["Regist_visibility"] = 'style="visibility: visible"';
 		}
 
 
 
 	}
 
-
-
-	echo fncGetReplacedHtml( "pc/parts.tmpl", $aryData ,$objAuth );
-//	echo $_COOKIE["lngLanguageCode"];
+	echo fncGetReplacedHtmlWithBase("base_mold.html", "pc/parts.tmpl", $aryData ,$objAuth );
 
 	$objDB->close();
 	return true;

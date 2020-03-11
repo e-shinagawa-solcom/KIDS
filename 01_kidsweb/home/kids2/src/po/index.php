@@ -50,25 +50,24 @@
 	}
 
 	// 502 発注管理（発注検索）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )
+	if ( fncCheckAuthority( DEF_FUNCTION_PO2, $objAuth ) )	
 	{
-		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["Regist_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Regist_visibility"] = 'style="visibility: hidden"';
 	}
 	
 	// 510 発注管理（発注書検索）
-	if ( fncCheckAuthority( DEF_FUNCTION_PO10, $objAuth ) )
+	if ( fncCheckAuthority( DEF_FUNCTION_PO10, $objAuth ) )		
 	{
-		$aryData["strDocSearchURL"]   = "search2/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["Search_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Search_visibility"] = 'style="visibility: hidden"';
 	}
-	
-	//echo "button : ".$aryData["strRegist"]."<br>";
-	//echo "button : ".$aryData["strSearch"]."<br>";
-
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_PO0;
 
-	echo fncGetReplacedHtml( "po/parts.tmpl", $aryData ,$objAuth );
-//	echo $_COOKIE["lngLanguageCode"];
+	echo fncGetReplacedHtmlWithBase("base_mold.html", "po/parts.tmpl", $aryData ,$objAuth );
 
 	$objDB->close();
 	return true;
