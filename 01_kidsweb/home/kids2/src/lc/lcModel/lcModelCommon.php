@@ -1901,10 +1901,10 @@ class lcModel
             . "," . ($data["bldetail3money"] == null ? "NULL" : $data["bldetail3money"])
             . "," . $data["lcstate"]
             . "," . ($data["entryuser"] == null ? "NULL" : "'" . $data["entryuser"] . "'")
-            . "," . ($data["entrydate"] == null ? "NULL" : "'" . $data["entrydate"] . "'")
+            . "," . ($data["entrydate"] == null ? "NULL" : "'" . preg_replace ( "/\//", "", $data["entrydate"] ) . "'")
             . "," . ($data["entrytime"] == null ? "NULL" : "'" . $data["entrytime"] . "'")
             . "," . ($data["updateuser"] == null ? "NULL" : "'" . $data["updateuser"] . "'")
-            . "," . ($data["updatedate"] == null ? "NULL" : "'" .$data["updatedate"] . "'")
+            . "," . ($data["updatedate"] == null ? "NULL" : "'" . preg_replace ( "/\//", "", $data["updatedate"] ) . "'")
             . "," . ($data["updatetime"] == null ? "NULL" : "'" . $data["updatetime"] . "'")
             . "," . ($data["shipym"] == null ? "NULL" : "'" . $data["shipym"] . "'")
             . ")";
