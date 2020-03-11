@@ -39,6 +39,21 @@
 	        fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 
+	// 1901 金型帳票登録
+	if ( fncCheckAuthority( DEF_FUNCTION_MR1, $objAuth ) )
+	{
+		$aryData["Regist_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Regist_visibility"] = 'style="visibility: hidden"';
+	}
+	
+	// 1902 金型帳票検索
+	if ( fncCheckAuthority( DEF_FUNCTION_MR2, $objAuth ) )
+	{
+		$aryData["Search_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Search_visibility"] = 'style="visibility: hidden"';
+	}
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_MM0;
 

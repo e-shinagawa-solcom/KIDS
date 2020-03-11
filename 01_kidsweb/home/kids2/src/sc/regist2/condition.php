@@ -42,9 +42,9 @@
 	// 顧客コード
 	$aryData["strDefaultCompanyDisplayCode"] = $_POST["strcompanydisplaycode"];
 
-	// 売上区分コードの初期値。画面にも保存しておく
-	// $lngDefaultSalesClassCode = $_POST["lngsalesclasscode"];
-	// $aryData["lngDefaultSalesClassCode"] = $lngDefaultSalesClassCode;
+	// 通貨コードの初期値。画面にも保存しておく
+	$lngDefaultMonetaryUnitCode = $_POST["lngmonetaryunitcode"];
+	$aryData["lngDefaultMonetaryUnitCode"] = $lngDefaultMonetaryUnitCode;
 
 	// 売上区分プルダウン（親画面の出力明細一覧エリアの1行目の売上区分コードを初期値選択）
 	// $optSalesClass .= fncGetPulldown("m_salesclass", "lngsalesclasscode","strsalesclassname", $lngDefaultSalesClassCode, "", $objDB);
@@ -53,9 +53,8 @@
 
 	// 通貨単位プルダウン
 	$optMonetaryUnitCode = "<option value=''> </option>"; 
-	$optMonetaryUnitCode .= fncGetPulldown("m_monetaryunit", "lngmonetaryunitcode","strmonetaryunitname", "", "", $objDB);
+	$optMonetaryUnitCode .= fncGetPulldown("m_monetaryunit", "lngmonetaryunitcode","strmonetaryunitname", $_POST["lngmonetaryunitcode"], "", $objDB);
 	$aryData["optMonetaryUnitCode"] = $optMonetaryUnitCode;
-
 	
 	$aryData["strSessionID"] = $_POST["strSessionID"];
 	// --------------------------

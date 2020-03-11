@@ -10,9 +10,8 @@
 
 	<header3>
 		<!-- ボタン押下時の遷移先の設定 -->
-		<script src="/inv/select-function/js/set-location.js" defer></script>		
-		<!-- 画面の初期設定 -->
-		<script src="/inv/select-function/js/init.js" defer></script>
+		<script src="/inv/select-function/js/set-location.js" defer></script>
+    	<link rel="stylesheet" href="/cmn/css/navigate/navigate.css">
 	</header3>
 
 	<bodyonload>
@@ -26,10 +25,10 @@
 	<!-- 各種機能ボタン -->
 	<div class="function-buttons">
 		<!-- 登録 -->
-		<img class="function-buttons__regist button" src="" alt="Regist">
+		<button type="button" class="function-buttons__regist btn btn-light" _%Regist_visibility%_>請求書登録</button>
 		<!-- 検索 -->
-		<img class="function-buttons__search button" src="" alt="Search">
+		<button type="button" class="function-buttons__search btn btn-light" _%Search_visibility%_>請求書検索</button>
 		<!-- 検索 -->
-		<img class="function-buttons__total button" src="" alt="Total">
+		<button type="button" class="function-buttons__total btn btn-light" _%Aggregate_visibility%_>請求集計</button>
 	</div>
 </div>

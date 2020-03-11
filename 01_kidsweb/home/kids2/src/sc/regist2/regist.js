@@ -219,9 +219,8 @@ function SearchReceiveDetail(data) {
 // 出力明細をすべてクリア
 function ClearAllEditDetail() {
     // 全削除ボタンクリックを手動で起動
-    $("#AllDeleteBt").trigger('click');
+    $('img.alldelete').trigger('click');
 }
-
 
 function resetTableADisplayStyle() {
     $("#tableA tbody tr").each(function (i, e) {
@@ -892,11 +891,11 @@ jQuery(function ($) {
     // 検索条件入力ボタン押下
     $('img.search').on('click', function () {
 
-        //出力明細一覧エリアの1行目の売上区分コードを取得する
-        var firstRowSalesClassCode = "";
+        //出力明細一覧エリアの1行目の通貨単位コードを取得する
+        var firstRowMonetaryUnitCode = "";
         var firstTr = $("#EditTableBody tr").eq(0);
         if (0 < firstTr.length) {
-            firstRowSalesClassCode = $(firstTr).children('.detailSalesClassCode').text();
+            firstRowMonetaryUnitCode = $(firstTr).children('.detailMonetaryUnitCode').text();
         }
 
         // 納品書明細検索条件入力画面を別窓で開く
@@ -905,8 +904,8 @@ jQuery(function ($) {
             strSessionID: $('input[name="strSessionID"]').val(),
             //顧客コード（表示用会社コード）
             strcompanydisplaycode: $('input[name="lngCustomerCode"]').val(),
-            //出力明細一覧エリアの1行目の売上区分コード
-            lngsalesclasscode: firstRowSalesClassCode,
+            //出力明細一覧エリアの1行目の通貨単位コード
+            lngmonetaryunitcode: firstRowMonetaryUnitCode,
         };
 
         var features = "width=710,height=460,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
@@ -1012,6 +1011,8 @@ jQuery(function ($) {
 
         // 対象チェックボックスチェック状態の設定
         scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+        
+        resetTableRowid($("#tableB"));
 
     });
 

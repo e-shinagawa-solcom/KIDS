@@ -25,7 +25,10 @@
 {
     margin-top: 20px;
     margin-left: 9px;
-    margin-bottom: 50px;
+}
+
+.OneLine {
+    height: 50px;
 }
 
 .function-group > button
@@ -34,11 +37,10 @@
     margin-bottom: 10px;
     border-radius: 50px;
     padding-bottom: 0px;
-    padding-top: 0px;
+    padding-top: 1px;
     height: 20px;
-    font-size: x-small;
+    font-size: 11px;
 }
-
 .other-function
 {
     position: absolute;
@@ -47,4 +49,45 @@
     margin-left: 9px;
     margin-bottom: 50px;
     background:#f5f8fa;
+}
+
+.btn{
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 150px;
+    height: 20px;
+    font-size: 11px;
+    border: 1px solid transparent;
+    /* 文字の太さをboldに指定 */
+    font-weight: bold;
+}
+.btn-light {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+.btn-light:hover {
+    color: #212529;
+    background-color: #bfc7ce;
+    border-color: #bfc7ce;
+}
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.btn:focus, .btn:hover {
+    text-decoration: none;
+}
+.btn-light:disabled {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+.btn:disabled {
+    opacity: .65;
+    color: gray;
 }

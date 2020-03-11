@@ -44,13 +44,15 @@
 	// 402 受注管理（受注検索）
 	if ( fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 	{
-		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["Search_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Search_visibility"] = 'style="visibility: hidden"';
 	}
 
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_SO0;
 
-	echo fncGetReplacedHtml( "so/parts.tmpl", $aryData ,$objAuth );
+	echo fncGetReplacedHtmlWithBase("base_mold.html", "so/parts.tmpl", $aryData ,$objAuth );
 
 	$objDB->close();
 	return true;

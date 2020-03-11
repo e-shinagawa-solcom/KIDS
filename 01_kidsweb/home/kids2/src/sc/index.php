@@ -44,25 +44,31 @@
 	// 601 売上管理（ 売上登録）
 	if ( fncCheckAuthority( DEF_FUNCTION_SC1, $objAuth ) )
 	{
-		$aryData["strRegistURL"]   = "regist2/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["Regist_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Regist_visibility"] = 'style="visibility: hidden"';
 	}
 	
 	// 602 売上管理（ 売上検索）
 	if ( fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 	{
-		$aryData["strSearchURL"]   = "search/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["Search_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Search_visibility"] = 'style="visibility: hidden"';
 	}
 
 	// 602 売上管理（ 納品書検索）
 	if ( fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
 	{
-		$aryData["strSearch2URL"]   = "search2/index.php?strSessionID=" . $aryData["strSessionID"];
+		$aryData["Search2_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Search2_visibility"] = 'style="visibility: hidden"';
 	}
-
+	
 	// ヘルプ対応
 	$aryData["lngFunctionCode"] = DEF_FUNCTION_SC0;
 
-	echo fncGetReplacedHtml( "sc/parts.tmpl", $aryData ,$objAuth );
+	echo fncGetReplacedHtmlWithBase("base_mold.html", "sc/parts.tmpl", $aryData ,$objAuth );
 
 	$objDB->close();
 	return true;

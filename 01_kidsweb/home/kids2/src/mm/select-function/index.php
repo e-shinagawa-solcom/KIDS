@@ -39,6 +39,21 @@
 	        fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 	}
 
+	// 1801 金型履歴登録
+	if ( fncCheckAuthority( DEF_FUNCTION_MM1, $objAuth ) )
+	{
+		$aryData["Regist_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Regist_visibility"] = 'style="visibility: hidden"';
+	}
+	
+	// 1802 金型履歴検索
+	if ( fncCheckAuthority( DEF_FUNCTION_MM2, $objAuth ) )
+	{
+		$aryData["Search_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Search_visibility"] = 'style="visibility: hidden"';
+	}
 	$objDB->close();
 
 	echo fncGetReplacedHtmlWithBase("base_mold.html", "/mm/select-function/parts.tmpl", $aryData ,$objAuth );

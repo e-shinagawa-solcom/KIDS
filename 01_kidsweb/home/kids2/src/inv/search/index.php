@@ -72,7 +72,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_INV2, $objAuth)) {
 if (fncCheckAuthority(DEF_FUNCTION_INV3, $objAuth)) {
     $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
 } else {
-    $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
+    $aryData["AdminSet_visibility"] = 'style="visibility: hidden"';
 }
 
 // ヘルプ対応

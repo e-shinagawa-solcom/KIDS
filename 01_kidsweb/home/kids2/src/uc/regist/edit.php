@@ -96,7 +96,7 @@ if ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC1 && fncCheckAuthority( DEF_F
 	$aryData["bytUserDisplayFlagDisabled"]     = "disabled";
 	$aryData["lngAuthorityGroupCodeDisabled"]  = "disabled";
 	$aryData["lngAccessIPAddressCodeDisabled"] = "disabled";
-	$aryData["strNaviCode"] = "uc-311";
+	$aryData["strNaviCode"] = "uc-info";
 }
 
 // ユーザー登録の場合
@@ -104,7 +104,7 @@ elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC2 && fncCheckAuthority( D
 {
 	$aryData["bytUserDisplayFlag"] = "t";
 	$aryData["bytInvalidFlag"] = "f";
-	$aryData["strNaviCode"] = "uc-131";
+	$aryData["strNaviCode"] = "uc-regist";
 }
 
 // ユーザー修正の場合
@@ -112,7 +112,7 @@ elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 && fncCheckAuthority( D
 {
 	$aryData["lngUserCodeConditions"]  = 1;
 	$aryData["lngGroupCodeConditions"] = 0;
-	$aryData["strNaviCode"] = "uc-113";
+	$aryData["strNaviCode"] = "uc-modify";
 }
 
 // それ以外

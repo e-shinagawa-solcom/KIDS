@@ -50,3 +50,33 @@
     margin-left: 9px;
     margin-bottom: 50px;
 }
+.btn{
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 150px;
+    height: 20px;
+    font-size: small;
+    border: 1px solid transparent;
+    /* 文字の太さをboldに指定 */
+    font-weight: bold;
+}
+.btn-light {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+.btn-light:hover {
+    color: #212529;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.btn:focus, .btn:hover {
+    text-decoration: none;
+}
