@@ -12,4 +12,4 @@
 	$('.function-buttons__search').on('click', function(){
 		$(location).attr('href', '../search/index.php?strSessionID=' + sessionId);
 	});
-})($.cookie('strSessionID'));
+})($('input[name="strSessionID"]').val());

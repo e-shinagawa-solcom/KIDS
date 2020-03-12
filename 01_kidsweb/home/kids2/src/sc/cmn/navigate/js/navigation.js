@@ -28,4 +28,4 @@
 	$('.navi-data-search').on('click', function(){
 		$(location).attr('href', '/dataex/index.php?strSessionID=' + sessionId);
 	});
-})($.cookie('strSessionID'));
+})($('input[name="strSessionID"]').val());

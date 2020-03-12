@@ -60,7 +60,7 @@ if ( fncCheckAuthority( DEF_FUNCTION_SYS1, $objAuth ) )
 } else {
 	$aryData["Info_visibility"] = 'style="visibility: hidden"';
 }
-if ( !fncCheckAuthority( DEF_FUNCTION_SYS2, $objAuth ) )
+if ( fncCheckAuthority( DEF_FUNCTION_SYS2, $objAuth ) )
 {
 	$aryData["Server_visibility"] = 'style="visibility: visible"';
 } else {

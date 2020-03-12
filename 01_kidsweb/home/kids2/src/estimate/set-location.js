@@ -12,4 +12,4 @@
 	$('.function-buttons__upload').on('click', function(){
 		$(location).attr('href', '/upload2/index.php?strSessionID=' + sessionId);
 	});
-})($.cookie('strSessionID'));
+})($('input[name="strSessionID"]').val());

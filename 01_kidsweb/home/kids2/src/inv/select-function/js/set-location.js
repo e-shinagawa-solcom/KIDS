@@ -16,4 +16,4 @@
 	$('.function-buttons__total').on('click', function(){
 		$(location).attr('href', '../aggregate/index.php?strSessionID=' + sessionId);
 	});
-})($.cookie('strSessionID'));
+})($('input[name="strSessionID"]').val());

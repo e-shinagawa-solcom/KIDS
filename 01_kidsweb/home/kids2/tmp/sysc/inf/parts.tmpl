@@ -10,9 +10,14 @@
 </header2>
 
 <header3>
+<!-- jQuery -->
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<!-- jQuery Cookie -->
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 <script type="text/javascript" language="javascript" src="/sysc/inf/exstr.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/sysc/cmn/layout.css">
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
 </header3>
 
 <bodyonload>
@@ -33,13 +38,10 @@ initLayoutBase();initLayout();Loading();
 
 <div class="main-area">
 	<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
-	<div class="navi-area">
-		<span id="NaviButton"></span>
-		<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-			<span id="Navi">
-				<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=sysc-3111"></iframe>
-			</span>
-		</p>
+	<div class="navigation-loadpoint" style="position: absolute;left: 11px;">
+		<script>
+			getNaviMenu('_%strSessionID%_', 'sys-info');
+		</script>
 	</div>
 
 

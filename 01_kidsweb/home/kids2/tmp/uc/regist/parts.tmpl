@@ -17,12 +17,17 @@
 
 
 <header3>
+<!-- jQuery -->
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<!-- jQuery Cookie -->
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="_%strCssName%_">
 <link rel="stylesheet" type="text/css" media="screen" href="_%strErrorCssName%_">
 <script type="text/javascript" language="javascript" src="exstr.js"></script>
 <script type="text/javascript" language="javascript" src="functions.js"></script>
 <script type="text/javascript" language="javascript" src="/uc/cmn/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
 </header3>
 
 
@@ -62,13 +67,10 @@ initLayoutBase();initLayoutUC();initLayoutQuery();initLayoutPunit();initLayoutEr
 
 <div class="main-area">
 	<!-- /////////////////////////////////// START NAVIGAION /////////////////////////////////// -->
-	<div class="navi-area">
-		<span id="NaviButton" style="visibility:_%strBaseVisibilityName%_;"></span>
-		<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-			<span id="Navi">
-				<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/uc/cmn/navigate/index.php?strSessionID=_%strSessionID%_&strNaviCode=_%strNaviCode%_"></iframe>
-			</span>
-		</p>
+	<div class="navigation-loadpoint" style="position: absolute;left: 11px;">
+		<script>
+			getNaviMenu('_%strSessionID%_', 'uc-regist');
+		</script>
 	</div>
 	<!-- //////////////////////////////////// END NAVIGAION //////////////////////////////////// -->
 	<!-- /////////////////////////////////// START INPUT A SEGMENTS /////////////////////////////////// -->

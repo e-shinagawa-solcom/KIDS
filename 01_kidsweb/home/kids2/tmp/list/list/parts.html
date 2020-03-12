@@ -1,28 +1,33 @@
 <config>
-<header1>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutnavi.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/list/cmn/images.js"></script>
-</header1>
+	<header1>
+		<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
+		<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
+		<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutnavi.js"></script>
+		<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/list/cmn/images.js"></script>
+	</header1>
 
-<header2>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/list/list/initlayout.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
-</header2>
+	<header2>
+		<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/list/list/initlayout.js"></script>
+		<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutmsw.js"></script>
+		<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutquery.js"></script>
+	</header2>
 
-<header3>
-<script type="text/javascript" language="javascript" src="/list/list/functions.js"></script>
-<script type="text/javascript" language="javascript" src="/list/list/exstr.js"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="/list/list/layout.css">
-<script type="text/javascript" language="javascript" src="/list/list/functions.js"></script>
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
-</header3>
+	<header3>
+		<!-- jQuery -->
+		<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+		<!-- jQuery Cookie -->
+		<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+		<script type="text/javascript" language="javascript" src="/list/list/functions.js"></script>
+		<script type="text/javascript" language="javascript" src="/list/list/exstr.js"></script>
+		<link rel="stylesheet" type="text/css" media="screen" href="/list/list/layout.css">
+		<script type="text/javascript" language="javascript" src="/list/list/functions.js"></script>
+		<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+		<script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
+	</header3>
 
-<bodyonload>
-initLayoutBase();initLayout();initLayoutNavi();initLayoutMsw();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
-</bodyonload>
+	<bodyonload>
+		initLayoutBase();initLayout();initLayoutNavi();initLayoutMsw();GetlngLanguageCode( _%lngLanguageCode%_ );Loading();
+	</bodyonload>
 </config>
 
 
@@ -38,15 +43,12 @@ initLayoutBase();initLayout();initLayoutNavi();initLayoutMsw();GetlngLanguageCod
 
 <div class="main-area">
 	<!-- //////////////////////////////////// START NAVIGATION //////////////////////////////////// -->
-	<div class="navi-area">
-		<span id="NaviButton"></span>
-		<p id="Navigations" onmouseout="NavigationOFF( Navigations , NaviButton );">
-			<span id="Navi">
-				<iframe id="NaviIfrm" name="NAVIwin" frameborder="0" scrolling="no" src="/navi/index.php?strSessionID=_%strSessionID%_&strNaviCode=list-1"></iframe>
-			</span>
-		</p>
+	<div class="navigation-loadpoint" style="position: absolute;left: 11px;">
+		<script>
+			getNaviMenu('_%strSessionID%_', 'list-es');
+		</script>
 	</div>
-<!-- ///////////////////////////////////// END NAVIGATION ///////////////////////////////////// -->
+	<!-- ///////////////////////////////////// END NAVIGATION ///////////////////////////////////// -->
 
 
 	<!-- //////////////////////////////////// START INPUT A SEGMENTS //////////////////////////////////// -->
@@ -66,16 +68,16 @@ initLayoutBase();initLayout();initLayoutNavi();initLayoutMsw();GetlngLanguageCod
 			<iframe id="SegAIFrm" name="Pwin" frameborder="0" scrolling="no" src="/list/select.php?strSessionID=_%strSessionID%_&lngFunctionCode=_%lngFunctionCode%_&lngApplicantUserCodeVisible=1&lngInputUserCodeVisible=1&dtmStartDateVisible=1&lngInChargeCodeVisible=1&lngWorkflowStatusCodeVisible=1&lngWorkflowStatusCodeConditions=1&lngSelectFunctionCode=500"></iframe>
 		</span>
 		-->
-		
+
 		<!-- START BOTTOM -->
 		<span id="SegABottom"></span>
 		<!-- END BOTTOM -->
-		
+
 		<!-- END SEGMENTS -->
 
 
 	</p>
-<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
+	<!-- ///////////////////////////////////// END INPUT A SEGMENTS ///////////////////////////////////// -->
 
 </div>
 

@@ -2,6 +2,11 @@
 	// サイドバー表示切替
 	$('.navigate').on('click', function () {
 		$('.navigate-box').toggle();
+		if ($('.navigate').attr('src') == '/img/type01/navi/off_bt.gif') {
+			$('.navigate').attr('src', '/img/type01/navi/on_bt.gif');
+		} else {
+			$('.navigate').attr('src', '/img/type01/navi/off_bt.gif');
+		}
 	});
 
 	// 受注検索画面
@@ -92,5 +97,44 @@
 	$('.navi-uc-search').on('click', function () {
 		$(location).attr('href', '/uc/search/index.php?strSessionID=' + sessionId);
 	});
-
-})($.cookie('strSessionID'));
+	// メッセージ
+	$('.navi-sysc-info').on('click', function () {
+		$(location).attr('href', '/sysc/inf/index.php?strSessionID=' + sessionId);
+	});
+	// 管理者メール
+	$('.navi-sysc-mail').on('click', function () {
+		$(location).attr('href', '/sysc/mail/index.php?strSessionID=' + sessionId);
+	});
+	// セッション
+	$('.navi-sysc-session').on('click', function () {
+		$(location).attr('href', '/sysc/session/index.php?strSessionID=' + sessionId);
+	});
+	// サーバー
+	$('.navi-sysc-server').on('click', function () {
+		$(location).attr('href', '/sysc/sev/index.php?strSessionID=' + sessionId);
+	});
+	// マスタA
+	$('.navi-mastera').on('click', function () {
+		$(location).attr('href', '/m/list/index.php?strSessionID=' + sessionId);
+	});
+	// マスタB
+	$('.navi-masterb').on('click', function () {
+		$(location).attr('href', '/m/search/index.php?strSessionID=' + sessionId);
+	});
+	// データエクスポート
+	$('.navi-dataex').on('click', function(){
+		$(location).attr('href', '/dataex/index.php?strSessionID=' + sessionId);
+	});
+	// 締め処理
+	$('.navi-closed').on('click', function(){
+		$(location).attr('href', '/closed/index.php?strSessionID=' + sessionId);
+	});
+	// master a
+	$('.navi-mastera').on('click', function(){
+		$(location).attr('href', '/m/list/index.php?strSessionID=' + sessionId);
+	});
+	// master b
+	$('.navi-masterb').on('click', function(){
+		$(location).attr('href', '/m/search/index.php?strSessionID=' + sessionId);
+	});
+})($('input[name="strSessionID"]').val());

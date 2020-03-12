@@ -43,7 +43,7 @@ function ChgEtoJ()
 		lngLanguageCode = 0;
 
 		window.Pwin.ChgEtoJ( 0 );
-		window.NAVIwin.ChgEtoJ( 0 );
+		// window.NAVIwin.ChgEtoJ( 0 );
 
 	}
 
@@ -82,7 +82,7 @@ function ChgEtoJ()
 		lngLanguageCode = 1;
 
 		window.Pwin.ChgEtoJ( 1 );
-		window.NAVIwin.ChgEtoJ( 1 );
+		// window.NAVIwin.ChgEtoJ( 1 );
 
 	}
 

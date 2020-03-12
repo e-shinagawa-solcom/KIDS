@@ -4,12 +4,10 @@
 <head>
     <link rel="stylesheet" href="/cmn/css/navigate/navigate.css">
     <!-- jQuery -->
-    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
-    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <!-- <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script> -->
     <!-- ナビゲーション遷移先設定 -->
     <script src="/cmn/js/navigation/navigation.js" defer></script>
-    <!-- ボタンdisable設定 -->
-    <script src="/pc/cmn/navigate/js/switch-disable.js" defer></script>
 </head>
 
 <body>
@@ -25,10 +23,10 @@
             <button type="button" class="navi-pc-search btn btn-light" _%Pc_Search_visibility%_>仕入検索</button>
         </div>
         <div class="function-group">
-            <button type="button" class="navi-po-search btn btn-light" _%So_Search_visibility%_>発注検索</button>
+            <button type="button" class="navi-po-search btn btn-light" _%sc_Search_visibility%_>発注検索</button>
         </div>
         <div class="function-group">
-            <button type="button" class="navi-po2-search btn btn-light" _%Sc_Search2_visibility%_>発注書検索</button>
+            <button type="button" class="navi-po2-search btn btn-light" _%sc_Search2_visibility%_>発注書検索</button>
         </div>
         <div class="OneLine">                
         </div>
@@ -36,6 +34,7 @@
             <button type="button" class="navi-list-search btn btn-light" _%List_Search_visibility%_>帳票出力</button>
         </div>
     </div>
+    <input type="hidden" name="strSessionID" value="_%strSessionID%_">
 </body>
 
 </html>

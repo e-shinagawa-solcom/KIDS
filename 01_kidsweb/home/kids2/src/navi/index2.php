@@ -150,26 +150,57 @@ if (fncCheckAuthority(DEF_FUNCTION_INV1, $objAuth)) {
 } else {
     $aryData["Inv_Regist_visibility"] = 'style="visibility: hidden"';
 }
-
 // 2202 請求書検索
 if (fncCheckAuthority(DEF_FUNCTION_INV2, $objAuth)) {
     $aryData["Inv_Search_visibility"] = 'style="visibility: visible"';
 } else {
     $aryData["Inv_Search_visibility"] = 'style="visibility: hidden"';
 }
-
 // 2204 請求集計
 if (fncCheckAuthority(DEF_FUNCTION_INV4, $objAuth)) {
     $aryData["Inv_Aggregate_visibility"] = 'style="visibility: visible"';
 } else {
     $aryData["Inv_Aggregate_visibility"] = 'style="visibility: hidden"';
 }
+if (fncCheckAuthority(DEF_FUNCTION_UC2, $objAuth)) {
+    $aryData["lngFunctionCode2"] = DEF_FUNCTION_UC2;
+    $aryData["Regist_visibility"] = 'style="visibility: visible"';
+} else {
+    $aryData["Regist_visibility"] = 'style="visibility: hidden"';
+}
 
+if (fncCheckAuthority(DEF_FUNCTION_UC3, $objAuth)) {
+    $aryData["lngFunctionCode3"] = DEF_FUNCTION_UC3;
+    $aryData["Search_visibility"] = 'style="visibility: visible"';
+} else {
+    $aryData["Search_visibility"] = 'style="visibility: hidden"';
+}
 // 帳票出力
 if (fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth)) {
     $aryData["List_Search_visibility"] = 'style="visibility: visible"';
 } else {
     $aryData["List_Search_visibility"] = 'style="visibility: hidden"';
+}
+
+if (fncCheckAuthority(DEF_FUNCTION_SYS1, $objAuth)) {
+    $aryData["Sysc_Info_visibility"] = 'style="visibility: visible"';
+} else {
+    $aryData["Sysc_Info_visibility"] = 'style="visibility: hidden"';
+}
+if (fncCheckAuthority(DEF_FUNCTION_SYS2, $objAuth)) {
+    $aryData["Sysc_Server_visibility"] = 'style="visibility: visible"';
+} else {
+    $aryData["Sysc_Server_visibility"] = 'style="visibility: hidden"';
+}
+if (fncCheckAuthority(DEF_FUNCTION_SYS3, $objAuth)) {
+    $aryData["Sysc_Mail_visibility"] = 'style="visibility: visible"';
+} else {
+    $aryData["Sysc_Mail_visibility"] = 'style="visibility: hidden"';
+}
+if (fncCheckAuthority(DEF_FUNCTION_SYS4, $objAuth)) {
+    $aryData["Sysc_Session_visibility"] = 'style="visibility: visible"';
+} else {
+    $aryData["Sysc_Session_visibility"] = 'style="visibility: hidden"';
 }
 switch ($strNaviCode) {
     // 見積原価検索
@@ -240,6 +271,12 @@ switch ($strNaviCode) {
     case "uc-search":
         $strTemplatePath = '/search/cmn/navigate/uc_navi.html';
         break;
+    case "uc-info":
+        $strTemplatePath = '/uc/cmn/navigate/uc_info_navi.html';
+        break;
+    case "uc-regist":
+        $strTemplatePath = '/uc/cmn/navigate/uc_navi.html';
+        break;
     case "mm-regist":
         $strTemplatePath = '/mm/cmn/navigate/mm_navi.html';
         break;
@@ -251,6 +288,27 @@ switch ($strNaviCode) {
         break;
     case "mr-search":
         $strTemplatePath = '/search/cmn/navigate/mr_navi.html';
+        break;
+    case "sys-info":
+        $strTemplatePath = '/sysc/cmn/navigate/sysc_info_navi.html';
+        break;
+    case "sys-session":
+        $strTemplatePath = '/sysc/cmn/navigate/sysc_session_navi.html';
+        break;
+    case "sys-sev":
+        $strTemplatePath = '/sysc/cmn/navigate/sysc_server_navi.html';
+        break;
+    case "sys-mail":
+        $strTemplatePath = '/sysc/cmn/navigate/sysc_mail_navi.html';
+        break;
+    case "dataex":
+        $strTemplatePath = '/search/cmn/navigate/dataex_navi.html';
+        break;
+    case "closed":
+        $strTemplatePath = '/search/cmn/navigate/closed_navi.html';
+        break;
+    case "m":
+        $strTemplatePath = '/search/cmn/navigate/m_navi.html';
         break;
 
 }

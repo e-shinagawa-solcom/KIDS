@@ -52,9 +52,7 @@ $objDB->close();
 $aryData["lngFunctionCode"] = DEF_FUNCTION_M0;
 
 // HTML出力
-
-echo fncGetReplacedHtml( "m/parts.tmpl", $aryData, $objAuth );
-
+echo fncGetReplacedHtmlWithBase("base_mold.html", "m/parts.tmpl", $aryData ,$objAuth );
 
 
 return TRUE;

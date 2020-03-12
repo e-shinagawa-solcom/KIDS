@@ -9,8 +9,6 @@ function getNaviMenu(strSessionID, strNaviCode) {
         }
     })
         .done(function (data) {
-            console.log(data);
             $('.navigation-loadpoint').html(data);
-            // return data;
         });
 }

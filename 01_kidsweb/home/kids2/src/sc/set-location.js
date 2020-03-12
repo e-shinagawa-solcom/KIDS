@@ -16,4 +16,4 @@
 	$('.function-buttons__search2').on('click', function(){
 		$(location).attr('href', '/sc/search2/index.php?strSessionID=' + sessionId);
 	});
-})($.cookie('strSessionID'));
+})($('input[name="strSessionID"]').val());

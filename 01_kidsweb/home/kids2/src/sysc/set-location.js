@@ -20,4 +20,4 @@
 	$('.function-buttons__server').on('click', function () {
 		$(location).attr('href', '/sysc/sev/index.php?strSessionID=' + sessionId);
 	});
-})($.cookie('strSessionID'));
+})($('input[name="strSessionID"]').val());
