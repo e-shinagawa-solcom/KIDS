@@ -71,6 +71,9 @@
 }
 .btn-kids
 {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
     margin-bottom: 10px;
     border-radius: 50px;
     padding-bottom: 0px;
@@ -78,6 +81,22 @@
     width: 95px;
     height: 20px;
     font-size: x-small;
+    border: 1px solid transparent;
+    font-weight: bold;
+    background-image: -moz-linear-gradient(top, #f2f6f8 0%, #d8e1e7 50%, #b5c6d0 51%, #e0eff9 100%);
+    background-image: -webkit-linear-gradient(top, #f2f6f8 0%,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);
+    background-image: linear-gradient(to bottom, #f2f6f8 0%,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);
+}
+
+.btn-kids:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+.btn-kids:focus, .btn:hover {
+    text-decoration: none;
+}
+.btn-kids:disabled {
+    opacity: .65;
+    color: gray;
 }
 .btn-kids-sm
 {

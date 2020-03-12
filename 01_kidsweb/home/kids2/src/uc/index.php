@@ -53,13 +53,19 @@ $aryData["visibility3"]      = "hidden";
 if ( fncCheckAuthority( DEF_FUNCTION_UC2, $objAuth ) )
 {
 	$aryData["lngFunctionCode2"] = DEF_FUNCTION_UC2;
-	$aryData["visibility2"]      = "visible";
+	$aryData["Regist_visibility"] = 'style="visibility: visible"';
+} else {
+	$aryData["Regist_visibility"] = 'style="visibility: hidden"';
 }
+
 if ( fncCheckAuthority( DEF_FUNCTION_UC3, $objAuth ) )
 {
 	$aryData["lngFunctionCode3"] = DEF_FUNCTION_UC3;
-	$aryData["visibility3"]      = "visible";
+	$aryData["Search_visibility"] = 'style="visibility: visible"';
+} else {
+	$aryData["Search_visibility"] = 'style="visibility: hidden"';
 }
+
 
 $objDB->close();
 
@@ -68,5 +74,7 @@ $objDB->close();
 $aryData["lngFunctionCode"] = DEF_FUNCTION_UC0;
 
 // HTML出力
-echo fncGetReplacedHtml( "uc/parts.tmpl", $aryData, $objAuth );
+// echo fncGetReplacedHtml( "uc/parts.tmpl", $aryData, $objAuth );
+
+echo fncGetReplacedHtmlWithBase("base_mold.html", "uc/parts.tmpl", $aryData ,$objAuth );
 ?>

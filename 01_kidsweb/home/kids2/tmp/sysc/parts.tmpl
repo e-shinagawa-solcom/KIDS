@@ -1,52 +1,36 @@
 
 <config>
-<header1>
+	<header1>
+		<!-- 機能選択画面 共通CSS -->
+		<link rel="stylesheet"  href="/cmn/css/select-function/select-function-border.css">
+	</header1>
 
-</header1>
+	<header2>
+	</header2>
 
+	<header3>
+		<!-- ボタン押下時の遷移先の設定 -->
+		<script src="/sysc/set-location.js" defer></script>
+    	<link rel="stylesheet" href="/cmn/css/navigate/navigate.css">
+	</header3>
 
-<header2>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutbase.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sysc/cmn/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sysc/initlayout.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/sysc/images.js"></script>
-<script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/navi/sysc/initlayout.js"></script>
-</header2>
-
-
-<header3>
-<link rel="stylesheet" type="text/css" media="screen" href="/sysc/layout.css">
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
-</header3>
-
-<bodyonload>
-initLayoutBase();initLayout();Loading();
-</bodyonload>
+	<bodyonload>
+	</bodyonload>
 </config>
 
-
-<p id="Preload">
-	<iframe id="PreloadFrm" name="PreloadWin" frameborder="0" src="/preload/index.html" onload="fncObjectResize( this , 0 , 0 );"></iframe>
-</p>
-
-
-
-<!-- ////////////////////////////////// START MAIN TITLE ////////////////////////////////// -->
-<span id="MainTitle"></span>
-<!-- /////////////////////////////////// END MAIN TITLE /////////////////////////////////// -->
-<div class="main-area">
-	<span id="strSelectFunctions">機能選択</span>
-	<span id="MenuBackBorder"></span>
-	<!-- <span id="MenuBack"></span> -->
-	<p id="TopNavi">
-		<span id="MessageBt" onclick="location.href = 'inf/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strInfVisibility%_;"></span>
-		<span id="EmailBt" onclick="location.href = 'mail/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strMailVisibility%_;"></span>
-		<span id="SessionBt" onclick="location.href = 'session/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strSessionVisibility%_;"></span>
-		<span id="ServerBt" onclick="location.href = 'sev/index.php?strSessionID=_%strSessionID%_';return false;" style="visibility:_%strSevVisibility%_;"></span>
-	</p>
+<!-- ラベル　機能選択 -->
+<div class="label-select-function">機能選択</div>
+<!-- 機能ボタンを囲む外枠 -->
+<div class="menu-back-border">
+	<!-- 各種機能ボタン -->
+	<div class="function-buttons">
+		<!-- 検索 -->
+		<button type="button" class="function-buttons__info btn btn-light">メッセージ</button>
+		<!-- 検索 -->
+		<button type="button" class="function-buttons__mail btn btn-light" _%Regist_visibility%_>管理者メール</button>
+		<!-- 検索 -->
+		<button type="button" class="function-buttons__session btn btn-light" _%Search_visibility%_>セッション</button>
+		<!-- 検索 -->
+		<button type="button" class="function-buttons__server btn btn-light" _%Search_visibility%_>サーバー</button>
+	</div>
 </div>
-
-
-
-<span id="OverLayer"></span>

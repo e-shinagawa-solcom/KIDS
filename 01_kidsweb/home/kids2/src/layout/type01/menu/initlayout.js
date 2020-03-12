@@ -1,6 +1,3 @@
-<!--
-
-
 //-----------------------------------------------------------------------------
 // 概要 : ローカル変数定義
 // 解説 :「TabIndex」値の設定
@@ -90,103 +87,81 @@ var MenuBackImg = '<img src="' + menuback + '" width="978" height="170" border="
 //---------------------------------------------------------
 //適用 :「商品管理」
 //---------------------------------------------------------
-var pNaviJ1 = '<a href="#"><img onmouseover="fncPButton( \'onJ\' , this );" onmouseout="fncPButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + pJ1 + '" width="151" height="25" border="0" alt="商品管理" tabindex="1"></a>';
+var pNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">商品管理</button></a>';
 
 
 //---------------------------------------------------------
 //適用 :「見積原価管理」
 //---------------------------------------------------------
-var esNaviJ1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, esJ2 );" onmouseout="fncChangeBtImg( this, esJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + esJ1 + '" width="151" height="25" border="0" alt="見積原価管理" tabindex="2"></a>';
+var esNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">見積原価管理</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「受注管理」
 //---------------------------------------------------------
-var soNaviJ1 = '<a href="#"><img onmouseover="fncSOButton( \'onJ\' , this );" onmouseout="fncSOButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + soJ1 + '" width="151" height="25" border="0" alt="受注管理" tabindex="3"></a>';
-
+var soNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">受注管理</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「発注管理」
 //---------------------------------------------------------
-var poNaviJ1 = '<a href="#"><img onmouseover="fncPOButton( \'onJ\' , this );" onmouseout="fncPOButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + poJ1 + '" width="151" height="25" border="0" alt="発注管理" tabindex="4"></a>';
-
+var poNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">発注管理</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「売上管理」
 //---------------------------------------------------------
-var scNaviJ1 = '<a href="#"><img onmouseover="fncSCButton( \'onJ\' , this );" onmouseout="fncSCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + scJ1 + '" width="151" height="25" border="0" alt="売上管理" tabindex="5"></a>';
-
+var scNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">売上管理</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「仕入管理」
 //---------------------------------------------------------
-var pcNaviJ1 = '<a href="#"><img onmouseover="fncPCButton( \'onJ\' , this );" onmouseout="fncPCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + pcJ1 + '" width="151" height="25" border="0" alt="仕入管理" tabindex="6"></a>';
-
+var pcNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">仕入管理</button></a>';
 
 //---------------------------------------------------------
 //適用 :「請求管理」
 //---------------------------------------------------------
-var invNaviJ1 = '<a href="#"><img onmouseover="fncINVButton( \'onJ\' , this );" onmouseout="fncINVButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + invJ1 + '" width="151" height="25" border="0" alt="請求管理" tabindex="7"></a>';
-
+var invNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">請求管理</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「帳票出力」
 //---------------------------------------------------------
-var listNaviJ1 = '<a href="#"><img onmouseover="fncLISTButton( \'onJ\' , this );" onmouseout="fncLISTButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + listoutJ1 + '" width="151" height="25" border="0" alt="帳票出力" tabindex="8"></a>'
-
+var listNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">帳票出力</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「データエクスポート」
 //---------------------------------------------------------
-var dataexNaviJ1 = '<a href="#"><img onmouseover="fncDATAEXButton( \'onJ\' , this );" onmouseout="fncDATAEXButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + dataexJ1 + '" width="151" height="25" border="0" alt="データエクスポート" tabindex="9"></a>';
-
-//---------------------------------------------------------
-//適用 :「アップロード」
-//---------------------------------------------------------
-var uploadNaviJ1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, uploadJ2 );" onmouseout="fncChangeBtImg( this, uploadJ1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + uploadJ1 + '" width="151" height="25" border="0" alt="アップロード" tabindex="10"></a>';
-
+var dataexNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">データエクスポート</button></a>';
 
 //---------------------------------------------------------
 //適用 :「金型履歴管理」
 //---------------------------------------------------------
-var mmNaviJ1 = '<a href="#"><img onmouseover="fncMMButton( \'onJ\' , this );" onmouseout="fncMMButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mmJ1 + '" width="151" height="25" border="0" alt="金型履歴管理" tabindex="11"></a>';
-
+var mmNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">金型履歴管理</button></a>';
 //---------------------------------------------------------
 //適用 :「金型帳票管理」
 //---------------------------------------------------------
-var mrNaviJ1 = '<a href="#"><img onmouseover="fncMRButton( \'onJ\' , this );" onmouseout="fncMRButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mrJ1 + '" width="151" height="25" border="0" alt="金型帳票管理" tabindex="12"></a>';
-
+var mrNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">金型帳票管理</button></a>';
 //---------------------------------------------------------
 //適用 :「LC管理」
 //---------------------------------------------------------
-var lcNaviJ1 = '<a href="#"><img onmouseover="fncLCButton( \'onJ\' , this );" onmouseout="fncLCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + lcJ1 + '" width="151" height="25" border="0" alt="LC管理" tabindex="13"></a>';
-
+var lcNaviJ1 = '<a href="#"><button type="button" class="btn btn-light">L/C管理</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「ユーザー管理」
 //---------------------------------------------------------
-var ucNavi1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, uc2 );" onmouseout="fncChangeBtImg( this, uc1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + uc1 + '" width="72" height="20" border="0" alt="USER" tabindex="14"></a>';
-
-var ucNaviJ1 = '<a href="#"><img onmouseover="fncUCButton( \'onJ\' , this );" onmouseout="fncUCButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + ucJ1 + '" width="151" height="25" border="0" alt="ユーザー管理" tabindex="14"></a>';
-
+var ucNavi1 = '<a href="#"><button type="button" class="btn-small btn-light">USER</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「マスタ管理」
 //---------------------------------------------------------
-var mNavi1 = '<a href="#"><img onmouseover="fncChangeBtImg( this, mst2 );" onmouseout="fncChangeBtImg( this, mst1 ); fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mst1 + '" width="72" height="20" border="0" alt="MASTER" tabindex="15"></a>';
-
-var mNaviJ1 = '<a href="#"><img onmouseover="fncMButton( \'onJ\' , this );" onmouseout="fncMButton( \'offJ\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + mstJ1 + '" width="151" height="25" border="0" alt="マスター管理" tabindex="15"></a>';
+var mNavi1 = '<a href="#"><button type="button" class="btn-small btn-light">MASTER</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「締め日」
 //---------------------------------------------------------
-var dataclosedNavi1 = '<a href="#"><img onmouseover="fncDataClosedButton( \'on\' , this );" onmouseout="fncDataClosedButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + dataclosed1 + '" width="72" height="20" border="0" alt="DATA CLOSED" tabindex="16"></a>';
-
+var dataclosedNavi1 = '<a href="#"><button type="button" class="btn-small btn-light">DATA</button></a>';
 
 //---------------------------------------------------------
 // 適用 :「システム管理」
 //---------------------------------------------------------
-var sysNavi1 = '<a href="#"><img onmouseover="fncSYSButton( \'on\' , this );" onmouseout="fncSYSButton( \'off\' , this );fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );" src="' + sys1 + '" width="72" height="20" border="0" alt="SYSTEM" tabindex="17"></a>';
-
+var sysNavi1 = '<a href="#"><button type="button" class="btn-small btn-light">SYSTEM</button></a>';
 
 
 
@@ -353,5 +328,3 @@ function initLayoutNavi()
 	return false;
 }
 
-
-//-->

@@ -54,21 +54,29 @@ $aryData["strInfVisibility"]     = "visible";
 $aryData["strMailVisibility"]    = "visible";
 $aryData["strSessionVisibility"] = "visible";
 $aryData["strSevVisibility"]     = "visible";
-if ( !fncCheckAuthority( DEF_FUNCTION_SYS1, $objAuth ) )
+if ( fncCheckAuthority( DEF_FUNCTION_SYS1, $objAuth ) )
 {
-	$aryData["strInfVisibility"] = "hidden";
+	$aryData["Info_visibility"] = 'style="visibility: visible"';
+} else {
+	$aryData["Info_visibility"] = 'style="visibility: hidden"';
 }
 if ( !fncCheckAuthority( DEF_FUNCTION_SYS2, $objAuth ) )
 {
-	$aryData["strMailVisibility"] = "hidden";
+	$aryData["Server_visibility"] = 'style="visibility: visible"';
+} else {
+	$aryData["Server_visibility"] = 'style="visibility: hidden"';
 }
-if ( !fncCheckAuthority( DEF_FUNCTION_SYS3, $objAuth ) )
+if ( fncCheckAuthority( DEF_FUNCTION_SYS3, $objAuth ) )
 {
-	$aryData["strSessionVisibility"] = "hidden";
+	$aryData["Mail_visibility"] = 'style="visibility: visible"';
+} else {
+	$aryData["Mail_visibility"] = 'style="visibility: hidden"';
 }
-if ( !fncCheckAuthority( DEF_FUNCTION_SYS4, $objAuth ) )
+if ( fncCheckAuthority( DEF_FUNCTION_SYS4, $objAuth ) )
 {
-	$aryData["strSevVisibility"] = "hidden";
+	$aryData["Session_visibility"] = 'style="visibility: visible"';
+} else {
+	$aryData["Session_visibility"] = 'style="visibility: hidden"';
 }
 
 
@@ -86,7 +94,7 @@ if ( join ( $aryCheckResult ) )
 
 
 // HTML出力
-echo fncGetReplacedHtml( "sysc/parts.tmpl", $aryData, $objAuth );
+echo fncGetReplacedHtmlWithBase("base_mold.html", "sysc/parts.tmpl", $aryData ,$objAuth );
 
 ?>
 <!--
