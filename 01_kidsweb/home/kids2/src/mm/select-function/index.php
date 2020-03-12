@@ -56,6 +56,6 @@
 	}
 	$objDB->close();
 
-	echo fncGetReplacedHtmlWithBase("base_mold.html", "/mm/select-function/parts.tmpl", $aryData ,$objAuth );
+	echo fncGetReplacedHtmlWithBase("base_mold.html", "mm/select-function/parts.tmpl", $aryData ,$objAuth );
 	return true;
 ?>
