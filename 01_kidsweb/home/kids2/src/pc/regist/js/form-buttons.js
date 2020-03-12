@@ -267,9 +267,9 @@ var chkbox = [];
 
             var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
 
-            // 仕入日が一年後である
-            if (isOneYearLater(new Date(dtmStockAppDate))) {
-                alert("仕入日はシステム日付の1年後以上となっている。");
+            // 仕入日が半年である
+            if (isHalfYearLater(new Date(dtmStockAppDate))) {
+                alert("仕入日はシステム日付の半年後以上となっている。");
                 return false;
             }
 
