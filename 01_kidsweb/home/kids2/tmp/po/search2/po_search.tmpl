@@ -39,6 +39,7 @@
     <!-- キーバインド -->
 	<script src="/search/cmn/js/key-bind.js" defer></script>
     <link rel="stylesheet" href="/po/search2/layout.css">
+    <script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
 </header3>
 
 <bodyonload>
@@ -48,7 +49,7 @@
 <!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
 	<script>
-		$('.navigation-loadpoint').load('/search/cmn/navigate/po2_navi.html');
+        getNaviMenu('_%strSessionID%_', 'po-search2');
 	</script>
 </div>
 

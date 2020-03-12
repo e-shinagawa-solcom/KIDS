@@ -38,6 +38,7 @@
 		<script type="text/javascript" language="javascript" src="/cmn/js/table.js"></script>
 		<script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
 		<script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
+		<script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
 	</header3>
 
 	<bodyonload>
@@ -47,7 +48,7 @@
 <!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
 	<script>
-		$('.navigation-loadpoint').load('/sc/cmn/navigate/sc_navi.html');
+        getNaviMenu('_%strSessionID%_', 'sc-regist');
 	</script>
 </div>
 

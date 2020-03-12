@@ -51,6 +51,7 @@
         <script src="/cmn/js/table.js" defer></script>
         <!-- TABLE操作 -->
         <script src="/inv/cmn/js/table.js" defer></script>
+        <script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
     </header3>
 
     <bodyonload>
@@ -60,7 +61,7 @@
 <!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
     <script>
-        $('.navigation-loadpoint').load('/inv/cmn/navigate/inv_navi.html');
+        getNaviMenu('_%strSessionID%_', 'inv-regist');
     </script>
 </div>
 

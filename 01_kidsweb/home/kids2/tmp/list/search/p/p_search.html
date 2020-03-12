@@ -39,6 +39,7 @@
         <script src="/search/cmn/js/key-bind.js" defer></script>
         <!-- キーバインド -->
         <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+        <script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
     </header3>
 
     <bodyonload>
@@ -49,7 +50,7 @@
 <!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
     <script>
-        $('.navigation-loadpoint').load('/search/cmn/navigate/list_p_navi.html');
+        getNaviMenu('_%strSessionID%_', 'list-p');
     </script>
 </div>
 

@@ -42,6 +42,7 @@
     <script src="/mr/regist/js/validate-form.js" defer></script>
     <!-- フォーム操作 -->
     <script src="/mr/regist/js/form-change-action.js" defer></script>
+    <script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
 </header3>
 
 <bodyonload>
@@ -51,7 +52,7 @@
 <!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
 	<script>
-		$('.navigation-loadpoint').load('/mr/cmn/navigate/mr_navi.html');
+        getNaviMenu('_%strSessionID%_', 'mr-regist');
 	</script>
 </div>
 
@@ -296,12 +297,11 @@
 		<iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
 		</iframe>
 	</div>
-</div>
-
-<!-- フォーム ボタン -->
-<div class="form-buttons">
-    <img class="form-buttons__clear button" src="/img/type01/cmn/querybt/clear_off_ja_bt.gif" alt="form clear">
-    <img class="form-buttons__regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
+	<!-- フォーム ボタン -->
+	<div class="form-buttons">
+		<img class="form-buttons__clear button" src="/img/type01/cmn/querybt/clear_off_ja_bt.gif" alt="form clear">
+		<img class="form-buttons__regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
+	</div>
 </div>
 
 <!-- 右サイドバー タブ -->

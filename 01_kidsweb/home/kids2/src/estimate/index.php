@@ -52,7 +52,7 @@ if (fncCheckAuthority(DEF_FUNCTION_E2, $objAuth)) {
 }
 
 // アップロード
-if (!fncCheckAuthority(DEF_FUNCTION_UP0, $objAuth)) {
+if (fncCheckAuthority(DEF_FUNCTION_UP0, $objAuth)) {
     $aryData["Upload_visibility"] = 'style="visibility: visible"';
 } else {
     $aryData["Upload_visibility"] = 'style="visibility: hidden"';
