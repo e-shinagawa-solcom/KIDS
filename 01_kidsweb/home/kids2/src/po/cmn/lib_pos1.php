@@ -1388,6 +1388,10 @@ function fncCancelOrderHtml($aryOrder)
         $aryHtml[] = "    <td class=\"Segs\">" . $row["lngproductquantity"] . "</td>";
         $aryHtml[] = "  </tr>";
         $aryHtml[] = "  <tr>";
+        $aryHtml[] = "    <td class=\"SegColumn\">単位</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . $row["strproductunitname"] . "</td>";
+        $aryHtml[] = "  </tr>";
+        $aryHtml[] = "  <tr>";
         $aryHtml[] = "    <td class=\"SegColumn\">税抜金額</td>";
         $aryHtml[] = "    <td class=\"Segs\">" . convertPrice($row["lngmonetaryunitcode"], $row["strmonetaryunitsign"], $row["cursubtotalprice"], "price") . "</td>";
         $aryHtml[] = "  </tr>";

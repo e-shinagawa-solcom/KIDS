@@ -53,9 +53,9 @@
                 $('input[name="To_dtmDeliveryDate"]').val(dtmchargeternend);
             } else {
                 var toDay = new Date();
-                var start = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/01';
-                var lastDay = new Date(toDay.getFullYear(), toDay.getMonth() + 1, 0);
-                var end = toDay.getFullYear() + '/' + (toDay.getMonth()+1) + '/' + lastDay.getDate();
+                var start = toDay.getFullYear() + '/' + (toDay.getMonth()) + '/01';
+                var lastDay = new Date(toDay.getFullYear(), toDay.getMonth(), 0);
+                var end = toDay.getFullYear() + '/' + (toDay.getMonth()) + '/' + lastDay.getDate();
                 $('input[name="From_dtmDeliveryDate"]').val(start);
                 $('input[name="To_dtmDeliveryDate"]').val(end);
             }    

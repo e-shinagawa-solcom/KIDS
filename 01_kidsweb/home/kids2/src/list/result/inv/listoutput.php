@@ -82,9 +82,15 @@ $objDB->close();
 // HTML出力
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("list/result/inv.html");
-$aryParts["totalprice_unitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["totalprice"];
+$aryParts["totalprice_unitsign"] = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryParts["totalprice"], "price");
 $aryParts["dtminvoicedate"] = date("Y年n月", strtotime($aryParts["dtminvoicedate"]));
 $aryParts["dtminsertdate"] = date("Y.n.j", strtotime($aryParts["dtminsertdate"]));
+
+$aryParts["curthismonthamount"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["curthismonthamount"], "price");
+$aryParts["curlastmonthbalance"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["curlastmonthbalance"], "price");
+$aryParts["curtaxprice1"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["curtaxprice1"], "taxprice");
+$aryParts["totalprice"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["totalprice"], "price");
+
 // 置き換え
 $objTemplate->replace($aryParts);
 $objTemplate->complete();

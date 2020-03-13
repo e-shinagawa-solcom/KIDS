@@ -239,6 +239,41 @@ function resetTableBDisplayStyle() {
 //   HTMLエレメント生成後の初期処理
 // ------------------------------------------
 jQuery(function ($) {
+    var subwin;
+    window.onload = function () {
+        if (!(window.location.href.indexOf('renew') >= 0)) {
+            $('img.search').click();
+        }
+    };
+
+    // メインメニューボタン
+    $('.control-block__buttan-main-menu').on({
+        'click': function (e) {
+            if (subwin != "undefined") {
+                subwin.close();
+            }
+            // セッションID取得
+            var sessionId = $('input[name="strSessionID"]').val();
+            // 取得できた場合
+            if (sessionId) {
+                // メインメニューへ遷移
+                window.location.href = '/menu/menu.php?strSessionID=' + sessionId;
+            }
+        }
+    });
+
+    // ログアウトボタン
+    $('.control-block__button-logout').on({
+        'click': function () {
+            // セッションID取得
+            var sessionId = $('input[name="strSessionID"]').val();
+            // 取得できた場合
+            if (sessionId) {
+                // メインメニューへ遷移
+                window.location.href = '/login/logout.php?strSessionID=' + sessionId;
+            }
+        }
+    });
 
     $("#tableA thead").css('display', 'none');
 
@@ -560,7 +595,7 @@ jQuery(function ($) {
     // 別ウィンドウを開いてPOSTする（検索条件入力画面を開くときだけ使用）
     function post_open(url, data, target, features) {
 
-        window.open('', target, features);
+        subwin = window.open('', target, features);
 
         // フォームを動的に生成
         var html = '<form id="temp_form" style="display:none;">';
@@ -1011,7 +1046,7 @@ jQuery(function ($) {
 
         // 対象チェックボックスチェック状態の設定
         scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
-        
+
         resetTableRowid($("#tableB"));
 
     });

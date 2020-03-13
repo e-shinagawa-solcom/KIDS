@@ -150,13 +150,12 @@ if ($aryResult[0]["lngcountrycode"] != 81) {
 
 // 運搬方法プルダウン（候補用）
 $strPulldownDeliveryMethod = fncPulldownMenu(6, 0, "", $objDB);
+// 単位プルダウン
+$strPulldownProductUnit = fncPulldownMenu(7, $aryOrderHeader["lngproductunitcode"], "", $objDB);
 $objDB->transactionBegin();
 // 明細（候補の発注）
 $aryOtherDetail = fncGetOtherOrderDetail($aryResult[0]["lngorderno"], $aryResult[0]["lngorderrevisionno"], $objDB);
 
-if (!$aryOtherDetail || count($aryOtherDetail) == 0) {
-    fncOutputError(503, DEF_ERROR, "発注書番号に対する明細情報が見つかりません。", true, "", $objDB);
-}
 // ロック（候補の発注）
 foreach ($aryOtherDetail as $otherDetail) {
     if (!lockExclusive($otherDetail["lngorderno"], DEF_FUNCTION_PO5, $objAuth, $objDB)) {
@@ -167,7 +166,7 @@ foreach ($aryOtherDetail as $otherDetail) {
 $objDB->transactionCommit();
 
 // 明細表示 （候補の発注）
-$aryOtherHtmlResult = fncGetOtherOrderDetailHtml($aryOtherDetail, $strPulldownDeliveryMethod, $aryData);
+$aryOtherHtmlResult = fncGetOtherOrderDetailHtml($aryOtherDetail, $strPulldownDeliveryMethod, $strPulldownProductUnit, $aryData);
 
 // 明細（発注書）
 $aryHtmlResult = fncGetPurchaseOrderDetailHtml($aryResult, $objDB);

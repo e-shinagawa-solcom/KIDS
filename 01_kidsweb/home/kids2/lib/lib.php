@@ -2380,36 +2380,44 @@ function toUTF8($str)
  */
 function convertPrice($lngmonetaryunitcode, $strmonetaryunitsign, $price, $type)
 {
+	if ($strmonetaryunitsign != "") {
+		if ($lngmonetaryunitcode == 1) {
+			$strmonetaryunitsign = "&yen;" . " ";
+		} else {
+			$strmonetaryunitsign = $strmonetaryunitsign . " ";
+		}
+	}
+
 	if ($lngmonetaryunitcode == 1) {
 		if ($type == "taxprice") {
 			// 消費税の場合
-			return "&yen;" . " " . number_format($price, 0, '.', ',');
+			return $strmonetaryunitsign . number_format($price, 0, '.', ',');
 		} else if ($type == "unitprice") {
 			// 単価の場合
-			return "&yen;" . " " . number_format($price, 4, '.', ',');
+			return $strmonetaryunitsign . number_format($price, 4, '.', ',');
 		} else if ($type == "price") {
 			// 金額・合計の場合
-			return "&yen;" . " " . number_format($price, 0, '.', ',');
+			return $strmonetaryunitsign . number_format($price, 0, '.', ',');
 		} else {
-			return "&yen;" . " " . $price;
+			return $strmonetaryunitsign . $price;
 		}
 	} else {
 		if ($type == "taxprice") {
 			// 消費税の場合
-			return $strmonetaryunitsign . " " . number_format($price, 0, '.', ',');
+			return $strmonetaryunitsign . number_format($price, 0, '.', ',');
 		} else if ($type == "unitprice") {
 			// 単価の場合
-			return $strmonetaryunitsign . " " . number_format($price, 4, '.', ',');
+			return $strmonetaryunitsign . number_format($price, 4, '.', ',');
 		} else if ($type == "price") {
-			return $strmonetaryunitsign . " " . number_format($price, 2, '.', ',');
+			return $strmonetaryunitsign . number_format($price, 2, '.', ',');
 		} else {
 			// 金額・合計の場合
-			return $strmonetaryunitsign . " " . $price;
+			return $strmonetaryunitsign . $price;
 		}
 	}
-
-
 }
+
+
 function toMoneyFormat($lngmonetaryunitcode, $strmonetaryunitsign, $price)
 {
     if ($lngmonetaryunitcode == 1) {

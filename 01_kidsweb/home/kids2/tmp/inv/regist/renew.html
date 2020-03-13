@@ -85,16 +85,17 @@
                         <div class="regist-line regist-float">
                             <span class="regist-label w-465">
                                 <span class="regist-label__text50">顧客</span>
-                                <input class="disTxt05L input-code" name="lngCustomerCode" type="text" value="_%strCustomerCode%_" iscustomer="yes" alt="Customer"
-                                    readonly>
+                                <input class="disTxt04L input-code" name="lngCustomerCode" type="text" value="_%strCustomerCode%_" iscustomer="yes" alt="Customer" disabled>
                                 <input class="disTxt2xL input-name" name="strCustomerName" type="text" readonly value="_%strCustomerName%_">
+                                <input type="hidden" name="lngCustomerCode" value="_%strCustomerCode%_">
                             </span>
                         </div>
                     </div>
                     <div class="regist-box2">
                         <span class="regist-label  regist-label-w190">
                             <span class="regist-label__text50">請求月</span>
-                            <select id="invoiceMonth" class="TxtStyle05L" name="From_strInvoiceMonth"></select>
+                            <!-- <select id="invoiceMonth" class="TxtStyle05L" name="From_strInvoiceMonth"></select> -->
+                            <input id="invoiceMonth" class="TxtStyle05L" name="From_strInvoiceMonth"></input>
                             <span class="regist-label__bold">月分</span>
                         </span>
 
@@ -139,326 +140,325 @@
                         </span>
                     </div>
                     <div class="regist-clear"></div>
-                    <input type="hidden" name="lngmonetaryunitcode" value="">
-                </div>
+                    <input type="hidden" name="lngmonetaryunitcode" value="_%lngMonetaryUnitCode%_" </div>
 
-                <div class="regist-box-area">
-                    <div class="regist-box1">
-                        <div class="regist-line regist-float">
-                            <span class="regist-label w-465" style="height:58px;">
-                                <span class="regist-label__text50">備考</span>
-                                <span class="regist-label__required-mark">◎</span>
-                                <span class="regist-label__text50">但し</span>
-                                <input class="TxtStyle04L" name="description" type="text" value="_%description%_">
-                                <span class="regist-label__text50">代として</span>
-                                <br>
-                                <br>
-                                <span class="regist-label__text50"></span>
-                                <input class="Txt54L" name="strnote" type="text" value="_%strNote%_">
+                    <div class="regist-box-area">
+                        <div class="regist-box1">
+                            <div class="regist-line regist-float">
+                                <span class="regist-label w-465" style="height:58px;">
+                                    <span class="regist-label__text50">備考</span>
+                                    <span class="regist-label__required-mark">◎</span>
+                                    <span class="regist-label__text50">但し</span>
+                                    <input class="TxtStyle04L" name="description" type="text" value="_%description%_">
+                                    <span class="regist-label__text50">代として</span>
+                                    <br>
+                                    <br>
+                                    <span class="regist-label__text50"></span>
+                                    <input class="Txt54L" name="strnote" type="text" value="_%strNote%_">
+                                </span>
+                            </div>
+                        </div>
+                        <div class="regist-box2">
+                            <span class="regist-label regist-label-w190">
+                                <span class="regist-label__text50">至</span>
+                                <input class="TxtStyle04L" name="dtmchargeternend" type="text" value="_%dtmChargeternEnd%_" maxlength="10">
+                            </span>
+
+                        </div>
+                        <div class="regist-box3">
+                            <span class="regist-label regist-label-box3">
+                                <span class="regist-label__text115">消費税</span>
+                                <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
+                                <input class="disTxt14R" name="curtaxprice" type="text" value="_%curTaxPrice1%_" readonly>
+                            </span>
+                        </div>
+                        <div class="regist-box2">
+                            <span class="regist-label regist-label-w190" style="margin-top:5px;">
+                                <span class="regist-label__text177">
+                                    再印刷を備考に明記する
+                                    <input name="strnotecheck" class="is-search" type="checkbox">
+                                </span>
+                            </span>
+
+                        </div>
+                        <div class="regist-box3">
+                            <span class="regist-label regist-label-box3" style="margin-top:5px;">
+                                <span class="regist-label__text115">差し引き合計額</span>
+                                <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
+                                <input class="disTxt14R" name="notaxcurthismonthamount" value="_%noTaxCurtTisMonthAmount%_" type="text" readonly>
                             </span>
                         </div>
                     </div>
-                    <div class="regist-box2">
-                        <span class="regist-label regist-label-w190">
-                            <span class="regist-label__text50">至</span>
-                            <input class="TxtStyle04L" name="dtmchargeternend" type="text" value="_%dtmChargeternEnd%_" maxlength="10">
-                        </span>
 
+                    <div class="regist-box-area">
+                        <div class="regist-clear"></div>
                     </div>
-                    <div class="regist-box3">
-                        <span class="regist-label regist-label-box3">
-                            <span class="regist-label__text115">消費税</span>
-                            <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
-                            <input class="disTxt14R" name="curtaxprice" type="text" value="_%curTaxPrice1%_" readonly>
-                        </span>
-                    </div>
-                    <div class="regist-box2">
-                        <span class="regist-label regist-label-w190" style="margin-top:5px;">
-                            <span class="regist-label__text177">
-                                再印刷を備考に明記する
-                                <input name="strnotecheck" class="is-search" type="checkbox">
-                            </span>
-                        </span>
 
-                    </div>
-                    <div class="regist-box3">
-                        <span class="regist-label regist-label-box3" style="margin-top:5px;">
-                            <span class="regist-label__text115">差し引き合計額</span>
-                            <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
-                            <input class="disTxt14R" name="notaxcurthismonthamount" value="_%noTaxCurtTisMonthAmount%_" type="text" readonly>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="regist-box-area">
-                    <div class="regist-clear"></div>
-                </div>
-
-                <div class="flex-container">
-                    <table class="table-box" style="height: 150px;">
-                        <tr>
-                            <td style="width: 800px;">
-                                <div class="regist-label div-table">
-                                    <table class="table-fix">
-                                        <thead id="tableA_chkbox_head">
-                                            <tr>
-                                                <th>
-                                                    <input name="allSel" type="checkbox" id="allChecked">
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <!-- 固定ヘッダ -->
-                                    </table>
-                                    <div id="header_h">
-                                        <table class="table-decide-description" name="T" id="tableA_head">
-                                            <thead>
-                                                <!-- 水平ヘッダ -->
+                    <div class="flex-container">
+                        <table class="table-box" style="height: 150px;">
+                            <tr>
+                                <td style="width: 800px;">
+                                    <div class="regist-label div-table">
+                                        <table class="table-fix">
+                                            <thead id="tableA_chkbox_head">
                                                 <tr>
-                                                    <th class="serial">No.</th>
-                                                    <th class="slipcode">納品書NO.
-                                                        <span></span>
-                                                    </th>
-                                                    <th class="customer">納品先
-                                                        <span></span>
-                                                    </th>
-                                                    <th class="deliverydate">納品日
-                                                        <span></span>
-                                                    </th>
-                                                    <th class="price">税抜金額
-                                                        <span></span>
-                                                    </th>
-                                                    <th class="taxclass">課税区分
-                                                        <span></span>
-                                                    </th>
-                                                    <th class="tax">税率
-                                                        <span></span>
-                                                    </th>
-                                                    <th class="taxamount">消費税額
-                                                        <span></span>
-                                                    </th>
-                                                    <th class="remarks">備考
-                                                        <span></span>
+                                                    <th>
+                                                        <input name="allSel" type="checkbox" id="allChecked">
                                                     </th>
                                                 </tr>
                                             </thead>
+                                            <!-- 固定ヘッダ -->
                                         </table>
-                                    </div>
-                                    <div id="header_v">
-                                        <table class="table-decide-description" name="TV" id="tableA_chkbox">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="checkbox center">
-                                                        <input type="checkbox" name="edit" class="check" />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        <div id="header_h">
+                                            <table class="table-decide-description" name="T" id="tableA_head">
+                                                <thead>
+                                                    <!-- 水平ヘッダ -->
+                                                    <tr>
+                                                        <th class="serial">No.</th>
+                                                        <th class="slipcode">納品書NO.
+                                                            <span></span>
+                                                        </th>
+                                                        <th class="customer">納品先
+                                                            <span></span>
+                                                        </th>
+                                                        <th class="deliverydate">納品日
+                                                            <span></span>
+                                                        </th>
+                                                        <th class="price">税抜金額
+                                                            <span></span>
+                                                        </th>
+                                                        <th class="taxclass">課税区分
+                                                            <span></span>
+                                                        </th>
+                                                        <th class="tax">税率
+                                                            <span></span>
+                                                        </th>
+                                                        <th class="taxamount">消費税額
+                                                            <span></span>
+                                                        </th>
+                                                        <th class="remarks">備考
+                                                            <span></span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div id="header_v">
+                                            <table class="table-decide-description" name="TV" id="tableA_chkbox">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="checkbox center">
+                                                            <input type="checkbox" name="edit" class="check" />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
 
-                                    <div id="data">
-                                        <table class="table-decide-description" name="T" id="tableA">
-                                            <thead style="display: none;">
-                                                <!-- 水平ヘッダ -->
-                                                <tr>
-                                                    <th class="serial">No.</th>
-                                                    <th class="slipcode">納品書NO.</th>
-                                                    <th class="customer">納品先</th>
-                                                    <th class="deliverydate">納品日</th>
-                                                    <th class="price">税抜金額</th>
-                                                    <th class="taxclass">課税区分</th>
-                                                    <th class="tax">税率</th>
-                                                    <th class="taxamount">消費税額</th>
-                                                    <th class="remarks">備考</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="tableA">
-                                                <tr>
-                                                    <td class="serial center">
-                                                        <span></span>
-                                                    </td>
-                                                    <td class="slipcode"></td>
-                                                    <td class="customer">
-                                                        <span class="customercode"></span>
-                                                        <span class="customername"></span>
-                                                    </td>
-                                                    <td class="deliverydate"></td>
-                                                    <td class="price right"></td>
-                                                    <td class="taxclass">
-                                                        <span class="taxclasscode"></span>
-                                                        <span class="taxclassname"></span>
-                                                    </td>
-                                                    <td class="tax right"></td>
-                                                    <td class="taxamount right"></td>
-                                                    <td class="remarks"></td>
-                                                </tr>
+                                        <div id="data">
+                                            <table class="table-decide-description" name="T" id="tableA">
+                                                <thead style="display: none;">
+                                                    <!-- 水平ヘッダ -->
+                                                    <tr>
+                                                        <th class="serial">No.</th>
+                                                        <th class="slipcode">納品書NO.</th>
+                                                        <th class="customer">納品先</th>
+                                                        <th class="deliverydate">納品日</th>
+                                                        <th class="price">税抜金額</th>
+                                                        <th class="taxclass">課税区分</th>
+                                                        <th class="tax">税率</th>
+                                                        <th class="taxamount">消費税額</th>
+                                                        <th class="remarks">備考</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableA">
+                                                    <tr>
+                                                        <td class="serial center">
+                                                            <span></span>
+                                                        </td>
+                                                        <td class="slipcode"></td>
+                                                        <td class="customer">
+                                                            <span class="customercode"></span>
+                                                            <span class="customername"></span>
+                                                        </td>
+                                                        <td class="deliverydate"></td>
+                                                        <td class="price right"></td>
+                                                        <td class="taxclass">
+                                                            <span class="taxclasscode"></span>
+                                                            <span class="taxclassname"></span>
+                                                        </td>
+                                                        <td class="tax right"></td>
+                                                        <td class="taxamount right"></td>
+                                                        <td class="remarks"></td>
+                                                    </tr>
 
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td style="width: 50px;"></td>
-                            <td style="width: 100px;">
-                                <img class="search button" src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="form search">
-                                <br>
-                                <br>
-                                <br>
-                                <img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="regist-line">
-                    <table class="table-box">
-                        <tr>
-                            <td style="vertical-align: top;width: 800px;">
-                                <div class="regist-label div-decide-table">
-                                    <table class="table-decide-fix" id="tableB_no_head">
-                                        <thead>
-                                            <tr>
-                                                <th>No.</th>
-                                            </tr>
-                                        </thead>
-                                        <!-- 固定ヘッダ -->
-                                    </table>
-                                    <div id="header_decide_h">
-                                        <table class="table-decide-description" name="DECIDE_T" id="tableB_head">
+                                </td>
+                                <td style="width: 50px;"></td>
+                                <td style="width: 100px;">
+                                    <img class="search button" src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="form search">
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="regist-line">
+                        <table class="table-box">
+                            <tr>
+                                <td style="vertical-align: top;width: 800px;">
+                                    <div class="regist-label div-decide-table">
+                                        <table class="table-decide-fix" id="tableB_no_head">
                                             <thead>
                                                 <tr>
-                                                    <th class="slipcode">納品書NO.</th>
-                                                    <th class="customer">納品先</th>
-                                                    <th class="deliverydate">納品日</th>
-                                                    <th class="price">税抜金額</th>
-                                                    <th class="taxclass">課税区分</th>
-                                                    <th class="tax">税率</th>
-                                                    <th class="taxamount">消費税額</th>
-                                                    <th class="remarks">備考</th>
+                                                    <th>No.</th>
                                                 </tr>
                                             </thead>
+                                            <!-- 固定ヘッダ -->
                                         </table>
-                                    </div>
-                                    <div id="header_decide_v">
-                                        <table class="table-decide-description" name="DECIDE_TV" id="tableB_no">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="serial center">
-                                                        <span></span>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        <div id="header_decide_h">
+                                            <table class="table-decide-description" name="DECIDE_T" id="tableB_head">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="slipcode">納品書NO.</th>
+                                                        <th class="customer">納品先</th>
+                                                        <th class="deliverydate">納品日</th>
+                                                        <th class="price">税抜金額</th>
+                                                        <th class="taxclass">課税区分</th>
+                                                        <th class="tax">税率</th>
+                                                        <th class="taxamount">消費税額</th>
+                                                        <th class="remarks">備考</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div id="header_decide_v">
+                                            <table class="table-decide-description" name="DECIDE_TV" id="tableB_no">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="serial center">
+                                                            <span></span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
 
-                                    <div id="decide_data">
-                                        <table class="table-decide-description" name="DECIDE_T" id="tableB">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="slipcode"></td>
-                                                    <td class="customer">
-                                                        <span class="customercode"></span>
-                                                        <span class="customername"></span>
-                                                    </td>
-                                                    <td class="deliverydate"></td>
-                                                    <td class="price right"></td>
-                                                    <td class="taxclass">
-                                                        <span class="taxclasscode"></span>
-                                                        <span class="taxclassname"></span>
-                                                    </td>
-                                                    <td class="tax right"></td>
-                                                    <td class="taxamount right"></td>
-                                                    <td class="remarks"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div id="decide_data">
+                                            <table class="table-decide-description" name="DECIDE_T" id="tableB">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="slipcode"></td>
+                                                        <td class="customer">
+                                                            <span class="customercode"></span>
+                                                            <span class="customername"></span>
+                                                        </td>
+                                                        <td class="deliverydate"></td>
+                                                        <td class="price right"></td>
+                                                        <td class="taxclass">
+                                                            <span class="taxclasscode"></span>
+                                                            <span class="taxclassname"></span>
+                                                        </td>
+                                                        <td class="tax right"></td>
+                                                        <td class="taxamount right"></td>
+                                                        <td class="remarks"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td style="text-align: center;">
-                            </td>
-                            <td>
-                                <img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
-                                <br>
-                                <br>
-                                <br>
-                                <img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                                </td>
+                                <td style="text-align: center;">
+                                </td>
+                                <td>
+                                    <img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
-                <input type="hidden" name="ActionScriptName" value="_%ActionScriptName%_">
-                <input type="hidden" name="strSessionID" value="_%strSessionID%_">
-                <input type="hidden" name="invConditionUrl" value="_%invConditionUrl%_">
-                <input type="hidden" name="lngInvoiceNo" value="_%lngInvoiceNo%_">
-                <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
-                <input type="hidden" name="strMode" value="renewPrev">
+                    <input type="hidden" name="ActionScriptName" value="_%ActionScriptName%_">
+                    <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+                    <input type="hidden" name="invConditionUrl" value="_%invConditionUrl%_">
+                    <input type="hidden" name="lngInvoiceNo" value="_%lngInvoiceNo%_">
+                    <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
+                    <input type="hidden" name="strMode" value="renewPrev">
             </form>
+            </div>
+            <!-- previewボタン -->
+            <div>
+                <img class="preview-button button" name="inv-customer" src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="preview">
+            </div>
+
+            <div class="msw-loadpoints">
+                <!-- MSW 顧客マスタ検索 -->
+                <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
+                </iframe>
+                <!-- MSW 入力者マスタ検索 -->
+                <iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
+                </iframe>
+            </div>
         </div>
-        <!-- previewボタン -->
-        <div>
-            <img class="preview-button button" name="inv-customer" src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="preview">
-        </div>
 
-        <div class="msw-loadpoints">
-            <!-- MSW 顧客マスタ検索 -->
-            <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
-            </iframe>
-            <!-- MSW 入力者マスタ検索 -->
-            <iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
-            </iframe>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        function $E(name) { return document.getElementById(name); }
-        function scroll() {
-            $E("header_h").scrollLeft = $E("data").scrollLeft;// データ部のスクロールをヘッダに反映
-            $E("header_v").scrollTop = $E("data").scrollTop;// データ部のスクロールをヘッダに反映
-        }
-        $E("data").onscroll = scroll;
-
-
-        function decide_scroll() {
-            $E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
-            $E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
-        }
-        $E("decide_data").onscroll = decide_scroll;
-    </script>
-    <script>
-        // 修正初期状態
-        var renewInit = function (invoiceNo, revisionNo) {
-            // 入力値を取得
-            // 顧客
-            var params = {
-                mode: 'ajaxRenew',
-                invoiceNo: invoiceNo,
-                revisionNo: revisionNo,
-                strSessionID: $('input[name="strSessionID"]').val(),
+        <script type="text/javascript">
+            function $E(name) { return document.getElementById(name); }
+            function scroll() {
+                $E("header_h").scrollLeft = $E("data").scrollLeft;// データ部のスクロールをヘッダに反映
+                $E("header_v").scrollTop = $E("data").scrollTop;// データ部のスクロールをヘッダに反映
             }
+            $E("data").onscroll = scroll;
 
 
-            // 検索する
-            var search = {
-                url: '/inv/regist/condition.php?strSessionID=' + $.cookie('strSessionID'),
-                type: 'post',
-                dataType: 'json',
-                data: params
+            function decide_scroll() {
+                $E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
+                $E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
+            }
+            $E("decide_data").onscroll = decide_scroll;
+        </script>
+        <script>
+            // 修正初期状態
+            var renewInit = function (invoiceNo, revisionNo) {
+                // 入力値を取得
+                // 顧客
+                var params = {
+                    mode: 'ajaxRenew',
+                    invoiceNo: invoiceNo,
+                    revisionNo: revisionNo,
+                    strSessionID: $('input[name="strSessionID"]').val(),
+                }
+
+
+                // 検索する
+                var search = {
+                    url: '/inv/regist/condition.php?strSessionID=' + $.cookie('strSessionID'),
+                    type: 'post',
+                    dataType: 'json',
+                    data: params
+                };
+
+                $.ajax(search)
+                    .done(function (response) {
+                        console.log(response);
+
+                        $.createTableRenew(response);
+                    })
+                    .fail(function (response) {
+                        alert(response.responseText);
+                        console.log(response);
+
+                        return;
+                    });
+
+                return false;
             };
-
-            $.ajax(search)
-                .done(function (response) {
-                    console.log(response);
-
-                    $.createTableRenew(response);
-                })
-                .fail(function (response) {
-                    alert(response.responseText);
-                    console.log(response);
-
-                    return;
-                });
-
-            return false;
-        };
-        setTimeout(renewInit('_%lngInvoiceNo%_', '_%lngRevisionNo%_'), 900);
-    </script>
+            setTimeout(renewInit('_%lngInvoiceNo%_', '_%lngRevisionNo%_'), 900);
+        </script>

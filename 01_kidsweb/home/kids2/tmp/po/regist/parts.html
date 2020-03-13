@@ -12,6 +12,7 @@
 
 	<title>K.I.D.S.</title>
 	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
 
 
 	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
@@ -155,6 +156,7 @@
 														<th>運搬方法</th>
 														<th>単価</th>
 														<th>数量</th>
+														<th>単位</th>
 														<th>税抜金額</th>
 														<th>納期</th>
 														<th>明細備考</th>
@@ -192,10 +194,10 @@
 														<th>運搬方法</th>
 														<th>単価</th>
 														<th>数量</th>
+														<th>単位</th>
 														<th>税抜価格</th>
 														<th>納期</th>
 														<th>明細備考</th>
-														<th class="forEdit"></th>
 														<th class="forEdit"></th>
 														<th class="forEdit"></th>
 														<th class="forEdit"></th>
@@ -216,7 +218,7 @@
 								</td>
 								<td style="width: 50px;"></td>
 								<td style="width: 100px;">
-									<img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="add">追加</button>
 								</td>
 							</tr>
 						</table>
@@ -243,10 +245,10 @@
 														<th>運搬方法</th>
 														<th>単価</th>
 														<th>数量</th>
+														<th>単位</th>
 														<th>税抜価格</th>
 														<th>納期</th>
 														<th>明細備考</th>
-														<th class="forEdit"></th>
 														<th class="forEdit"></th>
 														<th class="forEdit"></th>
 														<th class="forEdit"></th>
@@ -289,7 +291,6 @@
 														<th class="forEdit"></th>
 														<th class="forEdit"></th>
 														<th class="forEdit"></th>
-														<th class="forEdit"></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -317,11 +318,12 @@
 									</div>
 								</td>
 								<td>
-									<img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
+									
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="delete">削除</button>
 									<br>
 									<br>
 									<br>
-									<img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="alldelete">全削除</button>
 								</td>
 							</tr>
 						</table>
@@ -336,11 +338,10 @@
 			</form>
 		</div>
 	</div>
-
 	<!-- フォーム ボタン -->
 	<div class="form-buttons">
-		<img class="decideRegist button" src="/img/type01/so/reg_off_ja_bt.gif" alt="form decideRegist">
-		<img class="clear button" src="/img/type01/cmn/querybt/grayclear_off_ja_bt.gif" alt="form clear">
+		<button type="button" class="btn btn-light btn-kids" id="decideRegist">確定登録</button>
+		<button type="button" class="btn btn-light btn-kids" id="clear">クリア</button>
 	</div>
 	<div class="msw-loadpoints">
 		<!-- MSW 部門マスタ検索 -->

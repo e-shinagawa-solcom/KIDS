@@ -211,7 +211,7 @@ $aryData["ajaxPostTarget"] = "index.php";
 // 売上（納品書）登録画面表示（テンプレートは納品書修正画面と共通）
 // echo fncGetReplacedHtml( "sc/regist2/parts.tmpl", $aryData ,$objAuth);
 
-echo fncGetReplacedHtmlWithBase("base_mold.html", "sc/regist2/regist.html", $aryData, $objAuth);
+echo fncGetReplacedHtmlWithBase("base_sc.html", "sc/regist2/regist.html", $aryData, $objAuth);
 // DB切断
 $objDB->close();
 

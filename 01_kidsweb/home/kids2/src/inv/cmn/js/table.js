@@ -7,6 +7,43 @@ $(function () {
     }
   });
 
+  window.onload = function () {
+    if (!(window.location.href.indexOf('renew') >= 0)) {
+      $('img.search').click();
+    }
+  };
+
+  var sub_win;
+
+  // メインメニューボタン
+  $('.control-block__buttan-main-menu').on({
+    'click': function (e) {
+      if (sub_win != "undefined") {
+        sub_win.close();
+      }
+      // セッションID取得
+      var sessionId = $('input[name="strSessionID"]').val();
+      // 取得できた場合
+      if (sessionId) {
+        // メインメニューへ遷移
+        window.location.href = '/menu/menu.php?strSessionID=' + sessionId;
+      }
+    }
+  });
+
+  // ログアウトボタン
+  $('.control-block__button-logout').on({
+    'click': function () {
+      // セッションID取得
+      var sessionId = $('input[name="strSessionID"]').val();
+      // 取得できた場合
+      if (sessionId) {
+        // メインメニューへ遷移
+        window.location.href = '/login/logout.php?strSessionID=' + sessionId;
+      }
+    }
+  });
+
   // response ディープコピー用配列
   var data = [];
 
@@ -306,10 +343,9 @@ $(function () {
         var rowindex = $(this).closest('tr').index();
         console.log(rowindex);
 
-        var tmptax =  $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').find('.tax').text();
+        var tmptax = $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').find('.tax').text();
         console.log(tmptax);
-        if (tax != "" && tmptax != tax)
-        {
+        if (tax != "" && tmptax != tax) {
           alert('消費税率の異なる納品書は請求書の明細に混在できません');
           return false;
         }
@@ -461,7 +497,6 @@ $(function () {
   // 検索条件入力ボタン
   $('img.search').on('click', function (e) {
     e.preventDefault();
-
     // selectedRowIndexes 初期化
     selectedRowIndexes = [];
 

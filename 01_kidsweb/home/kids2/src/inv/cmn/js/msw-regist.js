@@ -262,7 +262,7 @@
         month += '</select>';
         $('#invoiceMonth').html(month + "月");
     };
-    setMonthSelectBox();
+    // setMonthSelectBox();
 
     // 納品書明細検索ボタン押下処理
     $('img.search-condition').on({
@@ -643,7 +643,7 @@
             }
 
             // フォーム設定
-            var windowPrev = open('about:blank', windowName, 'width=900, height=900, scrollbars=yes, resizable=yes');
+            var windowPrev = open('about:blank', windowName, 'width=900, height=768, scrollbars=yes, resizable=yes');
             invForm.attr('action', url);
             invForm.attr('method', 'post');
             invForm.attr('target', windowName);

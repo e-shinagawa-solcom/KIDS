@@ -74,6 +74,7 @@ $aryTableHeaderName_PO["lngreceivestatuscode"] = "状態";
 $aryTableHeaderName_PO["lngrecordno"] = "No.";
 $aryTableHeaderName_PO["curproductprice"] = "単価";
 $aryTableHeaderName_PO["lngproductquantity"] = "数量";
+$aryTableHeaderName_PO["lngproductunitcode"] = "単位";
 $aryTableHeaderName_PO["cursubtotalprice"] = "税抜金額";
 $aryTableHeaderName_PO["strdetailnote"] = "明細備考";
 
@@ -365,6 +366,8 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , od.strStockSubjectName";
         $aryQuery[] = "  , od.lngStockItemCode";
         $aryQuery[] = "  , od.strstockitemname";
+        $aryQuery[] = "  , od.lngproductunitcode";
+        $aryQuery[] = "  , od.strproductunitname";
         $aryQuery[] = "  , od.dtmDeliveryDate";
         $aryQuery[] = "  , od.curProductPrice";
         $aryQuery[] = "  , od.strmoldno";
@@ -397,6 +400,8 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "        , ss.strStockSubjectName as strStockSubjectName";
         $aryQuery[] = "        , od1.lngStockItemCode as lngStockItemCode";
         $aryQuery[] = "        , si.strstockitemname as strstockitemname";
+        $aryQuery[] = "        , od1.lngproductunitcode as lngproductunitcode";
+        $aryQuery[] = "        , mpu.strproductunitname as strproductunitname";
         $aryQuery[] = "        , to_char(od1.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
         $aryQuery[] = "        , od1.curProductPrice";
         $aryQuery[] = "        , to_char(od1.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
@@ -427,6 +432,8 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "        LEFT JOIN m_stockitem si ";
         $aryQuery[] = "          ON od1.lngstockitemcode = si.lngstockitemcode ";
         $aryQuery[] = "          AND od1.lngstocksubjectcode = si.lngstocksubjectcode ";
+        $aryQuery[] = "        LEFT JOIN m_productunit mpu ";
+        $aryQuery[] = "          ON od1.lngproductunitcode = mpu.lngproductunitcode ";
         $aryQuery[] = "    ) od ";
         $aryQuery[] = "WHERE";
         $aryQuery[] = "  od.lngorderno = o.lngorderno ";
