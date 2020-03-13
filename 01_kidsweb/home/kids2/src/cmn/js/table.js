@@ -1,4 +1,16 @@
 function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj) {
+    // chkboxObj.on('keydown', function (e) {
+    //     console.log('enter');
+    //     if (e.which == 13) {
+            
+    //     e.stopPropagation();
+    //         if (this.checked) {
+    //             $(this).prop('checked', false);
+    //         } else {
+    //             $(this).prop('checked', true);
+    //         }
+    //     }
+    //   });
     chkboxObj.on('click', function (e) {
         e.stopPropagation();
         var rowindex = $(this).parent().parent().index();

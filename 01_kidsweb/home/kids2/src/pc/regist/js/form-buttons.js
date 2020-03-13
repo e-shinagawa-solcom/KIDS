@@ -21,6 +21,13 @@ var chkbox = [];
         return false;
     });
 
+    $('.link_po').on('keydown', function (e) {
+        console.log('enter');
+        if (e.which == 13) {
+            $('img.getpoinfo').click();
+        }
+      });
+
     btnGetPoInfo.on('click', function () {
         // 発注NO.の取得
         var strOrderCode = $('input[name="strOrderCode"]').val();
@@ -262,7 +269,6 @@ var chkbox = [];
 
     // 登録ボタン押下時の処理
     btnRegist.on('click', function () {
-
         if (workForm.valid()) {
 
             var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
