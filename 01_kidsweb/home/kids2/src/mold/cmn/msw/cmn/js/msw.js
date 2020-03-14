@@ -36,7 +36,7 @@
                 'z-index': '9999'
             });
 
-            var handleName = $(this).prev().prev().attr('name');
+            var handleName = $(this).parents().parents().prev().prev().attr('name');
             ifmMsw.get(0).handler = handleName;
 
             docMsw.off('click', 'img.apply');

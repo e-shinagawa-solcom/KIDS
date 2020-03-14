@@ -8,6 +8,14 @@
         dataType: 'json'
     };
 
+
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            $(this).find('img').click();
+        }
+    });
+
     // 顧客-表示会社コード イベント登録
     $('input[name="lngCustomerCode"]').on({
         'change': function () {

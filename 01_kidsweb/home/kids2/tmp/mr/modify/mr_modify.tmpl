@@ -3,7 +3,6 @@
 	<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
     <link rel="stylesheet" href="/mold/cmn/form/css/forms-validation.css">
 	<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
-	<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
 
 
     <!-- confirm iframe スタイル -->
@@ -68,14 +67,18 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">製品コード</span>
-						<input class="TxtStyle05L" name="ProductCode" value="_%Header_ProductCode%_" readonly>
+						<input class="disTxt05L" name="ProductCode" value="_%Header_ProductCode%_" disabled>
 						<span>_</span>
-						<input class="TxtStyle01L" name="ReviseCode" value="_%Header_ReviseCode%_" readonly>
-						<input class="disTxt46L" name="ProductName" value="_%Header_ProductName%_" readonly>
+						<input class="disTxt01L" name="ReviseCode" value="_%Header_ReviseCode%_" disabled>
+						<input class="disTxt46L" name="ProductName" value="_%Header_ProductName%_" disabled>
+						<input type="hidden" name="ProductCode" value="_%Header_ProductCode%_">
+						<input type="hidden" name="ReviseCode" value="_%Header_ReviseCode%_">
+						<input type="hidden" name="ProductName" value="_%Header_ProductName%_">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">顧客品番</span>
-						<input class="TxtStyle05L" name="GoodsCode" value="_%Header_GoodsCode%_"  readonly>
+						<input class="disTxt05L" name="GoodsCode" value="_%Header_GoodsCode%_"  disabled>
+                    <input type="hidden" name="GoodsCode" value="_%Header_GoodsCode%_">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -139,8 +142,9 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">事業部(顧客)</span>
 						<input class="TxtStyle05L" name="CustomerCode" value="_%CustomerCode%_">
-						<input class="disTxt46L" name="CustomerName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="CustomerName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="CustomerName">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -148,8 +152,9 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">KWG担当部署</span>
 						<input class="TxtStyle05L" name="KuwagataGroupCode" value="_%KuwagataGroupCode%_">
-						<input class="disTxt46L" name="KuwagataGroupName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="KuwagataGroupName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="KuwagataGroupName">
 					</span>
 				</div>
 				<div class="regist-line--remora">
@@ -157,8 +162,9 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">KWG担当者</span>
 						<input class="TxtStyle05L" name="KuwagataUserCode" value="_%KuwagataUserCode%_">
-						<input class="disTxt46L" name="KuwagataUserName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="KuwagataUserName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="KuwagataUserName">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -196,14 +202,18 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">製品コード</span>
-						<input class="TxtStyle05L" name="ProductCode" readonly>
+						<input class="TxtStyle05L" name="ProductCode" disabled>
 						<span>_</span>
-						<input class="TxtStyle01L" name="ReviseCode" readonly>
-						<input class="disTxt46L" name="ProductName" readonly>
+						<input class="TxtStyle01L" name="ReviseCode" disabled>
+						<input class="disTxt46L" name="ProductName" disabled>
+						<input type="hidden" name="ProductCode">
+						<input type="hidden" name="ReviseCode">
+						<input type="hidden" name="ProductName">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">顧客品番</span>
-						<input class="TxtStyle05L" name="GoodsCode" readonly>
+						<input class="TxtStyle05L" name="GoodsCode" disabled>
+						<input type="hidden" name="GoodsCode">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -238,9 +248,11 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">保管工場</span>
-						<input class="TxtStyle05L" name="SourceFactory" value="_%SourceFactory%_" readonly>
-						<input class="disTxt46L" name="SourceFactoryName" value="_%SourceFactoryName%_" readonly>
-						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="TxtStyle05L" name="SourceFactory" value="_%SourceFactory%_" disabled>
+						<input class="disTxt46L" name="SourceFactoryName" value="_%SourceFactoryName%_" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="SourceFactory" value="_%SourceFactory%_">
+						<input type="hidden" name="SourceFactoryName" value="_%SourceFactoryName%_">
 					</span>
 				</div>
 				<div class="regist-line--remora">
@@ -248,8 +260,9 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__required-text">移動先工場</span>
 						<input class="TxtStyle05L" name="DestinationFactory" value="_%DestinationFactory%_">
-						<input class="disTxt46L" name="DestinationFactoryName" value="_%DestinationFactoryName%_" readonly>
-						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="DestinationFactoryName" value="_%DestinationFactoryName%_" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="DestinationFactoryName" value="_%DestinationFactoryName%_">
 					</span>
 				</div>
 					<table class="table-description">

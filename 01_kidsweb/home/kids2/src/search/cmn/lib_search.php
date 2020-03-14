@@ -1337,14 +1337,17 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
                     // 詳細ボタンの表示
                     if ($aryAuthority[$key] && $record["lngrevisionno"] >= 0) {
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");
                         // 詳細ボタン
                         $imgDetail = $doc->createElement("img");
                         $imgDetail->setAttribute("src", "/img/type01/pc/detail_off_bt.gif");
                         $imgDetail->setAttribute("id", $record["lngpkno"]);
                         $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
                         $imgDetail->setAttribute("class", "detail button");
+                        $a->appendChild($imgDetail);
                         // td > img
-                        $td->appendChild($imgDetail);
+                        $td->appendChild($a);
                     }
                     // tr > td
                     $trBody->appendChild($td);
@@ -1356,8 +1359,9 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     // 修正ボタンの表示
 
                     if ($type == 'slip') {
-                        if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {
-                            // 修正ボタン
+                        if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {                            
+                            $a = $doc->createElement("a"); 
+                            $a->setAttribute("href", "#");// 修正ボタン
                             $imgFix = $doc->createElement("img");
                             $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
                             $imgFix->setAttribute("lngslipno", $record["lngslipno"]);
@@ -1367,45 +1371,52 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                             $imgFix->setAttribute("strsalescode", $record["strsalescode"]);
                             $imgFix->setAttribute("strcustomercode", $record["strcustomerdisplaycode"]);
                             $imgFix->setAttribute("class", "renew button");
+                            $a->appendChild($imgFix);
                             // td > img
-                            $td->appendChild($imgFix);
+                            $td->appendChild($a);
                         }
                     } else if ($type == 'pc') {
                         // 修正ボタンの表示
                         if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $record["lngstockstatuscode"] != DEF_STOCK_CLOSED && $bgcolor != "background-color: #B3E0FF;") {
                             // 修正ボタン
+                            $a = $doc->createElement("a"); 
+                            $a->setAttribute("href", "#");// 修正ボタン
                             $imgFix = $doc->createElement("img");
                             $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
                             $imgFix->setAttribute("id", $record["lngstockno"]);
                             $imgFix->setAttribute("revisionno", $record["lngrevisionno"]);
                             $imgFix->setAttribute("class", "fix button");
-                            // td > img
-                            $td->appendChild($imgFix);
+                            $a->appendChild($imgFix);
+                            $td->appendChild($a);
                         }
                     } else if ($type == 'inv') {
                         // 修正ボタンの表示
                         if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {
                             // 修正ボタン
+                            $a = $doc->createElement("a"); 
+                            $a->setAttribute("href", "#");// 修正ボタン
                             $imgFix = $doc->createElement("img");
                             $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
                             $imgFix->setAttribute("id", $record["lnginvoiceno"]);
                             $imgFix->setAttribute("revisionno", $record["lngrevisionno"]);
                             $imgFix->setAttribute("class", "fix button");
-                            // td > img
-                            $td->appendChild($imgFix);
+                            $a->appendChild($imgFix);
+                            $td->appendChild($a);
                         }
 
                     } else if ($type == 'purchaseorder') {
                         // 修正ボタンの表示
                         if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {
                             // 修正ボタン
+                            $a = $doc->createElement("a"); 
+                            $a->setAttribute("href", "#");// 修正ボタン
                             $imgFix = $doc->createElement("img");
                             $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
                             $imgFix->setAttribute("id", $record["lngpurchaseorderno"]);
                             $imgFix->setAttribute("revisionno", $record["lngrevisionno"]);
                             $imgFix->setAttribute("class", "fix button");
-                            // td > img
-                            $td->appendChild($imgFix);
+                            $a->appendChild($imgFix);
+                            $td->appendChild($a);
                         }
                     }
                     // tr > td
@@ -1418,6 +1429,8 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
 
                     if ($isMaxData and $record["lngrevisionno"] != 0) {
                         // 履歴ボタン
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");// 修正ボタン
                         $imgHistory = $doc->createElement("img");
                         $imgHistory->setAttribute("src", "/img/type01/cmn/seg/history_open_off.gif");
                         if ($type == 'so') {
@@ -1440,8 +1453,8 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                         $imgHistory->setAttribute("maxdetailno", $maxdetailno);
                         $imgHistory->setAttribute("type", $type);
                         $imgHistory->setAttribute("class", "history button");
-                        // td > img
-                        $td->appendChild($imgHistory);
+                        $a->appendChild($imgHistory);
+                        $td->appendChild($a);
                     }
                     // tr > td
                     $trBody->appendChild($td);
@@ -1467,14 +1480,16 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     // 確定ボタンの表示
                     if (!$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngrevisionno"] >= 0 and $isDecideObj) {
                         // 確定ボタン
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");// 修正ボタン
                         $imgDecide = $doc->createElement("img");
                         $imgDecide->setAttribute("src", "/img/type01/so/renew_off_bt.gif");
                         $imgDecide->setAttribute("id", $id);
                         $imgDecide->setAttribute("lngestimateno", $record["lngestimateno"]);
                         $imgDecide->setAttribute("revisionno", $record["estimaterevisionno"]);
                         $imgDecide->setAttribute("class", "decide button");
-                        // td > img
-                        $td->appendChild($imgDecide);
+                        $a->appendChild($imgDecide);
+                        $td->appendChild($a);
                     }
                     // tr > td
                     $trBody->appendChild($td);
@@ -1515,13 +1530,15 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                     // 確定取消ボタンの表示
                     if (!$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngrevisionno"] >= 0 and $isDecideObj) {
                         // 確定取消ボタン
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");// 修正ボタン
                         $imgCancel = $doc->createElement("img");
                         $imgCancel->setAttribute("src", "/img/type01/so/cancel_off_bt.gif");
                         $imgCancel->setAttribute("id", $id);
                         $imgCancel->setAttribute("revisionno", $record["lngrevisionno"]);
                         $imgCancel->setAttribute("class", "cancel button");
-                        // td > img
-                        $td->appendChild($imgCancel);
+                        $a->appendChild($imgCancel);
+                        $td->appendChild($a);
                     }
                     // tr > td
                     $trBody->appendChild($td);
@@ -1533,40 +1550,48 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                     // 削除ボタンの表示
                     if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngstockstatuscode"] != DEF_STOCK_CLOSED and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");// 修正ボタン
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("id", $record["lngstockno"]);
                         $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
                         $imgDelete->setAttribute("class", "delete button");
-                        // td > img
-                        $td->appendChild($imgDelete);
+                        $a->appendChild($imgDelete);
+                        $td->appendChild($a);
                     } else if ($type == 'slip' and !$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngsalesstatuscode"] != DEF_SALES_CLOSED and $record["lnginvoiceno"] == null and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");// 修正ボタン
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("id", $record["lngslipno"]);
                         $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
                         $imgDelete->setAttribute("class", "delete button");
-                        // td > img
-                        $td->appendChild($imgDelete);
+                        $a->appendChild($imgDelete);
+                        $td->appendChild($a);
                     } else if ($type == 'inv' and !$isadmin and $isMaxData and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");// 修正ボタン
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("lnginvoiceno", $record["lnginvoiceno"]);
                         $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
                         $imgDelete->setAttribute("class", "delete button");
-                        // td > img
-                        $td->appendChild($imgDelete);
+                        $a->appendChild($imgDelete);
+                        $td->appendChild($a);
                     } else if ($type == 'purchaseorder' and !$isadmin and $isMaxData and $record["lngorderstatuscode"] == DEF_ORDER_ORDER and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");// 修正ボタン
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("lngpurchaseorderno", $record["lngpurchaseorderno"]);
                         $imgDelete->setAttribute("revisionno", $record["lngrevisionno"]);
                         $imgDelete->setAttribute("class", "delete button");
-                        // td > img
-                        $td->appendChild($imgDelete);
+                        $a->appendChild($imgDelete);
+                        $td->appendChild($a);
                     }
                     // tr > td
                     $trBody->appendChild($td);
@@ -1575,15 +1600,17 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
                     // 無効ボタンの表示
-                    if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngstockstatuscode"] != DEF_STOCK_CLOSED  && $record["bytinvalidflag"] == false) {
+                    if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngstockstatuscode"] != DEF_STOCK_CLOSED  && $record["bytinvalidflag"] == 'f') {
                         // 無効ボタン
+                        $a = $doc->createElement("a"); 
+                        $a->setAttribute("href", "#");// 修正ボタン
                         $imgInvalid = $doc->createElement("img");
                         $imgInvalid->setAttribute("src", "/img/type01/pc/invalid_off_bt.gif");
                         $imgInvalid->setAttribute("id", $record["lngstockno"]);
                         $imgInvalid->setAttribute("revisionno", $record["lngrevisionno"]);
                         $imgInvalid->setAttribute("class", "invalid button");
-                        // td > img
-                        $td->appendChild($imgInvalid);
+                        $a->appendChild($imgInvalid);
+                        $td->appendChild($a);
                     }
                     // tr > td
                     $trBody->appendChild($td);

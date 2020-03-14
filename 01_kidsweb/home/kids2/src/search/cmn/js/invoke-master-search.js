@@ -9,9 +9,10 @@
     };
 
     $('a').on('keydown', function (e) {
+        e.stopPropagation();
         if (e.which == 13) {
-            e.stopPropagation();
-            $(this).find('img.msw-button').click();
+            console.log($(this).find('img.msw-button'));
+            $(this).find('img').click();
         }
     });
 

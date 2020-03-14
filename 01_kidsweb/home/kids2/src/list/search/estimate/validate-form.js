@@ -29,15 +29,20 @@
     $.validator.addMethod(
         "checkSelect",
         function (value, element, params) {
-            return value != "";
+            var elename = 'input[name="IsSearch_' + element.name + '"]';
+            if ($(elename).get(0).checked) {
+                return value != "";
+            } else {
+                return true;
+            }
         },
         msgRequired
     );
-　　// 製品コードの書式チェック
+    　　// 製品コードの書式チェック
     $.validator.addMethod(
         "checkStrProductCode",
         function (value, element, params) {
-            if (params && value!='') {
+            if (params && value != '') {
                 return this.optional(element) || /\d{5}(_\d{2})?$/.test(value);
             }
             return true;
@@ -49,26 +54,12 @@
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
-            if (params && value!='') {
-                if (/^[0-9]{8}$/.test(value)) {
+            if (params && value != '') {
+                if (value.length == 8) {
                     var str = value.trim();
                     var y = str.substr(0, 4);
                     var m = str.substr(4, 2);
                     var d = str.substr(6, 2);
-                    value = y + "/" + m + "/" + d;
-                } else if (/(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])/.test(value)) {
-                    if (value.length == 7) {
-                        var str = value.trim();
-                        var y = str.substr(0, 4);
-                        var m = str.substr(5, 2);
-                        var d = '01';
-                        value = y + "/" + m + "/" + d;
-                    }
-                } else if (/(19[0-9]{2}|2[0-9]{3})(0[1-9]|1[0-2])/.test(value)) {
-                    var str = value.trim();
-                    var y = str.substr(0, 4);
-                    var m = str.substr(4, 2);
-                    var d = '01';
                     value = y + "/" + m + "/" + d;
                 }
 
@@ -140,7 +131,7 @@
         },
         msgLessThanToday
     );
-    
+
     // FROM_XXXXがTO_XXXXより小さいか(同日不可)
     $.validator.addMethod(
         "isGreaterThanFromDate",
@@ -167,7 +158,7 @@
                     var yyyy = regResult[1];
                     var mm = regResult[2];
                     var dd = regResult[3];
-                    var fromDate = new Date(yyyy, mm, dd);  
+                    var fromDate = new Date(yyyy, mm, dd);
                     regResult = regDate.exec(value);
                     yyyy = regResult[1];
                     mm = regResult[2];
@@ -273,7 +264,7 @@
                 isGreaterThanFromDate: function () {
                     return [$('input[name="IsSearch_dtmInsertDate"]').get(0).checked, 'input[name="From_dtmInsertDate"]'];
                 }
-                
+
             },
             // 納期
             From_dtmDeliveryLimitDate: {
@@ -294,7 +285,7 @@
                 isGreaterThanFromDate: function () {
                     return [$('input[name="IsSearch_dtmDeliveryLimitDate"]').get(0).checked, 'input[name="From_dtmDeliveryLimitDate"]'];
                 }
-                
+
             },
             // 入力者            
             lngInputUserCode: {
@@ -307,7 +298,7 @@
                 required: function () {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="To_strProductCode"]').val() == "";
                 },
-                checkStrProductCode: function() {
+                checkStrProductCode: function () {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
                 }
             },
@@ -315,7 +306,7 @@
                 required: function () {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked && $('input[name="From_strProductCode"]').val() == "";
                 },
-                checkStrProductCode: function() {
+                checkStrProductCode: function () {
                     return $('input[name="IsSearch_strProductCode"]').get(0).checked;
                 }
             },
@@ -355,7 +346,7 @@
             },
             To_dtmDeliveryLimitDate: {
                 required: msgRequired
-                
+
             },
             // 入力者            
             lngInputUserCode: {

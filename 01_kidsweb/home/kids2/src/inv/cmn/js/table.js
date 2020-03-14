@@ -3,13 +3,13 @@ $(function () {
   $('body').on('keydown', function (e) {
     console.log('enter');
     if (e.which == 13) {
-      $('img.add').click();
+      $('#add').click();
     }
   });
 
   window.onload = function () {
     if (!(window.location.href.indexOf('renew') >= 0)) {
-      $('img.search').click();
+      $('#search').click();
     }
   };
 
@@ -316,7 +316,7 @@ $(function () {
   setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
 
   // テーブルA 追加ボタン
-  $('img.add').on('click', function (e) {
+  $('#add').on('click', function (e) {
     e.preventDefault();
 
     var $all_chkbox_rows = $('tbody tr', $tableA_chkbox);
@@ -398,7 +398,7 @@ $(function () {
   });
 
   // テーブルB 削除ボタン
-  $('img.delete').on('click', function (e) {
+  $('#delete').on('click', function (e) {
     e.preventDefault();
 
     var $all_rows = $('tbody tr', $tableB);
@@ -447,7 +447,7 @@ $(function () {
   });
 
   // テーブルB 全削除ボタン
-  $('img.alldelete').on('click', function (e) {
+  $('#alldelete').on('click', function (e) {
     e.preventDefault();
 
     var $tableB_row = $('tbody tr', $tableB);
@@ -495,7 +495,7 @@ $(function () {
   });
 
   // 検索条件入力ボタン
-  $('img.search').on('click', function (e) {
+  $('#search').on('click', function (e) {
     e.preventDefault();
     // selectedRowIndexes 初期化
     selectedRowIndexes = [];

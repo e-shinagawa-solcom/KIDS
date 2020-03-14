@@ -12,6 +12,7 @@
 
 	<title>K.I.D.S.</title>
 	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
 	<!-- msw汎用スタイル -->
 	<link rel="stylesheet" href="/search/cmn/css/msw.css">
 
@@ -60,15 +61,18 @@
 				<div class="regist-tab-header">
 					<div class="regist-line">
 						<span class="regist-label">
-							<span class="regist-label__text_70">納品日</span>
-							<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10"
-							>
+							<span class="regist-label__text_68">納品日</span>
+							<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10">
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text">顧客</span>
-							<input class="disTxt03L input-code" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer" disabled value="_%lngCustomerCode%_">
+							<input class="disTxt04L input-code" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer" disabled value="_%lngCustomerCode%_">
 							<input class="disTxt28L input-name" name="strCustomerName" type="text" disabled value="_%strCustomerName%_">
-							<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+							<span>
+								<a href="#">
+									<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+								</a>
+							</span>
 							<input type="hidden" name="lngCountryCode" value="_%lngCountryCode%_">
 							<input type="hidden" name="lngCustomerCode" value="_%lngCustomerCode%_">
 						</span>
@@ -79,9 +83,9 @@
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text_68">通貨</span>
-							<input style="ime-mode:disabled;" class="disTxt05L" type="text" readonly name="strMonetaryUnitName" class="Slt93"
-							 value="_%strMonetaryUnitName%_">
+							<input style="ime-mode:disabled;" class="disTxt05L" type="text" disabled name="strMonetaryUnitName" class="Slt93" value="_%strMonetaryUnitName%_">
 							<input type="hidden" name="lngMonetaryUnitCode">
+							<input type="hidden" name="strMonetaryUnitName" value="_%strMonetaryUnitName%_">
 						</span>
 					</div>
 					<div class="regist-line">
@@ -92,8 +96,12 @@
 						<span class="regist-label">
 							<span class="regist-label__text">納品先</span>
 							<input class="TxtStyle03L" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_" alt="DeliveryPlace">
-							<input class="disTxt28L" name="strDeliveryPlaceName" readonly value="_%strDeliveryPlaceName%_">
-							<img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+							<input class="disTxt28L" name="strDeliveryPlaceName" disabled value="_%strDeliveryPlaceName%_">
+							<span>
+								<a href="#">
+									<img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+								</a>
+							</span>
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text_80">納品先担当者</span>
@@ -102,9 +110,10 @@
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text_68">レート</span>
-							<input style="ime-mode:disabled;" class="disTxt05L" type="text" readonly name="strMonetaryRateName" value="_%strMonetaryRateName%_"
+							<input style="ime-mode:disabled;" class="disTxt05L" type="text" disabled name="strMonetaryRateName" value="_%strMonetaryRateName%_"
 							 class="Slt93">
 							<input type="hidden" name="lngMonetaryRateCode">
+							<input type="hidden" name="strMonetaryRateName" value="_%strMonetaryRateName%_">
 						</span>
 					</div>
 					<div class="regist-line">
@@ -112,8 +121,12 @@
 						<span class="regist-label">
 							<span class="regist-label__text">起票者</span>
 							<input style="ime-mode:disabled;" class="TxtStyle03L" type="text" name="lngInsertUserCode" value="_%lngUserCode%_" alt="InsertUser">
-							<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strInsertUserName" value="_%strUserName%_" contenteditable="false">
-							<img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+							<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strInsertUserName" value="_%strUserName%_" disabled>
+							<span>
+								<a href="#">
+									<img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+								</a>
+							</span>
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text_70">消費税区分</span>
@@ -129,12 +142,13 @@
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text_50">消費税額</span>
-							<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" readonly>
+							<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTaxAmount" value="_%strTaxAmount%_" disabled>
+							<input type="hidden" name="strTaxAmount" value="_%strTaxAmount%_">
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text_68">適用レート</span>
-							<input style="ime-mode:disabled;" class="disTxt05R" type="text" name="curConversionRate" value="_%curConversionRate%_"
-							 readonly>
+							<input style="ime-mode:disabled;" class="disTxt05R" type="text" name="curConversionRate" value="_%curConversionRate%_" disabled>
+							<input type="hidden" name="curConversionRate" value="_%curConversionRate%_">
 						</span>
 					</div>
 					<div class="regist-line">
@@ -145,7 +159,8 @@
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text_50">合計金額</span>
-							<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTotalAmount" value="_%strTotalAmount%_" readonly>
+							<input style="ime-mode:disabled;" class="disTxt20R" type="text" name="strTotalAmount" value="_%strTotalAmount%_" disabled>
+							<input type="hidden" name="strTotalAmount" value="_%strTotalAmount%_">
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text_68">(D)支払方法</span>
@@ -253,11 +268,12 @@
 								</td>
 								<td style="width: 50px;"></td>
 								<td style="width: 100px;">
-									<img class="search button" src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="form search">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="search">検索条件入力</button>
 									<br>
 									<br>
 									<br>
-									<img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
+									<br>
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="add">追加</button>
 								</td>
 							</tr>
 						</table>
@@ -328,25 +344,33 @@
 									<div style="height: 25px;">
 									</div>
 									<div>
-										<img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top">
+										<a href="#">
+											<img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top">
+										</a>
 									</div>
 									<div>
-										<img class="rowup button" src="/img/type01/so/up.gif" alt="form row up">
+										<a href="#">
+											<img class="rowup button" src="/img/type01/so/up.gif" alt="form row up">
+										</a>
 									</div>
-									<div style="height: 10px;"></div>
+									<div style="height: 12px;"></div>
 									<div>
-										<img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down">
+										<a href="#">
+											<img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down">
+										</a>
 									</div>
 									<div>
-										<img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom">
+										<a href="#">
+											<img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom">
+										</a>
 									</div>
 								</td>
 								<td>
-									<img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="delete">削除</button>
 									<br>
 									<br>
 									<br>
-									<img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="alldelete">全削除</button>
 								</td>
 							</tr>
 						</table>
@@ -380,9 +404,9 @@
 	</div>
 
 	<!-- フォーム ボタン -->
-	<div class="form-buttons">
-		<img class="preview button" src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="form preview">
-		<img class="close button" src="/img/type01/cmn/querybt/close_dark_off_ja_bt.gif" alt="form close">
+	<div class="form-buttons2">
+		<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="preview">プレビュー</button>
+		<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="close">閉じる</button>
 	</div>
 	<script type="text/javascript">
 		function $E(name) { return document.getElementById(name); }

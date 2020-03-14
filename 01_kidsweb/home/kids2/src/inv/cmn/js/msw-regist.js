@@ -1,11 +1,11 @@
 (function () {
-    $('body').on('keydown', function (e) {
-        console.log('enter');
-        if (e.which == 13) {
-            $('img.search-condition').click();
-        }
-    }
-    );
+    // $('body').on('keydown', function (e) {
+    //     console.log('enter');
+    //     if (e.which == 13) {
+    //         $('#search-condition').click();
+    //     }
+    // }
+    // );
     // フォームサブミット抑止
     $('document').on('submit', 'form', function (e) {
         e.preventDefault();
@@ -265,7 +265,7 @@
     // setMonthSelectBox();
 
     // 納品書明細検索ボタン押下処理
-    $('img.search-condition').on({
+    $('#search-condition').on({
         'click': function () {
             // validationキック
             var form = $('form[name="Invoice"]');
@@ -384,7 +384,7 @@
                         // テーブル初期化
                         if (bReset == true) {
                             // 出力明細一覧を削除
-                            window.opener.$('img.alldelete').trigger('click');
+                            window.opener.$('#alldelete').trigger('click');
                             // 前月請求残額(消費税込み)
                             window.opener.$('input[name="curlastmonthbalance"]').val(0).change();
                             // 消費税
@@ -419,7 +419,7 @@
     });
 
     // PREVIEWボタン押下処理 (preview)
-    $('img.preview-button').on({
+    $('#preview').on({
         'click': function () {
             console.log("previw valid");
             // validationキック

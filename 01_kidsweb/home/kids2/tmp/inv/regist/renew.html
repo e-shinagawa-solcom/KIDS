@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
 
     <!-- スタイル初期化 & 各種コントロールスタイル -->
+    <link rel="stylesheet" href="/cmn/css/form/base.css">
     <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
     <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
     <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
@@ -85,8 +86,9 @@
                         <div class="regist-line regist-float">
                             <span class="regist-label w-465">
                                 <span class="regist-label__text50">顧客</span>
-                                <input class="disTxt04L input-code" name="lngCustomerCode" type="text" value="_%strCustomerCode%_" iscustomer="yes" alt="Customer" disabled>
-                                <input class="disTxt2xL input-name" name="strCustomerName" type="text" readonly value="_%strCustomerName%_">
+                                <input class="disTxt04L input-code" name="lngCustomerCode" type="text" value="_%strCustomerCode%_" iscustomer="yes" alt="Customer"
+                                    disabled>
+                                <input class="disTxt2xL input-name" name="strCustomerName" type="text" disabled value="_%strCustomerName%_">
                                 <input type="hidden" name="lngCustomerCode" value="_%strCustomerCode%_">
                             </span>
                         </div>
@@ -104,7 +106,8 @@
                         <span class="regist-label">
                             <span class="regist-label__text115">先月請求残額(税込)</span>
                             <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
-                            <input class="disTxt14R" name="curlastmonthbalance" type="text" readonly value="_%curLastMonthBalance%_">
+                            <input class="disTxt14R" name="curlastmonthbalance" type="text" disabled value="_%curLastMonthBalance%_">
+                            <input type="hidden" name="curlastmonthbalance" value="_%curLastMonthBalance%_">
                         </span>
                     </div>
                     <div class="regist-clear"></div>
@@ -116,8 +119,12 @@
                             <span class="regist-label">
                                 <span class="regist-label__text50">起票者</span>
                                 <input class="Txt07L" name="lngInputUserCode" type="text" value="_%strUserCode%_" alt="InputUser">
-                                <input class="disTxt120pxL" name="strInputUserName" type="text" readonly value="_%strUserName%_">
-                                <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                                <input class="disTxt120pxL" name="strInputUserName" type="text" disabled value="_%strUserName%_">
+                                <span>
+                                    <a href="#">
+                                        <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                                    </a>
+                                </span>
                             </span>
                             <span class="regist-label">
                                 <span class="regist-label__text50">請求日</span>
@@ -136,7 +143,9 @@
                         <span class="regist-label">
                             <span class="regist-label__text115">当月請求額</span>
                             <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
-                            <input class="disTxt14R" name="curthismonthamount" type="text" readonly value="_%curThisMonthAmount%_">
+                            <input class="disTxt14R" name="curthismonthamount" type="text" disabled value="_%curThisMonthAmount%_">
+
+                            <input type="hidden" name="curthismonthamount" value="_%curThisMonthAmount%_">
                         </span>
                     </div>
                     <div class="regist-clear"></div>
@@ -169,7 +178,8 @@
                             <span class="regist-label regist-label-box3">
                                 <span class="regist-label__text115">消費税</span>
                                 <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
-                                <input class="disTxt14R" name="curtaxprice" type="text" value="_%curTaxPrice1%_" readonly>
+                                <input class="disTxt14R" name="curtaxprice" type="text" value="_%curTaxPrice1%_" disabled>
+                                <input type="hidden" name="curtaxprice" value="_%curTaxPrice1%_">
                             </span>
                         </div>
                         <div class="regist-box2">
@@ -185,7 +195,8 @@
                             <span class="regist-label regist-label-box3" style="margin-top:5px;">
                                 <span class="regist-label__text115">差し引き合計額</span>
                                 <span class="regist-label__text20 moneyclass">_%strMonetaryUnitSign%_</span>
-                                <input class="disTxt14R" name="notaxcurthismonthamount" value="_%noTaxCurtTisMonthAmount%_" type="text" readonly>
+                                <input class="disTxt14R" name="notaxcurthismonthamount" value="_%noTaxCurtTisMonthAmount%_" type="text" disabled>
+                                <input type="hidden" name="notaxcurthismonthamount" value="_%noTaxCurtTisMonthAmount%_">
                             </span>
                         </div>
                     </div>
@@ -299,11 +310,11 @@
                                 </td>
                                 <td style="width: 50px;"></td>
                                 <td style="width: 100px;">
-                                    <img class="search button" src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="form search">
+                                    <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="search">検索条件入力</button>
                                     <br>
                                     <br>
                                     <br>
-                                    <img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
+                                    <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="add">追加</button>
                                 </td>
                             </tr>
                         </table>
@@ -376,11 +387,11 @@
                                 <td style="text-align: center;">
                                 </td>
                                 <td>
-                                    <img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
+                                    <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="delete">削除</button>
                                     <br>
                                     <br>
                                     <br>
-                                    <img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
+                                    <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="alldelete">全削除</button>
                                 </td>
                             </tr>
                         </table>
@@ -394,11 +405,9 @@
                     <input type="hidden" name="strMode" value="renewPrev">
             </form>
             </div>
-            <!-- previewボタン -->
-            <div>
-                <img class="preview-button button" name="inv-customer" src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="preview">
-            </div>
-
+            <div class="preview-button">
+                    <button type="button" class="btn btn-light btn-kids btn-kids-sm" style="width: 80px;" id="preview">プレビュー</button>
+                </div>
             <div class="msw-loadpoints">
                 <!-- MSW 顧客マスタ検索 -->
                 <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">

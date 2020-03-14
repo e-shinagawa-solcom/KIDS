@@ -101,7 +101,9 @@ class FormCache extends WithQuery
 							"hashcode" => $this->convertQueryableHashcode($hashcode),
 							"serializeddata" => $this->convertQueryableData($anyData),
 							"createby" => $this->getUserCode(),
-							"updateby" => $this->getUserCode()
+							"updateby" => $this->getUserCode(),
+							"created" => fncGetDateTimeString(),
+							"updated" => fncGetDateTimeString()
 					);
 					// キャッシュデータの挿入
 					$pgResultInsert = pg_insert(static::$db->ConnectID, T_CACHE, $paramInsert);

@@ -1,5 +1,6 @@
 <config>
 <header1>
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
     <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
     <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
     <link rel="stylesheet" href="/inv/cmn/form/css/forms.css">
@@ -13,7 +14,6 @@
     <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
     <!-- COOKIE関連の処理(検索画面) -->
     <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
-    <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script> -->
 </header1>
 
 <header2>
@@ -86,8 +86,8 @@
                     <span class="regist-label__required-mark">◎</span>
                     <span class="regist-label__required-text">顧客</span>
                     <input class="TxtStyle05L"  name="lngCustomerCode"  type="text" alt="Customer" iscustomer="yes">
-                    <input class="disTxt46L"    name="strCustomerName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L"    name="strCustomerName"  type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -107,8 +107,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">納品場所</span>
                     <input class="TxtStyle05L" name="lngDeliveryPlaceCode"  type="text" alt="DeliveryPlace">
-                    <input class="disTxt46L"   name="strDeliveryPlaceName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L"   name="strDeliveryPlaceName"  type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -133,16 +133,16 @@
                 <span class="regist-label">
                     <span class="regist-label__text">担当者</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode"  type="text" alt="InChargeUser">
-                    <input class="disTxt46L"   name="strInChargeUserName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-inchargeuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L"   name="strInChargeUserName"  type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-inchargeuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
                 <span class="regist-label">
                     <span class="regist-label__text">作成者</span>
                     <input class="TxtStyle05L" name="lngInputUserCode" type="text" alt="InputUser">
-                    <input class="disTxt46L"   name="lngInputUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L"   name="lngInputUserName" type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
 
@@ -152,10 +152,8 @@
             <input type="hidden" name="mode" value="_%mode%_">
 
             <div class="form-box__button">
-                <span>
-                    <img class="button search-condition margin-30pxL" src="/img/type01/so/search_brown_off_ja_bt.gif">
-                    <img class="clear button" src="/img/type01/cmn/querybt/close_blown_off_on_ja_bt.gif" onclick="window.close();">
-                </span>
+                <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="search-condition">検索</button>
+                <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="clear" onclick="window.close();">クリア</button>
             </div>
         </form>
     </div>

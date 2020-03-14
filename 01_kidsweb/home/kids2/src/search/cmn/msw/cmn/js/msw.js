@@ -12,6 +12,7 @@
         invokeMswClose(docMsw);
         // 顧客コードチェンジイベントキック
         code.trigger('change');
+        code.focus();
     };
 
     // 閉じるボタン処理の呼び出し
@@ -45,9 +46,10 @@
             //【注意】2つ前の要素がマスタのコード値を持つinput要素でないとうまく動かない
             var handleName = $(this).prev().prev().attr('name');
             if (mswName == 'msw-product') {
-                var handleName = $(this).prev().prev().prev().prev().attr('name');
+                var handleName = $(this).parents().parents().prev().prev().prev().prev().attr('name');
             } else {
-                var handleName = $(this).prev().prev().attr('name');
+                var handleName = $(this).parents().parents().prev().prev().attr('name');
+                // var handleName = $(this).prev().prev().attr('name');
             }
             // handleNameが取れなかったらinputCodeMSWNameにセットされた値をinput要素のname属性とみなす（2019/9/15 追加）
             if (!handleName){

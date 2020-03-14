@@ -1,5 +1,14 @@
 
 (function(){
+
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            console.log($(this).find('img.msw-button'));
+            $(this).find('img').click();
+        }
+    });
+        
     $('img.modify.button').on('click', function(){
         url = '/mm/modify/displayModify.php';
         sessionID = 'strSessionID=' + $.cookie('strSessionID');

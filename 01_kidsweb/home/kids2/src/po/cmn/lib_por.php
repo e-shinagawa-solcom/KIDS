@@ -1672,7 +1672,7 @@ function fncCreatePurchaseOrderUpdateHtml($aryPurchaseOrder, $strSessionID)
     $aryHtml[] = "<p class=\"caption\">発注書NO " . $aryPurchaseOrder[0]["strordercode"] . "の修正が完了しました。</p>";
     $aryHtml[] = "<table class=\"ordercode\">";
     $aryHtml[] = "  <tr>";
-    $aryHtml[] = "    <td class=\"orderbuttontd\" id=\"btnClose\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"\" onclick=\"window.opener.opener.location.reload();window.opener.close();window.close();\"></td>";
+    $aryHtml[] = "    <td class=\"orderbuttontd\" id=\"btnClose\"><a href=\"#\" onclick=\"window.opener.opener.location.reload();window.opener.close();window.close();\"><img src=\"/img/type01/cmn/querybt/close_blown_off_ja_bt.gif\" alt=\"\"></a></td>";
     $aryHtml[] = "    <td class=\"orderbuttontd\" colspan=\"2\"><a href=\"#\" onclick=\"window.open('" . $strUrl . "', 'listWin', 'width=800,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no')\"><img src=\"/img/type01/cmn/querybt/blownpreview_off_bt.gif\" alt=\"preview\"></a>";
     $aryHtml[] = "  </tr>";
     $aryHtml[] = "</table> ";

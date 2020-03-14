@@ -1,6 +1,14 @@
 
 (function () {
 
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            console.log($(this).find('img.msw-button'));
+            $(this).find('img').click();
+        }
+    });
+    
     // マスタ検索共通
     var searchMaster = {
         url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),

@@ -2102,10 +2102,9 @@ function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
         $aryHtml[] = "                    <td class='item-value'>" . $strSlipCode . "</td>";
         $aryHtml[] = "                    <td class='item-value'>" . $dtmInsertDate . "</td>";
         $aryHtml[] = "                    <td class='item-value'>";
-        $aryHtml[] = "                        <img class='btn-download'";
-        $aryHtml[] = "                         onclick='OnClickDownload(this, \"" . $lngSlipNo . "\", \"" . $strSlipCode . "\", \"" . $lngRevisionNo . "\");'";
+        $aryHtml[] = "                        <a href='#' onclick='OnClickDownload(this, \"" . $lngSlipNo . "\", \"" . $strSlipCode . "\", \"" . $lngRevisionNo . "\");'><img class='btn-download'";
         $aryHtml[] = "                         onmouseover='OnMouseOverDownload(this);'";
-        $aryHtml[] = "                         onmouseout='OnMouseOutDownload(this);'>";
+        $aryHtml[] = "                         onmouseout='OnMouseOutDownload(this);'></a>";
         $aryHtml[] = "                    </td>";
         $aryHtml[] = "                </tr>";
 

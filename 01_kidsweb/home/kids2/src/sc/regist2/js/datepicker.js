@@ -19,7 +19,9 @@
             dateFormat: "yy/mm/dd",
             onClose: function () {
                 this.focus();
-        }).attr({
+            }
+        })
+        .attr({
             maxlength: "10"
         });
     });

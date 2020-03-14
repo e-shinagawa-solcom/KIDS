@@ -28,7 +28,12 @@
     $.validator.addMethod(
         "checkSelect",
         function (value, element, params) {
-            return value != "";
+            var elename = 'input[name="IsSearch_' + element.name + '"]';
+            if ($(elename).get(0).checked) {
+                return value != "";
+            } else {
+                return true;
+            }
         },
         msgRequired
     );
@@ -49,25 +54,11 @@
         "checkDateFormat",
         function (value, element, params) {
             if (params && value!='') {
-                if (/^[0-9]{8}$/.test(value)) {
+                if (value.length == 8) {
                     var str = value.trim();
                     var y = str.substr(0, 4);
                     var m = str.substr(4, 2);
                     var d = str.substr(6, 2);
-                    value = y + "/" + m + "/" + d;
-                } else if (/(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])/.test(value)) {
-                    if (value.length == 7) {
-                        var str = value.trim();
-                        var y = str.substr(0, 4);
-                        var m = str.substr(5, 2);
-                        var d = '01';
-                        value = y + "/" + m + "/" + d;
-                    }
-                } else if (/(19[0-9]{2}|2[0-9]{3})(0[1-9]|1[0-2])/.test(value)) {
-                    var str = value.trim();
-                    var y = str.substr(0, 4);
-                    var m = str.substr(4, 2);
-                    var d = '01';
                     value = y + "/" + m + "/" + d;
                 }
 

@@ -19,6 +19,7 @@
 	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 
 	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+    <link rel="stylesheet" href="/cmn/css/form/base.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="/po/confirm2/layout.css">
 
@@ -131,12 +132,10 @@
 		<tr>
 			<td id="ButtonArea">
 				<span id="CancelBt">
-					<img src="/img/type01/cmn/querybt/back_gray_off_ja_bt.gif" onclick="window.close();" onmouseover="this.src='/img/type01/cmn/querybt/back_gray_on_ja_bt.gif'"
-					 onmouseout="this.src='/img/type01/cmn/querybt/back_gray_off_ja_bt.gif'">
+					<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="return" onclick="window.close();">戻る</button>
 				</span>
 				<span id="OkBt">
-					<img src="/img/type01/cmn/seg/regist_off_ja_bt.gif" onclick="RegistPO();" onmouseover="this.src='/img/type01/cmn/seg/regist_on_ja_bt.gif'"
-					 onmouseout="this.src='/img/type01/cmn/seg/regist_off_ja_bt.gif'">
+					<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="regist" onclick="RegistPO();">登録</button>
 				</span>
 			</td>
 		</tr>

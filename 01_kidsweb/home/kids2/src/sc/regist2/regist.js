@@ -10,7 +10,7 @@ window.document.onkeydown = fncEnterKeyDown;
 function fncEnterKeyDown(e) {
     // Enterキー押下で明細追加
     if (window.event.keyCode == 13) {
-        $("img.add").trigger('click');
+        $("#add").trigger('click');
     }
 }
 
@@ -60,7 +60,7 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
                 $("select[name='lngTaxClassCode']").prop('disabled', false);
                 $("input[name='dtmPaymentLimit']").prop('disabled', true);
                 $("input[name='dtmPaymentLimit']").val("");
-                $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "none");
+                $("input[name='dtmPaymentLimit']").next("button").prop('disabled', true);
                 $("select[name='lngPaymentMethodCode']").val("0");
                 $("select[name='lngPaymentMethodCode'] option:not(:selected)").prop('disabled', true);
                 $('input[name="strMonetaryRateName"]').val("－");
@@ -75,7 +75,7 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
                 $("select[name='lngPaymentMethodCode']").prop('disabled', true);
                 // 支払期限の設定
                 $("input[name='dtmPaymentLimit']").prop('disabled', false);
-                $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "");
+                $("input[name='dtmPaymentLimit']").next("button").prop('disabled', false);
                 $('input[name="strMonetaryRateName"]').val("TTM");
                 $('input[name="lngMonetaryRateCode"]').val("1");
                 var now = new Date();
@@ -219,7 +219,7 @@ function SearchReceiveDetail(data) {
 // 出力明細をすべてクリア
 function ClearAllEditDetail() {
     // 全削除ボタンクリックを手動で起動
-    $('img.alldelete').trigger('click');
+    $('#alldelete').trigger('click');
 }
 
 function resetTableADisplayStyle() {
@@ -242,7 +242,7 @@ jQuery(function ($) {
     var subwin;
     window.onload = function () {
         if (!(window.location.href.indexOf('renew') >= 0)) {
-            $('img.search').click();
+            $('#search').click();
         }
     };
 
@@ -313,8 +313,8 @@ jQuery(function ($) {
             $("select[name='lngTaxClassCode']").val("2");
             $("select[name='lngTaxClassCode']").prop('disabled', false);
             $("input[name='dtmPaymentLimit']").prop('disabled', true);
-            $("input[name='dtmPaymentLimit']").val("");
-            $("input[name='dtmPaymentLimit']").next("img").css("pointer-events", "none");
+            $("input[name='dtmPaymentLimit']").val("");            
+            $("input[name='dtmPaymentLimit']").next("button").prop('disabled', true);
             $("select[name='lngPaymentMethodCode']").val("0");
             $("select[name='lngPaymentMethodCode']").prop('disabled', true);
             $('input[name="strMonetaryRateName"]').val("－");
@@ -928,7 +928,7 @@ jQuery(function ($) {
 
 
     // 検索条件入力ボタン押下
-    $('img.search').on('click', function () {
+    $('#search').on('click', function () {
 
         //出力明細一覧エリアの1行目の通貨単位コードを取得する
         var firstRowMonetaryUnitCode = "";
@@ -952,7 +952,7 @@ jQuery(function ($) {
     });
 
     // 追加ボタン
-    $('img.add').on('click', function () {
+    $('#add').on('click', function () {
 
         var trArray = [];
 
@@ -1056,7 +1056,7 @@ jQuery(function ($) {
     });
 
     // 全削除ボタンのイベント
-    $('img.alldelete').on('click', function () {
+    $('#alldelete').on('click', function () {
 
         // テーブルBのデータをすべてテーブルAに移動する
         deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailReceiveNo')
@@ -1079,7 +1079,7 @@ jQuery(function ($) {
     });
 
     // 削除ボタンのイベント
-    $('img.delete').on('click', function () {
+    $('#delete').on('click', function () {
 
         // テーブルBの選択されたデータをテーブルAに移動する
         deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailReceiveNo');
@@ -1123,7 +1123,7 @@ jQuery(function ($) {
 
 
     // プレビューボタン押下
-    $('img.preview').on('click', function () {
+    $('#preview').on('click', function () {
         // 納品先
         // var lngDeliveryPlaceCode = $('input[name="lngDeliveryPlaceCode"]').val();
         // if (lngDeliveryPlaceCode.length == 0) {
@@ -1200,7 +1200,7 @@ jQuery(function ($) {
         window.opener.location.reload();
     });
 
-    $("img.close").on('click', function () {
+    $("#close").on('click', function () {
         window.close();
     });
 

@@ -2,11 +2,11 @@
     // フォーム
     var workForm = $('form');
     // クリアボタン
-    var btnClear = $('img.clear');
+    var btnClear = $('#clear');
     // 登録ボタン
-    var btnSearch = $('img.search');
+    var btnSearch = $('#search');
     // 閉じるボタン
-    var btnClose = $('img.close');
+    var btnClose = $('#close');
 
     // フォームサブミット抑止
     $('document').on('submit', 'form', function (e) {

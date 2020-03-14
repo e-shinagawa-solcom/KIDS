@@ -2,6 +2,7 @@
 	<header1>
 		<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
 		<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
+		<link rel="stylesheet" href="/cmn/css/form/base.css">
 
 
 		<!-- confirm iframe スタイル -->
@@ -52,7 +53,7 @@
 
 
 <form name="" action="_%actionUrl%_" method="post">
-	<input type="submit">
+	<!-- <input type="submit"> -->
 	<!-- 入力フォーム -->
 	<div class="form-box--pc1">
 		<!-- フォームヘッダ -->
@@ -224,33 +225,6 @@
 					</tr>
 				</table>
 			</div>
-			<!-- <div class="regist-line" style="width: 100%;white-space: nowrap; overflow: auto;">
-				<table class="table-description">
-					<thead>
-						<tr>
-							<th>No.</th>
-							<th>対象
-								<br>
-								<input name="allSel" id="allChecked" type="checkbox" style="width: 10px;">
-							</th>
-							<th>製品</th>
-							<th>仕入科目</th>
-							<th>仕入部品</th>
-							<th>単価</th>
-							<th>単位</th>
-							<th>数量</th>
-							<th>税抜金額</th>
-							<th>消費税区分</th>
-							<th>消費税率(%)</th>
-							<th>消費税額</th>
-							<th>納期</th>
-							<th>備考</th>
-						</tr>
-					</thead>
-					<tbody id="tbl_order_detail">
-					</tbody>
-				</table>
-			</div> -->
 			<div class="regist-line">
 			</div>
 		</div>
@@ -259,7 +233,7 @@
 
 <!-- フォーム ボタン -->
 <div class="form-buttons">
-	<a href="#"><img class="regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist"></a>
+	<button type="button" class="btn btn-light btn-kids btn-kids-sm" style="width: 75px;" id="regist">登録</button>
 </div>
 
 <script type="text/javascript">

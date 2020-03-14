@@ -7,7 +7,13 @@
         type: 'post',
         dataType: 'json'
     };
-
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            console.log($(this).find('img.msw-button'));
+            $(this).find('img').click();
+        }
+    });
     // --------------------------------------------------------------------------
     // イベント登録
     // --------------------------------------------------------------------------

@@ -203,6 +203,8 @@ class UtilMold extends WithQuery
 						TableMoldReport::MarginalNote => $formData[FormMoldReport::MarginalNote],
 						TableMoldReport::CreateBy => $this->getUserCode(),
 						TableMoldReport::UpdateBy => $this->getUserCode(),
+						TableMoldReport::Created => fncGetDateTimeString(),
+						TableMoldReport::Updated => fncGetDateTimeString(),
 						TableMoldReport::ReviseCode => $formData[FormMoldReport::ReviseCode]
 				);
 				break;
@@ -229,6 +231,8 @@ class UtilMold extends WithQuery
 						TableMoldReport::MarginalNote => $formData[FormMoldReport::MarginalNote],
 						TableMoldReport::CreateBy => $this->getUserCode(),
 						TableMoldReport::UpdateBy => $this->getUserCode(),
+						TableMoldReport::Created => fncGetDateTimeString(),
+						TableMoldReport::Updated => fncGetDateTimeString(),
 						TableMoldReport::ReviseCode => $formData[FormMoldReport::ReviseCode]
 				);
 				break;
@@ -314,7 +318,9 @@ class UtilMold extends WithQuery
 					TableMoldReportDetail::MoldNo => $listMoldNo[FormMoldReport::MoldNo.$i],
 					TableMoldReportDetail::MoldDescription => $listMoldDescription[FormMoldReport::MoldDescription.$i],
 					TableMoldReport::CreateBy => $this->getUserCode(),
-					TableMoldReport::UpdateBy => $this->getUserCode()
+					TableMoldReport::UpdateBy => $this->getUserCode(),
+					TableMoldReport::Created => fncGetDateTimeString(),
+					TableMoldReport::Updated => fncGetDateTimeString()
 			);
 
 			// クエリ実行結果が得られなかった場合
@@ -358,7 +364,9 @@ class UtilMold extends WithQuery
 			TableMoldReportRelation::MoldReportId => $id,
 			TableMoldReportRelation::Revision => $revision,
 			TableMoldReportRelation::CreateBy => $this->getUserCode(),
-			TableMoldReportRelation::UpdateBy => $this->getUserCode()
+			TableMoldReportRelation::UpdateBy => $this->getUserCode(),
+			TableMoldReport::Created => fncGetDateTimeString(),
+			TableMoldReport::Updated => fncGetDateTimeString()
 		);
 
 		// クエリ実行結果が得られなかった場合
@@ -452,10 +460,11 @@ class UtilMold extends WithQuery
 				TableMoldHistory::Remark2 => pg_escape_string($formData[FormMoldHistory::Remark2]),
 				TableMoldHistory::Remark3 => pg_escape_string($formData[FormMoldHistory::Remark3]),
 				TableMoldHistory::Remark4 => pg_escape_string($formData[FormMoldHistory::Remark4]),
+				TableMoldReport::Created => fncGetDateTimeString(),
 				TableMoldReport::CreateBy => $this->getUserCode(),
+				TableMoldReport::Updated => fncGetDateTimeString(),
 				TableMoldReport::UpdateBy => $this->getUserCode()
 			);
-
 			// クエリ実行結果が得られなかった場合
 			if ($pgResult = pg_execute("", $params))
 			{
@@ -510,7 +519,9 @@ class UtilMold extends WithQuery
 			TableMoldHistory::Remark3 => pg_escape_string($record[TableMoldHistory::Remark3]),
 			TableMoldHistory::Remark4 => pg_escape_string($record[TableMoldHistory::Remark4]),
 			TableMoldReport::CreateBy => $this->getUserCode(),
-			TableMoldReport::UpdateBy => $this->getUserCode()
+			TableMoldReport::UpdateBy => $this->getUserCode(),
+			TableMoldReport::Created => fncGetDateTimeString(),
+			TableMoldReport::Updated => fncGetDateTimeString()
 		);
 
 		// クエリ実行結果が得られなかった場合
@@ -625,7 +636,8 @@ class UtilMold extends WithQuery
 				TableMoldHistory::Remark2 => pg_escape_string($formData[FormMoldHistory::Remark2]),
 				TableMoldHistory::Remark3 => pg_escape_string($formData[FormMoldHistory::Remark3]),
 				TableMoldHistory::Remark4 => pg_escape_string($formData[FormMoldHistory::Remark4]),
-				TableMoldReport::UpdateBy => $this->getUserCode()
+				TableMoldReport::UpdateBy => $this->getUserCode(),
+				TableMoldReport::Updated => fncGetDateTimeString()
 		);
 
 		// SQLファイル読み込み
@@ -2089,6 +2101,8 @@ class UtilMold extends WithQuery
 						TableMoldReport::MarginalNote => $formData[FormMoldReport::MarginalNote],
 						TableMoldReport::CreateBy => $this->getUserCode(),
 						TableMoldReport::UpdateBy => $this->getUserCode(),
+						TableMoldReport::Created => fncGetDateTimeString(),
+						TableMoldReport::Updated => fncGetDateTimeString(),
 						TableMoldReport::ReviseCode => $formData[FormMoldReport::ReviseCode]
 				);
 				break;
@@ -2116,6 +2130,8 @@ class UtilMold extends WithQuery
 						TableMoldReport::MarginalNote => $formData[FormMoldReport::MarginalNote],
 						TableMoldReport::CreateBy => $this->getUserCode(),
 						TableMoldReport::UpdateBy => $this->getUserCode(),
+						TableMoldReport::Created => fncGetDateTimeString(),
+						TableMoldReport::Updated => fncGetDateTimeString(),
 						TableMoldReport::ReviseCode => $formData[FormMoldReport::ReviseCode]
 				);
 				break;
@@ -2128,7 +2144,8 @@ class UtilMold extends WithQuery
 
 		// クエリ構成
 		pg_prepare("", $query);
-
+var_dump($query);
+var_dump($params);
 		// クエリ実行結果が得られた場合
 		if ($pgResult = pg_execute("", $params))
 		{

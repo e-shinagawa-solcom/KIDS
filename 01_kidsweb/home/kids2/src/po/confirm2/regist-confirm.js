@@ -1,4 +1,3 @@
-<!--
 function RegistPO(){
     $.ajax({
         type: 'POST',
@@ -86,5 +85,3 @@ function getDetailName(name, rowno)
 //    alert(ret);
     return ret;
 }
-
-//-->

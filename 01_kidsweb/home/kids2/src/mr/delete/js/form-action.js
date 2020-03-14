@@ -22,4 +22,11 @@
             window.location.href = url + '?' + sessionID + '&' + moldReportID + '&' + revision;
         }
     });
+    
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            $(this).find('img').click();
+        }
+    });
 })();

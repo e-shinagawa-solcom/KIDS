@@ -1,9 +1,9 @@
 (function () {
 
     // 無効ボタンのイベント
-    $('img.invalid').on('click', function () {
-        var lngStockNo = $(this).attr('id');
-        var lngRevisionNo = $(this).attr('revisionno');
+    $('#invalid').on('click', function () {
+        var lngStockNo = $(this).attr('lngStockNo');
+        var lngRevisionNo = $(this).attr('lngRevisionNo');
         // リクエスト送信
         $.ajax({
             url: '/pc/invalid/invalid_finish.php',
@@ -26,7 +26,7 @@
 
     
     // 閉じるボタンのイベント
-    $('img.close').on('click', function () {
+    $('#close').on('click', function () {
         window.opener.location.reload();
         //ウィンドウを閉じる
         window.close();

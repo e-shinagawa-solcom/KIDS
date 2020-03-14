@@ -25,10 +25,10 @@ VALUES
   , $7
   , $8
   , $9
-  , NOW()
   , $10
-  , NOW()
   , $11
+  , $12
+  , $13
 )
 RETURNING
       moldno

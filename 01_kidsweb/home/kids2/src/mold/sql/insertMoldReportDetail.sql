@@ -7,6 +7,8 @@ INSERT INTO t_moldreportdetail
     , molddescription
     , CreateBy
     , UpdateBy
+    , Created
+    , Updated
 )
 VALUES
 (
@@ -17,5 +19,7 @@ VALUES
     , $5
     , $6
     , $7
+    , $8
+    , $9
 )
 ;

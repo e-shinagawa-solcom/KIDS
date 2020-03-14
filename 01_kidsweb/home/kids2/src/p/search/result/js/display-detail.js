@@ -1,4 +1,10 @@
 (function () {
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            $(this).find('img').click();
+        }
+    });
     // 詳細ボタンのイベント
     $('img.detail.button').on('click', function () {
         url = '/p/detail/index.php';

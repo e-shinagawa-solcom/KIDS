@@ -10,7 +10,7 @@ var chkbox = [];
     // クリアボタン
     var btnClear = $('img.clear');
     // 登録ボタン
-    var btnRegist = $('img.regist');
+    var btnRegist = $('#regist');
     // 発注情報取得ボタン
     var btnGetPoInfo = $('img.getpoinfo');
 

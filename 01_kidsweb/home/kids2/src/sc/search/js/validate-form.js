@@ -30,7 +30,7 @@
         "checkStrProductCode",
         function (value, element, params) {
             if (params && value != '') {
-                var codeList = value.split(",");                
+                var codeList = value.split(",");
                 var result = true;
                 $.each(codeList, function (ind, val) {
                     if (val.indexOf('-') !== -1) {
@@ -61,26 +61,12 @@
     $.validator.addMethod(
         "checkDateFormat",
         function (value, element, params) {
-            if (params && value != '') {                
-                if (/^[0-9]{8}$/.test(value)) {
+            if (params && value != '') {
+                if (value.length == 8) {
                     var str = value.trim();
                     var y = str.substr(0, 4);
                     var m = str.substr(4, 2);
                     var d = str.substr(6, 2);
-                    value = y + "/" + m + "/" + d;
-                } else if (/(19[0-9]{2}|2[0-9]{3})\/(0[1-9]|1[0-2])/.test(value)) {
-                    if (value.length == 7) {
-                        var str = value.trim();
-                        var y = str.substr(0, 4);
-                        var m = str.substr(5, 2);
-                        var d = '01';
-                        value = y + "/" + m + "/" + d;
-                    }
-                } else if (/(19[0-9]{2}|2[0-9]{3})(0[1-9]|1[0-2])/.test(value)) {
-                    var str = value.trim();
-                    var y = str.substr(0, 4);
-                    var m = str.substr(4, 2);
-                    var d = '01';
                     value = y + "/" + m + "/" + d;
                 }
                 // yyyy/mm/dd形式か

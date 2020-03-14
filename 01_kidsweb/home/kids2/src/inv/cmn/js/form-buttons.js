@@ -21,9 +21,9 @@
     var invForm = Object.create($('form[name="Invoice"]'));
     console.log(invForm);
     // クリアボタン
-    var btnClear = $('img.clear');
+    var btnClear = $('#clear');
     // プレビューボタン
-    var btnSearch = $('img.preview-button');
+    var btnSearch = $('#preview-button');
 
     // フォームサブミット抑止
     $('document').on('submit', 'form', function(e){

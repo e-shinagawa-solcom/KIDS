@@ -74,13 +74,14 @@
 						<input class="TxtStyle05L" name="ProductCode" autofocus>
 						<span class="regist-label__required-mark" style="right:2px;">_</span>
 						<input class="TxtStyle01L" name="ReviseCode">
-						<input class="disTxt46L" name="ProductName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="ProductName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">顧客品番</span>
-						<input class="TxtStyle05L" name="GoodsCode" readonly>
+						<input class="disTxt05L" name="GoodsCode" disabled>
+						<input type="hidden" name="GoodsCode">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -144,8 +145,9 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">事業部(顧客)</span>
 						<input class="TxtStyle05L" name="CustomerCode">
-						<input class="disTxt46L" name="CustomerName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="CustomerName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="CustomerName">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -153,8 +155,9 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">KWG担当部署</span>
 						<input class="TxtStyle05L" name="KuwagataGroupCode">
-						<input class="disTxt46L" name="KuwagataGroupName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="KuwagataGroupName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="KuwagataGroupName">
 					</span>
 				</div>
 				<div class="regist-line--remora">
@@ -162,8 +165,9 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">KWG担当者</span>
 						<input class="TxtStyle05L" name="KuwagataUserCode">
-						<input class="disTxt46L" name="KuwagataUserName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="KuwagataUserName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-inchargeuser" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="KuwagataUserName">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -202,16 +206,20 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">製品コード</span>
-						<input class="TxtStyle05L" name="ProductCode" readonly>
+						<input class="TxtStyle05L" name="ProductCode" disabled>
 						<span class="regist-label__required-mark" style="right:2px;">_</span>
-						<input class="TxtStyle01L" name="ReviseCode" readonly>
-						<input class="disTxt46L" name="ProductName" readonly>
-						<img class="msw-button button" id="detail-product" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="TxtStyle01L" name="ReviseCode" disabled>
+						<input class="disTxt46L" name="ProductName" disabled>
+						<span><a href="#"><img class="msw-button button" id="detail-product" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="ReviseCode">
+						<input type="hidden" name="ProductName">
+						<input type="hidden" name="ProductCode">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">顧客品番</span>
-						<input class="TxtStyle05L" name="GoodsCode" readonly>
+						<input class="TxtStyle05L" name="GoodsCode" disabled>
+						<input type="hidden" name="GoodsCode">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -246,9 +254,11 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">保管工場</span>
-						<input class="TxtStyle05L" name="SourceFactory" readonly>
-						<input class="disTxt46L" name="SourceFactoryName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="TxtStyle05L" name="SourceFactory" disabled>
+						<input class="disTxt46L" name="SourceFactoryName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="SourceFactory">
+						<input type="hidden" name="SourceFactoryName">
 					</span>
 				</div>
 				<div class="regist-line--remora">
@@ -256,8 +266,9 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">移動先工場</span>
 						<input class="TxtStyle05L" name="DestinationFactory">
-						<input class="disTxt46L" name="DestinationFactoryName" readonly>
-						<img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+						<input class="disTxt46L" name="DestinationFactoryName" disabled>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<input type="hidden" name="DestinationFactoryName">
 					</span>
 				</div>
 				<div class="regist-line">
@@ -299,8 +310,8 @@
 	</div>
 	<!-- フォーム ボタン -->
 	<div class="form-buttons">
-		<img class="form-buttons__clear button" src="/img/type01/cmn/querybt/clear_off_ja_bt.gif" alt="form clear">
-		<img class="form-buttons__regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
+		<a href="#"><img class="form-buttons__clear button" src="/img/type01/cmn/querybt/clear_off_ja_bt.gif" alt="form clear"></a>
+		<a href="#"><img class="form-buttons__regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist"></a>
 	</div>
 </div>
 <!-- 右サイドバー タブ -->

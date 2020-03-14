@@ -1,5 +1,6 @@
 <config>
 <header1>
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
 	<link rel="stylesheet" href="/search/cmn/form/css/forms.css">
 	<link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
 	<script src="/search/cmn/form/js/tab-function.js" defer></script>
@@ -27,10 +28,6 @@
     <link rel="stylesheet" href="/search/cmn/css/form-buttons.css">
     <!-- フォーム ボタン -->
 	<script src="/search/cmn/js/form-buttons.js" defer></script>
-    <!-- フォームバリデーション -->
-<!--    <script src="/search/cmn/js/validate-form.js" defer></script> -->
-    <!-- マスタ検索呼び出し -->
-	<script src="/search/cmn/js/invoke-master-search.js" defer></script>
     <!-- COOKIE 表示チェックボックス 保存/復元 -->
 	<script src="/search/cmn/js/cookie-display-items.js" defer></script>
     <!-- キーバインド -->
@@ -60,8 +57,8 @@
                 <span class="regist-label__required-mark">〇</span>
 						<span class="regist-label__required-text">顧客</span>
                     <input class="TxtStyle05L" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer">
-                    <input class="disTxt46L" name="strCustomerName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="strCustomerName" type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a>
                 </span>
             </div>
 
@@ -91,8 +88,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">営業部署</span>
                     <input class="TxtStyle05L" name="lngInChargeGroupCode"  type="text" alt="InChargeGroup">
-                    <input class="disTxt46L" name="strInChargeGroupName"  type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="strInChargeGroupName"  type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-group" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a>
                 </span>
             </div>
                 
@@ -149,14 +146,10 @@
     </div>
     <div>
         <span id="OkBt">
-            <a href="#">
-                <img src="/img/type01/cmn/querybt/search_off_ja_bt.gif" alt="">
-            </a> 
+            <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="search">検索</button> 
         </span>
         <span id="CancelBt">
-                <a href="#">
-                    <img src="/img/type01/cmn/querybt/close_dark_off_ja_bt.gif" alt="">
-                </a> 
+            <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="close">閉じる</button> 
         </span>
     </div>
     <div class="msw-loadpoints">

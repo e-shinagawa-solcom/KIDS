@@ -1,7 +1,7 @@
 (function () {
 
     // 登録ボタンのイベント
-    $('img.regist').on('click', function () {
+    $('#regist').on('click', function () {
         var formData = new Array();
         formData.push({ name: "strSessionID", value: $.cookie('strSessionID') });
         formData.push({ name: "lngStockNo", value: $('input[name="lngPurchaseOrderNo"]').val() });
@@ -30,7 +30,7 @@
 
 
     // 閉じるボタンのイベント
-    $('img.close').on('click', function () {
+    $('#close').on('click', function () {
         //ウィンドウを閉じる
         window.close();
     });

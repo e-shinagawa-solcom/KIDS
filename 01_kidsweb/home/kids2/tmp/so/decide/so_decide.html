@@ -12,6 +12,7 @@
 
 	<title>K.I.D.S.</title>
 	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
 
 	<!-- スタイル初期化 & 各種コントロールスタイル -->
 
@@ -52,8 +53,8 @@
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">製品コード</span>
-							<input class="disTxt05L" name="strProductCode" readonly value="_%strProductCode%_">
-							<input class="disTxt46L" name="strProductName" readonly value="_%strProductName%_">
+							<input class="disTxt05L" name="strProductCode" disabled value="_%strProductCode%_">
+							<input class="disTxt46L" name="strProductName" disabled value="_%strProductName%_">
 							<input type="hidden" name="lngProductNo" value="_%lngProductNo%_">
 							<input type="hidden" name="lngProductRevisionNo" value="_%lngProductRevisionNo%_">
 							<input type="hidden" name="strReviseCode" value="_%strReviseCode%_">
@@ -61,27 +62,34 @@
 						<span class="regist-label">
 							<span class="regist-label__text">顧客品番</span>
 							<input class="TxtStyle05L" style="ime-mode:disabled;" name="strGoodsCode" value="_%strGoodsCode%_">
+							<input type="hidden" name="strGoodsCode" value="_%strGoodsCode%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">営業部署</span>
-							<input class="disTxt05L" name="lngInChargeGroupCode" readonly value="_%lngInChargeGroupCode%_">
-							<input class="disTxt46L" name="strInChargeGroupName" readonly value="_%strInChargeGroupName%_">
+							<input class="disTxt05L" name="lngInChargeGroupCode" disabled value="_%lngInChargeGroupCode%_">
+							<input class="disTxt46L" name="strInChargeGroupName" disabled value="_%strInChargeGroupName%_">
+							<input type="hidden" name="lngInChargeGroupCode" value="_%lngInChargeGroupCode%_">
+							<input type="hidden" name="strInChargeGroupName" value="_%strInChargeGroupName%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">担当者</span>
-							<input class="disTxt05L" name="lngInChargeUserCode" readonly value="_%lngInChargeUserCode%_">
-							<input class="disTxt46L" name="strInChargeUserName" readonly value="_%strInChargeUserName%_">
+							<input class="disTxt05L" name="lngInChargeUserCode" disabled value="_%lngInChargeUserCode%_">
+							<input class="disTxt46L" name="strInChargeUserName" disabled value="_%strInChargeUserName%_">
+							<input type="hidden" name="lngInChargeUserCode" value="_%lngInChargeUserCode%_">
+							<input type="hidden" name="strInChargeUserName" value="_%strInChargeUserName%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">開発担当者</span>
-							<input class="disTxt05L" name="lngDevelopUserCode" readonly value="_%lngDevelopUserCode%_">
-							<input class="disTxt46L" name="strDevelopUserName" readonly value="_%strDevelopUserName%_">
+							<input class="disTxt05L" name="lngDevelopUserCode" disabled value="_%lngDevelopUserCode%_">
+							<input class="disTxt46L" name="strDevelopUserName" disabled value="_%strDevelopUserName%_">
+							<input type="hidden" name="lngDevelopUserCode" value="_%lngDevelopUserCode%_">
+							<input type="hidden" name="strDevelopUserName" value="_%strDevelopUserName%_">
 						</span>
 					</div>
 					<div class="regist-line">
@@ -143,11 +151,11 @@
 								</td>
 								<td style="width: 50px;"></td>
 								<td style="width: 100px;">
-									<img class="search button" src="/img/type01/so/conchange_off_ja_bt.gif" alt="form search">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="search">検索条件変更</button>
 									<br>
 									<br>
 									<br>
-									<img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="add">追加</button>
 								</td>
 							</tr>
 						</table>
@@ -209,25 +217,33 @@
 									<div style="height: 45px;">
 									</div>
 									<div>
-										<img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top">
+										<a href="#">
+											<img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top">
+										</a>
 									</div>
 									<div>
-										<img class="rowup button" src="/img/type01/so/up.gif" alt="form row up">
+										<a href="#">
+											<img class="rowup button" src="/img/type01/so/up.gif" alt="form row up">
+										</a>
 									</div>
 									<div style="height: 28px;"></div>
 									<div>
-										<img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down">
+										<a href="#">
+											<img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down">
+										</a>
 									</div>
 									<div>
-										<img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom">
+										<a href="#">
+											<img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom">
+										</a>
 									</div>
 								</td>
 								<td>
-									<img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="delete">削除</button>
 									<br>
 									<br>
 									<br>
-									<img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="alldelete">全削除</button>
 								</td>
 							</tr>
 						</table>
@@ -237,10 +253,9 @@
 			</form>
 		</div>
 	</div>
-
 	<!-- フォーム ボタン -->
 	<div class="form-buttons">
-		<img class="decideRegist button" src="/img/type01/so/reg_off_ja_bt.gif" alt="form decideRegist">
+		<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="decideRegist">確定登録</button>
 	</div>
 	<script type="text/javascript">
 		function $E(name) { return document.getElementById(name); }

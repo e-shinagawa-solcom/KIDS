@@ -1,9 +1,9 @@
 (function () {
 
     // 削除ボタンのイベント
-    $('img.delete').on('click', function () {
-        var lngStockNo = $(this).attr('id');
-        var lngRevisionNo = $(this).attr('revisionno');
+    $('#delete').on('click', function () {
+        var lngStockNo = $(this).attr('lngStockNo');
+        var lngRevisionNo = $(this).attr('lngRevisionNo');
         // リクエスト送信
         $.ajax({
             url: '/pc/delete/delete_finish.php',
@@ -26,7 +26,7 @@
 
     
     // 閉じるボタンのイベント
-    $('img.close').on('click', function () {
+    $('#close').on('click', function () {
         //ウィンドウを閉じる
         window.close();
     });
