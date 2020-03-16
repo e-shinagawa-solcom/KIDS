@@ -2144,8 +2144,6 @@ class UtilMold extends WithQuery
 
 		// クエリ構成
 		pg_prepare("", $query);
-var_dump($query);
-var_dump($params);
 		// クエリ実行結果が得られた場合
 		if ($pgResult = pg_execute("", $params))
 		{
