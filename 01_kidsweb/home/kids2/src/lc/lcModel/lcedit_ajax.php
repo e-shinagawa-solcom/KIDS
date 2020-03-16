@@ -98,11 +98,11 @@ function updateLcEdit($objDB, $lcModel, $data)
             $poreviseno = intval($data["poreviseno"]);
             do {
                 $param = $data;
-                $param["poreviseno"] = sprintf("%02d", $poreviseno + 1);
+                $param["poreviseno"] = sprintf("%02d", $poreviseno - 1);
                 // 同一POの直近リバイズデータを取得する
                 $lcinfo = fncGetLcInfoSingle($objDB, $param);
                 // 取得したデータの銀行依頼日が空の場合、
-                if (!$lcinfo) {
+                if ($lcinfo != null) {
                     if ($lcinfo->bankreqdate != "") {
                         $data["bankreqdate"] = $lcinfo->bankreqdate;
                         $data["lcamopen"] = $lcinfo->lcamopen;
@@ -114,7 +114,6 @@ function updateLcEdit($objDB, $lcModel, $data)
             } while ($poreviseno != 0);
         }
     }
-
     // パラメータの状態 <> 7の場合
     if ($data["lcstate"] != 7) {
         if ($data["lcstate"] == 9) {
