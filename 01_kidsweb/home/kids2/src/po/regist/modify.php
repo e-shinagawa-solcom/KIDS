@@ -154,9 +154,9 @@ $objDB->transactionBegin();
 // 明細（候補の発注）
 $aryOtherDetail = fncGetOtherOrderDetail($aryResult[0]["lngorderno"], $aryResult[0]["lngorderrevisionno"], $objDB);
 
-if (!$aryOtherDetail || count($aryOtherDetail) == 0) {
-    fncOutputError(503, DEF_ERROR, "発注書番号に対する明細情報が見つかりません。", true, "", $objDB);
-}
+//if (!$aryOtherDetail || count($aryOtherDetail) == 0) {
+//    fncOutputError(503, DEF_ERROR, "発注書番号に対する明細情報が見つかりません。", true, "", $objDB);
+//}
 // ロック（候補の発注）
 foreach ($aryOtherDetail as $otherDetail) {
     if (!lockExclusive($otherDetail["lngorderno"], DEF_FUNCTION_PO5, $objAuth, $objDB)) {
