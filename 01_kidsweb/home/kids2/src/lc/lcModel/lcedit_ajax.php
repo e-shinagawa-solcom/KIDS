@@ -93,7 +93,7 @@ function getLcEdit($objDB, $lcModel, $data)
 function updateLcEdit($objDB, $lcModel, $data)
 {
     $bankreqchk = $data["bankreqchk"];
-    if ($bankreqchk == "false") {
+    if ($bankreqchk == "true") {
         if (intval($data["poreviseno"]) > 0) {
             $poreviseno = intval($data["poreviseno"]);
             do {
