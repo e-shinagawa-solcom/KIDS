@@ -303,7 +303,8 @@ class estimateHeaderController {
                 $this->messageCode['retailPrice'] = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else {
                 // 小数点以下第3位を四捨五入
-                $formattedValue = number_format(round($retailPrice, 2), 2, '.', '');
+                //$formattedValue = number_format(round($retailPrice, 2), 2, '.', '');
+                $formattedValue = round($retailPrice, 2);
                 $this->retailPrice = $formattedValue;
             }
         } else {

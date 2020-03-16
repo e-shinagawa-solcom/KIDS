@@ -69,58 +69,65 @@ class estimateDB extends clsDB {
         if (!$this->isOpen()) {
             return false;
         } else {
-            $orderAttributeArray = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA; // 売上、仕入
-            foreach ($orderAttributeArray as $key => $val) {
-                if($val[$areaCode] === true) {
-                    $orderAttribute = $key;
-                    break;
-                } else if ($val[$areaCode] === false) {
-                    return false;
-                }
-            }
-
-           if (!$orderAttribute) {
-                return false;
-            }
             $strQuery = "SELECT";
+            $strQuery .= " TBL.level1code,";
             $strQuery .= " mc.lngcompanycode,";
             $strQuery .= " mc.strcompanydisplaycode,";
             $strQuery .= " mc.strcompanydisplayname,";
-            $strQuery .= " mc.strshortname";
-            $strQuery .= " FROM m_attributerelation mar";
-            $strQuery .= " INNER JOIN m_company mc";
-            $strQuery .= " ON mar.lngcompanycode = mc.lngcompanycode";
-            $strQuery .= " INNER JOIN m_attribute ma";
-            $strQuery .= " ON mar.lngattributecode = ma.lngattributecode";
-            if( $orderAttribute == DEF_ATTRIBUTE_SUPPLIER )
-            {
-                $strQuery .= " WHERE mar.lngattributecode IN( ". $orderAttribute . "," . DEF_ATTRIBUTE_FACTORY . ")";
-            }
-            else
-            {
-                $strQuery .= " WHERE mar.lngattributecode = ". $orderAttribute;
-            }
-            $strQuery .= " ORDER BY mc.strcompanydisplaycode";
+            $strQuery .= " mc.strshortname ";
 
-            $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
+            $strQuery  .= "from( ";
+            $strQuery  .= "    select distinct ";
+            $strQuery  .= "        msdl.lngestimateareaclassno as areano, ";
+            $strQuery  .= "        msdl.lngsalesdivisioncode as level1code, ";
+            $strQuery  .= "        msdl.lngsalesdivisioncode || ':' || msd.strsalesdivisionname as name ";
+            $strQuery  .= "    from m_salesclassdivisonlink msdl ";
+            $strQuery  .= "    inner join m_salesdivision msd ";
+            $strQuery  .= "        on msd.lngsalesdivisioncode = msdl.lngsalesdivisioncode ";
 
-            if ($queryResult[1]) {
-                for ($i = 0; $i < $queryResult[1]; ++$i) {
-                    $result = pg_fetch_array($queryResult[0], $i, PGSQL_ASSOC);
-                    $lngcompanycode = $result['lngcompanycode'];
-                    $customerCompanycode = $result['strcompanydisplaycode'];
-    
-                    $customerCompanyCodeList[$customerCompanycode] = array(
-                        'displayName' => $result['strcompanydisplayname'],
-                        'shortName' => $result['strshortname']
+            $strQuery  .= "    UNION( ";
+            $strQuery  .= "        select ";
+            $strQuery  .= "            A.lngestimateareaclassno as areano, ";
+            $strQuery  .= "            mss.lngstocksubjectcode as level1code, ";
+            $strQuery  .= "            mss.lngstocksubjectcode || ':' || mss.strstocksubjectname as name ";
+            $strQuery  .= "        from m_stocksubject mss ";
+            $strQuery  .= "        inner join ( ";
+            $strQuery  .= "            select distinct ";
+            $strQuery  .= "                msi.lngestimateareaclassno, ";
+            $strQuery  .= "                msi.lngstocksubjectcode ";
+            $strQuery  .= "            from m_stockitem msi ";
+            $strQuery  .= "        ) A ";
+            $strQuery  .= "            on A.lngstocksubjectcode = mss.lngstocksubjectcode ";
+            $strQuery  .= "    ) ";
+            $strQuery  .= ") TBL ";
+            $strQuery  .= "inner join m_estimatecompanypulldown mecp ";
+            $strQuery  .= "    on mecp.lngestimateareaclassno = TBL.areano ";
+            $strQuery  .= "    and mecp.lngsalesclassstocksubjectcode = TBL.level1code ";
+            $strQuery  .= "inner join m_company mc ";
+            $strQuery  .= "    on mc.lngcompanycode = mecp.lngcompanycode ";
+            $strQuery  .= "where TBL.areano = " . $areaCode . " ";
+            $strQuery  .= "order by TBL.areano, TBL.level1code, mc.strcompanydisplaycode ";
+
+
+            list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
+
+            if ($resultNumber > 0) {
+                $ret = array();
+                for ($i = 0; $i < $resultNumber; ++$i) {
+                    $result = pg_fetch_object($resultID, $i);
+                    $itemArray = array(
+                        'lngcompanycode' => $result->lngcompanycode,
+                        'strcompanydisplayname' => $result->strcompanydisplayname,
+                        'strshortname' => $result->strshortname
                     );
+                    
+                    $ret[$result->level1code][$result->strcompanydisplaycode] = $itemArray;
                 }
             } else {
-                return $customerCompanyCodeList = false;
+                $ret = false;
             }
 
-            $this->freeResult($queryResult[0]);
-            return $customerCompanyCodeList;
+            return $ret;
         }        
     }
 
@@ -863,6 +870,42 @@ class estimateDB extends clsDB {
         if (!$this->isOpen()) {
             return false;
         } else {
+
+            $strQuery   = "select ";
+            $strQuery  .= "    TBL.areano, ";
+            $strQuery  .= "    TBL.name, ";
+            $strQuery  .= "    mc.strcompanydisplaycode || ':' || mc.strshortname as customercompany ";
+            $strQuery  .= "from( ";
+            $strQuery  .= "    select distinct ";
+            $strQuery  .= "        msdl.lngestimateareaclassno as areano, ";
+            $strQuery  .= "        msdl.lngsalesdivisioncode as level1code, ";
+            $strQuery  .= "        msdl.lngsalesdivisioncode || ':' || msd.strsalesdivisionname as name ";
+            $strQuery  .= "    from m_salesclassdivisonlink msdl ";
+            $strQuery  .= "    inner join m_salesdivision msd ";
+            $strQuery  .= "        on msd.lngsalesdivisioncode = msdl.lngsalesdivisioncode ";
+
+            $strQuery  .= "    UNION( ";
+            $strQuery  .= "        select ";
+            $strQuery  .= "            A.lngestimateareaclassno as areano, ";
+            $strQuery  .= "            mss.lngstocksubjectcode as level1code, ";
+            $strQuery  .= "            mss.lngstocksubjectcode || ':' || mss.strstocksubjectname as name ";
+            $strQuery  .= "        from m_stocksubject mss ";
+            $strQuery  .= "        inner join ( ";
+            $strQuery  .= "            select distinct ";
+            $strQuery  .= "                msi.lngestimateareaclassno, ";
+            $strQuery  .= "                msi.lngstocksubjectcode ";
+            $strQuery  .= "            from m_stockitem msi ";
+            $strQuery  .= "        ) A ";
+            $strQuery  .= "            on A.lngstocksubjectcode = mss.lngstocksubjectcode ";
+            $strQuery  .= "    ) ";
+            $strQuery  .= ") TBL ";
+            $strQuery  .= "inner join m_estimatecompanypulldown mecp ";
+            $strQuery  .= "    on mecp.lngestimateareaclassno = TBL.areano ";
+            $strQuery  .= "    and mecp.lngsalesclassstocksubjectcode = TBL.level1code ";
+            $strQuery  .= "inner join m_company mc ";
+            $strQuery  .= "    on mc.lngcompanycode = mecp.lngcompanycode ";
+            $strQuery  .= "order by TBL.areano, TBL.level1code, mc.strcompanydisplaycode ";
+/*
             $strQuery  = "select distinct";
             $strQuery .= "    customercompany,";
             $strQuery .= "    lngattributecode ";
@@ -878,7 +921,7 @@ class estimateDB extends clsDB {
             $strQuery .= "   WHERE mar.lngattributecode in (". DEF_ATTRIBUTE_CLIENT. ", ". DEF_ATTRIBUTE_SUPPLIER . "," . DEF_ATTRIBUTE_FACTORY . ")" ;
             $strQuery .= ") A";
             $strQuery .= " ORDER BY lngattributecode ASC, customercompany ASC";
-
+*/
             list ($resultID, $resultNumber) = fncQuery($strQuery, $this);
 
             if ($resultNumber > 0) {

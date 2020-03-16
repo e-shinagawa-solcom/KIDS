@@ -64,7 +64,12 @@ class otherCostOrderRowController extends estimateRowController {
 
     // 顧客先のチェックを行う
     protected function validateCustomerCompany() {
-        $this->customerCompany = null;
-        return;
+        $subject = explode(':', $this->divisionSubject)[0];
+        $class = explode(':', $this->classItem)[0];
+        if($subject != DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST || $class != DEF_STOCK_ITEM_CODE_CERTIFICATE){ // 証紙以外はチェックしない
+            $this->customerCompany = null;
+            return true;
+        }
+        return parent::validateCustomerCompany();;
     }
 }

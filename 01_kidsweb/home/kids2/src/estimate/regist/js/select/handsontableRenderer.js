@@ -78,8 +78,26 @@ for (var sNum = 0; sNum < sheetNumber; sNum++) {
     data: hiddenCellValue[sNum],
     rowHeights: hiddenRowHeight[sNum],
     colWidths: columnWidth[sNum],
+    cell: cellClass,
     cells: function (row, col, prop) {
       var cellProperties = {};
+      var elements = getElementsForRowAndColumn(row, col, cellClass);
+
+      // エリア5の%入力に書式を設定する
+      if (!isEmpty(elements)) {
+        var className = elements[0].className;
+        if (className.includes('detail')) { 
+          if (className.includes('payoff')) { // 償却 
+            var area = className.match(/area(\d+)/);
+            if (Number(area[1]) === 5) { 
+              cellProperties.type = 'numeric';
+              cellProperties.numericFormat = {
+                pattern: '0.00%',
+              };
+            }
+          }
+        }
+      }
       cellProperties.renderer = firstRenderer;
       return cellProperties;
     },
@@ -93,7 +111,14 @@ for (var sNum = 0; sNum < sheetNumber; sNum++) {
 function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
   var id = instance.rootElement.id;
   var number = id.replace('grid', '');
-  Handsontable.renderers.TextRenderer.apply(this, arguments);
+//  Handsontable.renderers.TextRenderer.apply(this, arguments);
+  if (cellProperties.type === 'date') { // 日付型
+    Handsontable.renderers.DateRenderer.apply(this, arguments);
+  } else if (cellProperties.type === 'numeric') { // 数値型
+    Handsontable.renderers.NumericRenderer.apply(this, arguments);
+  } else { // 特に強い拘りがなければテキスト(文字列）型
+    Handsontable.renderers.TextRenderer.apply(this, arguments);
+  }
   var hidden = hiddenList[number];
   var cellInfoData = cellData[number][row][col];
   if (viewFlag[number] === true) {
@@ -164,3 +189,45 @@ function viewInvalidData(number) {
     rowHeights: rowHeightCell,
   });
 }
+
+  /**
+   * 指定した行および列を持つセルのクラス情報を取得する
+   * @param {integer} row 指定行
+   * @param {integer} col 指定列
+   * 
+   * @return {Array.object} elements クラス情報オブジェクトを持つ配列
+   */
+  function getElementsForRowAndColumn(row, col, searchList) {
+    var filter = {
+      row: row,
+      col: col
+    }
+    var elements = searchList.filter(function(item) {
+      for (var key in filter) {
+        if (item[key] === undefined || item[key] != filter[key])
+          return false;
+      }
+      return true;
+    });
+    return elements;
+  }
+
+  /**
+   * 値が空かどうか判定を行う
+   * 
+   * @param value 判定する値
+   * 
+   * @return {boolean} 空判定結果（true:空 false:空でない）
+   */
+  function isEmpty(value){
+    if (!value) {  //null or undefined or ''(空文字) or 0 or false
+        if (value!== 0 && value !== false) {
+            return true;
+        }
+    } else if( typeof value == "object") {  //array or object
+        return Object.keys(value).length === 0;
+    }
+      return false;  //値は空ではない
+  }
+
+

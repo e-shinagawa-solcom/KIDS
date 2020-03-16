@@ -59,6 +59,8 @@ class estimateSheetController {
     protected $overSeasMoldDepreciation;       // 仕入科目 403:海外金型償却の合計
     protected $importPartsCosts;               // 仕入科目 402:輸入パーツ仕入高の合計
     protected $tariff;
+    
+    protected $notFoundCellList;
 
     public function __construct() {
         $this->setExcelErrorList();
@@ -209,6 +211,7 @@ class estimateSheetController {
             $sheet = $spreadSheet->getSheet($count);
             $sheetName = $sheet->getTitle();
             if ($sheet->getSheetState() === 'visible') {
+                $notFoundCellList = "";
                 foreach($nameList as $val) {
                     $namedRange = null;
                     // シート内にセル名称が設定されているか検索する
@@ -224,19 +227,26 @@ class estimateSheetController {
                         // シート内で見つからないセル名称があった場合は処理を中断し、表示無効フラグを立てる
                         $cellAddressList = array();
                         $displayInvalid = true;
-                        break;
+                        if(strlen($notFoundCellList) > 0){
+                            $notFoundCellList .= ", ";
+                        }
+                        $notFoundCellList .= $val;
+//                        break;
                     }
+                }
+                if(strlen($notFoundCellList) > 0){
+//fncDebug("kids2.log", $sheetName . ":cell " . $notFoundCellList . " not found", __FILE__, __LINE__, "a");
                 }
             } else {
                 $displayInvalid = true;
             }
 
             if($separate) {
-            $startRow = (int)$separate['top_left']['row'];
-            $endRow = (int)$separate['bottom_left']['row'];
-            $startColumn = self::getIndexForColumnAlphabet($separate['top_left']['column']);
-            $endColumn = self::getIndexForColumnAlphabet($separate['top_right']['column']);
-            $columnValue = $endColumn - $startColumn + 1;
+                $startRow = (int)$separate['top_left']['row'];
+                $endRow = (int)$separate['bottom_left']['row'];
+                $startColumn = self::getIndexForColumnAlphabet($separate['top_left']['column']);
+                $endColumn = self::getIndexForColumnAlphabet($separate['top_right']['column']);
+                $columnValue = $endColumn - $startColumn + 1;
                 if ($columnValue !== workSheetConst::WORK_SHEET_COLUMN_NUMBER) {
                 // 列数が指定数でない場合は削除フラグを立てる
                     $displayInvalid = true;
@@ -297,6 +307,7 @@ class estimateSheetController {
         $endRow = $this->endRow;
         $startColumn = $this->startColumn;
         $endColumn = $this->endColumn;
+
         // ワークシートの行高さと列幅の情報を取得する
         // 行高さ
         $rowHeight = $this->getRowHeight();
@@ -381,7 +392,6 @@ class estimateSheetController {
                 }
 
             }
-           
             for ($tableColumn = $tableStartColumn; $tableColumn <= $tableEndColumn; ++$tableColumn) {
                 // 初期化
                 $cellAddress = null;
@@ -396,19 +406,20 @@ class estimateSheetController {
 
                 $setFormatFlag = true; // フォーマットセットフラグ
 
+                
                 // 編集モード時の書式の設定
                 if ($this->mode === workSheetConst::MODE_ESTIMATE_EDIT) {
                     if ($areaCode) {
                         // 各入力項目のヘッダに対する列番号リストの取得
-                        $columnNoList = $this->getColumnNumberList($areaCode);
-                        if ($columnNoList['quantity'] == $colAlphabet
-                        || $columnNoList['price'] == $colAlphabet
-                        || $columnNoList['conversionRate'] == $colAlphabet) { // 数量又は単価の場合
+//                        $columnNoList = $this->getColumnNumberList($areaCode);
+                        if ($columnNumberList['quantity'] == $colAlphabet
+                        || $columnNumberList['price'] == $colAlphabet
+                        || $columnNumberList['conversionRate'] == $colAlphabet) { // 数量又は単価の場合
                             $setFormatFlag = false;
                         }
-
+                        
                         if ($areaCode == DEF_AREA_OTHER_COST_ORDER) {
-                            if ($columnNoList['customerCompany'] == $colAlphabet) { // その他費用の顧客先（パーセント入力)
+                            if ($columnNumberList['payoff'] == $colAlphabet) { // その他費用の償却（パーセント入力)
                                 $setFormatFlag = 'percent';
                             }
                         }
@@ -419,13 +430,20 @@ class estimateSheetController {
                         }
                     }
                 }
+                if ($areaCode == DEF_AREA_OTHER_COST_ORDER) {
+                    if ($columnNumberList['payoff'] == $colAlphabet) { // その他費用の償却（パーセント入力)
+                        $setFormatFlag = 'percent';
+                    }
+                }
 
                 // セルの値を取得する
                 $getValue = $sheet->getCell($cellAddress)->getCalculatedValue();
                 if (isset($getValue)) {
                     if ($setFormatFlag === true) {
                         $cellValue = trim($sheet->getCell($cellAddress)->getFormattedValue());
-                    } else { // フォーマットセットフラグがfalseの時は計算値を直接与える（入力可能セルの一部について入力後にもセルの書式を反映させるため、書式をHandsontableで設定するための対応）
+                    } else { 
+                        // フォーマットセットフラグがfalseの時は計算値を直接与える
+                        //（入力可能セルの一部について入力後にもセルの書式を反映させるため、書式をHandsontableで設定するための対応）
                         $cellValue =  $getValue;
                         if ($setFormatFlag === 'percent' && $cellValue) {
                             $cellValue = $cellValue * 100;
@@ -489,9 +507,9 @@ class estimateSheetController {
                 if ($areaCode) {
                     $className = workSheetConst::DETAIL_CLASS_STRING. ' '. workSheetConst::AREA_CLASS_STRING. $areaCode;
                     // 各入力項目のヘッダに対する列番号リストの取得
-                    $columnNoList = $this->getColumnNumberList($areaCode);
+                    $columnNumberList = $this->getColumnNumberList($areaCode);
 
-                    foreach($columnNoList as $key => $columnNo) {
+                    foreach($columnNumberList as $key => $columnNo) {
                         if ($columnNo === $colAlphabet) {
                             $className .= ' ';
                             $className .= $key;
@@ -513,7 +531,7 @@ class estimateSheetController {
                     if ($areaCode) {
                         // 列番号を数字からアルファベットに変換
                         // $colAlphabet = $this->getAlphabetForColumnIndex($workSheetColumn);
-                        // foreach($columnNoList as $key => $columnNo) {
+                        // foreach($columnNumberList as $key => $columnNo) {
                         //     if ($columnNo === $colAlphabet) {
                         //         break;
                         //     }
@@ -688,7 +706,12 @@ class estimateSheetController {
                             case DEF_ORDER_APPLICATE:
 
                                 if (isset($companyCode) && $companyCode !== DEF_DISPLAY_COMPANY_CODE_OTHERS) {
-                                    $name = "confirm". $areaCode;
+                                    if( $areaCode == DEF_AREA_OTHER_COST_ORDER ){
+                                        $name = "confirm". DEF_AREA_PARTS_COST_ORDER;
+                                    }
+                                    else{
+                                        $name = "confirm". $areaCode;
+                                    }
                                     $htmlValue1 = "<div class=\"applicate\">";
                                     $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$orderNo . "\">";
                                     $htmlValue1 .= "</div>";
@@ -700,7 +723,12 @@ class estimateSheetController {
 
                                 break;
                             case DEF_ORDER_ORDER:
-                                $name = "cancel". $areaCode;
+                                if( $areaCode == DEF_AREA_OTHER_COST_ORDER ){
+                                    $name = "cancel". DEF_AREA_PARTS_COST_ORDER;
+                                }
+                                else{
+                                    $name = "cancel". $areaCode;
+                                }
                                 $htmlValue2 = "<div class=\"order\">";
                                 $htmlValue2 .= "<input type=\"checkbox\" class=\"checkbox_cancel\" name=\"". $name. "\" value=\"".$orderNo . "\">";
                                 $htmlValue2 .= "</div>";
@@ -1528,7 +1556,6 @@ class estimateSheetController {
         }
 
         $this->templateAdjust($estimateData); // テンプレート整形
-        $this->paramAssignForHiddenCells(); // 検索に必要な値のセット
         $this->inputHeaderData($productData); // 製品情報のセット（ヘッダ部）
         $this->inputStandardRate(); // 標準割合のセット
         $this->inputEstimateDetailData($estimateData); // 見積原価明細のセット
@@ -1574,7 +1601,7 @@ class estimateSheetController {
         $cellAddress = $this->getRowAndColumnFromCellName(workSheetConst::JPYEN_DISPLAY);
         $moneraryUnitCellRow = $cellAddress["row"];
         $moneraryUnitCellColumn = $cellAddress["column"];
-        $rowCount = 0;
+        $rowCount = 1;
         $cellAddress=$moneraryUnitCellColumn.$moneraryUnitCellRow;
         $cellAddressFrom = $cellAddress;
 //fncDebug("kids2.log", $cellAddress , __FILE__, __LINE__, "a");
@@ -1610,7 +1637,7 @@ class estimateSheetController {
                     $cell = $column. $row;
                     $this->sheet->getCell($cell)->setValue($value);
                     // パーセント入力の場合、書式を変更する
-                    if ($name == 'customerCompany' && is_numeric($value)) {
+                    if ($name == 'payoff' && is_numeric($value)) {
                         $style = $this->sheet->getStyle($cell);
                         $style->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_PERCENTAGE_00);
                         $style->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
@@ -1641,33 +1668,39 @@ class estimateSheetController {
     protected function inputDropdownList() {
         // ドロップダウンリストの元データをDBより取得する
         $this->setDropdownList();
-
         // ドロップダウンリストの生成
 
         $this->inputInchargeDropdownList(); // 営業部署、担当
 
         $this->inputDevelopDropdownList(); // 開発担当者
+        
+        $this->inputDropdownItems();  //売上分類 or 仕入科目、売上区分 or 仕入部品、顧客先 or 仕入先
 
-        $this->inputDetailDropdownList(); // 明細行(売上分類 or 仕入科目、売上区分 or 仕入部品、顧客先 or 仕入先)
+//        $this->inputDetailDropdownList(); // 明細行(売上分類 or 仕入科目、売上区分 or 仕入部品、顧客先 or 仕入先)
 
     }
 
     // ドロップダウンリストをオブジェクトにセットする
     protected function setDropdownList() {
         if (!$this->dropdownDSCI) {
+            // 売上分類（仕入科目）、売上区分（仕入部品）
             $this->setDropdownForDivSubAndClsItm();
         }
         if (!$this->dropdownCompany) {
+            // 会社
             $this->setDropdownForCompany();
         }
         if (!$this->dropdownGU) {
+            // 営業部門と営業担当者
             $this->setDropdownForGroupAndUser();
         }
         if (!$this->dropdownDevUser) {
+            // 開発担当者
             $this->setDropdownForDevelopUser();
         }
         /*
         if (!$this->monetaryiunit) {
+            // 通貨
             $this->setDropdownForMonetaryUnit();
         }
         */
@@ -1680,6 +1713,7 @@ class estimateSheetController {
         $dropdown = $this->objDB->getDropdownForDivSubAndClsItm();
 
         // 売上分類(or仕入科目)、売上区分(or仕入部品)についてリレーションを維持して切り分ける
+
         foreach ($dropdown as $list) {
             $areaCode = $list->areacode;
         
@@ -1693,11 +1727,16 @@ class estimateSheetController {
 
     protected function setDropdownForCompany() {
         $dropdown = $this->objDB->getDropdownForCompany();
-
-        // 会社を顧客先と仕入先/工場に分類する
+        $newCompanyList = array();
+        // 会社をエリア、売上分類（仕入科目）で分類する
         foreach ($dropdown as $list) {
-            $companyAttribute = $list->lngattributecode;
-            $newCompanyList[$companyAttribute][] = $list->customercompany;
+            $areaCode = $list->areano;
+            $level1Item = $list->name;
+            if( !isset($newCompanyList[$areaCode][$level1Item])){
+                $newCompanyList[$areaCode][$level1Item] = array();
+            }
+//            $companyAttribute = $list->lngattributecode;
+            $newCompanyList[$areaCode][$level1Item][] = $list->customercompany;
         }
 
         $this->dropdownCompany = $newCompanyList;
@@ -1725,13 +1764,31 @@ class estimateSheetController {
         $dropdownGU = $this->dropdownGU;
 
         // ユーザーを部署ごとに切り分ける
-        foreach ($dropdownGU as $list) {
-            $groupCode = $list->groupcode;
-            $newInchargeList[$groupCode][] = $list->usercode;
-        }
 
         $cellAddressList = $this->cellAddressList;
-
+        $baseCellAddress = $cellAddressList[workSheetConst::PULLDOWN_MRKT_DEV];
+//fncDebug("dl.log", sprintf("base address:%s", $baseCellAddress), __FILE__, __LINE__, "a");
+//        $baseCell = $this->sheet->getCell($baseCellAddress);
+        $lastgroup = "";
+        
+        $columnOffset = -1;
+        foreach ($dropdownGU as $list) {
+            $groupCode = $list->groupcode;
+            if($lastgroup != $groupCode){
+                $columnOffset++;
+                $cellAddress = self::getMoveCell($baseCellAddress, 0, $columnOffset);
+//fncDebug("dl.log", sprintf("address:%s, group:%s", $cellAddress, $groupCode ), __FILE__, __LINE__, "a");
+                $this->sheet->getCell($cellAddress)->setValue($groupCode);
+                $rowOffset = 2;
+                $lastgroup = $groupCode;
+            }
+            $usercode = $list->usercode;
+            $cellAddress = self::getMoveCell($baseCellAddress, $rowOffset, $columnOffset);
+//fncDebug("dl.log", sprintf("address:%s, user:%s", $cellAddress, $usercode), __FILE__, __LINE__, "a");
+            $this->sheet->getCell($cellAddress)->setValue($usercode);
+            $rowOffset++;
+        }
+/*
         // ドロップダウンのリストを書き込むセルの情報取得
         $inchargeGroupListCellName = workSheetConst::INCHARGE_GROUP_DROPDOWN; // ドロップダウンリストをセットするためのセル名称(営業部署)
         $IGLCellAddress = $cellAddressList[$inchargeGroupListCellName];
@@ -1800,7 +1857,7 @@ class estimateSheetController {
         // 入力規則の設定(ドロップダウン生成)
         $this->setDataValidationForCell($inchargeGroupCell, $IGLFomula); // 営業部署
         $this->setDataValidationForCell($inchargeUserCell, $IULFomula);  // 担当
-
+*/
         return;
     }
 
@@ -1809,8 +1866,18 @@ class estimateSheetController {
         $dropdownDevUser = $this->dropdownDevUser;
 
         $cellAddressList = $this->cellAddressList;
+        $baseCellAddress = $cellAddressList[workSheetConst::PULLDOWN_DEPT_MEMBER]; // ドロップダウンリストをセットするためのセル名称(開発担当)
+        $rowOffset = 1;
+        foreach ($dropdownDevUser as $data) {
+            $cellAddress = self::getMoveCell($baseCellAddress, $rowOffset, 0);
+//fncDebug("dl.log", sprintf("address:%s, user:%s", $cellAddress, $data->usercode ), __FILE__, __LINE__, "a");
+            $this->sheet->getCell($cellAddress)->setValue($data->usercode);
+            $rowOffset++;
+        }
+        
 
         // ドロップダウンのリストを書き込むセルの情報取得
+/*
         $developUserListCellName = workSheetConst::DEVELOP_USER_DROPDOWN; // ドロップダウンリストをセットするためのセル名称(開発担当)
         $DULCellAddress = $cellAddressList[$developUserListCellName];
         $DULSeparate = self::separateRowAndColumn($DULCellAddress);
@@ -1836,216 +1903,91 @@ class estimateSheetController {
 
         // 入力規則の設定(ドロップダウン生成)
         $this->setDataValidationForCell($developUserCell, $fomula);
-
+*/
         return;
     }
 
-    // 明細行にセットするドロップダウンリストを生成し、ブックにセットする
-    protected function inputDetailDropdownList() {
+    // ドロップダウンアイテムをセルに設定
+    protected function inputDropdownItems() {
+        $cellAddressList = $this->cellAddressList;
+        // 売上区分・仕入部品最大収容件数取得
+        $cellAddress = $cellAddressList[workSheetConst::LEVEL2_MAX_COUNT];
+        $level2Max = $this->sheet->getCell($cellAddress)->getCalculatedValue();
 
-        // ドロップダウンリストを取得する
+//fncDebug("dl.log", sprintf("address:%s, level2Max:%s", $cellAddress, $level2Max ), __FILE__, __LINE__, "a");
+
+        
+        // 会社最大収容件数取得
+        $cellAddress = $cellAddressList[workSheetConst::COMPANY_MAX_COUNT];
+        $companyMax = $this->sheet->getCell($cellAddress)->getCalculatedValue();
+//fncDebug("dl.log", sprintf("address:%s, companyMax:%s", $cellAddress, $companyMax ), __FILE__, __LINE__, "a");
+        
+        // エリアセット開始セル取得
+        $areaBaseAddress = $cellAddressList[workSheetConst::PULLDOWN_KEY_AREA];
+        
+        // 会社セット開始セル取得
+        $companyBaseAddress = $cellAddressList[workSheetConst::PULLDOWN_COMPANY];
+
+        $columnOffset = 0;
         $dropdownDSCI = $this->dropdownDSCI;
         $dropdownCompany = $this->dropdownCompany;
-    
-        $cellAddressList = $this->cellAddressList;
 
-        $divSubDropdownCellList = workSheetConst::DIVISION_SUBJECT_DROPDOWN_CELL_NAME;
-        $clsItmDropdownCellList = workSheetConst::CLASS_ITEM_DROPDOWN_CELL_NAME;
-
-        // 明細にセットするドロップダウンリスト
-        // 顧客先または仕入先
-        foreach ($dropdownCompany as $attribute => $companyList) {
-            if ($attribute === DEF_ATTRIBUTE_CLIENT) {
-                $cellName = workSheetConst::CLIENT_DROPDOWN; // ドロップダウンリストをセットするためのセル名称
-            } else if ($attribute === DEF_ATTRIBUTE_SUPPLIER) {
-                $cellName = workSheetConst::SUPPLIER_DROPDOWN; // ドロップダウンリストをセットするためのセル名称
-            }
-
-            $cellAddress = $cellAddressList[$cellName];
-            $separate = self::separateRowAndColumn($cellAddress);
-            $headerRow = $separate['row'];
-            $col = $separate['column'];
-
-            $row = $headerRow + 1;
-
-            $startCompanyCellList[$attribute] = '$'. $col. '$'. $row;
-
-            foreach ($companyList as $company) {
-                ++$row;
-                $inputCell = $col.$row;
-                $this->sheet->getCell($inputCell)->setValue($company);
-            }
-
-            $endCompanyCellList[$attribute] = '$'. $col. '$'. $row;
-        }
-
-        // エリア区分の取得
-        $areaNameList = workSheetConst::TARGET_AREA_NAME;
-
-        // 売上分類（仕入科目）、売上区分（仕入部品）
-        foreach($areaNameList as $areaCode => $areaName) {
-            $divSubCellName = $divSubDropdownCellList[$areaCode]; // ドロップダウンリストをセットするためのセル名称
-            $divSubCellAddress = $cellAddressList[$divSubCellName];
-            $divSubSeparate = self::separateRowAndColumn($divSubCellAddress);
-            $divSubHeaderRow = $divSubSeparate['row'];
-            $divSubCol = $divSubSeparate['column'];
-
-            $clsItmCellName = $clsItmDropdownCellList[$areaCode]; // ドロップダウンリストをセットするためのセル名称
-            $clsItmCellAddress = $cellAddressList[$clsItmCellName];
-            $clsItmseparate = self::separateRowAndColumn($clsItmCellAddress);
-            $clsItmHeaderRow = $clsItmseparate['row'];
-            $clsItmCol = $clsItmseparate['column'];
-
-            $divSubRow = $divSubHeaderRow + 1;
-            $clsItmRow = $clsItmHeaderRow + 1;
-
-            // 売上分類 or 仕入科目のドロップダウンリストの最初のセル
-            $startDivSubCell = '$'. $divSubCol. '$'. $divSubRow;
-
-            // ドロップダウンリストをエリアごとに初期化
-            $dropDownList = array();
-
-            foreach ($dropdownDSCI[$areaCode] as $divSub => $clsItmList) {
-                ++$divSubRow;
-                $inputDivSubCell = $divSubCol.$divSubRow;
-                $this->sheet->getCell($inputDivSubCell)->setValue($divSub);
-
-                $fixedDivSub = '$'. $divSubCol. '$'. $divSubRow;
-
-                $dropDownList[$fixedDivSub]['start'] = '$'. $clsItmCol. '$'. $clsItmRow;
-
-                foreach ($clsItmList as $clsItm) {
-                    ++$clsItmRow;
-                    $inputClsItmCell = $clsItmCol.$clsItmRow;
-                    $this->sheet->getCell($inputClsItmCell)->setValue($clsItm);
+        // 売上分類、仕入科目
+        $areaList = workSheetConst::TARGET_AREA_CODE_LIST;
+        foreach($areaList as $areaCode){
+            //エリアのアイテム
+            $rowOffset = 0;
+            $cellAddress = self::getMoveCell($areaBaseAddress, $rowOffset, $columnOffset);
+//fncDebug("dl.log", sprintf("address:%s, area:%s", $cellAddress, $areaCode ), __FILE__, __LINE__, "a");
+            $this->sheet->getCell($cellAddress)->setValue($areaCode);
+            // エリア内1件目はエリアコードのみ設定
+            $columnOffset++;
+            $level1Item = $dropdownDSCI[$areaCode];
+            $level1Key = array_keys($level1Item);
+            foreach($level1Key as $key1 ){
+                // エリアコード設定
+                $cellAddress = self::getMoveCell($areaBaseAddress, $rowOffset, $columnOffset);
+//fncDebug("dl.log", sprintf("address:%s, area:%s", $cellAddress, $areaCode ), __FILE__, __LINE__, "a");
+                $this->sheet->getCell($cellAddress)->setValue($areaCode);
+                // 次の行は売上分類・仕入科目
+                $rowOffset++;
+                $cellAddress = self::getMoveCell($areaBaseAddress, $rowOffset, $columnOffset);
+//fncDebug("dl.log", sprintf("address:%s, level1:%s", $cellAddress, $key1 ), __FILE__, __LINE__, "a");
+                $this->sheet->getCell($cellAddress)->setValue($key1);
+                // 次の行以降は、売上区分・仕入部品（ただし、1件目は空白）
+                $rowOffset++;
+                foreach($level1Item[$key1] as $level2Item){
+                    $cellAddress = self::getMoveCell($areaBaseAddress, $rowOffset, $columnOffset);
+//fncDebug("dl.log", sprintf("address:%s, level2:%s", $cellAddress, $level2Item ), __FILE__, __LINE__, "a");
+                    $this->sheet->getCell($cellAddress)->setValue($level2Item);
+                    $rowOffset++;
+                    if($rowOffset >= $level2Max)
+                    {
+                        break;
+                    }
                 }
-
-                $dropDownList[$fixedDivSub]['end'] = '$'. $clsItmCol. '$'. $clsItmRow;
-
-                ++$clsItmRow;
-            }
-
-            // ブランクセルの設定
-            $blankCell = '$'. $clsItmCol. '$'. $clsItmRow;
-//fncDebug("dl.log", $blankCell, __FILE__, __LINE__, "a");
-
-            // 売上分類 or 仕入科目のドロップダウンリストの最後のセル
-            $endDivSubCell = '$'. $divSubCol. '$'. $divSubRow;
-
-            $divSubFomula = '='.$startDivSubCell. ':'. $endDivSubCell; // 売上分類 or 仕入科目に代入する式
-
-
-            // 売上区分 or 仕入科目に代入する式を生成する
-            $clsItmFomula = '='; // 売上区分 or 仕入部品の入力規則の式
-            $branch = 0;
-            $divSubPattern = '_%DIVISIONSUBJECT%_';
-            $clsItmPattern = '_%CLASSITEM%_';
-            $clsItmCheckFomula = '';
-            $clsItmCheckFomula = '=IFERROR(IF('. $clsItmPattern. '<>0'; // 売上区分 or 仕入部品の入力規則の式
-
-            foreach ($dropDownList as $divSubCell => $clsItmCells) {
-                $start = $clsItmCells['start'];
-                $end = $clsItmCells['end'];
-                $range = $start. ':'. $end;
-                $clsItmFomula .= 'IF('. $divSubPattern.'='. $divSubCell. ','. $range. ',';
-                $clsItmCheckFomula .= ',IF('. $divSubPattern.'='. $divSubCell.',VLOOKUP('. $clsItmPattern.','. $range.',1,FALSE)';
-                ++$branch;
-            }
-
-            $clsItmFomula .= $blankCell;
-            $clsItmFomula .= str_repeat(')', $branch);
-
-            $clsItmCheckFomula .= ',""';
-            $clsItmCheckFomula .= str_repeat(')', $branch);
-            $clsItmCheckFomula .= ',""),"")';
-//fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
-
-            $orderAttribute = workSheetConst::ORDER_ATTRIBUTE_FOR_TARGET_AREA;
-
-
-            // 顧客先または仕入先の参照セルを取得
-            if ($orderAttribute[DEF_ATTRIBUTE_CLIENT][$areaCode] === true) {
-                $startCompanyCell = $startCompanyCellList[DEF_ATTRIBUTE_CLIENT];
-                $endCompanyCell = $endCompanyCellList[DEF_ATTRIBUTE_CLIENT];
-            } else if ($orderAttribute[DEF_ATTRIBUTE_SUPPLIER][$areaCode] === true) {
-                $startCompanyCell = $startCompanyCellList[DEF_ATTRIBUTE_SUPPLIER];
-                $endCompanyCell = $endCompanyCellList[DEF_ATTRIBUTE_SUPPLIER];
-            } else {
-                $startCompanyCell = null;
-                $endCompanyCell = null;
-            }
-
-            if ($startCompanyCell && $endCompanyCell) {
-                $companyFomula = $startCompanyCell. ':'. $endCompanyCell;
-            } else {
-                $companyFomula = null;
-            }
-
-            // セル名称に対応する列番号を取得する
-            $columnNumber = $this->getColumnNumberList($areaCode);
-
-            $targetAreaRows = $this->targetAreaRows;
-
-            $firstRow = $targetAreaRows[$areaCode]['firstRow'];
-            $lastRow = $targetAreaRows[$areaCode]['lastRow'];
-
-            $detailDivSubCol = $columnNumber['divisionSubject'];  // 売上分類 or 仕入科目の列番号
-            $detailClsItmCol = $columnNumber['classItem'];        // 売上区分 or 仕入部品の列番号
-            $detailCompanyCol = $columnNumber['customerCompany']; // 顧客先 or 仕入先の列番号
-            $detailMonetaryUnitCol = $columnNumber['monetaryDisplay']; // 通貨の列番号
-            $detailCheckCol = $columnNumber['classItemCheck']; // チェック列の列番号
-            $detailCompanyCheckCol = $columnNumber['companyItemCheck']; // チェック列の列番号
-//fncDebug("dl.log", $detailCheckCol, __FILE__, __LINE__, "a");
-//fncDebug("dl.log", $detailCompanyCheckCol, __FILE__, __LINE__, "a");
-            $detailNoteCol = $columnNumber['note']; // チェック列の列番号
-
-            // 明細行に入力規則を適用
-            for ($row = $firstRow; $row <= $lastRow; ++$row) {
-                $detailDivSubCell = $detailDivSubCol. $row;
-                $detailClsItmCell = $detailClsItmCol. $row;
-                $detailCompanyCell = $detailCompanyCol. $row;
-                $detailMonetaryUnitCell = $detailMonetaryUnitCol . $row;
-                $clsItmCheckCell = $detailCheckCol. $row;
-//                $clsCompanyCheckCell = $detailCompanyCheckCol. $row;
-                
-                $noteCell = $detailCheckCol. $row;
-
-                $this->setDataValidationForCell($detailDivSubCell, $divSubFomula);  // 売上分類 or 仕入科目
-
-                // 置換文字列を売上分類or仕入科目のセルに置換
-                $inputClsItmFomula = str_replace($divSubPattern, $detailDivSubCell, $clsItmFomula);
-
-                $this->setDataValidationForCell($detailClsItmCell, $inputClsItmFomula);  // 売上区分 or 仕入部品
-
-//fncDebug("kids2.log", $detailMonetaryUnitCell, __FILE__, __LINE__, "a");
-//fncDebug("kids2.log", $this->monetaryUnitFormula, __FILE__, __LINE__, "a");
-                $this->setDataValidationForCell($detailMonetaryUnitCell, $this->monetaryUnitFormula);  // 通貨
-
-//fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
-                // 置換文字列を売上分類or仕入科目のセルに置換
-                $inputClsItmCheckFomula = str_replace($divSubPattern, $detailDivSubCell, $clsItmCheckFomula);
-//fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
-                // 置換文字列を売上区分or仕入部品のセルに置換
-                $inputClsItmCheckFomula = str_replace($clsItmPattern, $detailClsItmCell, $inputClsItmCheckFomula);
-
-                // 売上区分 or 仕入部品チェック用セルに計算式をセットする
-//fncDebug("dl.log", $inputClsItmCheckFomula, __FILE__, __LINE__, "a");
-                $this->sheet->getCell($clsItmCheckCell)->setValue($inputClsItmCheckFomula);
-//                $this->sheet->getCell($clsCompanyCheckCell)->setValue($inputClsItmCheckFomula);
-
-                if ($companyFomula) {
-                    $this->setDataValidationForCell($detailCompanyCell, $companyFomula);  // 顧客先 or 仕入先
+//fncDebug("dl.log","set compamy", __FILE__, __LINE__, "a");
+                // 会社プルダウン設定
+                $rowOffset = 0;
+                if(is_array($dropdownCompany[$areaCode][$key1])){
+//echo sprintf("%s-%s:count=%d", $areaCode, $key1, count($dropdownCompany[$areaCode][$key1])) . "<br>";
+//var_dump($dropdownCompany[$areaCode][$key1]);
+//echo "<br>";
+                    foreach($dropdownCompany[$areaCode][$key1] as $company){
+                        $cellAddress = self::getMoveCell($companyBaseAddress,$rowOffset, $columnOffset);
+//fncDebug("dl.log", sprintf("address:%s, company:%s", $cellAddress, $company ), __FILE__, __LINE__, "a");
+                        $this->sheet->getCell($cellAddress)->setValue($company);
+                        $rowOffset++;
+                        if($rowOffset >= $companyMax)
+                        {
+                            break;
+                        }
+                    }
+                    $columnOffset++;
                 }
             }
-
-            $this->setConditionsForClassItemCell($areaCode);
+            
         }
-
-        $this->setConditionsForFixedCostSalesClassAndCustomer();
-        $this->setConditionsForExpensePercentCell();
-        $this->paramAssignForHiddenCells();
-
-        return;
     }
 
     // データの入力規則を式で指定し、セルにドロップダウンを設定する
@@ -2062,70 +2004,6 @@ class estimateSheetController {
         return;
     }
 
-    // 隠しセルに必要な値を代入する
-    protected function paramAssignForHiddenCells() {
-        // 全エリアコードを取得
-        $areaCodeList = workSheetConst::TARGET_AREA_NAME;
-
-        // 売上分類、売上区分（仕入科目、仕入部品)のドロップダウンリストのデータを取得
-        if (!$this->dropdownDSCI) {
-            $this->setDropdownForDivSubAndClsItm();
-        }
-        $dropdownDSCI = $this->dropdownDSCI; 
-
-        // セル名称に対応するセルのリストを取得
-        $cellAddressList = $this->cellAddressList;
-
-        // 代入セルと代入条件のリストを取得
-        $assignList = workSheetConst::ASSIGN_FOR_HIDDEN;
-
-        foreach ($areaCodeList as $areaCode => $areaName) {            
-
-            $dropdownForArea = $dropdownDSCI[$areaCode];
-
-            if (count($assignList[$areaCode])) {
-                foreach($assignList[$areaCode] as $cellName => $info) {
-                    $searchDivSub = $info['divisionSubject'];
-
-                    foreach ($dropdownForArea as $divSubDisplay => $clsItmList) {
-                        preg_match('/\A(\d+)\:/', $divSubDisplay, $divSubMatch); // 数字部分を抽出
-                        
-                        $divSubNumber = (int)$divSubMatch[1];
-                        
-                        if ($divSubNumber === $searchDivSub) {
-                            if ($info['classItem']) {
-                                // 代入の条件に売上区分または仕入部品がセットされている場合
-                                $searchClsItm = $info['classItem'];
-
-                                foreach($clsItmList as $clsItmDisplay) {
-                                    preg_match('/\A(\d+)\:/', $clsItmDisplay, $clsItmMatch); // 数字部分を抽出
-
-                                    $clsItmNumber = (int)$clsItmMatch[1];
-
-                                    if ($clsItmNumber === $searchClsItm) {
-                                        // 代入する条件の売上区分又は仕入部品と一致した場合
-                                        $param = $clsItmDisplay;
-                                    }
-                                }
-
-                            } else {
-                                // 代入の条件に売上区分または仕入部品がセットされていない場合は表示用の売上分類又は仕入科目の値をセットする
-                                $param = $divSubDisplay;
-                            }
-                        } else {
-                            continue;
-                        }
-                    }
-
-                    // セットした値を代入する
-                    $this->sheet->getCell($cellAddressList[$cellName])->setValue($param);
-                }
-            } else {
-                continue;
-            }
-        }        
-    }
-    
 
 
     // 各項目の列番号を取得する
@@ -2202,13 +2080,15 @@ class estimateSheetController {
                 $insertValue = preg_replace($cellPattern, $replace, $copyValue);
     
                 $sheet->setCellValue($newAddress, $insertValue);
-
+//if(strlen($insertValue) > 0){
+//fncDebug("view.log", sprintf("%s=%s", $newAddress, $insertValue), __FILE__, __LINE__, "a");
+//}
                 $sheet->duplicateStyle($copyStyle, $newAddress);
                 if( $col <= workSheetConst::WORK_SHEET_COLUMN_NUMBER ){
                     // コピー元のbottomは太いため、細い線をセット
                     $sheet->getStyle($newAddress)->getBorders()->getBottom()->setBorderStyle("thin");
                 }
-                
+                // 条件付き書式、入力規則の式の複製
                 
             }
     
@@ -2447,82 +2327,6 @@ class estimateSheetController {
         return;
     }
 
-    // 固定費売上の売上区分、顧客先に条件付き書式をセットする（関税選択時に適用）
-    protected function setConditionsForFixedCostSalesClassAndCustomer() {
-        $areaCode = DEF_AREA_FIXED_COST_SALES; // 固定費売上
-        
-        $targetAreaRows = $this->targetAreaRows;
-
-        $firstRow = $targetAreaRows[$areaCode]['firstRow'];
-        $lastRow = $targetAreaRows[$areaCode]['lastRow'];
-
-        $columnNumber = $this->getColumnNumberList($areaCode);
-
-        $clsItmCol = $columnNumber['classItem'];        // 売上区分 or 仕入部品の列番号
-        $customerCompanyCol = $columnNumber['customerCompany'];        // 仕入先（パーセント入力セル）の列番号
-
-        $compareCell = '$'. $clsItmCol. $firstRow; // 比較用のセル
-
-        $firstCell = $clsItmCol. $firstRow;
-        $lastCell = $customerCompanyCol. $lastRow;
-
-        $range = $firstCell. ':'. $lastCell;
-
-        $conditional = new Conditional();
-        $conditional->setConditionType(Conditional::CONDITION_EXPRESSION);
-
-        $fomula = '='. $compareCell.'='. workSheetConst::HIDDEN_TARIFF_SALES;
-
-        // 比較条件の設定
-        $conditional->addCondition($fomula);
-
-        // 書式の設定
-        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB('FFFFCC99'); // 背景色
-
-        $conditionalStyles[] = $conditional;
-
-        // 条件付き書式をセルにセットする
-        $this->sheet->getStyle($range)->setConditionalStyles($conditionalStyles);
-        
-    }
-
-    // 経費エリアの仕入先（パーセント入力セル）に条件付き書式をセットする
-    protected function setConditionsForExpensePercentCell() {
-
-        $areaCode = DEF_AREA_OTHER_COST_ORDER; // 経費
-        
-        $targetAreaRows = $this->targetAreaRows;
-
-        $firstRow = $targetAreaRows[$areaCode]['firstRow'];
-        $lastRow = $targetAreaRows[$areaCode]['lastRow'];
-
-        $columnNumber = $this->getColumnNumberList($areaCode);
-
-        $clsItmCol = $columnNumber['classItem'];        // 売上区分 or 仕入部品の列番号
-        $customerCompanyCol = $columnNumber['customerCompany'];        // 仕入先（パーセント入力セル）の列番号
-
-        $clsItmCell = $clsItmCol. $firstRow;
-        $firstCell = $customerCompanyCol. $firstRow;
-        $lastCell = $customerCompanyCol. $lastRow;
-
-        $range = $firstCell. ':'. $lastCell;
-
-        $conditional = new Conditional();
-        $conditional->setConditionType(Conditional::CONDITION_EXPRESSION);
-
-        $fomula = '=OR('. $clsItmCell.'='. workSheetConst::HIDDEN_IMPORT_COST.','. $clsItmCell.'='. workSheetConst::HIDDEN_TARIFF.')';
-
-        // 比較条件の設定
-        $conditional->addCondition($fomula);
-
-        // 書式の設定
-        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB(Color::COLOR_WHITE); // 背景色
-
-        $conditionalStyles[] = $conditional;
-
-        // 条件付き書式をセルにセットする
-        $this->sheet->getStyle($range)->setConditionalStyles($conditionalStyles);
-    }
 }
 
 ?>

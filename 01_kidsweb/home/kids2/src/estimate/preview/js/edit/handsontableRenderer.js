@@ -4,9 +4,12 @@ $(function() {
 
   // 定数の定義
   const chargeSubjectPattern = RegExp('^1224:');
-  const importItemPattern = RegExp('^2:');
+  const partsSubjectPattern = RegExp('^401:');
+//  const importItemPattern = RegExp('^2:');
+  const certificationPattern = RegExp('^1:');  // 証紙
   const tariffItemPattern = RegExp('^3:');
   const importOrTariffPattern = RegExp('^(2|3):');
+  const certificationOrTariffPattern = RegExp('^(1|3):');
   const backSlashPattern = RegExp('\xA5', 'g');
 
   // データの取得
@@ -131,12 +134,18 @@ $(function() {
 
   // 顧客先(仕入先)のドロップダウンリスト作成
   for (var i = 0; i < dropdownCompanyList.length; i++) {
-    var attributeCode = dropdownCompanyList[i].lngattributecode;
+    var areano = dropdownCompanyList[i].areano;
+    var name = dropdownCompanyList[i].name;
     var customerCompany = dropdownCompanyList[i].customercompany;
-    if (isEmpty(dropdownCompany[attributeCode])) {
-      dropdownCompany[attributeCode] = [''];
+    if (isEmpty(dropdownCompany[areano])) {
+      dropdownCompany[areano] = {};
     }
-    dropdownCompany[attributeCode].push(customerCompany);
+    if( isEmpty(dropdownCompany[areano][name])) {
+      dropdownCompany[areano][name] = [''];
+    }
+    if (dropdownCompany[areano][name].indexOf(customerCompany) == -1){
+      dropdownCompany[areano][name].push(customerCompany);
+    }
   }
 
   // 営業部署のドロップダウンリスト作成
@@ -299,6 +308,11 @@ $(function() {
 
         } else if (className.includes('customerCompany')) { // 顧客先（仕入先）の処理        
           var area = className.match(/area(\d+)/);
+          var divSubCol = getColumnForRowAndClassName(row, 'divisionSubject', cellClass);
+          var value = cellValue[row][divSubCol];
+          cellProperties.type = 'dropdown';
+          cellProperties.source = dropdownCompany[Number(area[1])][value];
+          /*
           if (Number(area[1]) === 1 || Number(area[1]) === 2) { // 受注
             cellProperties.type = 'dropdown';
             cellProperties.source = dropdownCompany[2];
@@ -313,14 +327,38 @@ $(function() {
               pattern: '0.00%',
             };
           }
+          */
+          
         } else if (className.includes('monetaryDisplay')) { // 通貨
           cellProperties.type = 'dropdown';
           cellProperties.source = ['', 'JP', 'US', 'HK'];
 
         } else if (className.includes('payoff')) { // 償却          
-          cellProperties.type = 'dropdown';
-          cellProperties.source = ['', '○'];
+          var area = className.match(/area(\d+)/);
+          if (Number(area[1]) === 5) { 
+            cellProperties.type = 'numeric';
+            cellProperties.numericFormat = {
+              pattern: '0.00%',
+            };
+            
+            // エリア5の償却は仕入科目、仕入部品で入力可否が変わる
+            var divSubCol = getColumnForRowAndClassName(row, 'divisionSubject', cellClass);
+            var div = cellValue[row][divSubCol];
+            var itemCol = getColumnForRowAndClassName(row, 'classItem', cellClass);
+            var item = cellValue[row][itemCol];
 
+            if((div == 401 && item == 1) || (div == 1224 && item == 3))
+            {
+              cellProperties.readOnly = false;
+            }
+            else{
+              cellProperties.readOnly = true;
+            }
+          }
+          else{
+            cellProperties.type = 'dropdown';
+            cellProperties.source = ['', '○'];
+          }
         } else if (className.includes('delivery')) { // 納期          
           cellProperties.type = 'date';
           cellProperties.datePickerConfig = {
@@ -1048,7 +1086,7 @@ $(function() {
 
     var elements = getElementsForRowAndColumn(row, col, checkList);
 
-    var calcFlag = {};
+    var calcFlag = {};// subtotal:金額合計、member:部材費、substitutePQ:償却、productionQuantity:数量（償却数）、importOrTariff:関税、輸入費
 
     var className = elements[0].className;
     if (className === 'inchargegroupcode') { // 営業部署
@@ -1063,6 +1101,9 @@ $(function() {
       // 担当を空欄にする
       assignValueForGlobal(userRow, userCol, ''); 
       
+    } else if (className == 'retailprice'){  //上代
+        calcFlag.subtotal = true;
+        calcFlag.member = true;
     } else if (className.includes('detail')) { // 明細行
 
       // セルのクラス情報取得
@@ -1079,9 +1120,9 @@ $(function() {
         assignValueForGlobal(row, clsItmCol, '');
 
         var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
+        assignValueForGlobal(row, cusComCol, '');  // 顧客先（仕入先）をクリア
 
         if (isNumber(cellValue[row][cusComCol]) === true) { // 数値入力されている場合
-          assignValueForGlobal(row, cusComCol, '');  // 顧客先（仕入先）をクリア
 
           var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
           assignValueForGlobal(row, priceCol, '');  // 単価をクリア
@@ -1091,31 +1132,51 @@ $(function() {
           calcFlag.productionQuantity = true;
         }
 
-        if (Number(areaCode[1]) === 4 || Number(areaCode[1]) === 5) {
-          calcFlag.substitutePQ = true;
+        if (Number(areaCode[1]) === 4) { // || Number(areaCode[1]) === 5) {
+          calcFlag.substitutePQ = true;   // 償却再計算
         }
 
+        if (Number(areaCode[1]) === 5) {
+          var cusPayoffCol = getColumnForRowAndClassName(row, 'payoff', checkList);
+          assignValueForGlobal(row, cusPayoffCol, 0);  // 償却をクリアし入力不可に
+          cellData[row][cusPayoffCol]['readOnly'] = true;
+        }
         calcFlag.subtotal = true;
 
       } else if (className.includes('classItem')) { // 売上区分（仕入部品)
-        var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
+        var cusPayoffCol = getColumnForRowAndClassName(row, 'payoff', checkList);
 
-        if (isNumber(cellValue[row][cusComCol]) === true) { // 仕入先に数値入力されている場合(パーセントの場合)
+//      if (isNumber(cellValue[row][cusComCol]) === true) { // 償却に数値入力されている場合(パーセントの場合)
           var divSubCol = getColumnForRowAndClassName(row, 'divisionSubject', checkList);
           var divSub = cellValue[row][divSubCol];
           if (divSub.match(chargeSubjectPattern)) { // 仕入科目がチャージの場合
-            if (oldValue.match(importOrTariffPattern) && !newValue.match(importOrTariffPattern)) { // 変更前の値が輸入費用又は関税で変更後の値がそれ以外の値の場合
-                assignValueForGlobal(row, cusComCol, '');  // 顧客先（仕入先）をクリア
+            if (oldValue.match(tariffItemPattern) && !newValue.match(tariffItemPattern)) { // 変更前の値が関税で変更後の値がそれ以外の値の場合
 
-                var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
-                assignValueForGlobal(row, priceCol, '');  // 単価をクリア
+                assignValueForGlobal(row, cusPayoffCol, '');  // 償却をクリアし入力不可に
 
-                calcFlag.subtotal = true;                            
-            } else {
-              calcFlag.importOrTariff = true // 輸入費用、関税の再計算フラグ
+                calcFlag.subtotal = true;
+                cellData[row][cusPayoffCol]['readOnly'] = true;
+            } else if (newValue.match(tariffItemPattern)){
+              calcFlag.importOrTariff = true // 輸入費用、関税、証紙の再計算フラグ
+              cellData[row][cusPayoffCol]['readOnly'] = false;
             }
           }
-        }
+          else if (divSub.match(partsSubjectPattern)) { // 仕入科目が材料パーツ仕入高の場合
+            if (oldValue.match(certificationPattern) && !newValue.match(certificationPattern)) { // 変更前の値が証紙で変更後の値がそれ以外の値の場合
+
+                assignValueForGlobal(row, cusPayoffCol, '');  // 償却をクリアし入力不可に
+                calcFlag.subtotal = true;                            
+                cellData[row][cusPayoffCol]['readOnly'] = true;
+
+                cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
+                assignValueForGlobal(row, cusComCol, '');  // 顧客先（仕入先）をクリア
+
+            } else if (newValue.match(certificationPattern)){
+              calcFlag.importOrTariff = true // 輸入費用、関税、証紙の再計算フラグ
+              cellData[row][cusPayoffCol]['readOnly'] = false;
+            }
+          }
+//      }
         
         if (oldValue == '' || newValue == '') {
           calcFlag.subtotal = true;
@@ -1129,32 +1190,34 @@ $(function() {
           calcFlag.substitutePQ = true;
         }
   
-      } else if (className.includes('customerCompany')) { // 顧客先（仕入先）
-        if (Number(areaCode[1]) === 5) {
-          calcFlag.subtotal = true;
-        }
-
       } else if (className.includes('quantity')) {
         calcFlag.subtotal = true;
 
         setQuantityCalculateFlag(Number(areaCode[1]), calcFlag, 'quantity');
 
       } else if (className.includes('price')) {
-        if (Number(areaCode[1]) === 5) {
-          var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList); // 仕入先列を取得
-          assignValueForGlobal(row, cusComCol, '');  // 仕入先列の値をクリア
-        }
+//        if (Number(areaCode[1]) === 5) {
+//          var cusComCol = getColumnForRowAndClassName(row, 'customerCompany', checkList); // 仕入先列を取得
+//          assignValueForGlobal(row, cusComCol, '');  // 仕入先列の値をクリア
+//        }
 
         calcFlag.subtotal = true;
 
       } else if (className.includes('conversionRate')) {
         calcFlag.subtotal = true;
       } else if (className.includes('payoff')) { // 償却
+        var cusPayoffCol = getColumnForRowAndClassName(row, 'payoff', checkList);
+        //assignValueForGlobal(row, cusComCol, newValue / 100 );
         if (Number(areaCode[1]) === 3) {
           calcFlag.depreciation = true;
-        } else if (Number(areaCode[1]) === 4 || Number(areaCode[1]) === 5) {
+        } else if (Number(areaCode[1]) === 4){ // || Number(areaCode[1]) === 5) {
           calcFlag.member = true;
           calcFlag.depreciation = true;
+        }
+        else if (Number(areaCode[1]) === 5) {
+          calcFlag.member = true;
+          calcFlag.importOrTariff = true;
+          calcFlag.subtotal = true;
         }
       }
 
@@ -1178,9 +1241,12 @@ $(function() {
       calcFlag.area3TotalCost = true;
       calcFlag.area3NotDepreciationCost = true;
       calcFlag.depreciation = true;
-    } else if (areaCode === 4 || areaCode === 5) {
+    } else if (areaCode === 4) { // || areaCode === 5) {
       calcFlag.member = true;
       calcFlag.depreciation = true;
+    }
+    else if (areaCode === 5) {
+      calcFlag.member = true;
     }
     calcFlag.importOrTariff = true;
     return;
@@ -1460,7 +1526,7 @@ $(function() {
         var quaCol = quantityElements[i].col;
 
         if (beforePQ == cellValue[row][quaCol]) { // 数量が変更前の償却数と一致する場合は代入
-          cellValue[row][quaCol] = productionQuantity;
+//          cellValue[row][quaCol] = productionQuantity;
           calculateSubtotal(row);
         }
       }
@@ -1487,7 +1553,7 @@ $(function() {
         // 仕入科目と仕入部品が両方入力されている場合は数量に償却数をセットする
         var quaCol = quantityElements[i].col;
         if (beforePQ == cellValue[row][quaCol]) { // 数量が変更前の償却数と一致する場合は代入
-          cellValue[row][quaCol] = productionQuantity;
+//          cellValue[row][quaCol] = productionQuantity;
           calculateSubtotal(row);
         }
       }
@@ -1522,7 +1588,7 @@ $(function() {
 
       var productionQuantity = cellValue[PQRow][PQCol];
 
-      cellValue[row][quaCol] = productionQuantity;
+//      cellValue[row][quaCol] = productionQuantity;
     } else {
       cellValue[row][quaCol] = '';
     }
@@ -1562,10 +1628,50 @@ $(function() {
       var quantityCol = getColumnForRowAndClassName(row, 'quantity', checkList);
       var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
       var rateCol = getColumnForRowAndClassName(row, 'conversionRate', checkList);
+      var percentCol = getColumnForRowAndClassName(row, 'payoff', checkList);
       var quantity = Number(cellValue[row][quantityCol]);
       var price = Number(cellValue[row][priceCol]);
       var rate = Number(cellValue[row][rateCol]);
       var subtotal = quantity * price * rate;
+      subtotal = '\xA5' + numberFormat(subtotal, 0);
+    } else {
+      var subtotal = '';
+    }
+
+    // 値の代入
+    assignValueForGlobal(row, subtotalCol, subtotal);
+
+    return subtotal;
+  }
+  
+   /**
+   * ％入力のある明細行の小計（または計画原価）の再計算を行う
+   * 
+   */
+  function calculateSubtotalByPercentage(row, rateBase) {
+    var checkList = cellClass;
+    var divSubCol = getColumnForRowAndClassName(row, 'divisionSubject', checkList);
+    var clsItemCol = getColumnForRowAndClassName(row, 'classItem', checkList);
+    var divSub = cellValue[row][divSubCol];
+    var clsItm = cellValue[row][clsItemCol];
+
+    var subtotalCol = getColumnForRowAndClassName(row, 'subtotal', checkList);
+
+    if (divSub !=='' && clsItm !== '') {
+      var quantityCol = getColumnForRowAndClassName(row, 'quantity', checkList);
+      var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
+      var rateCol = getColumnForRowAndClassName(row, 'conversionRate', checkList);
+      var percentCol = getColumnForRowAndClassName(row, 'payoff', checkList);
+      var quantity = Number(cellValue[row][quantityCol]);
+      var price = Number(cellValue[row][priceCol]);
+      var rate = Number(cellValue[row][rateCol]);
+      var percent =(isNaN(cellValue[row][percentCol]) === false) ? Number(cellValue[row][percentCol]) / 100 : 0;
+      if( percent != 0 && rateBase != 0){
+        var subtotal = rateBase * percent * quantity * rate;
+      }
+      else {
+        var subtotal = quantity * price * rate;
+      }
       subtotal = '\xA5' + numberFormat(subtotal, 0);
     } else {
       var subtotal = '';
@@ -1757,7 +1863,7 @@ $(function() {
   }
 
   /**
-   * 輸入費用及び関税の単価、小計を計算する（パーセント入力されている場合に使用）
+   * 輸入費用及び関税、証紙の単価、小計を計算する（パーセント入力されている場合に使用）
    * 
    */
   function calculateImportOrTariffRows() {
@@ -1800,6 +1906,7 @@ $(function() {
 
     var importRows = [];
     var tariffRows = [];
+    var certificationRows = [];
 
     // 輸入費用、関税の入力行取得
     for (var i = 0; i < subjectElements.length; i++) {
@@ -1807,34 +1914,24 @@ $(function() {
       var subjectCol = subjectElements[i].col;
       if (cellValue[targetRow][subjectCol].match(chargeSubjectPattern)) { // チャージの場合
         var itemCol = getColumnForRowAndClassName(targetRow, 'classItem', checkList);
-        if (cellValue[targetRow][itemCol].match(importItemPattern)) { // 輸入費用の場合
+        /*if (cellValue[targetRow][itemCol].match(importItemPattern)) { // 輸入費用の場合
           importRows.push(targetRow);
-        } else if (cellValue[targetRow][itemCol].match(tariffItemPattern)) { // 関税の場合
+        } else */ 
+        if (cellValue[targetRow][itemCol].match(tariffItemPattern)) { // 関税の場合
           tariffRows.push(targetRow);
-        }       
+        }
+      }
+      else if (cellValue[targetRow][subjectCol].match(partsSubjectPattern)) {
+        var itemCol = getColumnForRowAndClassName(targetRow, 'classItem', checkList);
+        if (cellValue[targetRow][itemCol].match(certificationPattern)) {  // 証紙の場合
+          certificationRows.push(targetRow);
+        }
       }
     }
 
     // 関税行の処理
     var tariffTotal = tariffRows.reduce(function(total, row) {
-      var percentCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
-      var percent = (isNaN(cellValue[row][percentCol]) === false) ? Number(cellValue[row][percentCol]) / 100 : 0;
-
-      if (percent) { // パーセント入力されている場合は単価の計算
-        var quantityCol = getColumnForRowAndClassName(row, 'quantity', checkList);
-        var priceCol = getColumnForRowAndClassName(row, 'price', checkList);
-        var quantity = (isNaN(cellValue[row][quantityCol]) === false) ? Number(cellValue[row][quantityCol]) : 0;
-        if (quantity) {
-          var price = Math.floor((sum * percent / quantity) * 10**4) / 10**4;
-        } else {
-          var price = '';
-        }
-        // 単価の代入
-        assignValueForGlobal(row, priceCol, price);
-      }
-
-      // 小計の代入、取得
-      var subtotal = calculateSubtotal(row);
+      var subtotal = calculateSubtotalByPercentage(row, sum);
       subtotal = Number(subtotal.replace('\xA5', '').split(',').join(''));
 
       return total + subtotal;
@@ -1842,6 +1939,7 @@ $(function() {
     }, sum);
 
     // 輸入費用行の処理
+/*
     importRows.forEach(function(row) {
       var percentCol = getColumnForRowAndClassName(row, 'customerCompany', checkList);
       var percent = (isNaN(cellValue[row][percentCol]) === false) ? Number(cellValue[row][percentCol]) / 100 : 0;
@@ -1858,9 +1956,28 @@ $(function() {
         // 単価の代入
         assignValueForGlobal(row, priceCol, price);
       }
-
+   
       // 小計の再計算、代入
       calculateSubtotal(row);
+    });
+*/
+    // 証紙の再計算
+    // 上代の取得
+    var checkList = cellClass;
+    for (var i = 0; i < checkList.length; i++) {
+      if (checkList[i].className == 'retailprice') {
+        var retailRow = cellClass[i].row;
+        var retailCol = cellClass[i].col;
+        break;
+      }
+    }
+    // 上代の値を数値に変換する
+    var retail = (isNaN(cellValue[retailRow][retailCol].replace('\xA5', '').split(',').join('')) === false) ? 
+                  Number(cellValue[retailRow][retailCol].replace('\xA5', '').split(',').join('')) : 0;
+    
+    certificationRows.forEach(function(row) {
+      // 小計の再計算、代入
+      calculateSubtotalByPercentage(row, retail);
     });
 
     return;

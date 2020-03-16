@@ -25,14 +25,12 @@ class registOtherCellsController extends estimateOtherCellsController {
         $cellPayoffCircle = $cellAddressList[workSheetConst::HIDDEN_PAYOFF_CIRCLE];
         $payoffCircle = $sheet->getCell($cellPayoffCircle)->getCalculatedValue();
 
-        // 本荷の検索条件取得
-        $cellMainProduct = $cellAddressList[workSheetConst::HIDDEN_MAIN_PRODUCT];
-        $mainProduct = $sheet->getCell($cellMainProduct)->getCalculatedValue();
 
         // 集計用変数のセット
         $receiveProductTotalPrice = 0;
         $receiveProductTotalQuantity = 0;
-        $productionQuantity = 0;
+//        $productionQuantity = 0;
+        $productionQuantity = $sheet->getCell($cellAddressList[workSheetConst::PRODUCTION_QUANTITY])->getCalculatedValue();;  // "productionquantity"の値
         $receiveFixedCostTotalPrice = 0;
         $receiveFixedCostTotalQuantity = 0;
         $orderFixedCostTotalPrice = 0;
@@ -54,9 +52,9 @@ class registOtherCellsController extends estimateOtherCellsController {
                         // 製品数量合計
                         $receiveProductTotalQuantity += $quantity;
                         // 償却数
-                        if ($classItem === $mainProduct) {
-                            $productionQuantity += $quantity;
-                        }
+//                        if ($classItem === $mainProduct) {
+//                            $productionQuantity += $quantity;
+//                        }
                         break;
                     case DEF_AREA_FIXED_COST_SALES:
                         $quantity = $objRow->quantity;

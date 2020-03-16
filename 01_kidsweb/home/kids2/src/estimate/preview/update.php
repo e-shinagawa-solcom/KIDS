@@ -142,6 +142,8 @@
 					if ($cellName === workSheetConst::RETAIL_PRICE) {
 						$param = str_replace('\\', '', $param);
 						$param = str_replace(',', '', $param);
+						// 証紙第計算用変数に上代を代入
+	                    $retailCost = $param;
 					}
 					$paramKey = $headerKey[$cellName];
 					$headerParam[$paramKey] = $param;
@@ -205,11 +207,20 @@
 			// 輸入費用、関税については個別処理を行う為、対象の行番号を配列に格納する
 			if ($objRow->invalidFlag != true) {
 				if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_CHARGE) {
+/*
 					if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_IMPORT_COST) {
 						$importCostRowList[] = $row;
 					} else if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_TARIFF) {
 						$tariffRowList[] = $row;
 					}
+*/
+					if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_TARIFF) {
+						$tariffRowList[] = $row;
+					}
+				}
+				else if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST 
+				         && $objRow->classItemCode === DEF_STOCK_ITEM_CODE_CERTIFICATE) {
+					$certificateRowList[] = $row;
 				}
 			}
 
@@ -251,26 +262,31 @@
 	unset($tariffRowList);
 
 
-	// 輸入費用の処理
-	if ($importCostRowList) {
-		foreach ($importCostRowList as $rowIndex) {
-			$importCostObjRow = &$objRowList[$rowIndex];
-			$importCostObjRow->chargeCalculate($importCost);
-	
-			if ($importCostObjRow->invalidFlag != true) {
-				// 単価出力	
-				$priceColumn =  $importCostObjRow->columnNumberList['price'];
-				$priceCell =  $priceColumn. $rowIndex;
-	
-				$subtotalColumn = $importCostObjRow->columnNumberList['subtotal'];
+	// 証紙の処理
+	if ($certificateRowList) {
+		foreach ($certificateRowList as $rowIndex) {
+			$certificateObjRow = &$objRowList[$rowIndex];
+			$certificateObjRow->chargeCalculate($retailCost);
+
+			if ($certificateObjRow->invalidFlag != true) {
+				// 単価出力
+				$price = $certificateObjRow->price;
+				$priceColumn = $certificateObjRow->columnNumberList['price'];
+				$priceCell =  $certificateObjRow. $rowIndex;
+
+				$subtotalColumn = $certificateObjRow->columnNumberList['subtotal'];
 				$subtotalCell =  $subtotalColumn. $rowIndex;
-	
-				$deliveryColumn = $importCostObjRow->columnNumberList['delivery'];
+
+				$deliveryColumn = $certificateObjRow->columnNumberList['delivery'];
 				$deliveryCell = $deliveryColumn. $rowIndex;
-	
+
+
+				// 輸入費用計算用変数に計算結果を加算
+				$importCost += $certificateObjRow->calculatedSubtotalJP;
 			}
 		}
 	}
+
 
 	// バリデーションでエラーが発生した場合はエラーメッセージを表示する
 	if ( $outputMessage ) {

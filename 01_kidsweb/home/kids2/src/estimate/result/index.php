@@ -219,7 +219,7 @@ if (!count($strErrorMessage)) {
 				me.lngrevisionno,
 				SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
 				SUM(CASE WHEN msi.lngestimateareaclassno = 3 AND ted.bytpayofftargetflag = FALSE THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
-				count(mscdl.lngestimateareaclassno <> 0 OR msi.lngestimateareaclassno <> 5 OR NULL) AS countofreceiveandorderdetail,
+				count(mscdl.lngestimateareaclassno <> 0 OR (msi.lngestimateareaclassno = 3 OR msi.lngestimateareaclassno = 4 OR (msi.lngstocksubjectcode = 401 and msi.lngstockitemcode = 1)) OR NULL) AS countofreceiveandorderdetail,
 				count(mr.lngreceivestatuscode = 1 OR mo.lngorderstatuscode = 1 OR NULL) AS countofaplicatedetail
 			FROM m_estimate me
 			INNER JOIN m_estimatehistory meh on meh.lngestimateno = me.lngestimateno and meh.lngrevisionno = me.lngrevisionno

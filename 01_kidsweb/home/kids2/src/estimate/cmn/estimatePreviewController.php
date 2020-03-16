@@ -134,6 +134,7 @@ class estimatePreviewController {
             workSheetConst::INCHARGE_USER_CODE => $inchargeUserDisplay->struserdisplaycode. ":". $inchargeUserDisplay->struserdisplayname,
             workSheetConst::DEVELOP_USER_CODE => $developUserDisplay ? $developUserDisplay->struserdisplaycode. ":". $developUserDisplay->struserdisplayname : '',
             workSheetConst::CARTON_QUANTITY => $product->lngcartonquantity,
+            workSheetConst::PRODUCTION_QUANTITY => $product->lngproductionquantity,
         );
 
         $this->product = $data;
@@ -240,11 +241,13 @@ class estimatePreviewController {
                 $ret[$areaCode][$sortKey] = array(
                     'divisionSubject' => $subjectCode. ":". $subjectName,
                     'classItem' => $itemCode. ":". $itemName,
-                    'customerCompany' => $record->bytpercentinputflag == "f" ? $companyDisplay : $record->curproductrate,
-                    'payoff' => $record->bytpayofftargetflag == "t" ? '○' : '',
+//                    'customerCompany' => $record->bytpercentinputflag == "f" ? $companyDisplay : $record->curproductrate,
+                    'customerCompany' => $companyDisplay,
+                    'payoff' => $areaCode == DEF_AREA_OTHER_COST_ORDER ? ($record->bytpercentinputflag == "f" ? '' : $record->curproductrate) : ($record->bytpayofftargetflag == "t" ? '○' : ''),
                     'quantity' => $record->lngproductquantity,
                     'monetaryDisplay' => $monetaryDisplay[$record->lngmonetaryunitcode],
-                    'price' => $record->bytpercentinputflag == "f" ? $record->curproductprice : null,
+//                    'price' => $record->bytpercentinputflag == "f" ? $record->curproductprice : null,
+                    'price' => $record->curproductprice,
                     'conversionRate' => $record->curconversionrate,
                     'delivery' => $record->dtmdelivery,
                     'note' => $record->strnote,
@@ -255,9 +258,9 @@ class estimatePreviewController {
 
                 // 不要データの削除
                 // パーセント入力フラグが有効な時は単価を入力しない
-                if ($record->bytpercentinputflag == "t") {
-                    unset($ret[$areaCode][$sortKey]['price']);
-                }
+//                if ($record->bytpercentinputflag == "t") {
+//                    unset($ret[$areaCode][$sortKey]['price']);
+//                }
             }
             $deliveryList[] = $record->dtmdelivery;
         }

@@ -6,6 +6,7 @@ require_once (SRC_ROOT. "/estimate/cmn/const/workSheetConst.php");
 // Composerのオートロードファイル読み込み
 require_once ( VENDOR_AUTOLOAD_FILE );
 
+include_once(LIB_DEBUGFILE);
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 /**
@@ -322,7 +323,7 @@ abstract class estimateRowController {
             $ret = true;
         }
 
-        // 輸入費用、関税フラグを設定する
+        // 証紙、関税フラグを設定する
         $this->setDistinctionFlag();
 
         // 納期のチェック
@@ -336,30 +337,28 @@ abstract class estimateRowController {
         }
 
 
-        if ($this->importCostFlag || $this->tariffFlag) { // 輸入費用、関税の場合、パーセント入力フラグの判定を行う
-            // 入力書式を取得する
-            $dataType = $this->dataType;
-            if ($dataType) {
-                if ($dataType['price'] === DataType::TYPE_FORMULA) {
-                    if (is_numeric($this->customerCompany)) {
-                        $this->percentInputFlag = true;
-                    } else {
-                        // 単価が数式の場合、顧客先に数値が入っていない場合は無効にする
-                        //return true;
-                        $ret = true;
-                    }
-                }
-            } else {
-                if (is_numeric($this->customerCompany)) {
-                    $this->percentInputFlag = true;
-                } else if (!is_numeric($this->price)) {
-                    // 単価が数式の場合、顧客先に数値が入っていない場合は無効にする
+        if ($this->certificateFlag || $this->tariffFlag) { // 証紙、関税の場合、パーセント入力フラグの判定を行う
+//fncDebug("view.log", "payoff:" . $this->payoff, __FILE__, __LINE__, "a");
+            if (is_numeric($this->payoff) && $this->payoff > 0) {
+                $this->percentInputFlag = true;
+            } else if (!is_numeric($this->price) && $this->price == 0){
+                // %も単価ともに、0または未入力の場合は無効にする
+                //return true;
+                $ret = true;
+            }
+            if( $this->certificateFlag )
+            {
+                // 証紙は仕入先のチェックを行う
+                $this->validateCustomerCompany();
+                if ($this->message['customerCompany']) {
+                    // 仕入先の入力が正確でない場合非表示
+                    $this->errorFlag = true;
                     //return true;
                     $ret = true;
                 }
             }
 
-        } else { // 輸入費用、関税以外の場合
+        } else { // 証紙、関税以外の場合
             // 顧客先のチェックを行う
             $this->validateCustomerCompany();
             if ($this->message['customerCompany']) {
@@ -380,8 +379,8 @@ abstract class estimateRowController {
             $ret = true;
         }
 
-        // 輸入費用と関税以外の場合は小計を再計算し、チェックする
-        if (!$this->importCostFlag && !$this->tariffFlag) {
+        // 証紙と関税以外の場合は小計を再計算し、チェックする
+        if (!$this->certificateFlag && !$this->tariffFlag) {
             // 単価の小数点以下の桁数を整え、小計を再計算する
             $this->resettingPriceAndSubtotal();
 
@@ -456,6 +455,9 @@ abstract class estimateRowController {
         if (!isset($this->percentInputFlag)) {
             $this->percentInputFlag = false;
         }
+        else{
+//fncDebug("view.log", "company:" . $this->customerCompanyCode, __FILE__, __LINE__, "a");
+        }
         $registData = array(
             'areaCode' => $this->areaCode,
             'salesOrder' => $this->salesOrder, // 受注または発注
@@ -468,7 +470,7 @@ abstract class estimateRowController {
             'conversionRate' => $this->conversionRate, // DBから取得した通貨コードを出力
             'monetary' => $this->monetary,
             'customerCompany' => $this->customerCompanyCode,
-            'payoff' => $this->payoff,
+            'payoff' => $this->percentInputFlag == true ? false : $this->payoff,
             'percentInputFlag' => $this->percentInputFlag,
             'percent' => $this->percent,
             'note' => $this->note
@@ -527,7 +529,7 @@ abstract class estimateRowController {
     public function workSheetRegistCheck() {
         $this->setInvalidFlag();
         if ($this->invalidFlag != true) {
-            if (!$this->importCostFlag && !$this->tariffFlag) {
+            if (!$this->certificateFlag && !$this->tariffFlag) {
                 // 単価の桁数再設定と小計の再計算
                 $this->resettingPriceAndSubtotal();
             }
@@ -545,9 +547,6 @@ abstract class estimateRowController {
             switch ($divisionSubjectCode) {
                 case DEF_STOCK_SUBJECT_CODE_CHARGE:
                     switch ($classItemCode) {
-                        case DEF_STOCK_ITEM_CODE_IMPORT_COST:
-                            $this->importCostFlag = true; // 輸入費用フラグ
-                            break;
                         case DEF_STOCK_ITEM_CODE_TARIFF:
                             $this->tariffFlag = true; // 関税フラグ
                             break;
@@ -560,6 +559,16 @@ abstract class estimateRowController {
                 case DEF_STOCK_SUBJECT_CODE_EXPENSE:
                     $this->expenseFlag = true; // 
                     break;
+
+                case DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST:
+                    switch ($classItemCode) {
+                        case DEF_STOCK_ITEM_CODE_CERTIFICATE:
+                            $this->certificateFlag = true; // 証紙代フラグ
+//fncDebug("view.log", "this row is for 証紙", __FILE__, __LINE__, "a");
+                            break;
+                        default:
+                            break;
+                    }
 
                 default:
                     break;
@@ -588,8 +597,11 @@ abstract class estimateRowController {
         return $prefix;
     }
 
-    // 輸入費用、関税の処理
-    public function chargeCalculate($conditionalTotal) {
+    // 証紙、関税の処理
+    public function chargeCalculate($conditionalTotal, $fromDB = false) {
+        // 通貨ごとの単価の小数点以下の桁数を取得
+        $decimalDigit = workSheetConst::PRICE_DECIMAL_DIGIT;
+
         $monetary = $this->monetary;
         if ($monetary !== DEF_MONETARY_YEN) {
             $this->invalidFlag = true;
@@ -598,34 +610,33 @@ abstract class estimateRowController {
 
         $quantity = $this->quantity; // 数量
 
-        if ($this->percentInputFlag) {
+//fncDebug("view.log", "percentInputFlag:" . $this->percentInputFlag , __FILE__, __LINE__, "a");
+        if ($this->percentInputFlag == true) {
+//fncDebug("view.log", "calclate by percent", __FILE__, __LINE__, "a");
             // パーセント値の取得
-            $percent = $this->customerCompany;
-            // 単価の再計算
-            $price = $percent * $conditionalTotal / $quantity;
+            $percent = $this->payoff;;
 
-            // 仕入先の出力値を空白にする
-            $this->customerCompany = null;
+            // 償却の出力値を空白にする
+            $this->payoff = null;
             // パーセント値をセットする
             $this->percent = $percent;
+            $price = $conditionalTotal * $percent;
         } else {
             $price = $this->price;
         }
-
-        // 通貨ごとの単価の小数点以下の桁数を取得
-        $decimalDigit = workSheetConst::PRICE_DECIMAL_DIGIT;
+//fncDebug("view.log", "price:" . $price, __FILE__, __LINE__, "a");
 
         // 小数点第4桁以下切り捨て
-        $price = floor($price * pow(10, $decimalDigit[$monetary])) / pow(10, $decimalDigit[$monetary]);
-        $price = number_format($price, 4, '.', '');
+        $price = floor($price * pow(10, 4)) / pow(10, 4);
+        $calculatedSubtotal = $price * $quantity;
 
         // 再計算結果で置換
-        $this->price = $price;
+//        $this->price = $price;
+//fncDebug("view.log", "calculatedSubtotal:" . $calculatedSubtotal, __FILE__, __LINE__, "a");
         
         $conversionRate = $this->conversionRate; // マスター上の通貨レート
-
-        // 小計の再計算
-        $calculatedSubtotal = $price * $conversionRate * $quantity;
+        $calculatedSubtotal *= $conversionRate;
+        $calculatedSubtotal = floor($calculatedSubtotal * pow(10, 2)) / pow(10, 2);
         $this->calculatedSubtotal = $calculatedSubtotal;
         $this->calculatedSubtotalJP = $calculatedSubtotal;
 
@@ -800,17 +811,19 @@ abstract class estimateRowController {
     // 顧客先
     protected function validateCustomerCompany() {
         $customerCompany = $this->customerCompany;
+        $divisionSubject = explode(':', $this->divisionSubject)[0];
         if (isset($customerCompany) && $customerCompany !=='') {
             if (preg_match("/\A[0-9]+:.*\z/", $customerCompany)) {
                 list ($customerCompanyCode, $customerCompanyName) = explode(':', $customerCompany);
                 $masterData = static::$customerCompanyCodeMaster;
                 $this->customerCompanyCode = (string)$customerCompanyCode;
                 // マスターチェック
-                if (!isset($masterData[$customerCompanyCode])) {
-                $str = array("明細部",strlen($this->columnDisplayNameList['customerCompany']) > 0 ? $this->columnDisplayNameList['customerCompany'] : "顧客または仕入先");
+                if (!isset($masterData[$divisionSubject][$customerCompanyCode])) {
+                    $str = array("明細部",strlen($this->columnDisplayNameList['customerCompany']) > 0 ? $this->columnDisplayNameList['customerCompany'] : "顧客または仕入先");
                     $this->message['customerCompany']  = fncOutputError(DEF_MESSAGE_CODE_MASTER_CHECK_ERROR, DEF_WARNING, $str, FALSE, '', $this->objDB);
+//fncDebug( "view.log", "subject: " . $divisionSubject . " company: " . $customerCompanyCode . " is  error", __FILE__, __LINE__, "a");
                 }
-                $display = $masterData[$customerCompanyCode]['shortName'];
+                $display = $masterData[$divisionSubject][$customerCompanyCode]['shortName'];
                 $this->customerCompany = $customerCompanyCode. ':'. $display;
             } else {
                 // 入力形式不正

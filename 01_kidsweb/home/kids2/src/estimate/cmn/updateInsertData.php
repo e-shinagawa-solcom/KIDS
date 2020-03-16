@@ -89,7 +89,16 @@ class updateInsertData extends estimateInsertData {
                 $detailNoList[] = $rowDataList[$i]['previousDetailNo'];
                 $rowDataList[$i]['detailRevisionNo'] = (int)$this->getCurrentDetailRevision($rowDataList[$i]['previousDetailNo']);
                 // 受注マスタ、発注マスタいずれかに登録される明細行について、以前の見積原価明細行番号を取得する
-                if ($rowDataList[$i]['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
+                if (
+                     ($rowDataList[$i]['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) ||
+                     (   
+                        ($rowDataList[$i]['areaCode'] == DEF_AREA_OTHER_COST_ORDER) && 
+                        ( 
+                          ($rowDataList[$i]['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowDataList[$i]['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE) ||
+                          ($rowDataList[$i]['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_EXPENSE && $rowDataList[$i]['classItem'] == DEF_STOCK_ITEM_CODE_TARIFF)
+                        )
+                     )
+                ){
 
                     if($rowDataList[$i]['salesOrder'] === DEF_ATTRIBUTE_CLIENT)
                     {
@@ -201,8 +210,19 @@ class updateInsertData extends estimateInsertData {
             // 発注の場合
             } else if ($salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
                 // 発注で経費以外の場合
-                if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
+                if (
+                     ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) ||
+                     (   
+                        ($rowData['areaCode'] == DEF_AREA_OTHER_COST_ORDER) && 
+                        ( 
+                          ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE) ||
+                          ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_EXPENSE && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_TARIFF)
+                        )
+                     )
+                ){
 
+//fncDebug("view.log", "divisionSubject:" . $rowData['divisionSubject'], __FILE__, __LINE__, "a");
+//fncDebug("view.log", "classItem:" . $rowData['classItem'], __FILE__, __LINE__, "a");
                     // 仮発注の明細のみ、見積原価明細と発注明細、発注マスタを更新
                     if ($rowData['orderStatusCode'] == DEF_ORDER_APPLICATE){
                         // 見積原価明細テーブルの登録処理
@@ -218,6 +238,8 @@ class updateInsertData extends estimateInsertData {
                 }
                 else
                 {
+//fncDebug("view.log", "divisionSubject:" . $rowData['divisionSubject'], __FILE__, __LINE__, "a");
+//fncDebug("view.log", "classItem:" . $rowData['classItem'], __FILE__, __LINE__, "a");
                     // 見積原価明細テーブルの登録処理
                     $this->updateTableEstimateDetail($rowData, $estimateDetailNo);
                 }
@@ -508,8 +530,8 @@ class updateInsertData extends estimateInsertData {
             'lngmonetaryratecode' => $rowData['monetary'] == 1 ? DEF_MONETARY_RATE_CODE_NONE : DEF_MONETARY_RATE_CODE_COMPANY_LOCAL,
             'curconversionrate' => $rowData['conversionRate'],
             'lngproductquantity' => $rowData['quantity'],
-            'curproductprice' => $rowData['percentInputFlag'] === false ? $rowData['price'] : 'null',
-            'curproductrate' => $rowData['percentInputFlag'] === true ? $rowData['percent'] : 'null',
+            'curproductprice' => $rowData['price'],
+            'curproductrate' => $rowData['percentInputFlag'] === true ? $rowData['percent'] / 100 : 'null',
             'cursubtotalprice' => $rowData['subtotal'],
             'strnote' => "'". $rowData['note']. "'",
             'lngsortkey' => $estimateDetailNo,

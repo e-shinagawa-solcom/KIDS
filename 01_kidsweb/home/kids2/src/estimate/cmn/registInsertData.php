@@ -162,7 +162,12 @@ class registInsertData extends estimateInsertData {
 
             // 発注の場合
             } else if ($salesOrder === DEF_ATTRIBUTE_SUPPLIER) {
-                if ($rowData['areaCode'] !== DEF_AREA_OTHER_COST_ORDER) {
+                if ($rowData['areaCode'] == DEF_AREA_FIXED_COST_ORDER ||
+                    $rowData['areaCode'] == DEF_AREA_PARTS_COST_ORDER ||
+                    ($rowData['areaCode'] == DEF_AREA_OTHER_COST_ORDER && 
+                     $rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST &&
+                     $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE)
+                      ) {
                     // 発注明細番号のインクリメント
                     ++$orderDetailNo;
 
@@ -321,7 +326,7 @@ class registInsertData extends estimateInsertData {
             'lngmonetaryratecode' => $rowData['monetary'] == 1 ? DEF_MONETARY_RATE_CODE_NONE : DEF_MONETARY_RATE_CODE_COMPANY_LOCAL,
             'curconversionrate' => $rowData['conversionRate'],
             'lngproductquantity' => $rowData['quantity'],
-            'curproductprice' => $rowData['percentInputFlag'] === false ? $rowData['price'] : 'null',
+            'curproductprice' => $rowData['price'],
             'cursubtotalprice' => $rowData['subtotal'],
             'strnote' => "'". $rowData['note']. "'",
             'lngsortkey' => $estimateDetailNo,
@@ -512,6 +517,13 @@ class registInsertData extends estimateInsertData {
         // テーブルの設定
         $table = 't_orderdetail';
 
+        if($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE){
+            $curproductprice = $rowData['subtotal'] / $rowData['quantity'];
+        }
+        else{
+            $curproductprice = $rowData['price'];
+        }
+
         $data = array(
             'lngorderno' => $orderNo,
             'lngorderdetailno' => $orderDetailNo,
@@ -523,7 +535,7 @@ class registInsertData extends estimateInsertData {
             'dtmdeliverydate' => "TO_TIMESTAMP('". $rowData['delivery']. "', 'YYYY/MM/DD')",
             'lngdeliverymethodcode' => 'NULL',
             'lngconversionclasscode' => DEF_CONVERSION_SEIHIN,
-            'curproductprice' => $rowData['price'],
+            'curproductprice' => $curproductprice,
             'lngproductquantity' => $rowData['quantity'],
             'lngproductunitcode' => DEF_PRODUCTUNIT_PCS,
             'cursubtotalprice' => $rowData['subtotal'],

@@ -210,11 +210,20 @@
 					// 輸入費用、関税については個別処理を行う為、対象の行番号を配列に格納する
 					if ($objRow->invalidFlag != true) {
 						if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_CHARGE) {
+/*
 							if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_IMPORT_COST) {
 								$importCostRowList[] = $row;
 							} else if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_TARIFF) {
 								$tariffRowList[] = $row;
 							}
+*/
+							if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_TARIFF) {
+								$tariffRowList[] = $row;
+							}
+						}
+						else if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST 
+						         && $objRow->classItemCode === DEF_STOCK_ITEM_CODE_CERTIFICATE) {
+							$certificateRowList[] = $row;
 						}
 					}
 
@@ -257,32 +266,38 @@
 			}
 		}
 
+		// 証紙第計算用変数に上代を代入
+		$retailCell = $cellAddressList[workSheetConst::RETAIL_PRICE];
+		$retailCost = $objSheet->sheet->getCell($retailCell)->getCalculatedValue();
 
-		// 輸入費用の処理
-		if ($importCostRowList) {
-			foreach ($importCostRowList as $rowIndex) {
-				$importCostObjRow = &$objRowList[$rowIndex];
-				$importCostObjRow->chargeCalculate($importCost);
+		// 証紙の処理
+		if ($certificateRowList) {
+			foreach ($certificateRowList as $rowIndex) {
+				$certificateObjRow = &$objRowList[$rowIndex];
+				$certificateObjRow->chargeCalculate($retailCost);
 	
-				if ($importCostObjRow->invalidFlag != true) {
+				if ($certificateObjRow->invalidFlag != true) {
 					// 単価出力
-					$price = $importCostObjRow->price;
-	
-					$priceColumn =  $importCostObjRow->columnNumberList['price'];
+					$price = $certificateObjRow->price;
+					$priceColumn = $certificateObjRow->columnNumberList['price'];
 					$priceCell =  $priceColumn. $rowIndex;
 	
-					$subtotalColumn = $importCostObjRow->columnNumberList['subtotal'];
+					$subtotalColumn = $certificateObjRow->columnNumberList['subtotal'];
 					$subtotalCell =  $subtotalColumn. $rowIndex;
 	
-					$deliveryColumn = $importCostObjRow->columnNumberList['delivery'];
+					$deliveryColumn = $certificateObjRow->columnNumberList['delivery'];
 					$deliveryCell = $deliveryColumn. $rowIndex;
 	
-					// 計算後の単価をsheetオブジェクトに挿入
+					// 計算後の単価、小計をsheetオブジェクトに挿入
 					$objSheet->sheet->getCell($priceCell)->setValue($price);
-					$objSheet->sheet->getCell($subtotalCell)->setValue($importCostObjRow->calculatedSubtotalJP);
+					$objSheet->sheet->getCell($subtotalCell)->setValue($certificateObjRow->calculatedSubtotalJP);
+	
+					// 輸入費用計算用変数に計算結果を加算
+					$importCost += $certificateObjRow->calculatedSubtotalJP;
 				}
 			}
 		}
+
 
 
 		// // 標準割合のチェック
@@ -322,15 +337,18 @@
 
 			$objSheet->sheet->getCell($subtotalCell)->setValue($calculatedSubtotalJP);
 			
-			if ($objRow->percentInputFlag !== true) {
-				// DBの情報に置換後（仕入の空欄はその他）の顧客先、仕入先情報をセットする
-				$column = $columnList['customerCompany'];
-				$customerCompany = $objRow->customerCompany;
-				$companyCell = $column.$row;
-				$objSheet->sheet->getCell($companyCell)->setValue($customerCompany);
-			} else {
-				// パーセント入力されている場合は右寄せにする
-				$objSheet->setHorizontalRight($companyCell);
+			$column = $columnList['payoff'];
+
+            if(strlen($column) > 0){
+				$payoff = $objRow->payoff;
+				$payoffCell = $column.$row;
+				if ($objRow->percentInputFlag !== true) {
+					// DBの情報に置換後（仕入の空欄はその他）の償却をセットする
+					    $objSheet->sheet->getCell($payoffCell)->setValue($payoff);
+				} else {
+					// パーセント入力されている場合は右寄せにする
+					$objSheet->setHorizontalRight($payoffCell);
+				}
 			}
 		}
 
