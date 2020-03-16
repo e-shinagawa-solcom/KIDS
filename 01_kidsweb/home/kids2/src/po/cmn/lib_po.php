@@ -130,6 +130,9 @@ fnccheckの換算レートdisableからpostされてないのでこめんと
 			case 10:	// 売上区分(受注）
 				$strPulldownMenu = fncGetPulldown( "m_salesclass", "lngsalesclasscode", "strsalesclassname", $lngValueCode,'', $objDB );
 				break;
+			case 11:		// 製品単位
+				$strPulldownMenu = fncGetPulldown( "m_productunit", "lngProductUnitCode", "strProductUnitName", $lngValueCode, "", $objDB );
+				break;
 		}
 		return $strPulldownMenu;
 	}

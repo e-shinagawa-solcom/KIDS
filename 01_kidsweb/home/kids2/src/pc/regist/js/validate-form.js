@@ -16,11 +16,11 @@
     var msgSpecialFormat = "書式に誤りがあります。"
 
     // validationキック
-    $('.hasDatepicker').on({
-        'change': function () {
-            $(this).blur();
-        }
-    });
+    // $('.hasDatepicker').on({
+    //     'change': function () {
+    //         $(this).blur();
+    //     }
+    // });
 
     // 発注NO.に半角英数字以外の文字が入力できない
     $.validator.addMethod(
@@ -39,11 +39,13 @@
         "checkDateFormat",
         function (value, element, params) {
             if (params) {
+                if (value.length == 8) {
+                    value = value.substr(0, 4) + "/" + value.substr(4, 2) + "/" + value.substr(6, 2)
+                }
                 // yyyy/mm/dd形式か
                 if (!(regDate.test(value))) {
                     return false;
                 }
-                // 日付文字列の字句分解
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];

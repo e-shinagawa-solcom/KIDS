@@ -18,4 +18,12 @@
             window.location.href = url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version;
         }
     });
+    
+    
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            $(this).find('img').click();
+        }
+    });
 })();

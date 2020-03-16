@@ -1,9 +1,9 @@
 (function () {
 
     // 登録ボタンのイベント
-    $('img.cancel').on('click', function () {
-        var lngReceiveNo = $(this).attr('id');
-        var lngRevisionNo = $(this).attr('revisionno');
+    $('#cancel').on('click', function () {
+        var lngReceiveNo = $(this).attr('lngReceiveNo');
+        var lngRevisionNo = $(this).attr('lngRevisionNo');
         // リクエスト送信
         $.ajax({
             url: '/so/cancel/cancel_finish.php',
@@ -26,7 +26,7 @@
 
     
     // 閉じるボタンのイベント
-    $('img.close').on('click', function () {
+    $('#close').on('click', function () {
 
         window.opener.location.reload();
         //ウィンドウを閉じる
@@ -34,8 +34,7 @@
     });
 
     // ウィンドウを閉じる前のイベント
-    $(window).on("beforeunload", function(e) {  
-        alert("test");      
+    $(window).on("beforeunload", function(e) {    
         window.opener.location.reload();
     });
 })();

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <!-- 互換表示OFFを強制させる -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,6 +27,7 @@
     <!-- 閉じる/登録 ボタンの挙動 -->
     <script src="./js/form-action.js" defer></script>
 </head>
+
 <body class="confirm-background">
     <div class="confirm-title">
         削除確認
@@ -35,8 +37,12 @@
             下記の金型帳票を削除します。
         </div>
         <div class="confirm-box__buttons">
-            <img class="close-action button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" alt="close">
-            <img id="delete-button" class="delete-action button" src="/img/type01/cmn/seg/delete_off_ja_bt.gif" alt="delete">
+            <a href="#">
+                <img class="close-action button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" alt="close">
+            </a>
+            <a href="#">
+                <img id="delete-button" class="delete-action button" src="/img/type01/cmn/seg/delete_off_ja_bt.gif" alt="delete">
+            </a>
         </div>
     </div>
     <div class="confirm-data">
@@ -167,4 +173,5 @@
         </div>
     </div>
 </body>
+
 </html>

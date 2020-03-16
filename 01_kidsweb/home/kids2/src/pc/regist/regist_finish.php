@@ -118,7 +118,7 @@ $aryQuery[] = ($aryData["curConversionRate"] == "" ? "null" : $aryData["curConve
 $aryQuery[] = ($aryData["lngPayConditionCode"] == "" ? "null" : $aryData["lngPayConditionCode"]) . ", "; // 13:支払い条件
 $aryQuery[] = "'" . $aryData["strSlipCode"] . "', "; // 14:伝票コード
 $aryQuery[] = $aryData["curTotalPrice"] . ", "; // 15:合計金額
-$aryQuery[] = $aryData["lngDeliveryPlaceCode"] . ", "; // 16:納品場所
+$aryQuery[] = ($aryData["lngDeliveryPlaceCode"] == "" ? "null" : $aryData["lngDeliveryPlaceCode"]) . ", "; // 16:納品場所
 $aryQuery[] = ($aryData["dtmExpirationDate"] == "" ? "null" : "'" . $aryData["dtmExpirationDate"] . "'") .", "; // 17:製品到着日
 $aryQuery[] = "'" . $aryData["strNote"] . "', "; // 18:備考
 $aryQuery[] = $lngUserCode . ", "; // 19:入力者コード
@@ -127,7 +127,7 @@ $aryQuery[] = "'" . fncGetDateTimeString() . "'"; // 21:登録日
 $aryQuery[] = " )";
 
 $strQuery = implode("\n", $aryQuery);
-//echo $strQuery . "<br>";
+
 if (!$lngResultID = $objDB->execute($strQuery)) {
     fncOutputError(9051, DEF_ERROR, "", true, "", $objDB);
 }

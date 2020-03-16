@@ -1,7 +1,7 @@
 (function () {
 
     // 登録ボタンのイベント
-    $('img.regist').on('click', function () {
+    $('#regist').on('click', function () {
         var params = new Array();
         var len = 0;
         $("#table_decide_detail tbody tr").each(function (i, e) {
@@ -58,7 +58,7 @@
 
     
     // 閉じるボタンのイベント
-    $('img.return').on('click', function () {
+    $('#return').on('click', function () {
                 
         // 親ウィンドウのロックを解除する
         if (window.opener.$('#lockId').length) {

@@ -1,5 +1,5 @@
 
-(function(){
+(function () {
     // フォーム
     var form = $('form');
     // エラーアイコンクラス名
@@ -13,7 +13,7 @@
 
     // validationキック
     $('.hasDatepicker').on({
-        'change': function(){
+        'change': function () {
             $(this).blur();
         }
     });
@@ -21,34 +21,34 @@
     // 登録ボタンイベント横取り
     var events = $._data($('img.search').get(0), 'events');
     var originalHandler = [];
-    for(var i = 0; i < events.click.length; i++){
+    for (var i = 0; i < events.click.length; i++) {
         originalHandler[i] = events.click[i].handler;
     }
     // 現在のイベントを打ち消す
     $('img.search').off('click');
-    $('img.search').on('click', {next:originalHandler}, function(event){
+    $('img.search').on('click', { next: originalHandler }, function (event) {
         var result = checkedCheckbox($('input.is-search'), "検索条件チェックボックスが選択されていません。");
-        if(!result){
+        if (!result) {
             return false;
         }
 
 
         // 保留していたイベントを実行
-        for(var i = 0; i < event.data.next.length; i++){
+        for (var i = 0; i < event.data.next.length; i++) {
             event.data.next[i]();
         }
     });
-    function checkedCheckbox(e, msg){
+    function checkedCheckbox(e, msg) {
         var result = isChecked(e);
-        if(!result){
+        if (!result) {
             alert(msg);
         }
         return result;
     }
-    function isChecked(e){
+    function isChecked(e) {
         var result = false;
-        $(e).each(function(){
-            if($(this).prop('checked')){
+        $(e).each(function () {
+            if ($(this).prop('checked')) {
                 result = true;
                 return false;
             }
@@ -59,8 +59,15 @@
     // 日付がyyyy/mm/dd形式にマッチしているか,有効な日付か
     $.validator.addMethod(
         "checkDateFormat",
-        function(value, element, params) {
-            if(params){
+        function (value, element, params) {
+            if (params) {
+                if (value.length == 8) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
                 // yyyy/mm/dd形式か
                 if (!(regDate.test(value))) {
                     return false;
@@ -77,7 +84,7 @@
                 } else {
                     return false;
                 }
-            }return true;
+            } return true;
         },
         msgDateFormat
     );
@@ -87,27 +94,27 @@
         // -----------------------------------------------
         // エラー表示処理
         // -----------------------------------------------
-        errorPlacement: function (error, element){
+        errorPlacement: function (error, element) {
             invalidImg = $('<img>')
-                            .attr('class', classNameErrorIcon)
-                            .attr('src', urlErrorIcon)
-                            // CSS設定(表示位置)
-                            .css({
-                                position: 'relative',
-                                top: -1,
-                                left: -2,
-                                opacity: 'inherit'
-                            })
-                            // ツールチップ表示
-                            .tooltipster({
-                                trigger: 'hover',
-                                onlyone: false,
-                                position: 'top',
-                                content: error.text()
-                            });
+                .attr('class', classNameErrorIcon)
+                .attr('src', urlErrorIcon)
+                // CSS設定(表示位置)
+                .css({
+                    position: 'relative',
+                    top: -1,
+                    left: -2,
+                    opacity: 'inherit'
+                })
+                // ツールチップ表示
+                .tooltipster({
+                    trigger: 'hover',
+                    onlyone: false,
+                    position: 'top',
+                    content: error.text()
+                });
 
             // エラーアイコンが存在しない場合
-            if ($(element).prev('img.' + classNameErrorIcon).length <= 0){
+            if ($(element).prev('img.' + classNameErrorIcon).length <= 0) {
                 // エラーアイコンを表示
                 $(element).before(invalidImg);
             }
@@ -115,61 +122,61 @@
             else {
                 // 既存のエラーアイコンのツールチップテキストを更新
                 $(element).prev('img.' + classNameErrorIcon)
-                            .tooltipster('content', error.text());
+                    .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
         // 検証OK時の処理
         // -----------------------------------------------
-        unhighlight: function(element){
-                // エラーアイコン削除
-                $(element).prev('img.' + classNameErrorIcon).remove();
+        unhighlight: function (element) {
+            // エラーアイコン削除
+            $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
         // 検証ルール
         // -----------------------------------------------
-        rules:{
+        rules: {
             // 仕入計上日
             From_DtmAppropriationDate: {
-                checkDateFormat: function(){
+                checkDateFormat: function () {
                     return $('input[name="IsSearch_DtmAppropriationDate"]').get(0).checked;
                 }
             },
             To_DtmAppropriationDate: {
-                checkDateFormat: function(){
+                checkDateFormat: function () {
                     return $('input[name="IsSearch_DtmAppropriationDate"]').get(0).checked;
                 }
             },
             // 実施日
             From_ActionDate: {
-                checkDateFormat: function(){
+                checkDateFormat: function () {
                     return $('input[name="IsSearch_ActionDate"]').get(0).checked;
                 }
             },
             To_ActionDate: {
-                checkDateFormat: function(){
+                checkDateFormat: function () {
                     return $('input[name="IsSearch_ActionDate"]').get(0).checked;
                 }
             },
             // 登録日
             From_Created: {
-                checkDateFormat: function(){
+                checkDateFormat: function () {
                     return $('input[name="IsSearch_Created"]').get(0).checked;
                 }
             },
             To_Created: {
-                checkDateFormat: function(){
+                checkDateFormat: function () {
                     return $('input[name="IsSearch_Created"]').get(0).checked;
                 }
             },
             // 更新日
             From_Updated: {
-                checkDateFormat: function(){
+                checkDateFormat: function () {
                     return $('input[name="IsSearch_Updated"]').get(0).checked;
                 }
             },
             To_Updated: {
-                checkDateFormat: function(){
+                checkDateFormat: function () {
                     return $('input[name="IsSearch_Updated"]').get(0).checked;
                 }
             }

@@ -143,6 +143,12 @@ function lcInit(json_obj) {
 					$(this).val(convertNumberByClass(val, lc_data.currencyclass, 0));
 				});
 
+				$('#bldetail1money, #bldetail2money, #bldetail3money').on('focus', function () {
+					var val = $(this).val();
+					console.log(val);
+					$(this).val(val.replace(/,/g, ''));
+				});
+
 				//ローダー解除
 				$("#masking_loader").css("display", "none");
 			} else {
@@ -181,21 +187,21 @@ function updateBtn() {
 	}
 
 	//依頼日の形式が日付形式（yyyy/mm/dd）になってない
-	if (!$("#bankreqdate").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+	if ($("#bankreqdate").val() != "" && !$("#bankreqdate").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
 		alert("依頼日の形式を確認してください。");
 		$("#bankreqdate").focus();
 		return false;
 	}
 
 	//発行日の形式が日付形式（yyyy/mm/dd）になってない
-	if (!$("#lcamopen").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+	if ($("#lcamopen").val() != "" && !$("#lcamopen").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
 		alert("発行日の形式を確認してください。");
 		$("#lcamopen").focus();
 		return false;
 	}
 
 	//有効日の形式が日付形式（yyyy/mm/dd）になってない
-	if (!$("#validmonth").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
+	if ($("#validmonth").val() != "" && !$("#validmonth").val().match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) {
 		alert("有効日の形式を確認してください。");
 		$("#validmonth").focus();
 		return false;
@@ -222,19 +228,19 @@ function updateBtn() {
 		return false;
 	}
 
-	if ($("#bldetail1money").val() != "" && !$.isNumeric($("#bldetail1money").val())) {
+	if ($("#bldetail1money").val() != "" && !$.isNumeric($("#bldetail1money").val().replace(/,/g, ''))) {
 		alert("決済1金額の形式を確認してください。");
 		$("#bldetail1money").focus();
 		return false;
 	}
 
-	if ($("#bldetail2money").val() != "" && !$.isNumeric($("#bldetail2money").val())) {
+	if ($("#bldetail2money").val() != "" && !$.isNumeric($("#bldetail2money").val().replace(/,/g, ''))) {
 		alert("決済2金額の形式を確認してください。");
 		$("#bldetail2money").focus();
 		return false;
 	}
 
-	if ($("#bldetail2money").val() != "" && !$.isNumeric($("#bldetail3money").val())) {
+	if ($("#bldetail2money").val() != "" && !$.isNumeric($("#bldetail3money").val().replace(/,/g, ''))) {
 		alert("決済3金額の形式を確認してください。");
 		$("#bldetail3money").focus();
 		return false;
@@ -319,14 +325,20 @@ function updateBtn() {
 		}
 	})
 		.done(function (data) {
+			console.log(data);
 			// Ajaxリクエストが成功
 			var data = JSON.parse(data);
+
+
+			alert("更新処理が完了しました。");
 
 			//ローダー非表示
 			$("#masking_loader").css("display", "none");
 		})
-		.fail(function () {
+		.fail(function (data) {
 			// Ajaxリクエストが失敗
+			console.log(data);
+			alert("更新処理が失敗しました。");
 		});
 
 }
@@ -365,7 +377,7 @@ function releaseBtn() {
 }
 
 (function () {
-    $(window).on("beforeunload", function(e) {
-        window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';	
-    });
+	$(window).on("beforeunload", function (e) {
+		window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+	});
 })();

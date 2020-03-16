@@ -10,11 +10,11 @@
     selectRow("", $("#tableB_no"), $("#tableB"), "");
 
     if ($('input[name="strGoodsCode"]').val() != "") {
-        $('input[name="strGoodsCode"]').attr('readonly', true);
+        $('input[name="strGoodsCode"]').attr('disabled', true);
         $('input[name="strGoodsCode"]').removeClass('TxtStyle05L');
         $('input[name="strGoodsCode"]').addClass('disTxt05L');
     } else {
-        $('input[name="strGoodsCode"]').attr('readonly', false);
+        $('input[name="strGoodsCode"]').attr('disabled', false);
         $('input[name="strGoodsCode"]').removeClass('disTxt05L');
         $('input[name="strGoodsCode"]').addClass('TxtStyle05L');
     }
@@ -30,7 +30,7 @@
     setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
     // 追加ボタンのイベント
-    $('img.add').on('click', function () {
+    $('#add').on('click', function () {
         var isChecked = false;
         $('input[type="checkbox"]')
             .each(function () {
@@ -105,7 +105,7 @@
     });
 
     // 全削除ボタンのイベント
-    $('img.alldelete').on('click', function () {
+    $('#alldelete').on('click', function () {
 
         // テーブルBのデータをすべてテーブルAに移動する
         deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
@@ -120,7 +120,7 @@
     });
 
     // 削除ボタンのイベント
-    $('img.delete').on('click', function () {
+    $('#delete').on('click', function () {
         // テーブルBの選択されたデータをテーブルAに移動する
         deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
 
@@ -134,7 +134,7 @@
     });
 
     // 検索条件変更ボタンのイベント
-    $('img.search').on('click', function () {
+    $('#search').on('click', function () {
 
         // 画面操作を無効する
         lockScreen(lockId);
@@ -167,7 +167,7 @@
     });
 
     // 確定登録イベント
-    $('img.decideRegist').on('click', function () {
+    $('#decideRegist').on('click', function () {
         // 顧客品番が空の場合、エラー
         if ($('input[name="strGoodsCode"]').val() == "") {
             alert("顧客品番が入力されていません。");
@@ -250,7 +250,7 @@
         // 画面操作を無効する
         // lockScreen("lockId");
         var strGoodsCode = "";
-        if (!$('input[name="strGoodsCode"]').attr('readonly')) {
+        if (!$('input[name="strGoodsCode"]').attr('disabled')) {
             strGoodsCode = $('input[name="strGoodsCode"]').val();
         }
 

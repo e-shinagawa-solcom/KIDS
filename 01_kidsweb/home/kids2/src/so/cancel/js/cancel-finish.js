@@ -1,7 +1,7 @@
 (function () {
 
     // 閉じるボタンのイベント
-    $('img.close').on('click', function () {
+    $('#close').on('click', function () {
         //ウィンドウを閉じる
         window.close();
         

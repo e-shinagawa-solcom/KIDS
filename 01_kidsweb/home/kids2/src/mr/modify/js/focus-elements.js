@@ -1,5 +1,5 @@
 // 各種ボタンをフォーカス可能にする
-$('img.msw-button, img.list-add, img.list-del').attr({
+$('img.list-add, img.list-del').attr({
     tabindex: 0
 });
 
@@ -9,7 +9,7 @@ $('.mold-selection__choosen-list').attr({
 });
 
 $('.form-box__contents').on(
-    'keydown', 'img.msw-button, img.list-add, img.list-del', function(e){
+    'keydown', 'img.list-add, img.list-del', function(e){
         // 13:Enterキー, 32:Spaceキー
         if(e.which == 13 || e.which == 32){
             $(this).click();

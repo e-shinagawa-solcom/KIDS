@@ -1,6 +1,13 @@
 
 (function(){
 
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            $(this).find('img').click();
+        }
+    });
+    
     // マスタ検索共通
     var searchMaster = {
         url: '/cmn/querydata.php?strSessionID=' + $.cookie('strSessionID'),

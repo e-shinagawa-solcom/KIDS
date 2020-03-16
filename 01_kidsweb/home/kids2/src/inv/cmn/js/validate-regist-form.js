@@ -1,5 +1,5 @@
 
-(function(){
+(function () {
     // フォーム
     var form = $('form[name="Invoice"]');
     // エラーアイコンクラス名
@@ -10,10 +10,10 @@
     // エラーメッセージ(必須項目)
     var msgRequired = "入力必須項目です。";
     // エラーメッセージ(必須項目)
-    var msgEmpty    = "が未入力です。";
+    var msgEmpty = "が未入力です。";
 
     // エラーメッセージ(明細出力無し)
-    var msgSlipEmpty    = "出力明細が選択されていません。";
+    var msgSlipEmpty = "出力明細が選択されていません。";
 
     // エラーメッセージ(日付)
     var msgDateFormat = "yyyy/mm/dd形式かつ有効な日付を入力してください。";
@@ -27,7 +27,7 @@
 
     // validationキック
     $('.hasDatepicker').on({
-        'change': function(){
+        'change': function () {
             $(this).blur();
         }
     })
@@ -35,7 +35,7 @@
     // 保管工場と移動先工場が不一致かどうか
     $.validator.addMethod(
         "difFactory",
-        function(value, element, params) {
+        function (value, element, params) {
             return value != params.val();
         },
         msgSameFactory
@@ -44,9 +44,16 @@
     // 日付がyyyy/mm/dd形式にマッチしているか,有効な日付か
     $.validator.addMethod(
         "checkDateFormat",
-        function(value, params) {
-        	if(!value){return true;}
-            if(params){
+        function (value, params) {
+            if (!value) { return true; }
+            if (params) {
+                if (value.length == 8) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
                 // yyyy/mm(m)/dd(d)形式か
                 if (!(regDate2.test(value))) {
                     return false;
@@ -63,7 +70,7 @@
                 } else {
                     return false;
                 }
-            }return true;
+            } return true;
         },
         msgDateFormat
     );
@@ -72,8 +79,8 @@
     // 日付が過去でないか ActionDate
     $.validator.addMethod(
         "equalsOrGreaterThanToday",
-        function(value, element, params) {
-            if(params){
+        function (value, element, params) {
+            if (params) {
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
@@ -82,20 +89,20 @@
                 // 現在の日時と比較
                 var nowDi = new Date();
                 // 入力した年が現在より小さければエラー
-                if (nowDi.getFullYear() > di.getFullYear()){
+                if (nowDi.getFullYear() > di.getFullYear()) {
                     return false;
-                // 入力した年が現在より大きければ正
+                    // 入力した年が現在より大きければ正
                 } else if (nowDi.getFullYear() < di.getFullYear()) {
                     return true;
-                // 入力した年が現在と同じ場合
+                    // 入力した年が現在と同じ場合
                 } else if (nowDi.getFullYear() == di.getFullYear()) {
                     // 入力した月が現在より小さければエラー
-                    if (nowDi.getMonth() > di.getMonth()){
+                    if (nowDi.getMonth() > di.getMonth()) {
                         return false;
-                    // 入力した月が現在より大きければ正
-                    } else if (nowDi.getMonth() < di.getMonth()){
+                        // 入力した月が現在より大きければ正
+                    } else if (nowDi.getMonth() < di.getMonth()) {
                         return true;
-                    } else if (nowDi.getMonth() == di.getMonth()){
+                    } else if (nowDi.getMonth() == di.getMonth()) {
                         // 入力した日が現在と同じかそれより小さければエラー
                         if (nowDi.getDate() > di.getDate()) {
                             return false;
@@ -103,7 +110,7 @@
                     }
                     return true;
                 }
-            }return true;
+            } return true;
         },
         msgGreaterThanToday
     );
@@ -113,27 +120,27 @@
         // -----------------------------------------------
         // エラー表示処理
         // -----------------------------------------------
-        errorPlacement: function (error, element){
+        errorPlacement: function (error, element) {
             invalidImg = $('<img>')
-                            .attr('class', classNameErrorIcon)
-                            .attr('src', urlErrorIcon)
-                            // CSS設定(表示位置)
-                            .css({
-                                position: 'absolute',
-                                top: $(element).position().top,
-                                left: $(element).position().left - 20,
-                                opacity: 'inherit'
-                            })
-                            // ツールチップ表示
-                            .tooltipster({
-                                trigger: 'hover',
-                                onlyone: false,
-                                position: 'top',
-                                content: error.text()
-                            });
+                .attr('class', classNameErrorIcon)
+                .attr('src', urlErrorIcon)
+                // CSS設定(表示位置)
+                .css({
+                    position: 'absolute',
+                    top: $(element).position().top,
+                    left: $(element).position().left - 20,
+                    opacity: 'inherit'
+                })
+                // ツールチップ表示
+                .tooltipster({
+                    trigger: 'hover',
+                    onlyone: false,
+                    position: 'top',
+                    content: error.text()
+                });
 
             // エラーアイコンが存在しない場合
-            if ($(element).prev('img.' + classNameErrorIcon).length <= 0){
+            if ($(element).prev('img.' + classNameErrorIcon).length <= 0) {
                 // エラーアイコンを表示
                 $(element).before(invalidImg);
             }
@@ -141,39 +148,39 @@
             else {
                 // 既存のエラーアイコンのツールチップテキストを更新
                 $(element).prev('img.' + classNameErrorIcon)
-                            .tooltipster('content', error.text());
+                    .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
         // 検証OK時の処理
         // -----------------------------------------------
-        unhighlight: function(element){
-                // エラーアイコン削除
-                $(element).prev('img.' + classNameErrorIcon).remove();
+        unhighlight: function (element) {
+            // エラーアイコン削除
+            $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
         // 検証ルール
         // -----------------------------------------------
-        rules:{
+        rules: {
             // 顧客コード
             lngCustomerCode: {
                 required: true
             },
-//            // 課税区分
-//            lngTaxClassCode: {
-//                required: true
-//            },
+            //            // 課税区分
+            //            lngTaxClassCode: {
+            //                required: true
+            //            },
             // 納品日From
             dtmDeliveryDate: {
-            	checkDateFormat: true
+                checkDateFormat: true
             },
             // 納品日To
             dtmDeliveryDate: {
-            	checkDateFormat: true
+                checkDateFormat: true
             },
             // 当月請求額
             curthismonthamount: {
-//                required: true
+                //                required: true
             },
             // 請求日
             ActionDate: {
@@ -188,7 +195,7 @@
             },
             // ただし
             description: {
-            	required: true
+                required: true
             },
 
 
@@ -204,10 +211,10 @@
             lngCustomerCode: {
                 required: '顧客コード' + msgEmpty
             },
-//            // 課税区分
-//            lngTaxClassCode: {
-//                required: '課税区分' + msgEmpty
-//            },
+            //            // 課税区分
+            //            lngTaxClassCode: {
+            //                required: '課税区分' + msgEmpty
+            //            },
             // 納品日From
             dtmDeliveryDate: {
                 required: + msgDateFormat
@@ -218,11 +225,11 @@
             },
             // 当月請求額
             curthismonthamount: {
-                required:  msgSlipEmpty
+                required: msgSlipEmpty
             },
             // ただし
             description: {
-            	required: '但し' + msgEmpty
+                required: '但し' + msgEmpty
             },
 
         }

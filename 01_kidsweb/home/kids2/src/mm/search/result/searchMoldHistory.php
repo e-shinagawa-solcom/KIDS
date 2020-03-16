@@ -569,11 +569,14 @@ $exclude = "exclude-in-clip-board-target";
 $thIndex = $doc->createElement("th");
 $thIndex->setAttribute("class", $exclude);
 // コピーボタン
+$a = $doc->createElement("a");
+$a->setAttribute("href", "#");
 $imgCopy = $doc->createElement("img");
 $imgCopy->setAttribute("src", "/mold/img/copy_off_bt.gif");
 $imgCopy->setAttribute("class", "copy button");
+$a->appendChild($imgCopy);
 // 項番カラム > コピーボタン
-$thIndex->appendChild($imgCopy);
+$thIndex->appendChild($a);
 // ヘッダに追加
 $trHead->appendChild($thIndex);
 
@@ -780,14 +783,17 @@ foreach ($records as $i => $record)
 		if ($allowedDetail)
 		{
 			// 詳細ボタン
+			$a = $doc->createElement("a");
+			$a->setAttribute("href", "#");
 			$imgDetail = $doc->createElement("img");
 			$imgDetail->setAttribute("src", "/mold/img/detail_off_bt.gif");
 			$imgDetail->setAttribute("id", $record[TableMoldHistory::MoldNo]);
 			$imgDetail->setAttribute("historyno", $record[TableMoldHistory::HistoryNo]);
 			$imgDetail->setAttribute("version", $record[TableMoldHistory::Version]);
 			$imgDetail->setAttribute("class", "detail button");
+			$a->appendChild($imgDetail);
 			// td > img
-			$tdDetail->appendChild($imgDetail);
+			$tdDetail->appendChild($a);
 		}
 		// tr > td
 		$trBody->appendChild($tdDetail);
@@ -804,14 +810,17 @@ foreach ($records as $i => $record)
 		if ($allowedModify)
 		{
 			// 修正ボタン
+			$a = $doc->createElement("a");
+			$a->setAttribute("href", "#");
 			$imgModify = $doc->createElement("img");
 			$imgModify->setAttribute("src", "/mold/img/renew_off_bt.gif");
 			$imgModify->setAttribute("id", $record[TableMoldHistory::MoldNo]);
 			$imgModify->setAttribute("historyno", $record[TableMoldHistory::HistoryNo]);
 			$imgModify->setAttribute("version", $record[TableMoldHistory::Version]);
 			$imgModify->setAttribute("class", "modify button");
+			$a->appendChild($imgModify);
 			// td > img
-			$tdModify->appendChild($imgModify);
+			$tdModify->appendChild($a);
 		}
 		// tr > td
 		$trBody->appendChild($tdModify);
@@ -827,6 +836,8 @@ foreach ($records as $i => $record)
 		if($relation = $utilMold->selectMoldReportRelationByHistory($record[TableMoldHistory::MoldNo], $record[TableMoldHistory::HistoryNo]))
 		{
 			// プレビューボタンを表示
+			$a = $doc->createElement("a");
+			$a->setAttribute("href", "#");
 			$imgPreview = $doc->createElement("img");
 			$imgPreview->setAttribute("src", "/mold/img/preview_off_bt.gif");
 			$imgPreview->setAttribute("id", $relation[0][TableMoldReportRelation::MoldReportId]);
@@ -844,9 +855,9 @@ foreach ($records as $i => $record)
 				// 原本帳票を出力
 				$imgPreview->setAttribute("class", "preview button");
 			}
-
+			$a->appendChild($imgPreview);
 			// td > img
-			$tdPreview->appendChild($imgPreview);
+			$tdPreview->appendChild($a);
 		}
 
 		// tr > td
@@ -1032,14 +1043,17 @@ foreach ($records as $i => $record)
 		if ($allowedDelete)
 		{
 			// 削除ボタン
+			$a = $doc->createElement("a");
+			$a->setAttribute("href", "#");
 			$imgDelete = $doc->createElement("img");
 			$imgDelete->setAttribute("src", "/mold/img/remove_off_bt.gif");
 			$imgDelete->setAttribute("id", $record[TableMoldHistory::MoldNo]);
 			$imgDelete->setAttribute("historyno", $record[TableMoldHistory::HistoryNo]);
 			$imgDelete->setAttribute("version", $record[TableMoldHistory::Version]);
 			$imgDelete->setAttribute("class", "delete button");
+			$a->appendChild($imgDelete);
 			// td > img
-			$tdDelete->appendChild($imgDelete);
+			$tdDelete->appendChild($a);
 		}
 		// tr > td
 		$trBody->appendChild($tdDelete);

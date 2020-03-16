@@ -1172,6 +1172,7 @@ function fncInsertPurchaseOrderDetail($aryDetail, $objDB)
  */
 function fncInsertPurchaseOrder($aryOrder, $objDB)
 {
+    $aryOrder["strmonetaryunitsign"] = ($aryOrder["lngmonetaryunitcode"] == 1) ? "\\\\": $aryOrder["strmonetaryunitsign"];
     $aryQuery[] = "INSERT INTO m_purchaseorder (";
     $aryQuery[] = "   lngpurchaseorderno";
     $aryQuery[] = "  ,lngrevisionno";
@@ -1244,7 +1245,6 @@ function fncInsertPurchaseOrder($aryOrder, $objDB)
 
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
-
     if (!$lngResultID = $objDB->execute($strQuery)) {
         fncOutputError(9051, DEF_ERROR, "発注書マスタへの更新処理に失敗しました。", true, "", $objDB);
         return false;
@@ -1386,6 +1386,10 @@ function fncCancelOrderHtml($aryOrder)
         $aryHtml[] = "  <tr>";
         $aryHtml[] = "    <td class=\"SegColumn\">数量</td>";
         $aryHtml[] = "    <td class=\"Segs\">" . $row["lngproductquantity"] . "</td>";
+        $aryHtml[] = "  </tr>";
+        $aryHtml[] = "  <tr>";
+        $aryHtml[] = "    <td class=\"SegColumn\">単位</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . $row["strproductunitname"] . "</td>";
         $aryHtml[] = "  </tr>";
         $aryHtml[] = "  <tr>";
         $aryHtml[] = "    <td class=\"SegColumn\">税抜金額</td>";

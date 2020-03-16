@@ -278,7 +278,7 @@ $aryData["strNote"] = fncHTMLSpecialChars($aryData["strNote"]);
 
 // 通貨記号+合計金額
 $aryData["strMonetarySign"] = $_POST["aryDetail"][0]["strMonetarySign"];
-$aryData["curAllTotalPrice_DIS"] = convertPrice($_POST["aryDetail"][0]["lngMonetaryUnitCode"], $aryData["strMonetaryUnitName"], $aryData["curAllTotalPrice"], "price");// 合計金額
+$aryData["curAllTotalPrice_DIS"] = convertPrice($_POST["aryDetail"][0]["lngMonetaryUnitCode"], $aryData["strMonetarySign"], $aryData["curAllTotalPrice"], "price");// 合計金額
 
 // コード→名称は全て処理する。コードがない場合は[]を表示しない（必須項目も全て。処理だけ）
 

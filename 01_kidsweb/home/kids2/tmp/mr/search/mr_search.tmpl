@@ -67,7 +67,6 @@
 	<!-- フォームコンテンツ -->
 	<div class="form-box__contents--with-scroll">
 		<form name="SearchMoldReport" method="post">
-            <input type="submit">
             <div class="regist-line">
                 <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
                 <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
@@ -254,8 +253,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">保管工場</span>
                     <input class="TxtStyle05L" name="SourceFactory" type="text">
-                    <input class="disTxt46L" name="SourceFactoryName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="SourceFactoryName" type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -266,8 +265,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">移動先工場</span>
                     <input class="TxtStyle05L" name="DestinationFactory" type="text">
-                    <input class="disTxt46L" name="DestinationFactoryName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="DestinationFactoryName" type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -332,8 +331,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">事業部(顧客)</span>
                     <input class="TxtStyle05L" name="CustomerCode" type="text">
-                    <input class="disTxt46L" name="CustomerName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="CustomerName" type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -344,8 +343,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">KWG担当部署</span>
                     <input class="TxtStyle05L" name="KuwagataGroupCode" type="text" displayFlagLimit="0">
-                    <input class="disTxt46L" name="KuwagataGroupName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-group" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="KuwagataGroupName" type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-group" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -356,8 +355,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">KWG担当者</span>
                     <input class="TxtStyle05L" name="KuwagataUserCode" type="text" displayFlagLimit="0">
-                    <input class="disTxt46L" name="KuwagataUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-inchargeuser" displayFlagLimit="0" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="KuwagataUserName" type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-inchargeuser" displayFlagLimit="0" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -404,8 +403,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">登録者</span>
                     <input class="TxtStyle05L" name="CreateBy" type="text" displayFlagLimit="0">
-                    <input class="disTxt46L" name="CreateByName" readonly type="text">
-                    <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="CreateByName" disabled type="text">
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -427,8 +426,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">更新者</span>
                     <input class="TxtStyle05L" name="UpdateBy" type="text" displayFlagLimit="0">
-                    <input class="disTxt46L" name="UpdateByName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="UpdateByName" type="text" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">

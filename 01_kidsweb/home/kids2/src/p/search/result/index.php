@@ -357,13 +357,16 @@ foreach ($records as $i => $record) {
         // if (($allowedDetailDelete and $record["bytinvalidflag"] != "f") or ($allowedDetail and $record["bytinvalidflag"] == "f")) {
         if (($allowedDetailDelete) or ($allowedDetail and $record["lngrevisionno"] >= 0)) {
             // 詳細ボタン
+            $a = $doc->createElement("a");
+            $a->setAttribute("href", "#");
             $imgDetail = $doc->createElement("img");
             $imgDetail->setAttribute("src", "/img/type01/so/detail_off_bt.gif");
             $imgDetail->setAttribute("id", $record["lngproductno"]);
             $imgDetail->setAttribute("revisionno", $record["lngrevisionno"]);
             $imgDetail->setAttribute("class", "detail button");
+            $a->appendChild($imgDetail);
             // td > img
-            $tdDetail->appendChild($imgDetail);
+            $tdDetail->appendChild($a);
         }
         // tr > td
         $trBody->appendChild($tdDetail);
@@ -378,6 +381,8 @@ foreach ($records as $i => $record) {
 
         if ($historyFlag) {
             // 履歴ボタン
+            $a = $doc->createElement("a");
+            $a->setAttribute("href", "#");
             $imgHistory = $doc->createElement("img");
             $imgHistory->setAttribute("src", "/img/type01/cmn/seg/p_history_open_off.gif");
             $imgHistory->setAttribute("id", $record["strproductcode"]);
@@ -385,8 +390,9 @@ foreach ($records as $i => $record) {
             $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
             $imgHistory->setAttribute("strrevisecode", $record["strrevisecode"]);
             $imgHistory->setAttribute("class", "history button");
+            $a->appendChild($imgHistory);
             // td > img
-            $tdHistory->appendChild($imgHistory);
+            $tdHistory->appendChild($a);
         }
         // tr > td
         $trBody->appendChild($tdHistory);

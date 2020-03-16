@@ -1067,11 +1067,11 @@ function fncUpdateLcinfo($objDB, $data)
         ($data["validmonth"] == "") ? null : str_replace("/", "", $data["validmonth"]),
         $data["lcstate"], 
         ($data["bldetail1date"] == "") ? null : date($data["bldetail1date"]),
-        ($data["bldetail1money"] == "") ? null : date($data["bldetail1money"]),
+        ($data["bldetail1money"] == "") ? null : str_replace(",", "", $data["bldetail1money"]),
         ($data["bldetail2date"] == "") ? null : date($data["bldetail2date"]),
-        ($data["bldetail2money"] == "") ? null : date($data["bldetail2money"]),
+        ($data["bldetail2money"] == "") ? null : str_replace(",", "", $data["bldetail2money"]),
         ($data["bldetail3date"] == "") ? null : date($data["bldetail3date"]),
-        ($data["bldetail3money"] == "") ? null : date($data["bldetail3money"]),
+        ($data["bldetail3money"] == "") ? null : str_replace(",", "", $data["bldetail3money"]),
         $data["pono"], $data["poreviseno"],
     );
 

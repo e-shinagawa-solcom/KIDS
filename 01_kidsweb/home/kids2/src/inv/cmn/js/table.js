@@ -3,7 +3,44 @@ $(function () {
   $('body').on('keydown', function (e) {
     console.log('enter');
     if (e.which == 13) {
-      $('img.add').click();
+      $('#add').click();
+    }
+  });
+
+  window.onload = function () {
+    if (!(window.location.href.indexOf('renew') >= 0)) {
+      $('#search').click();
+    }
+  };
+
+  var sub_win;
+
+  // メインメニューボタン
+  $('.control-block__buttan-main-menu').on({
+    'click': function (e) {
+      if (sub_win != "undefined") {
+        sub_win.close();
+      }
+      // セッションID取得
+      var sessionId = $('input[name="strSessionID"]').val();
+      // 取得できた場合
+      if (sessionId) {
+        // メインメニューへ遷移
+        window.location.href = '/menu/menu.php?strSessionID=' + sessionId;
+      }
+    }
+  });
+
+  // ログアウトボタン
+  $('.control-block__button-logout').on({
+    'click': function () {
+      // セッションID取得
+      var sessionId = $('input[name="strSessionID"]').val();
+      // 取得できた場合
+      if (sessionId) {
+        // メインメニューへ遷移
+        window.location.href = '/login/logout.php?strSessionID=' + sessionId;
+      }
     }
   });
 
@@ -279,7 +316,7 @@ $(function () {
   setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
 
   // テーブルA 追加ボタン
-  $('img.add').on('click', function (e) {
+  $('#add').on('click', function (e) {
     e.preventDefault();
 
     var $all_chkbox_rows = $('tbody tr', $tableA_chkbox);
@@ -306,10 +343,9 @@ $(function () {
         var rowindex = $(this).closest('tr').index();
         console.log(rowindex);
 
-        var tmptax =  $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').find('.tax').text();
+        var tmptax = $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').find('.tax').text();
         console.log(tmptax);
-        if (tax != "" && tmptax != tax)
-        {
+        if (tax != "" && tmptax != tax) {
           alert('消費税率の異なる納品書は請求書の明細に混在できません');
           return false;
         }
@@ -362,7 +398,7 @@ $(function () {
   });
 
   // テーブルB 削除ボタン
-  $('img.delete').on('click', function (e) {
+  $('#delete').on('click', function (e) {
     e.preventDefault();
 
     var $all_rows = $('tbody tr', $tableB);
@@ -411,7 +447,7 @@ $(function () {
   });
 
   // テーブルB 全削除ボタン
-  $('img.alldelete').on('click', function (e) {
+  $('#alldelete').on('click', function (e) {
     e.preventDefault();
 
     var $tableB_row = $('tbody tr', $tableB);
@@ -459,9 +495,8 @@ $(function () {
   });
 
   // 検索条件入力ボタン
-  $('img.search').on('click', function (e) {
+  $('#search').on('click', function (e) {
     e.preventDefault();
-
     // selectedRowIndexes 初期化
     selectedRowIndexes = [];
 

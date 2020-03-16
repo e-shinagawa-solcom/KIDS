@@ -74,14 +74,18 @@
                         <span class="regist-label">
                             <span class="regist-label__text">発注書No</span>
                             <input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strOrderCode" value="_%strOrderCode%_" maxlength="8"
-                                contenteditable="false" readonly>_
+                                contenteditable="false" disabled>_
                             <input style="ime-mode:disabled;" class="disTxt02L" type="text" name="lngRevisionNo" value="_%lngRevisionNo%_" maxlength="2"
-                                contenteditable="false" readonly>
+                                contenteditable="false" disabled>
+                                <input type="hidden" name="strOrderCode" value="_%strOrderCode%_">
+                                <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
                         </span>
                         <span class="regist-label">
                             <span class="regist-label__text">仕入先</span>
-                            <input class="disTxt05L" name="strCustomerCode" value="_%strCustomerCode%_" type="text" readonly>
-                            <input class="disTxt46L" name="strCustomerName" type="text" value="_%strCustomerName%_" readonly>
+                            <input class="disTxt05L" name="strCustomerCode" value="_%strCustomerCode%_" type="text" disabled>
+                            <input class="disTxt46L" name="strCustomerName" type="text" value="_%strCustomerName%_" disabled>
+                            <input type="hidden" name="strCustomerCode" value="_%strCustomerCode%_">
+                            <input type="hidden" name="strCustomerName" value="_%strCustomerName%_">
                         </span>
                     </div>
                     <div class="regist-line">
@@ -89,12 +93,14 @@
                             <span class="regist-label__text">支払条件</span>
                             <select name="lngPayConditionCode" _%PayConditionDisabled%_>
                                 _%lngPayConditionCode%_
-                            </select>
+                            </select>          
                         </span>
                         <span class="regist-label">
                             <span class="regist-label__text">営業部署</span>
-                            <input class="disTxt05L" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" type="text" readonly>
-                            <input class="disTxt46L" name="strGroupDisplayName" type="text" value="_%strGroupDisplayName%_" readonly>
+                            <input class="disTxt05L" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" type="text" disabled>
+                            <input class="disTxt46L" name="strGroupDisplayName" type="text" value="_%strGroupDisplayName%_" disabled>
+                            <input type="hidden" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_">
+                            <input type="hidden" name="strGroupDisplayName" value="_%strGroupDisplayName%_">
                         </span>
                     </div>
                     <div class="regist-line">
@@ -107,9 +113,10 @@
                         <span class="regist-label">
                             <span class="regist-label__text">製品</span>
                             <input style="ime-mode:disabled;" class="disTxt05L" type="text" name="strProductCode" value="_%strProductCode%___%strReviseCode%_"
-                                maxlength="8" readonly>
+                                maxlength="8" disabled>
                             <input type="hidden" name="strProductCode" value="_%strProductCode%_">
-                            <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" readonly>
+                            <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" disabled>
+                            <input type="hidden" name="strProductName" value="_%strProductName%_">
                         </span>
                     </div>
                     <div class="regist-line">
@@ -117,15 +124,16 @@
                         <span class="regist-label">
                             <span class="regist-label__text">製品名（英語）</span>
                             <input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_"
-                                readonly>
+                                disabled>
+                                <input type="hidden" name="strProductEnglishName" value="_%strProductEnglishName%_">
                     </div>
                     <div class="regist-line">
                         <span style="display: inline-block;width: 272px;">&nbsp;</span>
                         <span class="regist-label">
                             <span class="regist-label__text">納品場所</span>
                             <input class="TxtStyle05L" name="lngLocationCode" type="text" value="_%lngLocationCode%_" alt="Location">
-                            <input class="disTxt46L" name="strLocationName" type="text" value="_%strLocationName%_" readonly>
-                            <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                            <input class="disTxt46L" name="strLocationName" type="text" value="_%strLocationName%_" disabled>
+                            <span><a href="#"><img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                         </span>
                     </div>
                     <div class="regist-line">

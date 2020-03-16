@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<title>K.I.D.S.</title>
+
+	<!-- 互換表示OFFを強制させる -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta charset="UTF-8">
+
+	<!-- jQuery -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <!-- jQuery Cookie -->
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <!-- jQuery UI -->
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
+    <link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+    <!-- jQuery UI datepickerローカライズ用スクリプト -->
+	<script src="/cmn/jquery/ui/datepicker-ja.js"></script>
+    <!-- jQuery Validation Plugin -->
+    <script src="/cmn/jquery/validation/jquery.validate.js"></script>
+    <!-- jQuery tooltipster -->
+    <script src="/cmn/jquery/tooltipster/js/tooltipster.bundle.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
+
+	<!-- スタイル初期化 & 各種コントロールスタイル -->
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+
+	<!-- 全体/共通ヘッダ/コンテンツ/共通フッタ CSS -->
+	<link rel="stylesheet" href="/mold/cmn/base/css/base-mold-general.css">
+	<link rel="stylesheet" href="/mold/cmn/base/css/base-mold-header.css">
+	<link rel="stylesheet" href="/mold/cmn/base/css/base-mold-contents.css">
+	<link rel="stylesheet" href="/mold/cmn/base/css/base-mold-footer.css">
+
+	<!-- ボタン画像の共通の振る舞い CSS -->
+	<link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
+
+	<!-- 共通スクリプト -->
+	<!-- <link rel="stylesheet" href="/cmn/css/bootstrap-4.1.1/bootstrap.min.css" /> -->
+	<!-- <link rel="stylesheet" href="/cmn/css/bootstrap-4.1.1/bs-button-style.css" /> -->
+
+
+	<!-- 共通ヘッダ/共通フッタ スクリプト -->
+	<script src="/mold/cmn/base/js/base-mold-header.js" defer></script>
+	<!-- <script src="/mold/cmn/base/js/base-mold-footer.js" defer></script> -->
+
+	<!-- 各画面毎で呼び出すヘッダ群 -->
+	<!-- header1 共通ファイル -->
+	<!-- _%header1%_ -->
+	<!-- header2 機能共通ファイル -->
+	<!-- _%header2%_ -->
+	<!-- header3 個別ファイル -->
+	<!-- _%header3%_ -->
+</head>
+<body class="background">
+	<!-- ヘッダ等含むコンテンツ全体 -->
+	<div class="margin">
+		<!-- 共通ヘッダ -->
+		<div class="base-header">
+			<!-- 共通ヘッダ 画像 -->
+			<img class="base-header__background-image" src="/img/type01/cmn/based/header_v3.gif" alt="kids header">
+			<!-- 共通ヘッダ　画面タイトル 画像 -->
+			<img class="base-header__title-image" src="_%HeaderTitleImage%_" alt="Title">
+			<!-- 共通ヘッダ ユーザ情報  -->
+			<div class="base-header__user-board">
+				<!-- ユーザサムネイル -->
+				<div class="thumbnail-box">
+					<img class="thumbnail-box__background-image" src="/img/type01/cmn/based/pict_space_small.gif" alt="thumbnail background-image">
+					<img class="thumbnail-box__image" src="_%strUserImageFileName%_" alt="thumbnail image">
+				</div>
+				<!-- ログイン情報  -->
+				<div class="Login-information">
+					<div class="Login-information__clock">
+					</div>
+					<div class="Login-information__user">
+						LOGIN&nbsp;USER&nbsp;:&nbsp;[_%strUserID%_]&nbsp;_%strUserFullName%_
+					</div>
+					<div class="Login-information__system-group">
+						AUTHORITY&nbsp;GROUP&nbsp;:&nbsp;_%strAuthorityGroupName%_
+					</div>
+					<div class="Login-information__kuwagata-group">
+						GROUP&nbsp;:&nbsp;[_%strGroupDisplayCode%_]&nbsp;_%strGroupDisplayName%_
+					</div>
+					<div class="Login-information__host">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 各画面毎の表示内容 -->
+		<div class="any-contents">
+			_%BODY%_
+		</div>
+		<!-- 共通フッタ -->
+		<div class="base-footer">
+			<!-- 共通フッタ 画像 -->
+			<img class="base-footer__background-image" src="/img/type01/cmn/based/footer.gif" alt="kids footer">
+			<!-- メインメニューボタン -->
+			<img class="control-block__buttan-main-menu button" src="/img/type01/cmn/seg/main_menu_off_bt.gif" alt="main menu" style="position: absolutes;">
+
+			<!-- ログアウトボタン -->
+			<img class="control-block__button-logout button" src="/img/type01/cmn/logout/off_bt.gif" alt="logout">
+			<!-- ヘルプボタン -->
+			<img class="control-block__button-help button" src="/img/type01/help/help_off_bt.gif" alt="help">
+
+		</div>
+	</div>
+</body>
+</html>

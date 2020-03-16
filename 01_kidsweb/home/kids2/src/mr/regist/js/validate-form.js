@@ -1,5 +1,5 @@
 
-(function(){
+(function () {
     // フォーム
     var form = $('form[name="RegistMoldReport"]');
     // ヘッダタブ
@@ -12,8 +12,8 @@
     var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
     // 選択中の金型リストのラベル
     var labelChoosenMoldList = $('table.mold-selection')
-                                    .find('tr:nth-of-type(1)')
-                                    .find('th:nth-of-type(3)');
+        .find('tr:nth-of-type(1)')
+        .find('th:nth-of-type(3)');
 
     // エラーメッセージ(必須項目)
     var msgRequired = "入力必須項目です。";
@@ -32,21 +32,21 @@
 
     // validationキック
     $('.hasDatepicker').on({
-        'change': function(){
+        'change': function () {
             $(this).blur();
         }
     })
 
     // 希望日変更時、返却予定日のvalidationキック
     $('input[name="ActionRequestDate"]').on({
-        'blur': function(){
+        'blur': function () {
             $('input[name="ReturnSchedule"]').blur();
         }
     })
 
     // 生産後の処理変更時、エラーアイコン削除
     $('select[name="FinalKeep"]').on({
-        'change': function(){
+        'change': function () {
             $('input[name="ReturnSchedule"]').prev('img.error-icon').remove();
         }
     })
@@ -54,7 +54,7 @@
     // 保管工場と移動先工場が不一致かどうか
     $.validator.addMethod(
         "difFactory",
-        function(value, element, params) {
+        function (value, element, params) {
             return value != params.val();
         },
         msgSameFactory
@@ -63,15 +63,22 @@
     // 日付がyyyy/mm/dd形式にマッチしているか,有効な日付か
     $.validator.addMethod(
         "checkDateFormat",
-        function(value, element, params) {
+        function (value, element, params) {
             // チェック項目が返却予定日の場合
-            if(element.name == "ReturnSchedule"){
+            if (element.name == "ReturnSchedule") {
                 // 生産後の処理の値が[20:返却]以外なら検証しない
-                if(($('select[name="FinalKeep"]')).val() != 20){
+                if (($('select[name="FinalKeep"]')).val() != 20) {
                     return true;
                 }
             }
-            if(params){
+            if (params) {
+                if (value.length == 8) {
+                    var str = value.trim();
+                    var y = str.substr(0, 4);
+                    var m = str.substr(4, 2);
+                    var d = str.substr(6, 2);
+                    value = y + "/" + m + "/" + d;
+                }
                 // yyyy/mm/dd形式か
                 if (!(regDate.test(value))) {
                     return false;
@@ -97,15 +104,15 @@
     // 日付が過去でないか 当日不可
     $.validator.addMethod(
         "isGreaterThanToday",
-        function(value, element, params) {
+        function (value, element, params) {
             // チェック項目が返却予定日の場合
-            if(element.name == "ReturnSchedule"){
+            if (element.name == "ReturnSchedule") {
                 // 生産後の処理の値が[20:返却]以外なら検証しない
-                if(($('select[name="FinalKeep"]')).val() != 20){
+                if (($('select[name="FinalKeep"]')).val() != 20) {
                     return true;
                 }
             }
-            if(params){
+            if (params) {
                 var regResult = regDate.exec(value);
                 var yyyy = regResult[1];
                 var mm = regResult[2];
@@ -114,21 +121,21 @@
                 // 現在の日時と比較
                 var nowDi = new Date();
                 // 入力した年が現在より小さければエラー
-                if (nowDi.getFullYear() > di.getFullYear()){
+                if (nowDi.getFullYear() > di.getFullYear()) {
                     return false;
-                // 入力した年が現在より大きければ正
+                    // 入力した年が現在より大きければ正
                 } else if (nowDi.getFullYear() < di.getFullYear()) {
                     return true;
-                // 入力した年が現在と同じ場合
+                    // 入力した年が現在と同じ場合
                 } else if (nowDi.getFullYear() == di.getFullYear()) {
                     // 入力した月が現在より小さければエラー
-                    if (nowDi.getMonth() > di.getMonth()){
+                    if (nowDi.getMonth() > di.getMonth()) {
                         return false;
-                    // 入力した月が現在より大きければ正
-                    } else if (nowDi.getMonth() < di.getMonth()){
+                        // 入力した月が現在より大きければ正
+                    } else if (nowDi.getMonth() < di.getMonth()) {
                         return true;
-                    // 入力した月が現在と同じ場合
-                    } else if (nowDi.getMonth() == di.getMonth()){
+                        // 入力した月が現在と同じ場合
+                    } else if (nowDi.getMonth() == di.getMonth()) {
                         // 入力した日が現在と同じかそれより小さければエラー
                         if (nowDi.getDate() >= di.getDate()) {
                             return false;
@@ -147,7 +154,7 @@
         "isGreaterThanRequestDate",
         function (value, element, params) {
             // 生産後の処理が20の場合チェック
-            if(($('select[name="FinalKeep"]').val() == 20)){
+            if (($('select[name="FinalKeep"]').val() == 20)) {
                 // 希望日が入力されている場合チェック
                 if ($('input[name="ActionRequestDate"]').val() != "") {
                     var actionRequestDate = $('input[name="ActionRequestDate"]').val();
@@ -172,13 +179,13 @@
                         // 入力した年が希望日と同じ場合
                     } else if (RequestDate.getFullYear() == di.getFullYear()) {
                         // 入力した月が希望日より小さければエラー
-                        if (RequestDate.getMonth() > di.getMonth()){
+                        if (RequestDate.getMonth() > di.getMonth()) {
                             return false;
-                        // 入力した月が希望日より大きければ正
-                        } else if (RequestDate.getMonth() < di.getMonth()){
+                            // 入力した月が希望日より大きければ正
+                        } else if (RequestDate.getMonth() < di.getMonth()) {
                             return true;
-                        // 入力した月が希望日と同じ場合
-                        } else if (RequestDate.getMonth() == di.getMonth()){
+                            // 入力した月が希望日と同じ場合
+                        } else if (RequestDate.getMonth() == di.getMonth()) {
                             // 入力した日が希望日と同じかそれより小さければエラー
                             if (RequestDate.getDate() >= di.getDate()) {
                                 return false;
@@ -217,27 +224,27 @@
         // -----------------------------------------------
         // エラー表示処理
         // -----------------------------------------------
-        errorPlacement: function (error, element){
+        errorPlacement: function (error, element) {
             invalidImg = $('<img>')
-                            .attr('class', classNameErrorIcon)
-                            .attr('src', urlErrorIcon)
-                            // CSS設定(表示位置)
-                            .css({
-                                position: 'absolute',
-                                top: $(element).position().top,
-                                left: $(element).position().left - 20,
-                                opacity: 'inherit'
-                            })
-                            // ツールチップ表示
-                            .tooltipster({
-                                trigger: 'hover',
-                                onlyone: false,
-                                position: 'top',
-                                content: error.text()
-                            });
+                .attr('class', classNameErrorIcon)
+                .attr('src', urlErrorIcon)
+                // CSS設定(表示位置)
+                .css({
+                    position: 'absolute',
+                    top: $(element).position().top,
+                    left: $(element).position().left - 20,
+                    opacity: 'inherit'
+                })
+                // ツールチップ表示
+                .tooltipster({
+                    trigger: 'hover',
+                    onlyone: false,
+                    position: 'top',
+                    content: error.text()
+                });
 
             // エラーアイコンが存在しない場合
-            if ($(element).prev('img.' + classNameErrorIcon).length <= 0){
+            if ($(element).prev('img.' + classNameErrorIcon).length <= 0) {
                 // エラーアイコンを表示
                 $(element).before(invalidImg);
             }
@@ -245,20 +252,20 @@
             else {
                 // 既存のエラーアイコンのツールチップテキストを更新
                 $(element).prev('img.' + classNameErrorIcon)
-                            .tooltipster('content', error.text());
+                    .tooltipster('content', error.text());
             }
         },
         // -----------------------------------------------
         // 検証OK時の処理
         // -----------------------------------------------
-        unhighlight: function(element){
-                // エラーアイコン削除
-                $(element).prev('img.' + classNameErrorIcon).remove();
+        unhighlight: function (element) {
+            // エラーアイコン削除
+            $(element).prev('img.' + classNameErrorIcon).remove();
         },
         // -----------------------------------------------
         // 検証ルール
         // -----------------------------------------------
-        rules:{
+        rules: {
             // 製品コード
             ProductCode: {
                 required: true

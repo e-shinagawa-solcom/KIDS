@@ -12,6 +12,7 @@
 
 	<title>K.I.D.S.</title>
 	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
 
 
 	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
@@ -32,8 +33,8 @@
 	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
 	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
 	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
-    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
-    <script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
+	<script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+	<script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
 	<!-- jQuery UI datepickerローカライズ用スクリプト -->
 	<script src="/cmn/jquery/ui/datepicker-ja.js"></script>
 	<!-- jQuery Validation Plugin -->
@@ -56,9 +57,6 @@
 	<script type="text/javascript" language="javascript" src="/po/regist/regist2.js"></script>
 	<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
 	<script type="text/javascript" language="javascript" src="/po/cmn/resultexstr.js"></script>
-
-	<!-- マスタ検索呼び出し -->
-	<script src="/search/cmn/js/invoke-master-search.js" defer></script>
 	<!-- datepickerの要素指定 -->
 	<script src="/po/regist/datepicker.js" defer></script>
 </head>
@@ -77,51 +75,57 @@
 				<input type="submit">
 				<div class="regist-tab-header">
 					<div class="regist-line">
-                        <span class="regist-label">
-                            <span class="regist-label__text">発注書No</span>
-                            <input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strOrderCode" value="_%strOrderCode%_" maxlength="8"
-                                contenteditable="false" readonly>_
-                            <input style="ime-mode:disabled;" class="disTxt02L" type="text" name="lngRevisionNo" value="_%lngRevisionNo%_" maxlength="2"
-                                contenteditable="false" readonly>
-                            <input type="hidden" name="strSessionID" value="_%strSessionID%_">
-                            <input type="hidden" name="lngPurchaseOrderNo" value="_%lngPurchaseOrderNo%_">
-                            <input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
-                        </span>
+						<span class="regist-label">
+							<span class="regist-label__text">発注書No</span>
+							<input style="ime-mode:disabled;" class="disTxt07L" type="text" name="strOrderCode" value="_%strOrderCode%_" maxlength="8"
+							 contenteditable="false" disabled>_
+							<input style="ime-mode:disabled;" class="disTxt02L" type="text" name="lngRevisionNo" value="_%lngRevisionNo%_" maxlength="2"
+							 contenteditable="false" disabled>
+							<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+							<input type="hidden" name="lngPurchaseOrderNo" value="_%lngPurchaseOrderNo%_">
+							<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
+							<input type="hidden" name="strOrderCode" value="_%strOrderCode%_">
+						</span>
 						<span class="regist-label">
 							<span class="regist-label__text">製品</span>
-							<input style="ime-mode:disabled;" class="disTxt05L" type="text" name="strProductCode" value="_%strProductCode%___%strReviseCode%_" maxlength="8"
-							 readonly>
-							<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" readonly>
-
+							<input style="ime-mode:disabled;" class="disTxt05L" type="text" name="strProductCode" value="_%strProductCode%___%strReviseCode%_"
+							 maxlength="8" disabled>
+							<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductName" value="_%strProductName%_" disabled>
 							<input type="hidden" name="strProductCode" value="_%strProductCode%_">
+							<input type="hidden" name="strProductName" value="_%strProductName%_">
 							<input type="hidden" name="strReviseCode" value="_%strReviseCode%_">
 						</span>
 					</div>
 					<div class="regist-line">
-                        <span class="regist-label" style="width: 272px;">
-                            <span class="regist-label__text">通貨</span>
-                            <select name="lngMonetaryUnitCode" _%MonetaryUnitDisabled%_>
-                                _%lngMonetaryUnitCode%_
-                            </select>
-                        </span>
+						<span class="regist-label" style="width: 272px;">
+							<span class="regist-label__text">通貨</span>
+							<select name="lngMonetaryUnitCode" _%MonetaryUnitDisabled%_>
+								_%lngMonetaryUnitCode%_
+							</select>
+						</span>
 						<span class="regist-label">
 							<span class="regist-label__text">製品名（英語）</span>
 							<input style="ime-mode:disabled;" class="disTxt46L" type="text" name="strProductEnglishName" value="_%strProductEnglishName%_"
-							 readonly>
+							 disabled>
+							 <input type="hidden" name="strProductEnglishName" value="_%strProductEnglishName%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">営業部署</span>
-                            <input class="disTxt05L" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" type="text" readonly>
-                            <input class="disTxt46L" name="strGroupDisplayName" type="text" value="_%strGroupDisplayName%_" readonly>
+							<input class="disTxt05L" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_" type="text" disabled>
+							<input class="disTxt46L" name="strGroupDisplayName" type="text" value="_%strGroupDisplayName%_" disabled>
+							<input type="hidden" name="strGroupDisplayCode" value="_%strGroupDisplayCode%_">
+							<input type="hidden" name="strGroupDisplayName" value="_%strGroupDisplayName%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">仕入先</span>
-                            <input class="disTxt05L" name="strCustomerCode" value="_%strCustomerCode%_" type="text" readonly>
-                            <input class="disTxt46L" name="strCustomerName" type="text" value="_%strCustomerName%_" readonly>
+							<input class="disTxt05L" name="strCustomerCode" value="_%strCustomerCode%_" type="text" disabled>
+							<input class="disTxt46L" name="strCustomerName" type="text" value="_%strCustomerName%_" disabled>
+							<input type="hidden" name="strCustomerCode" value="_%strCustomerCode%_">
+							<input type="hidden" name="strCustomerName" value="_%strCustomerName%_">
 						</span>
 					</div>
 					<div class="regist-line">
@@ -130,19 +134,19 @@
 							<select name="lngPayConditionCode" class="Slt13">
 								_%lngPayConditionCode%_
 							</select>
-                            <input type="hidden" name="lngPayConditionCodeOrign" value="_%lngPayConditionCodeOrign%_">
+							<input type="hidden" name="lngPayConditionCodeOrign" value="_%lngPayConditionCodeOrign%_">
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text">納品場所</span>
 							<input class="TxtStyle05L" name="lngLocationCode" type="text" value="_%lngLocationCode%_" alt="Location">
-							<input class="disTxt46L" name="strLocationName" type="text" value="_%strLocationName%_" readonly>
-							<img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+							<input class="disTxt46L" name="strLocationName" type="text" value="_%strLocationName%_" disabled>
+							<span><a href="#"><img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">備考</span>
-                            <input class="Txt100L" type="text" name="strNote" value="_%strnote%_">
+							<input class="Txt100L" type="text" name="strNote" value="_%strnote%_">
 						</span>
 					</div>
 					<div class="regist-line">
@@ -170,6 +174,7 @@
 														<th>運搬方法</th>
 														<th>単価</th>
 														<th>数量</th>
+														<th>単位</th>
 														<th>税抜金額</th>
 														<th>納期</th>
 														<th>明細備考</th>
@@ -207,6 +212,7 @@
 														<th>運搬方法</th>
 														<th>単価</th>
 														<th>数量</th>
+														<th>単位</th>
 														<th>税抜価格</th>
 														<th>納期</th>
 														<th>明細備考</th>
@@ -221,7 +227,7 @@
 								</td>
 								<td style="width: 50px;"></td>
 								<td style="width: 100px;">
-									<img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="add">追加</button>
 								</td>
 							</tr>
 						</table>
@@ -248,6 +254,7 @@
 														<th>運搬方法</th>
 														<th>単価</th>
 														<th>数量</th>
+														<th>単位</th>
 														<th>税抜価格</th>
 														<th>納期</th>
 														<th>明細備考</th>
@@ -272,6 +279,7 @@
 														<th>運搬方法</th>
 														<th>単価</th>
 														<th>数量</th>
+														<th>単位</th>
 														<th>税抜価格</th>
 														<th>納期</th>
 														<th>明細備考</th>
@@ -288,25 +296,25 @@
 									<div style="height: 25px;">
 									</div>
 									<div>
-										<img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top">
+										<a href="#"><img class="rowtop button" src="/img/type01/so/top.gif" alt="form row top"></a>
 									</div>
 									<div>
-										<img class="rowup button" src="/img/type01/so/up.gif" alt="form row up">
+										<a href="#"><img class="rowup button" src="/img/type01/so/up.gif" alt="form row up"></a>
 									</div>
 									<div style="height: 12px;"></div>
 									<div>
-										<img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down">
+										<a href="#"><img class="rowdown button" src="/img/type01/so/down.gif" alt="form row down"></a>
 									</div>
 									<div>
-										<img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom">
+										<a href="#"><img class="rowbottom button" src="/img/type01/so/bottom.gif" alt="form row bottom"></a>
 									</div>
 								</td>
 								<td>
-									<img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="delete">削除</button>
 									<br>
 									<br>
 									<br>
-									<img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
+									<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="alldelete">全削除</button>
 								</td>
 							</tr>
 						</table>
@@ -324,7 +332,7 @@
 
 	<!-- フォーム ボタン -->
 	<div class="form-buttons">
-		<img class="decideRegist button" src="/img/type01/so/reg_off_ja_bt.gif" alt="form decideRegist">
+		<button type="button" class="btn btn-light btn-kids" id="decideRegist">確定登録</button>
 	</div>
 	<div class="msw-loadpoints">
 		<!-- MSW 部門マスタ検索 -->

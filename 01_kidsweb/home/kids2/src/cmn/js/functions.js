@@ -78,7 +78,7 @@ function convertNumber(str, fracctiondigits) {
 }
 
 /**
- * 一年後の日付になっているかどうかを確認する
+ * 半年の日付になっているかどうかを確認する
  * @param {} date 
  */
 function isHalfYearLater(date) {

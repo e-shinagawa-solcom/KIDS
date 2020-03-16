@@ -6,8 +6,6 @@
 
     <!-- confirm iframe スタイル -->
     <link rel="stylesheet" href="/mold/cmn/confirm/css/confirm-in-iframe.css">
-    <!-- タブ切り替え共通処理 -->
-	<script src="/mold/cmn/form/js/tab-function.js" defer></script>
     <!-- セレクトボックス共通処理 -->
 	<script src="/mold/cmn/form/js/util-selectbox.js" defer></script>
 	<!-- msw表示切替 -->
@@ -71,8 +69,8 @@
                     <input class="TxtStyle05L" name="ProductCode">
 					<span class="regist-label__required-mark" style="right:2px;">_</span>
                     <input class="TxtStyle01L" name="ReviseCode">
-                    <input class="disTxt46L" name="ProductName" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="ProductName" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -124,9 +122,9 @@
                 <span class="regist-label">
                     <span class="regist-label__required-mark">◎</span>
                     <span class="regist-label__text">保管工場</span>
-                    <input class="TxtStyle05L" name="SourceFactory" readonly>
-                    <input class="disTxt46L" name="SourceFactoryName" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt05L" name="SourceFactory" disabled>
+                    <input class="disTxt46L" name="SourceFactoryName" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line--remora">
@@ -134,8 +132,8 @@
                     <span class="regist-label__required-mark">◎</span>
                     <span class="regist-label__text">移動先工場</span>
                     <input class="TxtStyle05L" name="DestinationFactory">
-                    <input class="disTxt46L" name="DestinationFactoryName" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="DestinationFactoryName" disabled>
+                    <span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
             <div class="regist-line">
@@ -164,8 +162,8 @@
 	</div>
     <!-- フォーム ボタン -->
     <div class="form-buttons">
-        <img class="form-buttons__clear button" src="/img/type01/cmn/querybt/clear_off_ja_bt.gif" alt="form clear">
-        <img class="form-buttons__regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
+        <a href="#"><img class="form-buttons__clear button" src="/img/type01/cmn/querybt/clear_off_ja_bt.gif" alt="form clear"></a>
+        <a href="#"><img class="form-buttons__regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist"></a>
     </div>
 </div>
 

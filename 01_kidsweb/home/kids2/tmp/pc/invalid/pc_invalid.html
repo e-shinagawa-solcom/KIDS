@@ -4,9 +4,9 @@
 <head>
 	<title>K.I.D.S.</title>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <!-- jQuery -->
-    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
-    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<!-- jQuery -->
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
 	<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
@@ -14,25 +14,27 @@
 	<!-- ボタン画像の共通の振る舞い CSS -->
 	<link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
 
-    <!-- 確認画面共通  CSS -->
-    <link rel="stylesheet" href="/pc/cmn/css/forms-confirm.css">
-    <!-- 閉じる/取消 ボタンの挙動 -->
-    <script src="/pc/invalid/js/invalid-confirm.js" defer></script>
+    <link rel="stylesheet" href="/cmn/css/form/base.css">
+	<!-- 確認画面共通  CSS -->
+	<link rel="stylesheet" href="/pc/cmn/css/forms-confirm.css">
+	<!-- 閉じる/取消 ボタンの挙動 -->
+	<script src="/pc/invalid/js/invalid-confirm.js" defer></script>
 </head>
 
 <body>
-    <div class="confirm-title">
-        無効確認
-    </div>
-    <div class="confirm-box">
-        <div class="confirm-box__header">
-            無効しますか？
-        </div>
-        <div class="confirm-box__buttons">
-            <img class="close button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" alt="close">
-            <img id="_%lngStockNo%_" revisionno="_%lngRevisionNo%_" class="invalid button" src="/img/type01/cmn/querybt/invalid_big_off_ja_bt.gif" alt="invalid">
-        </div>
-    </div>
+	<div class="confirm-title">
+		無効確認
+	</div>
+	<div class="confirm-box">
+		<div class="confirm-box__header">
+			無効しますか？
+		</div>
+		<div class="confirm-box__buttons">
+			<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="close">閉じる</button>
+			<button type="button" class="btn btn-light btn-kids btn-kids-sm" lngStockNo="_%lngStockNo%_" lngRevisionNo="_%lngRevisionNo%_"
+			 id="invalid">無効</button>
+		</div>
+	</div>
 	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
 		<tr>
 			<td>

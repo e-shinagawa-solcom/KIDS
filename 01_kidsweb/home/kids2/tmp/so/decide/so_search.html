@@ -6,6 +6,7 @@
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<title>K.I.D.S.</title>
 	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
 	<!-- msw汎用スタイル -->
 	<link rel="stylesheet" href="/search/cmn/css/msw.css">
 	<!-- スタイル初期化 & 各種コントロールスタイル -->
@@ -68,8 +69,8 @@
 						<span class="regist-label">
 							<span class="regist-label__text">顧客</span>
 							<input class="TxtStyle05L" name="lngCustomerCode"  type="text" alt="Customer">
-							<input class="disTxt46L" name="strCustomerName" type="text" readonly>
-							<img class="msw-button button" invokeMSWName="msw-socustomer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+							<input class="disTxt46L" name="strCustomerName" type="text" disabled>
+							<span><a href="#"><img class="msw-button button" invokeMSWName="msw-socustomer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
 						</span>
 					</div>
 					<div class="regist-line">
@@ -112,11 +113,12 @@
 		<!-- フォーム ボタン -->
 		<div class="form-buttons">
 			<div class="form-buttons__search">
-				<img class="search button" src="/img/type01/so/search_brown_off_ja_bt.gif" alt="form search">
+				<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="search">検索</button>
+                    
 			</div>
 			<div class="form-buttons__clear">
-				<img class="clear button" src="/img/type01/so/clear_off_ja_bt.gif" alt="form clear">
-				<img class="close button" src="/img/type01/so/close_off_ja_bt.gif" alt="form close">
+				<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="clear">クリア</button>
+				<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="close">閉じる</button>
 			</div>
 			<div>
 			</div>

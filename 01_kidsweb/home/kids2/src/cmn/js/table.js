@@ -1,4 +1,11 @@
 function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj) {
+    chkboxObj.on('keydown', function (e) {            
+        e.stopPropagation();
+        console.log('enter');
+        if (e.which == 13) {
+            $(this).click();
+        }
+      });
     chkboxObj.on('click', function (e) {
         e.stopPropagation();
         var rowindex = $(this).parent().parent().index();
@@ -19,6 +26,13 @@ function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj) {
 }
 
 function setAllCheckClickEvent(allCheckObj, tableA, tableA_chkbox) {
+    allCheckObj.on('keydown', function (e) {            
+        e.stopPropagation();
+        console.log('enter');
+        if (e.which == 13) {
+            $(this).click();
+        }
+      });
     // チェックボックスの切り替え処理のバインド
     allCheckObj.on({
         'click': function () {

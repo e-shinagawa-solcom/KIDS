@@ -19,4 +19,10 @@
             window.location.href = url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version;
         }
     });
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            $(this).find('img').click();
+        }
+    });
 })();

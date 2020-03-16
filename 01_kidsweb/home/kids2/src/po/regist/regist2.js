@@ -88,8 +88,10 @@ jQuery(function ($) {
                 lngPurchaseOrderDetailNo: $(tr).find('.detailPurchaseorderDetailNo').text(),
                 lngStockSubjectCode: $(tr).find('.detailStockSubjectCode').text().split("]")[0].replace("[", ""),
                 lngStockItemCode: $(tr).find('.detailStockItemCode').text().split("]")[0].replace("[", ""),
-                lngDeliveryMethodCode: $(tr).find('option:selected').val(),
-                strDeliveryMethodName: $(tr).find('option:selected').text().trim(),
+                lngDeliveryMethodCode: $(tr).find('[name="lngdeliverymethodcode"] option:selected').val(),
+                strDeliveryMethodName: $(tr).find('[name="lngdeliverymethodcode"] option:selected').text().trim(),
+                lngProductUnitCode: $(tr).find('[name="lngproductunitcode"] option:selected').val(),
+                strProductUnitName: $(tr).find('[name="lngproductunitcode"] option:selected').text().trim(),
                 curProductPrice: $(tr).find('.detailProductPrice').text().split(" ")[1],
                 lngProductQuantity: $(tr).find('.detailProductQuantity').text(),
                 curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text().split(" ")[1],
@@ -128,7 +130,7 @@ jQuery(function ($) {
     $(document).on('click', '#btnClose', function () {
         window.open('about:blank', '_self').close();
     });
-    $('img.decideRegist').on('click', function () {
+    $('#decideRegist').on('click', function () {
         // console.log('確定登録ボタンクリック');
         if (!validationCheck()) {
             console.log("バリデーションエラーのため処理継続中止。")
@@ -174,7 +176,7 @@ jQuery(function ($) {
     });
 
     // 追加ボタンのイベント
-    $('img.add').on('click', function () {
+    $('#add').on('click', function () {
         var isChecked = false;
         $('input[type="checkbox"]')
             .each(function () {
@@ -234,7 +236,7 @@ jQuery(function ($) {
 
 
     // 全削除ボタンのイベント
-    $('img.alldelete').on('click', function () {
+    $('#alldelete').on('click', function () {
 
         // テーブルBのデータをすべてテーブルAに移動する
         deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
@@ -253,7 +255,7 @@ jQuery(function ($) {
     });
 
     // 削除ボタンのイベント
-    $('img.delete').on('click', function () {
+    $('#delete').on('click', function () {
 
         // テーブルBの選択されたデータをテーブルAに移動する
         deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
@@ -275,6 +277,7 @@ jQuery(function ($) {
 
 function resetTableADisplayStyle() {
     $("#tableA tbody tr").each(function (i, e) {
+        $(this).find(".detailProductUnitCode").find('select').prop('disabled', true);
         $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
         $(this).find(".detailDetailNote").find('input:text').prop('disabled', true);
     });
@@ -282,6 +285,7 @@ function resetTableADisplayStyle() {
 
 function resetTableBDisplayStyle() {
     $("#tableB tbody tr").each(function (i, e) {
+        $(this).find(".detailProductUnitCode").find('select').prop('disabled', false);
         $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
         $(this).find(".detailDetailNote").find('input:text').prop('disabled', false);
     });

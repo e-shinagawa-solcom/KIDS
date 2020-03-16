@@ -7,6 +7,13 @@
         type: 'post',
         dataType: 'json'
     };
+    
+    $('a').on('keydown', function (e) {
+        if (e.which == 13) {
+            e.stopPropagation();
+            $(this).find('img.msw-button').click();
+        }
+    });
 
     // 顧客-表示会社コード イベント登録
     $('input[name="lngCustomerCode"]').on({

@@ -18,6 +18,7 @@
     <!-- スタイル初期化 & 各種コントロールスタイル -->
     <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
 
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
     <!-- 確認画面共通  CSS -->
     <link rel="stylesheet" href="/so/cancel/css/forms-confirm.css">
     <!-- ボタン画像の共通の振る舞い CSS -->
@@ -104,8 +105,8 @@
             上記の受注を取消しますか？
         </div>
         <div class="confirm-box__buttons">
-            <img class="close button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" alt="close">
-            <img class="cancel button" id="_%lngReceiveNo%_" revisionno="_%lngRevisionNo%_" src="/img/type01/cmn/seg/cancel_off_ja_bt.gif" alt="cancel">
+                <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="close">閉じる</button>
+                <button type="button" class="btn btn-light btn-kids btn-kids-sm" lngReceiveNo="_%lngReceiveNo%_" lngRevisionNo="_%lngRevisionNo%_" id="cancel">取消</button>
         </div>
     </div>
 </body>

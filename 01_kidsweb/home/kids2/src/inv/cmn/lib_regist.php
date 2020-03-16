@@ -1118,9 +1118,8 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     // 御請求金額
     $insertAry['curthismonthamount']   = $aryData['curthismonthamount'];
 
-    // 通貨単位コード //円以外は？
-    $insertAry['lngmonetaryunitcode'] = 1;
-//     $insertAry['lngmonetaryunitcode']  = $aryData['lngmonetaryunitcode'];
+    // 通貨単位コード
+    $insertAry['lngmonetaryunitcode']  = $aryData['lngmonetaryunitcode'];
     // 通貨単位名称
     $insertAry['strmonetaryunitsign']  = fncGetMonetaryunitSign($insertAry['lngmonetaryunitcode'] ,$objDB);
 
@@ -1683,9 +1682,9 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     // 請求期間 至
     $aryNewResult["dtmChargeternEnd"]       = $aryResult["dtmchargeternend"];
     // 前月請求残額
-    $aryNewResult["curLastMonthBalance"]    = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitname"], $aryResult["curlastmonthbalance"], 'price');
+    $aryNewResult["curLastMonthBalance"]    = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["curlastmonthbalance"], 'price');
     // 御請求金額
-    $aryNewResult["curThisMonthAmount"]     = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitname"], $aryResult["curthismonthamount"], 'price');
+    $aryNewResult["curThisMonthAmount"]     = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["curthismonthamount"], 'price');
     // 通貨単位コード
     $aryNewResult["lngMonetaryUnitCode"]    = $aryResult["lngmonetaryunitcode"];
     // 通貨単位
@@ -1695,11 +1694,11 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     // 課税区分名
     $aryNewResult["strTaxClassName"]        = $aryResult["strtaxclassname"];
     // 税抜金額1
-    $aryNewResult["curSubTotal1"]           = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitname"], $aryResult["cursubtotal1"], 'price');
+    $aryNewResult["curSubTotal1"]           = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["cursubtotal1"], 'price');
     // 消費税率1
     $aryNewResult["curTax1"]                = $aryResult["curtax1"];
     // 消費税額1
-    $aryNewResult["curTaxPrice1"]           = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitname"], $aryResult["curtaxprice1"], 'taxprice');
+    $aryNewResult["curTaxPrice1"]           = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["curtaxprice1"], 'taxprice');
     // 担当者
     $aryNewResult["strUserCode"]            = $aryResult["strusercode"];
     $aryNewResult["strUserName"]            = $aryResult["strusername"];
@@ -1778,11 +1777,11 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
     // 税抜金額
     if ( !$aryDetailResult["cursubtotalprice"] )
     {
-        $aryNewDetailResult["curSubTotalPrice"] = convertPrice($aryHeadResult["lngMonetaryUnitCode"], $aryHeadResult["strMonetaryUnitName"], 0, 'price');
+        $aryNewDetailResult["curSubTotalPrice"] = convertPrice($aryHeadResult["lngMonetaryUnitCode"], $aryHeadResult["strMonetaryUnitSign"], 0, 'price');
     }
     else
     {
-        $aryNewDetailResult["curSubTotalPrice"] = convertPrice($aryHeadResult["lngMonetaryUnitCode"], $aryHeadResult["strMonetaryUnitName"], $aryDetailResult["cursubtotalprice"], 'price');
+        $aryNewDetailResult["curSubTotalPrice"] = convertPrice($aryHeadResult["lngMonetaryUnitCode"], $aryHeadResult["strMonetaryUnitSign"], $aryDetailResult["cursubtotalprice"], 'price');
     }
     // 課税区分コード
     $aryNewDetailResult["lngTaxClassCode"]       = $aryDetailResult["lngtaxclasscode"];
@@ -1795,7 +1794,7 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
     $curSubTotalPrice = $aryDetailResult["cursubtotalprice"];
     $aryNewDetailResult["taxPrice"]              = (int)($aryDetailResult["lngtaxclasscode"]) == 1
                                                     ? 0
-                                                    : convertPrice($aryHeadResult["lngMonetaryUnitCode"], $aryHeadResult["strMonetaryUnitName"], $curSubTotalPrice*$curTax, 'taxprice');
+                                                    : convertPrice($aryHeadResult["lngMonetaryUnitCode"], $aryHeadResult["strMonetaryUnitSign"], $curSubTotalPrice*$curTax, 'taxprice');
     // 課税区分・税率
     $aryNewDetailResult["strTax"]                = $aryDetailResult["strtaxclassname"] ."・" . (int)($curTax*100) . '%';
     // 明細備考
@@ -1909,9 +1908,11 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     // 担当者
     $aryPrevResult["strUserCode"] = $aryResult["lngInputUserCode"];
     $aryPrevResult["strUserName"] = $aryResult["strInputUserName"];
+
+    // 通貨単位コード
+    $aryPrevResult['lngMonetaryUnitCode'] = $aryResult["lngmonetaryunitcode"];
     // 通貨単位名称
-    $monetaryUnitCode = 1;
-    $aryPrevResult['strMonetaryUnitName'] = fncGetMonetaryunitSign( $monetaryUnitCode ,$objDB);
+    $aryPrevResult['strMonetaryUnitName'] = fncGetMonetaryunitSign( $aryResult["lngmonetaryunitcode"] ,$objDB);
 
     // 備考
     $aryPrevResult['description'] = $aryResult['description'];

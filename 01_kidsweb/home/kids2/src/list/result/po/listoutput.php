@@ -86,11 +86,11 @@ $aryQuery[] = "  , pod.lngstockitemcode";
 $aryQuery[] = "  , pod.strstockitemname";
 $aryQuery[] = "  , pod.lngdeliverymethodcode";
 $aryQuery[] = "  , pod.strdeliverymethodname";
-$aryQuery[] = "  , to_char(pod.curproductprice, '9,999,999,990.9999') AS curproductprice";
+$aryQuery[] = "  , pod.curproductprice";
 $aryQuery[] = "  , to_char(pod.lngproductquantity, '9,999,999,990') AS lngproductquantity";
 $aryQuery[] = "  , pod.lngproductunitcode";
 $aryQuery[] = "  , pod.strproductunitname";
-$aryQuery[] = "  , to_char(pod.cursubtotalprice, '9,999,999,990.99') AS cursubtotalprice";
+$aryQuery[] = "  , pod.cursubtotalprice";
 $aryQuery[] = "  , to_char(pod.dtmdeliverydate, 'YYYY/MM/DD') AS dtmdeliverydate";
 $aryQuery[] = "  , pod.strnote";
 $aryQuery[] = "  , od.strmoldno";
@@ -132,7 +132,7 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 $objDB->freeResult($lngResultID);
 
 // 合計金額処理(最後のページだけに表示)別変数に保存
-$curTotalPrice = $aryParts["strmonetaryunitsign"] . " " . sprintf("%1.2f", $aryParts["curtotalprice"]);
+$curTotalPrice = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryParts["curtotalprice"], "price");
 unset($aryParts["curtotalprice"]);
 
 // ページ処理
@@ -174,12 +174,12 @@ for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNo
 
         // 単価が存在すれば、それに通貨単位をつける
         if ($aryDetail[$j]["curproductprice" . (($j + 5) % 5)] > 0) {
-            $aryDetail[$j]["curproductprice" . (($j + 5) % 5)] = $aryParts["strmonetaryunitsign"] . " " . $aryDetail[$j]["curproductprice" . (($j + 5) % 5)];
+            $aryDetail[$j]["curproductprice" . (($j + 5) % 5)] = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryDetail[$j]["curproductprice" . (($j + 5) % 5)], "unitprice");
         }
 
         // 小計が存在すれば、それに通貨単位をつける
         if ($aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] > 0) {
-            $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] = $aryParts["strmonetaryunitsign"] . " " . $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)];
+            $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)], "price");
         }
 
         // 製品数量が存在すれば、それに製品単位をつける

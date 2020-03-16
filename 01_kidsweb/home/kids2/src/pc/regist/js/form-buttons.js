@@ -10,7 +10,7 @@ var chkbox = [];
     // クリアボタン
     var btnClear = $('img.clear');
     // 登録ボタン
-    var btnRegist = $('img.regist');
+    var btnRegist = $('#regist');
     // 発注情報取得ボタン
     var btnGetPoInfo = $('img.getpoinfo');
 
@@ -20,6 +20,13 @@ var chkbox = [];
         e.preventDefault();
         return false;
     });
+
+    $('.link_po').on('keydown', function (e) {
+        console.log('enter');
+        if (e.which == 13) {
+            $('img.getpoinfo').click();
+        }
+      });
 
     btnGetPoInfo.on('click', function () {
         // 発注NO.の取得
@@ -262,14 +269,13 @@ var chkbox = [];
 
     // 登録ボタン押下時の処理
     btnRegist.on('click', function () {
-
         if (workForm.valid()) {
 
             var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
 
-            // 仕入日が一年後である
-            if (isOneYearLater(new Date(dtmStockAppDate))) {
-                alert("仕入日はシステム日付の1年後以上となっている。");
+            // 仕入日が半年である
+            if (isHalfYearLater(new Date(dtmStockAppDate))) {
+                alert("仕入日はシステム日付の半年後以上となっている。");
                 return false;
             }
 

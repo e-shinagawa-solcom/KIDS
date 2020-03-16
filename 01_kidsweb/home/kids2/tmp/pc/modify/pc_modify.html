@@ -12,6 +12,7 @@
 
 	<title>K.I.D.S.</title>
 	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
 	<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
 	<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
 	<link rel="stylesheet" href="/mold/cmn/navigate/css/navigate.css">
@@ -66,7 +67,7 @@
 
 <body class="background">
 	<form name="" action="_%actionUrl%_" method="post">
-		<input type="submit">
+		<!-- <input type="submit"> -->
 		<!-- 入力フォーム -->
 		<div class="form-box--pc1">
 			<!-- フォームヘッダ -->
@@ -80,13 +81,15 @@
 						<span class="regist-label">
 							<span class="regist-label__required-mark">◎</span>
 							<span class="regist-label__required-text">仕入日</span>
-							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmStockAppDate" value="_%dtmstockappdate%_" maxlength="10"
-							>
+							<input style="ime-mode:disabled;" class="disTxt10L" type="text" name="dtmStockAppDate_desc" value="_%dtmstockappdate%_" maxlength="10"
+							 disabled>
+							<input type="hidden" name="dtmStockAppDate" value="_%dtmstockappdate%_">
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__required-text">発注書NO.</span>
 							<input style="ime-mode:disabled;" class="disTxt10L" type="text" name="strOrderCode" value="_%strrealordercode%_" maxlength="10"
-							 readonly>
+							 disabled>
+							<input type="hidden" name="strOrderCode" value="_%strrealordercode%_">
 							<input type="hidden" name="lngrevisionno" value="_%lngrevisionno%_">
 							<input type="hidden" name="lngOrderNo" value="_%lngorderno%_">
 							<input type="hidden" name="lngStockNo" value="_%lngStockNo%_">
@@ -97,16 +100,18 @@
 
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">状態</span>
-							<input class="disTxt07L" type="text" name="lngStockStatusCode" value="_%strstockstatusname%_" size="7" maxlength="7" readonly>
+							<input class="disTxt07L" type="text" name="lngStockStatusCode" value="_%strstockstatusname%_" size="7" maxlength="7" disabled>
+							<input type="hidden" name="lngStockStatusCode" value="_%strstockstatusname%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">仕入NO.</span>
-							<input class="disTxt10L" type="text" name="strStockCode" value="_%strstockcode%_" maxlength="10" readonly>
+							<input class="disTxt10L" type="text" name="strStockCode" value="_%strstockcode%_" maxlength="10" disabled>
+							<input type="hidden" name="strStockCode" value="_%strstockcode%_">
 							<input type="hidden" name="lngStockNo" value="_%lngstockno%_">
 						</span>
-						<span class="regist-label" style="margin-left: 19px;">
+						<span class="regist-label">
 							<span class="regist-label__required-mark">◎</span>
 							<span class="regist-label__required-text">納品書NO.</span>
 							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="strSlipCode" value="_%strslipcode%_" maxlength="10">
@@ -114,20 +119,21 @@
 
 						<span class="regist-label">
 							<span class="regist-label__text">製品到着日</span>
-							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" value="_%dtmexpirationdate%_" maxlength="10"
-							 >
+							<input style="ime-mode:disabled;" class="Txt10L" type="text" name="dtmExpirationDate" value="_%dtmexpirationdate%_" maxlength="10">
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">通貨</span>
-							<input class="disTxt07L" type="text" readonly name="strMonetaryUnitName" value="_%strMonetaryUnitName%_">
+							<input class="disTxt07L" type="text" disabled name="strMonetaryUnitName" value="_%strMonetaryUnitName%_">
 							<input type="hidden" name="lngMonetaryUnitCode" value="_%lngMonetaryUnitCode%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">製品</span>
-							<input class="disTxt05L" name="strProductCode" type="text" value="_%strproductcode%_" readonly>
-							<input class="disTxt46L" name="strProductName" type="text" value="_%strproductname%_" readonly>
+							<input class="disTxt05L" name="strProductCode" type="text" value="_%strproductcode%_" disabled>
+							<input class="disTxt46L" name="strProductName" type="text" value="_%strproductname%_" disabled>
+							<input type="hidden" name="strProductCode" value="_%strproductcode%_">
+							<input type="hidden" name="strProductName" value="_%strproductname%_">
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">レートタイプ</span>
@@ -140,25 +146,28 @@
 
 						<span class="regist-label">
 							<span class="regist-label__text">仕入先</span>
-							<input class="disTxt05L" name="lngCustomerCode" type="text" readonly value="_%strcustomerdisplaycode%_">
-							<input class="disTxt46L" name="strCustomerName" type="text" value="_%strcustomerdisplayname%_" readonly>
+							<input class="disTxt05L" name="lngCustomerCode" type="text" disabled value="_%strcustomerdisplaycode%_">
+							<input class="disTxt46L" name="strCustomerName" type="text" value="_%strcustomerdisplayname%_" disabled>
+							<input type="hidden" name="lngCustomerCode" value="_%strcustomerdisplaycode%_">
+							<input type="hidden" name="strCustomerName" value="_%strcustomerdisplayname%_">
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">適用レート</span>
-							<input style="ime-mode:disabled;" class="disTxt07R" type="text" name="curConversionRate" value="_%curconversionrate%_"
-							readonly>
+							<input style="ime-mode:disabled;" class="disTxt07R" type="text" name="curConversionRate" value="_%curconversionrate%_" disabled>
 							<input type="hidden" name="curConversionRate" value="_%curConversionRate%_">
 						</span>
 					</div>
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text">納品場所</span>
-							<input class="disTxt05L" name="lngLocationCode" type="text" readonly value="_%strdeliverydisplaycode%_">
-							<input class="disTxt46L" name="strLocationName" type="text" value="_%strdeliverydisplayname%_" readonly>
+							<input class="disTxt05L" name="lngLocationCode" type="text" disabled value="_%strdeliverydisplaycode%_">
+							<input class="disTxt46L" name="strLocationName" type="text" value="_%strdeliverydisplayname%_" disabled>
+							<input type="hidden" name="lngLocationCode" value="_%strdeliverydisplaycode%_">
+							<input type="hidden" name="strLocationName" value="_%strdeliverydisplayname%_">
 						</span>
 						<span class="regist-label regist-label--right">
 							<span class="regist-label__text">支払条件</span>
-							<input class="disTxt07L" type="text" readonly name="strPayConditionName" value="_%strPayConditionName%_">
+							<input class="disTxt07L" type="text" disabled name="strPayConditionName" value="_%strPayConditionName%_">
 							<input type="hidden" name="lngPayConditionCode" value="_%lngPayConditionCode%_">
 						</span>
 						<span style="visibility:hidden" id="taxList">
@@ -181,8 +190,8 @@
 			</div>
 			<!-- フォームコンテンツ -->
 			<div class="form-box__contents">
-				
-			<div class="regist-line">
+
+				<div class="regist-line">
 					<table class="table-box">
 						<tr>
 							<td style="vertical-align: top;width: 900px;">
@@ -224,7 +233,7 @@
 											</tbody>
 										</table>
 									</div>
-	
+
 									<div id="decide_data">
 										<table class="table-decide-description" name="DECIDE_T" id="tableB">
 											<tbody>
@@ -236,32 +245,6 @@
 						</tr>
 					</table>
 				</div>
-				<!-- <div class="regist-line" style="width: 100%;white-space: nowrap; overflow: auto;">
-					<table class="table-description">
-						<thead>
-							<tr>
-								<th></th>
-								<th>対象</th>
-								<th>製品</th>
-								<th>仕入科目</th>
-								<th>仕入部品</th>
-								<th>単価</th>
-								<th>単位</th>
-								<th>数量</th>
-								<th>税抜金額</th>
-								<th>消費税区分</th>
-								<th>消費税率(%)</th>
-								<th>消費税額</th>
-								<th>納期</th>
-								<th>備考</th>
-							</tr>
-						</thead>
-						<tbody id="tbl_order_detail">
-						</tbody>
-						<tfoot>
-						</tfoot>
-					</table>
-				</div> -->
 				<div class="regist-line">
 				</div>
 			</div>
@@ -278,7 +261,7 @@
 
 	<!-- フォーム ボタン -->
 	<div class="form-buttons">
-		<img class="regist button" src="/img/type01/cmn/querybt/reg_off_ja_bt.gif" alt="form regist">
+		<button type="button" class="btn btn-light btn-kids btn-kids-sm" style="width: 75px;" id="regist">登録</button>
 	</div>
 
 	<script type="text/javascript">

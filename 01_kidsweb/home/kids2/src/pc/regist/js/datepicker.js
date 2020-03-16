@@ -8,12 +8,19 @@
         , $('input[name="dtmExpirationDate"]')
     ];
 
+    if ((window.location.href.indexOf('modify') >= 0)) {
+        dateElements = [
+            $('input[name="dtmExpirationDate"]')
+        ];
+    }
+
     // datepickerの設定
     $.each(dateElements, function () {
         this.datepicker({
             buttonImage: "/img/type01/date/open_off_on_bt.gif",
-            buttonImageOnly: true,           // 画像として表示
-            showOn: "both",
+            buttonImageOnly: false,           // 画像として表示
+            buttonText: "D",
+            showOn: "button",
             showButtonPanel: true,
             dateFormat: "yy/mm/dd",
             onClose: function () {

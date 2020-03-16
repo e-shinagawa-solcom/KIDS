@@ -3,13 +3,14 @@
         <link rel="stylesheet" href="/search/cmn/form/css/forms.css">
         <link rel="stylesheet" href="/search/cmn/form/css/tabs.css">
         <link rel="stylesheet" href="/inv/cmn/form/css/forms.css">
+        <link rel="stylesheet" href="/cmn/css/form/base.css">
 
         <!-- <link rel="stylesheet" type="text/css" media="screen" href="/inv/regist/css/forms.css"> -->
         <link rel="stylesheet" type="text/css" media="screen" href="/inv/regist/css/table.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/inv/regist/css/table-decide.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/inv/regist/css/table-box.css">
         <link rel="stylesheet" type="text/css" media="screen" href="/inv/regist/css/form-buttons.css">
-        <script src="/search/cmn/form/js/tab-function.js" defer></script>
+        <!-- <script src="/search/cmn/form/js/tab-function.js" defer></script> -->
         <script src="/search/cmn/form/js/util-selectbox.js" defer></script>
         <!-- チェックボックスの切り替え処理 -->
         <script src="/search/cmn/search/js/toggleCheckbox.js" defer></script>
@@ -39,7 +40,7 @@
         <script src="/mold/lib/js/queryMasterData.js" defer></script>
         <!-- COOKIE 表示チェックボックス 保存/復元 -->
         <script src="/search/cmn/js/cookie-display-items.js" defer></script>
-		<script src="/search/cmn/js/date.js" defer></script>
+        <script src="/search/cmn/js/date.js" defer></script>
         <script src="/cmn/js/functions.js" defer></script>
         <!-- 請求日設定 -->
         <script src="/inv/cmn/js/msw-regist.js" defer></script>
@@ -79,9 +80,15 @@
                     <div class="regist-line regist-float">
                         <span class="regist-label w-465">
                             <span class="regist-label__text50">顧客</span>
-                            <input class="TxtStyle05L input-code" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer">
-                            <input class="disTxt2xL input-name" name="strCustomerName" type="text" readonly>
-                            <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                            <input class="disTxt05L input-code" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer" disabled>
+                            <input type="hidden" name="lngCustomerCode">
+                            <input class="disTxt2xL input-name" name="strCustomerName" type="text" disabled>
+                            <span>
+                                <a href="#">
+                                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif"
+                                        alt="msw">
+                                </a>
+                            </span>
                         </span>
                     </div>
                 </div>
@@ -111,8 +118,13 @@
                         <span class="regist-label">
                             <span class="regist-label__text50">起票者</span>
                             <input class="Txt07L" name="lngInputUserCode" type="text" value="_%lngInputUserCode%_" alt="InputUser">
-                            <input class="disTxt120pxL" name="strInputUserName" type="text" value="_%strInputUserName%_" readonly>
-                            <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                            <input class="disTxt120pxL" name="strInputUserName" type="text" value="_%strInputUserName%_" disabled>
+                            <span>
+                                <a href="#">
+                                    <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif"
+                                        alt="msw">
+                                </a>
+                            </span>
                         </span>
                         <span class="regist-label">
                             <span class="regist-label__text50">請求日</span>
@@ -123,8 +135,7 @@
                 <div class="regist-box2">
                     <span class="regist-label regist-label-w190">
                         <span class="regist-label__text50">自</span>
-                        <input class="TxtStyle04L" name="dtmchargeternstart" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);"
-                            >
+                        <input class="TxtStyle04L" name="dtmchargeternstart" type="text" value="" maxlength="10">
                     </span>
 
                 </div>
@@ -132,7 +143,8 @@
                     <span class="regist-label regist-label-box3">
                         <span class="regist-label__text115">当月請求額</span>
                         <span class="regist-label__text20 moneyclass"></span>
-                        <input class="disTxt14R" name="curthismonthamount" type="text" readonly>
+                        <input class="disTxt14R" name="curthismonthamount" type="text" disabled>
+                        <input type="hidden" name="curthismonthamount">
                     </span>
                 </div>
                 <div class="regist-clear"></div>
@@ -150,15 +162,14 @@
                             <br>
                             <br>
                             <span class="regist-label__text50"></span>
-                            <input class="Txt54L" name="strnote" type="text" onfocus="chColorOn(this);" onblur="chColorOff(this);">
+                            <input class="Txt54L" name="strnote" type="text">
                         </span>
                     </div>
                 </div>
                 <div class="regist-box2">
                     <span class="regist-label regist-label-w190">
                         <span class="regist-label__text50">至</span>
-                        <input class="TxtStyle04L" name="dtmchargeternend" type="text" value="" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);"
-                            >
+                        <input class="TxtStyle04L" name="dtmchargeternend" type="text" value="" maxlength="10">
                     </span>
 
                 </div>
@@ -166,7 +177,8 @@
                     <span class="regist-label regist-label-box3">
                         <span class="regist-label__text115">消費税</span>
                         <span class="regist-label__text20 moneyclass"></span>
-                        <input class="disTxt14R" name="curtaxprice" type="text" readonly>
+                        <input class="disTxt14R" name="curtaxprice" type="text" disabled>
+                        <input type="hidden" name="curtaxprice">
                     </span>
                 </div>
                 <div class="regist-box2">
@@ -182,7 +194,8 @@
                     <span class="regist-label regist-label-box3" style="margin-top:5px;">
                         <span class="regist-label__text115">差し引き合計額</span>
                         <span class="regist-label__text20 moneyclass"></span>
-                        <input class="disTxt14R" name="notaxcurthismonthamount" type="text" readonly>
+                        <input class="disTxt14R" name="notaxcurthismonthamount" type="text" disabled>
+                        <input type="hidden" name="notaxcurthismonthamount">
                     </span>
                 </div>
             </div>
@@ -296,11 +309,11 @@
                         </td>
                         <td style="width: 50px;"></td>
                         <td style="width: 100px;">
-                            <img class="search button" src="/img/type01/cmn/querybt/blown_process_off_ja_bt(1).gif" alt="form search">
+                            <button type="button" class="btn btn-light btn-kids btn-kids-sm" style="width: 80px;" id="search">検索条件入力</button>
                             <br>
                             <br>
                             <br>
-                            <img class="add button" src="/img/type01/cmn/querybt/add_blown_off_ja_bt(2).gif" alt="form add">
+                            <button type="button" class="btn btn-light btn-kids btn-kids-sm" style="width: 80px;" id="add">追加</button>
                         </td>
                     </tr>
                 </table>
@@ -373,11 +386,11 @@
                         <td style="text-align: center;">
                         </td>
                         <td>
-                            <img class="delete button" src="/img/type01/cmn/querybt/delete_blown_off_ja_bt.gif" alt="form delete">
+                            <button type="button" class="btn btn-light btn-kids btn-kids-sm" style="width: 80px;" id="delete">削除</button>
                             <br>
                             <br>
                             <br>
-                            <img class="alldelete button" src="/img/type01/cmn/querybt/all_delete_blown_off_ja_bt.gif" alt="form allDelete">
+                            <button type="button" class="btn btn-light btn-kids btn-kids-sm" style="width: 80px;" id="alldelete">全削除</button>
                         </td>
                     </tr>
                 </table>
@@ -391,8 +404,8 @@
     </div>
 </div>
 <!-- previewボタン -->
-<div>
-    <img class="preview-button button" name="inv-customer" src="/img/type01/cmn/querybt/preview_off_ja_bt.gif" alt="preview">
+<div class="preview-button">
+    <button type="button" class="btn btn-light btn-kids btn-kids-sm" style="width: 80px;" id="preview">プレビュー</button>
 </div>
 
 <div class="msw-loadpoints">

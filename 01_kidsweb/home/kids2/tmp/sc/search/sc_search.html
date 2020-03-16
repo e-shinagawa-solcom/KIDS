@@ -57,8 +57,12 @@
     <div class="form-box__header">
         <p class="form-box__header__title">売上検索</p>
         <span class="form-box__header__buttons">
-            <img class="clear button" src="/img/type01/cmn/seg/sch_clear_off_ja_bt.gif">
-            <img class="search button" src="/img/type01/cmn/seg/sch_search_off_ja_bt.gif">
+            <a href="#">
+                <img class="clear button" src="/img/type01/cmn/seg/sch_clear_off_ja_bt.gif">
+            </a>
+            <a href="#">
+                <img class="search button" src="/img/type01/cmn/seg/sch_search_off_ja_bt.gif">
+            </a>
         </span>
     </div>
     <!-- フォームコンテンツ -->
@@ -118,7 +122,8 @@
                 <span class="regist-label">
                     <span class="regist-label__text">請求日</span>
                     FROM
-                    <input class="TxtStyle05L is-from-date" name="From_dtmAppropriationDate" type="text" value="" alt="dtmAppropriationDate" tabindex="" maxlength="10"> TO
+                    <input class="TxtStyle05L is-from-date" name="From_dtmAppropriationDate" type="text" value="" alt="dtmAppropriationDate"
+                        tabindex="" maxlength="10"> TO
                     <input class="TxtStyle05L is-date" name="To_dtmAppropriationDate" type="text" value="" tabindex="" maxlength="10">
                 </span>
             </div>
@@ -173,8 +178,13 @@
                 <span class="regist-label">
                     <span class="regist-label__text">入力者</span>
                     <input class="TxtStyle05L" name="lngInputUserCode" type="text" alt="InputUser" displayFlagLimit="0">
-                    <input class="disTxt46L" name="strInputUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="strInputUserName" type="text" disabled>
+                    <span>
+                        <a href="#">
+                            <img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif"
+                                alt="msw">
+                        </a>
+                    </span>
                 </span>
             </div>
             <div class="regist-line">
@@ -185,8 +195,12 @@
                 <span class="regist-label">
                     <span class="regist-label__text">顧客</span>
                     <input class="TxtStyle05L" name="lngCustomerCompanyCode" type="text" alt="CustomerCompany">
-                    <input class="disTxt46L" name="strCustomerCompanyName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="strCustomerCompanyName" type="text" disabled>
+                    <span>
+                        <a href="#">
+                            <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                        </a>
+                    </span>
                 </span>
             </div>
             <div class="regist-line">
@@ -234,8 +248,12 @@
                 <span class="regist-label">
                     <span class="regist-label__text">営業部署</span>
                     <input class="TxtStyle05L" name="lngInChargeGroupCode" type="text" alt="InChargeGroup" displayFlagLimit="0">
-                    <input class="disTxt46L" name="strInChargeGroupName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-group" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="strInChargeGroupName" type="text" disabled>
+                    <span>
+                        <a href="#">
+                            <img class="msw-button button" invokeMSWName="msw-group" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                        </a>
+                    </span>
                 </span>
             </div>
             <div class="regist-line">
@@ -246,8 +264,13 @@
                 <span class="regist-label">
                     <span class="regist-label__text">開発担当者</span>
                     <input class="TxtStyle05L" name="lngInChargeUserCode" type="text" alt="InChargeUser" displayFlagLimit="0">
-                    <input class="disTxt46L" name="strInChargeUserName" type="text" readonly>
-                    <img class="msw-button button" invokeMSWName="msw-inchargeuser" displayFlagLimit="0" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                    <input class="disTxt46L" name="strInChargeUserName" type="text" disabled>
+                    <span>
+                        <a href="#">
+                            <img class="msw-button button" invokeMSWName="msw-inchargeuser" displayFlagLimit="0" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif"
+                                alt="msw">
+                        </a>
+                    </span>
                 </span>
             </div>
             <div class="regist-line">
@@ -362,14 +385,14 @@
         <!-- MSW 顧客マスタ検索 -->
         <iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">
         </iframe>
-		<!-- MSW 担当部署マスタ検索 -->
-		<iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
-		</iframe>
-		<!-- MSW 担当者マスタ検索 -->
-		<iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
-		</iframe>
-		<!-- MSW 入力者マスタ検索 -->
-		<iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
-		</iframe>
+        <!-- MSW 担当部署マスタ検索 -->
+        <iframe class="msw-group" src="/search/cmn/msw/group/mswgroup.html" frameborder="0">
+        </iframe>
+        <!-- MSW 担当者マスタ検索 -->
+        <iframe class="msw-inchargeuser" src="/search/cmn/msw/inchargeuser/mswinchargeuser.html" frameborder="0">
+        </iframe>
+        <!-- MSW 入力者マスタ検索 -->
+        <iframe class="msw-inputuser" src="/search/cmn/msw/inputuser/mswinputuser.html" frameborder="0">
+        </iframe>
     </div>
 </div>

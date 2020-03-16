@@ -2,12 +2,75 @@
 // condition.js
 //
 jQuery(function ($) {
+    // マスタ検索共通
+    var searchMaster = {
+        url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),
+        type: 'post',
+        dataType: 'json'
+    };
 
+
+    $('a').on('keydown', function (e) {
+        e.stopPropagation();
+        if (e.which == 13) {
+            $(this).find('img').click();
+        }
+    });
+
+    // 顧客-表示会社コード イベント登録
+    $('input[name="lngCustomerCode"]').on({
+        'change': function () {
+            selectCustomerName($(this));
+            // JQuery Validation Pluginで検知させる為イベントキック
+            $(this).trigger('blur');
+            // フォーカスを生産工場名に合わせる
+            $('input[name="strCustomerName"]').focus();
+
+            SetMonetaryUnitCode(postTarget, $('input[name="lngCustomerCode"]').val(), strSessionID);
+        }
+    });
+
+    // --------------------------------------------------------------------------
+    // 顧客-表示会社コードによるデータ索引
+    // --------------------------------------------------------------------------
+    // 顧客-表示会社コードから表示名を索引
+    var selectCustomerName = function (invoker) {
+        console.log("顧客-表示会社コード->表示名 change");
+        // 索引結果のセット先CSSセレクタの作成
+        var targetCssSelector = 'input[name="str' + $(invoker).attr('alt') + 'Name"]';
+        // 索引結果0件の時のコード欄のCSSセレクタの作成
+        var targetCodeCssSelector = 'input[name="lng' + $(invoker).attr('alt') + 'Code"]';
+        // 検索条件
+        var condition = {
+            data: {
+                QueryName: 'selectCustomerName',
+                Conditions: {
+                    CompanyDisplayName: $(invoker).val()
+                }
+            }
+        };
+
+        // リクエスト送信
+        $.ajax($.extend({}, searchMaster, condition))
+            .done(function (response) {
+                console.log("工場-表示会社コード->表示名 done");
+                // 工場-表示名に値をセット
+                $(targetCssSelector).val(response[0].companydisplayname);
+            })
+            .fail(function (response) {
+                console.log("工場-表示会社コード->表示名 fail");
+                console.log(response.responseText);
+                // 工場-コード、表示名の値をリセットし、コード欄にフォーカス
+                $(targetCssSelector).val('');
+                $(targetCodeCssSelector).val('').focus();
+            });
+    };
     // 親画面から引き継いだ顧客コードをセット
     var strDefaultCompanyDisplayCode = $('#strDefaultCompanyDisplayCode').val();
     if (0 < strDefaultCompanyDisplayCode.length) {
         // 顧客コードをセット
         $('input[name="lngCustomerCode"]').val(strDefaultCompanyDisplayCode);
+        console.log
         // 顧客名の表示のためchangeイベントを手動発生
         $('input[name="lngCustomerCode"]').trigger('change');
     }
@@ -21,12 +84,12 @@ jQuery(function ($) {
         SetMonetaryUnitCode(postTarget, strCompanyDisplayCode, strSessionID);
     }
 
-    // 顧客名称-表示会社コード イベント登録
-    $('input[name="strCustomerName"]').on({
-        'focus': function () {
-            SetMonetaryUnitCode(postTarget, $('input[name="lngCustomerCode"]').val(), strSessionID);
-        }
-    });
+    // // 顧客名称-表示会社コード イベント登録
+    // $('input[name="strCustomerName"]').on({
+    //     'change': function () {
+    //         SetMonetaryUnitCode(postTarget, $('input[name="lngCustomerCode"]').val(), strSessionID);
+    //     }
+    // });
     // ------------------------------------
     //  events
     // ------------------------------------
@@ -105,8 +168,7 @@ jQuery(function ($) {
                 return false;
             }
 
-            if (data.count == 0)
-            {
+            if (data.count == 0) {
                 alert("該当する受注データが存在していません。");
                 return false;
             }
@@ -251,10 +313,11 @@ jQuery(function ($) {
             $('#OkBt').trigger('click');
             return false;
         }
-        else{
+        else {
             // document.dispatchEvent(e);
         }
     }
+
 
 
 });

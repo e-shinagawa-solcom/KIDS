@@ -73,6 +73,8 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "  , od.strmoldno";
     $aryQuery[] = "  , od.curProductPrice";
     $aryQuery[] = "  , od.lngProductQuantity";
+    $aryQuery[] = "  , od.lngproductunitcode";
+    $aryQuery[] = "  , od.strproductunitname";
     $aryQuery[] = "  , od.curSubTotalPrice";
     $aryQuery[] = "  , od.strDetailNote ";
     $aryQuery[] = "FROM";
@@ -114,6 +116,8 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "        , ss.strStockSubjectName as strStockSubjectName";
     $aryQuery[] = "        , od1.lngStockItemCode as lngStockItemCode";
     $aryQuery[] = "        , si.strstockitemname as strstockitemname";
+    $aryQuery[] = "        , od1.lngproductunitcode as lngproductunitcode";
+    $aryQuery[] = "        , mpu.strproductunitname as strproductunitname";
     $aryQuery[] = "        , to_char(od1.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
     $aryQuery[] = "        , od1.curProductPrice";
     $aryQuery[] = "        , od1.strmoldno";
@@ -138,6 +142,8 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "          on mg.lnggroupcode = mp.lnginchargegroupcode ";
     $aryQuery[] = "        LEFT JOIN m_user mu ";
     $aryQuery[] = "          on mu.lngusercode = mp.lnginchargeusercode ";
+    $aryQuery[] = "        LEFT JOIN m_productunit mpu ";
+    $aryQuery[] = "          ON od1.lngproductunitcode = mpu.lngproductunitcode ";
     $aryQuery[] = "        LEFT JOIN m_StockSubject ss ";
     $aryQuery[] = "          ON od1.lngstocksubjectcode = ss.lngstocksubjectcode ";
     $aryQuery[] = "        LEFT JOIN m_stockitem si ";

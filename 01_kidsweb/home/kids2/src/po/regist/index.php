@@ -216,8 +216,9 @@ $strPulldownMonetaryUnit = fncPulldownMenu(0, $aryOrderHeader["lngmonetaryunitco
 $aryData["optMonetaryUnit"] = $strPulldownMonetaryUnit;
 // 運搬方法プルダウン
 $strPulldownDeliveryMethod = fncPulldownMenu(6, null, "", $objDB);
-
-$aryResult = fncGetOrderDetailHtml($aryDetail, $strPulldownDeliveryMethod, $aryData);
+// 単位プルダウン
+$strPulldownProductUnit = fncPulldownMenu(11, $aryOrderHeader["lngproductunitcode"], "", $objDB);
+$aryResult = fncGetOrderDetailHtml($aryDetail, $strPulldownDeliveryMethod, $strPulldownProductUnit, $aryData);
 
 $aryData["tableB_no_body"] = $aryResult["tableB_no_body"];
 $aryData["tableA_chkbox_body"] = $aryResult["tableA_chkbox_body"];

@@ -7,6 +7,6 @@
         lngRevisionNo = 'revisionNo=' + $(this).attr('revisionno');
         lngEstimateNo = 'estimateNo=' + $(this).attr('lngestimateno');
             
-        window.open(url + '?' + sessionID + '&' + lngReceiveNo + '&' + lngRevisionNo + '&' + lngEstimateNo, 'display-detail', 'width=1011, height=600, resizable=yes, scrollbars=yes, menubar=no');
+        window.open(url + '?' + sessionID + '&' + lngReceiveNo + '&' + lngRevisionNo + '&' + lngEstimateNo, 'display-detail', 'width=1011, height=620, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

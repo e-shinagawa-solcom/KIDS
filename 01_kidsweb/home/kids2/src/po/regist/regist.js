@@ -136,8 +136,9 @@ jQuery(function ($) {
                 lngOrderDetailNo: $(tr).children('.detailOrderDetailNo').text(),
                 lngSortKey: i + 1,
                 lngDeliveryMethodCode: $(tr).find('[name="optDelivery"] option:selected').val(),
-                strDeliveryMethodName: $(tr).find('[name="optDelivery"] option:selected').text(),
-                lngProductUnitCode: $(tr).find('.detailProductUnitCode').text(),
+                strDeliveryMethodName: $(tr).find('[name="optDelivery"] option:selected').text(),                
+                lngProductUnitCode: $(tr).find('[name="optProductUnit"] option:selected').val(),
+                strProductUnitName: $(tr).find('[name="optProductUnit"] option:selected').text(),
                 lngOrderNo: $(tr).find('.detailOrderNo').text(),
                 lngRevisionNo: $(tr).find('.detailRevisionNo').text(),
                 lngStockSubjectCode: $(tr).find('.detailStockSubjectCode').text(),
@@ -184,7 +185,7 @@ jQuery(function ($) {
     });
 
     // 追加ボタンのイベント
-    $('img.add').on('click', function () {
+    $('#add').on('click', function () {
         var isChecked = false;
         $('input[type="checkbox"]')
             .each(function () {
@@ -243,7 +244,7 @@ jQuery(function ($) {
     });
 
     // 全削除ボタンのイベント
-    $('img.alldelete').on('click', function () {
+    $('#alldelete').on('click', function () {
 
         // テーブルBのデータをすべてテーブルAに移動する
         deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
@@ -262,7 +263,7 @@ jQuery(function ($) {
     });
 
     // 削除ボタンのイベント
-    $('img.delete').on('click', function () {
+    $('#delete').on('click', function () {
 
         // テーブルBの選択されたデータをテーブルAに移動する
         deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
@@ -280,7 +281,7 @@ jQuery(function ($) {
         tableBSort();
     });
 
-    $('img.decideRegist').on('click', function () {
+    $('#decideRegist').on('click', function () {
         if (!validationCheck2()) {
             return false;
         }
@@ -311,7 +312,7 @@ jQuery(function ($) {
             console.log(error);
         });
     });
-    $('img.clear').on('click', function () {
+    $('#clear').on('click', function () {
         window.location.reload();
     });
     function unLock() {
@@ -333,6 +334,7 @@ jQuery(function ($) {
 
     function resetTableADisplayStyle() {
         $("#tableA tbody tr").each(function (i, e) {
+            $(this).find(".detailProductUnitCode").find('select').prop('disabled', true);
             $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
             $(this).find(".detailNote").find('input:text').prop('disabled', true);
         });
@@ -340,7 +342,8 @@ jQuery(function ($) {
 
     function resetTableBDisplayStyle() {
         $("#tableB tbody tr").each(function (i, e) {
-            $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
+            $(this).find(".detailProductUnitCode").find('select').prop('disabled', false);
+            $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
             $(this).find(".detailNote").find('input:text').prop('disabled', false);
         });
     }

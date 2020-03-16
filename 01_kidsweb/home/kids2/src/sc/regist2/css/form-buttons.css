@@ -10,6 +10,17 @@
     text-align: right;
 }
 
+/* フォーム ボタン */
+.form-buttons2
+{
+    position: absolute; 
+    top: 500px;
+    left: 21px;
+
+    width: 927px;
+    text-align: right;
+}
+
 /* クリアボタン */
 .form-buttons__clear
 {
