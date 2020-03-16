@@ -110,6 +110,7 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = "INNER JOIN m_purchaseorder mp ";
     $aryQuery[] = "    on mp.lngpurchaseorderno = tpd.lngpurchaseorderno ";
     $aryQuery[] = "    and mp.lngrevisionno = tpd.lngrevisionno ";
+    $aryQuery[] = "    and mp.lngpurchaseorderno not in (select lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0 ) ";
 
     $aryQuery[] = "LEFT JOIN m_User input_u ON s.lngInputUserCode = input_u.lngUserCode";
     $aryQuery[] = "LEFT JOIN m_Company cust_c ON s.lngCustomerCompanyCode = cust_c.lngCompanyCode";

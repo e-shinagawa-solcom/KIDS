@@ -175,6 +175,10 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "select lngpurchaseorderno, lngpurchaseorderdetailno, max(lngrevisionno) as lngrevisionno ";
     $aryQuery[] = "from t_purchaseorderdetail group by lngpurchaseorderno, lngpurchaseorderdetailno ";
     $aryQuery[] = ") pod_rev on pod_rev.lngpurchaseorderno = pod.lngpurchaseorderno and pod_rev.lngpurchaseorderdetailno = pod.lngpurchaseorderdetailno and pod_rev.lngrevisionno = pod.lngrevisionno ";
+    $aryQuery[] = "inner join m_purchaseorder mpo ";
+    $aryQuery[] = "on mpo.lngpurchaseorderno = pod.lngpurchaseorderno ";
+    $aryQuery[] = "and mpo.lngrevisionno = pod.lngrevisionno ";
+    $aryQuery[] = "and mpo.lngpurchaseorderno not in (select  lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0) ";
     $aryQuery[] = "WHERE ";
     $aryQuery[] = "od.lngorderno = " . $data["lngOrderNo"];
     $aryQuery[] = " AND od.lngrevisionno = " . $data["lngRevisionNo"];
