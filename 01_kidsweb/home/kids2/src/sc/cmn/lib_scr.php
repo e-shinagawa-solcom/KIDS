@@ -589,7 +589,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductname"]);
         $detail_body_html .= "<td class='detailProductName'>" . $strDisplayValue . "</td>";
         //売上区分
-        $strDisplayValue = "[". htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]) ."]"
+        $strDisplayValue = "[". htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]) ."] "
         . htmlspecialchars($aryDetail[$i]["strsalesclassname"]);
         $detail_body_html .= "<td class='detailSalesClassName'>" . $strDisplayValue . "</td>";
         //納期
@@ -1218,7 +1218,6 @@ function fncRegisterSalesAndSlip(
             $aryRegisterResult["result"] = false;
             return $aryRegisterResult;
         }
-
         // 納品伝票明細登録
         if (!fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo,
             $aryHeader, $aryDetail, $objDB, $objAuth)) {
@@ -1615,7 +1614,7 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
         $v_lngrevisionno = $lngRevisionNo; //3:リビジョン番号
         $v_strcustomersalescode = withQuote($d["strcustomerreceivecode"]); //4:顧客受注番号
         $v_lngsalesclasscode = $d["lngsalesclasscode"]; //5:売上区分コード
-        $v_strsalesclassname = withQuote($d["strsalesclassname"]); //6:売上区分名
+        $v_strsalesclassname = withQuote(fncGetMasterValue( "m_salesclass", "lngsalesclasscode", "strsalesclassname", $d["lngsalesclasscode"] ,'', $objDB )); //6:売上区分名
         $v_strgoodscode = withQuote($d["strgoodscode"]); //7:顧客品番
         $v_strproductcode = withQuote(mb_substr($d["strproductcode"], 0, 5)); //8:製品コード
         $v_strrevisecode = withQuote($d["strrevisecode"]); //9:再販コード

@@ -156,7 +156,11 @@ $(function () {
       $target_row.attr('slipno', slipno);
       $target_row.attr('revisionno', revisionno);
       $('.slipcode', $target_row).html(slipcode);
-      $('.customer .customercode', $target_row).html('[' + customercode + '] ');
+      if (customercode == null || customercode == "null") {
+        $('.customer .customercode', $target_row).html('');
+      } else {
+        $('.customer .customercode', $target_row).html('[' + customercode + '] ');
+      }
       $('.customer .customername', $target_row).html(customername);
       $('.deliverydate', $target_row).html(deliverydate);
       // $('.price', $target_row).html(convertNumber(curtotalprice));
@@ -200,7 +204,11 @@ $(function () {
       $target_row.attr('slipno', slipno);
       $target_row.attr('revisionno', revisionno);
       $('.slipcode', $target_row).html(slipcode);
-      $('.customer .customercode', $target_row).html('[' + customercode + '] ');
+      if (customercode == null || customercode == "null") {
+        $('.customer .customercode', $target_row).html('');
+      } else {
+        $('.customer .customercode', $target_row).html('[' + customercode + '] ');
+      }
       $('.customer .customername', $target_row).html(customername);
       $('.deliverydate', $target_row).html(deliverydate);
       // $('.price', $target_row).html(convertNumber(curtotalprice));
