@@ -30,7 +30,7 @@
 	<link rel="stylesheet" href="/cmn/css/bootstrap-4.1.1/bs-button-style.css" />
 	<link rel="stylesheet" href="/cmn/css/form/base.css">
 	<link rel="stylesheet" href="/cmn/css/msgbox/jquery.msgBox.css" />
-	<script src="/cmn/js/msgbox/jquery.msgBox.min.js" defer></script>	
+	<script src="/cmn/js/msgbox/jquery.msgBox.min.js" defer></script>
 	<script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
 	<script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
 	<link rel="stylesheet" href="/cmn/jquery/tablesorter/themes/blue/style.css">
@@ -64,11 +64,11 @@
 			<div class="form-box__contents">
 				<div class="condition">
 					<div class="input-group">
-						<div class="col-8 block input-group">
+						<div class="col-12 block input-group">
 							<div class="col-1">
 								<label>条件</label>
 							</div>
-							<div class="col-4 input-group">
+							<div class="col-3 input-group">
 								<div>
 									<label>FROM</label>
 								</div>
@@ -82,7 +82,7 @@
 									<input type="text" class="form-control txt-kids" id="endYm">
 								</div>
 							</div>
-							<div class="col-6 input-group">
+							<div class="col-4 input-group">
 								<div>
 									<label for="payfCode">仕入先名称 </label>
 								</div>
@@ -93,18 +93,28 @@
 									<input type="text" class="form-control txt-kids" id="payfName" name="payfName" aria-label="..." aria-describedby="basic-addon4">
 								</div>
 								<div class="input-group-append pl-1 p-0">
-									<span><a href="#"><img class="msw-button button modal1-button" invokeMSWName="msw-payf" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+									<span>
+										<a href="#">
+											<img class="msw-button button modal1-button" invokeMSWName="msw-payf" src="/img/type01/msw/cmn/open_off_bt.gif"
+											 alt="msw">
+										</a>
+									</span>
+								</div>
+							</div>
+							<div class="col-3 input-group">
+								<div class="col-3">
+								</div>
+								<div class="col-6">
+									<!-- 抽出ボタン -->
+									<button type="button" class="btn btn-light btn-xs btn-kids-sm" style="border-color: #212529;" id="getBtn" onclick="getLcInfo(1)">抽出</button>
+								</div>
+								<div class="col-3">
+									<!-- 条件クリアボタン -->
+									<button type="button" class="btn btn-light btn-xs btn-kids-sm" style="border-color: #212529;" id="clearBtn" onclick="formClear()">条件クリア</button>
 								</div>
 							</div>
 						</div>
-						<div class="col-4 input-group">
-							<div class="col-4 mt-1">
-								<label>取得日時： </label>
-							</div>
-							<div class="col-8 mt-1">
-								<label>_%lc_info_date%_</label>
-							</div>
-						</div>
+
 					</div>
 				</div>
 				<div class="condition">
@@ -120,14 +130,14 @@
 							</div>
 						</div>
 
-						<div class="col-3 input-group">
-							<div class="col-6 mt-1">
-								<!-- 条件クリアボタン -->
-								<button type="button" class="btn btn-light btn-xs btn-kids-sm" id="clearBtn" onclick="formClear()">条件クリア</button>
+						<div class="col-4 input-group">
+							<div class="col-2">
+							</div>
+							<div class="col-3 mt-1">
+								<label>取得日時： </label>
 							</div>
 							<div class="col-6 mt-1">
-								<!-- 抽出ボタン -->
-								<button type="button" class="btn btn-light btn-xs btn-kids-sm" id="getBtn" onclick="getLcInfo(1)">抽出</button>
+								<label>_%lc_info_date%_</label>
 							</div>
 						</div>
 					</div>
@@ -183,7 +193,7 @@
 										<th>L/Cno</th>
 										<th>発行日</th>
 										<th>有効日</th>
-										<th>決済額</th>
+										<th>決済残額</th>
 										<th>決済1日付</th>
 										<th>決済1金額</th>
 										<th>決済2日付</th>
@@ -237,7 +247,7 @@
 										<th>L/Cno</th>
 										<th>発行日</th>
 										<th>有効日</th>
-										<th>決済額</th>
+										<th>決済残額</th>
 										<th>決済1日付</th>
 										<th>決済1金額</th>
 										<th>決済2日付</th>

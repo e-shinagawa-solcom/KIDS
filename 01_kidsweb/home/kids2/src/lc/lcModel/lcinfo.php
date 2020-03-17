@@ -248,6 +248,8 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
     // 削除データ復活判定処理
     fncRevivalDeletedLcInfo($objDB, $lcModel);
 
+    return $orderCount;
+
 }
 
 /**

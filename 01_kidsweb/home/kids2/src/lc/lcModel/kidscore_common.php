@@ -246,7 +246,7 @@ function fncGetLcInfoData($objDB, $data)
             break;
     }
 
-    $sql .= " order by pono,poreviseno,polineno";
+    $sql .= " order by poupdatedate desc,pono, polineno";
 
     $result = pg_query($objDB->ConnectID, $sql);
 
@@ -1035,6 +1035,7 @@ function fncUpdateBankname($objDB, $bankcd, $bankname, $currencyclass, $pono)
  */
 function fncUpdateLcinfo($objDB, $data)
 {
+    // 同じPONO,POREVISENOの更新
     //クエリの生成
     $sql = "
                 update t_lcinfo
@@ -1046,16 +1047,10 @@ function fncUpdateLcinfo($objDB, $data)
                     lcno = $6,
                     lcamopen = $7,
                     validmonth = $8,
-                    lcstate = $9,
-                    bldetail1date = $10,
-                    bldetail1money = $11,
-                    bldetail2date = $12,
-                    bldetail2money = $13,
-                    bldetail3date = $14,
-                    bldetail3money = $15
+                    lcstate = $9
                 where
-                    pono = $16
-                    and poreviseno = $17
+                    pono = $10
+                    and poreviseno = $11
             ";
     $bind = array(($data["opendate"] == "") ? null : $data["opendate"],
         ($data["portplace"] == "") ? null : $data["portplace"],
@@ -1065,20 +1060,58 @@ function fncUpdateLcinfo($objDB, $data)
         ($data["lcno"] == "") ? null : $data["lcno"],
         ($data["lcamopen"] == "") ? null : date($data["lcamopen"]),
         ($data["validmonth"] == "") ? null : str_replace("/", "", $data["validmonth"]),
-        $data["lcstate"], 
-        ($data["bldetail1date"] == "") ? null : date($data["bldetail1date"]),
-        ($data["bldetail1money"] == "") ? null : str_replace(",", "", $data["bldetail1money"]),
-        ($data["bldetail2date"] == "") ? null : date($data["bldetail2date"]),
-        ($data["bldetail2money"] == "") ? null : str_replace(",", "", $data["bldetail2money"]),
-        ($data["bldetail3date"] == "") ? null : date($data["bldetail3date"]),
-        ($data["bldetail3money"] == "") ? null : str_replace(",", "", $data["bldetail3money"]),
-        $data["pono"], $data["poreviseno"],
+        $data["lcstate"],$data["pono"], $data["poreviseno"],
     );
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
         echo "L/C情報の更新失敗しました。\n";
+        exit;
+    } else {
+        return pg_affected_rows($result);
+    }
+}
+
+/**
+ * L/C情報の更新
+ *
+ * @param [object] $objDB
+ * @param [array] $data
+ * @return 更新件数
+ */
+function fncUpdateSettleInfo($objDB, $data) {
+    //クエリの生成
+    $sql = "
+                update t_lcinfo
+                set lcno = $1,
+                    usancesettlement = $2,
+                    bldetail1date = $3,
+                    bldetail1money = $4,
+                    bldetail2date = $5,
+                    bldetail2money = $6,
+                    bldetail3date = $7,
+                    bldetail3money = $8
+                where
+                    pono = $9
+                    and polineno = $10
+                    and poreviseno = $11
+            ";
+    $bind = array(($data["lcno"] == "") ? null : $data["lcno"],
+        ($data["usancesettlement"] == "") ? null : str_replace(",", "", $data["usancesettlement"]),
+        ($data["bldetail1date"] == "") ? null : date($data["bldetail1date"]),
+        ($data["bldetail1money"] == "") ? null : str_replace(",", "", $data["bldetail1money"]),
+        ($data["bldetail2date"] == "") ? null : date($data["bldetail2date"]),
+        ($data["bldetail2money"] == "") ? null : str_replace(",", "", $data["bldetail2money"]),
+        ($data["bldetail3date"] == "") ? null : date($data["bldetail3date"]),
+        ($data["bldetail3money"] == "") ? null : str_replace(",", "", $data["bldetail3money"]),
+        $data["pono"], $data["polineno"], $data["poreviseno"],
+    );
+
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+
+    if (!$result) {
+        echo "L/C情報の決済金額の更新失敗しました。\n";
         exit;
     } else {
         return pg_affected_rows($result);
@@ -1103,16 +1136,10 @@ function fncUpdateLcinfoToAmandCancel($objDB, $data)
                     bankreqdate = $3,
                     lcamopen = $4,
                     validmonth = $5,
-                    lcstate = 8,
-                    bldetail1date = $6,
-                    bldetail1money = $7,
-                    bldetail2date = $8,
-                    bldetail2money = $9,
-                    bldetail3date = $10,
-                    bldetail3money = $11
+                    lcstate = 8
                 where
-                    pono = $12
-                    and poreviseno = $13
+                    pono = $6
+                    and poreviseno = $7
             ";
 
     $bind = array(($data["opendate"] == "") ? null : $data["opendate"],
@@ -1120,12 +1147,6 @@ function fncUpdateLcinfoToAmandCancel($objDB, $data)
         ($data["bankreqdate"] == "") ? null : $data["bankreqdate"],
         ($data["lcamopen"] == "") ? null : $data["lcamopen"],
         ($data["validmonth"] == "") ? null : $data["validmonth"],
-        ($data["bldetail1date"] == "") ? null : date($data["bldetail1date"]),
-        ($data["bldetail1money"] == "") ? null : date($data["bldetail1money"]),
-        ($data["bldetail2date"] == "") ? null : date($data["bldetail2date"]),
-        ($data["bldetail2money"] == "") ? null : date($data["bldetail2money"]),
-        ($data["bldetail3date"] == "") ? null : date($data["bldetail3date"]),
-        ($data["bldetail3money"] == "") ? null : date($data["bldetail3money"]),
         $data["pono"], $data["poreviseno"]);
 
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);

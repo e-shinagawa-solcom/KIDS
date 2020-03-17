@@ -240,7 +240,7 @@ function updateBtn() {
 		return false;
 	}
 
-	if ($("#bldetail2money").val() != "" && !$.isNumeric($("#bldetail3money").val().replace(/,/g, ''))) {
+	if ($("#bldetail3money").val() != "" && !$.isNumeric($("#bldetail3money").val().replace(/,/g, ''))) {
 		alert("決済3金額の形式を確認してください。");
 		$("#bldetail3money").focus();
 		return false;
@@ -265,14 +265,14 @@ function updateBtn() {
 		return false;
 	}
 
-	//依頼日、発行日、有効日のいずれが空ではなくて、発行銀行が空の場合
-	if (($("#opendate").val() != "" || $("#validmonth").val() != "" || $("#lcamopen").val() != "") &&
-		$("#bankname").val() == ""
-	) {
-		alert("発行銀行を選択してください。");
-		$("#bankname").focus();
-		return false;
-	}
+	// //依頼日、発行日、有効日のいずれが空ではなくて、発行銀行が空の場合
+	// if (($("#opendate").val() != "" || $("#validmonth").val() != "" || $("#lcamopen").val() != "") &&
+	// 	$("#bankname").val() == ""
+	// ) {
+	// 	alert("発行銀行を選択してください。");
+	// 	$("#bankname").focus();
+	// 	return false;
+	// }
 
 	//発行日が空ではない、かつ依頼日が空の場合
 	if ($("#lcamopen").val() != "" && $("#bankreqdate").val() == "") {
@@ -282,7 +282,7 @@ function updateBtn() {
 	}
 
 	//有効日、発行日が空ではなくて、発行日 > 有効日の場合
-	if ($("#validmonth").val() == "" && $("#lcamopen").val() == "") {
+	if ($("#validmonth").val() != "" && $("#lcamopen").val() != "") {
 		var validmonth_d = new Date($("#validmonth").val());
 		var lcamopen_d = new Date($("#lcamopen").val());
 		if (validmonth_d < lcamopen_d) {
@@ -291,6 +291,37 @@ function updateBtn() {
 			return false;
 		}
 	}
+
+	// 決済金額の取得
+	var bldetail1money = 0;
+	var bldetail2money = 0;
+	var bldetail3money = 0;
+	var moneyprice = 0;
+	var blmoney = 0;
+	if ($("#bldetail1money").val() != "") {
+		bldetail1money = Number($("#bldetail1money").val().replace(/,/g, ''));
+	}
+	if ($("#bldetail2money").val() != "") {
+		bldetail2money = Number($("#bldetail2money").val().replace(/,/g, ''));
+	}
+	if ($("#bldetail3money").val() != "") {
+		bldetail3money = Number($("#bldetail3money").val().replace(/,/g, ''));
+	}
+	blmoney = bldetail1money + bldetail2money + bldetail3money;
+	if ($("#moneyprice").val() != "") {
+		moneyprice = $("#moneyprice").val().replace(/,/g, '');
+	}
+	if (blmoney > moneyprice) {
+		alert("決済金額1～3の合計は金額を超えている。");
+		$("#bldetail1money").focus();
+		return false;
+	}
+
+	if ($("#bldetail1money").val() == "" &&  $("#bldetail2money").val() == "" && $("#bldetail3money").val() == "" )
+	{
+		blmoney = "";
+	}
+
 	// 状態が７の場合、
 	if (lc_data.lcstate == 7) {
 		alert("アメンドを解除します。");
@@ -309,11 +340,11 @@ function updateBtn() {
 			'portplace': $("#portplace").val(),
 			'bankcd': $("#bankname").val(),
 			'bankname': $("#bankname option:selected").text(),
-			'bankreqchk': $("#bankreqchk").prop('checked'),
 			'bankreqdate': $("#bankreqdate").val(),
 			'lcno': $("#lcno").val(),
 			'lcamopen': $("#lcamopen").val(),
 			'validmonth': $("#validmonth").val(),
+			'usancesettlement': blmoney,
 			'bldetail1date': $("#bldetail1date").val(),
 			'bldetail1money': $("#bldetail1money").val(),
 			'bldetail2date': $("#bldetail2date").val(),
@@ -328,8 +359,7 @@ function updateBtn() {
 			console.log(data);
 			// Ajaxリクエストが成功
 			var data = JSON.parse(data);
-
-
+			
 			alert("更新処理が完了しました。");
 
 			//ローダー非表示

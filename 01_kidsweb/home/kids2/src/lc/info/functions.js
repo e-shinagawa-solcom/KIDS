@@ -103,7 +103,19 @@ function setLcInfoTable(data, phpData) {
 			'<td style="padding-left: 8px;"><input type="radio" name="selectRow" value="' + (i+1) + '" class="form-control form-control-sm" style="width:85%;height: 15px;background-color: #f0f0f6;"></td>' +
 			'</tr>';
 		$("#lc_table_radio").append(lc_table_radio);
-
+		var balance = row.moneyprice;
+		if (row.bldetail1money != null)
+		{
+			balance -= row.bldetail1money;
+		}
+		if (row.bldetail2money != null)
+		{
+			balance -= row.bldetail2money;
+		}
+		if (row.bldetail3money != null)
+		{
+			balance -= row.bldetail3money;
+		}
 		var lc_table_body = '<tr id="' + i + '" before-click-bgcolor="rgb(' + background_color + ')">' +
 			// '<td style="text-align: left;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm"></td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfnameomit) + '</td>' +
@@ -135,7 +147,7 @@ function setLcInfoTable(data, phpData) {
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.lcno) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.lcamopen, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.validmonth, 'yy/mm/dd') + '</td>' +
-			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.usancesettlement, row.currencyclass, 0) + '</td>' +
+			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(balance.toString(), row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail1date, 'yy/mm/dd') + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNumberByClass(row.bldetail1money, row.currencyclass, 0) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertDate(row.bldetail2date, 'yy/mm/dd') + '</td>' +
@@ -165,8 +177,6 @@ function setLcInfoTable(data, phpData) {
 			$("#lc_table_head tr th:nth-child(" + i + ")").width(body_width);
 			width += body_width;
 		}
-
-		console.log(body_width);
 		$("[name='T']").width(width + 250);
 	}
 
@@ -501,8 +511,8 @@ function setBtnControll() {
 //---------------------------------------------------
 function saveSearchConditions() {
 	var search_conditions = {
-		'from': $("#startYm").val(),
-		'to': $("#endYm").val(),
+		'from': $("#startYm").val().replace(/\//g, ""),
+		'to': $("#endYm").val().replace(/\//g, ""),
 		'payfcd': $("#payfCode").val(),
 		'payfnameomit': $("#payfName").val(),
 		'simulateYm': $("#simulateYm").val(),

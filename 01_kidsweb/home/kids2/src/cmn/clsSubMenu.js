@@ -311,7 +311,7 @@ function fncGetSubMenuRef(strMode, i) {
 //---------------------------------------------------------------------
 function fncSubMenuLocation(strURL) {
 	if (strURL.indexOf('/lc/info') >= 0) {
-		window.open(strURL, 'LC INFO', 'width=1000, height=650, resizable=yes, scrollbars=yes, menubar=no');        
+		window.open(strURL, 'LC INFO', 'width='+ screen.availWidth + ', height=' + (screen.availHeight -50) + ', resizable=yes, scrollbars=yes, menubar=no');        
 	} else if (strURL.indexOf('/lc/set') >= 0) {
 		window.open(strURL, 'LC SETTING', 'width=1000, height=650, resizable=yes, scrollbars=yes, menubar=no');        
 	} else {

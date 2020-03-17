@@ -93,7 +93,7 @@ function getLcEdit($objDB, $lcModel, $data)
 function updateLcEdit($objDB, $lcModel, $data)
 {
     $bankreqchk = $data["bankreqchk"];
-    if ($bankreqchk == "true") {
+    if ($bankreqdate == "") {
         if (intval($data["poreviseno"]) > 0) {
             $poreviseno = intval($data["poreviseno"]);
             do {
@@ -119,14 +119,19 @@ function updateLcEdit($objDB, $lcModel, $data)
         if ($data["lcstate"] == 9) {
             $data["lcstate"] = 10;
         }
-        $bankinfo = $lcModel->getAcBankInfo($data["bankcd"]);
-        $data["bankname"] = $bankinfo->bankomitname;
+        if ($data["bankcd"] != "") {
+            $bankinfo = $lcModel->getAcBankInfo($data["bankcd"]);
+            $data["bankname"] = $bankinfo->bankomitname;
+        }
         // L/C情報の更新
         $result = fncUpdateLcinfo($objDB, $data);
     } else {
         // L/C情報の更新
         $result = fncUpdateLcinfoToAmandCancel($objDB, $data);
     }
+
+    // 決済金額の更新
+    $result = fncUpdateSettleInfo($objDB, $data);
 
     return $result;
 }

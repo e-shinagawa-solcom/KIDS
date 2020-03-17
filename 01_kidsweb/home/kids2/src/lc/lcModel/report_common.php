@@ -1192,11 +1192,13 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
         WHERE
             shipstartdate between to_date($1,'YYYY/MM/DD') and to_date($2,'YYYY/MM/DD')
             and payfnameomit is not null
-            and currencyclass = $3"
+            and currencyclass = $3
+            and moneyprice - ( 
+                COALESCE(bldetail1money, 0) + COALESCE(bldetail2money, 0) + COALESCE(bldetail3money, 0)
+              ) != 0"
         . $where .
         "   order by bankcd, payfnameomit, shipstartdate
         ";
-
     // クエリへの設定値の定義
     $bind = array($startYmd, $endYmd, $currencyclass);
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);

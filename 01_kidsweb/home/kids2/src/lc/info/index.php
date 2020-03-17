@@ -68,9 +68,6 @@ $loginUserAuth = $lcModel->getUserAuth($usrId);
 
 $userAuth = substr($loginUserAuth, 1, 1);
 
-//LC情報取得日の取得
-$lcgetdate = $lcModel->getLcInfoDate();
-
 //ログイン状況の最大管理番号の取得
 $maxLgno = $lcModel->getMaxLoginStateNum();
 
@@ -85,15 +82,22 @@ if ($aryData["aclcinitFlg"] == "true") {
 //    $time = explode(" ", $curDate)[1];
 
     // L/Cデータを取得する
-    fncGetLcData($objDB, $lcModel, $usrName, $curDate);
-    // lcgetdateを更新する
-    $updCount = $lcModel->updateLcGetDate($maxLgno, date('Ymd h:m:s', strtotime($curDate)));
+    $orderCount = fncGetLcData($objDB, $lcModel, $usrName, $curDate);
 
-    if ($updCount < 0) {
-        $lcModel->updateLgStateToInit($maxLgno);
+    if ($orderCount > 0) {
+        // lcgetdateを更新する
+        $updCount = $lcModel->updateLcGetDate($maxLgno, date('Ymd h:m:s', strtotime($curDate)));
+
+        if ($updCount < 0) {
+            $lcModel->updateLgStateToInit($maxLgno);
+        }
     }
 
 }
+
+
+//LC情報取得日の取得
+$lcgetdate = $lcModel->getLcInfoDate();
 
 if( $aryData["reSearchFlg"] != true )
 {

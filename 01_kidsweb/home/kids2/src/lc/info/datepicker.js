@@ -1,35 +1,27 @@
 $(document).ready(function () {
-    // datepicker対象要素
-    var ymElements = [
-        $("#startYm"),
-        $("#endYm"),
-        $("#simulateYm")
-    ];
-
-    // datepickerの設定
-    $.each(ymElements, function () {
-        this.datepicker({
-            dateFormat: 'yymm',
-            changeMonth: true,
-            changeYear: true,
-            showButtonPanel: true,
-            language: 'ja',
-
-            onClose: function (dateText, inst) {
-                var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-                var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                $(this).val($.datepicker.formatDate('yymm', new Date(year, month, 1)));
-            },
-            beforeShow: function (input, inst) {
-                if ((datestr = $(this).val()).length > 0) {
-                    year = datestr.substr(0, 4);
-                    month = datestr.substr(4, 2);
-                    $(this).datepicker('option', 'defaultDate', new Date(year, month - 1, 1));
-                    $(this).datepicker('setDate', new Date(year, month - 1, 1));
-                }
-                inst.dpDiv.addClass('datepicker-month-year');
-            }
-        });
+    // 開始日時フォーカスを失ったときの処理
+    $("#startYm, #endYm").on('blur', function () {
+        console.log($(this).val());
+        var value = $(this).val();
+        if (/^[0-9]{6}$/.test(value)) {
+            var str = value.trim();
+            var y = str.substr(0, 4);
+            var m = str.substr(4, 2);
+            $(this).val(y + "/" + m);
+        }
+        if (/^[0-9]{5}$/.test(value)) {
+            var str = value.trim();
+            var y = str.substr(0, 4);
+            var m = str.substr(4, 1);
+            $(this).val(y + "/0" + m);
+        }
     });
-    
+
+    // 開始日時フォーカスを取ったときの処理
+    $("#startYm, #endYm").on('focus', function () {
+        var chgVal = $(this).val().replace(/\//g, "");
+        $(this).val(chgVal);
+        $(this).select();
+    });
+
 });

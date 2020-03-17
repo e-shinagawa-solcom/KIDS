@@ -347,12 +347,6 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
     $sheet->setCellValue('D'. ($startRow + 4), $bankLst[2]["bankomitname"]);
     $sheet->setCellValue('E'. ($startRow + 4), $bankLst[3]["bankomitname"]);
 
-    // $sheet->setCellValue('B'. ($startRow + 26), moneyFormat($unSettedTotal->bank1total * $rate, $currencyClass));
-    // $sheet->setCellValue('C'. ($startRow + 26), moneyFormat($unSettedTotal->bank2total * $rate, $currencyClass));
-    // $sheet->setCellValue('D'. ($startRow + 26), moneyFormat($unSettedTotal->bank3total * $rate, $currencyClass));
-    // $sheet->setCellValue('E'. ($startRow + 26), moneyFormat($unSettedTotal->bank4total * $rate, $currencyClass));
-    // $sheet->setCellValue('F'. ($startRow + 26), moneyFormat($unSettedTotal->unapprovaltotaltotal * $rate, $currencyClass));
-    // $sheet->setCellValue('G'. ($startRow + 26), moneyFormat($unSettedTotal->benetotaltotal * $rate, $currencyClass));
     $sheet->setCellValue('B'. ($startRow + 26), $unSettedTotal->bank1total * $rate);
     $sheet->setCellValue('C'. ($startRow + 26), $unSettedTotal->bank2total * $rate);
     $sheet->setCellValue('D'. ($startRow + 26), $unSettedTotal->bank3total * $rate);

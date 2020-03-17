@@ -89,7 +89,7 @@ function initLcinfo(sessionId)
 			strURL="/lc/info/index.php?strSessionID=" + data.strSessionID + "&aclcinitFlg=true"
 		}
 
-		window.open(strURL, 'LC INFO', 'width=1000, height=650, resizable=yes, scrollbars=yes, menubar=no');   
+		window.open(strURL, 'LC INFO', 'width='+ screen.availWidth + ', height=' + (screen.availHeight - 50) + ', resizable=yes, scrollbars=yes, menubar=no');   
 	})
 	.fail(function() {
 		alert("fail");

@@ -128,8 +128,7 @@ header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetm
 header('Content-Disposition: attachment;filename="' . $filename . '"');
 header('Cache-Control: max-age=0');
 $writer->save('php://output');
-// $writer = new XlsWriter($spreadsheet);
-// $writer->save(REPORT_TMPDIR . REPORT_LC_OUTPUTFILE);
+
 
 /**
  * 帳票（オープン月）_１の出力
@@ -472,6 +471,7 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data,
     fncDeleteReportUnSettedPrice($objDB);
     // L/C情報取得
     $lcinfoLst = fncGetLcInfoForReportFive($objDB, $data["startDate"], $data["endDate"], $currencyClass, 1);
+
     // （臨時テーブル）帳票未決済額テーブルにデータを登録する
     if ($lcinfoLst && count($lcinfoLst) > 0) {
         $insertData = array();
@@ -551,7 +551,7 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data,
             unset($insertData);
         }
         // ページ数の取得
-        $pageNum_1 = ceil(count($lcinfoLst) / REPORT_LC_ONE_PAGE_REPORT_NUM_5_1);
+        $pageNum_1 = ceil(count($totalUnSettedPriceByPayfLst) / REPORT_LC_ONE_PAGE_REPORT_NUM_5_1);
     }
 
     // レートを設定する

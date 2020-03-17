@@ -72,7 +72,7 @@ body {
     left: 0px;
 
     width: 98.5%;
-    height: 87%;
+    height: 90%;
 }
 table.tablesorter {
     font-family: arial;
@@ -148,7 +148,7 @@ table.tablesorter>thead>tr>th {
     top: 22px;
     overflow-x: scroll;
     overflow-y: scroll;
-    width: 98.7%;
+    width: 98%;
     height: 98.7%;
 }
 .form-box > div > button {

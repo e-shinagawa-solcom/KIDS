@@ -165,7 +165,7 @@ function printBtn() {
 
 	var windowName = 'reportDownload';
 	url = '/lc/report/download.php?bankname=' + bankname;
-	window.open("", "_self", "width=1011, height=700, scrollbars=yes, resizable=yes");
+	window.open("", "_parent", "width=1011, height=700, scrollbars=yes, resizable=yes");
 	$('form').attr('action', url);
 	$('form').attr('method', 'post');
 	$('form').submit();
