@@ -48,8 +48,8 @@ $aryTableHeaderName_SO["dtmdeliverydate"] = "納期";
 $aryTableHeaderName_SO["lngreceivestatuscode"] = "状態";
 $aryTableHeaderName_SO["lngrecordno"] = "No.";
 $aryTableHeaderName_SO["curproductprice"] = "単価";
-$aryTableHeaderName_SO["lngproductunitcode"] = "単位";
 $aryTableHeaderName_SO["lngproductquantity"] = "数量";
+$aryTableHeaderName_SO["lngproductunitcode"] = "単位";
 $aryTableHeaderName_SO["cursubtotalprice"] = "税抜金額";
 $aryTableHeaderName_SO["strdetailnote"] = "明細備考";
 

@@ -119,7 +119,7 @@ $aryNewResult["strDetailTable"] = implode("\n", $aryDetailTable);
 // 表示対象が削除データ、申請中データの場合はプレビューボタンを表示しない
 // また帳票出力権限を持ってない場合もプレビューボタンは表示しない
 if ($aryResult["lngrevisionno"] >= 0 and fncCheckAuthority(DEF_FUNCTION_LO2, $objAuth)) {
-    $aryNewResult["strPreviewAction"] = "../../list/result/frameset.php?strSessionID=" . $aryData["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_ORDER . "&strReportKeyCode=" . $aryData["lngPurchaseOrderNo"] . "&bytCopyFlag=TRUE";
+    $aryNewResult["strPreviewAction"] = "../../list/result/frameset.php?strSessionID=" . $aryData["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_ORDER . "&strReportKeyCode=" . $aryData["lngPurchaseOrderNo"] . "";
 
     $aryNewResult["listview"] = 'visible';
 } else {

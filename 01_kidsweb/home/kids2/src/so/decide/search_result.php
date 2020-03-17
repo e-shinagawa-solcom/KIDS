@@ -283,6 +283,21 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("id", "curproductprice");
     $trBody->appendChild($td);
 
+    $lngunitquantity = 1;
+    $detailResult["lngcartonquantity"] = $detailResult["lngcartonquantity"] == null ? 0 : $detailResult["lngcartonquantity"];
+    $detailResult["lngproductquantity"] = $detailResult["lngproductquantity_est"] == null ? 0 : $detailResult["lngproductquantity_est"];
+    $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
+    if ($detailResult["lngproductunitcode"] == 2) {
+        $lngunitquantity = $detailResult["lngcartonquantity"];
+        $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
+    }
+
+    // 数量
+    $textContent = number_format($lngproductquantity);
+    $td = $doc->createElement("td", $textContent);
+    $td->setAttribute("id", "lngproductquantity_re");
+    $trBody->appendChild($td);
+
     // 単位
     $td = $doc->createElement("td");
     $td->setAttribute("id", "lngproductunitcode");
@@ -299,13 +314,7 @@ foreach ($aryDetailResult as $detailResult) {
     $trBody->appendChild($td);
 
     // 入数
-    $lngunitquantity = 1;
-    $detailResult["lngcartonquantity"] = $detailResult["lngcartonquantity"] == null ? 0 : $detailResult["lngcartonquantity"];
-    $detailResult["lngproductquantity"] = $detailResult["lngproductquantity_est"] == null ? 0 : $detailResult["lngproductquantity_est"];
-    $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
     if ($detailResult["lngproductunitcode"] == 2) {
-        $lngunitquantity = $detailResult["lngcartonquantity"];
-        $lngproductquantity = $detailResult["lngproductquantity"] / $lngunitquantity;
         $td = $doc->createElement("td");
         $text = $doc->createElement("input");
         $text->setAttribute("type", "text");
@@ -319,12 +328,6 @@ foreach ($aryDetailResult as $detailResult) {
     }
     $td->setAttribute("id", "lngunitquantity");
     $td->setAttribute("style", "width:100px;");
-    $trBody->appendChild($td);
-
-    // 数量
-    $textContent = number_format($lngproductquantity);
-    $td = $doc->createElement("td", $textContent);
-    $td->setAttribute("id", "lngproductquantity_re");
     $trBody->appendChild($td);
 
     // 小計

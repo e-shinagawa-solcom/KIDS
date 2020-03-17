@@ -75,7 +75,7 @@ $aryNewResult = fncSetProductTableData($aryResult, $objDB);
 // なお権限を持ってない場合もプレビューボタンを表示しない
 if (!$aryResult["bytInvalidFlag"] && fncCheckAuthority(DEF_FUNCTION_LO1, $objAuth)) {
     $aryNewResult["strPreviewAction"] = "../../list/result/frameset.php?strSessionID=" . $aryData["strSessionID"] 
-    . "&lngReportClassCode=" . DEF_REPORT_PRODUCT . "&strReportKeyCode=" . $aryResult["lnggoodsplancode"] . "&bytCopyFlag=TRUE";
+    . "&lngReportClassCode=" . DEF_REPORT_PRODUCT . "&strReportKeyCode=" . $aryResult["lnggoodsplancode"] . "";
 
     $aryNewResult["listview"] = 'style="visibility: visible"';
 } else {

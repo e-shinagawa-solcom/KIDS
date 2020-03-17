@@ -343,7 +343,7 @@ jQuery(function ($) {
     function resetTableBDisplayStyle() {
         $("#tableB tbody tr").each(function (i, e) {
             $(this).find(".detailProductUnitCode").find('select').prop('disabled', false);
-            $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
+            $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
             $(this).find(".detailNote").find('input:text').prop('disabled', false);
         });
     }
