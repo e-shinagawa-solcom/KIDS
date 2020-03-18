@@ -172,10 +172,15 @@ $lcModel->close();
 //HTMLへの引き渡しデータ
 //$aryData["chkEpRes"] = $chkEpRes;
 $aryData["lc_info_date"] = date('Y/m/d H:i:s',  strtotime($lcgetdate->lcgetdate));
-// echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "", $aryData, $objAuth);
 
+$aryData["background_color_0"] = 'rgb('. $background_color[0]["lngcolorred"] . ',' .$background_color[0]["lngcolorgreen"] . ','. $background_color[0]["lngcolorblue"] . ')';
+$aryData["background_color_1"] = 'rgb('. $background_color[1]["lngcolorred"] . ',' .$background_color[1]["lngcolorgreen"] . ','. $background_color[1]["lngcolorblue"] . ')';
+$aryData["background_color_2"] = 'rgb('. $background_color[2]["lngcolorred"] . ',' .$background_color[2]["lngcolorgreen"] . ','. $background_color[2]["lngcolorblue"] . ')';
+$aryData["background_color_3"] = 'rgb('. $background_color[3]["lngcolorred"] . ',' .$background_color[3]["lngcolorgreen"] . ','. $background_color[3]["lngcolorblue"] . ')';
+$aryData["background_color_6"] = 'rgb('. $background_color[6]["lngcolorred"] . ',' .$background_color[6]["lngcolorgreen"] . ','. $background_color[6]["lngcolorblue"] . ')';
+$aryData["background_color_7"] = 'rgb('. $background_color[7]["lngcolorred"] . ',' .$background_color[7]["lngcolorgreen"] . ','. $background_color[7]["lngcolorblue"] . ')';
+$aryData["background_color_9"] = 'rgb('. $background_color[9]["lngcolorred"] . ',' .$background_color[9]["lngcolorgreen"] . ','. $background_color[9]["lngcolorblue"] . ')';
 
-// echo fncGetReplacedHtml( "lc/info/parts.html", $c, $objAuth );
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("lc/info/parts.html");
