@@ -197,7 +197,7 @@
                 return false;
             }
             var lngunitquantity = $(this).find('#lngunitquantity').find('input:text').val();
-            if (lngunitquantity != undefined) {                
+            if (lngunitquantity != undefined) {
                 if (!lngunitquantity.match(/^[0-9]+$/)) {
                     alert(len + "行目の入数は半角数字で入力してください。");
                     isError = true;
@@ -298,9 +298,13 @@ function selectChange() {
             var lngcartonquantity = $(this).parent().parent().find('#lngcartonquantity').text();
             var lngproductquantity = $(this).parent().parent().find('#lngproductquantity').text();
             var val = $(this).val();
-            // 入数・数量計算
+            // 入数・数量・単価計算
             var lngunitquantitynew = 1;
             var lngproductquantitynew = lngproductquantity / lngunitquantitynew;
+            var strmonetaryunitsign = $(this).parent().parent().find('#strmonetaryunitsign').text();
+            var lngmonetaryunitcode = $(this).parent().parent().find('#lngmonetaryunitcode').text();
+            var cursubtotalprice = $(this).parent().parent().find('#cursubtotalprice').text().split(" ")[1].replace(/,/g, '');
+            var curproductprice = $(this).parent().parent().find('#curproductprice').text()[1].replace(/,/g, '');
             // 単位が[c/t]の場合、
             if (val == 2) {
                 // 入数 = カートン入数
@@ -313,6 +317,11 @@ function selectChange() {
                 $(this).parent().parent().find('#lngunitquantity').text(lngunitquantitynew);
             }
             $(this).parent().parent().find('#lngproductquantity_re').text(lngproductquantitynew);
+
+            // 単価 = 小計金額/数量
+            curproductprice = cursubtotalprice / lngproductquantitynew;
+            // 単価
+            $(this).parent().parent().find('#curproductprice').text(money_format(lngmonetaryunitcode, strmonetaryunitsign, curproductprice, 'unitprice'));
 
             // テーブルBの幅をリセットする
             resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
@@ -331,11 +340,21 @@ function unitQuantityChange() {
                 return false;
             }
             var lngproductquantity = $(this).parent().parent().find('#lngproductquantity').text();
-            
+
             console.log(lngproductquantity);
             // 数量 = 製品数量/カートン入数
             var lngproductquantitynew = lngproductquantity / val;
             $(this).parent().parent().find('#lngproductquantity_re').text(lngproductquantitynew);
+
+
+            var strmonetaryunitsign = $(this).parent().parent().find('#strmonetaryunitsign').text();
+            var lngmonetaryunitcode = $(this).parent().parent().find('#lngmonetaryunitcode').text();
+            var cursubtotalprice = $(this).parent().parent().find('#cursubtotalprice').text().split(" ")[1].replace(/,/g, '');
+            var curproductprice = $(this).parent().parent().find('#curproductprice').text()[1].replace(/,/g, '');
+            // 単価 = 小計金額/数量
+            curproductprice = cursubtotalprice / lngproductquantitynew;
+            // 単価
+            $(this).parent().parent().find('#curproductprice').text(money_format(lngmonetaryunitcode, strmonetaryunitsign, curproductprice, 'unitprice'));
         }
     });
 }
@@ -365,13 +384,13 @@ function convertNullToZero(str) {
     }
 }
 
-function money_format(lngmonetaryunitcode, strmonetaryunitsign, price) {
-    if (lngmonetaryunitcode == 1) {
-        return '\xA5' + " " + price;
-    } else {
-        return strmonetaryunitsign + " " + price;
-    }
-}
+// function money_format(lngmonetaryunitcode, strmonetaryunitsign, price) {
+//     if (lngmonetaryunitcode == 1) {
+//         return '\xA5' + " " + price;
+//     } else {
+//         return strmonetaryunitsign + " " + price;
+//     }
+// }
 /*
  * 画面操作を無効にする
  */

@@ -113,6 +113,7 @@ $aryQuery[] = "UPDATE t_receivedetail ";
 $aryQuery[] = "set lngproductquantity = " . $aryDetailResult["lngproductquantity_est"] . " ";
 $aryQuery[] = ", lngproductunitcode = ". $aryDetailResult["lngproductunitcode"]." ";
 $aryQuery[] = ", lngunitquantity = ". $aryDetailResult["lngunitquantity"]." ";
+$aryQuery[] = ", curproductprice = ". $aryDetailResult["curproductprice_est"]." ";
 $aryQuery[] = "where lngreceiveno = " . $aryDetailResult["lngreceiveno"] . " ";
 $aryQuery[] = "and lngreceivedetailno = " . $aryDetailResult["lngreceivedetailno"] . " ";
 $aryQuery[] = "and lngrevisionno = " . $aryDetailResult["lngrevisionno"] . " ";
@@ -126,7 +127,7 @@ $objDB->freeResult($lngResultID);
 
 $objDB->transactionCommit();
 
-$aryDetailResult["curproductprice"] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["curproductprice"], "unitprice");
+$aryDetailResult["curproductprice"] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["curproductprice_est"], "unitprice");
 $aryDetailResult["cursubtotalprice"] = convertPrice($aryDetailResult["lngmonetaryunitcode"], $aryDetailResult["strmonetaryunitsign"], $aryDetailResult["cursubtotalprice"], "price");
 $aryDetailResult["lngproductquantity"] = $aryDetailResult["lngproductquantity_est2"];
 

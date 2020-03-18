@@ -102,6 +102,10 @@ foreach ($aryData["detailData"] as $data) {
     // 単価
     $td = $doc->createElement("td", $data["curProductPrice"]);
     $trBody->appendChild($td);
+    
+    // 数量
+    $td = $doc->createElement("td", $data["lngProductQuantity"]);
+    $trBody->appendChild($td);
 
     // 単位
     $td = $doc->createElement("td", $data["strProductUnitName"]);
@@ -109,9 +113,6 @@ foreach ($aryData["detailData"] as $data) {
 
     // 入数
     $td = $doc->createElement("td", $data["lngUnitQuantity"]);
-    $trBody->appendChild($td);
-    // 数量
-    $td = $doc->createElement("td", $data["lngProductQuantity"]);
     $trBody->appendChild($td);
 
     // 小計

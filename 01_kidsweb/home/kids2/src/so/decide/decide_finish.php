@@ -66,6 +66,7 @@ foreach ($aryData["detailData"] as $data) {
     $aryQuery[] = "set lngproductquantity = " . str_replace(",", "", $data["lngProductQuantity"]) . " ";
     $aryQuery[] = ", lngproductunitcode = '" . $data["lngProductUnitCode"] . "' ";
     $aryQuery[] = ", lngunitquantity = '" . str_replace(",", "", $data["lngUnitQuantity"]) . "' ";
+    $aryQuery[] = ", curproductprice = '" . str_replace(",", "", explode(" ", $data['curProductPrice'])[1]) . "' ";
     $aryQuery[] = ", strnote = '" . $data["strDetailNote"] . "' ";
     $aryQuery[] = "where lngreceiveno = " . $data["lngReceiveNo"] . " ";
     $aryQuery[] = "and lngreceivedetailno = " . $data["lngReceiveDetailNo"] . " ";
@@ -153,14 +154,14 @@ foreach ($aryData["detailData"] as $data) {
     // 単価
     $td = $doc->createElement("td", $data["curProductPrice"]);
     $trBody->appendChild($td);
+    // 数量
+    $td = $doc->createElement("td", $data["lngProductQuantity"]);
+    $trBody->appendChild($td);
     // 単位
-    $td = $doc->createElement("td", $data["lngProductUnitCode"]);
+    $td = $doc->createElement("td", $data["strProductUnitName"]);
     $trBody->appendChild($td);
     // 入数
     $td = $doc->createElement("td", $data["lngUnitQuantity"]);
-    $trBody->appendChild($td);
-    // 数量
-    $td = $doc->createElement("td", $data["lngProductQuantity"]);
     $trBody->appendChild($td);
     // 小計
     $td = $doc->createElement("td", $data["curSubtotalPrice"]);

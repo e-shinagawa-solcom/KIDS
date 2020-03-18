@@ -312,6 +312,7 @@ function fncGetReceiveDetailNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = ", p.strProductName as strProductName";
     $aryQuery[] = ", p.strproductenglishname as strproductenglishname";
     $aryQuery[] = ", me.lngProductQuantity as lngProductQuantity_est";
+    $aryQuery[] = ", me.curproductprice as curproductprice_est";
     $aryQuery[] = ", To_char( me.lngProductQuantity, '9,999,999,990' ) as lngProductQuantity_est2";
     $aryQuery[] = ", r.strCompanyDisplayCode as strCustomerDisplayCode"; 
     $aryQuery[] = ", r.lngMonetaryUnitCode";

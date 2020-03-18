@@ -409,6 +409,20 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
+    // 通貨単位コード
+    $textContent = $detailResult["lngmonetaryunitcode"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "lngmonetaryunitcode");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 通貨単位記号
+    $textContent = $detailResult["strmonetaryunitsign"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "strmonetaryunitsign");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
     if (!$isdecideObj) {
         // tbody > tr
         // $tbodyDetail->appendChild($trBody);
