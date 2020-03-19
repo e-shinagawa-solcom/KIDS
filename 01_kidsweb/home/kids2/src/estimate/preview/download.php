@@ -160,10 +160,9 @@ $objSheet->dataInitialize($sheetInfo, $objDB);
 
 // ワークシートオブジェクトに必要な値をセット
 $objSheet->setDBEstimateData($productData, $estimateData, $mode);
-fncDebug("dl.log", "set excel data", __FILE__, __LINE__, "a");
+
 // phpSpreadSheetオブジェクトをxlsxに書き込むオブジェクトにセットする
 $writer = new XlsxWriter($spreadSheet);
-fncDebug("dl.log", "create excel writer", __FILE__, __LINE__, "a");
 
 
 $time = new DateTime();
@@ -178,7 +177,6 @@ $excelDLFileName = $DlFileName. '.xlsx';
 $excelFileName = $fileName. '.xlsx';
 
 $writer->save($excelFileName);
-fncDebug("dl.log" . "write excel file", __FILE__, __LINE__, "a");
 
 $zipFileName = $time->format('YmdHisu'). '.zip';
 
