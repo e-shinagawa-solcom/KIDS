@@ -2,6 +2,11 @@
 
 require_once ('conf.inc');
 
+// Composerのオートロードファイル読み込み
+require_once ( VENDOR_AUTOLOAD_FILE );
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Style\Conditional;
+
 // ワークシート定数定義クラス
 
 class workSheetConst {
@@ -724,6 +729,15 @@ class workSheetConst {
 //        self::DIVISION_SUBJECT_DROPDOWN_CELL_NAME,
 //        self::CLASS_ITEM_DROPDOWN_CELL_NAME,
 //        self::OTHER_DROPDOWN_CELL_NAME
+    ];
+    
+    // 条件付き書式設定定義（__は対象範囲先頭行番号に置換される）
+    const CONDITION_RULE_LIST = [
+        // エリア（複数はカンマ区切り）|対象列|ルール種別|演算子|ルール|文字色(RGB)|太字(bool)|斜体(bool)|下線(bool)|背景色(ARGB)
+        '1,2,3,4,5|C|' . Conditional::CONDITION_CELLIS . '|' . Conditional::OPERATOR_NOTEQUAL . '|Q__|' . Color::COLOR_RED . '|' . true . '|' . true . '|' . true . '|' . Color::COLOR_YELLOW
+        ,'1,2,3,4,5|D|' . Conditional::CONDITION_CELLIS . '|' . Conditional::OPERATOR_NOTEQUAL . '|R__|' . Color::COLOR_RED . '|' . true . '|' . true . '|' . true . '|' . Color::COLOR_YELLOW
+        ,'1,2,3,4,5|J|' . Conditional::CONDITION_EXPRESSION . '|' . Conditional::OPERATOR_EQUAL . '|OR(AND(H__<>"JP",J__<=1,LEN(J__)<>0),AND(OR(H__="JP",H__=""),J__<>1,LEN(J__)<>0))=TRUE|' . Color::COLOR_RED . '|' . true . '|' . true . '|' . true . '|' . Color::COLOR_YELLOW
+        ,'5|F|' . Conditional::CONDITION_EXPRESSION . '|' . Conditional::OPERATOR_EQUAL . '|AND(OR(IFERROR(FIND("401:",A__,1),0)=0,IFERROR(FIND("1:",C__,1),0)=0),OR(IFERROR(FIND("1224:",A__,1),0)=0,IFERROR(FIND("3:",C__,1),0)=0))|' . Color::COLOR_BLACK . '|' . false . '|' . false . '|' . false . '|' . 'FFE6B8B7'
     ];
 
     // 全てのセル名称を並列で使用する場合

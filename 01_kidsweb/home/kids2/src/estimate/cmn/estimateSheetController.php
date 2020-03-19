@@ -159,6 +159,7 @@ class estimateSheetController {
         foreach ($targetAreaNameList as $areaCode => $areaDisplayName) {
             if ($targetAreaRows[$areaCode]['firstRow'] <= $row && $row <= $targetAreaRows[$areaCode]['lastRow']) {
                 $rowAttribute = $areaCode;
+//fncDebug("view.log", sprintf("row:%d, area:%d, top:%d last:%d", $row, $areaCode, $targetAreaRows[$areaCode]['firstRow'], $targetAreaRows[$areaCode]['lastRow']), __FILE__, __LINE__, "a");
                 break;
             }
         }
@@ -1432,6 +1433,7 @@ class estimateSheetController {
         foreach($targetAreaList as $areaCode => $areaName) {
             if ($areaCode !== DEF_AREA_OTHER_COST_ORDER) {
                 $rows[$areaCode] = $this->getRowRangeOfTargetArea($areaCode);
+//fncDebug("view.log", sprintf("area:%d, first:%d, last:%d", $areaCode, $rows[$areaCode]['firstRow'], $rows[$areaCode]['lastRow'] ), __FILE__, __LINE__, "a");
             }           
         }
 
@@ -1485,10 +1487,11 @@ class estimateSheetController {
         // ヘッダーおよびフッター（計算結果）のセル名称を1つセットする
         $upperCellName = self::getFirstElement($cellNameList['headerList']);
         $belowCellName = self::getFirstElement($cellNameList['resultList']);
-
+//fncDebug("view.log", sprintf("upper:%s, below:%s", $upperCellName, $belowCellName), __FILE__, __LINE__, "a");
         // セル名称から行番号を取得する
         $firstRow = $this->getRowNumberFromCellName($upperCellName) + 1;
         $lastRow = $this->getRowNumberFromCellName($belowCellName) - 1;
+//fncDebug("view.log", sprintf("first:%d, last:%d", $firstRow, $lastRow), __FILE__, __LINE__, "a");
         $rows = array(
             'firstRow' => $firstRow,
             'lastRow' => $lastRow
@@ -1767,8 +1770,6 @@ class estimateSheetController {
 
         $cellAddressList = $this->cellAddressList;
         $baseCellAddress = $cellAddressList[workSheetConst::PULLDOWN_MRKT_DEV];
-//fncDebug("dl.log", sprintf("base address:%s", $baseCellAddress), __FILE__, __LINE__, "a");
-//        $baseCell = $this->sheet->getCell($baseCellAddress);
         $lastgroup = "";
         
         $columnOffset = -1;
@@ -1777,87 +1778,15 @@ class estimateSheetController {
             if($lastgroup != $groupCode){
                 $columnOffset++;
                 $cellAddress = self::getMoveCell($baseCellAddress, 0, $columnOffset);
-//fncDebug("dl.log", sprintf("address:%s, group:%s", $cellAddress, $groupCode ), __FILE__, __LINE__, "a");
                 $this->sheet->getCell($cellAddress)->setValue($groupCode);
                 $rowOffset = 2;
                 $lastgroup = $groupCode;
             }
             $usercode = $list->usercode;
             $cellAddress = self::getMoveCell($baseCellAddress, $rowOffset, $columnOffset);
-//fncDebug("dl.log", sprintf("address:%s, user:%s", $cellAddress, $usercode), __FILE__, __LINE__, "a");
             $this->sheet->getCell($cellAddress)->setValue($usercode);
             $rowOffset++;
         }
-/*
-        // ドロップダウンのリストを書き込むセルの情報取得
-        $inchargeGroupListCellName = workSheetConst::INCHARGE_GROUP_DROPDOWN; // ドロップダウンリストをセットするためのセル名称(営業部署)
-        $IGLCellAddress = $cellAddressList[$inchargeGroupListCellName];
-        $IGLSeparate = self::separateRowAndColumn($IGLCellAddress);
-        $IGLHeaderRow = $IGLSeparate['row'];
-        $IGLCol = $IGLSeparate['column'];
-
-        $inchargeUserListCellName = workSheetConst::INCHARGE_USER_DROPDOWN; // ドロップダウンリストをセットするためのセル名称(担当)
-        $IULCellAddress = $cellAddressList[$inchargeUserListCellName];
-        $IULSeparate = self::separateRowAndColumn($IULCellAddress);
-        $IULHeaderRow = $IULSeparate['row'];
-        $IULCol = $IULSeparate['column'];
-        
-        $IGLRow = $IGLHeaderRow + 1;
-        $IULRow = $IULHeaderRow + 1;
-
-        // 売上分類 or 仕入科目のドロップダウンリストの最初のセル
-        $startIGLCell = '$'. $IGLCol. '$'. $IGLRow;
-
-        // ドロップダウンリストを生成し、ブックにセットする
-        foreach ($newInchargeList as $groupCode => $userCodeList) {
-            ++$IGLRow;
-            $inputIGLCell = $IGLCol.$IGLRow;
-            $this->sheet->getCell($inputIGLCell)->setValue($groupCode);
-
-            $fixedIGL = '$'. $IGLCol. '$'. $IGLRow;
-
-            $inchargeDropdownList[$fixedIGL]['start'] = '$'. $IULCol. '$'. $IULRow;
-
-            foreach ($userCodeList as $userCode) {
-                ++$IULRow;
-                $inputIULCell = $IULCol.$IULRow;
-                $this->sheet->getCell($inputIULCell)->setValue($userCode);
-            }
-
-            $inchargeDropdownList[$fixedIGL]['end'] = '$'. $IULCol. '$'. $IULRow;
-
-            ++$IULRow;
-        }
-
-        $blankCell = '$'. $IULCol. '$'. $IULRow;  // ブランクセルの設定
-        
-        $endIGLCell = '$'. $IGLCol. '$'. $IGLRow;  // 営業部署のドロップダウンリストの最後のセル
-
-        $IGLFomula = '='. $startIGLCell. ':'. $endIGLCell; // 営業部署に代入する式
-
-        // 担当に代入する式を生成する
-        $IULFomula = '=';
-        $branch = 0;
-
-        $inchargeGroupCell = $cellAddressList[workSheetConst::INCHARGE_GROUP_CODE]; // 営業部署のセル
-
-        foreach ($inchargeDropdownList as $fixedIGL => $userCodeCells) {
-            $start = $userCodeCells['start'];
-            $end = $userCodeCells['end'];
-            $range = $start. ':'. $end;
-            $IULFomula .= 'IF('. $inchargeGroupCell.'='. $fixedIGL. ','. $range. ',';
-            ++$branch;
-        }
-
-        $IULFomula .= $blankCell; // すべての条件に合致しなかった場合はブランクセルのみのドロップダウンを表示
-        $IULFomula .= str_repeat(')', $branch); // 条件分岐の数だけ閉じ括弧を追加
-
-        $inchargeUserCell = $cellAddressList[workSheetConst::INCHARGE_USER_CODE]; // 担当のセル
-
-        // 入力規則の設定(ドロップダウン生成)
-        $this->setDataValidationForCell($inchargeGroupCell, $IGLFomula); // 営業部署
-        $this->setDataValidationForCell($inchargeUserCell, $IULFomula);  // 担当
-*/
         return;
     }
 
@@ -1870,40 +1799,11 @@ class estimateSheetController {
         $rowOffset = 1;
         foreach ($dropdownDevUser as $data) {
             $cellAddress = self::getMoveCell($baseCellAddress, $rowOffset, 0);
-//fncDebug("dl.log", sprintf("address:%s, user:%s", $cellAddress, $data->usercode ), __FILE__, __LINE__, "a");
             $this->sheet->getCell($cellAddress)->setValue($data->usercode);
             $rowOffset++;
         }
         
 
-        // ドロップダウンのリストを書き込むセルの情報取得
-/*
-        $developUserListCellName = workSheetConst::DEVELOP_USER_DROPDOWN; // ドロップダウンリストをセットするためのセル名称(開発担当)
-        $DULCellAddress = $cellAddressList[$developUserListCellName];
-        $DULSeparate = self::separateRowAndColumn($DULCellAddress);
-        $DULHeaderRow = $DULSeparate['row'];
-        $DULCol = $DULSeparate['column'];
-
-        $DULRow = $DULHeaderRow + 1;
-
-
-        $startDULCell = '$'. $DULCol. '$'. $DULRow;  // ドロップダウンリストの最初のセル
-
-        foreach ($dropdownDevUser as $data) {
-            ++$DULRow;
-            $inputDULCell = $DULCol.$DULRow;
-            $this->sheet->getCell($inputDULCell)->setValue($data->usercode);
-        }
-
-        $endDULCell = '$'. $DULCol. '$'. $DULRow;  // ドロップダウンリストの最後のセル
-
-        $fomula = $startDULCell. ':'. $endDULCell;
-
-        $developUserCell = $cellAddressList[workSheetConst::DEVELOP_USER_CODE]; // 担当のセル
-
-        // 入力規則の設定(ドロップダウン生成)
-        $this->setDataValidationForCell($developUserCell, $fomula);
-*/
         return;
     }
 
@@ -1955,7 +1855,7 @@ class estimateSheetController {
 //fncDebug("dl.log", sprintf("address:%s, level1:%s", $cellAddress, $key1 ), __FILE__, __LINE__, "a");
                 $this->sheet->getCell($cellAddress)->setValue($key1);
                 // 次の行以降は、売上区分・仕入部品（ただし、1件目は空白）
-                $rowOffset++;
+                $rowOffset += 2;
                 foreach($level1Item[$key1] as $level2Item){
                     $cellAddress = self::getMoveCell($areaBaseAddress, $rowOffset, $columnOffset);
 //fncDebug("dl.log", sprintf("address:%s, level2:%s", $cellAddress, $level2Item ), __FILE__, __LINE__, "a");
@@ -1968,7 +1868,7 @@ class estimateSheetController {
                 }
 //fncDebug("dl.log","set compamy", __FILE__, __LINE__, "a");
                 // 会社プルダウン設定
-                $rowOffset = 0;
+                $rowOffset = 1;
                 if(is_array($dropdownCompany[$areaCode][$key1])){
 //echo sprintf("%s-%s:count=%d", $areaCode, $key1, count($dropdownCompany[$areaCode][$key1])) . "<br>";
 //var_dump($dropdownCompany[$areaCode][$key1]);
@@ -1983,8 +1883,9 @@ class estimateSheetController {
                             break;
                         }
                     }
-                    $columnOffset++;
                 }
+                $columnOffset++;
+                $rowOffset = 0;
             }
             
         }
@@ -2050,15 +1951,15 @@ class estimateSheetController {
     * @return boolean
     */
     protected function insertCopyRowBefore($selectedRow, $rowNum, $colNum = workSheetConst::WORK_SHEET_COPY_COLUMN_NUMBER) {
+//fncDebug("view.log", sprintf("selectedRow=%d, rowNum=%d", $selectedRow, $rowNum), __FILE__, __LINE__, "a");
         
         $sheet = $this->sheet;
-
         $sheet->insertNewRowBefore($selectedRow, $rowNum);
     
         // コピー元の行番号は挿入された行の数だけ増える
         $copyRow = $selectedRow + $rowNum;
     
-        for ($row = 0; $row < $rowNum; ++$row) {
+        for ($row = 0; $row <= $rowNum; $row++) {   // 移動済みのコピー元の行まで
 
             $newRow = $selectedRow + $row; // 挿入された行の番号
 
@@ -2068,30 +1969,25 @@ class estimateSheetController {
                 $alphaCol = Coordinate::stringFromColumnIndex($col);
 
                 $copyAddress = $alphaCol.$copyRow;
-                $newAddress = $alphaCol.$newRow;              
+                $newAddress = $alphaCol.$newRow;
 
                 $copyValue = $sheet->getCell($copyAddress)->getValue();
                 $copyStyle = $sheet->getStyle($copyAddress);
 
-                
                 $cellPattern = '/(\$?[A-Z]+)'. $copyRow. '(\D?)/';
                 $replace = '${1}'.$newRow. '${2}';
                 
                 $insertValue = preg_replace($cellPattern, $replace, $copyValue);
-    
+
                 $sheet->setCellValue($newAddress, $insertValue);
-//if(strlen($insertValue) > 0){
-//fncDebug("view.log", sprintf("%s=%s", $newAddress, $insertValue), __FILE__, __LINE__, "a");
-//}
                 $sheet->duplicateStyle($copyStyle, $newAddress);
                 if( $col <= workSheetConst::WORK_SHEET_COLUMN_NUMBER ){
                     // コピー元のbottomは太いため、細い線をセット
                     $sheet->getStyle($newAddress)->getBorders()->getBottom()->setBorderStyle("thin");
                 }
-                // 条件付き書式、入力規則の式の複製
+                
                 
             }
-    
             // 行の高さ複製
             $height = $sheet->getRowDimension($copyRow)->getRowHeight();
             $sheet->getRowDimension($newRow)->setRowHeight($height);
@@ -2139,6 +2035,71 @@ class estimateSheetController {
     }
 
     /**
+    * 入力規則の再設定
+    * 
+    * @param string  $from  設定開始行
+    * @param string  $to  設定終了行
+    * 
+    * @return boolean
+    */
+    protected function correctDataValidation($from, $to){
+        $sheet = $this->sheet;
+        $colNum = workSheetConst::WORK_SHEET_COPY_COLUMN_NUMBER;
+        // phpspreadsheetのバグで、テンプレートに設定された入力形式の式が
+        // 常にエリア1の明細1行目の式と認識されてしまうため、
+        // エリア1の明細1行目の行番号を置換対象として保持する必要がある
+
+        $cellAddressList = $this->cellAddressList;
+        // 明細行の先頭（=売上区分の1行目明細）のアドレス
+        $topRowCellAddress = $cellAddressList[workSheetConst::RECEIVE_PRODUCT_SALES_DIVISION_CODE];
+        $rowAndColumn = self::separateRowAndColumn($topRowCellAddress);
+        $replaceFormulaRow = $rowAndColumn['row'] + 1;
+
+        for ($row = $from; $row <= $to; $row++) {   // 移動済みのコピー元の行まで
+            for ($col = 1; $col <= $colNum; ++$col) {
+
+                // 入力規則の式の複製はコピー元、コピー先にも設定しなおしが必要
+
+                $alphaCol = Coordinate::stringFromColumnIndex($col);
+
+                $copyAddress = $alphaCol.$from;
+                $newAddress = $alphaCol.$row;
+                if(($sheet->getCell($copyAddress)->hasDataValidation() == true) && $sheet->getCell($copyAddress)->getDataValidation()->getType() != ""){
+                    if(($sheet->getCell($copyAddress)->isMergeRangeValueCell() == true) || ($sheet->getCell($copyAddress)->isInMergeRange() == false)){
+                        $orgvalidation = $sheet->getCell($copyAddress)->getDataValidation();
+                        $formula = $orgvalidation->getFormula1();
+//fncDebug("view.log", sprintf("Type:%s=%s", $copyAddress, $orgvalidation->getType()), __FILE__, __LINE__, "a");
+//fncDebug("view.log", sprintf("before:%s=%s", $copyAddress, $formula), __FILE__, __LINE__, "a");
+                        $cellPattern = '/(\$?[A-Z]+)'. $replaceFormulaRow. '(\D?)/';
+                        $replace = '${1}'.$row. '${2}';
+                        $newFormula = preg_replace($cellPattern, $replace, $formula);
+                        // 入力規則を初期化
+                        $sheet->getCell($newAddress)->setDataValidation();
+                        // 式を作り直した入力規則を再設定
+                        $validation = new DataValidation();
+                        $validation->setType($orgvalidation->getType());
+                        $validation->setAllowBlank($orgvalidation->getAllowBlank());
+                        $validation->setShowDropDown($orgvalidation->getShowDropDown());
+                        $validation->setFormula1($newFormula);
+                        $sheet->getCell($newAddress)->setDataValidation($validation);
+
+                        $validation = $sheet->getCell($newAddress)->getDataValidation();
+                        $formula = $validation->getFormula1();
+//fncDebug("view.log", sprintf("after:%s=%s", $newAddress, $formula), __FILE__, __LINE__, "a");
+                    }
+                    else{
+                        // 入力規則を初期化
+                        $sheet->getCell($newAddress)->setDataValidation();
+                    }
+                }
+                else{
+//fncDebug("view.log", sprintf("%s:no validation", $newAddress), __FILE__, __LINE__, "a");
+                }
+            }
+        }
+    }
+
+    /**
     * 見積原価明細行のデータ代入時に不足する行を挿入する
     * 
     * @param string  $selectedRow 選択行
@@ -2164,7 +2125,7 @@ class estimateSheetController {
     
             $firstRow = $targetAreaRows[$areaCode]['firstRow'];
             $lastRow = $targetAreaRows[$areaCode]['lastRow'];
-    
+//fncDebug("view.log", sprintf("area:%d, first:%d, last:%d", $areaCode, $firstRow, $lastRow ), __FILE__, __LINE__, "a");
             $linage = (int)$lastRow - (int)$firstRow + 1;
     
             $inputRowCount = count($data);    
@@ -2174,9 +2135,11 @@ class estimateSheetController {
                 $difference = $inputRowCount + $marginCell - $linage;
     
                 $selectedRow = $lastRow; // 最終行の1行前に(指定した行数を)挿入する
+//fncDebug("view.log", sprintf("area:%d, selected:%d last:%d", $areaCode, $selectedRow, $lastRow), __FILE__, __LINE__, "a");
     
                 $this->insertCopyRowBefore($selectedRow, $difference); // 行挿入実行
 
+                // 各エリアの先頭行、最終行の値を追加された行数分補正
                 foreach ($targetAreaRows as $key => $code) {
                     if ($key > $areaCode) {
                         $targetAreaRows[$key]['firstRow'] += $difference;
@@ -2184,7 +2147,10 @@ class estimateSheetController {
                     } else if ($key === $areaCode) {
                         $targetAreaRows[$key]['lastRow'] += $difference;
                     }
+//fncDebug("view.log", sprintf("area:%d, top:%d last:%d", $areaCode, $targetAreaRows[$key]['firstRow'], $targetAreaRows[$key]['lastRow']), __FILE__, __LINE__, "a");
+//fncDebug("view.log", sprintf("area:%d, top:%d last:%d", $areaCode, $this->targetAreaRows[$key]['firstRow'], $this->targetAreaRows[$key]['lastRow']), __FILE__, __LINE__, "a");
                 }
+//fncDebug("view.log", sprintf("area:%d, selected:%d last:%d", $areaCode, $selectedRow, $lastRow), __FILE__, __LINE__, "a");
 
                 $difTotal += $difference;
             }
@@ -2192,9 +2158,11 @@ class estimateSheetController {
                 $difference = $linage - ($inputRowCount + $marginCell) ;
     
                 $selectedRow = (int)$firstRow; // 先頭行を起点に(指定した行数を)削除する
+//fncDebug("view.log", sprintf("area:%d, selected:%d last:%d", $areaCode, $selectedRow, $lastRow), __FILE__, __LINE__, "a");
     
                 $this->sheet->removeRow($selectedRow, $difference); // 行挿入実行
 
+                // 各エリアの先頭行、最終行の値を削除された行数分補正
                 foreach ($targetAreaRows as $key => $code) {
                     if ($key > $areaCode) {
                         $targetAreaRows[$key]['firstRow'] -= $difference;
@@ -2202,10 +2170,18 @@ class estimateSheetController {
                     } else if ($key === $areaCode) {
                         $targetAreaRows[$key]['lastRow'] -= $difference;
                     }
+//fncDebug("view.log", sprintf("area:%d, top:%d last:%d", $areaCode, $targetAreaRows[$key]['firstRow'], $targetAreaRows[$key]['lastRow']), __FILE__, __LINE__, "a");
+//fncDebug("view.log", sprintf("area:%d, top:%d last:%d", $areaCode, $this->targetAreaRows[$key]['firstRow'], $this->targetAreaRows[$key]['lastRow']), __FILE__, __LINE__, "a");
                 }
 
+//fncDebug("view.log", sprintf("area:%d, selected:%d last:%d", $areaCode, $selectedRow, $lastRow), __FILE__, __LINE__, "a");
                 $difTotal -= $difference;
             }
+            
+            // 入力規則の式補正
+            $this->correctDataValidation($targetAreaRows[$areaCode]['firstRow'], $targetAreaRows[$areaCode]['lastRow']);
+            // 条件付き書式設定
+            $this->setConditionsForClassItemCell($areaCode, $targetAreaRows[$areaCode]['firstRow'], $targetAreaRows[$areaCode]['lastRow']);
         }
         $this->endRow += $difTotal;
 
@@ -2232,8 +2208,9 @@ class estimateSheetController {
     // 売上区分 or 仕入部品に条件付き書式を設定する
     //（売上分類 or 仕入科目 ⇔ 売上区分 or 仕入部品の関係チェック用）
     //（通貨とレート関係チェック用）
-    protected function setConditionsForClassItemCell($areaCode) {
+    protected function setConditionsForClassItemCell($areaCode, $firstRow, $lastRow) {
 
+//fncDebug("view.log", sprintf("area:%s", $areaCode), __FILE__, __LINE__, "a");
         // 売上分類 or 仕入科目 ⇔ 売上区分 or 仕入部品の関係チェック
         $columnNumber = $this->getColumnNumberList($areaCode);
 
@@ -2243,87 +2220,44 @@ class estimateSheetController {
 
         $targetAreaRows = $this->targetAreaRows;
 
-        $firstRow = $targetAreaRows[$areaCode]['firstRow'];
-        $lastRow = $targetAreaRows[$areaCode]['lastRow'];
-
-        $clsItmCol = $columnNumber['classItem'];        // 売上区分 or 仕入部品の列番号
-        $checkCol = $columnNumber['classItemCheck'];    // チェック列の列番号
-
-        $firstClsItmCell = $clsItmCol. $firstRow;
-        $lastClsItmCell = $clsItmCol. $lastRow;
-
-        $clsItmCellRange = $firstClsItmCell. ':'. $lastClsItmCell;
-
-        $compareCell = $checkCol. $firstRow;
-
-        $conditional = new Conditional();
-        $conditional->setConditionType(Conditional::CONDITION_CELLIS);
-
-        // 処理内容のセット（等しくない）
-        $conditional->setOperatorType(Conditional::OPERATOR_NOTEQUAL);
-
-        // 比較セルの設定
-        $conditional->addCondition($compareCell);
-
-        // 書式の設定
-        $conditional->getStyle()->getFont()->getColor()->setARGB(Color::COLOR_RED); // 文字色
-        $conditional->getStyle()->getFont()->setBold(true); // 太字
-        $conditional->getStyle()->getFont()->setItalic(true); // 斜体
-        $conditional->getStyle()->getFont()->setUnderline(true); // 下線
-        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB(Color::COLOR_YELLOW); // 背景色
-
-        $conditionalStyles[] = $conditional;
-
-        // 条件付き書式をセルにセットする
-        $this->sheet->getStyle($clsItmCellRange)->setConditionalStyles($conditionalStyles);
+//fncDebug("view.log", sprintf("area:%d, top:%d last:%d", $areaCode, $firstRow, $lastRow), __FILE__, __LINE__, "a");
         
-        unset($conditionalStyles);
+        // 条件付き書式の設定は、workSheetConstにて定義
+        // テンプレートからは条件付き書式を削除しておくこと。
+        foreach(workSheetConst::CONDITION_RULE_LIST as $ruleList){
+            $conditionItems = explode("|", $ruleList);
+            $areaList = explode(",", strtoupper($conditionItems[0]));
+            if( in_array(strtoupper($areaCode), $areaList) == true ){
+                $conditional = new Conditional();
+                $col = strtoupper($conditionItems[1]);        // 列番号
+                $firstClsItmCell = $col. $firstRow;
+                $lastClsItmCell = $col. $lastRow;
+                $cellRange = $firstClsItmCell. ':'. $lastClsItmCell;
+//fncDebug("view.log", sprintf("range:%s", $cellRange), __FILE__, __LINE__, "a");
+//fncDebug("view.log", sprintf("Condition:%s", $conditionItems[2]), __FILE__, __LINE__, "a");
+                $conditional->setConditionType($conditionItems[2]);
+//fncDebug("view.log", sprintf("Operator:%s", $conditionItems[3]), __FILE__, __LINE__, "a");
+                $conditional->setOperatorType($conditionItems[3]);
+                $expression = strtoupper(preg_replace("/__/", $firstRow, $conditionItems[4]));    // チェックの式
+//fncDebug("view.log", sprintf("expression:%s", $expression), __FILE__, __LINE__, "a");
+                $conditional->addCondition($expression);
 
-        // 通貨と金額の関係チェック
-        $columnNumber = $this->getColumnNumberList($areaCode);
+//fncDebug("view.log", sprintf("color:%s", $conditionItems[5]), __FILE__, __LINE__, "a");
+                // 書式の設定
+                $conditional->getStyle()->getFont()->getColor()->setARGB($conditionItems[5]); // 文字色
+                $conditional->getStyle()->getFont()->setBold($conditionItems[6]); // 太字
+                $conditional->getStyle()->getFont()->setItalic($conditionItems[7]); // 斜体
+                $conditional->getStyle()->getFont()->setUnderline($conditionItems[8]); // 下線
+//fncDebug("view.log", sprintf("fill color:%s", $conditionItems[9]), __FILE__, __LINE__, "a");
+                $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB($conditionItems[9]); // 背景色
 
-        if (!$columnNumber) {
-            return false;
+                $conditionalStyles = $this->sheet->getStyle($cellRange)->getConditionalStyles();
+                $conditionalStyles[] = $conditional;
+
+                // 条件付き書式をセルにセットする
+                $this->sheet->getStyle($cellRange)->setConditionalStyles($conditionalStyles);
+            }
         }
-
-        $targetAreaRows = $this->targetAreaRows;
-
-        $firstRow = $targetAreaRows[$areaCode]['firstRow'];
-        $lastRow = $targetAreaRows[$areaCode]['lastRow'];
-
-        $checkCol = $columnNumber['monetaryDisplay'];        // 通貨の列番号
-        $clsItmCol = $columnNumber['conversionRate'];    // チェック列（レート）の列番号
-
-        $firstClsItmCell = $clsItmCol. $firstRow;
-        $lastClsItmCell = $clsItmCol. $lastRow;
-
-        $clsItmCellRange = $firstClsItmCell. ':'. $lastClsItmCell;
-
-//        $compareCell = $checkCol. $firstRow;
-
-        $expression = 'AND('.$checkCol.$firstRow.'<>"JP",'.$clsItmCol.$firstRow.'<=1,LEN('.$clsItmCol.$firstRow.')<>0)=TRUE';
-//fncDebug("kids2.log", $expression, __FILE__, __LINE__, "a");
-        $conditional = new Conditional();
-        $conditional->setConditionType(Conditional::CONDITION_EXPRESSION);
-
-        // 処理内容のセット（等しい）
-        $conditional->setOperatorType(Conditional::OPERATOR_EQUAL);
-
-        // 比較セルの設定
-        $conditional->addCondition($expression);
-
-        // 書式の設定
-        $conditional->getStyle()->getFont()->getColor()->setARGB(Color::COLOR_RED); // 文字色
-        $conditional->getStyle()->getFont()->setBold(true); // 太字
-        $conditional->getStyle()->getFont()->setItalic(true); // 斜体
-        $conditional->getStyle()->getFont()->setUnderline(true); // 下線
-        $conditional->getStyle()->getFill()->setFillType(Fill::FILL_SOLID)->getEndColor()->setARGB(Color::COLOR_YELLOW); // 背景色
-
-        $conditionalStyles[] = $conditional;
-
-        // 条件付き書式をセルにセットする
-        $this->sheet->getStyle($clsItmCellRange)->setConditionalStyles($conditionalStyles);
-
         return;
     }
 
