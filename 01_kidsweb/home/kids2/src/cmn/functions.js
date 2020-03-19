@@ -702,6 +702,7 @@ function onKeyDown(e) {
 
 		// 要素が [text][textarea][password][file] の場合
 		if (window.event.srcElement.type == 'text' ||
+			window.event.srcElement.type == 'tel' ||
 			window.event.srcElement.type == 'file' ||
 			window.event.srcElement.type == 'password' ||
 			window.event.srcElement.type == 'textarea') {

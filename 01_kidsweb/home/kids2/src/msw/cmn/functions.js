@@ -180,7 +180,7 @@ function onKeyDown( e )
 	}
 
 	// 要素が [focus] の場合
-	if(window.event.srcElement.type != 'text' && window.event.srcElement.focus)
+	if(window.event.srcElement.type != 'text' && window.event.srcElement.type != 'tel' && window.event.srcElement.focus)
 	{
 		//BackSpaceキー押下防止
 		if( window.event.keyCode == 8	) return false ;

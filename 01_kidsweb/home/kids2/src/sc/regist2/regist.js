@@ -209,10 +209,12 @@ function SearchReceiveDetail(data) {
 
     resetTableRowid($('#tableA'));
 
+    resetTableADisplayStyle();
+
+    resetTableBDisplayStyle();
+
     $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
     $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
-    // $('input[name="strMonetaryRateName"]').val(data.strmonetaryratename);
-    // $('input[name="lngMonetaryRateCode"]').val(data.lngmonetaryratecode);
     $('input[name="curConversionRate"]').val(data.curconversionrate);
 
 }
@@ -225,12 +227,14 @@ function ClearAllEditDetail() {
 function resetTableADisplayStyle() {
     $("#tableA tbody tr").each(function (i, e) {
         $(this).find("td:nth-child(1)").css("display", "");
+        $(this).find(".detailNote").find('input').prop('disabled', true);
     });
 }
 
 function resetTableBDisplayStyle() {
     $("#tableB tbody tr").each(function (i, e) {
         $(this).find("td:nth-child(1)").css("display", "none");
+        $(this).find(".detailNote").find('input').prop('disabled', false);
     });
 }
 // ------------------------------------------------------------------
@@ -581,7 +585,7 @@ jQuery(function ($) {
                 //製品単位コード（明細登録用）
                 lngproductunitcode: $(tr).children('.detailProductUnitCode').text(),
                 //備考（明細登録用）
-                strnote: $(tr).children('.detailNote').text(),
+                strnote: $(tr).children('.detailNote').find('input:text').val(),
                 //通貨単位コード（明細登録用）
                 lngmonetaryunitcode: $(tr).children('.detailMonetaryUnitCode').text(),
                 //通貨レートコード（明細登録用）
@@ -943,6 +947,8 @@ jQuery(function ($) {
             strSessionID: $('input[name="strSessionID"]').val(),
             //顧客コード（表示用会社コード）
             strcompanydisplaycode: $('input[name="lngCustomerCode"]').val(),
+            //顧客名称（表示用会社名称）
+            strcompanydisplayname: $('input[name="strCustomerName"]').val(),
             //出力明細一覧エリアの1行目の通貨単位コード
             lngmonetaryunitcode: firstRowMonetaryUnitCode,
         };
@@ -1052,6 +1058,10 @@ jQuery(function ($) {
         scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
 
         resetTableRowid($("#tableB"));
+
+        resetTableADisplayStyle();
+
+        resetTableBDisplayStyle();
 
     });
 

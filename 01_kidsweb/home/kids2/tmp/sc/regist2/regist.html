@@ -37,6 +37,7 @@
 		<script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
 		<script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
 		<script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
+        <script src="/cmn/js/setinputmode.js" defer></script>
 	</header3>
 
 	<bodyonload>
@@ -73,6 +74,7 @@
 						<img src="/img/type01/msw/cmn/open_off_bt.gif">
 						<input type="hidden" name="lngCountryCode" value="">
 						<input type="hidden" name="lngCustomerCode" value="">
+						<input type="hidden" name="strCustomerName" value="">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text_80">顧客側担当者</span>
@@ -93,8 +95,8 @@
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">納品先</span>
-						<input class="TxtStyle03L" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_" alt="DeliveryPlace">
-						<input class="disTxt28L" name="strDeliveryPlaceName" disabled value="_%strDeliveryPlaceName%_">
+						<input class="TxtStyle03L" type="text" name="lngDeliveryPlaceCode" value="_%lngDeliveryPlaceCode%_" alt="DeliveryPlace">
+						<input class="disTxt28L" type="text" name="strDeliveryPlaceName" disabled value="_%strDeliveryPlaceName%_">
 						<span>
 							<a href="#">
 								<img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
@@ -200,13 +202,13 @@
 													<th class="sortable">顧客品番</th>
 													<th class="sortable">製品名（英語）</th>
 													<th class="sortable">営業部署</th>
+													<th class="sortable">備考</th>
 													<th class="forEdit">受注番号（非表示）</th>
 													<th class="forEdit">受注明細番号（非表示）</th>
 													<th class="forEdit">リビジョン番号（非表示）</th>
 													<th class="forEdit">再販コード（非表示）</th>
 													<th class="forEdit">売上区分コード（非表示）</th>
 													<th class="forEdit">製品単位コード（非表示）</th>
-													<th class="forEdit">備考（非表示）</th>
 													<th class="forEdit">通貨単位コード（非表示）</th>
 													<th class="forEdit">通貨レートコード（非表示）</th>
 													<th class="forEdit">通貨単位記号（非表示）</th>
@@ -243,13 +245,13 @@
 													<th class="sortable">顧客品番</th>
 													<th class="sortable">製品名（英語）</th>
 													<th class="sortable">営業部署</th>
+													<th class="sortable">備考</th>
 													<th class="forEdit">受注番号（非表示）</th>
 													<th class="forEdit">受注明細番号（非表示）</th>
 													<th class="forEdit">リビジョン番号（非表示）</th>
 													<th class="forEdit">再販コード（非表示）</th>
 													<th class="forEdit">売上区分コード（非表示）</th>
 													<th class="forEdit">製品単位コード（非表示）</th>
-													<th class="forEdit">備考（非表示）</th>
 													<th class="forEdit">通貨単位コード（非表示）</th>
 													<th class="forEdit">通貨レートコード（非表示）</th>
 													<th class="forEdit">通貨単位記号（非表示）</th>
@@ -306,13 +308,13 @@
 													<th>顧客品番</th>
 													<th>製品名（英語）</th>
 													<th>営業部署</th>
+													<th>備考</th>
 													<th class="forEdit">受注番号（非表示）</th>
 													<th class="forEdit">受注明細番号（非表示）</th>
 													<th class="forEdit">リビジョン番号（非表示）</th>
 													<th class="forEdit">再販コード（非表示）</th>
 													<th class="forEdit">売上区分コード（非表示）</th>
 													<th class="forEdit">製品単位コード（非表示）</th>
-													<th class="forEdit">備考（非表示）</th>
 													<th class="forEdit">通貨単位コード（非表示）</th>
 													<th class="forEdit">通貨レートコード（非表示）</th>
 													<th class="forEdit">通貨単位記号（非表示）</th>

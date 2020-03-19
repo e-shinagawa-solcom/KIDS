@@ -152,7 +152,7 @@ function fncInitArySubMenu() {
 				g_arySubMenu['so'][0] = '受注登録';
 				g_arySubMenu['so'][1] = '受注検索';
 
-				g_arySubMenu['po'][0] = '発注書検索';
+				g_arySubMenu['po'][0] = '発注書（PO）検索';
 				g_arySubMenu['po'][1] = '発注検索';
 
 				g_arySubMenu['sc'][0] = '売上(納品書)登録';

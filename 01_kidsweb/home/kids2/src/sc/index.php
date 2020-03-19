@@ -58,7 +58,7 @@
 	}
 
 	// 602 売上管理（ 納品書検索）
-	if ( fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
+	if ( fncCheckAuthority( DEF_FUNCTION_SC12, $objAuth ) )
 	{
 		$aryData["Search2_visibility"] = 'style="visibility: visible"';
 	} else {

@@ -164,8 +164,8 @@
 			$aryData["lngSubFlag_sc_0"] = 0;
 		}
 
-		// 602 納品書検索
-		if( !fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
+		// 612 納品書検索
+		if( !fncCheckAuthority( DEF_FUNCTION_SC12, $objAuth ) )
 		{
 			$aryData["lngSubFlag_sc_1"] = 0;
 		}

@@ -41,6 +41,7 @@
 	// --------------------------
 	// 顧客コード
 	$aryData["strDefaultCompanyDisplayCode"] = $_POST["strcompanydisplaycode"];
+	$aryData["strDefaultCompanyDisplayName"] = $_POST["strcompanydisplayname"];
 
 	// 通貨コードの初期値。画面にも保存しておく
 	$lngDefaultMonetaryUnitCode = $_POST["lngmonetaryunitcode"];

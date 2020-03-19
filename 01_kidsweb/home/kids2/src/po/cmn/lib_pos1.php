@@ -1417,7 +1417,7 @@ function fncCancelOrderHtml($aryOrder)
 function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDeleted = false)
 {
 //    for($i = 0; $i < count($aryDetail); $i++) {
-    $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $aryDetail["lngpurchaseorderno"] . "&lngReportClassCode=2&strSessionID=" . $strSessionID;
+    $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $aryDetail["lngpurchaseorderno"] . "&lngReportClassCode=2&bytCopyFlag=true&strSessionID=" . $strSessionID;
     $aryHtml[] = "<table class=\"ordercode\">";
     $aryHtml[] = "  <tr>";
     $aryHtml[] = "    <td class=\"ordercodetd\">" . sprintf("%s_%02d", $aryOrder["strordercode"], $aryOrder["lngrevisionno"]) . "</td>";

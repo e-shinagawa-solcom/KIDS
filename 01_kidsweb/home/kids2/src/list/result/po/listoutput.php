@@ -56,7 +56,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUN
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
-$copyDisabled = "visible";
+$copyDisabled = "hidden";
 
 // コピーフラグが偽(コピー選択ではない) かつ
 // コピー解除権限がある場合、
@@ -70,6 +70,10 @@ $strQuery = fncGetListOutputQuery(DEF_REPORT_ORDER, $aryData["strReportKeyCode"]
 $objMaster = new clsMaster();
 $objMaster->setMasterTableData($strQuery, $objDB);
 $aryParts = &$objMaster->aryData[0];
+
+if ($aryData["bytCopyFlag"] && intval($aryParts["lngprintcount"]) > 0) {
+    $copyDisabled = "visible";
+}
 
 $aryParts["copyDisabled"] = $copyDisabled;
 
@@ -155,6 +159,8 @@ $strTemplate = $objTemplate->strTemplate;
 
 // ページ数分テンプレートを繰り返し読み込み
 for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNowPage"]++) {
+    
+    $aryHtml[] = "<div style=\"page-break-after:always;page-break-inside: avoid;\">\n";
     $objTemplate->strTemplate = $strTemplate;
 
     // 表示しようとしているページが最後のページの場合、
@@ -207,8 +213,9 @@ for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNo
 
     $objTemplate->complete();
     $aryHtml[] = $objTemplate->strTemplate;
+    $aryHtml[] = "</div>";
 }
 
-$strBodyHtml = join("<br style=\"page-break-after:always;\">\n", $aryHtml);
+$strBodyHtml = join("", $aryHtml);
 
 echo $strTemplateHeader . $strBodyHtml . $strTemplateFooter;

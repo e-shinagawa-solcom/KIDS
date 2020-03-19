@@ -35,6 +35,7 @@
 
     <link rel="stylesheet" href="/sc/regist2/condition.css">
     <script src="/sc/regist2/condition.js" defer></script>
+	<script src="/cmn/js/setinputmode.js" defer></script>
 </header3>
 
 <bodyonload>
@@ -56,8 +57,8 @@
                 <span class="regist-label">
                 <span class="regist-label__required-mark">〇</span>
 						<span class="regist-label__required-text">顧客</span>
-                    <input class="TxtStyle05L" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer">
-                    <input class="disTxt46L" name="strCustomerName" type="text" disabled>
+                    <input class="TxtStyle05L" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer" value="_%strDefaultCompanyDisplayCode%_">
+                    <input class="disTxt46L" name="strCustomerName" type="text"  value="_%strDefaultCompanyDisplayName%_" disabled>
                     <span><a href="#"><img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a>
                 </span>
             </div>

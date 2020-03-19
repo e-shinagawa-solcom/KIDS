@@ -55,14 +55,14 @@ fncPutStringCheckError( $aryResult, $objDB );
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// 602 売上管理（売上検索）
-if ( !fncCheckAuthority( DEF_FUNCTION_SC2, $objAuth ) )
+// 612 売上管理（売上検索）
+if ( !fncCheckAuthority( DEF_FUNCTION_SC12, $objAuth ) )
 {
 	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
 
-// 603 売上管理（売上検索　管理モード）
-if ( fncCheckAuthority( DEF_FUNCTION_SC3, $objAuth ) )
+// 613 売上管理（納品書検索　管理モード）
+if ( fncCheckAuthority( DEF_FUNCTION_SC13, $objAuth ) )
 {
     $aryData["AdminSet_visibility"] = 'style="visibility: visible"';
 }

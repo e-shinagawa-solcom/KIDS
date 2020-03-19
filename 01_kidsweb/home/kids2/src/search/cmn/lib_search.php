@@ -1003,7 +1003,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , inv_d.lngtaxclasscode as lngtaxclasscode";
         $aryQuery[] = "  , inv_d.strtaxclassname as strtaxclassname";
         $aryQuery[] = "  , inv_d.curtax as curtax";
-        $aryQuery[] = "  , inv_d.strnote as strnote";
+        $aryQuery[] = "  , inv_d.strnote as strdetailnote";
         $aryQuery[] = "  , inv_d.lngslipno as lngslipno";
         $aryQuery[] = "  , inv_d.lngsliprevisionno as lngsliprevisionno";
         $aryQuery[] = "  , slip_m.strslipcode as strslipcode ";
@@ -1115,7 +1115,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , mtc.strtaxclassname";
         $aryQuery[] = "  , mt.curtax";
         $aryQuery[] = "  , sd.curtaxprice";
-        $aryQuery[] = "  , sd.strNote ";
+        $aryQuery[] = "  , sd.strNote as strdetailnote";
         $aryQuery[] = "FROM";
         $aryQuery[] = "  t_SalesDetail sd ";
         $aryQuery[] = "  LEFT JOIN ( ";
@@ -1169,7 +1169,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , to_char(sd.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
         $aryQuery[] = "  , sd.strProductUnitName";
         $aryQuery[] = "  , sd.curSubTotalPrice";
-        $aryQuery[] = "  , sd.strNote ";
+        $aryQuery[] = "  , sd.strNote as strdetailnote";
         $aryQuery[] = "from";
         $aryQuery[] = "  t_slipdetail sd ";
         $aryQuery[] = "where";

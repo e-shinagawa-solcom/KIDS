@@ -1,4 +1,6 @@
 (function () {
+    setTextInputMode();
+
     resetTableADisplayStyle();
     // テーブルAの幅をリセットする
     resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
@@ -84,8 +86,9 @@
             }
         }
 
-
         resetTableBDisplayStyle();
+
+        setTextInputMode();
 
         resetTableRowid($('#tableB_no'));
         // テーブルBの幅をリセットする

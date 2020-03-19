@@ -1253,7 +1253,7 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder, $strSessionID)
         for ($i = 0; $i < count($aryPurchaseOrder); $i++) {
             if ($aryPurchaseOrder[$i]["lngpurchaseorderno"] != $orderno) {continue;}
             if ($i == 0) {
-                $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $aryPurchaseOrder[$i]["lngpurchaseorderno"] . "&lngReportClassCode=2&strSessionID=" . $strSessionID;
+                $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $aryPurchaseOrder[$i]["lngpurchaseorderno"] . "&lngReportClassCode=2&bytCopyFlag=true&strSessionID=" . $strSessionID;
                 $aryHtml[] = "<table class=\"ordercode\">";
                 $aryHtml[] = "  <tr>";
                 $aryHtml[] = "    <td class=\"SegColumn\">PO番号</td>";
@@ -1668,7 +1668,7 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
  */
 function fncCreatePurchaseOrderUpdateHtml($aryPurchaseOrder, $strSessionID)
 {
-    $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $aryPurchaseOrder[0]["lngpurchaseorderno"] . "&lngReportClassCode=2&strSessionID=" . $strSessionID;
+    $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $aryPurchaseOrder[0]["lngpurchaseorderno"] . "&lngReportClassCode=2&bytCopyFlag=true&strSessionID=" . $strSessionID;
     $aryHtml[] = "<p class=\"caption\">発注書NO " . $aryPurchaseOrder[0]["strordercode"] . "の修正が完了しました。</p>";
     $aryHtml[] = "<table class=\"ordercode\">";
     $aryHtml[] = "  <tr>";

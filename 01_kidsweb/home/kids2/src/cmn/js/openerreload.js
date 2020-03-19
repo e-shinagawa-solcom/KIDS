@@ -1,5 +1,4 @@
-(function () {    
-
+(function () {
     // ウィンドウを閉じる前のイベント
     $(window).on("beforeunload", function(e) {
         //ウィンドウを閉じる

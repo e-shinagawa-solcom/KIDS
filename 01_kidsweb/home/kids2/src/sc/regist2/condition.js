@@ -17,6 +17,9 @@ jQuery(function ($) {
         }
     });
 
+    var postTarget = window.opener.$('input[name="ajaxPostTarget"]').val();
+    var strSessionID = $('input[name="strSessionID"]').val();
+
     // 顧客-表示会社コード イベント登録
     $('input[name="lngCustomerCode"]').on({
         'change': function () {
@@ -67,29 +70,8 @@ jQuery(function ($) {
     };
     // 親画面から引き継いだ顧客コードをセット
     var strDefaultCompanyDisplayCode = $('#strDefaultCompanyDisplayCode').val();
-    if (0 < strDefaultCompanyDisplayCode.length) {
-        // 顧客コードをセット
-        $('input[name="lngCustomerCode"]').val(strDefaultCompanyDisplayCode);
-        console.log
-        // 顧客名の表示のためchangeイベントを手動発生
-        $('input[name="lngCustomerCode"]').trigger('change');
-    }
-
-    var postTarget = window.opener.$('input[name="ajaxPostTarget"]').val();
-    var strSessionID = $('input[name="strSessionID"]').val();
     var strCompanyDisplayCode = $('input[name="lngCustomerCode"]').val();
-
     var lngDefaultMonetaryUnitCode = $('#lngDefaultMonetaryUnitCode').val();
-    if (0 == lngDefaultMonetaryUnitCode.length) {
-        SetMonetaryUnitCode(postTarget, strCompanyDisplayCode, strSessionID);
-    }
-
-    // // 顧客名称-表示会社コード イベント登録
-    // $('input[name="strCustomerName"]').on({
-    //     'change': function () {
-    //         SetMonetaryUnitCode(postTarget, $('input[name="lngCustomerCode"]').val(), strSessionID);
-    //     }
-    // });
     // ------------------------------------
     //  events
     // ------------------------------------

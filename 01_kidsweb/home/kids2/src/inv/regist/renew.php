@@ -78,8 +78,8 @@
         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
     }
 
-    // 2201 請求書発行
-    if ( !fncCheckAuthority( DEF_FUNCTION_INV1, $objAuth ) )
+    // 2205 請求書修正
+    if ( !fncCheckAuthority( DEF_FUNCTION_INV5, $objAuth ) )
     {
         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
     }

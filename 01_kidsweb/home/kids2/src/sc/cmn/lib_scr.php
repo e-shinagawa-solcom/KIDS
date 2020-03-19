@@ -266,6 +266,7 @@ function fncGetDetailBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
         // キーに紐づく明細を1件ずつ取得して全体の配列にマージ
         $arySubDetail = fncGetReceiveDetail($aryCondition, $objDB);
         $aryDetail = array_merge($aryDetail, $arySubDetail);
+        $aryDetail[$i]["strnote"] = $aryDetailKey[$i]["strnote"];
     }
 
     return $aryDetail;
@@ -279,7 +280,8 @@ function fncGetDetailKeyBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  sd.lngslipno, ";
     $aryQuery[] = "  sd.lngreceiveno, ";
     $aryQuery[] = "  sd.lngreceivedetailno, ";
-    $aryQuery[] = "  sd.lngreceiverevisionno ";
+    $aryQuery[] = "  sd.lngreceiverevisionno, ";
+    $aryQuery[] = "  sd.strnote ";
     $aryQuery[] = " FROM t_slipdetail sd";
     $aryQuery[] = " WHERE ";
     $aryQuery[] = "  sd.lngslipno = " . $lngSlipNo;
@@ -623,6 +625,9 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
             $strDisplayValue = "";
         }
         $detail_body_html .= "<td class='detailSalesDeptName'>" . $strDisplayValue . "</td>";
+        // 備考
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strnote"]);
+        $detail_body_html .= "<td class='detailNote'><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"" .$strDisplayValue ."\"></td>";
         //受注番号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceiveno"]);
         $detail_body_html .= "<td class='forEdit detailReceiveNo'>" . $strDisplayValue . "</td>";
@@ -641,9 +646,6 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         //製品単位コード（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngproductunitcode"]);
         $detail_body_html .= "<td class='forEdit detailProductUnitCode'>" . $strDisplayValue . "</td>";
-        //備考（明細登録用）
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strnote"]);
-        $detail_body_html .= "<td class='forEdit detailNote'>" . $strDisplayValue . "</td>";
         //通貨単位コード（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngmonetaryunitcode"]);
         $detail_body_html .= "<td class='forEdit detailMonetaryUnitCode'>" . $strDisplayValue . "</td>";
@@ -1804,7 +1806,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
             $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
             $aryHeader, $aryDetail,
-            $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate);
+            $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $objDB);
 
         //アクティブシート変更
         $xlSpreadSheet->setActiveSheetIndexByName($activeSheetName);
@@ -1848,7 +1850,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
                     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
                     $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
                     $aryHeader, $aryDetail,
-                    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate);
+                    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $objDB);
 
                 // 全体に追加
                 $pageHtml = $xlWriter->generateSheetData();
@@ -1950,7 +1952,7 @@ function fncSetSlipDataToWorkSheet(
     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
     $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
     $aryHeader, $aryDetail,
-    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate) {
+    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $objDB) {
     // 【補足】
     // lngSlipNo,lngRevisionNo,strSlipCode,lngSalesNo,dtmInsertDateはデータ登録するまで確定しないため
     // プレビュー表示時は空にせざるを得ない。ダウンロード時はデータ登録済みなため出力可能。
@@ -2038,7 +2040,7 @@ function fncSetSlipDataToWorkSheet(
         $v_lngrevisionno = is_null($lngRevisionNo) ? "" : $lngRevisionNo; //3:リビジョン番号
         $v_strcustomersalescode = $d["strcustomerreceivecode"]; //4:顧客受注番号
         $v_lngsalesclasscode = $d["lngsalesclasscode"]; //5:売上区分コード
-        $v_strsalesclassname = $d["strsalesclassname"]; //6:売上区分名
+        $v_strsalesclassname = fncGetMasterValue( "m_salesclass", "lngsalesclasscode", "strsalesclassname", $d["lngsalesclasscode"] ,'', $objDB); //6:売上区分名
         $v_strgoodscode = $d["strgoodscode"]; //7:顧客品番
         $v_strproductcode = $d["strproductcode"]; //8:製品コード
         $v_strrevisecode = $d["strrevisecode"]; //9:再販コード
