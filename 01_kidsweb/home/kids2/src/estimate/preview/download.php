@@ -112,8 +112,8 @@ $productData = $objPreview->getProduct();
 
 $estimateData = $objPreview->getEstimate();
 
-
-$tempFilePath = EXCEL_TMP_ROOT. 'workSheetTmp.xlsx';
+// ダウンロード用テンプレートにはデフォルト設定済みの行が設定されている。
+$tempFilePath = EXCEL_TMP_ROOT. 'workSheetTmp_DL.xlsx';
 
 $spreadSheet = $objReader->load($tempFilePath);
 

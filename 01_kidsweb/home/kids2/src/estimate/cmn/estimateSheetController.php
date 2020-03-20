@@ -2126,15 +2126,19 @@ class estimateSheetController {
             $firstRow = $targetAreaRows[$areaCode]['firstRow'];
             $lastRow = $targetAreaRows[$areaCode]['lastRow'];
 //fncDebug("view.log", sprintf("area:%d, first:%d, last:%d", $areaCode, $firstRow, $lastRow ), __FILE__, __LINE__, "a");
-            $linage = (int)$lastRow - (int)$firstRow + 1;
-    
+            if( $this->mode != workSheetConst::MODE_ESTIMATE_DOWNLOAD){
+                $linage = (int)$lastRow - (int)$firstRow + 1;
+            }
+            else{
+                $linage = 1;
+            }
             $inputRowCount = count($data);    
     
             if ($linage < $inputRowCount + $marginCell) {
     
                 $difference = $inputRowCount + $marginCell - $linage;
     
-                $selectedRow = $lastRow; // 最終行の1行前に(指定した行数を)挿入する
+                $selectedRow = $firstRow + 1; // 2行目の1行前に(指定した行数を)挿入する
 //fncDebug("view.log", sprintf("area:%d, selected:%d last:%d", $areaCode, $selectedRow, $lastRow), __FILE__, __LINE__, "a");
     
                 $this->insertCopyRowBefore($selectedRow, $difference); // 行挿入実行
