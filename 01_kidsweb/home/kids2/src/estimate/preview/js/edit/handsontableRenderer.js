@@ -200,6 +200,29 @@ $(function() {
     disableVisualSelection: 'area',
     fillHandle: false,
     undo: false,
+    beforePaste: function(data, coords){
+
+        for(var i = 0; i < coords.length; i++){
+//alert(coords[i]['startRow'] + "," + coords[i]['endRow'] + "," + coords[i]['startCol'] + "," + coords[i]['endCol']);
+            var startRow = coords[i]['startRow'];
+            var startCol = coords[i]['startCol'];
+            var endCol = coords[i]['endCol'];
+            // ペースト対象行数はデータ数/列数
+            var rowNum = data.length / (endCol - startCol + 1);
+            var colNum = endCol - startCol + 1;
+//alert("startRow:" + startRow + ",startCol:" + startCol + ",endRow:" + (startRow+rowNum) + ",endCol:" + endCol);
+            for(var j = 0; j < rowNum; j++){
+                for(var k = 0; k < colNum; k++){
+//alert(data[j][k]);
+                    // ペースト対象データを対象列の型式に合わせて補正
+                    var correctedValue = correctValue(startRow+j, startCol+k, data[j][k]);
+                    data[j][k] = correctedValue;
+//alert(data[j][k]);
+                }
+            }
+        }
+
+    },
     beforeChange: function(changes, source) {
       if (source == 'edit' ||
           source == 'CopyPaste.paste' ||
@@ -2568,7 +2591,62 @@ $(function() {
     }
     return ret;
   }
+
+  /**
+   * セルの入力値が変更された時の処理を行う
+   * @param {integer} row 変更セルの行
+   * @param {integer} col 変更セルの列
+   * @param {integer} oldValue 変更前の値
+   * @param {integer} newValue 変更後の値
+   * 
+   */
+  function correctValue(row, col, oldValue) {
+    var checkList = cellClass;
+    var newValue = oldValue;
+    var elements = getElementsForRowAndColumn(row, col, checkList);
+
+    var calcFlag = {};// subtotal:金額合計、member:部材費、substitutePQ:償却、productionQuantity:数量（償却数）、importOrTariff:関税、輸入費
+
+    var className = elements[0].className;
+    if (className == 'retailprice'){  //上代
+        newValue = oldValue.replace(/[^0-9.]/g, '');
+    }
+    else if( className.includes('cartonquantity') ){ // カートン入数
+        newValue = oldValue.replace(/[^0-9.]/g, '');
+    }
+    else if (className.includes('detail')) { // 明細行
+
+      // セルのクラス情報取得
+      var cellElement = getElementsForRowAndColumn(row, col, checkList);
+
+      // エリアコードの取得
+      var areaCode = cellElement[0].className.match(/area([0-9]+)/);
+
+
+      if (className.includes('quantity')) {
+          newValue = oldValue.replace(/[^0-9.]/g, '');
+
+      } else if (className.includes('price')) {    // 単価
+          newValue = oldValue.replace(/[^0-9.]/g, '');
+      } else if (className.includes('conversionRate')) {   // 通貨レート
+          newValue = oldValue.replace(/[^0-9.]/g, '');
+      } else if(className.includes('delivery')){  // 納期
+
+          var reg = new RegExp(/^[0-9]{8}$/)
+          if(reg.test(newValue)){
+              var yyyy = newValue.substr(0,4);
+              var mm = newValue.substr(4,2);
+              var dd = newValue.substr(6);
+              newValue = yyyy + "/" + mm + "/" + dd;
+          }
+      }
+
+    }
+    return newValue;
+  };
+
 });
+
 
 
 
