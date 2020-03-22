@@ -617,6 +617,8 @@ class estimateSheetController {
             $orderCancel = '消';
             $rowno = 0;
             $lastArea = 0;
+            $displayButton = array();
+            $titleRowList = array();
             foreach ($cellData as $tableRow => $rowData) {
                 $workSheetRow = $tableRow + $rowShiftValue; // ワークシートの行番号
 
@@ -668,6 +670,7 @@ class estimateSheetController {
                                     $htmlValue1 .= "</div>";
     
                                     $ColumnData1['value'] = $htmlValue1;
+                                    $displayButton[$areaCode] = true;
                                 }
 
 
@@ -727,9 +730,11 @@ class estimateSheetController {
                                 if (isset($companyCode) && $companyCode !== DEF_DISPLAY_COMPANY_CODE_OTHERS) {
                                     if( $areaCode == DEF_AREA_OTHER_COST_ORDER ){
                                         $name = "confirm". DEF_AREA_PARTS_COST_ORDER;
+                                        $displayButton[DEF_AREA_PARTS_COST_ORDER] = true;
                                     }
                                     else{
                                         $name = "confirm". $areaCode;
+                                        $displayButton[$areaCode] = true;
                                     }
                                     $htmlValue1 = "<div class=\"applicate\">";
                                     $htmlValue1 .= "<input type=\"checkbox\" class=\"checkbox_applicate\" name=\"". $name. "\" value=\"".$orderNo . "\">";
@@ -744,9 +749,11 @@ class estimateSheetController {
                             case DEF_ORDER_ORDER:
                                 if( $areaCode == DEF_AREA_OTHER_COST_ORDER ){
                                     $name = "cancel". DEF_AREA_PARTS_COST_ORDER;
+                                    $displayButton[DEF_AREA_PARTS_COST_ORDER] = true;
                                 }
                                 else{
                                     $name = "cancel". $areaCode;
+                                    $displayButton[$areaCode] = true;
                                 }
                                 $htmlValue2 = "<div class=\"order\">";
                                 $htmlValue2 .= "<input type=\"checkbox\" class=\"checkbox_cancel\" name=\"". $name. "\" value=\"".$orderNo . "\">";
@@ -777,7 +784,9 @@ class estimateSheetController {
                     } else if ($titleRowAttribute[$workSheetRow]) {
                         // 確定、取消ボタンの生成
                         $areaCode = $titleRowAttribute[$workSheetRow];
+                        $titleRowList[$areaCode] = $tableRow;
                         if ($receiveAreaCodeList[$areaCode]) {
+                            
                             // 受注エリアの場合
                             $confirmValue = "confirm". $areaCode;
                             $htmlValue1 = "<div>";
@@ -805,8 +814,15 @@ class estimateSheetController {
                         }
                     }
                 }
-
                 array_unshift($cellData[$tableRow], $ColumnData1, $ColumnData2, $ColumnData3, $ColumnData4);
+            }
+            // 確定・取消できる行がない場合のボタン削除
+            foreach(workSheetConst::TARGET_AREA_CODE_LIST as $area){
+                if(!isset($displayButton[$area]) || $displayButton[$area] == false)
+                {
+                    $cellData[$titleRowList[$area]][0]['value'] = '';
+                    $cellData[$titleRowList[$area]][1]['value'] = '';
+                }
             }
         }
 
