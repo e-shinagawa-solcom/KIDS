@@ -874,7 +874,7 @@ class estimateDB extends clsDB {
             $strQuery   = "select ";
             $strQuery  .= "    TBL.areano, ";
             $strQuery  .= "    TBL.name, ";
-            $strQuery  .= "    mc.strcompanydisplaycode || ':' || mc.strshortname as customercompany ";
+            $strQuery  .= "    mc.strcompanydisplaycode || ':' || trim(mc.strshortname) as customercompany ";
             $strQuery  .= "from( ";
             $strQuery  .= "    select distinct ";
             $strQuery  .= "        msdl.lngestimateareaclassno as areano, ";
