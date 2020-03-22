@@ -223,17 +223,28 @@ $(function() {
         }
 
     },
+    beforeValidate: function(value, row, col, source) {
+      if (source == 'edit' ||
+        source == 'CopyPaste.paste' ||
+        source == 'Autofill.fill') {
+        var correctedValue = correctValue(row, col, value);
+        return correctedValue;
+      }
+    },
     beforeChange: function(changes, source) {
       if (source == 'edit' ||
-          source == 'CopyPaste.paste' ||
-          source == 'Autofill.fill') {
-          for (var i = 0; i < changes.length; i++) {
+        source == 'CopyPaste.paste' ||
+        source == 'Autofill.fill') {
+        for (var i = 0; i < changes.length; i++) {
           var row = changes[i][0];
           var col = changes[i][1];
           var oldValue = changes[i][2];
           var newValue = changes[i][3];
-          if (newValue !== oldValue) { // 変更があった場合
-            cellValue[row][col] = newValue;
+          // 変更後データを対象列の型式に合わせて補正
+          var correctedValue = correctValue(row, col, newValue);
+          changes[i][3] = correctedValue;
+          if (newValue !== correctedValue) { // 変更があった場合
+            cellValue[row][col] = correctedValue;
             cellData[row][col]['value'] = cellValue[row][col];
             onChangedValue(row, col, oldValue, newValue);
           }
@@ -527,6 +538,7 @@ $(function() {
           blankRow[0] = JSON.parse(JSON.stringify(cellData[selectedRow]));        
           for (var column = startColumn; column <= endColumn; column++) {
             blankRow[0][column]['value'] = '';
+            blankRow[0][column]['border']['bottom'] = cellData[selectedRow-1][column]['border']['bottom'];
           }
   
           var newRow = startRow;
@@ -2609,10 +2621,12 @@ $(function() {
 
     var className = elements[0].className;
     if (className == 'retailprice'){  //上代
-        newValue = oldValue.replace(/[^0-9.]/g, '');
+          tmpValue = toHalfWidth(oldValue);
+          newValue = tmpValue.replace(/[^0-9.]/g, '');
     }
     else if( className.includes('cartonquantity') ){ // カートン入数
-        newValue = oldValue.replace(/[^0-9.]/g, '');
+          tmpValue = toHalfWidth(oldValue);
+          newValue = tmpValue.replace(/[^0-9.]/g, '');
     }
     else if (className.includes('detail')) { // 明細行
 
@@ -2624,19 +2638,21 @@ $(function() {
 
 
       if (className.includes('quantity')) {
-          newValue = oldValue.replace(/[^0-9.]/g, '');
-
+          tmpValue = toHalfWidth(oldValue);
+          newValue = tmpValue.replace(/[^0-9.]/g, '');
       } else if (className.includes('price')) {    // 単価
-          newValue = oldValue.replace(/[^0-9.]/g, '');
+          tmpValue = toHalfWidth(oldValue);
+          newValue = tmpValue.replace(/[^0-9.]/g, '');
       } else if (className.includes('conversionRate')) {   // 通貨レート
-          newValue = oldValue.replace(/[^0-9.]/g, '');
+          tmpValue = toHalfWidth(oldValue);
+          newValue = tmpValue.replace(/[^0-9.]/g, '');
       } else if(className.includes('delivery')){  // 納期
-
+          tmpValue = toHalfWidth(oldValue);
           var reg = new RegExp(/^[0-9]{8}$/)
-          if(reg.test(newValue)){
-              var yyyy = newValue.substr(0,4);
-              var mm = newValue.substr(4,2);
-              var dd = newValue.substr(6);
+          if(reg.test(tmpValue)){
+              var yyyy = tmpValue.substr(0,4);
+              var mm = tmpValue.substr(4,2);
+              var dd = tmpValue.substr(6);
               newValue = yyyy + "/" + mm + "/" + dd;
           }
       }
@@ -2644,6 +2660,25 @@ $(function() {
     }
     return newValue;
   };
+
+/**
+ * 全角から半角への変革関数
+ * 入力値の英数記号を半角変換して返却
+ * [引数]   strVal: 入力値
+ * [返却値] String(): 半角変換された文字列
+ */
+function toHalfWidth(strVal){
+  // 半角変換
+  var halfVal = strVal.replace(/[！-～]/g,
+    function( tmpStr ) {
+      // 文字コードをシフト
+      return String.fromCharCode( tmpStr.charCodeAt(0) - 0xFEE0 );
+    }
+  );
+ 
+  return halfVal;
+}
+
 
 });
 
