@@ -110,7 +110,7 @@ $(function(){
 
   // HandsontableのtdタグCSS
   function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
-    if (col <= 2) {
+    if (col <= 3) {
       Handsontable.renderers.HtmlRenderer.apply(this, arguments);  //　プレビューの確認、取消設置用
     } else {
 //      Handsontable.renderers.TextRenderer.apply(this, arguments);

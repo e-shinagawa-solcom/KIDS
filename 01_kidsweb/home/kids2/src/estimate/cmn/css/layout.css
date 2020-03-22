@@ -289,6 +289,12 @@ div.action-buttons > button
 	width: 98%;
 }
 
+.div_number
+{
+	display: inline-block;
+	color: #000000;
+}
+
 .status_order
 {
 	display: inline-block;
@@ -321,6 +327,12 @@ div.action-buttons > button
 .status_display
 {
 	text-align: center;
+	vertical-align: middle;
+}
+
+.number_display
+{
+	text-align: right;
 	vertical-align: middle;
 }
 

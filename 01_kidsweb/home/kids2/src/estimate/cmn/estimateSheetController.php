@@ -602,35 +602,49 @@ class estimateSheetController {
             
 
             // 列の挿入処理
-            $shiftResult = $this->shiftMergedCellsList($mergedCellsList, 0, -3); // セル位置補正
-            array_unshift($columnWidth, 30, 25, 40);
-            $tableEndColumn += 3;
+            $shiftResult = $this->shiftMergedCellsList($mergedCellsList, 0, -4); // セル位置補正
+            array_unshift($columnWidth, 30, 25, 40, 32);
+            $tableEndColumn += 4;
 
             // クラス情報の更新
             foreach ($cellClass as &$classData) {
-                $classData['col'] += 3;
+                $classData['col'] += 4;
             }
 
             // 受注確定、発注確定、発注取消のチェックボックス、ボタンのセット
             $receiveConfirm = '確定';
             $orderConfirm = '確';
             $orderCancel = '消';
-
+            $rowno = 0;
+            $lastArea = 0;
             foreach ($cellData as $tableRow => $rowData) {
                 $workSheetRow = $tableRow + $rowShiftValue; // ワークシートの行番号
 
                 $ColumnData1 = $defaultCellData;
                 $ColumnData2 = $defaultCellData;
                 $ColumnData3 = $defaultCellData;
+                $ColumnData4 = $defaultCellData;
 
                 $areaCode = $this->checkAttributeRow($workSheetRow);
-
+                                
                 // 編集可能な場合のみボタンを生成する
                 if ($this->uneditableFlag === false) {
+                    if($lastArea != $areaCode){
+                        if($areaCode != DEF_AREA_OTHER_COST_ORDER){
+                            $rowno = 0;
+                        }
+                        $lastArea = $areaCode;
+                    }
+                    $rowno++;
 
 
                     // ボタン生成処理
                     if ($receiveAreaCodeList[$areaCode]) {
+                        
+                        $htmlValue4 = "<div class=\"div_number\">";
+                        $htmlValue4 .= "<span class=\"number_display\">" . $rowno . "<span>";
+                        $htmlValue4 .= "</div>";
+                        $ColumnData4['value'] = $htmlValue4;
                         // 受注の場合
                         $data = $inputData[$workSheetRow]['data']; // 行データの取得
                         $statusCode = $data['statusCode'];
@@ -690,6 +704,10 @@ class estimateSheetController {
                                 break;
                         }                
                     } else if ($orderAreaCodeList[$areaCode]) {
+                        $htmlValue4 = "<div class=\"div_number\">";
+                        $htmlValue4 .= "<span class=\"number_display\">" . $rowno . "<span>";
+                        $htmlValue4 .= "</div>";
+                        $ColumnData4['value'] = $htmlValue4;
                         // 発注の場合
                         $data = $inputData[$workSheetRow]['data'];
                         $statusCode = $data['statusCode'];
@@ -788,7 +806,7 @@ class estimateSheetController {
                     }
                 }
 
-                array_unshift($cellData[$tableRow], $ColumnData1, $ColumnData2, $ColumnData3);
+                array_unshift($cellData[$tableRow], $ColumnData1, $ColumnData2, $ColumnData3, $ColumnData4);
             }
         }
 
