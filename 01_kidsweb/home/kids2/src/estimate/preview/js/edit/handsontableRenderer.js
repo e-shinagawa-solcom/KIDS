@@ -243,7 +243,7 @@ $(function() {
           // 変更後データを対象列の型式に合わせて補正
           var correctedValue = correctValue(row, col, newValue);
           changes[i][3] = correctedValue;
-          if (newValue !== correctedValue) { // 変更があった場合
+          if (oldValue !== correctedValue) { // 変更があった場合
             cellValue[row][col] = correctedValue;
             cellData[row][col]['value'] = cellValue[row][col];
             onChangedValue(row, col, oldValue, newValue);
@@ -2621,12 +2621,16 @@ $(function() {
 
     var className = elements[0].className;
     if (className == 'retailprice'){  //上代
+        if(isNaN(oldValue)){
           tmpValue = toHalfWidth(oldValue);
           newValue = tmpValue.replace(/[^0-9.]/g, '');
+        }
     }
     else if( className.includes('cartonquantity') ){ // カートン入数
+        if(isNaN(oldValue)){
           tmpValue = toHalfWidth(oldValue);
           newValue = tmpValue.replace(/[^0-9.]/g, '');
+        }
     }
     else if (className.includes('detail')) { // 明細行
 
@@ -2638,16 +2642,27 @@ $(function() {
 
 
       if (className.includes('quantity')) {
+        if(isNaN(oldValue)){
           tmpValue = toHalfWidth(oldValue);
           newValue = tmpValue.replace(/[^0-9.]/g, '');
+        }
       } else if (className.includes('price')) {    // 単価
+        if(isNaN(oldValue)){
           tmpValue = toHalfWidth(oldValue);
           newValue = tmpValue.replace(/[^0-9.]/g, '');
+        }
       } else if (className.includes('conversionRate')) {   // 通貨レート
+        if(isNaN(oldValue)){
           tmpValue = toHalfWidth(oldValue);
           newValue = tmpValue.replace(/[^0-9.]/g, '');
+        }
       } else if(className.includes('delivery')){  // 納期
-          tmpValue = toHalfWidth(oldValue);
+          if(isNaN(oldValue)){
+              tmpValue = toHalfWidth(oldValue);
+          }
+          else{
+              tmpValue = oldValue;
+          }
           var reg = new RegExp(/^[0-9]{8}$/)
           if(reg.test(tmpValue)){
               var yyyy = tmpValue.substr(0,4);
@@ -2662,20 +2677,24 @@ $(function() {
   };
 
 /**
- * 全角から半角への変革関数
+ * 全角から半角への変換関数
  * 入力値の英数記号を半角変換して返却
  * [引数]   strVal: 入力値
  * [返却値] String(): 半角変換された文字列
  */
 function toHalfWidth(strVal){
-  // 半角変換
-  var halfVal = strVal.replace(/[！-～]/g,
-    function( tmpStr ) {
-      // 文字コードをシフト
-      return String.fromCharCode( tmpStr.charCodeAt(0) - 0xFEE0 );
-    }
-  );
- 
+  if(isNaN(strVal)){
+    // 半角変換
+    var halfVal = strVal.replace(/[！-～]/g,
+      function( tmpStr ) {
+        // 文字コードをシフト
+        return String.fromCharCode( tmpStr.charCodeAt(0) - 0xFEE0 );
+      }
+    );
+  }
+  else{
+     halfVal = strVal;
+  }
   return halfVal;
 }
 
