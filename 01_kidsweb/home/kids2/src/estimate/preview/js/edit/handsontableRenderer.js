@@ -2671,7 +2671,15 @@ $(function() {
               newValue = yyyy + "/" + mm + "/" + dd;
           }
       }
-
+      else if (className.includes('payoff')) { // 償却          
+          var area = className.match(/area(\d+)/);
+          if (Number(area[1]) === 5) {  // ただし、エリア5の場合に限る
+              if(isNaN(oldValue)){
+                  tmpValue = toHalfWidth(oldValue);
+                  newValue = tmpValue.replace(/[^0-9.]/g, '');
+              }
+          }
+      }
     }
     return newValue;
   };
