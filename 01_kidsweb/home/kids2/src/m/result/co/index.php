@@ -80,6 +80,11 @@ if ( $aryData["strCompanyDisplayName"] )
 	$aryWhereString[] = " com.strCompanyDisplayName LIKE '%" . $aryData["strCompanyDisplayName"] . "%'";
 }
 
+if ( $aryData["strCompanyDisplayCode"] != "")
+{
+	$aryWhereString[] = " com.strCompanyDisplayCode = '" . $aryData["strCompanyDisplayCode"] . "'";
+}
+
 // 属性テーブルとの結合
 $aryWhereString[] = " com.lngCompanyCode = ar.lngCompanyCode";
 $aryWhereString[] = " com.lngCountryCode = con.lngCountryCode";
