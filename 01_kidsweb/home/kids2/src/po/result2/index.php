@@ -266,6 +266,12 @@ foreach ($records as $i => $record) {
 
     $detailData = fncGetDetailData('purchaseorder', $record["lngpurchaseorderno"], $record["lngrevisionno"], $objDB);
 fncDebug("kids2.log", sprintf("detail count=%d", count($detailData)), __FILE__, __LINE__, "a");
+
+    // 修正対象かどうかの確認
+    $isFixFlag = fucIsFixObject($record["lngpurchaseorderno"], $record["lngrevisionno"], $objDB);
+
+    $record["isFixFlag"] = $isFixFlag;
+
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 

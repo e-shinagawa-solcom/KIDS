@@ -137,7 +137,6 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "              AND mp1.lngrevisionno = m_product.lngrevisionno";
     $aryQuery[] = "      )mp ON  od1.strproductcode = mp.strproductcode ";
     $aryQuery[] = "          AND mp.strrevisecode = od1.strrevisecode ";
-//    $aryQuery[] = "          and mp.lngrevisionno = od1.lngrevisionno ";
     $aryQuery[] = "        LEFT JOIN m_group mg ";
     $aryQuery[] = "          on mg.lnggroupcode = mp.lnginchargegroupcode ";
     $aryQuery[] = "        LEFT JOIN m_user mu ";
@@ -196,16 +195,16 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     // 部門
     if (array_key_exists("lngInChargeGroupCode", $searchColumns) &&
         array_key_exists("lngInChargeGroupCode", $searchValue)) {
-            $detailConditionCount += 1;
-            $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+        $detailConditionCount += 1;
+        $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
         $aryQuery[] = " mg.strGroupDisplayCode = '" . $searchValue["lngInChargeGroupCode"] . "'";
 
     }
     // 担当者
     if (array_key_exists("lngInChargeUserCode", $searchColumns) &&
         array_key_exists("lngInChargeUserCode", $searchValue)) {
-            $detailConditionCount += 1;
-            $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
+        $detailConditionCount += 1;
+        $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
         $aryQuery[] = " mu.strUserDisplayCode = '" . $searchValue["lngInChargeUserCode"] . "'";
 
     }
@@ -222,7 +221,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
         array_key_exists("lngStockItemCode", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        
+
         $aryQuery[] = "od1.lngStockSubjectCode = " . explode("-", $searchValue["lngStockItemCode"])[0] . " ";
         $aryQuery[] = " AND od1.lngStockItemCode = " . explode("-", $searchValue["lngStockItemCode"])[1] . " ";
     }
@@ -285,11 +284,11 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
                 " between '" . explode("-", $strOrderCode)[0] . "'" .
                 " AND " . "'" . explode("-", $strOrderCode)[1] . "')";
             } else {
-                if (strpos($strOrderCode, '_') !== false) {                    
+                if (strpos($strOrderCode, '_') !== false) {
                     if (explode("_", $strOrderCode)[1] == '00') {
                         $aryQuery[] = " o.strOrderCode = '" . explode("_", $strOrderCode)[0] . "'";
                         $aryQuery[] = " AND o.lngrevisionno = 0 ";
-                    } else {                        
+                    } else {
                         $aryQuery[] = " o.strOrderCode = '" . explode("_", $strOrderCode)[0] . "'";
                         $aryQuery[] = " AND o.lngrevisionno = " . ltrim(explode("_", $strOrderCode)[1], '0') . "";
                     }
@@ -301,35 +300,6 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
         $aryQuery[] = ")";
     }
 
-    // if (array_key_exists("strOrderCode", $searchColumns) &&
-    //     array_key_exists("strOrderCode", $from) && $from["strOrderCode"] != '') {
-    //     if (strpos($from["strOrderCode"], "-")) {
-    //         // リバイズコード付の発注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-    //         $strNewOrderCode_from = preg_replace(strstr($from["strOrderCode"], "_"), "", $from["strOrderCode"]);
-    //     } else {
-    //         $strNewOrderCode_from = $from["strOrderCode"];
-    //     }
-    // }
-    // if (array_key_exists("strOrderCode", $searchColumns) &&
-    //     array_key_exists("strOrderCode", $to) && $to["strOrderCode"] != '') {
-    //     if (strpos($to["strOrderCode"], "-")) {
-    //         // リバイズコード付の発注Ｎｏのリバイズコードは検索結果では最新版を表示するため、無視する
-    //         $strNewOrderCode_to = preg_replace(strstr($to["strOrderCode"], "_"), "", $to["strOrderCode"]);
-    //     } else {
-    //         $strNewOrderCode_to = $to["strOrderCode"];
-    //     }
-    // }
-    // if (($strNewOrderCode_from && $strNewOrderCode_to) && ($strNewOrderCode_from == $strNewOrderCode_to)) {
-    //     // fromとtoが同じ値の場合は、範囲指定ではなく"="で指定"
-    //     $aryQuery[] = " AND o.strOrderCode = '" . $strNewOrderCode_to . "'";
-    // } else {
-    //     if ($strNewOrderCode_from) {
-    //         $aryQuery[] = " AND o.strOrderCode >= '" . $strNewOrderCode_from . "'";
-    //     }
-    //     if ($strNewOrderCode_to) {
-    //         $aryQuery[] = " AND o.strOrderCode <= '" . $strNewOrderCode_to . "'";
-    //     }
-    // }
     // 入力者
     if (array_key_exists("lngInputUserCode", $searchColumns) &&
         array_key_exists("lngInputUserCode", $searchValue)) {
@@ -499,8 +469,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
     }
 
     $aryQuery[] = "WHERE mp.lngpurchaseorderno >= 0";
-    if(!$bytAdminMode)
-    {
+    if (!$bytAdminMode) {
         //管理者モード以外の場合は削除されたデータは対象としない
         $aryQuery[] = " AND mp.lngpurchaseorderno NOT IN (SELECT lngpurchaseorderno from m_purchaseorder where lngrevisionno < 0)";
     }
@@ -524,12 +493,8 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
         // 入力者
         if ($strSearchColumnName == "lngInputUserCode") {
             if ($arySearchDataColumn["lngInputUserCode"]) {
-//                $aryQuery[] = "AND   mp.lnginsertusercode ~* '" . $arySearchDataColumn["lngInputUserCode"] . "'";
                 $aryQuery[] = "AND   input_user.struserdisplaycode = '" . $arySearchDataColumn["lngInputUserCode"] . "'";
             }
-//            if($arySearchDataColumn["strInputUserName"]){
-            //                $aryQuery[] = "AND   UPPER(mp.strinsertusername) LIKE UPPER('%" . $arySearchDataColumn["strInputUserName"] . "%')";
-            //            }
         }
 
         // 発注有効期限
@@ -574,7 +539,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
             $aryQuery[] = ")";
         }
         // 製品
-        if ($strSearchColumnName == "strProductCode") {            
+        if ($strSearchColumnName == "strProductCode") {
             $strProductCodeArray = explode(",", $arySearchDataColumn["strProductCode"]);
             $aryQuery[] = " AND (";
             $count = 0;
@@ -597,56 +562,34 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
                 }
             }
             $aryQuery[] = ")";
-            // if ($arySearchDataColumn["strProductCode"]) {
-            //     $aryQuery[] = "AND   mp.strProductCode = '" . $arySearchDataColumn["strProductCode"] . "'";
-            // }
-//            if($arySearchDataColumn["strProductName"]){
-            //                $aryQuery[] = "AND   UPPER(mp.strproductname) LIKE UPPER('%" . $arySearchDataColumn["strProductName"] . "%')";
-            //            }
         }
 
         // 営業部署
         if ($strSearchColumnName == "lngInChargeGroupCode") {
             if ($arySearchDataColumn["lngInChargeGroupCode"]) {
-//                $aryQuery[] = "AND   mp.lnggroupcode = '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
                 $aryQuery[] = "AND   mg.strgroupdisplaycode = '" . $arySearchDataColumn["lngInChargeGroupCode"] . "'";
             }
-//            if($arySearchDataColumn["strInChargeGroupName"]){
-            //                $aryQuery[] = "AND   UPPER(mp.strgroupname) LIKE UPPER('%" . $arySearchDataColumn["strInChargeGroupName"] . "%')";
-            //            }
         }
 
         // 開発担当者
         if ($strSearchColumnName == "lngInChargeUserCode") {
             if ($arySearchDataColumn["lngInChargeUserCode"]) {
-//                $aryQuery[] = "AND   mp.lngusercode = '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
                 $aryQuery[] = "AND   mu.struserdisplaycode = '" . $arySearchDataColumn["lngInChargeUserCode"] . "'";
             }
-//            if($arySearchDataColumn["strInChargeUserName"]){
-            //                $aryQuery[] = "AND   UPPER(mp.strusername) LIKE UPPER('%" . $arySearchDataColumn["strInChargeUserName"] . "%')";
-            //            }
         }
 
         // 仕入先
         if ($strSearchColumnName == "lngCustomerCode") {
             if ($arySearchDataColumn["lngCustomerCode"]) {
-//                $aryQuery[] = "AND   mp.lngcustomercode = '" . $arySearchDataColumn["lngCustomerCode"] . "'";
                 $aryQuery[] = "AND   mc_stock.strcompanydisplaycode = '" . $arySearchDataColumn["lngCustomerCode"] . "'";
             }
-//            if($arySearchDataColumn["strCustomerName"]){
-            //                $aryQuery[] = "AND   UPPER(mp.strcustomername) LIKE UPPER('%" . $arySearchDataColumn["strCustomerName"] . "%')";
-            //            }
         }
 
         // 納品場所
         if ($strSearchColumnName == "lngDeliveryPlaceCode") {
             if ($arySearchDataColumn["lngDeliveryPlaceCode"]) {
-//                $aryQuery[] = "AND   mp.lngdeliveryplacecode = '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
                 $aryQuery[] = "AND   mc_delivary.strcompanydisplaycode = '" . $arySearchDataColumn["lngDeliveryPlaceCode"] . "'";
             }
-//            if($arySearchDataColumn["strDeliveryPlaceName"]){
-            //                $aryQuery[] = "AND   UPPER(mp.strdeliveryplacename) LIKE UPPER('%" . $arySearchDataColumn["strDeliveryPlaceName"] . "%')";
-            //            }
         }
 
         // 通貨
@@ -905,331 +848,6 @@ function fncGetOrderToProductSQL($aryDetailViewColumn, $lngOrderNo, $lngRevision
     return implode("\n", $aryOutQuery);
 }
 
-// /**
-//  * 検索結果表示関数（ヘッダ用）
-//  *
-//  *    検索結果からテーブル構成で結果を出力する関数
-//  *    ヘッダ行を表示する
-//  *
-//  *    @param  Integer $lngColumnCount         行数
-//  *    @param  Array     $aryHeadResult             ヘッダ行の検索結果が格納された配列
-//  *    @param  Array     $aryDetailResult         明細行の検索結果が格納された配列
-//  *    @param  Array     $aryDetailViewColumn     明細表示対象カラム名の配列
-//  *    @param  Array     $aryHeadViewColumn         ヘッダ表示対象カラム名の配列
-//  *    @param  Array     $aryData                 ＰＯＳＴデータ群
-//  *    @param    Array    $aryUserAuthority        ユーザーの操作に対する権限が入った配列
-//  *    @param  Object     $objDB                     DBオブジェクト
-//  *    @param  Object     $objCache                 キャッシュオブジェクト
-//  *    @param    Integer    $lngReviseTotalCount    表示対象の発注の過去リバイズの合計数
-//  *    @param    Integer    $lngReviseCount            表示対象の発注の表示順（最新発注なら０）
-//  *    @param    Array    $aryNewResult            表示対象の発注の最新の発注データ
-//  *    @access public
-//  */
-// function fncSetPurchaseHeadTable($lngColumnCount, $aryHeadResult, $aryDetailResult, $aryDetailViewColumn, $aryHeadViewColumn,
-//     $aryData, $aryUserAuthority, $objDB, $objCache, $lngReviseTotalCount, $lngReviseCount, $aryNewResult) {
-//     include_once 'conf.inc';
-//     require_once LIB_DEBUGFILE;
-//     for ($i = 0; $i < count($aryDetailResult); $i++) {
-//         $aryHtml[] = "<tr>";
-//         $aryHtml[] = "\t<td class=\"rownum\">" . ($lngColumnCount + $i) . "</td>";
-//         // 表示対象カラムの配列より結果の出力
-//         for ($j = 0; $j < count($aryHeadViewColumn); $j++) {
-//             $strColumnName = $aryHeadViewColumn[$j];
-//             $TdData = "";
-
-//             // 表示対象がボタンの場合
-//             if ($strColumnName == "btnDetail" or $strColumnName == "btnFix" or $strColumnName == "btnDelete" or $strColumnName == "btnInvalid" or $strColumnName == "Record" or $strColumnName == "btnAdmin") {
-//                 // ボタン種により変更
-
-//                 // 詳細表示
-//                 if ($strColumnName == "btnDetail" and $aryUserAuthority["Detail"]) {
-//                     // 発注データが削除対象の場合、詳細表示ボタンは選択不可
-//                     if ($aryHeadResult["lngrevisionno"] >= 0) {
-//                         $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" lngrevisionno=\"" . $aryDetailResult[$i]["lngrevisionno"] . "\" class=\"detail button\"></td>\n";
-//                     } else {
-//                         $aryHtml[] = "\t<td></td>\n";
-//                     }
-//                 }
-
-//                 // 確定
-//                 if ($strColumnName == "btnFix" and $aryUserAuthority["Fix"]) {
-//                     // 発注データの状態により分岐  //// 状態が「仮発注」の場合確定ボタンは選択不可
-//                     if ($aryHeadResult["lngorderstatuscode"] == 1) {
-//                         $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"fix button\"></td>\n";
-//                     } else {
-//                         $aryHtml[] = "\t<td></td>\n";
-//                     }
-//                 }
-
-//                 // 履歴
-//                 if ($strColumnName == "Record") {
-//                     if ($aryHeadResult["lngrevisionno"] > 0) {
-//                         $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" strordercode=\"" . $aryHeadResult["strordercode"] . "\" class=\"record button\"></td>\n";
-//                     } else {
-//                         $aryHtml[] = "\t<td></td>\n";
-//                     }
-//                 }
-
-//                 // 確定取消
-//                 if ($strColumnName == "btnDelete" and $aryUserAuthority["Delete"]) {
-//                     // 発注データの状態により分岐  //// 状態が「申請中」「納品中」「納品済」「締め済」の場合削除ボタンを選択不可
-//                     // 最新発注が削除データの場合も選択不可
-//                     if ($aryHeadResult["lngorderstatuscode"] != DEF_ORDER_APPLICATE and $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_CLOSED) {
-//                         $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"remove button\"></td>\n";
-//                     } else {
-//                         $aryHtml[] = "\t<td></td>\n";
-//                     }
-// /*
-// //リバイズが存在しない場合
-// if ( $lngReviseTotalCount == 1 )
-// {
-// // 発注データの状態により分岐  //// 状態が「仮発注」「締め済」の場合削除ボタンを選択不可
-// // 最新発注が削除データの場合も選択不可
-// if ( $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_APPLICATE and $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_CLOSED)
-// {
-// $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"remove button\"></td>\n";
-// }
-// else
-// {
-// $aryHtml[] = "\t<td></td>\n";
-// }
-// }
-// //複数リバイズが存在する場合
-// else
-// {
-// // 最新発注の場合
-// if ( $lngReviseCount == 0 )
-// {
-// // 発注データの状態により分岐  //// 状態が「申請中」「納品中」「納品済」「締め済」の場合削除ボタンを選択不可
-// // 最新発注が削除データの場合も選択不可
-// if ( $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_APPLICATE and $aryHeadResult["lngorderstatuscode"] != DEF_ORDER_CLOSED)
-// {
-// $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/remove_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"remove button\"></td>\n";
-// }
-// else
-// {
-// $aryHtml[] = "\t<td></td>\n";
-// }
-// }
-// else
-// {
-// $aryHtml[] = "\t<td></td>\n";
-// }
-// }
-//  */
-//                 }
-
-//                 // 削除済
-//                 if ($strColumnName == "btnAdmin" and $aryUserAuthority["Admin"]) {
-//                     if ($aryHeadResult["lngRevisionno"] == -1) {
-//                         $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngorderno=\"" . $aryDetailResult[$i]["lngorderno"] . "\" class=\"admin button\"></td>\n";
-//                     } else {
-//                         $aryHtml[] = "\t<td></td>\n";
-//                     }
-//                 }
-
-//             } else if ($strColumnName != "") {
-//                 // $TdData = "\t<td>";
-//                 $TdData = "";
-//                 $TdDataUse = true;
-//                 $strText = "";
-//                 // 登録日
-//                 if ($strColumnName == "dtmInsertDate") {
-//                     $TdData .= "\t<td class=\"td-dtminsertdate\">";
-//                     $TdData .= str_replace("-", "/", substr($aryHeadResult["dtminsertdate"], 0, 19));
-//                 }
-//                 // 計上日
-//                 else if ($strColumnName == "dtmOrderAppDate") {
-//                     $TdData .= "\t<td class=\"td-dtmorderappdate\">";
-//                     $TdData .= str_replace("-", "/", $aryHeadResult["dtmorderappdate"]);
-//                 }
-//                 // 発注NO
-//                 else if ($strColumnName == "strOrderCode") {
-//                     $baseOrderCode = explode("_", $aryHeadResult["strordercode"])[0];
-//                     $TdData .= "\t<td class=\"td-strordercode\" baseordercode=\"" . $baseOrderCode . "\">";
-//                     $TdData .= $aryHeadResult["strordercode"];
-//                     // // 管理モードの場合　リビジョン番号を表示する
-//                     // if ( $aryData["Admin"] )
-//                     // {
-//                     //     $TdData .= "</td>\n\t<td>" . $aryHeadResult["lngrevisionno"];
-//                     // }
-//                 }
-//                 // 入力者
-//                 else if ($strColumnName == "lngInputUserCode") {
-//                     if ($aryHeadResult["strinputuserdisplaycode"]) {
-//                         $strText .= "[" . $aryHeadResult["strinputuserdisplaycode"] . "]";
-//                     } else {
-//                         $strText .= "     ";
-//                     }
-//                     $strText .= " " . $aryHeadResult["strinputuserdisplayname"];
-//                     $TdData .= "\t<td class=\"td-strinputuserdisplaycode\">";
-//                     $TdData .= $strText;
-//                 }
-//                 // 仕入先
-//                 else if ($strColumnName == "lngCustomerCode") {
-//                     if ($aryHeadResult["strcustomerdisplaycode"]) {
-//                         $strText .= "[" . $aryHeadResult["strcustomerdisplaycode"] . "]";
-//                     } else {
-//                         $strText .= "      ";
-//                     }
-//                     $strText .= " " . $aryHeadResult["strcustomerdisplayname"];
-//                     $TdData .= "\t<td class=\"td-strcustomerdisplaycode\">";
-//                     $TdData .= $strText;
-//                 }
-//                 // 合計金額
-//                 else if ($strColumnName == "curTotalPrice") {
-//                     $strText .= $aryHeadResult["strmonetaryunitsign"] . " ";
-//                     if (!$aryHeadResult["curtotalprice"]) {
-//                         $strText .= "0.00";
-//                     } else {
-//                         $strText .= $aryHeadResult["curtotalprice"];
-//                     }
-//                     $TdData .= "\t<td class=\"td-curtotalprice\">";
-//                     $TdData .= $strText;
-//                 }
-//                 // 状態
-//                 else if ($strColumnName == "lngOrderStatusCode") {
-//                     $TdData .= "\t<td class=\"td-strorderstatusname\">";
-//                     $TdData .= $aryHeadResult["strorderstatusname"];
-//                 }
-//                 // 支払条件
-//                 else if ($strColumnName == "lngPayConditionCode") {
-//                     $TdData .= "\t<td class=\"td-strpayconditionname\">";
-//                     $TdData .= $aryHeadResult["strpayconditionname"];
-//                 }
-//                 // 発注有効期限日
-//                 else if ($strColumnName == "dtmExpirationDate") {
-//                     $TdData .= "\t<td class=\"td-dtmexpirationdate\">";
-//                     $TdData .= str_replace("-", "/", $aryHeadResult["dtmexpirationdate"]);
-//                 }
-//                 // 明細行番号
-//                 else if ($strColumnName == "lngRecordNo") {
-//                     $TdData .= "\t<td class=\"td-lngrecordno\">";
-//                     $TdData .= $aryDetailResult[$i]["lngrecordno"];
-//                 }
-//                 // 2004.03.31 suzukaze update start
-//                 // 製品コード
-//                 else if ($strColumnName == "strProductCode") {
-//                     if ($aryDetailResult[$i]["strproductcode"]) {
-//                         $strText .= "[" . $aryDetailResult[$i]["strproductcode"] . "]";
-//                     } else {
-//                         $strText .= "      ";
-//                     }
-//                     $TdData .= "\t<td class=\"td-strproductcode\">";
-//                     $TdData .= $strText;
-//                 }
-//                 // 2004.03.31 suzukaze update start
-//                 // 仕入科目
-//                 else if ($strColumnName == "lngStockSubjectCode") {
-//                     if ($aryDetailResult[$i]["lngstocksubjectcode"]) {
-//                         $strText .= "[" . $aryDetailResult[$i]["lngstocksubjectcode"] . "]";
-//                     } else {
-//                         $strText .= "      ";
-//                     }
-//                     $strText .= " " . $aryDetailResult[$i]["strstocksubjectname"];
-// //fncDebug("kids2.log", $strText , __FILE__, __LINE__, "a" );
-//                     $TdData .= "\t<td class=\"td-lngstocksubjectcode\">";
-//                     $TdData .= $strText;
-//                 }
-//                 // 仕入部品
-//                 else if ($strColumnName == "lngStockItemCode") {
-//                     if ($aryDetailResult[$i]["lngstockitemcode"]) {
-//                         $strText .= "[" . $aryDetailResult[$i]["lngstockitemcode"] . "]";
-//                         // 仕入科目コードが存在するならば
-//                         if ($aryDetailResult[$i]["lngstocksubjectcode"]) {
-//                             $strSubjectItem = $aryDetailResult[$i]["lngstocksubjectcode"] . ":" . $aryDetailResult[$i]["lngstockitemcode"];
-//                             $aryStockItem = $objCache->GetValue("lngstocksubjectcode:lngstockitemcode", $strSubjectItem);
-//                             if (!is_array($aryStockItem)) {
-//                                 // 仕入名称の取得
-//                                 $strStockItemName = fncGetMasterValue("m_stockitem", "lngstockitemcode", "strstockitemname",
-//                                     $aryDetailResult[$i]["lngstockitemcode"], "lngstocksubjectcode = " . $aryDetailResult[$i]["lngstocksubjectcode"], $objDB);
-//                                 // 仕入名称の設定
-//                                 $aryStockItem = $strStockItemName;
-//                                 $objCache->SetValue("lngstocksubjectcode:lngstockitemcode", $strSubjectItem, $aryStockItem);
-//                             }
-//                             $strText .= " " . $aryStockItem;
-//                         }
-//                     } else {
-//                         $strText .= "      ";
-//                         $strText .= " " . $aryDetailResult[$i]["strstockitemname"];
-//                     }
-//                     $TdData .= "\t<td class=\"td-lngstockitemcode\">";
-//                     $TdData .= $strText;
-//                 }
-//                 // 運搬方法
-//                 else if ($strColumnName == "lngDeliveryMethodCode") {
-//                     if ($aryDetailResult[$i]["strdeliverymethodname"] == "") {
-//                         $aryDetailResult[$i]["strdeliverymethodname"] = "未定";
-//                     }
-//                     $strText .= $aryDetailResult[$i]["strdeliverymethodname"];
-//                     $TdData .= "\t<td class=\"td-strdeliverymethodname\">";
-//                     $TdData .= $strText;
-//                 }
-//                 // 2004.04.21 suzukaze update start
-//                 // 納期
-//                 else if ($strColumnName == "dtmDeliveryDate") {
-//                     $TdData .= "\t<td class=\"td-dtmdeliverydate\">";
-//                     $TdData .= str_replace("-", "/", $aryDetailResult[$i]["dtmdeliverydate"]);
-//                 }
-//                 // 2004.04.21 suzukaze update end
-//                 // 単価
-//                 else if ($strColumnName == "curProductPrice") {
-//                     $TdDataUse = false;
-//                     $strText = "\t<td align=\"right\">";
-//                     $strText .= $aryHeadResult["strmonetaryunitsign"] . " ";
-//                     if (!$aryDetailResult[$i]["curproductprice"]) {
-//                         $strText .= "0.00";
-//                     } else {
-//                         $strText .= $aryDetailResult[$i]["curproductprice"];
-//                     }
-//                     $aryHtml[] = $strText . "</td>\n";
-//                 }
-//                 // 単位
-//                 else if ($strColumnName == "lngProductUnitCode") {
-//                     $TdData .= "\t<td class=\"td-strproductunitname\">";
-//                     $TdData .= $aryDetailResult[$i]["strproductunitname"];
-//                 }
-//                 // 数量
-//                 else if ($strColumnName == "lngProductQuantity") {
-//                     $TdDataUse = false;
-//                     $aryHtml[] = "\t<td align=\"right\">" . $aryDetailResult[$i]["lngproductquantity"] . "</td>\n";
-//                 }
-//                 // 税抜金額
-//                 else if ($strColumnName == "curSubTotalPrice") {
-//                     $TdDataUse = false;
-//                     $strText = "\t<td align=\"right\">";
-//                     $strText .= $aryHeadResult["strmonetaryunitsign"] . " ";
-//                     if (!$aryDetailResult[$i]["cursubtotalprice"]) {
-//                         $strText .= "0.00";
-//                     } else {
-//                         $strText .= $aryDetailResult[$i]["cursubtotalprice"];
-//                     }
-//                     $aryHtml[] = $strText . "</td>\n";
-//                 }
-//                 // その他の項目はそのまま出力
-//                 else {
-//                     $strLowColumnName = strtolower($strColumnName);
-//                     if ($strLowColumnName == "strnote") {
-//                         $strText .= nl2br($aryHeadResult[$strLowColumnName]);
-//                     } else if (array_key_exists($strLowColumnName, $aryDetailResult[$i])) {
-//                         $strText .= $aryDetailResult[$i][$strLowColumnName];
-//                     } else {
-//                         $strText .= $aryHeadResult[$strLowColumnName];
-//                     }
-//                     $TdData .= "\t<td>";
-//                     $TdData .= $strText;
-//                 }
-//                 $TdData .= "</td>\n";
-//                 if ($TdDataUse) {
-//                     $aryHtml[] = $TdData;
-//                 }
-//             }
-//         }
-//         $aryHtml[] = "</tr>";
-//     }
-//     return $aryHtml;
-// }
-
 /**
  * 発注書データHTML変換
  *
@@ -1450,32 +1068,6 @@ function fncSetPurchaseTable($aryResult, $arySearchColumn, $aryViewColumn, $aryD
             $strOrderCodeBase = $aryResult[$i]["strordercode"];
         }
 
-//        $strSameOrderCodeQuery = fncGetSearchPurchaseSQL( $aryViewColumn, $arySearchColumn, $aryData, $objDB, $strOrderCodeBase, $aryResult[$i]["lngorderno"], FALSE ,$aryResult[$i]["lngrevisionno"]);
-        //        // 値をとる =====================================
-        //        list ( $lngResultID, $lngResultNum ) = fncQuery( $strSameOrderCodeQuery, $objDB );
-
-        // 配列のクリア
-        //        unset( $arySameOrderCodeResult );
-
-//        if ( $lngResultNum )
-        //        {
-        //            for ( $j = 0; $j < $lngResultNum; $j++ )
-        //            {
-        //                $arySameOrderCodeResult[] = $objDB->fetchArray( $lngResultID, $j );
-        //            }
-        //            $lngSameOrderCount = $lngResultNum;
-        //        }
-        //        $objDB->freeResult( $lngResultID );
-
-        // 同じ発注コードでの過去リバイズデータが存在すれば
-        //        if ( $lngResultNum )
-        //        {
-        //            for ( $j = 0; $j < $lngSameOrderCount; $j++ )
-        //            {
-        // 検索結果部分の設定
-
-//                reset( $arySameOrderCodeResult[$j] );
-
         // 明細出力用の調査
         $lngDetailViewCount = count($aryDetailViewColumn);
 
@@ -1483,7 +1075,7 @@ function fncSetPurchaseTable($aryResult, $arySearchColumn, $aryViewColumn, $aryD
             // 明細行数の調査
             $strDetailQuery = fncGetOrderToProductSQL($aryDetailViewColumn, $aryResult[$i]["lngorderno"], $aryResult[$i]["lngrevisionno"], $aryData, $objDB);
 //("kids2.log", $strDetailQuery , __FILE__, __LINE__, "a" );
-//echo $strDetailQuery;
+            //echo $strDetailQuery;
             // クエリー実行
             if (!$lngDetailResultID = $objDB->execute($strDetailQuery)) {
                 $strMessage = fncOutputError(3, "DEF_FATAL", "クエリー実行エラー", true, "../po/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
@@ -1620,66 +1212,6 @@ function fncSetPurchaseOrderTable($aryResult, $aryViewColumn, $aryData, $aryUser
     return $strHtml;
 }
 
-// /**
-//  * 発注書データHTML変換
-//  *
-//  * @param    Array    $aryResult            発注書データ
-//  * @param    Array    $aryViewColumn        表示列
-//  * @param    Array    $aryUserAuthority    権限
-//  * @param    Array    $aryTitle            列名
-//  * @param    Object    $objDB                DBオブジェクト
-//  * @param    Object    $objCache            キャッシュオブジェクト
-//  * @param    Array    $aryTableName        テーブル名
-//  */
-
-// function fncSetPurchaseOrderTable2($aryResult, $aryViewColumn, $aryData, $aryUserAuthority, $aryTitle, $objDB, $objCache, $aryTableName)
-// {
-//     for ($i = 0; $i < count($aryDetailResult); $i++) {
-//         $aryHtml[] = "<tr>";
-//         $aryHtml[] = "\t<td>" . ($lngColumnCount + 1) . "</td>";
-
-//         // 表示対象カラムの配列より結果の出力
-//         for ($j = 0; $j < count($aryHeadViewColumn); $j++) {
-//             $strColumnName = $aryHeadViewColumn[$j];
-//             $tdData = "";
-
-//             // 表示対象がボタンの場合
-//             if ($strColumnName == "btnEdit" or $strColumnName == "btnRecord" or $strColumnName == "btnDelete") {
-//                 // 修正ボタン
-//                 if ($strColumnName == "btnEdit" and $aryUserAuthority["Edit"]) {
-//                     $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngPurchaseOrderNo=\"" . $aryDetailResult[$i]["lngPurchaseOrderNo"] . "\" class=\"detail button\"></td>\n";
-//                 } else {
-//                     $aryHtml[] = "\t<td></td>\n";
-//                 }
-
-//                 // 履歴ボタン
-//                 if ($strColumnName == "btnRecord") {
-//                     if ($aryHeadResult["lngRevisionNo"] > 0 and $aryUserAuthority["Admin"]) {
-//                         $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngPurchaseOrderNo=\"" . $aryDetailResult[$i]["lngPurchaseOrderNo"] . "\" strOrderCode =\"" . $aryResult["strordercode"] . "\" class=\"fix button\"></td>\n";
-//                     } else {
-//                         $aryHtml[] = "\t<td></td>\n";
-//                     }
-//                 }
-
-//                 // 削除済ボタン
-//                 if ($strColumnName == "btnDelete" and $aryUserAuthority["Admin"]) {
-//                     if ($aryHeadResult["lngRevisionNo"] == -1) {
-//                         $aryHtml[] = "\t<td class=\"exclude-in-clip-board-target\"><img src=\"/mold/img/detail_off_bt.gif\" lngPurchaseOrderNo=\"" . $aryDetailResult[$i]["lngPurchaseOrderNo"] . "\" class=\"fix button\"></td>\n";
-//                     } else {
-//                         $aryHtml[] = "\t<td></td>\n";
-//                     }
-//                 }
-//             }
-//             $tdData .= "</td>\n";
-//             //if($tdDataUse){
-//             $aryHtml[] = $tdData;
-//             //}
-//         }
-//         $aryHtml[] = "</tr>";
-//     }
-//     return $aryHtml;
-// }
-
 function fncResortSearchColumn($aryViewColumn)
 {
     $aryResult = array();
@@ -1793,345 +1325,40 @@ function fncGetPurchseOrderByOrderCodeSQL($strOrderCode, $lngRevisionNo)
     return implode("\n", $aryQuery);
 }
 
-// /**
-//  * 受注コードによりデータの状態を確認する
-//  *
-//  * @param [type] $strordercode
-//  * @param [type] $objDB
-//  * @return void [0:確定対象外データ　1：確定対象データ]
-//  */
-// function fncCheckData($strordercode, $objDB)
-// {
-//     $result = 1;
-//     unset($aryQuery);
-//     $aryQuery[] = "SELECT";
-//     $aryQuery[] = " min(lngrevisionno) lngrevisionno, bytInvalidFlag, strordercode ";
-//     $aryQuery[] = "FROM m_order ";
-//     $aryQuery[] = "WHERE strordercode='" . $strordercode . "' ";
-//     $aryQuery[] = "group by strordercode, bytInvalidFlag";
+/**
+ * Undocumented function
+ *
+ * @param [type] $lngorderno
+ * @param [type] $revisionno
+ * @param [type] $objDB
+ * @return void
+ */
+function fucIsFixObject($lngpurchaseorderno, $lngrevisionno, $objDB)
+{
+    $aryQuery[] = "select";
+    $aryQuery[] = "  mo.lngorderstatuscode ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  m_order mo ";
+    $aryQuery[] = "  left join t_purchaseorderdetail tpo ";
+    $aryQuery[] = "    on mo.lngorderno = tpo.lngorderno ";
+    $aryQuery[] = "    and mo.lngrevisionno = tpo.lngorderrevisionno ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  tpo.lngpurchaseorderno = " . $lngpurchaseorderno;
+    $aryQuery[] = "  and tpo.lngrevisionno = " . $lngrevisionno;
+    $aryQuery[] = "  and mo.lngorderstatuscode < " . DEF_ORDER_END;
+    $strQuery = "";
+    $strQuery = implode("\n", $aryQuery);
 
-//     // クエリを平易な文字列に変換
-//     $strQuery = implode("\n", $aryQuery);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if (!$lngResultNum) {
+        return false;
+    }
 
-//     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if ($lngResultNum > 0) {
+        return true;
+    }
 
-//     if ($lngResultNum) {
-//         $resultObj = $objDB->fetchArray($lngResultID, 0);
-//     }
+    $objDB->freeResult($lngResultID);
 
-//     $objDB->freeResult($lngResultID);
-
-//     if ($resultObj["lngrevisionno"] < 0 || $resultObj["bytInvalidFlag"]) {
-//         $result = 0;
-//     }
-//     return $result;
-// }
-
-// /**
-//  * ヘッダー部データの生成
-//  *
-//  * @param [type] $doc
-//  * @param [type] $trBody
-//  * @param [type] $bgcolor
-//  * @param [type] $aryTableHeaderName
-//  * @param [type] $record
-//  * @param [type] $toUTF8Flag
-//  * @return void
-//  */
-// function fncSetHeaderDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, $toUTF8Flag)
-// {
-//     // 指定されたテーブル項目のセルを作成する
-//     foreach ($aryTableHeaderName as $key => $value) {
-//         // 表示対象のカラムの場合
-//         if (array_key_exists($key, $displayColumns)) {
-//             // 項目別に表示テキストを設定
-//             switch ($key) {
-//                 // 登録日
-//                 case "dtminsertdate":
-//                     $td = $doc->createElement("td", $record["dtminsertdate"]);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // [入力者表示コード] 入力者表示名
-//                 case "lnginputusercode":
-//                     $textContent = "[" . $record["strinputuserdisplaycode"] . "]" . " " . $record["strinputuserdisplayname"];
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 発注ＮＯ.
-//                 case "strordercode":
-//                     $textContent = $record["strordercode_desc"];
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // リビジョン番号
-//                 case "lngrevisionno":
-//                     $td = $doc->createElement("td", $record["lngrevisionno"]);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 製品コード
-//                 case "strproductcode":
-//                     $td = $doc->createElement("td", $record["strproductcode"]);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 製品マスタ.製品コード(日本語)
-//                 case "strproductname":
-//                     $textContent = $record["strproductname"];
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 製品マスタ.製品名称(英語)
-//                 case "strproductenglishname":
-//                     $textContent = $record["strproductenglishname"];
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // [営業部署表示コード] 営業部署表示名
-//                 case "lnginchargegroupcode":
-//                     if ($record["lnginchargegroupcode"] != '') {
-//                         $textContent = "[" . $record["lnginchargegroupcode"] . "]" . " " . $record["strinchargegroupname"];
-//                     } else {
-//                         $textContent = "    ";
-//                     }
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // [開発担当者表示コード] 開発担当者表示名
-//                 case "lnginchargeusercode":
-//                     if ($record["lnginchargeusercode"] != '') {
-//                         $textContent = "[" . $record["lnginchargeusercode"] . "]" . " " . $record["strinchargeusername"];
-//                     } else {
-//                         $textContent = "    ";
-//                     }
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // [仕入先表示コード] 仕入先表示名
-//                 case "lngcustomercode":
-//                     if ($record["strcustomerdisplaycode"] != '') {
-//                         $textContent = "[" . $record["strcustomerdisplaycode"] . "]" . " " . $record["strcustomerdisplayname"];
-//                     } else {
-//                         $textContent = "    ";
-//                     }
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 仕入科目
-//                 case "lngstocksubjectcode":
-//                     if ($record["lngstocksubjectcode"] != '') {
-//                         $textContent = "[" . $record["lngstocksubjectcode"] . "]" . " " . $record["strstocksubjectname"];
-//                     } else {
-//                         $textContent = "    ";
-//                     }
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 仕入部品
-//                 case "lngstockitemcode":
-//                     if ($record["lngstockitemcode"] != '') {
-//                         $textContent = "[" . $record["lngstockitemcode"] . "]" . " " . $record["strstockitemname"];
-//                     } else {
-//                         $textContent = "    ";
-//                     }
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 納期
-//                 case "dtmdeliverydate":
-//                     $textContent = $record["dtmdeliverydate"];
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 状態
-//                 case "lngorderstatuscode":
-//                     $textContent = $record["strorderstatusname"];
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 明細行番号
-//                 case "lngrecordno":
-//                     $td = $doc->createElement("td", $record["lngorderdetailno"]);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 単価
-//                 case "curproductprice":
-//                     $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["curproductprice"]));
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 数量
-//                 case "lngproductquantity":
-//                     $textContent = $record["lngproductquantity"];
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 税抜金額
-//                 case "cursubtotalprice":
-//                     $td = $doc->createElement("td", toMoneyFormat($record["lngmonetaryunitcode"], $record["strmonetaryunitsign"], $record["cursubtotalprice"]));
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//                 // 明細備考
-//                 case "strdetailnote":
-//                     $textContent = $record["strdetailnote"];
-//                     if ($toUTF8Flag) {
-//                         $textContent = toUTF8($textContent);
-//                     }
-//                     $td = $doc->createElement("td", $textContent);
-//                     $td->setAttribute("style", $bgcolor);
-//                     $trBody->appendChild($td);
-//                     break;
-//             }
-//         }
-//     }
-// }
-
-
-// function fncGetOrdersByStrOrderCodeSQL($strOrderCode, $lngOrderDetailNo, $lngRevisionNo)
-// {
-//     // 明細検索条件数
-//     $detailConditionCount = 0;
-//     // クエリの組立て
-//     $aryQuery = array();
-//     $aryQuery[] = "SELECT";
-//     $aryQuery[] = "  o.lngOrderNo as lngOrderNo";
-//     $aryQuery[] = "  , o.lngRevisionNo as lngRevisionNo";
-//     $aryQuery[] = "  , od.lngOrderDetailNo";
-//     $aryQuery[] = "  , o.strOrderCode as strOrderCode";
-//     $aryQuery[] = "  , o.strOrderCode || '_' || to_char(o.lngRevisionNo, 'FM00') as strOrderCode_desc";
-//     $aryQuery[] = "  , to_char(o.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS') as dtmInsertDate";
-//     $aryQuery[] = "  , input_u.strUserDisplayCode as strInputUserDisplayCode";
-//     $aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
-//     $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
-//     $aryQuery[] = "  , cust_c.strCompanyDisplayName as strCustomerDisplayName";
-//     $aryQuery[] = "  , o.lngOrderStatusCode as lngOrderStatusCode";
-//     $aryQuery[] = "  , os.strOrderStatusName as strOrderStatusName";
-//     $aryQuery[] = "  , mm.strMonetaryUnitSign as strMonetaryUnitSign";
-//     $aryQuery[] = "  , od.strProductCode";
-//     $aryQuery[] = "  , od.strProductName";
-//     $aryQuery[] = "  , od.strProductEnglishName";
-//     $aryQuery[] = "  , od.lngInChargeGroupCode";
-//     $aryQuery[] = "  , od.strInChargeGroupName";
-//     $aryQuery[] = "  , od.lngInChargeUserCode";
-//     $aryQuery[] = "  , od.strInChargeUserName";
-//     $aryQuery[] = "  , od.lngStockSubjectCode";
-//     $aryQuery[] = "  , od.strStockSubjectName";
-//     $aryQuery[] = "  , od.lngStockItemCode";
-//     $aryQuery[] = "  , od.strstockitemname";
-//     $aryQuery[] = "  , od.dtmDeliveryDate";
-//     $aryQuery[] = "  , od.curProductPrice";
-//     $aryQuery[] = "  , od.lngProductQuantity";
-//     $aryQuery[] = "  , od.curSubTotalPrice";
-//     $aryQuery[] = "  , od.strDetailNote ";
-//     $aryQuery[] = "FROM";
-//     $aryQuery[] = "  m_Order o ";
-//     $aryQuery[] = "  LEFT JOIN m_User input_u ";
-//     $aryQuery[] = "    ON o.lngInputUserCode = input_u.lngUserCode ";
-//     $aryQuery[] = "  LEFT JOIN m_Company cust_c ";
-//     $aryQuery[] = "    ON o.lngCustomerCompanyCode = cust_c.lngCompanyCode ";
-//     $aryQuery[] = "  LEFT JOIN m_OrderStatus os ";
-//     $aryQuery[] = "    USING (lngOrderStatusCode) ";
-//     $aryQuery[] = "  LEFT JOIN m_MonetaryUnit mm ";
-//     $aryQuery[] = "    ON o.lngMonetaryUnitCode = mm.lngMonetaryUnitCode";
-//     $aryQuery[] = "  , ( ";
-//     $aryQuery[] = "      select";
-//     $aryQuery[] = "        od1.lngorderno";
-//     $aryQuery[] = "        , od1.lngorderDetailNo";
-//     $aryQuery[] = "        , od1.lngRevisionNo";
-//     $aryQuery[] = "        , od1.strProductCode || '_' || od1.strReviseCode as strProductCode";
-//     $aryQuery[] = "        , mp.strProductName as strProductName";
-//     $aryQuery[] = "        , mp.strProductEnglishName as strProductEnglishName";
-//     $aryQuery[] = "        , mg.strgroupdisplaycode as lngInChargeGroupCode";
-//     $aryQuery[] = "        , mg.strgroupdisplayname as strInChargeGroupName";
-//     $aryQuery[] = "        , mu.struserdisplaycode as lngInChargeUserCode";
-//     $aryQuery[] = "        , mu.struserdisplayname as strInChargeUserName";
-//     $aryQuery[] = "        , od1.lngStockSubjectCode as lngStockSubjectCode";
-//     $aryQuery[] = "        , ss.strStockSubjectName as strStockSubjectName";
-//     $aryQuery[] = "        , od1.lngStockItemCode as lngStockItemCode";
-//     $aryQuery[] = "        , si.strstockitemname as strstockitemname";
-//     $aryQuery[] = "        , to_char(od1.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
-//     $aryQuery[] = "        , to_char(od1.curProductPrice, '9,999,999,990.9999') as curProductPrice";
-//     $aryQuery[] = "        , to_char(od1.lngProductQuantity, '9,999,999,990') as lngProductQuantity";
-//     $aryQuery[] = "        , to_char(od1.curSubTotalPrice, '9,999,999,990.99') as curSubTotalPrice";
-//     $aryQuery[] = "        , od1.strNote as strDetailNote ";
-//     $aryQuery[] = "      from";
-//     $aryQuery[] = "        t_orderdetail od1 ";
-//     $aryQuery[] = "        LEFT JOIN m_product mp ";
-//     $aryQuery[] = "          on mp.strproductcode = od1.strproductcode ";
-//     $aryQuery[] = "          and mp.strrevisecode = od1.strrevisecode ";
-//     $aryQuery[] = "          and mp.lngrevisionno = od1.lngrevisionno ";
-//     $aryQuery[] = "        LEFT JOIN m_group mg ";
-//     $aryQuery[] = "          on mg.lnggroupcode = mp.lnginchargegroupcode ";
-//     $aryQuery[] = "        LEFT JOIN m_user mu ";
-//     $aryQuery[] = "          on mu.lngusercode = mp.lnginchargeusercode ";
-//     $aryQuery[] = "        LEFT JOIN m_StockSubject ss ";
-//     $aryQuery[] = "          ON od1.lngstocksubjectcode = ss.lngstocksubjectcode ";
-//     $aryQuery[] = "        LEFT JOIN m_stockitem si ";
-//     $aryQuery[] = "          ON od1.lngstockitemcode = si.lngstockitemcode ";
-//     $aryQuery[] = "          AND od1.lngstocksubjectcode = si.lngstocksubjectcode ";
-//     $aryQuery[] = "    ) od ";
-//     $aryQuery[] = "WHERE";
-//     $aryQuery[] = "  od.lngorderno = o.lngorderno ";
-//     $aryQuery[] = "  AND od.lngRevisionNo = o.lngRevisionNo ";
-//     $aryQuery[] = "  AND o.lngRevisionNo <>  " . $lngRevisionNo . "";
-//     $aryQuery[] = "  AND o.strordercode = '" . $strOrderCode . "'";
-//     $aryQuery[] = "  AND od.lngOrderDetailNo = '" . $lngOrderDetailNo . "'";
-//     $aryQuery[] = "ORDER BY";
-//     $aryQuery[] = "  o.strordercode, od.lngOrderDetailNo, o.lngRevisionNo DESC";
-
-//     // クエリを平易な文字列に変換
-//     $strQuery = implode("\n", $aryQuery);
-
-//     return $strQuery;
-// }
+    return false;
+}

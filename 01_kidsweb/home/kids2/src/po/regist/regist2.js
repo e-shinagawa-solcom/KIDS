@@ -9,7 +9,7 @@ jQuery(function ($) {
 
     // チェックボックスクリックイベントの設定
     setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
-    
+
     // テーブルAの幅をリセットする
     resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
 
@@ -157,7 +157,7 @@ jQuery(function ($) {
                 lngCustomerCompanyCode: $('input[name="strCustomerCode"]').val(),
                 strProductCode: $('input[name="strProductCode"]').val(),
                 strProductName: $('input[name="strProductName"]').val(),
-
+                payConditionDisableFlag: $('select[name="lngPayConditionCode"]').prop('disabled'),
 
                 aryDetail: getUpdateDetail($('input[name="lngPurchaseOrderNo"]').val()),
             }
@@ -239,7 +239,7 @@ jQuery(function ($) {
     $('#alldelete').on('click', function () {
 
         // テーブルBのデータをすべてテーブルAに移動する
-        deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
+        deleteAllRowsForPo($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
 
         $("#tableA_head").trigger("update");
 
@@ -258,7 +258,7 @@ jQuery(function ($) {
     $('#delete').on('click', function () {
 
         // テーブルBの選択されたデータをテーブルAに移動する
-        deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
+        deleteRowsForPo($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '.detailOrderDetailNo');
 
         $("#tableA_head").trigger("update");
 
@@ -284,11 +284,25 @@ function resetTableADisplayStyle() {
 }
 
 function resetTableBDisplayStyle() {
+    var hasOrderEnd = false;
     $("#tableB tbody tr").each(function (i, e) {
-        $(this).find(".detailProductUnitCode").find('select').prop('disabled', false);
-        $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
-        $(this).find(".detailDetailNote").find('input:text').prop('disabled', false);
+        console.log($(this).find("input[name='lngorderstatuscode']").val());
+        if ($(this).find("input[name='lngorderstatuscode']").val() == 4) {
+            $(this).find(".detailProductUnitCode").find('select').prop('disabled', true);
+            $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
+            $(this).find(".detailDetailNote").find('input:text').prop('disabled', true);
+            hasOrderEnd = true;
+        } else {
+            $(this).find(".detailProductUnitCode").find('select').prop('disabled', false);
+            $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
+            $(this).find(".detailDetailNote").find('input:text').prop('disabled', false);
+        }
     });
+    if (hasOrderEnd) {
+        $('select[name="lngPayConditionCode"]').prop('disabled', true);
+    } else {
+        $('select[name="lngPayConditionCode"]').prop('disabled', false);
+    }
 }
 function tableBSort() {
     var sortval = 0;

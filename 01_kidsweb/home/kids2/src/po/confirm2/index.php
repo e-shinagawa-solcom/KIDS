@@ -164,7 +164,7 @@ $aryData["strNote"] = $_POST["strNote"];
 $aryData["lngMonetaryUnitCode"] = $_POST["lngMonetaryUnitCode"];
 $aryData["strmonetaryunitname"] = $_POST["strMonetaryUnitName"];
 $aryData["aryDetail"] = $_POST["aryDetail"];
-
+$aryData["payConditionDisableFlag"] = $_POST["payConditionDisableFlag"];
 // 明細行を除く
 for ($i = 0; $i < count($_POST); $i++) {
     list($strKeys, $strValues) = each($_POST);
@@ -297,7 +297,9 @@ $aryData["lngMonetaryUnitCode"] = fncGetMasterValue( "m_monetaryunit", "strmonet
 //$aryData["lngCustomerCode"] = $aryData["lngCustomerCompanyCode"];
 $aryData["lngCustomerCode"] = fncGetMasterValue( "m_company", "strcompanydisplaycode", "lngcompanycode",  $aryData["lngCustomerCompanyCode"].":str", '', $objDB);
 //$aryData["lngCustomerCode"] = fncGetMasterValue( "m_company", "lngcompanycode", "strcompanydisplaycode",  $aryData["lngCustomerCompanyCode"], '', $objDB);
-$aryData = fncPayConditionCodeMatch($aryData, $aryHeadColumnNames, $_POST["aryDetail"], $objDB);
+if ($aryData["payConditionDisableFlag"] == 'false') {
+    $aryData = fncPayConditionCodeMatch($aryData, $aryHeadColumnNames, $_POST["aryDetail"], $objDB);
+}
 
 $objDB->close();
 

@@ -1,11 +1,11 @@
 function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj) {
-    chkboxObj.on('keydown', function (e) {            
+    chkboxObj.on('keydown', function (e) {
         e.stopPropagation();
         console.log('enter');
         if (e.which == 13) {
             $(this).click();
         }
-      });
+    });
     chkboxObj.on('click', function (e) {
         e.stopPropagation();
         var rowindex = $(this).parent().parent().index();
@@ -26,13 +26,13 @@ function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj) {
 }
 
 function setAllCheckClickEvent(allCheckObj, tableA, tableA_chkbox) {
-    allCheckObj.on('keydown', function (e) {            
+    allCheckObj.on('keydown', function (e) {
         e.stopPropagation();
         console.log('enter');
         if (e.which == 13) {
             $(this).click();
         }
-      });
+    });
     // チェックボックスの切り替え処理のバインド
     allCheckObj.on({
         'click': function () {
@@ -229,6 +229,36 @@ function deleteAllRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, t
     scanAllCheckbox(tableA_chkbox, allCheckObj);
 }
 
+
+
+function deleteAllRowsForPo(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tableB, tableB_fix, allCheckObj, key) {
+
+    // tableB.find('tbody tr').find('td:nth-child(1)').css('display', '');
+    tableB.find("tbody tr").each(function (i, e) {
+        if ($(this).find("input[name='lngorderstatuscode']").val() != 4) {
+            $(this).find('td:nth-child(1)').css('display', '');
+            removeTableBToTableA($(this), tableA, tableA_chkbox, allCheckObj, key);
+        }
+    });
+
+    tableB_fix.find("tbody tr").each(function (i, e) {
+        $index = $(this).index();
+        console.log(tableB.find('tbody tr:nth-child(' + ($index + 1) + ')').find("input[name='lngorderstatuscode']").val());
+        if (tableB.find('tbody tr:nth-child(' + ($index + 1) + ')').find("input[name='lngorderstatuscode']").val() != 4) {
+            $(this).remove();
+        }
+    });
+
+    // resetTableRowid(tableA);
+
+    resetTableWidth(tableA_chkbox_head, tableA_chkbox, tableA_head, tableA);
+
+    selectRow('hasChkbox', tableA_chkbox, tableA, allCheckObj);
+
+    // 対象チェックボックスチェック状態の設定
+    scanAllCheckbox(tableA_chkbox, allCheckObj);
+}
+
 function deleteRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tableB, tableB_fix, allCheckObj, key) {
     tableB_fix.find("tbody tr").each(function (i, e) {
         var backgroud = $(this).css("background-color");
@@ -239,7 +269,6 @@ function deleteRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tabl
     tableB.find("tbody tr").each(function (i, e) {
         var backgroud = $(this).css("background-color");
         if (backgroud != 'rgb(255, 255, 255)') {
-
             tableB.find('tbody tr').find('td:nth-child(1)').css('display', '');
             removeTableBToTableA($(this), tableA, tableA_chkbox, allCheckObj, key);
         }
@@ -254,6 +283,40 @@ function deleteRows(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tabl
     scanAllCheckbox(tableA_chkbox, allCheckObj);
 }
 
+
+
+function deleteRowsForPo(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head, tableB, tableB_fix, allCheckObj, key) {
+    tableB_fix.find("tbody tr").each(function (i, e) {
+        var backgroud = $(this).css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            $index = $(this).index();
+            console.log(tableB.find('tbody tr:nth-child(' + ($index + 1) + ')').find("input[name='lngorderstatuscode']").val());
+            if (tableB.find('tbody tr:nth-child(' + ($index + 1) + ')').find("input[name='lngorderstatuscode']").val() != 4) {
+                $(this).remove();
+            }else {
+                alert("該当発注明細データが納品済のため、削除できません。");
+                return;
+            }
+        }
+    });
+    tableB.find("tbody tr").each(function (i, e) {
+        var backgroud = $(this).css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            if ($(this).find("input[name='lngorderstatuscode']").val() != 4) {
+                tableB.find('tbody tr').find('td:nth-child(1)').css('display', '');
+                removeTableBToTableA($(this), tableA, tableA_chkbox, allCheckObj, key);
+            }
+        }
+    });
+
+    resetTableRowid(tableB_fix);
+    resetTableWidth(tableA_chkbox_head, tableA_chkbox, tableA_head, tableA);
+
+    selectRow('hasChkbox', tableA_chkbox, tableA, allCheckObj);
+
+    // 対象チェックボックスチェック状態の設定
+    scanAllCheckbox(tableA_chkbox, allCheckObj);
+}
 
 function removeTableBToTableA(tableBRow, tableA, tableA_chkbox, allCheckObj, key) {
     var trhtml = tableBRow.html();
@@ -333,39 +396,39 @@ function rowUp(table, table_fix) {
 
 function rowDown(table, table_fix) {
     var len = table.find("tbody tr").length;
-        for (var i = len; i >= 1; i--) {
-            var row = table.find("tbody tr:nth-child(" + (i) + ")");
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i + 1; j <= len; j++) {
-                    var row_prev = table.find("tbody tr:nth-child(" + (j) + ")");
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertAfter(row_prev);
-                        break;
-                    }
+    for (var i = len; i >= 1; i--) {
+        var row = table.find("tbody tr:nth-child(" + (i) + ")");
+        var backgroud = row.css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            for (var j = i + 1; j <= len; j++) {
+                var row_prev = table.find("tbody tr:nth-child(" + (j) + ")");
+                var row_prev_backgroud = row_prev.css("background-color");
+                if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                    row.insertAfter(row_prev);
+                    break;
                 }
             }
         }
+    }
 
 
-        var len = table_fix.find("tbody tr").length;
-        for (var i = len; i >= 1; i--) {
-            var row = table_fix.find("tbody tr:nth-child(" + (i) + ")");
-            var backgroud = row.css("background-color");
-            if (backgroud != 'rgb(255, 255, 255)') {
-                for (var j = i + 1; j <= len; j++) {
-                    var row_prev = table_fix.find("tbody tr:nth-child(" + (j) + ")");
-                    var row_prev_backgroud = row_prev.css("background-color");
-                    if (row_prev_backgroud == 'rgb(255, 255, 255)') {
-                        row.insertAfter(row_prev);
-                        break;
-                    }
+    var len = table_fix.find("tbody tr").length;
+    for (var i = len; i >= 1; i--) {
+        var row = table_fix.find("tbody tr:nth-child(" + (i) + ")");
+        var backgroud = row.css("background-color");
+        if (backgroud != 'rgb(255, 255, 255)') {
+            for (var j = i + 1; j <= len; j++) {
+                var row_prev = table_fix.find("tbody tr:nth-child(" + (j) + ")");
+                var row_prev_backgroud = row_prev.css("background-color");
+                if (row_prev_backgroud == 'rgb(255, 255, 255)') {
+                    row.insertAfter(row_prev);
+                    break;
                 }
             }
         }
+    }
 
-        resetTableRowid(table_fix);
+    resetTableRowid(table_fix);
 }
 
 function rowTop(table, table_fix) {
