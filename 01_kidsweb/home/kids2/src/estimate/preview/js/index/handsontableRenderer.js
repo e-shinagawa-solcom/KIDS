@@ -11,6 +11,7 @@ $(function(){
   var grid = [];
   var table = [];
 
+
   // 表示用データの作成
   for (var sheetNum = 0; sheetNum < sheetNumber; sheetNum++) {
     var sheetData = result[sheetNum];
@@ -24,14 +25,18 @@ $(function(){
     var cellData = sheetData['cellData'];
 
     var cellValue = [];
+    var cellColorList = [];
 
     // セルの情報を配列に格納する
     for (var i = startRow; i <= endRow; i++) {
       var rowValue = [];
+      var colorValue = [];
       for (var j = startColumn; j <= endColumn; j++) {
         rowValue.push(cellData[i][j]['value']);
+        colorValue.push(cellData[i][j]['backgroundColor']);
       }
       cellValue.push(rowValue);
+      cellColorList.push(colorValue);
     }
 
     // マージセルの取得
@@ -73,31 +78,7 @@ $(function(){
       rowHeights: rowHeight,
       colWidths: columnWidth,
       cell: cellClass,
-      cells: function (row, col, prop) {
-        var cellProperties = {};
-
-        var cellProperties = {};
-        var elements = getElementsForRowAndColumn(row, col, cellClass);
-
-        // エリア5の%入力に書式を設定する
-        if (!isEmpty(elements)) {
-          var className = elements[0].className;
-          if (className.includes('detail')) { 
-            if (className.includes('payoff')) { // 償却 
-              var area = className.match(/area(\d+)/);
-              if (Number(area[1]) == 5) { 
-                cellProperties.type = 'numeric';
-                cellProperties.numericFormat = {
-                  pattern: '0.00%',
-                };
-              }
-            }
-          }
-        }
-        cellProperties.renderer = firstRenderer;
-
-        return cellProperties;
-      },
+      cells: cells,
       readOnly: true,
       mergeCells: merge,
       outsideClickDeselects: false,
@@ -107,6 +88,31 @@ $(function(){
   // Handsontableのアクティブ化のため、tableの左上を選択状態にする
   table[0].selectCell(0, 0);
   table[0].deselectCell();
+
+  function cells(row, col, prop) {
+    var cellProperties = {};
+
+    var cellProperties = {};
+    var elements = getElementsForRowAndColumn(row, col, cellClass);
+
+    // エリア5の%入力に書式を設定する
+    if (!isEmpty(elements)) {
+      var className = elements[0].className;
+      if (className.includes('detail')) { 
+        if (className.includes('payoff')) { // 償却 
+          var area = className.match(/area(\d+)/);
+          if (Number(area[1]) == 5) { 
+            cellProperties.type = 'numeric';
+            cellProperties.numericFormat = {
+              pattern: '0.00%',
+            };
+          }
+        }
+      }
+    }
+    cellProperties.renderer = firstRenderer;
+    return cellProperties;
+  }
 
   // HandsontableのtdタグCSS
   function firstRenderer(instance, td, row, col, prop, value, cellProperties) {
@@ -189,6 +195,7 @@ $(function(){
     } else {
       cellValue[rowNo][colNo] = cellValue[rowNo][colNo].replace(' checked=\"checked\"', '');
     }
+    changeBackColor(rowNo, colNo, status);
   });
 
   // スクロール時にチェックボックスの状態を保持するための関数(取消)
@@ -203,6 +210,7 @@ $(function(){
     } else {
       cellValue[rowNo][colNo] = cellValue[rowNo][colNo].replace(' checked=\"checked\"', '');
     }
+    changeBackColor(rowNo, colNo, status);
   });
 
   // 受注確定処理
@@ -476,6 +484,18 @@ $(function(){
         return Object.keys(value).length === 0;
     }
       return false;  //値は空ではない
+  }
+
+  function changeBackColor(row, col, isSelected) {
+    for (var column = startColumn+4; column <= endColumn; column++) {
+      if(isSelected == false){
+        cellData[row][column]['backgroundColor'] = cellColorList[row][column];
+      }
+      else{
+        cellData[row][column]['backgroundColor'] = 'DDDDDD';
+      }
+    }
+    table[0].render();
   }
 
 

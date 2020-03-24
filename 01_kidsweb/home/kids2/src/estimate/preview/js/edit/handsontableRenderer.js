@@ -32,8 +32,10 @@ $(function() {
 
   // セルのデータ取得
   var cellData = sheetData['cellData'];
-
+  var lastSelectFrom;
+  var lastSelectTo;
   var cellValue = [];
+  var cellColorList = [];
 
   var readOnlyDetailRow = [];
 
@@ -46,10 +48,13 @@ $(function() {
   // セルの情報を配列に格納する
   for (var i = startRow; i <= endRow; i++) {
     var rowValue = [];
+    var colorValue = [];
     for (var j = startColumn; j <= endColumn; j++) {
       rowValue.push(cellData[i][j]['value']);
+      colorValue.push(cellData[i][j]['backgroundColor']);
     }
     cellValue.push(rowValue);
+    cellColorList.push(colorValue);
   }
 
   // マージセルの取得
@@ -250,6 +255,13 @@ $(function() {
           }
         }
       }
+    },
+    afterSelectionEnd : function(rowFrom, colFrom, rowTo, colTo, leyerLevel)
+    {
+        changeBackColor(lastSelectFrom, lastSelectTo, false);
+        changeBackColor(rowFrom, rowTo, true);
+        lastSelectFrom = rowFrom;
+        lastSelectTo = rowTo;
     },
     // height: 700,
     // width: '100vw',
@@ -2706,6 +2718,19 @@ function toHalfWidth(strVal){
   return halfVal;
 }
 
+  function changeBackColor(rowFrom, rowTo, isSelected) {
+    for( var row = rowFrom; row <= rowTo; row++){
+      for (var column = startColumn; column <= endColumn; column++) {
+        if(isSelected == false){
+          cellData[row][column]['backgroundColor'] = cellColorList[row][column];
+        }
+        else{
+          cellData[row][column]['backgroundColor'] = 'DDDDDD';
+        }
+      }
+    }
+    table[0].render();
+  }
 
 });
 
