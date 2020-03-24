@@ -556,7 +556,9 @@ class UtilMold extends WithQuery
 
 		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
 		// クエリパラメータ作成(SELECT)
-		$param = array();
+		$param = array(
+			"current" => fncGetDateTimeString()
+		);
 
 		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);

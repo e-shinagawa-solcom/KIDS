@@ -845,6 +845,7 @@ function fncGetOtherOrderDetailHtml($aryOrderDetail, $strDelivery, $strProductUn
         $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderno\" value=\"" . $aryOrderDetail[$i]["lngorderno"] . "\"></td>";
         $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderrevisionno\" value=\"" . $aryOrderDetail[$i]["lngorderrevisionno"] . "\"></td>";
         $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $aryOrderDetail[$i]["lngorderdetailno"] . "\"></td>";
+        $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderstatuscode\" value=\"" . $aryOrderDetail[$i]["lngorderstatuscode"] . "\"></td>";
         $strHtml .= "</tr>";
 
         $tableA_body_html .= $strHtml;
@@ -1329,6 +1330,7 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "  ,mp.strordercode";
     $aryQuery[] = "  ,mo.strordercode as order_strordercode";
     $aryQuery[] = "  ,mo.lngrevisionno as order_lngrevisionno";
+    $aryQuery[] = "  ,mo.lngorderstatuscode";
     $aryQuery[] = "  ,TO_CHAR(mp.dtmexpirationdate, 'YYYY/MM/DD') as dtmexpirationdate";
     $aryQuery[] = "  ,mp.strproductcode";
     $aryQuery[] = "  ,mp.strproductname";
@@ -1448,7 +1450,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
         $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderno\" value=\"" . $aryResult[$i]["lngorderno"] . "\"></td>";
         $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderrevisionno\" value=\"" . $aryResult[$i]["lngorderrevisionno"] . "\"></td>";
         $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $aryResult[$i]["lngorderdetailno"] . "\"></td>";
-        // $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $aryResult[$i]["lngpurchaseorderdetailno"] . "\"></td>";
+        $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderstatuscode\" value=\"" . $aryResult[$i]["lngorderstatuscode"] . "\"></td>";
         $aryHtml[] = "  </tr>";
     }
 
@@ -1606,13 +1608,13 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
                                 $objDB) . "',";                                                   // strstockitemname
         $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"] . ",";          // lngdeliverymethodcode
         $aryQuery[] = "'" . $strDeliveryMethodName . "',";   // strdeliverymethodname
-        $aryQuery[] = (real)$aryPurchaseOrder["aryDetail"][$i]["curProductPrice"] . ",";                // curproductprice
-        $aryQuery[] = (int)$aryPurchaseOrder["aryDetail"][$i]["lngProductQuantity"] . ",";             // lngproductquantity
+        $aryQuery[] = preg_replace('/,/', '', $aryPurchaseOrder["aryDetail"][$i]["curProductPrice"]) . ",";                // curproductprice
+        $aryQuery[] = preg_replace('/,/', '', $aryPurchaseOrder["aryDetail"][$i]["lngProductQuantity"]) . ",";             // lngproductquantity
         $aryQuery[] = $_POST["aryDetail"][$i]["lngProductUnitCode"] . ",";                                                                    // lngproductunitcode
         $aryQuery[] = "'" . fncGetMasterValue(
                                 "m_productunit", "lngproductunitcode", "strProductUnitName", 
                                 $_POST["aryDetail"][$i]["lngProductUnitCode"], "", $objDB ) . "',";                                           // strproductunitname
-        $aryQuery[] = (real)$aryPurchaseOrder["aryDetail"][$i]["curSubtotalPrice"] . ",";               // cursubtotalprice
+        $aryQuery[] = preg_replace('/,/', '', $aryPurchaseOrder["aryDetail"][$i]["curSubtotalPrice"]) . ",";               // cursubtotalprice
         $aryQuery[] = "'" . $aryPurchaseOrder["aryDetail"][$i]["dtmDeliveryDate"] . "',";         // dtmdeliverydate
         $aryQuery[] = "'" . $aryPurchaseOrder["aryDetail"][$i]["strDetailNote"] . "',";           // strnote
         $aryQuery[] = (intval($i) + 1);                                                           // lngsortkey
@@ -1707,7 +1709,7 @@ function fncCreatePurchaseOrderUpdateHtml($aryPurchaseOrder, $strSessionID)
         $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryPurchaseOrder[$i]["lngstockitemcode"], $aryPurchaseOrder[$i]["strstockitemname"]) . "</td>";
         $aryHtml[] = "    <td class=\"Segs\">" . trim($aryPurchaseOrder[$i]["strdeliverymethodname"]) . "</td>";
         $aryHtml[] = "    <td class=\"Segs\">" . convertPrice($aryPurchaseOrder[$i]["lngmonetaryunitcode"], $aryPurchaseOrder[$i]["strmonetaryunitsign"], $aryPurchaseOrder[$i]["curproductprice"], 'unitprice') . "</td>";
-        $aryHtml[] = "    <td class=\"Segs\">" . sprintf("%d %s", number_format($aryPurchaseOrder[$i]["lngproductquantity"]), $aryPurchaseOrder[$i]["strproductunitname"]) . "</td>";
+        $aryHtml[] = "    <td class=\"Segs\">" . number_format($aryPurchaseOrder[$i]["lngproductquantity"]). " " .$aryPurchaseOrder[$i]["strproductunitname"] . "</td>";
         $aryHtml[] = "    <td class=\"Segs\">" . convertPrice($aryPurchaseOrder[$i]["lngmonetaryunitcode"], $aryPurchaseOrder[$i]["strmonetaryunitsign"], $aryPurchaseOrder[$i]["cursubtotalprice"], 'price') . "</td>";
         $aryHtml[] = "    <td class=\"Segs\">" . $aryPurchaseOrder[$i]["dtmdeliverydate"] . "</td>";
         $aryHtml[] = "  </tr>";

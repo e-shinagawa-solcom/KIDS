@@ -373,7 +373,7 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 								
 		//ユーザーが設定した支払条件と発注条件によって判断された支払い条件がマッチしてるかどうか
 		$flgPayConditionCodeMatch = ( $aryData["lngPayConditionCode"] == $Code[0] )? true:false;
-		if ($flgPayConditionCodeMatch == true && $flgPayConditionsMatch == true )
+		if ($flgPayConditionCodeMatch == true && $flgPayConditionsMatch == true)
 		{
 			//支払い条件がマッチしているのでフォーム不要
 			$frmPayConditionTable = $aryData["strPayConditionName"];

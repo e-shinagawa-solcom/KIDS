@@ -1406,7 +1406,7 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
 
                     } else if ($type == 'purchaseorder') {
                         // 修正ボタンの表示
-                        if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {
+                        if (!$isadmin && $isMaxData && $aryAuthority[$key] && $record["isFixFlag"] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {
                             // 修正ボタン
                             $a = $doc->createElement("a"); 
                             $a->setAttribute("href", "#");// 修正ボタン
