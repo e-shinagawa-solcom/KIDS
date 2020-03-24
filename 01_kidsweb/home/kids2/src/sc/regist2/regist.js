@@ -784,11 +784,11 @@ jQuery(function ($) {
         // ヘッダ・フッタ部の納品日を取得
         var deliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
 
-        // 納品日の月が締済みである
-        if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)) {
-            alert("締済みのため、指定された納品日は無効です");
-            return false;
-        }
+        // // 納品日の月が締済みである
+        // if (isClosedMonthOfDeliveryDate(deliveryDate, closedDay)) {
+        //     alert("締済みのため、指定された納品日は無効です");
+        //     return false;
+        // }
 
         // 出力明細一覧エリアの明細に、ヘッダ部の納品日の月度と同月度ではない納期の明細が存在する
         if (existsInDifferentDetailDeliveryMonthly(deliveryDate, closedDay)) {
@@ -886,11 +886,15 @@ jQuery(function ($) {
             async: true,
         }).done(function (data) {
             console.log("done:change-deliverydate");
-            console.log(data);
+            var data = JSON.parse(data);
+            console.log(data.error);
+            if (data.error) {
+                alert("納品日の税率マスタが見つかりません。");
+            }
 
             //消費税率の選択項目更新
             $('select[name="lngTaxRate"] > option').remove();
-            $('select[name="lngTaxRate"]').append(data);
+            $('select[name="lngTaxRate"]').append(data.strHtml);
 
             setTaxRate();
 
