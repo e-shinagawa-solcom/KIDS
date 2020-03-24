@@ -214,6 +214,7 @@ $aryTableHeaderName_PURORDER["lngprintcount"] = "印刷回数";
 $aryTableHeaderName_PURORDER["strnote"] = "備考";
 
 $aryTableDetailHeaderName_PURORDER["lngrecordno"] = "No.";
+$aryTableDetailHeaderName_PURORDER["strorderstatusname"] = "発注状態";
 $aryTableDetailHeaderName_PURORDER["lngstocksubjectname"] = "仕入科目";
 $aryTableDetailHeaderName_PURORDER["strstockitemname"] = "仕入部品";
 $aryTableDetailHeaderName_PURORDER["strdeliverymethodname"] = "運搬方法";
@@ -1183,6 +1184,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  tpod.lngpurchaseorderno";
         $aryQuery[] = "  , tpod.lngpurchaseorderdetailno as lngdetailno";
         $aryQuery[] = "  , msub.strstocksubjectname";
+        $aryQuery[] = "  , mos.strorderstatusname";
         $aryQuery[] = "  , tpod.strstockitemname";
         $aryQuery[] = "  , tpod.strdeliverymethodname";
         $aryQuery[] = "  , tpod.curproductprice";
@@ -1195,6 +1197,8 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "from";
         $aryQuery[] = "  t_purchaseorderdetail tpod ";
         $aryQuery[] = "inner join t_orderdetail tod on tod.lngorderno = tpod.lngorderno and tod.lngrevisionno = tpod.lngorderrevisionno ";
+        $aryQuery[] = "inner join m_order mo on mo.lngorderno = tpod.lngorderno and mo.lngrevisionno = tpod.lngorderrevisionno ";
+        $aryQuery[] = "inner join m_orderstatus mos on mos.lngorderstatuscode = mo.lngorderstatuscode ";
         $aryQuery[] = "inner join m_stocksubject msub on msub.lngstocksubjectcode = tpod.lngstocksubjectcode ";
         $aryQuery[] = "where";
         $aryQuery[] = "  tpod.lngpurchaseorderno = " . $lngPkNo;

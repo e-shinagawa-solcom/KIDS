@@ -801,6 +801,7 @@ function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo)
     $arySql[] = "  ,pd.lngorderno";
     $arySql[] = "  ,pd.lngorderdetailno";
     $arySql[] = "  ,pd.lngorderrevisionno";
+    $arySql[] = "  ,mos.strorderstatusname";
     $arySql[] = "  ,pd.lngstocksubjectcode";
     $arySql[] = "  ,mss.strstocksubjectname";
     $arySql[] = "  ,pd.lngstockitemcode";
@@ -819,6 +820,8 @@ function fncGetPurchaseOrderDetailSQL($lngOrderNo, $lngRevisionNo)
     $arySql[] = "  ,od.strmoldno";
     $arySql[] = "FROM t_purchaseorderdetail pd";
     $arySql[] = "INNER JOIN t_orderdetail od ON od.lngorderno = pd.lngorderno AND od.lngrevisionno = pd.lngorderrevisionno";
+    $arySql[] = "INNER JOIN m_order mo ON mo.lngorderno = pd.lngorderno AND mo.lngrevisionno = pd.lngorderrevisionno";
+    $arySql[] = "INNER JOIN m_orderstatus mos ON mos.lngorderstatuscode = mo.lngorderstatuscode";
     $arySql[] = "LEFT JOIN m_stocksubject mss ON pd.lngstocksubjectcode = mss.lngstocksubjectcode";
     $arySql[] = "WHERE pd.lngpurchaseorderno = " . intval($lngOrderNo);
     $arySql[] = "AND   pd.lngrevisionno = " . intval($lngRevisionNo);

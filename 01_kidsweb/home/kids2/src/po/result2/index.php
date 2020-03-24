@@ -147,8 +147,8 @@ if (fncCheckAuthority(DEF_FUNCTION_PO12, $objAuth)) {
 }
 
 // 表示項目  $aryViewColumnに格納
-// $aryViewColumn=$isDisplay;
-$aryViewColumn = fncResortSearchColumn2($isDisplay);
+ $aryViewColumn=$isDisplay;
+//$aryViewColumn = fncResortSearchColumn2($isDisplay);
 // 検索項目  $arySearchColumnに格納
 $arySearchColumn = $isSearch;
 

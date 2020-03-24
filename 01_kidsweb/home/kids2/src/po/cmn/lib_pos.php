@@ -1264,6 +1264,7 @@ function fncResortSearchColumn2($aryViewColumn)
         $aryResult[] = "strProductName";
         $aryResult[] = "strProductEnglishName";
     }
+    if (in_array("strOrderStatusName", $aryViewColumn)) {$aryResult[] = "strOrderStatusName";}
     if (in_array("lngInChargeGroupCode", $aryViewColumn)) {$aryResult[] = "lngInChargeGroupCode";}
     if (in_array("lngInChargeUserCode", $aryViewColumn)) {$aryResult[] = "lngInChargeUserCode";}
     if (in_array("lngCustomerCode", $aryViewColumn)) {$aryResult[] = "lngCustomerCode";}
