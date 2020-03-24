@@ -156,6 +156,8 @@ function fncReleaseExclusiveLock($lngFunctionCode, $strSlipCode, $objDB)
 // 消費税率プルダウンの選択項目作成
 function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
 {
+    $result = array();
+    $result["error"] = false;
     // DBからデータ取得
     $strQuery = "SELECT lngtaxcode, curtax * 100 as curtax "
         . " FROM m_tax "
@@ -168,7 +170,9 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9051, DEF_FATAL, "消費税情報の取得に失敗", true, "", $objDB);
+        // fncOutputError(9051, DEF_FATAL, "消費税情報の取得に失敗", true, "", $objDB);
+        $result["error"] = true;
+        return $result;
     }
     $objDB->freeResult($lngResultID);
 
@@ -185,8 +189,9 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
             $strHtml .= "<OPTION VALUE=\"$optionValue\">$displayText</OPTION>\n";
         }
     }
+    $result["strHtml"] = $strHtml;
 
-    return $strHtml;
+    return $result;
 }
 
 // 納品伝票番号に紐づくヘッダ項目取得

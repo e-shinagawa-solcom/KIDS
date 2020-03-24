@@ -158,9 +158,13 @@ if ($strMode == "search-detail") {
 //-------------------------------------------------------------------------
 if ($strMode == "change-deliverydate") {
     // 変更後の納品日に対応する消費税率の選択項目を取得
-    $optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
+    $aryResult = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
     // データ返却
-    echo $optTaxRate;
+    // echo $optTaxRate;
+    
+	//結果出力
+    echo $s->encodeUnsafe($aryResult);
+    
     // DB切断
     $objDB->close();
     // 処理終了
@@ -190,7 +194,7 @@ $aryData["optTaxClass"] = $optTaxClass;
 
 // 消費税率プルダウン
 $optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], "", $objDB);
-$aryData["optTaxRate"] = $optTaxRate;
+$aryData["optTaxRate"] = $optTaxRate["strHtml"];
 
 // // レートタイププルダウン
 // $optMonetaryRate .= fncGetPulldown("m_monetaryrateclass", "lngmonetaryratecode", "strmonetaryratename", "", "", $objDB);

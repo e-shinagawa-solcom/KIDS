@@ -72,6 +72,9 @@ jQuery(function ($) {
     var strDefaultCompanyDisplayCode = $('#strDefaultCompanyDisplayCode').val();
     var strCompanyDisplayCode = $('input[name="lngCustomerCode"]').val();
     var lngDefaultMonetaryUnitCode = $('#lngDefaultMonetaryUnitCode').val();
+    if (strDefaultCompanyDisplayCode != "" && lngDefaultMonetaryUnitCode == "") {
+        SetMonetaryUnitCode(postTarget, strDefaultCompanyDisplayCode, strSessionID);
+    }
     // ------------------------------------
     //  events
     // ------------------------------------
