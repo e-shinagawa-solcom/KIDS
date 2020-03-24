@@ -98,6 +98,7 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	$aryQuery[] = "sd.lngSlipNo as lngslipno, sd.lngRevisionNo as lngrevisionno";
 	// 顧客受注番号
 	$aryQuery[] = ", sd.strCustomerSalesCode as strcustomersalescode";
+	$aryQuery[] = ", mrs.strreceivestatusname as strreceivestatusname";
 	// 売上区分
 	$aryQuery[] = ", sd.lngSalesClassCode as lngsalesclasscode";	//売上区分コード
 	$aryQuery[] = ", sd.strSalesClassName as strsalesclassname";	//売上区分名
@@ -127,6 +128,8 @@ function fncGetSlipDetailNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 
 	// FROM句
 	$aryQuery[] = " FROM t_SlipDetail sd";
+	$aryQuery[] = " INNER JOIN m_receive mr on mr.lngreceiveno = sd.lngreceiveno and mr.lngrevisionno = sd.lngreceiverevisionno";
+	$aryQuery[] = " INNER JOIN m_receivestatus mrs on mrs.lngreceivestatuscode = mr.lngreceivestatuscode";
 
 	$aryQuery[] = " WHERE sd.lngSlipNo = " . $lngSlipNo . "";
 	$aryQuery[] = " AND sd.lngRevisionNo = " . (int)$lngRevisionNo . "";
@@ -251,6 +254,8 @@ function fncSetSlipDetailTableData ( $aryDetailResult, $aryHeadResult )
 	$aryNewDetailResult["lngRevisionNo"] = $aryDetailResult["lngrevisionno"];
 	// 顧客受注番号
 	$aryNewDetailResult["strCustomerSalesCode"] = $aryDetailResult["strcustomersalescode"];
+	// 売上状態（実態は受注状態）
+	$aryNewDetailResult["strReceiveStatusName"] = $aryDetailResult["strreceivestatusname"];
 	// 売上区分
 	if ( $aryDetailResult["lngsalesclasscode"] )
 	{

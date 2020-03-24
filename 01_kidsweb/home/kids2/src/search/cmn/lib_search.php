@@ -122,6 +122,7 @@ $aryTableHeaderName_SLIP["curtotalprice"] = "合計金額";
 
 // 明細部
 $aryTableDetailHeaderName_SLIP["lngrecordno"] = "明細行NO";
+$aryTableDetailHeaderName_SLIP["strreceivestatusname"] = "売上状態";
 $aryTableDetailHeaderName_SLIP["strcustomersalescode"] = "注文書NO";
 $aryTableDetailHeaderName_SLIP["strgoodscode"] = "顧客品番";
 $aryTableDetailHeaderName_SLIP["strproductname"] = "品名";
@@ -1159,6 +1160,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "select";
         $aryQuery[] = "  sd.lngSlipDetailNo";
         $aryQuery[] = "  , sd.lngSlipDetailNo as lngdetailno";
+        $aryQuery[] = "  , mrs.strReceiveStatusName";
         $aryQuery[] = "  , sd.strCustomerSalesCode";
         $aryQuery[] = "  , sd.strGoodsCode";
         $aryQuery[] = "  , sd.strProductCode";
@@ -1173,6 +1175,8 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , sd.strNote as strdetailnote";
         $aryQuery[] = "from";
         $aryQuery[] = "  t_slipdetail sd ";
+        $aryQuery[] = "inner join m_receive mr on mr.lngreceiveno = sd.lngreceiveno and mr.lngrevisionno = sd.lngreceiverevisionno";
+        $aryQuery[] = "inner join m_receivestatus mrs on mrs.lngreceivestatuscode = mr.lngreceivestatuscode";
         $aryQuery[] = "where";
         $aryQuery[] = "  sd.lngslipno = " . $lngPkNo;
         $aryQuery[] = "  AND sd.lngrevisionno = " . $lngRevisionNo;

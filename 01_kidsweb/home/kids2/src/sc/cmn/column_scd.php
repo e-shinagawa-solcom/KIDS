@@ -60,6 +60,7 @@ $aryHeadColumnNames["lngPrintCount"]	        = "印刷回数";
 
 // 明細部
 $aryDetailColumnNames["lngRecordNo"]			= "明細行番号";
+$aryDetailColumnNames["strReceiveStatusName"]	= "売上状態";
 $aryDetailColumnNames["strCustomerSalesCode"]   = "顧客受注番号";
 $aryDetailColumnNames["lngSalesClassCode"]		= "売上区分";
 $aryDetailColumnNames["strGoodsCode"]		    = "顧客品番";
