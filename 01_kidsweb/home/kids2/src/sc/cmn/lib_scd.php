@@ -270,7 +270,8 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	$arySelectQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD' ) as dtmDeliveryDate";
 	// 納品先
 	$arySelectQuery[] = " , delv_c.strcompanydisplaycode as strdeliveryplacecode";
-	$arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
+	$arySelectQuery[] = " , delv_c.strcompanydisplayname as strDeliveryPlaceName";
+	// $arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
 	// 起票者
 	$arySelectQuery[] = ", u.struserdisplaycode as strusercode";
 	$arySelectQuery[] = ", s.strUserName as strusername";

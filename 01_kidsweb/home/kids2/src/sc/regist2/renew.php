@@ -279,7 +279,7 @@ $aryData["dtmPaymentLimit"] = $aryHeader["dtmpaymentlimit"];
 
 // 納品先
 $aryData["lngDeliveryPlaceCode"] = $aryHeader["strdeliveryplacecompanydisplaycode"];
-$aryData["strDeliveryPlaceName"] = $aryHeader["strdeliveryplacename"];
+$aryData["strDeliveryPlaceName"] = $aryHeader["strdeliveryplacecompanydisplayname"];
 
 // 納品先担当者
 $aryData["strDeliveryPlaceUserName"] = $aryHeader["strdeliveryplaceusername"];

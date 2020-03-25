@@ -213,7 +213,8 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  TO_CHAR(s.dtmpaymentlimit, 'YYYY/MM/DD') as dtmpaymentlimit, "; //支払期限
     $aryQuery[] = "  s.lngpaymentmethodcode, "; //支払方法
     $aryQuery[] = "  c_deli.strcompanydisplaycode as strdeliveryplacecompanydisplaycode, "; //納品先（表示用会社コード）
-    $aryQuery[] = "  s.strdeliveryplacename, "; //納品先（表示用会社名）
+    $aryQuery[] = "  c_deli.strcompanydisplayname as strdeliveryplacecompanydisplayname, "; //納品先（表示用会社名）
+    $aryQuery[] = "  s.strdeliveryplacename, "; //納品先
     $aryQuery[] = "  s.strdeliveryplaceusername, "; //納品先担当者
     $aryQuery[] = "  s.strnote, "; //備考
     $aryQuery[] = "  s.lngtaxclasscode, "; //消費税区分（コード値）
@@ -1498,7 +1499,10 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $v_strshippercode = $strShipperCode; //15:仕入先コード（出荷者）
     $v_dtmdeliverydate = withQuote($aryHeader["dtmdeliverydate"]); //16:納品日
     $v_lngdeliveryplacecode = nullIfEmpty($lngDeliveryPlaceCode); //17:納品場所コード
-    $v_strdeliveryplacename = withQuote($aryHeader["strdeliveryplacename"]); //18:納品場所名
+    if (!is_null($lngDeliveryPlaceCode)) {
+        $strdeliveryplaceusername = fncGetMasterValue( "m_company", "lngcompanycode", "strcompanyname",  $lngDeliveryPlaceCode, '', $objDB);
+    }    
+    $v_strdeliveryplacename = withQuote($strdeliveryplaceusername); //18:納品場所名
     $v_strdeliveryplaceusername = withQuote($aryHeader["strdeliveryplaceusername"]); //19:納品場所担当者名
     $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"]; //20:支払方法コード
     $v_dtmpaymentlimit = $dtmPaymentLimit; //21:支払期限

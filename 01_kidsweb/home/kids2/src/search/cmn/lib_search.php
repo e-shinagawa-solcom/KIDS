@@ -651,7 +651,8 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , s.strSlipCode as strCode";
         $aryQuery[] = "  , to_char(s.dtmDeliveryDate, 'YYYY/MM/DD') as dtmDeliveryDate";
         $aryQuery[] = "  , delv_c.strcompanydisplaycode as strdeliveryplacecode";
-        $aryQuery[] = "  , s.strDeliveryPlaceName as strDeliveryPlaceName";
+        $aryQuery[] = "  , delv_c.strcompanydisplayname as strDeliveryPlaceName";
+        // $aryQuery[] = "  , s.strDeliveryPlaceName as strDeliveryPlaceName";
         $aryQuery[] = "  , u.struserdisplaycode as strusercode";
         $aryQuery[] = "  , s.strusername as strusername";
         $aryQuery[] = "  , s.strNote as strNote";
