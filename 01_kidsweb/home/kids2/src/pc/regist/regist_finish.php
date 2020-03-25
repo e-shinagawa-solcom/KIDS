@@ -145,7 +145,7 @@ foreach ($aryDetailData as $data) {
     // 明細行
     $aryQuery = array();
     $aryQuery[] = "SELECT ";
-    $aryQuery[] = "od.lngorderdetailno, "; // 発注明細番号
+    $aryQuery[] = "distinct od.lngorderdetailno, "; // 発注明細番号
     $aryQuery[] = "od.lngrevisionno, "; // リビジョン番号
     $aryQuery[] = "od.strproductcode, "; // 製品コード
     $aryQuery[] = "od.strrevisecode, "; // リバイズ番号
@@ -187,7 +187,8 @@ foreach ($aryDetailData as $data) {
     $strQuery = implode("\n", $aryQuery);
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-//echo $strQuery . "<br>";
+// echo $strQuery . "<br>";
+// echo $lngResultNum . "<br>";
 
     if ($lngResultNum) {
         if ($lngResultNum == 1) {

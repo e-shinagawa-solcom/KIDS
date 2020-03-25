@@ -1,4 +1,4 @@
-function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj) {
+function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj, hasCalculation = 0) {
     chkboxObj.on('keydown', function (e) {
         e.stopPropagation();
         console.log('enter');
@@ -20,12 +20,17 @@ function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj) {
         }
         // 対象チェックボックスチェック状態の設定
         scanAllCheckbox(tableA_chkbox, allCheckObj);
+
+        if (hasCalculation == 1) {
+            // 税抜金額の合計の計算
+            totalPriceCalculation(tableA_fix, tableA);
+        }
     });
 
 
 }
 
-function setAllCheckClickEvent(allCheckObj, tableA, tableA_chkbox) {
+function setAllCheckClickEvent(allCheckObj, tableA, tableA_chkbox, hasCalculation = 0) {
     allCheckObj.on('keydown', function (e) {
         e.stopPropagation();
         console.log('enter');
@@ -48,8 +53,42 @@ function setAllCheckClickEvent(allCheckObj, tableA, tableA_chkbox) {
                         tableA.find("tbody tr").css("background-color", "#ffffff");
                     }
                 });
+            if (hasCalculation == 1) {
+                // 税抜金額の合計の計算
+                totalPriceCalculation(tableA_chkbox, tableA);
+            }
         }
     });
+}
+
+function totalPriceCalculation(tableA_chkbox, tableA) {
+    var $all_chkbox_rows = tableA_chkbox.find('tbody tr');
+    var $all_checkbox = $all_chkbox_rows.find('input[type="checkbox"]');
+    var totalprice = 0;
+    var strmonetaryunitsign;
+    var lngmonetaryunitcode;
+    // data がない場合、全選択／解除チェックボックスを寝かせて無効化
+    if ($all_chkbox_rows.length == 0) {
+        totalprice = 0
+    } else {
+        strmonetaryunitsign = tableA.find("tbody tr:nth-child(1)").find('.strmonetaryunitsign').text();
+        lngmonetaryunitcode = tableA.find("tbody tr:nth-child(1)").find('.lngmonetaryunitcode').text();
+    }
+    console.log(totalprice);
+    $.each($all_checkbox, function (i) {
+        // チェックボックスがすべてチェックされた場合、全選択／解除チェックボックスを立てる
+        if ($(this).closest('tr').css("background-color") != 'rgb(255, 255, 255)') {
+            var rowindex = $(this).closest('tr').index();
+            var cursubtotalprice = Number(tableA.find("tbody tr:nth-child(" + (rowindex + 1) + ")").find('.cursubtotalprice').text());
+            console.log(cursubtotalprice);
+            totalprice += cursubtotalprice;
+        }
+    });
+    if ($all_chkbox_rows.length == 0) {
+        $('input[name="totalPrice"]').val(0);
+    } else {
+        $('input[name="totalPrice"]').val(money_format(lngmonetaryunitcode, strmonetaryunitsign, totalprice, 'price'));
+    }
 }
 
 function scanAllCheckbox(tableA_chkbox, allCheckObj) {
@@ -91,7 +130,7 @@ function scanAllCheckbox(tableA_chkbox, allCheckObj) {
     });
 }
 // テーブルの行をクリックする時のイベント
-function selectRow(type, tableA_fix, tableA, allCheckObj) {
+function selectRow(type, tableA_fix, tableA, allCheckObj, hasCalculation = 0) {
     var rows = tableA_fix.find('tbody tr');
     var rows = tableA.find('tbody tr');
     var lastSelectedRow;
@@ -100,6 +139,10 @@ function selectRow(type, tableA_fix, tableA, allCheckObj) {
         lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, tableA_fix, tableA);
         if (type == 'hasChkbox') {
             scanAllCheckbox(tableA_fix, allCheckObj);
+            if (hasCalculation == 1) {
+                // 税抜金額の合計の計算
+                totalPriceCalculation(tableA_fix, tableA);
+            }
         }
     });
 
@@ -108,6 +151,10 @@ function selectRow(type, tableA_fix, tableA, allCheckObj) {
         lastSelectedRow = trClickEvent($(this), lastSelectedRow, e, tableA_fix, tableA);
         if (type == 'hasChkbox') {
             scanAllCheckbox(tableA_fix, allCheckObj);
+            if (hasCalculation == 1) {
+                // 税抜金額の合計の計算
+                totalPriceCalculation(tableA_fix, tableA);
+            }
         }
     });
 
@@ -137,6 +184,9 @@ function trClickEvent(row, lastSelectedRow, e, tableA_fix, tableA) {
             tableA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
             tableA_fix.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
         }
+
+        tableA_fix.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').change();
+
     } else if (e.shiftKey) {
         /* If pressed highlight the other row that was clicked */
         var indexes = [lastSelectedRow.index(), row.index()];
@@ -147,15 +197,18 @@ function trClickEvent(row, lastSelectedRow, e, tableA_fix, tableA) {
             tableA_fix.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
             tableA.find("tbody tr:nth-child(" + (i + 1) + ")").css("background-color", "#bbbbbb");
             tableA_fix.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
+            tableA_fix.find("tbody tr:nth-child(" + (i + 1) + ")").find('input[type="checkbox"]').change();
         }
     } else {
         /* Otherwise just highlight one row and clean others */
         tableA_fix.find("tbody tr").css("background-color", "#ffffff");
         tableA_fix.find("tbody tr").find('input[type="checkbox"]').prop('checked', false);
+        tableA_fix.find("tbody tr").find('input[type="checkbox"]').change();
         tableA_fix.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
         tableA_fix.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').prop('checked', true);
         tableA.find("tbody tr").css("background-color", "#ffffff");
         tableA.find("tbody tr:nth-child(" + (row.index() + 1) + ")").css("background-color", "#bbbbbb");
+        tableA_fix.find("tbody tr:nth-child(" + (row.index() + 1) + ")").find('input[type="checkbox"]').change();
         lastSelectedRow = row;
     }
 
@@ -293,7 +346,7 @@ function deleteRowsForPo(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head,
             console.log(tableB.find('tbody tr:nth-child(' + ($index + 1) + ')').find("input[name='lngorderstatuscode']").val());
             if (tableB.find('tbody tr:nth-child(' + ($index + 1) + ')').find("input[name='lngorderstatuscode']").val() != 4) {
                 $(this).remove();
-            }else {
+            } else {
                 alert("該当発注明細データが納品済のため、削除できません。");
                 return;
             }

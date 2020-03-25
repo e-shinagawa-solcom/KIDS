@@ -117,6 +117,8 @@
 
         resetTableADisplayStyle();
 
+        resetTableBDisplayStyle();
+
         $("#tableA_head").trigger("update");
 
         $("#tableA").trigger("update");
@@ -134,6 +136,8 @@
         $("#tableA").trigger("update");
 
         resetTableADisplayStyle();
+
+        resetTableBDisplayStyle();
     });
 
     // 検索条件変更ボタンのイベント

@@ -88,7 +88,7 @@ foreach ($isSearch as $key => $flag) {
 
 // 検索項目から一致する最新の仕入データを取得するSQL文の作成関数
 $strQuery = fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
-//echo $strQuery . "<br>";
+// echo $strQuery . "<br>";
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 // 検索件数がありの場合

@@ -185,7 +185,9 @@ foreach ($aryOrderDetail as $orderDetail) {
             $isStocked = true;
             $lngtaxclasscode = $stockDetail["lngtaxclasscode"];
             $lngtaxcode = $stockDetail["lngtaxcode"];
-            $curtax = $stockDetail["curtax"];
+            if ($lngtaxcode != null) {
+                $curtax = $stockDetail["curtax"];
+            }
             $curtaxprice = $stockDetail["curtaxprice_comm"];
         }
     }
@@ -247,7 +249,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     // 単価
-    $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["curproductprice"]));
+    $td = $doc->createElement("td", convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["curproductprice"], 'unitprice'));
     $td->setAttribute("class", "col6");
     $trBody->appendChild($td);
 
@@ -262,7 +264,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 
     // 税抜金額
-    $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["cursubtotalprice"]));
+    $td = $doc->createElement("td", convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["cursubtotalprice"], 'price'));
     $td->setAttribute("class", "col9");
     $trBody->appendChild($td);
 
@@ -311,7 +313,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     else
     {
         $td = $doc->createElement("td", $curtax);
-        $td->setAttribute("class", "col11");
+        $td->setAttribute("class", "col112");
     }
 	$trBody->appendChild($td);
 
@@ -342,7 +344,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $trBody->appendChild($td);
 */
     // 消費税額
-    $td = $doc->createElement("td", toMoneyFormat($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $curtaxprice));
+    $td = $doc->createElement("td", convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $curtaxprice, 'taxprice'));
     $td->setAttribute("class", "col12");
     $trBody->appendChild($td);
 

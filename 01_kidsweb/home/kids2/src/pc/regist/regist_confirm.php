@@ -69,7 +69,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 	$aryQuery[] = "g.strGroupDisplayCode AS lnggroupcode, ";
 	$aryQuery[] = "g.strGroupDisplayName AS strgroupname, ";
 	$aryQuery[] = "u.strUserDisplayCode AS lngusercode, ";
-	$aryQuery[] = "u.strUserDisplayName AS lngusername, ";
+	$aryQuery[] = "u.strUserDisplayName AS strusername, ";
     $aryQuery[] = "To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
     $aryQuery[] = "pod.lngdeliverymethodcode as lngdeliverymethodcode, "; // 運搬方法コード
     $aryQuery[] = "dm.strdeliverymethodname as strdeliverymethodname, "; // 運搬方法名称
@@ -147,7 +147,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = "  AND od.lngorderdetailno = " . $aryDetailData[$i]["lngOrderDetailNo"] . " ";
     $aryQuery[] = " ORDER BY od.lngSortKey";
     $strQuery = implode("\n", $aryQuery);
-//echo $strQuery . "<br>";
+// echo $strQuery . "<br>";
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
         if ($lngResultNum == 1) {

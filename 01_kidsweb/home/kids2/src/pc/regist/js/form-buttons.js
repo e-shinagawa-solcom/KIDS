@@ -26,7 +26,7 @@ var chkbox = [];
         if (e.which == 13) {
             $('img.getpoinfo').click();
         }
-      });
+    });
 
     btnGetPoInfo.on('click', function () {
         // 発注NO.の取得
@@ -111,7 +111,8 @@ var chkbox = [];
                             taxList += '</select>';
                         }
 
-                        console.log(taxList);
+                        $("select[name='lngMonetaryRateCode'] option").prop('disabled', false);
+
                         // 国コード：81日本の場合、「外税」となる、それ以外の場合、非課税
                         if (lngcountrycode == 81) {
                             for (var j = 0; j < data.tax.length; j++) {
@@ -122,7 +123,6 @@ var chkbox = [];
                             }
                             curtaxList = taxList;
                             lngtaxclasscode = 2;
-
                             $("select[name='lngMonetaryRateCode']").val("0");
                             $('select[name="lngMonetaryRateCode"]').change();
 
@@ -130,7 +130,6 @@ var chkbox = [];
                             curtax = 0;
                             curtaxList = 0;
                             lngtaxclasscode = 1;
-                            console.log("tdd");
                             $("select[name='lngMonetaryRateCode']").val("1");
                         }
 
@@ -148,9 +147,6 @@ var chkbox = [];
                         } else {
                             curtaxprice = Math.floor((row.cursubtotalprice / (1 + (curtax / 100))) * (curtax / 100));
                         }
-                        console.log("消費税区分：" + lngtaxclasscode);
-                        console.log("消費税額：" + curtaxprice);
-                        console.log(money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice, 'taxprice'));
                         var select = '<select style="width:90px;" onchange="resetTaxPrice(this, 1)">';
                         for (var j = 0; j < data.taxclass.length; j++) {
                             var taxclassRow = data.taxclass[j];
@@ -203,14 +199,15 @@ var chkbox = [];
                     // テーブル各セルの幅をリセットする
                     resetTableWidth($("#tableB_chkbox_head"), $("#tableB_chkbox"), $("#tableB_head"), $("#tableB"));
                     // テーブル行クリックイベントの設定
-                    selectRow('hasChkbox', $("#tableB_chkbox"), $("#tableB"), $("#allChecked"));
+                    selectRow('hasChkbox', $("#tableB_chkbox"), $("#tableB"), $("#allChecked"), 1);
                     // 対象チェックボックスチェック状態の設定
                     scanAllCheckbox($("#tableB_chkbox"), $("#allChecked"));
+                    // 税抜金額の合計の計算
+                    totalPriceCalculation($("#tableB_chkbox"), $("#tableB"));
                     // チェックボックスクリックイベントの設定
-                    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableB"), $("#tableB_chkbox"), $("#allChecked"));
+                    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableB"), $("#tableB_chkbox"), $("#allChecked"), 1);
                     // 対象チェックボックスクリックイベントの設定
-                    setAllCheckClickEvent($("#allChecked"), $("#tableB"), $("#tableB_chkbox"));
-
+                    setAllCheckClickEvent($("#allChecked"), $("#tableB"), $("#tableB_chkbox"), 1);                    
                 })
                 .fail(function (response) {
                     alert(response);
@@ -222,6 +219,7 @@ var chkbox = [];
 
     // 通貨変更イベント
     $('input[name="lngMonetaryUnitCode"]').on('change', function () {
+        console.log("通貨レート：" + $('select[name="lngMonetaryRateCode"]').val());
         // リクエスト送信
         $.ajax({
             url: '/pc/regist/getMonetaryRate.php',
@@ -246,6 +244,8 @@ var chkbox = [];
 
     // 通貨レート変更イベント
     $('select[name="lngMonetaryRateCode"]').on('change', function () {
+        
+        console.log("通貨レート：" + $(this).val());
         // リクエスト送信
         $.ajax({
             url: '/pc/regist/getMonetaryRate.php',
@@ -392,11 +392,9 @@ var chkbox = [];
  * @param {*} objID 
  */
 function resetTaxPrice(objID, type) {
-
     if (!taxList) {
         taxList = $('#taxList').html();
     }
-    console.log(taxList);
     var children = objID.parentNode.parentNode.children;
     var rowClass = objID.parentNode.parentNode.className;
     var curtax;
@@ -415,9 +413,6 @@ function resetTaxPrice(objID, type) {
             $('.' + rowClass).find('.col11').text('');
             $('.' + rowClass).find('.col11').append(taxList);
             curtax = $('.' + rowClass).find('.col11').find('option:selected').text();
-            console.log(curtax);
-            console.log(rowClass);
-            console.log(taxList);
         }
     } else if (type == 2) {
         // 課税区分が変わったら消費税率も変わる
@@ -490,15 +485,12 @@ function money_format(lngmonetaryunitcode, strmonetaryunitsign, price, type) {
 }
 
 function convertNumber(str, fracctiondigits) {
-    console.log(str);
     if ((str != "" && str != undefined && str != "null") || str == 0) {
-        console.log("null以外の場合：" + str);
         return Number(str).toLocaleString(undefined, {
             minimumFractionDigits: fracctiondigits,
             maximumFractionDigits: fracctiondigits
         });
     } else {
-        console.log("nullの場合：" + str);
         return "";
     }
 }
