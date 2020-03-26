@@ -77,7 +77,6 @@ $objDB->open("", "", "", "");
 $aryCheck["strSessionID"] = "null:numenglish(32,32)";
 $aryResult = fncAllCheck($aryData, $aryCheck);
 fncPutStringCheckError($aryResult, $objDB);
-
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 $lngUserCode = $objAuth->UserCode;
@@ -176,7 +175,7 @@ if ($strMode == "change-deliverydate") {
     // 変更後の納品日に対応する消費税率の選択項目を取得
     $optTaxRate = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
     // データ返却
-    echo $optTaxRate;
+    echo $s->encodeUnsafe($optTaxRate);
     // DB切断
     $objDB->close();
     // 処理終了
@@ -220,6 +219,12 @@ if ($aryLockInfo["isLock"] == 1) {
 // 納品伝票番号に紐づくヘッダ・フッタ部のデータ読み込み
 $revisionNo = fncGetSlipMaxRevisionNo($lngSlipNo, $objDB);
 $aryHeader = fncGetHeaderBySlipNo($lngSlipNo, $revisionNo, $objDB);
+
+// 請求済のデータの場合、エラー
+if (fncInvoiceIssued($lngSlipNo, $revisionNo, $objDB)) {
+    fncOutputError(606, DEF_WARNING, "納品書は請求処理済みのため修正できません。", true, "", $objDB);
+}
+
 // $lngRevisionNo = $aryHeader["lngrevisionno"];
 // 納品伝票番号に紐づく受注明細情報を取得する
 $aryDetail = fncGetDetailBySlipNo($lngSlipNo, $revisionNo, $objDB);
@@ -296,7 +301,7 @@ $aryData["optTaxClass"] = $optTaxClass;
 if ($aryData["dtmDeliveryDate"]) {
     $curDefaultTax = $aryHeader["curtax"];
     $optTaxRate = fncGetTaxRatePullDown($aryData["dtmDeliveryDate"], $curDefaultTax, $objDB);
-    $aryData["optTaxRate"] = $optTaxRate;
+    $aryData["optTaxRate"] = $optTaxRate["strHtml"];
 }
 
 // 消費税額（※ここでは0をセットしておき、画面表示時にjavascriptで関数を呼び出して計算する）

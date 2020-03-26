@@ -159,7 +159,7 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
     $result = array();
     $result["error"] = false;
     // DBからデータ取得
-    $strQuery = "SELECT lngtaxcode, curtax * 100 as curtax "
+    $strQuery = "SELECT lngtaxcode, curtax * 100 as curtax, curtax as curtax_pre "
         . " FROM m_tax "
         . " WHERE dtmapplystartdate <= '$dtmDeliveryDate' "
         . "   AND dtmapplyenddate >= '$dtmDeliveryDate' "
@@ -181,9 +181,8 @@ function fncGetTaxRatePullDown($dtmDeliveryDate, $curDefaultTax, $objDB)
     for ($i = 0; $i < count($aryResult); $i++) {
         $optionValue = $aryResult[$i]["lngtaxcode"];
         $displayText = $aryResult[$i]["curtax"] * 1 . "%"; // 小数点末尾の0をカット
-
         // デフォルト値が設定されている場合、その値を選択
-        if ($curDefaultTax == $displayText) {
+        if ($curDefaultTax == $aryResult[$i]["curtax_pre"]) {
             $strHtml .= "<OPTION VALUE=\"$optionValue\" SELECTED>$displayText</OPTION>\n";
         } else {
             $strHtml .= "<OPTION VALUE=\"$optionValue\">$displayText</OPTION>\n";
@@ -227,7 +226,8 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  mu.strmonetaryunitname, "; //通貨単位名称
     $aryQuery[] = "  ms.lngmonetaryratecode, "; //通貨レート
     $aryQuery[] = "  mr.strmonetaryratename, "; //通貨レート名称
-    $aryQuery[] = "  ms.curconversionrate "; //換算レート
+    $aryQuery[] = "  ms.curconversionrate, "; //換算レート
+    $aryQuery[] = "  ms.lnginvoiceno "; //請求番号
     $aryQuery[] = " FROM m_slip s ";
     $aryQuery[] = "   LEFT JOIN m_sales ms ON s.lngsalesno = ms.lngsalesno and s.lngrevisionno = ms.lngrevisionno";
     $aryQuery[] = "   LEFT JOIN m_user u_ins ON s.lngusercode = u_ins.lngusercode ";
@@ -241,7 +241,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 
     $strQuery = "";
     $strQuery .= implode("\n", $aryQuery);
-
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
         for ($i = 0; $i < $lngResultNum; $i++) {
@@ -506,11 +506,6 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // 明細備考
     if ($aryCondition["strNote"]) {
         $aryWhere[] = " AND rd.strNote LIKE '%" . $aryCondition["strNote"] . "%'";
-    }
-
-    // 再販を含む（offの場合、t_receivedetail.strrevisecode='00'のみを対象）
-    if ($aryCondition["IsIncludingResale"] == "Off") {
-        $aryWhere[] = " AND rd.strrevisecode = '00'";
     }
 
     // -------------------

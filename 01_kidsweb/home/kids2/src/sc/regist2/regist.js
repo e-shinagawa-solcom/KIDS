@@ -96,10 +96,84 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
         $("select[name='lngTaxClassCode']").prop('disabled', false);
     }
 }
+
+
+function convertNumber(str, fracctiondigits) {
+    console.log(str);
+    if ((str != "" && str != undefined && str != "null") || str == 0) {
+        console.log("null以外の場合：" + str);
+        return Number(str).toLocaleString(undefined, {
+            minimumFractionDigits: fracctiondigits,
+            maximumFractionDigits: fracctiondigits
+        });
+    } else {
+        console.log("nullの場合：" + str);
+        return "";
+    }
+}
+
+// 合計金額・消費税額の更新
+function updateAmount() {
+
+    // 税抜金額を取得して配列に格納
+    var aryPrice = [];
+    $("#EditTableBody tr").each(function () {
+        //カンマをはじいてから数値に変換
+        var price = Number($(this).find($('td.detailSubTotalPrice')).html().split(',').join(''));
+        aryPrice.push(price);
+    });
+
+    // ----------------
+    // 合計金額の算出
+    // ----------------
+    var totalAmount = 0;
+    aryPrice.forEach(function (price) {
+        totalAmount += price;
+    });
+
+    // ----------------
+    // 消費税額の算出
+    // ----------------
+    // 消費税区分を取得
+    var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
+
+    // 消費税率を取得
+    var taxRate = Number($('select[name="lngTaxRate"]').children('option:selected').text().replace("%", "")) * 0.01;
+
+    console.log(taxRate);
+
+    // 消費税額の計算
+    var taxAmount = 0;
+    if (taxClassCode == "1") {
+        // 1:非課税
+        taxAmount = 0;
+    }
+    else if (taxClassCode == "2") {
+        // 2:外税
+        taxAmount = Math.floor(totalAmount * taxRate);
+    }
+    else if (taxClassCode == "3") {
+        // 3:内税
+        aryPrice.forEach(function (price) {
+            taxAmount += Math.floor((price / (1 + taxRate)) * taxRate);
+        });
+    }
+
+    // ------------------
+    // フォームに値を設定
+    // ------------------
+    if ($('input[name="lngMonetaryUnitCode"]').val() == "1" || $('input[name="lngMonetaryUnitCode"]').val() == "") {
+        $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 0));
+    } else {
+        $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 2));
+    }
+    $('input[name="strTaxAmount"]').val(convertNumber(taxAmount, 0));
+}
 // 消費税率の設定
 function setTaxRate() {
     // 消費税区分を取得
     var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
+    console.log(taxClassCode);
     if (taxClassCode == 1) {
         if (checkTaxRate()) {
             $('select[name="lngTaxRate"]').prepend('<option value="0">0%</option>');
@@ -243,6 +317,10 @@ function resetTableBDisplayStyle() {
 //   HTMLエレメント生成後の初期処理
 // ------------------------------------------
 jQuery(function ($) {
+    // エラーアイコンクラス名
+    var classNameErrorIcon = 'error-icon';
+    // エラーアイコンリソースURL
+    var urlErrorIcon = '/img/type01/cmn/seg/seg_error_mark.gif';
     var subwin;
     window.onload = function () {
         if (!(window.location.href.indexOf('renew') >= 0)) {
@@ -317,7 +395,7 @@ jQuery(function ($) {
             $("select[name='lngTaxClassCode']").val("2");
             $("select[name='lngTaxClassCode']").prop('disabled', false);
             $("input[name='dtmPaymentLimit']").prop('disabled', true);
-            $("input[name='dtmPaymentLimit']").val("");            
+            $("input[name='dtmPaymentLimit']").val("");
             $("input[name='dtmPaymentLimit']").next("button").prop('disabled', true);
             $("select[name='lngPaymentMethodCode']").val("0");
             $("select[name='lngPaymentMethodCode']").prop('disabled', true);
@@ -419,66 +497,13 @@ jQuery(function ($) {
     }
 
 
-    // 合計金額・消費税額の更新
-    function updateAmount() {
-
-        // 税抜金額を取得して配列に格納
-        var aryPrice = [];
-        $("#EditTableBody tr").each(function () {
-            //カンマをはじいてから数値に変換
-            var price = Number($(this).find($('td.detailSubTotalPrice')).html().split(',').join(''));
-            aryPrice.push(price);
-        });
-
-        // ----------------
-        // 合計金額の算出
-        // ----------------
-        var totalAmount = 0;
-        aryPrice.forEach(function (price) {
-            totalAmount += price;
-        });
-
-        // ----------------
-        // 消費税額の算出
-        // ----------------
-        // 消費税区分を取得
-        var taxClassCode = $('select[name="lngTaxClassCode"]').children('option:selected').val();
-
-        // 消費税率を取得
-        var taxRate = Number($('select[name="lngTaxRate"]').children('option:selected').text().replace("%", "")) * 0.01;
-
-        console.log(taxRate);
-
-        // 消費税額の計算
-        var taxAmount = 0;
-        if (taxClassCode == "1") {
-            // 1:非課税
-            taxAmount = 0;
-        }
-        else if (taxClassCode == "2") {
-            // 2:外税
-            taxAmount = Math.floor(totalAmount * taxRate);
-        }
-        else if (taxClassCode == "3") {
-            // 3:内税
-            aryPrice.forEach(function (price) {
-                taxAmount += Math.floor((price / (1 + taxRate)) * taxRate);
-            });
-        }
-
-        // ------------------
-        // フォームに値を設定
-        // ------------------
-        if ($('input[name="lngMonetaryUnitCode"]').val() == "1" || $('input[name="lngMonetaryUnitCode"]').val() == "") {
-            $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 0));
-        } else {
-            $('input[name="strTotalAmount"]').val(convertNumber(totalAmount, 2));
-        }
-        $('input[name="strTaxAmount"]').val(convertNumber(taxAmount, 0));
-    }
 
     function isDate(d) {
         if (d == "") { return false; }
+        if (/^[0-9]{8}$/.test(d)) {
+            var str = d.trim();
+            d = str.substr(0, 4) + '/' + str.substr(4, 2) + '/' + str.substr(6, 2);
+        }
         if (!d.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) { return false; }
 
         var date = new Date(d);
@@ -870,71 +895,6 @@ jQuery(function ($) {
         updateAmount();
     });
 
-    $('input[name="dtmDeliveryDate"]').on('change', function () {
-        // POST先
-        var postTarget = $('input[name="ajaxPostTarget"]').val();
-
-        //消費税率の選択項目変更
-        $.ajax({
-            type: 'POST',
-            url: postTarget,
-            data: {
-                strMode: "change-deliverydate",
-                strSessionID: $('input[name="strSessionID"]').val(),
-                dtmDeliveryDate: $(this).val(),
-            },
-            async: true,
-        }).done(function (data) {
-            console.log("done:change-deliverydate");
-            var data = JSON.parse(data);
-            console.log(data.error);
-            if (data.error) {
-                alert("納品日の税率マスタが見つかりません。");
-            }
-
-            //消費税率の選択項目更新
-            $('select[name="lngTaxRate"] > option').remove();
-            $('select[name="lngTaxRate"]').append(data.strHtml);
-
-            setTaxRate();
-
-            //金額の更新
-            updateAmount();
-
-        }).fail(function (error) {
-            console.log("fail:change-deliverydate");
-            console.log(error);
-        });
-
-        var lngMonetaryUnitCode = $('input[name="lngMonetaryUnitCode"]').val();
-        var lngMonetaryRateCode = $('input[name="lngMonetaryUnitCode"]').val();
-        // 適用レートの取得
-        if (lngMonetaryUnitCode != "" && lngMonetaryRateCode != "") {
-            // リクエスト送信
-            $.ajax({
-                url: '/pc/regist/getMonetaryRate.php',
-                type: 'post',
-                data: {
-                    'strSessionID': $.cookie('strSessionID'),
-                    'lngMonetaryUnitCode': lngMonetaryUnitCode,
-                    'lngMonetaryRateCode': lngMonetaryRateCode,
-                    'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
-                }
-            })
-                .done(function (response) {
-                    console.log(response);
-                    var data = JSON.parse(response);
-                    $('input[name="curConversionRate"]').val(data.curconversionrate);
-                })
-                .fail(function (response) {
-                    alert("fail");
-                })
-        }
-
-    });
-
-
-
     // 検索条件入力ボタン押下
     $('#search').on('click', function () {
 
@@ -1144,69 +1104,59 @@ jQuery(function ($) {
         //     alert("納品先を設定してください。");
         //     return;
         // }
-        // POST先
-        var postTarget = $('input[name="ajaxPostTarget"]').val();
 
-        // POSTデータ構築
-        var data = {
-            strMode: "get-closedday",
-            strSessionID: $('input[name="strSessionID"]').val(),
-            strcompanydisplaycode: $('input[name="lngCustomerCode"]').val(),
-        };
+        if ($('form').valid()) {
 
-        // プレビュー前のバリデーションに「締め日」が必要なのでajaxで取得する
-        $.ajax({
-            type: 'POST',
-            url: postTarget,
-            data: data,
-            async: true,
-        }).done(function (data) {
-            console.log("done:get-closedday");
-            console.log(data);
+            // POST先
+            var postTarget = $('input[name="ajaxPostTarget"]').val();
 
-            // 締め日
-            var closedDay = data;
+            // POSTデータ構築
+            var data = {
+                strMode: "get-closedday",
+                strSessionID: $('input[name="strSessionID"]').val(),
+                strcompanydisplaycode: $('input[name="lngCustomerCode"]').val(),
+            };
 
-            // 顧客コードに対応する締め日が取得できないとそもそもバリデーションできない
-            if (!closedDay) {
-                alert("顧客コードに対応する締め日が取得できません。");
-                return false;
-            }
+            // プレビュー前のバリデーションに「締め日」が必要なのでajaxで取得する
+            $.ajax({
+                type: 'POST',
+                url: postTarget,
+                data: data,
+                async: true,
+            }).done(function (data) {
+                console.log("done:get-closedday");
+                console.log(data);
 
-            if (closedDay < 0) {
-                alert("顧客コードに対応する締め日が負の値です。");
-                return false;
-            }
+                // 締め日
+                var closedDay = data;
 
-            // DBG:一時コメントアウト対象
-            // プレビュー画面表示前のバリデーションチェック
-            if (!varidateBeforePreview(closedDay)) {
-                return false;
-            }
+                // 顧客コードに対応する締め日が取得できないとそもそもバリデーションできない
+                if (!closedDay) {
+                    alert("顧客コードに対応する締め日が取得できません。");
+                    return false;
+                }
 
-            // プレビュー画面表示
-            displayPreview();
+                if (closedDay < 0) {
+                    alert("顧客コードに対応する締め日が負の値です。");
+                    return false;
+                }
 
-        }).fail(function (error) {
-            console.log("fail:get-closedday");
-            console.log(error);
-        });
+                // DBG:一時コメントアウト対象
+                // プレビュー画面表示前のバリデーションチェック
+                if (!varidateBeforePreview(closedDay)) {
+                    return false;
+                }
+
+                // プレビュー画面表示
+                displayPreview();
+
+            }).fail(function (error) {
+                console.log("fail:get-closedday");
+                console.log(error);
+            });
+        }
 
     });
-
-    function convertNumber(str, fracctiondigits) {
-        console.log(str);
-        if ((str != "" && str != undefined && str != "null") || str == 0) {
-            console.log("null以外の場合：" + str);
-            return Number(str).toLocaleString(undefined, {
-                minimumFractionDigits: fracctiondigits,
-                maximumFractionDigits: fracctiondigits
-            });
-        } else {
-            console.log("nullの場合：" + str);
-            return "";
-        }
-    }
 
 
     // 閉じた際の処理

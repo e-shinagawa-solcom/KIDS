@@ -29,6 +29,11 @@
 	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui-1.12.0.css">
 	<link rel="stylesheet" href="/cmn/jquery/ui/jquery-ui.theme.css">
+    <!-- jQuery Validation Plugin -->
+    <script src="/cmn/jquery/validation/jquery.validate.js"></script>
+    <!-- jQuery tooltipster -->
+    <script src="/cmn/jquery/tooltipster/js/tooltipster.bundle.js"></script>
+    <link rel="stylesheet" href="/cmn/jquery/tooltipster/css/tooltipster.bundle.css">
 	<!-- datepickerの日本語化 -->
 	<script src="/cmn/jquery/ui/datepicker-ja.js"></script>
 	<script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
@@ -37,6 +42,7 @@
 	<link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
 	<!-- msw 表示 -->
 	<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
+	<script src="/search/cmn/js/date.js" defer></script>
 	<!-- <script src="/search/cmn/js/invoke-master-search.js" defer></script> -->
 	<script src="/sc/regist2/js/invoke-master-search.js" defer></script>
 	<!-- datepickerの要素指定 -->
@@ -45,6 +51,8 @@
 	<script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
 	<script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
 	<script src="/cmn/js/setinputmode.js" defer></script>
+	<script src="/search/cmn/js/validate-functions.js" defer></script>
+	<script type="text/javascript" language="javascript" src="/sc/regist2/js/validate-form.js"></script>
 </head>
 
 <body class="background">
@@ -63,7 +71,7 @@
 					<div class="regist-line">
 						<span class="regist-label">
 							<span class="regist-label__text_68">納品日</span>
-							<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10">
+							<input style="ime-mode:disabled;" class="TxtStyle05L is-date" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10">
 						</span>
 						<span class="regist-label">
 							<span class="regist-label__text">顧客</span>

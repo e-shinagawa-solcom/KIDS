@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="/mold/cmn/confirm/css/confirm-in-iframe.css">
 		<!-- タブ切り替え共通処理 -->
 		<script src="/mold/cmn/form/js/tab-function.js" defer></script>
+		<script src="/search/cmn/js/validate-functions.js" defer></script>
 		<script src="/search/cmn/js/date.js" defer></script>
 		<!-- セレクトボックス共通処理 -->
 		<script src="/mold/cmn/form/js/util-selectbox.js" defer></script>
@@ -21,13 +22,13 @@
 		<link rel="stylesheet" href="/search/cmn/css/msw.css">
 		<script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
 		<script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
-		<!--<link rel="stylesheet" href="/cmn/jquery/tablesorter/themes/blue/style.css">-->
 		<link rel="stylesheet" href="/sc/regist2/tablesorter.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/forms.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/table.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/table-decide.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/table-box.css">
 		<link rel="stylesheet" type="text/css" media="screen" href="/sc/regist2/css/form-buttons.css">
+		<!-- <script type="text/javascript" language="javascript" src="/sc/regist2/js/validate-form.js"></script> -->
 		<!-- msw 表示 -->
 		<script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
 		<script src="/sc/regist2/js/invoke-master-search.js" defer></script>
@@ -37,7 +38,8 @@
 		<script type="text/javascript" language="javascript" src="/sc/regist2/functions.js"></script>
 		<script type="text/javascript" language="javascript" src="/sc/regist2/regist.js"></script>
 		<script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
-        <script src="/cmn/js/setinputmode.js" defer></script>
+		<script src="/cmn/js/setinputmode.js" defer></script>
+		<script type="text/javascript" language="javascript" src="/sc/regist2/js/validate-form.js"></script>
 	</header3>
 
 	<bodyonload>
@@ -50,8 +52,8 @@
 		getNaviMenu('_%strSessionID%_', 'sc-regist');
 	</script>
 </div>
-
-<input type="submit">
+<!-- 
+<input type="submit"> -->
 <!-- 入力フォーム -->
 <div class="form-box">
 	<!-- フォームヘッダ -->
@@ -65,7 +67,7 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text_68">納品日</span>
-						<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10">
+						<input style="ime-mode:disabled;" class="TxtStyle05L is-date" type="text" name="dtmDeliveryDate" value="_%dtmDeliveryDate%_" maxlength="10">
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">顧客</span>

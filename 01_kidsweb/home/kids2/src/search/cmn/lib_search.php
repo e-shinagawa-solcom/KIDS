@@ -1219,12 +1219,12 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
     if ($lngResultNum > 0) {
         // 指定数以内であれば通常処理
         for ($i = 0; $i < $lngResultNum; $i++) {
-            $detailData = pg_fetch_all($lngResultID);
+            $result = pg_fetch_all($lngResultID);
         }
     }
     $objDB->freeResult($lngResultID);
 
-    return $detailData;
+    return $result;
 }
 
 function fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displayColumns, $record, $toUTF8Flag)
@@ -1368,7 +1368,7 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     // 修正ボタンの表示
 
                     if ($type == 'slip') {
-                        if (!$isadmin and $isMaxData and $aryAuthority[$key] && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {                            
+                        if (!$isadmin && $isMaxData && $aryAuthority[$key] && is_null($record["lnginvoiceno"]) && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {                            
                             $a = $doc->createElement("a"); 
                             $a->setAttribute("href", "#");// 修正ボタン
                             $imgFix = $doc->createElement("img");

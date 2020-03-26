@@ -83,7 +83,7 @@ foreach ($aryData["detailData"] as $data) {
 if ($aryData["strGoodsCode"] != "") {
     unset($aryQuery);
     $aryQuery[] = "UPDATE m_product ";
-    $aryQuery[] = "set strgoodscode = " . $aryData["strGoodsCode"] . " ";
+    $aryQuery[] = "set strgoodscode = '" . $aryData["strGoodsCode"] . "' ";
     $aryQuery[] = "where lngproductno = " . $aryData["lngProductNo"] . " ";
     $aryQuery[] = "and lngrevisionno = " . $aryData["lngProductRevisionNo"] . " ";
     $aryQuery[] = "and strrevisecode = '" . $aryData["strReviseCode"] . "' ";
