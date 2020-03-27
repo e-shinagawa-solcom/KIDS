@@ -313,7 +313,7 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno, $lngrevisionno )
  *                                         nnn：月内での連番（001～999）を自動採番
  *    @access public
  */
-function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $objDB )
+function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $dtminvoicedate, $objDB )
 {
     // 登録済なら登録されているコードを返す
     if ( !empty($lnginvoiceno) )
@@ -338,11 +338,11 @@ function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $objDB )
     $baseDate   = '2019-04-01';
 
     $dateTimeBase = new DateTime($baseDate);
-    $dateTimeNow  = new DateTime(date('Y-m-d'));
+    $dateTimeNow  = new DateTime($dtminvoicedate);
     $diff   = $dateTimeBase->diff($dateTimeNow);
     $period = $basePeriod + (int)$diff->format('%Y');
     $thisMonth = $dateTimeNow->format('m');
-
+    // $thisMonth = $invoiceMonth;
     // dummyの処理(無駄なシーケンス発行を防ぐ)
     if($isDummy)
     {
@@ -1058,11 +1058,12 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     // 請求日
     $insertAry['dtminvoicedate'] = $aryData['dtminvoicedate'];
 
+    var_dump($aryData["dtminvoicedate"]);
     // 請求書コード
     // 登録時 : ルールに基づいたコード生成
     // 更新時 : 更新元の請求書マスタ.請求書コード
     $insertAry['strinvoicecode'] = empty($aryResult['strinvoicecode'])
-                                    ? fncGetStrInvoiceCode(null, false, $objDB)
+                                    ? fncGetStrInvoiceCode(null, false, $aryData["dtminvoicedate"], $objDB)
                                     : $aryResult['strinvoicecode'];
 
     // 顧客コード(DISPLAY)
@@ -1072,8 +1073,8 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     
     $printname = fncGetMasterValue("m_companyprintname","lngcompanycode","strprintcompanyname",$lngcompanycode, "", $objDB);
     $companyname = fncGetMasterValue("m_company","strcompanydisplaycode","strcompanyname",$aryData['strcustomercode'] . ":str", "", $objDB);
-    
-    if( strlen($printname) > 0 ){
+
+    if(strlen($printname) > 0 ){
         // 顧客名
         $insertAry['strcustomername'] = $companyname;
 
@@ -1872,14 +1873,19 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     // 請求日
     $dtmInvoiceDate = $aryResult['ActionDate'];
     $aryPrevResult['dtmInvoiceDate'] = $dtmInvoiceDate;
+
+    // 請求月
+    $aryPrevResult['invoiceMonth'] = $aryResult['invoiceMonth'];
+    $aryPrevResult['invoiceMonth_desc'] = ltrim($aryResult['invoiceMonth'], 0);
+
     // 表示用請求日
     $printInvDate = fncGetJapaneseDate($dtmInvoiceDate);
 //    $aryPrevResult['printInvDate']  = $printInvDate[0] . $printInvDate[1] .'年 ' .$printInvDate[2] .'月' .$printInvDate[3] .'日';
    $aryPrevResult['printInvDate']  = date('Y年n月j日', strtotime($aryResult['ActionDate']));
 
     // 請求書コード
-    $aryPrevResult['strInvoiceCode'] = fncGetStrInvoiceCode($lngInvoiceNo, true, $objDB);
-
+    // $aryPrevResult['strInvoiceCode'] = fncGetStrInvoiceCode($lngInvoiceNo, true, $aryResult['ActionDate'], $objDB);
+    $aryPrevResult['strInvoiceCode'] = "";
     // 自 dtmchargeternstart
     $printTernStart = fncGetJapaneseDate($aryResult['dtmchargeternstart']);
     $aryPrevResult['dtmChargeternStart'] = $aryResult['dtmchargeternstart'];

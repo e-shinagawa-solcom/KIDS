@@ -325,6 +325,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     $arySelect[] = "  p.strgoodscode,"; //顧客品番
     $arySelect[] = "  rd.strproductcode,"; //製品コード
     $arySelect[] = "  rd.strrevisecode,"; //リバイズコード（再販コード）
+    $arySelect[] = "  rd.strproductcode || '_' || rd.strrevisecode as strproductcode_desc,"; // 製品コード_再販コード）
     $arySelect[] = "  p.strproductname,"; //製品名
     $arySelect[] = "  p.strproductenglishname,"; //製品名（英語）
     $arySelect[] = "  g.strgroupdisplaycode as strsalesdeptcode,"; //営業部署（名称）
@@ -512,7 +513,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     //  並び順定義
     // -------------------
     $aryOrder[] = " ORDER BY";
-    $aryOrder[] = "  rd.lngsortkey";
+    $aryOrder[] = "  strproductcode_desc desc, r.dtminsertdate desc, rd.lngreceivedetailno";
 
     // -------------------
     // クエリ作成
@@ -527,7 +528,6 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // クエリ実行
     // -------------------
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-//echo $strQuery;
 fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
     // 結果を配列に格納
     $aryResult = []; //空の配列で初期化

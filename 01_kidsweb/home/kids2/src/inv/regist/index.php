@@ -127,7 +127,6 @@
 
         // トランザクション開始
         $objDB->transactionBegin();
-        
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
         // 出力明細が1件もない場合
