@@ -153,7 +153,7 @@ function fncGetSalesDetailNoToInfoSQL ( $lngSalesNo, $lngRevisionNo )
 	$aryQuery[] = ", tc.strTaxClassName as strTaxClassName";
 	// 税率
 	$aryQuery[] = ", sd.lngTaxCode as lngTaxCode";
-	$aryQuery[] = ", To_char( t.curTax, '9,999,999,990.9999' ) as curTax";
+	$aryQuery[] = ", To_char(t.curTax * 100, '9,999,999,990' ) || '%' as curTax";
 	// 税額
 	$aryQuery[] = ", sd.curTaxPrice";
 	// 明細備考
