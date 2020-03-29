@@ -21,7 +21,7 @@ FROM
         , ms.lngcustomercompanycode
         , tsd.strproductcode
         , tsd.strrevisecode
-        , to_timestamp($1,'YYYY/MM/DD HH:MI:SS.MS') as current
+        , to_timestamp($1,'YYYY/MM/DD HH24:MI:SS.MS') as current
     FROM
         t_stockdetail tsd
     INNER JOIN
