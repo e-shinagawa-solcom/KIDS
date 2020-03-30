@@ -28,6 +28,7 @@ error_reporting(E_ALL);
 
 	// ライブラリ読み込み
 	require_once(LIB_FILE);
+	require_once(LIB_DEBUGFILE);
 	require_once(SRC_ROOT . "dataex/cmn/lib_dataex.php");
 	require_once(SRC_ROOT . "dataex/result/spreadsheet.php");
 	
@@ -138,7 +139,7 @@ error_reporting(E_ALL);
 					$aryExportDataInfo[DEF_EXPORT_PURCHASE]["strExportConditions"] = "AND s.lngPayConditionCode = " . DEF_PAYCONDITION_TT . " ORDER BY s.lngMonetaryUnitCode, c.strCompanyDisplayCode, g.strGroupDisplayCode, sd.strProductCode";
 					break;
 				case 3:
-					$aryExportDataInfo[DEF_EXPORT_PURCHASE]["strExportConditions"] = "AND date_trunc( 'month', s.dtmAppropriationDate ) < date_trunc( 'month', s.dtmExpirationDate )" . " ORDER BY s.lngMonetaryUnitCode, g.strGroupDisplayCode, sd.strProductCode";
+					$aryExportDataInfo[DEF_EXPORT_PURCHASE]["strExportConditions"] = "";
 					break;
 			}
 
@@ -273,6 +274,7 @@ error_reporting(E_ALL);
 
 	if( $aryData["lngExportData"] != 8)
 	{
+//fncDebug("bbb.txt",  DEF_QUERY_ROOT . $aryExportDataInfo[$aryData["lngExportData"]]["filename"] . ".sql", __FILE__, __LINE__, "a");
 		// クエリファイルオープン
 		if ( !$strQuery = file_get_contents( DEF_QUERY_ROOT . $aryExportDataInfo[$aryData["lngExportData"]]["filename"] . ".sql" ) )
 		{
@@ -280,6 +282,7 @@ error_reporting(E_ALL);
 			echo $aryExportDataInfo[$aryData["lngExportData"]]["filename"];
 		}
 		$strQuery = sqlquery_replace($strQuery, $aryExportDataInfo[$aryData["lngExportData"]]);
+//fncDebug("bbb.txt",  $strQuery, __FILE__, __LINE__, "a");
 
 	}
 	elseif($aryData["lngExportData"] == 8)
@@ -287,12 +290,14 @@ error_reporting(E_ALL);
 		for($i=0; $i<4; $i++)
 		{
 		// クエリファイルオープン
+//fncDebug("bbb.txt",  DEF_QUERY_ROOT . $aryExportDataInfo[$aryData["lngExportData"]]["filename".$i] . ".sql", __FILE__, __LINE__, "a");
 			if ( !$strQuery = file_get_contents( DEF_QUERY_ROOT . $aryExportDataInfo[$aryData["lngExportData"]]["filename".$i] . ".sql" ) )
 			{
 				fncOutputError ( 9059, DEF_FATAL, "ファイルオープンに失敗しました。", TRUE, "", $objDB );
 				echo $aryExportDataInfo[$aryData["lngExportData"]]["filename".$i];
 			}
 			$strQuery = sqlquery_replace($strQuery, $aryExportDataInfo[$aryData["lngExportData"]]);
+//fncDebug("bbb.txt", $i . ":" . $strQuery, __FILE__, __LINE__, "a");
 			// SQLQueryを保持
 			$aryData["SQL".$i] = $strQuery;
 		}

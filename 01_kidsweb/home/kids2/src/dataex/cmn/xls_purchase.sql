@@ -37,21 +37,36 @@ SELECT
 	,sd.strNote
 FROM
 	m_Stock s
-	,t_StockDetail sd
+	inner join t_StockDetail sd 
+		on s.lngStockNo             = sd.lngStockNo
+		AND s.lngRevisionNo             = sd.lngRevisionNo
 	LEFT JOIN m_Order o
 		ON sd.lngOrderNo = o.lngOrderNo
 		AND sd.lngOrderRevisionNo = o.lngRevisionNo
-	,m_Product p
-	,m_Company c
-	,m_Group g
-	,m_User u
-	,m_MonetaryUnit mu
-	,m_MonetaryRateClass mrc
-	,m_StockSubject ss
-	,m_StockItem si
-	,m_ProductUnit pu
-	,m_PayCondition pc
-	,m_category mcg
+	inner join m_Product p 
+		on sd.strProductCode        = p.strProductCode
+		AND sd.strReviseCode        = p.strReviseCode
+	inner join m_Company c 
+		on s.lngCustomerCompanyCode = c.lngCompanyCode
+	inner join m_Group g 
+		on p.lnginchargegroupcode   = g.lngGroupCode
+	inner join m_User u 
+		on p.lnginchargeusercode    = u.lngUserCode
+	inner join m_MonetaryUnit mu 
+		on s.lngMonetaryUnitCode    = mu.lngMonetaryUnitCode
+	inner join m_MonetaryRateClass mrc 
+		on s.lngMonetaryRateCode    = mrc.lngMonetaryRateCode
+	inner join m_StockSubject ss 
+		on sd.lngStockSubjectCode   = ss.lngStockSubjectCode
+	inner join m_StockItem si 
+		on sd.lngStockItemCode      = si.lngStockItemCode
+		AND sd.lngStockSubjectCode   = si.lngStockSubjectCode
+	inner join m_ProductUnit pu 
+		on sd.lngProductUnitCode    = pu.lngProductUnitCode
+	inner join m_PayCondition pc 
+		on s.lngPayConditionCode    = pc.lngPayConditionCode
+	left outer join m_category mcg 
+		on p.lngcategorycode = mcg.lngcategorycode
 WHERE
 	s.lngRevisionNo =
 	(
@@ -73,23 +88,8 @@ WHERE
 	AND date_trunc ( 'day', s.dtmAppropriationDate ) <= '_%dtmAppropriationDateTo%_'
 	AND p.bytInvalidFlag        = FALSE
 	AND s.bytInvalidFlag        = FALSE
-	AND s.lngStockNo             = sd.lngStockNo
-	AND s.lngRevisionNo             = sd.lngRevisionNo
-	AND s.lngCustomerCompanyCode = c.lngCompanyCode
 	/* AND s.lngGroupCode           = g.lngGroupCode */
-	and p.lnginchargegroupcode   = g.lngGroupCode
 	/* AND s.lngUserCode            = u.lngUserCode */
-	and p.lnginchargeusercode    = u.lngUserCode
-	AND s.lngMonetaryUnitCode    = mu.lngMonetaryUnitCode
-	AND s.lngMonetaryRateCode    = mrc.lngMonetaryRateCode
-	AND s.lngPayConditionCode    = pc.lngPayConditionCode
-	AND sd.lngStockItemCode      = si.lngStockItemCode
-	AND sd.lngStockSubjectCode   = si.lngStockSubjectCode
-	AND sd.lngStockSubjectCode   = ss.lngStockSubjectCode
-	AND sd.strProductCode        = p.strProductCode
-	AND sd.strReviseCode        = p.strReviseCode
-	AND sd.lngProductUnitCode    = pu.lngProductUnitCode
-	and p.lngcategorycode = mcg.lngcategorycode
 
 	/* 条件：1.L/Cのデータ 2.T/Tのデータ 3.計上日～製品到着日が月を跨いだデータ */
 	_%strExportConditions%_

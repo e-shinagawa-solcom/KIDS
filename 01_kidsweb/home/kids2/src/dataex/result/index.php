@@ -105,8 +105,7 @@
 				. " ORDER BY s.lngMonetaryUnitCode, c.strCompanyDisplayCode, g.strGroupDisplayCode, sd.strProductCode";
 			$aryExportDataInfo[2]["lngExportConditions"][2] = "AND s.lngPayConditionCode = " . DEF_PAYCONDITION_TT 
 				. " ORDER BY s.lngMonetaryUnitCode, c.strCompanyDisplayCode, g.strGroupDisplayCode, sd.strProductCode";
-			$aryExportDataInfo[2]["lngExportConditions"][3] = "AND date_trunc( 'month', s.dtmAppropriationDate ) < date_trunc( 'month', s.dtmExpirationDate )"
-				. " ORDER BY s.lngMonetaryUnitCode, g.strGroupDisplayCode, sd.strProductCode";
+			$aryExportDataInfo[2]["lngExportConditions"][3] = "";
 
 			break;
 
@@ -166,6 +165,7 @@
 	$aryExportDataInfo[$aryData["lngExportData"]]["strOrderCodeFrom"][$aryData["lngExportConditions"]] = $aryData["strOrderCodeFrom"];
 	$aryExportDataInfo[$aryData["lngExportData"]]["strOrderCodeTo"][$aryData["lngExportConditions"]]   = $aryData["strOrderCodeTo"];
 
+//fncDebug( 'bbb.txt', DEF_QUERY_ROOT . $aryExportDataInfo[$aryData["lngExportData"]]["filename"] . ".sql", __FILE__, __LINE__, "a");
 
 	// クエリファイルオープン
 	if ( !$strQuery = file_get_contents ( DEF_QUERY_ROOT . $aryExportDataInfo[$aryData["lngExportData"]]["filename"] . ".sql" ) )
@@ -216,7 +216,7 @@
 	// カラム名セット
 	$strMasterData .= join ( "\t", $aryColumnName[$aryData["lngExportData"]] ) . "\n";
 
-fncDebug( 'bbb.txt', $strQuery, __FILE__, __LINE__);
+//fncDebug( 'bbb.txt', $strQuery, __FILE__, __LINE__, "a");
 
 	// データ文字列取得(***,***\n)
 	$strMasterData .= fncGetExportMasterData( $strQuery, $aryData, $objDB );

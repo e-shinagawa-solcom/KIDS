@@ -77,20 +77,30 @@ SELECT
 	,NULL as tyousei3
 	,sd.strNote
 FROM
-	m_Sales sa
-		left join t_SalesDetail sd
-			on sd.lngsalesno = sa.lngsalesno
-			and sd.lngrevisionno = sa.lngrevisionno
-			left join m_Receive r
-				on r.lngreceiveno = sd.lngReceiveNo
-				and r.lngrevisionno = sd.lngreceiverevisionno
-	,m_Company c
-	,m_Group g
-	,m_SalesClass sc
-	,m_Product p
-	,m_ProductUnit pu
-	,m_monetaryunit mu
-	,m_category mcg
+    m_Sales sa
+	left join t_SalesDetail sd
+		on sd.lngsalesno = sa.lngsalesno
+		and sd.lngrevisionno = sa.lngrevisionno
+	left join m_Receive r
+		on r.lngreceiveno = sd.lngReceiveNo
+		and r.lngrevisionno = sd.lngreceiverevisionno
+	inner join m_Product p 
+		on sd.strProductCode        = p.strProductCode
+		AND sd.strReviseCode        = p.strReviseCode
+
+	inner join m_Company c 
+		on sa.lngCustomerCompanyCode = c.lngCompanyCode
+	inner join m_Group g 
+		on p.lnginchargegroupcode   = g.lngGroupCode
+	inner join m_SalesClass sc 
+		on  sd.lngSalesClassCode     = sc.lngSalesClassCode
+	inner join m_ProductUnit pu 
+		on  sd.lngProductUnitCode    = pu.lngProductUnitCode
+	inner join m_monetaryunit mu 
+		on sa.lngmonetaryunitcode = mu.lngmonetaryunitcode
+	left outer join m_category mcg 
+		on mcg.lngcategorycode = p.lngcategorycode
+
 WHERE
 	sa.lngRevisionNo = 
 	(
@@ -113,16 +123,7 @@ WHERE
 	AND p.bytInvalidFlag         = FALSE
 	AND sa.bytInvalidFlag        = FALSE
 
-	AND sa.lngCustomerCompanyCode = c.lngCompanyCode
 	/* AND sa.lngGroupCode          = g.lngGroupCode*/
-	and p.lnginchargegroupcode   = g.lngGroupCode
-	AND sd.lngSalesClassCode     = sc.lngSalesClassCode
-	AND sa.lngSalesNo            = sd.lngSalesNo
-	AND sd.strProductCode        = p.strProductCode
-	AND sd.strReviseCode        = p.strReviseCode
-	AND sd.lngProductUnitCode    = pu.lngProductUnitCode
-	AND sa.lngmonetaryunitcode = mu.lngmonetaryunitcode
-	and p.lngcategorycode = mcg.lngcategorycode
 
 	/* 条件：1.グループ、顧客の順 2.グループ、製品の順 */
 	ORDER BY _%strExportConditions%_

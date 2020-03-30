@@ -80,20 +80,43 @@ SELECT
 	END AS curTotalPriceTTM
 FROM
 	m_Stock s 
-	,t_StockDetail sd
+	inner join t_StockDetail sd 
+		on s.lngStockNo             = sd.lngStockNo
+		AND s.lngRevisionNo             = sd.lngRevisionNo
+
 	LEFT JOIN m_Order o
 		ON sd.lngOrderNo = o.lngOrderNo
 		and sd.lngOrderRevisionNo = o.lngRevisionNo
-	,m_Product p
-	,m_Company c
-	,m_Group g
-	,m_TaxClass tc
-	,m_StockSubject ss
-	,m_StockItem si
-	,m_ProductUnit pu
-	,m_PayCondition pc
-	,m_monetaryunit mu
-	,m_category mcg
+	INNER JOIN m_Product p 
+		on sd.strProductCode        = p.strProductCode
+		AND sd.strReviseCode        = p.strReviseCode
+
+	inner join m_Company c 
+		on s.lngCustomerCompanyCode = c.lngCompanyCode
+
+	inner join m_Group g 
+		on p.lnginchargegroupcode   = g.lngGroupCode
+
+	inner join m_TaxClass tc 
+		on sd.lngTaxClassCode       = tc.lngTaxClassCode
+
+	inner join m_StockSubject ss 
+		on sd.lngStockSubjectCode   = ss.lngStockSubjectCode
+
+	inner join m_StockItem si 
+		on sd.lngStockItemCode      = si.lngStockItemCode
+		AND sd.lngStockSubjectCode   = si.lngStockSubjectCode
+
+	inner join m_ProductUnit pu 
+		on sd.lngProductUnitCode    = pu.lngProductUnitCode
+
+	inner join m_PayCondition pc 
+		on s.lngPayConditionCode    = pc.lngPayConditionCode
+	inner join m_monetaryunit mu 
+		on s.lngmonetaryunitcode = mu.lngmonetaryunitcode
+
+	left outer join m_category mcg 
+		on p.lngcategorycode = mcg.lngcategorycode
 WHERE
 	s.lngRevisionNo =
 	(
@@ -115,20 +138,6 @@ WHERE
 	AND date_trunc ( 'day', s.dtmAppropriationDate ) <= '_%dtmAppropriationDateTo%_'
 	AND p.bytInvalidFlag        = FALSE
 	AND s.bytInvalidFlag        = FALSE
-	AND s.lngCustomerCompanyCode = c.lngCompanyCode
 	/* AND s.lngGroupCode           = g.lngGroupCode */
-	and p.lnginchargegroupcode   = g.lngGroupCode
-	AND s.lngStockNo             = sd.lngStockNo
-	AND s.lngRevisionNo             = sd.lngRevisionNo
-	AND s.lngPayConditionCode    = pc.lngPayConditionCode
-	AND sd.lngStockItemCode      = si.lngStockItemCode
-	AND sd.lngStockSubjectCode   = si.lngStockSubjectCode
-	AND sd.lngStockSubjectCode   = ss.lngStockSubjectCode
-	AND sd.strProductCode        = p.strProductCode
-	AND sd.strReviseCode        = p.strReviseCode
-	AND sd.lngProductUnitCode    = pu.lngProductUnitCode
-	AND sd.lngTaxClassCode       = tc.lngTaxClassCode
-	AND s.lngmonetaryunitcode = mu.lngmonetaryunitcode
-	and p.lngcategorycode = mcg.lngcategorycode
 /* 条件：1.仕入科目、顧客の順 2.仕入科目、グループ、製品の順 */
 ORDER BY _%strExportConditions%_
