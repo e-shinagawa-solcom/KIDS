@@ -113,7 +113,7 @@ declare
         strordercode
        ,lngrevisionno
     from m_order
-    where lngorderstatuscode >= 4
+    where lngorderstatuscode >= 2
     order by strordercode, lngrevisionno;
     cur_po_detail CURSOR(ordercode text, revisionno integer) FOR
     select
