@@ -57,7 +57,6 @@ unset($aryQuery);
 
 // 詳細取得
 $strQuery = fncGetInvDetailQuery($aryData["strReportKeyCode"], $aryParts["lngrevisionno"]);
-
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum < 1) {
     fncOutputError(9051, DEF_FATAL, "帳票詳細データが存在しませんでした。", true, "", $objDB);

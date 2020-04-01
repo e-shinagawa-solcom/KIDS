@@ -75,136 +75,131 @@
     <!-- フォームコンテンツ -->
     <div class="form-box__contents--with-scroll">
         <form name="Invoice" method="post">
-            <!-- <input type="submit"> -->
             <div class="regist-box-area">
-                <div class="regist-box1">
-                    <div class="regist-line regist-float">
-                        <span class="regist-label w-465">
-                            <span class="regist-label__text50">顧客</span>
-                            <input class="disTxt05L input-code" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer" disabled>
-                            <input type="hidden" name="lngCustomerCode">
-                            <input class="disTxt2xL input-name" name="strCustomerName" type="text" disabled>
-                            <span>
-                                <a href="#">
-                                    <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif"
-                                        alt="msw">
-                                </a>
+                <!-- <input type="submit"> -->
+                <div class="regist-box-area-1">
+                    <div class="regist-box1">
+                        <div class="regist-line regist-float">
+                            <span class="regist-label w-465">
+                                <span class="regist-label__text50">顧客</span>
+                                <input class="disTxt05L input-code" name="lngCustomerCode" type="text" iscustomer="yes" alt="Customer" disabled>
+                                <input class="disTxt2xL input-name" name="strCustomerName" type="text" disabled>
+                                <input type="hidden" name="lngCustomerCode">
+                                <span>
+                                    <a href="#">
+                                        <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                                    </a>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="regist-box1">
+                            <div class="regist-line regist-float">
+                                <span class="regist-label">
+                                    <span class="regist-label__text50">起票者</span>
+                                    <input class="Txt07L" name="lngInputUserCode" type="text" value="_%lngInputUserCode%_" alt="InputUser">
+                                    <input class="disTxt120pxL" name="strInputUserName" type="text" value="_%strInputUserName%_" disabled>
+                                    <span>
+                                        <a href="#">
+                                            <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
+                                        </a>
+                                    </span>
+                                </span>
+                                <span class="regist-label">
+                                    <span class="regist-label__text50">請求日</span>
+                                    <input style="ime-mode:disabled;" class="Txt10L is-date" type="text" name="ActionDate" value="_%ActionDate%_" maxlength="10">
+                                </span>
+                            </div>
+                            <br>
+                            <div class="regist-line regist-float">
+                                <span class="regist-label w-465" style="height:58px;">
+                                    <span class="regist-label__text50">備考</span>
+                                    <span class="regist-label__required-mark">◎</span>
+                                    <span class="regist-label__text50">但し</span>
+                                    <input class="TxtStyle2xL" name="description" type="text">
+                                    <span class="regist-label__text50">代として</span>
+                                    <br>
+                                    <br>
+                                    <span class="regist-label__text50"></span>
+                                    <input class="Txt54L" name="strnote" type="text">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="regist-box-area-2">
+                    <div class="regist-box2">
+                        <span class="regist-label  regist-label-w190">
+                            <span class="regist-label__text50">請求月</span>
+                            <input id="invoiceMonth" class="TxtStyle05L" name="invoiceMonth">
+                            </input>
+                            <span class="regist-label__bold">月分</span>
+                        </span>
+                    </div>
+                    <div class="regist-box3">
+                        <span class="regist-label regist-label-box3">
+                            <span class="regist-label__text115">前月請求残額(税込)</span>
+                            <span class="regist-label__text20 moneyclass"></span>
+                            <input class="disTxt14R" name="curlastmonthbalance" type="text" value="0">
+                            <input type="hidden" name="lngmonetaryunitcode" value="">
+                        </span>
+                    </div>
+                    <div style="height: 92px;">
+                        <div class="regist-box2-2" style="margin-top: 5px;">
+                            <span class="regist-label" style="height: 60px;padding-top:5px;">
+                                <input type="radio" id="invoiceMode1" name="invoiceMode" value="1" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;" checked>
+                                <span class="regist-label__text65">請求日請求</span>
+                                <br>
+                                <br>
+                                <input type="radio" id="invoiceMode2"  name="invoiceMode" value="2" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;">
+                                <span class="regist-label__text65">締め日請求</span>
+                            </span>
+                        </div>
+                        <div class="regist-box2-3" style="margin-top: 5px;">
+                            <span class="regist-label regist-label-w135">
+                                <span class="regist-label__text15">自</span>
+                                <input class="TxtStyle04L is-date" name="dtmchargeternstart" type="text" value="" maxlength="10">
+                            </span>
+                            <br>
+                            <span class="regist-label regist-label-w135" style="margin-top: 5px;">
+                                <span class="regist-label__text15">至</span>
+                                <input class="TxtStyle04L is-date" name="dtmchargeternend" type="text" value="" maxlength="10">
+                            </span>
+                        </div>
+                        <div class="regist-box3-2" style="margin-top: 5px;">
+                            <span class="regist-label regist-label-box3">
+                                <span class="regist-label__text65">当月請求額</span>
+                                <span class="regist-label__text20 moneyclass"></span>
+                                <input class="disTxt14R" name="curthismonthamount" type="text" disabled>
+                                <input type="hidden" name="curthismonthamount">
+                            </span>
+                            <br>
+                            <span class="regist-label regist-label-box3" style="margin-top: 5px;">
+                                <span class="regist-label__text65">消費税</span>
+                                <span class="regist-label__text20 moneyclass"></span>
+                                <input class="disTxt14R" name="curtaxprice" type="text" disabled>
+                                <input type="hidden" name="curtaxprice">
+                            </span>
+                        </div>
+                    </div>
+                    <div class="regist-box2">
+                        <span class="regist-label regist-label-w190" style="margin-top:5px;">
+                            <span class="regist-label__text177">
+                                再印刷を備考に明記する
+                                <input name="strnotecheck" class="is-search" type="checkbox">
                             </span>
                         </span>
+
                     </div>
-                </div>
-                <div class="regist-box2">
-                    <span class="regist-label  regist-label-w190">
-                        <span class="regist-label__text50">請求月</span>
-                        <input id="invoiceMonth" class="TxtStyle05L" name="invoiceMonth">
-                        </input>
-                        <span class="regist-label__bold">月分</span>
-                    </span>
-
-                </div>
-                <div class="regist-box3">
-                    <span class="regist-label regist-label-box3">
-                        <span class="regist-label__text115">前月請求残額(税込)</span>
-                        <span class="regist-label__text20 moneyclass"></span>
-                        <input class="disTxt14R" name="curlastmonthbalance" type="text" value="0">
-                    </span>
-                </div>
-                <div class="regist-clear"></div>
-                <input type="hidden" name="lngmonetaryunitcode" value="">
-            </div>
-
-            <div class="regist-box-area">
-                <div class="regist-box1">
-                    <div class="regist-line regist-float">
-                        <span class="regist-label">
-                            <span class="regist-label__text50">起票者</span>
-                            <input class="Txt07L" name="lngInputUserCode" type="text" value="_%lngInputUserCode%_" alt="InputUser">
-                            <input class="disTxt120pxL" name="strInputUserName" type="text" value="_%strInputUserName%_" disabled>
-                            <span>
-                                <a href="#">
-                                    <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif"
-                                        alt="msw">
-                                </a>
-                            </span>
-                        </span>
-                        <span class="regist-label">
-                            <span class="regist-label__text50">請求日</span>
-                            <input style="ime-mode:disabled;" class="Txt10L" type="text" name="ActionDate" value="_%ActionDate%_" maxlength="10">
+                    <div class="regist-box3">
+                        <span class="regist-label regist-label-box3" style="margin-top:5px;">
+                            <span class="regist-label__text115">差し引き合計額</span>
+                            <span class="regist-label__text20 moneyclass"></span>
+                            <input class="disTxt14R" name="notaxcurthismonthamount" type="text" disabled>
+                            <input type="hidden" name="notaxcurthismonthamount">
                         </span>
                     </div>
                 </div>
-                <div class="regist-box2">
-                    <span class="regist-label regist-label-w190">
-                        <span class="regist-label__text50">自</span>
-                        <input class="TxtStyle04L" name="dtmchargeternstart" type="text" value="" maxlength="10">
-                    </span>
-
-                </div>
-                <div class="regist-box3">
-                    <span class="regist-label regist-label-box3">
-                        <span class="regist-label__text115">当月請求額</span>
-                        <span class="regist-label__text20 moneyclass"></span>
-                        <input class="disTxt14R" name="curthismonthamount" type="text" disabled>
-                        <input type="hidden" name="curthismonthamount">
-                    </span>
-                </div>
-                <div class="regist-clear"></div>
             </div>
-
-            <div class="regist-box-area">
-                <div class="regist-box1">
-                    <div class="regist-line regist-float">
-                        <span class="regist-label w-465" style="height:58px;">
-                            <span class="regist-label__text50">備考</span>
-                            <span class="regist-label__required-mark">◎</span>
-                            <span class="regist-label__text50">但し</span>
-                            <input class="TxtStyle04L" name="description" type="text">
-                            <span class="regist-label__text50">代として</span>
-                            <br>
-                            <br>
-                            <span class="regist-label__text50"></span>
-                            <input class="Txt54L" name="strnote" type="text">
-                        </span>
-                    </div>
-                </div>
-                <div class="regist-box2">
-                    <span class="regist-label regist-label-w190">
-                        <span class="regist-label__text50">至</span>
-                        <input class="TxtStyle04L" name="dtmchargeternend" type="text" value="" maxlength="10">
-                    </span>
-
-                </div>
-                <div class="regist-box3">
-                    <span class="regist-label regist-label-box3">
-                        <span class="regist-label__text115">消費税</span>
-                        <span class="regist-label__text20 moneyclass"></span>
-                        <input class="disTxt14R" name="curtaxprice" type="text" disabled>
-                        <input type="hidden" name="curtaxprice">
-                    </span>
-                </div>
-                <div class="regist-box2">
-                    <span class="regist-label regist-label-w190" style="margin-top:5px;">
-                        <span class="regist-label__text177">
-                            再印刷を備考に明記する
-                            <input name="strnotecheck" class="is-search" type="checkbox">
-                        </span>
-                    </span>
-
-                </div>
-                <div class="regist-box3">
-                    <span class="regist-label regist-label-box3" style="margin-top:5px;">
-                        <span class="regist-label__text115">差し引き合計額</span>
-                        <span class="regist-label__text20 moneyclass"></span>
-                        <input class="disTxt14R" name="notaxcurthismonthamount" type="text" disabled>
-                        <input type="hidden" name="notaxcurthismonthamount">
-                    </span>
-                </div>
-            </div>
-
-            <div class="regist-box-area">
-                <div class="regist-clear"></div>
-            </div>
-
             <div class="flex-container">
                 <table class="table-box" style="height: 150px;">
                     <tr>
@@ -227,6 +222,9 @@
                                             <tr>
                                                 <th class="serial">No.</th>
                                                 <th class="slipcode">納品書NO.
+                                                    <span></span>
+                                                </th>
+                                                <th class="customerno">顧客NO.
                                                     <span></span>
                                                 </th>
                                                 <th class="customer">納品先
@@ -273,6 +271,7 @@
                                             <tr>
                                                 <th class="serial">No.</th>
                                                 <th class="slipcode">納品書NO.</th>
+                                                <th class="customerno">顧客NO.</th>
                                                 <th class="customer">納品先</th>
                                                 <th class="deliverydate">納品日</th>
                                                 <th class="price">税抜金額</th>
@@ -288,6 +287,7 @@
                                                     <span></span>
                                                 </td>
                                                 <td class="slipcode"></td>
+                                                <td class="customerno" style="text-align: center;"></td>
                                                 <td class="customer">
                                                     <span class="customercode"></span>
                                                     <span class="customername"></span>
@@ -337,6 +337,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="slipcode">納品書NO.</th>
+                                                <th class="customerno">顧客NO.</th>
                                                 <th class="customer">納品先</th>
                                                 <th class="deliverydate">納品日</th>
                                                 <th class="price">税抜金額</th>
@@ -365,6 +366,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="slipcode"></td>
+                                                <td class="customerno" style="text-align: center;"></td>
                                                 <td class="customer">
                                                     <span class="customercode"></span>
                                                     <span class="customername"></span>

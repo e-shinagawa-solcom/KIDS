@@ -1756,6 +1756,8 @@
         <input type="hidden" name="slipCodeList"               value="_%slipCodeList%_"  >
         <!-- 明細伝票番号リスト -->
         <input type="hidden" name="slipNoList"               value="_%slipNoList%_"  >
+        <!-- 明細伝票コードリスト -->
+        <input type="hidden" name="customerNoList"               value="_%customerNoList%_"  >
         <!-- 明細伝票リビジョン番号リスト -->
         <input type="hidden" name="revisionNoList"               value="_%revisionNoList%_"  >
         <!-- 差し引き合計額 -->
@@ -1863,7 +1865,7 @@
         hidden;mso-ignore:visibility'>　</u></td>
         <td colspan=2 rowspan=2 class=xl12913302></td>
         <td colspan=1 class=xl13013302 align=center></td>
-        <td colspan=3 class=xl13113302 align=left>_%printInvDate%_</td>
+        <td colspan=3 class=xl13113302 style="text-align: center;">_%printInvDate%_</td>
         <td class=xl13213302></td>
         <td class=xl13213302></td>
         <td class=xl13213302></td>
@@ -2017,9 +2019,9 @@
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
-        <td colspan=2 rowspan=2 class=xl7613302 style='border-bottom:1.0pt solid black'></td>
+        <td colspan=2 rowspan=2 class=xl7613302 style='border-bottom:1.0pt solid black'>請求明細枚数</td>
         <td colspan=2 rowspan=2 class=xl7713302 style='border-right:1.0pt solid black;
-        border-bottom:1.0pt solid black'></td>
+        border-bottom:1.0pt solid black'>_%slipCodeCount%_枚</td>
         <td class=xl12513302>　</td>
     </tr>
     <tr height=10 style='mso-height-source:userset;height:8.1pt'>
@@ -2164,7 +2166,7 @@
         hidden;mso-ignore:visibility'>　</u></td>
         <td colspan=2 rowspan=2 class=xl12913302></td>
         <td colspan=1 class=xl13013302></td>
-        <td colspan=3 class=xl13113302 align=right>_%printInvDate%_</td>
+        <td colspan=3 class=xl13113302 style="text-align: center;">_%printInvDate%_</td>
         <td class=xl13213302></td>
         <td class=xl13213302></td>
         <td class=xl13213302></td>
@@ -2340,26 +2342,50 @@
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
-        <td class=xl6553513302></td>
-        <td class=xl6913302 width=40 style='border-top:none;width:30pt'>　</td>
-        <td rowspan=5 class=xl6913302 width=66 style='border-top:none;width:50pt'>
+        <td rowspan=6 colspan="2" class=xl6913302 style='border-top:none;width:50pt;text-align: right;'>
+            _%strcustomerno0%_
+          <br>_%strcustomerno1%_
+          <br>_%strcustomerno2%_
+          <br>_%strcustomerno3%_
+          <br>_%strcustomerno4%_
+          <br>_%strcustomerno5%_
+          <br>_%strcustomerno6%_
+          <br>_%strcustomerno7%_
+          <br>_%strcustomerno8%_
+          <br>_%strcustomerno9%_</td>
+        <td rowspan=8 class=xl6913302 width=66 style='border-top:none;width:50pt'>
             _%strslipcode0%_
           <br>_%strslipcode1%_
           <br>_%strslipcode2%_
           <br>_%strslipcode3%_
           <br>_%strslipcode4%_
           <br>_%strslipcode5%_
-          <br>_%strslipcode6%_</td>
-        <td rowspan=3 class=xl6913302 width=61 style='border-bottom:.5pt solid black;
-        border-top:none;width:46pt'>_%strslipcode7%_
+          <br>_%strslipcode6%_
+          <br>_%strslipcode7%_
           <br>_%strslipcode8%_
-          <br>_%strslipcode9%_
-          <br>_%strslipcode10%_</td>
-        <td rowspan=3 class=xl6913302 width=61 style='border-bottom:.5pt solid black;
-        border-top:none;width:46pt'>_%strslipcode11%_
+          <br>_%strslipcode9%_</td>
+        <td rowspan=6 class=xl6913302 width=61 style='border-bottom:.5pt solid black;
+        border-top:none;width:46pt'>_%strcustomerno0%_
+          <br>_%strcustomerno11%_
+          <br>_%strcustomerno12%_
+          <br>_%strcustomerno13%_
+          <br>_%strcustomerno14%_
+          <br>_%strcustomerno15%_
+          <br>_%strcustomerno16%_
+          <br>_%strcustomerno17%_
+          <br>_%strcustomerno18%_
+          <br>_%strcustomerno19%_</td>
+        <td rowspan=6 class=xl6913302 width=61 style='border-bottom:.5pt solid black;
+        border-top:none;width:46pt'>_%strslipcode0%_          
+          <br>_%strslipcode11%_
           <br>_%strslipcode12%_
           <br>_%strslipcode13%_
-          <br>_%strslipcode14%_</td>
+          <br>_%strslipcode14%_
+          <br>_%strslipcode15%_
+          <br>_%strslipcode16%_
+          <br>_%strslipcode17%_
+          <br>_%strslipcode18%_
+          <br>_%strslipcode19%_</td>
         <td class=xl12513302>　</td>
     </tr>
     <tr height=32 style='mso-height-source:userset;height:24.0pt'>
@@ -2368,10 +2394,7 @@
         <td class=xl6613302 style='border-top:none'>差引合計額</td>
         <td colspan=3 class=xl8613302 style='border-right:1.0pt solid black;
         border-left:none'>_%curThisMonthAmount_desc%_</td>
-        <td class=xl6553513302></td>
-        <td class=xl6553513302></td>
-        <td class=xl6553513302></td>
-        <td class=xl14313302 width=40 style='width:30pt'></td>
+        <td class=xl6553513302 colspan="2"></td>
         <td class=xl12513302>　</td>
     </tr>
     <tr height=15 style='mso-height-source:userset;height:11.25pt'>
@@ -2381,10 +2404,37 @@
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
+        <td class=xl6553513302 colspan="2"></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=15 style='mso-height-source:userset;height:11.25pt'>
+        <td height=15 class=xl12213302 style='height:11.25pt'>　</td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
         <td class=xl6553513302></td>
-        <td class=xl14313302 width=40 style='width:30pt'></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302 colspan="2"></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=15 style='mso-height-source:userset;height:11.25pt'>
+        <td height=15 class=xl12213302 style='height:11.25pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302 colspan="2"></td>
+        <td class=xl12513302>　</td>
+    </tr>
+    <tr height=15 style='mso-height-source:userset;height:11.25pt'>
+        <td height=15 class=xl12213302 style='height:11.25pt'>　</td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302></td>
+        <td class=xl6553513302 colspan="2"></td>
         <td class=xl12513302>　</td>
     </tr>
     <tr height=16 style='mso-height-source:userset;height:12.0pt'>

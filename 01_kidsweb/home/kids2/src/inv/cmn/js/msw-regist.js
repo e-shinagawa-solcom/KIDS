@@ -59,6 +59,11 @@
         selectClosedDay();
     });
 
+    // 請求モード変更の処理
+    $('input[name="invoiceMode"]:radio').on("change", function () {
+        console.log("change");
+        selectClosedDay();
+    });
     
     // 開始日時フォーカスを取ったときの処理
     $('input[name="ActionDate"]').on('blur', function () {        
@@ -164,13 +169,22 @@
 
     // 締め日から自至を算出する
     function getClosedDay(close) {
-        var billingDate = $('input[name="ActionDate"]');
+        var billingDate = $('input[name="ActionDate"]').val();
         var billingStart = $('input[name="dtmchargeternstart"]');
         var billingEnd = $('input[name="dtmchargeternend"]');
-        var dateLength = splitDate(billingDate.val());
-
+        if (billingDate.length == 8) { 
+            var y = billingDate.substr(0, 4);
+            var m = billingDate.substr(4, 2);
+            var d = billingDate.substr(6, 2);
+            billingDate = y + "/" + m + "/" + d;
+        }
+        var dateLength = splitDate(billingDate);
+        // 請求モード
+        var invoiceMode = $('input[name="invoiceMode"]:checked').val();
+console.log("モード：" + invoiceMode);
+console.log(invoiceMode == '1');
         // 請求日が未入力
-        if (isEmpty(billingDate.val()) == '0') {
+        if (isEmpty(billingDate) == '0') {
             return [false, false];
         }
 
@@ -179,42 +193,47 @@
             return [false, false];
         }
 
-        console.log(close);
-        console.log(close === 0);
-        console.log(close == 0);
-        if (close == 0) {
-            var date1 = new Date(billingDate.val() + ' 02:00');
-            // 先月初日
-            var first_date = new Date(date1.getFullYear(), date1.getMonth() - 1, 1);
-            // 先月末日
-            var last_date = new Date(date1.getFullYear(), date1.getMonth(), 0);
-            // 自の取得
-            var start = first_date.getFullYear() + '/' + ("00" + (first_date.getMonth() + 1)).slice( -2 )  + '/' + ("00" + first_date.getDate()).slice( -2 );
-            // 至の取得
-            var end = last_date.getFullYear() + '/' + ("00" + (last_date.getMonth() + 1)).slice( -2 ) + '/' + ("00" + last_date.getDate()).slice( -2 );
+        // 請求モードが請求日モードの場合
+        if (invoiceMode == '1') {
+            var start = billingDate;
+            var end = billingDate;
         } else {
-            var date1 = new Date(billingDate.val() + ' 00:00');
-            console.log(date1.getDate());
-            if (date1.getDate() <= close) {
-                // 先月の取得
-                var last_month = new Date(date1.getFullYear(), date1.getMonth() - 1, 1);
-                // 先先月の取得
-                var before_last_month = new Date(date1.getFullYear(), date1.getMonth() - 2, close);
-                before_last_month.setDate(before_last_month.getDate() + 1);
-
+            if (close == 0) {
+                var date1 = new Date(billingDate + ' 02:00');
+                // 今月初日
+                var first_date = new Date(date1.getFullYear(), date1.getMonth(), 1);
+                // 今月末日
+                var last_date = new Date(date1.getFullYear(), date1.getMonth() + 1, 0);
                 // 自の取得
-                var start = before_last_month.getFullYear() + '/' + ("00" + (before_last_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + before_last_month.getDate()).slice( -2 );
+                var start = first_date.getFullYear() + '/' + ("00" + (first_date.getMonth() + 1)).slice( -2 )  + '/' + ("00" + first_date.getDate()).slice( -2 );
                 // 至の取得
-                var end = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + close).slice( -2 );
+                var end = last_date.getFullYear() + '/' + ("00" + (last_date.getMonth() + 1)).slice( -2 ) + '/' + ("00" + last_date.getDate()).slice( -2 );
             } else {
-                // 先月の取得
-                var last_month = new Date(date1.getFullYear(), date1.getMonth() - 1, close);
-                last_month.setDate(last_month.getDate() + 1);
-                // 自の取得
-                var start = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + last_month.getDate()).slice( -2 );
-                // 至の取得
-                var end = date1.getFullYear() + '/' + ("00" + (date1.getMonth() + 1)).slice( -2 ) + '/' + ("00" + close).slice( -2 );
+                var date1 = new Date(billingDate + ' 00:00');
+                console.log(date1.getDate());
+                if (date1.getDate() <= close) {
+                    // 今月の取得
+                    var curr_month = new Date(date1.getFullYear(), date1.getMonth(), 1);
+                    // 先月の取得
+                    var last_month = new Date(date1.getFullYear(), date1.getMonth() - 1, close);
+                    last_month.setDate(last_month.getDate() + 1);
 
+                    // 自の取得
+                    var start = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + last_month.getDate()).slice( -2 );
+                    // 至の取得
+                    var end = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + close).slice( -2 );
+                } else {
+                    // 今月の取得
+                    var curr_month = new Date(date1.getFullYear(), date1.getMonth(), close);
+                    curr_month.setDate(curr_month.getDate() + 1);
+                    // 自の取得
+                    var start = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + curr_month.getDate()).slice( -2 );
+                    // 至の取得
+                    var end = date1.getFullYear() + '/' + ("00" + (date1.getMonth() + 2)).slice( -2 ) + '/' + ("00" + close).slice( -2 );
+
+                    console.log(start);
+                    console.log(end);
+                }
             }
         }
         // 返却
@@ -246,22 +265,22 @@
         return false;
     };
 
-    // 請求月のセレクトBOX
-    function setMonthSelectBox() {
-        var today = new Date();
-        var mm = today.getMonth() + 1;
-        //月
-        var month = "<select>";
-        for (var i = 1; i <= 12; i++) {
-            if (i == mm) {
-                month += '<option value=\"' + i + '\" selected >' + i + '</option>';
-            } else {
-                month += '<option value=\"' + i + '\" >' + i + '</option>';
-            }
-        }
-        month += '</select>';
-        $('#invoiceMonth').html(month + "月");
-    };
+    // // 請求月のセレクトBOX
+    // function setMonthSelectBox() {
+    //     var today = new Date();
+    //     var mm = today.getMonth() + 1;
+    //     //月
+    //     var month = "<select>";
+    //     for (var i = 1; i <= 12; i++) {
+    //         if (i == mm) {
+    //             month += '<option value=\"' + i + '\" selected >' + i + '</option>';
+    //         } else {
+    //             month += '<option value=\"' + i + '\" >' + i + '</option>';
+    //         }
+    //     }
+    //     month += '</select>';
+    //     $('#invoiceMonth').html(month + "月");
+    // };
     // setMonthSelectBox();
 
     // 納品書明細検索ボタン押下処理
@@ -333,6 +352,8 @@
                     strSlipCode: $('input[name="strSlipCode"]').val(),
                     deliveryFrom: $('input[name="From_dtmDeliveryDate"]').val(),
                     deliveryTo: $('input[name="To_dtmDeliveryDate"]').val(),
+                    dtmChargeternStart: $('input[name="dtmChargeternStart"]').val(),
+                    dtmChargeternEnd: $('input[name="dtmChargeternEnd"]').val(),
                     deliveryPlaceCode: $('input[name="lngDeliveryPlaceCode"]').val(),
                     deliveryPlaceName: $('input[name="strDeliveryPlaceName"]').val(),
                     moneyClassCode: $('select[name="lngMoneyClassCode"]').val(),
@@ -441,6 +462,7 @@
 
         // 納品書番号を取得する。slipcode
         var slipCodeList = [];
+        var customerNoList = [];
         var slipNoList = [];
         var revisionNoList = [];
         // 納品日を格納する
@@ -459,11 +481,16 @@
 
         for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
             for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
-                if (!tableB_row[i].cells[j].innerText) continue;
+                // if (!tableB_row[i].cells[j].innerText) continue;
 
                 if (tableB_row[i].cells[j].className.substr(0, 'slipcode'.length) == 'slipcode') {
                     // 納品書No
                     slipCodeList.push(tableB_row[i].cells[j].innerText);
+                }
+                if (tableB_row[i].cells[j].className.substr(0, 'customerno'.length) == 'customerno') {
+                    console.log(tableB_row[i].cells[j].querySelector('input').value);
+                    // 顧客No
+                    customerNoList.push(tableB_row[i].cells[j].querySelector('input').value);
                 }
                 if (tableB_row[i].cells[j].className.substr(0, 'tax right'.length) == 'tax right' && !tax) {
                     // 消費税
@@ -487,6 +514,7 @@
                 }
             }
         }
+        console.log(customerNoList);
 
         // エラーチェックで問題なければ確認画面表示
 
@@ -543,6 +571,12 @@
 
         // 既存フォーム削除
         var delold = document.getElementsByName('slipCodeList');
+        if (delold.length > 0) {
+            for (var i = 0; i < delold.length; i++) {
+                delold[i].parentNode.removeChild(delold[i]);
+            }
+        }
+        var delold = document.getElementsByName('customerNoList');
         if (delold.length > 0) {
             for (var i = 0; i < delold.length; i++) {
                 delold[i].parentNode.removeChild(delold[i]);
@@ -629,6 +663,14 @@
         // 要素を追加
         document.Invoice.appendChild(ele6);
 
+        var ele7 = document.createElement('input');
+        // データを設定
+        ele7.setAttribute('type', 'hidden');
+        ele7.setAttribute('name', 'customerNoList');
+        ele7.setAttribute('value', customerNoList);
+        // 要素を追加
+        document.Invoice.appendChild(ele7);
+
         var invForm = $('form[name="Invoice"]');
 
         if (invForm.valid()) {
@@ -688,6 +730,12 @@
                     console.log(tableB_row[i].cells[j].innerText);
                     slipCodeList.push(tableB_row[i].cells[j].innerText);
                 }
+                if (tableB_row[i].cells[j].className == 'customerno') {
+                    // 顧客No
+                    console.log(tableB_row[i].cells[j].className);
+                    console.log(tableB_row[i].cells[j].querySelector('input').value);
+                    customerNoList.push(tableB_row[i].cells[j].querySelector('input').value);
+                }
                 if (tableB_row[i].cells[j].className == 'tax right' && !tax) {
                     // 消費税
                     console.log(tableB_row[i].cells[j].className);
@@ -737,6 +785,15 @@
         ele4.setAttribute('value', tax);
         // 要素を追加
         document.Invoice.appendChild(ele4);
+
+        // フォーム追加
+        var ele5 = document.createElement('input');
+        // データを設定
+        ele5.setAttribute('type', 'hidden');
+        ele5.setAttribute('name', 'customerNoList');
+        ele5.setAttribute('value', customerNoList);
+        // 要素を追加
+        document.Invoice.appendChild(ele5);
 
         var invForm = $('form[name="Invoice"]');
         if (invForm.valid()) {

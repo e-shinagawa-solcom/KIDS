@@ -109,6 +109,8 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
     $aryOutQuery[] = ", ms.lngprintcount ";
     // 無効フラグ
     $aryOutQuery[] = ", ms.bytinvalidflag ";
+    // 顧客NO.
+    $aryOutQuery[] = ", '' as strcustomerno ";
     // From句
     $aryOutQuery[] = " FROM m_slip ms ";
     $aryOutQuery[] = " INNER JOIN (select lngslipno, MAX(lngrevisionno) as lngrevisionno from m_slip group by lngslipno)";
@@ -122,6 +124,21 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
     // Where句
     $aryOutQuery[] = " WHERE not exists (select lngslipno from m_slip ms1 where ms1.lngslipno = ms.lngslipno and ms1.lngrevisionno < 0) " ; // 削除済みは対象外
 
+    $isByDtmChargeternStart = false;
+    $isByDtmChargeternEnd = false;
+    if(empty($aryCondtition["deliveryFrom"]))
+    {
+        $isByDtmChargeternStart = true;
+        if(empty($aryCondtition["dtmChargeternStart"])) {
+            $nowDateTime = date('Y/m/d', strtotime('now' . "-6 month"));
+            $aryCondtition["dtmChargeternStart"] = $nowDateTime;
+        }
+    }
+
+    if (empty($aryCondtition["deliveryTo"]))
+    {
+        $isByDtmChargeternEnd = true;
+    }
     foreach($aryCondtition as $column => $value) {
         $value = trim($value);
         if(empty($value)) {
@@ -132,13 +149,6 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
         if($column == 'customerCode') {
             $aryOutQuery[] = " AND mc.strcompanydisplaycode = '" .$value ."' " ;
         }
-
-        // 顧客名
-/*
-        if($column == 'customerName') {
-            $aryOutQuery[] = " AND strcustomername LIKE '%" .$value ."%' " ;
-        }
-*/
         // 納品書番号
         if($column == 'strSlipCode') {
             // カンマ区切りの入力値をOR条件に展開
@@ -161,6 +171,16 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
 
         // 納品日 To
         if($column == 'deliveryTo') {
+            $aryOutQuery[] = " AND dtmdeliverydate <= '" .$value ." 23:59:59" ."' " ;
+        }
+
+        // 自
+        if ($isByDtmChargeternStart && $column == 'dtmChargeternStart') {
+            $aryOutQuery[] = " AND dtmdeliverydate >= '" .$value ." 00:00:00" ."' " ;
+        }
+
+        // 至
+        if ($isByDtmChargeternEnd && $column == 'dtmChargeternEnd') {
             $aryOutQuery[] = " AND dtmdeliverydate <= '" .$value ." 23:59:59" ."' " ;
         }
 
@@ -273,20 +293,22 @@ function fncGetSearchMSlipInvoiceNoSQL ( $lnginvoiceno, $lngrevisionno )
     $aryOutQuery[] = ", ms.lngprintcount ";
     // 無効フラグ
     $aryOutQuery[] = ", ms.bytinvalidflag ";
+    // 顧客NO.
+    $aryOutQuery[] = ", tid.strcustomerno ";
     // From句
     $aryOutQuery[] = " FROM m_slip ms ";
     // JOIN
     $aryOutQuery[] = " LEFT JOIN m_company mc ON (mc.lngcompanycode = ms.lngcustomercode ) ";
     $aryOutQuery[] = " LEFT JOIN m_company mc2 ON (mc2.lngcompanycode = ms.lngdeliveryplacecode ) ";
-
-    // Where句
-    // strslipcode を検索するサブクエリ
-    $subQuery  = "select DISTINCT lngslipno from t_invoicedetail where lnginvoiceno = "  .$lnginvoiceno ."  ";
-    $subQuery .= "AND lngrevisionno = " .$lngrevisionno. " ";
-
-    $aryOutQuery[] = " WHERE lngrevisionno >= 0 " ;    // 対象納品伝票番号の指定
-    $aryOutQuery[] = " AND ms.lngslipno IN ( " .$subQuery ." ) " ;
-
+    $aryOutQuery[] = " LEFT JOIN t_invoicedetail tid ";
+    $aryOutQuery[] = "   ON ( ";
+    $aryOutQuery[] = "     tid.lngslipno = ms.lngslipno ";
+    $aryOutQuery[] = "     AND tid.lngsliprevisionno = ms.lngrevisionno";
+    $aryOutQuery[] = "   ) ";
+    $aryOutQuery[] = " WHERE ";
+    $aryOutQuery[] = "  ms.lngrevisionno >= 0 ";
+    $aryOutQuery[] = "  AND tid.lnginvoiceno = " .$lnginvoiceno ."  ";
+    $aryOutQuery[] = "  AND tid.lngrevisionno = " .$lngrevisionno. " ";
     // order句
     $aryOutQuery[] = " ORDER BY  ms.lngSlipNo ASC , ms.lngrevisionno DESC " ;
 
@@ -340,9 +362,20 @@ function fncGetStrInvoiceCode( $lnginvoiceno = null, $isDummy=true , $dtminvoice
     $dateTimeBase = new DateTime($baseDate);
     $dateTimeNow  = new DateTime($dtminvoicedate);
     $diff   = $dateTimeBase->diff($dateTimeNow);
-    $period = $basePeriod + (int)$diff->format('%Y');
+	$diffY = (int)$diff->format('%Y');
+	$diffM = (int)$diff->format('%M');
+	$diffD = (int)$diff->format('%D');
+	if ($diffM != 0 || $diffD != 0) {
+		$diffY = $diffY + 1;
+	}
+	if ($dateTimeBase > $dateTimeNow)
+	{
+		$period = $basePeriod - $diffY;
+	} else {
+		$period = $basePeriod + $diffY - 1;
+	}	
     $thisMonth = $dateTimeNow->format('m');
-    // $thisMonth = $invoiceMonth;
+    
     // dummyの処理(無駄なシーケンス発行を防ぐ)
     if($isDummy)
     {
@@ -946,6 +979,8 @@ function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
     $arySelectQuery[] = ", inv_d.lngsliprevisionno as lngsliprevisionno";
     // 納品伝票コード
     $arySelectQuery[] = ", slip_m.strslipcode as strslipcode";
+    // 顧客No
+    $arySelectQuery[] = ", inv_d.strcustomerno as strcustomerno";
 
     // select句 クエリー連結
     $aryOutQuery[] = implode("\n", $arySelectQuery);
@@ -1038,6 +1073,9 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     $slipCodeArray = explode(',' ,$aryData['slipCodeList']);
     $insertAry['slipCodeArray']  = $slipCodeArray;
 
+    $customerNoArray = explode(',' ,$aryData['customerNoList']);
+    $insertAry['customerNoArray']  = $customerNoArray;
+
     $insertAry['slipNoArray']  = explode(',' ,$aryData['slipNoList']);
     $insertAry['revisionNoArray']  = explode(',' ,$aryData['revisionNoList']);
 
@@ -1058,7 +1096,6 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     // 請求日
     $insertAry['dtminvoicedate'] = $aryData['dtminvoicedate'];
 
-    var_dump($aryData["dtminvoicedate"]);
     // 請求書コード
     // 登録時 : ルールに基づいたコード生成
     // 更新時 : 更新元の請求書マスタ.請求書コード
@@ -1263,7 +1300,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
             fncOutputError ( 9051, DEF_ERROR, "", TRUE, "", $objDB );
         }
         $result = pg_fetch_assoc($lngResultID);
-
+        $result['strcustomerno'] = $insertAry['customerNoArray'][$no];
         $aryQuery   = [];
         $aryQuery[] = "INSERT INTO t_invoicedetail ( ";
         $aryQuery[] = "lnginvoiceno , ";                    // 請求書番号
@@ -1277,6 +1314,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
         $aryQuery[] = "strtaxclassname , ";                 // 課税区分
         $aryQuery[] = "curtax , ";                          // 消費税率
         $aryQuery[] = "strnote , ";                         // 備考
+        $aryQuery[] = "strcustomerno , ";                   // 顧客NO
         $aryQuery[] = "lngslipno , ";                       // 納品書番号
         $aryQuery[] = "lngsliprevisionno  ";                // 納品書リビジョン番号
         $aryQuery[] = " ) VALUES ( ";
@@ -1291,6 +1329,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
         $aryQuery[] =  "'"  .$result['strtaxclassname'] ."' ,";         // 課税区分
         $aryQuery[] =  "'"  .$result['curtax'] ."' ,";                  // 消費税率
         $aryQuery[] =  "'"  .$result['strnote'] ."' ,";                 // 備考
+        $aryQuery[] =  "'"  .$result['strcustomerno'] ."',";                  // 顧客NO
         $aryQuery[] =  $result['lngslipno'] ." ,";                      // 納品書番号
         $aryQuery[] =  $result['lngrevisionno'] ." ";                   // 納品書リビジョン番号
         $aryQuery[] =  " ) ";
@@ -1806,6 +1845,8 @@ function fncSetInvoiceDetailTableData ( $aryDetailResult, $aryHeadResult )
     $aryNewDetailResult["lngSlipRevisionNo"]     = $aryDetailResult["lngsliprevisionno"];
     // 納品伝票コード
     $aryNewDetailResult["lngSlipCode"]           = $aryDetailResult["strslipcode"];
+    // 顧客NO
+    $aryNewDetailResult["strCustomerNo"]           = $aryDetailResult["strcustomerno"];
 
     return $aryNewDetailResult;
 }
@@ -1832,6 +1873,15 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     $i = 0;
     foreach ($slipCodeArray as $slipCode) {
         $aryPrevResult['strslipcode' . $i] = $slipCode;
+    }
+    // 請求書明細の顧客No
+    $customerNoArray = explode(',' ,$aryResult['customerNoList']);
+    $aryPrevResult['customerNoList']  = $aryResult['customerNoList'];
+    $aryPrevResult['customerNoArray'] = $customerNoArray;
+    $aryPrevResult['customerNoCount'] = COUNT($customerNoArray);
+
+    foreach ($customerNoArray as $customerNo) {
+        $aryPrevResult['strcustomerNo' . $i] = $customerNo;
     }
     if(isset($aryResult['taxclass'])) {
         $taxclass = explode(' ' ,$aryResult['taxclass']);
@@ -2071,6 +2121,27 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
     $strQuery = implode( "\n", $aryQuery );
 
     return $strQuery;
+}
+
+// 売上区分名称を取得する
+function fncGetSalesClassNameLst($lngslipno, $lngrevisionno, $objDB)
+{
+    $aryResult[] = array();
+    
+    $strQuery = " SELECT DISTINCT strsalesclassname FROM t_slipdetail WHERE lngslipno = " . $lngslipno . " AND lngrevisionno = " . $lngrevisionno . " ";
+
+    list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
+
+    // レコードがあればコードを返す
+    if ( $lngResultNum )
+    {
+        for ($i = 0; $i < $lngResultNum; $i++) {
+            $aryResult= $objDB->fetchArray($lngResultID, $i);
+        }
+    }
+    $objDB->freeResult($lngResultID);
+
+    return $aryResult;
 }
 
 ?>

@@ -182,6 +182,11 @@ img.toggle-display
     height: 27px;
 }
 
+.regist-label-w135
+{
+    width: 135px;
+    height: 27px;
+}
 .regist-label-box3
 {
     height: 27px;
@@ -259,6 +264,15 @@ img.toggle-display
     text-align: right;
 }
 
+.regist-label__text15
+{
+    display: inline-block;
+    width: 15px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+    text-align: center;
+}
+
 .regist-label__text50
 {
     display: inline-block;
@@ -279,6 +293,15 @@ img.toggle-display
 {
     display: inline-block;
     width: 115px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+    text-align: left;
+}
+
+.regist-label__text65
+{
+    display: inline-block;
+    width: 65px;
     font-weight: bold;
     background-color: #e8f0f1;
     text-align: left;
@@ -314,6 +337,10 @@ img.toggle-display
     text-align : left ;
 }
 
+.TxtStyle2xL { /* 46byte */
+    width : 268px ;
+	text-align : left ;
+}
 .disTxt130pxL { /* 19byte */
     width : 130px ;
     font-family : monospace ;
@@ -362,10 +389,16 @@ img.toggle-display
 }
 
 /* 入力BOX */
-.regist-box-area
+.regist-box-area-1
 {
     text-align: left;
-    width: 928px;
+
+}
+
+/* 入力BOX */
+.regist-box-area-2
+{
+    text-align: left;
 
 }
 .regist-box1
@@ -385,15 +418,31 @@ img.toggle-display
   width: 190px;
   margin-right : 3px;
 }
+
+.regist-box2-2
+{
+  float: left;
+  margin-right : 3px;
+}
+
+.regist-box2-3
+{
+  float: left;
+  margin-right : 3px;
+}
 .label-box2
 {
   width: 190px;
 }
 
+.regist-box3-2
+{
+  float: left;
+}
 .regist-box3
 {
   float: left;
-  width: 260px;
+  margin-right : 3px;
 }
 .regist-clear {
   border: none;
@@ -628,6 +677,12 @@ input[type=checkbox] {
 .disabled {
   background-color: #c0c0c0;
   color: rgba(0, 0, 0, .5);
+}
+
+input[type="text"][disabled]{
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
 }
 
 #tableA {

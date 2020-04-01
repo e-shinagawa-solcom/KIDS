@@ -75,6 +75,7 @@ $aryDetailColumnNames["strDetailNote"]         = "備考";
 $aryDetailColumnNames["lngSlipNo"]             = "納品書番号";
 $aryDetailColumnNames["lngSlipRevisionNo"]     = "納品書リビジョン番号";
 $aryDetailColumnNames["lngSlipCode"]           = "納品書NO";
+$aryDetailColumnNames["strCustomerNo"]         = "顧客ＮＯ.";
 $aryDetailColumnNames["strTax"]                = "課税区分・税率";
 
 

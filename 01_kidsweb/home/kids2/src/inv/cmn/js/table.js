@@ -108,7 +108,6 @@ $(function () {
    * 関数群
    * ----------------------------------------------------------------------------------------------------
    */
-
   /**
   * @method createSkeletonTable テーブル生成
   * @param data {Array} 基となるデータ配列
@@ -156,6 +155,7 @@ $(function () {
       $target_row.attr('slipno', slipno);
       $target_row.attr('revisionno', revisionno);
       $('.slipcode', $target_row).html(slipcode);
+      $('.customerno', $target_row).html('<input type="text" style="ime-mode:disabled;" class="form-control form-control-sm" value="" disabled>');
       if (customercode == null || customercode == "null") {
         $('.customer .customercode', $target_row).html('');
       } else {
@@ -180,6 +180,8 @@ $(function () {
    * @method addDataTableB テーブルBにデータを追加
    */
   $.addDataTableB = function () {
+
+    var descriptionArry = [];
     $.each(temp, function (i, v) {
       var $target_row = $('tbody tr', $tableB).eq(i);
       var slipcode = v.strslipcode;
@@ -198,12 +200,15 @@ $(function () {
       var slipno = v.lngslipno;
       var revisionno = v.lngrevisionno;
       var strnote = v.strnote;
+      var strsalesclassname = v.strsalesclassname;
+      var strcustomerno = v.strcustomerno;
 
       // html 出力
       $target_row.attr('data-id', id);
       $target_row.attr('slipno', slipno);
       $target_row.attr('revisionno', revisionno);
       $('.slipcode', $target_row).html(slipcode);
+      $('.customerno', $target_row).html('<input type="text" style="ime-mode:disabled;" class="form-control form-control-sm" value="' + strcustomerno + '">');
       if (customercode == null || customercode == "null") {
         $('.customer .customercode', $target_row).html('');
       } else {
@@ -219,7 +224,15 @@ $(function () {
       // $('.taxamount', $target_row).html(convertNumber(Math.round(taxamount)));
       $('.taxamount', $target_row).html(money_format(lngmonetaryunitcode, strmonetaryunitsign, taxamount, 'taxprice'));
       $('.remarks', $target_row).html(strnote);
+      $.each(strsalesclassname, function (i, v) {
+        if (descriptionArry.indexOf(v) < 0) {
+          descriptionArry.push(v);
+        }
+      });
+
     });
+    $('input[name="description"]').val(descriptionArry.join('、'));
+
   };
 
   /**
@@ -286,6 +299,10 @@ $(function () {
   };
 
   $.createTableRenew = function (response) {
+    
+    // 顧客名称の取得
+    var description = $('input[name="description"]').val();
+
     data = (response === undefined || response && !response.length) ? dataEmpty : Array.from(new Set(response));
 
     // テーブルB生成
@@ -307,10 +324,15 @@ $(function () {
     resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
     // テーブルB行イベントの追加
     selectRow("", $("#tableB_no"), $("#tableB"), "");
+    setTextInputMode();
+
     // 顧客名称の取得
     $('input[name="lngCustomerCode"]').trigger('change');
+    // 起票者名称の取得
+    $('input[name="lngInputUserCode"]').trigger('change');
     // テーブルAデータの初期化
     data = [];
+    $('input[name="description"]').val(description);
   };
 
   /**
@@ -403,6 +425,8 @@ $(function () {
 
     selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
     selectRow("", $("#tableB_no"), $("#tableB"), "");
+
+    setTextInputMode();
   });
 
   // テーブルB 削除ボタン

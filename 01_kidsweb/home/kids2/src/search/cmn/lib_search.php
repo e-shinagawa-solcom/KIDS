@@ -188,6 +188,7 @@ $aryTableHeaderName_INV["strnote"] = "備考";
 $aryTableDetailHeaderName_INV["lnginvoicedetailno"] = "請求書明細番号";
 $aryTableDetailHeaderName_INV["dtmdeliverydate"] = "納品日";
 $aryTableDetailHeaderName_INV["strslipcode"] = "納品書NO";
+$aryTableDetailHeaderName_INV["strcustomerno"] = "顧客NO";
 $aryTableDetailHeaderName_INV["lngdeliveryplacecode"] = "納品先";
 $aryTableDetailHeaderName_INV["cursubtotalprice"] = "税抜金額";
 $aryTableDetailHeaderName_INV["lngtaxclasscode"] = "課税区分";
@@ -1010,6 +1011,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , inv_d.lngslipno as lngslipno";
         $aryQuery[] = "  , inv_d.lngsliprevisionno as lngsliprevisionno";
         $aryQuery[] = "  , slip_m.strslipcode as strslipcode ";
+        $aryQuery[] = "  , inv_d.strcustomerno as strcustomerno ";
         $aryQuery[] = "FROM";
         $aryQuery[] = "  t_invoicedetail inv_d ";
         $aryQuery[] = "  LEFT JOIN m_slip slip_m ";
@@ -1649,6 +1651,8 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
         case "lngrevisionno":
         // 納品書ＮＯ.
         case "strslipcode":
+        // 顧客ＮＯ.
+        case "strcustomerno":
         // 請求書ＮＯ.
         case "strinvoicecode":
         // 製品到着日

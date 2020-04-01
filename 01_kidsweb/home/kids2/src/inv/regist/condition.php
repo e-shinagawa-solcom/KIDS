@@ -88,12 +88,17 @@
                 for ($i = 0; $i < $lngResultNum; $i++)
                 {
 
-                    $resultDataSet[] = $objDB->fetchObject( $lngResultID, $i );
+                    $resultDataSet = $objDB->fetchObject( $lngResultID, $i );
+                    
                     // 検索結果レコードをオブジェクトで取得し必要なjsonデータに加工する
                     foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                     {
                         $json[$i][$column] = $val;
                     }
+                    // 売上区分名称の取得
+                    $salesClassNameArry = fncGetSalesClassNameLst($resultDataSet->lngslipno, $resultDataSet->lngrevisionno, $objDB);
+
+                    $json[$i]['strsalesclassname'] = $salesClassNameArry;
                 }
 			    $objDB->close();
 	            // レスポンスヘッダ設定
@@ -134,13 +139,17 @@
             for ($i = 0; $i < $lngResultNum; $i++)
             {
 
-                // $resultDataSet[] = $objDB->fetchObject( $lngResultID, $i );
+                $resultDataSet= $objDB->fetchObject( $lngResultID, $i );
                 // 検索結果レコードをオブジェクトで取得し必要なjsonデータに加工する
                 foreach($objDB->fetchObject( $lngResultID, $i ) as $column => $val)
                 {
                     // $json[$i][$column] = $val;
                     $json[$i][$column] = $val;
                 }
+                // 売上区分名称の取得
+                $salesClassNameArry = fncGetSalesClassNameLst($resultDataSet->lngslipno, $resultDataSet->lngrevisionno, $objDB);
+
+                $json[$i]['strsalesclassname'] = $salesClassNameArry;
             }
             
             $objDB->close();
@@ -173,7 +182,7 @@
     $aryData["DeliveryTo"]   = date('Y/m/d', strtotime('last day of '  . null));
 
     // テンプレート読み込み
-    echo fncGetReplacedHtmlWithBase("inv/base_condition.html", "inv/regist/condition.tmpl", $aryData ,$objAuth );
+    echo fncGetReplacedHtmlWithBase("inv/base_condition.html", "inv/regist/condition.html", $aryData ,$objAuth );
 
     $objDB->close();
 

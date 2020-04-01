@@ -257,8 +257,8 @@
         // 起票者が未選択は登録者を入れる
         if(empty($aryData['lngInputUserCode']))
         {
-            $aryData['lngInputUserCode'] = $lngUserCode;
-            $aryData['lngInputUserName'] = $objAuth->UserFullName;
+            $aryData['lngInputUserCode'] = trim($lngUserCode);
+            $aryData['lngInputUserName'] = trim($objAuth->UserFullName);
         }
         if(empty($aryData['ActionDate']))
         {

@@ -7,7 +7,6 @@ function setTextInputMode() {
     $("input[type='text']").focus(function () {
         // ime-mode:disabledを設定された場合
         var textStyle = $(this).attr('style');
-        console.log(textStyle);
         if (textStyle != undefined && textStyle.length > 0) {
             textStyle = textStyle.replace(/:/g, '').replace(' ', '');
             if (textStyle.indexOf('ime-modedisabled') >= 0) {
@@ -18,7 +17,6 @@ function setTextInputMode() {
 
         // コードテキストの場合
         var textName = $(this).attr('name');
-        console.log(textName);
         if (textName != undefined && textName.length > 0) {
             if (textName.indexOf('code') >= 0 || textName.indexOf('Code') >= 0) {
                 $(this).prop('type', 'tel');

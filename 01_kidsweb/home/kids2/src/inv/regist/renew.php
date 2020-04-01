@@ -301,6 +301,7 @@
         $aryNewResult['curThisMonthAmount']  = explode(" ", $aryNewResult['curSubTotal1'])[1];
         $aryNewResult['curLastMonthBalance'] = explode(" ", $aryNewResult['curLastMonthBalance'])[1];
         $aryNewResult['curTaxPrice1'] = explode(" ", $aryNewResult['curTaxPrice1'])[1];
+
         // テンプレート読み込み
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate( "inv/regist/renew.html" );

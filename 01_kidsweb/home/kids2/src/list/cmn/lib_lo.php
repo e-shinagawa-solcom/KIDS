@@ -740,7 +740,7 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
 function fncGetInvDetailQuery($strReportKeyCode, $lngRevisionNo)
 {
     $aryQuery[] = "SELECT distinct";
-    $aryQuery[] = "  s.strslipcode ";
+    $aryQuery[] = "  s.strslipcode, id.strcustomerno ";
     $aryQuery[] = "from";
     $aryQuery[] = "  t_invoicedetail id ";
     $aryQuery[] = "  left join m_slip s ";
