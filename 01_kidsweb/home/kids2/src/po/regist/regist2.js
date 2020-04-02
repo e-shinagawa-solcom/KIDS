@@ -100,6 +100,7 @@ jQuery(function ($) {
                 lngOrderNo: $(tr).find('input[name="lngorderno"]').val(),
                 lngOrderRevisionNo: $(tr).find('input[name="lngorderrevisionno"]').val(),
                 lngOrderDetailNo: $(tr).find('input[name="lngorderdetailno"]').val(),
+                strMoldNo: $(tr).find('.detailStrMoldNo').text(),
             };
             result.push(param);
         });

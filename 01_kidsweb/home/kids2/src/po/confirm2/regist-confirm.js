@@ -50,6 +50,7 @@ function getUpdateDetail() {
             lngOrderRevisionNo: $(getDetailName('lngOrderRevisionNo' ,i)).val(),
             lngStockSubjectCode: $(getDetailName('lngStockSubjectCode' ,i)).val(),
             lngStockItemCode: $(getDetailName('lngStockItemCode' ,i)).val(),
+            strMoldNo: $(getDetailName('strMoldNo' ,i)).val(),
             lngMonetaryUnitCode: $(getDetailName('lngStockItemCode' ,i)).val(),
             lngCustomerCompanyCode: $(getDetailName('lngCustomerCompanyCode' ,i)).val(),
             curProductPrice: $(getDetailName('curProductPrice' ,i)).val(),

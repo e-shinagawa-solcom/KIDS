@@ -150,7 +150,7 @@ jQuery(function ($) {
                 curSubtotalPrice: $(tr).find('.detailSubtotalPrice').text(),
                 dtmDeliveryDate: $(tr).find('.detailDeliveryDate').text(),
                 strDetailNote: $(tr).find('.detailNote').find('input:text').val(),
-                strMoldNo: null,
+                strMoldNo: $(tr).find('.detailStrMoldNo').text(),
             };
             result.push(param);
         });

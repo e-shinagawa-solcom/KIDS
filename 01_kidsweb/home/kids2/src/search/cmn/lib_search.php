@@ -219,6 +219,7 @@ $aryTableDetailHeaderName_PURORDER["lngrecordno"] = "No.";
 $aryTableDetailHeaderName_PURORDER["strorderstatusname"] = "発注状態";
 $aryTableDetailHeaderName_PURORDER["lngstocksubjectname"] = "仕入科目";
 $aryTableDetailHeaderName_PURORDER["strstockitemname"] = "仕入部品";
+$aryTableDetailHeaderName_PURORDER["strmoldno"] = "金型No.";
 $aryTableDetailHeaderName_PURORDER["strdeliverymethodname"] = "運搬方法";
 $aryTableDetailHeaderName_PURORDER["curproductprice"] = "単価";
 $aryTableDetailHeaderName_PURORDER["lngproductquantity"] = "数量";
@@ -226,7 +227,6 @@ $aryTableDetailHeaderName_PURORDER["strproductunitname"] = "製品単位";
 $aryTableDetailHeaderName_PURORDER["cursubtotalprice"] = "小計";
 $aryTableDetailHeaderName_PURORDER["dtmdeliverydate"] = "納品日";
 $aryTableDetailHeaderName_PURORDER["strdetailnote"] = "明細備考";
-$aryTableDetailHeaderName_PURORDER["strmoldno"] = "金型No.";
 
 $aryTableHeaderName["strstockcode"] = "仕入ＮＯ.";
 $aryTableHeaderName["strsalescode"] = "売上NO.";

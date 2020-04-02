@@ -745,6 +745,7 @@ function fncGetPurchaseOrder2($lngPurchaseOrderCode, $lngRevisionNo, $objDB)
     $arySql[] = "  ,mp.strproductenglishname";
     $arySql[] = "  ,TO_CHAR(mp.dtmexpirationdate, 'YYYY/MM/DD') AS dtmexpirationdate";
     $arySql[] = "  ,mp.lngmonetaryunitcode";
+    $arySql[] = "  ,mp.strmonetaryunitname";
     $arySql[] = "  ,mp.strmonetaryunitsign";
     $arySql[] = "  ,mp.lngmonetaryratecode";
     $arySql[] = "  ,mp.strmonetaryratename";
@@ -1248,6 +1249,7 @@ function fncInsertPurchaseOrder($aryOrder, $objDB)
 
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
+
     if (!$lngResultID = $objDB->execute($strQuery)) {
         fncOutputError(9051, DEF_ERROR, "発注書マスタへの更新処理に失敗しました。", true, "", $objDB);
         return false;

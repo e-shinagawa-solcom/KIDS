@@ -152,7 +152,6 @@ if($_POST){
 	$aryOrder["strinsertusername"] = null;
 	$aryOrder["strnote"] = null;
 	$aryOrder["lngprintcount"] = null;
-
 	if(!fncInsertPurchaseOrder($aryOrder, $objDB, $objAuth)) { return false; }
 
 	//$objDB->transactionRollback();

@@ -106,6 +106,7 @@ if ($_POST["strMode"] == "insert") {
         $aryUpdateDetail[$i]["cursubtotalprice"] = $_POST["aryDetail"][$i]["curSubtotalPrice"];
         $aryUpdateDetail[$i]["dtmseliverydate"] = $_POST["aryDetail"][$i]["dtmDeliveryDate"];
         $aryUpdateDetail[$i]["strnote"] = $_POST["aryDetail"][$i]["strDetailNote"];
+        $aryUpdateDetail[$i]["strmoldno"] = $_POST["aryDetail"][$i]["strMoldNo"];
     }
 
     $objDB->transactionBegin();
@@ -160,22 +161,23 @@ for ($i = 0; $i < count($_POST); $i++) {
 }
 
 // 明細行処理 ===========================================================================================
+// 金型NOの生成
+for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
+    if ($_POST["aryDetail"][$i]["strMoldNo"] == "") {
+        $strmoldno = fncGetMoldNo( 
+            $_POST["strProductCode"], 
+            $_POST["strReviseCode"], 
+            $_POST["aryDetail"][$i]["lngStockSubjectCode"], 
+            $_POST["aryDetail"][$i]["lngStockItemCode"],
+            $objDB
+        );
+        $_POST["aryDetail"][$i]["strMoldNo"] = $strmoldno;
+    }
+}
 // 明細行のhidden生成
 if (is_array($_POST["aryDetail"])) {
     $aryData["strDetailHidden"] = fncDetailHidden($_POST["aryDetail"], "insert", $objDB);
 }
-
-/*
-// 言語の設定
-if ( isset($aryData["lngLanguageCode"]) and  $aryData["lngLanguageCode"] == 0 )
-{
-$aryTytle = $aryTableTytleEng;
-}
-else
-{
-$aryTytle = $aryTableTytle;
-}
- */
 
 $aryTytle = $aryTableTytle;
 // カラム名の設定
@@ -191,11 +193,6 @@ for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
     $_POST["aryDetail"][$i]["strStockSubjectName"] = fncGetMasterValue("m_stocksubject", "lngstocksubjectcode", "strstocksubjectname", $_POST["aryDetail"][$i]["lngStockSubjectCode"], '', $objDB);
     // 仕入部品
     $_POST["aryDetail"][$i]["strStockItemName"] = fncGetMasterValue("m_stockitem", "lngstockitemcode", "strstockitemname", $_POST["aryDetail"][$i]["lngStockItemCode"], "lngstocksubjectcode = " . $_POST["aryDetail"][$i]["lngStockSubjectCode"], $objDB);
-
-/*
-// 顧客品番
-$_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strproductcode", "strGoodsCode", $_POST["aryDetail"][$i]["strProductCode"].":str", "bytinvalidflag = false", $objDB );
- */
     // 運搬方法
     $_POST["aryDetail"][$i]["strCarrierName"] = fncGetMasterValue("m_deliverymethod", "lngdeliverymethodcode", "strdeliverymethodname", $_POST["aryDetail"][$i]["lngDeliveryMethodCode"], '', $objDB);
     // 単位
@@ -206,7 +203,6 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
 
     // 通貨記号
     $_POST["aryDetail"][$i]["strMonetarySign"] = ($_POST["aryDetail"][0]["lngMonetaryUnitCode"] == 1) ? "\\\\" : fncGetMasterValue("m_monetaryunit", "lngmonetaryunitcode", "strmonetaryunitsign", $_POST["aryDetail"][$i]["lngMonetaryUnitCode"], '', $objDB);
-    //2004/03/17 watanabe update start
     $strProductName = "";
     $strProductCode_wk = substr($_POST["strProductCode"],0,5);
     $subCondition = "strrevisecode='".$_POST["strReviseCode"]."' AND lngrevisionno = (select MAX(lngrevisionno) from m_product where strproductcode ='".$strProductCode_wk."'and strrevisecode='".$_POST["strReviseCode"]."')";
@@ -218,17 +214,11 @@ $_POST["aryDetail"][$i]["strGoodsName"] = fncGetMasterValue( "m_product", "strpr
                                              $objDB)) {
         $_POST["aryDetail"][$i]["strproductname"] = $strProductName;
     }
-    // watanabe end
-
-    // 2004/03/11 number_format watanabe
     // 単価
     $_POST["aryDetail"][$i]["curproductprice_DIS"] = $_POST["aryDetail"][$i]["curProductPrice"];
     $_POST["aryDetail"][$i]["lnggoodsquantity_DIS"] = $_POST["aryDetail"][$i]["lngProductQuantity"];
     $_POST["aryDetail"][$i]["curtotalprice_DIS"] = $_POST["aryDetail"][$i]["curSubtotalPrice"];
     $allPrice = $allPrice + (double) (str_replace(",", "", explode(" ", $_POST["aryDetail"][$i]["curSubtotalPrice"])[1]));
-    // watanabe update end
-
-    // 2004/03/19 watanabe update コード→名称は全て処理する。コードがない場合は[]を表示しない（必須項目も全て。処理だけ）
     $_POST["aryDetail"][$i]["strproductcode_DISCODE"] = ($_POST["strProductCode"] != "") ? "[" . $_POST["strProductCode"] . "]" : "";
     $_POST["aryDetail"][$i]["strstockitemcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockItemCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockItemCode"] . "]" : "";
     $_POST["aryDetail"][$i]["strstocksubjectcode_DISCODE"] = ($_POST["aryDetail"][$i]["lngStockSubjectCode"] != "") ? "[" . $_POST["aryDetail"][$i]["lngStockSubjectCode"] . "]" : "";

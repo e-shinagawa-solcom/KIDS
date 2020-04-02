@@ -287,6 +287,7 @@ function fncGetOrderDetail($aryOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  , mpu.strproductunitname";
     $aryQuery[] = "  , mdm.strdeliverymethodname";
     $aryQuery[] = "  , od.strnote";
+    $aryQuery[] = "  , od.strmoldno";
     $aryQuery[] = "  , mo.lngrevisionno";
     $aryQuery[] = "  , mo.lngorderno";
     $aryQuery[] = "  , mo.lngmonetaryunitcode";
@@ -755,6 +756,9 @@ function fncGetOrderDetailHtml($aryOrderDetail, $strDelivery, $strProductUnit, $
         // 明細行番号(明細登録用)
         $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["lngorderdetailno"]);
         $strHtml .= "<td class=\"forEdit detailOrderDetailNo\">" . $strDisplayValue . "</td>";
+        // 金型No(明細登録用)
+        $strDisplayValue = htmlspecialchars($aryOrderDetail[$i]["strmoldno"]);
+        $strHtml .= "<td class=\"forEdit detailStrMoldNo\">" . $strDisplayValue . "</td>";
         $strHtml .= "</tr>";
 
         if (array_key_exists($aryOrderDetail[$i]["lngorderno"], $lngOrderNos)) {
@@ -1014,20 +1018,7 @@ function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB)
         $aryDetailQuery[] = "  ,lngsortkey = " . intval($aryDetail[$i]["lngsortkey"]);
         $aryDetailQuery[] = "  ,lngproductunitcode = " . intval($aryDetail[$i]["lngproductunitcode"]);
         $aryDetailQuery[] = "  ,strnote = '" . $aryDetail[$i]["strnote"]. "'";
-        if (
-            ($aryDetail[$i]["lngstocksubjectcode"] == 433 and $aryDetail[$i]["lngstockitemcode"] == 1)
-            or 
-            ($aryDetail[$i]["lngstocksubjectcode"] == 431 and $aryDetail[$i]["lngstockitemcode"] == 8)
-        ) {
-            $strmoldno = fncGetMoldNo( 
-                             $aryUpdate["strProductCode"], 
-                             $aryUpdate["strReviseCode"], 
-                             $aryDetail[$i]["lngstocksubjectcode"], 
-                             $aryDetail[$i]["lngstockitemcode"],
-                             $objDB
-                         );
-            $aryDetailQuery[] = "  ,strmoldno = '" . $strmoldno . "'";
-        }
+        $aryDetailQuery[] = "  ,strmoldno = '" . $aryDetail[$i]["strmoldno"] . "'";
         $aryDetailQuery[] = "WHERE lngorderno = " . intval($aryDetail[$i]["lngorderno"]);
         $aryDetailQuery[] = "AND   lngorderdetailno = " . intval($aryDetail[$i]["lngorderdetailno"]);
         $aryDetailQuery[] = "AND   lngrevisionno = " . intval($aryDetail[$i]["lngrevisionno"]);
