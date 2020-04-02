@@ -92,7 +92,7 @@ function fncNavigatorCheck()
 function fncCheckDisplaySizeModule()
 {
 	var lngW = 1024; // 規定値横サイズ
-	var lngH = 768;  // 規定値縦サイズ
+	var lngH = 728;  // 規定値縦サイズ
 
 	var lngWdisp = screen.width;  // ウィンドウ横サイズ取得
 	var lngHdisp = screen.height; // ウィンドウ縦サイズ取得

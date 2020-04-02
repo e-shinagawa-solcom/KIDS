@@ -47,21 +47,6 @@
                     $('input[name="strCustomerName"]').val(parentCustomerName);
                     $('input[name="dtmChargeternStart"]').val(window.opener.$('input[name="dtmchargeternstart"]').val());
                     $('input[name="dtmChargeternEnd"]').val(window.opener.$('input[name="dtmchargeternstart"]').val());
-
-                    // // From(システム日付の月初) To(システム日付の月末)
-                    // var dtmchargeternstart = window.opener.document.getElementsByName('dtmchargeternstart')[0].value;
-                    // var dtmchargeternend = window.opener.document.getElementsByName('dtmchargeternend')[0].value;
-                    // if (dtmchargeternstart != "" && dtmchargeternend != "") {
-                    //     $('input[name="From_dtmDeliveryDate"]').val(dtmchargeternstart);
-                    //     $('input[name="To_dtmDeliveryDate"]').val(dtmchargeternend);
-                    // } else {
-                    //     var toDay = new Date();
-                    //     var start = toDay.getFullYear() + '/' + (toDay.getMonth()) + '/01';
-                    //     var lastDay = new Date(toDay.getFullYear(), toDay.getMonth(), 0);
-                    //     var end = toDay.getFullYear() + '/' + (toDay.getMonth()) + '/' + lastDay.getDate();
-                    //     $('input[name="From_dtmDeliveryDate"]').val(start);
-                    //     $('input[name="To_dtmDeliveryDate"]').val(end);
-                    // }
                 }
 
             });
@@ -178,8 +163,9 @@
             <input type="hidden" name="mode" value="_%mode%_">
 
             <div class="form-box__button">
-                <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="search-condition">検索</button>
                 <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="clear" onclick="window.close();">閉じる</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="search-condition">検索</button>
             </div>
         </form>
     </div>

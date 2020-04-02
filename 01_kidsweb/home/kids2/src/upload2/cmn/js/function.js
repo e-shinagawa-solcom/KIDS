@@ -45,7 +45,7 @@
         var baseURI = workForm.get(0).baseURI;
         
         if(baseURI.indexOf('/upload2/index.php') > 0) {
-			var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=985, height=700, resizable=0 location=0');
+			var windowResult = open('about:blank', windowName, 'scrollbars=yes, width=1065, height=700, resizable=0 location=0');
 			var getParam = getURLGetParam('strSessionID');
 			var inputSessionIDTag = '<input type="hidden" name="strSessionID" value="'+ getParam + '">';
 			workForm.append(inputSessionIDTag);

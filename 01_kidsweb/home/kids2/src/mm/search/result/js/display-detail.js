@@ -8,6 +8,6 @@
         version = 'Version=' + $(this).attr('version');
 
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version, 'display-detail', 'width=800, height=768, resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version, 'display-detail', 'width=800, height=728, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

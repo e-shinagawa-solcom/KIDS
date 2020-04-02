@@ -122,7 +122,7 @@
                         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
                         url = url + '?' + sessionID + '&' + lngPkNo + '&' + lngRevisionNo;
                         // 別ウィンドウで表示
-                        open(url, 'display-detail', 'width=800, height=768, resizable=yes, scrollbars=yes, menubar=no');
+                        open(url, 'display-detail', 'width=800, height=728, resizable=yes, scrollbars=yes, menubar=no');
                     });
                 })
                 .fail(function (response) {

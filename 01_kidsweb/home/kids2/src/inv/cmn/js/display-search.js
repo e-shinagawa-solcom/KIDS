@@ -7,7 +7,7 @@
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lnginvoiceno + '&' + lngRevisionNo + '&' + sessionID, 'display-detail', 'width=800, height=768,resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lnginvoiceno + '&' + lngRevisionNo + '&' + sessionID, 'display-detail', 'width=800, height=728,resizable=yes, scrollbars=yes, menubar=no');
     });
 
     $('img.fix.button').on('click', function(){
@@ -27,7 +27,7 @@
         sessionID = 'strSessionID=' + getUrlVars()["strSessionID"];
 
         // 別ウィンドウで表示
-        open(url + '?' + lnginvoiceno + '&' + lngRevisionNo + '&' + sessionID, 'display-detail', 'width=800, height=768,resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + lnginvoiceno + '&' + lngRevisionNo + '&' + sessionID, 'display-detail', 'width=800, height=728,resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
 

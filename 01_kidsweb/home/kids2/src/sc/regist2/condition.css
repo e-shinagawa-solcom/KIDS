@@ -20,14 +20,14 @@
 #OkBt{
 	position: absolute;
 	top: 405px;
-	left: 230px;
+	left: 350px;
 }
 
 /* キャンセルボタン */
 #CancelBt{
 	position: absolute;
 	top: 405px;
-	left: 350px;
+	left: 230px;
 }
 
 

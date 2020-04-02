@@ -7,6 +7,6 @@
         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
 
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + lngReceiveNo + '&' + lngRevisionNo, 'display-detail', 'width=800, height=768, resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + sessionID + '&' + lngReceiveNo + '&' + lngRevisionNo, 'display-detail', 'width=800, height=728, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();
