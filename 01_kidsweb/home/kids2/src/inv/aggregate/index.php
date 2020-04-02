@@ -28,6 +28,7 @@ require LIB_FILE;
 require LIB_DEBUGFILE;
 require SRC_ROOT . "m/cmn/lib_m.php";
 require SRC_ROOT . "inv/cmn/lib_regist.php";
+require SRC_ROOT . "search/cmn/lib_search.php";
 require SRC_ROOT . "inv/cmn/column.php";
 
 // PhpSpreadsheeを使うため
@@ -104,38 +105,38 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
     if ($lngResultNum) {
         for ($i = 0; $i < $lngResultNum; $i++) {
             $exportAry = [];
-            $aryDetailResult = $objDB->fetchArray($lngResultID, $i);
+            $aryResult = $objDB->fetchArray($lngResultID, $i);
             // lngmonetaryunitcode別の配列に格納
-            $monetaryunitcode = (int) $aryDetailResult['lngmonetaryunitcode'];
+            $monetaryunitcode = (int) $aryResult['lngmonetaryunitcode'];
             // lngmonetaryunitcode別の配列に格納
-            $strcustomercode = $aryDetailResult['strcustomercode'];
+            $strcustomercode = $aryResult['strcustomercode'];
 
             // 顧客コード・顧客名・顧客社名
-            list($printCustomerName, $printCompanyName, $customerCode, $strcompanydisplayname) = fncGetCompanyPrintName($aryDetailResult['strcustomercode'], $objDB);
+            list($printCustomerName, $printCompanyName, $customerCode, $strcompanydisplayname) = fncGetCompanyPrintName($aryResult['strcustomercode'], $objDB);
 
-            $exportAry['lnginvoiceno'] = $aryDetailResult['lnginvoiceno'];
-            $exportAry['lngrevisionno'] = $aryDetailResult['lngrevisionno'];
+            $exportAry['lnginvoiceno'] = $aryResult['lnginvoiceno'];
+            $exportAry['lngrevisionno'] = $aryResult['lngrevisionno'];
             // 顧客コード(表示用)
-            $strcustomercode = $aryDetailResult['strcustomercode'];
+            $strcustomercode = $aryResult['strcustomercode'];
             $exportAry['strcustomercode'] = $strcustomercode;
             // 表示用顧客名・会社名を入れる
             $exportAry['strcustomername'] = $printCustomerName;
             $exportAry['strcustomercompanyname'] = $printCompanyName;
-            $exportAry['strinvoicecode'] = $aryDetailResult['strinvoicecode'];
+            $exportAry['strinvoicecode'] = $aryResult['strinvoicecode'];
 
-            $exportAry['curlastmonthbalance'] = $aryDetailResult['curlastmonthbalance'];
-            $exportAry['curthismonthamount'] = $aryDetailResult['curthismonthamount'];
-            $exportAry['lngmonetaryunitcode'] = $aryDetailResult['lngmonetaryunitcode'];
-            $exportAry['lngtaxclasscode'] = $aryDetailResult['lngtaxclasscode'];
-            $exportAry['strtaxclassname'] = $aryDetailResult['strtaxclassname'];
+            $exportAry['curlastmonthbalance'] = $aryResult['curlastmonthbalance'];
+            $exportAry['curthismonthamount'] = $aryResult['curthismonthamount'];
+            $exportAry['lngmonetaryunitcode'] = $aryResult['lngmonetaryunitcode'];
+            $exportAry['lngtaxclasscode'] = $aryResult['lngtaxclasscode'];
+            $exportAry['strtaxclassname'] = $aryResult['strtaxclassname'];
             // 税抜金額1
-            $cursubtotal1 = (int) $aryDetailResult['cursubtotal1'];
+            $cursubtotal1 = (int) $aryResult['cursubtotal1'];
             $exportAry['cursubtotal1'] = $cursubtotal1;
             // 消費税率1
-            $curtax1 = (int) $aryDetailResult['curtax1'];
+            $curtax1 = (int) $aryResult['curtax1'];
             $exportAry['curtax1'] = $curtax1;
             // 消費税額1
-            $curtaxprice1 = (int) $aryDetailResult['curtaxprice1'];
+            $curtaxprice1 = (int) $aryResult['curtaxprice1'];
             $exportAry['curtaxprice1'] = $curtaxprice1;
 
             // 顧客ごとのデータをまとめる
@@ -157,16 +158,42 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
     if(isset($aggregateData[1])){
         foreach ((array) $aggregateData[1] as $code => $val) {
             for ($i = 0; $i + 2 < COUNT($val); $i++) {
-                $row[] = [
-                    $val[$i]['strcustomercompanyname'],
-                    $val[$i]['strcustomername'],
-                    '',
-                    $val[$i]['strinvoicecode'],
-                    $val[$i]['cursubtotal1'],
-                    $val[$i]['curtaxprice1'],
-                ];
-                // 行数カウント
-                $writeRow++;
+                // 詳細データを取得する
+                $lnginvoiceno = $val[$i]['lnginvoiceno'];
+                $lngrevisionno = $val[$i]['lngrevisionno'];
+                $strcustomercompanyname = $val[$i]['strcustomercompanyname'];
+                $strcustomername = $val[$i]['strcustomername'];
+                $strinvoicecode = $val[$i]['strinvoicecode'];
+                $detailData = fncGetDetailData('inv', $lnginvoiceno, $lngrevisionno, $objDB);
+                $len = 0;
+                foreach ($detailData as $data) {
+                    if ($len == 0) {
+                        $row[] = [
+                            $strcustomercompanyname,
+                            $strcustomername,
+                            '',
+                            $strinvoicecode,
+                            $data['strslipcode'],
+                            $data['strcustomerno'],
+                            $data['cursubtotalprice'],
+                            $data['curtaxprice'],
+                        ];
+                    } else {                        
+                        $row[] = [
+                            $strcustomercompanyname,
+                            $strcustomername,
+                            '',
+                            '',
+                            $data['strslipcode'],
+                            $data['strcustomerno'],
+                            $data['cursubtotalprice'],
+                            $data['curtaxprice'],
+                        ];
+                    }
+                    $len += 1;
+                    // 行数カウント
+                    $writeRow++;
+                }
             }
             // 合計値
             $row[] = [
@@ -174,6 +201,8 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
                 '',
                 '',
                 '小計',
+                '',
+                '',
                 $val['cursubtotal'],
                 $val['curtaxprice'],
             ];
@@ -267,16 +296,42 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
     if( isset($aggregateData[2])){
         foreach ((array) $aggregateData[2] as $code => $val) {
             for ($i = 0; $i + 2 < COUNT($val); $i++) {
-                $row[] = [
-                    $val[$i]['strcustomercompanyname'],
-                    $val[$i]['strcustomername'],
-                    '',
-                    $val[$i]['strinvoicecode'],
-                    $val[$i]['cursubtotal1'],
-                    $val[$i]['curtaxprice1'],
-                ];
-                // 行数カウント
-                $writeRow++;
+                // 詳細データを取得する
+                $lnginvoiceno = $val[$i]['lnginvoiceno'];
+                $lngrevisionno = $val[$i]['lngrevisionno'];
+                $strcustomercompanyname = $val[$i]['strcustomercompanyname'];
+                $strcustomername = $val[$i]['strcustomername'];
+                $strinvoicecode = $val[$i]['strinvoicecode'];
+                $detailData = fncGetDetailData('inv', $lnginvoiceno, $lngrevisionno, $objDB);
+                $len = 0;
+                foreach ($detailData as $data) {
+                    if ($len == 0) {
+                        $row[] = [
+                            $strcustomercompanyname,
+                            $strcustomername,
+                            '',
+                            $strinvoicecode,
+                            $data['strslipcode'],
+                            $data['strcustomerno'],
+                            $data['cursubtotalprice'],
+                            $data['curtaxprice'],
+                        ];
+                    } else {                        
+                        $row[] = [
+                            $strcustomercompanyname,
+                            $strcustomername,
+                            '',
+                            '',
+                            $data['strslipcode'],
+                            $data['strcustomerno'],
+                            $data['cursubtotalprice'],
+                            $data['curtaxprice'],
+                        ];
+                    }
+                    $len += 1;
+                    // 行数カウント
+                    $writeRow++;
+                }
             }
             // 合計値
             $row[] = [
@@ -284,6 +339,8 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
                 '',
                 '',
                 '小計',
+                '',
+                '',
                 $val['cursubtotal'],
                 $val['curtaxprice'],
             ];
@@ -379,16 +436,42 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
     $writeRow = 0;
     foreach ((array) $aggregateData[3] as $code => $val) {
         for ($i = 0; $i + 2 < COUNT($val); $i++) {
-            $row[] = [
-                $val[$i]['strcustomercompanyname'],
-                $val[$i]['strcustomername'],
-                '',
-                $val[$i]['strinvoicecode'],
-                $val[$i]['cursubtotal1'],
-                $val[$i]['curtaxprice1'],
-            ];
-            // 行数カウント
-            $writeRow++;
+            // 詳細データを取得する
+            $lnginvoiceno = $val[$i]['lnginvoiceno'];
+            $lngrevisionno = $val[$i]['lngrevisionno'];
+            $strcustomercompanyname = $val[$i]['strcustomercompanyname'];
+            $strcustomername = $val[$i]['strcustomername'];
+            $strinvoicecode = $val[$i]['strinvoicecode'];
+            $detailData = fncGetDetailData('inv', $lnginvoiceno, $lngrevisionno, $objDB);
+            $len = 0;
+            foreach ($detailData as $data) {
+                if ($len == 0) {
+                    $row[] = [
+                        $strcustomercompanyname,
+                        $strcustomername,
+                        '',
+                        $strinvoicecode,
+                        $data['strslipcode'],
+                        $data['strcustomerno'],
+                        $data['cursubtotalprice'],
+                        $data['curtaxprice'],
+                    ];
+                } else {                        
+                    $row[] = [
+                        $strcustomercompanyname,
+                        $strcustomername,
+                        '',
+                        '',
+                        $data['strslipcode'],
+                        $data['strcustomerno'],
+                        $data['cursubtotalprice'],
+                        $data['curtaxprice'],
+                    ];
+                }
+                $len += 1;
+                // 行数カウント
+                $writeRow++;
+            }
         }
         // 合計値
         $row[] = [
@@ -396,6 +479,8 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
             '',
             '',
             '小計',
+            '',
+            '',
             $val['cursubtotal'],
             $val['curtaxprice'],
         ];
@@ -529,10 +614,6 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
     setCurrencyFormatCode($sheet, "7", "小計", 7, 173, "円");
     setCurrencyFormatCode($sheet, "5", "請求額合計", 174, 174, "円");
     
-//    $sheet->fromArray($writeData1_1, null, $writeCell2_1);
-//    $sheet->fromArray($writeData1_2, null, $writeCell2_2);
-//    $sheet->fromArray($writeData1_3, null, $writeCell2_3);
-//    $sheet->fromArray($writeData1_4, null, $writeCell2_4);
      $sheet->fromArray($writeData2_1, null, $writeCell2_1);
      $sheet->fromArray($writeData2_2, null, $writeCell2_2);
      $sheet->fromArray($writeData2_3, null, $writeCell2_3);
@@ -541,11 +622,6 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
     setCurrencyFormatCode($sheet, "7", "小計", 242, 272, "USドル");
     setCurrencyFormatCode($sheet, "5", "請求額合計", 273, 273, "USドル");
 
-    
-//    $sheet->fromArray($writeData1_1, null, $writeCell3_1);
-//    $sheet->fromArray($writeData1_2, null, $writeCell3_2);
-//    $sheet->fromArray($writeData1_3, null, $writeCell3_3);
-//    $sheet->fromArray($writeData1_4, null, $writeCell3_4);
      $sheet->fromArray($writeData3_1, null, $writeCell3_1);
      $sheet->fromArray($writeData3_2, null, $writeCell3_2);
      $sheet->fromArray($writeData3_3, null, $writeCell3_3);
@@ -553,6 +629,7 @@ if (isset($aryData["strMode"]) && $aryData["strMode"] == 'export') {
 
     setCurrencyFormatCode($sheet, "7", "小計", 316, 346, "HKドル");
     setCurrencyFormatCode($sheet, "5", "請求額合計", 347, 347, "HKドル");
+
 
     $fileName = '請求集計_' . $time->format('Ym') . '_通貨名.xlsx';
     $outFile = FILE_UPLOAD_TMPDIR . $fileName;
@@ -615,7 +692,7 @@ function setCurrencyFormatCode($sheet, $chkCol, $chkStr, $startRow, $endRow, $cu
         $chkAddress = $alphaChkCol . $row;
         $value =$sheet->getCell($chkAddress)->getValue();
         if ($value == $chkStr) {
-            $newAddress = "H" . $row. ":J" . $row;
+            $newAddress = "J" . $row. ":L" . $row;
             $sheet->getStyle($newAddress)->getNumberFormat()->setFormatCode($numberFormat);
             $sheet->getStyle($newAddress) ->getFont() ->setBold(true);
             $sheet->getStyle($chkAddress) ->getFont() ->setBold(true);

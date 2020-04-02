@@ -64,9 +64,9 @@
         console.log("change");
         selectClosedDay();
     });
-    
+
     // 開始日時フォーカスを取ったときの処理
-    $('input[name="ActionDate"]').on('blur', function () {        
+    $('input[name="ActionDate"]').on('blur', function () {
         blurDate($(this));
     });
 
@@ -172,7 +172,7 @@
         var billingDate = $('input[name="ActionDate"]').val();
         var billingStart = $('input[name="dtmchargeternstart"]');
         var billingEnd = $('input[name="dtmchargeternend"]');
-        if (billingDate.length == 8) { 
+        if (billingDate.length == 8) {
             var y = billingDate.substr(0, 4);
             var m = billingDate.substr(4, 2);
             var d = billingDate.substr(6, 2);
@@ -181,8 +181,8 @@
         var dateLength = splitDate(billingDate);
         // 請求モード
         var invoiceMode = $('input[name="invoiceMode"]:checked').val();
-console.log("モード：" + invoiceMode);
-console.log(invoiceMode == '1');
+        console.log("モード：" + invoiceMode);
+        console.log(invoiceMode == '1');
         // 請求日が未入力
         if (isEmpty(billingDate) == '0') {
             return [false, false];
@@ -205,9 +205,9 @@ console.log(invoiceMode == '1');
                 // 今月末日
                 var last_date = new Date(date1.getFullYear(), date1.getMonth() + 1, 0);
                 // 自の取得
-                var start = first_date.getFullYear() + '/' + ("00" + (first_date.getMonth() + 1)).slice( -2 )  + '/' + ("00" + first_date.getDate()).slice( -2 );
+                var start = first_date.getFullYear() + '/' + ("00" + (first_date.getMonth() + 1)).slice(-2) + '/' + ("00" + first_date.getDate()).slice(-2);
                 // 至の取得
-                var end = last_date.getFullYear() + '/' + ("00" + (last_date.getMonth() + 1)).slice( -2 ) + '/' + ("00" + last_date.getDate()).slice( -2 );
+                var end = last_date.getFullYear() + '/' + ("00" + (last_date.getMonth() + 1)).slice(-2) + '/' + ("00" + last_date.getDate()).slice(-2);
             } else {
                 var date1 = new Date(billingDate + ' 00:00');
                 console.log(date1.getDate());
@@ -219,17 +219,17 @@ console.log(invoiceMode == '1');
                     last_month.setDate(last_month.getDate() + 1);
 
                     // 自の取得
-                    var start = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + last_month.getDate()).slice( -2 );
+                    var start = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice(-2) + '/' + ("00" + last_month.getDate()).slice(-2);
                     // 至の取得
-                    var end = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + close).slice( -2 );
+                    var end = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice(-2) + '/' + ("00" + close).slice(-2);
                 } else {
                     // 今月の取得
                     var curr_month = new Date(date1.getFullYear(), date1.getMonth(), close);
                     curr_month.setDate(curr_month.getDate() + 1);
                     // 自の取得
-                    var start = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice( -2 ) + '/' + ("00" + curr_month.getDate()).slice( -2 );
+                    var start = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice(-2) + '/' + ("00" + curr_month.getDate()).slice(-2);
                     // 至の取得
-                    var end = date1.getFullYear() + '/' + ("00" + (date1.getMonth() + 2)).slice( -2 ) + '/' + ("00" + close).slice( -2 );
+                    var end = date1.getFullYear() + '/' + ("00" + (date1.getMonth() + 2)).slice(-2) + '/' + ("00" + close).slice(-2);
 
                     console.log(start);
                     console.log(end);
@@ -473,11 +473,23 @@ console.log(invoiceMode == '1');
         var tax = false;
         // 税率が同じかをチェックするフラグ
         var isSameTax = true;
+        var isError = false;
+        var len = 0;
         tableB_row.each(function () {
             slipNoList.push($(this).attr('slipno'));
             revisionNoList.push($(this).attr('revisionno'));
+            len += 1;
+            var strCustomerNo = $(this).find('.customerno').find('input:text').val();
+            if (strCustomerNo == "") {
+                alert(len + "行目の顧客NO.が入力されていません。");
+                isError = true;
+                return false;
+            }
+        });
+        
+        if (isError) {
+            return;
         }
-        );
 
         for (var i = 0, rowlen = tableB_row.length; i < rowlen; i++) {
             for (var j = 0, collen = tableB_row[i].cells.length; j < collen; j++) {
