@@ -328,7 +328,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         //  改訂日時
         $aryQuery[] = " , To_Char( p.dtmUpdateDate, 'YYYY/MM/DD' ) as dtmRevisionDate";
         //  製品コード
-        $aryQuery[] = " , p.strProductCode";
+        $aryQuery[] = " , p.strProductCode || '_' || p.strrevisecode as strproductcode";
         //  製品名称
         $aryQuery[] = " , p.strProductName";
         //  製品名称（英語）

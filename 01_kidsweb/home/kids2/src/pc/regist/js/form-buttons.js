@@ -181,6 +181,7 @@ var chkbox = [];
                             + '<td class="col12">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice, 'taxprice') + '</td>'
                             + '<td class="dtmdeliverydate">' + row.dtmdeliverydate + '</td>'
                             + '<td>' + convertNull(row.strnote) + '</td>'
+                            + '<td class="strmoldno">' + convertNull(row.strmoldno) + '</td>'
                             + '<td class="cursubtotalprice" style="display:none">' + row.cursubtotalprice + '</td>'
                             + '<td class="curtax" style="display:none">' + curtax + '</td>'
                             + '<td class="lngmonetaryunitcode" style="display:none">' + row.lngmonetaryunitcode + '</td>'

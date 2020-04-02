@@ -85,7 +85,7 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
 */
     $aryQuery[] = "od.cursubtotalprice as cursubtotalprice, "; // 小計金額
     $aryQuery[] = "od.strnote as strdetailnote,"; // 備考
-    $aryQuery[] = "od.strmoldno as strSerialNo, "; // シリアル
+    $aryQuery[] = "od.strmoldno as strmoldno, "; // シリアル
     $aryQuery[] = "o.lngorderstatuscode as lngorderstatuscode, "; // 発注ステータス
     $aryQuery[] = "os.strorderstatusname as strorderstatusname, "; // 発注ステータス
     $aryQuery[] = "o.lngmonetaryunitcode as lngmonetaryunitcode, "; // 通貨単位コード

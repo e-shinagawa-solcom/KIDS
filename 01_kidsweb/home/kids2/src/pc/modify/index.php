@@ -358,6 +358,11 @@ foreach ($aryOrderDetail as $orderDetail) {
     $td->setAttribute("class", "col14");
     $trBody->appendChild($td);
 
+    // 金型NO.
+    $td = $doc->createElement("td", toUTF8($orderDetail["strmoldno"]));
+    $td->setAttribute("class", "strmoldno");
+    $trBody->appendChild($td);
+
     // 税抜金額（金額フォーマット変換前）
     $td = $doc->createElement("td", $orderDetail["cursubtotalprice"]);
     $td->setAttribute("class", "cursubtotalprice");

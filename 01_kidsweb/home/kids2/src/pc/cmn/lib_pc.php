@@ -904,7 +904,7 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
      */
     $aryQuery[] = " od.cursubtotalprice as cursubtotalprice,"; // 小計金額
     $aryQuery[] = " od.strnote,"; // 備考
-    $aryQuery[] = " od.strmoldno as strSerialNo,"; // シリアル
+    $aryQuery[] = " od.strmoldno as strmoldno,"; // シリアル
     $aryQuery[] = " mo.lngorderstatuscode as lngorderstatuscode,"; // 発注ステータス
     $aryQuery[] = " os.strorderstatusname as strorderstatusname,"; // 発注ステータス
     $aryQuery[] = " mo.lngmonetaryunitcode as lngmonetaryunitcode,"; // 通貨単位コード
@@ -926,8 +926,9 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "    select";
     $aryQuery[] = "      mpo1.lngpurchaseorderno";
     $aryQuery[] = "      , mpo1.lngrevisionno";
-    $aryQuery[] = "      , mpo1.strordercode ";
-    $aryQuery[] = "      , mpo1.lngpayconditioncode ";
+    $aryQuery[] = "      , mpo1.strordercode";
+    $aryQuery[] = "      , mpo1.lngpayconditioncode";
+    $aryQuery[] = "      , mpo1.lngdeliveryplacecode";
     $aryQuery[] = "    from";
     $aryQuery[] = "      m_purchaseorder mpo1 ";
     $aryQuery[] = "      inner join ( ";
@@ -967,7 +968,7 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "  LEFT JOIN m_orderstatus os on os.lngorderstatuscode = mo.lngorderstatuscode";
     $aryQuery[] = "  LEFT JOIN m_productunit pu on pu.lngproductunitcode = od.lngproductunitcode";
     $aryQuery[] = "  LEFT JOIN m_company c on c.lngcompanycode = mo.lngcustomercompanycode";
-    $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mo.lngdeliveryplacecode";
+    $aryQuery[] = "  LEFT JOIN m_company dp_c on dp_c.lngcompanycode = mpo.lngdeliveryplacecode";
     $aryQuery[] = "  LEFT JOIN m_paycondition dp_pc on dp_pc.lngpayconditioncode = mpo.lngpayconditioncode";
     $aryQuery[] = " WHERE mo.lngorderstatuscode = 2";
 
@@ -975,6 +976,7 @@ function fncGetPoInfoSQL($strOrderCode, $objDB)
     $aryQuery[] = "  ORDER BY od.lngSortKey";
 
     $strQuery = implode("\n", $aryQuery);
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     $aryOrderDetail = array();
@@ -1031,7 +1033,7 @@ function fncGetPoInfoSQLByStock($lngStockNo, $lngRevisionNo, $strOrderCode, $obj
      */
     $aryQuery[] = " od.cursubtotalprice as cursubtotalprice,"; // 小計金額
     $aryQuery[] = " od.strnote,"; // 備考
-    $aryQuery[] = " od.strmoldno as strSerialNo,"; // シリアル
+    $aryQuery[] = " od.strmoldno as strmoldno,"; // シリアル
     $aryQuery[] = " mo.lngorderstatuscode as lngorderstatuscode,"; // 発注ステータス
     $aryQuery[] = " os.strorderstatusname as strorderstatusname,"; // 発注ステータス
     $aryQuery[] = " mo.lngmonetaryunitcode as lngmonetaryunitcode,"; // 通貨単位コード
