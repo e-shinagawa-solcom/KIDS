@@ -175,6 +175,9 @@ if ($strMode == "change-deliverydate") {
 // フォーム初期値設定
 //-------------------------------------------------------------------------
 // ヘッダ・フッダ部
+// 起票者
+$aryData['lngInsertUserCode'] = trim($objAuth->UserID);
+$aryData['strInsertUserName'] = trim($objAuth->UserFullName);
 
 // 納品日
 $nowDate = new DateTime();

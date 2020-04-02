@@ -201,7 +201,12 @@ $(function () {
       var revisionno = v.lngrevisionno;
       var strnote = v.strnote;
       var strsalesclassname = v.strsalesclassname;
-      var strcustomerno = v.strcustomerno;
+      var strcustomerno = "";
+      console.log(v.strcustomerno);
+      if (v.strcustomerno != null)
+      {
+        strcustomerno = v.strcustomerno;
+      }
 
       // html 出力
       $target_row.attr('data-id', id);
@@ -328,8 +333,6 @@ $(function () {
 
     // 顧客名称の取得
     $('input[name="lngCustomerCode"]').trigger('change');
-    // 起票者名称の取得
-    $('input[name="lngInputUserCode"]').trigger('change');
     // テーブルAデータの初期化
     data = [];
     $('input[name="description"]').val(description);

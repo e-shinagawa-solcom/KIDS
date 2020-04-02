@@ -1873,15 +1873,17 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     $i = 0;
     foreach ($slipCodeArray as $slipCode) {
         $aryPrevResult['strslipcode' . $i] = $slipCode;
+        $i += 1;
     }
     // 請求書明細の顧客No
     $customerNoArray = explode(',' ,$aryResult['customerNoList']);
     $aryPrevResult['customerNoList']  = $aryResult['customerNoList'];
     $aryPrevResult['customerNoArray'] = $customerNoArray;
     $aryPrevResult['customerNoCount'] = COUNT($customerNoArray);
-
+    $i = 0;
     foreach ($customerNoArray as $customerNo) {
         $aryPrevResult['strcustomerNo' . $i] = $customerNo;
+        $i += 1;
     }
     if(isset($aryResult['taxclass'])) {
         $taxclass = explode(' ' ,$aryResult['taxclass']);
