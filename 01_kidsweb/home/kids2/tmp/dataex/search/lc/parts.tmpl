@@ -25,6 +25,11 @@
 <script type="text/javascript" language="javascript" src="/dataex/search/lc/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/dataex/search/cmn/functions.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<!-- jQuery -->
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<!-- jQuery Cookie -->
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+<script src="/search/cmn/js/date.js" defer></script>
 
 </head>
 <body id="Backs" oncontextmenu="return false;" onload="ChgEtoJ( parent.lngLanguageCode );fncAutoFocus( document.all.dtmAppropriationDateFrom );">
@@ -49,9 +54,9 @@
 			<span class="Column">設定日</span>
 			<span class="VarText" id="VarsA01">
 				<span class="VarLabel">FROM</span>
-				<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );fncCopyValue( this , document.all.dtmAppropriationDateTo );" tabindex="">
+				<input style="ime-mode:disabled;" class="TxtStyle05L is-date" type="text" name="dtmAppropriationDateFrom" value="_%lcdatestart%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );fncCopyValue( this , document.all.dtmAppropriationDateTo );" tabindex="">
 				<span class="VarLabel">TO</span>
-				<input style="ime-mode:disabled;" class="TxtStyle05L" type="text" name="dtmAppropriationDateTo" value="_%lcdateend%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="">
+				<input style="ime-mode:disabled;" class="TxtStyle05L is-date" type="text" name="dtmAppropriationDateTo" value="_%lcdateend%_" maxlength="10" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate( this );" tabindex="">
 			</span>
 		</span>
 	</div>

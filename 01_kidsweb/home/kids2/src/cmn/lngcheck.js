@@ -253,11 +253,19 @@
 	    if(strDate == ""){
 	        fncErrorMessage(0, strObjectName);
 	        return true;
-	    }
+		}
 		
+		
+
 		// 番号が指定されている場合
 		if( isNaN(lngFormatNo) == false )
 		{
+			if (strDate.indexOf('/') < 0 && strDate.length == 6) {
+				var y = strDate.substr(0, 4);
+				var m = strDate.substr(4, 2);
+				strDate = y + "/" + m;
+			}
+
 	        // 年/月の形式のみ許容する
 	        if(!strDate.match(/^\d{4}\/\d{1,2}$/)){
 	            fncErrorMessage(2, strObjectName);
@@ -281,6 +289,13 @@
 		}
 		else
 		{
+			if (strDate.indexOf('/') < 0 && strDate.length == 8) {
+				var y = strDate.substr(0, 4);
+				var m = strDate.substr(4, 2);
+				var d = strDate.substr(6, 2);
+				strDate = y + "/" + m + "/" + d;
+			}
+			
 	        // 年/月/日の形式のみ許容する
 	        if(!strDate.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
 	            fncErrorMessage(2, strObjectName);
