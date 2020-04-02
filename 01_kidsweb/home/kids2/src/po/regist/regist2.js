@@ -156,6 +156,7 @@ jQuery(function ($) {
                 strMonetaryUnitName: $('select[name="lngMonetaryUnitCode"]').children('option:selected').text(),
                 lngCustomerCompanyCode: $('input[name="strCustomerCode"]').val(),
                 strProductCode: $('input[name="strProductCode"]').val(),
+                strReviseCode: $('input[name="strReviseCode"]').val(),
                 strProductName: $('input[name="strProductName"]').val(),
                 payConditionDisableFlag: $('select[name="lngPayConditionCode"]').prop('disabled'),
 

@@ -1,4 +1,6 @@
 function RegistPO(){
+    console.log($('input[name="strProductCode"]').val());
+    console.log($('input[name="strReviseCode"]').val());
     $.ajax({
         type: 'POST',
         url: '/po/confirm2/index.php?strSessionID=' + $('input[name="strSessionID"]').val(),
@@ -14,6 +16,7 @@ function RegistPO(){
             strLocationName: $('input[name="strLocationName"]').val(),
             strNote: $('input[name="strNote"]').val(),
             strProductCode: $('input[name="strProductCode"]').val(),
+            strReviseCode: $('input[name="strReviseCode"]').val(),
             lngDetailCount: $('input[name="lngDetailCount"]').val(),
             aryDetail: getUpdateDetail(),
         },

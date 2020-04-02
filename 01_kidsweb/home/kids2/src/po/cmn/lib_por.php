@@ -1034,6 +1034,7 @@ function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB)
 
         $strDetailQuery = "";
         $strDetailQuery = implode("\n", $aryDetailQuery);
+        
         if (!$lngResultID = $objDB->execute($strDetailQuery)) {
             fncOutputError(9051, DEF_ERROR, "発注明細テーブルへの更新処理に失敗しました。", true, "", $objDB);
             return false;
