@@ -45,7 +45,6 @@ if ( !fncCheckAuthority( DEF_FUNCTION_SYS2, $objAuth ) )
 $aryCheck["strSessionID"]  = "null:numenglish(32,32)";
 $aryCheck["lngActionCode"] = "null:number(" . DEF_ACTION_RESTART . "," . DEF_ACTION_STOP . ")";
 
-
 // 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
 fncPutStringCheckError( $aryCheckResult, $objDB );
@@ -83,11 +82,10 @@ echo $objTemplate->strTemplate;
 echo $strMessage;
 echo "<a href=/login.php>BACK</a>";
 
-
 // シェル実行
 if ( !$strShell || !$strResult = exec ( $strShell ) )
 {
-	fncOutputError ( 9052, DEF_WARNING, "シェルの実行に失敗しました。", TRUE, "", $objDB );
+	echo "シェルの実行に失敗しました。";
 }
 return TRUE;
 ?>

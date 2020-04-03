@@ -21,24 +21,20 @@
 
 
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/sysc/server/initlayoutifrm.js"></script>
-<script type="text/javascript" language="javascript" src="/sysc/sev/sev_exstr.js"></script>
-
-
 <link rel="stylesheet" type="text/css" media="screen" href="/sysc/sev/sev_layout.css">
-<script type="text/javascript" language="javascript" src="/cmn/languages.js"></script>
+<link rel="stylesheet" href="/cmn/css/navigate/navigate.css">
 
 
 </head>
-<body id="Backs" oncontextmenu="return false;" onload="GetIfrmlngLanguageCode( window.top.lngLanguageCode );">
+<body id="Backs" oncontextmenu="return false;">
 
 
 
 <p id="ApacheSet">
-	<span id="RestartBt" onclick="window.location='action.php?strSessionID=_%strSessionID%_&lngActionCode=_%DEF_ACTION_RESTART%_';"></span>
-	<span id="StopBt" onclick="window.location='action.php?strSessionID=_%strSessionID%_&lngActionCode=_%DEF_ACTION_STOP%_';"></span>
+<button type="button" class="btn btn-light" onclick="window.location='action.php?strSessionID=_%strSessionID%_&lngActionCode=_%DEF_ACTION_RESTART%_';">アパッチ再起動</button>
+<button type="button" class="btn btn-light" onclick="window.location='action.php?strSessionID=_%strSessionID%_&lngActionCode=_%DEF_ACTION_STOP%_';">アパッチ停止</button>
+<button type="button" class="btn btn-light" onclick="window.location='/mold/batch/ImportMold.php?printFlag=true';">金型登録バッチ</button>
 </p>
-
-
 
 </body>
 </html>

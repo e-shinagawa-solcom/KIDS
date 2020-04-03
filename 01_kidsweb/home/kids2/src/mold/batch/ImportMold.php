@@ -6,14 +6,14 @@
 //
 // -----------------------------------------------------------
 
-include( 'conf.inc' );
-require_once( LIB_FILE );
-require_once(SRC_ROOT.'/mold/lib/UtilMold.class.php');
+include 'conf.inc';
+require_once LIB_FILE;
+require_once SRC_ROOT . '/mold/lib/UtilMold.class.php';
 
 // ログ出力時のプレフィックス
 const LOG_PREFIX = "[KIDS-ImportMold] ";
 
-$objDB   = new clsDB();
+$objDB = new clsDB();
 $objAuth = new clsAuth();
 
 // DBオープン
@@ -37,7 +37,7 @@ pg_query("LOCK t_stockdetail");
 // 金型関連テーブルのロック
 pg_query("LOCK m_mold");
 
-syslog(LOG_INFO, LOG_PREFIX."金型マスタインポート処理開始");
+syslog(LOG_INFO, LOG_PREFIX . "金型マスタインポート処理開始");
 
 // トランザクション開始
 $objDB->transactionBegin();
@@ -46,11 +46,16 @@ $objDB->transactionBegin();
 $affected = $utilMold->importMoldFromStock();
 
 // 取り込み件数のログ出力
-syslog(LOG_INFO, LOG_PREFIX.$affected."件取り込み");
+syslog(LOG_INFO, LOG_PREFIX . $affected . "件取り込み");
 
 // コミット
 $objDB->transactionCommit();
 
-syslog(LOG_INFO, LOG_PREFIX."金型マスタインポート処理終了");
+syslog(LOG_INFO, LOG_PREFIX . "金型マスタインポート処理終了");
+
+if ($aryData["printFlag"]) {
+    echo "金型マスタインポート処理終了しました。" . "<br>";
+    echo $affected . "件取り込みました。" . "<br>";
+}
 
 return;
