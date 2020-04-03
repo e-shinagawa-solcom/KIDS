@@ -42,7 +42,7 @@ function OnClickDownload(obj, lngSlipNo, strSlipCode, lngRevisionNo){
                     ;
 
     // ダウンロードファイル名
-    var fileName = "KWG" + strSlipCode + ".xlsx";
+    var fileName = "KWG" + strSlipCode + ".xls";
 
 　　// 非同期リクエストの設定
     var url = "preview.php"
@@ -83,3 +83,4 @@ function OnClickDownload(obj, lngSlipNo, strSlipCode, lngRevisionNo){
     // 非同期リクエストの送信
     xhr.send(postParams);
 }
+

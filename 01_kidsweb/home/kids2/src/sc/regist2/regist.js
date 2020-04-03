@@ -917,7 +917,7 @@ jQuery(function ($) {
             lngmonetaryunitcode: firstRowMonetaryUnitCode,
         };
 
-        var features = "width=710,height=460,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
+        var features = "width=750,height=460,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no";
         post_open(url, data, "conditionWin", features);
     });
 

@@ -27,6 +27,8 @@ require LIB_FILE;
 require_once LIB_EXCLUSIVEFILE;
 require SRC_ROOT . "sc/cmn/lib_scr.php";
 require PATH_HOME . "/vendor/autoload.php";
+require SRC_ROOT . "list/cmn/lib_lo.php";
+require SRC_ROOT . "m/cmn/lib_m.php";
 
 $objDB = new clsDB();
 $objAuth = new clsAuth();
@@ -44,7 +46,12 @@ setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
 // 処理モード
 $strMode = $_POST["strMode"];
+$strMode = $_REQUEST["strMode"];
+// $lngSlipNo = $_REQUEST["lngSlipNo"];
 
+$lngSlipNo = $_REQUEST["lngSlipNo"];
+$strSlipCode = $_REQUEST["strSlipCode"];
+$lngRevisionNo = $_REQUEST["lngRevisionNo"];
 //-------------------------------------------------------------------------
 // DBオープン
 //-------------------------------------------------------------------------
@@ -277,9 +284,9 @@ if ($strMode == "regist-or-renew") {
 if ($strMode == "download") {
 
     // 納品書データのキー項目をパラメータから受け取る
-    $lngSlipNo = $_POST["lngSlipNo"];
-    $strSlipCode = $_POST["strSlipCode"];
-    $lngRevisionNo = $_POST["lngRevisionNo"];
+    // $lngSlipNo = $_POST["lngSlipNo"];
+    // $strSlipCode = $_POST["strSlipCode"];
+    // $lngRevisionNo = $_POST["lngRevisionNo"];
 
     // レコード登録後に作られるデータをDBより取得する
     $lngSalesNo = fncGetSalesNoBySlipCode($strSlipCode, $objDB);
@@ -297,14 +304,17 @@ if ($strMode == "download") {
         $objDB);
     $xlsxWriter = $aryGenerateResult["XlsxWriter"];
 
+    // $xlsxWriter = fncDownloadExcelFile($lngSlipNo, $objDB);
+
     // 印刷回数を増やす
     fncIncrementPrintCountBySlipCode($strSlipCode, $objDB);
 
     // MIMEタイプをセットしてダウンロード
     //MIMEタイプ：https://technet.microsoft.com/ja-jp/ee309278.aspx
     header("Content-Description: File Transfer");
-    header('Content-Disposition: attachment; filename="weather.xlsx"');
+    header('Content-Disposition: attachment; filename="weather.xls"');
     header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Cache-Control: max-age=0');
     header('Content-Transfer-Encoding: binary');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Expires: 0');
@@ -312,6 +322,11 @@ if ($strMode == "download") {
 
     // バイナリイメージをレスポンスとして返す
     $xlsxWriter->save('php://output');
+    
+    // header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    // header('Content-Disposition: attachment;filename="01simple.xls"');
+    // header('Cache-Control: max-age=0');
+    // $xlsxWriter->save('php://output');
 
     // 処理終了
     return true;

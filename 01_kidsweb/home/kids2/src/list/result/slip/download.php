@@ -77,7 +77,7 @@ $worksheet->fromArray($aryDetail, null, 'B6');
 
 if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
     //ロードしたシートの中から"売上明細"シートを$sheetとする
-    $sheet = $spreadsheet->getSheetByName("ｆｏｒｍ-blank");
+    $sheet = $spreadsheet->getSheetByName("DEBIT NOTE");
     //画像の貼り付け
     $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
     $drawing->setPath("rogo_slip.gif");

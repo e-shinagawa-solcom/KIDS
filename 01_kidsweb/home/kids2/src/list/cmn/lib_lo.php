@@ -829,7 +829,7 @@ function fncGetSlipForDownloadQuery($strReportKeyCode)
     $aryQuery[] = "  , s.strtaxclassname";
     $aryQuery[] = "  , s.curtax";
     $aryQuery[] = "  , s.lngpaymentmethodcode";
-    $aryQuery[] = "  , to_char(s.dtmpaymentlimit, 'dd/mm/yyyy') as dtmpaymentlimit";
+    $aryQuery[] = "  , to_char(s.dtmpaymentlimit, 'yyyy/mm/dd') as dtmpaymentlimit";
     $aryQuery[] = "  , s.dtminsertdate";
     $aryQuery[] = "  , s.strnote";
     $aryQuery[] = "  , s.strshippercode ";

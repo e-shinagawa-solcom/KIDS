@@ -241,7 +241,7 @@ function fncGetHeaderBySlipNo($lngSlipNo, $lngRevisionNo, $objDB)
 
     $strQuery = "";
     $strQuery .= implode("\n", $aryQuery);
-    
+
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
         for ($i = 0; $i < $lngResultNum; $i++) {
@@ -481,7 +481,6 @@ function fncGetReceiveDetail($aryCondition, $objDB)
         $aryWhere[] = " AND r.lngMonetaryUnitCode = " . $aryCondition["lngMonetaryUnitCode"];
     }
 
-
     // 売上区分（コードで検索）
     if ($aryCondition["lngSalesClassCode"]) {
         $aryWhere[] = " AND rd.lngsalesclasscode = " . $aryCondition["lngSalesClassCode"];
@@ -528,7 +527,7 @@ function fncGetReceiveDetail($aryCondition, $objDB)
     // クエリ実行
     // -------------------
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
+    fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
     // 結果を配列に格納
     $aryResult = []; //空の配列で初期化
     if (0 < $lngResultNum) {
@@ -552,8 +551,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
             $monetaryunitcode = $aryDetail[$i]["lngmonetaryunitcode"];
             $monetaryunitCount = 1;
         } else {
-            if ($monetaryunitcode != $aryDetail[$i]["lngmonetaryunitcode"])
-            {
+            if ($monetaryunitcode != $aryDetail[$i]["lngmonetaryunitcode"]) {
                 $monetaryunitcode = $aryDetail[$i]["lngmonetaryunitcode"];
                 $monetaryunitCount += 1;
             }
@@ -569,7 +567,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
             $chkbox_body_html .= "</tr>";
         } else {
             $chkbox_body_html .= "<tr>";
-            $chkbox_body_html .= "<td>" .($i + 1) . "</td>";
+            $chkbox_body_html .= "<td>" . ($i + 1) . "</td>";
             $chkbox_body_html .= "</tr>";
         }
 
@@ -592,7 +590,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductname"]);
         $detail_body_html .= "<td class='detailProductName'>" . $strDisplayValue . "</td>";
         //売上区分
-        $strDisplayValue = "[". htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]) ."] "
+        $strDisplayValue = "[" . htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]) . "] "
         . htmlspecialchars($aryDetail[$i]["strsalesclassname"]);
         $detail_body_html .= "<td class='detailSalesClassName'>" . $strDisplayValue . "</td>";
         //納期
@@ -610,7 +608,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         //単価
         $strDisplayValue = convertPrice($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], $aryDetail[$i]["curproductprice"], 'unitprice');
         $detail_body_html .= "<td class='detailProductPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
-        //税抜金額        
+        //税抜金額
         $strDisplayValue = convertPrice($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], $aryDetail[$i]["cursubtotalprice"], 'price');
         $detail_body_html .= "<td class='detailSubTotalPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
         //顧客品番
@@ -621,14 +619,14 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         $detail_body_html .= "<td class='detailProductEnglishName'>" . $strDisplayValue . "</td>";
         //営業部署
         if ($aryDetail[$i]["strsalesdeptcode"] != "") {
-            $strDisplayValue = htmlspecialchars( "[" .$aryDetail[$i]["strsalesdeptcode"]. "] " .$aryDetail[$i]["strsalesdeptname"]);
+            $strDisplayValue = htmlspecialchars("[" . $aryDetail[$i]["strsalesdeptcode"] . "] " . $aryDetail[$i]["strsalesdeptname"]);
         } else {
             $strDisplayValue = "";
         }
         $detail_body_html .= "<td class='detailSalesDeptName'>" . $strDisplayValue . "</td>";
         // 備考
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strnote"]);
-        $detail_body_html .= "<td class='detailNote'><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"" .$strDisplayValue ."\"></td>";
+        $detail_body_html .= "<td class='detailNote'><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"" . $strDisplayValue . "\"></td>";
         //受注番号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceiveno"]);
         $detail_body_html .= "<td class='forEdit detailReceiveNo'>" . $strDisplayValue . "</td>";
@@ -673,7 +671,6 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
     $aryResult["detail_body"] = $detail_body_html;
     $aryResult["count"] = count($aryDetail);
     $aryResult["monetaryunitCount"] = $monetaryunitCount;
-
 
     return $aryResult;
 }
@@ -1179,10 +1176,10 @@ function fncRegisterSalesAndSlip(
         if ($isCreateNew) {
             // 登録：当日に紐づく納品伝票コードの発番
             $strSlipCode = fncGetDateSequence(
-                               date('y', strtotime($dtmNowDate)),
-                               date('m', strtotime($dtmNowDate)), 
-                               "m_sales.strSlipCode", $objDB
-                           );
+                date('y', strtotime($dtmNowDate)),
+                date('m', strtotime($dtmNowDate)),
+                "m_sales.strSlipCode", $objDB
+            );
         } else {
             // 修正：修正対象に紐づく値
             $strSlipCode = $strRenewTargetSlipCode;
@@ -1495,8 +1492,8 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $v_dtmdeliverydate = withQuote($aryHeader["dtmdeliverydate"]); //16:納品日
     $v_lngdeliveryplacecode = nullIfEmpty($lngDeliveryPlaceCode); //17:納品場所コード
     if (!is_null($lngDeliveryPlaceCode)) {
-        $strdeliveryplaceusername = fncGetMasterValue( "m_company", "lngcompanycode", "strcompanyname",  $lngDeliveryPlaceCode, '', $objDB);
-    }    
+        $strdeliveryplaceusername = fncGetMasterValue("m_company", "lngcompanycode", "strcompanyname", $lngDeliveryPlaceCode, '', $objDB);
+    }
     $v_strdeliveryplacename = withQuote($strdeliveryplaceusername); //18:納品場所名
     $v_strdeliveryplaceusername = withQuote($aryHeader["strdeliveryplaceusername"]); //19:納品場所担当者名
     $v_lngpaymentmethodcode = $aryHeader["lngpaymentmethodcode"]; //20:支払方法コード
@@ -1595,7 +1592,7 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
     $aryInsert[] = ") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
-    
+
     // 登録実行
     if (!$lngResultID = $objDB->execute($strQuery)) {
         fncOutputError(9051, DEF_ERROR, "納品伝票マスタ登録失敗。", true, "", $objDB);
@@ -1620,7 +1617,7 @@ function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRev
         $v_lngrevisionno = $lngRevisionNo; //3:リビジョン番号
         $v_strcustomersalescode = withQuote($d["strcustomerreceivecode"]); //4:顧客受注番号
         $v_lngsalesclasscode = $d["lngsalesclasscode"]; //5:売上区分コード
-        $v_strsalesclassname = withQuote(fncGetMasterValue( "m_salesclass", "lngsalesclasscode", "strsalesclassname", $d["lngsalesclasscode"] ,'', $objDB )); //6:売上区分名
+        $v_strsalesclassname = withQuote(fncGetMasterValue("m_salesclass", "lngsalesclasscode", "strsalesclassname", $d["lngsalesclasscode"], '', $objDB)); //6:売上区分名
         $v_strgoodscode = withQuote($d["strgoodscode"]); //7:顧客品番
         $v_strproductcode = withQuote(mb_substr($d["strproductcode"], 0, 5)); //8:製品コード
         $v_strrevisecode = withQuote($d["strrevisecode"]); //9:再販コード
@@ -1760,17 +1757,17 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
     // 最大ページ数の計算
     $maxPageCount = ceil($totalItemCount / $maxItemPerPage);
     // 帳票種別ごとに異なる情報の取得
-    if ($lngSlipKindCode == 1) {
+    if ($lngSlipKindCode == DEF_SLIP_KIND_EXCLUSIVE) {
         //1:指定・専用
-        $templatFileName = "納品書temple_B社_連絡書付.xlsx";
+        $templatFileName = REPORT_SLIP_EXCLUSIVE;
         $activeSheetName = "納品書";
-    } else if ($lngSlipKindCode == 2) {
+    } else if ($lngSlipKindCode == DEF_SLIP_KIND_COMM) {
         //2:市販
-        $templatFileName = "納品書temple_市販_連絡書付.xlsx";
+        $templatFileName = REPORT_SLIP_COMM;
         $activeSheetName = "納品書";
-    } else if ($lngSlipKindCode == 3) {
+    } else if ($lngSlipKindCode == DEF_SLIP_KIND_DEBIT) {
         //3:DEBIT NOTE
-        $templatFileName = "DEBIT NOTE.xlsx";
+        $templatFileName = REPORT_SLIP_DEBIT;
         $activeSheetName = "DEBIT NOTE";
     } else {
         throw new Exception("帳票テンプレートを特定できません。lngSlipKindCode=" . $lngSlipKindCode);
@@ -1797,23 +1794,25 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
         $xlSpreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($spreadSheetFilePath);
         //ワークシート生成
         $xlWorkSheet = $xlSpreadSheet->GetSheetByName($dataSheetName);
-        //XlsxWriter生成
-        $xlWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($xlSpreadSheet);
 
         //1ページ分の明細のみ存在するという前提
         $itemMinIndex = 0;
         $itemMaxIndex = count($aryDetail) - 1;
 
         //ワークシートに納品書データを設定
-        fncSetSlipDataToWorkSheet(
+        $xlSpreadSheet = fncSetSlipDataToWorkSheet(
+            $xlSpreadSheet,
             $xlWorkSheet,
             $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
             $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
             $aryHeader, $aryDetail,
-            $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $objDB);
+            $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $lngSlipKindCode, $objDB);
 
         //アクティブシート変更
         $xlSpreadSheet->setActiveSheetIndexByName($activeSheetName);
+
+        //XlsxWriter生成
+        $xlWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($xlSpreadSheet, 'Xls');
 
         //Writerだけ戻してみる
         $aryGenerateResult["XlsxWriter"] = $xlWriter;
@@ -1850,11 +1849,12 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
 
                 // 1ページ分のプレビューHTML生成
                 fncSetSlipDataToWorkSheet(
+                    $xlSpreadSheet,
                     $xlWorkSheet,
                     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
                     $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
                     $aryHeader, $aryDetail,
-                    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $objDB);
+                    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $lngSlipKindCode, $objDB);
 
                 // 全体に追加
                 $pageHtml = $xlWriter->generateSheetData();
@@ -1952,11 +1952,12 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
 
 // 納品書データを帳票テンプレートのワークシートに設定
 function fncSetSlipDataToWorkSheet(
+    $xlSpreadSheet,
     $xlWorkSheet,
     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
     $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
     $aryHeader, $aryDetail,
-    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $objDB) {
+    $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $lngSlipKindCode, $objDB) {
     // 【補足】
     // lngSlipNo,lngRevisionNo,strSlipCode,lngSalesNo,dtmInsertDateはデータ登録するまで確定しないため
     // プレビュー表示時は空にせざるを得ない。ダウンロード時はデータ登録済みなため出力可能。
@@ -2044,7 +2045,7 @@ function fncSetSlipDataToWorkSheet(
         $v_lngrevisionno = is_null($lngRevisionNo) ? "" : $lngRevisionNo; //3:リビジョン番号
         $v_strcustomersalescode = $d["strcustomerreceivecode"]; //4:顧客受注番号
         $v_lngsalesclasscode = $d["lngsalesclasscode"]; //5:売上区分コード
-        $v_strsalesclassname = fncGetMasterValue( "m_salesclass", "lngsalesclasscode", "strsalesclassname", $d["lngsalesclasscode"] ,'', $objDB); //6:売上区分名
+        $v_strsalesclassname = fncGetMasterValue("m_salesclass", "lngsalesclasscode", "strsalesclassname", $d["lngsalesclasscode"], '', $objDB); //6:売上区分名
         $v_strgoodscode = $d["strgoodscode"]; //7:顧客品番
         $v_strproductcode = $d["strproductcode"]; //8:製品コード
         $v_strrevisecode = $d["strrevisecode"]; //9:再販コード
@@ -2081,6 +2082,46 @@ function fncSetSlipDataToWorkSheet(
 
     }
 
+    if ($lngSlipKindCode == DEF_SLIP_KIND_DEBIT) {
+        $sheet = $xlSpreadSheet->getSheetByName("DEBIT NOTE");
+        //画像の貼り付け
+        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing->setPath(SRC_ROOT ."/list/result/slip/rogo_slip.gif");
+        $drawing->setCoordinates('B2'); //貼り付け場所
+        $drawing->setResizeProportional(false); // リサイズ時に縦横比率を固定する (false = 固定しない)
+        $drawing->setWidth(130); // 画像の幅 (px)
+        $drawing->setHeight(80); // 画像の高さ (px)
+        $drawing->setWorksheet($sheet); //対象シート（インスタンスを指定）
+
+        $drawing1 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing1->setPath(SRC_ROOT ."/list/result/slip/title1.gif");
+        $drawing1->setHeight(25); //高さpx
+        $drawing1->setOffsetY(5); // 位置をずらす
+        $drawing1->setCoordinates('D1'); //貼り付け場所
+        $drawing1->setWorksheet($sheet); //対象シート（インスタンスを指定）
+
+        $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing2->setPath(SRC_ROOT ."/list/result/slip/title2.gif");
+        $drawing2->setHeight(60); //高さpx
+        $drawing2->setWidth(400); // 画像の幅 (px)
+        $drawing2->setCoordinates('D3'); //貼り付け場所
+        $drawing2->setWorksheet($sheet); //対象シート（インスタンスを指定）
+
+        $drawing3 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing3->setPath(SRC_ROOT ."/list/result/slip/brackets_left.gif");
+        $drawing3->setHeight(100); //高さpx
+        $drawing3->setOffsetX(20); // 位置をずらす
+        $drawing3->setCoordinates('A9'); //貼り付け場所
+        $drawing3->setWorksheet($sheet); //対象シート（インスタンスを指定）
+
+        $drawing4 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing4->setPath(SRC_ROOT ."/list/result/slip/brackets_right.gif");
+        $drawing4->setHeight(100); //高さpx
+        $drawing4->setCoordinates('F9'); //貼り付け場所
+        $drawing4->setWorksheet($sheet); //対象シート（インスタンスを指定）
+    }
+    return $xlSpreadSheet;
+
 }
 
 // ページ毎の情報から登録結果HTMLを生成
@@ -2101,6 +2142,8 @@ function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
         // 作成日の取得
         $dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
 
+        // $url ='location.href=' . '"/list/result/slip/download.php?strSessionID=' .$strSessionID . '&strReportKeyCode='.$lngSlipNo .'"';
+
         // HTMLの生成（/sc/finish2/finish2.js のファンクション呼び出しを含む）
         $aryHtml = array();
         $aryHtml[] = "                <tr>";
@@ -2108,6 +2151,7 @@ function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
         $aryHtml[] = "                    <td class='item-value'>" . $dtmInsertDate . "</td>";
         $aryHtml[] = "                    <td class='item-value'>";
         $aryHtml[] = "                        <a href='#' onclick='OnClickDownload(this, \"" . $lngSlipNo . "\", \"" . $strSlipCode . "\", \"" . $lngRevisionNo . "\");'><img class='btn-download'";
+        // $aryHtml[] = "                        <a href='#' onclick='" . $url . "'><img class='btn-download'";
         $aryHtml[] = "                         onmouseover='OnMouseOverDownload(this);'";
         $aryHtml[] = "                         onmouseout='OnMouseOutDownload(this);'></a>";
         $aryHtml[] = "                    </td>";
@@ -2193,4 +2237,102 @@ function fncResetReceiveStatus($lngSlipNo, $lngRevisisonNo, $objDB)
     }
     $objDB->freeResult($lngResultID);
     return true;
+}
+
+function fncDownloadExcelFile($lngSlipNo, $objDB)
+{
+    // データ取得クエリ
+    $strQuery = fncGetSlipForDownloadQuery($lngSlipNo);
+    $objMaster = new clsMaster();
+    $objMaster->setMasterTableData($strQuery, $objDB);
+    $aryParts = &$objMaster->aryData[0];
+
+    // 納品伝票種別取得
+    $strQuery = fncGetSlipKindQuery($aryParts["lngcustomercode"]);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    $slipKidObj = $objDB->fetchArray($lngResultID, 0);
+    $objDB->freeResult($lngResultID);
+
+    unset($aryQuery);
+
+    // 詳細取得
+    $strQuery = fncGetSlipDetailForDownloadQuery($lngSlipNo, $aryParts["lngrevisionno"]);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    // フィールド名取得
+    for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
+        $aryKeys[] = pg_field_name($lngResultID, $i);
+    }
+
+    // 行数だけデータ取得、配列に代入
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $aryResult = $objDB->fetchArray($lngResultID, $i);
+        for ($j = 0; $j < count($aryKeys); $j++) {
+            $aryDetail[$i][$aryKeys[$j]] = $aryResult[$j];
+        }
+    }
+
+    $objDB->close();
+
+    // テンプレートパス設定
+    if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
+        $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_EXCLUSIVE;
+        // $downloadFileName = REPORT_SLIP_EXCLUSIVE;
+    } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
+        $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_COMM;
+        // $downloadFileName = REPORT_SLIP_COMM;
+    } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
+        $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_DEBIT;
+        // $downloadFileName = REPORT_SLIP_DEBIT;
+    }
+
+    // 帳票テンプレートファイルの読込
+    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($strTemplatePath);
+    // データ設定用シートにデータの設定
+    $worksheet = $spreadsheet->getSheetByName("データ設定用");
+    $worksheet->fromArray($aryParts, null, 'B3');
+    $worksheet->fromArray($aryDetail, null, 'B6');
+
+    if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
+        //ロードしたシートの中から"売上明細"シートを$sheetとする
+        $sheet = $spreadsheet->getSheetByName("DEBIT NOTE");
+        //画像の貼り付け
+        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing->setPath(SRC_ROOT ."/list/result/slip/rogo_slip.gif");
+        $drawing->setCoordinates('B2'); //貼り付け場所
+        $drawing->setResizeProportional(false); // リサイズ時に縦横比率を固定する (false = 固定しない)
+        $drawing->setWidth(130); // 画像の幅 (px)
+        $drawing->setHeight(80); // 画像の高さ (px)
+        $drawing->setWorksheet($sheet); //対象シート（インスタンスを指定）
+
+        $drawing1 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing1->setPath(SRC_ROOT ."/list/result/slip/title1.gif");
+        $drawing1->setHeight(25); //高さpx
+        $drawing1->setOffsetY(5); // 位置をずらす
+        $drawing1->setCoordinates('D1'); //貼り付け場所
+        $drawing1->setWorksheet($sheet); //対象シート（インスタンスを指定）
+
+        $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing2->setPath(SRC_ROOT ."/list/result/slip/title2.gif");
+        $drawing2->setHeight(60); //高さpx
+        $drawing2->setWidth(400); // 画像の幅 (px)
+        $drawing2->setCoordinates('D3'); //貼り付け場所
+        $drawing2->setWorksheet($sheet); //対象シート（インスタンスを指定）
+
+        $drawing3 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing3->setPath(SRC_ROOT ."/list/result/slip/brackets_left.gif");
+        $drawing3->setHeight(100); //高さpx
+        $drawing3->setOffsetX(20); // 位置をずらす
+        $drawing3->setCoordinates('A9'); //貼り付け場所
+        $drawing3->setWorksheet($sheet); //対象シート（インスタンスを指定）
+
+        $drawing4 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        $drawing4->setPath(SRC_ROOT ."/list/result/slip/brackets_right.gif");
+        $drawing4->setHeight(100); //高さpx
+        $drawing4->setCoordinates('F9'); //貼り付け場所
+        $drawing4->setWorksheet($sheet); //対象シート（インスタンスを指定）
+    }
+
+    $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+
+    return $writer;
 }
