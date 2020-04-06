@@ -564,6 +564,12 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
             $aryQuery[] = ")";
         }
 
+        // 製品名称（日本語）
+        if ($strSearchColumnName == "strProductName") {
+            if ($arySearchDataColumn["strProductName"]) {
+                $aryQuery[] = "AND UPPER( mp.strProductName ) LIKE UPPER( '%" . $arySearchDataColumn["strProductName"] . "%' ) ";
+            }
+        }
         // 営業部署
         if ($strSearchColumnName == "lngInChargeGroupCode") {
             if ($arySearchDataColumn["lngInChargeGroupCode"]) {
