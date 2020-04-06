@@ -270,6 +270,10 @@ select {
 	text-align : left ;
 }
 
+.Txt10L { /* 10byte */
+	width : 77px ;
+	text-align : left ;
+}
 #TxtFreeC { /* 10byte */
 	width : 28px ;
 	text-align : center ;

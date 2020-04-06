@@ -15,6 +15,7 @@
     <script src="/search/cmn/search/js/cookie-functions.js" defer></script>
     <!-- セレクトボックス値変更のjs読み込みに使用 -->
     <script type="text/javascript" language="javascript" src="/cmn/masterlib.js"></script>
+        <script type="text/javascript" language="javascript" src="/cmn/js/functions.js"></script>
 </header1>
 
 <header2>
@@ -229,7 +230,7 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">仕入科目</span>
-                    <select name="lngStockSubjectCode" class="Slt13">
+                    <select name="lngStockSubjectCode" class="Slt13" onchange="fncGetStockItem(this.value, '_%strSessionID%_');">
                     _%lngStockSubjectCode%_
                     </select>
                 </span>

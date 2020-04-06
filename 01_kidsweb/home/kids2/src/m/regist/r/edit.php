@@ -105,7 +105,7 @@ if ( $aryData["lngActionCode"] == DEF_ACTION_INSERT )
 	$aryParts["MASTER"][1] .= "</select></span>\n";
 
 	// 適用開始月
-	$aryParts["MASTER"][3] = "<span class=\"InputSegs\"><input id=\"Input3\" type=\"text\" name=\"" . $objMaster->aryColumnName[3] . "\" value=\"" . $aryData[$objMaster->aryColumnName[3]]. "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"10\"></span>\n";
+	$aryParts["MASTER"][3] = "<span class=\"InputSegs_date\"><input class=\"Txt10L is-date\" type=\"text\" name=\"" . $objMaster->aryColumnName[3] . "\" value=\"" . $aryData[$objMaster->aryColumnName[3]]. "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"10\"></span>\n";
 
 	// 換算レートに戻ってきた際のデータを格納
 	$objMaster->aryData[0][$objMaster->aryColumnName[2]] = $aryData[$objMaster->aryColumnName[2]];
@@ -139,14 +139,14 @@ elseif ( $aryData["lngActionCode"] != DEF_ACTION_INSERT )
 	$aryParts["MASTER"][1] .= "</select></span>\n";
 
 	// 適用開始月
-	$aryParts["MASTER"][3] = "<span class=\"InputSegs\"><input id=\"Input3\" type=\"text\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[3]] . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" disabled></span>\n";}
+	$aryParts["MASTER"][3] = "<span class=\"InputSegs\"><input type=\"text\" id=\"TxtDis10L\" value=\"" . str_replace('-', '/', $objMaster->aryData[0][$objMaster->aryColumnName[3]]) . "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" disabled></span>\n";}
 
 // 新規登録、修正共通入力項目
 // 換算レート
 $aryParts["MASTER"][2] = "<span class=\"InputSegs\"><input id=\"Input2\" type=\"text\" name=\"" . $objMaster->aryColumnName[2] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[2]]. "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"10\"></span>\n";
 
 // 適用終了月
-$aryParts["MASTER"][4] = "<span class=\"InputSegs\"><input id=\"Input4\" type=\"text\" name=\"" . $objMaster->aryColumnName[4] . "\" value=\"" . $objMaster->aryData[0][$objMaster->aryColumnName[4]]. "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"10\"></span>\n";
+$aryParts["MASTER"][4] = "<span class=\"InputSegs_date\"><input class=\"Txt10L is-date\" type=\"text\" name=\"" . $objMaster->aryColumnName[4] . "\" value=\"" . str_replace('-', '/', $objMaster->aryData[0][$objMaster->aryColumnName[4]]). "\" onfocus=\"chColorOn(this);\" onblur=\"chColorOff(this);\" maxlength=\"10\"></span>\n";
 
 // カラム表示
 $aryData["COLUMN"] = "<span id=\"Column0\" class=\"ColumnSegs\"></span>\n<span id=\"Column1\" class=\"ColumnSegs\"></span>\n<span id=\"Column2\" class=\"ColumnSegs\"></span>\n<span id=\"Column3\" class=\"ColumnSegs\"></span>\n<span id=\"Column4\" class=\"ColumnSegs\"></span>\n";

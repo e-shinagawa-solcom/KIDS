@@ -106,3 +106,27 @@ function isHalfYearLater(date) {
 	}
 
 }
+
+
+
+function fncGetStockItem(lngstocksubjectcode, strSessionID) {
+	$.ajax({
+		url: "/pc/search/getStockItemPulldown.php",
+		type: 'post',
+		data: {
+			'lngStockSubjectCode': lngstocksubjectcode,
+			'strSessionID': strSessionID
+		}
+	})
+		.done(function (response) {
+			console.log(response);
+			var data = JSON.parse(response);
+			console.log(data);
+			$('select[name="lngStockItemCode"] option').remove();
+			$('select[name="lngStockItemCode"]').append("<option value=''></option>");
+			$('select[name="lngStockItemCode"]').append(data.lngStockItemCode);
+		})
+		.fail(function (response) {
+			alert("fail");
+		})
+}

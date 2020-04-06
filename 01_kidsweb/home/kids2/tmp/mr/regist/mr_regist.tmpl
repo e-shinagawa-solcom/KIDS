@@ -71,9 +71,9 @@
 					<span class="regist-label">
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">製品コード</span>
-						<input class="TxtStyle05L" name="ProductCode" autofocus>
+						<input class="TxtStyle05L" name="ProductCode" id="ProductCode" autofocus>
 						<span class="regist-label__required-mark" style="right:2px;">_</span>
-						<input class="TxtStyle01L" name="ReviseCode">
+						<input class="TxtStyle01L" name="ReviseCode" id="ReviseCode">
 						<input class="disTxt46L" name="ProductName" disabled>
 						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-product" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
 					</span>
@@ -289,6 +289,7 @@
 				<div class="regist-line">
 				</div>
 			</div>
+			<input type="hidden" name="strSessionID" value="_%strSessionID%_">
 		</form>
 	</div>
 	<div class="msw-loadpoints">

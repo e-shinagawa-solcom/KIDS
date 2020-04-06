@@ -3,14 +3,14 @@
 
     // マスタ検索共通
     var searchMaster = {
-        url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),
+        url: '/mold/lib/queryMasterData.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
         dataType: 'json'
     };
 
     // 更新クエリ共通
     var updateQuery = {
-        url: '/mold/lib/execUpdateQuery.php?strSessionID=' + $.cookie('strSessionID'),
+        url: '/mold/lib/execUpdateQuery.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
         dataType: 'json'
     };
@@ -26,7 +26,7 @@
     // イベント登録
     // --------------------------------------------------------------------------
     // ヘッダタブ 製品コード イベント登録
-    $('input[name="ProductCode"]').on({
+    $('#ProductCode').on({
         'change': function () {
             revisecode = $('input[name="ReviseCode"]').val();
             // 製品名称索引

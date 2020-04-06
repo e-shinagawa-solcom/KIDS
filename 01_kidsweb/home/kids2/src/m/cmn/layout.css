@@ -16,7 +16,7 @@
 	font-weight : bold ;
 	position : absolute ;
 	width : 160px ;
-	height : 16px ;
+	height : 18px ;
 	border-width: 1px ;
 	border-style: solid ;
 	padding : 8px 0px 0px 8px ;
@@ -35,10 +35,22 @@
 .InputSegs
 {
 	position : absolute ;
-	height : 21px ;
+	height : 23px ;
 	border-width: 1px ;
 	border-style: solid ;
 	padding : 3px 0px 0px 8px ;
+}
+
+.InputSegs_date
+{
+	position : absolute ;
+    display: inline-block;
+	border-width: 1px ;
+	border-style: solid ;
+	width: 150px;
+	height : 24px ;
+	padding-left : 8px;
+	padding-bottom : 2px;
 }
 
 #QueryTable

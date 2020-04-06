@@ -3,7 +3,7 @@
 
     // マスタ検索共通
     var searchMaster = {
-        url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),
+        url: '/mold/lib/queryMasterData.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
         dataType: 'json'
     };

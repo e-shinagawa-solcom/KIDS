@@ -3,7 +3,7 @@
 
     // マスタ検索共通
     var searchMaster = {
-        url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),
+        url: '/mold/lib/queryMasterData.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
         dataType: 'json'
     };
@@ -138,6 +138,8 @@
                     revisecode = response[0].revisecode;
                     // 金型リスト索引
                     selectMoldSelectionListByReviseCode(invoker, revisecode);
+                } else {
+                    $('img.msw-button[invokemswname="msw-product"]').click();
                 }
 
                 // JQuery Validation Pluginで検知させる為イベントキック

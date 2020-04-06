@@ -39,6 +39,7 @@
         <script src="/search/cmn/js/key-bind.js" defer></script>
         <!-- キーバインド -->
         <script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
+        <script type="text/javascript" language="javascript" src="/cmn/js/functions.js"></script>
         <script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
         <script src="/cmn/js/setinputmode.js" defer></script>
     </header3>
@@ -262,6 +263,16 @@
 			</div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
+                    <input name="IsSearch_strProductName" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strProductName" class="is-display" type="checkbox">
+                </span>
+				<span class="regist-label">
+					<span class="regist-label__text">製品名</span>
+                    <input class="Txt46L" name="strProductName"  type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
+				</span>
+			</div>
+            <div class="regist-line">
+                <span class="search-label--checkbox">
                     <input name="IsSearch_lngInChargeGroupCode" class="is-search" type="checkbox">
                     <input name="IsDisplay_lngInChargeGroupCode" class="is-display" type="checkbox">
                 </span>
@@ -284,16 +295,6 @@
                     <span><a href="#"><img class="msw-button button" invokeMSWName="msw-inchargeuser" displayFlagLimit="0" msw-before="pickupGroupCode" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_strProductName" class="is-search" type="checkbox">
-                    <input name="IsDisplay_strProductName" class="is-display" type="checkbox">
-                </span>
-				<span class="regist-label">
-					<span class="regist-label__text">製品名</span>
-                    <input class="Txt46L" name="strProductName"  type="text" value="" maxlength="80" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckString( this );" tabindex="">
-				</span>
-			</div>
 			<div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_lngStockSubjectCode" class="is-search" type="checkbox">
@@ -301,7 +302,7 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">仕入科目</span>
-                    <select name="lngStockSubjectCode" class="Slt13">
+                    <select name="lngStockSubjectCode" class="Slt13" onchange="fncGetStockItem(this.value, '_%strSessionID%_');">
                         _%lngStockSubjectCode%_ 
                     </select>
                 </span>

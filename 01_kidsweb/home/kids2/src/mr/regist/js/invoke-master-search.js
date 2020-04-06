@@ -11,14 +11,14 @@
     
     // マスタ検索共通
     var searchMaster = {
-        url: '/mold/lib/queryMasterData.php?strSessionID=' + $.cookie('strSessionID'),
+        url: '/mold/lib/queryMasterData.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
         dataType: 'json'
     };
 
     // 更新クエリ共通
     var updateQuery = {
-        url: '/mold/lib/execUpdateQuery.php?strSessionID=' + $.cookie('strSessionID'),
+        url: '/mold/lib/execUpdateQuery.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
         dataType: 'json'
     };
@@ -26,7 +26,7 @@
     // イベント登録
     // --------------------------------------------------------------------------
     // ヘッダタブ 製品コード イベント登録
-    $('input[name="ProductCode"]').on({
+    $('#ProductCode').on({
         'change': function () {
             revisecode = $('input[name="ReviseCode"]').val();
             if (revisecode != "") {
@@ -54,7 +54,7 @@
     });
 
     // ヘッダタブ 製品コード イベント登録
-    $('input[name="ReviseCode"]').on({
+    $('#ReviseCode').on({
         'change': function () {
             var revisecode = $(this).val();
             var productcode = $('input[name="ProductCode"]');
@@ -152,8 +152,6 @@
                     $('input[name="ReviseCode"]').val(response[0].revisecode);
                     $('input[name="ProductName"]').val(response[0].productname);
                     revisecode = response[0].revisecode;
-                    // 顧客品番索引
-                    selectGoodsCode(invoker, revisecode);
                     // 事業部(顧客)-表示会社コード索引
                     selectCustomerByProductCode(invoker, revisecode);
                     // 担当グループ-表示グループコード索引
@@ -162,6 +160,12 @@
                     selectUserByProductCode(invoker, revisecode);
                     // 金型リスト索引
                     selectMoldSelectionListByReviseCode(invoker, revisecode);
+                    // 顧客品番索引
+                    selectGoodsCode(invoker, revisecode);
+                } else {
+                    console.log($('img[invokemswname="msw-product"]'));
+                    $('img[invokemswname="msw-product"]')[0].click();
+                    return;
                 }
 
                 // JQuery Validation Pluginで検知させる為イベントキック
@@ -235,7 +239,6 @@
     // 製品コードから顧客品番を索引
     var selectGoodsCode = function (invoker, revisecode) {
         console.log("製品コード->顧客品番 change");
-
         // 検索条件
         var condition = {
             data: {
@@ -251,8 +254,8 @@
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
                 console.log("製品コード->顧客品番 done");
-
                 var goodscode = response[0].goodscode;
+                console.log(goodscode);
                 // 顧客品番が設定されている場合
                 if (goodscode) {
                     // ヘッダタブ/詳細タブの顧客品番に値をセット
@@ -261,8 +264,9 @@
                     $('input[name="GoodsCode"]').trigger('blur');
                 }
                 else {
+                    
                     // 入力ダイアログ表示
-                    var newgoodscode = window.prompt('顧客品番を入力してください。(半角英数のみ)', '');
+                    var newgoodscode = window.prompt('顧客品番を入力してください。(半角英数のみ)');
 
                     // キャンセル押下チェック
                     if (!newgoodscode) {

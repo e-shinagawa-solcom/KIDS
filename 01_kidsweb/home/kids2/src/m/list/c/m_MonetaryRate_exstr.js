@@ -15,17 +15,17 @@ function fncEditObjectOnload( lngLangCode )
 	if( g_strMode == 'add' )
 	{
 		// オブジェクトのID変換
-		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' ) ,
+		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' ) ,
 
-								 Array( 'TxtSlt10' , 'TxtSlt10' , 'Txt07R' , 'Txt10L' , 'Txt10L' ) );
+								 Array( 'TxtSlt10' , 'TxtSlt10' , 'Txt07R' ) );
 	}
 	// [修正]
 	else if( g_strMode == 'fix' )
 	{
 		// オブジェクトのID変換
-		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2' , 'Input3' , 'Input4' ) ,
+		fncChangeObjectIdModule( Array( 'Input0' , 'Input1' , 'Input2') ,
 
-								 Array( 'TxtSlt10' , 'TxtSlt10' , 'Txt07R' , 'TxtDis10L' , 'Txt10L' ) );
+								 Array( 'TxtSlt10' , 'TxtSlt10' , 'Txt07R') );
 	}
 
 
