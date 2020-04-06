@@ -247,9 +247,11 @@ $query[] = "    ON ms.lngMonetaryUnitCode = mou.lngMonetaryUnitCode ";
 $query[] = "WHERE";// 履歴の全件出力
 if (!array_key_exists("IsDetail", $optionColumns))
 {
-$query[] = "    tmh.deleteflag = false";
+	$query[] = " tmh.deleteflag = false";
+	$query[] = " AND mm.deleteflag = false";
+} else {
+	$query[] = " mm.deleteflag = false";
 }
-$query[] = "AND mm.deleteflag = false";
 
 // ユーティリティのインスタンス取得
 $utilBussinesscode = UtilBussinesscode::getInstance();
@@ -466,7 +468,6 @@ $query[] = ";";
 
 // クエリを平易な文字列に変換
 $query = implode("\n",$query);
-
 // クエリ実行
 $lngResultID = pg_query($query);
 

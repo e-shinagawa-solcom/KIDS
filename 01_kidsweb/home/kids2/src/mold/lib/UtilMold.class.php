@@ -559,7 +559,6 @@ class UtilMold extends WithQuery
 		$param = array(
 			"current" => fncGetDateTimeString()
 		);
-
 		// 業務コードの説明を取得する
 		pg_prepare(static::$db->ConnectID, "", $query);
 		$pgResult = pg_execute("", $param);

@@ -544,6 +544,7 @@ function fncGetOtherOrderDetail($lngorderNo, $lngrevisionno, $objDB)
     $aryQuery[] = "  , mo.lngorderno";
     $aryQuery[] = "  , mo.lngmonetaryunitcode";
     $aryQuery[] = "  , mo.lngcustomercompanycode ";
+    $aryQuery[] = "  , od.strmoldno ";
     $aryQuery[] = "FROM";
     $aryQuery[] = "  m_order mo ";
     $aryQuery[] = "  INNER JOIN t_orderdetail od ";
@@ -850,6 +851,7 @@ function fncGetOtherOrderDetailHtml($aryOrderDetail, $strDelivery, $strProductUn
         $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderrevisionno\" value=\"" . $aryOrderDetail[$i]["lngorderrevisionno"] . "\"></td>";
         $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $aryOrderDetail[$i]["lngorderdetailno"] . "\"></td>";
         $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderstatuscode\" value=\"" . $aryOrderDetail[$i]["lngorderstatuscode"] . "\"></td>";
+        $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"strmoldno\" value=\"" . $aryOrderDetail[$i]["strmoldno"] . "\"></td>";
         $strHtml .= "</tr>";
 
         $tableA_body_html .= $strHtml;
@@ -1382,9 +1384,11 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
     $aryQuery[] = "  ,pd.lngorderno";
     $aryQuery[] = "  ,pd.lngorderdetailno";
     $aryQuery[] = "  ,pd.lngorderrevisionno";
+    $aryQuery[] = "  ,od.strmoldno";
     $aryQuery[] = "FROM m_purchaseorder mp";
     $aryQuery[] = "LEFT JOIN t_purchaseorderdetail pd ON mp.lngpurchaseorderno = pd.lngpurchaseorderno AND mp.lngrevisionno = pd.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_order mo ON pd.lngorderno = mo.lngorderno AND pd.lngorderrevisionno = mo.lngrevisionno";
+    $aryQuery[] = "LEFT JOIN t_orderdetail od ON pd.lngorderno = od.lngorderno AND pd.lngorderdetailno = od.lngorderdetailno AND pd.lngorderrevisionno = od.lngrevisionno";
     $aryQuery[] = "LEFT JOIN m_group mg ON mp.lnggroupcode = mg.lnggroupcode";
     $aryQuery[] = "LEFT JOIN m_user mu1 ON mp.lngusercode = mu1.lngusercode";
     $aryQuery[] = "LEFT JOIN m_user mu2 ON mp.lnginsertusercode = mu2.lngusercode";
@@ -1399,7 +1403,7 @@ function fncGetPurchaseOrderEdit($lngpurchaseorderno, $lngrevisionno, $objDB)
 
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
-
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if (!$lngResultNum) {
         return false;
@@ -1443,6 +1447,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
         $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderrevisionno\" value=\"" . $aryResult[$i]["lngorderrevisionno"] . "\"></td>";
         $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $aryResult[$i]["lngorderdetailno"] . "\"></td>";
         $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderstatuscode\" value=\"" . $aryResult[$i]["lngorderstatuscode"] . "\"></td>";
+        $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"strmoldno\" value=\"" . $aryResult[$i]["strmoldno"] . "\"></td>";
         $aryHtml[] = "  </tr>";
     }
 

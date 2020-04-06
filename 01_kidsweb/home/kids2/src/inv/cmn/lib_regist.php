@@ -1324,10 +1324,10 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
         $aryQuery[] =  "'"  .$insertAry['dtminvoicedate'] ."' ,";       // 納品日
         $aryQuery[] = "(select lngcompanycode from m_company where strcompanydisplaycode='". $result['lngdeliveryplacecode'] ."')  ,"; // 納品場所コード
         $aryQuery[] =  "'"  .$result['strdeliveryplacename'] ."' ,";    // 納品場所名
-        $aryQuery[] =  "'"  .$result['curtotalprice'] ."' ,";           // 小計
+        $aryQuery[] =  ""  .$result['curtotalprice'] ." ,";           // 小計
         $aryQuery[] =  "'"  .$result['lngtaxclasscode'] ."' ,";         // 課税区分コード
         $aryQuery[] =  "'"  .$result['strtaxclassname'] ."' ,";         // 課税区分
-        $aryQuery[] =  "'"  .$result['curtax'] ."' ,";                  // 消費税率
+        $aryQuery[] =  ""  .$result['curtax'] ." ,";                  // 消費税率
         $aryQuery[] =  "'"  .$result['strnote'] ."' ,";                 // 備考
         $aryQuery[] =  "'"  .$result['strcustomerno'] ."',";                  // 顧客NO
         $aryQuery[] =  $result['lngslipno'] ." ,";                      // 納品書番号
