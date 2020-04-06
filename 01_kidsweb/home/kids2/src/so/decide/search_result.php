@@ -245,7 +245,7 @@ foreach ($aryDetailResult as $detailResult) {
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
     $text->setAttribute("style", "ime-mode:disabled;");
-    $text->setAttribute("class", "form-control form-control-sm txt-kids");
+    $text->setAttribute("class", "form-control form-control-sm");
     $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
     $td->appendChild($text);
     $trBody->appendChild($td);
@@ -319,7 +319,7 @@ foreach ($aryDetailResult as $detailResult) {
         $text = $doc->createElement("input");
         $text->setAttribute("type", "text");
         $text->setAttribute("name", "unitQuantity");
-        $text->setAttribute("class", "form-control form-control-sm txt-kids");
+        $text->setAttribute("class", "form-control form-control-sm");
         $text->setAttribute("style", "width:90px;");
         $text->setAttribute("value", $lngunitquantity);
         $td->appendChild($text);

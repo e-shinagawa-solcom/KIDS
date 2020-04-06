@@ -318,7 +318,7 @@ function selectChange() {
                 lngunitquantitynew = lngcartonquantity;
                 // 数量 = 製品数量/カートン入数
                 lngproductquantitynew = lngproductquantity / lngunitquantitynew;
-                var html = '<input type="text" name="unitQuantity" class="form-control form-control-sm txt-kids" style="width:90px;" value="' + lngunitquantitynew + '">';
+                var html = '<input type="text" name="unitQuantity" class="form-control form-control-sm" style="width:90px;" value="' + lngunitquantitynew + '">';
                 $(this).parent().parent().find('#lngunitquantity').html(html);
             } else {
                 $(this).parent().parent().find('#lngunitquantity').text(lngunitquantitynew);
