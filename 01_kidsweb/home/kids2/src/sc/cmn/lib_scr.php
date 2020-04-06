@@ -1747,7 +1747,10 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
     $strCustomerName = fncGetCustomerName($aryCustomerCompany);
     // 納品先の会社コードの取得
     $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
-
+    // 納品先の会社名称の取得
+    if (!is_null($lngDeliveryPlaceCode)) {
+        $strDeliveryPlaceName = fncGetMasterValue("m_company", "lngcompanycode", "strcompanyname", $lngDeliveryPlaceCode, '', $objDB);
+    }
     // 帳票種別の取得
     $lngSlipKindCode = $aryReport["lngslipkindcode"];
     // 顧客に紐づく帳票1ページあたりの最大明細数を取得する
@@ -1804,7 +1807,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $xlSpreadSheet,
             $xlWorkSheet,
             $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
-            $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+            $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode, $strDeliveryPlaceName,
             $aryHeader, $aryDetail,
             $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $lngSlipKindCode, $objDB);
 
@@ -1852,7 +1855,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
                     $xlSpreadSheet,
                     $xlWorkSheet,
                     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
-                    $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+                    $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode, $strDeliveryPlaceName,
                     $aryHeader, $aryDetail,
                     $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $lngSlipKindCode, $objDB);
 
@@ -1955,7 +1958,7 @@ function fncSetSlipDataToWorkSheet(
     $xlSpreadSheet,
     $xlWorkSheet,
     $itemMinIndex, $itemMaxIndex, $strCustomerCompanyName,
-    $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+    $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode, $strDeliveryPlaceName,
     $aryHeader, $aryDetail,
     $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate, $lngSlipKindCode, $objDB) {
     // 【補足】
@@ -1982,7 +1985,7 @@ function fncSetSlipDataToWorkSheet(
     $v_strcustomerusername = $aryHeader["strcustomerusername"]; //14:顧客担当者名
     $v_dtmdeliverydate = $aryHeader["dtmdeliverydate"]; //15:納品日
     $v_lngdeliveryplacecode = $lngDeliveryPlaceCode; //16:納品場所コード
-    $v_strdeliveryplacename = $aryHeader["strdeliveryplacename"]; //17:納品場所名
+    $v_strdeliveryplacename = $strDeliveryPlaceName; //17:納品場所名
     $v_strdeliveryplaceusername = $aryHeader["strdeliveryplaceusername"]; //18:納品場所担当者名
     $v_strusercode = $aryHeader["strdrafteruserdisplaycode"]; //19:担当者コード
     $v_strusername = $aryHeader["strdrafteruserdisplayname"]; //20:担当者名
