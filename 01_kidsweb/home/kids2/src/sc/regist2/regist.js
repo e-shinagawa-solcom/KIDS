@@ -84,6 +84,11 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
             }
             setTaxRate();
 
+            var optionCount = $('select[name="lngTaxRate"]').children('option').length;
+            if (optionCount == 0) {
+                alert("納品日の税率マスタが見つかりません。");
+            }
+
         }).fail(function (error) {
             console.log("fail:get-lngcountrycode");
             console.log(error);
