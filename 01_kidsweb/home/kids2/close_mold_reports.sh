@@ -1,2 +1,2 @@
 #/bin/bash
-curl http://localhost/mold/batch/CloseMoldReports.php
+curl http://192.168.1.2/mold/batch/CloseMoldReports.php

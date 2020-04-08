@@ -1,2 +1,2 @@
 #!/bin/bash
-curl http://localhost/mold/batch/ImportMold.php
+curl http://192.168.1.2/mold/batch/ImportMold.php

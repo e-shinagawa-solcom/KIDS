@@ -287,9 +287,9 @@
                         data: JSON.stringify({
                             QueryName: 'updateGoodsCode',
                             Conditions: {
+                                GoodsCode: newgoodscode,
                                 ProductCode: $(invoker).val(),
-                                ReviseCode: revisecode,
-                                GoodsCode: newgoodscode
+                                ReviseCode: revisecode
                             }
                         })
                     };
@@ -297,10 +297,12 @@
                     // リクエスト送信
                     $.ajax($.extend({}, updateQuery, condition))
                         .done(function (response) {
+                            console.log(response);
                             window.alert('顧客品番を更新しました。');
                             $(invoker).change();
                         })
                         .fail(function (response) {
+                            console.log(response);
                             window.alert('顧客品番の更新に失敗しました。');
                             $(invoker).change();
                         });

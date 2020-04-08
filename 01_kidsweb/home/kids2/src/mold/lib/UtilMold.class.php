@@ -518,10 +518,10 @@ class UtilMold extends WithQuery
 			TableMoldHistory::Remark2 => pg_escape_string($record[TableMoldHistory::Remark2]),
 			TableMoldHistory::Remark3 => pg_escape_string($record[TableMoldHistory::Remark3]),
 			TableMoldHistory::Remark4 => pg_escape_string($record[TableMoldHistory::Remark4]),
-			TableMoldReport::CreateBy => $this->getUserCode(),
-			TableMoldReport::UpdateBy => $this->getUserCode(),
 			TableMoldReport::Created => fncGetDateTimeString(),
-			TableMoldReport::Updated => fncGetDateTimeString()
+			TableMoldReport::CreateBy => $this->getUserCode(),
+			TableMoldReport::Updated => fncGetDateTimeString(),
+			TableMoldReport::UpdateBy => $this->getUserCode()
 		);
 
 		// クエリ実行結果が得られなかった場合
