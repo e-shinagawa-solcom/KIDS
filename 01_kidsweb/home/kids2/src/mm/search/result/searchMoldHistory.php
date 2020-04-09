@@ -311,7 +311,7 @@ if (array_key_exists("strproductcode", $searchColumns) &&
 	array_key_exists("strproductcode", $from) &&
 	array_key_exists("strproductcode", $to))
 {
-	$query[] = "AND mp.strproductcode".
+	$query[] = "AND ms.strproductcode".
 				" between '".pg_escape_string($from["strproductcode"])."'".
 				" AND "."'".pg_escape_string($to["strproductcode"])."'";
 }
