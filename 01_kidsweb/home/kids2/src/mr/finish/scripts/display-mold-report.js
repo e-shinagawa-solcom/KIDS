@@ -1,6 +1,6 @@
 
 (function(){
-    url = '/mold/list/displayMoldReport.php';
+    url = '/mold/list/frameset.php';
     sessionID = 'strSessionID=' + $.cookie('strSessionID');
     moldReportID = 'MoldReportId=' + $('#preview').attr('moldreportid');
     revision = 'Revision=' + $('#preview').attr('revision');
@@ -9,6 +9,6 @@
 
     $('.report-box__wrap-box-button #preview').on('click', function(){
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + moldReportID  + '&' + revision  + '&' +  version + '&' + isRegist, 'display-report', 'resizable=yes, scrollbars=yes, menubar=no');
+        window.open(url + '?' + sessionID + '&' + moldReportID  + '&' + revision  + '&' +  version + '&' + isRegist, 'display-report', 'width=1011, height=670,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no');
     });
 })();
