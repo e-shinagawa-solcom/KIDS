@@ -176,6 +176,7 @@ $output .= $objWriter->generateStyles();
 $customCSS = "<style>";
 $customCSS .= "table {table-layout: fixed; width: 950px; white-space:nowrap;}";
 $customCSS .= "td {overflow: hidden;}";
+$customCSS .= "body {-webkit-print-color-adjust: exact;}";
 $customCSS .= "</style>";
 
 $output .= $customCSS;
