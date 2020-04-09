@@ -456,7 +456,7 @@ function fncGetCompanyPrintName( $companyDisplayCode ,$objDB)
             // 顧客社名
             $printCompanyName  = $result['strprintcompanyname'];
             // 顧客名
-            $printCustomerName = $result['strcompanydisplayname'];
+            $printCustomerName = $result['strcompanyname'];
         }
         else
         {

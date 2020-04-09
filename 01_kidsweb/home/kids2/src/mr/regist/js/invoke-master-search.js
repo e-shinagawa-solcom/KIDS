@@ -18,7 +18,7 @@
 
     // 更新クエリ共通
     var updateQuery = {
-        url: '/mold/lib/execUpdateQuery.php?strSessionID=' + $('input[name="strSessionID"]').val(),
+        url: '/mold/lib/execUpdateProduct.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
         dataType: 'json'
     };
@@ -285,12 +285,9 @@
                     // 更新条件
                     var condition = {
                         data: JSON.stringify({
-                            QueryName: 'updateGoodsCode',
-                            Conditions: {
-                                GoodsCode: newgoodscode,
+                            GoodsCode: newgoodscode,
                                 ProductCode: $(invoker).val(),
                                 ReviseCode: revisecode
-                            }
                         })
                     };
 

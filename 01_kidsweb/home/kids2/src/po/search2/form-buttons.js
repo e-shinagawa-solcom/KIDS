@@ -21,7 +21,7 @@
     btnSearch.on('click', function(){
         if(workForm.valid()){
             var windowName = 'searchResult';
-            window.open("", windowName,"width=1011, height=700, scrollbars=yes, resizable=yes"); 
+            window.open("", windowName,"width=1011, height=670, scrollbars=yes, resizable=yes"); 
             workForm.attr('action', '/po/result2/index.php?strSessionID=' + $.cookie('strSessionID'));
             // workForm.attr('action', '/pc/old/result/index.php?strSessionID=' + $.cookie('strSessionID'));
             workForm.attr('method', 'post');

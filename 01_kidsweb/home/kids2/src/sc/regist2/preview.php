@@ -303,9 +303,7 @@ if ($strMode == "download") {
         $lngSlipNo, $lngRevisionNo, $strSlipCode, $lngSalesNo, $dtmInsertDate,
         $objDB);
     $xlsxWriter = $aryGenerateResult["XlsxWriter"];
-
-    // $xlsxWriter = fncDownloadExcelFile($lngSlipNo, $objDB);
-
+    
     // 印刷回数を増やす
     fncIncrementPrintCountBySlipCode($strSlipCode, $objDB);
 

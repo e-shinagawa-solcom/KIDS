@@ -85,7 +85,7 @@
 
         // リクエスト送信
         $.ajax({
-            url: '/mold/validation/MoldHistory/regist.php?strSessionID=' + $.cookie('strSessionID'),
+            url: '/mold/validation/MoldHistory/regist.php?strSessionID=' + $('input[name="strSessionID"]').val(),
             type: 'post',
             dataType: 'json',
             data: formData
@@ -99,7 +99,7 @@
                 console.log('金型履歴登録-検証結果 OK');
 
                 // 確認画面URL
-                var confirmURL = '/mm/confirm/mm_confirm.php?strSessionID=' + $.cookie('strSessionID') + "&resultHash=" + response.resultHash
+                var confirmURL = '/mm/confirm/mm_confirm.php?strSessionID=' + $('input[name="strSessionID"]').val() + "&resultHash=" + response.resultHash
 
                 // 確認画面用iframe作成
                 $dialogContent = $('<iframe>')

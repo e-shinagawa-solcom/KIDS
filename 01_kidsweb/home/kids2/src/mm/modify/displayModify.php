@@ -109,5 +109,6 @@ $replacement[FormMoldHistory::SourceFactoryName] = $displaySrcFactoryName;
 $replacement[TableMoldHistory::DestinationFactory] = $displayDstFactoryCode;
 $replacement[FormMoldHistory::DestinationFactoryName] = $displayDstFactoryName;
 $replacement["DummyStatus"] = $record[TableMoldHistory::Status];
+$replacement ["strSessionID"] = $_REQUEST["strSessionID"];
 // テンプレート読み込み
 echo fncGetReplacedHtmlWithBase("base_mold_noframes.html", "mm/modify/mm_modify.tmpl", $replacement ,$objAuth );

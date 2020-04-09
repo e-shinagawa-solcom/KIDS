@@ -9,6 +9,7 @@ SET
     , remark4 = $10
     , updateby = $11
     , updated = $12
+    , status = $13
 WHERE
     moldno = $1
 AND historyNo = $2

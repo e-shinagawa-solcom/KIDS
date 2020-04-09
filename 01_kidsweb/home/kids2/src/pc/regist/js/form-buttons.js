@@ -308,7 +308,7 @@ var chkbox = [];
                         curTax = 0;
                     }
                     else {
-                        lngTaxCode = $(this).find('.col10').find('select').val();
+                        lngTaxCode = $(this).find('.col11').find('select option:selected').val();
                         curTax = $(this).find('.col11').find('select option:selected').text();
                     }
                     // 消費税額                
@@ -367,7 +367,7 @@ var chkbox = [];
                         document.write(response);
                         document.close();
                     } else {
-                        var w = window.open("", 'Regist Confirm', "width=1011, height=700, scrollbars=yes, resizable=yes");
+                        var w = window.open("", 'Regist Confirm', "width=1011, height=670, scrollbars=yes, resizable=yes");
                         w.document.open();
                         w.document.write(response);
                         w.document.close();

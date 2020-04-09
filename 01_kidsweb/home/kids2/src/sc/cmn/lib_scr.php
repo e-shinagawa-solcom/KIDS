@@ -1745,11 +1745,14 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
     $strCustomerCompanyName = fncGetCustomerCompanyName($lngCustomerCountryCode, $aryCustomerCompany);
     // 顧客名の取得
     $strCustomerName = fncGetCustomerName($aryCustomerCompany);
-    // 納品先の会社コードの取得
-    $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
-    // 納品先の会社名称の取得
-    if (!is_null($lngDeliveryPlaceCode)) {
+    if ($aryHeader["strdeliveryplacecompanydisplaycode"]) {
+        // 納品先の会社コードの取得
+        $lngDeliveryPlaceCode = fncGetNumericCompanyCode($aryHeader["strdeliveryplacecompanydisplaycode"], $objDB);
+        // 納品先の会社名称の取得
         $strDeliveryPlaceName = fncGetMasterValue("m_company", "lngcompanycode", "strcompanyname", $lngDeliveryPlaceCode, '', $objDB);
+    } else {
+        $lngDeliveryPlaceCode = null;
+        $strDeliveryPlaceName = null;
     }
     // 帳票種別の取得
     $lngSlipKindCode = $aryReport["lngslipkindcode"];
@@ -2090,10 +2093,10 @@ function fncSetSlipDataToWorkSheet(
         //画像の貼り付け
         $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
         $drawing->setPath(SRC_ROOT ."/list/result/slip/rogo_slip.gif");
-        $drawing->setCoordinates('B2'); //貼り付け場所
+        $drawing->setCoordinates('A2'); //貼り付け場所
         $drawing->setResizeProportional(false); // リサイズ時に縦横比率を固定する (false = 固定しない)
-        $drawing->setWidth(130); // 画像の幅 (px)
-        $drawing->setHeight(80); // 画像の高さ (px)
+        $drawing->setWidth(143); // 画像の幅 (px)
+        $drawing->setHeight(99); // 画像の高さ (px)
         $drawing->setWorksheet($sheet); //対象シート（インスタンスを指定）
 
         $drawing1 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
@@ -2240,102 +2243,4 @@ function fncResetReceiveStatus($lngSlipNo, $lngRevisisonNo, $objDB)
     }
     $objDB->freeResult($lngResultID);
     return true;
-}
-
-function fncDownloadExcelFile($lngSlipNo, $objDB)
-{
-    // データ取得クエリ
-    $strQuery = fncGetSlipForDownloadQuery($lngSlipNo);
-    $objMaster = new clsMaster();
-    $objMaster->setMasterTableData($strQuery, $objDB);
-    $aryParts = &$objMaster->aryData[0];
-
-    // 納品伝票種別取得
-    $strQuery = fncGetSlipKindQuery($aryParts["lngcustomercode"]);
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    $slipKidObj = $objDB->fetchArray($lngResultID, 0);
-    $objDB->freeResult($lngResultID);
-
-    unset($aryQuery);
-
-    // 詳細取得
-    $strQuery = fncGetSlipDetailForDownloadQuery($lngSlipNo, $aryParts["lngrevisionno"]);
-    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
-    // フィールド名取得
-    for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
-        $aryKeys[] = pg_field_name($lngResultID, $i);
-    }
-
-    // 行数だけデータ取得、配列に代入
-    for ($i = 0; $i < $lngResultNum; $i++) {
-        $aryResult = $objDB->fetchArray($lngResultID, $i);
-        for ($j = 0; $j < count($aryKeys); $j++) {
-            $aryDetail[$i][$aryKeys[$j]] = $aryResult[$j];
-        }
-    }
-
-    $objDB->close();
-
-    // テンプレートパス設定
-    if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
-        $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_EXCLUSIVE;
-        // $downloadFileName = REPORT_SLIP_EXCLUSIVE;
-    } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
-        $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_COMM;
-        // $downloadFileName = REPORT_SLIP_COMM;
-    } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
-        $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_DEBIT;
-        // $downloadFileName = REPORT_SLIP_DEBIT;
-    }
-
-    // 帳票テンプレートファイルの読込
-    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($strTemplatePath);
-    // データ設定用シートにデータの設定
-    $worksheet = $spreadsheet->getSheetByName("データ設定用");
-    $worksheet->fromArray($aryParts, null, 'B3');
-    $worksheet->fromArray($aryDetail, null, 'B6');
-
-    if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
-        //ロードしたシートの中から"売上明細"シートを$sheetとする
-        $sheet = $spreadsheet->getSheetByName("DEBIT NOTE");
-        //画像の貼り付け
-        $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing->setPath(SRC_ROOT ."/list/result/slip/rogo_slip.gif");
-        $drawing->setCoordinates('B2'); //貼り付け場所
-        $drawing->setResizeProportional(false); // リサイズ時に縦横比率を固定する (false = 固定しない)
-        $drawing->setWidth(130); // 画像の幅 (px)
-        $drawing->setHeight(80); // 画像の高さ (px)
-        $drawing->setWorksheet($sheet); //対象シート（インスタンスを指定）
-
-        $drawing1 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing1->setPath(SRC_ROOT ."/list/result/slip/title1.gif");
-        $drawing1->setHeight(25); //高さpx
-        $drawing1->setOffsetY(5); // 位置をずらす
-        $drawing1->setCoordinates('D1'); //貼り付け場所
-        $drawing1->setWorksheet($sheet); //対象シート（インスタンスを指定）
-
-        $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing2->setPath(SRC_ROOT ."/list/result/slip/title2.gif");
-        $drawing2->setHeight(60); //高さpx
-        $drawing2->setWidth(400); // 画像の幅 (px)
-        $drawing2->setCoordinates('D3'); //貼り付け場所
-        $drawing2->setWorksheet($sheet); //対象シート（インスタンスを指定）
-
-        $drawing3 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing3->setPath(SRC_ROOT ."/list/result/slip/brackets_left.gif");
-        $drawing3->setHeight(100); //高さpx
-        $drawing3->setOffsetX(20); // 位置をずらす
-        $drawing3->setCoordinates('A9'); //貼り付け場所
-        $drawing3->setWorksheet($sheet); //対象シート（インスタンスを指定）
-
-        $drawing4 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing4->setPath(SRC_ROOT ."/list/result/slip/brackets_right.gif");
-        $drawing4->setHeight(100); //高さpx
-        $drawing4->setCoordinates('F9'); //貼り付け場所
-        $drawing4->setWorksheet($sheet); //対象シート（インスタンスを指定）
-    }
-
-    $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
-
-    return $writer;
 }

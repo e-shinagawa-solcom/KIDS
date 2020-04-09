@@ -638,7 +638,8 @@ class UtilMold extends WithQuery
 				TableMoldHistory::Remark3 => pg_escape_string($formData[FormMoldHistory::Remark3]),
 				TableMoldHistory::Remark4 => pg_escape_string($formData[FormMoldHistory::Remark4]),
 				TableMoldReport::UpdateBy => $this->getUserCode(),
-				TableMoldReport::Updated => fncGetDateTimeString()
+				TableMoldReport::Updated => fncGetDateTimeString(),
+				TableMoldHistory::Status => $formData[FormMoldHistory::Status],
 		);
 
 		// SQLファイル読み込み

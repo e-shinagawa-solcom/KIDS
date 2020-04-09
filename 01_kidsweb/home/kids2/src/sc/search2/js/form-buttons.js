@@ -21,7 +21,7 @@
     btnSearch.on('click', function(){
         if(workForm.valid()){
             var windowName = 'searchResult';
-            window.open("", windowName,"width=1011, height=700, scrollbars=yes, resizable=yes"); 
+            window.open("", windowName,"width=1011, height=670, scrollbars=yes, resizable=yes"); 
             workForm.attr('action', '/sc/result2/index.php?strSessionID=' + $('input[name="strSessionID"]').val());
             workForm.attr('method', 'post');
             workForm.attr('target', windowName);

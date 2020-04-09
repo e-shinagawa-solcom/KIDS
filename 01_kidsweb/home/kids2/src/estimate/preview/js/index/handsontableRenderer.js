@@ -273,7 +273,7 @@ $(function(){
         var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey +  target + "&strSessionID=" + sessionID;
         
         var windowName = 'window_confirm';
-        var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
+        var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
 
         return false;
 
@@ -356,7 +356,7 @@ $(function(){
         var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey + target + "&strSessionID=" + sessionID;
 
         var windowName = 'window_confirm';
-        var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
+        var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
         
         return false;
 
@@ -401,7 +401,7 @@ $(function(){
 
         var actionUrl = baseUrl + "?" + numberKey + "=" + target[0] + "&strSessionID=" + sessionID;
         var windowName = 'window_confirm';
-        var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
+        var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
         
         return false;
 

@@ -1,7 +1,6 @@
 <config>
 <header1>
 	<link rel="stylesheet" href="/mold/cmn/form/css/forms.css">
-    <link rel="stylesheet" href="/mold/cmn/form/css/forms-validation.css">
 	<link rel="stylesheet" href="/mold/cmn/form/css/tabs.css">
 
 
@@ -67,9 +66,9 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">製品コード</span>
-						<input class="disTxt05L" name="ProductCode" value="_%Header_ProductCode%_" disabled>
+						<input class="disTxt05L" name="ProductCode" id="ProductCode" value="_%Header_ProductCode%_" disabled>
 						<span>_</span>
-						<input class="disTxt01L" name="ReviseCode" value="_%Header_ReviseCode%_" disabled>
+						<input class="disTxt01L" name="ReviseCode" id="ReviseCode" value="_%Header_ReviseCode%_" disabled>
 						<input class="disTxt46L" name="ProductName" value="_%Header_ProductName%_" disabled>
 						<input type="hidden" name="ProductCode" value="_%Header_ProductCode%_">
 						<input type="hidden" name="ReviseCode" value="_%Header_ReviseCode%_">
@@ -202,9 +201,9 @@
 				<div class="regist-line">
 					<span class="regist-label">
 						<span class="regist-label__text">製品コード</span>
-						<input class="TxtStyle05L" name="ProductCode" disabled>
+						<input class="disTxt05L" name="ProductCode" disabled>
 						<span>_</span>
-						<input class="TxtStyle01L" name="ReviseCode" disabled>
+						<input class="disTxt01L" name="ReviseCode" disabled>
 						<input class="disTxt46L" name="ProductName" disabled>
 						<input type="hidden" name="ProductCode">
 						<input type="hidden" name="ReviseCode">
@@ -212,7 +211,7 @@
 					</span>
 					<span class="regist-label">
 						<span class="regist-label__text">顧客品番</span>
-						<input class="TxtStyle05L" name="GoodsCode" disabled>
+						<input class="disTxt05L" name="GoodsCode" disabled>
 						<input type="hidden" name="GoodsCode">
 					</span>
 				</div>

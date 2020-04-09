@@ -144,7 +144,7 @@
 
         // リクエスト送信
         $.ajax({
-            url: '/mold/validation/MoldReport/modify.php?strSessionID=' + $.cookie('strSessionID'),
+            url: '/mold/validation/MoldReport/modify.php?strSessionID=' + $('input[name="strSessionID"]').val(),
             type: 'post',
             dataType: 'json',
             data: formData
@@ -160,7 +160,7 @@
                 // 確認画面URL
                 var confirmUrl = '/mr/modify/confirm/mr_confirm.php';
                 // パラメータ
-                var sessionId = 'strSessionID=' + $.cookie('strSessionID');
+                var sessionId = 'strSessionID=' + $('input[name="strSessionID"]').val();
                 var resultHash = 'resultHash=' + response.resultHash;
                 var moldReportId='MoldReportId=' + $.cookie('MoldReportId');
                 var revision='Revision=' + $.cookie('Revision');

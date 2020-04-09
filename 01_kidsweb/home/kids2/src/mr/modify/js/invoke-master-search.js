@@ -10,7 +10,7 @@
 
     // 更新クエリ共通
     var updateQuery = {
-        url: '/mold/lib/execUpdateQuery.php?strSessionID=' + $('input[name="strSessionID"]').val(),
+        url: '/mold/lib/execUpdateProduct.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
         dataType: 'json'
     };
@@ -175,12 +175,9 @@
                             // 更新条件
                             var condition = {
                                 data: JSON.stringify({
-                                    QueryName: 'updateGoodsCode',
-                                    Conditions: {
-                                        ProductCode: $(invoker).val(),
-                                        ReviseCode: revisecode,
-                                        GoodsCode: newgoodscode
-                                    }
+                                    ProductCode: $(invoker).val(),
+                                    ReviseCode: revisecode,
+                                    GoodsCode: newgoodscode
                                 })
                             };
 
@@ -302,13 +299,23 @@
     // 担当グループ-表示グループコードから表示名を索引
     var selectGroupName = function (invoker) {
         console.log("担当グループ-表示グループコード->表示名 change");
-
+        // 表示フラグ制限の取得
+        var displayFlagLimit = $(invoker).attr('displayFlagLimit');
+        if (displayFlagLimit == '0') {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = false;
+        } else {
+            displayFlagLimit0 = true;
+            displayFlagLimit1 = true;
+        }
         // 検索条件
         var condition = {
             data: {
                 QueryName: 'selectGroupName',
                 Conditions: {
-                    GroupDisplayName: $(invoker).val()
+                    GroupDisplayName: $(invoker).val(),
+                    displayFlagLimit0: displayFlagLimit0,
+                    displayFlagLimit1: displayFlagLimit1
                 }
             }
         };
@@ -386,15 +393,15 @@
                 console.log("工場-表示会社コード->表示名 done");
                 // 工場-表示名に値をセット
                 $(targetCssSelector).val(response[0].companydisplayname);
-                if ($(invoker).attr('name')=="SourceFactory") {
+                if ($(invoker).attr('name') == "SourceFactory") {
                     $('input[name="SourceFactoryName"] + img').css('visibility', 'hidden');
                 }
             })
             .fail(function (response) {
                 console.log("工場-表示会社コード->表示名 fail");
-                console.log(response.responseText);                
+                console.log(response.responseText);
                 var listlength = $('.mold-selection__choosen-list').find('option').length;
-                if ($(invoker).attr('name')=="SourceFactory") {
+                if ($(invoker).attr('name') == "SourceFactory") {
                     if (listlength > 0) {
                         $('input[name="SourceFactoryName"] + img').css('visibility', 'visible');
                     } else {

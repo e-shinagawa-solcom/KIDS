@@ -1,9 +1,9 @@
 UPDATE m_product
 SET
-    strgoodscode = $3
+    strgoodscode = $1
 WHERE
-    strproductcode = $1
-    and strrevisecode = $2
+    strproductcode = $2
+    and strrevisecode = $3
 AND (
         strgoodscode is null OR
         strgoodscode = ''

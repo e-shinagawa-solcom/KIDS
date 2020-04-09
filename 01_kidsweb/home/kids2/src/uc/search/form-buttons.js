@@ -56,7 +56,7 @@ function restoreCookieDispayItems1(form){
     btnSearch.on('click', function () {
         if (workForm.valid()) {
             var windowName = 'searchResult';
-            window.open("", windowName,"width=1011, height=700, scrollbars=yes, resizable=yes"); 
+            window.open("", windowName,"width=1011, height=670, scrollbars=yes, resizable=yes"); 
             workForm.attr('action', '/uc/result/index.php?strSessionID=' + $.cookie('strSessionID'));
             workForm.attr('method', 'post');
             workForm.attr('target', windowName);

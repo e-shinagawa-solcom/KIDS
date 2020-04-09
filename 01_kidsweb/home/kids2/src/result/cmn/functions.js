@@ -268,7 +268,7 @@ function fncSort2( strSortValue, strSortOrder )
 function fncSubwin( code )
 {
 //alert(code);
-	window.open( code ,"","width=1000,height=700,scrollbars=yes,toolbar=no");
+	window.open( code ,"","width=1000,height=670,scrollbars=yes,toolbar=no");
 }
 
 

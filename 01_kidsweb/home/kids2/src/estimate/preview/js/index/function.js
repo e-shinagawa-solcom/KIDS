@@ -87,7 +87,7 @@ function postChild(data) {
 	$("body").append(html);
 
 	var windowName = 'preview_result';
-	win = window.open('about:blank', windowName, 'scrollbars=yes, width=1000, height=700, resizable=0 location=0');
+	win = window.open('about:blank', windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
 
 	document.temp_form.target = windowName;
 	document.temp_form.action = '/estimate/preview/result.php';

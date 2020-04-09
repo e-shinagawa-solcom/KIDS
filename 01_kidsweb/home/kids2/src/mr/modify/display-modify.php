@@ -109,6 +109,8 @@ catch (SQLException $e)
 
 // 置換文字列群の作成
 $replacement = array();
+// セッションID
+$replacement["strSessionID"] = $_REQUEST["strSessionID"];
 
 // 金型帳票ID
 $replacement["MoldReportId"] = $moldReportId;

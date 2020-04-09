@@ -81,10 +81,10 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
     //画像の貼り付け
     $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
     $drawing->setPath("rogo_slip.gif");
-    $drawing->setCoordinates('B2'); //貼り付け場所
+    $drawing->setCoordinates('A2'); //貼り付け場所
     $drawing->setResizeProportional(false); // リサイズ時に縦横比率を固定する (false = 固定しない)
-    $drawing->setWidth(130); // 画像の幅 (px)
-    $drawing->setHeight(80); // 画像の高さ (px)
+    $drawing->setWidth(143); // 画像の幅 (px)
+    $drawing->setHeight(99); // 画像の高さ (px)
     $drawing->setWorksheet($sheet); //対象シート（インスタンスを指定）
 
     $drawing1 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
