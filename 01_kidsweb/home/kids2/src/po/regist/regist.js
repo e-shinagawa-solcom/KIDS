@@ -330,6 +330,7 @@ jQuery(function ($) {
             .fail(function (response) {
             });
 
+        window.opener.location.reload();
     }
 
     function resetTableADisplayStyle() {

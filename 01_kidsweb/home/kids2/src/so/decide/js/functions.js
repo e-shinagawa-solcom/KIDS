@@ -471,4 +471,5 @@ function unLock() {
         .fail(function (response) {
         });
 
+    window.opener.location.reload();
 }
