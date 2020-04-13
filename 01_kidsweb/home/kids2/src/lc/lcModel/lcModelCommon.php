@@ -2293,7 +2293,7 @@ class lcModel
         $result = $db->select_single($sql, $bind);
 
         if (!$result) {
-            echo "支払先情報の取得失敗しました。\n";
+            echo "支払先情報(" . $payfcd . ")の取得失敗しました。\n";
             exit;
         }
 
