@@ -17,6 +17,7 @@ function RegistPO(){
             strNote: $('input[name="strNote"]').val(),
             strProductCode: $('input[name="strProductCode"]').val(),
             strReviseCode: $('input[name="strReviseCode"]').val(),
+            curAllTotalPrice: $('input[name="curAllTotalPrice"]').val(),
             lngDetailCount: $('input[name="lngDetailCount"]').val(),
             aryDetail: getUpdateDetail(),
         },

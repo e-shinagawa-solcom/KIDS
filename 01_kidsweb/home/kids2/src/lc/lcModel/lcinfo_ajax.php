@@ -75,6 +75,10 @@ switch ($data['method']) {
         //処理呼び出し
         $result = exportLcReport($data);
         break;
+    case 'getUnreflectedDataCount':
+        //処理呼び出し
+        $result["count"] = getUnreflectedDataCount($objDB);
+        break;
 }
 
 $objDB->close();
@@ -217,6 +221,8 @@ function reflectLcInfo($objDB, $lcModel, $usrId)
             $lcInfo["updatetime"] = date("H:i:s");
             // t_aclcinfoにデータを反映する
             $lcModel->updateAcLcInfo($lcInfo);
+            // lc未反映フラグをfalseに設定
+            fncUpdateUnreflectedflag($objDB, $lcInfo["pono"], $lcInfo["polineno"], $lcInfo["poreviseno"]);
         }
     }
     return true;
@@ -250,4 +256,9 @@ function exportLcReport($objDB, $lcModel, $data)
     JS側の入力チェック後にSUBMITを実行する流れにする必要があります。
      */
     return true;
+}
+
+function getUnreflectedDataCount($objDB)
+{
+    return fncGetUnreflectedDataCount($objDB);
 }

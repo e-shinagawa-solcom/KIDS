@@ -34,8 +34,10 @@ if ($_GET) {
     $aryData = $_POST;
 }
 
+fncDebug( 'exclusive.txt', $aryData["strSessionID"], __FILE__, __LINE__);
 // セッション確認
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
+
 // 権限確認
 // 402 受注管理（受注検索）
 if (!fncCheckAuthority(DEF_FUNCTION_SO2, $objAuth)) {
@@ -69,7 +71,8 @@ if (isEstimateModified($lngestimateno, $lngRevisionNo, $objDB)) {
 
 // 受注データロック
 if (!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)) {
-    fncOutputError(401, DEF_ERROR, "該当データがロックされています。", true, "", $objDB);
+    $lngUserCode = getLockedUserID($lngestimateno, $objDB);
+    fncOutputError(401, DEF_ERROR, "該当データがユーザーID：".$lngUserCode ."にロックされています。" , true, "", $objDB);
 }
 
 foreach ($lngReceiveNoList as $eachLngReceiveNo) {

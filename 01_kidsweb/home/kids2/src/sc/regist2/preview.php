@@ -205,7 +205,8 @@ if ($strMode == "regist-or-renew") {
     // 受注明細ロック
     foreach ($aryDetail as $row) {
         if (!lockReceive($row["lngreceiveno"], $objDB)) {
-            MoveToErrorPage("受注データが他ユーザーによりロックされています。");
+            $lngUserCode = getLockedUserID($row["lngreceiveno"], $objDB);
+            MoveToErrorPage("受注データが他ユーザー(ユーザーID：".$lngUserCode .")によりロックされています。");
         }
     }
 

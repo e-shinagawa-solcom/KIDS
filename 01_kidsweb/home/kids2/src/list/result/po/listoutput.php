@@ -168,6 +168,9 @@ for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNo
     if ($aryParts["lngNowPage"] == $aryParts["lngAllPage"]) {
         $aryParts["curTotalPrice"] = $curTotalPrice;
         $aryParts["strTotalAmount"] = "Total Amount";
+    }    
+    if ($aryParts["txtsignaturefilename"] != "" && $aryParts["txtsignaturefilename"] != null) {
+        $aryParts["txtsignaturefilename"] = '/img/signature/' .$aryParts["txtsignaturefilename"];
     }
 
     // 置き換え

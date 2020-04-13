@@ -208,6 +208,9 @@ function fncGetLcInfoData($objDB, $data)
     $condcount = 0;
     switch ($data["mode"]) {
         case "0":
+            $fromdate = date("Ym",strtotime("-6 month"));
+            $todate = date('Ym', strtotime('now'));
+            $sql .= " where opendate between '" . $fromdate . "' and '" . $todate . "'";
             break;
         case "1":
             //抽出条件
@@ -225,9 +228,6 @@ function fncGetLcInfoData($objDB, $data)
                 $sql .= ($condcount == 1) ? " where " : " and ";
                 $sql .= " payfcd = '" . $data["payfcd"] . "'";
             }
-//            if ($data["payfnameomit"] != "") {
-//                $sql .= " and payfnameomit = '" . $data["payfnameomit"] . "'";
-//            }
             if ($data["getDataModeFlg"] == 1) {                
                 $condcount += 1;
                 $sql .= ($condcount == 1) ? " where " : " and ";
@@ -513,7 +513,6 @@ function fncGetPurchaseOrderCount($objDB, $lcgetdate)
     ";
     //バインドの設定
     $bind = array($lcgetdate);
-
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
@@ -562,7 +561,7 @@ function fncGetPurchaseOrderData($objDB, $date)
     $sql = "
         select
         lngpurchaseorderno
-        , lngrevisionno
+        , CASE WHEN lngrevisionno=-1 THEN 99 else lngrevisionno END
         , strordercode
         , lngcustomercode
         , strcustomername
@@ -1027,6 +1026,40 @@ function fncUpdateBankname($objDB, $bankcd, $bankname, $currencyclass, $pono)
 }
 
 /**
+ * L/C情報の発行銀行の更新
+ *
+ * @param [object] $objDB
+ * @param [string] $bankcd
+ * @param [string] $bankname
+ * @param [string] $currencyclass
+ * @param [string] $pono
+ * @return 更新件数
+ */
+function fncUpdateUnreflectedflag($objDB, $pono, $polineno, $poreviseno)
+{
+    //クエリの生成
+    $sql = "
+                update t_lcinfo
+                set unreflectedflag = false
+                where
+                    pono = $1
+                    and polineno = $2
+                    and poreviseno = $3
+            ";
+
+    $bind = array($pono, $polineno, $poreviseno);
+    $result = pg_query_params($objDB->ConnectID, $sql, $bind);
+
+    if (!$result) {
+        echo "L/C情報の未反映フラグの更新失敗しました。\n";
+        exit;
+    } else {
+        return pg_affected_rows($result);
+    }
+
+}
+
+/**
  * L/C情報の更新
  *
  * @param [object] $objDB
@@ -1091,7 +1124,8 @@ function fncUpdateSettleInfo($objDB, $data) {
                     bldetail2date = $5,
                     bldetail2money = $6,
                     bldetail3date = $7,
-                    bldetail3money = $8
+                    bldetail3money = $8,
+                    unreflectedflag = true
                 where
                     pono = $9
                     and polineno = $10
@@ -1172,7 +1206,8 @@ function fncUpdateLcState($objDB, $data)
     //クエリの生成
     $sql = "
                 update t_lcinfo
-                set lcstate = $1
+                set lcstate = $1,
+                unreflectedflag = true
                 where pono = $2
                 and poreviseno = $3
             ";
@@ -1491,4 +1526,28 @@ function fncGetValidBankInfo($objDB)
         return pg_fetch_all($result);
     }
 
+}
+/**
+ *未反映L/C情報件数を取得する
+ *
+ * @param [object] $objDB
+ * @param [string] $lcgetdate
+ * @return 発注件数
+ */
+function fncGetUnreflectedDataCount($objDB)
+{
+    $sql = "
+        select count(*)
+        from t_lcinfo
+        where unreflectedflag = true
+    ";
+
+    $result = pg_query($objDB->ConnectID, $sql);
+
+    if (!$result) {
+        echo "未反映L/C情報件数の取得失敗しました。\n";
+        exit;
+    } else {
+        return pg_fetch_object($result)->count;
+    }
 }

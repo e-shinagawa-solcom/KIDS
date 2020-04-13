@@ -16,7 +16,7 @@ $(document).ready(function () {
     // datepickerの設定
     $.each(ymElements, function () {
         this.datepicker({
-            dateFormat: 'yymm',
+            dateFormat: 'yy/mm',
             changeMonth: true,
             changeYear: true,
             showButtonPanel: true,
@@ -25,12 +25,12 @@ $(document).ready(function () {
             onClose: function (dateText, inst) {
                 var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
                 var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-                $(this).val($.datepicker.formatDate('yymm', new Date(year, month, 1)));
+                $(this).val($.datepicker.formatDate('yy/mm', new Date(year, month, 1)));
             },
             beforeShow: function (input, inst) {
                 if ((datestr = $(this).val()).length > 0) {
                     year = datestr.substr(0, 4);
-                    month = datestr.substr(4, 2);
+                    month = datestr.substr(5, 2);
                     $(this).datepicker('option', 'defaultDate', new Date(year, month - 1, 1));
                     $(this).datepicker('setDate', new Date(year, month - 1, 1));
                 }
@@ -51,5 +51,7 @@ $(document).ready(function () {
             maxlength: "10"
         });
     });
+
+
     
 });

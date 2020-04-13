@@ -230,12 +230,11 @@ function getLock($table, $keyname, $key, $objDB){
 *	@param  object  $objDB        DBオブジェクト
 *	@return boolean TRUE,FALSE
 */
-function lockExclusive($key, $functioncode, $objAuth, $objDB){
-
+function lockExclusive($key, $functioncode, $objAuth, $objDB) {
     $strQuery = "LOCK TABLE t_exclusivecontrol IN EXCLUSIVE MODE";
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-    $strQuery = "SELECT strsessionid FROM t_exclusivecontrol WHERE strexclusivekey1 = '" . $key . "'";
+    $strQuery = "SELECT lngusercode,strsessionid FROM t_exclusivecontrol WHERE strexclusivekey1 = '" . $key . "'";
     if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
     {
     	return false;
@@ -244,14 +243,9 @@ function lockExclusive($key, $functioncode, $objAuth, $objDB){
     if ( $lngResultNum )
     {
         $lngOrderCount = $lngResultNum;
-        for ( $i = 0; $i < $aryResult; $i++ )
-        {
-            $aryResult[] = $objDB->fetchArray( $lngResultID, $i );
-            if( $aryResult["strsessionid"] != $objAuth->SessionID )
-            {
-                $objDB->freeResult( $lngResultID );
+        if ($lngResultNum > 0) {
+            $objDB->freeResult( $lngResultID );
                 return false;
-            }
         }
     }
     $objDB->freeResult( $lngResultID );
@@ -260,13 +254,6 @@ function lockExclusive($key, $functioncode, $objAuth, $objDB){
     $strQuery .= "VALUES(" . $key . "," . $functioncode . "," . $objAuth->UserID . ",'" . $objAuth->SessionID . "') ";
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
-/*
-    if ( !$lngResultID )
-    {
-        return false;
-    }
-*/
-    $objDB->freeResult($lngResultID);
     return true;
 }
 
@@ -277,6 +264,28 @@ function lockExclusive($key, $functioncode, $objAuth, $objDB){
 */
 function unlockExclusive($objAuth, $objDB){
     return unlockExclusiveBySessionID($objAuth->SessionID, $objDB);
+}
+
+/**
+ * ロック中のユーザーIDを取得する
+ *
+ * @param [type] $key
+ * @param [type] $objDB
+ * @return void
+ */
+function getLockedUserID($key, $objDB) {
+    $strQuery = "SELECT lngusercode,strsessionid FROM t_exclusivecontrol WHERE strexclusivekey1 = '" . $key . "'";
+    list($lngResultID, $lngResultNum) = fncQuery( $strQuery, $objDB);
+    if ($lngResultNum)
+    {
+        for ( $i = 0; $i < $lngResultNum; $i++ )
+        {
+            $aryResult= $objDB->fetchArray($lngResultID, $i);            
+            $objDB->freeResult( $lngResultID );
+            return $aryResult["lngusercode"];
+        }
+    }
+    return "";
 }
 
 /* 更新有無チェック

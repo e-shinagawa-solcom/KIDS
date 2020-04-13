@@ -107,10 +107,10 @@ function printBtn() {
 			alert("オープン月の形式が不正です。例：2019/01");
 			return false;
 		}
-		if ($('input[name="shipYm"]').val() == "") {
-			alert("船積月が空です。");
-			return false;
-		}
+		// if ($('input[name="shipYm"]').val() == "") {
+		// 	alert("船積月が空です。");
+		// 	return false;
+		// }
 		if (!fncCheckDate($('input[name="shipYm"]').val(), 'yyyy/mm')) {
 			alert("船積月の形式が不正です。例：2019/01");
 			return false;

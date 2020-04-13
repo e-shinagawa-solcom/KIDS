@@ -167,8 +167,9 @@ $objDB->transactionBegin();
 if (isEstimateModified($aryData["lngEstimateNo"], $aryData["lngEstimateRevisionNo"], $objDB)) {
     fncOutputError(501, DEF_ERROR, "他のユーザによって更新または削除されています。", true, "", $objDB);
 }
-if (!lockOrderFix($aryData["lngEstimateNo"], $lngOrderNo[0], DEF_FUNCTION_PO1, $objDB, $objAuth)) {
-    fncOutputError(501, DEF_ERROR, "該当データがロックされています。", true, "", $objDB);
+if (!lockOrderFix($aryData["lngEstimateNo"], $lngOrderNo[0], DEF_FUNCTION_PO1, $objDB, $objAuth)) {    
+    $lngUserCode = getLockedUserID($lngOrderNo[0], $objDB);
+    fncOutputError(501, DEF_ERROR, "該当データがユーザーID：".$lngUserCode ."にロックされています。" , true, "", $objDB);
 }
 
 // ヘッダ・フッダ部

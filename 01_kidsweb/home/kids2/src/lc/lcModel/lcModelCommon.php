@@ -1599,20 +1599,18 @@ class lcModel
      * @param [string] $postate
      * @return void 更新件数
      */
-    public function updateAcLcStateToDelete($pono, $postate)
+    public function updateAcLcStateToDelete($pono)
     {
         //クラスの生成
         $db = $this->lcConn;
         //クエリの生成
         $sql = "
                 update t_aclcinfo
-                set lcstate = 2,
-                postate = $1
-                where pono = $2
+                set lcstate = 2
+                where pono = $1
             ";
         //バインドの設定
-        $bind = array($pono, $postate);
-
+        $bind = array($pono);
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 
@@ -2006,7 +2004,6 @@ class lcModel
             ";
         //バインドの設定
         $bind = array($opendate, $pono);
-
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 
@@ -2096,7 +2093,6 @@ class lcModel
             . " and poreviseno = " . "'" . $data["poreviseno"] . "'";
         //バインドの設定
         $bind = array();
-
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 
@@ -2131,7 +2127,6 @@ class lcModel
             ";
         //バインドの設定
         $bind = array($pono, $poreviseno);
-
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 
@@ -2475,7 +2470,6 @@ class lcModel
             , $data["pono"]
             , $data["polineno"]
             , $data["poreviseno"]);
-        //return $bind;
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 

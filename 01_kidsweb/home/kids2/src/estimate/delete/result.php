@@ -100,6 +100,9 @@ $objRegist->setDeleteParam($estimateNo, $revisionNo, $lngUserCode, $objDB);
 
 $strErrorMessage = $objRegist->delete();
 
+// 排他ロックの解放
+$result = unlockExclusive($objAuth, $objDB);
+
 // 検索でエラーが発生したらエラーメッセージ出力画面に遷移する
 if ($strErrorMessage) {
 	makeHTML::outputErrorWindow($strErrorMessage);

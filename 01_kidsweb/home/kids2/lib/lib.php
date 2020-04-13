@@ -2464,11 +2464,12 @@ function convert_jpdt($str,$fmt='年n月j日',$kanji=true) {
 // 排他制御テーブルの解除
 function unlockExclusiveBySessionID($sessionID, $objDB){
     $strQuery = "LOCK TABLE t_exclusivecontrol IN EXCLUSIVE MODE";
+	fncDebug( 'exclusive.txt', $strQuery, __FILE__, __LINE__);
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
     $strQuery = "DELETE FROM t_exclusivecontrol WHERE strsessionid = '" . $sessionID . "'";
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
-
+	fncDebug( 'exclusive.txt', $strQuery, __FILE__, __LINE__);
     $objDB->freeResult($lngResultID);
     return true;
 

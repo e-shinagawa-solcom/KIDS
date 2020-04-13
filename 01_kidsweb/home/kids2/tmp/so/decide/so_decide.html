@@ -37,6 +37,28 @@
 	<script src="/cmn/js/setinputmode.js" defer></script>
 	<script src="/cmn/js/table.js" defer></script>
 	<script src="/so/decide/js/functions.js" defer></script>
+	<script type="text/javascript">
+	  window.onbeforeunload = function(e) {
+		  
+		$.ajax({
+        url: '/so/decide/index.php',
+        type: 'post',
+        type: 'POST',
+        data: {
+            'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
+            'mode': 'cancel',
+        }
+    })
+        .done(function (response) {
+            window.opener.location.reload();
+        })
+        .fail(function (response) {
+			console.log(response);
+		e.returnValue = "ページを離れようとしています。よろしいですか？";
+        });
+		e.returnValue = "ページを離れようとしています。よろしいですか？";
+	  }
+	</script>
 </head>
 
 <body class="background">

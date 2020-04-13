@@ -20,12 +20,12 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
     // 発注件数の取得
     $orderCount = fncGetPurchaseOrderCount($objDB, $lcGetDate);
     $date = str_replace("-", "", explode(" ", $datetime)[0]);
-    $time = str_replace(":", "", explode(".",explode(" ", $datetime)[1])[0]);
+    $time = str_replace(":", "", explode(".", explode(" ", $datetime)[1])[0]);
     // リバイズ情報の初期化
     $reviseDataArry = array();
     $reviseNum = 0;
 //echo "lcGetDate:" . $lcGetDate . "<br>";
-//echo "orderCount:" . $orderCount . "<br>";
+    //echo "orderCount:" . $orderCount . "<br>";
     // 発注件数 > 0 の場合、t_aclcinfoへデータの登録・更新処理
     if ($orderCount > 0) {
         // t_aclcinfoデータの削除
@@ -35,13 +35,15 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
         $orderArry = fncGetPurchaseOrderData($objDB, $lcGetDate);
         // 若納品日の初期化
         $strWorkDate = "9999/99/99";
-
+        $strMostOldDdate = "";
+        $strWorkPo = "";
         foreach ($orderArry as $orderData) {
             $pono = $orderData["strordercode"];
             $poreviseno = $orderData["lngrevisionno"];
             $intPayFlg = false;
             $payconditioncode = $orderData["lngpayconditioncode"];
             $loadFlg = 0;
+            $strOldOpenYearMonth = "";
 
             // 発注書明細データを取得する
             $orderDetailArry = fncGetPurchaseOrderDetail($objDB, $orderData["lngpurchaseorderno"], $poreviseno);
@@ -50,9 +52,8 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
             // 発注データのリビジョン番号 < 0の場合
             if ($poreviseno < 0) {
                 // t_aclcinfoの状態を削除に更新する
-                $lcModel->updateAcLcStateToDelete($pono, $strDataState);
-            } 
-            else {
+                $lcModel->updateAcLcStateToDelete($pono);
+            } else {
                 // 発注データの支払条件コード = 2 かつ 発注データのリビジョン番号 <> 0の場合
                 if ($payconditioncode == DEF_PAYCONDITION_TT && $poreviseno != 0) {
                     // t_aclcinfoに同一Ponoが存在しているかをチェックする
@@ -66,13 +67,18 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                 if ($poreviseno != 0) {
                     // t_aclcinfoより最新リバイズデータのオープン月と銀行依頼日を取得する
                     $acLcInfoArry = $lcModel->getAcLcInfoByPono($pono);
+                    foreach ($acLcInfoArry as $acLcInfo) {
+                        $strOldOpenYearMonth = $acLcInfo["opendate"];
+                        if ($strOldOpenYearMonth <> "") {
+                            break;
+                        }
+                    }
                 }
             }
-            if( !is_array($orderDetailArry))
-            {
+            if (!is_array($orderDetailArry)) {
                 $orderDetailArry[0] = $orderDetailArry;
             }
-            
+
             if (count($orderDetailArry) > 0) {
                 foreach ($orderDetailArry as $orderDetailData) {
                     $dtmdeliverydate = $orderDetailData["dtmdeliverydate"];
@@ -81,22 +87,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                         // po行番号の設定
                         $lngsortkey = $orderDetailData["lngpurchaseorderdetailno"];
                         $polineno = sprintf("%02s", $lngsortkey % 100);
-                        /*
-                        $sortKeylen = strlen($lngsortkey);
-                        if ($sortKeylen == 1) {
-                            $polineno = sprintf("%02s", $lngsortkey);
-                        }
-                        if ($sortKeylen == 2) {
-                            $polineno = $lngsortkey;
-                        }
-                        if ($sortKeylen == 3) {
-                            if (substr($lngsortkey, 1, 1) == 0) {
-                                $polineno = sprintf("%02s", substr($lngsortkey, 2, 1));
-                            } else {
-                                $polineno = substr($lngsortkey, 1, 2);
-                            }
-                        }
-                        */
+
                         // 納品場所名称と荷揚地の取得
                         $companyNameAndCountryName = fncGetCompanyNameAndCountryName($objDB, $orderData["lngdeliveryplacecode"]);
 
@@ -111,7 +102,6 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                         if ($payconditioncode == DEF_PAYCONDITION_TT && $intPayFlg) {
                             $lcstate = 9;
                         }
-
                         // 若納品日の取得
                         if ($dtmdeliverydate != null && $dtmdeliverydate < $strWorkDate) {
                             $strWorkDate = $dtmdeliverydate;
@@ -136,7 +126,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             }
                         } else {
                             if ($orderData["lngrevisionno"] != 0) {
-                            // リバイズ対象データとして記録（のちに処理）
+                                // リバイズ対象データとして記録（のちに処理）
                                 $reviseDataArry[$reviseNum]["pono"] = $pono;
                                 $reviseDataArry[$reviseNum]["polineno"] = $polineno;
                                 $reviseDataArry[$reviseNum]["poreviseno"] = sprintf("%02s", $poreviseno % 100);
@@ -167,13 +157,13 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             $data["unitprice"] = $orderDetailData["curproductprice"];
                             $data["moneyprice"] = $orderDetailData["cursubtotalprice"];
                             $data["shipstartdate"] = $orderDetailData["dtmdeliverydate"];
-                            $data["shipenddate"] =   $orderDetailData["dtmdeliverydate"];
-                            $data["sumdate"] = $orderDetailData["dtmappropriationdate"];  // 計上日どうする？
+                            $data["shipenddate"] = $orderDetailData["dtmdeliverydate"];
+                            $data["sumdate"] = $orderDetailData["dtmappropriationdate"]; // 計上日どうする？
                             $data["poupdatedate"] = $orderData["dtminsertdate"];
                             $data["deliveryplace"] = $companyNameAndCountryName->strcompanydisplayname;
                             $data["currencyclass"] = $orderData["strmonetaryunitname"];
                             $data["lcnote"] = $orderData["strnote"];
-                            $dtmdeliverydate =       $orderDetailData["dtmdeliverydate"];
+                            $dtmdeliverydate = $orderDetailData["dtmdeliverydate"];
                             $data["shipterm"] = date("Y/m/d", strtotime($dtmdeliverydate . "+10 day"));
                             $data["validterm"] = date("Y/m/d", strtotime($dtmdeliverydate . "+20 day"));
                             // $data["bankcd"] = "";
@@ -196,7 +186,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                             $data["updateuser"] = $usrId;
                             $data["updatedate"] = $date;
                             $data["updatetime"] = $time;
-                            $data["shipym"] = substr(str_replace("-", "", $dtmdeliverydate), 0 ,6);
+                            $data["shipym"] = substr(str_replace("-", "", $dtmdeliverydate), 0, 6);
                             $lcModel->insertAcLcInfo($data);
                             $loadFlg = 1;
                         }
@@ -205,31 +195,32 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                     }
                 }
                 // ↑明細単位のループここまで
-                
+
                 // オープン年月の更新（明細行単位の納品日が一番若い月のものを設定）
-                if( $loadFlg == 1 )
-                {
-                    if( !is_array($acLcInfoArry))
-                    {
-                        $acLcInfoArry[] = $acLcInfoArry;
-                    }
-                    if( $acLcInfoArry[0]["opendate"] = null){
-                        $lcModel->updateAcLcOpendate($pono,$acLcInfoArry[0]["opendate"]);
+                if ($loadFlg == 1) {
+                    if ($strOldOpenYearMonth <> "") {
+                        $lcModel->updateAcLcOpendate($pono, $strOldOpenYearMonth);
+                    } else {
+                        if ($strMostOldDate == "") {
+                            $strMostOldDate = $strWorkDate;
+                            $strWorkPoNo = $pono;
+                        } else if ($strWorkPoNo == $pono) {
+                            if ($strMostOldDate > $strWorkDate)
+                            {
+                                $strMostOldDate = $strWorkDate;
+                            }
+                        } else {
+                            $lcModel->updateAcLcOpendate($strWorkPoNo, fncSetOpenMth($lcModel, $StrMostOldDate));                            
+                            $strMostOldDate = $strWorkDate;
+                            $strWorkPoNo = $pono;
+                        }
                     }
                 }
             }
             // ↑発注書単位のループここまで
         }
 
-        // 発注明細のオープン月設定
-        // 基準日の取得
-        $baseDate = $lcModel->getBaseDate();
-        if ($baseDate < substr($strWorkDate, 8, 2)) {
-            $opendate = date("Ym", strtotime($strWorkDate . "+0 day"));
-        } else {
-            $opendate = date("Ym", strtotime($strWorkDate . "-1 month"));
-        }
-        $lcModel->updateAcLcOpendate($pono, $opendate);
+        $lcModel->updateAcLcOpendate($strWorkPoNo, fncSetOpenMth($lcModel, $strWorkDate));
     }
 
     // リバイズ情報があった場合、リバイズ情報継承処理を行う
@@ -251,6 +242,26 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
     return $orderCount;
 
 }
+/**
+ * オープン月の設定
+ *
+ * @param [type] $lcModel
+ * @param [type] $strTemp
+ * @return void
+ */
+function fncSetOpenMth($lcModel, $strTemp)
+{
+    $strDeliverDay = substr($strTemp, 8, 2);
+
+    $baseDate = $lcModel->getBaseDate();
+    if ($baseDate < $strDeliverDay) {
+        $opendate = date("Ym", strtotime($strTemp . "+0 day"));
+    } else {
+        $opendate = date("Ym", strtotime($strTemp . "-1 month"));
+    }
+    
+    return $opendate;
+}
 
 /**
  * リバイズデータの継続処理
@@ -264,7 +275,7 @@ function fncSetRevData($lcModel, $reviseData)
     $reviseLcInfoArry = $lcModel->getReviseAcLcInfo($reviseData["pono"], $reviseData["polineno"]);
     $argIntAmdFlg = 0;
     $revDataArry = array();
-    if(!is_array($reviseLcInfoArry)){
+    if (!is_array($reviseLcInfoArry)) {
         $reviseLcInfoArry[] = $reviseLcInfoArry;
     }
     foreach ($reviseLcInfoArry as $reviseLcInfo) {
@@ -286,7 +297,7 @@ function fncSetRevData($lcModel, $reviseData)
         if ($reviseData["polineno"] > 1) {
             reset($reviseLcInfoArry);
             // 見つからなかったので全リビジョンの値を取得
-            $reviseLcInfoArry = $lcModel->getReviseAcLcInfo($reviseData["pono"], $reviseData["polineno"] );
+            $reviseLcInfoArry = $lcModel->getReviseAcLcInfo($reviseData["pono"], $reviseData["polineno"]);
 
             foreach ($reviseLcInfoArry as $reviseLcInfo) {
                 // 上記で取得した銀行依頼日が空ではない場合
@@ -346,9 +357,7 @@ function fncUpdRevState($lcModel, $reviseDataArry)
 {
     $orderno = "";
     $len = count($reviseDataArry);
-    
-    for ($i = count($reviseDataArry) -1; $i > 0; $i--)
-    {
+    for ($i = $len - 1; $i >= 0; $i--) {
         // 発注番号 <> リバイズ情報のponoの場合
         if ($orderno != $reviseDataArry[$i]["pono"]) {
             // t_aclcinfoにデータを更新する

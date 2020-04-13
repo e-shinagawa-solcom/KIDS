@@ -94,9 +94,10 @@ switch($mode) {
             $ret['result'] = 0;
         }
         else{
-            if( !lockEstimateEdit($estimateNo, $functionCode, $objDB, $objAuth)){
+            if( !lockEstimateEdit($estimateNo, $functionCode, $objDB, $objAuth)){                 
+                $lngUserCode = getLockedUserID($estimateNo, $objDB);
                 $ret['result'] = 0;
-                $ret['message'] = "見積原価データは他ユーザーが編集中です。";
+                $ret['message'] = "見積原価データは他ユーザー（ユーザーID：" .$lngUserCode . ")が編集中です。";
             }
         }
         if ($ret['result'] == true) {

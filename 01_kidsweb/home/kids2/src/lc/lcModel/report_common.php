@@ -1261,11 +1261,14 @@ function fncGetMonetaryRate($objDB, $monetaryRateCode, $monetaryUnitCode)
  */
 function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
 {
-    // 船積月
-    $shipYm = str_replace("/", "-", $data["shipYm"]);
-    $firstDate = date('Y/m/d', strtotime('first day of ' . $shipYm));
-    $lastDate = date('Y/m/d', strtotime('last day of ' . $shipYm));
     $where = "";
+    if ($data["shipYm"] != "") {
+        // 船積月
+        $shipYm = str_replace("/", "-", $data["shipYm"]);
+        $firstDate = date('Y/m/d', strtotime('first day of ' . $shipYm));
+        $lastDate = date('Y/m/d', strtotime('last day of ' . $shipYm));
+        $where .= " and shipstartdate between to_date('". $firstDate ."','YYYY/MM/DD') and to_date('" .$lastDate . "','YYYY/MM/DD')";
+    }
     // 銀行コードがALL以外の場合、検索条件となる
     if ($data["bankcd"] != "0000") {
         $where .= " and bankcd = '" . $data["bankcd"] . "'";
@@ -1342,16 +1345,14 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
                 and tlc.poreviseno = tlc1.poreviseno
         WHERE
             opendate = $1
-            and shipstartdate between to_date($2,'YYYY/MM/DD') and to_date($3,'YYYY/MM/DD')
-            and payfcd = $4"
+            and payfcd = $2"
         . $where .
-        "   and currencyclass = $5
+        "   and currencyclass = $3
             and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
         order by productcd, productrevisecd, tlc.pono, tlc.polineno
         ";
     // クエリへの設定値の定義
-    $bind = array(str_replace("/", "", $data["openYm"]),
-        $firstDate, $lastDate, $data["payfCode"], $currencyclass);
+    $bind = array(str_replace("/", "", $data["openYm"]), $data["payfCode"], $currencyclass);
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
     if (!$result) {
         echo "帳票6出力用のL/C別合計の取得失敗しました。\n";

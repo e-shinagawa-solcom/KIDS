@@ -69,7 +69,13 @@ function lcInit(json_obj) {
 				$("#productcd").val(lc_data.productcd);
 				$("#productrevisecd").val(lc_data.productrevisecd);
 				$("#productname").val(lc_data.productname);
-				$("#opendate").val(lc_data.opendate);
+				opendate = lc_data.opendate;
+				if (opendate != null && opendate != "") {
+					var year = opendate.substring(0, 4);
+					var month = opendate.substring(4, 6);
+					opendate = year + "/" + month;
+				}
+				$("#opendate").val(opendate);
 				$("#moneyprice").val(convertNumberByClass(lc_data.moneyprice, lc_data.currencyclass, 0));
 				//テーブル
 				$('#portplace option').filter(function (index) {
@@ -181,7 +187,7 @@ function updateBtn() {
 		return false;
 	}
 	//オープン年月の形式が日付形式（yyyy/mm）になってない ←仕様書が矛盾していてYYYYMMが正しいと思われる
-	if (!$("#opendate").val().match(/^\d{4}\d{1,2}$/)) {
+	if (!$("#opendate").val().match(/^\d{4}\/\d{1,2}$/)) {
 		alert("発行月の形式を確認してください。");
 		return false;
 	}
@@ -317,8 +323,7 @@ function updateBtn() {
 		return false;
 	}
 
-	if ($("#bldetail1money").val() == "" &&  $("#bldetail2money").val() == "" && $("#bldetail3money").val() == "" )
-	{
+	if ($("#bldetail1money").val() == "" && $("#bldetail2money").val() == "" && $("#bldetail3money").val() == "") {
 		blmoney = "";
 	}
 
@@ -336,7 +341,7 @@ function updateBtn() {
 			'pono': $("#pono").val(),
 			'poreviseno': phpData.poreviseno,
 			'polineno': $("#polineno").val(),
-			'opendate': $("#opendate").val(),
+			'opendate': $("#opendate").val().replace(/\//g, ""),
 			'portplace': $("#portplace").val(),
 			'bankcd': $("#bankname").val(),
 			'bankname': $("#bankname option:selected").text(),
@@ -359,7 +364,7 @@ function updateBtn() {
 			console.log(data);
 			// Ajaxリクエストが成功
 			var data = JSON.parse(data);
-			
+
 			alert("更新処理が完了しました。");
 
 			//ローダー非表示
@@ -390,6 +395,7 @@ function releaseBtn() {
 			}
 		})
 			.done(function (data) {
+				console.log(data);
 				// Ajaxリクエストが成功
 				var data = JSON.parse(data);
 
@@ -407,7 +413,34 @@ function releaseBtn() {
 }
 
 (function () {
+
 	$(window).on("beforeunload", function (e) {
 		window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
 	});
 })();
+
+$(document).ready(function () {
+	// 開始日時フォーカスを失ったときの処理
+	$("#opendate").on('blur', function () {
+		console.log($(this).val());
+		var value = $(this).val();
+		if (/^[0-9]{6}$/.test(value)) {
+			var str = value.trim();
+			var y = str.substr(0, 4);
+			var m = str.substr(4, 2);
+			$(this).val(y + "/" + m);
+		}
+		if (/^[0-9]{5}$/.test(value)) {
+			var str = value.trim();
+			var y = str.substr(0, 4);
+			var m = str.substr(4, 1);
+			$(this).val(y + "/0" + m);
+		}
+	});
+	// 開始日時フォーカスを取ったときの処理
+	$("#opendate").on('focus', function () {
+		var chgVal = $(this).val().replace(/\//g, "");
+		$(this).val(chgVal);
+		$(this).select();
+	});
+});

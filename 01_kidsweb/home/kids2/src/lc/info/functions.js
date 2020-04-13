@@ -100,20 +100,17 @@ function setLcInfoTable(data, phpData) {
 		}
 
 		var lc_table_radio = '<tr>' +
-			'<td style="padding-left: 8px;"><input type="radio" name="selectRow" value="' + (i+1) + '" class="form-control form-control-sm" style="width:85%;height: 15px;background-color: #f0f0f6;"></td>' +
+			'<td style="padding-left: 8px;"><input type="radio" name="selectRow" value="' + (i + 1) + '" class="form-control form-control-sm" style="width:85%;height: 15px;background-color: #f0f0f6;"></td>' +
 			'</tr>';
 		$("#lc_table_radio").append(lc_table_radio);
 		var balance = row.moneyprice;
-		if (row.bldetail1money != null)
-		{
+		if (row.bldetail1money != null) {
 			balance -= row.bldetail1money;
 		}
-		if (row.bldetail2money != null)
-		{
+		if (row.bldetail2money != null) {
 			balance -= row.bldetail2money;
 		}
-		if (row.bldetail3money != null)
-		{
+		if (row.bldetail3money != null) {
 			balance -= row.bldetail3money;
 		}
 		var lc_table_body = '<tr id="' + i + '" before-click-bgcolor="rgb(' + background_color + ')">' +
@@ -180,7 +177,7 @@ function setLcInfoTable(data, phpData) {
 		$("[name='T']").width(width + 250);
 	}
 
-	
+
 	$("#lc_head").trigger("update");
 	$("#lc_table").trigger("update");
 	trClickSelectRow();
@@ -255,6 +252,7 @@ function getLcInfo(mode, type = 1) {
 			}
 		})
 			.done(function (data) {
+				console.log(data);
 				// Ajaxリクエストが成功
 				var data = JSON.parse(data);
 				tableData = data;
@@ -307,6 +305,7 @@ function getSimulateLcInfo() {
 			}
 		})
 			.done(function (data) {
+				console.log(data);
 				// Ajaxリクエストが成功
 				var data = JSON.parse(data);
 				tableData = data;
@@ -348,9 +347,9 @@ function openEdit() {
 		lcstate != 9) {
 		alert("選択されたL/C情報は編集することが出来ません。");
 	} else {
-		var strURL  = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
-		+ polineno + '&poreviseno=' + poreviseno;
-		window.open(strURL, 'LC EDIT', 'width=1000, height=550, resizable=yes, scrollbars=yes, menubar=no'); 
+		var strURL = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
+			+ polineno + '&poreviseno=' + poreviseno;
+		window.open(strURL, 'LC EDIT', 'width=1000, height=550, resizable=yes, scrollbars=yes, menubar=no');
 		// location.href = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
 		//  + polineno + '&poreviseno=' + poreviseno;
 	}
@@ -602,6 +601,34 @@ function exportFile() {
 		'&getDataModeFlg=' + getDataModeFlg;
 }
 
+function closeEvent() {
+	console.log("ddddddddddddd");
+	$.ajax({
+		url: '../lcModel/lcinfo_ajax.php',
+		type: 'POST',
+		data: {
+			'method': 'getUnreflectedDataCount',
+			'sessionid': phpData["session_id"]
+		}
+	})
+		.done(function (data) {
+			console.log(data);
+			// Ajaxリクエストが成功
+			var data = JSON.parse(data);
+			if (data.count != "0") {
+				if (confirm("変更が反映されていませんが終了しますか？")) {
+					window.close();
+				}
+			} else {
+				window.close();
+			}
+		})
+		.fail(function () {
+			// Ajaxリクエストが失敗
+		});
+
+
+}
 // function convertNumberByClass(str, currencyclass, fracctiondigits) {
 // 	if (str != "" && str != undefined && str != "null") {
 // 		if (currencyclass != "") {
@@ -640,28 +667,28 @@ function trClickSelectRow() {
 		var beforeClickBgcolor = $(this).attr('before-click-bgcolor');
 		if (bgcolor != 'rgb(187, 187, 187)') {
 			$(this).find('td').css("background-color", "#bbbbbb");
-			$('#lc_table_radio tr:nth-child(' + (index + 1)+ ')').find('input[type="radio"]').prop('checked', true);
+			$('#lc_table_radio tr:nth-child(' + (index + 1) + ')').find('input[type="radio"]').prop('checked', true);
 		} else {
 			$(this).find('td').css("background-color", beforeClickBgcolor);
-			$('#lc_table_radio tr:nth-child(' + (index + 1)+ ')').find('input[type="radio"]').prop('checked', false);
+			$('#lc_table_radio tr:nth-child(' + (index + 1) + ')').find('input[type="radio"]').prop('checked', false);
 		}
 	});
 
-	
+
 	$('input[type="radio"]').on('click', function (e) {
-		var rowindex = $(this).parent().parent().index(); 
-		
+		var rowindex = $(this).parent().parent().index();
+
 		$('#lc_table_body tr').each(function (i, tr) {
 			$(this).find('td').css("background-color", $(this).attr('before-click-bgcolor'));
 		});
 
 		var beforeClickBgcolor = $("#lc_table_body tr:nth-child(" + (rowindex + 1) + ")").attr('before-click-bgcolor');
 		if (this.checked) {
-            $("#lc_table_body tr:nth-child(" + (rowindex + 1) + ")").find('td').css('background-color', '#bbbbbb');
-            $("#lc_table_radio tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[type="radio"]').prop('checked', true);
-        } else {
-            $("#lc_table_body tr:nth-child(" + (rowindex + 1) + ")").find('td').css('background-color', beforeClickBgcolor);
-            $("#lc_table_radio tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[type="radio"]').prop('checked', false);
+			$("#lc_table_body tr:nth-child(" + (rowindex + 1) + ")").find('td').css('background-color', '#bbbbbb');
+			$("#lc_table_radio tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[type="radio"]').prop('checked', true);
+		} else {
+			$("#lc_table_body tr:nth-child(" + (rowindex + 1) + ")").find('td').css('background-color', beforeClickBgcolor);
+			$("#lc_table_radio tr:nth-child(" + (rowindex + 1) + ")").find('td').find('input[type="radio"]').prop('checked', false);
 		}
 	});
 }

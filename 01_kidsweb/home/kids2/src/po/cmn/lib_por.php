@@ -1467,6 +1467,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
  */
 function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
 {
+    $datestring = "'" . fncGetDateTimeString() . "'";
     $lngcompanycode = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryPurchaseOrder["lngLocationCode"] . ":str", '', $objDB);
     $aryQuery[] = "INSERT INTO m_purchaseorder(";
     $aryQuery[] = "    lngpurchaseorderno,";
@@ -1524,25 +1525,35 @@ function fncUpdatePurchaseOrder($aryPurchaseOrder, $objDB, $objAuth)
     $aryQuery[] = "    strmonetaryratename,";
     $aryQuery[] = $aryPurchaseOrder["lngPayConditionCode"] . ",";
     $aryQuery[] = "    '" . $aryPurchaseOrder["strPayConditionName"] . "',";
-    $aryQuery[] = "    lnggroupcode,";
+    $aryQuery[] = "    po.lnggroupcode,";
     $aryQuery[] = "    strgroupname,";
-    $aryQuery[] = "    txtsignaturefilename,";
+    $aryQuery[] = "    ms.txtsignaturefilename,";
     $aryQuery[] = "    lngusercode,";
     $aryQuery[] = "    strusername,";
     $aryQuery[] = $lngcompanycode . ",";
     $aryQuery[] = "    '" . $aryPurchaseOrder["strLocationName"] . "',";
-    $aryQuery[] = "    curtotalprice,";
+    $aryQuery[] = "    " . $aryPurchaseOrder["curAllTotalPrice"] . ",";
     $aryQuery[] = "    '" . fncGetDateTimeString() . "',";
     $aryQuery[] = $objAuth->UserCode . ",";
     $aryQuery[] = "    '" . $objAuth->UserDisplayName . "',";
     $aryQuery[] = "    '" . $aryPurchaseOrder["strNote"] . "',";
     $aryQuery[] = 0 . " ";
     $aryQuery[] = "FROM m_purchaseorder po";
+    $aryQuery[] = "  left join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      lnggroupcode";
+    $aryQuery[] = "      , txtsignaturefilename ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_signature ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      dtmapplystartdate <= " . $datestring ." ";
+    $aryQuery[] = "      and dtmapplyenddate >= " . $datestring ."";
+    $aryQuery[] = "  ) ms ";
+    $aryQuery[] = "    on ms.lnggroupcode = po.lnggroupcode ";
     $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
     $aryQuery[] = "    AND   lngrevisionno = (SELECT MAX( po1.lngRevisionNo ) FROM m_purchaseorder po1 WHERE po1.lngpurchaseorderno = po.lngpurchaseorderno )";
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
-
     if (!$lngResultID = $objDB->execute($strQuery)) {
         fncOutputError(9051, DEF_ERROR, "発注書マスタへの更新処理に失敗しました。", true, "", $objDB);
         return null;

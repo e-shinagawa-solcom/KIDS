@@ -162,8 +162,9 @@ $aryOtherDetail = fncGetOtherOrderDetail($aryResult[0]["lngorderno"], $aryResult
 
 // ロック（候補の発注）
 foreach ($aryOtherDetail as $otherDetail) {
-    if (!lockExclusive($otherDetail["lngorderno"], DEF_FUNCTION_PO5, $objAuth, $objDB)) {
-        fncOutputError(501, DEF_ERROR, "該当データが見積原価修正または発注確定でロックされています。", true, "", $objDB);
+    if (!lockExclusive($otherDetail["lngorderno"], DEF_FUNCTION_PO5, $objAuth, $objDB)) {        
+        $lngUserCode = getLockedUserID($otherDetail["lngorderno"], $objDB);
+        fncOutputError(501, DEF_ERROR, "該当データが見積原価修正または発注確定でユーザーID：".$lngUserCode ."ロックされています。", true, "", $objDB);
     }
 }
 
