@@ -290,20 +290,13 @@ $aryData["curAllTotalPrice_DIS"] = convertPrice($aryData["lngMonetaryUnitCode"],
 // 入力者
 $aryData["lngInputUserCode_DISCODE"] = ($aryData["lngInputUserCode"] != "") ? "[" . $aryData["lngInputUserCode"] . "]" : "";
 // 仕入先
-//$aryData["strCustomerCode"] = $aryData["lngCustomerCompanyCode"];
 $aryData["strCustomerName"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "strcompanydisplayname", $aryData["lngCustomerCompanyCode"] . ":str", '', $objDB);
 $aryData["lngCustomerCode_DISCODE"] = ($aryData["lngCustomerCompanyCode"] != "") ? "[" . $aryData["lngCustomerCompanyCode"] . "]" : "";
 
 // 納品場所
 $aryData["lngLocationCode_DISCODE"] = ($aryData["lngLocationCode"] != "") ? "[" . $aryData["lngLocationCode"] . "]" : "";
-
-// watanabe update end
-
-// 支払条件整合性チェック
-$aryData["lngMonetaryUnitCode"] = fncGetMasterValue("m_monetaryunit", "strmonetaryunitsign", "lngmonetaryunitcode", $aryData["lngMonetaryUnitCode"] . ":str", '', $objDB);
-//$aryData["lngCustomerCode"] = $aryData["lngCustomerCompanyCode"];
 $aryData["lngCustomerCode"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "lngcompanycode", $aryData["lngCustomerCompanyCode"] . ":str", '', $objDB);
-//$aryData["lngCustomerCode"] = fncGetMasterValue( "m_company", "lngcompanycode", "strcompanydisplaycode",  $aryData["lngCustomerCompanyCode"], '', $objDB);
+
 if ($aryData["payConditionDisableFlag"] == 'false') {
     $aryData = fncPayConditionCodeMatch($aryData, $aryHeadColumnNames, $_POST["aryDetail"], $objDB);
 }

@@ -329,7 +329,6 @@ function fncPayConditionCodeMatch($aryData , $aryHeadColumnNames , $aryPoDitail 
 				$Code[$i]= "2";
 			}
 		}
-	
 //echo "lngMonetaryUnitCode" . $aryData["lngMonetaryUnitCode"] . "<br>";
 		if ( $aryData["lngMonetaryUnitCode"] == 2 )
 		{
