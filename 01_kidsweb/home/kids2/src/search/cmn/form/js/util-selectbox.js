@@ -45,6 +45,7 @@ function selectBoxCommand(selectbox, commandName)
                     });
                     // ソート結果を反映
                     selectbox.append(sortedOptions);
+                    selectbox.focus();
                     break;
                 default:
                     break

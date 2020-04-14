@@ -12,6 +12,8 @@
             selectBoxMoveTo(moldList, moldChoosenList);
             // 選択中の金型リストのソート
             selectBoxCommand(moldChoosenList, 'sort');
+            
+            moldList.focus();
         }
     });
 
@@ -22,6 +24,8 @@
             selectBoxMoveTo(moldChoosenList, moldList);
             // 金型リストのソート
             selectBoxCommand(moldList, 'sort');
+
+            moldChoosenList.focus();
         }
     });
 
