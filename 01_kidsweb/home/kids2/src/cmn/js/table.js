@@ -23,7 +23,7 @@ function setCheckBoxClickEvent(chkboxObj, tableA, tableA_chkbox, allCheckObj, ha
 
         if (hasCalculation == 1) {
             // 税抜金額の合計の計算
-            totalPriceCalculation(tableA_fix, tableA);
+            totalPriceCalculation(tableA_chkbox, tableA);
         }
     });
 
