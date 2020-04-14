@@ -36,7 +36,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	$aryQuery[] = ", c.strcompanydisplaycode as strcustomercode";	//顧客コード
 	$aryQuery[] = ", s.strCustomerName as strcustomername";	//顧客名
 	// 納品日
-	$aryQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH:MI:SS' ) as dtmdeliverydate";
+	$aryQuery[] = ", to_char( s.dtmDeliveryDate, 'YYYY/MM/DD HH24:MI:SS' ) as dtmdeliverydate";
 	// 納品場所名
 	$aryQuery[] = ", s.strDeliveryPlaceName as strdeliveryplacename";
 	// 納品場所担当者名
@@ -53,7 +53,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	// 備考
 	$aryQuery[] = ", s.strNote as strnote";
 	// 入力日
-	$aryQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
+	$aryQuery[] = ", to_char( s.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS' ) as dtminsertdate";
 	// 入力者＝起票者
 	$aryQuery[] = ", u.struserdisplaycode as strinsertusercode";	//入力者コード
 	$aryQuery[] = ", s.strInsertUserName as strinsertusername";	//入力者名

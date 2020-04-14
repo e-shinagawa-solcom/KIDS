@@ -958,7 +958,7 @@ function fncGetSearchInvoiceDetailSQL ( $lnginvoiceno, $lngrevisionno=null )
     // 請求書明細番号
     $arySelectQuery[] = ", inv_d.lnginvoicedetailno";
     // 納品日
-    $arySelectQuery[] = ", to_char( inv_d.dtmdeliverydate, 'YYYY/MM/DD HH:MI:SS' ) as dtmdeliverydate";
+    $arySelectQuery[] = ", to_char( inv_d.dtmdeliverydate, 'YYYY/MM/DD HH24:MI:SS' ) as dtmdeliverydate";
     // 納品場所コード
     $arySelectQuery[] = ", delv_c.strcompanydisplaycode as lngdeliveryplacecode";
     // 納品場所名
@@ -1433,7 +1433,7 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo)
     $aryQuery[] = ", insert_u.struserdisplaycode as strinsertusercode";
     $aryQuery[] = ", inv.strinsertusername as strinsertusername";
     // 作成日
-    $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
+    $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH24:MI:SS' ) as dtminsertdate";
     // 備考
     $aryQuery[] = ", inv.strnote as strnote";
     // 印刷回数
@@ -1664,7 +1664,7 @@ function fncGetSalesMSQL ( $lngInvoiceNo )
     // 入力者コード
     $aryQuery[] = ", lnginputusercode";
     // 登録日
-    $aryQuery[] = ", to_char( dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
+    $aryQuery[] = ", to_char( dtminsertdate, 'YYYY/MM/DD HH24:MI:SS' ) as dtminsertdate";
 
     // FROM句
     $aryQuery[] = " FROM m_sales ";
@@ -2100,7 +2100,7 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
     $aryQuery[] = ", insert_u.struserdisplaycode as strinsertusercode";
     $aryQuery[] = ", inv.strinsertusername as strinsertusername";
     // 作成日
-    $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH:MI:SS' ) as dtminsertdate";
+    $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH24:MI:SS' ) as dtminsertdate";
     // 備考
     $aryQuery[] = ", inv.strnote as strnote";
     // 印刷回数

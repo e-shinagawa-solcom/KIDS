@@ -348,7 +348,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , o.strOrderCode as strOrderCode";
         $aryQuery[] = "  , o.strOrderCode as strCode";
         $aryQuery[] = "  , o.strOrderCode || '_' || to_char(o.lngRevisionNo, 'FM00') as strOrderCode_desc";
-        $aryQuery[] = "  , to_char(o.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS') as dtmInsertDate";
+        $aryQuery[] = "  , to_char(o.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
         $aryQuery[] = "  , input_u.strUserDisplayCode as strInputUserDisplayCode";
         $aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
         $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
@@ -999,7 +999,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , inv_d.lnginvoicedetailno";
         $aryQuery[] = "  , inv_d.lnginvoicedetailno as lngdetailno";
         $aryQuery[] = "  , inv_d.lnginvoicedetailno as lngrecodeno";
-        $aryQuery[] = "  , to_char(inv_d.dtmdeliverydate, 'YYYY/MM/DD HH:MI:SS') as dtmdeliverydate";
+        $aryQuery[] = "  , to_char(inv_d.dtmdeliverydate, 'YYYY/MM/DD HH24:MI:SS') as dtmdeliverydate";
         $aryQuery[] = "  , delv_c.strcompanydisplaycode as strdeliveryplacecode";
         $aryQuery[] = "  , inv_d.strdeliveryplacename as strdeliveryplacename";
         $aryQuery[] = "  , inv_d.cursubtotalprice as cursubtotalprice";

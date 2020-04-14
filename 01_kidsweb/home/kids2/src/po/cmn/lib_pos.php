@@ -49,7 +49,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     $aryQuery[] = "  , od.estimaterevisionno as estimaterevisionno";
     $aryQuery[] = "  , o.strOrderCode as strOrderCode";
     $aryQuery[] = "  , o.strOrderCode || '_' || to_char(o.lngRevisionNo, 'FM00') as strOrderCode_desc";
-    $aryQuery[] = "  , to_char(o.dtmInsertDate, 'YYYY/MM/DD HH:MI:SS') as dtmInsertDate";
+    $aryQuery[] = "  , to_char(o.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
     $aryQuery[] = "  , input_u.strUserDisplayCode as strInputUserDisplayCode";
     $aryQuery[] = "  , input_u.strUserDisplayName as strInputUserDisplayName";
     $aryQuery[] = "  , cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
