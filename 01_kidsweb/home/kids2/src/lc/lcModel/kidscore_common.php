@@ -208,7 +208,7 @@ function fncGetLcInfoData($objDB, $data)
     $condcount = 0;
     switch ($data["mode"]) {
         case "0":
-            $fromdate = date("Ym",strtotime("-6 month"));
+            $fromdate = date("Ym",strtotime("-12 month"));
             $todate = date('Ym', strtotime('now'));
             $sql .= " where opendate between '" . $fromdate . "' and '" . $todate . "'";
             break;

@@ -515,13 +515,13 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  inner join ( ";
         $aryQuery[] = "    select";
         $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
-        $aryQuery[] = "      , strordercode ";
+        $aryQuery[] = "      , lngpurchaseorderno ";
         $aryQuery[] = "    from";
         $aryQuery[] = "      m_purchaseorder ";
         $aryQuery[] = "    group by";
-        $aryQuery[] = "      strordercode";
+        $aryQuery[] = "      lngpurchaseorderno";
         $aryQuery[] = "  ) po1 ";
-        $aryQuery[] = "    on po.strordercode = po1.strordercode ";
+        $aryQuery[] = "    on po.lngpurchaseorderno = po1.lngpurchaseorderno ";
         $aryQuery[] = "    and po.lngrevisionno = po1.lngrevisionno ";
         $aryQuery[] = "WHERE po.lngpurchaseorderno = " . $lngKeyCode;
     } else if ($lngClassCode == DEF_REPORT_SLIP) {
