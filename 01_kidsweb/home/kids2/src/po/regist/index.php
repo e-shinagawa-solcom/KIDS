@@ -202,10 +202,18 @@ if ($aryOrderHeader[0]["lngcountrycode"] != 81) {
 $aryDetail = fncGetOrderDetail($aryData["lngOrderNo"], $aryData["lngRevisionNo"], $objDB);
 
 if ($aryDetail == null || count($aryDetail) == 0) {
+    // 排他ロックの解放
+    $objDB->transactionBegin();
+    unlockExclusive($objAuth, $objDB);
+    $objDB->transactionCommit();
     fncOutputError(501, DEF_ERROR, "対象データの一部またはすべてが確定済みです。", true, "", $objDB);
 }
 $checkList = null;
 foreach ($lngOrderNo as $row) {
+    // 排他ロックの解放
+    $objDB->transactionBegin();
+    unlockExclusive($objAuth, $objDB);
+    $objDB->transactionCommit();
     if (isOrderModified($row, DEF_ORDER_APPLICATE, $objDB)) {
         fncOutputError(501, DEF_ERROR, "対象データの一部またはすべてが確定済みです。", true, "", $objDB);
     }

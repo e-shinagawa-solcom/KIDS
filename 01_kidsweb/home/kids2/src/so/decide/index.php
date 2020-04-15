@@ -71,7 +71,13 @@ if (isEstimateModified($lngestimateno, $lngRevisionNo, $objDB)) {
 
 // 受注データロック
 if (!lockReceiveFix($lngestimateno, DEF_FUNCTION_SO4, $objDB, $objAuth)) {
-    $lngUserCode = getLockedUserID($lngestimateno, $objDB);
+    foreach ($lngReceiveNoList as $eachLngReceiveNo) {
+        $lngUserCode = getLockedUserID($eachLngReceiveNo, $objDB);
+        if ($lngUserCode != "")
+        {
+            break;
+        }
+    }
     fncOutputError(401, DEF_ERROR, "該当データがユーザーID：".$lngUserCode ."にロックされています。" , true, "", $objDB);
 }
 
@@ -92,14 +98,16 @@ $objDB->transactionCommit();
 // $lngRevisionNo = $aryData["lngRevisionNo"];
 // 指定受注番号の受注データ取得用SQL文の作成
 $strQuery = fncGetReceiveHeadInfoSQL($aryData["lngReceiveNo"], $lngestimateno);
-
 // 詳細データの取得
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum) {
     for ($i = 0; $i < $lngResultNum; $i++) {
         $aryResult = pg_fetch_all($lngResultID);
     }
-} else {
+} else {    
+    $objDB->transactionBegin();
+    $result = unlockExclusive($objAuth, $objDB);
+    $objDB->transactionCommit();
     fncOutputError(403, DEF_ERROR, "該当データの取得に失敗しました", true, "", $objDB);
 }
 
@@ -140,6 +148,9 @@ if ($lngResultNum) {
         $aryDetailResult[] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
+    $objDB->transactionBegin();
+    $result = unlockExclusive($objAuth, $objDB);
+    $objDB->transactionCommit();
     fncOutputError(403, DEF_WARNING, "受注番号に対する明細情報が見つかりません。", true, "", $objDB);
 }
 
