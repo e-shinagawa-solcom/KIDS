@@ -137,12 +137,12 @@ switch( $strExcuteHttpHostName )
 		break;
 	default:
 		// DB設定
-		define ( "POSTGRESQL_HOSTNAME", "192.168.1.83" );
+		define ( "POSTGRESQL_HOSTNAME", "192.168.1.84" );
 		define ( "POSTGRESQL_HOSTPORT", "5432" );
 		define ( "DB_LOGIN_USERNAME", "kids" );
 		define ( "DB_LOGIN_PASSWORD", "kids" );
 		define ( "DB_NAME", "kidscore2" );
-		define ( "LC_POSTGRESQL_HOSTNAME", "192.168.1.83" );
+		define ( "LC_POSTGRESQL_HOSTNAME", "192.168.1.84" );
 		define ( "LC_POSTGRESQL_HOSTPORT", "5432" );
 		define ( "LC_DB_LOGIN_USERNAME", "ackids" );
 		define ( "LC_DB_LOGIN_PASSWORD", "x7zv1jid" );

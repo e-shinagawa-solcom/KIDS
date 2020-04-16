@@ -250,8 +250,8 @@ function lockExclusive($key, $functioncode, $objAuth, $objDB) {
     }
     $objDB->freeResult( $lngResultID );
 
-    $strQuery = "INSERT INTO  t_exclusivecontrol (strexclusivekey1,lngfunctioncode,lngusercode,strsessionid) ";
-    $strQuery .= "VALUES(" . $key . "," . $functioncode . "," . $objAuth->UserID . ",'" . $objAuth->SessionID . "') ";
+    $strQuery = "INSERT INTO  t_exclusivecontrol (strexclusivekey1,lngfunctioncode,lngusercode,strsessionid, dtminsertdate) ";
+    $strQuery .= "VALUES(" . $key . "," . $functioncode . "," . $objAuth->UserID . ",'" . $objAuth->SessionID . "','" . fncGetDateTimeString() . "') ";
     list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
 
     return true;

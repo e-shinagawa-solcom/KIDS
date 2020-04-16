@@ -74,6 +74,7 @@ class lcConnect
         try {
             $conn = "host=" . LC_POSTGRESQL_HOSTNAME
                 . " dbname=" . LC_DB_NAME
+                . " port=" . LC_POSTGRESQL_HOSTPORT
                 . " user=" . LC_DB_LOGIN_USERNAME
                 . " password=" . LC_DB_LOGIN_PASSWORD;
             $link = pg_connect($conn);
