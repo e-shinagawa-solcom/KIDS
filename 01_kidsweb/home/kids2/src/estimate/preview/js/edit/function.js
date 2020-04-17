@@ -87,8 +87,8 @@ function unLock(){
 		url: "/estimate/preview/editExclusive.php",
 		type: "post",
 		dataType: "json",
-//		async: false,
-		data: formData.serialize()
+		data: formData.serialize(),
+		timeout: 10000
 	}).done(function (response) {
 		console.log("unLock:success")
 	}).fail(function (xhr,textStatus,errorThrown) {

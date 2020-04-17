@@ -324,14 +324,12 @@ function tableBSort() {
 function unLock() {
     $.ajax({
         url: '/po/regist/modify.php',
-        type: 'post',
-        // dataType: 'json',
         type: 'POST',
-        //            async: false,
         data: {
             'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
             'strMode': 'cancel',
-        }
+        },
+        timeout: 10000
     })
         .done(function (response) {
         })

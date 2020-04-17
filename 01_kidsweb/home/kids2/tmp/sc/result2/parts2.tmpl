@@ -17,6 +17,7 @@
 
 	<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
 	<script type="text/javascript" language="javascript" src="/sc/cmn/result2exstr.js"></script>
+	<script type="text/javascript" language="javascript" src="/list/result/cmn/functions.js"></script>
 
 </head>
 
@@ -106,16 +107,40 @@
 		</tr>
 	</table>
 
-	<div class="detail-footer">
-		<div id="MessageTitle" class="box-title"></div>
-		<div class="box-buttons">
-			<!-- 削除ボタン -->
-			<span id="DeleteBt" style="padding-right:20px;" onclick="form1.submit();"></span>
-			<!-- 閉じるボタン -->
-			<span id="CloseBt" onclick="window.opener.location.reload();window.close();return false;"></span>
-		</div>
-	</div>
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center" style="visibility:_%listview%_">
+		<tr>
+			<td>
 
+				<span id="PreviewBt">
+					<a href="#">
+						<img onclick="fncListOutput('_%strPreviewAction%_');return false;" onmouseover="fncGrayPreviewButton('on' , this);"
+						 onmouseout="fncGrayPreviewButton('off', this);fncAlphaOff( this );" onmousedown="fncAlphaOn( this );" onmouseup="fncAlphaOff( this );"
+						 src="/img/type01/cmn/querybt/graypreview_off_bt.gif" width="72" height="20" border="0" alt="PREVIEW">
+					</a>
+				</span>
+
+			</td>
+		</tr>
+	</table>
+	<br>
+
+	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
+		<tr>
+			<td>
+				<span id="objQuery">
+					<table width="90%" cellpadding="5" cellspacing="1" border="0" bgcolor="#6f8180" align="center">
+						<tr>
+							<td bgcolor="#f1f1f1">
+								<a href="#" onclick="window.opener.location.reload();window.close();">
+									<img class="button" src="/img/type01/cmn/seg/close_off_ja_bt.gif" width="72" height="20" border="0" alt="CLOSE">
+								</a>
+							</td>
+						</tr>
+					</table>
+				</span>
+			</td>
+		</tr>
+	</table>
 
 	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
 		<tr>

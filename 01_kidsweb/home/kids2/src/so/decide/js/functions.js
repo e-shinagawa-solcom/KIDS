@@ -23,7 +23,24 @@
 
     var lockId = "lockId";
     // ウィンドウクローズ処理
-    window.onbeforeunload = unLock;
+    window.onbeforeunload = function () {
+        function unLock() {
+            $.ajax({
+                url: '/so/decide/index.php',
+                type: 'POST',
+                data: {
+                    'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
+                    'mode': 'cancel',
+                },
+                timeout: 10000
+            })
+                .done(function (response) {
+                })
+                .fail(function (response) {
+                });
+        }
+        unLock();
+    };
 
     // チェックボックスの切り替え処理のバインド
     setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
@@ -391,13 +408,6 @@ function convertNullToZero(str) {
     }
 }
 
-// function money_format(lngmonetaryunitcode, strmonetaryunitsign, price) {
-//     if (lngmonetaryunitcode == 1) {
-//         return '\xA5' + " " + price;
-//     } else {
-//         return strmonetaryunitsign + " " + price;
-//     }
-// }
 /*
  * 画面操作を無効にする
  */
@@ -454,21 +464,4 @@ function resetTableBDisplayStyle() {
         $(this).find("#lngunitquantity").find('input:text').prop('disabled', false);
         $(this).find("#strdetailnote").find('input:text').prop('disabled', false);
     });
-}
-
-function unLock() {
-    $.ajax({
-        url: '/so/decide/index.php',
-        type: 'post',
-        type: 'POST',
-        data: {
-            'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
-            'mode': 'cancel',
-        }
-    })
-        .done(function (response) {
-        })
-        .fail(function (response) {
-        });
-        window.opener.location.reload();
 }

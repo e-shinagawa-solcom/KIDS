@@ -90,13 +90,12 @@ function unLock()
 {
     $.ajax({
         url: '/po/confirm/index.php',
-        type: 'post',
-    // dataType: 'json',
         type: 'POST',
         data: {
             'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
             'strMode': 'cancel',
-        }
+        },
+        timeout: 10000
     })
     .done(function (response) {
     })

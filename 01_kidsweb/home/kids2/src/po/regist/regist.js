@@ -318,12 +318,12 @@ jQuery(function ($) {
     function unLock() {
         $.ajax({
             url: '/po/regist/index.php',
-            type: 'post',
             type: 'POST',
             data: {
                 'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
                 'strMode': 'cancel',
-            }
+            },
+            timeout: 10000
         })
             .done(function (response) {
             })
