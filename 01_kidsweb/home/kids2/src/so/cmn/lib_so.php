@@ -277,7 +277,7 @@ function fncGetReceiveHeadInfoSQL($lngReceiveNo, $lngestimateno)
     $aryQuery[] = "      ed.lngsalesdivisioncode ";
     $aryQuery[] = "    from";
     $aryQuery[] = "      t_receivedetail rd ";
-    $aryQuery[] = "      left join t_estimatedetail ed ";
+    $aryQuery[] = "      inner join t_estimatedetail ed ";
     $aryQuery[] = "        on rd.lngestimateno = ed.lngestimateno ";
     $aryQuery[] = "        and rd.lngestimaterevisionno = ed.lngrevisionno ";
     $aryQuery[] = "        and rd.lngestimatedetailno = ed.lngestimatedetailno ";
