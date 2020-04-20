@@ -1198,13 +1198,13 @@ function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMon
         return "1.000000";
     }
     $aryQuery = array();
-    $aryQuery[] = "SELECT mmr.curConversionRate ";
+    $aryQuery[] = "SELECT mmr.curConversionRate, mmr.dtmapplystartdate";
     $aryQuery[] = "FROM m_MonetaryRate mmr ";
     $aryQuery[] = "WHERE mmr.dtmapplystartdate <= to_date('" . $dtmStockAppDate . "', 'yyyy/mm/dd') ";
     $aryQuery[] = "	AND mmr.dtmapplyenddate >= to_date('" . $dtmStockAppDate . "', 'yyyy/mm/dd') ";
     $aryQuery[] = "	AND mmr.lngmonetaryratecode = '" . $lngMonetaryRateCode . "' ";
     $aryQuery[] = "	AND mmr.lngMonetaryUnitCode = '" . $lngMonetaryUnitCode . "' ";
-    $aryQuery[] = "GROUP BY mmr.curConversionRate ";
+    $aryQuery[] = "GROUP BY mmr.curConversionRate, mmr.dtmapplystartdate ";
     $strQuery = implode("\n", $aryQuery);
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
@@ -1215,13 +1215,14 @@ function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMon
         $objDB->freeResult($lngResultID);
         unset($aryQuery);
         unset($objResult);
-        $aryQuery[] = "SELECT mmr.curConversionRate ";
+        $aryQuery[] = "SELECT mmr.curConversionRate, mmr.dtmapplystartdate ";
         $aryQuery[] = "FROM m_MonetaryRate mmr ";
         $aryQuery[] = "WHERE mmr.lngmonetaryratecode = '" . $lngMonetaryRateCode . "' ";
         $aryQuery[] = "	AND mmr.lngMonetaryUnitCode = '" . $lngMonetaryUnitCode . "' ";
         $aryQuery[] = "	AND mmr.dtmapplystartdate = (SELECT MAX(mmr2.dtmapplystartdate) FROM m_MonetaryRate mmr2 WHERE mmr2.lngMonetaryRateCode = mmr.lngMonetaryRateCode AND mmr2.lngMonetaryUnitCode = mmr.lngMonetaryUnitCode) ";
-        $aryQuery[] = "GROUP by mmr.curConversionRate ";
+        $aryQuery[] = "GROUP by mmr.curConversionRate, mmr.dtmapplystartdate ";
         $strQuery = implode("\n", $aryQuery);
+
         list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
         if ($lngResultNum > 0) {
             $objResult = $objDB->fetchObject($lngResultID, 0);
@@ -1231,5 +1232,5 @@ function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMon
 
     $objDB->freeResult($lngResultID);
 
-    return $curconversionrate;
+    return $objResult;
 }

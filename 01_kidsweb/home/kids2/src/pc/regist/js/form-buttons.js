@@ -1,5 +1,6 @@
 var taxList;
 var chkbox = [];
+var alertCount = 0;
 (function () {
     // フォーム
     var workForm = $('form');
@@ -28,7 +29,14 @@ var chkbox = [];
         }
     });
 
+    // 仕入日変更イベント
+    $('input[name="dtmStockAppDate"]').on('change', function () {
+        alertCount =0;
+        getMonetaryRate();
+    });
+
     btnGetPoInfo.on('click', function () {
+        alertCount = 0;
         // 発注NO.の取得
         var strOrderCode = $('input[name="strOrderCode"]').val();
         var strReviseCode = $('input[name="strReviseCode"]').val();
@@ -63,6 +71,7 @@ var chkbox = [];
                             return false;
                         }
                     }
+
 
                     for (var i = 0; i < data.orderdetail.length; i++) {
                         var rowNum = i + 1;
@@ -208,7 +217,7 @@ var chkbox = [];
                     // チェックボックスクリックイベントの設定
                     setCheckBoxClickEvent($('input[name="edit"]'), $("#tableB"), $("#tableB_chkbox"), $("#allChecked"), 1);
                     // 対象チェックボックスクリックイベントの設定
-                    setAllCheckClickEvent($("#allChecked"), $("#tableB"), $("#tableB_chkbox"), 1);                    
+                    setAllCheckClickEvent($("#allChecked"), $("#tableB"), $("#tableB_chkbox"), 1);
                 })
                 .fail(function (response) {
                     alert(response);
@@ -218,54 +227,15 @@ var chkbox = [];
 
     });
 
+
     // 通貨変更イベント
     $('input[name="lngMonetaryUnitCode"]').on('change', function () {
-        console.log("通貨レート：" + $('select[name="lngMonetaryRateCode"]').val());
-        // リクエスト送信
-        $.ajax({
-            url: '/pc/regist/getMonetaryRate.php',
-            type: 'post',
-            data: {
-                'strSessionID': $.cookie('strSessionID'),
-                'lngMonetaryUnitCode': $(this).val(),
-                'lngMonetaryRateCode': $('select[name="lngMonetaryRateCode"]').val(),
-                'dtmStockAppDate': $('input[name="dtmStockAppDate"]').val()
-            }
-        })
-            .done(function (response) {
-                console.log(response);
-                var data = JSON.parse(response);
-                $('input[name="curConversionRate"]').val(data.curconversionrate);
-            })
-            .fail(function (response) {
-                alert(response);
-                alert("fail");
-            })
+        getMonetaryRate();
     });
 
     // 通貨レート変更イベント
     $('select[name="lngMonetaryRateCode"]').on('change', function () {
-        
-        console.log("通貨レート：" + $(this).val());
-        // リクエスト送信
-        $.ajax({
-            url: '/pc/regist/getMonetaryRate.php',
-            type: 'post',
-            data: {
-                'strSessionID': $.cookie('strSessionID'),
-                'lngMonetaryUnitCode': $('input[name="lngMonetaryUnitCode"]').val(),
-                'lngMonetaryRateCode': $(this).val(),
-                'dtmStockAppDate': $('input[name="dtmStockAppDate"]').val()
-            }
-        })
-            .done(function (response) {
-                console.log(response);
-                var data = JSON.parse(response);
-                $('input[name="curConversionRate"]').val(data.curconversionrate);
-            })
-            .fail(function (response) {
-                alert("fail");
-            })
+        getMonetaryRate();
     });
 
     // 登録ボタン押下時の処理
@@ -387,7 +357,59 @@ var chkbox = [];
 
 
 })();
-
+function isDate(d) {
+    if (d == "") { return false; }
+    if (!d.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)) { return false; }
+    var date = new Date(d);
+    if (date.getFullYear() != d.split("/")[0]
+        || date.getMonth() != d.split("/")[1] - 1
+        || date.getDate() != d.split("/")[2]
+    ) {
+        return false;
+    }
+    return true;
+}
+function getMonetaryRate() {
+    var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
+    if (dtmStockAppDate.length == 8) {
+        dtmStockAppDate = dtmStockAppDate.substr(0, 4) + '/' + dtmStockAppDate.substr(4, 2) + '/' + dtmStockAppDate.substr(6, 2)
+    }
+    if (!isDate(dtmStockAppDate)) {
+        return false;
+    }
+    
+    if ($('input[name="lngMonetaryUnitCode"]').val() == "" || $('select[name="lngMonetaryRateCode"]').val() == "")
+    {
+        return false;
+    }
+    // リクエスト送信
+    $.ajax({
+        url: '/pc/regist/getMonetaryRate.php',
+        type: 'post',
+        data: {
+            'strSessionID': $.cookie('strSessionID'),
+            'lngMonetaryUnitCode': $('input[name="lngMonetaryUnitCode"]').val(),
+            'lngMonetaryRateCode': $('select[name="lngMonetaryRateCode"]').val(),
+            'dtmStockAppDate': dtmStockAppDate
+        }
+    })
+        .done(function (response) {
+            console.log(response);
+            var data = JSON.parse(response);
+            console.log(data.dtmapplystartdate.substr(0,7).replace(/-/g, ""));
+            console.log(dtmStockAppDate.substr(0,7).replace(/\//g, ""));
+            console.log(alertCount);
+            $('input[name="curConversionRate"]').val(data.curconversionrate);
+            if (data.dtmapplystartdate.substr(0,7).replace(/-/g, "") != dtmStockAppDate.substr(0,7).replace(/\//g, "") && alertCount == 0) {
+                alertCount += 1;
+                $message = "選択された仕入日の適用レートが存在しません。\n" + data.dtmapplystartdate.substr(0,7) + "のレートを適用します。"
+                alert($message);
+            }
+        })
+        .fail(function (response) {
+            alert("fail");
+        })
+}
 /**
  * 税額再計算
  * @param {*} objID 

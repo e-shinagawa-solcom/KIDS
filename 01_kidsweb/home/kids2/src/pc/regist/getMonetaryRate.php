@@ -34,12 +34,13 @@ if ($aryData == null) {
 $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
 // 適用レートを取得する
-$curconversionrate = fncGetCurConversionRate($aryData["dtmStockAppDate"], $aryData["lngMonetaryRateCode"],
+$rateResult = fncGetCurConversionRate($aryData["dtmStockAppDate"], $aryData["lngMonetaryRateCode"],
     $aryData["lngMonetaryUnitCode"], $objDB);
 
 $objDB->close();
 
 // 適用レート
-$result["curconversionrate"] = $curconversionrate;
+$result["curconversionrate"] = $rateResult->curconversionrate;
+$result["dtmapplystartdate"] = $rateResult->dtmapplystartdate;
 //結果出力
 echo $s->encodeUnsafe($result);

@@ -354,7 +354,7 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
     $sheet->setCellValue('F'. ($startRow + 26), $unSettedTotal->unapprovaltotaltotal * $rate);
     $sheet->setCellValue('G'. ($startRow + 26), $unSettedTotal->benetotaltotal * $rate);
 
-    $sheet->getStyle('B'. ($startRow + 26). ':G'. ($startRow + 26))->getNumberFormat()->setFormatCode($numberFormat);
+    $sheet->getStyle('B'. ($startRow + 26). ':G'. ($startRow + 26))->getNumberFormat()->setFormatCode('#,##0');
 
     $offset = $pageNo * REPORT_LC_ONE_PAGE_REPORT_NUM_5_2;
 
@@ -411,8 +411,12 @@ function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     }
     $sheet->setCellValue('P'. ($startRow + 9), "通貨区分：" . $currencyClass);
     $sheet->setCellValue('B'. ($startRow + 7), sprintf('%d年%d月', substr($data["openYm"], 0, 4), substr($data["openYm"], 5, 2)));
-    $sheet->setCellValue('M'. ($startRow + 8), sprintf('%d年%d月', substr($data["shipYm"], 0, 4), substr($data["shipYm"], 5, 2)));
-
+    if ($data["shipYm"] != "") {
+        $sheet->setCellValue('M'. ($startRow + 8), sprintf('%d年%d月', substr($data["shipYm"], 0, 4), substr($data["shipYm"], 5, 2)));
+    } else {
+        $sheet->setCellValue('M'. ($startRow + 8), "ALL");
+    }
+    
     $sheet->setCellValue('D'. ($startRow + 8), $data["payfName"]);
     $sheet->setCellValue('H'. ($startRow + 8), $data["bankname"]);
 
@@ -441,8 +445,8 @@ function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     $payfInfo = fncGetPayfInfoByPayfcd($objDB, $data["payfCode"]);
 
     if ($payfInfo != null) {
-        $sheet->setCellValue('B'. ($startRow + 2), $payfInfo->payfsendname);
-        $sheet->setCellValue('H'. ($startRow + 42), $payfInfo->payfsendfax);
+        $sheet->setCellValue('B'. ($startRow + 2), "To : BENE NAME");
+        // $sheet->setCellValue('H'. ($startRow + 42), $payfInfo->payfsendfax);
     }
     
     $offset = $pageNo * REPORT_LC_ONE_PAGE_REPORT_NUM_6;

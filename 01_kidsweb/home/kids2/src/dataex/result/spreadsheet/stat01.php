@@ -376,7 +376,7 @@
 				
 			case 27:	// 目標利益
 				// 売上合計が0では無い
-				if( $aryDataset[23]->data != 0 )
+				if( $aryDataset[23]->data != 0 && $aryDataset[26]->data != "ERR")
 				{
 					// 売上合計 - 製品原価合計
 					$curCalc = (float)$aryDataset[23]->data - $aryDataset[26]->data;
