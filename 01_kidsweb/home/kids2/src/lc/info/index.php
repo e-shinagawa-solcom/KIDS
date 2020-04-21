@@ -48,18 +48,6 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 $usrId = trim($objAuth->UserID);
 $usrName = trim($objAuth->UserDisplayName);
 
-// // 2100 LC管理
-// if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
-// {
-//         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-// }
-
-// // 2101 LC情報
-// if ( !fncCheckAuthority( DEF_FUNCTION_LC1, $objAuth ) )
-// {
-//         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-// }
-
 //経理サブシステムDB接続
 $lcModel = new lcModel();
 
@@ -70,23 +58,19 @@ $userAuth = substr($loginUserAuth, 1, 1);
 
 //ログイン状況の最大管理番号の取得
 $maxLgno = $lcModel->getMaxLoginStateNum();
+$curDate = fncGetDateTimeString();
 
 // T_Aclcinfo初期化フラグがtrueの場合
 if ($aryData["aclcinitFlg"] == "true") {
     // t_aclcinfoデータの登録・更新処理
-    // kidscore2から時間と日付を取得する
-    // $curDate = fncGetCurDate($objDB);
     $curDate = fncGetDateTimeString();
-    
-//    $date = explode(" ", $curDate)[0];
-//    $time = explode(" ", $curDate)[1];
 
     // L/Cデータを取得する
     $orderCount = fncGetLcData($objDB, $lcModel, $usrName, $curDate);
 
     if ($orderCount > 0) {
         // lcgetdateを更新する
-        $updCount = $lcModel->updateLcGetDate($maxLgno, date('Ymd h:m:s', strtotime($curDate)));
+        $updCount = $lcModel->updateLcGetDate($maxLgno, date('Ymd H:i:s', strtotime($curDate)));
 
         if ($updCount < 0) {
             $lcModel->updateLgStateToInit($maxLgno);
@@ -200,6 +184,7 @@ $arr = array(
     "userAuth" => $userAuth,
     "session_id" => $aryData["strSessionID"],
     "reSearchFlg" => $aryData["reSearchFlg"],
+    "lgno" => $maxLgno,
 );
 echo "<script>$(function(){lcInit('" . json_encode($arr) . "');});</script>";
 return true;

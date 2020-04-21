@@ -38,6 +38,8 @@
                 })
                 .fail(function (response) {
                 });
+            
+            window.opener.location.reload();
         }
         unLock();
     };

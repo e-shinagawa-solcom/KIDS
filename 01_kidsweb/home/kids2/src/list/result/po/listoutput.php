@@ -139,6 +139,10 @@ $objDB->freeResult($lngResultID);
 $curTotalPrice = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryParts["curtotalprice"], "price");
 unset($aryParts["curtotalprice"]);
 
+if ($aryParts["txtsignaturefilename"] != "" && $aryParts["txtsignaturefilename"] != null) {
+    $aryParts["txtsignaturefilename"] = '/img/signature/' .$aryParts["txtsignaturefilename"];
+}
+
 // ページ処理
 $aryParts["lngNowPage"] = 1;
 $aryParts["lngAllPage"] = ceil($lngResultNum / 5);
@@ -169,9 +173,6 @@ for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNo
         $aryParts["curTotalPrice"] = $curTotalPrice;
         $aryParts["strTotalAmount"] = "Total Amount";
     }    
-    if ($aryParts["txtsignaturefilename"] != "" && $aryParts["txtsignaturefilename"] != null) {
-        $aryParts["txtsignaturefilename"] = '/img/signature/' .$aryParts["txtsignaturefilename"];
-    }
 
     // 置き換え
     $objTemplate->replace($aryParts);

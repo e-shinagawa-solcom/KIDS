@@ -68,7 +68,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_PO10, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 // 504 発注管理（詳細表示）
-if (!fncCheckAuthority(DEF_FUNCTION_PO12, $objAuth)) {
+if (!fncCheckAuthority(DEF_FUNCTION_PO4, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 

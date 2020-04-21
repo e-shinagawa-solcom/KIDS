@@ -23,6 +23,7 @@ var session_id;
 //---------------------------------------------------
 function lcInit( json_obj )
 {
+	console.log(json_obj);
 	var phpData = JSON.parse(json_obj);
 	session_id = phpData.session_id;
 

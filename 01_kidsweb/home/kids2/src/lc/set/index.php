@@ -47,21 +47,6 @@ $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 //ユーザーID取得(半角スペースがあるため)
 $usrId = trim($objAuth->UserID);
 
-// //ユーザーID取得(半角スペースがあるため)
-// $user_id = trim($objAuth->UserID);
-
-// 2100 LC管理
-// if ( !fncCheckAuthority( DEF_FUNCTION_LC0, $objAuth ) )
-// {
-//         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-// }
-
-// // 2102 LC設定変更
-// if ( !fncCheckAuthority( DEF_FUNCTION_LC2, $objAuth ) )
-// {
-//         fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
-// }
-
 //経理サブシステムDB接続
 $lcModel = new lcModel();
 
@@ -135,6 +120,7 @@ $arr = array(
     "session_id" => $aryData["strSessionID"],
     "lgoutymd" => $lgoutymd,
     "userAuth" => $userAuth,
+    "lgno" => $maxLgno,
 );
 echo "<script>$(function(){lcInit('" . json_encode($arr) . "');});</script>";
 return true;

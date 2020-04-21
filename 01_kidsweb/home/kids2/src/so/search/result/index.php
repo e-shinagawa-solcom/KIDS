@@ -50,7 +50,7 @@ $lngInputUserCode = $objAuth->UserCode;
 
 // 権限確認
 // 401 受注管理（受注検索）
-if (!fncCheckAuthority(DEF_FUNCTION_SO1, $objAuth)) {
+if (!fncCheckAuthority(DEF_FUNCTION_SO2, $objAuth)) {
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 

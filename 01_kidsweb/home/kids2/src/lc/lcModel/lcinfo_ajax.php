@@ -54,13 +54,6 @@ switch ($data['method']) {
         //対象データが多いとJSON変換時にメモリオーバーになるため、2000件で小分けに変換する
         ini_set('memory_limit', '512M');
         break;
-    // シミュレートイベント
-    case 'getSimulateLcInfo':
-        // シミュレート処理
-        $result = getSimulateLcInfo($objDB, $data);
-        //対象データが多いとJSON変換時にメモリオーバーになるため、2000件で小分けに変換する
-        ini_set('memory_limit', '512M');
-        break;
     // 反映イベント
     case 'reflectLcInfo':
         $result = reflectLcInfo($objDB, $lcModel, $usrId);
@@ -70,15 +63,14 @@ switch ($data['method']) {
         //処理呼び出し
         $result = getSelLcReport();
         break;
-    // 帳票出力の印刷イベント
-    case 'exportLcReport':
-        //処理呼び出し
-        $result = exportLcReport($data);
-        break;
     case 'getUnreflectedDataCount':
         //処理呼び出し
         $result["count"] = getUnreflectedDataCount($objDB);
         break;
+        case 'logout':
+            //処理呼び出し
+            $result["count"] = getUnreflectedDataCount($objDB);
+            break;
 }
 
 $objDB->close();

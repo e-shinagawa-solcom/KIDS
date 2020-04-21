@@ -28,7 +28,7 @@ var tableData;//テーブルデータ確保配列
 //---------------------------------------------------
 function lcInit(json_obj) {
 	phpData = $.parseJSON(json_obj);
-	console.log(phpData.reSearchFlg);
+	console.log(phpData);
 	if (phpData.reSearchFlg == "true" && $.cookie("lcInfoSearchConditions") != undefined) {
 		//他画面からの戻りなどで、移動前の検索条件で再検索する場合
 		//抽出条件をcookieから取得
@@ -99,7 +99,7 @@ function setLcInfoTable(data, phpData) {
 			background_color = background_color_data["lngcolorred"] + "," + background_color_data["lngcolorgreen"] + "," + background_color_data["lngcolorblue"];
 		}
 
-		var lc_table_radio = '<tr>' +
+		var lc_table_radio = '<tr style="height: 20px;">' +
 			'<td style="padding-left: 8px;"><input type="radio" name="selectRow" value="' + (i + 1) + '" class="form-control form-control-sm" style="width:85%;height: 15px;background-color: #f0f0f6;"></td>' +
 			'</tr>';
 		$("#lc_table_radio").append(lc_table_radio);
@@ -113,7 +113,7 @@ function setLcInfoTable(data, phpData) {
 		if (row.bldetail3money != null) {
 			balance -= row.bldetail3money;
 		}
-		var lc_table_body = '<tr id="' + i + '" before-click-bgcolor="rgb(' + background_color + ')">' +
+		var lc_table_body = '<tr id="' + i + '" before-click-bgcolor="rgb(' + background_color + ')" style="height: 20px;">' +
 			// '<td style="text-align: left;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm"></td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfnameomit) + '</td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + strIns(row.opendate, 4, '/') + '</td>' +
@@ -154,11 +154,6 @@ function setLcInfoTable(data, phpData) {
 			'<td style="display:none;">' + row.lcstate + '</td>' +
 			'</tr>';
 		$("#lc_table_body").append(lc_table_body);
-	}
-	console.log(data.length);
-	for (var i = 0; i <= data.length; i++) {
-		var height = $("#lc_table_radio tr:nth-child(" + i + ") td:nth-child(1)").height();
-		$("#lc_table_body tr:nth-child(" + i + ") td:nth-child(1)").height(height);
 	}
 
 	var width = 0;
@@ -252,7 +247,7 @@ function getLcInfo(mode, type = 1) {
 			}
 		})
 			.done(function (data) {
-				console.log(data);
+				// console.log(data);
 				// Ajaxリクエストが成功
 				var data = JSON.parse(data);
 				tableData = data;
@@ -270,57 +265,6 @@ function getLcInfo(mode, type = 1) {
 
 }
 
-//---------------------------------------------------
-// シミュレート処理
-//---------------------------------------------------
-function getSimulateLcInfo() {
-
-	var to = $("#simulateYm").val().replace("/", "");
-
-	//年月が空の場合、エラー
-	var error = false;
-	var error_msg = "";
-	if (to == "") {
-		error = true;
-		error_msg += "年月が空です。\r\n";
-	}
-	//年月日付ではない場合、エラー
-	if (to != "" && !to.match(/(\d{4})(\d{2})/)) {
-		error = true;
-		error_msg += "年月の形式が不正です。例：2019/01\r\n";
-	}
-
-	if (error == false) {
-		//LC情報取得
-		$("#masking_loader").css("display", "block");
-		$.ajax({
-			url: '../lcModel/lcinfo_ajax.php',
-			type: 'POST',
-			data: {
-				'method': 'getSimulateLcInfo',
-				'mode': 2,
-				'getDataModeFlg': getDataModeFlg,
-				'to': to,
-				'sessionid': phpData["session_id"]
-			}
-		})
-			.done(function (data) {
-				console.log(data);
-				// Ajaxリクエストが成功
-				var data = JSON.parse(data);
-				tableData = data;
-				setLcInfoTable(data, phpData);
-				setBtnControll();
-			})
-			.fail(function () {
-				// Ajaxリクエストが失敗
-			});
-		$("#masking_loader").css("display", "none");
-	} else {
-		//検索フォームエラー出力
-		alert(error_msg);
-	}
-}
 
 //---------------------------------------------------
 // 編集処理
@@ -350,8 +294,6 @@ function openEdit() {
 		var strURL = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
 			+ polineno + '&poreviseno=' + poreviseno;
 		window.open(strURL, 'LC EDIT', 'width=1000, height=550, resizable=yes, scrollbars=yes, menubar=no');
-		// location.href = '/lc/edit/index.php?strSessionID=' + phpData["session_id"] + '&pono=' + pono + '&polineno='
-		//  + polineno + '&poreviseno=' + poreviseno;
 	}
 }
 
@@ -436,6 +378,7 @@ function reflectLcInfo() {
 			} else {
 				// 取得したlgoutymdが空の場合、反映確認メッセージを表示する
 				if (res = confirm("更新した情報をサーバに反映しますか。")) {
+					console.log($("#masking_loader"));
 					$("#masking_loader").css("display", "block");
 					$.ajax({
 						url: '../lcModel/lcinfo_ajax.php',
@@ -473,23 +416,11 @@ function reflectLcInfo() {
 //各ボタン制御
 //---------------------------------------------------
 function setBtnControll() {
-	//シミュレートボタン
-	if (!lcInfoHit && getInfoFlg == 1) {
-		$("#simulateBtn").prop("disabled", true);
-	} else {
-		$("#simulateBtn").prop("disabled", false);
-	}
 	//編集ボタン
 	if (lcInfoHit) {
 		$("#editBtn").prop("disabled", false);
 	} else {
 		$("#editBtn").prop("disabled", true);
-	}
-	//エクスポートボタン
-	if (lcInfoHit) {
-		$("#exportBtn").prop("disabled", false);
-	} else {
-		$("#exportBtn").prop("disabled", true);
 	}
 	//帳票出力ボタン
 	if (lcInfoHit) {
@@ -549,60 +480,8 @@ function reportOutputBtn() {
 	window.open(strURL, 'LC REPORT', 'width=1000, height=550, resizable=yes, scrollbars=yes, menubar=no');
 }
 
-/**
- * インポートボタン処理
- */
-function chooseFile() {
-	$('#txtFile').click();
-}
-
-/**
- * インポートでの選択ファイル変更時の処理
- */
-function importFile() {
-	var fd = new FormData();
-	fd.append("txtfile", $("#txtFile").prop("files")[0]);
-	fd.append("sessionid", phpData["session_id"]);
-	$("#masking_loader").css("display", "block");
-	$.ajax({
-		url: '/lc/info/import.php',
-		type: 'POST',
-		data: fd,
-		processData: false,
-		contentType: false,
-
-	})
-		.done(function (data) {
-			if (data == "success") {
-				alert("インポートが完了しました。");
-				getLcInfo(0);
-			} else {
-				alert("インポートでエラーが発生しました。");
-			}
-		})
-		.fail(function () {
-			alert("fail");
-			// Ajaxリクエストが失敗
-		});
-	//ローダー解除
-	$("#masking_loader").css("display", "none");
-}
-
-/**
- * エクスポートボタン処理
- */
-function exportFile() {
-	// ファイルエクスポート処理を行う
-	location.href = '/lc/info/export.php?sessionid=' + phpData["session_id"] +
-		'&mode=1' +
-		'&from=' + $("#startYm").val() +
-		'&to=' + $("#endYm").val() +
-		'&payfcd=' + $("#payfCode").val() +
-		'&getDataModeFlg=' + getDataModeFlg;
-}
 
 function closeEvent() {
-	console.log("ddddddddddddd");
 	$.ajax({
 		url: '../lcModel/lcinfo_ajax.php',
 		type: 'POST',
@@ -617,17 +496,48 @@ function closeEvent() {
 			var data = JSON.parse(data);
 			if (data.count != "0") {
 				if (confirm("変更が反映されていませんが終了しますか？")) {
+					console.log(phpData);
+					console.log(phpData.lngno);
+					logout();
 					window.close();
 				}
 			} else {
+				logout();
 				window.close();
 			}
 		})
 		.fail(function () {
 			// Ajaxリクエストが失敗
 		});
+}
 
+// ウィンドウを閉じる前のイベント
+$(window).on("beforeunload", function (e) {
+	logout();
+});
 
+// ログアウト処理
+function logout() {
+	$.ajax({
+		url: '../lcModel/lcinfo_ajax.php',
+		type: 'POST',
+		data: {
+			'method': 'logoutState',
+			'lgno': phpData.lgno,
+			'sessionid': phpData["session_id"]
+		}
+	})
+		// Ajaxリクエストが成功した時発動
+		.done((data) => {
+			console.log(data);
+		})
+		// Ajaxリクエストが失敗した時発動
+		.fail((data) => {
+			console.log(data);
+		})
+		// Ajaxリクエストが成功・失敗どちらでも発動
+		.always((data) => {
+		});
 }
 // function convertNumberByClass(str, currencyclass, fracctiondigits) {
 // 	if (str != "" && str != undefined && str != "null") {
