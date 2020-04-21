@@ -204,6 +204,7 @@ BEGIN
             current_order = header.strordercode;
         END IF;
 -- 発注明細件数分、発注マスタを登録
+        RAISE INFO '% %', header.lngorderno, write_count;
         insert into m_order(
             lngorderno
            ,lngrevisionno
@@ -321,6 +322,8 @@ BEGIN
     END LOOP;
     close cur_detail;
 RAISE INFO 'complete order';
+
+
     po_count = 0;
     last_order = '';
     open cur_po_key;
@@ -397,7 +400,7 @@ RAISE INFO 'complete order';
         END LOOP;
         close cur_po_detail;
         
-        RAISE INFO '% % %', last_orderno, last_revision, product_code;
+--        RAISE INFO '% % %', last_orderno, last_revision, product_code;
         -- 発注書マスタ登録
         insert into m_purchaseorder
         (
@@ -458,9 +461,9 @@ RAISE INFO 'complete order';
            ,m_monetaryrateclass.strmonetaryratename
            ,m_order.lngpayconditioncode
            ,m_paycondition.strpayconditionname
-           ,m_order.lnggroupcode
+           ,m_product.lnginchargegroupcode
            ,m_group.strgroupname
-           ,m_order.lngusercode
+           ,m_product.lngdevelopusercode
            ,m_user.struserdisplayname
            ,m_order.lngdeliveryplacecode
            ,delivery.strcompanyname
@@ -479,41 +482,46 @@ RAISE INFO 'complete order';
             on m_monetaryrateclass.lngmonetaryratecode = m_order.lngmonetaryratecode
         left outer join m_paycondition
             on m_paycondition.lngpayconditioncode = m_order.lngpayconditioncode
-        left outer join m_group
-            on m_group.lnggroupcode = m_order.lnggroupcode
-        left outer join m_user
-            on m_user.lngusercode = m_order.lnginputusercode
         left outer join m_company delivery
             on delivery.lngcompanycode = m_order.lngdeliveryplacecode
         left outer join m_product
             on  m_product.lngrevisionno = 0
             and m_product.strrevisecode = '00'
+        left outer join m_group
+            on m_group.lnggroupcode = m_product.lnginchargegroupcode
+        left outer join m_user
+            on m_user.lngusercode = m_product.lngdevelopusercode
+        left outer join m_signature
+            on m_signature.lnggroupcode = m_product.lnginchargegroupcode
          where m_order.lngorderno = last_orderno
              and m_order.lngrevisionno = last_revision
              and m_product.strproductcode = product_code
         ;
         -- 発注書マスタ削除チェック
-        IF EXISTS( 
-            select * 
-            from m_order 
-            where strordercode = ( select strordercode from m_order where lngorderno = last_orderno and lngrevisionno = last_revision )
-                and lngrevisionno = -1 ) THEN
-            RAISE INFO 'data deleted % %', product_code, last_revision;
-            insert into m_purchaseorder
-            (
-                lngpurchaseorderno
-                ,lngrevisionno
-                ,strordercode
-            )
-            values
-            (
-                last_orderno
-               ,-1
-               ,(select strordercode from m_order where lngorderno = lngorderno and lngrevisionno = last_revision)
-            );
+        IF last_revision = 0 THEN
+            IF EXISTS( 
+                select * 
+                from m_order 
+                where strordercode = ( select strordercode from m_order where lngorderno = last_orderno and lngrevisionno = last_revision )
+                    and lngrevisionno = -1 ) THEN
+--                RAISE INFO 'data deleted % % %', last_orderno, product_code, last_revision;
+                insert into m_purchaseorder
+                (
+                    lngpurchaseorderno
+                    ,lngrevisionno
+                    ,strordercode
+                )
+                values
+                (
+                    po_count
+                   ,-1
+                   ,(select strordercode from m_order where lngorderno = last_orderno and lngrevisionno = last_revision)
+                );
+            END IF;
         END IF;
     END LOOP;
     close cur_po_key;
 RAISE INFO 'complete po';
+
 END $$
 

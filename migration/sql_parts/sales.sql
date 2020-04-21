@@ -159,6 +159,7 @@ declare
         left outer join m_tax
             on m_tax.dtmapplystartdate <= m_sales.dtmappropriationdate
             and m_tax.dtmapplyenddate >= m_sales.dtmappropriationdate
+			and m_tax.lngpriority = 1
         order by m_sales.lngsalesno;
         
     header RECORD;
@@ -301,6 +302,7 @@ RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailn
         close cur_detail;
     END LOOP;
     close cur_header;
+
 
     last_no = -1;
     -- 納品書データ作成

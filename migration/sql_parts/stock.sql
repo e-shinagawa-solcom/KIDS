@@ -264,7 +264,7 @@ begin
         LOOP
             FETCH cur_detail into detail;
             EXIT WHEN NOT FOUND;
-            RAISE INFO '% % % % % %' , stockno, detail.lngstockno, detail.lngstockdetailno, header.lngorderno, detail.lngorderno, detail.lngorderdetailno;
+--            RAISE INFO '% % % % % %' , stockno, detail.lngstockno, detail.lngstockdetailno, header.lngorderno, detail.lngorderno, detail.lngorderdetailno;
 
                 insert into t_stockdetail
                 (

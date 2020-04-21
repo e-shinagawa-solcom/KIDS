@@ -1,2 +1,2 @@
-select dblink_connect('con111','hostaddr=192.168.1.111 port=5432 dbname=kidscore2 user=kids password=kids');
+select dblink_connect('con111','hostaddr=127.0.0.1 port=5432 dbname=kidscore2_v2 user=kids password=kids');
 

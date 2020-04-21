@@ -42,6 +42,7 @@ payfnameomit character varying(255)
 ,lcstate numeric(2)
 ,bankcd character varying(8)
 ,shipym character(6)
+,unreflectedflag boolean
 ,primary key(
 pono
 ,polineno

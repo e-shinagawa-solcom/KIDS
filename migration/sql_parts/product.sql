@@ -61,8 +61,8 @@ SELECT * FROM dblink('con111',
     'strgoodscode,' ||
     'strgoodsname,' ||
     'lnginchargegroupcode,' ||
-    'lnginchargeusercode,' ||
-    'null AS lngdevelopusercode,' ||
+    '204 as lnginchargeusercode,' ||
+    'lnginchargeusercode AS lngdevelopusercode,' ||
     'lnginputusercode,' ||
     'lngcustomercompanycode,' ||
     'lngcustomergroupcode,' ||

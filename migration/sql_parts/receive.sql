@@ -239,6 +239,6 @@ BEGIN
         END IF;
     END LOOP;
     close cur_detail;
-    delete t_receivedetail where lngreceivedetailno < 0;
+    delete from t_receivedetail where lngreceivedetailno < 0;
 END $$
 

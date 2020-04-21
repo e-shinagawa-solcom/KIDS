@@ -1,3 +1,4 @@
+drop table t_aclcinfo_old;
 alter table  t_aclcinfo rename to t_aclcinfo_old;
 
 create table "public".t_aclcinfo (
