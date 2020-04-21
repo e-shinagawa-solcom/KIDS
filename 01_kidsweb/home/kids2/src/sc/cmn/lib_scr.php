@@ -1291,7 +1291,7 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     $v_lngsalesstatuscode = "4"; //8:売上状態コード
     $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //9:通貨単位コード
     $v_lngmonetaryratecode = $aryDetail[0]["lngmonetaryratecode"]; //10:通貨レートコード
-    $v_curconversionrate = $aryHeader["curconversionrate"]; //11:換算レート
+    $v_curconversionrate = nullIfEmpty($aryHeader["curconversionrate"]); //11:換算レート
     $v_strslipcode = withQuote($strSlipCode); //12:納品書NO
     $v_lnginvoiceno = "Null"; //13:請求書番号
     $v_curtotalprice = $aryHeader["curtotalprice"]; //14:合計金額
@@ -1345,7 +1345,7 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     $aryInsert[] = ") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
-
+echo $strQuery;
     // 登録実行
     if (!$lngResultID = $objDB->execute($strQuery)) {
         fncOutputError(9051, DEF_ERROR, "売上マスタ登録失敗。", true, "", $objDB);
