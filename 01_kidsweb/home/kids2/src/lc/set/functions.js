@@ -396,3 +396,28 @@ function reflection(){
 		console.log(e);
 	}
 }
+
+// ウィンドウを閉じる前のイベント
+$(window).on("beforeunload", function (e) {
+	// ログアウト処理
+	$.ajax({
+		url: '../lcModel/lcinfo_ajax.php',
+		type: 'POST',
+		data: {
+			'method': 'logoutState',
+			'lgno': phpData.lgno,
+			'sessionid': phpData["session_id"]
+		}
+	})
+		// Ajaxリクエストが成功した時発動
+		.done((data) => {
+			console.log(data);
+		})
+		// Ajaxリクエストが失敗した時発動
+		.fail((data) => {
+			console.log(data);
+		})
+		// Ajaxリクエストが成功・失敗どちらでも発動
+		.always((data) => {
+		});
+});

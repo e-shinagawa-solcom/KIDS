@@ -35,6 +35,7 @@
 	<script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
 	<link rel="stylesheet" href="/cmn/jquery/tablesorter/themes/blue/style.css">
 	<link rel="stylesheet" href="/lc/info/css/forms.css">
+	<link rel="stylesheet" href="/lc/cmn/css/base-contents.css">
 	<script type="text/javascript" language="javascript" src="/lc/info/functions.js"></script>
 	<script type="text/javascript" language="javascript" src="/lc/info/table.js"></script>
 	<script type="text/javascript" language="javascript" src="/lc/info/datepicker.js"></script>
@@ -55,6 +56,10 @@
 </head>
 
 <body class="background">
+	<!-- 各画面毎の表示内容 -->
+	<div id="masking_loader">
+		<div>読み込み中...</div>
+	</div>
 	<div class="form-box">
 		<div class="form-box__main">
 			<!-- フォームヘッダ -->
@@ -91,13 +96,13 @@
 									<input type="text" class="form-control txt-kids" id="payfCode" name="payfCode" aria-label="..." aria-describedby="basic-addon4">
 								</div>
 								<div class="col-6 p-0">
-									<input type="text" class="form-control txt-kids" id="payfName" name="payfName" aria-label="..." aria-describedby="basic-addon4" disabled>
+									<input type="text" class="form-control txt-kids" id="payfName" name="payfName" aria-label="..." aria-describedby="basic-addon4"
+									 disabled>
 								</div>
 								<div class="input-group-append pl-1 p-0">
 									<span>
 										<a href="#">
-											<img class="msw-button button modal1-button" invokeMSWName="msw-payf" src="/img/type01/msw/cmn/open_off_bt.gif"
-											 alt="msw">
+											<img class="msw-button button modal1-button" invokeMSWName="msw-payf" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
 										</a>
 									</span>
 								</div>
@@ -283,7 +288,7 @@
 				<button type="button" class="btn btn-light btn-xs btn-kids" id="reflectionBtn" onclick="reflectLcInfo()">反映</button>
 				<!-- 閉じる -->
 				<button type="button" class="btn btn-light btn-xs btn-kids" id="closeBtn" onclick="closeEvent()">閉じる</button>
-			
+
 			</div>
 		</div>
 	</div>

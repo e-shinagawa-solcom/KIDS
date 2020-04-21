@@ -44,6 +44,7 @@
 	<script src="/lc/cmn/search/js/cookie-functions.js" defer></script>
 	<!-- フォームボタン css -->
 	<link rel="stylesheet" href="/lc/cmn/css/form-buttons.css">
+	<link rel="stylesheet" href="/lc/cmn/css/base-contents.css">
 	<!-- フォーム ボタン -->
 	<script src="/lc/cmn/js/form-buttons.js" defer></script>
 	<!-- フォームバリデーション -->
@@ -77,6 +78,10 @@
 </head>
 
 <body class="background">
+	<!-- 各画面毎の表示内容 -->
+	<div id="masking_loader">
+		<div>読み込み中...</div>
+	</div>
 	<div class="form-box">
 		<div class="form-box__main">
 			<!-- フォームヘッダ -->
@@ -136,8 +141,13 @@
 									 disabled>
 								</div>
 								<div class="input-group-append pl-1 p-0">
-									<span><a href="#"><img class="msw-button button modal1-button" invokeMSWName="msw-payf" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
-								</div>								
+									<span>
+										<a href="#">
+											<img class="msw-button button modal1-button" invokeMSWName="msw-payf" src="/img/type01/msw/cmn/open_off_bt.gif"
+											 alt="msw">
+										</a>
+									</span>
+								</div>
 								<input type="hidden" name="payfName">
 							</div>
 							<div class="condition input-group">

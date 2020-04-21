@@ -82,7 +82,7 @@ function lcInit(json_obj) {
 //---------------------------------------------------
 function closeBtn() {
 	// location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
-	window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';	
+	window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
 	window.close();
 }
 
@@ -161,18 +161,62 @@ function printBtn() {
 	//出力処理
 	$("#masking_loader").css("display", "block");
 
+	$("#masking_loader").find('div').text("ダウンロード中...");
+
 	var bankname = $('select[name="bankcd"] option:selected').text();
 
-	var windowName = 'reportDownload';
-	url = '/lc/report/download.php?bankname=' + bankname;
-	window.open("", "_parent", "width=1011, height=670, scrollbars=yes, resizable=yes");
-	$('form').attr('action', url);
-	$('form').attr('method', 'post');
-	$('form').submit();
+	var formData = $('form').serialize();
 
+	// 非同期リクエストの設定
+	var url = '/lc/report/download.php?bankname=' + bankname;
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', url, true);
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	xhr.responseType = 'blob'; //blob型のレスポンスを受け付ける
 
-	//ローダー非表示
-	$("#masking_loader").css("display", "none");
+	var fileName = "";
+	// コールバック定義
+	xhr.onload = function (e) {
+		// 成功時の処理
+		if (this.status == 200) {
+			var blob = this.response;//レスポンス
+			var disposition = xhr.getResponseHeader('Content-Disposition');
+			if (disposition && disposition.indexOf('attachment') !== -1) {
+				var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+				var matches = filenameRegex.exec(disposition);
+				if (matches != null && matches[1]) { 
+					fileName = matches[1].replace(/['"]/g, '');
+				}
+			}
+			//IEとその他で処理の切り分け
+			if (navigator.appVersion.toString().indexOf('.NET') > 0) {
+				//IE 10+
+				window.navigator.msSaveBlob(blob, fileName);
+			} else {
+				//aタグの生成
+				var a = document.createElement("a");
+				//レスポンスからBlobオブジェクト＆URLの生成
+				var blobUrl = window.URL.createObjectURL(new Blob([blob], {
+					type: blob.type
+				}));
+				//上で生成したaタグをアペンド
+				document.body.appendChild(a);
+				a.style = "display: none";
+				//BlobオブジェクトURLをセット
+				a.href = blobUrl;
+				//ダウンロードさせるファイル名の生成
+				a.download = fileName;
+				//クリックイベント発火
+				a.click();
+
+				//ローダー非表示
+				$("#masking_loader").css("display", "none");
+			}
+		}
+	};
+
+	// 非同期リクエストの送信
+	xhr.send(formData);
 }
 
 
@@ -756,7 +800,7 @@ function convertNumberByClass(str, currencyclass) {
 
 
 (function () {
-    $(window).on("beforeunload", function(e) {
-        window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';	
-    });
+	$(window).on("beforeunload", function (e) {
+		window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+	});
 })();

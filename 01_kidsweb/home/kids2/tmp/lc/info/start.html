@@ -50,15 +50,12 @@
 	<script src="/cmn/js/base/base-header.js" defer></script>
 	<script src="/cmn/js/base/base-footer.js" defer></script>
 
-	<!-- ナビゲーション遷移先設定 -->
-	<link rel="stylesheet" href="/lc/cmn/navigate/css/navigate.css">
-	<script src="/lc/cmn/navigate/js/navigation.js" defer></script>
-
 	<!-- ボタンdisable設定 -->
 	<script src="/lc/cmn/navigate/js/switch-disable.js" defer></script>
 	<script src="/cmn/js/msgbox/jquery.msgBox.min.js" defer></script>
 	<script type="text/javascript" language="javascript" src="/lc/select-function/functions.js"></script>
 	<script type="text/javascript">
+		lcInit('_%jsondata%_');
 		initLcinfo('_%strSessionID%_');
 	</script>
 	<link rel="stylesheet" href="/lc/info/css/forms.css">

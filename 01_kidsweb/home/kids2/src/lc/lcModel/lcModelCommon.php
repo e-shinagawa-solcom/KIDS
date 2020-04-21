@@ -440,7 +440,7 @@ class lcModel
 					lgusrname in(select lgusrname from m_acloginstate where lgno = $3)
 		    ";
         //バインドの設定
-        $bind = array(fncGetDateString(), fncGetTimemString(), $param["lgno"]);
+        $bind = array(date('Ymd', strtotime('now')), date('H:i:s', strtotime('now')), $param["lgno"]);
 
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);

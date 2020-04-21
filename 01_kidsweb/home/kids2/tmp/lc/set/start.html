@@ -31,6 +31,15 @@
 	<!-- ??????? & ???????????? -->
 	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/css/styles.css">
 
+	<!-- ??/?????/?????/????? CSS -->
+	<!-- <link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<link rel="stylesheet" href="/cmn/css/base/base-header.css">
+	<link rel="stylesheet" href="/cmn/css/base/base-contents.css">
+	<link rel="stylesheet" href="/cmn/css/base/base-footer.css"> -->
+
+	<!-- ????????????? CSS -->
+	<!-- <link rel="stylesheet" href="/lc/cmn/button/css/button-behaivior.css"> -->
+
 	<!-- ??????? -->
 	<link rel="stylesheet" href="/cmn/css/bootstrap-4.1.1/bootstrap.min.css" />
 	<link rel="stylesheet" href="/cmn/css/bootstrap-4.1.1/bs-button-style.css" />
@@ -40,19 +49,16 @@
 	<!-- ?????/????? ????? -->
 	<script src="/cmn/js/base/base-header.js" defer></script>
 	<script src="/cmn/js/base/base-footer.js" defer></script>
-
-	<!-- ???????????? -->
-	<link rel="stylesheet" href="/lc/cmn/navigate/css/navigate.css">
-	<script src="/lc/cmn/navigate/js/navigation.js" defer></script>
-
-	<!-- ???disable?? -->
-	<script src="/lc/cmn/navigate/js/switch-disable.js" defer></script>
 	<script src="/cmn/js/msgbox/jquery.msgBox.min.js" defer></script>
 	<script type="text/javascript" language="javascript" src="/lc/select-function/functions.js"></script>
+	<script type="text/javascript">
+		lcInit('_%jsondata%_');
+		document.location.href='/lc/set/index.php?strSessionID=_%strSessionID%_';
+	</script>
 	<link rel="stylesheet" href="/lc/info/css/forms.css">
 	<script type="text/javascript" language="javascript" src="/lc/info/datepicker.js"></script>
 	<script type="text/javascript" language="javascript" src="/cmn/js/functions.js"></script>
-	<!-- msw設定 -->
+	<!-- msw???? -->
 	<link rel="stylesheet" href="/lc/info/css/msw.css">
 	<script src="/lc/cmn/msw/cmn/js/msw.js" defer></script>
 	<script src="/cmn/querydata.js" defer></script>
@@ -63,10 +69,9 @@
 			width: 20px;
 		}
 	</style>
-	<!-- msw設定 end -->
 </head>
-
 <body>
+	
 </body>
-
 </html>
+<!-- ????????? -->

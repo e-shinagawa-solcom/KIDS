@@ -82,19 +82,6 @@ $aryData["session_id"] = $aryData["strSessionID"];
 //HTMLへの引き渡しデータ
 $aryData["session_id"] = $aryData["strSessionID"];
 
-// echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/set/start.tmpl", $aryData ,$objAuth );
-
-// テンプレート読み込み
-$objTemplate = new clsTemplate();
-$objTemplate->getTemplate("lc/set/start.html");
-
-// テンプレート生成
-$objTemplate->replace($aryData);
-$objTemplate->complete();
-
-// HTML出力
-echo $objTemplate->strTemplate;
-
 //jsへの引き渡しデータ
 $lcInfoDate = array(
     "lcgetdate" => $lcgetdate->lcgetdate,
@@ -107,6 +94,22 @@ $arr = array(
     "logined_flg" => $logined_flg,
     "login_user_auth" => $login_user_auth,
 );
+$aryData["jsondata"] = json_encode($arr);
+// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("lc/info/start.html");
+
+// テンプレート読み込み
+$objTemplate = new clsTemplate();
+$objTemplate->getTemplate("lc/set/start.html");
+
+// テンプレート生成
+$objTemplate->replace($aryData);
+$objTemplate->complete();
+
+// HTML出力
+echo $objTemplate->strTemplate;
+
 echo "<script>
 	    $(function(){lcInit('" . json_encode($arr) . "');});
 	    document.location.href='/lc/set/index.php?strSessionID=" . $aryData["strSessionID"] . "';</script>";

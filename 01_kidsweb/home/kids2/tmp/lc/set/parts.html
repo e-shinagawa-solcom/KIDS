@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="/cmn/css/form/base.css">
     <link rel="stylesheet" href="/cmn/css/msgbox/jquery.msgBox.css" />
     <!-- ボタンdisable設定 -->
-    <script src="/lc/cmn/navigate/js/switch-disable.js" defer></script>
     <script src="/cmn/js/msgbox/jquery.msgBox.min.js" defer></script>
     <script src="/lc/cmn/form/js/tab-function.js" defer></script>
     <script src="/lc/cmn/form/js/util-selectbox.js" defer></script>
@@ -45,6 +44,7 @@
     <script src="/lc/cmn/js/datepicker.js" defer></script>
     <!-- フォームボタン css -->
     <link rel="stylesheet" href="/lc/cmn/css/form-buttons.css">
+	<link rel="stylesheet" href="/lc/cmn/css/base-contents.css">
     <!-- フォーム ボタン -->
     <script src="/lc/cmn/js/form-buttons.js" defer></script>
     <!-- フォームバリデーション -->
@@ -60,10 +60,14 @@
     <!-- 個別スクリプト -->
     <link rel="stylesheet" href="css/forms.css">
     <script type="text/javascript" language="javascript" src="/lc/set/functions.js"></script>
-	<script src="/cmn/js/setinputmode.js" defer></script>
+    <script src="/cmn/js/setinputmode.js" defer></script>
 </head>
 
 <body class="background">
+    <!-- 各画面毎の表示内容 -->
+    <div id="masking_loader">
+        <div>読み込み中...</div>
+    </div>
     <div class="form-box-warp">
         <form name="" action="" method="get">
             <div class="form-box--notabs-for-bank">

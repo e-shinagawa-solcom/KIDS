@@ -44,11 +44,12 @@ $lcModel = new lcModel();
 //ログイン状況判定処理
 $logined_flg = false;
 $login_state = $lcModel->getLoginState($user_id);
+// 1: 同一IDでログインしている
 if ($login_state["login_state"] == "1") {
     //ログアウト処理を行う
     $lcModel->loginStateLogout($login_state["login_obj"]);
 } else if ($login_state["login_state"] == "2") {
-    //同一権限者がログインしている
+    // 2:同一権限者がログインしている
     //lginymd < 現在日付の場合
     $ymd = date('Ymd', strtotime($lcInfoDate["lcgetdate"]));
     if ($ymd < time()) {
@@ -63,6 +64,9 @@ $login_max_num = $lcModel->getMaxLoginStateNum();
 //ログイン状況の登録
 $lcModel->setLcLoginState($login_max_num, $objAuth->UserFullName);
 
+//ユーザー権限の取得
+$login_user_auth = $lcModel->getUserAuth($user_id);
+
 //LC情報取得日の取得
 $lcgetdate = $lcModel->getLcInfoDate();
 // ここまでselect-function/index.phpのログイン状況操作と同等の処理
@@ -70,8 +74,19 @@ $lcgetdate = $lcModel->getLcInfoDate();
 //HTMLへの引き渡しデータ
 $aryData["session_id"] = $aryData["strSessionID"];
 
-// echo fncGetReplacedHtmlWithBase("lc/base_lc.html", "lc/info/start.tmpl", $aryData ,$objAuth );
-// echo fncGetReplacedHtml( "lc/info/start.html", $aryData, $objAuth );
+//jsへの引き渡しデータ
+$lcInfoDate = array(
+    "lcgetdate" => $lcgetdate->lcgetdate,
+    "lgusrname" => $lcgetdate->lgusrname,
+);
+$arr = array(
+    "login_state" => $login_state,
+    "session_id" => $aryData["strSessionID"],
+    "lcInfoDate" => $lcInfoDate,
+    "logined_flg" => $logined_flg,
+    "login_user_auth" => $login_user_auth,
+);
+$aryData["jsondata"] = json_encode($arr);
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("lc/info/start.html");
@@ -82,4 +97,5 @@ $objTemplate->complete();
 
 // HTML出力
 echo $objTemplate->strTemplate;
+
 return true;
