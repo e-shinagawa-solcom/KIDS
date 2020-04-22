@@ -234,7 +234,7 @@ function fncSetReportFour($objDB, $spreadsheet, $sheetname, $currencyClass, $obj
     $sheet->setCellValue('E'. ($startRow + 3), date("Y年m月", strtotime($objectYm . "-3 month")));
     $sheet->setCellValue('F'. ($startRow + 3), date("Y年m月", strtotime($objectYm . "-2 month")));
     $sheet->setCellValue('G'. ($startRow + 3), date("Y年m月", strtotime($objectYm . "-1 month")));
-    $sheet->setCellValue('H'. ($startRow + 3), date("Y年m月", strtotime($objectYm . "0 month")));
+    $sheet->setCellValue('H'. ($startRow + 3), date("Y年m月", strtotime($objectYm)));
     $sheet->setCellValue('I'. ($startRow + 3), date("Y年m月", strtotime($objectYm . "+1 month")));
     $sheet->setCellValue('J'. ($startRow + 3), date("Y年m月", strtotime($objectYm . "+2 month")));
     $sheet->setCellValue('K'. ($startRow + 3), date("Y年m月", strtotime($objectYm . "+3 month")));
@@ -445,7 +445,7 @@ function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     $payfInfo = fncGetPayfInfoByPayfcd($objDB, $data["payfCode"]);
 
     if ($payfInfo != null) {
-        $sheet->setCellValue('B'. ($startRow + 2), "To : BENE NAME");
+        $sheet->setCellValue('B'. ($startRow + 2), "To : ".$data["payfName"]);
         // $sheet->setCellValue('H'. ($startRow + 42), $payfInfo->payfsendfax);
     }
     

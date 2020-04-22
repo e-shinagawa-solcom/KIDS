@@ -75,13 +75,13 @@ if ($data["setChk"] == "1") {
         $pageNo_4_openym = 1;
         $pageNo_4_shipym = 1;
 
-        $clonedWorksheet = clone $spreadsheet->getSheetByName("1");
-        $clonedWorksheet->setTitle("1_船積月");
-        $spreadsheet->addSheet($clonedWorksheet);
+        // $clonedWorksheet = clone $spreadsheet->getSheetByName("1");
+        // $clonedWorksheet->setTitle("1_船積月");
+        // $spreadsheet->addSheet($clonedWorksheet);
 
-        $clonedWorksheet = clone $spreadsheet->getSheetByName("4");
-        $clonedWorksheet->setTitle("4_船積月");
-        $spreadsheet->addSheet($clonedWorksheet);
+        // $clonedWorksheet = clone $spreadsheet->getSheetByName("4");
+        // $clonedWorksheet->setTitle("4_船積月");
+        // $spreadsheet->addSheet($clonedWorksheet);
         foreach ($currencyClassLst as $currencyClassObj) {
             $currencyClass = $currencyClassObj["currencyclass"];
 
@@ -89,7 +89,7 @@ if ($data["setChk"] == "1") {
             $pageNo_1_openym = reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $objectYm, 1, $pageNo_1_openym);
 
             // LCOpen情報(Beneficiary・BK別合計)ー船積月の出力
-            $pageNo_1_shipym = reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $objectYm, 2, $pageNo_1_shipym);
+            // $pageNo_1_shipym = reportOneOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $objectYm, 2, $pageNo_1_shipym);
 
             // L/C Open情報(LC別合計）の出力
             $pageNo_2 = reportTwoOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $pageNo_2);
@@ -101,7 +101,7 @@ if ($data["setChk"] == "1") {
             $pageNo_4_openym = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 3, $pageNo_4_openym);
 
             // L/C Open情報（船積月・Beneficiary別L/C発行予定集計表）の出力
-            $pageNo_4_shipym = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 4, $pageNo_4_shipym);
+            // $pageNo_4_shipym = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 4, $pageNo_4_shipym);
         }
     }
 
@@ -359,7 +359,7 @@ function reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $type
     $dates["date4"] = date("Ym", strtotime($objectYm . "-3 month"));
     $dates["date5"] = date("Ym", strtotime($objectYm . "-2 month"));
     $dates["date6"] = date("Ym", strtotime($objectYm . "-1 month"));
-    $dates["date7"] = date("Ym", strtotime($objectYm . "0 month"));
+    $dates["date7"] = date("Ym", strtotime($objectYm));
     $dates["date8"] = date("Ym", strtotime($objectYm . "+1 month"));
     $dates["date9"] = date("Ym", strtotime($objectYm . "+2 month"));
     $dates["date10"] = date("Ym", strtotime($objectYm . "+3 month"));
@@ -374,7 +374,6 @@ function reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, $type
     } else {
         $totalPriceByPayfDateLst = fncGetSumOfMoneypriceByPayfAndShipDate($objDB, $params, $type);
     }
-
     // 支払先別の合計金額を取得する
     $totalPriceByPayfLst = fncGetSumOfMoneypriceByPayf($objDB, $params, $type);
 

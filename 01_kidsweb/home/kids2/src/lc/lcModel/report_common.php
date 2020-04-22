@@ -71,8 +71,8 @@ function fncGetSumOfMoneypriceByPayfAndOpenDate($objDB, $data)
             and currencyclass = $3
             and payfnameomit is not null
             and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
-            group by payfcd, opendate, bankcd, payfnameformal
-            order by payfcd, opendate, bankcd, payfnameformal
+            group by payfcd, opendate, payfnameformal
+            order by payfcd, opendate, payfnameformal
             ";
 
     // クエリへの設定値の定義
