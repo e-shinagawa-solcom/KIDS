@@ -165,13 +165,14 @@ class updateInsertData extends estimateInsertData
             if (is_null($rowData)) {
                 continue;
             }
-            // 見積原価明細番号のインクリメント
+            // 見積原価明細番号のインクリメントs
             ++$estimateDetailNo;
 
             $detailRevisionNo = $rowData['detailRevisionNo'];
             if ($rowData['areaCode'] == DEF_AREA_OTHER_COST_ORDER &&
-                $rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST &&
-                $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE && $rowData['orderStatusCode'] == 0) {
+                (($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE) ||
+                ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_EXPENSE && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_TARIFF))
+                && $rowData['orderStatusCode'] == 0) {
                 $detailRevisionNo += 1;
             }
             // 見積原価履歴テーブルの登録処理
@@ -808,6 +809,7 @@ class updateInsertData extends estimateInsertData
         ) {
             if ($rowData['orderStatusCode'] == 0) {
                 $updateFlag = false;
+                $detailRevisionNo = 0;
             }
 
         }
@@ -920,12 +922,14 @@ class updateInsertData extends estimateInsertData
         $revisionNo = $this->preOrderRevisionNo + 1; // 登録に使用する発注のリビジョン番号
 
         $previousDetailNo = $rowData['previousDetailNo']; // 以前の見積原価明細番号
+        $detailRevisionNo = $rowData['detailRevisionNo'] + 1;
         if ($rowData['areaCode'] == DEF_AREA_OTHER_COST_ORDER &&
             $rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST &&
             $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE
         ) {
             if ($rowData['orderStatusCode'] == 0) {
                 $updateFlag = false;
+                $detailRevisionNo = 0;
             }
 
         }
@@ -974,7 +978,7 @@ class updateInsertData extends estimateInsertData
             $timeString = "'" . fncGetDateTimeString() . "'";
             $data = array(
                 'lngorderno' => $orderNo,
-                'lngrevisionno' => $rowData['detailRevisionNo'] + 1,
+                'lngrevisionno' => $detailRevisionNo,
                 'strordercode' => "'" . $this->orderCode . "'",
                 'dtmappropriationdate' => $timeString,
                 'lngcustomercompanycode' => $this->companyCodeList[$rowData['customerCompany']],
