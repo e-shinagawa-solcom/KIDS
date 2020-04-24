@@ -242,7 +242,7 @@ $aryNewResult["strMode"] = "delete";
 
 // テンプレート読み込み
 $objTemplate = new clsTemplate();
-$objTemplate->getTemplate( "sc/result2/parts2.tmpl" );
+$objTemplate->getTemplate( "sc/result2/parts4.tmpl" );
 
 // テンプレート生成
 $objTemplate->replace( $aryNewResult );

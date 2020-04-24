@@ -132,11 +132,13 @@ $index = 0;
 // 検索結果件数分走査
 foreach ($records as $i => $record) {
     // 背景色設定
-    if ($record["strgroupdisplaycolor"]) {
-        $bgcolor = $record["strgroupdisplaycolor"];
-    } else {
-        $bgcolor = "#FFFFFF";
-    }
+    // if ($record["strgroupdisplaycolor"]) {
+    //     $bgcolor = $record["strgroupdisplaycolor"];
+    // } else {
+    //     $bgcolor = "#FFFFFF";
+    // }
+
+    $bgcolor = "#FEEF8B";
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");

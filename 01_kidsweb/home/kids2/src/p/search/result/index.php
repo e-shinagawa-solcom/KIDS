@@ -111,6 +111,7 @@ if (empty($isDisplay)) {
 
 // 検索項目から一致する最新の仕入データを取得するSQL文の作成関数
 $strQuery = fncGetMaxProductSQL($displayColumns, $searchColumns, $from, $to, $searchValue, $optionColumns);
+
 // 値をとる =====================================
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -327,13 +328,17 @@ foreach ($records as $i => $record) {
     }
     $objDB->freeResult($lngResultID);
 
-    // 背景色設定
-    if ($record["strgroupdisplaycolor"]) {
-        $bgcolor = $record["strgroupdisplaycolor"];
+    if ($deletedFlag)
+    {
+        $bgcolor = "#B3E0FF";
     } else {
-        $bgcolor = "#FFFFFF";
+        // 背景色設定
+        if ($record["strgroupdisplaycolor"]) {
+            $bgcolor = $record["strgroupdisplaycolor"];
+        } else {
+            $bgcolor = "#FFFFFF";
+        }
     }
-
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
     $trBody->setAttribute("id", $record["strproductcode"]. "_" . $record["strrevisecode"] );

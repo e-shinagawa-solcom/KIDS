@@ -1345,7 +1345,7 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     $aryInsert[] = ") ";
     $strQuery = "";
     $strQuery .= implode("\n", $aryInsert);
-echo $strQuery;
+// echo $strQuery;
     // 登録実行
     if (!$lngResultID = $objDB->execute($strQuery)) {
         fncOutputError(9051, DEF_ERROR, "売上マスタ登録失敗。", true, "", $objDB);

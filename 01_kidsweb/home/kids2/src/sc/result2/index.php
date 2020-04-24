@@ -100,8 +100,14 @@ if (!$bytSearchFlag) {
 }
 reset($aryData);
 
+// 管理者モードチェック
+$isadmin = array_key_exists("admin", $optionColumns);
+
+$aryData["Admin"] = $isadmin;
+
 // 検索SQLを実行し検索（ヒット）件数を取得する
 $strQuery = fncGetSearchSlipSQL($arySearchColumn, $aryData, $objDB, "", 0, $aryData["strSessionID"]);
+
 fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
@@ -183,9 +189,6 @@ $tbody = $table->getElementsByTagName("tbody")->item(0);
 // 各種ボタン表示チェック/権限チェック
 // -------------------------------------------------------
 $aryAuthority = fncGetAryAuthority('slip', $objAuth);
-
-// 管理者モードチェック
-$isadmin = array_key_exists("admin", $optionColumns);
 
 // テーブルヘッダ作成
 // -------------------------------------------------------

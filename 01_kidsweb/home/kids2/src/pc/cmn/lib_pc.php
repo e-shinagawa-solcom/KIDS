@@ -143,7 +143,7 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
 function fncGetStockDetailNoToInfoSQL($lngStockNo, $lngRevisionNo)
 {
     // SQL文の作成
-    $aryQuery[] = "SELECT distinct on (sd.lngSortKey) sd.lngSortKey as lngRecordNo, ";
+    $aryQuery[] = "SELECT sd.lngSortKey as lngRecordNo, ";
     $aryQuery[] = "sd.lngStockNo as lngStockNo, sd.lngRevisionNo as lngRevisionNo";
 
     // 発注番号・発注明細番号
