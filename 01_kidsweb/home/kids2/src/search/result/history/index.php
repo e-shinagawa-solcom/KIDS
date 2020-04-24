@@ -105,7 +105,7 @@ if ($type == 'purchaseorder') { // 発注書
 $index = 0;
 // 検索結果件数分走査
 foreach ($records as $i => $record) {
-    if ($type == 'slip') {
+    if ($type == 'slip' || $type == 'so' || $type == 'po') {
         $strcode = $record["lngpkno"];
     } else {
         $strcode = $record["strcode"];
@@ -115,6 +115,9 @@ foreach ($records as $i => $record) {
     // 背景色設定
     $bgcolor = fncSetBgColor($type, $strcode, false, $objDB);
 
+    if ($type == 'so' || $type == 'po') {
+        $strcode = $record["strcode"];
+    }
     $detailData = array();
     $rowspan == 0;
 

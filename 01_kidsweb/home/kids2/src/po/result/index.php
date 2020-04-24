@@ -198,7 +198,7 @@ $thead->appendChild($trHead);
 foreach ($records as $i => $record) {
     $index = $index + 1;
 
-    $bgcolor = fncSetBgColor('po', $record["strordercode"], true, $objDB);
+    $bgcolor = fncSetBgColor('po', $record["lngorderno"], true, $objDB);
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");

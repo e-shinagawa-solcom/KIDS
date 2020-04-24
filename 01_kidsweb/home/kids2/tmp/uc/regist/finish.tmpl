@@ -43,7 +43,7 @@
 
 <!-- 閉じるボタン -->
 
-<span id="CloseBt" onclick="parent.close();window.returnValue=Array( '_%strAction%_' , '_%strSessionID%_' );return false;"></span>
+<span id="CloseBt" onclick="window.parent.opener.location.reload();parent.close();window.returnValue=Array( '_%strAction%_' , '_%strSessionID%_' );return false;"></span>
 
 </p>
 

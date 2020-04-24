@@ -94,6 +94,9 @@ $(document).ready(function () {
       }
       r.trigger('sorton', [[[(sortkey - 1), sortval]]]);
     }
+    
+    // $("#result").trigger("update");
+    // $(".tablesorter-child").trigger("update");
 
     // コピーボタンのイベント
     if ($(this)[0].cellIndex == 0) {

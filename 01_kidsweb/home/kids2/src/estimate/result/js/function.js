@@ -157,7 +157,7 @@ $(function () {
 		var rownum = $(this).attr('rownum');
 		var sessionID = $('input[name="strSessionID"]').val();
 		if ($('tr[id^="' + lngEstimateNo + '_"]').length) {
-            $(this).attr('src','/img/type01/cmn/seg/history_open_off.gif');
+			$(this).attr('src', '/img/type01/cmn/seg/history_open_off.gif');
 			$('tr[id^="' + lngEstimateNo + '_"]').remove();
 		} else {
 			// リクエスト送信
@@ -176,13 +176,22 @@ $(function () {
 					console.log(response);
 					$('tr[id="' + lngEstimateNo + '"]').after(response);
 
-                    historyTrClickSelectRow();
+					historyTrClickSelectRow();
 				})
 				.fail(function (response) {
 					console.log(response);
 					alert("fail");
 				})
-            $(this).attr('src','/img/type01/cmn/seg/history_close_off.gif');
+			$(this).attr('src', '/img/type01/cmn/seg/history_close_off.gif');
 		}
+	});
+
+
+	// ヘッダーをクリックする時、明細行を削除する
+	$('th').on('click', function () {
+		$('tr.estimate_search_result.history').prev().find('img.history.button').attr('src', '/img/type01/cmn/seg/history_open_off.gif');
+		$('tr.estimate_search_result.history').remove();
+		$("#result").trigger("update");
+		$(".tablesorter-child").trigger("update");
 	});
 });

@@ -228,6 +228,12 @@ function fncGetLcInfoData($objDB, $data)
                 $sql .= ($condcount == 1) ? " where " : " and ";
                 $sql .= " payfcd = '" . $data["payfcd"] . "'";
             }
+            if ($condcount == 0) {               
+                $condcount += 1;
+                $fromdate = date("Ym",strtotime("-12 month"));
+                $todate = date('Ym', strtotime('now'));
+                $sql .= " where opendate between '" . $fromdate . "' and '" . $todate . "'";
+            }
             if ($data["getDataModeFlg"] == 1) {                
                 $condcount += 1;
                 $sql .= ($condcount == 1) ? " where " : " and ";

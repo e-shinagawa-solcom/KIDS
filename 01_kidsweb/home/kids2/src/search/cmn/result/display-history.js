@@ -7,6 +7,7 @@
     });
     // 履歴ボタンのイベント
     $('img.history.button').on('click', function () {
+        var row = $(this).parent().parent().parent();
         var id = $(this).attr('id');
         var lngRevisionNo = $(this).attr('lngrevisionno');
         var type = $(this).attr('type');
@@ -15,25 +16,6 @@
             var displayColumns = $('input[name="displayColumns"]').val().split(',');
         }
         var removeFlag = false;
-        // if (type == 'inv') {
-        //     var strCode = id;
-        //     var maxdetailno = $(this).attr('maxdetailno');
-        //     var row = $('tr[id="' + id + '"]');
-        //     var detailnos = row.attr('detailnos').split(",");
-        //     $('tr[id^="' + id + '_"]')
-        //         .each(function () {
-        //             var isMaxData = false;
-        //             for (var i = 0; i < detailnos.length; i++) {
-        //                 if ($(this).attr('id') == id || $(this).attr('id') == (id + "_" + lngRevisionNo + "_" + detailnos[i])) {
-        //                     isMaxData = true;
-        //                 }
-        //             }
-        //             if (!isMaxData) {
-        //                 $(this).remove();
-        //                 removeFlag = true;
-        //             }
-        //         });
-        // } else 
         if (type == 'so' || type == 'po' || type == 'pc' || type == 'purchaseorder' || type == 'slip' || type == 'sc' || type == 'inv') {
             if ($('tr[id^="' + id + '_"]').length) {
                 $('tr[id^="' + id + '_"]').remove();
@@ -65,18 +47,13 @@
                 // async: true,s
             })
                 .done(function (response) {
-                    console.log(response);
-                    // if (type == 'so' || type == 'po' || type == 'purchaseorder') {
-                    // }
-
-
-                    var row = $('tr[id="' + id + '"]');
+                    console.log(response);                
                     row.after(response);
 
                     historyTrClickSelectRow();
 
-                    $("#result").trigger("update");
-                    $(".tablesorter-child").trigger("update");
+                    // $("#result").trigger("update");
+                    // $(".tablesorter-child").trigger("update");
 
                     $(".tablesorter-child thead").css('display', '');
                     $(".tablesorter-child").css('table-layout', '');
@@ -132,7 +109,10 @@
         }
         // ヘッダーをクリックする時、明細行を削除する
         $('th').on('click', function () {
-            // $('tr.detail').remove();
+            $('tr.detail.history').prev().find('img.history.button').attr('src', '/img/type01/cmn/seg/history_open_off.gif');
+            $('tr.detail.history').remove();
+            $("#result").trigger("update");
+            $(".tablesorter-child").trigger("update");
         });
         if (!removeFlag) {
             $(this).attr('src', '/img/type01/cmn/seg/history_close_off.gif');
@@ -173,7 +153,6 @@
                 var index1 = $(this)[0].cellIndex;
                 var index2 = $(".tablesorter-child").parent()[0].cellIndex;
                 var index3 = index1 + index2 + 1;
-                console.log(index3);
                 if (endindex == 0) {
                     endindex = index3;
                 }

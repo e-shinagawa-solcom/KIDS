@@ -143,7 +143,7 @@ foreach ($records as $i => $record) {
     $trBody->setAttribute("id", $record["strproductcode"]. "_" . $record["strrevisecode"] .  "_" . sprintf("%02d",$record["lngrevisionno"]) );
     
     $trBody->setAttribute("before-click-bgcolor", $bgcolor);
-    $trBody->setAttribute("class", "history");
+    $trBody->setAttribute("class", "p_result history");
 
     $bgcolor = "background-color: " .$bgcolor . ";";
     // 項番
@@ -200,7 +200,7 @@ foreach ($records as $i => $record) {
                     break;
                 // 企画進行状況
                 case "lnggoodsplanprogresscode":
-                    $td = $doc->createElement("td", $record["strgoodsplanprogressname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strgoodsplanprogressname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -225,13 +225,13 @@ foreach ($records as $i => $record) {
                     break;
                 // 製品名
                 case "strproductname":
-                    $td = $doc->createElement("td", $record["strproductname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strproductname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 製品名（英語）
                 case "strproductenglishname":
-                    $td = $doc->createElement("td", $record["strproductenglishname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strproductenglishname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -242,7 +242,7 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -253,7 +253,7 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -264,7 +264,7 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -275,13 +275,13 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // カテゴリ
                 case "lngcategorycode":
-                    $td = $doc->createElement("td", $record["strcategoryname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strcategoryname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -293,7 +293,7 @@ foreach ($records as $i => $record) {
                     break;
                 // 商品名称
                 case "strgoodsname":
-                    $td = $doc->createElement("td", $record["strgoodsname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strgoodsname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -304,7 +304,7 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -315,25 +315,25 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 荷姿単位
                 case "lngpackingunitcode":
-                    $td = $doc->createElement("td", $record["strpackingunitname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strpackingunitname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 製品単位
                 case "lngproductunitcode":
-                    $td = $doc->createElement("td", $record["strproductunitname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strproductunitname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 商品形態
                 case "lngproductformcode":
-                    $td = $doc->createElement("td", $record["strproductformname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strproductformname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -368,7 +368,7 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -379,7 +379,7 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -390,7 +390,7 @@ foreach ($records as $i => $record) {
                     } else {
                         $textContent = "";
                     }
-                    $td = $doc->createElement("td", $textContent);
+                    $td = $doc->createElement("td", toUTF8($textContent));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -424,7 +424,7 @@ foreach ($records as $i => $record) {
                     break;
                 // 対象年齢
                 case "lngtargetagecode":
-                    $td = $doc->createElement("td", $record["strtargetagename"]);
+                    $td = $doc->createElement("td", toUTF8($record["strtargetagename"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
@@ -436,49 +436,49 @@ foreach ($records as $i => $record) {
                     break;
                 // 証紙
                 case "lngcertificateclasscode":
-                    $td = $doc->createElement("td", $record["strcertificateclassname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strcertificateclassname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 版権元
                 case "lngcopyrightcode":
-                    $td = $doc->createElement("td", $record["strcopyrightname"]);
+                    $td = $doc->createElement("td", toUTF8($record["strcopyrightname"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 版権元備考
                 case "strcopyrightnote":
-                    $td = $doc->createElement("td", $record["strcopyrightnote"]);
+                    $td = $doc->createElement("td", toUTF8($record["strcopyrightnote"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 版権表示（刻印）
                 case "strcopyrightdisplaystamp":
-                    $td = $doc->createElement("td", $record["strcopyrightdisplaystamp"]);
+                    $td = $doc->createElement("td", toUTF8($record["strcopyrightdisplaystamp"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 版権表示（印刷物）
                 case "strcopyrightdisplayprint":
-                    $td = $doc->createElement("td", $record["strcopyrightdisplayprint"]);
+                    $td = $doc->createElement("td", toUTF8($record["strcopyrightdisplayprint"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 製品構成
                 case "strproductcomposition":
-                    $td = $doc->createElement("td", "全" . $record["strproductcomposition"] . "種アッセンブリ");
+                    $td = $doc->createElement("td", toUTF8("全" . $record["strproductcomposition"] . "種アッセンブリ"));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // アッセンブリ内容
                 case "strassemblycontents":
-                    $td = $doc->createElement("td", $record["strassemblycontents"]);
+                    $td = $doc->createElement("td", toUTF8($record["strassemblycontents"]));
                     $td->setAttribute("style", $bgcolor);
                     $trBody->appendChild($td);
                     break;
                 // 仕様詳細
                 case "strspecificationdetails":
-                    $td = $doc->createElement("td", $record["strspecificationdetails"]);
+                    $td = $doc->createElement("td", toUTF8($record["strspecificationdetails"]));
                     $td->setAttribute("style", $bgcolor . "white-space: pre; ");
                     // $td->setAttribute("style", "white-space: pre; ");
                     $trBody->appendChild($td);

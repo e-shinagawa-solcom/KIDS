@@ -3,8 +3,11 @@
 <head>
 <title>K.I.D.S.</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-
 <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+<script src="/cmn/jquery/tablesorter/jquery.tablesorter.js"></script>
+<script src="/cmn/jquery/tablesorter/jquery.tablesorter.widgets.js"></script>
 
 <script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/cmn/functions.js" charset="UTF-8"></script>
@@ -16,6 +19,7 @@
 <script src="/estimate/result/js/function.js"></script>
 <script src="/p/search/result/js/clipboard.js" defer=""></script>
 <script src="/search/cmn/result/trclicked.js"></script>
+<script src="/search/cmn/result/tablesorter.js"></script>
 
 </head>
 
@@ -23,18 +27,16 @@
 <input type="hidden" value="" name="copyhidden">
 
 <span id="COPYAREA1">
-<table class="estimate_search" id="result">
+<table class="estimate_search" id="result" class="tablesorter">
+<thead>
 <tr>
-<th valign="top" valign="center"><img src="/img/type01/cmn/seg/copy_off_bt.gif" class="copy button"></td>
+<th valign="middle" valign="center"><img src="/img/type01/cmn/seg/copy_off_bt.gif" class="copy button"></td>
 	_%HEADER%_
 </tr>
-<!--
-<tr id="SegTitle">
-  _%2row%_
-</tr>
--->
-<!-- <tr id="DummyTR"><th colspan="_%lngColumnNum%_">&nbsp;</th></tr> -->
+</thead>
+<tbody>
 _%tabledata%_
+</tbody>
 </table>
 </span>
 

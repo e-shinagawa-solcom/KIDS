@@ -48,16 +48,15 @@
                     console.log(response);
                     var row = $('tr[id="' + strProductCode + '_' + strReviseCode + '"]');
                     row.after(response);
-
                     historyTrClickSelectRow();
-                    
+
                     $('a').on('keydown', function (e) {
                         e.stopPropagation();
                         if (e.which == 13) {
                             $(this).find('img').click();
                         }
                     });
-                    
+
                     // 詳細ボタンのイベント
                     $('img.detail.button').on('click', function () {
                         url = '/p/detail/index.php';
@@ -76,5 +75,14 @@
             $(this).attr('src', '/img/type01/cmn/seg/p_history_close_off.gif');
 
         }
+    });
+
+    // ヘッダーをクリックする時、明細行を削除する
+    $('th').on('click', function () {
+        console.log($('tr.p_result.history'));
+        $('tr.p_result.history').prev().find('img.history.button').attr('src', '/img/type01/cmn/seg/p_history_open_off.gif');
+        $('tr.p_result.history').remove();
+        $("#result").trigger("update");
+        $(".tablesorter-child").trigger("update");
     });
 })();

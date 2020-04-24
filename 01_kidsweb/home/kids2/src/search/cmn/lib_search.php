@@ -2114,10 +2114,10 @@ function fncSetBgColor($type, $strCode, $isMaxData, $objDB)
     $columnvalue = $strCode;
     if ($type == 'po') { // 発注
         $tablename = 'm_order';
-        $columnname = 'strordercode';
+        $columnname = 'lngorderno';
     } else if ($type == 'so') { // 受注
         $tablename = 'm_receive';
-        $columnname = 'strreceivecode';
+        $columnname = 'lngreceiveno';
     } else if ($type == 'sc') { // 売上
         $tablename = 'm_sales';
         $columnname = 'strsalescode';

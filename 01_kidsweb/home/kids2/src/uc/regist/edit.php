@@ -113,6 +113,7 @@ elseif ( $aryData["lngFunctionCode"] == DEF_FUNCTION_UC5 && fncCheckAuthority( D
 	$aryData["lngUserCodeConditions"]  = 1;
 	$aryData["lngGroupCodeConditions"] = 0;
 	$aryData["strNaviCode"] = "uc-modify";
+	$aryData["naviVisibility"] = "visibility:hidden;";
 }
 
 // それ以外

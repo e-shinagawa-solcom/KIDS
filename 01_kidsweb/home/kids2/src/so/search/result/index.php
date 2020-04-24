@@ -192,7 +192,7 @@ $thead->appendChild($trHead);
 foreach ($records as $i => $record) {
     $index = $index + 1;
 
-    $bgcolor = fncSetBgColor('so', $record["strreceivecode"], true, $objDB);
+    $bgcolor = fncSetBgColor('so', $record["lngreceiveno"], true, $objDB);
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");

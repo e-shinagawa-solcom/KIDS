@@ -196,17 +196,25 @@ if($_POST){
 			$aryCancelOrderDetail["strnote"] = $aryPurchaseOrderDetail["strnote"];
 			$aryCancelOrderDetail["lngsortkey"] = $aryPurchaseOrderDetail[$j]["lngsortkey"];
 		}
+		$curtotalprice = 0;
 		if(count($aryInsertPurchaseOrderDetail) > 0){
 			// 残明細がある場合は、発注書明細を新規に登録する
 			foreach($aryInsertPurchaseOrderDetail as $row){
 				if(!fncInsertPurchaseOrderDetail($row, $objDB)) { return false; }
+
+				// 合計金額の設定
+				if ($row["cursubtotalprice"] != null) {
+					$curtotalprice += $row["cursubtotalprice"];
+				}
 			}
+			
 	
 			// 発注書マスタを更新する
 			$aryOrder_org = fncGetPurchaseOrder2($aryPurchaseOrderDetail[0]["lngpurchaseorderno"], $aryPurchaseOrderDetail[0]["lngrevisionno"], $objDB);
 			$aryOrder = $aryOrder_org;
 			$aryOrder["lngrevisionno"] = intval($aryOrder["lngrevisionno"]) + 1;
 			$aryOrder["lngprintcount"] = 0;
+			$aryOrder["curtotalprice"] = $curtotalprice;
 			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
 		}
 		else
