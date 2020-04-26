@@ -243,8 +243,8 @@ begin
            ,header.strstockcode
            ,header.dtmappropriationdate
            ,header.lngcustomercompanycode
-           ,header.lnggroupcode
-           ,header.lngusercode
+           ,NULL
+           ,NULL
            ,header.lngstockstatuscode
            ,header.lngmonetaryunitcode
            ,header.lngmonetaryratecode

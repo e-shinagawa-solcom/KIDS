@@ -216,8 +216,8 @@ begin
            ,header.strsalescode
            ,header.dtmappropriationdate
            ,header.lngcustomercompanycode
-           ,header.lnggroupcode
-           ,header.lngusercode
+           ,NULL
+           ,NULL
            ,header.lngsalesstatuscode
            ,header.lngmonetaryunitcode
            ,header.lngmonetaryratecode

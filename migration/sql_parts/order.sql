@@ -230,8 +230,8 @@ BEGIN
            ,header.strordercode
            ,header.dtmappropriationdate
            ,header.lngcustomercompanycode
-           ,header.lnggroupcode
-           ,header.lngusercode
+           ,NULL
+           ,NULL
            ,header.lngorderstatuscode
            ,header.lngmonetaryunitcode
            ,header.lngmonetaryratecode
@@ -463,7 +463,7 @@ RAISE INFO 'complete order';
            ,m_paycondition.strpayconditionname
            ,m_product.lnginchargegroupcode
            ,m_group.strgroupname
-           ,m_product.lngdevelopusercode
+           ,m_product.lnginchargeusercode
            ,m_user.struserdisplayname
            ,m_order.lngdeliveryplacecode
            ,delivery.strcompanyname
@@ -490,7 +490,7 @@ RAISE INFO 'complete order';
         left outer join m_group
             on m_group.lnggroupcode = m_product.lnginchargegroupcode
         left outer join m_user
-            on m_user.lngusercode = m_product.lngdevelopusercode
+            on m_user.lngusercode = m_product.lnginchargeusercode
         left outer join m_signature
             on m_signature.lnggroupcode = m_product.lnginchargegroupcode
          where m_order.lngorderno = last_orderno

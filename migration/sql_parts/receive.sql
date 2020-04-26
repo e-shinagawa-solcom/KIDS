@@ -173,8 +173,8 @@ BEGIN
            ,header.strrevisecode
            ,header.dtmappropriationdate
            ,header.lngcustomercompanycode
-           ,header.lnggroupcode
-           ,header.lngusercode
+           ,NULL
+           ,NULL
            ,header.lngreceivestatuscode
            ,header.lngmonetaryunitcode
            ,header.lngmonetaryratecode
@@ -184,7 +184,7 @@ BEGIN
            ,header.dtminsertdate
            ,header.strcustomerreceivecode
         );
--- 発注明細を登録
+-- 受注明細を登録
         IF detail.lngrevisionno >= 0 THEN
             insert into t_receivedetail
             (
@@ -217,7 +217,7 @@ BEGIN
                ,detail.curproductprice
                ,detail.lngproductquantity
                ,detail.lngproductunitcode
-               ,1
+               ,(select lngcartonquantity from m_product where strproductcode = detail.strproductcode and strrevisecode='00' and lngrevisionno=0)
                ,detail.cursubtotalprice
                ,detail.strnote
                ,detail.lngsortkey

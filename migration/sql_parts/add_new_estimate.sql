@@ -30,7 +30,10 @@ cur_check cursor for
     order by me.lngestimateno,me.lngrevisionno;
 
 r_check RECORD;
-
+remain integer;
+p_total numeric(20,4);
+price integer;
+per_once integer;
 
 r_honni RECORD;
 cur_honni cursor(e_no integer) for
@@ -139,7 +142,7 @@ and detailno.lngrevisionno = me.lngrevisionno
            ,mr.lngmonetaryratecode
            ,mr.curconversionrate
            ,case tr.lngproductunitcode when 2 then tr.lngproductquantity * mp.lngcartonquantity else tr.lngproductquantity end as lngproductquantity
-           ,case tr.lngproductunitcode when 2 then trunc(tr.curproductprice / mp.lngcartonquantity,4) else tr.curproductprice end as curproductprice
+           ,case tr.lngproductunitcode when 2 then trunc(tr.curproductprice / (case mp.lngcartonquantity when 0 then 1 else mp.lngcartonquantity end) ,4) else tr.curproductprice end as curproductprice
            ,null as curproductrate
            ,tr.cursubtotalprice
            ,tr.strnote
@@ -204,7 +207,7 @@ and detailno.lngrevisionno = me.lngrevisionno
            ,mr.lngmonetaryratecode
            ,mr.curconversionrate
            ,case tr.lngproductunitcode when 2 then tr.lngproductquantity * mp.lngcartonquantity else tr.lngproductquantity end as lngproductquantity
-           ,case tr.lngproductunitcode when 2 then trunc(tr.curproductprice / mp.lngcartonquantity,4) else tr.curproductprice end as curproductprice
+           ,case tr.lngproductunitcode when 2 then trunc(tr.curproductprice / (case mp.lngcartonquantity when 0 then 1 else mp.lngcartonquantity end),4) else tr.curproductprice end as curproductprice
            ,null as curproductrate
            ,tr.cursubtotalprice
            ,tr.strnote
@@ -231,6 +234,7 @@ and detailno.lngrevisionno = me.lngrevisionno
             and tr.lngrevisionno = mr.lngrevisionno
         inner join m_estimate me
             on me.strproductcode = tr.strproductcode
+            and  me.strrevisecode = tr.strrevisecode
         inner join (
             select 
                 lngestimateno
@@ -249,7 +253,7 @@ and detailno.lngrevisionno = me.lngrevisionno
             mr.strordercode
            ,tr.lngorderno
            ,tr.lngorderdetailno;
-    -- 
+    -- 証紙以外のエリア5
     cur_cost cursor(estimateno integer, revisionno integer) for
         select 
             t_estimatedetail.lngestimateno
@@ -277,8 +281,9 @@ and detailno.lngrevisionno = me.lngrevisionno
             on m_stockitem.lngstockitemcode = t_estimatedetail.lngstockitemcode
             and m_stockitem.lngstocksubjectcode = t_estimatedetail.lngstocksubjectcode
         where m_stockitem.lngestimateareaclassno = 5
-            and lngestimateno = estimateno
-            and lngrevisionno = revisionno;
+            and t_estimatedetail.lngestimateno = estimateno
+            and t_estimatedetail.lngrevisionno = revisionno
+            and NOT(t_estimatedetail.lngstocksubjectcode = 401 and t_estimatedetail.lngstockitemcode = 1);
 
 
 begin
@@ -297,6 +302,7 @@ begin
     LOOP
         FETCH cur_me into me_r;
         EXIT WHEN NOT FOUND;
+--RAISE INFO '% start', me_r.lngestimateno;
         detailno = 1;
         open cur_tr(me_r.strproductcode);
         LOOP
@@ -334,7 +340,7 @@ begin
                ,null
                ,tr_r.lngcustomercompanycode
                ,tr_r.dtmdelivery
-               ,tr_r.bytpayofftargetflag
+               ,false
                ,tr_r.bytpercentinputflag
                ,tr_r.lngmonetaryunitcode
                ,tr_r.lngmonetaryratecode
@@ -349,7 +355,7 @@ begin
                ,tr_r.lngsalesclasscode
             );
             -- 作成した見積原価を受注明細と連携
---            RAISE INFO '(r)% % % -> % % %', tr_r.lngreceiveno, tr_r.lngreceivedetailno, tr_r.r_lngrevisionno, tr_r.lngestimateno, detailno, tr_r.lngestimaterevisionno;
+--RAISE INFO '(r)% % % -> % % %', tr_r.lngreceiveno, tr_r.lngreceivedetailno, tr_r.r_lngrevisionno, tr_r.lngestimateno, detailno, tr_r.lngestimaterevisionno;
             update t_receivedetail
             set 
                 lngestimateno = tr_r.lngestimateno
@@ -366,12 +372,13 @@ begin
 
         END LOOP;
         close cur_tr;
+--RAISE INFO '% receive OK', me_r.lngestimateno;
 
         open cur_to(me_r.strproductcode);
         LOOP
             FETCH cur_to into tr_r;
             EXIT WHEN NOT FOUND;
-            -- 発注明細から見積原価明細（受注分）を作成
+            -- 発注明細から見積原価明細（発注分）を作成
             insert into t_estimatedetail
             (
                 lngestimateno
@@ -403,7 +410,7 @@ begin
                ,tr_r.lngstockitemcode
                ,tr_r.lngcustomercompanycode
                ,tr_r.dtmdelivery
-               ,tr_r.bytpayofftargetflag
+               ,false    -- 償却はのちに設定
                ,tr_r.bytpercentinputflag
                ,tr_r.lngmonetaryunitcode
                ,tr_r.lngmonetaryratecode
@@ -434,7 +441,8 @@ begin
             detailno = detailno + 1;
         END LOOP;
         close cur_to;
-        -- 受発注明細のない見積原価を移行する。
+--RAISE INFO '% order OK', me_r.lngestimateno;
+        -- エリア5で発注が発生しない見積原価を移行する。
         open cur_cost(me_r.lngestimateno, me_r.lngrevisionno);
         LOOP
             FETCH cur_cost into tr_r;
@@ -487,7 +495,9 @@ begin
             detailno = detailno + 1;
         END LOOP;
         close cur_cost;
-        -- 見積原価マスタを追加
+--RAISE INFO '% area-5 OK', me_r.lngestimateno;
+
+        -- 見積原価マスタを追加（ただし、この後補正必要）
         insert into m_estimate(
             lngestimateno
            ,lngrevisionno
@@ -530,6 +540,7 @@ begin
            ,me_r.strnote
            ,0
         );
+--RAISE INFO '% new master OK', me_r.lngestimateno;
         
         -- 製品マスタ(リビジョン追従分）を追加
 --RAISE INFO '% % % % ', me_r.lngestimateno, me_r.strproductcode, me_r.lngrevisionno, me_r.strrevisecode; 
@@ -639,10 +650,13 @@ begin
         where m_estimate.lngestimateno = me_r.lngestimateno
             and m_product.lngrevisionno = 0
             and m_estimate.lngrevisionno > 0;
+--RAISE INFO '% completed', me_r.lngestimateno;
+
     END LOOP;
     close cur_me;
     update m_estimate set lngproductrevisionno = lngrevisionno;
 
+--RAISE INFO '% completed', me_r.lngestimateno;
 
 open cur_check;
 LOOP
@@ -657,7 +671,7 @@ RAISE INFO '% % % % % %', r_check.lngestimateno, r_check.lngrevisionno, r_check.
         LOOP
             FETCH cur_honni into r_honni;
             EXIT WHEN NOT FOUND;
-RAISE INFO '% % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.lngrevisionno;
+RAISE INFO 'add honni(detail) % % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.lngrevisionno;
         -- 見積原価明細
             insert into t_estimatedetail(
             lngestimateno
@@ -696,6 +710,7 @@ RAISE INFO '% % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.
 	       ,r_honni.lngsalesclasscode
            );
         -- 受注マスタ
+RAISE INFO 'add honni(m_receive) % % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.lngrevisionno;
            insert into m_receive(
 	       lngreceiveno
 	       ,lngrevisionno
@@ -723,6 +738,7 @@ RAISE INFO '% % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.
            update t_sequence set lngsequence = lngsequence+1  where strsequencename = 'm_receive.strreceivecode.' || to_char(r_honni.dtmdelivery,'yymm');
     
         -- 受注明細
+RAISE INFO 'add honni(t_receivedetail) % % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.lngrevisionno;
            insert into t_receivedetail(
               lngreceiveno
               ,lngreceivedetailno
@@ -768,50 +784,118 @@ RAISE INFO '% % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.
 
     ELSE
         -- 製品マスタの生産数を書き換え
+RAISE INFO 'update honni(quantity) % % % % % %', r_check.lngestimateno, r_check.lngrevisionno, r_check.strproductcode, r_check.strrevisecode, r_check.detail_cnt, r_check.detail_q;
         update m_product set lngproductionquantity = r_check.detail_q where strproductcode = r_check.strproductcode and strrevisecode = r_check.strrevisecode and lngrevisionno = 1;
     END IF;
 
-    -- リビジョン0の見積原価明細作成
-    insert into t_estimatedetail(
-        lngestimateno
-	   ,lngestimatedetailno
-	   ,lngrevisionno
-	   ,lngcustomercompanycode
-	   ,dtmdelivery
-	   ,bytpayofftargetflag
-	   ,bytpercentinputflag
-	   ,lngmonetaryunitcode
-       ,lngmonetaryratecode
-	   ,curconversionrate
-	   ,lngproductquantity
-	   ,curproductprice
-	   ,cursubtotalprice
-	   ,lngsortkey
-	   ,lngsalesdivisioncode
-	   ,lngsalesclasscode
-    )
-    select 
-        r_check.lngestimateno
-       ,(select coalesce(max(lngestimatedetailno),0) + 1 from t_estimatedetail where lngestimateno = r_check.lngestimateno and lngrevisionno=0)
-       ,0
-       ,mp.lngcustomercompanycode
-       ,mp.dtmdeliverylimitdate
-       ,false
-       ,false
-       ,1
-       ,1
-       ,1
-       ,mp.lngproductionquantity
+
+RAISE INFO 'add detail(rev0)% % % % % %', r_check.lngestimateno, r_check.lngrevisionno, r_check.strproductcode, r_check.strrevisecode, r_check.detail_cnt, r_check.detail_q;
+    select
+        mp.lngproductionquantity
        ,mp.curproductprice
-       ,mp.curproductprice * mp.lngproductionquantity
-       ,(select coalesce(max(lngestimatedetailno),0) + 1 from t_estimatedetail where lngestimateno = r_check.lngestimateno and lngrevisionno=0)
-       ,2
-       ,1
-   from m_product mp
-   where mp.strproductcode = r_check.strproductcode 
+       ,mp.curproductprice * mp.lngproductionquantity into remain ,price, p_total
+    from m_product mp
+    inner join m_estimate me
+        on me.strproductcode = mp.strproductcode
+        and me.strrevisecode = mp.strrevisecode
+        and me.lngrevisionno = 0
+    where mp.strproductcode = r_check.strproductcode 
        and mp.strrevisecode = r_check.strrevisecode
        and mp.lngrevisionno = 0;
+RAISE INFO '%', p_total;
+    if p_total is not  null THEN
+        if p_total <= 9999999999 THEN
+        -- リビジョン0の見積原価明細作成
+            insert into t_estimatedetail(
+                lngestimateno
+	           ,lngestimatedetailno
+	           ,lngrevisionno
+	           ,lngcustomercompanycode
+	           ,dtmdelivery
+	           ,bytpayofftargetflag
+	           ,bytpercentinputflag
+	           ,lngmonetaryunitcode
+               ,lngmonetaryratecode
+	           ,curconversionrate
+	           ,lngproductquantity
+	           ,curproductprice
+	           ,cursubtotalprice
+	           ,lngsortkey
+	           ,lngsalesdivisioncode
+	           ,lngsalesclasscode
+            )
+            select 
+                r_check.lngestimateno
+               ,(select coalesce(max(lngestimatedetailno),0) + 1 from t_estimatedetail where lngestimateno = r_check.lngestimateno and lngrevisionno=0)
+               ,0
+               ,mp.lngcustomercompanycode
+               ,mp.dtmdeliverylimitdate
+               ,false
+               ,false
+               ,1
+               ,1
+               ,1
+               ,mp.lngproductionquantity
+               ,mp.curproductprice
+               ,mp.curproductprice * mp.lngproductionquantity
+               ,(select coalesce(max(lngestimatedetailno),0) + 1 from t_estimatedetail where lngestimateno = r_check.lngestimateno and lngrevisionno=0)
+               ,2
+               ,1
+            from m_product mp
+            where mp.strproductcode = r_check.strproductcode 
+                and mp.strrevisecode = r_check.strrevisecode
+                and mp.lngrevisionno = 0;
+        ELSE
+            -- 見積原価明細を分割作成
+RAISE INFO '%: devide estimatedetail for rev 0(%)', r_check.strproductcode, remain;
+            -- 桁あふれしない数量を算出
+            per_once = trunc(9999999999 / price,0);
+            WHILE remain > 0 LOOP
+                insert into t_estimatedetail(
+                    lngestimateno
+	               ,lngestimatedetailno
+	               ,lngrevisionno
+	               ,lngcustomercompanycode
+	               ,dtmdelivery
+	               ,bytpayofftargetflag
+	               ,bytpercentinputflag
+	               ,lngmonetaryunitcode
+                   ,lngmonetaryratecode
+	               ,curconversionrate
+	               ,lngproductquantity
+	               ,curproductprice
+	               ,cursubtotalprice
+	               ,lngsortkey
+	               ,lngsalesdivisioncode
+	               ,lngsalesclasscode
+                )
+                select 
+                    r_check.lngestimateno
+                   ,(select coalesce(max(lngestimatedetailno),0) + 1 from t_estimatedetail where lngestimateno = r_check.lngestimateno and lngrevisionno=0)
+                   ,0
+                   ,mp.lngcustomercompanycode
+                   ,mp.dtmdeliverylimitdate
+                   ,false
+                   ,false
+                   ,1
+                   ,1
+                   ,1
+                   ,case when remain - per_once > 0 then per_once else remain end
+                   ,mp.curproductprice
+                   ,mp.curproductprice * (case when remain - per_once > 0 then per_once else remain end)
+                   ,(select coalesce(max(lngestimatedetailno),0) + 1 from t_estimatedetail where lngestimateno = r_check.lngestimateno and lngrevisionno=0)
+                   ,2
+                   ,1
+                from m_product mp
+                where mp.strproductcode = r_check.strproductcode 
+                    and mp.strrevisecode = r_check.strrevisecode
+                    and mp.lngrevisionno = 0;
+                remain = remain - per_once;
+            END LOOP;
+        END IF;
+    END IF;
 
 END LOOP;
 close cur_check;
+
 END $$
