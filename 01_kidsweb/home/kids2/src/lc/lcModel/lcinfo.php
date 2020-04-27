@@ -35,7 +35,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
         $orderArry = fncGetPurchaseOrderData($objDB, $lcGetDate);
         // 若納品日の初期化
         $strWorkDate = "9999/99/99";
-        $strMostOldDdate = "";
+        $strMostOldDate = "";
         $strWorkPo = "";
         foreach ($orderArry as $orderData) {
             $pono = $orderData["strordercode"];
@@ -78,7 +78,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
             if (!is_array($orderDetailArry)) {
                 $orderDetailArry[0] = $orderDetailArry;
             }
-
+            
             if (count($orderDetailArry) > 0) {
                 foreach ($orderDetailArry as $orderDetailData) {
                     $dtmdeliverydate = $orderDetailData["dtmdeliverydate"];
@@ -210,7 +210,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
                                 $strMostOldDate = $strWorkDate;
                             }
                         } else {
-                            $lcModel->updateAcLcOpendate($strWorkPoNo, fncSetOpenMth($lcModel, $StrMostOldDate));                            
+                            $lcModel->updateAcLcOpendate($strWorkPoNo, fncSetOpenMth($lcModel, $strMostOldDate));                            
                             $strMostOldDate = $strWorkDate;
                             $strWorkPoNo = $pono;
                         }
@@ -219,8 +219,7 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
             }
             // ↑発注書単位のループここまで
         }
-
-        $lcModel->updateAcLcOpendate($strWorkPoNo, fncSetOpenMth($lcModel, $strWorkDate));
+        $lcModel->updateAcLcOpendate($strWorkPoNo, fncSetOpenMth($lcModel, $strMostOldDate));
     }
 
     // リバイズ情報があった場合、リバイズ情報継承処理を行う
@@ -252,14 +251,12 @@ function fncGetLcData($objDB, $lcModel, $usrId, $datetime)
 function fncSetOpenMth($lcModel, $strTemp)
 {
     $strDeliverDay = substr($strTemp, 8, 2);
-
     $baseDate = $lcModel->getBaseDate();
     if ($baseDate < $strDeliverDay) {
         $opendate = date("Ym", strtotime($strTemp . "+0 day"));
     } else {
         $opendate = date("Ym", strtotime($strTemp . "-1 month"));
     }
-    
     return $opendate;
 }
 

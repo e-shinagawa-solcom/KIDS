@@ -80,7 +80,7 @@
 
 	//HTMLへの引き渡しデータ
 	$aryData["lc_info_date"] = date('Ymd',  strtotime($lcgetdate->lcgetdate));
-	$aryData["lc_info_time"] = date('h:m:s',  strtotime($lcgetdate->lcgetdate));
+	$aryData["lc_info_time"] = date('H:i:s',  strtotime($lcgetdate->lcgetdate));
 	$aryData["user_nm"] = $login_state["lgusrname"];
 	$aryData["session_id"] = $aryData["strSessionID"];
 
@@ -97,7 +97,8 @@
 		"session_id" => $aryData["strSessionID"],
 		"lcInfoDate" => $lcInfoDate,
 		"logined_flg" => $logined_flg,
-		"login_user_auth"=> $login_user_auth
+		"login_user_auth"=> $login_user_auth,
+		"lgno" => sprintf('%08d', ($login_max_num + 1)),
 	);
 	echo "<script>$(function(){lcInit('". json_encode($arr) ."');});</script>";
 

@@ -52,11 +52,11 @@ function fncGetPurchaseHeadNoToInfo($lngOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
     $aryQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
     // 部門
-    $aryQuery[] = ", o.lngGroupCode as lngInChargeGroupCode";
+    $aryQuery[] = ", p.lnginchargegroupcode as lngInChargeGroupCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
     // 担当者
-    $aryQuery[] = ", o.lngUserCode as lngInChargeUserCode";
+    $aryQuery[] = ", p.lngInChargeUserCode as lngInChargeUserCode";
     $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
     $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
     // 納品場所
@@ -1312,8 +1312,8 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "      AND mp1.strrevisecode = m_product.strrevisecode";
     $aryQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
     $aryQuery[] = ") mp ON od.strproductcode = mp.strproductcode and od.lngrevisionno = mp.lngrevisionno";
-    $aryQuery[] = "LEFT JOIN m_group mg ON mo.lnggroupcode = mg.lnggroupcode";
-    $aryQuery[] = "LEFT JOIN m_user mu ON mo.lngusercode = mu.lngusercode";
+    $aryQuery[] = "LEFT JOIN m_group mg ON mp.lnginchargegroupcode = mg.lnggroupcode";
+    $aryQuery[] = "LEFT JOIN m_user mu ON mp.lnginchargeusercode = mu.lngusercode";
     $aryQuery[] = "LEFT JOIN m_stockitem ms ON od.lngstockitemcode = ms.lngstockitemcode and od.lngstocksubjectcode = ms.lngstocksubjectcode";
     $aryQuery[] = "LEFT JOIN m_company mc ON mo.lngcustomercompanycode = mc.lngcompanycode";
     $aryQuery[] = "LEFT JOIN m_monetaryunit mm ON mo.lngmonetaryunitcode = mm.lngmonetaryunitcode";

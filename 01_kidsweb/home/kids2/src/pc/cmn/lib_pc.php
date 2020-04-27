@@ -58,11 +58,11 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
     $aryQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
     // 部門
-    $aryQuery[] = ", s.lngGroupCode as lngInChargeGroupCode";
+    $aryQuery[] = ", p.lnginchargegroupcode as lngInChargeGroupCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
     // 担当者
-    $aryQuery[] = ", s.lngUserCode as lngInChargeUserCode";
+    $aryQuery[] = ", p.lngInChargeUserCode as lngInChargeUserCode";
     $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
     $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
     // 納品場所
@@ -115,8 +115,8 @@ function fncGetStockHeadNoToInfoSQL($lngStockNo, $lngRevisionNo)
     $aryQuery[] = "LEFT JOIN m_User input_u ON s.lngInputUserCode = input_u.lngUserCode";
     $aryQuery[] = "LEFT JOIN m_Company cust_c ON s.lngCustomerCompanyCode = cust_c.lngCompanyCode";
     $aryQuery[] = "LEFT JOIN m_Company delv_c ON s.lngDeliveryPlaceCode = delv_c.lngCompanyCode";
-    $aryQuery[] = "LEFT JOIN m_Group inchg_g ON s.lngGroupCode = inchg_g.lngGroupCode";
-    $aryQuery[] = "LEFT JOIN m_User inchg_u ON s.lngUserCode = inchg_u.lngUserCode";
+    $aryQuery[] = "LEFT JOIN m_Group inchg_g ON p.lnginchargegroupcode = inchg_g.lngGroupCode";
+    $aryQuery[] = "LEFT JOIN m_User inchg_u ON p.lnginchargeusercode = inchg_u.lngUserCode";
     $aryQuery[] = "LEFT JOIN m_StockStatus ss USING (lngStockStatusCode)";
     $aryQuery[] = "LEFT JOIN m_PayCondition pc ON s.lngPayConditionCode = pc.lngPayConditionCode";
     $aryQuery[] = "LEFT JOIN m_MonetaryUnit mu ON s.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";

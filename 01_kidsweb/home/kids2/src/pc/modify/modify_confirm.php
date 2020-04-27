@@ -164,8 +164,8 @@ for ($i = 0; $i < count($aryDetailData); $i++) {
     $aryQuery[] = " LEFT JOIN m_productunit pu on pu.lngproductunitcode = od.lngproductunitcode";
     $aryQuery[] = " LEFT JOIN m_deliverymethod dm on dm.lngdeliverymethodcode = od.lngdeliverymethodcode";
     $aryQuery[] = " LEFT JOIN m_company c on c.lngcompanycode = o.lngcustomercompanycode";
-	$aryQuery[] = " LEFT JOIN m_Group g on o.lnggroupcode = g.lnggroupcode";
-	$aryQuery[] = " LEFT JOIN m_User u on o.lngusercode = u.lngusercode";
+	$aryQuery[] = " LEFT JOIN m_Group g on p.lnginchargegroupcode = g.lnggroupcode";
+	$aryQuery[] = " LEFT JOIN m_User u on p.lnginchargeusercode = u.lngusercode";
     $aryQuery[] = " WHERE od.lngorderno = " . $aryDetailData[$i]["lngOrderNo"] . " ";
     $aryQuery[] = "  AND od.lngrevisionno = " . $aryDetailData[$i]["lngRevisionNo"] . " ";
     $aryQuery[] = "  AND od.lngorderdetailno = " . $aryDetailData[$i]["lngOrderDetailNo"] . " ";

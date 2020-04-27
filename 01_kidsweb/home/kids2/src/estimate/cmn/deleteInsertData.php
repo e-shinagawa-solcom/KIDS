@@ -87,6 +87,7 @@ class deleteInsertData extends estimateInsertData {
 
             // 受注マスタ、発注マスタの削除
             foreach ($estimateDetail as $record) {
+                
                 if (isset($record->lngreceiveno)) {
 
                     $this->deleteMasterReceive($record);
@@ -99,7 +100,7 @@ class deleteInsertData extends estimateInsertData {
             }
             
             $this->productNo = $firstRecord->lngproductno;
-            $this->reviseCode = $reviseCode;
+            $this->reviseCode = $firstRecord->strrevisecode;
             $this->productRevisionNo = $firstRecord->lngproductrevisionno;
 
             // 製品マスタの削除

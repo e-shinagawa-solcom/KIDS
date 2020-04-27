@@ -350,7 +350,6 @@ function fncInsertReportUnSettedPriceUnapproval($objDB, $data)
     //バインドの設定
     $bind = array($data["payeeformalname"]
         , $data["unsettledprice"]);
-
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {
@@ -728,7 +727,7 @@ function fncGetReportByLcDetail($objDB, $offset, $limit)
 				select
                     lcno,
                     pono,
-                    substr(factoryname, 0 ,24) as factoryname,
+                    factoryname as factoryname,
                     productcd || '_' || productrevisecd,
                     substr(productname, 0 ,22) as productname,
                     productnumber,
@@ -809,7 +808,7 @@ function fncGetReportImpLcOrderInfo($objDB, $offset, $limit)
 				select
                     to_char(bankreqdate, 'MM月DD日') as bankreqdate,
                     pono,
-                    productcd || '_' || productrevisecd,
+                    productcd || '_' || productrevisecd as productcd,
                     substr(productname, 0, 24) as productname,
                     productnumber,
                     unitname,
@@ -1017,12 +1016,12 @@ function fncGetLcInfoForReportTwo($objDB, $data)
             moneyprice,
             shipterm,
             validterm,
-            bankcd,
-            bankname,
+            t_lcinfo.bankcd,
+            m_bank.bankformalname as bankname,
             bankreqdate,
             lcamopen
         from
-            t_lcinfo
+            t_lcinfo left join m_bank on t_lcinfo.bankcd = m_bank.bankcd
         WHERE
             opendate = '". $data["opendate"] ."'";
     $sql .= " and currencyclass = '". $data["currencyclass"] ."'";
@@ -1038,9 +1037,9 @@ function fncGetLcInfoForReportTwo($objDB, $data)
         $sql .= " and payfnameformal = '". $data["payfnameformal"] ."'";
     }
     if ($data["bankcd"] == null) {
-        $sql .= " and bankcd is null ";
+        $sql .= " and t_lcinfo.bankcd is null ";
     } else {        
-        $sql .= " and bankcd = '". $data["bankcd"] ."'";
+        $sql .= " and t_lcinfo.bankcd = '". $data["bankcd"] ."'";
     }
 
     $result = pg_query($objDB->ConnectID, $sql);
@@ -1090,7 +1089,7 @@ function fncGetLcInfoForReportThree($objDB, $opendate, $currencyclass)
             lcnote,
             shipterm,
             validterm,
-            bankname,
+            m_bank.bankformalname bankname,
             bankreqdate,
             lcno,
             lcamopen,
@@ -1105,15 +1104,15 @@ function fncGetLcInfoForReportThree($objDB, $opendate, $currencyclass)
             payfnameformal,
             productnamee,
             lcstate,
-            bankcd,
+            m_bank.bankcd,
             shipym
         from
-            t_lcinfo
+            t_lcinfo left join m_bank on t_lcinfo.bankcd = m_bank.bankcd
         WHERE
             opendate = $1
             and currencyclass = $2
             and (lcstate = 0 or lcstate = 3 or lcstate = 4 or lcstate = 7 or lcstate = 8)
-            order by lcno, payfnameformal, bankcd
+            order by lcno, payfnameformal, t_lcinfo.bankcd
         ";
 
     // クエリへの設定値の定義
@@ -1199,6 +1198,7 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
         . $where .
         "   order by bankcd, payfnameomit, shipstartdate
         ";
+        echo $sql;
     // クエリへの設定値の定義
     $bind = array($startYmd, $endYmd, $currencyclass);
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
@@ -1310,7 +1310,7 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
             lcnote,
             shipterm,
             validterm,
-            bankname,
+            m_bank.bankformalname bankname,
             bankreqdate,
             lcno,
             lcamopen,
@@ -1325,10 +1325,10 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
             payfnameformal,
             productnamee,
             lcstate,
-            bankcd,
+            tlc.bankcd,
             shipym
         from
-            t_lcinfo tlc
+            t_lcinfo tlc left join m_bank on tlc.bankcd = m_bank.bankcd
             INNER JOIN (
                 select
                   pono

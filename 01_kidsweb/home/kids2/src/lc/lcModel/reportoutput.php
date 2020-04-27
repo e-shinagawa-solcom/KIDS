@@ -217,10 +217,10 @@ function fncSetReportFour($objDB, $spreadsheet, $sheetname, $currencyClass, $obj
     $startRow -= 1;
 
     if ($type == 3) {
-        $sheet->getHeaderFooter()->setOddHeader('Open月・Beneficiary別L/C発行予定集計表');
+        $sheet->getHeaderFooter()->setOddHeader('Ｌ／Ｃ　Ｏｐｅｎ情報(Open月・Beneficiary別L/C発行予定集計表)');
         // $copysheetname = $sheetname . "_" . $currencyClass . "Open月";
     } else if ($type == 4) {
-        $sheet->getHeaderFooter()->setOddHeader('船積月・Beneficiary別L/C発行予定集計表');
+        $sheet->getHeaderFooter()->setOddHeader("Ｌ／Ｃ　Ｏｐｅｎ情報(船積月・Beneficiary別L/C発行高集計表)");
         // $copysheetname = $sheetname . "_" . $currencyClass . "船積月";
     }
 

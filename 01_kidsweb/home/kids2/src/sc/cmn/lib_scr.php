@@ -1100,6 +1100,7 @@ function fncRegisterSalesAndSlip(
         $aryDrafter["lnggroupcode"] = null;
     }
 
+
     // 顧客の国コードを取得
     $lngCustomerCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
     // 顧客社名の取得
@@ -1280,14 +1281,17 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     //     $curConversionRate = $aryConversionRate["curconversionrate"];
     // }
 
+    // 営業部署・担当者を取得
+    $product = fncGetProduct($aryDetail[0]["strproductcode"], $objDB);
+
     // 登録データのセット
     $v_lngsalesno = $lngSalesNo; //1:売上番号
     $v_lngrevisionno = $lngRevisionNo; //2:リビジョン番号
     $v_strsalescode = withQuote($strSalesCode); //3:売上コード
     $v_dtmappropriationdate = withQuote($dtmAppropriationDate); //4:計上日
     $v_lngcustomercompanycode = $aryCustomerCompany["lngcompanycode"]; //5:顧客コード
-    $v_lnggroupcode = nullIfEmpty($aryDrafter["lnggroupcode"]); //6:グループコード
-    $v_lngusercode = nullIfEmpty($aryDrafter["lngusercode"]); //7:ユーザコード
+    $v_lnggroupcode = nullIfEmpty($product->lnginchargegroupcode); //6:グループコード
+    $v_lngusercode = nullIfEmpty($product->lnginchargeusercode); //7:ユーザコード
     $v_lngsalesstatuscode = "4"; //8:売上状態コード
     $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //9:通貨単位コード
     $v_lngmonetaryratecode = $aryDetail[0]["lngmonetaryratecode"]; //10:通貨レートコード
@@ -2243,4 +2247,61 @@ function fncResetReceiveStatus($lngSlipNo, $lngRevisisonNo, $objDB)
     }
     $objDB->freeResult($lngResultID);
     return true;
+}
+
+
+
+// 製品マスタより営業部署、担当者コードを取得する
+function fncGetProduct($strproductcode, $objDB)
+{
+    $aryQuery = array();
+    $aryQuery[] = "select";
+    $aryQuery[] = "  p.strproductcode";
+    $aryQuery[] = "  , p.strproductname";
+    $aryQuery[] = "  , p.lnginchargegroupcode";
+    $aryQuery[] = "  , p.lnginchargeusercode";
+    $aryQuery[] = "  , p.lngdevelopusercode";
+    $aryQuery[] = "  , p.strrevisecode ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  m_product p ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      max(p2.lngRevisionNo) lngRevisionNo";
+    $aryQuery[] = "      , p2.strproductcode";
+    $aryQuery[] = "      , p2.strrevisecode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_Product p2 ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      p2.bytinvalidflag = false ";
+    $aryQuery[] = "      and not exists ( ";
+    $aryQuery[] = "        select";
+    $aryQuery[] = "          strproductcode ";
+    $aryQuery[] = "        from";
+    $aryQuery[] = "          m_product p3 ";
+    $aryQuery[] = "        where";
+    $aryQuery[] = "          p3.lngRevisionNo < 0 ";
+    $aryQuery[] = "          and p3.strproductcode = p2.strproductcode ";
+    $aryQuery[] = "          and p3.strrevisecode = p2.strrevisecode";
+    $aryQuery[] = "      ) ";
+    $aryQuery[] = "    group by";
+    $aryQuery[] = "      p2.strProductCode";
+    $aryQuery[] = "      , p2.strrevisecode";
+    $aryQuery[] = "  ) p4 ";
+    $aryQuery[] = "    on p.lngRevisionNo = p4.lngRevisionNo ";
+    $aryQuery[] = "    and p.strproductcode = p4.strproductcode ";
+    $aryQuery[] = "    and p.strrevisecode = p4.strrevisecode ";
+    $aryQuery[] = "WHERE p.strproductcode = '" . $strproductcode . "'";
+
+    $strQuery = "";
+    $strQuery .= implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if ($lngResultNum) {
+        $objResult= $objDB->fetchObject($lngResultID, 0);
+    } else {
+        fncOutputError(9051, DEF_FATAL, "製品情報取得に失敗", true, "", $objDB);
+    }
+    $objDB->freeResult($lngResultID);
+
+    return $objResult;
 }

@@ -113,9 +113,9 @@ $objDB->transactionCommit();
 //////////////////////////////////////////////////////////////////////////
 // 結果取得、出力処理
 //////////////////////////////////////////////////////////////////////////
+$firstRecord = $estimate[0];
 
-
-$completeMessage = "製品コード". $productCode. "_". $reviseCode. "の見積原価データを削除いたしました。";
+$completeMessage = "製品コード". $firstRecord->strproductcode. "_". $firstRecord->strrevisecode. "の見積原価データを削除いたしました。";
 
 $postData = array(
 	'completeMessage' => $completeMessage

@@ -231,7 +231,7 @@ if (array_key_exists("strProductCode", $searchColumns) &&
                 $aryQuery[] = "p.strProductCode = '" . explode("_", $strProductCode)[0] . "'";
                 $aryQuery[] = " AND p.strrevisecode = '" . explode("_", $strProductCode)[1] . "'";
             } else {
-                $aryQuery[] = "p.strProductCode = '" . $strProductCode . "'";
+                $aryQuery[] = "p.strProductCode like '" . $strProductCode . "%'";
             }
         }
     }
@@ -350,7 +350,7 @@ if (!array_key_exists("admin", $optionColumns)) {
     $aryQuery[] = "          and p1.strproductcode = p.strproductcode";
     $aryQuery[] = "      )";
 } else {
-    $aryQuery[] = "  AND p.bytInvalidFlag = FALSE ";
+    // $aryQuery[] = "  AND p.bytInvalidFlag = FALSE ";
     $aryQuery[] = "  AND p.lngRevisionNo >= 0 ";
 }
 

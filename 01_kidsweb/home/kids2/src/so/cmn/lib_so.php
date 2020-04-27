@@ -54,11 +54,11 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
     $aryQuery[] = ", cust_c.strCompanyDisplayName as strCustomerDisplayName";
     // 部門
-    $aryQuery[] = ", r.lngGroupCode as lngInChargeGroupCode";
+    $aryQuery[] = ", p.lngInChargeGroupCode as lngInChargeGroupCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
     // 担当者
-    $aryQuery[] = ", r.lngUserCode as lngInChargeUserCode";
+    $aryQuery[] = ", p.lngInChargeUserCode as lngInChargeUserCode";
     $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
     $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
     // 通貨
@@ -92,7 +92,10 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = "    select";
     $aryQuery[] = "      p1.strproductcode";
     $aryQuery[] = "      , p1.strproductname";
-    $aryQuery[] = "	  , p1.strrevisecode";
+    $aryQuery[] = "      , p1.lnginchargegroupcode";
+    $aryQuery[] = "      , p1.lnginchargeusercode";
+    $aryQuery[] = "      , p1.lngdevelopusercode";
+    $aryQuery[] = "	     , p1.strrevisecode";
     $aryQuery[] = "    from";
     $aryQuery[] = "      m_product p1 ";
     $aryQuery[] = "      inner join ( ";
@@ -126,8 +129,8 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = "    and rd.strrevisecode = p.strrevisecode ";
     $aryQuery[] = " LEFT JOIN m_User input_u ON r.lngInputUserCode = input_u.lngUserCode";
     $aryQuery[] = " LEFT JOIN m_Company cust_c ON r.lngCustomerCompanyCode = cust_c.lngCompanyCode";
-    $aryQuery[] = " LEFT JOIN m_Group inchg_g ON r.lngGroupCode = inchg_g.lngGroupCode";
-    $aryQuery[] = " LEFT JOIN m_User inchg_u ON r.lngUserCode = inchg_u.lngUserCode";
+    $aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lnginchargegroupcode = inchg_g.lngGroupCode";
+    $aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lngInChargeUserCode = inchg_u.lngUserCode";
     $aryQuery[] = " LEFT JOIN m_ReceiveStatus rs USING (lngReceiveStatusCode)";
     $aryQuery[] = " LEFT JOIN m_MonetaryUnit mu ON r.lngMonetaryUnitCode = mu.lngMonetaryUnitCode";
     $aryQuery[] = " LEFT JOIN m_MonetaryRateClass mr ON r.lngMonetaryRateCode = mr.lngMonetaryRateCode";
@@ -181,11 +184,11 @@ function fncGetReceiveHeadInfoSQL($lngReceiveNo, $lngestimateno)
     $aryQuery[] = ", cust_c.strCompanyDisplayCode as strCustomerDisplayCode";
     $aryQuery[] = ", cust_c.strshortname as strCustomerDisplayName";
     // 部門
-    $aryQuery[] = ", r.lngGroupCode as lngInChargeGroupCode";
+    $aryQuery[] = ", p.lngInChargeGroupCode as lngInChargeGroupCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayCode as strInChargeGroupDisplayCode";
     $aryQuery[] = ", inchg_g.strGroupDisplayName as strInChargeGroupDisplayName";
     // 担当者
-    $aryQuery[] = ", r.lngUserCode as lngInChargeUserCode";
+    $aryQuery[] = ", p.lngInChargeUserCode as lngInChargeUserCode";
     $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
     $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
     // 開発担当者

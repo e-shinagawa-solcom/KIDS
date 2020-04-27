@@ -41,6 +41,10 @@ $objDB->close();
 //経理サブシステムDB接続
 $lcModel = new lcModel();
 
+
+//LC情報取得日の取得
+$lcgetdate = $lcModel->getLcInfoDate();
+
 //ログイン状況判定処理
 $logined_flg = false;
 $login_state = $lcModel->getLoginState($user_id);
@@ -66,9 +70,6 @@ $lcModel->setLcLoginState($login_max_num, $objAuth->UserFullName);
 
 //ユーザー権限の取得
 $login_user_auth = $lcModel->getUserAuth($user_id);
-
-//LC情報取得日の取得
-$lcgetdate = $lcModel->getLcInfoDate();
 // ここまでselect-function/index.phpのログイン状況操作と同等の処理
 
 //HTMLへの引き渡しデータ

@@ -209,8 +209,7 @@ function fncGetLcInfoData($objDB, $data)
     switch ($data["mode"]) {
         case "0":
             $fromdate = date("Ym",strtotime("-12 month"));
-            $todate = date('Ym', strtotime('now'));
-            $sql .= " where opendate between '" . $fromdate . "' and '" . $todate . "'";
+            $sql .= " where opendate >= '" . $fromdate . "'";
             break;
         case "1":
             //抽出条件
@@ -231,8 +230,7 @@ function fncGetLcInfoData($objDB, $data)
             if ($condcount == 0) {               
                 $condcount += 1;
                 $fromdate = date("Ym",strtotime("-12 month"));
-                $todate = date('Ym', strtotime('now'));
-                $sql .= " where opendate between '" . $fromdate . "' and '" . $todate . "'";
+                $sql .= " where opendate >= '" . $fromdate . "'";
             }
             if ($data["getDataModeFlg"] == 1) {                
                 $condcount += 1;

@@ -79,9 +79,10 @@ if ($data["setChk"] == "1") {
         // $clonedWorksheet->setTitle("1_船積月");
         // $spreadsheet->addSheet($clonedWorksheet);
 
-        // $clonedWorksheet = clone $spreadsheet->getSheetByName("4");
-        // $clonedWorksheet->setTitle("4_船積月");
-        // $spreadsheet->addSheet($clonedWorksheet);
+        $oldIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName("5"));
+        $clonedWorksheet = clone $spreadsheet->getSheetByName("4");
+        $clonedWorksheet->setTitle("4_船積月");
+        $spreadsheet->addSheet($clonedWorksheet, $oldIndex);
         foreach ($currencyClassLst as $currencyClassObj) {
             $currencyClass = $currencyClassObj["currencyclass"];
 
@@ -101,7 +102,7 @@ if ($data["setChk"] == "1") {
             $pageNo_4_openym = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 3, $pageNo_4_openym);
 
             // L/C Open情報（船積月・Beneficiary別L/C発行予定集計表）の出力
-            // $pageNo_4_shipym = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 4, $pageNo_4_shipym);
+            $pageNo_4_shipym = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 4, $pageNo_4_shipym);
         }
     }
 
@@ -499,6 +500,7 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data,
 
     // L/C情報取得
     $lcinfoUnapprovalLst = fncGetLcInfoForReportFive($objDB, $data["startDate"], $data["endDate"], $currencyClass, 2);
+
     // （臨時テーブル）帳票未決済額未承認テーブルにデータを登録する
     if ($lcinfoUnapprovalLst && count($lcinfoUnapprovalLst) > 0) {
         unset($insertData);
