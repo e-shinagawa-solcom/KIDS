@@ -4,6 +4,19 @@ DO $$
 --BEGIN TRANSACTION;
 --発注マスタカーソル
 declare
+    cur_del cursor for
+        select distinct 
+            lngreceiveno
+           ,strreceivecode
+--           ,strrevisecode
+           ,-1 as lngrevisionno
+           ,CURRENT_TIMESTAMP as dtminsertdate
+        from m_receive
+        where lngreceiveno not in (select lngreceiveno from m_receive where lngrevisionno < 0)
+            and strreceivecode in (
+                select strreceivecode from m_receive where lngrevisionno < 0
+            );
+
     receiveno integer;
     cur_header CURSOR(receiveno integer, revisionno integer) FOR
     select * from dblink('con111',
@@ -112,6 +125,7 @@ declare
     max_revision integer;
     last_revision integer;
 BEGIN
+
     last_receive = '';
     current_receive = '';
     write_count = 0;
@@ -120,10 +134,6 @@ BEGIN
     max_revision = 0;
     delete from m_receive;
     delete from t_receivedetail;
-/*
-    delete from m_purchasereceive;
-    delete from t_purchasereceivedetail;
-*/
 
     drop table if exists receive_conversion;
     create table receive_conversion(
@@ -131,7 +141,7 @@ BEGIN
        ,detailno  integer
        ,new_receive integer
     );
---発注明細カーソルオープン（条件：発注番号 = 読み込んだ発注マスタの発注番号）
+--受注明細カーソルオープン（条件：受注番号 = 読み込んだ受注マスタの受注番号）
 
     open cur_detail;
     LOOP
@@ -240,5 +250,27 @@ BEGIN
     END LOOP;
     close cur_detail;
     delete from t_receivedetail where lngreceivedetailno < 0;
+
+    open cur_del;
+    LOOP
+        FETCH cur_del INTO detail;
+        EXIT WHEN NOT FOUND;
+RAISE INFO '% %', detail.lngreceiveno, detail.strreceivecode;
+        insert into m_receive(
+            lngreceiveno
+           ,strreceivecode
+           ,strrevisecode
+           ,lngrevisionno
+           ,dtminsertdate
+        )
+        values(
+            detail.lngreceiveno
+           ,detail.strreceivecode
+           ,(select MAX(strrevisecode) from m_receive where lngreceiveno = detail.lngreceiveno)
+           ,detail.lngrevisionno
+           ,detail.dtminsertdate
+        );
+    END LOOP;
+    close cur_del;
 END $$
 
