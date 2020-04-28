@@ -436,6 +436,7 @@ RAISE INFO 'complete order';
            ,strinsertusername
            ,strnote
            ,lngprintcount
+           ,txtsignaturefilename
         )
         select
             po_count
@@ -473,6 +474,7 @@ RAISE INFO 'complete order';
            ,m_user.struserdisplayname
            ,null
            ,0
+           ,(select txtsignaturefilename from m_signature where lnggroupcode = m_product.lnginchargegroupcode)
         from m_order
         left outer join m_company customer
             on customer.lngcompanycode = m_order.lngcustomercompanycode
