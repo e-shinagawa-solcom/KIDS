@@ -172,7 +172,8 @@ function lcInit(json_obj) {
 // 戻るボタン処理
 //---------------------------------------------------
 function closeBtn() {
-	window.opener.document.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+	window.opener.getSearchConditions();
+	window.opener.getLcInfo(1, 2);
 	window.close();
 }
 
@@ -415,7 +416,8 @@ function releaseBtn() {
 (function () {
 
 	$(window).on("beforeunload", function (e) {
-		window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+		window.opener.getSearchConditions();
+		window.opener.getLcInfo(1, 2);
 	});
 })();
 

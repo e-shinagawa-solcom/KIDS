@@ -270,6 +270,7 @@ function getLcInfo(mode, type = 1) {
 // 編集処理
 //---------------------------------------------------
 function openEdit() {
+	saveSearchConditions();
 	//行が選択されているかどうか
 	var sel = $('input[name=selectRow]:checked').val();
 	if (sel == undefined) {
@@ -476,6 +477,7 @@ function delSearchConditions() {
 // 帳票出力ボタン処理
 //---------------------------------------------------
 function reportOutputBtn() {
+	saveSearchConditions();
 	var strURL = '/lc/report/index.php?strSessionID=' + phpData["session_id"];
 	window.open(strURL, 'LC REPORT', 'width=1000, height=550, resizable=yes, scrollbars=yes, menubar=no');
 }
@@ -515,6 +517,7 @@ function closeEvent() {
 $(window).on("beforeunload", function (e) {
 	logout();
 });
+
 
 // ログアウト処理
 function logout() {

@@ -129,10 +129,10 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
     if(empty($aryCondtition["deliveryFrom"]))
     {
         $isByDtmChargeternStart = true;
-        if(empty($aryCondtition["dtmChargeternStart"])) {
+        // if(empty($aryCondtition["dtmChargeternStart"])) {
             $nowDateTime = date('Y/m/d', strtotime('now' . "-6 month"));
             $aryCondtition["dtmChargeternStart"] = $nowDateTime;
-        }
+        // }
     }
 
     if (empty($aryCondtition["deliveryTo"]))

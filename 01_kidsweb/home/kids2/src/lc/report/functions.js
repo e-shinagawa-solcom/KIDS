@@ -81,8 +81,8 @@ function lcInit(json_obj) {
 // 戻るボタン処理
 //---------------------------------------------------
 function closeBtn() {
-	// location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
-	window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+	window.opener.getSearchConditions();
+	window.opener.getLcInfo(1, 2);
 	window.close();
 }
 
@@ -801,6 +801,8 @@ function convertNumberByClass(str, currencyclass) {
 
 (function () {
 	$(window).on("beforeunload", function (e) {
-		window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+		// window.opener.location.href = '/lc/info/index.php?strSessionID=' + phpData["session_id"] + '&reSearchFlg=true';
+		window.opener.getSearchConditions();
+		window.opener.getLcInfo(1, 2);
 	});
 })();

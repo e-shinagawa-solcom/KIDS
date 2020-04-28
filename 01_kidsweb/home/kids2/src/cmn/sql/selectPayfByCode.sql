@@ -5,5 +5,6 @@ FROM
     m_payfinfo
 WHERE
     payfcd = $1
-    and invalidflag = false;
+    and invalidflag = false
+ORDER BY payfcd
 ;

@@ -5,5 +5,6 @@ FROM
     m_payfinfo
 WHERE
     payfformalname LIKE '%' || $1 || '%'
-    and invalidflag = false;
+    and invalidflag = false
+ORDER BY payfcd
 ;

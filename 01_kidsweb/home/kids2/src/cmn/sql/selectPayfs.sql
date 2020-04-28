@@ -4,5 +4,6 @@ SELECT
 FROM
     m_payfinfo
 WHERE
-    invalidflag = false;
+    invalidflag = false
+ORDER BY payfcd
 ;

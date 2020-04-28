@@ -146,7 +146,6 @@
             procDone(response);
         })
         .fail(function(response){
-            alert(searchMaster);
             procFail(response);
         });
     }

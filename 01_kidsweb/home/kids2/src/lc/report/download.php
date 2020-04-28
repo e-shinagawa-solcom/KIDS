@@ -56,6 +56,12 @@ $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filepath); //template.
 
 // 出力
 if ($data["impletterChk"] == "1") {
+    if ($data["bankcd"] != "0000") {
+        $bankinfo = $lcModel->getAcBankInfo($data["bankcd"]);
+        $data["bankformalname"] = $bankinfo->bankformalname;
+    } else {
+        $data["bankformalname"] = "ALL";
+    }
     if ($currencyClassLst && count($currencyClassLst) > 0) {
         $pageNo_6 = 1;
         foreach ($currencyClassLst as $currencyClassObj) {

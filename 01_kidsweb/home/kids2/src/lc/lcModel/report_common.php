@@ -1198,7 +1198,6 @@ function fncGetLcInfoForReportFive($objDB, $startYmd, $endYmd, $currencyclass, $
         . $where .
         "   order by bankcd, payfnameomit, shipstartdate
         ";
-        echo $sql;
     // クエリへの設定値の定義
     $bind = array($startYmd, $endYmd, $currencyclass);
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
@@ -1271,7 +1270,7 @@ function fncGetLcInfoForReportSix($objDB, $currencyclass, $data)
     }
     // 銀行コードがALL以外の場合、検索条件となる
     if ($data["bankcd"] != "0000") {
-        $where .= " and bankcd = '" . $data["bankcd"] . "'";
+        $where .= " and tlc.bankcd = '" . $data["bankcd"] . "'";
     }
     // L/CopenがALL以外の場合、検索条件となる
     if (trim($data["lcopen"]) == "未発行") {

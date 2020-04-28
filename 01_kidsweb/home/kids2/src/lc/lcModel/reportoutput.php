@@ -418,7 +418,7 @@ function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     }
     
     $sheet->setCellValue('D'. ($startRow + 8), $data["payfName"]);
-    $sheet->setCellValue('H'. ($startRow + 8), $data["bankname"]);
+    $sheet->setCellValue('H'. ($startRow + 8), $data["bankformalname"]);
 
     if (strcmp($currencyClass, '円') == 0) {
         $pricesign = '金額（＄）';

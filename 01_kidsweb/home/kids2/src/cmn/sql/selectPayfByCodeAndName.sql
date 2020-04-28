@@ -6,5 +6,6 @@ FROM
 WHERE
     payfcd = $1
     and payfformalname LIKE '%' || $2 || '%'
-    and invalidflag = false;
+    and invalidflag = false
+ORDER BY payfcd
 ;
