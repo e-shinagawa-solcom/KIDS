@@ -1770,14 +1770,17 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
     if ($lngSlipKindCode == DEF_SLIP_KIND_EXCLUSIVE) {
         //1:指定・専用
         $templatFileName = REPORT_SLIP_EXCLUSIVE;
+        $downloadTemplateFileName = "slip_exclusive_download.xlsx";
         $activeSheetName = "納品書";
     } else if ($lngSlipKindCode == DEF_SLIP_KIND_COMM) {
         //2:市販
         $templatFileName = REPORT_SLIP_COMM;
+        $downloadTemplateFileName = "slip_comm_download.xlsx";
         $activeSheetName = "納品書";
     } else if ($lngSlipKindCode == DEF_SLIP_KIND_DEBIT) {
         //3:DEBIT NOTE
         $templatFileName = REPORT_SLIP_DEBIT;
+        $downloadTemplateFileName = REPORT_SLIP_DEBIT;
         $activeSheetName = "DEBIT NOTE";
     } else {
         throw new Exception("帳票テンプレートを特定できません。lngSlipKindCode=" . $lngSlipKindCode);
@@ -1790,6 +1793,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
     ini_set('default_charset', 'UTF-8');
     // 帳票テンプレートのフルパス
     $spreadSheetFilePath = REPORT_TMPDIR . $templatFileName;
+    $spreadSheetDownloadFilePath = REPORT_TMPDIR . $downloadTemplateFileName;
     // データを設定するシート名
     $dataSheetName = "データ設定用";
 
@@ -1801,7 +1805,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
         //  ダウンロード用Writer生成
         // --------------------------------------------
         //スプレッドシート生成
-        $xlSpreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($spreadSheetFilePath);
+        $xlSpreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($spreadSheetDownloadFilePath);
         //ワークシート生成
         $xlWorkSheet = $xlSpreadSheet->GetSheetByName($dataSheetName);
 

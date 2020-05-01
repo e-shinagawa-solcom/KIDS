@@ -58,10 +58,10 @@ $objDB->close();
 
 // テンプレートパス設定
 if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
-    $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_EXCLUSIVE;
+    $strTemplatePath = REPORT_TMPDIR . "slip_exclusive_download.xlsx";
     // $downloadFileName = REPORT_SLIP_EXCLUSIVE;
 } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
-    $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_COMM;
+    $strTemplatePath = REPORT_TMPDIR . "slip_comm_download.xlsx";
     // $downloadFileName = REPORT_SLIP_COMM;
 } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
     $strTemplatePath = REPORT_TMPDIR . REPORT_SLIP_DEBIT;

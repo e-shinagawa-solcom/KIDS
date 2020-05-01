@@ -202,6 +202,10 @@
                     $aryCurTax[] = $Result['curtax'];
                     // 納品日
                     $aryDeliveryDate[] = $Result['dtmdeliverydate'];
+
+                    if ($Result['lngtaxclasscode'] != $insertData['lngtaxclasscode']) {
+                        MoveToErrorPage("課税区分の異なる納品書は請求書の明細に混在できません");
+                    }
                 }
             }
             else
