@@ -945,6 +945,7 @@ function fncGetSumofUnSettedPriceByPayf($objDB)
                     sum(usancesettlement) as totalmoneyprice
 				from
                     t_reportunsettedprice
+                where bankname is not null
                 group by payeeformalname
                 order by payeeformalname
             ";
@@ -1370,68 +1371,80 @@ function fncGetUnSettedTotal($objDB, $offset, $limt)
 {
     $sql = "
         SELECT
-            SUM(tmp.bank1) AS bank1total
-            , SUM(tmp.bank2) AS bank2total
-            , SUM(tmp.bank3) AS bank3total
-            , SUM(tmp.bank4) AS bank4total
-            , SUM(tmp.unapprovaltotal) AS unapprovaltotaltotal
-            , SUM(tmp.benetotal) AS benetotaltotal
+            SUM(tmp2.bank1) AS bank1total
+            , SUM(tmp2.bank2) AS bank2total
+            , SUM(tmp2.bank3) AS bank3total
+            , SUM(tmp2.bank4) AS bank4total
+            , SUM(tmp2.nobanktotal) AS nobanktotaltotal
+            , SUM(tmp2.benetotal) AS benetotaltotal 
         FROM
-            (
+            ( 
+            SELECT
+                tmp.Beneficiary
+                , tmp.bank1
+                , tmp.bank2
+                , tmp.bank3
+                , tmp.bank4
+                , tmp.nobanktotal
+                , tmp.benetotal 
+            FROM
+                ( 
                 SELECT
-                    bkunapproval.Beneficiary
-                    , bkunapproval.bank1
-                    , bkunapproval.bank2
-                    , bkunapproval.bank3
-                    , bkunapproval.bank4
-                    , bkunapproval.unapprovaltotal
-                    , bkunapproval.benetotal
+                    t_reportbybenebktotal.Beneficiary
+                    , t_reportbybenebktotal.bank1
+                    , t_reportbybenebktotal.bank2
+                    , t_reportbybenebktotal.bank3
+                    , t_reportbybenebktotal.bank4
+                    , nobank.totalmoneyprice AS nobanktotal
+                    , COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(nobank.totalmoneyprice, 0) AS benetotal 
                 FROM
-                    (
-                    SELECT
-                        t_reportbybenebktotal.Beneficiary
-                        , t_reportbybenebktotal.bank1
-                        , t_reportbybenebktotal.bank2
-                        , t_reportbybenebktotal.bank3
-                        , t_reportbybenebktotal.bank4
-                        , unapproval.unapprovalprice AS unapprovaltotal
-                        , COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0) AS benetotal
-                    FROM
-                        (
-                        SELECT
-                            t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
-                            , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
-                        FROM
-                            t_reportunsettedpriceunapproval
-                        GROUP BY
-                            t_reportunsettedpriceunapproval.payeeformalname
-                        ) AS unapproval
-                        RIGHT JOIN t_reportbybenebktotal
-                        ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
-                    UNION
-                    SELECT
-                        unapproval.payeeformal as Beneficiary
-                        , t_reportbybenebktotal.bank1
-                        , t_reportbybenebktotal.bank2
-                        , t_reportbybenebktotal.bank3
-                        , t_reportbybenebktotal.bank4
-                        , unapproval.unapprovalprice AS unapprovaltotal
-                        , COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0) AS benetotal
-                    FROM
-                        (
-                        SELECT
-                            t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
-                            , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
-                        FROM
-                            t_reportunsettedpriceunapproval
-                        GROUP BY
-                            t_reportunsettedpriceunapproval.payeeformalname
-                        ) AS unapproval
-                        LEFT JOIN t_reportbybenebktotal
-                        ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
-                    ) AS bkunapproval
+                    ( 
+                    select
+                        payeeformalname
+                        , sum(usancesettlement) as totalmoneyprice 
+                    from
+                        t_reportunsettedprice 
+                    where
+                        bankname is null 
+                    group by
+                        payeeformalname
+                        , bankname 
+                    order by
+                        payeeformalname
+                        , bankname
+                    ) AS nobank 
+                    RIGHT JOIN t_reportbybenebktotal 
+                    ON nobank.payeeformalname = t_reportbybenebktotal.Beneficiary 
+                union 
+                SELECT
+                    nobank.payeeformalname as Beneficiary
+                    , t_reportbybenebktotal.bank1
+                    , t_reportbybenebktotal.bank2
+                    , t_reportbybenebktotal.bank3
+                    , t_reportbybenebktotal.bank4
+                    , nobank.totalmoneyprice AS nobanktotal
+                    , COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(nobank.totalmoneyprice, 0) AS benetotal 
+                FROM
+                    ( 
+                    select
+                        payeeformalname
+                        , sum(usancesettlement) as totalmoneyprice 
+                    from
+                        t_reportunsettedprice 
+                    where
+                        bankname is null 
+                    group by
+                        payeeformalname
+                        , bankname 
+                    order by
+                        payeeformalname
+                        , bankname
+                    ) AS nobank 
+                    LEFT JOIN t_reportbybenebktotal 
+                    ON nobank.payeeformalname = t_reportbybenebktotal.Beneficiary
+                ) as tmp
                 LIMIT $1 OFFSET $2
-            ) as tmp
+            ) as tmp2
         ";
 
 
@@ -1464,52 +1477,70 @@ function fncGetUnSettedLst($objDB, $offset, $limt)
             , tmp.bank2
             , tmp.bank3
             , tmp.bank4
-            , tmp.unapprovaltotal
-            , tmp.benetotal
+            , tmp.nobanktotal
+            , tmp.benetotal 
         FROM
-            (
+            ( 
             SELECT
                 t_reportbybenebktotal.Beneficiary
                 , t_reportbybenebktotal.bank1
                 , t_reportbybenebktotal.bank2
                 , t_reportbybenebktotal.bank3
                 , t_reportbybenebktotal.bank4
-                , to_char(unapproval.unapprovalprice, 'FM9,999,999.00') AS unapprovaltotal
-                , to_char(COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0), 'FM9,999,999.00') AS benetotal
-                FROM
-                (
-                    SELECT
-                    t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
-                    , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
-                    FROM
-                    t_reportunsettedpriceunapproval
-                    GROUP BY
-                    t_reportunsettedpriceunapproval.payeeformalname
-                ) AS unapproval
-                RIGHT JOIN t_reportbybenebktotal
-                    ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
-                UNION
-                SELECT
-                unapproval.payeeformal as Beneficiary
+                , to_char(nobank.totalmoneyprice, 'FM9,999,999.00') AS nobanktotal
+                , to_char( 
+                COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(nobank.totalmoneyprice, 0)
+                , 'FM9,999,999.00'
+                ) AS benetotal 
+            FROM
+                ( 
+                select
+                    payeeformalname
+                    , sum(usancesettlement) as totalmoneyprice 
+                from
+                    t_reportunsettedprice 
+                where
+                    bankname is null 
+                group by
+                    payeeformalname
+                    , bankname 
+                order by
+                    payeeformalname
+                    , bankname
+                ) AS nobank 
+                RIGHT JOIN t_reportbybenebktotal 
+                ON nobank.payeeformalname = t_reportbybenebktotal.Beneficiary 
+            union 
+            SELECT
+                nobank.payeeformalname as Beneficiary
                 , t_reportbybenebktotal.bank1
                 , t_reportbybenebktotal.bank2
                 , t_reportbybenebktotal.bank3
                 , t_reportbybenebktotal.bank4
-                , to_char(unapproval.unapprovalprice, 'FM9,999,999.00') AS unapprovaltotal
-                , to_char(COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(unapproval.unapprovalprice, 0), 'FM9,999,999.00') AS benetotal
-                FROM
-                (
-                    SELECT
-                    t_reportunsettedpriceunapproval.payeeformalname AS payeeformal
-                    , sum(t_reportunsettedpriceunapproval.unsettledprice) AS unapprovalprice
-                    FROM
-                    t_reportunsettedpriceunapproval
-                    GROUP BY
-                    t_reportunsettedpriceunapproval.payeeformalname
-                ) AS unapproval
-                LEFT JOIN t_reportbybenebktotal
-                    ON unapproval.payeeformal = t_reportbybenebktotal.Beneficiary
-            ) as tmp
+                , to_char(nobank.totalmoneyprice, 'FM9,999,999.00') AS nobanktotal
+                , to_char( 
+                COALESCE(t_reportbybenebktotal.total, 0) + COALESCE(nobank.totalmoneyprice, 0)
+                , 'FM9,999,999.00'
+                ) AS benetotal 
+            FROM
+                ( 
+                select
+                    payeeformalname
+                    , sum(usancesettlement) as totalmoneyprice 
+                from
+                    t_reportunsettedprice 
+                where
+                    bankname is null 
+                group by
+                    payeeformalname
+                    , bankname 
+                order by
+                    payeeformalname
+                    , bankname
+                ) AS nobank 
+                LEFT JOIN t_reportbybenebktotal 
+                ON nobank.payeeformalname = t_reportbybenebktotal.Beneficiary
+            ) as tmp  
             LIMIT $1 OFFSET $2
         ";
 

@@ -502,23 +502,23 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data,
     }
 
     // （臨時テーブル）帳票未決済額未承認テーブルデータを全件削除する
-    fncDeleteReportUnSettedPriceUnapproval($objDB);
+    // fncDeleteReportUnSettedPriceUnapproval($objDB);
 
     // L/C情報取得
-    $lcinfoUnapprovalLst = fncGetLcInfoForReportFive($objDB, $data["startDate"], $data["endDate"], $currencyClass, 2);
+    // $lcinfoUnapprovalLst = fncGetLcInfoForReportFive($objDB, $data["startDate"], $data["endDate"], $currencyClass, 2);
 
     // （臨時テーブル）帳票未決済額未承認テーブルにデータを登録する
-    if ($lcinfoUnapprovalLst && count($lcinfoUnapprovalLst) > 0) {
-        unset($insertData);
-        foreach ($lcinfoUnapprovalLst as $lcinfoUnapproval) {
-            $insertData["payeeformalname"] = $lcinfoUnapproval["payfnameformal"];
-            $insertData["unsettledprice"] = $lcinfoUnapproval["moneyprice"] -
-                ($lcinfoUnapproval["bldetail1money"] + $lcinfoUnapproval["bldetail2money"] + $lcinfoUnapproval["bldetail3money"]);
+    // if ($lcinfoUnapprovalLst && count($lcinfoUnapprovalLst) > 0) {
+    //     unset($insertData);
+    //     foreach ($lcinfoUnapprovalLst as $lcinfoUnapproval) {
+    //         $insertData["payeeformalname"] = $lcinfoUnapproval["payfnameformal"];
+    //         $insertData["unsettledprice"] = $lcinfoUnapproval["moneyprice"] -
+    //             ($lcinfoUnapproval["bldetail1money"] + $lcinfoUnapproval["bldetail2money"] + $lcinfoUnapproval["bldetail3money"]);
 
-            fncInsertReportUnSettedPriceUnapproval($objDB, $insertData);
-            unset($insertData);
-        }
-    }
+    //         fncInsertReportUnSettedPriceUnapproval($objDB, $insertData);
+    //         unset($insertData);
+    //     }
+    // }
 
     // 帳票BeneBK別合計テーブルデータを全件削除する
     fncDeleteReportByBenebktotal($objDB);
@@ -545,7 +545,7 @@ function reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data,
                         $insertData["bank2"] = $totalmoneyprice;
                     } else if ($bankname == trim($bankLst[2]["bankomitname"])) {
                         $insertData["bank3"] = $totalmoneyprice;
-                    } else if ($bankname == trim($bankLst[3]["bankomitname"])) {
+                    } else if ($bankLst[3]["bankomitname"] != null && $bankname == trim($bankLst[3]["bankomitname"])) {
                         $insertData["bank4"] = $totalmoneyprice;
                     }
                 } else {

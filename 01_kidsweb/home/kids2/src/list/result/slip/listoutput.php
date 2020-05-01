@@ -161,6 +161,17 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
     $aryParts["accountname"] = $aryParts["lngpaymentmethodcode"] == 1 ? "KUWAGATA CO.,LTD." : "";
     $aryParts["accountno"] = $aryParts["lngpaymentmethodcode"] == 1 ? "1063143" : "";
     $aryParts["dtmpaymentlimit"] = $aryParts["lngpaymentmethodcode"] == 1 ? ("on " . $aryParts["dtmpaymentlimit"]) : "";
+} else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
+    $strnote = "";
+    $strsalesclassname = $aryDetail[0]["strsalesclassname0"];
+    if (strlen($strsalesclassname) > 0 ) {
+        $strnote = $strnote .$strsalesclassname ."分　";
+    }
+    if ($aryParts["strtaxclassname"] != "非課税") {
+        $strnote = $strnote . $aryParts["strtaxclassname"]. "(". ($aryParts["curtax"] * 100)."%)" . "\n" .$aryParts["strnote"];
+    }
+    
+    $aryParts["strnote"] = $strnote;
 }
 
 // HTML出力

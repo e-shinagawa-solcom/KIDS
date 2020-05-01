@@ -336,7 +336,7 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
         $sheet->setCellValue('C'. ($startRow + 23), $unSettedTotal->bank2total);
         $sheet->setCellValue('D'. ($startRow + 23), $unSettedTotal->bank3total);
         $sheet->setCellValue('E'. ($startRow + 23), $unSettedTotal->bank4total);
-        $sheet->setCellValue('F'. ($startRow + 23), $unSettedTotal->unapprovaltotaltotal);
+        $sheet->setCellValue('F'. ($startRow + 23), $unSettedTotal->nobanktotaltotal);
         $sheet->setCellValue('G'. ($startRow + 23), $unSettedTotal->benetotaltotal);
     }    
     $sheet->getStyle('B'. ($startRow + 23). ':G'. ($startRow + 23))->getNumberFormat()->setFormatCode($numberFormat);
@@ -351,7 +351,7 @@ function fncSetReportFive($objDB, $spreadsheet, $sheetname, $currencyClass, $ban
     $sheet->setCellValue('C'. ($startRow + 26), $unSettedTotal->bank2total * $rate);
     $sheet->setCellValue('D'. ($startRow + 26), $unSettedTotal->bank3total * $rate);
     $sheet->setCellValue('E'. ($startRow + 26), $unSettedTotal->bank4total * $rate);
-    $sheet->setCellValue('F'. ($startRow + 26), $unSettedTotal->unapprovaltotaltotal * $rate);
+    $sheet->setCellValue('F'. ($startRow + 26), $unSettedTotal->nobanktotaltotal * $rate);
     $sheet->setCellValue('G'. ($startRow + 26), $unSettedTotal->benetotaltotal * $rate);
 
     $sheet->getStyle('B'. ($startRow + 26). ':G'. ($startRow + 26))->getNumberFormat()->setFormatCode('#,##0');

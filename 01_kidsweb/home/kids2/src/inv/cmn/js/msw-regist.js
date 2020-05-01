@@ -485,6 +485,11 @@
                 isError = true;
                 return false;
             }
+            if (strCustomerNo.length > 10) {
+                alert(len + "行目の顧客NO.が10桁まで入力してください。");
+                isError = true;
+                return false;
+            }
         });
         
         if (isError) {

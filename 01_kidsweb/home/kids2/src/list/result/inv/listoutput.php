@@ -83,6 +83,7 @@ $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("list/result/inv.html");
 $aryParts["totalprice_unitsign"] = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryParts["totalprice"], "price");
 $aryParts["dtminvoicedate"] = date("Y年n月", strtotime($aryParts["dtminvoicedate"]));
+$aryParts["dtminvoicedate_day"] = ltrim($aryParts["dtminvoicedate_day"], '0');
 $aryParts["dtminsertdate"] = date("Y.n.j", strtotime($aryParts["dtminsertdate"]));
 
 $aryParts["curthismonthamount"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["curthismonthamount"], "price");
