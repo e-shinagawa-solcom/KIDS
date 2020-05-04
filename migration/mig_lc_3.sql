@@ -1,10 +1,12 @@
 \c ackids
+\encoding UTF8;
 update t_aclcinfo set productrevisecd = '00' where productrevisecd is null;
 update m_acsendinfo set sendfromname = 'From ： KUWAGATA /  ACCOUNTING DIV.';
 update m_acbackcolorinfo set bytinvalidflag = true where strclrno = '0012';
 update t_aclcinfo set currencyclass = 'USドル' where currencyclass = 'ＵＳドル';
 
 \c kidscore2
+\encoding UTF8;
 drop table if exists m_sendinfo;
 create table m_sendinfo(
     sendno character(4) not null

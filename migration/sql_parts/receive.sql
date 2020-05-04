@@ -4,42 +4,38 @@ DO $$
 --BEGIN TRANSACTION;
 --発注マスタカーソル
 declare
-    cur_del cursor for
-        select distinct 
-            lngreceiveno
-           ,strreceivecode
---           ,strrevisecode
-           ,-1 as lngrevisionno
-           ,CURRENT_TIMESTAMP as dtminsertdate
-        from m_receive
-        where lngreceiveno not in (select lngreceiveno from m_receive where lngrevisionno < 0)
-            and strreceivecode in (
-                select strreceivecode from m_receive where lngrevisionno < 0
-            );
-
     receiveno integer;
-    cur_header CURSOR(receiveno integer, revisionno integer) FOR
-    select * from dblink('con111',
-        'select ' ||
-        'lngreceiveno, ' ||
-        'lngrevisionno, ' ||
-        'strreceivecode, ' ||
-        'strrevisecode, ' ||
-        'dtmappropriationdate, ' ||
-        'lngcustomercompanycode, ' ||
-        'lnggroupcode, ' ||
-        'lngusercode, ' ||
-        'lngreceivestatuscode, ' ||
-        'lngmonetaryunitcode, ' ||
-        'lngmonetaryratecode, ' ||
-        'curconversionrate, ' ||
-        'lnginputusercode, ' ||
-        'bytinvalidflag, ' ||
-        'dtminsertdate, ' ||
-        'strcustomerreceivecode ' ||
-        'from m_receive ' || 
-        'where lngreceiveno = ' || receiveno ||
-        ' and lngrevisionno = ' || revisionno
+    cur_header CURSOR FOR
+    select * from dblink('con111','
+select
+    lngreceiveno
+   ,lngrevisionno
+   ,strreceivecode
+   ,strrevisecode
+   ,dtmappropriationdate
+   ,lngcustomercompanycode
+   ,lnggroupcode
+   ,lngusercode
+   ,lngreceivestatuscode
+   ,lngmonetaryunitcode
+   ,lngmonetaryratecode
+   ,curconversionrate
+   ,lnginputusercode
+   ,bytinvalidflag
+   ,dtminsertdate
+   ,strcustomerreceivecode
+from m_receive
+where bytinvalidflag = false
+    and (strreceivecode, lngrevisionno) in
+    (
+        select
+            strreceivecode
+           ,MAX(lngrevisionno) as lngrevisionno
+        from m_receive
+        where strreceivecode not in (select strreceivecode from m_receive where lngrevisionno < 0)
+        group by strreceivecode
+    )
+order by strreceivecode'
     ) 
     AS T1
     (
@@ -63,34 +59,30 @@ declare
 
 
 --移行元発注明細テーブルカーソル
-    cur_detail CURSOR FOR
-    SELECT * FROM dblink('con111',
-        'select ' || 
-        'm_receive.lngreceiveno,' || 
-        'COALESCE(t_receivedetail.lngreceivedetailno, -1) AS lngreceivedetailno,' || 
---        't_receivedetail.lngreceivedetailno,' || 
-        'm_receive.lngrevisionno,' || 
-        't_receivedetail.strproductcode,' || 
---        't_receivedetail.strrevisecode,' || 
-        't_receivedetail.lngsalesclasscode,' || 
-        't_receivedetail.dtmdeliverydate,' || 
-        't_receivedetail.lngconversionclasscode,' || 
-        't_receivedetail.curproductprice,' || 
-        't_receivedetail.lngproductquantity,' || 
-        't_receivedetail.lngproductunitcode,' || 
---        't_receivedetail.lngunitquantity,' || 
-        't_receivedetail.cursubtotalprice,' || 
-        't_receivedetail.strnote,' || 
-        't_receivedetail.lngsortkey ' || 
-        'from m_receive ' ||
-        'left outer join t_receivedetail ' ||
-        'on t_receivedetail.lngreceiveno = m_receive.lngreceiveno ' ||
-        'and t_receivedetail.lngrevisionno = m_receive.lngrevisionno ' ||
-        'where m_receive.bytinvalidflag = FALSE ' ||
-        'order by m_receive.strreceivecode' ||
-        ', t_receivedetail.lngreceivedetailno' ||
-        ', m_receive.lngrevisionno' ||
-        ', m_receive.lngreceiveno'
+    cur_detail CURSOR(receiveno integer, revisionno integer) FOR
+    SELECT * FROM dblink('con111', '
+select  
+    t_receivedetail.lngreceiveno 
+    ,t_receivedetail.lngreceivedetailno 
+    ,t_receivedetail.lngrevisionno 
+    ,t_receivedetail.strproductcode 
+    ,''00'' as strrevisecode 
+    ,t_receivedetail.lngsalesclasscode 
+    ,t_receivedetail.dtmdeliverydate 
+    ,t_receivedetail.lngconversionclasscode 
+    ,t_receivedetail.curproductprice 
+    ,t_receivedetail.lngproductquantity 
+    ,t_receivedetail.lngproductunitcode 
+    ,m_product.lngcartonquantity as lngunitquantity 
+    ,t_receivedetail.cursubtotalprice 
+    ,t_receivedetail.strnote 
+    ,t_receivedetail.lngsortkey  
+from t_receivedetail 
+inner join m_product
+    on m_product.strproductcode = t_receivedetail.strproductcode
+where t_receivedetail.lngreceiveno = ' || receiveno || 
+' and t_receivedetail.lngrevisionno = ' || revisionno || 
+' order by t_receivedetail.lngreceivedetailno'
     )
     AS T2
     (
@@ -98,14 +90,14 @@ declare
        ,lngreceivedetailno integer
        ,lngrevisionno integer
        ,strproductcode	text
---       ,strrevisecode	text
+       ,strrevisecode	text
        ,lngsalesclasscode	integer
        ,dtmdeliverydate	date
        ,lngconversionclasscode	integer
        ,curproductprice	numeric(14, 4)
        ,lngproductquantity	integer
        ,lngproductunitcode	integer
---       ,lngunitquantity	integer
+       ,lngunitquantity	integer
        ,cursubtotalprice	numeric(14, 4)
        ,strnote	text
        ,lngsortkey	integer
@@ -143,59 +135,54 @@ BEGIN
     );
 --受注明細カーソルオープン（条件：受注番号 = 読み込んだ受注マスタの受注番号）
 
-    open cur_detail;
+    open cur_header;
     LOOP
-        FETCH cur_detail INTO detail;
-        EXIT WHEN NOT FOUND;
-        open cur_header(detail.lngreceiveno,detail.lngrevisionno);
         FETCH cur_header INTO header;
-        close cur_header;
-        IF current_receive <> header.strreceivecode or 
-        ( detail.lngreceivedetailno is not null and detail.lngreceivedetailno >= 0 and last_detail <> detail.lngreceivedetailno) THEN
-            write_count = write_count + 1;
-            last_detail = detail.lngreceivedetailno;
-            current_receive = header.strreceivecode;
-        END IF;
---        RAISE INFO '% % % % % ', header.strreceivecode, header.lngrevisionno, detail.lngreceivedetailno, detail.lngreceiveno, write_count;
+        EXIT WHEN NOT FOUND;
+        open cur_detail(header.lngreceiveno,header.lngrevisionno);
+        LOOP
+            FETCH cur_detail INTO detail;
+            EXIT WHEN NOT FOUND;
+--RAISE INFO '% % % % % ', header.strreceivecode, header.lngrevisionno, detail.lngreceivedetailno, detail.lngreceiveno, write_count;
+
 -- 受注明細件数分、受注マスタを登録
-        insert into m_receive(
-            lngreceiveno
-           ,lngrevisionno
-           ,strreceivecode
-           ,strrevisecode
-           ,dtmappropriationdate
-           ,lngcustomercompanycode
-           ,lnggroupcode
-           ,lngusercode
-           ,lngreceivestatuscode
-           ,lngmonetaryunitcode
-           ,lngmonetaryratecode
-           ,curconversionrate
-           ,lnginputusercode
-           ,bytinvalidflag
-           ,dtminsertdate
-           ,strcustomerreceivecode
-        )
-        values(
-            write_count
-           ,header.lngrevisionno
-           ,header.strreceivecode
-           ,header.strrevisecode
-           ,header.dtmappropriationdate
-           ,header.lngcustomercompanycode
-           ,NULL
-           ,NULL
-           ,header.lngreceivestatuscode
-           ,header.lngmonetaryunitcode
-           ,header.lngmonetaryratecode
-           ,header.curconversionrate
-           ,header.lnginputusercode
-           ,header.bytinvalidflag
-           ,header.dtminsertdate
-           ,header.strcustomerreceivecode
-        );
+            insert into m_receive(
+                lngreceiveno
+               ,lngrevisionno
+               ,strreceivecode
+               ,strrevisecode
+               ,dtmappropriationdate
+               ,lngcustomercompanycode
+               ,lnggroupcode
+               ,lngusercode
+               ,lngreceivestatuscode
+               ,lngmonetaryunitcode
+               ,lngmonetaryratecode
+               ,curconversionrate
+               ,lnginputusercode
+               ,bytinvalidflag
+               ,dtminsertdate
+               ,strcustomerreceivecode
+            )
+            values(
+                write_count
+               ,0
+               ,header.strreceivecode
+               ,'00'
+               ,header.dtmappropriationdate
+               ,header.lngcustomercompanycode
+               ,header.lnggroupcode
+               ,header.lngusercode
+               ,header.lngreceivestatuscode
+               ,header.lngmonetaryunitcode
+               ,header.lngmonetaryratecode
+               ,header.curconversionrate
+               ,header.lnginputusercode
+               ,header.bytinvalidflag
+               ,header.dtminsertdate
+               ,header.strcustomerreceivecode
+            );
 -- 受注明細を登録
-        IF detail.lngrevisionno >= 0 THEN
             insert into t_receivedetail
             (
                 lngreceiveno
@@ -218,7 +205,7 @@ BEGIN
             (
                 write_count
                ,detail.lngreceivedetailno
-               ,detail.lngrevisionno
+               ,0
                ,detail.strproductcode
                ,'00'
                ,detail.lngsalesclasscode
@@ -227,7 +214,7 @@ BEGIN
                ,detail.curproductprice
                ,detail.lngproductquantity
                ,detail.lngproductunitcode
-               ,(select lngcartonquantity from m_product where strproductcode = detail.strproductcode and strrevisecode='00' and lngrevisionno=0)
+               ,detail.lngunitquantity
                ,detail.cursubtotalprice
                ,detail.strnote
                ,detail.lngsortkey
@@ -246,31 +233,11 @@ BEGIN
                ,write_count
             );
             total_price = total_price + detail.cursubtotalprice;
-        END IF;
+            write_count = write_count + 1;
+        END LOOP;
+        close cur_detail;
     END LOOP;
-    close cur_detail;
-    delete from t_receivedetail where lngreceivedetailno < 0;
+    close cur_header;
 
-    open cur_del;
-    LOOP
-        FETCH cur_del INTO detail;
-        EXIT WHEN NOT FOUND;
-RAISE INFO '% %', detail.lngreceiveno, detail.strreceivecode;
-        insert into m_receive(
-            lngreceiveno
-           ,strreceivecode
-           ,strrevisecode
-           ,lngrevisionno
-           ,dtminsertdate
-        )
-        values(
-            detail.lngreceiveno
-           ,detail.strreceivecode
-           ,(select MAX(strrevisecode) from m_receive where lngreceiveno = detail.lngreceiveno)
-           ,detail.lngrevisionno
-           ,detail.dtminsertdate
-        );
-    END LOOP;
-    close cur_del;
 END $$
 

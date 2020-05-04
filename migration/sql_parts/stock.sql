@@ -1,52 +1,40 @@
 DO $$
 declare
     cur_header cursor for
-    select * from dblink('con111',
-        'select ' ||
-            'm_stock.lngstockno ' ||
-           ',m_stock.lngrevisionno ' ||
-           ',m_stock.strstockcode ' ||
-           ',m_stock.lngorderno ' ||
-           ',m_stock.dtmappropriationdate ' ||
-           ',m_stock.lngcustomercompanycode ' ||
-           ',m_stock.lnggroupcode ' ||
-           ',m_stock.lngusercode ' ||
-           ',m_stock.lngstockstatuscode ' ||
-           ',m_stock.lngmonetaryunitcode ' ||
-           ',m_stock.lngmonetaryratecode ' ||
-           ',m_stock.curconversionrate ' ||
-           ',m_stock.lngpayconditioncode ' ||
-           ',m_stock.strslipcode ' ||
-           ',m_stock.curtotalprice ' ||
-           ',m_stock.lngdeliveryplacecode ' ||
-           ',m_stock.dtmexpirationdate ' ||
-           ',m_stock.strnote ' ||
-           ',m_stock.lnginputusercode ' ||
-           ',m_stock.bytinvalidflag ' ||
-           ',m_stock.dtminsertdate ' ||
-        'from m_stock ' ||
-        'inner join ( ' ||
-            'select  ' ||
-                'm_stock.strstockcode ' ||
-            'from m_stock ' ||
-            'inner join ( ' ||
-                'select * from  ' ||
-                '( ' ||
-                    'select ' ||
-                        'strstockcode ' ||
-                       ',MAX(lngrevisionno) as lngrevisionno_max ' ||
-                    'from m_stock ' ||
-                    'group by strstockcode ' ||
-                ') GET_MAX ' ||
-            ') rev ' ||
-                'on rev.strstockcode = m_stock.strstockcode ' ||
-                'and rev.lngrevisionno_max = m_stock.lngrevisionno ' ||
-            'where m_stock.lngstockstatuscode >= 4 ' ||
-        ') A ' ||
-            'on A.strstockcode = m_stock.strstockcode ' ||
-        'order by  ' ||
-            'm_stock.strstockcode ' ||
-           ',m_stock.lngstockno'
+    select * from dblink('con111', '
+select 
+    m_stock.lngstockno 
+   ,m_stock.lngrevisionno 
+   ,m_stock.strstockcode 
+   ,m_stock.lngorderno 
+   ,m_stock.dtmappropriationdate 
+   ,m_stock.lngcustomercompanycode 
+   ,m_stock.lnggroupcode 
+   ,m_stock.lngusercode 
+   ,m_stock.lngstockstatuscode 
+   ,m_stock.lngmonetaryunitcode 
+   ,m_stock.lngmonetaryratecode 
+   ,m_stock.curconversionrate 
+   ,m_stock.lngpayconditioncode 
+   ,m_stock.strslipcode 
+   ,m_stock.curtotalprice 
+   ,m_stock.lngdeliveryplacecode 
+   ,m_stock.dtmexpirationdate 
+   ,m_stock.strnote 
+   ,m_stock.lnginputusercode 
+   ,m_stock.bytinvalidflag 
+   ,m_stock.dtminsertdate 
+from m_stock 
+inner join (
+    select strstockcode, MAX(lngrevisionno) as lngrevisionno from m_stock group by strstockcode
+) rev
+    on rev.strstockcode = m_stock.strstockcode
+	and rev.lngrevisionno = m_stock.lngrevisionno
+where m_stock.strstockcode not in (select strstockcode from m_stock where lngrevisionno < 0)
+order by  
+            m_stock.strstockcode 
+           ,m_stock.lngstockno
+'
     ) AS T1(
         lngstockno integer
        ,lngrevisionno integer
@@ -77,8 +65,8 @@ declare
        ,t_orderdetail.lngorderdetailno
        ,t_orderdetail.lngrevisionno as lngorderrevisionno
        ,T1.*
-    from dblink('con111',
-        'select 
+    from dblink('con111','
+select 
 ms.lngorderno as old_order,
 tod.lngorderdetailno as old_orderdetail ,
 
@@ -126,8 +114,8 @@ and tod.lngproductunitcode = tsd.lngproductunitcode
 and tod.lngorderdetailno = tsd.lngstockdetailno ' ||
         'where ms.lngstockno = ' || stockno || ' ' ||
         'and ms.lngrevisionno = ' || revisionno || ' ' ||
-
-'order by tsd.lngstockno,tsd.lngstockdetailno,tsd.lngrevisionno'
+'and ms.strstockcode not in (select strstockcode from m_stock where lngrevisionno < 0)
+order by tsd.lngstockno,tsd.lngstockdetailno,tsd.lngrevisionno'
         
     ) AS T1(
         old_order integer
@@ -157,7 +145,7 @@ and tod.lngorderdetailno = tsd.lngstockdetailno ' ||
     and order_conversion.detailno = T1.old_orderdetail
     left outer join t_orderdetail
     on t_orderdetail.lngorderno = order_conversion.new_order
-    and t_orderdetail.lngorderdetailno = T1.lngstockdetailno
+--    and t_orderdetail.lngorderdetailno = T1.lngstockdetailno
     inner join (
         select lngorderno, MAX(lngrevisionno) as lngrevisionno from t_orderdetail group by lngorderno
     )tod_rev
@@ -170,7 +158,7 @@ and tod.lngorderdetailno = tsd.lngstockdetailno ' ||
         from order_conversion
         inner join t_orderdetail
             on t_orderdetail.lngorderno = order_conversion.new_order
- --           and t_orderdetail.lngorderdetailno = order_conversion.detailno
+--           and t_orderdetail.lngorderdetailno = order_conversion.detailno
         inner join (
             select 
                 lngorderno
@@ -182,7 +170,7 @@ and tod.lngorderdetailno = tsd.lngstockdetailno ' ||
                ,lngorderdetailno
         ) max_rev
             on max_rev.lngorderno = t_orderdetail.lngorderno
-            and max_rev.lngorderdetailno = t_orderdetail.lngorderdetailno
+--            and max_rev.lngorderdetailno = t_orderdetail.lngorderdetailno
             and max_rev.lngrevisionno = t_orderdetail.lngrevisionno
         where order_conversion.old_order = orderno
     )order_info
@@ -213,6 +201,7 @@ begin
             last_stock = header.strstockcode;
             stockno = stockno + 1;
         END IF;
+--        RAISE INFO 'header: % % %', stockno, header.lngrevisionno, header.strstockcode;
         insert into m_stock
         (
             lngstockno
@@ -239,7 +228,7 @@ begin
         values
         (
             stockno
-           ,header.lngrevisionno
+           ,0
            ,header.strstockcode
            ,header.dtmappropriationdate
            ,header.lngcustomercompanycode
@@ -259,7 +248,6 @@ begin
            ,header.bytinvalidflag
            ,header.dtminsertdate
         );
---        RAISE INFO 'header: % % %', stockno, header.lngrevisionno, header.strstockcode;
         open cur_detail(header.lngstockno, header.lngrevisionno, header.lngorderno);
         LOOP
             FETCH cur_detail into detail;
@@ -296,10 +284,10 @@ begin
                 (
                     stockno
                    ,detail.lngstockdetailno
-                   ,detail.lngrevisionno
+                   ,0
                    ,detail.lngorderno
                    ,detail.lngorderdetailno
-                   ,detail.lngorderrevisionno
+                   ,0
                    ,detail.strproductcode
                    ,'00'
                    ,detail.lngstocksubjectcode
@@ -319,22 +307,6 @@ begin
                    ,detail.lngsortkey
                 );
 
-/*
-            IF detail.lngorderno is null or detail.lngorderdetailno is null THEN
-                RAISE INFO '% % % %' , stockno, detail.lngstockdetailno, detail.lngorderno, detail.lngorderdetailno;
-            END IF;
-            IF NOT EXISTS(
-                select 
-                    *
-                from t_stockdetail
-                where lngstockno = detail.lngstockno
-                    and lngstockdetailno = detail.lngstockdetailno
-                    and lngrevisionno = detail.lngrevisionno
-             ) THEN
-            ELSE
-                RAISE INFO 'detail duplicates % % %' , stockno, detail.lngrevisionno, detail.lngstockdetailno;
-            END IF;
-*/
         END LOOP;
         close cur_detail;
     END LOOP;

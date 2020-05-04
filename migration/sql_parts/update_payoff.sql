@@ -6,7 +6,7 @@ where (lngestimateno, lngestimatedetailno, lngrevisionno) in
 (
     select te.lngestimateno, te.lngestimatedetailno, te.lngrevisionno
     from t_estimatedetail te
-    where te.lngrevisionno = 1 
+    where te.lngrevisionno = 0
     and (te.lngstocksubjectcode, te.lngstockitemcode ) in 
     (
         select lngstocksubjectcode, lngstockitemcode from m_stockitem where lngestimateareaclassno = 3
@@ -34,7 +34,7 @@ where (lngestimateno, lngestimatedetailno, lngrevisionno) in
             on mp.strproductcode = me.strproductcode
             and mp.strrevisecode = me.strrevisecode
             and mp.lngrevisionno = me.lngrevisionno
-        where me.lngrevisionno = 1
+        where me.lngrevisionno = 0
             and me.lngestimateno not in 
             (
                 select distinct

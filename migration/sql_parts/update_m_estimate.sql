@@ -4,8 +4,8 @@ declare
 c_estimate cursor for
     select lngestimateno, lngrevisionno 
     from m_estimate 
-    where lngrevisionno >= 0 
-        and NOT (lngestimateno=6120 and  lngrevisionno=0) 
+    where lngrevisionno = 0 
+        --and NOT (lngestimateno=6120 and  lngrevisionno=0) 
     order by lngestimateno, lngrevisionno;
 
 r_estinate RECORD;    
@@ -16,7 +16,7 @@ open c_estimate;
 LOOP
     FETCH c_estimate INTO r_estinate;
     EXIT WHEN NOT FOUND;
-RAISE INFO '% %', r_estinate.lngestimateno, r_estinate.lngrevisionno;
+--RAISE INFO '% %', r_estinate.lngestimateno, r_estinate.lngrevisionno;
 	--入力者
     update m_estimate set
         --固定費
@@ -36,6 +36,6 @@ where lngrevisionno >= 0;
 
 update m_estimate set
     curprofit = curtotalprice - trunc((curtotalprice*0.060800),0)	--営業利益   売上総利益 - (売上総利益*標準割合）
-where lngrevisionno >= 0;
+where lngrevisionno = 0;
 
 END$$
