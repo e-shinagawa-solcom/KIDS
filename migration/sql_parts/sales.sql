@@ -1,35 +1,44 @@
 DO $$
 declare
     cur_header cursor for
-    select T1.* from dblink('con111',
-        'select ' ||
-            'm_sales.lngsalesno ' ||
-           ',m_sales.lngrevisionno ' ||
-           ',m_sales.strsalescode ' ||
-           ',m_sales.lngreceiveno ' ||
-           ',m_sales.dtmappropriationdate ' ||
-           ',m_sales.lngcustomercompanycode ' ||
-           ',m_sales.lnggroupcode ' ||
-           ',m_sales.lngusercode ' ||
-           ',m_sales.lngsalesstatuscode ' ||
-           ',m_sales.lngmonetaryunitcode ' ||
-           ',m_sales.lngmonetaryratecode ' ||
-           ',m_sales.curconversionrate ' ||
-           ',m_sales.strslipcode ' ||
-           ',m_sales.curtotalprice ' ||
-           ',m_sales.strnote ' ||
-           ',m_sales.lnginputusercode ' ||
-           ',m_sales.bytinvalidflag ' ||
-           ',m_sales.dtminsertdate ' ||
-        'from m_sales ' ||
-        'where strsalescode in  (' ||
-            'select strsalescode from m_sales '
-            'where lngsalesstatuscode >= 4 '
-        ')'
-        'order by ' ||
-            'm_sales.strsalescode ' ||
-           ',m_sales.lngsalesno '
-    ) AS T1
+    select T1.* from dblink('con111', '
+        select 
+            m_sales.lngsalesno 
+           ,m_sales.lngrevisionno 
+           ,m_sales.strsalescode 
+           ,m_sales.lngreceiveno 
+           ,m_sales.dtmappropriationdate 
+           ,m_sales.lngcustomercompanycode 
+           ,m_sales.lnggroupcode 
+           ,m_sales.lngusercode 
+           ,m_sales.lngsalesstatuscode 
+           ,m_sales.lngmonetaryunitcode 
+           ,m_sales.lngmonetaryratecode 
+           ,m_sales.curconversionrate 
+           ,m_sales.strslipcode 
+           ,m_sales.curtotalprice 
+           ,m_sales.strnote 
+           ,m_sales.lnginputusercode 
+           ,m_sales.bytinvalidflag 
+           ,m_sales.dtminsertdate 
+        from m_sales 
+        inner join (
+            select strsalescode, MAX(lngrevisionno) as lngrevisionno from m_sales group by strsalescode
+        ) rev
+            on rev.strsalescode = m_sales.strsalescode
+            and rev.lngrevisionno = m_sales.lngrevisionno
+        where m_sales.strsalescode in  (
+            select strsalescode from m_sales 
+            where lngsalesstatuscode >= 4 
+        )
+        and m_sales.strsalescode not in (
+            select strsalescode from m_sales 
+            where lngrevisionno < 0 
+        )
+        order by 
+            m_sales.strsalescode 
+           ,m_sales.lngsalesno 
+'    ) AS T1
     (
         lngsalesno integer
        ,lngrevisionno integer
@@ -173,10 +182,9 @@ declare
     last_slip text;
     last_no integer;
 begin
+
     delete from m_sales;
     delete from t_salesdetail;
-    delete from m_slip;
-    delete from t_slipdetail;
     sales_count = 0;
     last_sales = '';
 
@@ -212,7 +220,7 @@ begin
         values
         (
             sales_count
-           ,header.lngrevisionno
+           ,0
            ,header.strsalescode
            ,header.dtmappropriationdate
            ,header.lngcustomercompanycode
@@ -237,7 +245,7 @@ begin
             -- 受注番号採択（明細かヘッダか）
                 new_receiveno = detail.new_receive_sub;
                 IF new_receiveno is null THEN
-RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailno;
+--RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailno;
                 ELSE
 --RAISE INFO '% % use receive no on detail % -> %', detail.lngsalesno, detail.lngsalesdetailno, detail.lngreceiveno, detail.new_receive_sub;
                 END IF;
@@ -270,13 +278,13 @@ RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailn
                 (
                     sales_count
                    ,detail.lngsalesdetailno
-                   ,detail.lngrevisionno
+                   ,0
                    ,detail.strproductcode
                    ,'00'   -- 再販コード
                    ,detail.lngsalesclasscode
 --                   ,detail.dtmdeliverydate
                    ,detail.lngconversionclasscode
-                   ,1      -- 入数の逆算不可
+                   ,(select lngcartonquantity from m_product where strproductcode = detail.strproductcode)
                    ,detail.curproductprice
                    ,detail.lngproductquantity
                    ,detail.lngproductunitcode
@@ -288,15 +296,7 @@ RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailn
                    ,detail.lngsortkey
                    ,detail.new_receive_sub    --移行後の受注番号
                    ,detail.lngreceivedetailno
-                   ,(select 
-                         lngrevisionno 
-                     from t_receivedetail 
-                     where lngreceiveno = detail.new_receive_sub 
-                         and lngreceivedetailno = detail.lngreceivedetailno 
-                         and lngrevisionno = (
-                             select MAX(lngrevisionno) from t_receivedetail where lngreceiveno = detail.new_receive_sub and lngreceivedetailno = detail.lngreceivedetailno
-                         )
-                    )
+                   ,case WHEN detail.new_receive_sub is null then null else 0 end
                 );
         END LOOP;
         close cur_detail;
@@ -304,6 +304,8 @@ RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailn
     close cur_header;
 
 
+    delete from m_slip;
+    delete from t_slipdetail;
     last_no = -1;
     -- 納品書データ作成
     slip_count = 0;
@@ -312,7 +314,7 @@ RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailn
         FETCH cur_slip_head INTO slip_header;
         EXIT WHEN NOT FOUND;
         IF slip_header.lngrevisionno < 0 THEN
-            RAISE INFO '% deleted', slip_header.lngsalesno;
+--            RAISE INFO '% deleted', slip_header.lngsalesno;
         END IF;
         IF last_no <> slip_header.lngsalesno THEN
             slip_count = slip_count + 1;
@@ -446,7 +448,7 @@ RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailn
            ,t_salesdetail.strnote    --  明細備考
            ,t_salesdetail.lngreceiveno    --  受注番号
            ,t_salesdetail.lngreceivedetailno    --  受注明細番号
-           ,t_receivedetail.lngrevisionno    --  受注リビジョン番号
+           ,0    --  受注リビジョン番号
            ,t_salesdetail.lngsortkey    --  表示用ソートキー
         from t_salesdetail
         left outer join m_product
@@ -464,7 +466,7 @@ RAISE INFO '% % no receiveno matched', detail.lngsalesno, detail.lngsalesdetailn
             on  m_productunit.lngproductunitcode = t_salesdetail.lngproductunitcode
         left outer join t_receivedetail
             on t_receivedetail.lngreceiveno = t_salesdetail.lngreceiveno
-            and t_receivedetail.lngreceivedetailno = t_salesdetail.lngreceivedetailno
+--            and t_receivedetail.lngreceivedetailno = t_salesdetail.lngreceivedetailno
             and t_receivedetail.lngrevisionno = t_salesdetail.lngreceiverevisionno
         left outer join m_receive
             on m_receive.lngreceiveno = t_salesdetail.lngreceiveno

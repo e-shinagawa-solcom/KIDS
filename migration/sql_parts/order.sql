@@ -5,30 +5,41 @@ DO $$
 --発注マスタカーソル
 declare
     orderno integer;
-    cur_header CURSOR(orderno integer, revisionno integer) FOR
+    cur_header CURSOR FOR
     select * from dblink('con111',
-        'select ' ||
-        'lngorderno ' || 
-        ',lngrevisionno ' || 
-        ',strordercode ' || 
-        ',strrevisecode ' || 
-        ',dtmappropriationdate ' || 
-        ',lngcustomercompanycode ' || 
-        ',lnggroupcode ' || 
-        ',lngusercode ' || 
-        ',lngorderstatuscode ' || 
-        ',lngmonetaryunitcode ' || 
-        ',lngmonetaryratecode ' || 
-        ',curconversionrate ' || 
-        ',lngpayconditioncode ' || 
-        ',lngdeliveryplacecode ' || 
-        ',dtmexpirationdate ' || 
-        ',lnginputusercode ' || 
-        ',bytinvalidflag ' || 
-        ',dtminsertdate ' || 
-        'from m_order ' || 
-        'where lngorderno = ' || orderno ||
-        ' and lngrevisionno = ' || revisionno
+'select 
+        lngorderno
+       ,lngrevisionno
+       ,strordercode
+       ,''00'' as strrevisecode
+       ,dtmappropriationdate
+       ,lngcustomercompanycode
+       ,lnggroupcode
+       ,lngusercode
+       ,lngorderstatuscode
+       ,lngmonetaryunitcode
+       ,lngmonetaryratecode
+       ,curconversionrate
+       ,lngpayconditioncode
+       ,lngdeliveryplacecode
+       ,dtmexpirationdate
+       ,lnginputusercode
+       ,bytinvalidflag
+       ,dtminsertdate
+from m_order
+where bytinvalidflag = false
+    and (strordercode, lngrevisionno) in (
+        select 
+            strordercode
+           ,MAX(lngrevisionno) as lngrevisionno
+        from m_order
+        where strordercode not in (
+            select strordercode from m_order where lngrevisionno < 0
+        )
+        group by strordercode
+    )
+    order by strordercode
+'
     ) 
     AS T1
     (
@@ -54,37 +65,29 @@ declare
 
 
 --移行元発注明細テーブルカーソル
-    cur_detail CURSOR FOR
-    SELECT * FROM dblink('con111',
-        'select ' || 
-        'm_order.lngorderno,' || 
-        'COALESCE(t_orderdetail.lngorderdetailno, -1) AS lngorderdetailno,' || 
---        't_orderdetail.lngorderdetailno,' || 
-        'm_order.lngrevisionno,' || 
-        't_orderdetail.strproductcode,' || 
-        't_orderdetail.lngstocksubjectcode,' || 
-        't_orderdetail.lngstockitemcode,' || 
-        't_orderdetail.dtmdeliverydate,' || 
-        't_orderdetail.lngdeliverymethodcode,' || 
-        't_orderdetail.lngconversionclasscode,' || 
-        't_orderdetail.curproductprice,' || 
-        't_orderdetail.lngproductquantity,' || 
-        't_orderdetail.lngproductunitcode,' || 
---        't_orderdetail.lngtaxclasscode,' || 
---        't_orderdetail.lngtaxcode,' || 
---        't_orderdetail.curtaxprice,' || 
-        't_orderdetail.cursubtotalprice,' || 
-        't_orderdetail.strnote,' || 
-        't_orderdetail.strmoldno ' || 
-        'from m_order ' ||
-        'left outer join t_orderdetail ' ||
-        'on t_orderdetail.lngorderno = m_order.lngorderno ' ||
-        'and t_orderdetail.lngrevisionno = m_order.lngrevisionno ' ||
-        'where m_order.bytinvalidflag = FALSE ' ||
-        'order by m_order.strordercode' ||
-        ', t_orderdetail.lngorderdetailno' ||
-        ', m_order.lngrevisionno' ||
-        ', m_order.lngorderno'
+    cur_detail CURSOR(orderno integer, revisionno integer) FOR
+    SELECT * FROM dblink('con111','
+select
+    lngorderno
+   ,lngorderdetailno
+   ,0 as lngrevisionno
+   ,strproductcode
+   ,lngstocksubjectcode
+   ,lngstockitemcode
+   ,dtmdeliverydate
+   ,lngdeliverymethodcode
+   ,lngconversionclasscode
+   ,curproductprice
+   ,lngproductquantity
+   ,lngproductunitcode
+   ,cursubtotalprice
+   ,strnote
+   ,strmoldno
+from t_orderdetail
+where lngorderno = ' || orderno ||
+   ' and lngrevisionno = ' || revisionno ||
+   ' order by lngorderdetailno
+'
     )
     AS T2
     (
@@ -166,15 +169,15 @@ declare
 BEGIN
     last_order = '';
     current_order = '';
-    write_count = 0;
+    write_count = 1;
     po_count = 0;
     last_detail = -999;
     max_revision = 0;
+
+
+--発注マスタ
     delete from m_order;
     delete from t_orderdetail;
-    delete from m_purchaseorder;
-    delete from t_purchaseorderdetail;
-
     drop table if exists order_conversion;
     create table order_conversion(
         old_order integer
@@ -189,62 +192,56 @@ BEGIN
            ,dtmexpirationdate date
         );
 
---発注明細カーソルオープン（条件：発注番号 = 読み込んだ発注マスタの発注番号）
 
-    open cur_detail;
+--発注マスタカーソルオープン
+    open cur_header;
     LOOP
-        FETCH cur_detail INTO detail;
-        EXIT WHEN NOT FOUND;
-        open cur_header(detail.lngorderno,detail.lngrevisionno);
         FETCH cur_header INTO header;
-        close cur_header;
-        IF current_order <> header.strordercode OR (detail.lngorderdetailno is not null and detail.lngorderdetailno <> last_detail) THEN
-            write_count = write_count + 1;
-            last_detail = detail.lngorderdetailno;
-            current_order = header.strordercode;
-        END IF;
+        EXIT WHEN NOT FOUND;
+--RAISE INFO '% %', header.lngorderno, write_count;
+--発注明細カーソルオープン（条件：発注番号 = 読み込んだ発注マスタの発注番号）
+        open cur_detail(header.lngorderno,header.lngrevisionno);
+        LOOP
+            FETCH cur_detail INTO detail;
+            EXIT WHEN NOT FOUND;
 -- 発注明細件数分、発注マスタを登録
-        RAISE INFO '% %', header.lngorderno, write_count;
-        insert into m_order(
-            lngorderno
-           ,lngrevisionno
-           ,strordercode
-           ,dtmappropriationdate
-           ,lngcustomercompanycode
-           ,lnggroupcode
-           ,lngusercode
-           ,lngorderstatuscode
-           ,lngmonetaryunitcode
-           ,lngmonetaryratecode
-           ,curconversionrate
-           ,lngpayconditioncode
-           ,lngdeliveryplacecode
---           ,dtmexpirationdate
-           ,lnginputusercode
-           ,bytinvalidflag
-           ,dtminsertdate
-        )
-        values(
-            write_count
-           ,header.lngrevisionno
-           ,header.strordercode
-           ,header.dtmappropriationdate
-           ,header.lngcustomercompanycode
-           ,NULL
-           ,NULL
-           ,header.lngorderstatuscode
-           ,header.lngmonetaryunitcode
-           ,header.lngmonetaryratecode
-           ,header.curconversionrate
-           ,header.lngpayconditioncode
-           ,header.lngdeliveryplacecode
---           ,header.dtmexpirationdate
-           ,header.lnginputusercode
-           ,header.bytinvalidflag
-           ,header.dtminsertdate
-        );
+            insert into m_order(
+                lngorderno
+               ,lngrevisionno
+               ,strordercode
+               ,dtmappropriationdate
+               ,lngcustomercompanycode
+               ,lnggroupcode
+               ,lngusercode
+               ,lngorderstatuscode
+               ,lngmonetaryunitcode
+               ,lngmonetaryratecode
+               ,curconversionrate
+               ,lngpayconditioncode
+               ,lngdeliveryplacecode
+               ,lnginputusercode
+               ,bytinvalidflag
+               ,dtminsertdate
+            )
+            values(
+                write_count
+               ,0
+               ,header.strordercode
+               ,header.dtmappropriationdate
+               ,header.lngcustomercompanycode
+               ,header.lnggroupcode
+               ,header.lngusercode
+               ,header.lngorderstatuscode
+               ,header.lngmonetaryunitcode
+               ,header.lngmonetaryratecode
+               ,header.curconversionrate
+               ,header.lngpayconditioncode
+               ,header.lngdeliveryplacecode
+               ,header.lnginputusercode
+               ,header.bytinvalidflag
+               ,header.dtminsertdate
+            );
 -- 発注明細を登録
-        IF detail.lngrevisionno >= 0 THEN
 --        RAISE INFO '% % % % % ', header.strordercode, header.lngrevisionno, detail.lngorderdetailno, detail.lngorderno, write_count;
             insert into t_orderdetail
             (
@@ -261,9 +258,6 @@ BEGIN
                ,curproductprice
                ,lngproductquantity
                ,lngproductunitcode
---               ,lngtaxclasscode
---               ,lngtaxcode
---               ,curtaxprice
                ,cursubtotalprice
                ,strnote
                ,strmoldno
@@ -272,7 +266,7 @@ BEGIN
             (
                 write_count
                ,detail.lngorderdetailno
-               ,detail.lngrevisionno
+               ,0
                ,detail.strproductcode
                ,'00'
                ,detail.lngstocksubjectcode
@@ -283,13 +277,11 @@ BEGIN
                ,detail.curproductprice
                ,detail.lngproductquantity
                ,detail.lngproductunitcode
---               ,detail.lngtaxclasscode
---               ,detail.lngtaxcode
---               ,detail.curtaxprice
                ,detail.cursubtotalprice
                ,detail.strnote
                ,detail.strmoldno
             );
+-- 新旧変換データを作成
             insert into order_conversion
             (
                 old_order
@@ -302,27 +294,17 @@ BEGIN
                ,detail.lngorderdetailno
                ,write_count
             );
-            insert into expire_date
-            (
-                lngorderno
-               ,lngrevisionno
-               ,dtmexpirationdate
-            )
-            values(
-                write_count
-               ,detail.lngrevisionno
-               ,header.dtmexpirationdate
-            );
-            total_price = total_price + detail.cursubtotalprice;
-            IF detail.lngorderdetailno = 1 THEN
-                product_code = detail.strproductcode;
-            END IF;
-        END IF;
--- 新旧変換データを作成
+            write_count = write_count + 1;
+        END LOOP;
+        close cur_detail;
     END LOOP;
-    close cur_detail;
+    close cur_header;
 RAISE INFO 'complete order';
 
+
+-- 発注書マスタ
+    delete from m_purchaseorder;
+    delete from t_purchaseorderdetail;
 
     po_count = 0;
     last_order = '';
@@ -499,28 +481,6 @@ RAISE INFO 'complete order';
              and m_order.lngrevisionno = last_revision
              and m_product.strproductcode = product_code
         ;
-        -- 発注書マスタ削除チェック
-        IF last_revision = 0 THEN
-            IF EXISTS( 
-                select * 
-                from m_order 
-                where strordercode = ( select strordercode from m_order where lngorderno = last_orderno and lngrevisionno = last_revision )
-                    and lngrevisionno = -1 ) THEN
---                RAISE INFO 'data deleted % % %', last_orderno, product_code, last_revision;
-                insert into m_purchaseorder
-                (
-                    lngpurchaseorderno
-                    ,lngrevisionno
-                    ,strordercode
-                )
-                values
-                (
-                    po_count
-                   ,-1
-                   ,(select strordercode from m_order where lngorderno = last_orderno and lngrevisionno = last_revision)
-                );
-            END IF;
-        END IF;
     END LOOP;
     close cur_po_key;
 RAISE INFO 'complete po';

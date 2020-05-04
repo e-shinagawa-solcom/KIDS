@@ -7,10 +7,11 @@ delete from m_receive;
 delete from t_receivedetail;
 delete from m_purchaseorder;
 delete from t_purchaseorderdetail;
+delete from m_sales;
+delete from t_salesdetail;
 delete from m_slip;
 delete from t_slipdetail;
-delete from m_invoice;
-delete from t_invoicedetail;
 delete from m_stock;
 delete from t_stockdetail;
-
+/*
+*/

@@ -132,5 +132,5 @@ begin
         m_count = m_count + 1;
     END LOOP;
     close cur_product;
-    
+RAISE INFO 'add_empty_estimate completed';
 END $$
