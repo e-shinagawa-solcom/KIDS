@@ -133,7 +133,7 @@ $aryQuery[] = "dtminsertdate "; // 21:登録日
 $aryQuery[] = " ) VALUES ( ";
 $aryQuery[] = $aryData["lngStockNo"] . ", "; // 1:仕入番号
 $aryQuery[] = intval($lngrevisionno) + 1 . ","; // 2:リビジョン番号
-$aryQuery[] = $strstockcode . ", "; // 3:仕入コード
+$aryQuery[] = "'" . $strstockcode . "', "; // 3:仕入コード
 $aryQuery[] = "'" . $aryData["dtmStockAppDate"] . "', "; // 5:計上日
 $aryQuery[] = "'" . $aryData["lngCustomerCompanyCode"] . "', "; // 6:仕入先コード
 $aryQuery[] = ($aryData["lngGroupCode"] == "" ? "null" : $aryData["lngGroupCode"]) . ", "; // 7:部門コード
