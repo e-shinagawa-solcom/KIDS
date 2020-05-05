@@ -12,19 +12,50 @@
 -- あと、本荷の明細のない見積原価データに本荷の明細を追加
 \i ./sql_parts/add_new_estimate.sql
 
+
+-- 元データのnullを0に置換
+update t_estimatedetail
+set lngproductquantity = 0
+where lngproductquantity is null;
+
+update t_estimatedetail
+set curproductprice = 0
+where curproductprice is null;
+
+update t_estimatedetail
+set cursubtotalprice = 0
+where cursubtotalprice is null;
+
 -- 見積原価明細のレートには、当時の社内レートを設定
+update t_estimatedetail 
+set curconversionrate = (select curconversionrate from m_monetaryrate where lngmonetaryratecode = 2 and lngmonetaryunitcode = t_estimatedetail.lngmonetaryunitcode and dtmapplystartdate <= t_estimatedetail.dtmdelivery and dtmapplyenddate >= t_estimatedetail.dtmdelivery)
+where lngmonetaryunitcode <> 1;
 
 update t_estimatedetail 
-set curconversionrate = (select curconversionrate from m_monetaryrate where lngmonetaryratecode = 1 and lngmonetaryunitcode = t_estimatedetail.lngmonetaryunitcode and dtmapplystartdate <= t_estimatedetail.dtmdelivery and dtmapplyenddate >= t_estimatedetail.dtmdelivery)
-where lngmonetaryunitcode <> 1;
+set curconversionrate = (
+    select
+        curconversionrate 
+    from m_monetaryrate 
+    where lngmonetaryratecode = 2 
+    and lngmonetaryunitcode = t_estimatedetail.lngmonetaryunitcode 
+    order by dtmapplyenddate desc
+    limit 1
+)
+where lngmonetaryunitcode <> 1
+and dtmdelivery is not null
+and curconversionrate is null;
+
 
 update t_estimatedetail 
 set curconversionrate = 1
 where lngmonetaryunitcode = 1;
 
--- 金額にレートを反映
+-- 金額にレートを反映（%入力フラグがfalseの物だけ。trueのものは経費で現状日本円のみであることを現行データで確認）
 update t_estimatedetail 
-set cursubtotalprice = trunc(lngproductquantity * curproductprice * curconversionrate,2);
+set cursubtotalprice = trunc(lngproductquantity * curproductprice * curconversionrate,2)
+where bytpercentinputflag = false;
+
+
 
 -- 現行で発注データのない証紙の見積原価明細とその発注データ（仮発注）を次期に追加
 -- （見積原価明細のレートと金額は補正不要）

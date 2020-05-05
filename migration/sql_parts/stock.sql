@@ -151,37 +151,6 @@ order by tsd.lngstockno,tsd.lngstockdetailno,tsd.lngrevisionno'
     )tod_rev
     on tod_rev.lngorderno = t_orderdetail.lngorderno
     and tod_rev.lngrevisionno = t_orderdetail.lngrevisionno
-/*
-    left outer join (
-        select 
-            order_conversion.old_order, t_orderdetail.* 
-        from order_conversion
-        inner join t_orderdetail
-            on t_orderdetail.lngorderno = order_conversion.new_order
---           and t_orderdetail.lngorderdetailno = order_conversion.detailno
-        inner join (
-            select 
-                lngorderno
-               ,lngorderdetailno
-               ,MAX(lngrevisionno) as lngrevisionno
-            from t_orderdetail
-            group by 
-                lngorderno
-               ,lngorderdetailno
-        ) max_rev
-            on max_rev.lngorderno = t_orderdetail.lngorderno
---            and max_rev.lngorderdetailno = t_orderdetail.lngorderdetailno
-            and max_rev.lngrevisionno = t_orderdetail.lngrevisionno
-        where order_conversion.old_order = orderno
-    )order_info
-        on  order_info.lngstocksubjectcode = T1.lngstocksubjectcode
-        and order_info.lngstockitemcode = T1.lngstockitemcode
-        and order_info.curproductprice = T1.curproductprice
-        and order_info.lngproductquantity = T1.lngproductquantity
-        and order_info.cursubtotalprice = T1.cursubtotalprice
-        and order_info.lngorderdetailno = T1.lngstockdetailno
---    where order_info.lngsortkey = T1.lngsortkey
-*/
     ;
 
     header RECORD;
@@ -283,7 +252,7 @@ begin
                 values
                 (
                     stockno
-                   ,detail.lngstockdetailno
+                   ,detail.lngsortkey
                    ,0
                    ,detail.lngorderno
                    ,detail.lngorderdetailno
@@ -292,7 +261,7 @@ begin
                    ,'00'
                    ,detail.lngstocksubjectcode
                    ,detail.lngstockitemcode
- --                  ,detail.dtmdeliverydate
+--                   ,detail.dtmdeliverydate
                    ,detail.lngdeliverymethodcode
                    ,detail.lngconversionclasscode
                    ,detail.curproductprice

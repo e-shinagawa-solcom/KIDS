@@ -330,7 +330,7 @@ RAISE INFO 'complete order';
             FETCH cur_po_detail into detail;
             EXIT WHEN NOT FOUND;
             select count(*) + 1 into max_detail from t_purchaseorderdetail where lngpurchaseorderno = po_count;
---RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, max_revision, max_detail;
+RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, max_revision, max_detail;
             -- 発注書明細登録
             insert into t_purchaseorderdetail
             (
@@ -382,7 +382,7 @@ RAISE INFO 'complete order';
         END LOOP;
         close cur_po_detail;
         
---        RAISE INFO '% % %', last_orderno, last_revision, product_code;
+        RAISE INFO '% % %', last_orderno, last_revision, product_code;
         -- 発注書マスタ登録
         insert into m_purchaseorder
         (
@@ -444,9 +444,9 @@ RAISE INFO 'complete order';
            ,m_monetaryrateclass.strmonetaryratename
            ,m_order.lngpayconditioncode
            ,m_paycondition.strpayconditionname
-           ,m_product.lnginchargegroupcode
+           ,m_group.lnggroupcode
            ,m_group.strgroupname
-           ,m_product.lnginchargeusercode
+           ,m_order.lnginputusercode
            ,m_user.struserdisplayname
            ,m_order.lngdeliveryplacecode
            ,delivery.strcompanyname
@@ -456,8 +456,20 @@ RAISE INFO 'complete order';
            ,m_user.struserdisplayname
            ,null
            ,0
-           ,(select txtsignaturefilename from m_signature where lnggroupcode = m_product.lnginchargegroupcode)
+           ,m_signature.txtsignaturefilename
         from m_order
+        inner join m_grouprelation
+             on m_grouprelation.lngusercode = m_order.lnginputusercode
+             and bytdefaultflag = true
+        inner join m_groupattributerelation
+            on m_groupattributerelation.lnggroupcode = m_grouprelation.lnggroupcode
+            and m_groupattributerelation.lngattributecode = 1
+        left outer join m_group
+            on m_group.lnggroupcode = m_grouprelation.lnggroupcode
+        left outer join m_user
+            on m_user.lngusercode = m_order.lnginputusercode
+        left outer join m_signature
+            on m_signature.lnggroupcode = m_group.lnggroupcode
         left outer join m_company customer
             on customer.lngcompanycode = m_order.lngcustomercompanycode
         left outer join m_monetaryunit
@@ -471,13 +483,7 @@ RAISE INFO 'complete order';
         left outer join m_product
             on  m_product.lngrevisionno = 0
             and m_product.strrevisecode = '00'
-        left outer join m_group
-            on m_group.lnggroupcode = m_product.lnginchargegroupcode
-        left outer join m_user
-            on m_user.lngusercode = m_product.lnginchargeusercode
-        left outer join m_signature
-            on m_signature.lnggroupcode = m_product.lnginchargegroupcode
-         where m_order.lngorderno = last_orderno
+        where m_order.lngorderno = last_orderno
              and m_order.lngrevisionno = last_revision
              and m_product.strproductcode = product_code
         ;

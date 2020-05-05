@@ -373,8 +373,8 @@ begin
            ,slip_header.lngtaxclasscode
            ,slip_header.strtaxclassname
            ,slip_header.curtax
-           ,slip_header.lngusercode
-           ,slip_header.strusername
+           ,slip_header.lnginsertusercode
+           ,slip_header.strinsertusername
            ,slip_header.curtotalprice
            ,slip_header.lngmonetaryunitcode
            ,slip_header.strmonetaryunitsign

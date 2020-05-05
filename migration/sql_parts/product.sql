@@ -61,8 +61,8 @@ SELECT * FROM dblink('con111',
     'strgoodscode,' ||
     'strgoodsname,' ||
     'lnginchargegroupcode,' ||
-    '204 as lnginchargeusercode,' ||
-    'lnginchargeusercode AS lngdevelopusercode,' ||
+    'lnginchargeusercode,' ||
+    'NULL AS lngdevelopusercode,' ||
     'lnginputusercode,' ||
     'lngcustomercompanycode,' ||
     'lngcustomergroupcode,' ||
@@ -190,6 +190,14 @@ AS T(
 --,strrevisecode text
 );
 
-
+update m_product set lngdevelopusercode = (
+select 
+    m_grouprelation.lngusercode
+from m_grouprelation
+inner join m_user
+    on m_user.lngusercode = m_grouprelation.lngusercode
+where lnggroupcode = 47
+    and bytdefaultflag = true
+)
 
 --COMMIT;
