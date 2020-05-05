@@ -348,7 +348,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
 		$aryQuery[] = " AND s.lngRevisionNo >= 0";
 	}
     $aryQuery[] = "ORDER BY";
-    $aryQuery[] = " strStockCode, lngRevisionNo DESC";
+    $aryQuery[] = " s.dtmInsertDate DESC";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);

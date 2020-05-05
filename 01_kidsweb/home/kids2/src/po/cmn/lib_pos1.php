@@ -1277,10 +1277,10 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "  ,mo.lngrevisionno";
     $aryQuery[] = "  ,od.strproductcode || '_' || od.strrevisecode as strproductcode";
     $aryQuery[] = "  ,mp.strproductname";
-    $aryQuery[] = "  ,mo.lnggroupcode";
+    $aryQuery[] = "  ,mp.lnginchargegroupcode";
     $aryQuery[] = "  ,mg.strgroupdisplaycode";
     $aryQuery[] = "  ,mg.strgroupdisplayname";
-    $aryQuery[] = "  ,mo.lngusercode";
+    $aryQuery[] = "  ,mp.lnginchargeusercode";
     $aryQuery[] = "  ,mu.struserdisplaycode";
     $aryQuery[] = "  ,mu.struserdisplayname";
     $aryQuery[] = "  ,od.lngstockitemcode";
@@ -1311,7 +1311,7 @@ function fncGetOrder($lngOrderNo, $lngRevisionNo, $objDB)
     $aryQuery[] = "      ) mp1 ON mp1.lngproductno = m_product.lngproductno";
     $aryQuery[] = "      AND mp1.strrevisecode = m_product.strrevisecode";
     $aryQuery[] = "      AND mp1.lngrevisionno = m_product.lngrevisionno";
-    $aryQuery[] = ") mp ON od.strproductcode = mp.strproductcode and od.lngrevisionno = mp.lngrevisionno";
+    $aryQuery[] = ") mp ON od.strproductcode = mp.strproductcode and od.strrevisecode = mp.strrevisecode";
     $aryQuery[] = "LEFT JOIN m_group mg ON mp.lnginchargegroupcode = mg.lnggroupcode";
     $aryQuery[] = "LEFT JOIN m_user mu ON mp.lnginchargeusercode = mu.lngusercode";
     $aryQuery[] = "LEFT JOIN m_stockitem ms ON od.lngstockitemcode = ms.lngstockitemcode and od.lngstocksubjectcode = ms.lngstocksubjectcode";

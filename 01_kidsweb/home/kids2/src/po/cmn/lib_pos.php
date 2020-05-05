@@ -39,7 +39,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
     // クエリの組立て
     $aryQuery = array();
     $aryQuery[] = "SELECT";
-    $aryQuery[] = "  distinct ";
+    // $aryQuery[] = "  distinct ";
     $aryQuery[] = "  o.lngOrderNo as lngOrderNo";
     $aryQuery[] = "  , o.lngOrderNo as lngpkno";
     $aryQuery[] = "  , o.lngRevisionNo as lngRevisionNo";
@@ -351,7 +351,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
         $aryQuery[] = " AND o.lngRevisionNo >= 0";
     }
     $aryQuery[] = "ORDER BY";
-    $aryQuery[] = "  o.lngOrderNo DESC";
+    $aryQuery[] = "  o.dtmInsertDate DESC";
 
     return implode("\n", $aryQuery);
 }
@@ -379,7 +379,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
 
         // 登録日
         if ($strViewColumnName == "dtmInsertDate") {
-            $arySelectQuery[] = "  ,to_char(mp.dtminsertdate, 'YYYY/MM/DD') as dtmInsertDate";
+            $arySelectQuery[] = "  ,to_char(mp.dtminsertdate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
         }
 
         // 入力者
@@ -646,8 +646,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
     $aryOutQuery[] = "left join m_company mc_delivary on mc_delivary.lngcompanycode = mp.lngdeliveryplacecode";
     $aryOutQuery[] = implode("\n", $aryQuery);
     $aryOutQuery[] = "ORDER BY";
-    $aryOutQuery[] = "   mp.lngpurchaseorderno";
-    $aryOutQuery[] = "  ,mp.lngrevisionno DESC";
+    $aryOutQuery[] = "   mp.dtmInsertDate DESC";
     $aryOutQuery[] = "";
 
     switch ($arySearchDataColumn["strSort"]) {

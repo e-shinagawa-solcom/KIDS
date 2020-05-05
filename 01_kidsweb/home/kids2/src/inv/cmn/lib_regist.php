@@ -905,7 +905,7 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
                 . "SELECT MIN( inv2.lngrevisionno ) FROM m_invoice inv2 WHERE inv2.bytinvalidflag = false AND inv2.strinvoicecode = inv.strinvoicecode )";
     }
     // ソート条件設定
-    $aryOutQuery[] = " ORDER BY inv.lnginvoiceno DESC";
+    $aryOutQuery[] = " ORDER BY inv.dtminsertdate DESC";
 
     return implode("\n", $aryOutQuery);
 }

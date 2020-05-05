@@ -84,7 +84,7 @@ if (array_key_exists("isRegist", $_REQUEST))
 <frameset rows="40,1,*" frameborder="0" border="0" framespacing="0">
 	<frame id="button" src="button.php?strSessionID=<?echo $aryData["strSessionID"]; ?>" name="button" scrolling="no" noresize>
 	<frame src="/list/printset/borders.html" scrolling="no" noresize>
-	<frame src="/mold/list/displayMoldReport.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&MoldReportId=<?echo $aryData["MoldReportId"]; ?>&Revision=<?echo $aryData["Revision"]; ?>&Version=<?echo $aryData["Version"]; ?><?echo $aryData["isCopy"]; ?>" name="list" noresize>
+	<frame src="/mold/list/displayMoldReport.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&MoldReportId=<?echo $aryData["MoldReportId"]; ?>&Revision=<?echo $aryData["Revision"]; ?>&Version=<?echo $aryData["Version"]; ?><?echo $aryData["type"]; ?>" name="list" noresize>
 </frameset>
 
 
