@@ -446,8 +446,8 @@ RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, ma
            ,m_paycondition.strpayconditionname
            ,m_group.lnggroupcode
            ,m_group.strgroupname
-           ,m_order.lnginputusercode
-           ,m_user.struserdisplayname
+           ,m_product.lngdevelopusercode
+           ,dev_user.struserdisplayname
            ,m_order.lngdeliveryplacecode
            ,delivery.strcompanyname
            ,total_price
@@ -483,6 +483,8 @@ RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, ma
         left outer join m_product
             on  m_product.lngrevisionno = 0
             and m_product.strrevisecode = '00'
+        left outer join m_user dev_user
+            on dev_user.lngusercode = m_product.lngdevelopusercode
         where m_order.lngorderno = last_orderno
              and m_order.lngrevisionno = last_revision
              and m_product.strproductcode = product_code
