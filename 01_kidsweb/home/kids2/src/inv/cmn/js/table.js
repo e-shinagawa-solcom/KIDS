@@ -1,7 +1,6 @@
 $(function () {
 
   $('body').on('keydown', function (e) {
-    console.log('enter');
     if (e.which == 13) {
       $('#add').click();
     }
@@ -149,13 +148,14 @@ $(function () {
       if (taxclasscode == 1) taxamount = 0;
       var id = v.strslipcode;
       var strnote = v.strnote;
+      var customerno = v.strcustomerno;
 
       // html 出力
       $target_row.attr('data-id', id);
       $target_row.attr('slipno', slipno);
       $target_row.attr('revisionno', revisionno);
       $('.slipcode', $target_row).html(slipcode);
-      $('.customerno', $target_row).html('<input type="text" style="ime-mode:disabled;" class="form-control form-control-sm" value="" disabled>');
+      $('.customerno', $target_row).html('<input type="text" style="ime-mode:disabled;" class="form-control form-control-sm" value="' + customerno + '" disabled>');
       if (customercode == null || customercode == "null") {
         $('.customer .customercode', $target_row).html('');
       } else {
@@ -202,7 +202,6 @@ $(function () {
       var strnote = v.strnote;
       var strsalesclassname = v.strsalesclassname;
       var strcustomerno = "";
-      console.log(v.strcustomerno);
       if (v.strcustomerno != null)
       {
         strcustomerno = v.strcustomerno;
@@ -283,7 +282,6 @@ $(function () {
 
   $.createTable = function (response) {
     data = (response === undefined || response && !response.length) ? dataEmpty : Array.from(new Set(response));
-    console.log(data);
     // テーブルA生成
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
     $.createSkeletonTable(data, $tableA_chkbox_row, domA, $tableA_chkbox_tbody);
@@ -314,8 +312,6 @@ $(function () {
     $.createSkeletonTable(data, $tableB_row, domB, $tableB_tbody);
     $.createSkeletonTable(data, $tableB_no_row, domB, $tableB_no_tbody);
     $.each(data, function (i) {
-      console.log(i);
-      console.log(data[i]);
       temp.push(data[i]);
     });
     $.addDataTableB();
@@ -358,7 +354,6 @@ $(function () {
 
     var tax = "";
     if ($('#tableB tbody tr').length > 0) {
-      console.log($('#tableB tbody tr:nth-child(1)').find('.tax').text());
       tax = $('#tableB tbody tr:nth-child(1)').find('.tax').text();
     }
 
@@ -374,27 +369,21 @@ $(function () {
     $.each($all_checkbox, function () {
       if ($(this).prop('checked')) {
         var rowindex = $(this).closest('tr').index();
-        console.log(rowindex);
-
         var tmptax = $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').find('.tax').text();
-        console.log(tmptax);
         if (tax != "" && tmptax != tax) {
           alert('消費税率の異なる納品書は請求書の明細に混在できません');
           return false;
         }
 
-
-
-        var $data_id = $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').data('id');
-        console.log($data_id);
-        var data_index = data.findIndex(function (value) { return value.strslipcode == $data_id });
+        var $data_id = $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').attr('slipno');
+        var data_index = data.findIndex(function (value) { return value.lngslipno == $data_id });
         if (data_index !== -1) {
-          // id重複チェック
-          let sameId = false;
-          $.each(temp, function (i, v) {
-            if (v.strslipcode == data[data_index].strslipcode) { sameId = true; }
-          });
-          if (sameId == true) { return; }
+          // // id重複チェック
+          // let sameId = false;
+          // $.each(temp, function (i, v) {
+          //   if (v.strslipcode == data[data_index].strslipcode) { sameId = true; }
+          // });
+          // if (sameId == true) { return; }
           temp.push(data[data_index]);
           // 該当データを data から削除
           data.splice(data_index, 1);
@@ -417,6 +406,9 @@ $(function () {
 
     // スキャンチェックボックス
     scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+
+    // チェックボックスクリックイベントの設定
+    setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
     // 金額計算
     billingAmount();
@@ -441,9 +433,15 @@ $(function () {
     if (!$all_rows.length) return;
 
     $.each($all_rows, function () {
+      var rowindex = $(this).closest('tr').index();
+      var customerno = $('#tableB tbody tr:nth-child(' + (rowindex + 1) + ')').find('.customerno').find('input').val();
+      temp[rowindex].strcustomerno = customerno;
+    });
+
+    $.each($all_rows, function () {
       if ($(this).css("background-color") != 'rgb(255, 255, 255)') {
-        var $data_id = $(this).data('id');
-        var temp_index = temp.findIndex(function (value) { return value.strslipcode == $data_id });
+        var $data_id = $(this).attr('slipno');
+        var temp_index = temp.findIndex(function (value) { return value.lngslipno == $data_id });
         data.push(temp[temp_index]);
         // 該当データを temp から削除
         if (temp_index !== -1) {
@@ -451,6 +449,7 @@ $(function () {
         }
       }
     });
+    data.sort(function(a, b){return a.lngslipno-b.lngslipno});
 
     // テーブルB 再生成
     $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
@@ -488,16 +487,24 @@ $(function () {
     var $tableB_row = $('tbody tr', $tableB);
 
     if (!$tableB_row.length) return;
+    
+    $.each($tableB_row, function () {
+      var rowindex = $(this).closest('tr').index();
+      var customerno = $('#tableB tbody tr:nth-child(' + (rowindex + 1) + ')').find('.customerno').find('input').val();
+      temp[rowindex].strcustomerno = customerno;
+    });
 
     $.each($tableB_row, function () {
-      var $data_id = $(this).data('id');
-      var temp_index = temp.findIndex(function (value) { return value.strslipcode == $data_id });
+      var $data_id = $(this).attr('slipno');
+      var temp_index = temp.findIndex(function (value) { return value.lngslipno == $data_id });
       data.push(temp[temp_index]);
       // 該当データを temp から削除
       if (temp_index !== -1) {
         temp.splice(temp_index, 1);
       }
     });
+
+    data.sort(function(a, b){return a.lngslipno-b.lngslipno});
 
     // テーブルA 再生成
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
@@ -589,7 +596,6 @@ $(function () {
         if (tax !== false || !tableB_row[i].cells[j]) continue;
         if (tableB_row[i].cells[j].className == 'tax right') {
           // 消費税率
-          console.log(tableB_row[i].cells[j].innerText);
           strtax = tableB_row[i].cells[j].innerText.replace(/[^0-9]/g, '');
           tax = Number(strtax) / 100;
         }
@@ -638,13 +644,10 @@ $(function () {
             deliverydate = tableB_row[i].cells[j].innerText;
           }
           if (tableB_row[i].cells[j].className == 'price right') {
-
-            console.log(tableB_row[i].cells[j].innerText);
             // 税抜金
             price = (tableB_row[i].cells[j].innerText.replace(/,/g, '')).split(' ')[1];
           }
         }
-        console.log(price);
         if (!deliverydate || !price) continue;
         date = splitDate(deliverydate);
         deliverydateStamp = new Date(deliverydate);
@@ -658,9 +661,6 @@ $(function () {
         }
         thisMonthAmount += Number(price);
       }
-
-      // console.log(lastMonthBalance);
-      console.log(tax);
       // 前月請求残額(消費税込み)
       // curLastMonthBalance = lastMonthBalance + (lastMonthBalance * (tax * 100)) / 100;
       curLastMonthBalance = Number($('input[name="curlastmonthbalance"]').val().replace(/,/g, ''));
@@ -671,8 +671,6 @@ $(function () {
       // 前月請求残額 + 当月請求額 + 消費税
       noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice;
       // 結果を繁栄
-      // $('input[name="curlastmonthbalance"]').val(convertNumber(Math.round(curLastMonthBalance))).change();
-      console.log($('input[name="lngmonetaryunitcode"]').val());
       var fracctiondigits = 0
       if ($('input[name="lngmonetaryunitcode"]').val() == '1') {
         fracctiondigits = 0;

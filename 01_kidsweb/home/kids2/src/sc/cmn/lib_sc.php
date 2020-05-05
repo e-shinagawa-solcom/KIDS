@@ -32,7 +32,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
 
     // クエリの組立て
     $aryQuery = array();
-    $aryQuery[] = "SELECT distinct";
+    $aryQuery[] = "SELECT";
     $aryQuery[] = "  s.lngSalesNo as lngSalesNo";
     $aryQuery[] = "  , s.lngSalesNo as lngpkno";
     $aryQuery[] = "  , s.lngRevisionNo as lngRevisionNo";
@@ -345,6 +345,7 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         $aryQuery[] = "  AND s.bytInvalidFlag = FALSE ";
         $aryQuery[] = "  AND s.lngRevisionNo >= 0 ";
     }
+    $aryQuery[] = " ORDER BY s.dtmInsertDate DESC";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);

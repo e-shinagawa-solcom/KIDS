@@ -32,7 +32,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
     // クエリの組立て
     $aryQuery = array();
     $aryQuery[] = "SELECT";
-    $aryQuery[] = "  distinct ";
+    // $aryQuery[] = "  distinct ";
     $aryQuery[] = "  r.lngReceiveNo as lngReceiveNo";
     $aryQuery[] = "  , r.lngReceiveNo as lngpkno";
     $aryQuery[] = "  , r.lngRevisionNo as lngRevisionNo";
@@ -305,6 +305,7 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         $aryQuery[] = " AND r.bytInvalidFlag = FALSE ";
         $aryQuery[] = " AND r.lngRevisionNo >= 0";
     }
+    $aryQuery[] = " ORDER BY r.dtmInsertDate DESC";
 
     // クエリを平易な文字列に変換
     $strQuery = implode("\n", $aryQuery);

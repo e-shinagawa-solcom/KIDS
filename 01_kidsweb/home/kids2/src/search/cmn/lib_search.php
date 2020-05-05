@@ -1027,7 +1027,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
     } else if ($type == 'pc') { //仕入
         $aryQuery[] = "SELECT sd.lngStockNo";
         $aryQuery[] = "  , sd.lngStockDetailNo";
-        $aryQuery[] = "  , sd.lngStockDetailNo as lngdetailno";
+        $aryQuery[] = "  , row_number() OVER (ORDER BY sd.lngStockDetailNo) AS lngdetailno";
         $aryQuery[] = "  , p.strProductCode || '_' || p.strReviseCode as strProductCode";
         $aryQuery[] = "  , mg.strGroupDisplayCode";
         $aryQuery[] = "  , mg.strGroupDisplayName";
@@ -1178,8 +1178,8 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , sd.strNote as strdetailnote";
         $aryQuery[] = "from";
         $aryQuery[] = "  t_slipdetail sd ";
-        $aryQuery[] = "inner join m_receive mr on mr.lngreceiveno = sd.lngreceiveno and mr.lngrevisionno = sd.lngreceiverevisionno";
-        $aryQuery[] = "inner join m_receivestatus mrs on mrs.lngreceivestatuscode = mr.lngreceivestatuscode";
+        $aryQuery[] = "left join m_receive mr on mr.lngreceiveno = sd.lngreceiveno and mr.lngrevisionno = sd.lngreceiverevisionno";
+        $aryQuery[] = "left join m_receivestatus mrs on mrs.lngreceivestatuscode = mr.lngreceivestatuscode";
         $aryQuery[] = "where";
         $aryQuery[] = "  sd.lngslipno = " . $lngPkNo;
         $aryQuery[] = "  AND sd.lngrevisionno = " . $lngRevisionNo;

@@ -366,7 +366,7 @@ function fncGetSearchSlipSQL ( $arySearchColumn, $arySearchDataColumn, $objDB, $
 	}
 
 	// 同じ納品伝票コードのデータを取得する場合
-	if ($strSlipCode)
+	if ($strSlipCode == "")
 	{
 		$aryOutQuery[] = " ORDER BY dtmInsertDate DESC";
 	}
