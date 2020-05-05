@@ -1,5 +1,7 @@
 \encoding UTF8;
+
 /*
+*/
 \i 0_mig_sequence.sql;
 \qecho 'step0 completed';
 \i 1_mig_product.sql;
@@ -10,13 +12,15 @@
 \qecho 'step3 completed';
 \i 4_mig_estimate.sql;
 \qecho  'step4 completed';
-*/
 \i 5_mig_sales.sql;
 \qecho  'step5 completed';
 \i 7_mig_stock.sql;
 \qecho  'step7 completed';
 \i 8_mig_mold.sql;
 \qecho  'step8 completed';
+/*
+
+*/
 /*
 */
 

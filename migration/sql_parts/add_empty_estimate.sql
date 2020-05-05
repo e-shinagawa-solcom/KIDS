@@ -83,52 +83,6 @@ begin
            ,0	-- 製品リビジョン番号
            ,0	-- 印刷回数
         );
-/*
-        insert into t_estimatedetail(
-            lngestimateno	-- 見積原価番号
-           ,lngestimatedetailno	-- 見積原価明細番号
-           ,lngrevisionno	-- リビジョン番号
-           ,lngstocksubjectcode	-- 仕入科目コード
-           ,lngstockitemcode	-- 仕入部品コード
-           ,lngcustomercompanycode	-- 会社コード
-           ,dtmdelivery	-- 納期
-           ,bytpayofftargetflag	-- 償却対象フラグ
-           ,bytpercentinputflag	-- パーセント入力フラグ
-           ,lngmonetaryunitcode	-- 通貨単位コード
-           ,lngmonetaryratecode	-- 通貨レートコード
-           ,curconversionrate	-- 為替レート
-           ,lngproductquantity	-- 製品数量
-           ,curproductprice	-- 製品単価
-           ,curproductrate	-- パーセント入力値
-           ,cursubtotalprice	-- 計画原価
-           ,strnote	-- 備考
-           ,lngsortkey	-- 表示用ソートキー
-           ,lngsalesdivisioncode	-- 売上分類コード
-           ,lngsalesclasscode	-- 売上区分コード
-        )
-        VALUES(
-            estimateno + m_count	-- 見積原価番号
-           ,1	-- 見積原価明細番号
-           ,0	-- リビジョン番号
-           ,NULL	-- 仕入科目コード
-           ,NULL	-- 仕入部品コード
-           ,r_product.lngcustomercompanycode	-- 会社コード
-           ,r_product.dtmdeliverylimitdate	-- 納期
-           ,false	-- 償却対象フラグ
-           ,false	-- パーセント入力フラグ
-           ,1	-- 通貨単位コード
-           ,1	-- 通貨レートコード
-           ,1	-- 為替レート
-           ,r_product.lngproductionquantity	-- 製品数量
-           ,r_product.curproductprice	-- 製品単価
-           ,NULL	-- パーセント入力値
-           ,trunc(r_product.lngproductionquantity * r_product.curproductprice, 2)	-- 計画原価
-           ,NULL	-- 備考
-           ,1	-- 表示用ソートキー
-           ,2	-- 売上分類コード
-           ,1	-- 売上区分コード
-        );
-*/
         m_count = m_count + 1;
     END LOOP;
     close cur_product;

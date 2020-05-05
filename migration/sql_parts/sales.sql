@@ -60,29 +60,47 @@ declare
        ,dtminsertdate timestamp(6) without time zone
     );
     cur_detail cursor(salesno integer, revisionno integer, receiveno integer) FOR
-        select OLD2NEW_SUB.new_receive as new_receive_sub, T1.* from dblink('con111',
-            'select ' ||
-            'lngsalesno ' ||
-           ',lngsalesdetailno ' ||
-           ',lngrevisionno ' ||
-           ',strproductcode ' ||
-           ',lngsalesclasscode ' ||
-           ',dtmdeliverydate ' ||
-           ',lngconversionclasscode ' ||
-           ',curproductprice ' ||
-           ',lngproductquantity ' ||
-           ',lngproductunitcode ' ||
-           ',lngtaxclasscode ' ||
-           ',lngtaxcode ' ||
-           ',curtaxprice ' ||
-           ',cursubtotalprice ' ||
-           ',strnote ' ||
-           ',lngsortkey ' ||
-           ',lngreceiveno ' ||
-           ',lngreceivedetailno  ' ||
-        'from t_salesdetail  ' ||
-        'where lngsalesno =' || salesno || ' ' ||
-            'and lngrevisionno = ' || revisionno
+        select OLD2NEW_SUB.new_receive as new_receive_sub, T1.* from dblink('con111', '
+select
+    t_salesdetail.lngsalesno
+   ,t_salesdetail.lngsalesdetailno
+   ,t_salesdetail.lngrevisionno
+   ,t_salesdetail.strproductcode
+   ,t_salesdetail.lngsalesclasscode
+   ,t_salesdetail.dtmdeliverydate
+   ,t_salesdetail.lngconversionclasscode
+   ,t_salesdetail.curproductprice
+   ,t_salesdetail.lngproductquantity
+   ,t_salesdetail.lngproductunitcode
+   ,t_salesdetail.lngtaxclasscode
+   ,t_salesdetail.lngtaxcode
+   ,t_salesdetail.curtaxprice
+   ,t_salesdetail.cursubtotalprice
+   ,t_salesdetail.strnote
+   ,t_salesdetail.lngsortkey
+   ,mr2.lngreceiveno as lngreceiveno
+   ,t_salesdetail.lngreceivedetailno 
+from t_salesdetail 
+
+inner join m_sales
+    on m_sales.lngsalesno = t_salesdetail.lngsalesno
+    and m_sales.lngrevisionno = t_salesdetail.lngrevisionno
+inner join(
+    select strsalescode,max(lngrevisionno) as lngrevisionno from m_sales group by strsalescode
+) ms_rev
+    on ms_rev.strsalescode = m_sales.strsalescode
+    and ms_rev.lngrevisionno = m_sales.lngrevisionno
+left outer join m_receive
+    on m_receive.lngreceiveno = t_salesdetail.lngreceiveno
+left outer join (
+    select strreceivecode,MAX(lngrevisionno) as lngrevisionno from m_receive group by strreceivecode
+) mr_rev
+    on mr_rev.strreceivecode = m_receive.strreceivecode
+left outer join m_receive mr2
+    on mr2.strreceivecode = mr_rev.strreceivecode
+    and mr2.lngrevisionno = mr_rev.lngrevisionno
+where t_salesdetail.lngsalesno = ' || salesno || ' ' ||
+            ' and t_salesdetail.lngrevisionno = ' || revisionno
         ) AS T1(
             lngsalesno integer
            ,lngsalesdetailno integer
@@ -373,8 +391,8 @@ begin
            ,slip_header.lngtaxclasscode
            ,slip_header.strtaxclassname
            ,slip_header.curtax
-           ,slip_header.lngusercode
-           ,slip_header.strusername
+           ,slip_header.lnginsertusercode
+           ,slip_header.strinsertusername
            ,slip_header.curtotalprice
            ,slip_header.lngmonetaryunitcode
            ,slip_header.strmonetaryunitsign

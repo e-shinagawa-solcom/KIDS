@@ -185,6 +185,7 @@ and detailno.lngrevisionno = me.lngrevisionno
         inner join m_salesclassdivisonlink salesdivision
             on salesdivision.lngsalesclasscode = tr.lngsalesclasscode
             and NOT(salesdivision.lngestimateareaclassno = 2 and salesdivision.lngsalesclasscode = 9 and salesdivision.lngsalesdivisioncode = 1)
+            and NOT(salesdivision.lngestimateareaclassno = 1 and salesdivision.lngsalesclasscode = 99 and salesdivision.lngsalesdivisioncode = 2)
         where tr.strproductcode = productcode
         order by
             mr.strreceivecode
@@ -253,7 +254,7 @@ and detailno.lngrevisionno = me.lngrevisionno
             mr.strordercode
            ,tr.lngorderno
            ,tr.lngorderdetailno;
-    -- 証紙以外のエリア5
+    -- 証紙以外のエリア5(cursubtotalpriceが0またはnullのデータを除外したい）
     cur_cost cursor(estimateno integer, revisionno integer) for
     select * from dblink('con111','
 select 
@@ -263,7 +264,6 @@ select
    ,t_estimatedetail.lngstocksubjectcode
    ,t_estimatedetail.lngstockitemcode
    ,t_estimatedetail.lngcustomercompanycode
-   ,null as dtmdelivery
    ,t_estimatedetail.bytpayofftargetflag
    ,t_estimatedetail.bytpercentinputflag
    ,t_estimatedetail.lngmonetaryunitcode
@@ -282,8 +282,8 @@ inner join m_estimate
     on m_estimate.lngestimateno = t_estimatedetail.lngestimateno
 	and m_estimate.lngrevisionno = t_estimatedetail.lngrevisionno
 where t_estimatedetail.lngestimateno = ' || estimateno ||
-' and t_estimatedetail.lngrevisionno = ' || revisionno ||
-'    and t_estimatedetail.lngstocksubjectcode in (1224,1230) 
+' and t_estimatedetail.lngrevisionno = (select max(lngrevisionno) from m_estimate where lngestimateno = ' || estimateno || ')
+    and t_estimatedetail.lngstocksubjectcode in (1224,1230) 
    ')
     AS T1(
     lngestimateno integer
@@ -292,7 +292,6 @@ where t_estimatedetail.lngestimateno = ' || estimateno ||
    ,lngstocksubjectcode integer
    ,lngstockitemcode integer
    ,lngcustomercompanycode integer
-   ,dtmdelivery timestamp(6) without time zone
    ,bytpayofftargetflag boolean
    ,bytpercentinputflag boolean
    ,lngmonetaryunitcode integer
@@ -361,7 +360,7 @@ begin
                ,null
                ,null
                ,tr_r.lngcustomercompanycode
-               ,tr_r.dtmdelivery
+               ,coalesce(tr_r.dtmdelivery,(select dtmdeliverylimitdate from m_product where strproductcode = me_r.strproductcode))
                ,false
                ,tr_r.bytpercentinputflag
                ,tr_r.lngmonetaryunitcode
@@ -428,7 +427,7 @@ begin
                ,tr_r.lngstocksubjectcode
                ,tr_r.lngstockitemcode
                ,tr_r.lngcustomercompanycode
-               ,tr_r.dtmdelivery
+               ,coalesce(tr_r.dtmdelivery,(select dtmdeliverylimitdate from m_product where strproductcode = me_r.strproductcode))
                ,false    -- 償却はのちに設定
                ,tr_r.bytpercentinputflag
                ,tr_r.lngmonetaryunitcode
@@ -457,6 +456,7 @@ begin
             detailno = detailno + 1;
         END LOOP;
         close cur_to;
+--RAISE INFO '% order OK', me_r.lngestimateno;
         
 -- エリア5の発注が発生しない経費の明細を移行
 
@@ -494,7 +494,7 @@ begin
                ,tr_r.lngstocksubjectcode
                ,tr_r.lngstockitemcode
                ,tr_r.lngcustomercompanycode
-               ,tr_r.dtmdelivery
+               ,(select dtmdeliverylimitdate from m_product where strproductcode = me_r.strproductcode)
                ,false    -- 償却はのちに設定
                ,tr_r.bytpercentinputflag
                ,tr_r.lngmonetaryunitcode
@@ -512,6 +512,7 @@ begin
             detailno = detailno + 1;
         END LOOP;
         close cur_cost;
+--RAISE INFO '% cost OK', me_r.lngestimateno;
 
 RAISE INFO '% completed', me_r.lngestimateno;
 
@@ -613,7 +614,7 @@ RAISE INFO 'add honni % % %', r_honni.lngestimateno, r_honni.lngestimatedetailno
            update t_sequence set lngsequence = lngsequence+1  where strsequencename = 'm_receive.strreceivecode.' || to_char(r_honni.dtmdelivery,'yymm');
     
         -- 受注明細
---RAISE INFO 'add honni(t_receivedetail) % % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.lngrevisionno;
+RAISE INFO 'add honni(t_receivedetail) % % %', r_honni.lngestimateno, r_honni.lngestimatedetailno, r_honni.lngrevisionno;
            insert into t_receivedetail(
               lngreceiveno
               ,lngreceivedetailno
@@ -656,14 +657,10 @@ RAISE INFO 'add honni % % %', r_honni.lngestimateno, r_honni.lngestimatedetailno
 	       );
         END LOOP; 
         close cur_honni;
-
-    ELSE
-        -- 製品マスタの生産数を書き換え
---RAISE INFO 'update honni(quantity) % % % % % %', r_check.lngestimateno, r_check.lngrevisionno, r_check.strproductcode, r_check.strrevisecode, r_check.detail_cnt, r_check.detail_q;
-        update m_product set lngproductionquantity = r_check.detail_q where strproductcode = r_check.strproductcode and strrevisecode = r_check.strrevisecode and lngrevisionno = 0;
     END IF;
 
 END LOOP;
 close cur_check;
+
 RAISE INFO 'add_new_estimate completed';
 END $$
