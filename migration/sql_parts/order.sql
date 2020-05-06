@@ -28,6 +28,7 @@ declare
        ,dtminsertdate
 from m_order
 where bytinvalidflag = false
+    and lngorderstatuscode is not null
     and (strordercode, lngrevisionno) in (
         select 
             strordercode
@@ -174,7 +175,7 @@ BEGIN
     last_detail = -999;
     max_revision = 0;
 
-/*
+
 --発注マスタ
     delete from m_order;
     delete from t_orderdetail;
@@ -300,7 +301,7 @@ BEGIN
     END LOOP;
     close cur_header;
 RAISE INFO 'complete order';
-*/
+
 
 -- 発注書マスタ
     delete from m_purchaseorder;
@@ -445,7 +446,7 @@ RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, ma
            ,m_order.lngpayconditioncode
            ,m_paycondition.strpayconditionname
            ,m_group.lnggroupcode
-           ,m_group.strgroupname
+           ,m_group.strgroupdisplayname
            ,m_product.lnginchargeusercode
            ,dev_user.struserdisplayname
            ,m_order.lngdeliveryplacecode
@@ -464,8 +465,11 @@ RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, ma
         inner join m_groupattributerelation
             on m_groupattributerelation.lnggroupcode = m_grouprelation.lnggroupcode
             and m_groupattributerelation.lngattributecode = 1
+        left outer join m_product
+            on  m_product.lngrevisionno = 0
+            and m_product.strrevisecode = '00'
         left outer join m_group
-            on m_group.lnggroupcode = m_grouprelation.lnggroupcode
+            on m_group.lnggroupcode = m_product.lnginchargegroupcode
         left outer join m_user
             on m_user.lngusercode = m_order.lnginputusercode
         left outer join m_signature
@@ -480,9 +484,6 @@ RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, ma
             on m_paycondition.lngpayconditioncode = m_order.lngpayconditioncode
         left outer join m_company delivery
             on delivery.lngcompanycode = m_order.lngdeliveryplacecode
-        left outer join m_product
-            on  m_product.lngrevisionno = 0
-            and m_product.strrevisecode = '00'
         left outer join m_user dev_user
             on dev_user.lngusercode = m_product.lnginchargeusercode
         where m_order.lngorderno = last_orderno

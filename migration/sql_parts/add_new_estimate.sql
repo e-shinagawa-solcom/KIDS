@@ -11,8 +11,9 @@ cur_check cursor for
        ,me.lngrevisionno
        ,me.strproductcode
        ,me.strrevisecode
-       ,count(ted.lngproductquantity) as detail_cnt
+       ,count(ted.lngproductquantity) as honni_cnt
        ,sum(coalesce(ted.lngproductquantity,0)) as detail_q
+       ,count(ted_all.lngproductquantity) as detail_cnt
     from m_estimate me
 
     left outer join t_estimatedetail ted
@@ -20,6 +21,10 @@ cur_check cursor for
        and ted.lngrevisionno = me.lngrevisionno
        and ted.lngsalesdivisioncode = 2
        and ted.lngsalesclasscode = 1
+
+    left outer join t_estimatedetail ted_all
+       on ted_all.lngestimateno = me.lngestimateno
+       and ted_all.lngrevisionno = me.lngrevisionno
     where me.lngestimateno not in ( select lngestimateno from m_estimate where lngrevisionno < 0)
         and me.lngrevisionno = 0
     group by 
@@ -523,15 +528,15 @@ RAISE INFO '% completed', me_r.lngestimateno;
 
 
 
--- 本荷の明細がない製品に本荷を追加するか、製品マスタの生産数を補正。
+-- 本荷の明細がない製品に本荷を追加。
 open cur_check;
 LOOP
     FETCH cur_check into r_check;
     EXIT WHEN NOT FOUND;
 
 RAISE INFO '% % % % % %', r_check.lngestimateno, r_check.lngrevisionno, r_check.strproductcode, r_check.strrevisecode, r_check.detail_cnt, r_check.detail_q;
-    IF r_check.detail_cnt = 0 THEN
-        -- 製品マスタから見積原価明細、受注マスタ、受注明細を作成
+    IF r_check.honni_cnt = 0 and r_check.detail_cnt > 0 THEN
+        -- 製品マスタから本荷の見積原価明細、受注マスタ、受注明細を作成
 
         open cur_honni(r_check.lngestimateno);
         LOOP
@@ -657,6 +662,10 @@ RAISE INFO 'add honni(t_receivedetail) % % %', r_honni.lngestimateno, r_honni.ln
 	       );
         END LOOP; 
         close cur_honni;
+    ELSIF r_check.detail_cnt = 0 THEN
+-- 明細のない見積原価は削除
+RAISE INFO 'del % %', r_check.lngestimateno, r_check.lngrevisionno;
+        delete from m_estimate where lngestimateno = r_check.lngestimateno;
     END IF;
 
 END LOOP;

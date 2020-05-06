@@ -110,6 +110,7 @@ inner join (
 ) rev
     on rev.pono = t_aclcinfo.pono
     and rev.poreviseno = t_aclcinfo.poreviseno
+where t_aclcinfo.lcstate <> 2
 order by t_aclcinfo.pono, t_aclcinfo.polineno;
 ') AS T1(
     pono character varying(8)

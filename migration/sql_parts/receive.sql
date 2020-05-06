@@ -26,6 +26,7 @@ select
    ,strcustomerreceivecode
 from m_receive
 where bytinvalidflag = false
+    and lngreceivestatuscode is not null
     and (strreceivecode, lngrevisionno) in
     (
         select

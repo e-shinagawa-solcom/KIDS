@@ -2,6 +2,7 @@
 
 /*
 */
+
 \i 0_mig_sequence.sql;
 \qecho 'step0 completed';
 \i 1_mig_product.sql;
@@ -18,12 +19,6 @@
 \qecho  'step7 completed';
 \i 8_mig_mold.sql;
 \qecho  'step8 completed';
-/*
-
-*/
-/*
-*/
-
 
 
 /*
@@ -32,6 +27,9 @@
 \i mig_lc.sql;
 \i mig_lc_2.sql;
 \i mig_lc_3.sql;
+
+/*
+*/
 
 --\i 6_update_m_stockitem.sql;
 /*
