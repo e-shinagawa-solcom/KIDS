@@ -174,7 +174,7 @@ BEGIN
     last_detail = -999;
     max_revision = 0;
 
-
+/*
 --発注マスタ
     delete from m_order;
     delete from t_orderdetail;
@@ -300,7 +300,7 @@ BEGIN
     END LOOP;
     close cur_header;
 RAISE INFO 'complete order';
-
+*/
 
 -- 発注書マスタ
     delete from m_purchaseorder;
@@ -446,7 +446,7 @@ RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, ma
            ,m_paycondition.strpayconditionname
            ,m_group.lnggroupcode
            ,m_group.strgroupname
-           ,m_product.lngdevelopusercode
+           ,m_product.lnginchargeusercode
            ,dev_user.struserdisplayname
            ,m_order.lngdeliveryplacecode
            ,delivery.strcompanyname
@@ -484,7 +484,7 @@ RAISE INFO '% % % % % ', po_key.strordercode, po_key.lngrevisionno, po_count, ma
             on  m_product.lngrevisionno = 0
             and m_product.strrevisecode = '00'
         left outer join m_user dev_user
-            on dev_user.lngusercode = m_product.lngdevelopusercode
+            on dev_user.lngusercode = m_product.lnginchargeusercode
         where m_order.lngorderno = last_orderno
              and m_order.lngrevisionno = last_revision
              and m_product.strproductcode = product_code
