@@ -202,8 +202,7 @@ $(function () {
       var strnote = v.strnote;
       var strsalesclassname = v.strsalesclassname;
       var strcustomerno = "";
-      if (v.strcustomerno != null)
-      {
+      if (v.strcustomerno != null) {
         strcustomerno = v.strcustomerno;
       }
 
@@ -282,6 +281,15 @@ $(function () {
 
   $.createTable = function (response) {
     data = (response === undefined || response && !response.length) ? dataEmpty : Array.from(new Set(response));
+    $.each($('#tableB tbody tr'), function () {
+      var slipno = $(this).attr('slipno');
+      var data_index = data.findIndex(function (value) { return value.lngslipno == slipno })
+      // 該当データを data から削除
+      if (data_index !== -1) {
+        data.splice(data_index, 1);
+      }
+    });
+
     // テーブルA生成
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
     $.createSkeletonTable(data, $tableA_chkbox_row, domA, $tableA_chkbox_tbody);
@@ -302,7 +310,7 @@ $(function () {
   };
 
   $.createTableRenew = function (response) {
-    
+
     // 顧客名称の取得
     var description = $('input[name="description"]').val();
 
@@ -375,8 +383,8 @@ $(function () {
           return false;
         }
 
-        var $data_id = $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').attr('slipno');
-        var data_index = data.findIndex(function (value) { return value.lngslipno == $data_id });
+        var data_id = $('#tableA tbody tr:nth-child(' + (rowindex + 1) + ')').attr('slipno');
+        var data_index = data.findIndex(function (value) { return value.lngslipno == data_id });
         if (data_index !== -1) {
           // // id重複チェック
           // let sameId = false;
@@ -440,8 +448,8 @@ $(function () {
 
     $.each($all_rows, function () {
       if ($(this).css("background-color") != 'rgb(255, 255, 255)') {
-        var $data_id = $(this).attr('slipno');
-        var temp_index = temp.findIndex(function (value) { return value.lngslipno == $data_id });
+        var data_id = $(this).attr('slipno');
+        var temp_index = temp.findIndex(function (value) { return value.lngslipno == data_id });
         data.push(temp[temp_index]);
         // 該当データを temp から削除
         if (temp_index !== -1) {
@@ -449,7 +457,7 @@ $(function () {
         }
       }
     });
-    data.sort(function(a, b){return a.lngslipno-b.lngslipno});
+    data.sort(function (a, b) { return a.lngslipno - b.lngslipno });
 
     // テーブルB 再生成
     $.createSkeletonTable(temp, $tableB_row, domB, $tableB_tbody);
@@ -487,7 +495,7 @@ $(function () {
     var $tableB_row = $('tbody tr', $tableB);
 
     if (!$tableB_row.length) return;
-    
+
     $.each($tableB_row, function () {
       var rowindex = $(this).closest('tr').index();
       var customerno = $('#tableB tbody tr:nth-child(' + (rowindex + 1) + ')').find('.customerno').find('input').val();
@@ -495,8 +503,8 @@ $(function () {
     });
 
     $.each($tableB_row, function () {
-      var $data_id = $(this).attr('slipno');
-      var temp_index = temp.findIndex(function (value) { return value.lngslipno == $data_id });
+      var data_id = $(this).attr('slipno');
+      var temp_index = temp.findIndex(function (value) { return value.lngslipno == data_id });
       data.push(temp[temp_index]);
       // 該当データを temp から削除
       if (temp_index !== -1) {
@@ -504,7 +512,7 @@ $(function () {
       }
     });
 
-    data.sort(function(a, b){return a.lngslipno-b.lngslipno});
+    data.sort(function (a, b) { return a.lngslipno - b.lngslipno });
 
     // テーブルA 再生成
     $.createSkeletonTable(data, $tableA_row, domA, $tableA_tbody);
