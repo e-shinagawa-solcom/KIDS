@@ -35,7 +35,7 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "     s.lngstockno";
     $aryQuery[] = "   , s.lngstockno as lngpkno";
     $aryQuery[] = "   , s.lngRevisionNo as lngRevisionNo";
-    $aryQuery[] = "   , sd.strordercode";
+    $aryQuery[] = "   , sd.strordercode || '-' || lpad(to_char(sd.lngpurchaserevisionno, 'FM99'), 2, '0') as strordercode";
     $aryQuery[] = "   , to_char(s.dtmInsertDate, 'YYYY/MM/DD HH24:MI:SS') as dtmInsertDate";
     $aryQuery[] = "   , to_char(s.dtmappropriationdate, 'YYYY/MM/DD') as dtmappropriationdate";
     $aryQuery[] = "   , to_char(s.dtmexpirationdate, 'YYYY/MM/DD') as dtmexpirationdate";
@@ -82,7 +82,9 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "          on (sd1.lngStockNo) sd1.lngStockNo";
     $aryQuery[] = "        , sd1.lngStockDetailNo";
     $aryQuery[] = "        , sd1.lngRevisionNo ";
+    $aryQuery[] = "        , sd1.lngorderrevisionno";
     $aryQuery[] = "        , mp.strordercode";
+    $aryQuery[] = "        , mp.lngRevisionNo as lngpurchaserevisionno";
     $aryQuery[] = "        , p.strProductCode";
     $aryQuery[] = "        , mg.strGroupDisplayCode";
     $aryQuery[] = "        , mg.strGroupDisplayName";

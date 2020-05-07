@@ -164,10 +164,10 @@
         //    修正可能かどうかのチェック
         // --------------------------------
         // 請求書明細に紐づ売上マスタの売上ステータスが締済みは不可
-        if (fncSalesStatusIsClosed($lngInvoiceNo, $objDB))
-        {
-            MoveToErrorPage("締済みのため、修正できません");
-        }
+        // if (fncSalesStatusIsClosed($lngInvoiceNo, $objDB))
+        // {
+        //     MoveToErrorPage("締済みのため、修正できません");
+        // }
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
 

@@ -105,9 +105,12 @@ if ($strMode == "get-closedday") {
     // 顧客コード
     $strCompanyDisplayCode = $_POST["strcompanydisplaycode"];
     // 締め日取得
-    $lngClosedDay = fncGetClosedDay($strCompanyDisplayCode, $objDB);
+    $aryResult["lngClosedDay"] = fncGetClosedDay($strCompanyDisplayCode, $objDB);
+
+    $aryResult["isClosedFlag"] = fncIsClosedForSales(substr($_POST["dtmDeliveryDate"],0,7), $objDB);
+
     // データ返却
-    echo $lngClosedDay;
+	echo $s->encodeUnsafe($aryResult);
     // DB切断
     $objDB->close();
     // 処理終了
@@ -161,7 +164,6 @@ if ($strMode == "change-deliverydate") {
     $aryResult = fncGetTaxRatePullDown($_POST["dtmDeliveryDate"], "", $objDB);
     // データ返却
     // echo $optTaxRate;
-    
 	//結果出力
     echo $s->encodeUnsafe($aryResult);
     
@@ -170,6 +172,7 @@ if ($strMode == "change-deliverydate") {
     // 処理終了
     return true;
 }
+
 
 //-------------------------------------------------------------------------
 // フォーム初期値設定

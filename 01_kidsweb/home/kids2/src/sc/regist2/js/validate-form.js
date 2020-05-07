@@ -59,9 +59,6 @@ $(function () {// フォーム
     });
 
     $('input[name="dtmDeliveryDate"]').on('change', function () {
-        console.log($(this).val());
-        console.log($('input[name="strSessionID"]').val());
-        console.log($('input[name="ajaxPostTarget"]').val());
         // POST先
         var postTarget = $('input[name="ajaxPostTarget"]').val();
         if ($('form').valid()) {

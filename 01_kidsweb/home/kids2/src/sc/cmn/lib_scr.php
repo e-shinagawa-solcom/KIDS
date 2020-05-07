@@ -1076,9 +1076,10 @@ function fncRegisterSalesAndSlip(
     $isCreateNew = strlen($lngRenewTargetSlipNo) == 0;
 
     // 現在日付
-    $dtmNowDate = date('Y/m/d', time());
+    $dtmdeliverydate = date($aryHeader["dtmdeliverydate"]);
     // 計上日
-    $dtmAppropriationDate = $dtmNowDate;
+    $dtmAppropriationDate = $dtmdeliverydate;
+
     // 顧客の会社コードを取得
     $lngCustomerCompanyCode = fncGetNumericCompanyCode($aryHeader["strcompanydisplaycode"], $objDB);
     // 顧客の会社コードに紐づく会社情報を取得
@@ -1157,8 +1158,8 @@ function fncRegisterSalesAndSlip(
         // 売上コード
         if ($isCreateNew) {
             // 登録：当月に紐づく売上コードの発番
-            $strSalesCode = fncGetDateSequence(date('Y', strtotime($dtmNowDate)),
-                date('m', strtotime($dtmNowDate)), "m_sales.lngSalesNo", $objDB);
+            $strSalesCode = fncGetDateSequence(date('Y', strtotime($dtmdeliverydate)),
+                date('m', strtotime($dtmdeliverydate)), "m_sales.lngSalesNo", $objDB);
         } else {
             // 修正：修正対象に紐づく値
             $strSalesCode = $strRenewTargetSalesCode;
@@ -1177,8 +1178,8 @@ function fncRegisterSalesAndSlip(
         if ($isCreateNew) {
             // 登録：当日に紐づく納品伝票コードの発番
             $strSlipCode = fncGetDateSequence(
-                date('y', strtotime($dtmNowDate)),
-                date('m', strtotime($dtmNowDate)),
+                date('y', strtotime($dtmdeliverydate)),
+                date('m', strtotime($dtmdeliverydate)),
                 "m_sales.strSlipCode", $objDB
             );
         } else {
@@ -1894,7 +1895,9 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["strcustomeraddress2"] = $aryCustomerCompany["straddress2"]; //9:顧客住所2
             $aryParts["strcustomeraddress3"] = $aryCustomerCompany["straddress3"]; //10:顧客住所3
             $aryParts["strcustomeraddress4"] = $aryCustomerCompany["straddress4"]; //11:顧客住所4
+            $aryParts["strcustomerusername"] = $aryHeader["strcustomerusername"];
             $aryParts["dtmdeliverydate"] = $aryHeader["dtmdeliverydate"];
+            $aryParts["strnote"] = $aryHeader["strnote"];
             $lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];
             $strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"];
             $aryParts["strmonetaryunitsign"] = $strmonetaryunitsign;
@@ -1934,7 +1937,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
                 $aryParts["strproductenglishname" . ($i)] = $aryDetail[$i]["strproductenglishname"];
                 $aryParts["lngproductquantity" . ($i)] = number_format($aryDetail[$i]["lngproductquantity"]);
                 $aryParts["strproductunitname" . ($i)] = $aryDetail[$i]["strproductunitname"];
-                $aryParts["curproductprice" . ($i)] = number_format($aryDetail[$i]["curproductprice"], 2, '.', ',');
+                $aryParts["curproductprice" . ($i)] = number_format($aryDetail[$i]["curproductprice"], 4, '.', ',');
                 $aryParts["cursubtotalprice" . ($i)] = number_format($aryDetail[$i]["cursubtotalprice"], 2, '.', ',');
                 $aryParts["strsalesclassname" . ($i)] = $aryDetail[$i]["strsalesclassname"];
                 $aryParts["strnote" . ($i)] = $aryDetail[$i]["strnote"];
@@ -1944,7 +1947,6 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
                     $aryParts["strcustomersalescode" . ($i)] = "(PO No:" . $aryParts["strcustomersalescode" . ($i)] . ")";
                 }
             }
-
             // 置き換え
             $objTemplate->replace($aryParts);
             $objTemplate->complete();
@@ -2065,7 +2067,7 @@ function fncSetSlipDataToWorkSheet(
         $v_strrevisecode = $d["strrevisecode"]; //9:再販コード
         $v_strproductname = $d["strproductname"]; //10:製品名
         $v_strproductenglishname = $d["strproductenglishname"]; //11:製品名（英語）
-        $v_curproductprice = number_format($d["curproductprice"]); //12:単価
+        $v_curproductprice = number_format($d["curproductprice"], 4, '.', ','); //12:単価
         $v_lngquantity = number_format($d["lngunitquantity"]); //13:入数
         $v_lngproductquantity = number_format($d["lngproductquantity"]); //14:数量
         $v_lngproductunitcode = $d["lngproductunitcode"]; //15:製品単位コード
@@ -2121,18 +2123,18 @@ function fncSetSlipDataToWorkSheet(
         $drawing2->setCoordinates('D3'); //貼り付け場所
         $drawing2->setWorksheet($sheet); //対象シート（インスタンスを指定）
 
-        $drawing3 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing3->setPath(SRC_ROOT ."/list/result/slip/brackets_left.gif");
-        $drawing3->setHeight(100); //高さpx
-        $drawing3->setOffsetX(20); // 位置をずらす
-        $drawing3->setCoordinates('A9'); //貼り付け場所
-        $drawing3->setWorksheet($sheet); //対象シート（インスタンスを指定）
+        // $drawing3 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        // $drawing3->setPath(SRC_ROOT ."/list/result/slip/brackets_left.gif");
+        // $drawing3->setHeight(100); //高さpx
+        // $drawing3->setOffsetX(20); // 位置をずらす
+        // $drawing3->setCoordinates('A9'); //貼り付け場所
+        // $drawing3->setWorksheet($sheet); //対象シート（インスタンスを指定）
 
-        $drawing4 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing4->setPath(SRC_ROOT ."/list/result/slip/brackets_right.gif");
-        $drawing4->setHeight(100); //高さpx
-        $drawing4->setCoordinates('F9'); //貼り付け場所
-        $drawing4->setWorksheet($sheet); //対象シート（インスタンスを指定）
+        // $drawing4 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+        // $drawing4->setPath(SRC_ROOT ."/list/result/slip/brackets_right.gif");
+        // $drawing4->setHeight(100); //高さpx
+        // $drawing4->setCoordinates('F9'); //貼り付け場所
+        // $drawing4->setWorksheet($sheet); //対象シート（インスタンスを指定）
     }
     return $xlSpreadSheet;
 
@@ -2201,6 +2203,32 @@ function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
     }
     $objDB->freeResult($lngResultID);
     return true;
+
+}
+
+function fncSalesStatusIsClosedForSales($lngSalesNo, $objDB)
+{   
+    $strQuery = "SELECT lngsalesstatuscode ";
+    $strQuery .= "FROM m_sales ms ";    
+    $strQuery .= "INNER JOIN ( ";
+    $strQuery .= "    SELECT lngsalesno, MAX(lngrevisionno) AS max_lngrevisionno , MIN(lngrevisionno) AS min_lngrevisionno FROM m_sales GROUP BY lngsalesno ";
+    $strQuery .= ") mi_rev ";
+    $strQuery .= "    ON mi_rev.lngsalesno = ms.lngsalesno ";
+    $strQuery .= "    AND  mi_rev.max_lngrevisionno = ms.lngrevisionno ";
+    $strQuery .= "    AND  mi_rev.min_lngrevisionno >= 0 ";
+    $strQuery .= "WHERE ms.lngsalesno = " . (int) $lngSalesNo;
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if ($lngResultNum == 1) {
+        $objResult = $objDB->fetchObject($lngResultID, 0);
+        if ((int) $objResult->lngsalesstatuscode ==  DEF_SALES_CLOSED) {
+            return true;
+        }
+    } else {
+        fncOutputError(9051, DEF_FATAL, "売上状態情報取得に失敗", true, "", $objDB);
+    }
+    $objDB->freeResult($lngResultID);
+    return false;
 
 }
 
@@ -2308,4 +2336,51 @@ function fncGetProduct($strproductcode, $objDB)
     $objDB->freeResult($lngResultID);
 
     return $objResult;
+}
+
+
+/**
+ * 締め処理下かどうかの確認
+ *
+ * @param [type] $objDB
+ * @return void
+ */
+function fncIsClosedForSales($dtmAppropriationDate, $objDB)
+{
+    unset($aryQuery);
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = "  count(ms.*) as count ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  m_sales ms ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      lngsalesno";
+    $aryQuery[] = "      , max(lngrevisionno) lngrevisionno";
+    $aryQuery[] = "      , MIN(lngrevisionno) AS min_lngrevisionno ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_sales ";
+    $aryQuery[] = "    group by";
+    $aryQuery[] = "      lngsalesno";
+    $aryQuery[] = "  ) max_s ";
+    $aryQuery[] = "    on ms.lngsalesno = max_s.lngsalesno ";
+    $aryQuery[] = "    and ms.lngrevisionno = max_s.lngrevisionno ";
+    $aryQuery[] = "    and min_lngrevisionno >= 0 ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  to_char( ";
+    $aryQuery[] = "    date_trunc('month', dtmAppropriationDate)";
+    $aryQuery[] = "    , 'YYYY/MM'";
+    $aryQuery[] = "  ) = '" . $dtmAppropriationDate . "' ";
+    $aryQuery[] = "  AND lngsalesStatusCode = " . DEF_SALES_CLOSED;    
+    $strQuery = implode("\n", $aryQuery);
+    // 税区分の取得クエリーの実行
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if ($lngResultNum == 1) {
+        $objResult = $objDB->fetchObject($lngResultID, 0);
+        if ((int) $objResult->count > 0) {
+            return true;
+        }
+    }
+    $objDB->freeResult($lngResultID);
+
+    return false;
 }

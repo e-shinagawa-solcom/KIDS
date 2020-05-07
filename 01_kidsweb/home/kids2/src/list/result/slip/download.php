@@ -101,18 +101,18 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
     $drawing2->setCoordinates('D3'); //貼り付け場所
     $drawing2->setWorksheet($sheet); //対象シート（インスタンスを指定）
 
-    $drawing3 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-    $drawing3->setPath("brackets_left.gif");
-    $drawing3->setHeight(100); //高さpx
-    $drawing3->setOffsetX(20); // 位置をずらす
-    $drawing3->setCoordinates('A9'); //貼り付け場所
-    $drawing3->setWorksheet($sheet); //対象シート（インスタンスを指定）
+    // $drawing3 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+    // $drawing3->setPath("brackets_left.gif");
+    // $drawing3->setHeight(100); //高さpx
+    // $drawing3->setOffsetX(20); // 位置をずらす
+    // $drawing3->setCoordinates('A9'); //貼り付け場所
+    // $drawing3->setWorksheet($sheet); //対象シート（インスタンスを指定）
 
-    $drawing4 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-    $drawing4->setPath("brackets_right.gif");
-    $drawing4->setHeight(100); //高さpx
-    $drawing4->setCoordinates('F9'); //貼り付け場所
-    $drawing4->setWorksheet($sheet); //対象シート（インスタンスを指定）
+    // $drawing4 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+    // $drawing4->setPath("brackets_right.gif");
+    // $drawing4->setHeight(100); //高さpx
+    // $drawing4->setCoordinates('F9'); //貼り付け場所
+    // $drawing4->setWorksheet($sheet); //対象シート（インスタンスを指定）
 } else {
     // 再印刷フラグの設定
     $worksheet->getCell('AK3')->setValue($aryData["reprintFlag"]);

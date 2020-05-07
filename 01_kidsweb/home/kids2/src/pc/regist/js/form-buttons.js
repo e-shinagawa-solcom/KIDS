@@ -1,6 +1,7 @@
 var taxList;
 var chkbox = [];
 var alertCount = 0;
+var isClosedFlg = false;
 (function () {
     // フォーム
     var workForm = $('form');
@@ -31,8 +32,9 @@ var alertCount = 0;
 
     // 仕入日変更イベント
     $('input[name="dtmStockAppDate"]').on('change', function () {
-        alertCount =0;
+        alertCount = 0;
         getMonetaryRate();
+        isClosed();
     });
 
     btnGetPoInfo.on('click', function () {
@@ -240,119 +242,141 @@ var alertCount = 0;
 
     // 登録ボタン押下時の処理
     btnRegist.on('click', function () {
-        if (workForm.valid()) {
 
-            var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
 
-            // 仕入日が半年である
-            if (isHalfYearLater(new Date(dtmStockAppDate))) {
-                alert("仕入日はシステム日付の半年後以上となっている。");
-                return false;
+        var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
+
+        $.ajax({
+            url: '/pc/regist/isClosed.php',
+            type: 'post',
+            data: {
+                'strSessionID': $.cookie('strSessionID'),
+                'dtmStockAppDate': dtmStockAppDate.substr(0, 7)
             }
-
-
-            var detaildata = new Array();
-            var len = 0;
-            $("#tableB tbody tr").each(function (i, e) {
-                // 発注明細行番号
-                // 受注明細番号
-                var chkbox = $("#tableB_chkbox tbody tr:nth-child(" + (i + 1) + ") td").find('input:checkbox');
-                if (chkbox.prop("checked")) {
-                    len += 1;
-                    // 発注番号                
-                    var lngOrderNo = $(this).find('.lngorderno').text();
-                    // 発注リビジョン番号                
-                    var lngRevisionNo = $(this).find('.lngrevisionno').text();
-                    // 発注明細番号                
-                    var lngOrderDetailNo = $(this).find('.lngorderdetailno').text();
-                    // 仕入明細番号
-                    var lngStockDetailNo = len;
-                    // 消費税区分
-                    var lngTaxClassCode = $(this).find('.col10').find('select').val();
-                    var strTaxClassName = $(this).find('.col10').find('select option:selected').text();
-                    // 消費率
-                    var curTax = 0;
-                    var lngTaxCode = null;
-                    if (lngTaxClassCode == "1") {
-                        lngTaxCode = null;
-                        curTax = 0;
+        })
+            .done(function (response) {
+                var data = JSON.parse(response);
+                console.log(data);
+                console.log(data == "1");
+                if (data == "1") {
+                    alert("入力された仕入月" + dtmStockAppDate.substr(0, 7) + "は既に締め処理済の為入力できません。\n経理部門に相談してください。");
+                    return false;
+                }
+                if (workForm.valid()) {
+                    // 仕入日が半年である
+                    if (isHalfYearLater(new Date(dtmStockAppDate))) {
+                        alert("仕入日はシステム日付の半年後以上となっている。");
+                        return false;
                     }
-                    else {
-                        lngTaxCode = $(this).find('.col11').find('select option:selected').val();
-                        curTax = $(this).find('.col11').find('select option:selected').text();
-                    }
-                    // 消費税額                
-                    var curTaxPrice = $(this).find('.curtaxprice').text();
-                    // 納期
-                    var dtmDeliveryDate = $(this).find('.dtmdeliverydate').text();
-                    // 消費税コード                
-                    //                    var lngTaxCode = $(this).find('td:nth-child(23)').text();
 
-                    // 納期がヘッダ部で入力した仕入日と同月でない行が存在した場合
-                    if (dtmDeliveryDate.substring(1, 7) != dtmStockAppDate.substring(1, 7)) {
-                        alert("発注確定時の納期と仕入日と一致しません。発注データを修正してください。");
+                    var detaildata = new Array();
+                    var len = 0;
+                    $("#tableB tbody tr").each(function (i, e) {
+                        // 発注明細行番号
+                        // 受注明細番号
+                        var chkbox = $("#tableB_chkbox tbody tr:nth-child(" + (i + 1) + ") td").find('input:checkbox');
+                        if (chkbox.prop("checked")) {
+                            len += 1;
+                            // 発注番号                
+                            var lngOrderNo = $(this).find('.lngorderno').text();
+                            // 発注リビジョン番号                
+                            var lngRevisionNo = $(this).find('.lngrevisionno').text();
+                            // 発注明細番号                
+                            var lngOrderDetailNo = $(this).find('.lngorderdetailno').text();
+                            // 仕入明細番号
+                            var lngStockDetailNo = len;
+                            // 消費税区分
+                            var lngTaxClassCode = $(this).find('.col10').find('select').val();
+                            var strTaxClassName = $(this).find('.col10').find('select option:selected').text();
+                            // 消費率
+                            var curTax = 0;
+                            var lngTaxCode = null;
+                            if (lngTaxClassCode == "1") {
+                                lngTaxCode = null;
+                                curTax = 0;
+                            }
+                            else {
+                                lngTaxCode = $(this).find('.col11').find('select option:selected').val();
+                                curTax = $(this).find('.col11').find('select option:selected').text();
+                            }
+                            // 消費税額                
+                            var curTaxPrice = $(this).find('.curtaxprice').text();
+                            // 納期
+                            var dtmDeliveryDate = $(this).find('.dtmdeliverydate').text();
+                            // 消費税コード                
+                            //                    var lngTaxCode = $(this).find('td:nth-child(23)').text();
+
+                            // 納期がヘッダ部で入力した仕入日と同月でない行が存在した場合
+                            if (dtmDeliveryDate.substring(1, 7) != dtmStockAppDate.substring(1, 7)) {
+                                alert("発注確定時の納期と仕入日と一致しません。発注データを修正してください。");
+                                exit;
+                            }
+                            detaildata[len - 1] = {
+                                "lngOrderNo": lngOrderNo,
+                                "lngOrderDetailNo": lngOrderDetailNo,
+                                "lngRevisionNo": lngRevisionNo,
+                                "lngStockDetailNo": lngStockDetailNo,
+                                "lngTaxClassCode": lngTaxClassCode,
+                                "strTaxClassName": strTaxClassName,
+                                "curTax": curTax / 100,
+                                "curTaxPrice": curTaxPrice,
+                                "lngTaxCode": lngTaxCode
+                            };
+                        }
+                    });
+
+                    if (len == 0) {
+                        alert("発注明細を一つ以上選択してください。")
                         exit;
                     }
-                    detaildata[len - 1] = {
-                        "lngOrderNo": lngOrderNo,
-                        "lngOrderDetailNo": lngOrderDetailNo,
-                        "lngRevisionNo": lngRevisionNo,
-                        "lngStockDetailNo": lngStockDetailNo,
-                        "lngTaxClassCode": lngTaxClassCode,
-                        "strTaxClassName": strTaxClassName,
-                        "curTax": curTax / 100,
-                        "curTaxPrice": curTaxPrice,
-                        "lngTaxCode": lngTaxCode
-                    };
+
+                    var formData = workForm.serializeArray();
+                    formData.push({ name: "detailData", value: JSON.stringify(detaildata) });
+                    formData.push({ name: "strSessionID", value: $.cookie('strSessionID') });
+                    formData.push({ name: "strMonetaryRateName", value: $('select[name="lngMonetaryRateCode"] option:selected').text() });
+                    formData.push({ name: "lngMonetaryUnitCode", value: $('input[name="lngMonetaryUnitCode"]').val() });
+                    formData.push({ name: "lngPayConditionCode", value: $('input[name="lngPayConditionCode"]').val() });
+                    formData.push({ name: "lngPurchaseOrderNo", value: $('input[name="lngPurchaseOrderNo"]').val() });
+                    formData.push({ name: "lngPurchaseOrderRevisionNo", value: $('input[name="lngpurchaserevisionno"]').val() });
+                    formData.push({ name: "lngStockNo", value: $('input[name="lngStockNo"]').val() });
+                    formData.push({ name: "lngStockRevisionNo", value: $('input[name="lngstockrevisionno"]').val() });
+
+                    var actionUrl = workForm.attr('action');
+                    //            alert(actionUrl);
+                    // リクエスト送信
+                    $.ajax({
+                        url: actionUrl,
+                        type: 'POST',
+                        data: formData
+                    })
+                        .done(function (response) {
+                            console.log(response);
+                            if (actionUrl.indexOf('modify') > -1) {
+                                document.open();
+                                document.write(response);
+                                document.close();
+                            } else {
+                                var w = window.open("", 'Regist Confirm', "width=1011, height=670, scrollbars=yes, resizable=yes");
+                                w.document.open();
+                                w.document.write(response);
+                                w.document.close();
+                            }
+                        })
+                        .fail(function (response) {
+                            alert(response);
+                            //                    alert("fail");
+                            // Ajaxリクエストが失敗
+                        });
                 }
-            });
-
-            if (len == 0) {
-                alert("発注明細を一つ以上選択してください。")
-                exit;
-            }
-            var formData = workForm.serializeArray();
-            formData.push({ name: "detailData", value: JSON.stringify(detaildata) });
-            formData.push({ name: "strSessionID", value: $.cookie('strSessionID') });
-            formData.push({ name: "strMonetaryRateName", value: $('select[name="lngMonetaryRateCode"] option:selected').text() });
-            formData.push({ name: "lngMonetaryUnitCode", value: $('input[name="lngMonetaryUnitCode"]').val() });
-            formData.push({ name: "lngPayConditionCode", value: $('input[name="lngPayConditionCode"]').val() });
-            formData.push({ name: "lngPurchaseOrderNo", value: $('input[name="lngPurchaseOrderNo"]').val() });
-            formData.push({ name: "lngPurchaseOrderRevisionNo", value: $('input[name="lngpurchaserevisionno"]').val() });
-            formData.push({ name: "lngStockNo", value: $('input[name="lngStockNo"]').val() });
-            formData.push({ name: "lngStockRevisionNo", value: $('input[name="lngstockrevisionno"]').val() });
-
-            var actionUrl = workForm.attr('action');
-            //            alert(actionUrl);
-            // リクエスト送信
-            $.ajax({
-                url: actionUrl,
-                type: 'POST',
-                data: formData
+                else {
+                    // バリデーションのキック
+                    workForm.find(':submit').click();
+                }
             })
-                .done(function (response) {
-                    console.log(response);
-                    if (actionUrl.indexOf('modify') > -1) {
-                        document.open();
-                        document.write(response);
-                        document.close();
-                    } else {
-                        var w = window.open("", 'Regist Confirm', "width=1011, height=670, scrollbars=yes, resizable=yes");
-                        w.document.open();
-                        w.document.write(response);
-                        w.document.close();
-                    }
-                })
-                .fail(function (response) {
-                    alert(response);
-                    //                    alert("fail");
-                    // Ajaxリクエストが失敗
-                });
-        }
-        else {
-            // バリデーションのキック
-            workForm.find(':submit').click();
-        }
+            .fail(function (response) {
+                console.log(response);
+                alert("締めチェック処理が失敗しました。");
+            })
     });
 
 
@@ -377,9 +401,8 @@ function getMonetaryRate() {
     if (!isDate(dtmStockAppDate)) {
         return false;
     }
-    
-    if ($('input[name="lngMonetaryUnitCode"]').val() == "" || $('select[name="lngMonetaryRateCode"]').val() == "")
-    {
+
+    if ($('input[name="lngMonetaryUnitCode"]').val() == "" || $('select[name="lngMonetaryRateCode"]').val() == "") {
         return false;
     }
     // リクエスト送信
@@ -394,15 +417,14 @@ function getMonetaryRate() {
         }
     })
         .done(function (response) {
-            console.log(response);
             var data = JSON.parse(response);
-            console.log(data.dtmapplystartdate.substr(0,7).replace(/-/g, ""));
-            console.log(dtmStockAppDate.substr(0,7).replace(/\//g, ""));
+            console.log(data.dtmapplystartdate.substr(0, 7).replace(/-/g, ""));
+            console.log(dtmStockAppDate.substr(0, 7).replace(/\//g, ""));
             console.log(alertCount);
             $('input[name="curConversionRate"]').val(data.curconversionrate);
-            if (data.dtmapplystartdate.substr(0,7).replace(/-/g, "") != dtmStockAppDate.substr(0,7).replace(/\//g, "") && alertCount == 0) {
+            if (data.dtmapplystartdate.substr(0, 7).replace(/-/g, "") != dtmStockAppDate.substr(0, 7).replace(/\//g, "") && alertCount == 0) {
                 alertCount += 1;
-                $message = "選択された仕入日の適用レートが存在しません。\n" + data.dtmapplystartdate.substr(0,7) + "のレートを適用します。"
+                $message = "選択された仕入日の適用レートが存在しません。\n" + data.dtmapplystartdate.substr(0, 7) + "のレートを適用します。"
                 alert($message);
             }
         })
@@ -516,5 +538,28 @@ function convertNumber(str, fracctiondigits) {
     } else {
         return "";
     }
+}
+
+function isClosed() {
+    var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val().substr(0, 7);
+    // リクエスト送信
+    $.ajax({
+        url: '/pc/regist/isClosed.php',
+        type: 'post',
+        data: {
+            'strSessionID': $.cookie('strSessionID'),
+            'dtmStockAppDate': dtmStockAppDate
+        }
+    })
+        .done(function (response) {
+            var data = JSON.parse(response);
+            if (data) {
+                isClosedFlg = true;
+            }
+        })
+        .fail(function (response) {
+            console.log(response);
+            alert("締めチェック処理が失敗しました。");
+        })
 }
 

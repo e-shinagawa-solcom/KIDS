@@ -148,7 +148,7 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
 
     // 顧客FAX番号
     $aryParts["strcustomerfax"] = "Fax.:" . $aryParts["strcustomerfaxno"];
-
+    $aryparts["strcustomerusername"] = $aryParts["strcustomerusername"];
     // 合計金額
     $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["curtotalprice"];
 

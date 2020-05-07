@@ -19,6 +19,13 @@
  *
  */
 // ----------------------------------------------------------------------------
+const PRICE_CLOUMN_LIST = array("curthismonthamount",
+"curtotalprice",
+"cursubtotalprice",
+"cursubtotal",
+"curtaxprice",
+"curproductprice",
+"curlastmonthbalance");
 
 $aryTableHeadBtnName = array();
 $aryTableHeadBtnName["btndetail"] = "詳細";
@@ -40,7 +47,7 @@ $aryTableHeaderName_SO["strproductcode"] = "製品コード";
 $aryTableHeaderName_SO["strproductname"] = "製品名";
 $aryTableHeaderName_SO["strproductenglishname"] = "製品名（英語）";
 $aryTableHeaderName_SO["lnginchargegroupcode"] = "営業部署";
-$aryTableHeaderName_SO["lnginchargeusercode"] = "開発担当者";
+$aryTableHeaderName_SO["lnginchargeusercode"] = "担当者";
 $aryTableHeaderName_SO["lngsalesclasscode"] = "売上区分";
 $aryTableHeaderName_SO["strgoodscode"] = "顧客品番";
 $aryTableHeaderName_SO["lngcustomercompanycode"] = "顧客";
@@ -61,7 +68,7 @@ $aryTableHeaderName_PO["strproductcode"] = "製品コード";
 $aryTableHeaderName_PO["strproductname"] = "製品名";
 $aryTableHeaderName_PO["strproductenglishname"] = "製品名（英語）";
 $aryTableHeaderName_PO["lnginchargegroupcode"] = "営業部署";
-$aryTableHeaderName_PO["lnginchargeusercode"] = "開発担当者";
+$aryTableHeaderName_PO["lnginchargeusercode"] = "担当者";
 $aryTableHeaderName_PO["lngcustomercode"] = "仕入先";
 $aryTableHeaderName_PO["lngstocksubjectcode"] = "仕入科目";
 $aryTableHeaderName_PO["lngstockitemcode"] = "仕入部品";
@@ -92,7 +99,7 @@ $aryTableHeaderName_SC["curtotalprice"] = "合計金額";
 $aryTableDetailHeaderName_SC["lngrecordno"] = "No.";
 $aryTableDetailHeaderName_SC["strproductcode"] = "製品コード";
 $aryTableDetailHeaderName_SC["lnginchargegroupcode"] = "営業部署";
-$aryTableDetailHeaderName_SC["lnginchargeusercode"] = "開発担当者";
+$aryTableDetailHeaderName_SC["lnginchargeusercode"] = "担当者";
 $aryTableDetailHeaderName_SC["strproductname"] = "製品名";
 $aryTableDetailHeaderName_SC["lngsalesclasscode"] = "売上区分";
 $aryTableDetailHeaderName_SC["strgoodscode"] = "顧客品番";
@@ -116,13 +123,13 @@ $aryTableHeaderName_SLIP["lngtaxclasscode"] = "課税区分";
 $aryTableHeaderName_SLIP["strslipcode"] = "納品書NO";
 $aryTableHeaderName_SLIP["dtmdeliverydate"] = "納品日";
 $aryTableHeaderName_SLIP["lngdeliveryplacecode"] = "納品先";
+$aryTableHeaderName_SLIP["strsalesstatusname"] = "売上状態";
 $aryTableHeaderName_SLIP["lngusercode"] = "起票者";
 $aryTableHeaderName_SLIP["strnote"] = "備考";
 $aryTableHeaderName_SLIP["curtotalprice"] = "合計金額";
 
 // 明細部
 $aryTableDetailHeaderName_SLIP["lngrecordno"] = "明細行NO";
-$aryTableDetailHeaderName_SLIP["strreceivestatusname"] = "売上状態";
 $aryTableDetailHeaderName_SLIP["strcustomersalescode"] = "注文書NO";
 $aryTableDetailHeaderName_SLIP["strgoodscode"] = "顧客品番";
 $aryTableDetailHeaderName_SLIP["strproductname"] = "品名";
@@ -150,7 +157,7 @@ $aryTableHeaderName_PC["curtotalprice"] = "合計金額";
 $aryTableDetailHeaderName_PC["lngrecordno"] = "No.";
 $aryTableDetailHeaderName_PC["strproductcode"] = "製品コード";
 $aryTableDetailHeaderName_PC["lnginchargegroupcode"] = "営業部署";
-$aryTableDetailHeaderName_PC["lnginchargeusercode"] = "開発担当者";
+$aryTableDetailHeaderName_PC["lnginchargeusercode"] = "担当者";
 $aryTableDetailHeaderName_PC["strproductname"] = "製品名";
 $aryTableDetailHeaderName_PC["lngstocksubjectcode"] = "仕入科目";
 $aryTableDetailHeaderName_PC["lngstockitemcode"] = "仕入部品";
@@ -205,7 +212,7 @@ $aryTableHeaderName_PURORDER["strproductcode"] = "製品コード";
 $aryTableHeaderName_PURORDER["strproductname"] = "製品名";
 $aryTableHeaderName_PURORDER["strproductenglishname"] = "製品名（英語）";
 $aryTableHeaderName_PURORDER["lnginchargegroupcode"] = "営業部署";
-$aryTableHeaderName_PURORDER["lnginchargeusercode"] = "営業担当者";
+$aryTableHeaderName_PURORDER["lnginchargeusercode"] = "担当者";
 $aryTableHeaderName_PURORDER["lngcustomercode"] = "仕入先";
 $aryTableHeaderName_PURORDER["lngpayconditioncode"] = "支払条件";
 $aryTableHeaderName_PURORDER["curtotalprice"] = "合計金額";
@@ -217,8 +224,8 @@ $aryTableHeaderName_PURORDER["strnote"] = "備考";
 
 $aryTableDetailHeaderName_PURORDER["lngrecordno"] = "No.";
 $aryTableDetailHeaderName_PURORDER["strorderstatusname"] = "発注状態";
-$aryTableDetailHeaderName_PURORDER["lngstocksubjectname"] = "仕入科目";
-$aryTableDetailHeaderName_PURORDER["strstockitemname"] = "仕入部品";
+$aryTableDetailHeaderName_PURORDER["lngstocksubjectcode"] = "仕入科目";
+$aryTableDetailHeaderName_PURORDER["lngstockitemcode"] = "仕入部品";
 $aryTableDetailHeaderName_PURORDER["strmoldno"] = "金型No.";
 $aryTableDetailHeaderName_PURORDER["strdeliverymethodname"] = "運搬方法";
 $aryTableDetailHeaderName_PURORDER["curproductprice"] = "単価";
@@ -254,7 +261,7 @@ $aryTableHeaderName["lngprintcount"] = "印刷回数";
 $aryTableDetailHeaderName["lngrecordno"] = "No.";
 $aryTableDetailHeaderName["strproductcode"] = "製品コード";
 $aryTableDetailHeaderName["lnginchargegroupcode"] = "営業部署";
-$aryTableDetailHeaderName["lnginchargeusercode"] = "開発担当者";
+$aryTableDetailHeaderName["lnginchargeusercode"] = "担当者";
 $aryTableDetailHeaderName["strproductname"] = "製品名";
 $aryTableDetailHeaderName["lngstocksubjectcode"] = "仕入科目";
 $aryTableDetailHeaderName["lngstockitemcode"] = "仕入部品";
@@ -1163,7 +1170,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "select";
         $aryQuery[] = "  sd.lngSlipDetailNo";
         $aryQuery[] = "  , sd.lngSlipDetailNo as lngdetailno";
-        $aryQuery[] = "  , mrs.strReceiveStatusName";
+        // $aryQuery[] = "  , mrs.strReceiveStatusName";
         $aryQuery[] = "  , sd.strCustomerSalesCode";
         $aryQuery[] = "  , sd.strGoodsCode";
         $aryQuery[] = "  , sd.strProductCode";
@@ -1178,8 +1185,8 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , sd.strNote as strdetailnote";
         $aryQuery[] = "from";
         $aryQuery[] = "  t_slipdetail sd ";
-        $aryQuery[] = "left join m_receive mr on mr.lngreceiveno = sd.lngreceiveno and mr.lngrevisionno = sd.lngreceiverevisionno";
-        $aryQuery[] = "left join m_receivestatus mrs on mrs.lngreceivestatuscode = mr.lngreceivestatuscode";
+        // $aryQuery[] = "left join m_receive mr on mr.lngreceiveno = sd.lngreceiveno and mr.lngrevisionno = sd.lngreceiverevisionno";
+        // $aryQuery[] = "left join m_receivestatus mrs on mrs.lngreceivestatuscode = mr.lngreceivestatuscode";
         $aryQuery[] = "where";
         $aryQuery[] = "  sd.lngslipno = " . $lngPkNo;
         $aryQuery[] = "  AND sd.lngrevisionno = " . $lngRevisionNo;
@@ -1190,8 +1197,10 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "select";
         $aryQuery[] = "  tpod.lngpurchaseorderno";
         $aryQuery[] = "  , tpod.lngpurchaseorderdetailno as lngdetailno";
+        $aryQuery[] = "  , tpod.lngstocksubjectcode";
         $aryQuery[] = "  , msub.strstocksubjectname";
         $aryQuery[] = "  , mos.strorderstatusname";
+        $aryQuery[] = "  , tpod.lngstockitemcode";
         $aryQuery[] = "  , tpod.strstockitemname";
         $aryQuery[] = "  , tpod.strdeliverymethodname";
         $aryQuery[] = "  , tpod.curproductprice";
@@ -1239,7 +1248,11 @@ function fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displ
         if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
             $textContent = fncSetTextContent($record, $key, $toUTF8Flag);
             $td = $doc->createElement("td", $textContent);
-            $td->setAttribute("style", $bgcolor);
+            if (in_array($key, PRICE_CLOUMN_LIST)) {
+                $td->setAttribute("style", $bgcolor. "text-align: right;");
+            } else {
+                $td->setAttribute("style", $bgcolor);
+            }
             $trBody->appendChild($td);
         }
     }
@@ -1257,7 +1270,7 @@ function fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName, $displ
  * @return void
  */
 function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName, $displayColumns, $detailData, $toUTF8Flag)
-{
+{ 
 
     // 指定されたテーブル項目のセルを作成する
     foreach ($aryTableDetailHeaderName as $key => $value) {
@@ -1265,7 +1278,11 @@ function fncSetDetailDataToTr($doc, $trBody, $bgcolor, $aryTableDetailHeaderName
         if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
             $textContent = fncSetTextContent($detailData, $key, $toUTF8Flag);
             $td = $doc->createElement("td", $textContent);
-            $td->setAttribute("style", $bgcolor);
+            if (in_array($key, PRICE_CLOUMN_LIST)) {
+                $td->setAttribute("style", $bgcolor. "text-align: right;");
+            } else {
+                $td->setAttribute("style", $bgcolor);
+            }
             $trBody->appendChild($td);
         }
 
@@ -1368,9 +1385,8 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
                     // 修正ボタンの表示
-
                     if ($type == 'slip') {
-                        if (!$isadmin && $isMaxData && $aryAuthority[$key] && is_null($record["lnginvoiceno"]) && $record["lngrevisionno"] >= 0 && $bgcolor != "background-color: #B3E0FF;") {                            
+                        if (!$isadmin && $isMaxData && $aryAuthority[$key] && is_null($record["lnginvoiceno"]) && $record["lngrevisionno"] >= 0 &&  $record["lngsalesstatuscode"] != DEF_SALES_CLOSED && $bgcolor != "background-color: #B3E0FF;") {                            
                             $a = $doc->createElement("a"); 
                             $a->setAttribute("href", "#");// 修正ボタン
                             $imgFix = $doc->createElement("img");
@@ -1841,7 +1857,7 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
                 $textContent = toUTF8($textContent);
             }
             break;
-        // [開発担当者表示コード] 開発担当者表示名
+        // [担当者表示コード] 担当者表示名
         case "lnginchargeusercode":
             if ($record["struserdisplaycode"] != '') {
                 $textContent = "[" . $record["struserdisplaycode"] . "]" . " " . $record["struserdisplayname"];
@@ -1936,7 +1952,7 @@ function fncSetTextContent($record, $key, $toUTF8Flag)
                 $textContent = toUTF8($textContent);
             }
             break;
-        // [開発担当者表示コード] 開発担当者表示名
+        // [担当者表示コード] 担当者表示名
         case "lnginchargeusercode":
             if ($record["struserdisplaycode"] != '') {
                 $textContent = "[" . $record["struserdisplaycode"] . "]" . " " . $record["struserdisplayname"];

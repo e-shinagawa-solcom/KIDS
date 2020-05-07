@@ -397,8 +397,16 @@ jQuery(function ($) {
         if ($('input[name="lngCountryCode"').val() == "81") {
             console.log("81：「外税」");
             // 81：「外税」を選択（他の項目も選択可能）
-            $("select[name='lngTaxClassCode']").val("2");
-            $("select[name='lngTaxClassCode']").prop('disabled', false);
+            var lngtaxclasscode = $("select[name='lngTaxClassCode']").children('option:selected').val();
+            if (lngtaxclasscode != "") {
+                if (lngtaxclasscode == "2") {
+                    $("select[name='lngTaxClassCode']").prop('disabled', false);
+                }
+            } else {
+                $("select[name='lngTaxClassCode']").val("2");
+                $("select[name='lngTaxClassCode']").prop('disabled', false);
+            }
+            
             $("input[name='dtmPaymentLimit']").prop('disabled', true);
             $("input[name='dtmPaymentLimit']").val("");
             $("input[name='dtmPaymentLimit']").next("button").prop('disabled', true);
@@ -464,21 +472,11 @@ jQuery(function ($) {
     // ------------------------------------------
     // 追加バリデーションチェック
     function validateAdd(tr) {
-        console.log($(tr));
-        console.log($(tr).children('td'));
-        console.log($(tr).children('td.detailDeliveryDate').text());
-        console.log($('input[name="dtmDeliveryDate"]').val());
         //明細選択エリアの納期
         var detailDeliveryDate = new Date($(tr).children('td.detailDeliveryDate').text());
 
         //ヘッダ・フッタ部の納品日と比較（同月以外は不正）
         var headerDeliveryDate = new Date($('input[name="dtmDeliveryDate"]').val());
-        console.log(detailDeliveryDate);
-        console.log(headerDeliveryDate);
-
-
-        console.log(headerDeliveryDate.getYear() + "/" + headerDeliveryDate.getMonth());
-        console.log(detailDeliveryDate.getYear() + "/" + detailDeliveryDate.getMonth());
         var sameMonth = (headerDeliveryDate.getYear() == detailDeliveryDate.getYear())
             && (headerDeliveryDate.getMonth() == detailDeliveryDate.getMonth());
         if (!sameMonth) {
@@ -1120,6 +1118,7 @@ jQuery(function ($) {
                 strMode: "get-closedday",
                 strSessionID: $('input[name="strSessionID"]').val(),
                 strcompanydisplaycode: $('input[name="lngCustomerCode"]').val(),
+                dtmDeliveryDate: $('input[name="dtmDeliveryDate"]').val(),
             };
 
             // プレビュー前のバリデーションに「締め日」が必要なのでajaxで取得する
@@ -1131,9 +1130,13 @@ jQuery(function ($) {
             }).done(function (data) {
                 console.log("done:get-closedday");
                 console.log(data);
-
+                var data = JSON.parse(data);
+                if (data.isClosedFlag) {
+                    alert("入力された仕入月" + $('input[name="dtmDeliveryDate"]').val().substr(0, 7) + "は既に締め処理済の為入力できません。\n経理部門に相談してください。");
+                    return false;
+                }
                 // 締め日
-                var closedDay = data;
+                var closedDay = data.lngClosedDay;
 
                 // 顧客コードに対応する締め日が取得できないとそもそもバリデーションできない
                 if (!closedDay) {

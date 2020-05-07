@@ -711,12 +711,12 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , strrevisecode";
     $aryQuery[] = "  , strproductname";
     $aryQuery[] = "  , strproductenglishname";
-    $aryQuery[] = "  , to_char(curproductprice, '9,999,999,990') AS curproductprice";
+    $aryQuery[] = "  , to_char(curproductprice, '9,999,999,990.9999') AS curproductprice";
     $aryQuery[] = "  , lngquantity";
     $aryQuery[] = "  , to_char(lngproductquantity, '9,999,999,990') AS lngproductquantity";
     $aryQuery[] = "  , lngproductunitcode";
     $aryQuery[] = "  , strproductunitname";
-    $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990') AS cursubtotalprice";
+    $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990.99') AS cursubtotalprice";
     $aryQuery[] = "  , trunc(cursubtotalprice) AS cursubtotalprice_comm";
     $aryQuery[] = "  , strnote ";
     $aryQuery[] = "from";
@@ -816,7 +816,7 @@ function fncGetSlipForDownloadQuery($strReportKeyCode)
     $aryQuery[] = "  , s.strcustomerphoneno";
     $aryQuery[] = "  , s.strcustomerfaxno";
     $aryQuery[] = "  , s.strcustomerusername";
-    $aryQuery[] = "  , s.dtmdeliverydate";
+    $aryQuery[] = "  , to_char(s.dtmdeliverydate, 'yyyy/mm/dd') as dtmdeliverydate";
     $aryQuery[] = "  , s.lngdeliveryplacecode";
     $aryQuery[] = "  , s.strdeliveryplacename";
     $aryQuery[] = "  , s.strdeliveryplaceusername";

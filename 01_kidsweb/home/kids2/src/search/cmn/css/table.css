@@ -1,3 +1,9 @@
+table#result td
+{
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
 table.tablesorter {
     font-family: arial;
     background-color: #CDCDCD;

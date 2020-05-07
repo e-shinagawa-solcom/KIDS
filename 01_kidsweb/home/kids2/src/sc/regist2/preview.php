@@ -193,6 +193,11 @@ if ($strMode == "regist-or-renew") {
         if (fncInvoiceIssued($lngRenewTargetSlipNo, $lngrevisionno, $objDB)) {
             MoveToErrorPage("納品書は請求処理済みのため修正できません。");
         }
+        // 納品書明細に紐づ売上マスタの売上ステータスが締済みは不可
+        if (fncSalesStatusIsClosedForSales($lngRenewTargetSalesNo, $objDB))
+        {
+            MoveToErrorPage("締済みのため、修正できません");
+        }
         if (!fncLockReceiveByOldDetail($lngRenewTargetSlipNo, $lngrevisionno, $objDB)) {
             MoveToErrorPage("更新前受注データのロックに失敗しました。");
         }

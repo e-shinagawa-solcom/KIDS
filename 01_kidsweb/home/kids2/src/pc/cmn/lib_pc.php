@@ -1234,3 +1234,50 @@ function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMon
 
     return $objResult;
 }
+
+/**
+ * 締め処理下かどうかの確認
+ *
+ * @param [type] $objDB
+ * @return void
+ */
+function fncIsClosedStatus($dtmAppropriationDate, $objDB)
+{
+    unset($aryQuery);
+    $aryQuery[] = "SELECT";
+    $aryQuery[] = "  count(ms.*) as count";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  m_stock ms ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      lngstockno";
+    $aryQuery[] = "      , max(lngrevisionno) lngrevisionno";
+    $aryQuery[] = "      , MIN(lngrevisionno) AS min_lngrevisionno ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_stock ";
+    $aryQuery[] = "    group by";
+    $aryQuery[] = "      lngstockno";
+    $aryQuery[] = "  ) max_s ";
+    $aryQuery[] = "    on ms.lngstockno = max_s.lngstockno ";
+    $aryQuery[] = "    and ms.lngrevisionno = max_s.lngrevisionno ";
+    $aryQuery[] = "    and min_lngrevisionno >= 0 ";
+    $aryQuery[] = "WHERE";
+    $aryQuery[] = "  to_char( ";
+    $aryQuery[] = "    date_trunc('month', dtmAppropriationDate)";
+    $aryQuery[] = "    , 'YYYY/MM'";
+    $aryQuery[] = "  ) = '" . $dtmAppropriationDate . "' ";
+    $aryQuery[] = "  AND lngstockStatusCode = " . DEF_STOCK_CLOSED;    
+    $strQuery = implode("\n", $aryQuery);
+
+    // 税区分の取得クエリーの実行
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if ($lngResultNum == 1) {
+        $objResult = $objDB->fetchObject($lngResultID, 0);
+        if ((int) $objResult->count > 0) {
+            return 1;
+        }
+    }
+    $objDB->freeResult($lngResultID);
+
+    return 0;
+}

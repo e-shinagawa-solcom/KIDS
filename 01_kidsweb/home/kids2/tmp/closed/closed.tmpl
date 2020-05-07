@@ -5,6 +5,11 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
 
+<!-- jQuery -->
+<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+<!-- jQuery Cookie -->
+<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/closed/cmn/images.js"></script>
 <script type="text/javascript" language="javascript" src="/layout/_%lngLayoutCode%_/cmn/initlayoutcommon.js"></script>
@@ -44,21 +49,23 @@
 				<span class="Column">計上日</span>
 				<span class="VarText" id="Vars0">
 					<span class="VarLabel">FROM</span>
-					<input style="ime-mode:disabled;" class="Txt07L" type="text" name="dtmUpdateFrom" value="" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this,1);fncCopyValue( this , document.all.dtmUpdateTo );" tabindex="1">
+					<input style="ime-mode:disabled;" class="Txt07L" type="text" name="dtmUpdateFrom" value="" maxlength="7" tabindex="1">
 					<span class="VarLabel">TO</span>
-					<input style="ime-mode:disabled;" class="Txt07L" type="text" name="dtmUpdateTo" value="" maxlength="7" onfocus="chColorOn(this);" onblur="chColorOff(this);fncCheckDate(this,1);" tabindex="2">
+					<input style="ime-mode:disabled;" class="Txt07L" type="text" name="dtmUpdateTo" value="" maxlength="7" tabindex="2">
 				</span>
 			</span>
 		</div>
 		<div class="regist-line">
 			<span class="form-line">
 				<span class="Column">対象</span>
-				<span class="VarText" id="Vars1">
-					<span>売上</span>
+				<span class="VarText">
 					<input class="CheckBox14" type="checkbox" name="lngTargetData[]" value="600">
-					<span>仕入</span>
+				</span>
+				<span>売上</span>
+				<span class="VarText">&nbsp;
 					<input class="CheckBox14" type="checkbox" name="lngTargetData[]" value="700">
 				</span>
+				<span>仕入</span>
 			</span>
 		</div>
 		<span id="RivivalBt" onclick="document.PS.lngActionCode.value=3;fncClosedSubmit( window.PS , document.all.dtmUpdateFrom , document.all.dtmUpdateTo );return false;"></span>

@@ -373,6 +373,7 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
  */
 function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySearchDataColumn, $objDB, $strOrderCode, $lngOrderNo, $bytAdminMode)
 {
+    $arySelectQuery = array();
     // 表示用カラムに設定されている内容を検索用に文字列設定
     for ($i = 0; $i < count($aryViewColumn); $i++) {
         $strViewColumnName = $aryViewColumn[$i];
@@ -395,7 +396,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
 
         // 発注NO.
         if ($strViewColumnName == "strOrderCode") {
-            $arySelectQuery[] = "  ,mp.strordercode as strOrderCode";
+            $arySelectQuery[] = "  ,mp.strordercode || '-' || lpad(to_char(mp.lngrevisionno, 'FM99'), 2, '0') as strOrderCode";
         }
 
         // 製品

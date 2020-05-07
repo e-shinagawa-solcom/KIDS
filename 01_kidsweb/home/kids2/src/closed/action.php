@@ -125,17 +125,15 @@ if ( $aryData["lngActionCode"] == DEF_CLOSED_RUN )
 		$objDB->transactionBegin();
 
 		// 更新行の行レベルロック（売上、受注を同時にロック）
-		$strQuery = "SELECT ms.lngSalesNo, ms.lngrevisionno as lngsalesrevisionno, ms.strSalesCode, mr.lngReceiveNo, mr.lngrevisionno as lngreceiverevisionno " 
+		$strQuery = "SELECT ms.lngSalesNo, ms.lngrevisionno as lngsalesrevisionno, ms.strSalesCode" 
 			. " FROM m_Sales ms"
 			. " INNER JOIN  t_salesdetail tsd on tsd.lngSalesNo = ms.lngSalesNo and tsd.lngrevisionno = ms.lngrevisionno"
-			. " INNER JOIN  t_receivedetail trd on trd.lngReceiveNo = tsd.lngReceiveNo and trd.lngrevisionno = tsd.lngreceiverevisionno"
-			. " INNER JOIN  m_receive mr on mr.lngReceiveNo = trd.lngReceiveNo and mr.lngrevisionno = trd.lngrevisionno"
 			. " WHERE ms.lngSalesStatusCode = " . DEF_SALES_END
-			. " AND mr.lngReceiveStatusCode = " . DEF_RECEIVE_END 
 			. " AND ms.bytInvalidFlag = FALSE " 
 			. " AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. "ORDER BY ms.lngSalesNo, ms.lngrevisionno DESC FOR UPDATE";
+
 fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
@@ -172,13 +170,13 @@ fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 				$salesList[] = $arySalesResult[$i]["strsalescode"];
 			}
 			// 受注マスタ
-			$strQuery = "UPDATE m_receive SET lngreceivestatuscode = " . DEF_RECEIVE_CLOSED 
-			. " WHERE lngreceiveno = " . $arySalesResult[$i]["lngreceiveno"] . " AND lngrevisionno = " . $arySalesResult[$i]["lngreceiverevisionno"];
-			if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
-			{
-				fncOutputError ( 9061, DEF_ERROR, "売上分の受注データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
-			}
-			$objDB->freeResult( $lngResultID );
+			// $strQuery = "UPDATE m_receive SET lngreceivestatuscode = " . DEF_RECEIVE_CLOSED 
+			// . " WHERE lngreceiveno = " . $arySalesResult[$i]["lngreceiveno"] . " AND lngrevisionno = " . $arySalesResult[$i]["lngreceiverevisionno"];
+			// if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
+			// {
+			// 	fncOutputError ( 9061, DEF_ERROR, "売上分の受注データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+			// }
+			// $objDB->freeResult( $lngResultID );
 		}
 		// コミット処理
 //		$objDB->transactionRollback();
@@ -218,13 +216,10 @@ fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		$objDB->transactionBegin();
 
 		// 更新行の行レベルロック（仕入、発注を同時にロック）
-		$strQuery = "SELECT ms.lngstockNo, ms.lngrevisionno as lngstockrevisionno, ms.strstockCode, mo.lngorderNo, mo.lngrevisionno as lngorderrevisionno " 
+		$strQuery = "SELECT ms.lngstockNo, ms.lngrevisionno as lngstockrevisionno, ms.strstockCode " 
 			. " FROM m_stock ms"
 			. " INNER JOIN  t_stockdetail tsd on tsd.lngstockNo = ms.lngstockNo and tsd.lngrevisionno = ms.lngrevisionno"
-			. " INNER JOIN  t_orderdetail tod on tod.lngorderNo = tsd.lngorderNo and tod.lngrevisionno = tsd.lngorderrevisionno"
-			. " INNER JOIN  m_order mo on mo.lngorderNo = tod.lngorderNo and mo.lngrevisionno = tod.lngrevisionno"
 			. " WHERE ms.lngstockStatusCode = " . DEF_STOCK_END
-			. " AND mo.lngorderStatusCode = " . DEF_ORDER_END 
 			. " AND ms.bytInvalidFlag = FALSE " 
 			. " AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
@@ -268,15 +263,15 @@ fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 				$stockList[] = $aryStockResult[$i]["strstockcode"];
 			}
 
-			// 発注マスタのUPDATE
-			$strQuery = "UPDATE m_order SET lngorderstatuscode = " . DEF_ORDER_CLOSED 
-			. "WHERE lngorderno = " . $aryStockResult[$i]["lngorderno"] . " AND lngrevisionno = " . $aryStockResult[$i]["lngorderrevisionno"];
+			// // 発注マスタのUPDATE
+			// $strQuery = "UPDATE m_order SET lngorderstatuscode = " . DEF_ORDER_CLOSED 
+			// . "WHERE lngorderno = " . $aryStockResult[$i]["lngorderno"] . " AND lngrevisionno = " . $aryStockResult[$i]["lngorderrevisionno"];
 
-			if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
-			{
-				fncOutputError ( 9061, DEF_ERROR, "仕入分の発注データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
-			}
-			$objDB->freeResult( $lngResultID );
+			// if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
+			// {
+			// 	fncOutputError ( 9061, DEF_ERROR, "仕入分の発注データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+			// }
+			// $objDB->freeResult( $lngResultID );
 
 		}
 
@@ -351,17 +346,15 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 		$objDB->transactionBegin();
 
 		// 更新行の行レベルロック（売上、受注を同時にロック）
-		$strQuery = "SELECT ms.lngSalesNo, ms.lngrevisionno as lngsalesrevisionno, ms.strSalesCode, mr.lngReceiveNo, mr.lngrevisionno as lngreceiverevisionno " 
+		$strQuery = "SELECT ms.lngSalesNo, ms.lngrevisionno as lngsalesrevisionno, ms.strSalesCode " 
 			. " FROM m_Sales ms"
 			. " INNER JOIN  t_salesdetail tsd on tsd.lngSalesNo = ms.lngSalesNo and tsd.lngrevisionno = ms.lngrevisionno"
-			. " INNER JOIN  t_receivedetail trd on trd.lngReceiveNo = tsd.lngReceiveNo and trd.lngrevisionno = tsd.lngreceiverevisionno"
-			. " INNER JOIN  m_receive mr on mr.lngReceiveNo = trd.lngReceiveNo and mr.lngrevisionno = trd.lngrevisionno"
 			. " WHERE ms.lngSalesStatusCode = " . DEF_SALES_CLOSED
-			. " AND mr.lngReceiveStatusCode = " . DEF_RECEIVE_CLOSED 
 			. " AND ms.bytInvalidFlag = FALSE " 
 			. " AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. "ORDER BY ms.lngSalesNo, ms.lngrevisionno DESC FOR UPDATE";
+			echo $strQuery;
 fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{
@@ -398,13 +391,13 @@ fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 				$salesList[] = $arySalesResult[$i]["strsalescode"];
 			}
 			// 受注マスタ
-			$strQuery = "UPDATE m_receive SET lngreceivestatuscode = " . DEF_RECEIVE_END 
-			. " WHERE lngreceiveno = " . $arySalesResult[$i]["lngreceiveno"] . " AND lngrevisionno = " . $arySalesResult[$i]["lngreceiverevisionno"];
-			if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
-			{
-				fncOutputError ( 9061, DEF_ERROR, "売上分の受注データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
-			}
-			$objDB->freeResult( $lngResultID );
+			// $strQuery = "UPDATE m_receive SET lngreceivestatuscode = " . DEF_RECEIVE_END 
+			// . " WHERE lngreceiveno = " . $arySalesResult[$i]["lngreceiveno"] . " AND lngrevisionno = " . $arySalesResult[$i]["lngreceiverevisionno"];
+			// if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
+			// {
+			// 	fncOutputError ( 9061, DEF_ERROR, "売上分の受注データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+			// }
+			// $objDB->freeResult( $lngResultID );
 		}
 		// コミット処理
 //		$objDB->transactionRollback();
@@ -444,13 +437,10 @@ fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		$objDB->transactionBegin();
 
 		// 更新行の行レベルロック（仕入、発注を同時にロック）
-		$strQuery = "SELECT ms.lngstockNo, ms.lngrevisionno as lngstockrevisionno, ms.strstockCode, mo.lngorderNo, mo.lngrevisionno as lngorderrevisionno " 
+		$strQuery = "SELECT ms.lngstockNo, ms.lngrevisionno as lngstockrevisionno, ms.strstockCode " 
 			. " FROM m_stock ms"
 			. " INNER JOIN  t_stockdetail tsd on tsd.lngstockNo = ms.lngstockNo and tsd.lngrevisionno = ms.lngrevisionno"
-			. " INNER JOIN  t_orderdetail tod on tod.lngorderNo = tsd.lngorderNo and tod.lngrevisionno = tsd.lngorderrevisionno"
-			. " INNER JOIN  m_order mo on mo.lngorderNo = tod.lngorderNo and mo.lngrevisionno = tod.lngrevisionno"
 			. " WHERE ms.lngstockStatusCode = " . DEF_STOCK_CLOSED
-			. " AND mo.lngorderStatusCode = " . DEF_ORDER_CLOSED 
 			. " AND ms.bytInvalidFlag = FALSE " 
 			. " AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
@@ -494,15 +484,15 @@ fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 				$stockList[] = $aryStockResult[$i]["strstockcode"];
 			}
 
-			// 発注マスタのUPDATE
-			$strQuery = "UPDATE m_order SET lngorderstatuscode = " . DEF_ORDER_END 
-			. "WHERE lngorderno = " . $aryStockResult[$i]["lngorderno"] . " AND lngrevisionno = " . $aryStockResult[$i]["lngorderrevisionno"];
+			// // 発注マスタのUPDATE
+			// $strQuery = "UPDATE m_order SET lngorderstatuscode = " . DEF_ORDER_END 
+			// . "WHERE lngorderno = " . $aryStockResult[$i]["lngorderno"] . " AND lngrevisionno = " . $aryStockResult[$i]["lngorderrevisionno"];
 
-			if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
-			{
-				fncOutputError ( 9061, DEF_ERROR, "仕入分の発注データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
-			}
-			$objDB->freeResult( $lngResultID );
+			// if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
+			// {
+			// 	fncOutputError ( 9061, DEF_ERROR, "仕入分の発注データの締め処理状態への更新処理に失敗しました。", TRUE, "../closed/closed.php?strSessionID=".$aryData["strSessionID"], $objDB );
+			// }
+			// $objDB->freeResult( $lngResultID );
 
 		}
 
