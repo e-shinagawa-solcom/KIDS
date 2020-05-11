@@ -125,6 +125,13 @@ if ($strMode == "get-closedday") {
 
     $aryResult["isClosedFlag"] = fncIsClosedForSales(substr($_POST["dtmDeliveryDate"],0,7), $objDB);
 
+    // 顧客に紐づく帳票1ページあたりの最大明細数を取得する
+    $lngcompanycode = fncGetMasterValue("m_company","strcompanydisplaycode","lngcompanycode",$strCompanyDisplayCode . ":str", "", $objDB);
+    $aryReport = fncGetSlipKindByCompanyCode($lngcompanycode, $objDB);
+    $aryResult["lngmaxline"] = $aryReport["lngmaxline"];
+    $aryResult["lngslipkindcode"] = $aryReport["lngslipkindcode"];
+    $aryResult["strslipkindname"] = $aryReport["strslipkindname"];
+    
     // データ返却
 	echo $s->encodeUnsafe($aryResult);
     // DB切断
@@ -160,7 +167,7 @@ if ($strMode == "search-detail") {
     // 換算レートの取得
     $rateResult = fncGetCurConversionRate($aryData["dtmDeliveryDate"], intval($aryDetail[0]["lngmonetaryratecode"]),
     intval($aryDetail[0]["lngmonetaryunitcode"]), $objDB);
-    $aryResult["curconversionrate"] = $rateResult->curconversionrate;
+    $aryResult["curconversionrate"] = $rateResult["curconversionrate"];
 
 	//結果出力
 	echo $s->encodeUnsafe($aryResult);

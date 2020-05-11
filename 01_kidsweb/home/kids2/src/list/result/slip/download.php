@@ -117,9 +117,10 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
     // 再印刷フラグの設定
     $worksheet->getCell('AK3')->setValue($aryData["reprintFlag"]);
 }
+$filename = "KWG". $aryParts["strslipcode"] . ".xls";
 // 成功
 $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="01simple.xls"');
+header('Content-Disposition: attachment;filename="' .$filename .'"');
 header('Cache-Control: max-age=0');
 $writer->save('php://output');

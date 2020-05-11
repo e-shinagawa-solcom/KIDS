@@ -39,8 +39,9 @@ $rateResult = fncGetCurConversionRate($aryData["dtmStockAppDate"], $aryData["lng
 
 $objDB->close();
 
+if ($rateResult)
 // 適用レート
-$result["curconversionrate"] = $rateResult->curconversionrate;
-$result["dtmapplystartdate"] = $rateResult->dtmapplystartdate;
+$result["curconversionrate"] = $rateResult["curconversionrate"];
+$result["dtmapplystartdate"] = $rateResult["dtmapplystartdate"];
 //結果出力
 echo $s->encodeUnsafe($result);

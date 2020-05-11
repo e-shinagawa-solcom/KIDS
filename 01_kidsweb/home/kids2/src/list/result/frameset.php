@@ -78,7 +78,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUN
 
 
 <frameset rows="40,1,*" frameborder="0" border="0" framespacing="0">
-	<frame id="button" src="button.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&lngReportClassCode=<?echo $aryData["lngReportClassCode"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>" name="button" scrolling="no" noresize>
+	<frame id="button" src="button.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&lngReportClassCode=<?echo $aryData["lngReportClassCode"]; ?>&lngSlipKindCode=<?echo $aryData["lngSlipKindCode"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>" name="button" scrolling="no" noresize>
 	<frame src="/list/printset/borders.html" scrolling="no" noresize>
 	<frame src="<?echo $aryListOutputMenu[$aryData["lngReportClassCode"]]["file"]; ?>/listoutput.php?strSessionID=<?echo $aryData["strSessionID"]; ?>&strReportKeyCode=<?echo $aryData["strReportKeyCode"]; ?>&lngReportCode=<?echo $aryData["lngReportCode"]; ?>&bytCopyFlag=<?echo $aryData["bytCopyFlag"]; ?>" name="list" noresize>
 </frameset>

@@ -1194,8 +1194,10 @@ function fncGetTaxClassAry($objDB)
  */
 function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMonetaryUnitCode, $objDB)
 {
+    $result = array();
     if ($lngMonetaryUnitCode == 1) {
-        return "1.000000";
+        $result["curconversionrate"] = "1.000000";
+        return $result;
     }
     $aryQuery = array();
     $aryQuery[] = "SELECT mmr.curConversionRate, mmr.dtmapplystartdate";
@@ -1210,7 +1212,6 @@ function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMon
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum > 0) {
         $objResult = $objDB->fetchObject($lngResultID, 0);
-        $curconversionrate = $objResult->curconversionrate;
     } else {
         $objDB->freeResult($lngResultID);
         unset($aryQuery);
@@ -1226,13 +1227,15 @@ function fncGetCurConversionRate($dtmStockAppDate, $lngMonetaryRateCode, $lngMon
         list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
         if ($lngResultNum > 0) {
             $objResult = $objDB->fetchObject($lngResultID, 0);
-            $curconversionrate = $objResult->curconversionrate;
         }
     }
 
+    $result["curconversionrate"] = $objResult->curconversionrate;
+    $result["dtmapplystartdate"] = $objResult->dtmapplystartdate;
+
     $objDB->freeResult($lngResultID);
 
-    return $objResult;
+    return $result;
 }
 
 /**

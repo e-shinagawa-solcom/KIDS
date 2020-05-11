@@ -1101,7 +1101,6 @@ function fncRegisterSalesAndSlip(
         $aryDrafter["lnggroupcode"] = null;
     }
 
-
     // 顧客の国コードを取得
     $lngCustomerCountryCode = fncGetCountryCode($aryHeader["strcompanydisplaycode"], $objDB);
     // 顧客社名の取得
@@ -1123,113 +1122,101 @@ function fncRegisterSalesAndSlip(
     $maxItemPerPage = intval($aryReport["lngmaxline"]);
     // 登録する全明細の数
     $totalItemCount = count($aryDetail);
-    // 最大ページ数の計算
-    $maxPageCount = ceil($totalItemCount / $maxItemPerPage);
 
-    // ページ単位でのデータ登録
-    for ($page = 1; $page <= $maxPageCount; $page++) {
+    // 登録する明細のインデックスの最小値と最大値を求める
+    $itemMinIndex = 0;
+    $itemMaxIndex = $totalItemCount - 1;
 
-        // 現在のページ数と1ページあたりの明細数から、
-        // 登録する明細のインデックスの最小値と最大値を求める
-        $itemMinIndex = ($page - 1) * $maxItemPerPage;
-        $itemMaxIndex = $page * $maxItemPerPage - 1;
-        if ($itemMaxIndex > $totalItemCount - 1) {
-            $itemMaxIndex = $totalItemCount - 1;
-        }
-
-        // リビジョン番号
-        if ($isCreateNew) {
-            // 登録：0 固定
-            $lngRevisionNo = 0;
-        } else {
-            // 修正：同一納品伝票番号内での最大値＋１
-            $lngRevisionNo = fncGetSlipMaxRevisionNo($lngRenewTargetSlipNo, $objDB) + 1;
-        }
-
-        // 売上番号
-        if ($isCreateNew) {
-            // 登録：シーケンスより発番
-            $lngSalesNo = fncGetSequence('m_sales.lngSalesNo', $objDB);
-        } else {
-            // 修正：修正対象に紐づく値
-            $lngSalesNo = $lngRenewTargetSalesNo;
-        }
-
-        // 売上コード
-        if ($isCreateNew) {
-            // 登録：当月に紐づく売上コードの発番
-            $strSalesCode = fncGetDateSequence(date('Y', strtotime($dtmdeliverydate)),
-                date('m', strtotime($dtmdeliverydate)), "m_sales.lngSalesNo", $objDB);
-        } else {
-            // 修正：修正対象に紐づく値
-            $strSalesCode = $strRenewTargetSalesCode;
-        }
-
-        // 納品伝票番号
-        if ($isCreateNew) {
-            // 登録：シーケンスより発番
-            $lngSlipNo = fncGetSequence('m_Slip.lngSlipNo', $objDB);
-        } else {
-            // 修正：修正対象に紐づく値
-            $lngSlipNo = $lngRenewTargetSlipNo;
-        }
-
-        // 納品伝票コード
-        if ($isCreateNew) {
-            // 登録：当日に紐づく納品伝票コードの発番
-            $strSlipCode = fncGetDateSequence(
-                date('y', strtotime($dtmdeliverydate)),
-                date('m', strtotime($dtmdeliverydate)),
-                "m_sales.strSlipCode", $objDB
-            );
-        } else {
-            // 修正：修正対象に紐づく値
-            $strSlipCode = $strRenewTargetSlipCode;
-        }
-
-        // ページ単位の情報を保存（後の登録結果画面で使う）
-        $aryPageInfo = array();
-        $aryPageInfo["lngSlipNo"] = $lngSlipNo;
-        $aryPageInfo["strSlipCode"] = $strSlipCode;
-        $aryPageInfo["lngRevisionNo"] = $lngRevisionNo;
-        $aryRegisterResult["aryPerPage"][] = $aryPageInfo;
-
-        // --------------------------------
-        //   データベース変更
-        // --------------------------------
-        // 売上マスタ登録
-        if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryConversionRate, $aryCustomerCompany, $aryDrafter,
-            $aryHeader, $aryDetail, $objDB, $objAuth)) {
-            // 失敗
-            $aryRegisterResult["result"] = false;
-            return $aryRegisterResult;
-        }
-
-        // 売上明細登録
-        if (!fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo,
-            $aryHeader, $aryDetail, $objDB, $objAuth)) {
-            // 失敗
-            $aryRegisterResult["result"] = false;
-            return $aryRegisterResult;
-        }
-
-        // 納品伝票マスタ登録
-        if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
-            $aryDrafter, $aryHeader, $aryDetail, $objDB, $objAuth)) {
-            // 失敗
-            $aryRegisterResult["result"] = false;
-            return $aryRegisterResult;
-        }
-        // 納品伝票明細登録
-        if (!fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo,
-            $aryHeader, $aryDetail, $objDB, $objAuth)) {
-            // 失敗
-            $aryRegisterResult["result"] = false;
-            return $aryRegisterResult;
-        }
-
+    // リビジョン番号
+    if ($isCreateNew) {
+        // 登録：0 固定
+        $lngRevisionNo = 0;
+    } else {
+        // 修正：同一納品伝票番号内での最大値＋１
+        $lngRevisionNo = fncGetSlipMaxRevisionNo($lngRenewTargetSlipNo, $objDB) + 1;
     }
 
+    // 売上番号
+    if ($isCreateNew) {
+        // 登録：シーケンスより発番
+        $lngSalesNo = fncGetSequence('m_sales.lngSalesNo', $objDB);
+    } else {
+        // 修正：修正対象に紐づく値
+        $lngSalesNo = $lngRenewTargetSalesNo;
+    }
+
+    // 売上コード
+    if ($isCreateNew) {
+        // 登録：当月に紐づく売上コードの発番
+        $strSalesCode = fncGetDateSequence(date('Y', strtotime($dtmdeliverydate)),
+            date('m', strtotime($dtmdeliverydate)), "m_sales.lngSalesNo", $objDB);
+    } else {
+        // 修正：修正対象に紐づく値
+        $strSalesCode = $strRenewTargetSalesCode;
+    }
+
+    // 納品伝票番号
+    if ($isCreateNew) {
+        // 登録：シーケンスより発番
+        $lngSlipNo = fncGetSequence('m_Slip.lngSlipNo', $objDB);
+    } else {
+        // 修正：修正対象に紐づく値
+        $lngSlipNo = $lngRenewTargetSlipNo;
+    }
+
+    // 納品伝票コード
+    if ($isCreateNew) {
+        // 登録：当日に紐づく納品伝票コードの発番
+        $strSlipCode = fncGetDateSequence(
+            date('y', strtotime($dtmdeliverydate)),
+            date('m', strtotime($dtmdeliverydate)),
+            "m_sales.strSlipCode", $objDB
+        );
+    } else {
+        // 修正：修正対象に紐づく値
+        $strSlipCode = $strRenewTargetSlipCode;
+    }
+
+    $SlipInfo = array();
+    $SlipInfo["lngSlipNo"] = $lngSlipNo;
+    $SlipInfo["strSlipCode"] = $strSlipCode;
+    $SlipInfo["lngRevisionNo"] = $lngRevisionNo;
+    $aryRegisterResult["slipinfo"] = $SlipInfo;
+
+    // --------------------------------
+    //   データベース変更
+    // --------------------------------
+    // 売上マスタ登録
+    if (!fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strSalesCode, $dtmAppropriationDate, $aryConversionRate, $aryCustomerCompany, $aryDrafter,
+        $aryHeader, $aryDetail, $objDB, $objAuth)) {
+        // 失敗
+        $aryRegisterResult["result"] = false;
+        return $aryRegisterResult;
+    }
+
+    // 売上明細登録
+    if (!fncRegisterSalesDetail($lngSalesNo, $lngRevisionNo, $aryHeader, $aryDetail, $objDB, $objAuth)) {
+        // 失敗
+        $aryRegisterResult["result"] = false;
+        return $aryRegisterResult;
+    }
+
+    // 納品伝票マスタ登録
+    if (!fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlipCode, $strCustomerCompanyName, $strCustomerName, $aryCustomerCompany, $lngDeliveryPlaceCode,
+        $aryDrafter, $aryHeader, $aryDetail, $objDB, $objAuth)) {
+        // 失敗
+        $aryRegisterResult["result"] = false;
+        return $aryRegisterResult;
+    }
+    // 納品伝票明細登録
+    if (!fncRegisterSlipDetail($lngSlipNo, $lngRevisionNo, $aryHeader, $aryDetail, $objDB, $objAuth)) {
+        // 失敗
+        $aryRegisterResult["result"] = false;
+        return $aryRegisterResult;
+    }
+
+    // 伝票種類の設定
+    $aryRegisterResult["lngslipkindcode"] = $aryReport["lngslipkindcode"];
     // 成功
     $aryRegisterResult["result"] = true;
     return $aryRegisterResult;
@@ -1364,14 +1351,14 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
 }
 
 // 売上明細登録
-function fncRegisterSalesDetail($itemMinIndex, $itemMaxIndex, $lngSalesNo, $lngRevisionNo,
-    $aryHeader, $aryDetail, $objDB, $objAuth) {
+function fncRegisterSalesDetail($lngSalesNo, $lngRevisionNo, $aryHeader, $aryDetail, $objDB, $objAuth)
+{
     // 消費税率
     $curTax = floatval($aryHeader["curtax"]);
     // 消費税区分
     $lngTaxClassCode = $aryHeader["lngtaxclasscode"];
 
-    for ($i = $itemMinIndex; $i <= $itemMaxIndex; $i++) {
+    for ($i = 0; $i < count($aryDetail); $i++) {
         $d = $aryDetail[$i];
 
         // 明細単位での消費税金額の計算
@@ -1611,9 +1598,9 @@ function fncRegisterSlipMaster($lngSlipNo, $lngRevisionNo, $lngSalesNo, $strSlip
 }
 
 // 納品伝票明細登録
-function fncRegisterSlipDetail($itemMinIndex, $itemMaxIndex, $lngSlipNo, $lngRevisionNo,
-    $aryHeader, $aryDetail, $objDB, $objAuth) {
-    for ($i = $itemMinIndex; $i <= $itemMaxIndex; $i++) {
+function fncRegisterSlipDetail($lngSlipNo, $lngRevisionNo, $aryHeader, $aryDetail, $objDB, $objAuth)
+{
+    for ($i = 0; $i < count($aryDetail); $i++) {
         $d = $aryDetail[$i];
 
         // 登録データのセット
@@ -1883,6 +1870,18 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
 
             }
         } else if ($lngSlipKindCode == 3) {
+
+            // フィールド名取得
+            $aryKeys = array_keys($aryDetail[0]);
+            $aryTmpDetail = array();
+            // 行数だけデータ取得、配列に代入
+            for ($i = 0; $i < count($aryDetail); $i++) {
+                $obj = $aryDetail[$i];
+                for ($j = 0; $j < count($aryKeys); $j++) {
+                    $aryTmpDetail[$i][$aryKeys[$j] . (($i + $maxItemPerPage) % $maxItemPerPage)] = $obj[$aryKeys[$j]];
+                }
+            }
+
             // // 日本語対応
             ini_set('default_charset', 'UTF-8');
             $strTemplateHeaderPath = "list/result/slip_debit_header.html";
@@ -1930,27 +1929,55 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $objTemplate->getTemplate($strTemplatePath);
             $strTemplate = $objTemplate->strTemplate;
 
-            $objTemplate->strTemplate = $strTemplate;
+            $aryParts["lngNowPage"] = 1;
+            $aryParts["lngAllPage"] = $maxPageCount;
+            for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNowPage"]++) {
+                $lngRecordCount = 0;
+                $aryHtml[] = "<div style=\"page-break-after:always;page-break-inside: avoid;\">\n";
 
-            for ($i = 0; $i < count($aryDetail); $i++) {
-                $aryParts["strcustomersalescode" . ($i)] = $aryDetail[$i]["strcustomerreceivecode"];
-                $aryParts["strproductenglishname" . ($i)] = $aryDetail[$i]["strproductenglishname"];
-                $aryParts["lngproductquantity" . ($i)] = number_format($aryDetail[$i]["lngproductquantity"]);
-                $aryParts["strproductunitname" . ($i)] = $aryDetail[$i]["strproductunitname"];
-                $aryParts["curproductprice" . ($i)] = number_format($aryDetail[$i]["curproductprice"], 4, '.', ',');
-                $aryParts["cursubtotalprice" . ($i)] = number_format($aryDetail[$i]["cursubtotalprice"], 2, '.', ',');
-                $aryParts["strsalesclassname" . ($i)] = $aryDetail[$i]["strsalesclassname"];
-                $aryParts["strnote" . ($i)] = $aryDetail[$i]["strnote"];
-
-                // 顧客受注番号
-                if ($aryParts["strcustomersalescode" . ($i)] != "") {
-                    $aryParts["strcustomersalescode" . ($i)] = "(PO No:" . $aryParts["strcustomersalescode" . ($i)] . ")";
+                // 表示しようとしているページが最後のページの場合、
+                // 合計金額を代入(発注書出力特別処理)
+                if ($aryParts["lngNowPage"] == $aryParts["lngAllPage"]) {
+                    $aryParts["curtotalprice"] = $curTotalPrice;
+                    $aryParts["strTotalAmount"] = "Total Amount";
+                } else {
+                    $aryParts["curtotalprice"] = "";
                 }
+
+                $objTemplate->strTemplate = $strTemplate;
+                // // 置き換え
+                $objTemplate->replace($aryParts);
+                for ($j = ($aryParts["lngNowPage"] - 1) * $maxItemPerPage; $j < ($aryParts["lngNowPage"] * $maxItemPerPage); $j++) {
+                    if ($j > (count($aryDetail) - 1)) {
+                        break;
+                    }
+
+                    $index = ($j + $maxItemPerPage) % $maxItemPerPage;
+                    $aryTmpDetail[$j]["strcustomersalescode" . ($index)] = $aryTmpDetail[$j]["strcustomerreceivecode" . ($index)];
+                    $aryTmpDetail[$j]["strproductenglishname" . ($index)] = $aryTmpDetail[$j]["strproductenglishname" . ($index)];
+                    $aryTmpDetail[$j]["lngproductquantity" . ($index)] = number_format($aryTmpDetail[$j]["lngproductquantity" . ($index)]);
+                    $aryTmpDetail[$j]["strproductunitname" . ($index)] = $aryTmpDetail[$j]["strproductunitname" . ($index)];
+                    $aryTmpDetail[$j]["curproductprice" . ($index)] = number_format($aryTmpDetail[$j]["curproductprice" . ($index)], 4, '.', ',');
+                    $aryTmpDetail[$j]["cursubtotalprice" . ($index)] = number_format($aryTmpDetail[$j]["cursubtotalprice" . ($index)], 2, '.', ',');
+                    $aryTmpDetail[$j]["strsalesclassname" . ($index)] = $aryTmpDetail[$j]["strsalesclassname" . ($index)];
+                    $aryTmpDetail[$j]["strnote" . ($index)] = $aryTmpDetail[$j]["strnote" . ($index)];
+
+                    // 顧客受注番号
+                    if ($aryTmpDetail[$j]["strcustomersalescode" . ($index)] != "") {
+                        $aryTmpDetail[$j]["strcustomersalescode" . ($index)] = "(PO No:" . $aryTmpDetail[$j]["strcustomersalescode" . ($index)] . ")";
+                    }
+
+                    // 置き換え
+                    $objTemplate->replace($aryTmpDetail[$j]);
+
+                }
+                $objTemplate->complete();
+                $aryHtml[] = $objTemplate->strTemplate;
+                $aryHtml[] = "</div>";
+
             }
-            // 置き換え
-            $objTemplate->replace($aryParts);
-            $objTemplate->complete();
-            $strBodyHtml = $objTemplate->strTemplate;
+
+            $strBodyHtml = join("", $aryHtml);
             $aryGenerateResult["PreviewStyle"] = $strTemplateHeader;
             $aryGenerateResult["PreviewData"] = $strBodyHtml;
         }
@@ -2102,7 +2129,7 @@ function fncSetSlipDataToWorkSheet(
         $sheet = $xlSpreadSheet->getSheetByName("DEBIT NOTE");
         //画像の貼り付け
         $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing->setPath(SRC_ROOT ."/list/result/slip/rogo_slip.gif");
+        $drawing->setPath(SRC_ROOT . "/list/result/slip/rogo_slip.gif");
         $drawing->setCoordinates('A2'); //貼り付け場所
         $drawing->setResizeProportional(false); // リサイズ時に縦横比率を固定する (false = 固定しない)
         $drawing->setWidth(143); // 画像の幅 (px)
@@ -2110,14 +2137,14 @@ function fncSetSlipDataToWorkSheet(
         $drawing->setWorksheet($sheet); //対象シート（インスタンスを指定）
 
         $drawing1 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing1->setPath(SRC_ROOT ."/list/result/slip/title1.gif");
+        $drawing1->setPath(SRC_ROOT . "/list/result/slip/title1.gif");
         $drawing1->setHeight(25); //高さpx
         $drawing1->setOffsetY(5); // 位置をずらす
         $drawing1->setCoordinates('D1'); //貼り付け場所
         $drawing1->setWorksheet($sheet); //対象シート（インスタンスを指定）
 
         $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-        $drawing2->setPath(SRC_ROOT ."/list/result/slip/title2.gif");
+        $drawing2->setPath(SRC_ROOT . "/list/result/slip/title2.gif");
         $drawing2->setHeight(60); //高さpx
         $drawing2->setWidth(400); // 画像の幅 (px)
         $drawing2->setCoordinates('D3'); //貼り付け場所
@@ -2141,40 +2168,37 @@ function fncSetSlipDataToWorkSheet(
 }
 
 // ページ毎の情報から登録結果HTMLを生成
-function fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB)
+function fncGetRegisterResultTableBodyHtml($slipinfo, $lngslipkindcode, $strSessionID, $objDB)
 {
     $strHtml = "";
 
-    for ($i = 0; $i < count($aryPerPage); $i++) {
-        $aryPage = $aryPerPage[$i];
+    // 納品伝票番号
+    $lngSlipNo = $slipinfo["lngSlipNo"];
+    // 納品伝票コード
+    $strSlipCode = $slipinfo["strSlipCode"];
+    // リビジョン番号
+    $lngRevisionNo = $slipinfo["lngRevisionNo"];
 
-        // 納品伝票番号
-        $lngSlipNo = $aryPage["lngSlipNo"];
-        // 納品伝票コード
-        $strSlipCode = $aryPage["strSlipCode"];
-        // リビジョン番号
-        $lngRevisionNo = $aryPage["lngRevisionNo"];
-
-        // 作成日の取得
-        $dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
-
-        // $url ='location.href=' . '"/list/result/slip/download.php?strSessionID=' .$strSessionID . '&strReportKeyCode='.$lngSlipNo .'"';
-
-        // HTMLの生成（/sc/finish2/finish2.js のファンクション呼び出しを含む）
-        $aryHtml = array();
-        $aryHtml[] = "                <tr>";
-        $aryHtml[] = "                    <td class='item-value'>" . $strSlipCode . "</td>";
-        $aryHtml[] = "                    <td class='item-value'>" . $dtmInsertDate . "</td>";
-        $aryHtml[] = "                    <td class='item-value'>";
-        $aryHtml[] = "                        <a href='#' onclick='OnClickDownload(this, \"" . $lngSlipNo . "\", \"" . $strSlipCode . "\", \"" . $lngRevisionNo . "\");'><img class='btn-download'";
-        // $aryHtml[] = "                        <a href='#' onclick='" . $url . "'><img class='btn-download'";
-        $aryHtml[] = "                         onmouseover='OnMouseOverDownload(this);'";
-        $aryHtml[] = "                         onmouseout='OnMouseOutDownload(this);'></a>";
-        $aryHtml[] = "                    </td>";
-        $aryHtml[] = "                </tr>";
-
-        $strHtml .= implode("\n", $aryHtml);
+    // 作成日の取得
+    $dtmInsertDate = fncGetInsertDateBySlipCode($strSlipCode, $objDB);
+    if ($lngslipkindcode == DEF_SLIP_KIND_EXCLUSIVE || $lngslipkindcode == DEF_SLIP_KIND_COMM) {
+        $link = "<a href='#' onclick='OnClickDownload(this, \"" . $lngSlipNo . "\", \"" . $strSlipCode . "\", \"" . $lngRevisionNo . "\");'><img class='btn-download' onmouseover='OnMouseOverDownload(this);' onmouseout='OnMouseOutDownload(this);'></a>";
+    } else {
+        $strUrl = "/list/result/frameset.php?strReportKeyCode=" . $lngSlipNo . "&lngSlipKindCode=" . $lngslipkindcode . "&lngReportClassCode=" . DEF_REPORT_SLIP . "&strSessionID=" . $strSessionID;
+        $link = "<a href=\"#\" onclick=\"window.open('" . $strUrl . "', 'listWin', 'width=800,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no')\"><img src=\"/img/type01/cmn/querybt/preview_off_on_bt.gif\" alt=\"preview\"></a>";
     }
+
+    // HTMLの生成（/sc/finish2/finish2.js のファンクション呼び出しを含む）
+    $aryHtml = array();
+    $aryHtml[] = "                <tr>";
+    $aryHtml[] = "                    <td class='item-value'>" . $strSlipCode . "</td>";
+    $aryHtml[] = "                    <td class='item-value'>" . $dtmInsertDate . "</td>";
+    $aryHtml[] = "                    <td class='item-value'>";
+    $aryHtml[] = "                        " . $link;
+    $aryHtml[] = "                    </td>";
+    $aryHtml[] = "                </tr>";
+
+    $strHtml .= implode("\n", $aryHtml);
 
     return $strHtml;
 
@@ -2207,9 +2231,9 @@ function fncInvoiceIssued($lngSlipNo, $lngRevisisonNo, $objDB)
 }
 
 function fncSalesStatusIsClosedForSales($lngSalesNo, $objDB)
-{   
+{
     $strQuery = "SELECT lngsalesstatuscode ";
-    $strQuery .= "FROM m_sales ms ";    
+    $strQuery .= "FROM m_sales ms ";
     $strQuery .= "INNER JOIN ( ";
     $strQuery .= "    SELECT lngsalesno, MAX(lngrevisionno) AS max_lngrevisionno , MIN(lngrevisionno) AS min_lngrevisionno FROM m_sales GROUP BY lngsalesno ";
     $strQuery .= ") mi_rev ";
@@ -2221,7 +2245,7 @@ function fncSalesStatusIsClosedForSales($lngSalesNo, $objDB)
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum == 1) {
         $objResult = $objDB->fetchObject($lngResultID, 0);
-        if ((int) $objResult->lngsalesstatuscode ==  DEF_SALES_CLOSED) {
+        if ((int) $objResult->lngsalesstatuscode == DEF_SALES_CLOSED) {
             return true;
         }
     } else {
@@ -2281,8 +2305,6 @@ function fncResetReceiveStatus($lngSlipNo, $lngRevisisonNo, $objDB)
     return true;
 }
 
-
-
 // 製品マスタより営業部署、担当者コードを取得する
 function fncGetProduct($strproductcode, $objDB)
 {
@@ -2329,7 +2351,7 @@ function fncGetProduct($strproductcode, $objDB)
 
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
     if ($lngResultNum) {
-        $objResult= $objDB->fetchObject($lngResultID, 0);
+        $objResult = $objDB->fetchObject($lngResultID, 0);
     } else {
         fncOutputError(9051, DEF_FATAL, "製品情報取得に失敗", true, "", $objDB);
     }
@@ -2337,7 +2359,6 @@ function fncGetProduct($strproductcode, $objDB)
 
     return $objResult;
 }
-
 
 /**
  * 締め処理下かどうかの確認
@@ -2370,7 +2391,7 @@ function fncIsClosedForSales($dtmAppropriationDate, $objDB)
     $aryQuery[] = "    date_trunc('month', dtmAppropriationDate)";
     $aryQuery[] = "    , 'YYYY/MM'";
     $aryQuery[] = "  ) = '" . $dtmAppropriationDate . "' ";
-    $aryQuery[] = "  AND lngsalesStatusCode = " . DEF_SALES_CLOSED;    
+    $aryQuery[] = "  AND lngsalesStatusCode = " . DEF_SALES_CLOSED;
     $strQuery = implode("\n", $aryQuery);
     // 税区分の取得クエリーの実行
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);

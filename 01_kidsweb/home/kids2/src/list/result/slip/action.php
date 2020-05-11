@@ -68,11 +68,23 @@ $aryParts = &$objMaster->aryData[0];
 // 印刷回数を更新する
 fncUpdatePrintCount(DEF_REPORT_SLIP, $aryParts, $objDB);
 
+// 納品伝票種別取得
+$strQuery = fncGetSlipKindQuery($aryParts["lngcustomercode"]);
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+if ($lngResultNum < 1) {
+    fncOutputError(9051, DEF_FATAL, "納品伝票種別データが存在しませんでした。", true, "", $objDB);
+} else {
+    $slipKidObj = $objDB->fetchArray($lngResultID, 0);
+}
+
+$objDB->freeResult($lngResultID);
+
 $objDB->close();
 
-header("location: /list/result/slip/download.php?strSessionID=" . $aryData["strSessionID"]
+if ($slipKidObj["lngslipkindcode"] != DEF_SLIP_KIND_DEBIT) {
+    header("location: /list/result/slip/download.php?strSessionID=" . $aryData["strSessionID"]
     . "&strReportKeyCode=" . $aryData["strReportKeyCode"]
     . "&lngReportCode=" . $aryData["lngReportCode"]
     . "&reprintFlag=" . $aryData["reprintFlag"]);
-
+}
 return true;

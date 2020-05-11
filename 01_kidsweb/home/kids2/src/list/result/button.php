@@ -46,7 +46,7 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUN
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
-if ($aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] == "slip") {
+if ($aryListOutputMenu[$aryData["lngReportClassCode"]]["file"] == "slip" && $aryData["lngSlipKindCode"] != DEF_SLIP_KIND_DEBIT) {
 	$function = "fncDownload('slip/action.php?strSessionID=" . $aryData["strSessionID"]
 	 . "&strReportKeyCode=" . $aryData["strReportKeyCode"]
 	 . "&lngReportCode=" . $aryData["lngReportCode"] ."')";

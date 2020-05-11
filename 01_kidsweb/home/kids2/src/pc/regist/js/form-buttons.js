@@ -418,14 +418,14 @@ function getMonetaryRate() {
     })
         .done(function (response) {
             var data = JSON.parse(response);
-            console.log(data.dtmapplystartdate.substr(0, 7).replace(/-/g, ""));
-            console.log(dtmStockAppDate.substr(0, 7).replace(/\//g, ""));
-            console.log(alertCount);
+            console.log(data);
             $('input[name="curConversionRate"]').val(data.curconversionrate);
-            if (data.dtmapplystartdate.substr(0, 7).replace(/-/g, "") != dtmStockAppDate.substr(0, 7).replace(/\//g, "") && alertCount == 0) {
-                alertCount += 1;
-                $message = "選択された仕入日の適用レートが存在しません。\n" + data.dtmapplystartdate.substr(0, 7) + "のレートを適用します。"
-                alert($message);
+            if ($('input[name="lngMonetaryUnitCode"]').val() != 1) {
+                if (data.dtmapplystartdate.substr(0, 7).replace(/-/g, "") != dtmStockAppDate.substr(0, 7).replace(/\//g, "") && alertCount == 0) {
+                    alertCount += 1;
+                    $message = "選択された仕入日の適用レートが存在しません。\n" + data.dtmapplystartdate.substr(0, 7) + "のレートを適用します。"
+                    alert($message);
+                }
             }
         })
         .fail(function (response) {

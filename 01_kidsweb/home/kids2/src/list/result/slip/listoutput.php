@@ -89,18 +89,18 @@ for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
     $aryKeys[] = pg_field_name($lngResultID, $i);
 }
 
+$maxLine = $slipKidObj["lngmaxline"];
+$count = $lngResultNum;
 // 行数だけデータ取得、配列に代入
-for ($i = 0; $i < $lngResultNum; $i++) {
+for ($i = 0; $i < $count; $i++) {
     $aryResult = $objDB->fetchArray($lngResultID, $i);
     for ($j = 0; $j < count($aryKeys); $j++) {
-        $aryDetail[$i][$aryKeys[$j] . $i] = $aryResult[$j];
+        $aryDetail[$i][$aryKeys[$j] . (($i + $maxLine) % $maxLine)] = $aryResult[$j];
     }
 }
 $objDB->freeResult($lngResultID);
 
 $objDB->close();
-
-$rowNum = $slipKidObj["lngmaxline"];
 
 // テンプレートパス設定
 if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
@@ -152,7 +152,7 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
     // 合計金額
     $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["curtotalprice"];
 
-    $aryParts["curtotalprice"] = $curTotalPrice;
+    // $aryParts["curtotalprice"] = $curTotalPrice;
     $aryParts["nameofbank"] = $aryParts["lngpaymentmethodcode"] == 1 ? "MUFG BANK, LTD." : "";
     $aryParts["nameofbranch"] = $aryParts["lngpaymentmethodcode"] == 1 ? "ASAKUSA BRANCH" : "";
     $aryParts["addressofbank1"] = $aryParts["lngpaymentmethodcode"] == 1 ? "4-2, ASAKUSA 1-CHOME, " : "";
@@ -164,13 +164,13 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
 } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
     $strnote = "";
     $strsalesclassname = $aryDetail[0]["strsalesclassname0"];
-    if (strlen($strsalesclassname) > 0 ) {
-        $strnote = $strnote .$strsalesclassname ."分　";
+    if (strlen($strsalesclassname) > 0) {
+        $strnote = $strnote . $strsalesclassname . "分　";
     }
     if ($aryParts["strtaxclassname"] != "非課税") {
-        $strnote = $strnote . $aryParts["strtaxclassname"]. "(". ($aryParts["curtax"] * 100)."%)" . "\n" .$aryParts["strnote"];
+        $strnote = $strnote . $aryParts["strtaxclassname"] . "(" . ($aryParts["curtax"] * 100) . "%)" . "\n" . $aryParts["strnote"];
     }
-    
+
     $aryParts["strnote"] = $strnote;
 }
 
@@ -189,35 +189,70 @@ $objTemplate = new clsTemplate();
 $objTemplate->getTemplate($strTemplatePath);
 $strTemplate = $objTemplate->strTemplate;
 
-$objTemplate->strTemplate = $strTemplate;
+if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
+// ページ処理
+    $aryParts["lngNowPage"] = 1;
+    $aryParts["lngAllPage"] = ceil($lngResultNum / $maxLine);
+// ページ数分テンプレートを繰り返し読み込み
+    for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNowPage"]++) {
+        $lngRecordCount = 0;
+        $aryHtml[] = "<div style=\"page-break-after:always;page-break-inside: avoid;\">\n";
 
-// 置き換え
-$objTemplate->replace($aryParts);
+        // 表示しようとしているページが最後のページの場合、
+        // 合計金額を代入(発注書出力特別処理)
+        if ($aryParts["lngNowPage"] == $aryParts["lngAllPage"]) {
+            $aryParts["curtotalprice"] = $curTotalPrice;
+            $aryParts["strTotalAmount"] = "Total Amount";
+        } else {
+            $aryParts["curtotalprice"] = "";
+        }
 
-for ($i = 0; $i < $lngResultNum; $i++) {
-    // 合計金額
-    if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
-        // 金額設定
-        $cursubtotalprice = str_pad($aryDetail[$i]["cursubtotalprice_comm" . ($i)], 8, " ", STR_PAD_LEFT);
-        for ($k = 0; $k < 8; $k++) {
-            $aryDetail[$i]["cursubtotalprice" . $i . $k] = substr($cursubtotalprice, $k, 1);
+        $objTemplate->strTemplate = $strTemplate;
+        // 置き換え
+        $objTemplate->replace($aryParts);
+        for ($j = ($aryParts["lngNowPage"] - 1) * $maxLine; $j < ($aryParts["lngNowPage"] * $maxLine); $j++) {
+            if ($j > ($count - 1)) {
+                break;
+            }
+            $index = ($j + $maxLine) % $maxLine;
+            // 顧客受注番号
+            if ($aryDetail[$j]["strcustomersalescode" . ($index)] != "") {
+                $aryDetail[$j]["strcustomersalescode" . ($index)] = "(PO No:" . $aryDetail[$j]["strcustomersalescode" . ($index)] . ")";
+            }
+
+            // 置き換え
+            $objTemplate->replace($aryDetail[$j]);
         }
-        // 入数
-        $aryDetail[$i]["lngquantity" . ($i)] = "";
-    } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
-        // 顧客受注番号
-        if ($aryDetail[$i]["strcustomersalescode" . ($i)] != "") {
-            $aryDetail[$i]["strcustomersalescode" . ($i)] = "(PO No:" . $aryDetail[$i]["strcustomersalescode" . ($i)] . ")";
+
+        $objTemplate->complete();
+        $aryHtml[] = $objTemplate->strTemplate;
+        $aryHtml[] = "</div>";
+
+    }
+} else {
+    $objTemplate->strTemplate = $strTemplate;
+    // 置き換え
+    $objTemplate->replace($aryParts);
+
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        // 合計金額
+        if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
+            // 金額設定
+            $cursubtotalprice = str_pad($aryDetail[$i]["cursubtotalprice_comm" . ($i)], 8, " ", STR_PAD_LEFT);
+            for ($k = 0; $k < 8; $k++) {
+                $aryDetail[$i]["cursubtotalprice" . $i . $k] = substr($cursubtotalprice, $k, 1);
+            }
+            // 入数
+            $aryDetail[$i]["lngquantity" . ($i)] = "";
         }
+
+        // 置き換え
+        $objTemplate->replace($aryDetail[$i]);
     }
 
-    // 置き換え
-    $objTemplate->replace($aryDetail[$i]);
+    $objTemplate->complete();
+    $aryHtml[] = $objTemplate->strTemplate;
 }
-
-$objTemplate->complete();
-$aryHtml[] = $objTemplate->strTemplate;
-
-$strBodyHtml = join("<br style=\"page-break-after:always;\">\n", $aryHtml);
+$strBodyHtml = join("", $aryHtml);
 
 echo $strTemplateHeader . $strBodyHtml . $strTemplateFooter;

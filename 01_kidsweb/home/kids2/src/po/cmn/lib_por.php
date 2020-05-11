@@ -613,7 +613,6 @@ function fncGetOtherOrderDetail($lngorderNo, $lngrevisionno, $objDB)
     $aryQuery[] = "  ) m_key ";
     $aryQuery[] = "    ON od.strproductcode = m_key.strproductcode ";
     $aryQuery[] = "    AND od.strrevisecode = m_key.strrevisecode ";
-    $aryQuery[] = "    AND mo.strordercode = m_key.strordercode ";
     $aryQuery[] = "    AND mo.lngcustomercompanycode = m_key.lngcustomercompanycode ";
     $aryQuery[] = "    AND mo.lngmonetaryunitcode = m_key.lngmonetaryunitcode ";
     $aryQuery[] = "    AND msi.lngestimateareaclassno = m_key.lngestimateareaclassno ";

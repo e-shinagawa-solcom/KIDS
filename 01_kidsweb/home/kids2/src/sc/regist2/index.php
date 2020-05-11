@@ -99,7 +99,7 @@ if ($strMode == "get-lngcountrycode") {
 }
 
 //-------------------------------------------------------------------------
-// 【ajax】顧客に紐づく締め日を取得
+// 【ajax】顧客に紐づく締め日,締め処理確認を取得
 //-------------------------------------------------------------------------
 if ($strMode == "get-closedday") {
     // 顧客コード
@@ -108,6 +108,14 @@ if ($strMode == "get-closedday") {
     $aryResult["lngClosedDay"] = fncGetClosedDay($strCompanyDisplayCode, $objDB);
 
     $aryResult["isClosedFlag"] = fncIsClosedForSales(substr($_POST["dtmDeliveryDate"],0,7), $objDB);
+
+    // 顧客に紐づく帳票1ページあたりの最大明細数を取得する
+    $lngcompanycode = fncGetMasterValue("m_company","strcompanydisplaycode","lngcompanycode",$strCompanyDisplayCode . ":str", "", $objDB);
+    $aryReport = fncGetSlipKindByCompanyCode($lngcompanycode, $objDB);
+    $aryResult["lngmaxline"] = $aryReport["lngmaxline"];
+    $aryResult["lngslipkindcode"] = $aryReport["lngslipkindcode"];
+    $aryResult["strslipkindname"] = $aryReport["strslipkindname"];
+    
 
     // データ返却
 	echo $s->encodeUnsafe($aryResult);
@@ -144,7 +152,7 @@ if ($strMode == "search-detail") {
     // 換算レートの取得
     $rateResult = fncGetCurConversionRate($aryData["dtmDeliveryDate"], intval($aryDetail[0]["lngmonetaryratecode"]),
     intval($aryDetail[0]["lngmonetaryunitcode"]), $objDB);
-    $aryResult["curconversionrate"] = $rateResult->curconversionrate;
+    $aryResult["curconversionrate"] = $rateResult["curconversionrate"];
     // データ返却
 	// echo $strHtml;
 	//結果出力

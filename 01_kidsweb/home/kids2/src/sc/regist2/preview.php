@@ -248,24 +248,8 @@ if ($strMode == "regist-or-renew") {
     // --------------------------
     //  登録結果画面表示
     // --------------------------
-    // 処理結果（テーブル出力）
-    $aryPerPage = $aryRegResult["aryPerPage"];
-
-    // //DBG:TESTCODE 仮の処理結果
-    // $aryPage1 = array();
-    // $aryPage1["lngSlipNo"] = 30487;
-    // $aryPage1["lngRevisionNo"] = 1;
-    // $aryPage1["strSlipCode"] = "02030457";
-    // $aryPage2 = array();
-    // $aryPage2["lngSlipNo"] = 27741;
-    // $aryPage2["lngRevisionNo"] = 0;
-    // $aryPage2["strSlipCode"] = "02028443";
-    // $aryPerPage = array();
-    // $aryPerPage[] = $aryPage1;
-    // $aryPerPage[] = $aryPage2;
-
     // 処理結果をテーブルのHTMLに出力
-    $strHtml = fncGetRegisterResultTableBodyHtml($aryPerPage, $objDB);
+    $strHtml = fncGetRegisterResultTableBodyHtml($aryRegResult["slipinfo"], $aryRegResult["lngslipkindcode"], $aryData["strSessionID"], $objDB);
     $aryData["tbodyResiterResult"] = $strHtml;
 
     // 登録完了メッセージ

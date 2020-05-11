@@ -237,7 +237,7 @@ function SearchReceiveDetail(data) {
     $('#tableA tbody tr').remove();
     $('#tableA tbody tr td').width('');
     $('#tableA_head thead tr th').width('');
-    console.log(data.detail_body);
+    console.log(data);
     var subElements = $(data.detail_body);
     subElements.each(function (i, e) {
         var checkElements = $(data.chkbox_body).eq($(this).index());
@@ -1134,6 +1134,14 @@ jQuery(function ($) {
                 if (data.isClosedFlag) {
                     alert("入力された仕入月" + $('input[name="dtmDeliveryDate"]').val().substr(0, 7) + "は既に締め処理済の為入力できません。\n経理部門に相談してください。");
                     return false;
+                }
+
+                // 納品伝票種類が1:指定伝票・2:市販伝票の場合、最大件数入力チェックを行う
+                if (data.lngslipkindcode == 1 || data.lngslipkindcode == 2)
+                if ($('#tableB tbody tr').length > data.lngmaxline)
+                {
+                    alert(data.strslipkindname + "に対して、最大" + data.lngmaxline + "行の明細しか出力できませんので、明細行数を減らしてください。");
+                    return 
                 }
                 // 締め日
                 var closedDay = data.lngClosedDay;

@@ -1640,11 +1640,11 @@
         }
 
         table.sheet0 col.col1 {
-            width: 44.05555505pt
+            width: 150.05555505pt
         }
 
         table.sheet0 col.col2 {
-            width: 46.08888836pt
+            width: 100.08888836pt
         }
 
         table.sheet0 col.col3 {
@@ -1660,11 +1660,11 @@
         }
 
         table.sheet0 col.col6 {
-            width: 80.83333275pt
+            width: 70.83333275pt
         }
 
         table.sheet0 col.col7 {
-            width: 77.26666578pt
+            width: 100.26666578pt
         }
 
         table.sheet0 col.col8 {
@@ -1852,9 +1852,16 @@
         }
 
         body {
-            margin-left: 0.98425196850394in;
+            margin-left: 0.18425196850394in;
             margin-right: 0.5511811023622in;
-            margin-top: 0.70866141732283in;
+            /* margin-top: 0.70866141732283in; */
             margin-bottom: 0.59055118110236in;
+        }
+
+        @media print {
+            body {
+                zoom: 81%;
+                /*←いー感じに調整してください*/
+            }
         }
     </style>

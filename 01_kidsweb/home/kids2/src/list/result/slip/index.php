@@ -69,6 +69,7 @@ $aryQuery[] = "  , u2.strUserDisplayCode AS strUserDisplayCode";
 $aryQuery[] = "  , u2.strUserDisplayName AS strUserDisplayName";
 $aryQuery[] = "  , s.lngprintcount";
 $aryQuery[] = "  , s.lngslipno AS strReportKeyCode ";
+$aryQuery[] = "  , skr.lngslipkindcode ";
 $aryQuery[] = "FROM";
 $aryQuery[] = "  m_slip s ";
 $aryQuery[] = "  inner join ( ";
@@ -86,6 +87,8 @@ $aryQuery[] = "    on s.strslipcode = s1.strslipcode ";
 $aryQuery[] = "    AND s.lngrevisionno = s1.lngRevisionNo ";
 $aryQuery[] = "  left join t_slipdetail sd ";
 $aryQuery[] = "    on s.lngslipno = sd.lngslipno ";
+$aryQuery[] = "  left join m_slipkindrelation skr ";
+$aryQuery[] = "    on s.lngcustomercode = skr.lngCompanyCode ";
 $aryQuery[] = "  left join m_Company c ";
 $aryQuery[] = "    on s.lngdeliveryplacecode = c.lngCompanyCode ";
 $aryQuery[] = "  left join m_Company cust ";
@@ -260,6 +263,7 @@ if ($lngResultNum > 0) {
 
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = implode("\n", $aryQuery);
+
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 // 検索件数がありの場合
@@ -312,7 +316,8 @@ for ($i = 0; $i < $lngResultNum; $i++) {
     // 印刷回数が0より大きい場合、コピー帳票出力ボタン表示
     if (intval($objResult->lngprintcount) > 0) {
         // コピー帳票出力ボタン表示
-        $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_SLIP . "&strReportKeyCode=" . $objResult->strreportkeycode . "' );return false;\" onmouseover=\"fncCopyPreviewButton( 'on' , this );\" onmouseout=\"fncCopyPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/list/copybig_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"COPY PREVIEW\"></a>";
+        $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] 
+        . "&lngReportClassCode=" . DEF_REPORT_SLIP . "&lngSlipKindCode=" . $objResult->lngslipkindcode . "&strReportKeyCode=" . $objResult->strreportkeycode . "' );return false;\" onmouseover=\"fncCopyPreviewButton( 'on' , this );\" onmouseout=\"fncCopyPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/list/copybig_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"COPY PREVIEW\"></a>";
     }
 
     $aryParts["strResult"] .= "</td>\n<td align=center>";
@@ -321,7 +326,8 @@ for ($i = 0; $i < $lngResultNum; $i++) {
     // 帳票出力ボタン表示
     if ($aryReportCode[$objResult->strreportkeycode] == null || fncCheckAuthority(DEF_FUNCTION_LO4, $objAuth)) {
         // 帳票出力ボタン表示
-        $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"] . "&lngReportClassCode=" . DEF_REPORT_SLIP . "&strReportKeyCode=" . $objResult->strreportkeycode . "' );return false;\" onmouseover=\"fncPreviewButton( 'on' , this );\" onmouseout=\"fncPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/cmn/querybt/preview_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"PREVIEW\"></a>";
+        $aryParts["strResult"] .= "<a href=\"#\"><img onclick=\"fncListOutput( '/list/result/frameset.php?strSessionID=" . $searchValue["strSessionID"]
+         . "&lngReportClassCode=" . DEF_REPORT_SLIP . "&lngSlipKindCode=" . $objResult->lngslipkindcode. "&strReportKeyCode=" . $objResult->strreportkeycode . "' );return false;\" onmouseover=\"fncPreviewButton( 'on' , this );\" onmouseout=\"fncPreviewButton( 'off' , this );fncAlphaOff( this );\" onmousedown=\"fncAlphaOn( this );\" onmouseup=\"fncAlphaOff( this );\" src=\"/img/type01/cmn/querybt/preview_off_bt.gif\" width=\"72\" height=\"20\" border=\"0\" alt=\"PREVIEW\"></a>";
     }
 
     $aryParts["strResult"] .= "</td></tr>\n";
