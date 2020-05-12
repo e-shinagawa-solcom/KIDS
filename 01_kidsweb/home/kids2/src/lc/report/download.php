@@ -33,7 +33,6 @@ foreach ($data as $key => $value) {
     $data[$key] = trim($value);
 }
 
-
 // セッション確認
 $objAuth = fncIsSession($data["strSessionID"], $objAuth, $objDB);
 
@@ -54,6 +53,26 @@ $filepath = REPORT_TMPDIR . REPORT_LC_TMPFILE;
 
 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($filepath); //template.xlsx 読込
 
+if (!isset($data["unsetChk"])) {
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('5'));
+    $spreadsheet->removeSheetByIndex($sheetIndex);
+}
+
+if (!isset($data["setChk"])) {
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('1'));
+    $spreadsheet->removeSheetByIndex($sheetIndex);
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('2'));
+    $spreadsheet->removeSheetByIndex($sheetIndex);
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('3'));
+    $spreadsheet->removeSheetByIndex($sheetIndex);
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('4'));
+    $spreadsheet->removeSheetByIndex($sheetIndex);
+}
+
+if (!isset($data["impletterChk"])) {
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('6'));
+    $spreadsheet->removeSheetByIndex($sheetIndex);
+}
 // 出力
 if ($data["impletterChk"] == "1") {
     if ($data["bankcd"] != "0000") {
@@ -70,6 +89,9 @@ if ($data["impletterChk"] == "1") {
             $pageNo_6 = reportSixOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data, $pageNo_6);
         }
     }
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('6'));
+    $spreadsheet->setActiveSheetIndex($sheetIndex);
+    $spreadsheet->getActiveSheet()->freezePane('A1');
 }
 
 if ($data["setChk"] == "1") {
@@ -84,8 +106,16 @@ if ($data["setChk"] == "1") {
         // $clonedWorksheet = clone $spreadsheet->getSheetByName("1");
         // $clonedWorksheet->setTitle("1_船積月");
         // $spreadsheet->addSheet($clonedWorksheet);
-
-        $oldIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName("5"));
+        $sheet = $spreadsheet->getSheetByName("5");
+        if ($spreadsheet->getSheetByName("5") == null) {
+            if ($spreadsheet->getSheetByName("6") == null) {
+                $oldIndex = null;
+            } else {
+                $oldIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName("6"));
+            }
+        } else {
+            $oldIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName("5"));
+        }
         $clonedWorksheet = clone $spreadsheet->getSheetByName("4");
         $clonedWorksheet->setTitle("4_船積月");
         $spreadsheet->addSheet($clonedWorksheet, $oldIndex);
@@ -111,7 +141,10 @@ if ($data["setChk"] == "1") {
             $pageNo_4_shipym = reportFourOutput($objDB, $spreadsheet, $currencyClass, $objectYm, 4, $pageNo_4_shipym);
         }
     }
-
+    
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('1'));
+    $spreadsheet->setActiveSheetIndex($sheetIndex);
+    $spreadsheet->getActiveSheet()->freezePane('A1');
 }
 
 if ($data["unsetChk"] == "1") {
@@ -123,10 +156,11 @@ if ($data["unsetChk"] == "1") {
             $pageNo_5 = reportFiveOutput($objDB, $spreadsheet, $currencyClass, $bankLst, $data, $pageNo_5);
         }
     }
+    $sheetIndex = $spreadsheet->getIndex($spreadsheet->getSheetByName('5'));
+    $spreadsheet->setActiveSheetIndex($sheetIndex);
+    $spreadsheet->getActiveSheet()->freezePane('A1');
 }
-
 $objDB->close();
-// return;
 
 $filename = 'lc_report_' . date("YmdHis") . '.xls';
 // 成功
@@ -135,7 +169,6 @@ header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetm
 header('Content-Disposition: attachment;filename="' . $filename . '"');
 header('Cache-Control: max-age=0');
 $writer->save('php://output');
-
 
 /**
  * 帳票（オープン月）_１の出力
