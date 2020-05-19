@@ -594,7 +594,10 @@ class updateInsertData extends estimateInsertData
         $previousDetailNo = $rowData['previousDetailNo']; // 以前の見積原価明細番号（検索用）
         //        $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
         $estimateDetailNo = $rowData['previousDetailNo']; // 今回の見積原価明細番号（登録用)←不変。見積原価明細番号は見積原価履歴マスタの見積原価行番号が担う
-
+        
+        $curproductprice = ($rowData['monetary'] == 1 ? floor($rowData['price']*100)/100: floor($rowData['price']*10000)/10000);
+        $cursubtotalprice = $curproductprice * $rowData['quantity'];
+        $cursubtotalprice = ($rowData['monetary'] == 1 ? floor($cursubtotalprice): floor($cursubtotalprice*100)/100);
         if ($rowData["detailRevisionNo"] >= 0) {
             $data = array(
                 'lngreceiveno' => 'lngreceiveno',
@@ -605,11 +608,11 @@ class updateInsertData extends estimateInsertData
                 'lngsalesclasscode' => $rowData['classItem'],
                 'dtmdeliverydate' => "TO_TIMESTAMP('" . $rowData['delivery'] . "', 'YYYY/MM/DD')",
                 'lngconversionclasscode' => 'lngconversionclasscode',
-                'curproductprice' => $rowData['price'],
+                'curproductprice' => $curproductprice,
                 'lngproductquantity' => $rowData['quantity'],
                 'lngproductunitcode' => 'lngproductunitcode',
                 'lngunitquantity' => 'lngunitquantity',
-                'cursubtotalprice' => $rowData['subtotal'],
+                'cursubtotalprice' => $cursubtotalprice,
                 'strnote' => "'" . $rowData['note'] . "'",
                 'lngsortkey' => $sortKey,
                 'lngestimateno' => $this->estimateNo,
@@ -657,11 +660,11 @@ class updateInsertData extends estimateInsertData
                 'lngsalesclasscode' => $rowData['classItem'],
                 'dtmdeliverydate' => "TO_TIMESTAMP('" . $rowData['delivery'] . "', 'YYYY/MM/DD')",
                 'lngconversionclasscode' => 'NULL',
-                'curproductprice' => $rowData['price'],
+                'curproductprice' => $curproductprice,
                 'lngproductquantity' => $rowData['quantity'],
                 'lngproductunitcode' => 1,
                 'lngunitquantity' => 1,
-                'cursubtotalprice' => $rowData['subtotal'],
+                'cursubtotalprice' => $cursubtotalprice,
                 'strnote' => "'" . $rowData['note'] . "'",
                 'lngsortkey' => $sortKey,
                 'lngestimateno' => $this->estimateNo,
@@ -813,7 +816,10 @@ class updateInsertData extends estimateInsertData
             }
 
         }
-
+        
+        $curproductprice = ($rowData['monetary'] == 1 ? floor($rowData['price']*100)/100: floor($rowData['price']*10000)/10000);
+        $cursubtotalprice = $curproductprice * $rowData['quantity'];
+        $cursubtotalprice = ($rowData['monetary'] == 1 ? floor($cursubtotalprice): floor($cursubtotalprice*100)/100);
         if ($rowData["detailRevisionNo"] >= 0 && $updateFlag) {
 
             $data = array(
@@ -827,10 +833,10 @@ class updateInsertData extends estimateInsertData
                 'dtmdeliverydate' => "TO_TIMESTAMP('" . $rowData['delivery'] . "', 'YYYY/MM/DD')",
                 'lngdeliverymethodcode' => 'lngdeliverymethodcode',
                 'lngconversionclasscode' => 'lngconversionclasscode',
-                'curproductprice' => $rowData['price'],
+                'curproductprice' => $curproductprice,
                 'lngproductquantity' => $rowData['quantity'],
                 'lngproductunitcode' => 'lngproductunitcode',
-                'cursubtotalprice' => $rowData['subtotal'],
+                'cursubtotalprice' => $cursubtotalprice,
                 'strnote' => "'" . $rowData['note'] . "'",
                 'strmoldno' => 'strmoldno',
                 'lngsortkey' => (int) $sortKey,
@@ -878,10 +884,10 @@ class updateInsertData extends estimateInsertData
                 'dtmdeliverydate' => "TO_TIMESTAMP('" . $rowData['delivery'] . "', 'YYYY/MM/DD')",
                 'lngdeliverymethodcode' => 'NULL',
                 'lngconversionclasscode' => DEF_CONVERSION_SEIHIN,
-                'curproductprice' => $rowData['price'],
+                'curproductprice' => $curproductprice,
                 'lngproductquantity' => $rowData['quantity'],
                 'lngproductunitcode' => DEF_PRODUCTUNIT_PCS,
-                'cursubtotalprice' => $rowData['subtotal'],
+                'cursubtotalprice' => $cursubtotalprice,
                 'strnote' => "'" . $rowData['note'] . "'",
                 'strmoldno' => 'NULL',
                 'lngsortkey' => (int) $sortKey,

@@ -2094,7 +2094,7 @@ function fncSetSlipDataToWorkSheet(
         $v_strrevisecode = $d["strrevisecode"]; //9:再販コード
         $v_strproductname = $d["strproductname"]; //10:製品名
         $v_strproductenglishname = $d["strproductenglishname"]; //11:製品名（英語）
-        $v_curproductprice = number_format($d["curproductprice"], 4, '.', ','); //12:単価
+        $v_curproductprice = number_format($d["curproductprice"], 2, '.', ','); //12:単価
         $v_lngquantity = number_format($d["lngunitquantity"]); //13:入数
         $v_lngproductquantity = number_format($d["lngproductquantity"]); //14:数量
         $v_lngproductunitcode = $d["lngproductunitcode"]; //15:製品単位コード

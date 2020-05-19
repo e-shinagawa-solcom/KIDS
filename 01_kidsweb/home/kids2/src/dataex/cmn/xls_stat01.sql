@@ -37,14 +37,14 @@ INNER JOIN (
 	SELECT r1.lngreceiveno, r1.strreceivecode, r1.lngrevisionno
 	FROM m_Receive r1
 	WHERE
-		r1.strreceivecode NOT IN(
-			SELECT r2.strreceivecode  FROM m_Receive r2
+		r1.lngreceiveno NOT IN(
+			SELECT r2.lngreceiveno  FROM m_Receive r2
 			where r2.lngrevisionno < 0
-			group by r2.strreceivecode
+			group by r2.lngreceiveno
 		)
 		AND r1.lngrevisionno = (
 			SELECT MAX( rr1.lngRevisionNo ) FROM m_Receive rr1 
-			WHERE rr1.strreceivecode = r1.strreceivecode 
+			WHERE rr1.lngreceiveno = r1.lngreceiveno 
 				AND rr1.bytInvalidFlag = false
 		)
 ) mrtrue

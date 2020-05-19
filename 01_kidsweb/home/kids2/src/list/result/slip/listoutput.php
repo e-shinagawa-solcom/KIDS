@@ -150,7 +150,7 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
     $aryParts["strcustomerfax"] = "Fax.:" . $aryParts["strcustomerfaxno"];
     $aryparts["strcustomerusername"] = $aryParts["strcustomerusername"];
     // 合計金額
-    $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["curtotalprice"];
+    $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["curtotalprice_us"];
 
     // $aryParts["curtotalprice"] = $curTotalPrice;
     $aryParts["nameofbank"] = $aryParts["lngpaymentmethodcode"] == 1 ? "MUFG BANK, LTD." : "";
@@ -244,7 +244,11 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
             }
             // 入数
             $aryDetail[$i]["lngquantity" . ($i)] = "";
+        } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
+            $aryDetail[$i]["cursubtotalprice" . ($i)] = $aryDetail[$i]["cursubtotalprice_jp" . ($i)];
         }
+
+        $aryDetail[$i]["curproductprice" . ($i)] = $aryDetail[$i]["curproductprice_jp" . ($i)];
 
         // 置き換え
         $objTemplate->replace($aryDetail[$i]);

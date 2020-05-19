@@ -1561,7 +1561,7 @@ function fncDeleteInvoice($lngInvoiceNo, $lngRevisionNo, $objDB, $objAuth)
     $aryQuery[] = $lngMinRevisionNo . ", ";             // 2:リビジョン番号
     $aryQuery[] = "'" .$strInvoiceCode . "', ";         // 3:請求書コード
     $aryQuery[] = "" .$objAuth->UserCode . ", ";      // 4:入力者コード
-    $aryQuery[] = "'" .$objAuth->UserFullName . "', ";  // 4:入力者名
+    $aryQuery[] = "'" .$objAuth->UserDisplayName . "', ";  // 4:入力者名
     $aryQuery[] = "false, ";                            // 5:無効フラグ
     $aryQuery[] = "'" . fncGetDateTimeString() . "'";   // 6:登録日
     $aryQuery[] = ")";

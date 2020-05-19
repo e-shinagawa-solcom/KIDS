@@ -170,25 +170,25 @@ foreach ($aryDetailData as $data) {
     // 明細行
     $aryQuery = array();
     $aryQuery[] = "SELECT ";
-    $aryQuery[] = "t_orderdetail.lngorderdetailno, "; // 発注明細番号
-    $aryQuery[] = "t_orderdetail.lngrevisionno, "; // リビジョン番号
-    $aryQuery[] = "t_orderdetail.strproductcode, "; // 製品コード
-    $aryQuery[] = "t_orderdetail.strrevisecode, "; // リバイズ番号
-    $aryQuery[] = "t_orderdetail.lngstocksubjectcode, "; // 仕入科目コード
-    $aryQuery[] = "t_orderdetail.lngstockitemcode, "; // 仕入部品コード
-    $aryQuery[] = "To_char( t_orderdetail.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
+    $aryQuery[] = "pod.lngorderdetailno, "; // 発注明細番号
+    $aryQuery[] = "pod.lngorderrevisionno as lngrevisionno, "; // リビジョン番号
+    $aryQuery[] = "mpo.strproductcode, "; // 製品コード
+    $aryQuery[] = "mpo.strrevisecode, "; // リバイズ番号
+    $aryQuery[] = "pod.lngstocksubjectcode, "; // 仕入科目コード
+    $aryQuery[] = "pod.lngstockitemcode, "; // 仕入部品コード
+    $aryQuery[] = "To_char( pod.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
     $aryQuery[] = "pod.lngdeliverymethodcode as lngCarrierCode, "; // 運搬方法コード
     $aryQuery[] = "t_orderdetail.lngconversionclasscode, "; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
-    $aryQuery[] = "t_orderdetail.curproductprice, "; // 製品価格
-    $aryQuery[] = "t_orderdetail.lngproductquantity, "; // 製品数量
-    $aryQuery[] = "t_orderdetail.lngproductunitcode, "; // 製品単位コード
+    $aryQuery[] = "pod.curproductprice, "; // 製品価格
+    $aryQuery[] = "pod.lngproductquantity, "; // 製品数量
+    $aryQuery[] = "pod.lngproductunitcode, "; // 製品単位コード
 /*
     $aryQuery[] = "lngtaxclasscode, "; // 消費税区分コード
     $aryQuery[] = "lngtaxcode, "; // 消費税コード
     $aryQuery[] = "curtaxprice, "; // 消費税金額
 */
-    $aryQuery[] = "t_orderdetail.cursubtotalprice, "; // 小計金額
-    $aryQuery[] = "t_orderdetail.strnote, "; // 備考
+    $aryQuery[] = "pod.cursubtotalprice, "; // 小計金額
+    $aryQuery[] = "pod.strnote, "; // 備考
     $aryQuery[] = "t_orderdetail.strmoldno as strSerialNo, "; // シリアル
     $aryQuery[] = "t_orderdetail.lngsortkey "; // シリアル
     $aryQuery[] = "FROM t_orderdetail ";
@@ -200,6 +200,8 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "    select";
     $aryQuery[] = "      mpo1.lngpurchaseorderno";
     $aryQuery[] = "      , mpo1.lngrevisionno ";
+    $aryQuery[] = "      , mpo1.strproductcode ";
+    $aryQuery[] = "      , mpo1.strrevisecode ";
     $aryQuery[] = "    from";
     $aryQuery[] = "      m_purchaseorder mpo1 ";
     $aryQuery[] = "      inner join ( ";

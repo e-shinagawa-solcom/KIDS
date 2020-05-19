@@ -188,7 +188,7 @@ if ($strMode == "change-deliverydate") {
 // ヘッダ・フッダ部
 // 起票者
 $aryData['lngInsertUserCode'] = trim($objAuth->UserID);
-$aryData['strInsertUserName'] = trim($objAuth->UserFullName);
+$aryData['strInsertUserName'] = trim($objAuth->UserDisplayName);
 
 // 納品日
 $nowDate = new DateTime();

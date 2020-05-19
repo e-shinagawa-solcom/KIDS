@@ -547,6 +547,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , s.lngusercode";
         $aryQuery[] = "  , s.strusername";
         $aryQuery[] = "  , to_char(s.curtotalprice, '9,999,999,990') AS curtotalprice";
+        $aryQuery[] = "  , to_char(s.curtotalprice, '9,999,999,990.99') AS curtotalprice_us";
         $aryQuery[] = "  , trunc(s.curtotalprice) AS curtotalprice_comm";
         $aryQuery[] = "  , s.lngmonetaryunitcode";
         $aryQuery[] = "  , s.strmonetaryunitsign";
@@ -712,11 +713,13 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , strproductname";
     $aryQuery[] = "  , strproductenglishname";
     $aryQuery[] = "  , to_char(curproductprice, '9,999,999,990.9999') AS curproductprice";
+    $aryQuery[] = "  , to_char(curproductprice, '9,999,999,990.99') AS curproductprice_jp";
     $aryQuery[] = "  , lngquantity";
     $aryQuery[] = "  , to_char(lngproductquantity, '9,999,999,990') AS lngproductquantity";
     $aryQuery[] = "  , lngproductunitcode";
     $aryQuery[] = "  , strproductunitname";
     $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990.99') AS cursubtotalprice";
+    $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990') AS cursubtotalprice_jp";
     $aryQuery[] = "  , trunc(cursubtotalprice) AS cursubtotalprice_comm";
     $aryQuery[] = "  , strnote ";
     $aryQuery[] = "from";

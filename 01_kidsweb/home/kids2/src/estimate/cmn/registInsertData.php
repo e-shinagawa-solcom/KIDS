@@ -428,7 +428,9 @@ class registInsertData extends estimateInsertData {
     protected function registTableReceiveDetail($rowData, $receiveNo, $receiveDetailNo, $estimateDetailNo) {
         // テーブルの設定 
         $table = 't_receivedetail';
-
+        $curproductprice = ($rowData['monetary'] == 1 ? floor($rowData['price']*100)/100: floor($rowData['price']*10000)/10000);
+        $cursubtotalprice = $curproductprice * $rowData['quantity'];
+        $cursubtotalprice = ($rowData['monetary'] == 1 ? floor($cursubtotalprice): floor($cursubtotalprice*100)/100);
         $data = array(
             'lngreceiveno' => $receiveNo,
             'lngreceivedetailno' => $receiveDetailNo,
@@ -438,11 +440,11 @@ class registInsertData extends estimateInsertData {
             'lngsalesclasscode' => $rowData['classItem'],
             'dtmdeliverydate' => "TO_TIMESTAMP('". $rowData['delivery']. "', 'YYYY/MM/DD')",
             'lngconversionclasscode' => 'NULL',
-            'curproductprice' => $rowData['price'],
+            'curproductprice' => $curproductprice,
             'lngproductquantity' => $rowData['quantity'],
             'lngproductunitcode' => 1,
             'lngunitquantity' => 1,
-            'cursubtotalprice' => $rowData['subtotal'],
+            'cursubtotalprice' => $cursubtotalprice,
             'strnote' => "'". $rowData['note']. "'",
             'lngsortkey' => $receiveDetailNo,
             'lngestimateno' => $this->estimateNo,
@@ -523,7 +525,9 @@ class registInsertData extends estimateInsertData {
         else{
             $curproductprice = $rowData['price'];
         }
-
+        $curproductprice = ($rowData['monetary'] == 1 ? floor($curproductprice*100)/100: floor($curproductprice*10000)/10000);
+        $cursubtotalprice = $curproductprice * $rowData['quantity'];
+        $cursubtotalprice = ($rowData['monetary'] == 1 ? floor($cursubtotalprice): floor($cursubtotalprice*100)/100);
         $data = array(
             'lngorderno' => $orderNo,
             'lngorderdetailno' => $orderDetailNo,
@@ -538,7 +542,7 @@ class registInsertData extends estimateInsertData {
             'curproductprice' => $curproductprice,
             'lngproductquantity' => $rowData['quantity'],
             'lngproductunitcode' => DEF_PRODUCTUNIT_PCS,
-            'cursubtotalprice' => $rowData['subtotal'],
+            'cursubtotalprice' => $cursubtotalprice,
             'strnote' => "'". $rowData['note']. "'",
             'strmoldno' => 'NULL',
             'lngsortkey' => $orderDetailNo,

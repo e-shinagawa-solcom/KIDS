@@ -1068,10 +1068,12 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
             foreach ($detail as $order) {
                 $aryOrderNo[] = $order["lngorderno"];
                 $detail = fncGetOrderDetail2($order["lngorderno"], $order["lngorderdetailno"], $order["lngrevisionno"], $objDB);
+                $detail["curproductprice"] = $detail["lngmonetaryunitcode"] == 1 ? floatval($detail['curproductprice']*100)/100 : floatval($detail['curproductprice']*10000) /10000;
+                $cursubtotalprice = $detail["curproductprice"] * $detail["lngproductquantity"];
+                $detail["cursubtotalprice"] = $detail["lngmonetaryunitcode"] == 1 ? floor($cursubtotalprice) : floor($cursubtotalprice*100) /100;
                 $aryOrderDetailUpdate[] = $detail;
-                $curTotalPrice += floatval($detail["cursubtotalprice"]);
+                $curTotalPrice += $detail["cursubtotalprice"];
             }
-
             for ($i = 0; $i < count($aryOrderDetailUpdate); $i++) {
                 if ($i == 0) {
                     // 発注書マスタ登録
@@ -1627,36 +1629,8 @@ function fncUpdatePurchaseOrderDetail($aryPurchaseOrder, $objDB)
         $aryQuery[] = (intval($i) + 1);                                                           // lngsortkey
 
         $aryQuery[] = ")";
-/*
-        $aryQuery[] = "SELECT";
-        $aryQuery[] = "    lngpurchaseorderno,";
-        $aryQuery[] = "    lngpurchaseorderdetailno,";
-        $aryQuery[] = "    lngrevisionno + 1,";
-        $aryQuery[] = "    lngorderno,";
-        $aryQuery[] = "    lngorderdetailno,";
-        $aryQuery[] = "    lngorderrevisionno,";
-        $aryQuery[] = "    lngstocksubjectcode,";
-        $aryQuery[] = "    lngstockitemcode,";
-        $aryQuery[] = "    strstockitemname,";
-        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngDeliveryMethodCode"] . ",";
-//        $aryQuery[] =      "'" . $aryPurchaseOrder["aryDetail"][$i]["strDeliveryMethodName"] . "',";
-        $aryQuery[] = "'" . $strDeliveryMethodName . "',";
-        $aryQuery[] = "    curproductprice,";
-        $aryQuery[] = "    lngproductquantity,";
-        $aryQuery[] = "    lngproductunitcode,";
-        $aryQuery[] = "    strproductunitname,";
-        $aryQuery[] = "    cursubtotalprice,";
-        $aryQuery[] = "    dtmdeliverydate,";
-        $aryQuery[] = "    strnote,";
-        $aryQuery[] = $aryPurchaseOrder["aryDetail"][$i]["lngSortKey"] . " ";
-        $aryQuery[] = "FROM t_purchaseorderdetail pod";
-        $aryQuery[] = "WHERE lngpurchaseorderno = " . $aryPurchaseOrder["lngPurchaseOrderNo"];
-        $aryQuery[] = "AND   lngpurchaseorderdetailno = " . $aryPurchaseOrder["aryDetail"][$i]["lngPurchaseOrderDetailNo"];
-        $aryQuery[] = "AND   lngrevisionno = (SELECT MAX( pod1.lngRevisionNo ) FROM t_purchaseorderdetail pod1 WHERE pod1.lngPurchaseOrderNo = pod.lngPurchaseOrderNo and  pod1.lngpurchaseorderdetailno = pod.lngpurchaseorderdetailno)";
-*/
         $strQuery = "";
         $strQuery = implode("\n", $aryQuery);
-//fncDebug("kids2.log", $strQuery, __FILE__, __LINE__, "a");
         if (!$lngResultID = $objDB->execute($strQuery)) {
             fncOutputError(9051, DEF_ERROR, "発注書明細への更新処理に失敗しました。", true, "", $objDB);
             return null;

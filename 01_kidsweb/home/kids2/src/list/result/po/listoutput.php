@@ -187,14 +187,14 @@ for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNo
             $aryDetail[$j]["curproductprice" . (($j + 5) % 5)] = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryDetail[$j]["curproductprice" . (($j + 5) % 5)], "unitprice");
         }
 
-        // 小計が存在すれば、それに通貨単位をつける
-        if ($aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] > 0) {
-            $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)], "price");
-        }
-
         // 製品数量が存在すれば、それに製品単位をつける
         if ($aryDetail[$j]["lngproductquantity" . (($j + 5) % 5)] > 0) {
             $aryDetail[$j]["lngproductquantity" . (($j + 5) % 5)] .= "(" . $aryDetail[$j]["strproductunitname" . (($j + 5) % 5)] . ")";
+        }
+
+        // 小計が存在すれば、それに通貨単位をつける
+        if ($aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] > 0) {
+            $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)] = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryDetail[$j]["cursubtotalprice" . (($j + 5) % 5)], "price");
         }
 
         // カートン入数が存在すれば、それに製品単位をつける

@@ -147,23 +147,23 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = "SELECT ";
     $aryQuery[] = "distinct od.lngorderdetailno, "; // 発注明細番号
     $aryQuery[] = "od.lngrevisionno, "; // リビジョン番号
-    $aryQuery[] = "od.strproductcode, "; // 製品コード
-    $aryQuery[] = "od.strrevisecode, "; // リバイズ番号
-    $aryQuery[] = "od.lngstocksubjectcode, "; // 仕入科目コード
-    $aryQuery[] = "od.lngstockitemcode, "; // 仕入部品コード
-    $aryQuery[] = "To_char( od.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
+    $aryQuery[] = "mpo.strproductcode, "; // 製品コード
+    $aryQuery[] = "mpo.strrevisecode, "; // リバイズ番号
+    $aryQuery[] = "pod.lngstocksubjectcode, "; // 仕入科目コード
+    $aryQuery[] = "pod.lngstockitemcode, "; // 仕入部品コード
+    $aryQuery[] = "To_char( pod.dtmdeliverydate, 'YYYY/mm/dd' ) as dtmdeliverydate, "; // 納品日
     $aryQuery[] = "pod.lngdeliverymethodcode as lngCarrierCode, "; // 運搬方法コード
     $aryQuery[] = "od.lngconversionclasscode, "; // 換算区分コード / 1：単位計上/ 2：荷姿単位計上
-    $aryQuery[] = "od.curproductprice, "; // 製品価格
-    $aryQuery[] = "od.lngproductquantity, "; // 製品数量
-    $aryQuery[] = "od.lngproductunitcode, "; // 製品単位コード
+    $aryQuery[] = "pod.curproductprice, "; // 製品価格
+    $aryQuery[] = "pod.lngproductquantity, "; // 製品数量
+    $aryQuery[] = "pod.lngproductunitcode, "; // 製品単位コード
 /*
     $aryQuery[] = "lngtaxclasscode, "; // 消費税区分コード
     $aryQuery[] = "lngtaxcode, "; // 消費税コード
     $aryQuery[] = "curtaxprice, "; // 消費税金額
 */
-    $aryQuery[] = "od.cursubtotalprice, "; // 小計金額
-    $aryQuery[] = "od.strnote, "; // 備考
+    $aryQuery[] = "pod.cursubtotalprice, "; // 小計金額
+    $aryQuery[] = "pod.strnote, "; // 備考
     $aryQuery[] = "od.strmoldno as strserialno, "; // シリアル
     $aryQuery[] = "od.lngsortkey "; // シリアル
     $aryQuery[] = "FROM t_orderdetail od ";

@@ -262,7 +262,7 @@
         if(empty($aryData['lngInputUserCode']))
         {
             $aryData['lngInputUserCode'] = trim($lngUserCode);
-            $aryData['strInputUserName'] = trim($objAuth->UserFullName);
+            $aryData['strInputUserName'] = trim($objAuth->UserDisplayName);
         }
         if(empty($aryData['ActionDate']))
         {
