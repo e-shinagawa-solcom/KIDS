@@ -2379,7 +2379,7 @@ $(function () {
   */
   function numberFormat(num, decimals = 0, thousands_sep = ',') {
     if (!isNaN(num)) {
-      var number = Number(num);
+      var number = Number(num) + 0.00001;
       var tmp = 1;
       if (decimals == 1) {
         tmp = 10;

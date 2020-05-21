@@ -3,6 +3,8 @@
 //
 jQuery(function ($) {
 
+    var lockId = "lockId";
+
     window.onbeforeunload = unLock;
     // チェックボックスの切り替え処理のバインド
     setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
@@ -132,8 +134,15 @@ jQuery(function ($) {
         window.open('about:blank', '_self').close();
     });
     $('#decideRegist').on('click', function () {
+        
+        // 画面操作を無効する
+        lockScreen(lockId);
+
         // console.log('確定登録ボタンクリック');
         if (!validationCheck()) {
+            // 画面操作を有効にする
+            unlockScreen("lockId");
+
             console.log("バリデーションエラーのため処理継続中止。")
             return false;
         }
@@ -174,6 +183,8 @@ jQuery(function ($) {
         }).fail(function (error) {
             console.log("fail");
             console.log(error);
+            // 画面操作を有効にする
+            unlockScreen("lockId");
         });
     });
 
@@ -274,7 +285,43 @@ jQuery(function ($) {
 
         tableBSort();
     });
+    /*
+ * 画面操作を無効にする
+ */
+    function lockScreen(id) {
 
+        /*
+         * 現在画面を覆い隠すためのDIVタグを作成する
+         */
+        var divTag = $('<div />').attr("id", id);
+
+        /*
+         * スタイルを設定
+         */
+        divTag.css("z-index", "999")
+            .css("position", "absolute")
+            .css("top", "0px")
+            .css("left", "0px")
+            .css("right", "0px")
+            .css("bottom", "0px")
+            .css("background-color", "gray")
+            .css("opacity", "0.8");
+
+        /*
+         * BODYタグに作成したDIVタグを追加
+         */
+        $('body').append(divTag);
+    }
+
+    /*
+     * 画面操作無効を解除する
+     */
+    function unlockScreen(id) {
+        /*
+         * 画面を覆っているタグを削除する
+         */
+        $("#" + id).remove();
+    }
 });
 
 function resetTableADisplayStyle() {
@@ -335,6 +382,7 @@ function unLock() {
         })
         .fail(function (response) {
         });
-        
+
     window.opener.location.reload();
 }
+

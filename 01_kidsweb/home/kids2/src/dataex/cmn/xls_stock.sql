@@ -128,11 +128,11 @@ WHERE
 	)
 	AND p.lngrevisionno =
 	(
-	  SELECT MAX ( p2.lngRevisionNo ) FROM m_Product p2 WHERE p2.lngProductNo = p.lngProductNo
+	  SELECT MAX ( p2.lngRevisionNo ) FROM m_Product p2 WHERE p2.lngProductNo = p.lngProductNo and p2.strrevisecode = p.strrevisecode
 	)
 	 AND 0 <=
 	(
-	  SELECT MIN ( p3.lngRevisionNo ) FROM m_Product p3 WHERE p3.lngProductNo = p.lngProductNo AND p3.bytInvalidFlag = false
+	  SELECT MIN ( p3.lngRevisionNo ) FROM m_Product p3 WHERE p3.lngProductNo = p.lngProductNo and p3.strrevisecode = p.strrevisecode AND p3.bytInvalidFlag = false
 	)
 	AND date_trunc ( 'day', s.dtmAppropriationDate ) >= '_%dtmAppropriationDateFrom%_'
 	AND date_trunc ( 'day', s.dtmAppropriationDate ) <= '_%dtmAppropriationDateTo%_'

@@ -73,11 +73,11 @@
             var rownum = i + 1;
             var chkbox = $(this).find('input[type="checkbox"]');
             if (chkbox.prop("checked")) {
-                var lngreceivedetailnoA = $('#tableA tbody tr:nth-child(' + rownum + ')').find('#lngreceivedetailno').text();
+                var lngreceivenoA = $('#tableA tbody tr:nth-child(' + rownum + ')').find('#lngreceiveno').text();
                 var addObj = true;
                 $('#tableB tbody tr').each(function (i, e) {
-                    var lngreceivedetailnoB = $(this).find('#lngreceivedetailno').text();
-                    if (lngreceivedetailnoA == lngreceivedetailnoB) {
+                    var lngreceivenoB = $(this).find('#lngreceiveno').text();
+                    if (lngreceivenoA == lngreceivenoB) {
                         addObj = false;
                         return false;
                     }
@@ -130,7 +130,7 @@
     $('#alldelete').on('click', function () {
 
         // テーブルBのデータをすべてテーブルAに移動する
-        deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
+        deleteAllRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceiveno');
 
         resetTableRowid($("#tableA"));
 
@@ -146,7 +146,7 @@
     // 削除ボタンのイベント
     $('#delete').on('click', function () {
         // テーブルBの選択されたデータをテーブルAに移動する
-        deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceivedetailno');
+        deleteRows($("#tableA"), $("#tableA_head"), $("#tableA_chkbox"), $("#tableA_chkbox_head"), $("#tableB"), $("#tableB_no"), $("#allChecked"), '#lngreceiveno');
 
         resetTableRowid($("#tableA"));
 

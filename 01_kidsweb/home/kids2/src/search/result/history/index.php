@@ -107,17 +107,11 @@ $index = 0;
 foreach ($records as $i => $record) {
     if ($type == 'slip' || $type == 'so' || $type == 'po') {
         $strcode = $record["lngpkno"];
-    } else {
-        $strcode = $record["strcode"];
     }
     $lngrevisionno = $record["lngrevisionno"];
     $lngpkno = $record["lngpkno"];
     // 背景色設定
-    $bgcolor = fncSetBgColor($type, $strcode, false, $objDB);
-
-    if ($type == 'so' || $type == 'po') {
-        $strcode = $record["strcode"];
-    }
+    $bgcolor = fncSetBgColor($type, $lngpkno, false, $objDB);
     $detailData = array();
     $rowspan == 0;
 
@@ -134,9 +128,9 @@ foreach ($records as $i => $record) {
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
     if ($type == 'so' || $type == 'po') {
-        $trBody->setAttribute("id", $strcode . "_" . $record["lngdetailno"] . "_" . $lngrevisionno);
+        $trBody->setAttribute("id", $lngpkno . "_" . $record["lngdetailno"] . "_" . $lngrevisionno);
     } else {
-        $trBody->setAttribute("id", $strcode . "_" . $lngrevisionno);
+        $trBody->setAttribute("id", $lngpkno . "_" . $lngrevisionno);
     }
     $trBody->setAttribute("class", 'detail history');
     $trBody->setAttribute("before-click-bgcolor", $bgcolor);

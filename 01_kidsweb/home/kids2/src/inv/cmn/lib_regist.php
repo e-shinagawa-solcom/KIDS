@@ -1259,7 +1259,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $aryQuery[] = "'". $insertAry['dtmchargeternend'] ."'  ,";                              // 請求期間(TO)
     $aryQuery[] = $insertAry['curlastmonthbalance'] ." ,";                                  // 前月請求残額
 //    $aryQuery[] = (int)$insertAry['cursubtotal1']." ,";                                     // 御請求金額
-    $aryQuery[] = (int)$insertAry['curthismonthamount']." ,";                                     // 御請求金額
+    $aryQuery[] = (float)$insertAry['curthismonthamount']." ,";                                     // 御請求金額
     $aryQuery[] = $insertAry['lngmonetaryunitcode'] ." ,";                                  // 通貨単位コード default ?
     $aryQuery[] = "'". preg_replace('/\\\/','￥',$insertAry['strmonetaryunitsign']) ."'  ,";// 通貨単位 \のインサートができないので全角対応
     $aryQuery[] = (int)$insertAry['lngtaxclasscode'] ." , ";                                // 課税区分コード
@@ -1267,7 +1267,7 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
 //    $aryQuery[] =  $insertAry['curthismonthamount'] .",";                                   // 税抜き金額1
     $aryQuery[] =  $insertAry['cursubtotal1'] .",";                                   // 税抜き金額1
     $aryQuery[] = $insertAry['curtax1'] / 100 .",";                                          // 消費税率1
-    $aryQuery[] = (int)$insertAry['curtaxprice1'] .",";                                     // 消費税額1
+    $aryQuery[] = (float)$insertAry['curtaxprice1'] .",";                                     // 消費税額1
     $aryQuery[] = "'" . fncGetDateTimeString() . "' ,";                                    // 作成日
     $aryQuery[] = "(select lngusercode from m_user where struserdisplaycode = '". $insertAry['strusercode'] ."')  ,";                                   // 担当者コード
     $aryQuery[] = "'". $insertAry['strusername'] ."'  ,";                                   // 担当者名
@@ -1901,14 +1901,20 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     // 顧客名
     $aryPrevResult["strCustomerName"] = $aryResult["strCustomerName"];
 
+    if ($aryResult["lngmonetaryunitcode"] == 1) {
+        $decimal = 0;
+    } else {
+        $decimal = 2;
+    }
+
     // 前月請求残額
-    $aryPrevResult['curLastMonthBalance_desc'] = preg_match('/,/',$aryResult["curlastmonthbalance"]) ? $aryResult["curlastmonthbalance"] : number_format($aryResult["curlastmonthbalance"]);
+    $aryPrevResult['curLastMonthBalance_desc'] = preg_match('/,/',$aryResult["curlastmonthbalance"]) ? $aryResult["curlastmonthbalance"] : number_format(floor_plus($aryResult["curlastmonthbalance"], $decimal) , $decimal);
     // 今月税抜き金額
-    $aryPrevResult['curSubTotal1_desc']        = preg_match('/,/',$aryResult["curthismonthamount"]) ? $aryResult["curthismonthamount"] : number_format($aryResult["curthismonthamount"]);
+    $aryPrevResult['curSubTotal1_desc']        = preg_match('/,/',$aryResult["curthismonthamount"]) ? $aryResult["curthismonthamount"] : number_format(floor_plus($aryResult["curthismonthamount"], $decimal) , $decimal);
     // 消費税額
-    $aryPrevResult['curTaxPrice1_desc']        = preg_match('/,/',$aryResult["curtaxprice"]) ? $aryResult["curtaxprice"] : number_format($aryResult["curtaxprice"]);
+    $aryPrevResult['curTaxPrice1_desc']        = preg_match('/,/',$aryResult["curtaxprice"]) ? $aryResult["curtaxprice"] : number_format(floor_plus($aryResult["curtaxprice"], $decimal) , $decimal);
     // ご請求額
-    $aryPrevResult['curThisMonthAmount_desc']  = preg_match('/,/',$aryResult["notaxcurthismonthamount"]) ? $aryResult["notaxcurthismonthamount"] : number_format($aryResult["notaxcurthismonthamount"]);
+    $aryPrevResult['curThisMonthAmount_desc']  = preg_match('/,/',$aryResult["notaxcurthismonthamount"]) ? $aryResult["notaxcurthismonthamount"] : number_format(floor_plus($aryResult["notaxcurthismonthamount"], $decimal) , $decimal);
     // 前月請求残額
     $aryPrevResult['curLastMonthBalance'] = preg_replace('/,/', '', $aryResult["curlastmonthbalance"]);
     // 今月税抜き金額

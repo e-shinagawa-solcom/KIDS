@@ -203,7 +203,7 @@ foreach ($records as $i => $record) {
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 
-    $trBody->setAttribute("id", $record["strordercode"] . "_" . $record["lngorderdetailno"]);
+    $trBody->setAttribute("id", $record["lngorderno"] . "_" . $record["lngorderdetailno"]);
     $trBody->setAttribute("before-click-bgcolor", $bgcolor);
 
     $bgcolor = "background-color: " .$bgcolor . ";";

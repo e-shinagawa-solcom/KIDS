@@ -195,7 +195,7 @@ foreach ($records as $i => $record) {
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 
-    $trBody->setAttribute("id", $record["strstockcode"]);
+    $trBody->setAttribute("id", $record["lngstockno"]);
     $trBody->setAttribute("before-click-bgcolor", $bgcolor);
 
     $bgcolor = "background-color: " .$bgcolor . ";";

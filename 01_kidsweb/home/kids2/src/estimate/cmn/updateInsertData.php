@@ -595,9 +595,9 @@ class updateInsertData extends estimateInsertData
         //        $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
         $estimateDetailNo = $rowData['previousDetailNo']; // 今回の見積原価明細番号（登録用)←不変。見積原価明細番号は見積原価履歴マスタの見積原価行番号が担う
         
-        $curproductprice = ($rowData['monetary'] == 1 ? floor($rowData['price']*100)/100: floor($rowData['price']*10000)/10000);
+        $curproductprice = $rowData['monetary'] == 1 ? floor_plus($rowData['price'], 2): floor_plus($rowData['price'], 4);
         $cursubtotalprice = $curproductprice * $rowData['quantity'];
-        $cursubtotalprice = ($rowData['monetary'] == 1 ? floor($cursubtotalprice): floor($cursubtotalprice*100)/100);
+        $cursubtotalprice = $rowData['monetary'] == 1 ? floor_plus($cursubtotalprice, 0): floor_plus($cursubtotalprice, 2);
         if ($rowData["detailRevisionNo"] >= 0) {
             $data = array(
                 'lngreceiveno' => 'lngreceiveno',
@@ -817,9 +817,9 @@ class updateInsertData extends estimateInsertData
 
         }
         
-        $curproductprice = ($rowData['monetary'] == 1 ? floor($rowData['price']*100)/100: floor($rowData['price']*10000)/10000);
+        $curproductprice = $rowData['monetary'] == 1 ? floor_plus($rowData['price'], 2): floor_plus($rowData['price'], 4);
         $cursubtotalprice = $curproductprice * $rowData['quantity'];
-        $cursubtotalprice = ($rowData['monetary'] == 1 ? floor($cursubtotalprice): floor($cursubtotalprice*100)/100);
+        $cursubtotalprice = $rowData['monetary'] == 1 ? floor_plus($cursubtotalprice, 0): floor_plus($cursubtotalprice, 2);
         if ($rowData["detailRevisionNo"] >= 0 && $updateFlag) {
 
             $data = array(

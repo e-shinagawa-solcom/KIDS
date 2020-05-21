@@ -1013,13 +1013,25 @@ function fncUpdateOrderDetail($aryUpdate, $aryDetail, $objDB)
 {
     // t_orderdetail更新
     for ($i = 0; $i < count($aryDetail); $i++) {
+        if ($aryDetail[$i]["strmoldno"] == "") {
+            // 金型NOの生成
+            $strmoldno = fncGetMoldNo( 
+                $aryUpdate["strProductCode"], 
+                $aryUpdate["strReviseCode"], 
+                $aryDetail[$i]["lngstocksubjectcode"], 
+                $aryDetail[$i]["lngstockitemcode"],
+                $objDB
+            );
+        } else {
+            $strmoldno = $aryDetail[$i]["strmoldno"];
+        }
         $aryDetailQuery = array();
         $aryDetailQuery[] = "UPDATE t_orderdetail SET";
         $aryDetailQuery[] = "   lngdeliverymethodcode = " . intval($aryDetail[$i]["lngdeliverymethodcode"]);
         $aryDetailQuery[] = "  ,lngsortkey = " . intval($aryDetail[$i]["lngsortkey"]);
         $aryDetailQuery[] = "  ,lngproductunitcode = " . intval($aryDetail[$i]["lngproductunitcode"]);
         $aryDetailQuery[] = "  ,strnote = '" . $aryDetail[$i]["strnote"]. "'";
-        $aryDetailQuery[] = "  ,strmoldno = '" . $aryDetail[$i]["strmoldno"] . "'";
+        $aryDetailQuery[] = "  ,strmoldno = '" . $strmoldno . "'";
         $aryDetailQuery[] = "WHERE lngorderno = " . intval($aryDetail[$i]["lngorderno"]);
         $aryDetailQuery[] = "AND   lngorderdetailno = " . intval($aryDetail[$i]["lngorderdetailno"]);
         $aryDetailQuery[] = "AND   lngrevisionno = " . intval($aryDetail[$i]["lngrevisionno"]);
@@ -1068,9 +1080,9 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
             foreach ($detail as $order) {
                 $aryOrderNo[] = $order["lngorderno"];
                 $detail = fncGetOrderDetail2($order["lngorderno"], $order["lngorderdetailno"], $order["lngrevisionno"], $objDB);
-                $detail["curproductprice"] = $detail["lngmonetaryunitcode"] == 1 ? floatval($detail['curproductprice']*100)/100 : floatval($detail['curproductprice']*10000) /10000;
+                $detail["curproductprice"] = $detail["lngmonetaryunitcode"] == 1 ? floor_plus($detail['curproductprice'], 2) : floor_plus($detail['curproductprice'], 4);
                 $cursubtotalprice = $detail["curproductprice"] * $detail["lngproductquantity"];
-                $detail["cursubtotalprice"] = $detail["lngmonetaryunitcode"] == 1 ? floor($cursubtotalprice) : floor($cursubtotalprice*100) /100;
+                $detail["cursubtotalprice"] = $detail["lngmonetaryunitcode"] == 1 ? floor_plus($cursubtotalprice, 0) : floor_plus($cursubtotalprice, 2);
                 $aryOrderDetailUpdate[] = $detail;
                 $curTotalPrice += $detail["cursubtotalprice"];
             }
@@ -1088,6 +1100,14 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $lngorderno = fncGetDateSequence($year, $month, "m_purchaseorder.strordercode", $objDB);
 //fncDebug("kids2.log", $lngorderno, __FILE__, __LINE__, "a");
                     $customer = fncGetCompany($aryOrderDetailUpdate[$i]["lngcustomercompanycode"], $objDB);
+                    if ($customer["lngorganizationcode"] == DEF_ORGANIZATION_FOREIGN ) {
+                        $strcompanyname = "TO: " . $customer["strcompanyname"];
+                        $straddress =  $customer["straddress4"] . $customer["straddress3"] . "<br>" . $customer["straddress2"] . $customer["straddress1"];
+                    } else {
+                        $strcompanyname = $customer["strcompanyname"] ." 様";
+                        $straddress =  $customer["straddress1"] . $customer["straddress2"] . "<br>" . $customer["straddress3"] . $customer["straddress4"];
+                    }
+
                     $delivery = fncGetCompany($aryOrderDetailUpdate[$i]["lngdeliveryplacecode"], $objDB);
                     $payconditioncode = $aryOrder["lngpayconditioncode"];
                     $paycondition = fncGetPayCondition($payconditioncode, $objDB);
@@ -1129,8 +1149,8 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
                     $aryQuery[] = "  ," . $lngrevisionno;
                     $aryQuery[] = "  ,'" . $lngorderno . "'";
                     $aryQuery[] = "  ," . $customer["lngcompanycode"];
-                    $aryQuery[] = "  ,'" . $customer["strcompanydisplayname"] . "'";
-                    $aryQuery[] = "  ,'" . $customer["straddress1"] . $customer["straddress2"] . $customer["straddress3"] . "'";
+                    $aryQuery[] = "  ,'" . $strcompanyname . "'";
+                    $aryQuery[] = "  ,'" . $straddress . "'";
                     $aryQuery[] = "  ,'" . $customer["strtel1"] . "'";
                     $aryQuery[] = "  ,'" . $customer["strfax1"] . "'";
                     $aryQuery[] = "  ,'" . $aryOrderDetailUpdate[$i]["strproductcode"] . "'";

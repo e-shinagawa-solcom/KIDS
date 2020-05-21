@@ -54,6 +54,14 @@
 	} else {
 		$aryData["Search_visibility"] = 'style="visibility: hidden"';
 	}
+	
+	// 1803 金型一覧検索
+	if ( fncCheckAuthority( DEF_FUNCTION_MM6, $objAuth ) )
+	{
+		$aryData["Search_List_visibility"] = 'style="visibility: visible"';
+	} else {
+		$aryData["Search_List_visibility"] = 'style="visibility: hidden"';
+	}
 	$objDB->close();
 
 	echo fncGetReplacedHtmlWithBase("base_mold.html", "mm/select-function/parts.tmpl", $aryData ,$objAuth );

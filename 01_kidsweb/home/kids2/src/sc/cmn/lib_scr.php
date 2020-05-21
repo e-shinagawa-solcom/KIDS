@@ -661,7 +661,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         $strDisplayValue = htmlspecialchars(number_format($aryDetail[$i]["curproductprice"], 4));
         $detail_body_html .= "<td class='forEdit detailProductPrice' style='text-align:right;'>" . $strDisplayValue . "</td>";
         //税抜金額
-        $strDisplayValue = htmlspecialchars(number_format($aryDetail[$i]["cursubtotalprice"]));
+        $strDisplayValue = htmlspecialchars(number_format($aryDetail[$i]["cursubtotalprice"], 4));
         $detail_body_html .= "<td class='forEdit detailSubTotalPrice' style='text-align:right;'>" . $strDisplayValue . "</td>";
 
         $detail_body_html .= "</tr>";
@@ -1870,7 +1870,6 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
 
             }
         } else if ($lngSlipKindCode == 3) {
-
             // フィールド名取得
             $aryKeys = array_keys($aryDetail[0]);
             $aryTmpDetail = array();
@@ -1907,7 +1906,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["strcustomerfax"] = "Fax.:" . $aryCustomerCompany["strfax1"] . " " . $aryCustomerCompany["strfax2"];
 
             // 合計金額
-            $curTotalPrice = ($lngmonetaryunitcode == 1 ? "&yen; " : $strmonetaryunitsign) . " " . number_format($aryHeader["curtotalprice"], 2, '.', ',');
+            $curTotalPrice = ($lngmonetaryunitcode == 1 ? "&yen; " : $strmonetaryunitsign) . " " . number_format(floor_plus($aryHeader["curtotalprice"],2), 2, '.', ',');
 
             $aryParts["curtotalprice"] = $curTotalPrice;
             $aryParts["strpaymentmethodname"] = $aryHeader["strpaymentmethodname"];
@@ -1957,8 +1956,8 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
                     $aryTmpDetail[$j]["strproductenglishname" . ($index)] = $aryTmpDetail[$j]["strproductenglishname" . ($index)];
                     $aryTmpDetail[$j]["lngproductquantity" . ($index)] = number_format($aryTmpDetail[$j]["lngproductquantity" . ($index)]);
                     $aryTmpDetail[$j]["strproductunitname" . ($index)] = $aryTmpDetail[$j]["strproductunitname" . ($index)];
-                    $aryTmpDetail[$j]["curproductprice" . ($index)] = number_format($aryTmpDetail[$j]["curproductprice" . ($index)], 4, '.', ',');
-                    $aryTmpDetail[$j]["cursubtotalprice" . ($index)] = number_format($aryTmpDetail[$j]["cursubtotalprice" . ($index)], 2, '.', ',');
+                    $aryTmpDetail[$j]["curproductprice" . ($index)] = number_format(floor_plus($aryTmpDetail[$j]["curproductprice" . ($index)],4), 4, '.', ',');
+                    $aryTmpDetail[$j]["cursubtotalprice" . ($index)] = number_format(floor_plus($aryTmpDetail[$j]["cursubtotalprice" . ($index)],2), 2, '.', ',');
                     $aryTmpDetail[$j]["strsalesclassname" . ($index)] = $aryTmpDetail[$j]["strsalesclassname" . ($index)];
                     $aryTmpDetail[$j]["strnote" . ($index)] = $aryTmpDetail[$j]["strnote" . ($index)];
 

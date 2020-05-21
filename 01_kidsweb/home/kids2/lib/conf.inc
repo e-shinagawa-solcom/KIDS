@@ -440,6 +440,7 @@ define ( "DEF_FUNCTION_MM2", 1802 );	//金型管理(検索)
 define ( "DEF_FUNCTION_MM3", 1803 );	//金型管理(詳細)
 define ( "DEF_FUNCTION_MM4", 1804 );	//金型管理(修正)
 define ( "DEF_FUNCTION_MM5", 1805 );	//金型管理(削除)
+define ( "DEF_FUNCTION_MM6", 1806 );	//金型管理(一覧検索)
 
 define ( "DEF_FUNCTION_MR0", 1900 );	//金型帳票管理
 define ( "DEF_FUNCTION_MR1", 1901 );	//金型帳票管理(登録)

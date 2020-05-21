@@ -2,6 +2,9 @@
 // regist.js
 //
 jQuery(function ($) {
+
+    var lockId = "lockId";
+
     // ウィンドウクローズ処理
     window.onbeforeunload = unLock;
 
@@ -15,7 +18,7 @@ jQuery(function ($) {
     selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
     // テーブル行クリックイベントの設定
     selectRow('', $("#tableB_no"), $("#tableB"), '');
-    
+
     resetTableRowid($('#tableB_no'));
 
     tableBSort();
@@ -136,7 +139,7 @@ jQuery(function ($) {
                 lngOrderDetailNo: $(tr).children('.detailOrderDetailNo').text(),
                 lngSortKey: i + 1,
                 lngDeliveryMethodCode: $(tr).find('[name="optDelivery"] option:selected').val(),
-                strDeliveryMethodName: $(tr).find('[name="optDelivery"] option:selected').text(),                
+                strDeliveryMethodName: $(tr).find('[name="optDelivery"] option:selected').text(),
                 lngProductUnitCode: $(tr).find('[name="optProductUnit"] option:selected').val(),
                 strProductUnitName: $(tr).find('[name="optProductUnit"] option:selected').text(),
                 lngOrderNo: $(tr).find('.detailOrderNo').text(),
@@ -282,7 +285,13 @@ jQuery(function ($) {
     });
 
     $('#decideRegist').on('click', function () {
+
+        // 画面操作を無効する
+        lockScreen(lockId);
+
         if (!validationCheck2()) {
+            // 画面操作を有効にする
+            unlockScreen("lockId");
             return false;
         }
         $.ajax({
@@ -310,6 +319,8 @@ jQuery(function ($) {
         }).fail(function (error) {
             console.log("fail");
             console.log(error);
+            // 画面操作を有効にする
+            unlockScreen("lockId");
         });
     });
     $('#clear').on('click', function () {
@@ -347,5 +358,44 @@ jQuery(function ($) {
             $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
             $(this).find(".detailNote").find('input:text').prop('disabled', false);
         });
+    }
+
+
+    /*
+     * 画面操作を無効にする
+     */
+    function lockScreen(id) {
+
+        /*
+         * 現在画面を覆い隠すためのDIVタグを作成する
+         */
+        var divTag = $('<div />').attr("id", id);
+
+        /*
+         * スタイルを設定
+         */
+        divTag.css("z-index", "999")
+            .css("position", "absolute")
+            .css("top", "0px")
+            .css("left", "0px")
+            .css("right", "0px")
+            .css("bottom", "0px")
+            .css("background-color", "gray")
+            .css("opacity", "0.8");
+
+        /*
+         * BODYタグに作成したDIVタグを追加
+         */
+        $('body').append(divTag);
+    }
+
+    /*
+     * 画面操作無効を解除する
+     */
+    function unlockScreen(id) {
+        /*
+         * 画面を覆っているタグを削除する
+         */
+        $("#" + id).remove();
     }
 });

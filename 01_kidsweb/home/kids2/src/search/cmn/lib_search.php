@@ -300,7 +300,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , mp.lngpurchaseorderno as lngPkNo";
         $aryQuery[] = "  , mp.lngrevisionno as lngRevisionNo";
         $aryQuery[] = "  , mp.strrevisecode as strReviseCode";
-        $aryQuery[] = "  , mp.strordercode as strOrderCode";
+        $aryQuery[] = "  , mp.strordercode ||  '-' || lpad(to_char(mp.lngrevisionno, 'FM99'), 2, '0') as strOrderCode";
         $aryQuery[] = "  , mp.strordercode as strCode";
         $aryQuery[] = "  , to_char(mp.dtmexpirationdate, 'YYYY/MM/DD') as dtmExpirationDate";
         $aryQuery[] = "  , mp.strproductcode || '_' || mp.strrevisecode as strProductCode";
@@ -339,7 +339,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  left join m_company mc_delivary ";
         $aryQuery[] = "    on mc_delivary.lngcompanycode = mp.lngdeliveryplacecode ";
         $aryQuery[] = "WHERE";
-        $aryQuery[] = "  mp.strordercode = '" . $strCode . "' ";
+        $aryQuery[] = "  mp.lngpurchaseorderno = '" . $strCode . "' ";
         $aryQuery[] = "  AND mp.lngrevisionno <> " . $lngRevisionNo . " ";
         $aryQuery[] = "  AND mp.lngrevisionno >= 0 ";
         $aryQuery[] = "ORDER BY";
@@ -448,7 +448,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "WHERE";
         $aryQuery[] = "  od.lngorderno = o.lngorderno ";
         $aryQuery[] = "  AND od.lngRevisionNo = o.lngRevisionNo ";
-        $aryQuery[] = "  AND o.strordercode = '" . $strCode . "'";
+        $aryQuery[] = "  AND o.lngorderno = '" . $strCode . "'";
         $aryQuery[] = "  AND od.lngOrderDetailNo = '" . $lngDetailNo . "'";
         $aryQuery[] = "  AND o.lngRevisionNo <>  " . $lngRevisionNo . "";
         $aryQuery[] = "  AND o.lngRevisionNo >= 0 ";
@@ -543,7 +543,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "WHERE";
         $aryQuery[] = " rd.lngReceiveNo = r.lngReceiveNo ";
         $aryQuery[] = " AND rd.lngRevisionNo = r.lngRevisionNo ";
-        $aryQuery[] = " AND r.strReceiveCode = '" . $strCode . "'";
+        $aryQuery[] = " AND r.lngReceiveNo = '" . $strCode . "'";
         $aryQuery[] = " AND rd.lngReceiveDetailNo = '" . $lngDetailNo . "'";
         $aryQuery[] = " AND r.lngRevisionNo <> " . $lngRevisionNo . "";
         $aryQuery[] = " AND r.lngRevisionNo >= 0 ";
@@ -637,7 +637,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "    ) as sd ";
         $aryQuery[] = "WHERE";
         $aryQuery[] = " sd.lngSalesNo = s.lngSalesNo ";
-        $aryQuery[] = " AND s.strSalesCode = '" . $strCode . "'";
+        $aryQuery[] = " AND s.lngSalesNo = '" . $strCode . "'";
         $aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
         $aryQuery[] = " AND s.lngRevisionNo <> " . $lngRevisionNo . " ";
         $aryQuery[] = " AND s.lngRevisionNo >= 0 ";
@@ -746,7 +746,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  ) as sd ";
         $aryQuery[] = "    on sd.lngStockNo = s.lngStockNo ";
         $aryQuery[] = "WHERE";
-        $aryQuery[] = " s.strStockCode = '" . $strCode . "'";
+        $aryQuery[] = " s.lngStockNo = '" . $strCode . "'";
         $aryQuery[] = " AND s.lngrevisionno <> " . $lngRevisionNo . " ";
         $aryQuery[] = " AND s.lngRevisionNo >= 0 ";
         $aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
@@ -805,7 +805,7 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "    ON inv.lnginvoiceno = inv_d.lnginvoiceno ";
         $aryQuery[] = "WHERE";
         $aryQuery[] = "  inv.bytinvalidflag = FALSE ";
-        $aryQuery[] = "  AND inv.strinvoicecode = '" . $strCode . "'";
+        $aryQuery[] = "  AND inv.lnginvoiceno = '" . $strCode . "'";
         $aryQuery[] = "  AND inv.lngrevisionno <> " . $lngRevisionNo . "";
         $aryQuery[] = "  AND inv.lngRevisionNo >= 0 ";
         $aryQuery[] = "ORDER BY";
@@ -1107,7 +1107,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "SELECT";
         $aryQuery[] = "  sd.lngSalesNo";
         $aryQuery[] = "  , sd.lngSalesDetailNo";
-        $aryQuery[] = "  , sd.lngSalesDetailNo as lngdetailno";
+        $aryQuery[] = "  , row_number() OVER (ORDER BY sd.lngSalesDetailNo) AS lngdetailno";
         $aryQuery[] = "  , p.strProductCode || '_' || p.strrevisecode as strProductCode";
         $aryQuery[] = "  , mg.strGroupDisplayCode";
         $aryQuery[] = "  , mg.strGroupDisplayName";
@@ -1169,7 +1169,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
     } else if ($type == 'slip') { //納品書
         $aryQuery[] = "select";
         $aryQuery[] = "  sd.lngSlipDetailNo";
-        $aryQuery[] = "  , sd.lngSlipDetailNo as lngdetailno";
+        $aryQuery[] = "  , row_number() OVER (ORDER BY sd.lngSlipDetailNo) AS lngdetailno";
         // $aryQuery[] = "  , mrs.strReceiveStatusName";
         $aryQuery[] = "  , sd.strCustomerSalesCode";
         $aryQuery[] = "  , sd.strGoodsCode";
@@ -1461,19 +1461,19 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                         $imgHistory = $doc->createElement("img");
                         $imgHistory->setAttribute("src", "/img/type01/cmn/seg/history_open_off.gif");
                         if ($type == 'so') {
-                            $imgHistory->setAttribute("id", $record["strcode"] . "_" . $record["lngdetailno"]);
+                            $imgHistory->setAttribute("id", $record["lngreceiveno"] . "_" . $record["lngdetailno"]);
                         } else if ($type == 'sc') {
-                            $imgHistory->setAttribute("id", $record["strsalescode"]);
+                            $imgHistory->setAttribute("id", $record["lngsalesno"]);
                         } else if ($type == 'pc') {
-                            $imgHistory->setAttribute("id", $record["strstockcode"]);
+                            $imgHistory->setAttribute("id", $record["lngstockno"]);
                         } else if ($type == 'slip') {
                             $imgHistory->setAttribute("id", $record["lngslipno"]);
                         } else if ($type == 'inv') {
-                            $imgHistory->setAttribute("id", $record["strinvoicecode"]);
+                            $imgHistory->setAttribute("id", $record["lnginvoiceno"]);
                         } else if ($type == 'po') {
-                            $imgHistory->setAttribute("id", $record["strordercode"] . "_" . $record["lngdetailno"]);
+                            $imgHistory->setAttribute("id", $record["lngorderno"] . "_" . $record["lngdetailno"]);
                         } else if ($type == 'purchaseorder') {
-                            $imgHistory->setAttribute("id", $record["strordercode"]);
+                            $imgHistory->setAttribute("id", $record["lngpurchaseorderno"]);
                         }
                         $imgHistory->setAttribute("lngrevisionno", $record["lngrevisionno"]);
                         $imgHistory->setAttribute("rownum", $index);
@@ -2136,20 +2136,20 @@ function fncSetBgColor($type, $strCode, $isMaxData, $objDB)
         $columnname = 'lngreceiveno';
     } else if ($type == 'sc') { // 売上
         $tablename = 'm_sales';
-        $columnname = 'strsalescode';
+        $columnname = 'lngsalesno';
     } else if ($type == 'pc') { // 仕入
         $tablename = 'm_stock';
-        $columnname = 'strstockcode';
+        $columnname = 'lngstockno';
     } else if ($type == 'inv') {
         $tablename = 'm_invoice';
-        $columnname = 'strinvoicecode';
+        $columnname = 'lnginvoiceno';
     }
     if ($type == 'purchaseorder') {
         $aryQuery[] = "SELECT";
-        $aryQuery[] = " min(lngrevisionno) lngrevisionno, strordercode";
+        $aryQuery[] = " min(lngrevisionno) lngrevisionno, lngpurchaseorderno";
         $aryQuery[] = "FROM m_purchaseorder";
-        $aryQuery[] = "WHERE strordercode ='" . $columnvalue . "' ";
-        $aryQuery[] = "group by strordercode";
+        $aryQuery[] = "WHERE lngpurchaseorderno ='" . $columnvalue . "' ";
+        $aryQuery[] = "group by lngpurchaseorderno";
     } else if ($type == 'estimate') {
         $aryQuery[] = "SELECT";
         $aryQuery[] = " min(lngrevisionno) lngrevisionno, lngestimateno, bytinvalidflag";

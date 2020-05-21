@@ -627,7 +627,7 @@ abstract class estimateRowController {
 //fncDebug("view.log", "price:" . $price, __FILE__, __LINE__, "a");
 
         // 小数点第4桁以下切り捨て
-        $price = floor($price * pow(10, 4)) / pow(10, 4);
+        $price = floor_plus($price, 4);
         $calculatedSubtotal = $price * $quantity;
 
         // 再計算結果で置換
@@ -636,7 +636,7 @@ abstract class estimateRowController {
         
         $conversionRate = $this->conversionRate; // マスター上の通貨レート
         $calculatedSubtotal *= $conversionRate;
-        $calculatedSubtotal = floor($calculatedSubtotal * pow(10, 2)) / pow(10, 2);
+        $calculatedSubtotal = floor_plus($calculatedSubtotal, 2);
         $this->calculatedSubtotal = $calculatedSubtotal;
         $this->calculatedSubtotalJP = $calculatedSubtotal;
 

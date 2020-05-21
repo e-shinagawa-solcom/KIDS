@@ -262,7 +262,7 @@ $thead->appendChild($trHead);
 // 検索結果件数分走査
 foreach ($records as $i => $record) {
     $index = $index + 1;
-    $bgcolor = fncSetBgColor('purchaseorder', $record["strordercode"], true, $objDB);
+    $bgcolor = fncSetBgColor('purchaseorder', $record["lngpurchaseorderno"], true, $objDB);
 
     $detailData = fncGetDetailData('purchaseorder', $record["lngpurchaseorderno"], $record["lngrevisionno"], $objDB);
 fncDebug("kids2.log", sprintf("detail count=%d", count($detailData)), __FILE__, __LINE__, "a");
@@ -275,7 +275,7 @@ fncDebug("kids2.log", sprintf("detail count=%d", count($detailData)), __FILE__, 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 
-    $trBody->setAttribute("id", $record["strordercode"]);
+    $trBody->setAttribute("id", $record["lngpurchaseorderno"]);
     $trBody->setAttribute("before-click-bgcolor", $bgcolor);
 
     $bgcolor = "background-color: " .$bgcolor . ";";

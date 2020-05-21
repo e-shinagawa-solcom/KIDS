@@ -90,3 +90,11 @@ function getDetailName(name, rowno)
 //    alert(ret);
     return ret;
 }
+
+
+$(window).on("beforeunload", function (e) {
+    // 親ウィンドウのロックを解除する
+    if (window.opener.$('#lockId').length) {
+        window.opener.$('#lockId').remove();
+    }
+});

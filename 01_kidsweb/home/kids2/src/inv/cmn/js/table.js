@@ -98,9 +98,19 @@ $(function () {
     var curLastMonthBalance = Number(val);
     // 差引合計額
     // 前月請求残額 + 当月請求額 + 消費税
-    var noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice;
-    $('input[name="notaxcurthismonthamount"]').val(convertNumber(Math.round(noTaxMonthAmount))).change();
-    $(this).val(convertNumber(val));
+    var noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice + 0.00001;
+    var fracctiondigits = 0
+    if ($('input[name="lngmonetaryunitcode"]').val() == '1') {
+      fracctiondigits = 0;
+      noTaxMonthAmount = Math.floor(noTaxMonthAmount);
+      val = Math.floor(val);
+    } else {
+      noTaxMonthAmount = Math.floor((noTaxMonthAmount * 100)) / 100;
+      val = Math.floor((val * 100)) / 100;
+      fracctiondigits = 2;
+    }
+    $('input[name="notaxcurthismonthamount"]').val(convertNumber(noTaxMonthAmount, fracctiondigits)).change();
+    $(this).val(convertNumber(val, fracctiondigits));
   });
   /**
    * ----------------------------------------------------------------------------------------------------
@@ -677,17 +687,19 @@ $(function () {
       taxPrice = (thisMonthAmount * (tax * 100)) / 100;
       // 差引合計額
       // 前月請求残額 + 当月請求額 + 消費税
-      noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice;
+      noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice + 0.00001;
       // 結果を繁栄
       var fracctiondigits = 0
       if ($('input[name="lngmonetaryunitcode"]').val() == '1') {
         fracctiondigits = 0;
+        noTaxMonthAmount = Math.floor(noTaxMonthAmount);
       } else {
+        noTaxMonthAmount = Math.floor((noTaxMonthAmount * 100)) / 100;
         fracctiondigits = 2;
       }
       $('input[name="curthismonthamount"]').val(convertNumber(thisMonthAmount, fracctiondigits)).change();
       $('input[name="curtaxprice"]').val(convertNumber(Math.round(taxPrice), 0)).change();
-      $('input[name="notaxcurthismonthamount"]').val(convertNumber(Math.round(noTaxMonthAmount), fracctiondigits)).change();
+      $('input[name="notaxcurthismonthamount"]').val(convertNumber(noTaxMonthAmount, fracctiondigits)).change();
     };
     var result = setTimeout(chargetern, 500);
 

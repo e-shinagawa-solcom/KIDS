@@ -428,9 +428,9 @@ class registInsertData extends estimateInsertData {
     protected function registTableReceiveDetail($rowData, $receiveNo, $receiveDetailNo, $estimateDetailNo) {
         // テーブルの設定 
         $table = 't_receivedetail';
-        $curproductprice = ($rowData['monetary'] == 1 ? floor($rowData['price']*100)/100: floor($rowData['price']*10000)/10000);
+        $curproductprice = $rowData['monetary'] == 1 ? floor_plus($rowData['price'], 2): floor_plus($rowData['price'], 4);
         $cursubtotalprice = $curproductprice * $rowData['quantity'];
-        $cursubtotalprice = ($rowData['monetary'] == 1 ? floor($cursubtotalprice): floor($cursubtotalprice*100)/100);
+        $cursubtotalprice = $rowData['monetary'] == 1 ? floor_plus($cursubtotalprice, 0): floor_plus($cursubtotalprice, 2);
         $data = array(
             'lngreceiveno' => $receiveNo,
             'lngreceivedetailno' => $receiveDetailNo,
@@ -525,9 +525,9 @@ class registInsertData extends estimateInsertData {
         else{
             $curproductprice = $rowData['price'];
         }
-        $curproductprice = ($rowData['monetary'] == 1 ? floor($curproductprice*100)/100: floor($curproductprice*10000)/10000);
+        $curproductprice = $rowData['monetary'] == 1 ? floor_plus($curproductprice, 2): floor_plus($curproductprice, 4);
         $cursubtotalprice = $curproductprice * $rowData['quantity'];
-        $cursubtotalprice = ($rowData['monetary'] == 1 ? floor($cursubtotalprice): floor($cursubtotalprice*100)/100);
+        $cursubtotalprice = $rowData['monetary'] == 1 ? floor_plus($cursubtotalprice, 0): floor_plus($cursubtotalprice, 2);
         $data = array(
             'lngorderno' => $orderNo,
             'lngorderdetailno' => $orderDetailNo,

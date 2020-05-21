@@ -161,19 +161,6 @@ for ($i = 0; $i < count($_POST); $i++) {
 }
 
 // 明細行処理 ===========================================================================================
-// 金型NOの生成
-for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
-    if ($_POST["aryDetail"][$i]["strMoldNo"] == "") {
-        $strmoldno = fncGetMoldNo( 
-            $_POST["strProductCode"], 
-            $_POST["strReviseCode"], 
-            $_POST["aryDetail"][$i]["lngStockSubjectCode"], 
-            $_POST["aryDetail"][$i]["lngStockItemCode"],
-            $objDB
-        );
-        $_POST["aryDetail"][$i]["strMoldNo"] = $strmoldno;
-    }
-}
 // 明細行のhidden生成
 if (is_array($_POST["aryDetail"])) {
     $aryData["strDetailHidden"] = fncDetailHidden($_POST["aryDetail"], "insert", $objDB);

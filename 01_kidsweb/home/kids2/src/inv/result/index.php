@@ -207,7 +207,7 @@ $thead->appendChild($trHead);
 foreach ($aryResult as $i => $record) {
     $index = $index + 1;
 
-    $bgcolor = fncSetBgColor('inv', $record["strinvoicecode"], true, $objDB);
+    $bgcolor = fncSetBgColor('inv', $record["lnginvoiceno"], true, $objDB);
 
     $detailData = array();
     $rowspan == 0;
@@ -222,7 +222,7 @@ foreach ($aryResult as $i => $record) {
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
 
-    $trBody->setAttribute("id", $record["strinvoicecode"]);
+    $trBody->setAttribute("id", $record["lnginvoiceno"]);
     $trBody->setAttribute("before-click-bgcolor", $bgcolor);
 
     $bgcolor = "background-color: " .$bgcolor . ";";

@@ -41,6 +41,7 @@
 
 		$aryData["lngSubFlag_mm_0"]		= 1;	// 金型履歴登録
 		$aryData["lngSubFlag_mm_1"]		= 1;	// 金型履歴検索
+		$aryData["lngSubFlag_mm_2"]		= 1;	// 金型一覧検索
 
 		$aryData["lngSubFlag_mr_0"]		= 1;	// 金型帳票登録
 		$aryData["lngSubFlag_mr_1"]		= 1;	// 金型帳票検索
@@ -276,6 +277,12 @@
 		if( !fncCheckAuthority( DEF_FUNCTION_MM2, $objAuth ) )
 		{
 			$aryData["lngSubFlag_mm_1"] = 0;
+		}
+
+		// 1806 金型一覧検索
+		if( !fncCheckAuthority( DEF_FUNCTION_MM6, $objAuth ) )
+		{
+			$aryData["lngSubFlag_mm_2"] = 0;
 		}
 
 		//-------------------------------------------------------------------------

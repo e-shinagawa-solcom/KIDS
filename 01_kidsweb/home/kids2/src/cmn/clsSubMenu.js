@@ -177,6 +177,7 @@ function fncInitArySubMenu() {
 
 				g_arySubMenu['mm'][0] = '金型履歴登録';
 				g_arySubMenu['mm'][1] = '金型履歴検索';
+				g_arySubMenu['mm'][2] = '金型一覧検索';
 
 				g_arySubMenu['mr'][0] = '金型帳票登録';
 				g_arySubMenu['mr'][1] = '金型帳票検索';
