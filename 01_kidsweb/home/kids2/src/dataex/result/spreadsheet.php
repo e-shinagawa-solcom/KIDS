@@ -1659,6 +1659,19 @@ echo "\n";
 				}
 				return $objFormat["numberPercent"];
 				break;
+			case 'numberCalcPercent':
+				if(!isset($objFormat["numberCalcPercent"]))
+				{
+					$objFormat["numberCalcPercent"] =& $workbook->addFormat();
+					fncSpreadSheetExcelFormatSetting($objFormat["numberCalcPercent"], "detail");
+					fncSpreadSheetExcelFormatSetting($objFormat["numberCalcPercent"], "setFontFamilyMsGothic");
+					fncSpreadSheetExcelFormatSetting($objFormat["numberCalcPercent"], "setSize9");
+					fncSpreadSheetExcelFormatSetting($objFormat["numberCalcPercent"], "setHAlignRight");
+					fncSpreadSheetExcelFormatSetting($objFormat["numberCalcPercent"], "setNumFormatnumberPercent");
+					fncSpreadSheetExcelFormatSetting($objFormat["numberCalcPercent"], "setFgColor40");
+				}
+				return $objFormat["numberCalcPercent"];
+				break;
 				
 //by kou 20090611 目立つ列に背景つける				
 			case 'numberCalcPoint':

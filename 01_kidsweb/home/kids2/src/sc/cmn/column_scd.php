@@ -44,7 +44,7 @@ $arySearchTableTytle["btnDelete"]				= "削除";
 // ヘッダ部
 $aryHeadColumnNames["lngSlipNo"]			    = "納品伝票番号";
 $aryHeadColumnNames["lngRevisionNo"]			= "リビジョン番号";
-$aryHeadColumnNames["strSlipCode"]		    	= "納品書ＮＯ.";
+$aryHeadColumnNames["strSlipCode"]		    	= "KWGNO.";
 $aryHeadColumnNames["strCustomer"]	        	= "顧客";
 $aryHeadColumnNames["dtmDeliveryDate"]	    	= "納品日";
 $aryHeadColumnNames["strDeliveryPlaceName"] 	= "納品場所";

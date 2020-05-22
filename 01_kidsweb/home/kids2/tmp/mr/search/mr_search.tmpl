@@ -41,6 +41,7 @@
     <!-- キーバインド -->
 	<script src="/mr/search/js/key-bind.js" defer></script>
     <script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
+    <script src="/search/cmn/js/date.js" defer=""></script>
 </header3>
 
 <bodyonload>
@@ -140,8 +141,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">依頼日</span>
-                    FROM <input name="From_RequestDate" class="TxtStyle05L" type="text">
-                    TO <input name="To_RequestDate" class="TxtStyle05L" type="text">
+                    FROM <input name="From_RequestDate" class="TxtStyle05L is-from-date" type="text">
+                    TO <input name="To_RequestDate" class="TxtStyle05L is-date" type="text">
                 </span>
             </div>
             <div class="regist-line">
@@ -290,8 +291,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">希望日</span>
-                    FROM <input name="From_ActionRequestDate" class="TxtStyle05L" type="text">
-                    TO <input name="To_ActionRequestDate" class="TxtStyle05L" type="text">
+                    FROM <input name="From_ActionRequestDate" class="TxtStyle05L is-from-date" type="text">
+                    TO <input name="To_ActionRequestDate" class="TxtStyle05L is-date" type="text">
                 </span>
             </div>
             <div class="regist-line">
@@ -380,8 +381,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">返却予定日</span>
-                    FROM <input name="From_ReturnSchedule" class="TxtStyle05L" type="text">
-                    TO <input name="To_ReturnSchedule" class="TxtStyle05L" type="text">
+                    FROM <input name="From_ReturnSchedule" class="TxtStyle05L is-from-date" type="text">
+                    TO <input name="To_ReturnSchedule" class="TxtStyle05L is-date" type="text">
                 </span>
             </div>
             <div class="regist-line">
@@ -391,8 +392,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">登録日</span>
-                    FROM <input class="TxtStyle05L" name="From_Created" type="text">
-                    TO <input class="TxtStyle05L" name="To_Created" type="text">
+                    FROM <input class="TxtStyle05L is-from-date" name="From_Created" type="text">
+                    TO <input class="TxtStyle05L is-date" name="To_Created" type="text">
                 </span>
             </div>
             <div class="regist-line">
@@ -414,8 +415,8 @@
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">更新日</span>
-                    FROM <input class="TxtStyle05L" name="From_Updated" type="text">
-                    TO <input class="TxtStyle05L" name="To_Updated" type="text">
+                    FROM <input class="TxtStyle05L is-from-date" name="From_Updated" type="text">
+                    TO <input class="TxtStyle05L is-date" name="To_Updated" type="text">
                 </span>
             </div>
             <div class="regist-line">

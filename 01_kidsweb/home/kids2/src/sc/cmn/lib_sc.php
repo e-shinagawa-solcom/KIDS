@@ -159,9 +159,11 @@ function fncGetMaxSalesSQL($displayColumns, $searchColumns, $from, $to, $searchV
         array_key_exists("strProductName", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = "UPPER(p.strproductname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
+        // $aryQuery[] = "UPPER(p.strproductname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
+        $aryQuery[] = "(sf_translate_case(p.strproductname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductName"])."') || '%'";
         $aryQuery[] = " OR ";
-        $aryQuery[] = "UPPER(p.strproductenglishname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
+        // $aryQuery[] = "UPPER(p.strproductenglishname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
+        $aryQuery[] = "sf_translate_case(p.strproductenglishname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductName"])."') || '%')";
 
     }
 

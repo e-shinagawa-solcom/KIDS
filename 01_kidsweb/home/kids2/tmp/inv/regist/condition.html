@@ -47,7 +47,20 @@
                     $('input[name="strCustomerName"]').val(parentCustomerName);
                     $('input[name="dtmChargeternStart"]').val(window.opener.$('input[name="dtmchargeternstart"]').val());
                     $('input[name="dtmChargeternEnd"]').val(window.opener.$('input[name="dtmchargeternstart"]').val());
+
+                    if (window.opener.$('input[name="strMode"]').val() == "renewPrev") {
+                        var lngmonetaryunitcode = window.opener.$('input[name="lngmonetaryunitcode"]').val();
+                        $("select[name='lngMoneyClassCode']").val(lngmonetaryunitcode);
+                        var lngtaxclasscode = window.opener.$('input[name="lngtaxclasscode"]').val();
+                        $("select[name='lngTaxClassCode']").val(lngtaxclasscode);
+                        // 編集不可設定
+                        $("select[name='lngMoneyClassCode']").prop('disabled', true);
+                        $("select[name='lngTaxClassCode']").prop('disabled', true);
+                        $('input[name="lngCustomerCode"]').prop('disabled', true);
+                    }
                 }
+
+
 
             });
         </script>
@@ -77,15 +90,14 @@
                     <input class="disTxt46L" name="strCustomerName" type="text" disabled>
                     <span>
                         <a href="#">
-                            <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif"
-                                alt="msw">
+                            <img class="msw-button button" invokeMSWName="msw-customer" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                         </a>
                     </span>
                 </span>
             </div>
             <div class="regist-line">
                 <span class="regist-label">
-                    <span class="regist-label__text">納品書NO.</span>
+                    <span class="regist-label__text">KWGNO.</span>
                     <input class="Txt59L" name="strSlipCode" type="text" maxlength="50">
                 </span>
             </div>
@@ -104,8 +116,7 @@
                     <input class="disTxt46L" name="strDeliveryPlaceName" type="text" disabled>
                     <span>
                         <a href="#">
-                            <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif"
-                                alt="msw">
+                            <img class="msw-button button" invokeMSWName="msw-location" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                         </a>
                     </span>
                 </span>
@@ -135,8 +146,7 @@
                     <input class="disTxt46L" name="strInChargeUserName" type="text" disabled>
                     <span>
                         <a href="#">
-                            <img class="msw-button button" invokeMSWName="msw-inchargeuser" src="/img/type01/msw/cmn/open_off_bt.gif"
-                                alt="msw">
+                            <img class="msw-button button" invokeMSWName="msw-inchargeuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                         </a>
                     </span>
                 </span>
@@ -148,8 +158,7 @@
                     <input class="disTxt46L" name="lngInputUserName" type="text" disabled>
                     <span>
                         <a href="#">
-                            <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif"
-                                alt="msw">
+                            <img class="msw-button button" invokeMSWName="msw-inputuser" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw">
                         </a>
                     </span>
                 </span>

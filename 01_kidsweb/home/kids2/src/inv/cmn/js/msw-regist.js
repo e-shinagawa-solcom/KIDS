@@ -1,11 +1,4 @@
 (function () {
-    // $('body').on('keydown', function (e) {
-    //     console.log('enter');
-    //     if (e.which == 13) {
-    //         $('#search-condition').click();
-    //     }
-    // }
-    // );
     // フォームサブミット抑止
     $('document').on('submit', 'form', function (e) {
         e.preventDefault();
@@ -265,24 +258,6 @@
         return false;
     };
 
-    // // 請求月のセレクトBOX
-    // function setMonthSelectBox() {
-    //     var today = new Date();
-    //     var mm = today.getMonth() + 1;
-    //     //月
-    //     var month = "<select>";
-    //     for (var i = 1; i <= 12; i++) {
-    //         if (i == mm) {
-    //             month += '<option value=\"' + i + '\" selected >' + i + '</option>';
-    //         } else {
-    //             month += '<option value=\"' + i + '\" >' + i + '</option>';
-    //         }
-    //     }
-    //     month += '</select>';
-    //     $('#invoiceMonth').html(month + "月");
-    // };
-    // setMonthSelectBox();
-
     // 納品書明細検索ボタン押下処理
     $('#search-condition').on({
         'click': function () {
@@ -361,7 +336,7 @@
                     inChargeUserCode: $('input[name="lngInChargeUserCode"]').val(),
                     inChargeUserName: $('input[name="strInChargeUserName"]').val(),
                     inputUserCode: $('input[name="lngInputUserCode"]').val(),
-                    inputUserName: $('input[name="lngInputUserName"]').val()
+                    inputUserName: $('input[name="lngInputUserName"]').val(),
                 }
             }
 

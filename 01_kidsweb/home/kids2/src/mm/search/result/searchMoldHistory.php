@@ -319,13 +319,13 @@ if (array_key_exists("strproductcode", $searchColumns) &&
 if (array_key_exists("strproductname", $searchColumns) &&
 	array_key_exists("strproductname", $searchValue))
 {
-	$query[] = "AND mp.strproductname like '%".pg_escape_string($searchValue["strproductname"])."%'";
+	$query[] = "AND sf_translate_case(mp.strproductname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strproductname"])."') || '%'";
 }
 // 製品名称(英語)
 if (array_key_exists("strproductenglishname", $searchColumns) &&
 	array_key_exists("strproductenglishname", $searchValue))
 {
-	$query[] = "AND mp.strproductenglishname like '%".pg_escape_string($searchValue["strproductenglishname"])."%'";
+	$query[] = "AND sf_translate_case(mp.strproductenglishname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strproductenglishname"])."') || '%'";
 }
 
 // 顧客品番

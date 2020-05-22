@@ -12,7 +12,6 @@
     <script src="/search/cmn/msw/cmn/js/msw.js" defer></script>
     <!-- COOKIE関連の処理(検索画面) -->
     <script src="/mold/cmn/search/js/cookie-functions.js" defer></script>
-    <script src="/search/cmn/js/date.js" defer=""></script>
 </header1>
 
 <header2>
@@ -30,11 +29,12 @@
     <!-- フォームボタン css -->
     <link rel="stylesheet" href="/mm/search/css/form-buttons.css">
     <!-- フォーム ボタン -->
-	<script src="/mm/search/js/form-buttons.js" defer></script>
+	<script src="/mm/list/js/form-buttons.js" defer></script>
     <!-- フォームバリデーション -->
     <script src="/mm/search/js/validate-form.js" defer></script>
     <!-- マスタ検索呼び出し -->
 	<script src="/mm/search/js/invoke-master-search.js" defer></script>
+	<script src="/mm/list/js/invoke-master-search.js" defer></script>
     <!-- セレクトボックス操作 -->
 	<script src="/mr/search/js/bind-selectbox-action.js" defer></script>
     <!-- COOKIE 表示チェックボックス 保存/復元 -->
@@ -42,6 +42,7 @@
     <!-- キーバインド -->
 	<script src="/mm/search/js/key-bind.js" defer></script>
     <script type="text/javascript" language="javascript" src="/navi/cmn/load.js"></script>
+    <script src="/search/cmn/js/date.js" defer=""></script>
 </header3>
 
 <bodyonload>
@@ -51,7 +52,7 @@
 <!-- 左サイドバー ナビゲート -->
 <div class="navigation-loadpoint">
 	<script>
-        getNaviMenu('_%strSessionID%_', 'mm-search');
+        getNaviMenu('_%strSessionID%_', 'mm-list');
 	</script>
 </div>
 
@@ -59,7 +60,7 @@
 <div class="form-box--notabs-for-search">
 	<!-- フォームヘッダ -->
 	<div class="form-box__header">
-		<p class="form-box__header__title">金型履歴検索</p>
+		<p class="form-box__header__title">金型一覧検索</p>
         <span class="form-box__header__buttons">
             <img class="clear button" src="/img/type01/cmn/seg/sch_clear_off_ja_bt.gif">
             <img class="search button" src="/img/type01/cmn/seg/sch_search_off_ja_bt.gif">
@@ -68,14 +69,6 @@
 	<!-- フォームコンテンツ -->
 	<div class="form-box__contents--with-scroll">
 		<form name="SearchMoldHistory" method="post">
-            <div class="option-box">
-                <div class="regist-line">
-                    <span class="regist-label">
-                        <span class="regist-label--text-only">履歴詳細表示</span>
-                        <input name="Option_IsDetail" type="checkbox">
-                    </span>
-                </div>
-            </div>
             <div class="regist-line">
                 <img class="toggle-search button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle search">
                 <img class="toggle-display button" src="/img/type01/cmn/seg/off_bt.gif" alt="toggle display">
@@ -85,29 +78,11 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_Detail" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Detail" class="is-display" type="checkbox">
+                    <input name="IsSearch_btnDetail" class="is-search" type="checkbox" disabled>
+                    <input name="IsDisplay_btnDetail" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label--text-only">詳細</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_Modify" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Modify" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">修正</span>
-                </span>
-            </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_Preview" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Preview" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">プレビュー</span>
                 </span>
             </div>
             <div class="regist-line">
@@ -126,14 +101,14 @@
             </div>
             <div class="regist-line">
                 <span class="search-label--checkbox">
-                    <input name="IsSearch_MoldNo" class="is-search" type="checkbox">
-                    <input name="IsDisplay_MoldNo" class="is-display" type="checkbox">
+                    <input name="IsSearch_strMoldNo" class="is-search" type="checkbox">
+                    <input name="IsDisplay_strMoldNo" class="is-display" type="checkbox">
                 </span>
                 <span class="regist-label">
                     <span class="regist-label__text">金型NO</span>
-					検索：<input class="TxtStyle05L mold-product-code" placeholder="製品コード" type="text">
+					検索：<input class="TxtStyle05L" name="ProductCode" placeholder="製品コード" type="text">
 					<span class="regist-label__required-mark" style="right:2px;">_</span>
-                    <input class="TxtStyle01L" name="ReviseCode">
+                    <input class="TxtStyle01L" name="strReviseCode">
                 </span>
             </div>
 			<div class="regist-line">
@@ -173,28 +148,6 @@
                     <span class="regist-label--text-only">履歴NO</span>
                 </span>
             </div>
-            <!-- <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_DtmAppropriationDate" class="is-search" type="checkbox">
-                    <input name="IsDisplay_DtmAppropriationDate" class="is-display" type="checkbox">
-                </span>
-				<span class="regist-label">
-					<span class="regist-label__text">計上日</span>
-					FROM <input class="TxtStyle05L is-from-date" name="From_DtmAppropriationDate">
-					TO <input class="TxtStyle05L is-date" name="To_DtmAppropriationDate">
-				</span>
-			</div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_StrOrderCode" class="is-search" type="checkbox">
-                    <input name="IsDisplay_StrOrderCode" class="is-display" type="checkbox">
-                </span>
-				<span class="regist-label">
-					<span class="regist-label__text">発注コード</span>
-					FROM <input class="TxtStyle05L" name="From_StrOrderCode">
-					TO <input class="TxtStyle05L" name="To_StrOrderCode">
-				</span>
-			</div> -->
             <div class="regist-line">
                 <span class="search-label--checkbox">
                     <input name="IsSearch_StrCompanyDisplayCode" class="is-search" type="checkbox">
@@ -386,15 +339,6 @@
                     <span><a href="#"><img class="msw-button button" invokeMSWName="msw-inputuser" displayFlagLimit="0" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
                 </span>
             </div>
-            <div class="regist-line">
-                <span class="search-label--checkbox">
-                    <input name="IsSearch_Delete" class="is-search" type="checkbox" disabled>
-                    <input name="IsDisplay_Delete" class="is-display" type="checkbox">
-                </span>
-                <span class="regist-label">
-                    <span class="regist-label--text-only">削除</span>
-                </span>
-            </div>            
             <input type="hidden" name="strSessionID" value="_%strSessionID%_">
 		</form>
 	</div>

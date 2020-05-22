@@ -13,7 +13,7 @@
 		$(location).attr('href', '../search/index.php?strSessionID=' + sessionId);
 	});
 	// 金型一覧検索画面
-	$('.function-buttons__list_search').on('click', function(){
-		$(location).attr('href', '../search/list/index.php?strSessionID=' + sessionId);
+	$('.function-buttons__list').on('click', function(){
+		$(location).attr('href', '../list/index.php?strSessionID=' + sessionId);
 	});
 })($('input[name="strSessionID"]').val());

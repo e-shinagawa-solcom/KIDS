@@ -1,5 +1,5 @@
-(function(){
-    switch(location.pathname){
+(function () {
+    switch (location.pathname) {
         case "/mm/regist/index.php":
             $('.navi-mold-history-regist')
                 .off()
@@ -8,6 +8,12 @@
             break;
         case "/mm/search/index.php":
             $('.navi-mold-history-search')
+                .off()
+                .css('opacity', 0.5)
+                .css('cursor', 'default');
+            break;
+        case "/mm/list/index.php":
+            $('.navi-mold-list-search')
                 .off()
                 .css('opacity', 0.5)
                 .css('cursor', 'default');

@@ -349,14 +349,16 @@ if (!count($strErrorMessage)) {
             // 製品名称
             case 'strProductName';
                 if (strlen($condition)) {
-                    $search = "mp.strProductName LIKE '%" . $condition . "%'";
+                    // $search = "mp.strProductName LIKE '%" . $condition . "%'";
+                    $search = "sf_translate_case(mp.strproductname) like '%' || sf_translate_case('".pg_escape_string($condition)."') || '%'";
                 }
                 break;
 
             // 製品名称(英語)
             case 'strProductEnglishName';
                 if (strlen($condition)) {
-                    $search = "mp.strproductenglishname LIKE '%" . $condition . "%'";
+                    // $search = "mp.strproductenglishname LIKE '%" . $condition . "%'";
+                    $search = "sf_translate_case(mp.strproductenglishname) like '%' || sf_translate_case('".pg_escape_string($condition)."') || '%'";
                 }
                 break;
 

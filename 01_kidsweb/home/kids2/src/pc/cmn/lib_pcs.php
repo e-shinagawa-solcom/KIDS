@@ -59,14 +59,14 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
     $aryQuery[] = "  inner join ( ";
     $aryQuery[] = "    select";
     $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
-    $aryQuery[] = "      , strStockCode ";
+    $aryQuery[] = "      , lngstockno ";
     $aryQuery[] = "    from";
     $aryQuery[] = "      m_Stock ";
     $aryQuery[] = "    group by";
-    $aryQuery[] = "      strStockCode";
+    $aryQuery[] = "      lngstockno";
     $aryQuery[] = "  ) s1 ";
     $aryQuery[] = "    on s.lngrevisionno = s1.lngrevisionno ";
-    $aryQuery[] = "    and s.strStockCode = s1.strStockCode ";
+    $aryQuery[] = "    and s.lngstockno = s1.lngstockno ";
     $aryQuery[] = "  LEFT JOIN m_User input_u ";
     $aryQuery[] = "    ON s.lngInputUserCode = input_u.lngUserCode ";
     $aryQuery[] = "  LEFT JOIN m_Company cust_c ";
@@ -209,7 +209,10 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
         array_key_exists("strProductName", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = "UPPER(p.strproductname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
+        // $aryQuery[] = "UPPER(p.strproductname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
+        $aryQuery[] = "(sf_translate_case(p.strproductname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductName"])."') || '%'";
+        $aryQuery[] = " OR sf_translate_case(p.strproductenglishname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductName"])."') || '%')";
+
     }
 
     // 仕入科目コード
@@ -330,19 +333,19 @@ function fncGetMaxStockSQL($displayColumns, $searchColumns, $from, $to, $searchV
 		$aryQuery[] = " AND s.bytInvalidFlag = FALSE ";
 		$aryQuery[] = "  AND not exists ( ";
 		$aryQuery[] = "    select";
-		$aryQuery[] = "      s2.strStockCode ";
+		$aryQuery[] = "      s2.lngstockno ";
 		$aryQuery[] = "    from";
 		$aryQuery[] = "      ( ";
 		$aryQuery[] = "        SELECT";
 		$aryQuery[] = "          min(lngRevisionNo) lngRevisionNo";
-		$aryQuery[] = "          , strStockCode ";
+		$aryQuery[] = "          , lngstockno ";
 		$aryQuery[] = "        FROM";
 		$aryQuery[] = "          m_Stock ";
 		$aryQuery[] = "        group by";
-		$aryQuery[] = "          strStockCode";
+		$aryQuery[] = "          lngstockno";
 		$aryQuery[] = "      ) as s2 ";
 		$aryQuery[] = "    where";
-		$aryQuery[] = "      s2.strStockCode = s.strStockCode";
+		$aryQuery[] = "      s2.lngstockno = s.lngstockno";
 		$aryQuery[] = "      AND s2.lngRevisionNo < 0";
 		$aryQuery[] = "  ) ";
 	} else {

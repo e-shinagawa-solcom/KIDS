@@ -165,14 +165,17 @@ function fncGetMaxReceiveSQL($displayColumns, $searchColumns, $from, $to, $searc
         array_key_exists("strProductName", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = "UPPER(p.strproductname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
+        // $aryQuery[] = "UPPER(p.strproductname) like UPPER('%" . pg_escape_string($searchValue["strProductName"]) . "%')";
+        $aryQuery[] = "sf_translate_case(p.strproductname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductName"])."') || '%'";
+
     }
     // 製品名称(英語)
     if (array_key_exists("strProductEnglishName", $searchColumns) &&
         array_key_exists("strProductEnglishName", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = "UPPER(p.strproductenglishname) like UPPER('%" . pg_escape_string($searchValue["strProductEnglishName"]) . "%')";
+        // $aryQuery[] = "UPPER(p.strproductenglishname) like UPPER('%" . pg_escape_string($searchValue["strProductEnglishName"]) . "%')";
+        $aryQuery[] = "sf_translate_case(p.strproductenglishname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductEnglishName"])."') || '%'";
     }
 
     // 顧客品番

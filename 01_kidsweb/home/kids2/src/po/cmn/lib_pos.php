@@ -182,14 +182,16 @@ function fncGetSearchPurchaseSQL($displayColumns, $searchColumns, $from, $to, $s
         array_key_exists("strProductName", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = "UPPER( mp.strProductName ) LIKE UPPER( '%" . $searchValue["strProductName"] . "%' ) ";
+        // $aryQuery[] = "UPPER( mp.strProductName ) LIKE UPPER( '%" . $searchValue["strProductName"] . "%' ) ";        
+        $aryQuery[] = "sf_translate_case(mp.strproductname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductName"])."') || '%'";
     }
     // 製品名称（英語）
     if (array_key_exists("strProductEnglishName", $searchColumns) &&
         array_key_exists("strProductEnglishName", $searchValue)) {
         $detailConditionCount += 1;
         $aryQuery[] = $detailConditionCount == 1 ? "WHERE " : "AND ";
-        $aryQuery[] = "UPPER( mp.strProductEnglishName ) LIKE UPPER( '%" . $searchValue["strProductEnglishName"] . "%' ) ";
+        // $aryQuery[] = "UPPER( mp.strProductEnglishName ) LIKE UPPER( '%" . $searchValue["strProductEnglishName"] . "%' ) ";
+        $aryQuery[] = "sf_translate_case(mp.strProductEnglishName) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductEnglishName"])."') || '%'";
     }
 
     // 部門
@@ -568,7 +570,9 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
         // 製品名称（日本語）
         if ($strSearchColumnName == "strProductName") {
             if ($arySearchDataColumn["strProductName"]) {
-                $aryQuery[] = "AND UPPER( mp.strProductName ) LIKE UPPER( '%" . $arySearchDataColumn["strProductName"] . "%' ) ";
+                // $aryQuery[] = "AND UPPER( mp.strProductName ) LIKE UPPER( '%" . $arySearchDataColumn["strProductName"] . "%' ) ";
+                $aryQuery[] = "AND (sf_translate_case(mp.strproductname) like '%' || sf_translate_case('".pg_escape_string($arySearchDataColumn["strProductName"])."') || '%'";                
+                $aryQuery[] = " OR sf_translate_case(mp.strproductenglishname) like '%' || sf_translate_case('".pg_escape_string($arySearchDataColumn["strProductName"])."') || '%')";
             }
         }
         // 営業部署

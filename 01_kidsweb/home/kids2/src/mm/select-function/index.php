@@ -58,9 +58,9 @@
 	// 1803 金型一覧検索
 	if ( fncCheckAuthority( DEF_FUNCTION_MM6, $objAuth ) )
 	{
-		$aryData["Search_List_visibility"] = 'style="visibility: visible"';
+		$aryData["List_visibility"] = 'style="visibility: visible"';
 	} else {
-		$aryData["Search_List_visibility"] = 'style="visibility: hidden"';
+		$aryData["List_visibility"] = 'style="visibility: hidden"';
 	}
 	$objDB->close();
 

@@ -344,12 +344,14 @@ $(function () {
     // テーブルB行イベントの追加
     selectRow("", $("#tableB_no"), $("#tableB"), "");
     setTextInputMode();
-
     // 顧客名称の取得
     $('input[name="lngCustomerCode"]').trigger('change');
     // テーブルAデータの初期化
     data = [];
     $('input[name="description"]').val(description);
+
+    // 金額計算
+    billingAmount();
   };
 
   /**
@@ -684,7 +686,7 @@ $(function () {
       curLastMonthBalance = Number($('input[name="curlastmonthbalance"]').val().replace(/,/g, ''));
       // 消費税計算
       // 当月請求額に対して課税区分に応じて計算
-      taxPrice = (thisMonthAmount * (tax * 100)) / 100;
+      taxPrice = Math.round((thisMonthAmount * (tax * 100)) / 100, 0);
       // 差引合計額
       // 前月請求残額 + 当月請求額 + 消費税
       noTaxMonthAmount = curLastMonthBalance + thisMonthAmount + taxPrice + 0.00001;
@@ -698,7 +700,7 @@ $(function () {
         fracctiondigits = 2;
       }
       $('input[name="curthismonthamount"]').val(convertNumber(thisMonthAmount, fracctiondigits)).change();
-      $('input[name="curtaxprice"]').val(convertNumber(Math.round(taxPrice), 0)).change();
+      $('input[name="curtaxprice"]').val(convertNumber(taxPrice)).change();
       $('input[name="notaxcurthismonthamount"]').val(convertNumber(noTaxMonthAmount, fracctiondigits)).change();
     };
     var result = setTimeout(chargetern, 500);

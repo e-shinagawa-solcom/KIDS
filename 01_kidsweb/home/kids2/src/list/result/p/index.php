@@ -185,12 +185,15 @@ if (array_key_exists("strProductCode", $searchColumns) &&
 // 製品名
 if (array_key_exists("strProductName", $searchColumns) &&
     array_key_exists("strProductName", $searchValue)) {
-		$aryQuery[] = " AND p.strProductName LIKE '%" . $searchValue["strProductName"] . "%'";
+        // $aryQuery[] = " AND p.strProductName LIKE '%" . $searchValue["strProductName"] . "%'";
+        $aryQuery[] = "AND sf_translate_case(p.strproductname) like '%' || sf_translate_case('".pg_escape_string($searchValue["strproductname"])."') || '%'";
+
 }
 // 製品名(英語)
 if (array_key_exists("strProductEnglishName", $searchColumns) &&
     array_key_exists("strProductEnglishName", $searchValue)) {
-		$aryQuery[] = " AND p.strProductEnglishName LIKE '%" . $searchValue["strProductEnglishName"] . "%'";
+        // $aryQuery[] = " AND p.strProductEnglishName LIKE '%" . $searchValue["strProductEnglishName"] . "%'";
+        $aryQuery[] = "AND sf_translate_case(p.strProductEnglishName) like '%' || sf_translate_case('".pg_escape_string($searchValue["strProductEnglishName"])."') || '%'";
 }
 // 入力者コード
 if (array_key_exists("lngInputUserCode", $searchColumns) &&

@@ -72,6 +72,7 @@ function clsSubMenu(objMenu) {
 
 		g_aryMenuPos['mm'][0] = 504;
 		g_aryMenuPos['mm'][1] = 424;
+		g_aryMenuPos['mm'][2] = 524;
 
 		g_aryMenuPos['mr'][0] = 664;
 		g_aryMenuPos['mr'][1] = 424;

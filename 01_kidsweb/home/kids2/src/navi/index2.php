@@ -144,6 +144,13 @@ if (fncCheckAuthority(DEF_FUNCTION_MM2, $objAuth)) {
     $aryData["Mm_Search_visibility"] = 'style="visibility: hidden"';
 }
 
+// 1806 金型一覧検索
+if (fncCheckAuthority(DEF_FUNCTION_MM6, $objAuth)) {
+    $aryData["Mm_List_visibility"] = 'style="visibility: visible"';
+} else {
+    $aryData["Mm_List_visibility"] = 'style="visibility: hidden"';
+}
+
 // 2201 請求書登録
 if (fncCheckAuthority(DEF_FUNCTION_INV1, $objAuth)) {
     $aryData["Inv_Regist_visibility"] = 'style="visibility: visible"';
@@ -282,6 +289,9 @@ switch ($strNaviCode) {
         break;
     case "mm-search":
         $strTemplatePath = '/search/cmn/navigate/mm_navi.html';
+        break;
+    case "mm-list":
+        $strTemplatePath = '/search/cmn/navigate/mm_list_navi.html';
         break;
     case "mr-regist":
         $strTemplatePath = '/mr/cmn/navigate/mr_navi.html';

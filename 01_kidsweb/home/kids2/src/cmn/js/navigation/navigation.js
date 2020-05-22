@@ -69,6 +69,10 @@
 	$('.navi-mm-search').on('click', function () {
 		$(location).attr('href', '/mm/search/index.php?strSessionID=' + sessionId);
 	});
+	// 金型一覧検索画面
+	$('.navi-mm-list').on('click', function () {
+		$(location).attr('href', '/mm/list/index.php?strSessionID=' + sessionId);
+	});
 	// 売上納品書登録画面
 	$('.navi-sc-regist').on('click', function () {
 		$(location).attr('href', '/sc/regist2/index.php?strSessionID=' + sessionId);
