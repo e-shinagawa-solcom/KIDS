@@ -314,6 +314,14 @@ img.toggle-display
     background-color: #e8f0f1;
 }
 
+/* 入力フォーム ラベルテキスト */
+.regist-label__text_60
+{
+    display: inline-block;
+    width: 60px;
+    font-weight: bold;
+    background-color: #e8f0f1;
+}
 
 /* 入力フォーム ラベルテキスト */
 .regist-label__text_70
@@ -325,7 +333,7 @@ img.toggle-display
 }
 
 .disTxt28L { 
-	width : 208px ;
+	width : 195px ;
 	font-family : monospace ;
 	border-width : 1px ;
 	border-style : solid ;
@@ -355,7 +363,7 @@ img.toggle-display
 .regist-label__text_60
 {
     display: inline-block;
-    width: 60px;
+    width: 62px;
     font-weight: bold;
     background-color: #e8f0f1;
 }
@@ -370,7 +378,7 @@ img.toggle-display
 }
 
 .Txt57L { /* 55byte */
-	width : 464px ;
+	width : 459px ;
 	text-align : left ;
 }
 .textarea
@@ -391,6 +399,18 @@ img.toggle-display
 	width : 70px ;
 }
 
+
+.Slt55
+{
+	font-family  : monospace ;
+	width        : 58px ;
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #7f7f7f #dfdfdf #dfdfdf #7f7f7f ;
+	margin       : 0 4px 0 0 ;
+	color        : #666666 ;
+	background   : #ffffff ;
+}
 /* 入力フォーム ラベルテキスト */
 .regist-label__text_15
 {

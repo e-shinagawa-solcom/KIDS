@@ -4,7 +4,7 @@ SELECT
 FROM
     m_payfinfo
 WHERE
-    payfformalname LIKE '%' || $1 || '%'
+    sf_translate_case(payfformalname) LIKE '%' || sf_translate_case($1) || '%'
     and invalidflag = false
 ORDER BY payfcd
 ;

@@ -21,7 +21,7 @@ FROM
     and mp.lngrevisionno = mp1.lngrevisionno 
     and mp.strrevisecode = mp1.strrevisecode 
 where
-  mp.strproductname LIKE '%' || $1 || '%'
+  sf_translate_case(mp.strproductname) LIKE '%' || sf_translate_case($1) || '%'
   and not exists ( 
     select
       strproductcode 

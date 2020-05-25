@@ -29,7 +29,7 @@ WHERE
       and strReceiveCode = mr.strReceiveCode
   ) 
   AND mc.strcompanydisplaycode = $1
-  AND mc.strcompanydisplayname LIKE '%' || $2 || '%'
+  AND sf_translate_case(mc.strcompanydisplayname) LIKE '%' || sf_translate_case($2) || '%'
 ORDER BY
   mc.strcompanydisplaycode
 ;

@@ -13,7 +13,7 @@ WHERE
   AND mgar.lngattributecode = 2 
   AND mg.bytgroupdisplayflag = true 
   AND mu.bytuserdisplayflag = true 
-  AND mu.struserdisplayname LIKE '%' || $1 || '%'
+  AND sf_translate_case(mu.struserdisplayname) LIKE '%' || sf_translate_case($1) || '%'
 ORDER BY
   mu.struserdisplaycode
 ;

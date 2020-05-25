@@ -9,7 +9,7 @@ INNER JOIN
     mar.lngcompanycode = mc.lngcompanycode
 WHERE
     mc.strcompanydisplaycode = $1
-AND mc.strcompanydisplayname LIKE '%' || $2 || '%'
+AND sf_translate_case(mc.strcompanydisplayname) LIKE '%' || sf_translate_case($2) || '%'
 AND mar.lngattributecode in (2, 99)
 AND mc.bytcompanydisplayflag = true
 ;

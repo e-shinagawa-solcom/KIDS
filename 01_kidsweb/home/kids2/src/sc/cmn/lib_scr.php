@@ -860,7 +860,7 @@ function fncGetNumericUserCode($strUserDisplayCode, $objDB)
 }
 
 // 会社コードに紐づく帳票伝票種別を取得
-function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)
+function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB, $isToErrorPage = "1")
 {
     $strQuery = ""
         . "SELECT"
@@ -882,7 +882,11 @@ function fncGetSlipKindByCompanyCode($lngCompanyCode, $objDB)
             $aryResult[] = $objDB->fetchArray($lngResultID, $i);
         }
     } else {
-        fncOutputError(9051, DEF_FATAL, "帳票伝票種別の取得に失敗", true, "", $objDB);
+        if ($isToErrorPage) {
+            fncOutputError(9051, DEF_FATAL, "帳票伝票種別の取得に失敗", true, "", $objDB);
+        } else {
+            return false;
+        }
     }
     $objDB->freeResult($lngResultID);
 

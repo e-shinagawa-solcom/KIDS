@@ -28,7 +28,7 @@ WHERE
       lngRevisionNo < 0 
       and strReceiveCode = mr.strReceiveCode
   ) 
-  mc.strcompanydisplayname LIKE '%' || $1 || '%'
+  sf_translate_case(mc.strcompanydisplayname) LIKE '%' || sf_translate_case($1) || '%'
 ORDER BY
   mc.strcompanydisplaycode
 ;

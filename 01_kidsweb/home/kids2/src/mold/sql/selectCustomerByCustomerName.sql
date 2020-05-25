@@ -8,7 +8,7 @@ INNER JOIN
   ON
     mar.lngcompanycode = mc.lngcompanycode
 WHERE
-    mc.strcompanydisplayname LIKE '%' || $1 || '%'
+    sf_translate_case(mc.strcompanydisplayname) LIKE '%' || sf_translate_case($1) || '%'
 AND mar.lngattributecode in (2, 99)
 AND mc.bytcompanydisplayflag = true
 ORDER BY

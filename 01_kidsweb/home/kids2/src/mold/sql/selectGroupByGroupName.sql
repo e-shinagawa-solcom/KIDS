@@ -8,7 +8,7 @@ WHERE
   mg.lnggroupcode = mgar.lnggroupcode 
   AND mgar.lngattributecode = 1 
   AND mg.bytgroupdisplayflag in ($2, $3) 
-  AND mg.strgroupdisplayname LIKE '%' || $1 || '%' 
+  AND sf_translate_case(mg.strgroupdisplayname) LIKE '%' || sf_translate_case($1) || '%' 
 ORDER BY
   mg.strgroupdisplaycode
 ;

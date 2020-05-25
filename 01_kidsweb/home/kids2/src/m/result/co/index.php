@@ -77,7 +77,7 @@ if ( $aryData["lngAttributeCode"] != "" )
 // 表示会社名条件生成
 if ( $aryData["strCompanyDisplayName"] )
 {
-	$aryWhereString[] = " com.strCompanyDisplayName LIKE '%" . $aryData["strCompanyDisplayName"] . "%'";
+	$aryWhereString[] = " sf_translate_case(com.strCompanyDisplayName) LIKE '%' || sf_translate_case('" . $aryData["strCompanyDisplayName"] . "') || '%'";
 }
 
 if ( $aryData["strCompanyDisplayCode"] != "")

@@ -1135,6 +1135,10 @@ jQuery(function ($) {
                     alert("入力された仕入月" + $('input[name="dtmDeliveryDate"]').val().substr(0, 7) + "は既に締め処理済の為入力できません。\n経理部門に相談してください。");
                     return false;
                 }
+                if (data.getSlipKind_Error) {
+                    alert("顧客コードに応じる納品伝票種別が取得できません。");
+                    return false;
+                }
 
                 // 納品伝票種類が1:指定伝票・2:市販伝票の場合、最大件数入力チェックを行う
                 if (data.lngslipkindcode == 1 || data.lngslipkindcode == 2)

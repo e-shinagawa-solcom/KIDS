@@ -63,7 +63,7 @@ $strQuery = "SELECT *, c.strcompanydisplayname FROM m_Group g, m_Company c";
 // 表示グループ名称条件生成
 if ( $aryData["strGroupDisplayName"] )
 {
-	$aryWhereString[] = " g.strGroupDisplayName LIKE '%" . $aryData["strGroupDisplayName"] . "%'";
+	$aryWhereString[] = " sf_translate_case(g.strGroupDisplayName) LIKE '%' || sf_translate_case('" . $aryData["strGroupDisplayName"] . "') || '%'";
 }
 
 // 属性テーブルとの結合

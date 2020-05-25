@@ -111,10 +111,14 @@ if ($strMode == "get-closedday") {
 
     // 顧客に紐づく帳票1ページあたりの最大明細数を取得する
     $lngcompanycode = fncGetMasterValue("m_company","strcompanydisplaycode","lngcompanycode",$strCompanyDisplayCode . ":str", "", $objDB);
-    $aryReport = fncGetSlipKindByCompanyCode($lngcompanycode, $objDB);
-    $aryResult["lngmaxline"] = $aryReport["lngmaxline"];
-    $aryResult["lngslipkindcode"] = $aryReport["lngslipkindcode"];
-    $aryResult["strslipkindname"] = $aryReport["strslipkindname"];
+    $aryReport = fncGetSlipKindByCompanyCode($lngcompanycode, $objDB, 0);
+    if ($aryReport) {
+        $aryResult["lngmaxline"] = $aryReport["lngmaxline"];
+        $aryResult["lngslipkindcode"] = $aryReport["lngslipkindcode"];
+        $aryResult["strslipkindname"] = $aryReport["strslipkindname"];
+    } else {
+        $aryResult["getSlipKind_Error"] = true;
+    }
     
 
     // データ返却

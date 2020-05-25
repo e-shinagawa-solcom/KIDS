@@ -12,7 +12,7 @@ WHERE
   AND mc.bytcompanydisplayflag = true 
   AND mu.bytuserdisplayflag = true 
   AND mc.strcompanydisplaycode LIKE '%' || $1 || '%' 
-  AND mu.struserdisplayname LIKE '%' || $2 || '%' 
+  AND sf_translate_case(mu.struserdisplayname) LIKE '%' || sf_translate_case($2) || '%' 
 ORDER BY
   mu.struserdisplaycode
 ; 

@@ -15,7 +15,7 @@ WHERE
   AND mu.bytuserdisplayflag in ($4, $5) 
   AND mg.strgroupdisplaycode LIKE '%' || $1 || '%'
   AND mu.struserdisplaycode = $2
-  AND mu.struserdisplayname LIKE '%' || $3 || '%'
+  AND sf_translate_case(mu.struserdisplayname) LIKE '%' || sf_translate_case($3) || '%'
 ORDER BY
   mu.struserdisplaycode
 ;

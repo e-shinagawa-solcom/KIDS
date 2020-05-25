@@ -136,13 +136,13 @@ function getUserQuery( $lngUserCode, $aryData, $objDB )
 	// 表示ユーザー名
 	if ( $aryData["strUserDisplayNameConditions"] && $strUserDisplayName != "" )
 	{
-		$strQuery .= " AND u.strUserDisplayName LIKE '%$strUserDisplayName%' \n";
+		$strQuery .= " AND sf_translate_case(u.strUserDisplayName) LIKE '%' || sf_translate_case('$strUserDisplayName') ||  '%' \n";
 	}
 
 	// フルネーム
 	if ( $aryData["strUserFullNameConditions"] && $strUserFullName != "" )
 	{
-		$strQuery .= " AND u.strUserFullName LIKE '%$strUserFullName%' \n";
+		$strQuery .= " AND sf_translate_case(u.strUserFullName) LIKE '%' || sf_translate_case('$strUserFullName') || '%' \n";
 	}
 
 	// 企業コード
