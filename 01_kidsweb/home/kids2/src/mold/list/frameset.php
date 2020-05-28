@@ -57,13 +57,11 @@ if (!fncCheckAuthority(DEF_FUNCTION_LO0, $objAuth) || !fncCheckAuthority(DEF_FUN
     fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 $aryData["type"] = "";
-if (array_key_exists("isCopy", $_REQUEST))
-{
-	$aryData["type"] = "&isCopy";
+if (array_key_exists("isCopy", $_REQUEST)) {
+    $aryData["type"] = "&isCopy";
 }
-if (array_key_exists("isRegist", $_REQUEST))
-{
-	$aryData["type"] = "&isRegist";
+if (array_key_exists("isRegist", $_REQUEST)) {
+    $aryData["type"] = "&isRegist";
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
@@ -79,7 +77,14 @@ if (array_key_exists("isRegist", $_REQUEST))
 <script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
 <script src="/list/result/cmn/frameset.js"></script>
 </head>
+<script>
+$(window).on("beforeunload", function(e) {
+    if (window.opener) {
+        window.opener.location.reload();
+    }
+});
 
+</script>
 
 <frameset rows="40,1,*" frameborder="0" border="0" framespacing="0">
 	<frame id="button" src="button.php?strSessionID=<?echo $aryData["strSessionID"]; ?>" name="button" scrolling="no" noresize>

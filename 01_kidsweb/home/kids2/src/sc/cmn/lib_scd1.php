@@ -64,6 +64,7 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	$aryQuery[] = ", s.lngPrintCount as lngprintcount";
 	// 売上番号
 	$aryQuery[] = ", s.lngSalesNo as lngsalesno";
+	$aryQuery[] = ", skr.lngslipkindcode";
 
 	// FROM句
 	$aryQuery[] = " FROM m_Slip s ";
@@ -71,6 +72,9 @@ function fncGetSlipHeadNoToInfoSQL ( $lngSlipNo, $lngRevisionNo )
 	$aryQuery[] = " LEFT JOIN m_company c ON s.lngCustomerCode = c.lngcompanycode";
 	$aryQuery[] = " LEFT JOIN m_user u ON s.lngInsertUserCode = u.lngusercode";
 	$aryQuery[] = " LEFT JOIN m_user u2 ON s.lngUserCode = u2.lngusercode";
+	$aryQuery[] = " LEFT JOIN m_slipkindrelation skr ON s.lngCustomerCode = skr.lngcompanycode";
+
+	
 
 	// WHERE句
 	$aryQuery[] = " WHERE s.lngSlipNo = " . $lngSlipNo . "";
