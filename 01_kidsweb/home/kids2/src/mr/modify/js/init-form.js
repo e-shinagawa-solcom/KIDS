@@ -63,6 +63,9 @@
 
         // 追加ボタンのクリック(金型説明テーブルの作成)
         btnAdd.click();
+
+        $('input[name="SourceFactory"]').val($('input[name="init_SourceFactory"]').val());
+        $('input[name="SourceFactory"]').change();
     });
 
     // 金型説明の作成完了時に金型説明を設定する

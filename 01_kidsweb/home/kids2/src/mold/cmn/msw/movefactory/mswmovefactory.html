@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title>msw</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+    <script src="/mold/lib/js/queryMasterData.js" defer></script>
+    <script src="/mold/cmn/msw/cmn/js/msw-commons.js" defer></script>
+    <script src="/mold/cmn/msw/movefactory/js/msw-movefactory.js" defer></script>
+    <link rel="stylesheet" href="/mold/cmn/msw/cmn/css/msw-commons.css">
+    <link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
+</head>
+
+<body>
+    <div class="msw-box">
+        <div class="msw-box__header">
+            <span class="msw-box__header__bar">MOLD MOVE REQUEST FACTORY SEARCH</span>
+            <img class="msw-box__header__close-btn" src="/img/type01/msw/cmn/msw_close.gif" alt="msw box close btn">
+        </div>
+
+        <div class="content-box">
+            <div class="box-header">
+                検索
+            </div>
+            <div class="conditions">
+                <div class="element">
+                    <span class="label">工場コード</span>
+                    <input class="input-code" tabindex="1" type="text" maxlength="5">
+                </div>
+                <div class="element">
+                    <span class="label">工場名称</span>
+                    <input class="input-name" tabindex="2" type="text" maxlength="50">
+                </div>
+            </div>
+            <div class="search-btn">
+                <img class="button" tabindex="3" src="/img/type01/msw/cmn/search_off_ja_bt.gif" alt="search btn">
+            </div>
+        </div>
+
+        <div class="content-box">
+            <div class="box-header">
+                検索結果
+            </div>
+            <div class="select-wrap">
+                <select class="result-select" tabindex="4" size="10">
+                </select>
+            </div>
+            <div class="footer-btn">
+                <img class="clear button" tabindex="5" src="/img/type01/msw/cmn/clear_off_ja_bt.gif" alt="clear">
+                <img class="apply button" tabindex="6" src="/img/type01/msw/cmn/apply_off_ja_bt.gif" alt="apply">
+            </div>
+            <div class="result-count">
+                <span>RESULT</span>
+                <input class="counter" type="text" disabled="disabled">
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

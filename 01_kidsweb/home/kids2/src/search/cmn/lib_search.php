@@ -181,6 +181,8 @@ $aryTableBackBtnName_INV["btndelete"] = "削除";
 $aryTableHeaderName_INV["lngcustomercode"] = "顧客";
 $aryTableHeaderName_INV["strinvoicecode"] = "請求書No";
 $aryTableHeaderName_INV["dtminvoicedate"] = "請求日";
+$aryTableHeaderName_INV["strinvoicemonth"] = "請求月";
+$aryTableHeaderName_INV["strinvoicemode"] = "請求モード";
 $aryTableHeaderName_INV["curlastmonthbalance"] = "先月請求残額";
 $aryTableHeaderName_INV["curthismonthamount"] = "当月請求金額";
 $aryTableHeaderName_INV["curtaxprice"] = "消費税額";
@@ -781,6 +783,8 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , inv.lnginvoiceno as lnginvoiceno";
         $aryQuery[] = "  , inv.lngrevisionno as lngrevisionno";
         $aryQuery[] = "  , inv.dtminsertdate as dtminsertdate";
+        $aryQuery[] = "  , inv.strinvoicemonth || '月' as strinvoicemonth";
+        $aryQuery[] = "  , (CASE inv.strinvoicemode when '1' then '請求日請求' when '2' then '締め日請求' else '' end) as strinvoicemode";
         $aryQuery[] = "  , cust_c.strcompanydisplaycode as strcustomerdisplaycode";
         $aryQuery[] = "  , inv.strcustomername as strcustomername";
         $aryQuery[] = "  , inv.strcustomercompanyname as strcustomerdisplayname";

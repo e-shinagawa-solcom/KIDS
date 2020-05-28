@@ -106,9 +106,7 @@
 						<span class="regist-label__required-mark">◎</span>
 						<span class="regist-label__text">依頼区分</span>
 						<select name="RequestCategory" class="Slt25">
-							<option value="">−</option>
-							<option value="10">KUWAGATA JAPAN REQUEST</option>
-							<option value="20">KUWAGATA H.K. REQUEST</option>
+							<option value="10" selected>KUWAGATA JAPAN REQUEST</option>
 						</select>
 					</span>
 				</div>
@@ -256,7 +254,7 @@
 						<span class="regist-label__text">保管工場</span>
 						<input class="TxtStyle05L" name="SourceFactory" disabled>
 						<input class="disTxt46L" name="SourceFactoryName" disabled>
-						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-movefactory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
 						<input type="hidden" name="SourceFactory">
 						<input type="hidden" name="SourceFactoryName">
 					</span>
@@ -267,7 +265,7 @@
 						<span class="regist-label__text">移動先工場</span>
 						<input class="TxtStyle05L" name="DestinationFactory">
 						<input class="disTxt46L" name="DestinationFactoryName" disabled>
-						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-factory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
+						<span><a href="#"><img class="msw-button button" invokeMSWName="msw-movefactory" src="/img/type01/msw/cmn/open_off_bt.gif" alt="msw"></a></span>
 						<input type="hidden" name="DestinationFactoryName">
 					</span>
 				</div>
@@ -297,7 +295,7 @@
 		<iframe class="msw-product" src="/mold/cmn/msw/product/mswproduct.html" frameborder="0">
 		</iframe>
 		<!-- MSW 工場マスタ検索 -->
-		<iframe class="msw-factory" src="/search/cmn/msw/factory/mswfactory.html" frameborder="0">
+		<iframe class="msw-movefactory" src="/mold/cmn/msw/movefactory/mswmovefactory.html" frameborder="0">
 		</iframe>
 		<!-- MSW 顧客マスタ検索 -->
 		<iframe class="msw-customer" src="/search/cmn/msw/customer/mswcustomer.html" frameborder="0">

@@ -807,6 +807,10 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     $arySelectQuery[] = ", cust_c.lngCountryCode as lngcountrycode";
     // 請求書コード
     $arySelectQuery[] = ", inv.strinvoicecode as strinvoicecode";
+    // 請求月
+    $arySelectQuery[] = ", inv.strinvoicemonth || '月' as strinvoicemonth";
+    // 請求モード
+    $arySelectQuery[] = ", (CASE inv.strinvoicemode when '1' then '請求日請求' when '2' then '締め日請求' else '' end) as strinvoicemode";
     // 請求日
     $arySelectQuery[] = ", to_char( inv.dtminvoicedate, 'YYYY/MM/DD' ) as dtminvoicedate";
     // 請求期間 自
@@ -1100,7 +1104,7 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     // 登録時 : ルールに基づいたコード生成
     // 更新時 : 更新元の請求書マスタ.請求書コード
     $insertAry['strinvoicecode'] = empty($aryResult['strinvoicecode'])
-                                    ? fncGetStrInvoiceCode(null, false, $aryData["dtminvoicedate"], $aryData["invoicemonth"], $objDB)
+                                    ? fncGetStrInvoiceCode(null, false, $aryData["dtminvoicedate"], $aryData["strinvoicemonth"], $objDB)
                                     : $aryResult['strinvoicecode'];
 
     // 顧客コード(DISPLAY)
@@ -1147,8 +1151,10 @@ function fncInvoiceInsertReturnArray($aryData, $aryResult=null, $objAuth, $objDB
     // 請求期間 至
     $insertAry['dtmchargeternend'] = $aryData['dtmchargeternend'];
 
-    // 請求期間
-//     $dtmchargeternend = $aryData['dtmchargeternend'];
+    // 請求モード
+    $insertAry['strinvoicemode'] = $aryData['strinvoicemode'];
+    // 請求月
+    $insertAry['strinvoicemonth'] = $aryData['strinvoicemonth'];
 
     // 前月請求残額
     $insertAry['curlastmonthbalance'] = $aryData['curlastmonthbalance'];
@@ -1245,6 +1251,8 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $aryQuery[] = "strnote, ";                  // 備考
      $aryQuery[] = "lngprintcount, ";         // 印刷回数
     $aryQuery[] = "bytinvalidflag, ";            // 無効フラグ
+    $aryQuery[] = "strinvoicemode, ";            // 請求モード
+    $aryQuery[] = "strinvoicemonth, ";            // 請求月
     $aryQuery[] = "description ";            // 説明
     $aryQuery[] = ") values (";
     // 請求書番号
@@ -1276,6 +1284,8 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
     $aryQuery[] = "'" .$insertAry['strnote'] ."', ";                                        // 備考
     $aryQuery[] = "0 ,";                                                                 // 印刷回数
     $aryQuery[] = "FALSE, ";                                                                 // 無効フラグ
+    $aryQuery[] = "'". $insertAry['strinvoicemode'] ."'  ,";                                               
+    $aryQuery[] = "'". $insertAry['strinvoicemonth'] ."'  ,";                                                               // 請求モード
     $aryQuery[] = "'" .$insertAry['description'] ."'";                                        // 備考
     $aryQuery[] = ") ";
 
@@ -1435,11 +1445,16 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo)
     // 作成日
     $aryQuery[] = ", to_char( inv.dtminsertdate, 'YYYY/MM/DD HH24:MI:SS' ) as dtminsertdate";
     // 備考
-    $aryQuery[] = ", inv.strnote as strnote";
+    $aryQuery[] = ", inv.strnote";
     // 印刷回数
-    $aryQuery[] = ", inv.lngprintcount as lngprintcount";
-    // 説明
-    $aryQuery[] = ", inv.description as description";
+    $aryQuery[] = ", inv.lngprintcount";
+    // 請求モード
+    $aryQuery[] = ", inv.strinvoicemode";
+    $aryQuery[] = "  , (CASE inv.strinvoicemode when '1' then '請求日請求' when '2' then '締め日請求' else '' end) as strinvoicemode_desc";
+    // 請求月
+    $aryQuery[] = ", inv.strinvoicemonth";
+    $aryQuery[] = ", inv.strinvoicemonth || '月' as strinvoicemonth_desc";// 説明
+    $aryQuery[] = ", inv.description";
 
     $aryQuery[] = " FROM m_invoice inv ";
     $aryQuery[] = " LEFT JOIN m_Company cust_c ON inv.lngcustomercode = cust_c.lngcompanycode";
@@ -1738,7 +1753,7 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     // 消費税率1
     $aryNewResult["curTax1"]                = $aryResult["curtax1"];
     // 消費税額1
-    $aryNewResult["curTaxPrice1"]           = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["curtaxprice1"], 'taxprice');
+    $aryNewResult["curTaxPrice1"]           = convertPrice($aryResult["lngmonetaryunitcode"], $aryResult["strmonetaryunitsign"], $aryResult["curtaxprice1"], 'price');
     // 担当者
     $aryNewResult["strUserCode"]            = $aryResult["strusercode"];
     $aryNewResult["strUserName"]            = $aryResult["strusername"];
@@ -1775,6 +1790,12 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     $aryNewResult["description"]                = $aryResult["description"];
     // 印刷回数
     $aryNewResult["lngPrintCount"]          = $aryResult["lngprintcount"];
+    // 請求モード
+    $aryNewResult['strInvoiceMode'] = $aryResult['strinvoicemode'];
+    $aryNewResult['strInvoiceMode_desc'] = $aryResult['strinvoicemode_desc'];
+    // 請求月
+    $aryNewResult['strInvoiceMonth'] = $aryResult['strinvoicemonth'];
+    $aryNewResult['strInvoiceMonth_desc'] = $aryResult['strinvoicemonth_desc'];
 
     return $aryNewResult;
 }
@@ -1932,9 +1953,11 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     $dtmInvoiceDate = $aryResult['ActionDate'];
     $aryPrevResult['dtmInvoiceDate'] = $dtmInvoiceDate;
 
+    // 請求モード
+    $aryPrevResult['strInvoiceMode'] = $aryResult['strinvoicemode'];
+
     // 請求月
-    $aryPrevResult['invoiceMonth'] = $aryResult['invoiceMonth'];
-    $aryPrevResult['invoiceMonth_desc'] = ltrim($aryResult['invoiceMonth'], 0);
+    $aryPrevResult['strInvoiceMonth'] = ltrim($aryResult['strinvoicemonth'], 0);
 
     // 表示用請求日
     $printInvDate = fncGetJapaneseDate($dtmInvoiceDate);

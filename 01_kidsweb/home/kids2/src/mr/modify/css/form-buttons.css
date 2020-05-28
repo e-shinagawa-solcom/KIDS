@@ -21,3 +21,9 @@
     display: none;
     float: right;
 }
+
+input[disabled]{
+	border-width : 1px ;
+	border-style : solid ;
+	border-color : #cdcdcd ;
+}

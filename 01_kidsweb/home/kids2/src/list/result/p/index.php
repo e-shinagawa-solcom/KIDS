@@ -228,6 +228,40 @@ if ($lngResultNum > 0) {
 // 帳票データ取得クエリ実行・テーブル生成
 $strQuery = join("\n", $aryQuery);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+// 検索件数がありの場合
+if ($lngResultNum > 0) {
+    // 指定数以上の場合エラーメッセージを表示する
+    if ($lngResultNum > DEF_SEARCH_MAX) {
+        $errorFlag = true;
+        $lngErrorCode = 9057;
+        $aryErrorMessage = DEF_SEARCH_MAX;
+    }
+} else {
+    $errorFlag = true;
+    $lngErrorCode = 303;
+    $aryErrorMessage = "";
+}
+if ($errorFlag) {
+
+    $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, "", $objDB);
+
+    // [strErrorMessage]書き出し
+    $aryHtml["strErrorMessage"] = $strMessage;
+
+    // テンプレート読み込み
+    $objTemplate = new clsTemplate();
+    $objTemplate->getTemplate("/result/error/parts.tmpl");
+
+    // テンプレート生成
+    $objTemplate->replace($aryHtml);
+    $objTemplate->complete();
+
+    // HTML出力
+    echo $objTemplate->strTemplate;
+
+    exit;
+}
 for ($i = 0; $i < $lngResultNum; $i++) {
     $objResult = $objDB->fetchObject($lngResultID, $i);
 

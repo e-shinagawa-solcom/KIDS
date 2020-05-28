@@ -507,7 +507,7 @@ function rowTop(table, table_fix) {
 
 function rowBottom(table, table_fix) {
     var lasttr = table.find("tbody").find('tr').last();
-    table.find('tr').each(function (i, e) {
+    table.find("tbody").find('tr').each(function (i, e) {
         var backgroud = $(this).css("background-color");
         if (backgroud != 'rgb(255, 255, 255)') {
             $(this).insertAfter(lasttr);
@@ -515,7 +515,7 @@ function rowBottom(table, table_fix) {
     });
 
     lasttr = table_fix.find("tbody").find('tr').last();
-    table_fix.find('tr').each(function (i, e) {
+    table_fix.find("tbody").find('tr').each(function (i, e) {
         var backgroud = $(this).css("background-color");
         if (backgroud != 'rgb(255, 255, 255)') {
             $(this).insertAfter(lasttr);

@@ -393,7 +393,7 @@ if ($lngResultNum > 0) {
     // 指定数以上の場合エラーメッセージを表示する
     if ($lngResultNum > DEF_SEARCH_MAX) {
         $errorFlag = true;
-        $lngErrorCode = 9068;
+        $lngErrorCode = 9057;
         $aryErrorMessage = DEF_SEARCH_MAX;
     }
 } else {

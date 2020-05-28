@@ -85,6 +85,10 @@ $aryParts["totalprice_unitsign"] = convertPrice($aryParts["lngmonetaryunitcode"]
 $aryParts["dtminvoicedate"] = date("Y年n月", strtotime($aryParts["dtminvoicedate"]));
 $aryParts["dtminvoicedate_day"] = ltrim($aryParts["dtminvoicedate_day"], '0');
 $aryParts["dtminsertdate"] = date("Y.n.j", strtotime($aryParts["dtminsertdate"]));
+$aryParts["dtmchargeternstart_month"] = ltrim($aryParts["dtmchargeternstart_month"], '0');
+$aryParts["dtmchargeternstart_day"] = ltrim($aryParts["dtmchargeternstart_day"], '0');
+$aryParts["dtmchargeternend_month"] = ltrim($aryParts["dtmchargeternend_month"], '0');
+$aryParts["dtmchargeternend_day"] = ltrim($aryParts["dtmchargeternend_day"], '0');
 
 $aryParts["curthismonthamount"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["curthismonthamount"], "price");
 $aryParts["curlastmonthbalance"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["curlastmonthbalance"], "price");

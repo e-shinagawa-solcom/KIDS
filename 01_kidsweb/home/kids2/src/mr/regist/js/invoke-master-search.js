@@ -436,7 +436,7 @@
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
                 console.log("製品コード->金型リスト done");
-
+console.log(response);
                 // 金型セレクトボックスの取得
                 var moldList = $('.mold-selection__list');
                 var moldChoosenList = $('.mold-selection__choosen-list');
@@ -452,6 +452,7 @@
                         $('<option>')
                             .val(row.moldno)
                             .attr('displaycode', row.companydisplaycode)
+                            .attr('referrer', row.referrer)
                             .html(row.moldno + ' : ' + '[' + row.companydisplaycode + ']' + ' ' + row.companydisplayname)
                     );
                 });

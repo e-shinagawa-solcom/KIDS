@@ -133,7 +133,7 @@
                         <div class="regist-box2">
                             <span class="regist-label  regist-label-w190">
                                 <span class="regist-label__text50">請求月</span>
-                                <input id="invoiceMonth" class="TxtStyle05L" name="invoiceMonth">
+                                <input id="strinvoicemonth" class="TxtStyle05L" style="text-align: right;" name="strinvoicemonth" value="_%strInvoiceMonth%_">
                                 </input>
                                 <span class="regist-label__bold">月分</span>
                             </span>
@@ -151,12 +151,12 @@
                         <div style="height: 92px;">
                             <div class="regist-box2-2" style="margin-top: 5px;">
                                 <span class="regist-label" style="height: 60px;padding-top:5px;">
-                                    <input type="radio" id="invoiceMode1" name="invoiceMode" value="1" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;"
-                                        checked>
+                                    <input type="radio" id="invoiceMode1" name="strinvoicemode" value="1" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;"
+                                        _%invoiceMode1%_>
                                     <span class="regist-label__text65">請求日請求</span>
                                     <br>
                                     <br>
-                                    <input type="radio" id="invoiceMode2" name="invoiceMode" value="2" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;">
+                                    <input type="radio" id="invoiceMode2" name="strinvoicemode" value="2" class="form-control form-control-sm" style="width:12px;height: 15px;background-color: #f0f0f6;" _%invoiceMode2%_>
                                     <span class="regist-label__text65">締め日請求</span>
                                 </span>
                             </div>
@@ -442,15 +442,15 @@
         $E("decide_data").onscroll = decide_scroll;
     </script>
     <script>
-        var actiondate = $('input[name="ActionDate"]').val();
-        var dtmchargeternstart = $('input[name="dtmchargeternstart"]').val();
-        var dtmchargeternend = $('input[name="dtmchargeternend"]').val();
-        if (dtmchargeternstart == dtmchargeternend && actiondate == dtmchargeternend)
-        {
-            $('#invoiceMode1').prop('checked',true);
-        } else {            
-            $('#invoiceMode2').prop('checked',true);
-        }
+        // var actiondate = $('input[name="ActionDate"]').val();
+        // var dtmchargeternstart = $('input[name="dtmchargeternstart"]').val();
+        // var dtmchargeternend = $('input[name="dtmchargeternend"]').val();
+        // if (dtmchargeternstart == dtmchargeternend && actiondate == dtmchargeternend)
+        // {
+        //     $('#invoiceMode1').prop('checked',true);
+        // } else {            
+        //     $('#invoiceMode2').prop('checked',true);
+        // }
         // 修正初期状態
         var renewInit = function (invoiceNo, revisionNo) {
             // 入力値を取得

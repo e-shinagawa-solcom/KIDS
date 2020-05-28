@@ -345,7 +345,7 @@ $(function () {
     selectRow("", $("#tableB_no"), $("#tableB"), "");
     setTextInputMode();
     // 顧客名称の取得
-    $('input[name="lngCustomerCode"]').trigger('change');
+    // $('input[name="lngCustomerCode"]').trigger('change');
     // テーブルAデータの初期化
     data = [];
     $('input[name="description"]').val(description);
@@ -700,7 +700,7 @@ $(function () {
         fracctiondigits = 2;
       }
       $('input[name="curthismonthamount"]').val(convertNumber(thisMonthAmount, fracctiondigits)).change();
-      $('input[name="curtaxprice"]').val(convertNumber(taxPrice)).change();
+      $('input[name="curtaxprice"]').val(convertNumber(taxPrice, fracctiondigits)).change();
       $('input[name="notaxcurthismonthamount"]').val(convertNumber(noTaxMonthAmount, fracctiondigits)).change();
     };
     var result = setTimeout(chargetern, 500);

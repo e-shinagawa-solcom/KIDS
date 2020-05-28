@@ -178,13 +178,13 @@ if (array_key_exists("strInvoiceCode", $searchColumns) &&
         if ($count != 1) {
             $aryQuery[] = " OR ";
         }
-        if (strpos($strInvoiceCode, '-') !== false) {
-            $aryQuery[] = "(i.strInvoiceCode" .
-            " between '" . explode("-", $strInvoiceCode)[0] . "'" .
-            " AND " . "'" . explode("-", $strInvoiceCode)[1] . "')";
-        } else {
+        // if (strpos($strInvoiceCode, '-') !== false) {
+        //     $aryQuery[] = "(i.strInvoiceCode" .
+        //     " between '" . explode("-", $strInvoiceCode)[0] . "'" .
+        //     " AND " . "'" . explode("-", $strInvoiceCode)[1] . "')";
+        // } else {
             $aryQuery[] = "i.strInvoiceCode = '" . $strInvoiceCode . "'";
-        }
+        // }
     }
     $aryQuery[] = ")";
 }

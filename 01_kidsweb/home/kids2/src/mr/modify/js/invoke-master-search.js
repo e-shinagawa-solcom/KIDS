@@ -240,6 +240,7 @@
                         $('<option>')
                             .val(row.moldno)
                             .attr('displaycode', row.companydisplaycode)
+                            .attr('referrer', row.referrer)
                             .html(row.moldno + ' : ' + '[' + row.companydisplaycode + ']' + ' ' + row.companydisplayname)
                     );
                 });

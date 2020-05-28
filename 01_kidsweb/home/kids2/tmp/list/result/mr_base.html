@@ -750,7 +750,7 @@
 			font-family: Arial, sans-serif;
 			mso-font-charset: 0;
 			mso-number-format: General;
-			text-align: general;
+			text-align: center;
 			vertical-align: middle;
 			border-top: .5pt solid windowtext;
 			border-right: .5pt hairline windowtext;
@@ -765,15 +765,15 @@
 			padding: 0px;
 			mso-ignore: padding;
 			color: windowtext;
-			font-size: 11.0pt;
+			font-size: 10.0pt;
 			font-weight: 400;
 			font-style: normal;
 			text-decoration: none;
 			font-family: Arial, sans-serif;
 			mso-font-charset: 0;
 			mso-number-format: General;
-			text-align: general;
-			vertical-align: bottom;
+			text-align: center;
+			vertical-align: middle;
 			border: .5pt solid windowtext;
 			background: gray;
 			mso-pattern: black none;
@@ -3778,8 +3778,8 @@
 				<td class=xl6818368></td>
 			</tr>
 			<tr height=44 style='mso-height-source:userset;height:33.0pt'>
-				<td colspan=2 height=44 class=xl23318368 style='height:33.0pt'>TO:</td>
-				<td colspan=10 class="xl22918368 setFont" width=250 style='width:190pt'>_%SendTo%_</td>
+				<td colspan=2 height=44 class=xl23318368 style='height:33.0pt;vertical-align: bottom;'>TO:</td>
+				<td colspan=10 class="xl22918368 setFont" width=250 style='width:190pt;vertical-align: bottom;' id="sendto"></td>
 				<td class=xl7018368></td>
 				<td class=xl7018368></td>
 				<td class=xl7018368></td>
@@ -3794,7 +3794,7 @@
 			</tr>
 			<tr height=21 style='mso-height-source:userset;height:15.95pt'>
 				<td colspan=2 height=21 class=xl17118368 style='height:15.95pt'>ATTN:</td>
-				<td colspan=10 class=xl12318368></td>
+				<td colspan=10 class=xl12318368 id="attn"></td>
 				<td class=xl7018368></td>
 				<td class=xl7018368></td>
 				<td class=xl7018368></td>
@@ -3809,7 +3809,7 @@
 			</tr>
 			<tr height=21 style='mso-height-source:userset;height:15.95pt'>
 				<td colspan=2 height=21 class=xl17118368 style='height:15.95pt'>CC:</td>
-				<td colspan=10 class=xl7318368></td>
+				<td colspan=10 class=xl12318368 id="cc"></td>
 				<td class=xl7018368></td>
 				<td class=xl7018368></td>
 				<td class=xl7018368></td>
@@ -3912,28 +3912,6 @@
 				<td colspan=9 class=xl17518368>- SELECTION (選択)</td>
 			</tr>
 			<tr height=6 style='mso-height-source:userset;height:5.1pt'>
-			</tr>
-			<tr height=21 style='mso-height-source:userset;height:15.75pt'>
-				<td height=21 id="hongkong-request" class="xl7618368" style='height:15.75pt; border-right:.5pt solid #aaaaaa'></td>
-				<td colspan=10 class=xl10618368 style='border-right:.5pt solid black; border-left:none'>KUWAGATA H.K. REQUEST</td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
-				<td class=xl6918368></td>
 			</tr>
 			<tr height=10 style='mso-height-source:userset;height:8.1pt'>
 				<td height=10 class=xl6918368 style='height:8.1pt'></td>
@@ -4070,6 +4048,10 @@
 				<td colspan=2 class=xl14618368 style='border-right:.5pt hairline black; border-right:.5pt solid #aaaaaa'></td>
 				<td colspan=2 class=xl7218368 style='border-right:.5pt solid black'></td>
 				<td colspan=3 class=xl8918368 style='border-right:.5pt solid black; border-left:none'></td>
+			</tr>
+			<tr height=38 style='height:28.50pt'>
+				<td colspan=4 height=38 id="mold-index10" class=xl8518368 style='height:14.25pt;border-top:none;vertical-align: middle;'>Remark</td>
+				<td colspan=25 id="mold-desc10" class="xl14018368 setFont" style='border-right:.5pt solid black; border-left:none'>_%marginalnote%_</td>
 			</tr>
 			<tr height=6 style='mso-height-source:userset;height:5.1pt'>
 				<td height=6 class=xl7818368 style='height:5.1pt;border-top:none'></td>
@@ -4297,17 +4279,43 @@
 				<td class=xl7218368 style='border-top:none'></td>
 				<td class=xl7218368 style='border-top:none'></td>
 			</tr>
-			<tr height=23 style='mso-height-source:userset;height:17.45pt;'>
-				<td colspan=4 rowspan=2 height=51 class=xl18118368 width=100 style='padding:2px 0px; border-right:.5pt solid black; border-bottom:.5pt solid black;height:38.45pt;width:76pt'>VENDOR'S
-					<br> NAME (ORIGINAL)
-					<br> (保管工場)</td>
-				<td colspan=11 rowspan=2 class="xl20918368 setFont" width=275 style='border-right:.5pt solid black; border-bottom:.5pt solid black;width:209pt'>_%SourceFactory%_</td>
+			<tr height=13 style='mso-height-source:userset;height:13.45pt;'>
+				<td colspan=4 rowspan=2 class=xl18118368 width=100 style='padding:2px 0px; border-right:.5pt solid black; border-bottom:.5pt solid black;width:76pt'>VENDOR'S
+					<br> NAME (ORIGINAL)</td>
+				<td colspan=11 rowspan=2 class="xl20918368 setFont" width=275 style='border-right:.5pt solid black; border-bottom:.5pt solid black;width:209pt'>
+				_%sour_strforeignfactoryname%_
+				</td>
 				<td colspan=4 rowspan=2 class=xl18118368 width=100 style='padding:2px 0px; border-right:.5pt solid black; border-bottom:.5pt solid black; width:76pt'>VENDOR'S
-					<br> NAME (RECEIVER)
-					<br> (移動先工場)</td>
-				<td colspan=10 rowspan=2 class="xl22118368 setFont" style='border-right:.5pt solid black; border-bottom:.5pt solid black'>_%DestinationFactory%_</td>
+					<br> NAME (RECEIVER)</td>
+				<td colspan=10 rowspan=2 class="xl22118368 setFont" style='border-right:.5pt solid black; border-bottom:.5pt solid black'>
+				_%desc_strforeignfactoryname%_
+				</td>
 			</tr>
-			<tr height=28 style='mso-height-source:userset;height:21.0pt'>
+			<tr height=21 style='mso-height-source:userset;height:21.0pt'>
+			</tr>
+			<tr height=13 style='mso-height-source:userset;height:13.45pt;'>
+				<td colspan=4 rowspan=2 class=xl18118368 width=100 style='padding:2px 0px; border-right:.5pt solid black; border-bottom:.5pt solid black;width:76pt'>(保管工場)</td>
+				<td colspan=11 rowspan=2 class="xl20918368 setFont" width=275 style='border-right:.5pt solid black; border-bottom:.5pt solid black;width:209pt;text-align: left;'>
+				_%sour_strforeignfactoryaddress%_
+				</td>
+				<td colspan=4 rowspan=2 class=xl18118368 width=100 style='padding:2px 0px; border-right:.5pt solid black; border-bottom:.5pt solid black; width:76pt'>(移動先工場)</td>
+				<td colspan=10 rowspan=2 class="xl22118368 setFont" style='border-right:.5pt solid black; border-bottom:.5pt solid black;text-align: left;'>
+				_%desc_strforeignfactoryaddress%_
+				</td>
+			</tr>
+			<tr style='mso-height-source:userset;'>
+			</tr>
+			<tr height=13 style='mso-height-source:userset;height:13.45pt;'>
+				<td colspan=4 rowspan=2 class=xl18118368 width=100 style='padding:2px 0px; border-right:.5pt solid black; border-bottom:.5pt solid black;width:76pt'>担当者/手機</td>
+				<td colspan=11 rowspan=2 class="xl20918368 setFont" width=275 style='border-right:.5pt solid black; border-bottom:.5pt solid black;width:209pt;text-align: left;'>
+				_%sour_strmoveactionuser%_ _%sour_stractionusertel%_
+				</td>
+				<td colspan=4 rowspan=2 class=xl18118368 width=100 style='padding:2px 0px; border-right:.5pt solid black; border-bottom:.5pt solid black; width:76pt'>担当者/手機</td>
+				<td colspan=10 rowspan=2 class="xl22118368 setFont" style='border-right:.5pt solid black; border-bottom:.5pt solid black;text-align: left;'>
+				_%desc_strmoveactionuser%_ _%desc_stractionusertel%_
+				</td>
+			</tr>
+			<tr style='mso-height-source:userset;'>
 			</tr>
 			<tr height=13 style='mso-height-source:userset;height:9.95pt'>
 				<td height=13 class=xl6918368 style='height:9.95pt'></td>
@@ -4341,22 +4349,18 @@
 				<td class=xl6918368></td>
 			</tr>
 			<tr height=23 style='mso-height-source:userset;height:19.5pt'>
-				<td height=23 id="instruction-customer" class="xl9518368" style='height:17.25pt; border-right:.5pt solid #aaaaaa'></td>
-				<td class=xl13618368 colspan=3>顧客指示</td>
-				<td class=xl6618368 colspan=3>事業部名</td>
-				<td class=xl6718368></td>
-				<td class=xl7418368></td>
-				<td class=xl7418368></td>
+				<td height=23 colspan=4 class="xl9518368" style='height:17.25pt;font-size: 10pt;'>KWG INSTRUCTION</td>
+				<td class=xl6618368 id="instruction-customer" colspan=3 style='border-bottom:.5pt solid black'>顧客指示</td>
+				<td class=xl6718368 colspan=3>事業部名/担当者</td>
 				<td class=xl7418368></td>
 				<td class=xl7418368></td>
 				<td class=xl7518368></td>
-				<td class=xl6718368 colspan=4>チーム名/担当者</td>
-				<td class=xl6718368></td>
-				<td class=xl7418368></td>
+				<td class=xl6618368 colspan=3 id="instruction-kuwagata" style='border-bottom:.5pt solid black'>クワガタ指示</td>
+				<td class=xl6718368 colspan=3>チーム名/担当者</td>
 				<td class=xl7418368></td>
 				<td class=xl7418368></td>
 				<td class=xl7518368></td>
-				<td class=xl6718368 colspan=2>その他</td>
+				<td class=xl6718368 colspan=2 style='border-bottom:.5pt solid black'>その他</td>
 				<td class=xl6718368></td>
 				<td class=xl7418368></td>
 				<td class=xl7418368></td>
@@ -4364,8 +4368,7 @@
 				<td class=xl7518368></td>
 			</tr>
 			<tr height=26 style='mso-height-source:userset;height:19.5pt'>
-				<td height=26 id="instruction-kuwagata" class="xl13518368" style='height:19.5pt; border-right:.5pt solid #aaaaaa'></td>
-				<td class=xl13618368 colspan=3>クワガタ指示</td>
+				<td height=23 colspan=4 id="instruction-customer" class="xl9518368" style='height:17.25pt;'>(移動指示)</td>
 				<td colspan=9 class="xl21818368 setFont" style='border-right:.5pt solid black'>_%CustomerName%_</td>
 				<td colspan=9 class="xl21818368 setFont" style='border-right:.5pt solid black; border-left:none'>_%KuwagataGroupName%_ / _%KuwagataUserName%_</td>
 				<td colspan=7 class="xl21818368 setFont" style='border-right:.5pt solid black; border-left:none'>_%Note%_</td>

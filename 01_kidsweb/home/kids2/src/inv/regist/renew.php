@@ -56,7 +56,6 @@
         fncOutputError ( 9061, DEF_ERROR, "データ異常です。", TRUE, "", $objDB );
     }
 
-
     // セッション確認
     $objAuth = fncIsSession($aryData["strSessionID"], $objAuth, $objDB);
 
@@ -162,7 +161,6 @@
         }
         // DB登録の為のデータ配列を返す
         $insertData = fncInvoiceInsertReturnArray($aryData, $aryResult, $objAuth, $objDB);
-
         // 出力明細が1件もない場合
         $slipCodeArray = $insertData['slipCodeArray'];
         $slipNoArray = $insertData['slipNoArray'];
@@ -274,11 +272,15 @@
         $aryNewResult['curThisMonthAmount']  = explode(" ", $aryNewResult['curSubTotal1'])[1];
         $aryNewResult['curLastMonthBalance'] = explode(" ", $aryNewResult['curLastMonthBalance'])[1];
         $aryNewResult['curTaxPrice1'] = explode(" ", $aryNewResult['curTaxPrice1'])[1];
+        if ($aryNewResult['strInvoiceMode'] == '1') {
+            $aryNewResult['invoiceMode1'] = 'checked';
+        } else {            
+            $aryNewResult['invoiceMode2'] = 'checked';
+        }
 
         // テンプレート読み込み
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate( "inv/regist/renew.html" );
-        
         // テンプレート生成
         $objTemplate->replace( $aryNewResult );
         $objTemplate->complete();

@@ -565,13 +565,13 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  inner join ( ";
         $aryQuery[] = "    select";
         $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
-        $aryQuery[] = "      , strslipcode ";
+        $aryQuery[] = "      , lngslipno ";
         $aryQuery[] = "    from";
         $aryQuery[] = "      m_slip ";
         $aryQuery[] = "    group by";
-        $aryQuery[] = "      strslipcode";
+        $aryQuery[] = "      lngslipno";
         $aryQuery[] = "  ) s1 ";
-        $aryQuery[] = "    on s.strslipcode = s1.strslipcode ";
+        $aryQuery[] = "    on s.lngslipno = s1.lngslipno ";
         $aryQuery[] = "    and s.lngrevisionno = s1.lngrevisionno ";
         $aryQuery[] = "WHERE s.lngslipno = " . $lngKeyCode;
     }  else if ($lngClassCode == DEF_REPORT_INV) {
@@ -591,7 +591,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , i.cursubtotal1 AS curthismonthamount";
         $aryQuery[] = "  , i.curlastmonthbalance";
         $aryQuery[] = "  , i.curtaxprice1";
-        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'mm月') as dtminvoicemonth";
+        $aryQuery[] = "  , i.strinvoicemonth";
         $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'mm月') as dtmchargeternstart_month";
         $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'dd日') as dtmchargeternstart_day";
         $aryQuery[] = "  , to_char(i.dtmchargeternend, 'mm月') as dtmchargeternend_month";
@@ -733,6 +733,44 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
     return join("", $aryQuery);
 }
 
+/**
+ * サインイメージ取得クエリの生成
+ *
+ * @param [type] $strReportKeyCode
+ * @return void
+ */
+function fncGetTxtSignatureFilenameQuery($strproductcode, $strrevisecode, $dtmdeliverydate)
+{
+    $aryQuery[] = "select";
+    $aryQuery[] = "  ms.txtsignaturefilename ";
+    $aryQuery[] = "from";
+    $aryQuery[] = "  m_Product p ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      max(lngrevisionno) lngrevisionno";
+    $aryQuery[] = "      , strproductcode";
+    $aryQuery[] = "      , strrevisecode ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_Product ";
+    $aryQuery[] = "    where";
+    $aryQuery[] = "      bytInvalidFlag = false ";
+    $aryQuery[] = "    group by";
+    $aryQuery[] = "      strProductCode";
+    $aryQuery[] = "      , strrevisecode";
+    $aryQuery[] = "  ) p1 ";
+    $aryQuery[] = "    on p.strProductCode = p1.strProductCode ";
+    $aryQuery[] = "    and p.lngrevisionno = p1.lngrevisionno ";
+    $aryQuery[] = "    and p.strrevisecode = p1.strrevisecode ";
+    $aryQuery[] = "  inner join m_signature ms ";
+    $aryQuery[] = "    on p.lnginchargegroupcode = ms.lnggroupcode ";
+    $aryQuery[] = "where";
+    $aryQuery[] = "  p.strproductcode = '". $strproductcode ."' ";
+    $aryQuery[] = "  and p.strrevisecode = '". $strrevisecode ."' ";
+    $aryQuery[] = "  and ms.dtmapplystartdate <= '". $dtmdeliverydate ."' ";
+    $aryQuery[] = "  and ms.dtmapplyenddate >= '". $dtmdeliverydate ."' ";    
+
+    return join("", $aryQuery);
+}
 
 /**
  * 請求明細取得クエリの生成

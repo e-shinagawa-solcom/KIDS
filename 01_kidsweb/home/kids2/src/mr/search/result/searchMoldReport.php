@@ -422,13 +422,26 @@ $query = implode("\n", $query);
 // クエリ実行
 $lngResultID = pg_query($query);
 
-// 検索結果が得られなかった場合
-if (!pg_num_rows($lngResultID)) {
-    // 該当帳票データなし
-    $strMessage = fncOutputError(9064, DEF_WARNING, "", false, "", $objDB);
+$lngResultNum = pg_num_rows($lngResultID);
 
-    // [lngLanguageCode]書き出し
-    $aryHtml["lngLanguageCode"] = $aryData["lngLanguageCode"];
+// 検索件数がありの場合
+if ($lngResultNum > 0) {
+    // 指定数以上の場合エラーメッセージを表示する
+    if ($lngResultNum > DEF_SEARCH_MAX) {
+        $errorFlag = true;
+        $lngErrorCode = 9057;
+        $aryErrorMessage = DEF_SEARCH_MAX;
+    }
+} else {
+    $errorFlag = true;
+    $lngErrorCode = 9064;
+    $aryErrorMessage = "";
+}
+if ($errorFlag) {  
+    // エラー画面の戻り先
+    $strReturnPath = "../mr/search/index.php?strSessionID=" . $aryData["strSessionID"];
+    // 該当帳票データなし
+    $strMessage = fncOutputError($lngErrorCode, DEF_WARNING, $aryErrorMessage, false, $strReturnPath, $objDB);
 
     // [strErrorMessage]書き出し
     $aryHtml["strErrorMessage"] = $strMessage;

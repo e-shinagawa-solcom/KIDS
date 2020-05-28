@@ -1,13 +1,14 @@
 SELECT
       moldno
-    , companydisplaycode
+    , SPLIT_PART(companydisplaycode,'_',1) as companydisplaycode
+	, SPLIT_PART(companydisplaycode,'_',2) as referrer
     , (
               SELECT
                   strcompanydisplayname
               FROM
                   m_company
               WHERE
-                  strcompanydisplaycode = companydisplaycode
+                  strcompanydisplaycode = SPLIT_PART(companydisplaycode,'_',1)
       ) companydisplayname
 FROM
 (
@@ -17,7 +18,7 @@ FROM
 
               (
                   SELECT
-                      c.strcompanydisplaycode
+                      c.strcompanydisplaycode || '_' || 'MOVEFAC' as strcompanydisplaycode
                   FROM
                       t_moldhistory itmh
                   INNER JOIN
@@ -44,7 +45,7 @@ FROM
 
               (
                   SELECT
-                      c.strcompanydisplaycode
+                      c.strcompanydisplaycode || '_' || 'VENDER' as strcompanydisplaycode
                   FROM
                       m_mold m
                   INNER JOIN

@@ -53,7 +53,7 @@
     });
 
     // 請求モード変更の処理
-    $('input[name="invoiceMode"]:radio').on("change", function () {
+    $('input[name="strinvoicemode"]:radio').on("change", function () {
         console.log("change");
         selectClosedDay();
     });
@@ -143,12 +143,21 @@
         // 自/至セット
         var billingStart = $('input[name="dtmchargeternstart"]');
         var billingEnd = $('input[name="dtmchargeternend"]');
-        var billingMonth = $('#invoiceMonth');
-
-        billingStart.val(start).change();
-        billingEnd.val(end).change();
         // 請求月セット
-        billingMonth.val(end.split('/')[1]).change();
+        $('#strinvoicemonth').val(Number(end.split('/')[1])).change();
+
+        // 請求モード
+        var strinvoicemode = $('input[name="strinvoicemode"]:checked').val();
+
+        // 請求モードが請求日モードの場合
+        if (strinvoicemode == '1') {
+            var start = $('input[name="ActionDate"]').val();
+            billingStart.val(start).change();
+            billingEnd.val(start).change();
+        } else {
+            billingStart.val(start).change();
+            billingEnd.val(end).change();
+        }
         return true;
 
 
@@ -172,10 +181,6 @@
             billingDate = y + "/" + m + "/" + d;
         }
         var dateLength = splitDate(billingDate);
-        // 請求モード
-        var invoiceMode = $('input[name="invoiceMode"]:checked').val();
-        console.log("モード：" + invoiceMode);
-        console.log(invoiceMode == '1');
         // 請求日が未入力
         if (isEmpty(billingDate) == '0') {
             return [false, false];
@@ -186,47 +191,43 @@
             return [false, false];
         }
 
-        // 請求モードが請求日モードの場合
-        if (invoiceMode == '1') {
-            var start = billingDate;
-            var end = billingDate;
+        $('input[name="ActionDate"]').val(billingDate);
+
+        if (close == 0) {
+            var date1 = new Date(billingDate + ' 02:00');
+            // 今月初日
+            var first_date = new Date(date1.getFullYear(), date1.getMonth(), 1);
+            // 今月末日
+            var last_date = new Date(date1.getFullYear(), date1.getMonth() + 1, 0);
+            // 自の取得
+            var start = first_date.getFullYear() + '/' + ("00" + (first_date.getMonth() + 1)).slice(-2) + '/' + ("00" + first_date.getDate()).slice(-2);
+            // 至の取得
+            var end = last_date.getFullYear() + '/' + ("00" + (last_date.getMonth() + 1)).slice(-2) + '/' + ("00" + last_date.getDate()).slice(-2);
         } else {
-            if (close == 0) {
-                var date1 = new Date(billingDate + ' 02:00');
-                // 今月初日
-                var first_date = new Date(date1.getFullYear(), date1.getMonth(), 1);
-                // 今月末日
-                var last_date = new Date(date1.getFullYear(), date1.getMonth() + 1, 0);
+            var date1 = new Date(billingDate + ' 00:00');
+            console.log(date1.getDate());
+            if (date1.getDate() <= close) {
+                // 今月の取得
+                var curr_month = new Date(date1.getFullYear(), date1.getMonth(), 1);
+                // 先月の取得
+                var last_month = new Date(date1.getFullYear(), date1.getMonth() - 1, close);
+                last_month.setDate(last_month.getDate() + 1);
+
                 // 自の取得
-                var start = first_date.getFullYear() + '/' + ("00" + (first_date.getMonth() + 1)).slice(-2) + '/' + ("00" + first_date.getDate()).slice(-2);
+                var start = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice(-2) + '/' + ("00" + last_month.getDate()).slice(-2);
                 // 至の取得
-                var end = last_date.getFullYear() + '/' + ("00" + (last_date.getMonth() + 1)).slice(-2) + '/' + ("00" + last_date.getDate()).slice(-2);
+                var end = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice(-2) + '/' + ("00" + close).slice(-2);
             } else {
-                var date1 = new Date(billingDate + ' 00:00');
-                console.log(date1.getDate());
-                if (date1.getDate() <= close) {
-                    // 今月の取得
-                    var curr_month = new Date(date1.getFullYear(), date1.getMonth(), 1);
-                    // 先月の取得
-                    var last_month = new Date(date1.getFullYear(), date1.getMonth() - 1, close);
-                    last_month.setDate(last_month.getDate() + 1);
+                // 今月の取得
+                var curr_month = new Date(date1.getFullYear(), date1.getMonth(), close);
+                curr_month.setDate(curr_month.getDate() + 1);
+                // 自の取得
+                var start = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice(-2) + '/' + ("00" + curr_month.getDate()).slice(-2);
+                // 至の取得
+                var end = date1.getFullYear() + '/' + ("00" + (date1.getMonth() + 2)).slice(-2) + '/' + ("00" + close).slice(-2);
 
-                    // 自の取得
-                    var start = last_month.getFullYear() + '/' + ("00" + (last_month.getMonth() + 1)).slice(-2) + '/' + ("00" + last_month.getDate()).slice(-2);
-                    // 至の取得
-                    var end = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice(-2) + '/' + ("00" + close).slice(-2);
-                } else {
-                    // 今月の取得
-                    var curr_month = new Date(date1.getFullYear(), date1.getMonth(), close);
-                    curr_month.setDate(curr_month.getDate() + 1);
-                    // 自の取得
-                    var start = curr_month.getFullYear() + '/' + ("00" + (curr_month.getMonth() + 1)).slice(-2) + '/' + ("00" + curr_month.getDate()).slice(-2);
-                    // 至の取得
-                    var end = date1.getFullYear() + '/' + ("00" + (date1.getMonth() + 2)).slice(-2) + '/' + ("00" + close).slice(-2);
-
-                    console.log(start);
-                    console.log(end);
-                }
+                console.log(start);
+                console.log(end);
             }
         }
         // 返却
@@ -466,7 +467,7 @@
                 return false;
             }
         });
-        
+
         if (isError) {
             return;
         }

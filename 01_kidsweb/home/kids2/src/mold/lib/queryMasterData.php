@@ -69,7 +69,7 @@ if ((new clsAuth())->isLogin($_REQUEST["strSessionID"], $objDB))
                 {
                     $keys = array_keys($resultDataSet[$i]);
                     $values = array_values($resultDataSet[$i]);
-                    $json[$i] = array($keys[0]=>$values[0], $keys[1]=>$values[1], $keys[2]=>$values[2]);
+                    $json[$i] = array($keys[0]=>$values[0], $keys[1]=>$values[1], $keys[2]=>$values[2], $keys[3]=>$values[3]);
                 }
                 echo json_encode($json);
 			}

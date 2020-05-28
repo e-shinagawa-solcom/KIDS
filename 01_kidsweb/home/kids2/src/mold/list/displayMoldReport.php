@@ -4,19 +4,18 @@
 //       金型帳票出力 帳票出力画面
 // ----------------------------------------------------------------------------
 // ライブラリファイル読込
-include( 'conf.inc' );
-require( LIB_FILE );
+include 'conf.inc';
+require LIB_FILE;
 
+require_once SRC_ROOT . '/mold/lib/UtilBussinesscode.class.php';
+require_once SRC_ROOT . '/mold/lib/UtilMold.class.php';
+require_once SRC_ROOT . '/mold/lib/UtilGroup.class.php';
+require_once SRC_ROOT . '/mold/lib/UtilUser.class.php';
+require_once SRC_ROOT . '/mold/lib/UtilProduct.class.php';
+require_once SRC_ROOT . '/mold/lib/UtilCompany.class.php';
 
-require_once(SRC_ROOT.'/mold/lib/UtilBussinesscode.class.php');
-require_once(SRC_ROOT.'/mold/lib/UtilMold.class.php');
-require_once(SRC_ROOT.'/mold/lib/UtilGroup.class.php');
-require_once(SRC_ROOT.'/mold/lib/UtilUser.class.php');
-require_once(SRC_ROOT.'/mold/lib/UtilProduct.class.php');
-require_once(SRC_ROOT.'/mold/lib/UtilCompany.class.php');
-
-require_once (SRC_ROOT.'/mold/lib/index/TableMoldReport.class.php');
-require_once (SRC_ROOT.'/mold/lib/index/TableMoldReportDetail.class.php');
+require_once SRC_ROOT . '/mold/lib/index/TableMoldReport.class.php';
+require_once SRC_ROOT . '/mold/lib/index/TableMoldReportDetail.class.php';
 
 // 金型帳票テンプレートパス
 const PATH_TEMPLATE = "/list/result/mr_base.html";
@@ -31,7 +30,7 @@ const ID_MOLD_NO = "mold-no";
 const ID_MOLD_DESC = "mold-desc";
 
 // オブジェクト生成
-$objDB   = new clsDB();
+$objDB = new clsDB();
 $objAuth = new clsAuth();
 
 // DBオープン
@@ -40,12 +39,11 @@ $objDB->open("", "", "", "");
 setcookie("strSessionID", $_REQUEST["strSessionID"]);
 
 // セッション確認
-$objAuth = fncIsSession( $_REQUEST["strSessionID"], $objAuth, $objDB );
+$objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
 // 1900 金型帳票管理
-if ( !fncCheckAuthority( DEF_FUNCTION_MR0, $objAuth ) )
-{
-	fncOutputError( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
+if (!fncCheckAuthority(DEF_FUNCTION_MR0, $objAuth)) {
+    fncOutputError(9060, DEF_WARNING, "アクセス権限がありません。", true, "", $objDB);
 }
 
 // パラメータの取得
@@ -53,351 +51,472 @@ $moldReportId = $_REQUEST["MoldReportId"];
 $revision = $_REQUEST["Revision"];
 $version = $_REQUEST["Version"];
 
-if($moldReportId && (0 <= $revision) && (0 <= $version))
-{
-	// ユーティリティクラスのインスタンス生成
-	$utilMold = UtilMold::getInstance();
-	$utilBussinesscode = UtilBussinesscode::getInstance();
-	$utilGroup = UtilGroup::getInstance();
-	$utilUser = UtilUser::getInstance();
-	$utilProduct = UtilProduct::getInstance();
-	$utilCompany = UtilCompany::getInstance();
+if ($moldReportId && (0 <= $revision) && (0 <= $version)) {
+    // ユーティリティクラスのインスタンス生成
+    $utilMold = UtilMold::getInstance();
+    $utilBussinesscode = UtilBussinesscode::getInstance();
+    $utilGroup = UtilGroup::getInstance();
+    $utilUser = UtilUser::getInstance();
+    $utilProduct = UtilProduct::getInstance();
+    $utilCompany = UtilCompany::getInstance();
 
-	try
-	{
-		// 金型帳票データの取得
-		$recordMoldReport = $utilMold->selectMoldReport($moldReportId, $revision, $version);
+    try
+    {
+        // 金型帳票データの取得
+        $recordMoldReport = $utilMold->selectMoldReport($moldReportId, $revision, $version);
+        // リビジョンの取得
+        $revision = $recordMoldReport[TableMoldReport::Revision];
+        // 印刷済フラグの取得
+        $printed = $recordMoldReport[TableMoldReport::Printed];
 
-		// リビジョンの取得
-		$revision = $recordMoldReport[TableMoldReport::Revision];
-		// 印刷済フラグの取得
-		$printed =  $recordMoldReport[TableMoldReport::Printed];
+        // リクエストが原本印刷の場合 かつ
+        // リクエスト元が金型帳票登録完了画面以外の場合
+        if (!array_key_exists("isCopy", $_REQUEST) && !isset($_REQUEST['isRegist'])) {
+            // 原本が印刷されていない場合
+            if ($printed == "f") {
+                try
+                {
+                    // トランザクション開始
+                    $objDB->transactionBegin();
+                    // 印刷済みフラグをtrueに更新
+                    $utilMold->updateAlredyPrintedReport($moldReportId, $revision);
+                    // コミット
+                    $objDB->transactionCommit();
+                } catch (SQLException $e) {
+                    // ロールバック
+                    $objDB->transactionRollback();
+                    throw $e;
+                }
+            }
+        }
 
-		// リクエストが原本印刷の場合 かつ
-		// リクエスト元が金型帳票登録完了画面以外の場合
-		if (!array_key_exists("isCopy", $_REQUEST) && !isset($_REQUEST['isRegist']))
-		{
-			// 原本が印刷されていない場合
-			if($printed == "f")
-			{
-				try
-				{
-					// トランザクション開始
-					$objDB->transactionBegin();
-					// 印刷済みフラグをtrueに更新
-					$utilMold->updateAlredyPrintedReport($moldReportId, $revision);
-					// コミット
-					$objDB->transactionCommit();
-				}
-				catch (SQLException $e)
-				{
-					// ロールバック
-					$objDB->transactionRollback();
-					throw $e;
-				}
-			}
-		}
+        // 業務コード説明の取得(_%ReportCategoryDesc%_)
+        $recordMoldReport[TableMoldReport::ReportCategory . "Desc"] =
+        $utilBussinesscode->getDescription('帳票区分', $recordMoldReport[TableMoldReport::ReportCategory]);
 
-		// 業務コード説明の取得(_%ReportCategoryDesc%_)
-		$recordMoldReport[TableMoldReport::ReportCategory."Desc"] =
-			$utilBussinesscode->getDescription('帳票区分', $recordMoldReport[TableMoldReport::ReportCategory]);
+        // 製品名称の取得(_%ProductName%_)
+        $recordMoldReport["ProductName"] =
+        $utilProduct->selectProductNameByProductCode($recordMoldReport[TableMoldReport::ProductCode], $recordMoldReport[TableMoldReport::ReviseCode]);
 
-		// 製品名称の取得(_%ProductName%_)
-		$recordMoldReport["ProductName"] =
-			$utilProduct->selectProductNameByProductCode($recordMoldReport[TableMoldReport::ProductCode], $recordMoldReport[TableMoldReport::ReviseCode]);
+        // 表示会社名を取得
+        // _%SendTo%_
+        $recordMoldReport[TableMoldReport::SendTo] =
+        $utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::SendTo]);
+        // _%CustomerName%_
+        $recordMoldReport["CustomerName"] =
+        $utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::CustomerCode]);
 
-		// 表示会社名を取得
-		// _%SendTo%_
-		$recordMoldReport[TableMoldReport::SendTo] =
-			$utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::SendTo]);
-		// _%CustomerName%_
-		$recordMoldReport["CustomerName"] =
-			$utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::CustomerCode]);
+        // 帳票区分が10:移動版又は20:返却版の場合
+        if (($recordMoldReport[TableMoldReport::ReportCategory] == "10" ||
+            $recordMoldReport[TableMoldReport::ReportCategory] == "20")) {
+            // _%SourceFactory%_
+            $recordMoldReport[TableMoldReport::SourceFactory] =
+            $utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::SourceFactory]);
+            // _%DestinationFactory%_
+            $recordMoldReport[TableMoldReport::DestinationFactory] =
+            $utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::DestinationFactory]);
+        }
 
-		// 帳票区分が10:移動版又は20:返却版の場合
-		if (($recordMoldReport[TableMoldReport::ReportCategory] == "10" ||
-			 $recordMoldReport[TableMoldReport::ReportCategory] == "20"))
-		{
-			// _%SourceFactory%_
-			$recordMoldReport[TableMoldReport::SourceFactory] =
-				$utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::SourceFactory]);
-			// _%DestinationFactory%_
-			$recordMoldReport[TableMoldReport::DestinationFactory] =
-				$utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::DestinationFactory]);
-		}
+        // 表示グループ名を取得(_%KuwagataGroupName%_)
+        $recordMoldReport["KuwagataGroupName"] =
+        $utilGroup->selectDisplayNameByGroupCode($recordMoldReport[TableMoldReport::KuwagataGroupCode]);
+        // 表示ユーザ名を取得(_%KuwagataUserName%_)
+        $recordMoldReport["KuwagataUserName"] =
+        $utilUser->selectDisplayNameByUserCode($recordMoldReport[TableMoldReport::KuwagataUserCode]);
 
-		// 表示グループ名を取得(_%KuwagataGroupName%_)
-		$recordMoldReport["KuwagataGroupName"] =
-			$utilGroup->selectDisplayNameByGroupCode($recordMoldReport[TableMoldReport::KuwagataGroupCode]);
-		// 表示ユーザ名を取得(_%KuwagataUserName%_)
-		$recordMoldReport["KuwagataUserName"] =
-			$utilUser->selectDisplayNameByUserCode($recordMoldReport[TableMoldReport::KuwagataUserCode]);
+        // 日付の分割(ActionRequestDate)
+        list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::ActionRequestDate]);
+        $recordMoldReport[TableMoldReport::ActionRequestDate . "0"] = $yyyy;
+        $recordMoldReport[TableMoldReport::ActionRequestDate . "1"] = $mm;
+        $recordMoldReport[TableMoldReport::ActionRequestDate . "2"] = $dd;
 
-		// 日付の分割(ActionRequestDate)
-		list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::ActionRequestDate]);
-		$recordMoldReport[TableMoldReport::ActionRequestDate."0"] = $yyyy;
-		$recordMoldReport[TableMoldReport::ActionRequestDate."1"] = $mm;
-		$recordMoldReport[TableMoldReport::ActionRequestDate."2"] = $dd;
+        // 日付の分割(RequestDate)
+        list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::RequestDate]);
+        $recordMoldReport[TableMoldReport::RequestDate . "0"] = $yyyy;
+        $recordMoldReport[TableMoldReport::RequestDate . "1"] = $mm;
+        $recordMoldReport[TableMoldReport::RequestDate . "2"] = $dd;
 
-		// 日付の分割(RequestDate)
-		list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::RequestDate]);
-		$recordMoldReport[TableMoldReport::RequestDate."0"] = $yyyy;
-		$recordMoldReport[TableMoldReport::RequestDate."1"] = $mm;
-		$recordMoldReport[TableMoldReport::RequestDate."2"] = $dd;
+        // 日付の分割(ReturnSchedule)
+        list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::ReturnSchedule]);
+        $recordMoldReport[TableMoldReport::ReturnSchedule . "0"] = $yyyy;
+        $recordMoldReport[TableMoldReport::ReturnSchedule . "1"] = $mm;
+        $recordMoldReport[TableMoldReport::ReturnSchedule . "2"] = $dd;
 
-		// 日付の分割(ReturnSchedule)
-		list($yyyy, $mm, $dd) = explode("-", $recordMoldReport[TableMoldReport::ReturnSchedule]);
-		$recordMoldReport[TableMoldReport::ReturnSchedule."0"] = $yyyy;
-		$recordMoldReport[TableMoldReport::ReturnSchedule."1"] = $mm;
-		$recordMoldReport[TableMoldReport::ReturnSchedule."2"] = $dd;
+        // 金型詳細の取得
+        $details = $utilMold->selectMoldReportDetail(
+            $recordMoldReport[TableMoldReport::MoldReportId],
+            $recordMoldReport[TableMoldReport::Revision]);
 
-		// 金型詳細の取得
-		$details = $utilMold->selectMoldReportDetail(
-				$recordMoldReport[TableMoldReport::MoldReportId],
-				$recordMoldReport[TableMoldReport::Revision]);
+        // 金型詳細件数の取得
+        $cntDetails = count($details);
 
-		// 金型詳細件数の取得
-		$cntDetails = count($details);
+        // 金型帳票IDの出力(フォーマット変更)
+        $revision = "-" . str_pad($recordMoldReport[TableMoldReport::Revision], 2, "0", STR_PAD_LEFT);
+        $recordMoldReport[TableMoldReport::MoldReportId] = $recordMoldReport[TableMoldReport::MoldReportId] . $revision;
 
-		// 金型帳票IDの出力(フォーマット変更)
-		$revision = "-" . str_pad($recordMoldReport[TableMoldReport::Revision], 2, "0", STR_PAD_LEFT);
-		$recordMoldReport[TableMoldReport::MoldReportId] = $recordMoldReport[TableMoldReport::MoldReportId] . $revision;
+        // テンプレート読み込み
+        $objTemplate = new clsTemplate();
+        $objTemplate->getTemplate(PATH_TEMPLATE);
 
-		// テンプレート読み込み
-		$objTemplate = new clsTemplate ();
-		$objTemplate->getTemplate (PATH_TEMPLATE);
+        // プレースホルダー置換
+        $objTemplate->replace($recordMoldReport);
+        $objTemplate->complete();
 
-		// プレースホルダー置換
-		$objTemplate->replace($recordMoldReport);
-		$objTemplate->complete();
+        $doc = new DOMDocument();
 
-		$doc = new DOMDocument();
+        // パースエラー抑制
+        libxml_use_internal_errors(true);
+        // DOMパース
+        $doc->loadHTML($objTemplate->strTemplate);
+        // パースエラークリア
+        libxml_clear_errors();
+        // パースエラー抑制解除
+        libxml_use_internal_errors(false);
 
-		// パースエラー抑制
-		libxml_use_internal_errors(true);
-		// DOMパース
-		$doc->loadHTML($objTemplate->strTemplate);
-		// パースエラークリア
-		libxml_clear_errors();
-		// パースエラー抑制解除
-		libxml_use_internal_errors(false);
+        // body要素の取得
+        $body = $doc->getElementsByTagName("body")->item(0);
+        // 金型帳票ページ単位取得
+        $page = $doc->getElementById(ID_REPORT_CONTENTS);
+        // ページ設定(1ページ目)
+        $page->setAttribute("page", 1);
 
-		// body要素の取得
-		$body = $doc->getElementsByTagName("body")->item(0);
-		// 金型帳票ページ単位取得
-		$page = $doc->getElementById(ID_REPORT_CONTENTS);
-		// ページ設定(1ページ目)
-		$page->setAttribute("page", 1);
+        // 依頼区分
+        switch ($recordMoldReport[TableMoldReport::RequestCategory]) {
+            case "10":
+                setSelectedCell($doc->getElementById("japan-request"));
+                break;
+            case "20":
+                setSelectedCell($doc->getElementById("hongkong-request"));
+                break;
+            default:
+                // プログラムエラー
+                fncOutputError(9054, DEF_ERROR, "不正な依頼区分です。:" . "", true, "", $objDB);
+                break;
+        }
 
-		// 依頼区分
-		switch ($recordMoldReport[TableMoldReport::RequestCategory])
-		{
-			case "10":
-				setSelectedCell($doc->getElementById("japan-request"));
-				break;
-			case "20":
-				setSelectedCell($doc->getElementById("hongkong-request"));
-				break;
-			default:
-				// プログラムエラー
-				fncOutputError(9054, DEF_ERROR, "不正な依頼区分です。:"."", TRUE, "", $objDB);
-				break;
-		}
+        // 指示区分
+        switch ($recordMoldReport[TableMoldReport::InstructionCategory]) {
+            case "10":
+                setSelectedCell($doc->getElementById("instruction-customer"));
+                break;
+            case "20":
+                setSelectedCell($doc->getElementById("instruction-kuwagata"));
+                break;
+            default:
+                // TODO 例外出力 業務コードエラー
+                break;
+        }
 
-		// 指示区分
-		switch ($recordMoldReport[TableMoldReport::InstructionCategory])
-		{
-			case "10":
-				setSelectedCell($doc->getElementById("instruction-customer"));
-				break;
-			case "20":
-				setSelectedCell($doc->getElementById("instruction-kuwagata"));
-				break;
-			default:
-				// TODO 例外出力 業務コードエラー
-				break;
-		}
+        // 移動版/返却版のみセルの塗り潰しを行う項目
+        if ($recordMoldReport[TableMoldReport::ReportCategory] == "10" ||
+            $recordMoldReport[TableMoldReport::ReportCategory] == "20") {
+            // 移動方法
+            switch ($recordMoldReport[TableMoldReport::TransferMethod]) {
+                case "10":
+                    setSelectedCell($doc->getElementById("deliver-to-receiver"));
+                    break;
+                case "20":
+                    setSelectedCell($doc->getElementById("pickup-by-receiver"));
+                    break;
+                case "30":
+                    setSelectedCell($doc->getElementById("via-hong-kong"));
+                    break;
+                default:
+                    // TODO 例外出力 業務コードエラー
+                    break;
+            }
+            // 生産後の処理
+            switch ($recordMoldReport[TableMoldReport::FinalKeep]) {
+                case "10":
+                    setSelectedCell($doc->getElementById("keep-by-receiver"));
+                    break;
+                case "20":
+                    setSelectedCell($doc->getElementById("return-to-original"));
+                    break;
+                default:
+                    // TODO 例外出力 業務コードエラー
+                    break;
+            }
+        }
 
-		// 移動版/返却版のみセルの塗り潰しを行う項目
-		if ($recordMoldReport[TableMoldReport::ReportCategory] == "10" ||
-				$recordMoldReport[TableMoldReport::ReportCategory] == "20")
-		{
-			// 移動方法
-			switch ($recordMoldReport[TableMoldReport::TransferMethod])
-			{
-				case "10":
-					setSelectedCell($doc->getElementById("deliver-to-receiver"));
-					break;
-				case "20":
-					setSelectedCell($doc->getElementById("pickup-by-receiver"));
-					break;
-				case "30":
-					setSelectedCell($doc->getElementById("via-hong-kong"));
-					break;
-				default:
-					// TODO 例外出力 業務コードエラー
-					break;
-			}
-			// 生産後の処理
-			switch ($recordMoldReport[TableMoldReport::FinalKeep])
-			{
-				case "10":
-					setSelectedCell($doc->getElementById("keep-by-receiver"));
-					break;
-				case "20":
-					setSelectedCell($doc->getElementById("return-to-original"));
-					break;
-				default:
-					// TODO 例外出力 業務コードエラー
-					break;
-			}
-		}
+        // 詳細件数が10件以下の場合(帳票1枚)
+        // # 0件は索引時に例外を投げるので考えない
+        if ($cntDetails <= 10) {
+            foreach ($details as $i => $record) {
+                $index = $i + 1;
 
-		// 詳細件数が10件以下の場合(帳票1枚)
-		// # 0件は索引時に例外を投げるので考えない
-		if ($cntDetails <= 10)
-		{
-			foreach($details as $i => $record)
-			{
-				$index = $i + 1;
+                // 金型 各種セルの取得
+                $td_index = $doc->getElementById(ID_MOLD_INDEX . $index);
+                $td_moldNo = $doc->getElementById(ID_MOLD_NO . $index);
+                $td_desc = $doc->getElementById(ID_MOLD_DESC . $index);
 
-				// 金型 各種セルの取得
-				$td_index = $doc->getElementById(ID_MOLD_INDEX.$index);
-				$td_moldNo = $doc->getElementById(ID_MOLD_NO.$index);
-				$td_desc = $doc->getElementById(ID_MOLD_DESC.$index);
+                // テキストノードの作成
+                $text_index = $doc->createTextNode($index);
+                $text_moldNo = $doc->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldNo]));
+                $text_desc = $doc->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldDescription]));
 
-				// テキストノードの作成
-				$text_index = $doc->createTextNode($index);
-				$text_moldNo = $doc->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldNo]));
-				$text_desc = $doc->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldDescription]));
+                // テキストノードの追加
+                $td_index->appendChild($text_index);
+                $td_moldNo->appendChild($text_moldNo);
+                $td_desc->appendChild($text_desc);
+            }
+            // ページ番号設定
+            $td_pageNum = $doc->getElementById(ID_PAGE_NUMBER);
+            switch ($recordMoldReport[TableMoldReport::ReportCategory]) {
+                case "10":
+                case "20":
+                    $td_pageNum->appendChild($doc->createTextNode("1 / 2"));
+                    break;
+                default:
+                    $td_pageNum->appendChild($doc->createTextNode("1 / 1"));
+                    break;
+            }
+            $sendto = $doc->getElementById("sendto");
+            $sendto_node = $doc->createTextNode($recordMoldReport["sour_strfactorydisplayname"]);
+            $sendto->appendChild($sendto_node);
+            $attn = $doc->getElementById("attn");
+            $attn_node = $doc->createTextNode($recordMoldReport["sour_strinchargeattention"]);
+            $attn->appendChild($attn_node);
+            $cc = $doc->getElementById("cc");
+            $cc_node = $doc->createTextNode($recordMoldReport["sour_strinchargecc"]);
+            $cc->appendChild($cc_node);
+            // 画面出力
+            // header("Content-type: text/html; charset=utf-8");
+            // $out = $doc->saveHTML();
+            // echo $out;
+            // 共通部分保存の為、一旦clsTemplate内に退避
+            $objTemplate->strTemplate = $doc->saveHTML();
+            // 帳票ページ単位でDOMDocumentを作成
+            $docs[] = $doc;
+            // 帳票区分
+            switch ($recordMoldReport[TableMoldReport::ReportCategory]) {
+                case "10":
+                case "20":
+                    // パースエラー抑制
+                    libxml_use_internal_errors(true);
+                    // 新規ページの作成用のDOMDocumentを作成
+                    $newDoc = new DOMDocument();
+                    $newDoc->loadHTML($objTemplate->strTemplate);
+                    // 金型帳票ページ単位取得
+                    $newPage = $newDoc->getElementById(ID_REPORT_CONTENTS);
+                    // ページ番号設定
+                    $newPage->setAttribute("page", 2);
+                    $sendto = $newDoc->getElementById("sendto");
+                    $sendto->removeChild($sendto->lastChild);
+                    $sendto_node = $newDoc->createTextNode($recordMoldReport["desc_strfactorydisplayname"]);
+                    $sendto->appendChild($sendto_node);
 
-				// テキストノードの追加
-				$td_index->appendChild($text_index);
-				$td_moldNo->appendChild($text_moldNo);
-				$td_desc->appendChild($text_desc);
-			}
+                    $attn = $newDoc->getElementById("attn");
+                    if ($attn->lastChild != null) {
+                        $attn->removeChild($attn->lastChild);
+                    }
+                    $attn_node = $newDoc->createTextNode($recordMoldReport["desc_strinchargeattention"]);
+                    $attn->appendChild($attn_node);
 
-			// ページ番号設定
-			$td_pageNum = $doc->getElementById(ID_PAGE_NUMBER);
-			$td_pageNum->appendChild($doc->createTextNode("1 / 1"));
+                    $cc = $newDoc->getElementById("cc");
+                    if ($cc->lastChild != null) {
+                        $cc->removeChild($cc->lastChild);
+                    }
+                    $cc_node = $newDoc->createTextNode($recordMoldReport["desc_strinchargecc"]);
+                    $cc->appendChild($cc_node);
 
-			// 画面出力
-			// header("Content-type: text/html; charset=utf-8");
-			$out = $doc->saveHTML();
-			echo $out;
-		}
-		// 10件以上(帳票2枚以上)
-		else
-		{
-			// 最大ページ数の算出
-			$maxPage = floor($cntDetails / 10) + ($cntDetails % 10 ? 1 : 0);
+                    $td_pageNum = $newDoc->getElementById(ID_PAGE_NUMBER);
+                    $td_pageNum->removeChild($td_pageNum->lastChild);
+                    // ページ番号テキストノードの作成
+                    $text_pageNum = $newDoc->createTextNode("2 / 2");
+                    $td_pageNum->appendChild($text_pageNum);
+                    // DOMDocumentの追加
+                    $docs[] = $newDoc;
+                    // パースエラークリア
+                    libxml_clear_errors();
+                    // パースエラー抑制解除
+                    libxml_use_internal_errors(false);
+                    break;
+                default:
+                    break;
+            }
 
-			// 共通部分保存の為、一旦clsTemplate内に退避
-			$objTemplate->strTemplate = $doc->saveHTML();
+            array_shift($docs);
+            // ノードのマージ
+            foreach ($docs as $innerDoc) {
+                // 帳票コンテンツの取得
+                $srcContents = $innerDoc->getElementById(ID_REPORT_CONTENTS);
+                // 帳票コンテンツのインポート
+                $currentContents = $doc->importNode($srcContents, true);
+                $body->appendChild($currentContents);
+            }
 
-			// 帳票ページ単位でDOMDocumentを作成
-			$docs[] = $doc;
+            // 画面出力
+            // header("Content-type: text/html; charset=utf-8");
+            echo $doc->saveHTML();
+            // echo $out;
+        }
+        // 10件以上(帳票2枚以上)
+        else {
+            // 最大ページ数の算出
+            $maxPage = floor($cntDetails / 10) + ($cntDetails % 10 ? 1 : 0);
 
-			// パースエラー抑制
-			libxml_use_internal_errors(true);
+            switch ($recordMoldReport[TableMoldReport::ReportCategory]) {
+                case "10":
+                case "20":
+                    $maxPage_addmove = $maxPage * 2;
+                    break;
+                default:
+                    $maxPage_addmove = $maxPage;
+                    break;
+            }
 
-			// 金型数に応じて追加ページを作成する(1ページ分下駄を履かせる)
-			for ($i = 1; $i < $maxPage; $i++)
-			{
-				// 新規ページの作成用のDOMDocumentを作成
-				$newDoc = new DOMDocument();
-				$newDoc->loadHTML($objTemplate->strTemplate);
-				// 金型帳票ページ単位取得
-				$newPage = $newDoc->getElementById(ID_REPORT_CONTENTS);
-				// ページ番号設定
-				$newPage->setAttribute("page", $i + 1);
-				// DOMDocumentの追加
-				$docs[] = $newDoc;
-			}
+            $sendto = $doc->getElementById("sendto");
+            $sendto_node = $doc->createTextNode($recordMoldReport["sour_strfactorydisplayname"]);
+            $sendto->appendChild($sendto_node);
+            $attn = $doc->getElementById("attn");
+            $attn_node = $doc->createTextNode($recordMoldReport["sour_strinchargeattention"]);
+            $attn->appendChild($attn_node);
+            $cc = $doc->getElementById("cc");
+            $cc_node = $doc->createTextNode($recordMoldReport["sour_strinchargecc"]);
+            $cc->appendChild($cc_node);
 
-			// パースエラークリア
-			libxml_clear_errors();
-			// パースエラー抑制解除
-			libxml_use_internal_errors(false);
+            // 共通部分保存の為、一旦clsTemplate内に退避
+            $objTemplate->strTemplate = $doc->saveHTML();
 
-			// (テンプレート上の)ページ番号の設定
-			foreach($docs as $pageNum => $innerDoc)
-			{
-				$td_pageNum = $innerDoc->getElementById(ID_PAGE_NUMBER);
-				// ページ番号テキストノードの作成
-				$text_pageNum = $innerDoc->createTextNode(($pageNum + 1)." / ".$maxPage);
-				$td_pageNum->appendChild($text_pageNum);
-			}
+            // 帳票ページ単位でDOMDocumentを作成
+            $docs[] = $doc;
 
-			// 金型数分走査
-			foreach($details as $i => $record)
-			{
-				$index = $i + 1;
+            // パースエラー抑制
+            libxml_use_internal_errors(true);
 
-				// 現在のページ番号を採番
-				if ($index <=10)
-				{
-					$currentPage = 0;
-				}
-				// 2ページ名以上(改ページ)
-				else if ($index%10 == 1)
-				{
-					// 改ページ
-					$currentPage++;
-				}
+            // 金型数に応じて追加ページを作成する(1ページ分下駄を履かせる)
+            for ($i = 1; $i < $maxPage_addmove; $i++) {
+                // 新規ページの作成用のDOMDocumentを作成
+                $newDoc = new DOMDocument();
+                $newDoc->loadHTML($objTemplate->strTemplate);
+                // 金型帳票ページ単位取得
+                $newPage = $newDoc->getElementById(ID_REPORT_CONTENTS);
+                // ページ番号設定
+                $newPage->setAttribute("page", $i + 1);
 
-				// ID取得用のindex作成(接頭辞+1～10までなので)
-				$index_loop = ($index%10 == 0) ? 10 : $index - floor($index/10)*10;
+                if ($i > ($maxPage - 1)) {
+                    switch ($recordMoldReport[TableMoldReport::ReportCategory]) {
+                        case "10":
+                        case "20":
+                            $sendto = $newDoc->getElementById("sendto");
+                            $sendto->removeChild($sendto->lastChild);
+                            $sendto_node = $newDoc->createTextNode($recordMoldReport["desc_strfactorydisplayname"]);
+                            $sendto->appendChild($sendto_node);
 
-				// 金型 各種セルの取得
-				$td_index = $docs[$currentPage]->getElementById(ID_MOLD_INDEX.$index_loop);
-				$td_moldNo = $docs[$currentPage]->getElementById(ID_MOLD_NO.$index_loop);
-				$td_desc = $docs[$currentPage]->getElementById(ID_MOLD_DESC.$index_loop);
+                            $attn = $newDoc->getElementById("attn");
+                            if ($attn->lastChild != null) {
+                                $attn->removeChild($attn->lastChild);
+                            }
+                            $attn_node = $newDoc->createTextNode($recordMoldReport["desc_strinchargeattention"]);
+                            $attn->appendChild($attn_node);
 
-				// テキストノードの作成
-				$text_index = $docs[$currentPage]->createTextNode($index);
-				$text_moldNo = $docs[$currentPage]->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldNo]));
-				$text_desc = $docs[$currentPage]->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldDescription]));
+                            $cc = $newDoc->getElementById("cc");
+                            if ($cc->lastChild != null) {
+                                $cc->removeChild($cc->lastChild);
+                            }
+                            $cc_node = $newDoc->createTextNode($recordMoldReport["desc_strinchargecc"]);
+                            $cc->appendChild($cc_node);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                // DOMDocumentの追加
+                $docs[] = $newDoc;
+            }
 
-				// テキストノードの追加
-				$td_index->appendChild($text_index);
-				$td_moldNo->appendChild($text_moldNo);
-				$td_desc->appendChild($text_desc);
-			}
+            // パースエラークリア
+            libxml_clear_errors();
+            // パースエラー抑制解除
+            libxml_use_internal_errors(false);
 
-			// 親(マージ先)となる先頭要素のDOMDocumentの退避
-			array_shift($docs);
+            // (テンプレート上の)ページ番号の設定
+            foreach ($docs as $pageNum => $innerDoc) {
+                $td_pageNum = $innerDoc->getElementById(ID_PAGE_NUMBER);
+                // ページ番号テキストノードの作成
+                $text_pageNum = $innerDoc->createTextNode(($pageNum + 1) . " / " . $maxPage_addmove);
+                $td_pageNum->appendChild($text_pageNum);
+            }
 
-			// ノードのマージ
-			foreach ($docs as $innerDoc)
-			{
-				// 帳票コンテンツの取得
-				$srcContents = $innerDoc->getElementById(ID_REPORT_CONTENTS);
-				// 帳票コンテンツのインポート
-				$currentContents = $doc->importNode($srcContents, true);
-				$body->appendChild($currentContents);
-			}
+            // 金型数分走査
+            foreach ($details as $i => $record) {
+                $index = $i + 1;
 
-			// 画面出力
-			// header("Content-type: text/html; charset=utf-8");
-			echo $doc->saveHTML();
-		}
-	}
-	catch (SQLException $e)
-	{
-		echo ($e->getMessage());
-		// 情報の取得に失敗しました。
-		fncOutputError(9061, DEF_WARNING, " 対象のデータが変更された可能性があります。", TRUE, "", $objDB);
-	}
-	catch (InvalidArgumentException $e)
-	{
-		// プログラムエラー
-		fncOutputError(9054, DEF_WARNING, "", TRUE, "", $objDB);
-	}
-}
-else
-{
-	fncOutputError(9061, DEF_WARNING, "パラメータが不正です。", TRUE, "", $objDB);
+                // 現在のページ番号を採番
+                if ($index <= 10) {
+                    $currentPage = 0;
+                }
+                // 2ページ名以上(改ページ)
+                else if ($index % 10 == 1) {
+                    // 改ページ
+                    $currentPage++;
+                }
+
+                // ID取得用のindex作成(接頭辞+1～10までなので)
+                $index_loop = ($index % 10 == 0) ? 10 : $index - floor($index / 10) * 10;
+
+                // 金型 各種セルの取得
+                $td_index = $docs[$currentPage]->getElementById(ID_MOLD_INDEX . $index_loop);
+                $td_moldNo = $docs[$currentPage]->getElementById(ID_MOLD_NO . $index_loop);
+                $td_desc = $docs[$currentPage]->getElementById(ID_MOLD_DESC . $index_loop);
+
+                // テキストノードの作成
+                $text_index = $docs[$currentPage]->createTextNode($index);
+                $text_moldNo = $docs[$currentPage]->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldNo]));
+                $text_desc = $docs[$currentPage]->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldDescription]));
+
+                // テキストノードの追加
+                $td_index->appendChild($text_index);
+                $td_moldNo->appendChild($text_moldNo);
+                $td_desc->appendChild($text_desc);
+                
+                // 移動先ページの設定
+                if ($maxPage != $maxPage_addmove) {
+                    // 金型 各種セルの取得
+                    $td_index_addmove = $docs[$currentPage + $maxPage]->getElementById(ID_MOLD_INDEX . $index_loop);
+                    $td_moldNo_addmove = $docs[$currentPage + $maxPage]->getElementById(ID_MOLD_NO . $index_loop);
+                    $td_desc_addmove = $docs[$currentPage + $maxPage]->getElementById(ID_MOLD_DESC . $index_loop);
+
+                    // テキストノードの作成
+                    $text_index_addmove = $docs[$currentPage + $maxPage]->createTextNode($index);
+                    $text_moldNo_addmove = $docs[$currentPage + $maxPage]->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldNo]));
+                    $text_desc_addmove = $docs[$currentPage + $maxPage]->createTextNode(toUTF8($details[$i][TableMoldReportDetail::MoldDescription]));
+
+                    // テキストノードの追加
+                    $td_index_addmove->appendChild($text_index_addmove);
+                    $td_moldNo_addmove->appendChild($text_moldNo_addmove);
+                    $td_desc_addmove->appendChild($text_desc_addmove);
+                }
+
+            }
+
+            // 親(マージ先)となる先頭要素のDOMDocumentの退避
+            array_shift($docs);
+
+            // ノードのマージ
+            foreach ($docs as $innerDoc) {
+                // 帳票コンテンツの取得
+                $srcContents = $innerDoc->getElementById(ID_REPORT_CONTENTS);
+                // 帳票コンテンツのインポート
+                $currentContents = $doc->importNode($srcContents, true);
+                $body->appendChild($currentContents);
+            }
+
+            // 画面出力
+            // header("Content-type: text/html; charset=utf-8");
+            echo $doc->saveHTML();
+        }
+    } catch (SQLException $e) {
+        echo ($e->getMessage());
+        // 情報の取得に失敗しました。
+        fncOutputError(9061, DEF_WARNING, " 対象のデータが変更された可能性があります。", true, "", $objDB);
+    } catch (InvalidArgumentException $e) {
+        // プログラムエラー
+        fncOutputError(9054, DEF_WARNING, "", true, "", $objDB);
+    }
+} else {
+    fncOutputError(9061, DEF_WARNING, "パラメータが不正です。", true, "", $objDB);
 }
 
 /**
@@ -406,6 +525,6 @@ else
  */
 function setSelectedCell(DOMElement $element)
 {
-	$currentClassName = $element->getAttribute("class");
-	$element->setAttribute("class", $currentClassName." "."selected-cell");
+    $currentClassName = $element->getAttribute("class");
+    $element->setAttribute("class", $currentClassName . " " . "selected-cell");
 }

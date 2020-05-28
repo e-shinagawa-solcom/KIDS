@@ -338,32 +338,32 @@ if (!count($errMstList))
 		 $_REQUEST[FormMoldReport::ReportCategory] == "20"))
 	{
 		// 対象の「金型NO」の全ての保管工場が入力された保管元工場と同一工場であること
-		// 期待する会社コード
-		$expectedCompanyCode =
-		$utilCompany->selectCompanyCodeByDisplayCompanyCode($_REQUEST[FormMoldReport::SourceFactory]);
+		// // 期待する会社コード
+		// $expectedCompanyCode =
+		// $utilCompany->selectCompanyCodeByDisplayCompanyCode($_REQUEST[FormMoldReport::SourceFactory]);
 
-		foreach ($molds as $index => $moldNo)
-		{
-			// 金型履歴から最新の移動先工場を取得
-			$currentFactory = $utilMold->selectCurrentStorageOfMold($moldNo);
+		// foreach ($molds as $index => $moldNo)
+		// {
+		// 	// 金型履歴から最新の移動先工場を取得
+		// 	$currentFactory = $utilMold->selectCurrentStorageOfMold($moldNo);
 
-			// 金型履歴が存在しない場合(初回)
-			if (!$currentFactory)
-			{
-				// 有効な金型履歴が存在しない金型は仕入れ元を現在の保管工場として扱う
-				$currentFactory = $utilMold->selectMoldVender($moldNo);
-			}
+		// 	// 金型履歴が存在しない場合(初回)
+		// 	if (!$currentFactory)
+		// 	{
+		// 		// 有効な金型履歴が存在しない金型は仕入れ元を現在の保管工場として扱う
+		// 		$currentFactory = $utilMold->selectMoldVender($moldNo);
+		// 	}
 
-			// 現在の保管工場と入力された保管工場が一致しない場合
-			if ($currentFactory != $utilCompany->
-					selectCompanyCodeByDisplayCompanyCode($_REQUEST[FormMoldReport::SourceFactory]))
-			{
-				$message = "[保管元工場]指定された保管工場と金型NO:".$moldNo."の現在の保管工場が一致しませんでした。\n";
-				array_key_exists(FormMoldReport::SourceFactory, $errSemanticList) ?
-				$errSemanticList[FormMoldReport::SourceFactory] = $message:
-				$errSemanticList[FormMoldReport::SourceFactory] += $message;
-			}
-		}
+		// 	// 現在の保管工場と入力された保管工場が一致しない場合
+		// 	if ($currentFactory != $utilCompany->
+		// 			selectCompanyCodeByDisplayCompanyCode($_REQUEST[FormMoldReport::SourceFactory]))
+		// 	{
+		// 		$message = "[保管元工場]指定された保管工場と金型NO:".$moldNo."の現在の保管工場が一致しませんでした。\n";
+		// 		array_key_exists(FormMoldReport::SourceFactory, $errSemanticList) ?
+		// 		$errSemanticList[FormMoldReport::SourceFactory] = $message:
+		// 		$errSemanticList[FormMoldReport::SourceFactory] += $message;
+		// 	}
+		// }
 
 		// 保管元工場と移動先工場が同一工場でないこと
 		if ($_REQUEST[FormMoldReport::SourceFactory] == $_REQUEST[FormMoldReport::DestinationFactory])

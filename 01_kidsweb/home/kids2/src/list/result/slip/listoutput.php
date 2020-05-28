@@ -59,7 +59,6 @@ if ($lngResultNum > 0) {
 }
 // データ取得クエリ
 $strQuery = fncGetListOutputQuery(DEF_REPORT_SLIP, $aryData["strReportKeyCode"], $objDB);
-
 $objMaster = new clsMaster();
 $objMaster->setMasterTableData($strQuery, $objDB);
 $aryParts = &$objMaster->aryData[0];
@@ -83,7 +82,6 @@ list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 if ($lngResultNum < 1) {
     fncOutputError(9051, DEF_FATAL, "帳票詳細データが存在しませんでした。", true, "", $objDB);
 }
-
 // フィールド名取得
 for ($i = 0; $i < pg_num_fields($lngResultID); $i++) {
     $aryKeys[] = pg_field_name($lngResultID, $i);
@@ -99,8 +97,6 @@ for ($i = 0; $i < $count; $i++) {
     }
 }
 $objDB->freeResult($lngResultID);
-
-$objDB->close();
 
 // テンプレートパス設定
 if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
@@ -142,7 +138,19 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
 
     // DEBIT　NOTEの場合
 } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
-
+    // サインイメージの取得
+    unset($aryQuery);
+    $strQuery = fncGetTxtSignatureFilenameQuery($aryDetail[0]["strproductcode0"], $aryDetail[0]["strrevisecode0"], $aryParts["dtmdeliverydate"]);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if ($lngResultNum < 1) {
+        fncOutputError(9051, DEF_FATAL, "サインイメージデータが存在しませんでした。", true, "", $objDB);
+    } else {
+        $txtsignaturefilename = $objDB->fetchArray($lngResultID, 0)["txtsignaturefilename"];
+    }    
+    $objDB->freeResult($lngResultID);
+    if ($txtsignaturefilename != "" && $txtsignaturefilename != null) {
+        $aryParts["txtsignaturefilename"] = '/img/signature/' .$txtsignaturefilename;
+    }
     // 顧客電話番号
     $aryParts["strcustomertel"] = "Tel:" . $aryParts["strcustomerphoneno"];
 
@@ -260,3 +268,5 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
 $strBodyHtml = join("", $aryHtml);
 
 echo $strTemplateHeader . $strBodyHtml . $strTemplateFooter;
+
+$objDB->close();

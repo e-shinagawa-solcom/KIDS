@@ -56,7 +56,6 @@
     if( !empty($aryData["strSessionID"]) )
         setcookie("strSessionID", $aryData["strSessionID"], 0, "/");
 
-
     // 文字列チェック
     $aryCheck["strSessionID"]   = "null:numenglish(32,32)";
     $aryResult = fncAllCheck( $aryData, $aryCheck );

@@ -72,6 +72,13 @@
     var propSourceFactory = function(selectBox){
         sourceFactory.val(selectBox.find('option').first().attr('displaycode'));
         sourceFactory.trigger('change');
+        if (selectBox.find('option').first().attr('referrer') == 'MOVEFAC') {
+            $('input[name="SourceFactory"]').eq(0).prop('disabled', true);
+            $('input[name="SourceFactoryName"]').next('span').find('img').css('visibility', 'hidden');
+        } else {
+            $('input[name="SourceFactory"]').eq(0).prop('disabled', false);
+            $('input[name="SourceFactoryName"]').next('span').find('img').css('visibility', 'visible');
+        }
     };
 
     // 金型説明入力欄の作成
