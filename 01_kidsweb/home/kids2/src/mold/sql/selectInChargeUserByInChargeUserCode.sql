@@ -15,6 +15,7 @@ WHERE
   AND mu.bytuserdisplayflag in ($3, $4) 
   AND mg.strgroupdisplaycode LIKE '%' || $1 || '%'
   AND mu.struserdisplaycode = $2
+  AND mu.bytinvalidflag = false
 ORDER BY
   mu.struserdisplaycode
 ;

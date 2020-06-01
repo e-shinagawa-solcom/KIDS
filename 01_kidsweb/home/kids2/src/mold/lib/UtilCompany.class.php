@@ -60,6 +60,56 @@ class UtilCompany extends WithQuery
 
 		return $result;
 	}
+	/**
+	 * 会社コードを基に会社名を取得する
+	 *
+	 * @param string $companyCode 会社コード
+	 * @return 表示ユーザ名
+	 */
+	public function selectNameByCompanyCode($companyCode)
+	{
+		$result = false;
+
+		$query = file_get_contents($this->getQueryFileName(__FUNCTION__));
+		// クエリパラメータ作成(SELECT)
+		$param = array(
+				"companyCode" => pg_escape_string($companyCode)
+		);
+
+		// 業務コードの説明を取得する
+		pg_prepare(static::$db->ConnectID, "", $query);
+		$pgResult = pg_execute("", $param);
+
+		if ($pgResult)
+		{
+			// 一致する行が存在する場合
+			if (1 <= pg_num_rows($pgResult))
+			{
+				$record = pg_fetch_array($pgResult, 0);
+				// 表示名の取得
+				$result = $record["strcompanyname"];
+			}
+			else
+			{
+				throw new SQLException(
+						"検索条件に一致するレコードが存在しませんでした。",
+						$query,
+						$param
+				);
+			}
+		}
+		else
+		{
+			throw new SQLException(
+					"検索の問い合わせに失敗しました。",
+					$query,
+					$param
+					);
+		}
+
+		return $result;
+	}
+
 
 	/**
 	 * 会社コードを基に会社表示コードを取得する

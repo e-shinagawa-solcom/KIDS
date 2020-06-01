@@ -79,7 +79,7 @@ if (array_key_exists("isRegist", $_REQUEST)) {
 </head>
 <script>
 $(window).on("beforeunload", function(e) {
-    if (window.opener) {
+    if(window.opener.location.pathname.indexOf("/mr/search/result/") >= 0){
         window.opener.location.reload();
     }
 });

@@ -179,8 +179,9 @@
                 //fncOutputError ( 9051, DEF_ERROR, "登録対象納品書データが削除または更新されています", TRUE, "", $objDB );
                 MoveToErrorPage("登録対象納品書データが削除または更新されています");
             }
-            $condition['strSlipCode'] = $slipCodeArray[$i];
+            $condition['lngSlipNo'] = $slipNoArray[$i];
             $strQuery = fncGetSearchMSlipSQL($condition, $lngInvoiceNo, $objDB);
+            $aryCurTax[] = array();
             // 明細データの取得
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
             if ( $lngResultNum )
@@ -189,9 +190,7 @@
                 {
                     $Result = $objDB->fetchArray( $lngResultID, $j );
                     // 消費税率の配列
-                    $aryCurTax[] = $Result['curtax'];
-                    // 納品日
-                    $aryDeliveryDate[] = $Result['dtmdeliverydate'];
+                    $aryCurTax[$i] = $Result['curtax'];
 
                     if ($Result['lngtaxclasscode'] != $insertData['lngtaxclasscode']) {
                         MoveToErrorPage("課税区分の異なる納品書は請求書の明細に混在できません");

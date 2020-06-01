@@ -509,24 +509,13 @@ console.log(response);
     // 担当グループ-表示グループコードから表示名を索引
     var selectGroupName = function (invoker) {
         console.log("担当グループ-表示グループコード->表示名 change");
-        // 表示フラグ制限の取得
-        var displayFlagLimit = $(invoker).attr('displayFlagLimit');
-        if (displayFlagLimit == '0') {
-            displayFlagLimit0 = true;
-            displayFlagLimit1 = false;
-        } else {
-            displayFlagLimit0 = true;
-            displayFlagLimit1 = true;
-        } 
 
         // 検索条件
         var condition = {
             data: {
-                QueryName: 'selectGroupName',
+                QueryName: 'selectGroupNameForKwg',
                 Conditions: {
-                    GroupDisplayName: $(invoker).val(),
-                    displayFlagLimit0: displayFlagLimit0,
-                    displayFlagLimit1: displayFlagLimit1
+                    GroupDisplayName: $(invoker).val()
                 }
             }
         };
@@ -551,24 +540,13 @@ console.log(response);
     // 担当者-表示ユーザコードから表示名を索引
     var selectUserName = function (invoker) {
         console.log("担当者-表示ユーザコード->表示名 change");
-        // 表示フラグ制限の取得
-        var displayFlagLimit = $(invoker).attr('displayFlagLimit');
-        if (displayFlagLimit == '0') {
-            displayFlagLimit0 = true;
-            displayFlagLimit1 = false;
-        } else {
-            displayFlagLimit0 = true;
-            displayFlagLimit1 = true;
-        } 
 
         // 検索条件
         var condition = {
             data: {
-                QueryName: 'selectInChargeUserName',
+                QueryName: 'selectInChargeUserNameForKwg',
                 Conditions: {
-                    UserDisplayName: $(invoker).val(),
-                    displayFlagLimit0: displayFlagLimit0,
-                    displayFlagLimit1: displayFlagLimit1
+                    UserDisplayName: $(invoker).val()
                 }
             }
         };

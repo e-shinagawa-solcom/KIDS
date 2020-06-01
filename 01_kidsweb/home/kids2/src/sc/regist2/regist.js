@@ -406,7 +406,7 @@ jQuery(function ($) {
                 $("select[name='lngTaxClassCode']").val("2");
                 $("select[name='lngTaxClassCode']").prop('disabled', false);
             }
-            
+
             $("input[name='dtmPaymentLimit']").prop('disabled', true);
             $("input[name='dtmPaymentLimit']").val("");
             $("input[name='dtmPaymentLimit']").next("button").prop('disabled', true);
@@ -1081,23 +1081,35 @@ jQuery(function ($) {
     // 行を一つ上に移動するボタン
     $('img.rowup').click(function () {
         rowUp($("#tableB"), $("#tableB_no"));
+        resetTableRownum($("#tableB"));
     });
 
     // 行を一つ下に移動するボタン
     $('img.rowdown').click(function () {
         rowDown($("#tableB"), $("#tableB_no"));
+        resetTableRownum($("#tableB"));
     });
 
     // 行を一番上に移動する
     $('img.rowtop').click(function () {
         rowTop($("#tableB"), $("#tableB_no"));
+        resetTableRownum($("#tableB"));
     });
 
     // 行を一番下に移動する
     $('img.rowbottom').click(function () {
         rowBottom($("#tableB"), $("#tableB_no"));
+        resetTableRownum($("#tableB"));
     });
 
+    // 行IDの再設定
+    function resetTableRownum(tableObj) {
+        var rownum = 0;
+        tableObj.find("tbody tr").each(function (i, e) {
+            rownum += 1;
+            $(this).find('td').first().text(rownum);
+        });
+    }
 
     // プレビューボタン押下
     $('#preview').on('click', function () {
@@ -1142,11 +1154,10 @@ jQuery(function ($) {
 
                 // 納品伝票種類が1:指定伝票・2:市販伝票の場合、最大件数入力チェックを行う
                 if (data.lngslipkindcode == 1 || data.lngslipkindcode == 2)
-                if ($('#tableB tbody tr').length > data.lngmaxline)
-                {
-                    alert(data.strslipkindname + "に対して、最大" + data.lngmaxline + "行の明細しか出力できませんので、明細行数を減らしてください。");
-                    return 
-                }
+                    if ($('#tableB tbody tr').length > data.lngmaxline) {
+                        alert(data.strslipkindname + "に対して、最大" + data.lngmaxline + "行の明細しか出力できませんので、明細行数を減らしてください。");
+                        return
+                    }
                 // 締め日
                 var closedDay = data.lngClosedDay;
 

@@ -147,8 +147,9 @@
                 //fncOutputError ( 9051, DEF_ERROR, "登録対象納品書データが削除または更新されています", TRUE, "", $objDB );
                 MoveToErrorPage("登録対象納品書データが削除または更新されています");
             }
-            $condition['strSlipCode'] = $slipCodeArray[$i];
-            $strQuery = fncGetSearchMSlipSQL($condition, null, $objDB);
+            $condition['lngSlipNo'] = $slipNoArray[$i];
+            $strQuery = fncGetSearchMSlipSQL($condition, null, $objDB);            
+            $aryCurTax[] = array();
             // 明細データの取得
             list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB );
             if ( $lngResultNum )
@@ -157,9 +158,7 @@
                 {
                     $Result = $objDB->fetchArray( $lngResultID, $j );
                     // 消費税率の配列
-                    $aryCurTax[] = $Result['curtax'];
-                    // 納品日
-                    $aryDeliveryDate[] = $Result['dtmdeliverydate'];
+                    $aryCurTax[$i] = $Result['curtax'];
 
                     if ($Result['lngtaxclasscode'] != $insertData['lngtaxclasscode']) {
                         MoveToErrorPage("課税区分の異なる納品書は請求書の明細に混在できません");
@@ -174,10 +173,6 @@
         }
         // 消費税率が同じかチェック
         $baseTax = null;
-        if( !is_array($aryCurTax) )
-        {
-            $aryCurTax[] = $aryCurTax;
-        }
         foreach($aryCurTax as $tax){
             $baseTax = empty($baseTax) ? $tax : $baseTax;
             if($baseTax != $tax)
@@ -197,23 +192,6 @@
         {
             MoveToErrorPage("締め日の取得ができませんでした。");
         }
-
-        // $baseDateTime = new DateTime($closeDay);
-        // foreach($aryDeliveryDate as $date){
-        //     $deliveryDateTiem = new DateTime($date);
-        //     $diff = $baseDateTime->diff($deliveryDateTiem);
-        //     // 納品日がシステム日付の1か月前後でない場合
-        //     if($diff->format('%a') > 30)
-        //     {
-        //         MoveToErrorPage("納品日は当月度の前後1ヶ月の間を指定してください");
-        //     }
-        //     // 納品日と異なる月の明細の場合
-        //     $deliveryDateMonth = date('m', strtotime($date));
-        //     if( (int)$baseMonth != (int)$deliveryDateMonth )
-        //     {
-        //         MoveToErrorPage("出力明細には、入力された納品日と異なる月に納品された明細を指定できません");
-        //     }
-        // }
 
         // --------------------------------
         //    登録処理

@@ -12,3 +12,4 @@ WHERE
   AND mg.bytgroupdisplayflag in ($2, $3) 
   AND mu.bytuserdisplayflag in ($2, $3) 
   AND mu.struserdisplaycode = $1
+  AND mu.bytinvalidflag = false

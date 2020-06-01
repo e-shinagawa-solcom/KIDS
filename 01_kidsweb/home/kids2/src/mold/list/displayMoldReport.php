@@ -104,7 +104,7 @@ if ($moldReportId && (0 <= $revision) && (0 <= $version)) {
         $utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::SendTo]);
         // _%CustomerName%_
         $recordMoldReport["CustomerName"] =
-        $utilCompany->selectDisplayNameByCompanyCode($recordMoldReport[TableMoldReport::CustomerCode]);
+        $utilCompany->selectNameByCompanyCode($recordMoldReport[TableMoldReport::CustomerCode]);
 
         // 帳票区分が10:移動版又は20:返却版の場合
         if (($recordMoldReport[TableMoldReport::ReportCategory] == "10" ||

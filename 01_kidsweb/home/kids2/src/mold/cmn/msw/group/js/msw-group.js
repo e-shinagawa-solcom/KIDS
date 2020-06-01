@@ -49,7 +49,7 @@
             case '00':
                 var condition = {
                     data: {
-                        QueryName: 'selectGroups'
+                        QueryName: 'selectGroupsForKwg'
                     }
                 };
                 break;
@@ -57,7 +57,7 @@
             case '01':
                 var condition = {
                     data: {
-                        QueryName: 'selectGroupByGroupName',
+                        QueryName: 'selectGroupByGroupNameForKwg',
                         Conditions: {
                             groupName: groupName.val()
                         }
@@ -68,7 +68,7 @@
             case '10':
                 var condition = {
                     data: {
-                        QueryName: 'selectGroupByGroupCode',
+                        QueryName: 'selectGroupByGroupCodeForKwg',
                         Conditions: {
                             groupCode: groupCode.val()
                         }
@@ -79,7 +79,7 @@
             case '11':
                 var condition = {
                     data: {
-                        QueryName: 'selectGroupByCodeAndName',
+                        QueryName: 'selectGroupByCodeAndNameForKwg',
                         Conditions: {
                             groupCode: groupCode.val(),
                             groupName: groupName.val()

@@ -149,7 +149,12 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
         if($column == 'customerCode') {
             $aryOutQuery[] = " AND mc.strcompanydisplaycode = '" .$value ."' " ;
         }
+
         // 納品書番号
+        if($column == 'lngSlipNo') {
+            $aryOutQuery[] = " AND  ms.lngslipno = '" .$value ."' " ;
+        }
+        // 納品書NO
         if($column == 'strSlipCode') {
             // カンマ区切りの入力値をOR条件に展開
             $arySCValue = preg_split('/[,\s]/', $value);
@@ -179,10 +184,10 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
             $aryOutQuery[] = " AND dtmdeliverydate >= '" .$value ." 00:00:00" ."' " ;
         }
 
-        // 至
-        if ($isByDtmChargeternEnd && $column == 'dtmChargeternEnd') {
-            $aryOutQuery[] = " AND dtmdeliverydate <= '" .$value ." 23:59:59" ."' " ;
-        }
+        // // 至
+        // if ($isByDtmChargeternEnd && $column == 'dtmChargeternEnd') {
+        //     $aryOutQuery[] = " AND dtmdeliverydate <= '" .$value ." 23:59:59" ."' " ;
+        // }
 
         // 納品場所コード
         if($column == 'deliveryPlaceCode') {
@@ -219,7 +224,7 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
     }
 
     // OrderBy句
-    $aryOutQuery[] = " ORDER BY ms.lngslipno ASC , ms.lngrevisionno DESC ";
+    $aryOutQuery[] = " ORDER BY ms.strslipcode desc";
 
 
     return implode("\n", $aryOutQuery);
@@ -1300,10 +1305,10 @@ function fncInvoiceInsert( $insertAry ,$objDB, $objAuth)
 
     // 請求書明細登録
     $salesNoList = [];      // 売上No
-    foreach($insertAry['slipCodeArray'] as $no => $strslipcode)
+    foreach($insertAry['slipNoArray'] as $no => $lngSlipNo)
     {
         $condtition = [];
-        $condtition['strSlipCode'] = $strslipcode;
+        $condtition['lngSlipNo'] = $lngSlipNo;
         $strQuery = fncGetSearchMSlipSQL ($condtition, $insertAry['lnginvoiceno'], $objDB);
         if( !$lngResultID = $objDB->execute( $strQuery ) )
         {

@@ -591,7 +591,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , i.cursubtotal1 AS curthismonthamount";
         $aryQuery[] = "  , i.curlastmonthbalance";
         $aryQuery[] = "  , i.curtaxprice1";
-        $aryQuery[] = "  , i.strinvoicemonth";
+        $aryQuery[] = "  , i.strinvoicemonth || '月' as strinvoicemonth";
         $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'mm月') as dtmchargeternstart_month";
         $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'dd日') as dtmchargeternstart_day";
         $aryQuery[] = "  , to_char(i.dtmchargeternend, 'mm月') as dtmchargeternend_month";

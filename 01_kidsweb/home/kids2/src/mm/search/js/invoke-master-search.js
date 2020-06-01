@@ -342,7 +342,7 @@
         // 検索条件
         var condition = {
             data: {
-                QueryName: 'selectInChargeUserName',
+                QueryName: 'selectInputUserName',
                 Conditions: {
                     UserDisplayName: $(invoker).val(),
                     displayFlagLimit0: displayFlagLimit0,
@@ -387,7 +387,7 @@
         // 検索条件
         var condition = {
             data: {
-                QueryName: 'selectInChargeUserName',
+                QueryName: 'selectInputUserName',
                 Conditions: {
                     UserDisplayName: $(invoker).val(),
                     displayFlagLimit0: displayFlagLimit0,
