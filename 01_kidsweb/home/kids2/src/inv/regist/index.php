@@ -30,6 +30,7 @@
     require (LIB_EXCLUSIVEFILE);
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
+    require SRC_ROOT . "pc/cmn/lib_pc.php";
     require_once(LIB_DEBUGFILE);
 
     // オブジェクト生成

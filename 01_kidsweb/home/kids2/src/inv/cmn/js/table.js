@@ -583,6 +583,8 @@ $(function () {
     }
 
     url = $('input[name="invConditionUrl"]').val();
+    actionDate = $('input[name="ActionDate"]').val();
+    url = url + "&actionDate=" + actionDate;
     // 納品書検索ウィンドウをポップアップ表示
     sub_win = window.open(url, 'winSearch', "width=800,height=500,scrollbars=yes");
     // 請求書検索ウィンドウをポップアップ表示

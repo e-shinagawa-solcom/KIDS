@@ -16,6 +16,7 @@ include_once 'conf.inc';
 require LIB_FILE;
 require SRC_ROOT . "list/cmn/lib_lo.php";
 require SRC_ROOT . "m/cmn/lib_m.php";
+require SRC_ROOT . "pc/cmn/lib_pc.php";
 
 $objDB = new clsDB();
 $objAuth = new clsAuth();
@@ -76,13 +77,12 @@ for ($i = 0; $i < $lngResultNum; $i++) {
 }
 $objDB->freeResult($lngResultID);
 
-$objDB->close();
-
 // HTML出力
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("list/result/inv.html");
 $aryParts["totalprice_unitsign"] = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryParts["totalprice"], "price");
-$aryParts["dtminvoicedate"] = date("Y年n月", strtotime($aryParts["dtminvoicedate"]));
+$dtminvoicedate = $aryParts["dtminvoicedate"];
+$aryParts["dtminvoicedate"] = date("Y年n月", strtotime($aryParts["dtminvoicedate_desc"]));
 $aryParts["dtminvoicedate_day"] = ltrim($aryParts["dtminvoicedate_day"], '0');
 $aryParts["dtminsertdate"] = date("Y.n.j", strtotime($aryParts["dtminsertdate"]));
 $aryParts["dtmchargeternstart_month"] = ltrim($aryParts["dtmchargeternstart_month"], '0');
@@ -94,6 +94,23 @@ $aryParts["curthismonthamount"] = convertPrice($aryParts["lngmonetaryunitcode"],
 $aryParts["curlastmonthbalance"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["curlastmonthbalance"], "price");
 $aryParts["curtaxprice1"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["curtaxprice1"], "taxprice");
 $aryParts["totalprice"] = convertPrice($aryParts["lngmonetaryunitcode"], "", $aryParts["totalprice"], "price");
+if ($aryParts["strcustomername"] != "") {
+    $aryParts["strcustomername"] .= "　御中";
+}
+
+// 課税区分が１：非課税の場合
+if ($aryParts["lngtaxclasscode"] == "1") {
+    $aryParts['strtaxdescription'] = "《不課税対象分》";
+} else {
+    $taxList = fncGetTaxInfo($dtminvoicedate, $objDB);
+    if ($aryParts["curtax"] == $taxList[0]->curtax) {
+        $aryParts['strtaxdescription'] = "《標準課税対象分》";
+    } else {
+        $aryParts['strtaxdescription'] = "《軽減税率対象分》";
+    }
+}
+
+$objDB->close();
 
 // 置き換え
 $objTemplate->replace($aryParts);

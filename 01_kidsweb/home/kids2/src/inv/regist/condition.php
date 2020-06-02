@@ -29,6 +29,7 @@
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
     require_once (SRC_ROOT.'/cmn/exception/SQLException.class.php');
+    require SRC_ROOT . "pc/cmn/lib_pc.php";
 	require_once (LIB_DEBUGFILE);
 
     // オブジェクト生成
@@ -177,6 +178,14 @@
     $taxclassList = fncGetPulldownQueryExec($strQuery, 0, $objDB, false);
     $aryData["taxclassList"] = '<OPTION VALUE="0">未選択</OPTION>' .$taxclassList;
 
+    // 税マスタを取得
+    $taxList = fncGetTaxInfo($aryData["actionDate"], $objDB);
+    for ($i = 0; $i < count($taxList); $i++) {
+        $optionValue = $taxList[$i]->curtax;
+        $displayText = $taxList[$i]->curtax * 100 . "%"; // 小数点末尾の0をカット
+        $strHtml .= "<OPTION VALUE=\"$optionValue\">$displayText</OPTION>\n";
+    }
+    $aryData["taxList"] = '<OPTION VALUE="">未選択</OPTION><OPTION VALUE="0.0000">0%</OPTION>' .$strHtml;
     // システムdateの月初・月末を求める
     $aryData["DeliveryFrom"] = date('Y/m/d', strtotime('first day of ' . null));
     $aryData["DeliveryTo"]   = date('Y/m/d', strtotime('last day of '  . null));

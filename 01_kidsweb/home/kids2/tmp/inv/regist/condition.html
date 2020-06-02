@@ -53,10 +53,14 @@
                         $("select[name='lngMoneyClassCode']").val(lngmonetaryunitcode);
                         var lngtaxclasscode = window.opener.$('input[name="lngtaxclasscode"]').val();
                         $("select[name='lngTaxClassCode']").val(lngtaxclasscode);
+                        
+                        var curtax = window.opener.$('input[name="curtax"]').val();
+                        $("select[name='curTax']").val(curtax);
                         // 編集不可設定
                         $("select[name='lngMoneyClassCode']").prop('disabled', true);
                         $("select[name='lngTaxClassCode']").prop('disabled', true);
                         $('input[name="lngCustomerCode"]').prop('disabled', true);
+                        $('select[name="curTax"]').prop('disabled', true);
                     }
                 }
 
@@ -136,6 +140,14 @@
                     <span class="regist-label__required-text">課税区分</span>
                     <select name="lngTaxClassCode" class="Slt13">
                         _%taxclassList%_
+                    </select>
+                </span>
+            </div>
+            <div class="regist-line">
+                <span class="regist-label">
+                    <span class="regist-label__text">税率</span>
+                    <select name="curTax" class="Slt13">
+                        _%taxList%_
                     </select>
                 </span>
             </div>

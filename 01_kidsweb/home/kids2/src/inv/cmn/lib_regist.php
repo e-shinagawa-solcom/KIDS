@@ -203,6 +203,11 @@ function fncGetSearchMSlipSQL ( $aryCondtition = array(), $lnginvoiceno, $objDB)
             $aryOutQuery[] = " AND lngtaxclasscode = " .$value ." " ;
         }
 
+        // 税率
+        if($column == 'curTax') {
+            $aryOutQuery[] = " AND curtax = " .$value ." " ;
+        }
+
         // 担当者コード
         if($column == 'inChargeUserCode') {
             $aryOutQuery[] = " AND mu1.struserdisplaycode LIKE '%" .$value ."%' " ;
@@ -1391,6 +1396,7 @@ function fncGetInvoiceMSQL ( $lngInvoiceNo, $lngRevisionNo)
     $aryQuery[] = ", inv.lngrevisionno as lngrevisionno";
     // 顧客コード
     $aryQuery[] = ", cust_c.strcompanydisplaycode as strcustomercode";
+    $aryQuery[] = ", cust_c.strcompanydisplayname as strcompanydisplayname";
     // 顧客名
     $aryQuery[] = ", inv.strcustomername as strcustomername";
     // 顧客社名
@@ -1698,6 +1704,7 @@ function fncSetInvoiceHeadTableData ( $aryResult )
     $aryNewResult["strCustomerCode"] = $aryResult["strcustomercode"];
     // 顧客名
     $aryNewResult["strCustomerName"] = $aryResult["strcustomername"];
+    $aryNewResult["strcompanydisplayname"] = $aryResult["strcompanydisplayname"];
     // 顧客
     if ( $aryResult["strcustomercode"] )
     {
@@ -2004,6 +2011,21 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
 
     // ユーザー名取得
     $aryPrevResult['lngUserName'] = $objAuth->UserFullName;
+
+    // 課税区分が１：非課税の場合
+    if ($aryPrevResult["lngTaxClassCode"] == "1") {
+        $aryPrevResult['strTaxDescription'] = "《不課税対象分》";    
+    } else {
+        $taxList = fncGetTaxInfo($dtmInvoiceDate, $objDB);
+        if ($aryPrevResult["curTax1"] == $taxList[0]->curtax * 100) {        
+            $aryPrevResult['strTaxDescription'] = "《標準課税対象分》";
+        } else {
+            $aryPrevResult['strTaxDescription'] = "《軽減税率対象分》";
+        }
+    }
+    if ($aryPrevResult['printCustomerName'] != "") {
+        $aryPrevResult['printCustomerName'] .= "　御中";
+    }
 
     return $aryPrevResult;
 }

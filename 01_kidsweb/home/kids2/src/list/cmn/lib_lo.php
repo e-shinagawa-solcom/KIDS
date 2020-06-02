@@ -580,13 +580,16 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , i.lngrevisionno";
         $aryQuery[] = "  , i.strinvoicecode";
         $aryQuery[] = "  , i.lngprintcount";
-        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'yyyy/mm/dd') as dtminvoicedate";
+        $aryQuery[] = "  , to_char(i.dtminvoicedate, 'yyyy/mm/dd') as dtminvoicedate_desc";
         $aryQuery[] = "  , to_char(i.dtminvoicedate, 'dd日') as dtminvoicedate_day";
+        $aryQuery[] = "  , i.dtminvoicedate as dtminvoicedate";
         $aryQuery[] = "  , i.strcustomername";
         $aryQuery[] = "  , i.strcustomercompanyname";
         $aryQuery[] = "  , i.lngmonetaryunitcode";
         $aryQuery[] = "  , i.strmonetaryunitsign";
         $aryQuery[] = "  , round(i.curtax1 * 100) || '%' as curtax1";
+        $aryQuery[] = "  , i.curtax1 as curtax";
+        $aryQuery[] = "  , i.lngtaxclasscode";
         $aryQuery[] = "  , (i.cursubtotal1 + i.curlastmonthbalance + i.curtaxprice1) AS totalprice";
         $aryQuery[] = "  , i.cursubtotal1 AS curthismonthamount";
         $aryQuery[] = "  , i.curlastmonthbalance";

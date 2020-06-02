@@ -29,6 +29,7 @@
     require (LIB_FILE);
     require (SRC_ROOT . "m/cmn/lib_m.php");
     require (SRC_ROOT . "inv/cmn/lib_regist.php");
+    require SRC_ROOT . "pc/cmn/lib_pc.php";
     require (LIB_EXCLUSIVEFILE);
 
     // 固定エラーメッセージ ToDo DB登録
@@ -276,7 +277,7 @@
         } else {            
             $aryNewResult['invoiceMode2'] = 'checked';
         }
-
+        $aryNewResult['strCustomerName'] = $aryNewResult['strcompanydisplayname'];
         // テンプレート読み込み
         $objTemplate = new clsTemplate();
         $objTemplate->getTemplate( "inv/regist/renew.html" );

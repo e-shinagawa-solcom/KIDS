@@ -259,6 +259,18 @@
         return false;
     };
 
+    // 課税区分変更イベント
+    $('select[name="lngTaxClassCode"]').on("change", function () {
+        var lngTaxClassCode = $('select[name="lngTaxClassCode"]').val();
+        if (lngTaxClassCode == "2" || lngTaxClassCode == "3") {
+            $('select[name="curTax"]').prop("selectedIndex", 2);
+        } else if (lngTaxClassCode == "1") {
+            $('select[name="curTax"]').prop("selectedIndex", 1);
+        } else {            
+            $('select[name="curTax"]').prop("selectedIndex", 0);
+        }
+    });
+
     // 納品書明細検索ボタン押下処理
     $('#search-condition').on({
         'click': function () {
@@ -334,6 +346,7 @@
                     deliveryPlaceName: $('input[name="strDeliveryPlaceName"]').val(),
                     moneyClassCode: $('select[name="lngMoneyClassCode"]').val(),
                     taxClassCode: $('select[name="lngTaxClassCode"]').val(),
+                    curTax: $('select[name="curTax"]').val(),
                     inChargeUserCode: $('input[name="lngInChargeUserCode"]').val(),
                     inChargeUserName: $('input[name="strInChargeUserName"]').val(),
                     inputUserCode: $('input[name="lngInputUserCode"]').val(),
