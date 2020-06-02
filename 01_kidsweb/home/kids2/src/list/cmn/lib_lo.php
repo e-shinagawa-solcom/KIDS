@@ -596,7 +596,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "  , to_char(i.dtmchargeternstart, 'dd日') as dtmchargeternstart_day";
         $aryQuery[] = "  , to_char(i.dtmchargeternend, 'mm月') as dtmchargeternend_month";
         $aryQuery[] = "  , to_char(i.dtmchargeternend, 'dd日') as dtmchargeternend_day";
-        $aryQuery[] = "  , id.detailcount";
+        $aryQuery[] = "  , id.strcustomernocount";
         $aryQuery[] = "  , i.strnote";
         $aryQuery[] = "  , i.description";
         $aryQuery[] = "  , i.strusername";
@@ -620,7 +620,7 @@ function fncGetListOutputQuery($lngClassCode, $lngKeyCode, $objDB)
         $aryQuery[] = "    select";
         $aryQuery[] = "      lnginvoiceno";
         $aryQuery[] = "      , lngrevisionno";
-        $aryQuery[] = "      , count(*) detailcount ";
+        $aryQuery[] = "      , count(distinct strcustomerno) strcustomernocount ";
         $aryQuery[] = "    from";
         $aryQuery[] = "      t_invoicedetail ";
         $aryQuery[] = "    group by";
@@ -780,7 +780,7 @@ function fncGetTxtSignatureFilenameQuery($strproductcode, $strrevisecode, $dtmde
  */
 function fncGetInvDetailQuery($strReportKeyCode, $lngRevisionNo)
 {
-    $aryQuery[] = "SELECT distinct";
+    $aryQuery[] = "SELECT ";
     $aryQuery[] = "  s.strslipcode, id.strcustomerno ";
     $aryQuery[] = "from";
     $aryQuery[] = "  t_invoicedetail id ";

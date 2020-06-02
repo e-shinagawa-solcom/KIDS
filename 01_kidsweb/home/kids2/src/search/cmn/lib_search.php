@@ -811,15 +811,8 @@ function fncGetHistoryDataByPKSQL($type, $strCode, $lngRevisionNo, $lngDetailNo,
         $aryQuery[] = "  , inv.strnote as strnote";
         $aryQuery[] = "  , inv.description as description";
         $aryQuery[] = "  , inv.lngprintcount as lngprintcount";
-        $aryQuery[] = "  , sa.lngSalesStatusCode as lngSalesStatusCode";
-        $aryQuery[] = "  , ss.strSalesStatusName as strSalesStatusName ";
-        $aryQuery[] = "  , ss.strSalesStatusName as strStatusName ";
         $aryQuery[] = "FROM";
         $aryQuery[] = "  m_invoice inv ";
-        $aryQuery[] = "  LEFT JOIN m_sales sa ";
-        $aryQuery[] = "    ON inv.lnginvoiceno = sa.lnginvoiceno ";
-        $aryQuery[] = "  LEFT JOIN m_SalesStatus ss ";
-        $aryQuery[] = "    ON sa.lngSalesStatusCode = ss.lngSalesStatusCode ";
         $aryQuery[] = "  LEFT JOIN m_Company cust_c ";
         $aryQuery[] = "    ON inv.lngcustomercode = cust_c.lngcompanycode ";
         $aryQuery[] = "  LEFT JOIN m_MonetaryUnit mu ";

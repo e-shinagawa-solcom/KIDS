@@ -855,36 +855,16 @@ function fncGetSearchInvoiceSQL ( $arySearchColumn, $arySearchDataColumn, $objDB
     // 印刷回数
     $arySelectQuery[] = ", inv.lngprintcount as lngprintcount";
 
-
-//     // 課税区分
-//     $arySelectQuery[] = ", s.strtaxclassname as strtaxclassname";
-//     // 納品伝票コード（納品書NO）
-//     $arySelectQuery[] = ", s.strSlipCode as strSlipCode";
-//     // 納品先
-//     $arySelectQuery[] = " , s.strDeliveryPlaceName as strDeliveryPlaceName";
-//     // 合計金額
-//     $arySelectQuery[] = ", To_char( s.curTotalPrice, '9,999,999,990.99' ) as curTotalPrice";
-    //// 売上Ｎｏ
-    //$arySelectQuery[] = ", s.strSalesCode as strSalesCode";
-    // 売上状態コード
-    $arySelectQuery[] = ", sa.lngSalesStatusCode as lngSalesStatusCode";
-    $arySelectQuery[] = ", ss.strSalesStatusName as strSalesStatusName";
-//     // 通貨単位
-//     $arySelectQuery[] = ", mu.strMonetaryUnitSign as strMonetaryUnitSign";
-
     // select句 クエリー連結
     $aryOutQuery[] = implode("\n", $arySelectQuery);
 
     // From句 の生成
     $aryFromQuery = array();
     $aryFromQuery[] = " FROM m_invoice inv";
-    $aryFromQuery[] = " LEFT JOIN m_sales sa ON inv.lnginvoiceno = sa.lnginvoiceno";
-    $aryFromQuery[] = " LEFT JOIN m_SalesStatus ss ON sa.lngSalesStatusCode = ss.lngSalesStatusCode";
     $aryFromQuery[] = " LEFT JOIN m_Company cust_c ON inv.lngcustomercode = cust_c.lngcompanycode";
     $aryFromQuery[] = " LEFT JOIN m_MonetaryUnit mu ON inv.lngmonetaryunitcode = mu.lngMonetaryUnitCode";
     $aryFromQuery[] = " LEFT JOIN m_User insert_u ON inv.lngInsertUserCode = insert_u.lngusercode";
     $aryFromQuery[] = " LEFT JOIN m_User u ON inv.lngusercode = u.lngusercode";
-    // $aryFromQuery[] = " LEFT JOIN m_Company delv_c ON inv.strcustomercode = delv_c.strcompanydisplaycode";
     //　請求書明細がない場合は不整合の為除外
     $aryFromQuery[] = " INNER JOIN t_invoicedetail inv_d ON inv.lnginvoiceno = inv_d.lnginvoiceno";
 
@@ -1905,12 +1885,17 @@ function fncSetPreviewTableData ( $aryResult , $lngInvoiceNo, $objDB)
     $customerNoArray = explode(',' ,$aryResult['customerNoList']);
     $aryPrevResult['customerNoList']  = $aryResult['customerNoList'];
     $aryPrevResult['customerNoArray'] = $customerNoArray;
-    $aryPrevResult['customerNoCount'] = COUNT($customerNoArray);
     $i = 0;
+    $customerNoCount = 0;
+    $newCustomerNoArray = array();
     foreach ($customerNoArray as $customerNo) {
         $aryPrevResult['strcustomerNo' . $i] = $customerNo;
         $i += 1;
+        if (!in_array($customerNo, $newCustomerNoArray)) {
+            array_push($newCustomerNoArray,$customerNo);
+        }
     }
+    $aryPrevResult['customerNoCount'] = count($newCustomerNoArray);
     if(isset($aryResult['taxclass'])) {
         $taxclass = explode(' ' ,$aryResult['taxclass']);
         $taxclasscode = preg_replace('/[^0-9]/', '', $taxclass[0]);
