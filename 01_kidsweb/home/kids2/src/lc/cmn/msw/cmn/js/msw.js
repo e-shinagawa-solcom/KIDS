@@ -28,10 +28,10 @@
             var pos = setPosition(this, docMsw);
             ifmMsw.css({
                 'position': 'absolute',
-                'top': pos.top,
-                'left': pos.left,
-                'height': ifmHeight,
-                'width': ifmWidth,
+                'top': '20px',
+                'left': '20px',
+                'height': '100%',
+                'width': '100%',
                 'z-index': '9999'
             });
 

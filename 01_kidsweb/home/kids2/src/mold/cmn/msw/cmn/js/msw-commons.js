@@ -46,28 +46,17 @@
 
 // iframe要素のdraggable実装
 (function(){
-    var dragging = null;
-    var start = null;
     var iframe = $(window.frameElement);
 
-    $('body').on('mousemove', function(e){
-        if(dragging && start){
-            var offsetTop = e.offsetY - start.top;
-            var offsetLeft = e.offsetX - start.left;
-
-            iframe.offset({
-                top: iframe.offset().top + offsetTop,
-                left: iframe.offset().left + offsetLeft
-            });
-        }
+    $("body").on("dragstart", function(event, ui) {
+        iframe.css('top', '0px');
+        iframe.css('left', '0px');
+        iframe.css('height', '100%');
+        iframe.css('width', '100%');
     });
-
-    $('body').on('mousedown', 'div.msw-box__header', function(e){
-        dragging = $(e.target);
-        start = {top: e.offsetY, left: e.offsetX};
-    });
-
-    $('body').on('mouseup', function(e){
-        dragging = null;
+    
+    $('body').draggable({
+        cursor: "move",
+        containment: [0, 0, 1500, 1500]
     });
 })();
