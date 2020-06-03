@@ -1,0 +1,1 @@
+insert into "public".m_group(lnggroupcode,lngcompanycode,strgroupname,bytgroupdisplayflag,strgroupdisplaycode,strgroupdisplayname,strgroupdisplaycolor) values (45,418,'開発チーム',True,'99','開発チーム','#FFFFFF');

@@ -1,0 +1,117 @@
+// í†ï[BeneBkï çáåv
+create table t_reportbybenebktotal(
+    beneficiary character varying(255),
+    bank1 numeric(14,4),
+    bank2 numeric(14,4),
+    bank3 numeric(14,4),
+    bank4 numeric(14,4),
+    total numeric(14,4) 
+);
+
+GRANT SELECT, UPDATE, INSERT, DELETE ON t_reportbybenebktotal TO kids;
+alter table t_reportbybenebktotal owner to kids;
+
+
+// í†ï[LCï çáåv
+create table t_reportbylctotal(
+    lcNo character varying(32),
+    factoryName character varying(255),
+    price numeric(14, 4),
+    shipterm date,
+    validterm date,
+    bankname character varying(255),
+    bankreqdate date,
+    lcamopen date
+);
+GRANT SELECT, UPDATE, INSERT, DELETE ON t_reportbylctotal TO kids;
+alter table t_reportbylctotal owner to kids;
+
+
+// í†ï[Beneåéï èWåv
+create t_reportbybenemonthcalculation(
+    beneficiary character varying(255),
+    date1 character varying(6),
+    date2 character varying(6),
+    date3 character varying(6),
+    date4 character varying(6),
+    date5 character varying(6),
+    date6 character varying(6),
+    date7 character varying(6),
+    date8 character varying(6),
+    date9 character varying(6),
+    date10 character varying(6),
+    date11 character varying(6),
+    total numeric(14, 4)
+);
+GRANT SELECT, UPDATE, INSERT, DELETE ON t_reportbybenemonthcalculation TO kids;
+alter table t_reportbybenemonthcalculation owner to kids;
+
+// í†ï[LCï ñæç◊
+create t_reportbylcdetail(
+    lcNo character varying(32),
+    pono character varying(8),
+    factoryName character varying(255),
+    productcd character varying(8),
+    productname character varying(255),
+    productnumber integer,
+    unitname character varying(8),
+    unitprice numeric(14, 4),
+    moneyprice numeric(14, 4),
+    shipstartdate date,
+    shipenddate date,
+    portplace character varying(255),
+    shipterm date,
+    validterm date,
+    bankname character varying(255),
+    bankreqdate date,
+    lcamopen date
+);
+GRANT SELECT, UPDATE, INSERT, DELETE ON t_reportbylcdetail TO kids;
+alter table t_reportbylcdetail owner to kids;
+
+
+// í†ï[ñ¢åàçœäzñ¢è≥îF
+create t_reportunsettedpriceunapproval(
+    payeeFormalName character varying(255),
+    unsettledPrice numeric(14, 4)
+);
+GRANT SELECT, UPDATE, INSERT, DELETE ON t_reportunsettedpriceunapproval TO kids;
+alter table t_reportunsettedpriceunapproval owner to kids;
+
+
+
+// í†ï[ñ¢åàçœäz
+create t_reportunsettedprice(
+    managementNo character varying(8),
+    bankname character varying(255),
+    payeeFormalName character varying(255),
+    shipstartdate date,
+    lcno character varying(32),
+    usancesettlement numeric(14, 4)
+);
+GRANT SELECT, UPDATE, INSERT, DELETE ON t_reportunsettedprice TO kids;
+alter table t_reportunsettedprice owner to kids;
+
+
+// í†ï[óAì¸êMópèÛî≠çsèÓïÒ
+create t_reportimportlcorderinfo(
+    bankreqdate date,
+    pono character varying(8),
+    productcd character varying(8),
+    productname character varying(255),
+    productnumber integer,
+    unitname character varying(8),
+    unitprice numeric(14, 4),
+    moneyprice numeric(14, 4),
+    shipstartdate date,
+    shipenddate date,
+    shipterm date,
+    validterm date,
+    lcno character varying(32),
+    reckoningInitialDate date,
+    portplace character varying(255),
+    bankname character varying(255),
+    reserve1 text
+);
+GRANT SELECT, UPDATE, INSERT, DELETE ON t_reportimportlcorderinfo TO kids;
+alter table t_reportimportlcorderinfo owner to kids;

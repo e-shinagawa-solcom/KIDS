@@ -1,0 +1,93 @@
+	納品伝票番号	lngslipno
+	リビジョン番号	lngrevisionno
+20	納品伝票コード	strslipcode
+18	売上番号	lngsalesno
+	顧客コード	lngcustomercode
+	顧客社名	strcustomercompanyname
+1	顧客名	strcustomername
+	顧客住所1	strcustomeraddress1
+	顧客住所2	strcustomeraddress2
+	顧客住所3	strcustomeraddress3
+	顧客住所4	strcustomeraddress4
+	顧客電話番号	strcustomerphoneno
+	顧客FAX番号	strcustomerfaxno
+	顧客担当者名	strcustomerusername
+	仕入先コード（出荷者）	strshippercode
+2	納品日	dtmdeliverydate
+	納品場所コード	lngdeliveryplacecode
+3	納品場所名	strdeliveryplacename
+	納品場所担当者名	strdeliveryplaceusername
+	売上区分コード	lngsalesclasscode
+	支払方法コード	lngpaymentmethodcode
+32	支払期限	dtmpaymentlimit
+	課税区分コード	lngtaxclasscode
+17	課税区分	strtaxclassname
+	消費税率	curtax
+	担当者コード	lngusercode
+	担当者名	strusername
+15	合計金額	curtotalprice
+	通貨単位コード	lngmonetaryunitcode
+	通貨単位	strmonetaryunitsign
+	作成日	dtminsertdate
+	入力者コード	lnginsertusercode
+19	入力者名	strinsertusername
+16	備考	strnote
+	印刷回数	lngprintcount
+	無効フラグ	bytinvalidflag
+
+
+
+
+21	仕入先コード	m_slip.lngcustomercodeに紐づくm_stockcompanycode.strstockcompanycode
+22	仕入先住所		
+23	仕入先社名		m_company.straddress1
+24	仕入先電話番号	m_company.strtel1　m_company.strtel2
+25	仕入先FAX番号	m_company.strfax1　m_company.strfax2
+26	顧客住所		m_slip.lngcustomercodeに紐づく
+27	顧客電話番号	m_slip.lngcustomercodeに紐づく
+28	顧客FAX番号		m_slip.lngcustomercodeに紐づく
+31	支払方法		m_slip.lngpaymentmethodcodeに紐づくm_paymentmethod.strpaymentmethodname	
+	
+
+
+	納品伝票番号	lngslipno
+	納品伝票明細番号	lngslipdetailno
+	リビジョン番号	lngrevisionno
+4	顧客受注番号	strcustomersalescode
+	売上区分コード	lngsalesclasscode
+6	売上区分名	strsalesclassname
+	顧客品番	strgoodscode
+7	製品コード	strproductcode
+	再販コード	strrevisecode
+5	製品名	strproductname
+29	製品名（英語）	strproductenglishname
+9,13	単価	curproductprice
+	入数	lngquantity
+11	数量	lngproductquantity
+	製品単位コード	lngproductunitcode
+12	製品単位名	strproductunitname
+14	小計	cursubtotalprice
+8	明細備考	strnote
+	受注番号	lngreceiveno
+	受注明細番号	lngreceivedetailno
+	受注リビジョン番号	lngreceiverevisionno
+	表示用ソートキー	lngsortkey
+
+
+
+
+
+
+仕入NO.	計上日	発注書NO.
+19120023	2019/12/25	19120045
+
+（株）クワガタ(KUWAGATA)
+
+
+
+
+
+
+
+
+

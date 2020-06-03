@@ -1,0 +1,13 @@
+2009/08/24	12:24:23	原価計算データ更新	UpdGoodsPrice	6	オーバーフローしました。	SELECT * FROM 製品原価情報テーブル  ORDER BY 製品コード 
+2009/08/24	12:41:06	原価計算データ更新	UpdGoodsPrice	6	オーバーフローしました。	SELECT * FROM 製品原価情報テーブル  ORDER BY 製品コード 
+2009/08/24	12:58:00	原価計算データ更新	UpdGoodsPrice	6	オーバーフローしました。	SELECT * FROM 製品原価情報テーブル  ORDER BY 製品コード 
+2009/08/24	13:02:30	原価計算データ更新	UpdGoodsPrice	6	オーバーフローしました。	SELECT * FROM 製品原価情報テーブル  ORDER BY 製品コード 
+2009/08/24	13:03:42	原価計算データ更新	UpdGoodsPrice	6	オーバーフローしました。	SELECT * FROM 製品原価情報テーブル  ORDER BY 製品コード 
+2009/08/28	16:55:42	シート取込	GetFileRecArray	3	入力ファイル警告:2行 製品コード桁に不備あり	794	373459	
+2009/08/28	16:55:42	取込画面	RecImpFileDate	0	
+2009/08/28	16:57:08	シート取込	GetFileRecArray	3	入力ファイル警告:2行 製品コード桁に不備あり	794	373459	
+2009/08/28	16:57:08	取込画面	RecImpFileDate	0	
+2009/08/28	16:58:53	シート取込	GetFileRecArray	3	入力ファイル警告:2行 製品コード桁に不備あり	794	373459	
+2009/08/28	16:58:53	取込画面	RecImpFileDate	0	
+2009/08/28	17:00:41	シート取込	GetFileRecArray	3	入力ファイル警告:2行 製品コード桁に不備あり	794	373459	
+2009/08/28	17:00:41	取込画面	RecImpFileDate	0	

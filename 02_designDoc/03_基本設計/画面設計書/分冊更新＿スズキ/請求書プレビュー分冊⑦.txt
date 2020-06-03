@@ -1,0 +1,88 @@
+	請求書番号	lnginvoiceno
+	リビジョン番号	lngrevisionno
+1	請求書コード	strinvoicecode
+2,10,	請求日	dtminvoicedate
+	顧客コード	lngcustomercode
+4	顧客名	strcustomername
+3	顧客社名	strcustomercompanyname
+11	請求期間(FROM)	dtmchargeternstart
+12	請求期間(TO)	dtmchargeternend
+6	前月請求残額	curlastmonthbalance
+7	御請求金額	curthismonthamount
+	通貨単位コード	lngmonetaryunitcode
+	通貨単位	strmonetaryunitsign
+	課税区分コード	lngtaxclasscode
+	課税区分名	strtaxclassname
+	税抜金額1	cursubtotal1
+	消費税率1	curtax1
+8	消費税額1	curtaxprice1
+	税抜金額2	cursubtotal2
+	消費税率2	curtax2
+	消費税額2	curtaxprice2
+19	作成日	dtminsertdate
+	担当者コード	lngusercode
+15	担当者名	strusername
+	作成者コード	lnginsertusercode
+	作成者名	strinsertusername
+14	備考	strnote
+	印刷回数	lngprintcount
+	無効フラグ	bytinvalidflag
+		description
+	
+5	m_invoice.strmonetaryunitsign + " " + m_invoice.curlastmonthbalance + m_invoice.curthismonthamount + m_invoice.curtaxprice1
+9	m_invoice.curlastmonthbalance + m_invoice.curthismonthamount + m_invoice.curtaxprice1
+10	m_invoice.dtminvoicedate の月の部分のみ
+	13
+	
+	
+	
+	御請求金額 = 御請求金額
+	前月請求残額 = 前月請求残額				
+	当月請求額	= 税抜金額1
+	
+	
+	
+	御請求金額 = 通貨単位￥　差引合計額
+	前月請求残額 = 前月請求残額				
+	当月請求額	= 御請求金額
+	消費税		= 消費税額
+	差引合計額	= 前月請求残額 + 御請求金額 + 消費税額
+	
+	
+	請求書番号	lnginvoiceno
+	請求書明細番号	lnginvoicedetailno
+	リビジョン番号	lngrevisionno
+	納品日	dtmdeliverydate
+	納品場所コード	lngdeliveryplacecode
+	納品場所名	strdeliveryplacename
+	小計	cursubtotalprice
+	課税区分コード	lngtaxclasscode	
+	課税区分	strtaxclassname
+	消費税率	curtax
+	備考	strnote
+	納品書番号	lngslipno
+	納品書リビジョン番号	lngsliprevisionno
+
+16	t_invoicedetail.lngslipnoとlngsliprevisionnoに紐づくm_slip.strslipcode（1～7件目）
+17	t_invoicedetail.lngslipnoとlngsliprevisionnoに紐づくm_slip.strslipcode（8～11件目）
+18	t_invoicedetail.lngslipnoとlngsliprevisionnoに紐づくm_slip.strslipcode（12～15件目）
+
+
+
+
+請求書検索　起票者＝担当者
+			入力日＝作成日
+
+
+
+登録日時
+
+納品NO
+
+2019-12-26 01:10:51
+
+42-B12009
+
+閉じる 
+
+

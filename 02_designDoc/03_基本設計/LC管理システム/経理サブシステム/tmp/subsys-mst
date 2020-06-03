@@ -1,0 +1,16 @@
+# 経理サブ用
+IDX=POS
+DSN=PostgreSQL30;
+UID=ackids;
+PWD=x7zv1jid
+
+# K.I.D.S.用
+IDX=CORE
+DSN=PostgreSQL30_core2;
+UID=kids;
+PWD=kids2
+
+# データ取得年月
+IDX=DATA
+FLG=ON
+TYM=200705

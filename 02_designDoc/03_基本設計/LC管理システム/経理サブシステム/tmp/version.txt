@@ -1,0 +1,17 @@
+
+#
+# Microsoft Visual Studio Installer
+#
+# Setting information
+#
+
+UpgradeCode [何れのバージョンでも変更禁止]
+{4892FC09-56E1-4602-ADED-EE43A48213EB}
+
+ProductCode[提供バージョンにより変更される]
+1.0.0
+{9B55834C-FA24-4A74-BBC3-1294DD5C0B27}
+
+1.240.050
+{1CB508F3-6E2C-4486-B269-09E6D9777138}
+
