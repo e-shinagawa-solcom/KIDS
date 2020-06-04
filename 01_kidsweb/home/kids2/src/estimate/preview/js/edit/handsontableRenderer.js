@@ -2574,14 +2574,24 @@ $(function () {
   }
 
   // 編集保存処理
-  $('#update_regist').on('click', function () {
+  $('#update_regist').on('click', function () {    
+    var estimateDetailNoCount = 0
+    $.map(detailNoList, function(value, index){
+      if (value.estimateDetailNo != null) {
+        estimateDetailNoCount += 1;
+      }
+    });
+    if (estimateDetailNoCount == 0) {
+      alert("見積原価明細を一つ以上追加してください。")
+      return false;
+    }
+
     if (window.confirm('編集内容を保存してプレビュー画面を再読み込みします。よろしいですか？')) {
       var postData = {
         value: cellValue,
         class: cellClass,
         estimateDetailNo: detailNoList
       }
-
       var postJson = JSON.stringify(postData, replacer);
 
       $("<input>", {

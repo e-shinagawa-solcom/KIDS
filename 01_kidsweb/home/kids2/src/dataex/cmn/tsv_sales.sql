@@ -29,8 +29,8 @@ SELECT
 	,p.strGoodsCode
 	,mu.strmonetaryunitname
 	,
-	/* 荷姿単位計上の場合、単価をカートン入り数で割る */
-	CASE WHEN sd.lngConversionClassCode = 2 THEN To_char( sd.curProductPrice / p.lngCartonQuantity, '99999990.9999' )
+	/* c/tの場合、単価をカートン入り数で割る */
+	CASE WHEN sd.lngproductunitcode = 2 THEN To_char( sd.curProductPrice / p.lngCartonQuantity, '99999990.9999' )
 	  ELSE To_char( sd.curProductPrice, '99999990.9999' )
 	END AS curProductPrice,
 /*
@@ -40,8 +40,8 @@ SELECT
 	/*
 	pu.strProductUnitName,
 	*/
-	/* 荷姿単位計上の場合、製品数量をカートン入り数で掛ける */
-	CASE WHEN sd.lngConversionClassCode = 2 THEN  sd.lngProductQuantity * p.lngCartonQuantity
+	/* c/tの場合、製品数量をカートン入り数で掛ける */
+	CASE WHEN sd.lngproductunitcode = 2 THEN  sd.lngProductQuantity * p.lngCartonQuantity
 	  ELSE sd.lngProductQuantity
 	END AS lngProductQuantity
 /*	

@@ -2104,6 +2104,12 @@ function fncSetSlipDataToWorkSheet(
         $v_strproductunitname = $d["strproductunitname"]; //16:製品単位名
         $v_cursubtotalprice = $d["cursubtotalprice"]; //17:小計
         $v_strnote = $d["strnote"]; //18:明細備考
+        // 一個単価
+        if ($d["lngproductunitcode"] == 2) {
+            $v_stroneproductprice = number_format($d["curproductprice"] / $d["lngunitquantity"], 2, '.', ',');
+        } else {
+            $v_stroneproductprice = $v_curproductprice;
+        }
 
         // セルに値をセット
         $r = $startRowIndex + ($i - $itemMinIndex);
@@ -2125,6 +2131,7 @@ function fncSetSlipDataToWorkSheet(
         setCellDetailValue($xlWorkSheet, "Q", $r, $v_strproductunitname); //16:製品単位名
         setCellDetailValue($xlWorkSheet, "R", $r, $v_cursubtotalprice); //17:小計
         setCellDetailValue($xlWorkSheet, "S", $r, $v_strnote, 'UTF-8', 'UTF8'); //18:明細備考
+        setCellDetailValue($xlWorkSheet, "T", $r, $v_stroneproductprice); //19:一個単価
 
     }
 

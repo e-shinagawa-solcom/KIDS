@@ -73,7 +73,7 @@ img.toggle-display
     top: 10px;
     left: 21px;
 
-    width: 700px;
+    width: 745px;
     height: 430px;
 
     border-style: solid;
@@ -547,7 +547,7 @@ img.margin-30pxL
 }
 .form-box__contents--with-scroll
 {
-    height: 89%;
+    height: 85%;
     margin: 40px 5px 20px;
     padding: 3px 10px;
     border: 1px solid #788787;

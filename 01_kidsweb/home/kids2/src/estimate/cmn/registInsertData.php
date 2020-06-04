@@ -56,9 +56,9 @@ class registInsertData extends estimateInsertData {
 
 			if ($currentRecord !== false) {
                 // 製品番号を取得
-                $productNo = $currentRecord->lngproductno;
+                // $productNo = $currentRecord->lngproductno;
                 // t_goodplanがPK違反となるため、製品番号は新規に取得する。  
-                //$productNo = fncGetSequence("m_product.lngproductno", $this->objDB);
+                $productNo = fncGetSequence("m_product.lngproductno", $this->objDB);
                 
                 // 最大のリバイスコードを取得
                 $maxReviceCode = (int)$currentRecord->strrevisecode;
