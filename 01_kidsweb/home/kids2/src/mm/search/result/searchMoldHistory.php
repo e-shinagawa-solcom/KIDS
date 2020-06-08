@@ -152,34 +152,34 @@ $query[] = "          m_stock ims ";
 $query[] = "          inner join ( ";
 $query[] = "            SELECT";
 $query[] = "              MAX(lngRevisionNo) lngrevisionno";
-$query[] = "              , strStockCode ";
+$query[] = "              , lngstockno ";
 $query[] = "            FROM";
 $query[] = "              m_Stock ";
 $query[] = "            WHERE";
 $query[] = "              bytInvalidFlag = false ";
 $query[] = "            group by";
-$query[] = "              strStockCode";
+$query[] = "              lngstockno";
 $query[] = "          ) s ";
 $query[] = "            on ims.lngrevisionno = s.lngrevisionno ";
-$query[] = "            and ims.strstockcode = s.strStockCode ";
+$query[] = "            and ims.lngstockno = s.lngstockno ";
 $query[] = "        where";
 $query[] = "          not exists ( ";
 $query[] = "            select";
-$query[] = "              s1.strStockCode ";
+$query[] = "              s1.lngstockno ";
 $query[] = "            from";
 $query[] = "              ( ";
 $query[] = "                SELECT";
 $query[] = "                  min(lngRevisionNo) lngRevisionNo";
-$query[] = "                  , strStockCode ";
+$query[] = "                  , lngstockno ";
 $query[] = "                FROM";
 $query[] = "                  m_Stock ";
 $query[] = "                where";
 $query[] = "                  bytInvalidFlag = false ";
 $query[] = "                group by";
-$query[] = "                  strStockCode";
+$query[] = "                  lngstockno";
 $query[] = "              ) as s1 ";
 $query[] = "            where";
-$query[] = "              s1.strStockCode = ims.strstockcode AND s1.lngRevisionNo < 0";
+$query[] = "              s1.lngstockno = ims.lngstockno AND s1.lngRevisionNo < 0";
 $query[] = "          )";
 $query[] = "      ) s ";
 $query[] = "        on tsd.lngstockno = s.lngstockno and tsd.lngrevisionno = s.lngrevisionno";
@@ -1040,8 +1040,12 @@ foreach ($records as $i => $record)
 		$tdDelete = $doc->createElement("td");
 		$tdDelete->setAttribute("class", $exclude);
 
+		if ($utilMold->selectMaxMoldHistoryNo($record[TableMoldHistory::MoldNo], $objDB) != $record[TableMoldHistory::HistoryNo]) {
+			$allowedDelete = false;
+		}
+		
 		// 削除ボタンの表示
-		if ($allowedDelete)
+		if ($allowedDelete && $record[TableMoldHistory::DeleteFlag] == 'f')
 		{
 			// 削除ボタン
 			$a = $doc->createElement("a");

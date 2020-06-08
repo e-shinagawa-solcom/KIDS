@@ -62,6 +62,9 @@ $utilProduct = UtilProduct::getInstance();
 // 金型履歴の索引
 try
 {
+	if ($utilMold->selectMaxMoldHistoryNo($moldNo, $objDB) != $historyNo) {
+		fncOutputError(9056, DEF_ERROR, "対象の金型データが移動されましたので、削除できませんでした。", TRUE, "", $objDB);
+	}
 	// 金型情報
 	$record = $utilMold->selectMoldHistory($moldNo, $historyNo, $version);
 	$infoMold = $utilMold->selectMold($moldNo);
@@ -97,7 +100,20 @@ catch (SQLException $e)
 }
 
 // 金型履歴レコードの無効化
-$affect_count = $utilMold->disableMoldHistory($moldNo, $historyNo, $version);
+// $affect_count = $utilMold->disableMoldHistory($moldNo, $historyNo, $version);
+$aryQuery[] = "UPDATE t_moldhistory ";
+$aryQuery[] = "SET";
+$aryQuery[] = "  deleteflag = true ";
+$aryQuery[] = "WHERE";
+$aryQuery[] = "  moldno = '" . $moldNo . "'";
+$aryQuery[] = "  and historyno = " . $historyNo . "";
+$aryQuery[] = "  AND version = " .$version . "";
+$strQuery = implode("\n", $aryQuery);
+list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+if (!$lngResultID) {
+	fncOutputError(9061, DEF_ERROR, "金型履歴テーブルの更新が失敗しました。", TRUE, "", $objDB);
+}
+$objDB->freeResult($lngResultID);
 
 // 置換文字列群の作成
 $replacement = $record;

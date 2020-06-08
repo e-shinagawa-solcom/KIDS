@@ -59,6 +59,10 @@ $utilProduct = UtilProduct::getInstance();
 // 金型履歴の索引
 try
 {
+	if ($utilMold->selectMaxMoldHistoryNo($moldNo, $objDB) != $historyNo) {
+		fncOutputError(9056, DEF_ERROR, "対象の金型データが移動されましたので、削除できませんでした。", TRUE, "", $objDB);
+	}
+
 	// 金型情報
 	$record = $utilMold->selectMoldHistory($moldNo, $historyNo, $version);
 	$infoMold = $utilMold->selectMold($moldNo);

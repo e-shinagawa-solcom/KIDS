@@ -88,15 +88,55 @@ if ($relation  = $utilMold->selectMoldReportRelationByReport($moldReportId, $rev
 try
 {
 	// 金型帳票の無効化
-	$utilMold->disableMoldReport($moldReportId, $revision, $report[TableMoldReport::Version]);
+	// $utilMold->disableMoldReport($moldReportId, $revision, $report[TableMoldReport::Version]);
+	$aryQuery[] = "UPDATE m_moldreport ";
+	$aryQuery[] = "SET";
+	$aryQuery[] = "  deleteflag = true ";
+	$aryQuery[] = "WHERE";
+	$aryQuery[] = "  moldreportid = '" . $moldReportId . "'";
+	$aryQuery[] = "  and revision = " . $revision . "";
+	$aryQuery[] = "  AND version = " .$report[TableMoldReport::Version] . "";
+	$strQuery = implode("\n", $aryQuery);
+	list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+	if (!$lngResultID) {
+		fncOutputError(9061, DEF_ERROR, "金型帳票テーブルの更新が失敗しました。", TRUE, "", $objDB);
+	}
+	$objDB->freeResult($lngResultID);
+
 	// 金型帳票詳細の無効化
-	$utilMold->disableMoldReportDetail($moldReportId, $revision);
+	// $utilMold->disableMoldReportDetail($moldReportId, $revision);
+    unset($aryQuery);
+	$aryQuery[] = "UPDATE t_moldreportdetail ";
+	$aryQuery[] = "SET";
+	$aryQuery[] = "  deleteflag = true ";
+	$aryQuery[] = "WHERE";
+	$aryQuery[] = "  moldreportid = '" . $moldReportId . "'";
+	$aryQuery[] = "  and revision = " . $revision . "";
+	$strQuery = implode("\n", $aryQuery);
+	list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+	if (!$lngResultID) {
+		fncOutputError(9061, DEF_ERROR, "金型帳票明細テーブルの更新が失敗しました。", TRUE, "", $objDB);
+	}
+	$objDB->freeResult($lngResultID);
 
 	// 金型帳票関連レコードが存在する場合
 	if($relation)
 	{
 		// 金型帳票関連の無効化
-		$utilMold->disableMoldReportRelationByReport($moldReportId, $revision);
+		// $utilMold->disableMoldReportRelationByReport($moldReportId, $revision);
+    	unset($aryQuery);
+		$aryQuery[] = "UPDATE t_moldreportrelation ";
+		$aryQuery[] = "SET";
+		$aryQuery[] = "  deleteflag = true ";
+		$aryQuery[] = "WHERE";
+		$aryQuery[] = "  moldreportid = '" . $moldReportId . "'";
+		$aryQuery[] = "  and revision = " . $revision . "";
+		$strQuery = implode("\n", $aryQuery);
+		list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+		if (!$lngResultID) {
+			fncOutputError(9061, DEF_ERROR, "金型帳票関連テーブルの更新が失敗しました。", TRUE, "", $objDB);
+		}
+		$objDB->freeResult($lngResultID);
 
 		// 金型履歴件数分操作
 		foreach ($history as $row => $columns)
@@ -106,7 +146,21 @@ try
 			$hisVersion = $columns[TableMoldHistory::Version];
 
 			// 金型履歴の無効化
-			$utilMold->disableMoldHistory($moldNo, $historyNo, $hisVersion);
+			// $utilMold->disableMoldHistory($moldNo, $historyNo, $hisVersion);
+    		unset($aryQuery);
+			$aryQuery[] = "UPDATE t_moldhistory ";
+			$aryQuery[] = "SET";
+			$aryQuery[] = "  deleteflag = true ";
+			$aryQuery[] = "WHERE";
+			$aryQuery[] = "  moldno = '" . $moldNo . "'";
+			$aryQuery[] = "  and historyno = " . $historyNo . "";
+			$aryQuery[] = "  AND version = " .$hisVersion . "";
+			$strQuery = implode("\n", $aryQuery);
+			list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+			if (!$lngResultID) {
+				fncOutputError(9061, DEF_ERROR, "金型履歴テーブルの更新が失敗しました。", TRUE, "", $objDB);
+			}
+			$objDB->freeResult($lngResultID);
 		}
 	}
 }

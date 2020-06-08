@@ -84,7 +84,7 @@ foreach ($aryData["detailData"] as $data) {
     $trBody->appendChild($td);
 
     // 製品
-    $td = $doc->createElement("td", $data["strProductCode"]);
+    $td = $doc->createElement("td", htmlspecialchars($data["strProductCode"]));
     $trBody->appendChild($td);
 
     // 顧客品番

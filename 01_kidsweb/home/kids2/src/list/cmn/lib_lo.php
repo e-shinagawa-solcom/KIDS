@@ -725,7 +725,7 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , to_char(cursubtotalprice, '9,999,999,990') AS cursubtotalprice_jp";
     $aryQuery[] = "  , trunc(cursubtotalprice) AS cursubtotalprice_comm";
     $aryQuery[] = "  , strnote ";
-    $aryQuery[] = "  , (CASE lngproductunitcode when 2 then to_char(curproductprice/lngquantity, '9,999,999,990.9999') else to_char(curproductprice, '9,999,999,990.9999') end) as curoneproductprice ";
+    $aryQuery[] = "  , (CASE lngproductunitcode when 2 then to_char(curproductprice/lngquantity, '9,999,999,990.99') else to_char(curproductprice, '9,999,999,990.99') end) as curoneproductprice ";
     $aryQuery[] = "from";
     $aryQuery[] = "  t_slipdetail ";
     $aryQuery[] = "where";
@@ -827,7 +827,7 @@ function fncGetSlipDetailForDownloadQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , strproductunitname";
     $aryQuery[] = "  , cursubtotalprice";
     $aryQuery[] = "  , strnote ";
-    $aryQuery[] = "  , (CASE lngproductunitcode when 2 then to_char(curproductprice/lngquantity, '9,999,999,990.9999') else to_char(curproductprice, '9,999,999,990.9999') end) as curoneproductprice ";
+    $aryQuery[] = "  , (CASE lngproductunitcode when 2 then cast(curproductprice/lngproductquantity as numeric(14,4)) else cast(curproductprice as numeric(14,4)) end) as curoneproductprice ";
     $aryQuery[] = "from";
     $aryQuery[] = "  t_slipdetail ";
     $aryQuery[] = "where";
