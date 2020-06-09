@@ -827,7 +827,7 @@ function fncGetSlipDetailForDownloadQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , strproductunitname";
     $aryQuery[] = "  , cursubtotalprice";
     $aryQuery[] = "  , strnote ";
-    $aryQuery[] = "  , (CASE lngproductunitcode when 2 then cast(curproductprice/lngproductquantity as numeric(14,4)) else cast(curproductprice as numeric(14,4)) end) as curoneproductprice ";
+    $aryQuery[] = "  , (CASE lngproductunitcode when 2 then cast(curproductprice/lngquantity as numeric(14,4)) else cast(curproductprice as numeric(14,4)) end) as curoneproductprice ";
     $aryQuery[] = "from";
     $aryQuery[] = "  t_slipdetail ";
     $aryQuery[] = "where";
