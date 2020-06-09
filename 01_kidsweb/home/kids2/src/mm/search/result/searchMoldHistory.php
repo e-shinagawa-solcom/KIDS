@@ -763,6 +763,11 @@ $thead->appendChild($trHead);
 // 検索結果件数分走査
 foreach ($records as $i => $record)
 {
+	$isMaxHistoryNo = true;
+	if ($utilMold->selectMaxMoldHistoryNo($record[TableMoldHistory::MoldNo], $objDB) != $record[TableMoldHistory::HistoryNo]) {
+		$isMaxHistoryNo = false;
+	}
+
 	$index = $i + 1;
 
 	// tbody > tr要素作成
@@ -808,7 +813,7 @@ foreach ($records as $i => $record)
 		$tdModify->setAttribute("class", $exclude);
 
 		// 修正ボタンの表示
-		if ($allowedModify)
+		if ($allowedModify && $isMaxHistoryNo)
 		{
 			// 修正ボタン
 			$a = $doc->createElement("a");
@@ -1040,12 +1045,8 @@ foreach ($records as $i => $record)
 		$tdDelete = $doc->createElement("td");
 		$tdDelete->setAttribute("class", $exclude);
 
-		if ($utilMold->selectMaxMoldHistoryNo($record[TableMoldHistory::MoldNo], $objDB) != $record[TableMoldHistory::HistoryNo]) {
-			$allowedDelete = false;
-		}
-		
 		// 削除ボタンの表示
-		if ($allowedDelete && $record[TableMoldHistory::DeleteFlag] == 'f')
+		if ($allowedDelete && $record[TableMoldHistory::DeleteFlag] == 'f' && $isMaxHistoryNo)
 		{
 			// 削除ボタン
 			$a = $doc->createElement("a");
