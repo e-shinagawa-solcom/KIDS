@@ -1030,7 +1030,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  , delv_c.strcompanydisplaycode as strdeliveryplacecode";
         $aryQuery[] = "  , inv_d.strdeliveryplacename as strdeliveryplacename";
         $aryQuery[] = "  , inv_d.cursubtotalprice as cursubtotalprice";
-        $aryQuery[] = "  , inv_d.curtax * inv_d.cursubtotalprice as curtaxprice";
+        $aryQuery[] = "  , round(inv_d.curtax * inv_d.cursubtotalprice) as curtaxprice";
         $aryQuery[] = "  , inv_d.lngtaxclasscode as lngtaxclasscode";
         $aryQuery[] = "  , inv_d.strtaxclassname as strtaxclassname";
         $aryQuery[] = "  , inv_d.curtax as curtax";

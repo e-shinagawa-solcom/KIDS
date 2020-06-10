@@ -2091,13 +2091,11 @@ function fncGetJapaneseDate($date)
  */
 function fncGetInvoiceAggregateSQL ( $invoiceMonth )
 {
-    $start = new DateTime($invoiceMonth);
-    $end =   new DateTime($invoiceMonth);
-    // 来月
-    $end->add(DateInterval::createFromDateString('1 month'));
+    $year = explode("-", $invoiceMonth)[0];
+    $month = explode("-", $invoiceMonth)[1];
 
     // 請求書番号番号
-    $aryQuery[] = "SELECT distinct on (inv.lnginvoiceno) inv.lnginvoiceno as lnginvoiceno ";
+    $aryQuery[] = "SELECT inv.lnginvoiceno ";
     // リビジョン番号
     $aryQuery[] = ", inv.lngrevisionno as lngrevisionno";
     // 顧客コード
@@ -2145,19 +2143,31 @@ function fncGetInvoiceAggregateSQL ( $invoiceMonth )
     // 印刷回数
     $aryQuery[] = ", inv.lngprintcount as lngprintcount";
 
-    $aryQuery[] = " FROM m_invoice inv ";
+    $aryQuery[] = "  FROM m_invoice inv ";
+    $aryQuery[] = "  inner join ( ";
+    $aryQuery[] = "    select";
+    $aryQuery[] = "      lnginvoiceno";
+    $aryQuery[] = "      , max(lngrevisionno) as lngrevisionno ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      m_invoice ";
+    $aryQuery[] = "    group by";
+    $aryQuery[] = "      lnginvoiceno";
+    $aryQuery[] = "  ) max_inv ";
+    $aryQuery[] = "    on max_inv.lnginvoiceno = inv.lnginvoiceno ";
+    $aryQuery[] = "    and max_inv.lngrevisionno = inv.lngrevisionno ";
     $aryQuery[] = " LEFT JOIN m_Company cust_c ON inv.lngcustomercode = cust_c.lngcompanycode";
     $aryQuery[] = " LEFT JOIN m_User insert_u ON inv.lngInsertUserCode = insert_u.lngusercode";
     $aryQuery[] = " LEFT JOIN m_User u ON inv.lngusercode = u.lngusercode";
 
     // WHERE  dtminvoicedate
-    $aryQuery[] = " WHERE inv.dtminvoicedate >= '" .$start->format('Y-m-d') ."'  AND inv.dtminvoicedate < '"  .$end->format('Y-m-d') ."' ";
+    $aryQuery[] = " WHERE to_char(inv.dtminvoicedate, 'YYYY') = '" .$year ."' ";
+    $aryQuery[] = " AND inv.strinvoicemonth = '" .$month ."' ";
     // 削除済みは排除
     $aryQuery[] = " AND inv.lnginvoiceno NOT IN ( ";
     $aryQuery[] = " SELECT DISTINCT(lnginvoiceno) FROM m_invoice WHERE lngrevisionno = -1";
     $aryQuery[] = " ) ";
 
-    $aryQuery[] = " ORDER BY inv.lnginvoiceno ASC , inv.lngrevisionno DESC , inv.lngmonetaryunitcode ASC, inv.lngcustomercode ASC, inv.strinvoicecode ASC ";
+    $aryQuery[] = " ORDER BY inv.lngmonetaryunitcode ASC, inv.strcustomercompanyname ASC, inv.strcustomername ASC, inv.strinvoicecode ASC ";
 
     $strQuery = implode( "\n", $aryQuery );
 
