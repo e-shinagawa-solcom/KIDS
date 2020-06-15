@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>msw</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+  <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+  <script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+  <script src="/mold/lib/js/queryMasterData.js" defer></script>
+  <script src="/po/cmn/msw/choice/js/msw-commons.js" defer></script>
+  <script src="/po/cmn/msw/choice/js/msw-choice.js" defer></script>
+  <link rel="stylesheet" href="/mold/cmn/msw/cmn/css/msw-commons.css">
+  <link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
+  <link rel="stylesheet" href="/cmn/css/form/base.css">
+  <link rel="stylesheet" href="/po/cmn/msw/choice/css/form.css">
+</head>
+
+<body>
+  <div class="msw-box">
+    <div class="msw-box__header">
+      <span class="msw-box__header__bar"></span>
+      <img class="msw-box__header__close-btn" src="/img/type01/msw/cmn/msw_close.gif" alt="msw box close btn">
+    </div>
+    <div class="content-header-box">
+      <p class="box-title">確定タイプを選択してください。
+      </p>
+      <span class="radio-group">
+        <input type="radio" name="decidetype" value="1" checked> 修正で実行
+        <span class="important-point">※修正で実行の場合、発注書No候補リストより発注書NOを選択してください。</span>
+        <br>
+        <input type="radio" name="decidetype" value="2"> 新規で作成
+      </span>
+    </div>
+    <div class="content-box" disabled>
+      <div class="box-header">
+        発注書No候補リスト
+      </div>
+      <div>
+        <select class="select-result" size="10">
+          <!-- <option code="20060057" name="(株)エムアイシー（MIC）">20060057&nbsp;&nbsp;&nbsp;(株)エムアイシー（MIC）</option>
+          <option code="20060059" name="ボーイズトイ事業部">20060059&nbsp;&nbsp;&nbsp;CHINA ANIMATION GROUP Ltd. </option> -->
+        </select>
+      </div>
+    </div>
+    <div class="button-group">
+      <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="cancel">キャンセル</button>
+      <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="choice" onclick="">選択</button>
+    </div>
+  </div>
+</body>
+
+</html>

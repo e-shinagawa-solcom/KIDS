@@ -299,8 +299,7 @@ class estimateDB extends clsDB {
             $strQuery .= " INNER JOIN m_stockclass msc ON mss.lngstockclasscode = msc.lngstockclasscode";
             if (isset($areaCode)) {
                 $strQuery .= " WHERE msi.lngestimateareaclassno = " .$areaCode;
-            }            
-
+            }
             $queryResult = fncQuery($strQuery, $this); // [0]:結果ID [1]:取得行数
 
             for ($i = 0; $i < $queryResult[1]; ++$i) {
@@ -847,6 +846,8 @@ class estimateDB extends clsDB {
             $strQuery .= " INNER JOIN m_stockclass f ON e.lngstockclasscode = f.lngstockclasscode";
             
             $strQuery .= " WHERE (char_length(trim(e.strstocksubjectname)) > 0) AND (char_length(trim(d.strstockitemname)) > 0)";
+            $strQuery .= " and d.bytdisplayestimateflag = true and d.bytinvalidflag = false ";
+            $strQuery .= " and e.bytdisplayestimateflag = true and e.bytinvalidflag = false ";
             
             $strQuery .= " ORDER BY areacode ASC, divisionsubjectsort ASC, classitemsort ASC";
             
@@ -895,8 +896,10 @@ class estimateDB extends clsDB {
             $strQuery  .= "                msi.lngestimateareaclassno, ";
             $strQuery  .= "                msi.lngstocksubjectcode ";
             $strQuery  .= "            from m_stockitem msi ";
+            $strQuery  .= "            where msi.bytinvalidflag = false and msi.bytdisplayestimateflag = true ";
             $strQuery  .= "        ) A ";
             $strQuery  .= "            on A.lngstocksubjectcode = mss.lngstocksubjectcode ";
+            $strQuery  .= "            where mss.bytinvalidflag = false and mss.bytdisplayestimateflag = true ";
             $strQuery  .= "    ) ";
             $strQuery  .= ") TBL ";
             $strQuery  .= "inner join m_estimatecompanypulldown mecp ";
@@ -904,6 +907,7 @@ class estimateDB extends clsDB {
             $strQuery  .= "    and mecp.lngsalesclassstocksubjectcode = TBL.level1code ";
             $strQuery  .= "inner join m_company mc ";
             $strQuery  .= "    on mc.lngcompanycode = mecp.lngcompanycode ";
+            $strQuery  .= "where mecp.bytinvalidflag = false ";
             $strQuery  .= "order by TBL.areano, TBL.level1code, mc.strcompanydisplaycode ";
 /*
             $strQuery  = "select distinct";

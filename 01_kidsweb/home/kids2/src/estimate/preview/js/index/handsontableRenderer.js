@@ -1,6 +1,6 @@
 // handsontableの操作関数
 
-$(function(){
+$(function () {
   // データの取得
   var script = $('#script').attr('data-param');
   var result = JSON.parse(script);
@@ -98,10 +98,10 @@ $(function(){
     // エリア5の%入力に書式を設定する
     if (!isEmpty(elements)) {
       var className = elements[0].className;
-      if (className.includes('detail')) { 
+      if (className.includes('detail')) {
         if (className.includes('payoff')) { // 償却 
           var area = className.match(/area(\d+)/);
-          if (Number(area[1]) == 5) { 
+          if (Number(area[1]) == 5) {
             cellProperties.type = 'numeric';
             cellProperties.numericFormat = {
               pattern: '0.00%',
@@ -119,7 +119,7 @@ $(function(){
     if (col <= 3) {
       Handsontable.renderers.HtmlRenderer.apply(this, arguments);  //　プレビューの確認、取消設置用
     } else {
-//      Handsontable.renderers.TextRenderer.apply(this, arguments);
+      //      Handsontable.renderers.TextRenderer.apply(this, arguments);
       if (cellProperties.type === 'date') { // 日付型
         Handsontable.renderers.DateRenderer.apply(this, arguments);
       } else if (cellProperties.type === 'numeric') { // 数値型
@@ -128,15 +128,15 @@ $(function(){
         Handsontable.renderers.TextRenderer.apply(this, arguments);
       }
     }
-    var cellInfoData = cellData[row][col];  
+    var cellInfoData = cellData[row][col];
     var emphasis = cellInfoData['emphasis'];
     var border = cellInfoData['border'];
     var background = '#' + cellInfoData['backgroundColor'];
     var fontSize = (parseInt(cellInfoData['fontSize']) + 1) + 'px';
     var fontFamily = cellInfoData['fontFamily'];
-    var fontColor = '#' + cellInfoData['fontColor'];  
+    var fontColor = '#' + cellInfoData['fontColor'];
     var verticalAlign = cellInfoData['verticalPosition'];
-    var textAlign =  cellInfoData['horizontalPosition'];
+    var textAlign = cellInfoData['horizontalPosition'];
     var boldStyle = emphasis['bold'] == true ? 'bold' : 'normal';
     var italicStyle = emphasis['italic'] == true ? 'italic' : 'normal';
     var borderColor = '#' + border['top']['color'] + ' #' + border['right']['color'] + ' #' + border['bottom']['color'] + ' #' + border['left']['color'];
@@ -144,7 +144,7 @@ $(function(){
     var borderWidth = border['top']['width'] + ' ' + border['right']['width'] + ' ' + border['bottom']['width'] + ' ' + border['left']['width'];
     var clsRow = 'row' + row;
     var clsCol = 'col' + col;
-    
+
     td.style.background = background;
     td.style.fontSize = fontSize;
     td.style.fontFamily = fontFamily;
@@ -160,7 +160,7 @@ $(function(){
     td.classList.add(clsRow);
     td.classList.add(clsCol);
   }
-  
+
   /**
    * 指定した行および列を持つセルのクラス情報を取得する
    * @param {integer} row 指定行
@@ -173,7 +173,7 @@ $(function(){
       row: row,
       col: col
     }
-    var elements = searchList.filter(function(item) {
+    var elements = searchList.filter(function (item) {
       for (var key in filter) {
         if (item[key] === undefined || item[key] != filter[key])
           return false;
@@ -184,7 +184,7 @@ $(function(){
   }
 
   // スクロール時にチェックボックスの状態を保持するための関数（確定）
-  $(document).on('change', '.checkbox_applicate', function() {
+  $(document).on('change', '.checkbox_applicate', function () {
     var row = $(this).parents('td').attr('class').match(/\srow(\d+)\s/);
     var col = $(this).parents('td').attr('class').match(/\scol(\d+)\s/);
     var rowNo = row[1];
@@ -199,7 +199,7 @@ $(function(){
   });
 
   // スクロール時にチェックボックスの状態を保持するための関数(取消)
-  $(document).on('change', '.checkbox_cancel', function() {
+  $(document).on('change', '.checkbox_cancel', function () {
     var row = $(this).parents('td').attr('class').match(/\srow(\d+)\s/);
     var col = $(this).parents('td').attr('class').match(/\scol(\d+)\s/);
     var rowNo = row[1];
@@ -214,7 +214,7 @@ $(function(){
   });
 
   // 受注確定処理
-  $(document).on('click', '.btn_confirm_receive', function() {
+  $(document).on('click', '.btn_confirm_receive', function () {
     var searchName = $(this).val();
 
     var confirmCol = 0;
@@ -237,7 +237,7 @@ $(function(){
     // handsontableが画面外に表を作成しない(= 画面外の表にはhtmlが存在していない)ため、html要素からの取得は行っていない)
     for (var row = 1; row < keyLength; row++) {
       // 押下したボタンに対応する(エリアごと）かつチェック済のチェックボックスを取得
-      if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {   
+      if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {
         // var companyCol = getColumnForRowAndClassName(row, companyClassName, searchList);
 
         // if (beforeCompanyVal === '') {
@@ -254,39 +254,39 @@ $(function(){
         ret.push(cellValue[row]);
       }
     }
-    
-    var target = ret.map(function(value) { // チェックボックスに対応する受注又は発注番号を取得し、カンマ区切りの文字列生成
+
+    var target = ret.map(function (value) { // チェックボックスに対応する受注又は発注番号を取得し、カンマ区切りの文字列生成
       var ret = value[confirmCol].match(/value=\"(\d+)\"/);
       return ret[1];
     }).join(",");
 
     if (target) {
-//      var text = '選択された受注を確定します。\nよろしいですか？';
-//      var result = confirm(text);
-//      if (result) {
-        var sessionID = $('input[name="strSessionID"]').val();
+      //      var text = '選択された受注を確定します。\nよろしいですか？';
+      //      var result = confirm(text);
+      //      if (result) {
+      var sessionID = $('input[name="strSessionID"]').val();
 
-        var baseUrl = "/so/decide/index.php";
-        var estimateNo = 'estimateNo=';
-        var revisionNo = '&revisionNo=';
-        var numberKey = '&lngReceiveNo=';
-        var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey +  target + "&strSessionID=" + sessionID;
-        
-        var windowName = 'window_confirm';
-        var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
+      var baseUrl = "/so/decide/index.php";
+      var estimateNo = 'estimateNo=';
+      var revisionNo = '&revisionNo=';
+      var numberKey = '&lngReceiveNo=';
+      var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey + target + "&strSessionID=" + sessionID;
 
-        return false;
+      var windowName = 'window_confirm';
+      var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
 
-//      } else {
-//        return false;
-//      }
+      return false;
+
+      //      } else {
+      //        return false;
+      //      }
     } else {
       alert('受注を確定する明細行を選択してください。');
     }
   });
 
   // 発注確定処理
-  $(document).on('click', '.btn_confirm_order', function() {
+  $(document).on('click', '.btn_confirm_order', function () {
     var searchName = $(this).val();
 
     var confirmCol = 0;
@@ -311,7 +311,7 @@ $(function(){
     // handsontableが画面外に表を作成しない(= 画面外の表にはhtmlが存在していない)ため、html要素からの取得は行っていない)
     for (var row = 1; row < keyLength; row++) {
       // 押下したボタンに対応する(エリアごと）かつチェック済のチェックボックスを取得
-      if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {   
+      if (cellValue[row][confirmCol].match(buttonMatch) && cellValue[row][confirmCol].match(checkedMatch)) {
         var companyCol = getColumnForRowAndClassName(row, companyClassName, searchList);
         var monetaryCol = getColumnForRowAndClassName(row, monetaryClassName, searchList);
 
@@ -335,41 +335,43 @@ $(function(){
         ret.push(cellValue[row]);
       }
     }
-    
-    var target = ret.map(function(value) { // チェックボックスに対応する受注又は発注番号を取得し、カンマ区切りの文字列生成
+
+    var target = ret.map(function (value) { // チェックボックスに対応する受注又は発注番号を取得し、カンマ区切りの文字列生成
       var ret = value[confirmCol].match(/value=\"(\d+)\"/);
       return ret[1];
     }).join(",");
 
     if (target) {
-//      var text = '選択された発注を確定します。\nよろしいですか？';
-//      var result = confirm(text);
-//      if (result) {
-        var sessionID = $('input[name="strSessionID"]').val();
+      var sessionID = $('input[name="strSessionID"]').val();
 
-        var baseUrl = "/po/regist/index.php";
-        
-        var estimateNo = 'estimateNo=';
-        var revisionNo = '&revisionNo=';
-        var numberKey = '&lngOrderNo=';
+      var lngestimateno = $('input[name="estimateNo"]').val();
+      var lngestimaterevisionno = $('input[name="revisionNo"]').val();
+      var lngorderno = target;
+      var strsessionid = $('input[name="strSessionID"]').val();
+      
+      var parentObj = $(this).parents('span');;
+console.log(parentObj);
+      showIFrame(lngestimateno, lngestimaterevisionno, lngorderno, sessionID, parentObj);
 
-        var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey + target + "&strSessionID=" + sessionID;
+      // var baseUrl = "/po/regist/index.php";
 
-        var windowName = 'window_confirm';
-        var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
-        
-        return false;
+      // var estimateNo = 'estimateNo=';
+      // var revisionNo = '&revisionNo=';
+      // var numberKey = '&lngOrderNo=';
 
-//      } else {
-//        return false;
-//      }
+      // var actionUrl = baseUrl + "?" + estimateNo + $('input[name="estimateNo"]').val() + revisionNo + $('input[name="revisionNo"]').val() + numberKey + target + "&strSessionID=" + sessionID;
+
+      // var windowName = 'window_confirm';
+      // var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
+
+      return false;
     } else {
       alert('発注を確定する明細行を選択してください。');
     }
   });
 
   // 発注取消処理
-  $(document).on('click', '.btn_cancel_order', function() {
+  $(document).on('click', '.btn_cancel_order', function () {
     var searchName = $(this).val();
 
     var cancelCol = 1;
@@ -378,12 +380,12 @@ $(function(){
 
     // セルに格納されたhtmlの文章から対象のチェックボックスを取得する
     // handsontableが画面外に表を作成しない(= 画面外の表にはhtmlが存在していない)ため、html要素からの取得は行っていない)
-    var target = cellValue.filter(function(value) {
+    var target = cellValue.filter(function (value) {
       // ボタンに対応するチェック済のチェックボックスを取得
       if (value[cancelCol].match(buttonMatch) && value[cancelCol].match(checkedMatch)) {
         return value;
       }
-    }).map(function(value) { // チェックボックスに対応する受注又は発注番号を取得し、カンマ区切りの文字列生成
+    }).map(function (value) { // チェックボックスに対応する受注又は発注番号を取得し、カンマ区切りの文字列生成
       var ret = value[cancelCol].match(/value=\"(\d+)\"/);
       return ret[1];
     });
@@ -402,7 +404,7 @@ $(function(){
         var actionUrl = baseUrl + "?" + numberKey + "=" + target[0] + "&strSessionID=" + sessionID;
         var windowName = 'window_confirm';
         var win = window.open(actionUrl, windowName, 'scrollbars=yes, width=1000, height=670, resizable=0 location=0');
-        
+
         return false;
 
       } else {
@@ -427,15 +429,15 @@ $(function(){
     var filter = {
       row: row,
     }
-    
-    var elements = searchList.filter(function(item) {
+
+    var elements = searchList.filter(function (item) {
       for (var key in filter) {
         if (item[key] === undefined || item[key] != filter[key])
           return false;
       }
       return true;
     });
-    
+
     for (var i = 0; i < elements.length; i++) {
       if (elements[i].className.includes(className)) {
         var col = elements[i].col;
@@ -443,7 +445,7 @@ $(function(){
       }
     }
 
-    return col;      
+    return col;
   }
 
   /**
@@ -458,7 +460,7 @@ $(function(){
       row: row,
       col: col
     }
-    var elements = searchList.filter(function(item) {
+    var elements = searchList.filter(function (item) {
       for (var key in filter) {
         if (item[key] === undefined || item[key] != filter[key])
           return false;
@@ -475,23 +477,23 @@ $(function(){
    * 
    * @return {boolean} 空判定結果（true:空 false:空でない）
    */
-  function isEmpty(value){
+  function isEmpty(value) {
     if (!value) {  //null or undefined or ''(空文字) or 0 or false
-        if (value!== 0 && value !== false) {
-            return true;
-        }
-    } else if( typeof value == "object") {  //array or object
-        return Object.keys(value).length === 0;
+      if (value !== 0 && value !== false) {
+        return true;
+      }
+    } else if (typeof value == "object") {  //array or object
+      return Object.keys(value).length === 0;
     }
-      return false;  //値は空ではない
+    return false;  //値は空ではない
   }
 
   function changeBackColor(row, col, isSelected) {
-    for (var column = startColumn+4; column <= endColumn; column++) {
-      if(isSelected == false){
+    for (var column = startColumn + 4; column <= endColumn; column++) {
+      if (isSelected == false) {
         cellData[row][column]['backgroundColor'] = cellColorList[row][column];
       }
-      else{
+      else {
         cellData[row][column]['backgroundColor'] = 'DDDDDD';
       }
     }

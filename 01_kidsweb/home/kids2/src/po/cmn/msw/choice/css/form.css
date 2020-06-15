@@ -1,0 +1,41 @@
+
+.msw-box{
+    position: absolute;
+    width: 689px;
+    height: 350px;
+    border: 1px solid #3885c0;
+    background-color: #ffffff;
+}
+
+.content-header-box{
+    margin-top: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border:0px; 
+    border-radius: 0px;
+}
+
+.box-title{
+    font-weight: bold; font-size: 13px;
+}
+
+.important-point{
+    color: red; font-size: 11px;
+}
+
+.radio-group{
+    font-size: 12px;
+}
+
+.select-result {
+    display: inline-block;
+    width: 100%;
+    height: 10em;
+    border-color: #7f7f7f;
+    background-color: #f1f1f1;
+}
+
+.button-group{
+    margin-top: 10px;
+    text-align: center;
+}

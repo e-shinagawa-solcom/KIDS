@@ -47,6 +47,7 @@ $aryData["strLocationName"] = $_REQUEST["strLocationName"];
 $aryData["strNote"] = $_REQUEST["strNote"];
 $aryData["strOrderCode"] = $_REQUEST["strOrderCode"];
 $aryData["aryDetail"] = $_REQUEST["aryDetail"];
+$aryData["lngOrderNo"] = $_REQUEST["lngOrderNo"];
 
 //var_dump($_REQUEST);
 
@@ -154,7 +155,18 @@ $strPulldownDeliveryMethod = fncPulldownMenu(6, 0, "", $objDB);
 $strPulldownProductUnit = fncPulldownMenu(7, $aryOrderHeader["lngproductunitcode"], "", $objDB);
 $objDB->transactionBegin();
 // 明細（候補の発注）
-$aryOtherDetail = fncGetOtherOrderDetail($aryResult[0]["lngorderno"], $aryResult[0]["lngorderrevisionno"], $objDB);
+$aryOtherDetail = array();
+if ($aryResult[0]["lngorderno"] == null) {
+    $lngorderno = $aryData["lngOrderNo"];
+} else {    
+    $lngorderno = $aryResult[0]["lngorderno"];
+}
+if ($lngorderno != null) {
+    $aryOtherDetail = fncGetOtherOrderDetail($lngorderno, $aryResult[0]["lngorderrevisionno"], $objDB);
+}
+
+// $aryOtherDetail = fncGetOtherOrderDetail($lngorderno, $aryResult[0]["lngorderrevisionno"], $objDB);
+
 
 //if (!$aryOtherDetail || count($aryOtherDetail) == 0) {
 //    fncOutputError(503, DEF_ERROR, "発注書番号に対する明細情報が見つかりません。", true, "", $objDB);
@@ -169,17 +181,18 @@ foreach ($aryOtherDetail as $otherDetail) {
 }
 
 $objDB->transactionCommit();
-
 // 明細表示 （候補の発注）
 $aryOtherHtmlResult = fncGetOtherOrderDetailHtml($aryOtherDetail, $strPulldownDeliveryMethod, $strPulldownProductUnit, $aryData);
 
 // 明細（発注書）
 $aryHtmlResult = fncGetPurchaseOrderDetailHtml($aryResult, $objDB);
 
-$aryNewResult["purchaseOrderDetail"] = $aryHtmlResult["purchaseOrderDetail"];
-$aryNewResult["purchaseOrderDetailNo"] = $aryHtmlResult["purchaseOrderDetailNo"];
+// $aryNewResult["purchaseOrderDetail"] = $aryHtmlResult["purchaseOrderDetail"];
+// $aryNewResult["purchaseOrderDetailNo"] = $aryHtmlResult["purchaseOrderDetailNo"];
 $aryNewResult["tableA_chkbox_body"] = $aryOtherHtmlResult["tableA_chkbox_body"];
 $aryNewResult["tableA_body"] = $aryOtherHtmlResult["tableA_body"];
+$aryNewResult["purchaseOrderDetail"] = $aryHtmlResult["purchaseOrderDetail"] .$aryOtherHtmlResult["tableB_body"];
+$aryNewResult["purchaseOrderDetailNo"] = $aryHtmlResult["purchaseOrderDetailNo"] .$aryOtherHtmlResult["tableB_no_body"];
 
 $objDB->close();
 $objDB->freeResult($lngResultID);

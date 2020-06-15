@@ -804,7 +804,7 @@ class estimateSheetController {
                             $cancelValue = "cancel". $areaCode;
                             // 発注エリアの場合
                             $htmlValue1 = "<div>";
-                            $htmlValue1 .= "<button type=\"button\" class=\"btn_confirm_order\" value=\"". $confirmValue. "\">". $orderConfirm. "</button>";
+                            $htmlValue1 .= "<span><button type=\"button\" class=\"btn_confirm_order\" value=\"". $confirmValue. "\">". $orderConfirm. "</button><span>";
                             $htmlValue1 .= "</div>";
                             $htmlValue2 = "<div>";
                             $htmlValue2 .= "<button type=\"button\" class=\"btn_cancel_order\" value=\"". $cancelValue. "\">". $orderCancel. "</button>";

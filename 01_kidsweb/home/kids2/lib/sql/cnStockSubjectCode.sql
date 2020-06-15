@@ -7,3 +7,5 @@
 SELECT lngStockSubjectCode, lngStockSubjectCode || ':' || strStockSubjectName
 FROM m_Stocksubject
 WHERE lngStockClassCode = '_%strFormValue0%_'
+AND bytinvalidflag = false
+AND bytdisplayflag = true

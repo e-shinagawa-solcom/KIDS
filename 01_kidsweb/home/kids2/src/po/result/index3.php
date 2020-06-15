@@ -223,34 +223,34 @@ if($_POST){
 			$aryOrder_org = fncGetPurchaseOrder2($aryCancelOrderDetail["lngpurchaseorderno"], $aryCancelOrderDetail["lngrevisionno"], $objDB);
 			$aryOrder = $aryOrder_org;
 			$orgRevision = $aryOrder["lngrevisionno"];
-			$aryOrder["lngrevisionno"] = -1;
-			$aryOrder["lngcustomercode"] = null;
-			$aryOrder["strcustomername"] = null;
-			$aryOrder["strcustomercompanyaddreess"] = null;
-			$aryOrder["strcustomercompanytel"] = null;
-			$aryOrder["strcustomercompanyfax"] = null;
-			$aryOrder["strproductname"] = null;
-			$aryOrder["strproductenglishname"] = null;
-			$aryOrder["dtmexpirationdate"] = null;
-			$aryOrder["lngmonetaryunitcode"] = null;
-			$aryOrder["strmonetaryunitname"] = null;
-			$aryOrder["strmonetaryunitsign"] = null;
-			$aryOrder["lngmonetaryratecode"] = null;
-			$aryOrder["strmonetaryratename"] = null;
-			$aryOrder["lngpayconditioncode"] = null;
-			$aryOrder["strpayconditionname"] = null;
-			$aryOrder["lnggroupcode"] = null;
-			$aryOrder["strgroupname"] = null;
-			$aryOrder["txtsignaturefilename"] = null;
-			$aryOrder["lngusercode"] = null;
-			$aryOrder["strusername"] = null;
-			$aryOrder["lngdeliveryplacecode"] = null;
-			$aryOrder["strdeliveryplacename"] = null;
-			$aryOrder["curtotalprice"] = null;
-			$aryOrder["lnginsertusercode"] = $lngInputUserCode;
-			$aryOrder["strinsertusername"] = null;
-			$aryOrder["strnote"] = null;
-			$aryOrder["lngprintcount"] = null;
+			$aryOrder["lngrevisionno"] = $orgRevision + 1;
+			// $aryOrder["lngcustomercode"] = null;
+			// $aryOrder["strcustomername"] = null;
+			// $aryOrder["strcustomercompanyaddreess"] = null;
+			// $aryOrder["strcustomercompanytel"] = null;
+			// $aryOrder["strcustomercompanyfax"] = null;
+			// $aryOrder["strproductname"] = null;
+			// $aryOrder["strproductenglishname"] = null;
+			// $aryOrder["dtmexpirationdate"] = null;
+			// $aryOrder["lngmonetaryunitcode"] = null;
+			// $aryOrder["strmonetaryunitname"] = null;
+			// $aryOrder["strmonetaryunitsign"] = null;
+			// $aryOrder["lngmonetaryratecode"] = null;
+			// $aryOrder["strmonetaryratename"] = null;
+			// $aryOrder["lngpayconditioncode"] = null;
+			// $aryOrder["strpayconditionname"] = null;
+			// $aryOrder["lnggroupcode"] = null;
+			// $aryOrder["strgroupname"] = null;
+			// $aryOrder["txtsignaturefilename"] = null;
+			// $aryOrder["lngusercode"] = null;
+			// $aryOrder["strusername"] = null;
+			// $aryOrder["lngdeliveryplacecode"] = null;
+			// $aryOrder["strdeliveryplacename"] = null;
+			// $aryOrder["curtotalprice"] = null;
+			// $aryOrder["lnginsertusercode"] = $lngInputUserCode;
+			// $aryOrder["strinsertusername"] = null;
+			// $aryOrder["strnote"] = null;
+			// $aryOrder["lngprintcount"] = null;
 
 			if(!fncInsertPurchaseOrder($aryOrder, $objDB)) { return false; }
 			// 確定取消完了画面表示のためにリビジョン番号を復元
@@ -259,17 +259,17 @@ if($_POST){
 		}
 	
 
-		if(count($aryInsertPurchaseOrderDetail) > 0){
+		// if(count($aryInsertPurchaseOrderDetail) > 0){
 			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を修正しました。</p>";
 			$aryHtml[] = fncCancelPurchaseOrderHtml($aryOrder, $aryCancelOrderDetail, $aryData["strSessionID"]);
-		}
-		else
-		{
+		// }
+		// else
+		// {
 			// 残明細がない場合
-			$aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を削除しました</p>";
-			$aryHtml[] = fncDeletePurchaseOrderHtml($aryOrder_org, $aryPurchaseOrderDetail, $aryData["strSessionID"]);
+			// $aryHtml[] = "<p class=\"caption\">以下の発注の確定取消に伴い、該当の発注書を削除しました</p>";
+			// $aryHtml[] = fncDeletePurchaseOrderHtml($aryOrder_org, $aryPurchaseOrderDetail, $aryData["strSessionID"]);
 			
-		}
+		// }
 	}
 	// $objDB->transactionRollback();
 	$objDB->transactionCommit();

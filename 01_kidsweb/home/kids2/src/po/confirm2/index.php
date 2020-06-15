@@ -58,10 +58,9 @@ $UserDisplayCode = trim($objAuth->UserID);
 // ここから追加ボタン押下処理
 if ($_POST["strMode"] == "update") {
 
-    $_POST["strPayConditionName"] = $_POST["strPayConditionName"];
+    // $_POST["strPayConditionName"] = $_POST["strPayConditionName"];
     $_POST["strLocationName"] = $_POST["strLocationName"];
     $_POST["strNote"] = $_POST["strNote"];
-
     $objDB->transactionBegin();
 
     // 発注書マスタロック

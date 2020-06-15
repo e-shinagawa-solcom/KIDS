@@ -9,8 +9,11 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="/estimate/cmn/css/layout.css">
 	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
 	<link rel="stylesheet" href="/cmn/handsontable/css/handsontable.full.min.css"/>
+    <!-- msw汎用スタイル -->
+    <link rel="stylesheet" href="/search/cmn/css/msw.css">
 	<script src="/cmn/handsontable/js/handsontable.full.min.js"></script>
 	<script src="/estimate/preview/js/index/function.js"></script>
+    <script src="/po/cmn/msw/choice/js/msw.js" defer></script>
 
 	<!-- キーバインド -->
 	<!-- <script src="/cmn/functions.js"></script> -->
@@ -27,12 +30,15 @@ _%DEBUG%_
 	_%HEADER%_
 </div>
 
+
 <form method="post" name="formAction" id="formData">
 	_%FORM%_
 </form>
 
 _%EXCEL%_
-
+<div class="msw-loadpoints">
+    <iframe src="/po/cmn/msw/choice/mswchoice.html" frameborder="0"></iframe>
+</div>
     <script id="script" type="text/javascript" src="/estimate/preview/js/index/handsontableRenderer.js" data-param='_%TABLEDATA%_'></script>
 
 	<br /><br />

@@ -21,6 +21,8 @@ jQuery(function ($) {
     resetTableADisplayStyle();
 
     resetTableBDisplayStyle();
+    
+    resetTableRowid($('#tableB_no'));
 
     // テーブル行クリックイベントの設定
     selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));

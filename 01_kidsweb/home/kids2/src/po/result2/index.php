@@ -265,12 +265,14 @@ foreach ($records as $i => $record) {
     $bgcolor = fncSetBgColor('purchaseorder', $record["lngpurchaseorderno"], true, $objDB);
 
     $detailData = fncGetDetailData('purchaseorder', $record["lngpurchaseorderno"], $record["lngrevisionno"], $objDB);
-fncDebug("kids2.log", sprintf("detail count=%d", count($detailData)), __FILE__, __LINE__, "a");
 
-    // 修正対象かどうかの確認
-    $isFixFlag = fucIsFixObject($record["lngpurchaseorderno"], $record["lngrevisionno"], $objDB);
-
-    $record["isFixFlag"] = $isFixFlag;
+    if (count($detailData) == 0) {
+        $record["isFixFlag"] = true;
+    } else {
+        // 修正対象かどうかの確認
+        $isFixFlag = fucIsFixObject($record["lngpurchaseorderno"], $record["lngrevisionno"], $objDB);
+        $record["isFixFlag"] = $isFixFlag;
+    }
 
     // tbody > tr要素作成
     $trBody = $doc->createElement("tr");
@@ -286,8 +288,18 @@ fncDebug("kids2.log", sprintf("detail count=%d", count($detailData)), __FILE__, 
     // ヘッダー部データ設定
     fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PURORDER, $displayColumns, $record, true);
 
-    // 明細部データ設定
-    fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_PURORDER, $displayColumns, $record, $detailData, true, true);
+    if (count($detailData) == 0) {        
+        foreach ($aryTableHeaderName_PURORDER as $key => $value) {
+            if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
+                $td = $doc->createElement("td");
+                $td->setAttribute("style", $bgcolor);
+                $trBody->appendChild($td);
+            }
+        }
+    } else {
+        // 明細部データ設定
+        fncSetDetailTable($doc, $trBody, $bgcolor, $aryTableDetailHeaderName_PURORDER, $displayColumns, $record, $detailData, true, true);
+    }
 
     // フッターボタン表示
     fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displayColumns, $record, $aryAuthority, true, $isadmin, 'purchaseorder');

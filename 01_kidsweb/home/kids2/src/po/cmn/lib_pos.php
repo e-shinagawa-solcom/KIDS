@@ -631,7 +631,7 @@ function fncGetSearchPurcheseOrderSQL($aryViewColumn, $arySearchColumn, $arySear
     $aryOutQuery[] = "INNER JOIN (";
     $aryOutQuery[] = "    SELECT lngpurchaseorderno, MAX(lngrevisionno) as maxRevisionNo FROM m_purchaseorder GROUP BY lngpurchaseorderno";
     $aryOutQuery[] = ") max_rev ON max_rev.lngpurchaseorderno = mp.lngpurchaseorderno and max_rev.maxRevisionNo = mp.lngrevisionno";
-    $aryOutQuery[] = "INNER JOIN (";
+    $aryOutQuery[] = "LEFT JOIN (";
     $aryOutQuery[] = "    select ";
     $aryOutQuery[] = "        tpod.lngpurchaseorderno";
     $aryOutQuery[] = "       ,tpod.lngrevisionno";

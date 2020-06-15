@@ -1,6 +1,11 @@
 function RegistPO(){
     console.log($('input[name="strProductCode"]').val());
     console.log($('input[name="strReviseCode"]').val());
+
+    if ($('#lngPayConditionCodeList option:selected').length != 0)
+    {
+        $('input[name="lngPayConditionCode"]').val($('#lngPayConditionCodeList option:selected').val());
+    }
     $.ajax({
         type: 'POST',
         url: '/po/confirm2/index.php?strSessionID=' + $('input[name="strSessionID"]').val(),
@@ -10,7 +15,6 @@ function RegistPO(){
             strMode: "update",
             lngRevisionNo: $('input[name="lngRevisionNo"]').val(),
             lngPayConditionCode: $('input[name="lngPayConditionCode"]').val(),
-            strPayConditionName: $('input[name="strPayConditionName"]').val(),
             dtmExpirationDate: $('input[name="dtmExpirationDate"]').val(),
             lngLocationCode: $('input[name="lngLocationCode"]').val(),
             strLocationName: $('input[name="strLocationName"]').val(),

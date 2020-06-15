@@ -150,6 +150,7 @@ $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("/po/result/po_search_result.html");
 
 $aryResult["displayColumns"] = implode(",", $displayColumns);
+$aryResult["strSessionID"] = $_REQUEST["strSessionID"];
 // テンプレート生成
 $objTemplate->replace($aryResult);
 

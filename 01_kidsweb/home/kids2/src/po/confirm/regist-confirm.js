@@ -2,6 +2,11 @@
 // window.onbeforeunload = unLock;
 
 function RegistPO(){
+    if ($('#lngPayConditionCodeList option:selected').length != 0)
+    {
+        console.log($('input[name="lngPayConditionCode"]').val());
+        $('input[name="lngPayConditionCode"]').val($('#lngPayConditionCodeList option:selected').val());
+    }
     $.ajax({
         type: 'POST',
         url: '/po/confirm/index.php?strSessionID=' + $('input[name="strSessionID"]').val(),
