@@ -200,7 +200,7 @@ $strTemplate = $objTemplate->strTemplate;
 if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_DEBIT) {
 // ページ処理
     $aryParts["lngNowPage"] = 1;
-    $aryParts["lngAllPage"] = ceil($lngResultNum / $maxLine);
+    $aryParts["lngAllPage"] = ceil($count / $maxLine);
 // ページ数分テンプレートを繰り返し読み込み
     for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNowPage"]++) {
         $lngRecordCount = 0;

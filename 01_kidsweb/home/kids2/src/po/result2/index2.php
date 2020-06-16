@@ -94,7 +94,7 @@ if ($lngResultNum) {
         $aryDetailResult[$i] = $objDB->fetchArray($lngResultID, $i);
     }
 } else {
-    fncOutputError(503, DEF_ERROR, "発注番号に対する明細情報が見つかりません。", true, "", $objDB);
+    // fncOutputError(503, DEF_ERROR, "発注番号に対する明細情報が見つかりません。", true, "", $objDB);
 }
 $objDB->freeResult($lngResultID);
 
@@ -113,7 +113,9 @@ for ($i = 0; $i < count($aryDetailResult); $i++) {
     $aryDetailTable[] = $objTemplate->strTemplate;
 }
 
-$aryNewResult["strDetailTable"] = implode("\n", $aryDetailTable);
+if ($aryDetailTable != null) {
+    $aryNewResult["strDetailTable"] = implode("\n", $aryDetailTable);
+}
 
 // 帳票出力対応
 // 表示対象が削除データ、申請中データの場合はプレビューボタンを表示しない

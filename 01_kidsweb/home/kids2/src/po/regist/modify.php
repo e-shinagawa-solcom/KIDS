@@ -163,6 +163,9 @@ if ($aryResult[0]["lngorderno"] == null) {
 }
 if ($lngorderno != null) {
     $aryOtherDetail = fncGetOtherOrderDetail($lngorderno, $aryResult[0]["lngorderrevisionno"], $objDB);
+} else {
+    $aryResult_pre = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"] - 1, $objDB);
+    $aryOtherDetail = fncGetOtherOrderDetail($aryResult_pre[0]["lngorderno"], $aryResult_pre[0]["lngorderrevisionno"], $objDB);
 }
 
 // $aryOtherDetail = fncGetOtherOrderDetail($lngorderno, $aryResult[0]["lngorderrevisionno"], $objDB);

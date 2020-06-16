@@ -118,7 +118,14 @@ unset($aryQuery);
 list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
 if ($lngResultNum < 1) {
-    fncOutputError(9051, DEF_FATAL, "帳票詳細データが存在しませんでした。", true, "", $objDB);
+    // エラー画面へのリダイレクト
+    $strRedirectHTML = "
+			<script language=javascript>
+			window.location='/error/index.php?strMessage=" . rawurlencode("関連する発注書明細データが存在しません。") . "';
+			</script>
+			";
+    echo $strRedirectHTML;
+    return;
 }
 
 // フィールド名取得
@@ -140,7 +147,7 @@ $curTotalPrice = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmo
 unset($aryParts["curtotalprice"]);
 
 if ($aryParts["txtsignaturefilename"] != "" && $aryParts["txtsignaturefilename"] != null) {
-    $aryParts["txtsignaturefilename"] = '/img/signature/' .$aryParts["txtsignaturefilename"];
+    $aryParts["txtsignaturefilename"] = '/img/signature/' . $aryParts["txtsignaturefilename"];
 }
 
 // ページ処理
@@ -163,7 +170,7 @@ $strTemplate = $objTemplate->strTemplate;
 
 // ページ数分テンプレートを繰り返し読み込み
 for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNowPage"]++) {
-    
+
     $aryHtml[] = "<div style=\"page-break-after:always;page-break-inside: avoid;\">\n";
     $objTemplate->strTemplate = $strTemplate;
 
@@ -172,7 +179,7 @@ for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNo
     if ($aryParts["lngNowPage"] == $aryParts["lngAllPage"]) {
         $aryParts["curTotalPrice"] = $curTotalPrice;
         $aryParts["strTotalAmount"] = "Total Amount";
-    }    
+    }
 
     // 置き換え
     $objTemplate->replace($aryParts);
@@ -223,3 +230,24 @@ for (; $aryParts["lngNowPage"] < ($aryParts["lngAllPage"] + 1); $aryParts["lngNo
 $strBodyHtml = join("", $aryHtml);
 
 echo $strTemplateHeader . $strBodyHtml . $strTemplateFooter;
+
+// エラー画面への遷移
+function MoveToErrorPage($strMessage)
+{
+
+    // エラーメッセージの設定
+    $aryHtml["strErrorMessage"] = $strMessage;
+
+    // テンプレート読み込み
+    $objTemplate = new clsTemplate();
+    $objTemplate->getTemplate("/result/error/parts.tmpl");
+
+    // テンプレート生成
+    $objTemplate->replace($aryHtml);
+    $objTemplate->complete();
+
+    // HTML出力
+    echo $objTemplate->strTemplate;
+
+    exit;
+}

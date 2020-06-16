@@ -123,12 +123,12 @@ if($_POST){
 		// 取得した発注書番号、リビジョン番号に該当し、かつ確定取消となった発注明細に該当しない発注書明細を
 		// 表示用ソートキーの昇順に取得した結果を基に、以下の仕様で新規の発注書明細を新規に登録する
 		$aryInsertPurchaseOrderDetail = [];
-		$aryDetailNo = array_column($aryOrderDetail, "lngorderdetailno");
+		$aryDetailNo = array_column($aryOrderDetail, "lngorderno");
 		if( is_array($aryPurchaseOrderDetail) )
 		{
 		    $count = 0;
 			for($j = 0; $j < count($aryPurchaseOrderDetail); $j++){
-				if($aryPurchaseOrderDetail[$j]["lngorderdetailno"] != $aryDetailNo[0]){
+				if($aryPurchaseOrderDetail[$j]["lngorderno"] != $aryDetailNo[0]){
 					$aryInsertPurchaseOrderDetail[$count]["lngpurchaseorderno"] = $aryPurchaseOrderDetail[$j]["lngpurchaseorderno"];
 					$aryInsertPurchaseOrderDetail[$count]["lngpurchaseorderdetailno"] = $count + 1;
 					$aryInsertPurchaseOrderDetail[$count]["lngrevisionno"] = intval($aryPurchaseOrderDetail[$j]["lngrevisionno"]) + 1;

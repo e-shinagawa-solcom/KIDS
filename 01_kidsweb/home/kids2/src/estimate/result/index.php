@@ -1,3 +1,4 @@
+
 <?
 /**
  *    見積原価管理 検索結果表示画面
@@ -171,7 +172,7 @@ if (!count($strErrorMessage)) {
 			me.curtotalprice,
 			CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE me.curtotalprice / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curtotalpricerate,
 			me.curtotalprice - me.curprofit AS curindirectmanufacturingcost,
-			CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE (me.curtotalprice - me.curprofit) / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curstandardrate,
+			6.08 AS curstandardrate,
 			me.curprofit,
 			CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE me.curprofit / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curprofitrate,
 			me.curmembercost,
@@ -217,8 +218,8 @@ if (!count($strErrorMessage)) {
 			SELECT
 				me.lngestimateno,
 				me.lngrevisionno,
-				SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
-				SUM(CASE WHEN msi.lngestimateareaclassno = 3 AND ted.bytpayofftargetflag = FALSE THEN ted.curconversionrate * ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
+				SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
+				SUM(CASE WHEN msi.lngestimateareaclassno = 3 AND ted.bytpayofftargetflag = FALSE THEN ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
 				count(mscdl.lngestimateareaclassno <> 0 OR (msi.lngestimateareaclassno = 3 OR msi.lngestimateareaclassno = 4 OR (msi.lngstocksubjectcode = 401 and msi.lngstockitemcode = 1)) OR NULL) AS countofreceiveandorderdetail,
 				count(mr.lngreceivestatuscode = 1 OR mo.lngorderstatuscode = 1 OR NULL) AS countofaplicatedetail
 			FROM m_estimate me
@@ -421,7 +422,7 @@ if (!count($strErrorMessage)) {
     }
 
     $strQuery = $selectQuery . $where . $orderBy;
-    
+
     list($resultID, $resultNum) = fncQuery($strQuery, $objDB);
     if ($resultNum > 1000) {
         $strErrorMessage = fncOutputError(9057, DEF_WARNING, "1000", false, "/estimate/search/index.php?strSessionID=" . $aryData["strSessionID"], $objDB);
@@ -520,7 +521,6 @@ $body = '';
 for ($i = 0; $i < $resultNum; ++$i) {
 
     $result = pg_fetch_array($resultID, $i, PGSQL_ASSOC);
-    
     $bgcolor = fncSetBgColor('estimate', $result["lngestimateno"], true, $objDB);
     $beforeClickBgcolor = $bgcolor;
 
