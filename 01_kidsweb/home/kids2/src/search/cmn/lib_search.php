@@ -1631,7 +1631,7 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                     if ($type == 'pc' and !$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngstockstatuscode"] != DEF_STOCK_CLOSED and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
                         $a = $doc->createElement("a"); 
-                        $a->setAttribute("href", "#");// 修正ボタン
+                        $a->setAttribute("href", "#");
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("id", $record["lngstockno"]);
@@ -1642,7 +1642,7 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                     } else if ($type == 'slip' and !$isadmin and $isMaxData and $aryAuthority[$key] and $record["lngsalesstatuscode"] != DEF_SALES_CLOSED and $record["lnginvoiceno"] == null and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
                         $a = $doc->createElement("a"); 
-                        $a->setAttribute("href", "#");// 修正ボタン
+                        $a->setAttribute("href", "#");
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("id", $record["lngslipno"]);
@@ -1653,7 +1653,7 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                     } else if ($type == 'inv' and !$isadmin and $isMaxData and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
                         $a = $doc->createElement("a"); 
-                        $a->setAttribute("href", "#");// 修正ボタン
+                        $a->setAttribute("href", "#");
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("lnginvoiceno", $record["lnginvoiceno"]);
@@ -1661,10 +1661,10 @@ function fncSetBackBtnToTr($doc, $trBody, $bgcolor, $aryTableBackBtnName, $displ
                         $imgDelete->setAttribute("class", "delete button");
                         $a->appendChild($imgDelete);
                         $td->appendChild($a);
-                    } else if ($type == 'purchaseorder' and !$isadmin and $isMaxData and $record["lngorderstatuscode"] == DEF_ORDER_ORDER and $bgcolor != "background-color: #B3E0FF;") {
+                    } else if ($type == 'purchaseorder' and !$isadmin and $isMaxData and ($record["lngorderstatuscode"] == null or $record["lngorderstatuscode"] == DEF_ORDER_ORDER) and $bgcolor != "background-color: #B3E0FF;") {
                         // 削除ボタン
                         $a = $doc->createElement("a"); 
-                        $a->setAttribute("href", "#");// 修正ボタン
+                        $a->setAttribute("href", "#");
                         $imgDelete = $doc->createElement("img");
                         $imgDelete->setAttribute("src", "/img/type01/pc/delete_off_bt.gif");
                         $imgDelete->setAttribute("lngpurchaseorderno", $record["lngpurchaseorderno"]);

@@ -259,6 +259,7 @@ $strPayConditionName = fncGetMasterValue("m_paycondition", "lngpayconditioncode"
 $aryData["strPayConditionName"] = ($strPayConditionName == "−") ? "" : $strPayConditionName;
 
 // 納品場所
+$aryData["lngLocationCode"] = $_POST["lngLocationCode"];
 $aryData["strLocationName"] = fncGetMasterValue("m_company", "strcompanydisplaycode", "strcompanydisplayname", $_POST["lngLocationCode"] . ":str", '', $objDB);
 
 // 状態

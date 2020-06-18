@@ -278,6 +278,7 @@ foreach ($aryDetailResult as $detailResult) {
     }
     $td = $doc->createElement("td", toUTF8($textContent));
     $td->setAttribute("id", "strcompanydisplaycode");
+    $td->setAttribute("style", "white-space: nowrap;");
     $trBody->appendChild($td);
 
     // 納期

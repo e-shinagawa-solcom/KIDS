@@ -1285,8 +1285,8 @@ function fncRegisterSalesMaster($lngSalesNo, $lngRevisionNo, $strSlipCode, $strS
     $v_lnggroupcode = nullIfEmpty($product->lnginchargegroupcode); //6:グループコード
     $v_lngusercode = nullIfEmpty($product->lnginchargeusercode); //7:ユーザコード
     $v_lngsalesstatuscode = "4"; //8:売上状態コード
-    $v_lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"]; //9:通貨単位コード
-    $v_lngmonetaryratecode = $aryDetail[0]["lngmonetaryratecode"]; //10:通貨レートコード
+    $v_lngmonetaryunitcode = $aryHeader["lngmonetaryunitcode"]; //9:通貨単位コード
+    $v_lngmonetaryratecode = $aryHeader["lngmonetaryratecode"]; //10:通貨レートコード
     $v_curconversionrate = nullIfEmpty($aryHeader["curconversionrate"]); //11:換算レート
     $v_strslipcode = withQuote($strSlipCode); //12:納品書NO
     $v_lnginvoiceno = "Null"; //13:請求書番号

@@ -289,7 +289,7 @@ foreach ($records as $i => $record) {
     fncSetHeadDataToTr($doc, $trBody, $bgcolor, $aryTableHeaderName_PURORDER, $displayColumns, $record, true);
 
     if (count($detailData) == 0) {        
-        foreach ($aryTableHeaderName_PURORDER as $key => $value) {
+        foreach ($aryTableDetailHeaderName_PURORDER as $key => $value) {
             if ($displayColumns == null or array_key_exists($key, $displayColumns)) {
                 $td = $doc->createElement("td");
                 $td->setAttribute("style", $bgcolor);

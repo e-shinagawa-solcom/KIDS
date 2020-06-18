@@ -158,8 +158,8 @@ if ($strMode == "search-detail") {
     $aryResult["strmonetaryunitname"] = $aryDetail[0]["strmonetaryunitname"];
     $aryResult["lngmonetaryunitcode"] = $aryDetail[0]["lngmonetaryunitcode"];
     // レートタイプ
-    $aryResult["lngmonetaryratecode"] = $aryDetail[0]["lngmonetaryratecode"];
-    $aryResult["strmonetaryratename"] = $aryDetail[0]["strmonetaryratename"];
+    $aryResult["lngmonetaryratecode"] = 1;
+    $aryResult["strmonetaryratename"] = 'TTM';
     // 顧客
     $aryResult["strcompanydisplaycode"] = $aryDetail[0]["strcompanydisplaycode"];
     $aryResult["strcompanydisplayname"] = $aryDetail[0]["strcompanydisplayname"];
@@ -321,8 +321,10 @@ $aryData["strTaxAmount"] = "0";
 $aryData["strTotalAmount"] = $aryHeader["curtotalprice"];
 
 // 通貨単位
+$aryData["lngMonetaryUnitCode"] = $aryHeader["lngmonetaryunitcode"];
 $aryData["strMonetaryUnitName"] = $aryHeader["strmonetaryunitname"];
 // レートタイプ
+$aryData["lngMonetaryRateCode"] = $aryHeader["lngmonetaryratecode"];
 $aryData["strMonetaryRateName"] = $aryHeader["strmonetaryratename"];
 // 適用レート
 $aryData["curConversionRate"] = $aryHeader["curconversionrate"];

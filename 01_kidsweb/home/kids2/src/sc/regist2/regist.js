@@ -424,6 +424,31 @@ jQuery(function ($) {
             $('input[name="strMonetaryRateName"]').val("TTM");
             $('input[name="lngMonetaryRateCode"]').val("1");
         }
+        
+        var lngMonetaryUnitCode = $('input[name="lngMonetaryUnitCode"]').val();
+        var lngMonetaryRateCode = $('input[name="lngMonetaryRateCode"]').val();
+        // 適用レートの取得
+        if (lngMonetaryUnitCode != "" && lngMonetaryRateCode != "") {
+            // リクエスト送信
+            $.ajax({
+                url: '/pc/regist/getMonetaryRate.php',
+                type: 'post',
+                data: {
+                    'strSessionID': $('input[name="strSessionID"]').val(),
+                    'lngMonetaryUnitCode': lngMonetaryUnitCode,
+                    'lngMonetaryRateCode': lngMonetaryRateCode,
+                    'dtmStockAppDate': $('input[name="dtmDeliveryDate"]').val()
+                }
+            })
+                .done(function (response) {
+                    console.log(response);
+                    var data = JSON.parse(response);
+                    $('input[name="curConversionRate"]').val(data.curconversionrate);
+                })
+                .fail(function (response) {
+                    alert("fail");
+                })
+        }
     } else {
         $("select[name='lngTaxClassCode']").val("");
         $("select[name='lngTaxRate']").val("");
@@ -538,6 +563,10 @@ jQuery(function ($) {
             strdeliveryplacename: $('input[name="strDeliveryPlaceName"]').val(),
             //納品先担当者
             strdeliveryplaceusername: $('input[name="strDeliveryPlaceUserName"]').val(),
+            // 通貨単位コード
+            lngmonetaryunitcode: $('input[name="lngMonetaryUnitCode"]').val(),
+            // 通貨レートコード
+            lngmonetaryratecode: $('input[name="lngMonetaryRateCode"]').val(),
             //備考
             strnote: $('input[name="strNote"]').val(),
             //消費税区分

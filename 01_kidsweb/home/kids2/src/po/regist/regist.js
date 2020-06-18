@@ -87,8 +87,9 @@ jQuery(function ($) {
             result = false;
         }
         var countryCode = $('input[name="lngCountryCode"]').val();
+        console.log(countryCode);
         if (countryCode !== '81') {
-            var selected = $('select[name="optPayCondition"]').children('option:selected').val();
+            var selected = $('select[name="lngPayConditionCode"]').children('option:selected').val();
             if (selected === '0') {
                 // 仕入先のm_company.lngcountrycodeが「81(日本)」以外かつ支払条件が未選択の場合
                 alert('仕入先が海外の場合、支払い条件を指定してください。');

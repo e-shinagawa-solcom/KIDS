@@ -572,7 +572,7 @@ for ($i = 0; $i < $resultNum; ++$i) {
                 }
 
                 if ($commaSeparateList[$column]) {
-                    $param = number_format($param, 2);
+                    $param = number_format($param, 0);
                 }
 
                 if ($yenAddList[$column]) {

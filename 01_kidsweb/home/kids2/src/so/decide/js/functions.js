@@ -110,6 +110,9 @@
         setTextInputMode();
 
         resetTableRowid($('#tableB_no'));
+
+        resetTableRowid($('#tableA'));
+
         // テーブルBの幅をリセットする
         resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
         // テーブルB行イベントの追加

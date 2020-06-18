@@ -106,17 +106,17 @@ class registOtherCellsController extends estimateOtherCellsController {
 
         // その他計算
         // 製品売上高
-        $productTotalPrice = $receiveProductTotalPrice;
+        $productTotalPrice = floor_plus($receiveProductTotalPrice,0);
         // 製造費用
-        $manufacturingCost = $depreciationCost + $memberCost;
+        $manufacturingCost = floor_plus($depreciationCost,0) + floor_plus($memberCost,0);
         // 製品利益
         $productProfit = $productTotalPrice - $manufacturingCost;
         // 製品利益率
         $productProfitRate = $productTotalPrice ? ($productProfit / $productTotalPrice) : 0;
         // 固定費売上高
-        $fixedCostTotalPrice = $receiveFixedCostTotalPrice;
+        $fixedCostTotalPrice = floor_plus($receiveFixedCostTotalPrice,0);
         // 固定費利益
-        $fixedCostProfit = $fixedCostTotalPrice - $orderFixedCostNotDepreciation;
+        $fixedCostProfit = $fixedCostTotalPrice - floor_plus($orderFixedCostNotDepreciation,0);
         // 固定費利益率
         $fixedCostProfitRate = $fixedCostTotalPrice ? ($fixedCostProfit / $fixedCostTotalPrice) : 0;
         // 総売上高
@@ -128,7 +128,7 @@ class registOtherCellsController extends estimateOtherCellsController {
         // 標準割合
         $standardRate = $standardRateMaster;
         // 間接製造経費
-        $indirectCost = floor($salesAmount * $standardRate);
+        $indirectCost = floor_plus($salesAmount * $standardRate, 0);
         // 営業利益
         $operatingProfit = $profit - $indirectCost;
         // 営業利益率

@@ -1688,7 +1688,7 @@ function fncCanDeletePO($lngPurchaseOrderno, $lngRevisionNo, $objDB)
 {
     $orderList = fncGetOrderByPO($lngPurchaseOrderno, $lngRevisionNo, $objDB, true);
     if (is_null($orderList)) {
-        return false;
+        return true;
     }
     foreach ($orderList as $order) {
         if ($order["lngorderstatuscode"] != DEF_ORDER_ORDER) {

@@ -147,14 +147,14 @@ if ($strMode == "search-detail") {
     $aryResult["strmonetaryunitname"] = $aryDetail[0]["strmonetaryunitname"];
     $aryResult["lngmonetaryunitcode"] = $aryDetail[0]["lngmonetaryunitcode"];
     // レートタイプ
-    $aryResult["lngmonetaryratecode"] = $aryDetail[0]["lngmonetaryratecode"];
-    $aryResult["strmonetaryratename"] = $aryDetail[0]["strmonetaryratename"];
+    $aryResult["lngmonetaryratecode"] = '1';
+    $aryResult["strmonetaryratename"] = 'TTM';
     // 顧客
     $aryResult["strcompanydisplaycode"] = $aryDetail[0]["strcompanydisplaycode"];
     $aryResult["strcompanydisplayname"] = $aryDetail[0]["strcompanydisplayname"];
 
     // 換算レートの取得
-    $rateResult = fncGetCurConversionRate($aryData["dtmDeliveryDate"], intval($aryDetail[0]["lngmonetaryratecode"]),
+    $rateResult = fncGetCurConversionRate($aryData["dtmDeliveryDate"], 1,
     intval($aryDetail[0]["lngmonetaryunitcode"]), $objDB);
     $aryResult["curconversionrate"] = $rateResult["curconversionrate"];
     // データ返却
