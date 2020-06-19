@@ -166,8 +166,8 @@ if (!count($strErrorMessage)) {
 			me.cursalesamount - me.curmanufacturingcost AS cursalesprofit,
 			CASE WHEN me.cursalesamount = 0 THEN 0 ELSE (me.cursalesamount - me.curmanufacturingcost) / me.cursalesamount * 100 END AS cursalesprofitrate,
 			tsum.curfixedcostsales,
-			tsum.curfixedcostsales - tsum.curnotdepreciationcost AS curfixedcostsalesprofit,
-			CASE WHEN tsum.curfixedcostsales = 0 THEN 0 ELSE (tsum.curfixedcostsales - tsum.curnotdepreciationcost) / tsum.curfixedcostsales * 100 END AS curfixedcostsalesprofitrate,
+			me.curtotalprice - me.cursalesamount + me.curmanufacturingcost AS curfixedcostsalesprofit,
+			CASE WHEN tsum.curfixedcostsales = 0 THEN 0 ELSE (me.curtotalprice - me.cursalesamount + me.curmanufacturingcost) / tsum.curfixedcostsales * 100 END AS curfixedcostsalesprofitrate,
 			me.cursalesamount + tsum.curfixedcostsales AS curtotalsales,
 			me.curtotalprice,
 			CASE WHEN me.cursalesamount + tsum.curfixedcostsales = 0 THEN 0 ELSE me.curtotalprice / (me.cursalesamount + tsum.curfixedcostsales) * 100 END AS curtotalpricerate,
@@ -219,7 +219,6 @@ if (!count($strErrorMessage)) {
 				me.lngestimateno,
 				me.lngrevisionno,
 				SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
-				SUM(CASE WHEN msi.lngestimateareaclassno = 3 AND ted.bytpayofftargetflag = FALSE THEN ted.cursubtotalprice ELSE 0 END) AS curnotdepreciationcost,
 				count(mscdl.lngestimateareaclassno <> 0 OR (msi.lngestimateareaclassno = 3 OR msi.lngestimateareaclassno = 4 OR (msi.lngstocksubjectcode = 401 and msi.lngstockitemcode = 1)) OR NULL) AS countofreceiveandorderdetail,
 				count(mr.lngreceivestatuscode = 1 OR mo.lngorderstatuscode = 1 OR NULL) AS countofaplicatedetail
 			FROM m_estimate me
@@ -468,23 +467,21 @@ $commaSeparateList = array(
     "lngProductionQuantity" => true,
     "curSalesAmount" => true,
     "curSalesProfit" => true,
-    "curSalesProfitRate" => true,
     "curFixedCostSales" => true,
     "curFixedCostSalesProfit" => true,
-    "curFixedCostSalesProfitRate" => true,
     "curTotalSales" => true,
     "curTotalPrice" => true,
-    "curTotalPriceRate" => true,
     "curIndirectManufacturingCost" => true,
-    "curStandardRate" => true,
     "curProfit" => true,
-    "curProfitRate" => true,
-    "curMemberCostPieces" => true,
     "curMemberCost" => true,
-    "curFixedCostPieces" => true,
     "curFixedCost" => true,
-    "curManufacturingCostPieces" => true,
     "curManufacturingCost" => true,
+);
+
+$hasDecimalPointList = array(
+    "curMemberCostPieces" => true,
+    "curFixedCostPieces" => true,
+    "curManufacturingCostPieces" => true
 );
 
 // 円マークをつける項目
@@ -575,12 +572,16 @@ for ($i = 0; $i < $resultNum; ++$i) {
                     $param = number_format($param, 0);
                 }
 
+                if ($hasDecimalPointList[$column]) {
+                    $param = number_format($param, 2);
+                }
+                
                 if ($yenAddList[$column]) {
                     $param = '&yen ' . $param;
                 }
 
                 if ($percentList[$column]) {
-                    $param = $param . '%';
+                    $param = number_format($param, 2) . '%';
                 }
             }
 

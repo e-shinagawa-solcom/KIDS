@@ -36,39 +36,6 @@ var choice = function (lngestimateno, lngestimaterevisionno, lngorderno, strsess
     // mswの非表示
     invokeMswClose(docMsw);
 };
-// mswのposition設定
-var setPosition = function (parentObj, docMsw) {
-    // ボタンの親のライン
-    var line = parentObj;
-    console.log(line);
-    var lineOffset = line.offset();
-    console.log(lineOffset);
-
-    console.log(line.outerHeight(true));
-    var mswBox = docMsw.find('.msw-box');
-    var mswBoxHeight = mswBox.outerHeight(true);
-    var mswBoxWidth = mswBox.outerWidth(true);
-    // msw初期位置
-    var position = { top: lineOffset.top - mswBoxHeight, left: lineOffset.left };
-    if ((lineOffset.top - mswBoxHeight) < 0) {
-        position.top = 0;
-    }
-//     if ((lineOffset.left - mswBoxWidth) < 0) {
-//         position.left = 0;
-//     }
-// console.log(position);
-    // //mswの表示が画面に収まらない場合
-    // if (lineOffset.top + mswBoxHeight > $(document).height() && $(document).height() > mswBoxHeight) {
-    //     // 画面の高さに収まらない高さ分を引く
-    //     position.top -= position.top + mswBoxHeight - $(document).height();
-    // }
-
-    // // msw横幅が画面に収まらない場合
-    // position.left -= Math.min(position.left, (position.left + mswBoxWidth > $(document).width() && $(document).width() > mswBoxWidth) ?
-    //     Math.abs(position.left + mswBoxWidth - $(document).width()) : 0);
-
-    return position;
-}
 // 閉じるボタン処理の呼び出し
 var invokeMswClose = function (msw) {
     msw.find('.msw-box__header__close-btn').trigger('click');
@@ -114,28 +81,41 @@ var showIFrame = function (lngestimateno, lngestimaterevisionno, lngorderno, str
                     );
 
                 }
-                var mswBox = docMsw.find('.msw-box');
-                // var ifmHeight = mswBox.offset().top + mswBox.outerHeight(true);
-                // var ifmWidth = mswBox.offset().top + mswBox.outerWidth(true);
-                // console.log($('body').outerHeight(true));
-                // console.log($('body').offset.height);
-                // console.log($('body').offset.width);
-                console.log($('body').outerHeight(true));
-                var pos = setPosition(parentObj, docMsw);
-                console.log($(window).height());
 
-                console.log(pos);
                 var height = $('body').outerHeight(true);
                 if (height < $(window).height()) {
                     height = $(window).height();
                 }
+
+                // 画面の縦横
+                var w_height = $(window).height();
+                var w_width = $(window).width();
+
+                // 要素の縦横
+                var mswBox = docMsw.find('.msw-box');
+                var el_height = mswBox.offset().top + mswBox.outerHeight(true);
+                var el_width = mswBox.offset().top + mswBox.outerWidth(true);
+
+                // 最上部からの距離
+                var scroll_height = $(window).scrollTop();
+
+                // 高さは画面の上部（最上部）からの距離なのでスクロールの距離を加算
+                var position_h = scroll_height + (w_height - el_height) / 2;
+
+                // 横は画面左からの距離なので、そのまま画面の横幅と要素の横幅を減算して半分の距離
+                var position_w = (w_width - el_width) / 2;
+console.log(w_width);
+console.log($(window).height());
+console.log(el_height);
+console.log(position_h);
+console.log(position_w);
                 ifmMsw.css({
                     'position': 'absolute',
-                    'top': pos.top,
-                    'left': pos.left,
-                    'height': height,
+                    'top': position_h + 'px',
+                    'left': position_w + 'px',
+                    'height': height-position_h,
                     'width': $('body').outerWidth(true),
-                    'z-index': '9999'
+                    'z-index': '9999',
                 });
 
 

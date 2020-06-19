@@ -47,7 +47,7 @@ class updateOtherCellsController extends estimateOtherCellsController {
             if ($objRow->invalidFlag != true) {
                 $areaCode = $objRow->areaCode;
                 // 再計算結果がない場合は取得値を参照する
-                $subtotal = isset($objRow->calculatedSubtotalJP) ? $objRow->calculatedSubtotalJP : $objRow->subtotal;
+                $subtotal = floor_plus(isset($objRow->calculatedSubtotalJP) ? $objRow->calculatedSubtotalJP : $objRow->subtotal, 0);
                 switch ($areaCode) {
                     case DEF_AREA_PRODUCT_SALES:
                         $quantity = $objRow->quantity;
@@ -112,17 +112,17 @@ class updateOtherCellsController extends estimateOtherCellsController {
 
         // その他計算
         // 製品売上高
-        $productTotalPrice = floor_plus($receiveProductTotalPrice, 0);
+        $productTotalPrice = $receiveProductTotalPrice;
         // 製造費用
-        $manufacturingCost = floor_plus($depreciationCost, 0) + floor_plus($memberCost, 0);
+        $manufacturingCost = $depreciationCost + $memberCost;
         // 製品利益
         $productProfit = $productTotalPrice - $manufacturingCost;
         // 製品利益率
         $productProfitRate = $productTotalPrice ? ($productProfit / $productTotalPrice) : '';
         // 固定費売上高
-        $fixedCostTotalPrice = floor_plus($receiveFixedCostTotalPrice, 0);
+        $fixedCostTotalPrice = $receiveFixedCostTotalPrice;
         // 固定費利益
-        $fixedCostProfit = $fixedCostTotalPrice - floor_plus($orderFixedCostNotDepreciation, 0);
+        $fixedCostProfit = $fixedCostTotalPrice - $orderFixedCostNotDepreciation;
         // 固定費利益率
         $fixedCostProfitRate = $fixedCostTotalPrice ? ($fixedCostProfit / $fixedCostTotalPrice) : '';
         // 総売上高
@@ -134,7 +134,7 @@ class updateOtherCellsController extends estimateOtherCellsController {
         // 標準割合
         $standardRate = $standardRateMaster;
         // 間接製造経費
-        $indirectCost = floor_plus($salesAmount * $standardRate, 0);
+        $indirectCost = $salesAmount * $standardRate;
         // 営業利益
         $operatingProfit = $profit - $indirectCost;
         // 営業利益率

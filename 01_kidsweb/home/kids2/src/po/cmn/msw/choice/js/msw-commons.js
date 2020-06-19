@@ -1,4 +1,4 @@
-(function() {
+(function () {
     var mswBox = $('.msw-box');
     var btnClose = mswBox.find('.msw-box__header__close-btn');
     var inputCode = mswBox.find('.input-code');
@@ -9,31 +9,37 @@
 
     // 閉じるボタン押下処理
     btnClose.on({
-        'click': function() {
+        'click': function () {
             clear();
             $(window.frameElement).toggle();
+            $("body").css('top', '0px');
+            $("body").css('left', '0px');
         }
     });
 
     // クリアボタン押下処理
     btnClear.on({
         // クリック
-        'click': function(){
+        'click': function () {
             clear();
             // msw内の最初のinputにフォーカス
             mswBox.find('input').eq(0).focus();
+            $("body").css('top', '0px');
+            $("body").css('left', '0px');
         },
         // EnterKey
-        'keypress': function(e) {
-            if(e.which == 13){
+        'keypress': function (e) {
+            if (e.which == 13) {
                 clear();
                 // msw内の最初のinputにフォーカス
                 mswBox.find('input').eq(0).focus();
+                $("body").css('top', '0px');
+                $("body").css('left', '0px');
             }
         }
     })
 
-    var clear = function(){
+    var clear = function () {
         inputCode.val('');
         inputName.val('');
         resultSelectBox.empty();
@@ -45,22 +51,28 @@
 })();
 
 // iframe要素のdraggable実装
-(function(){
+(function () {
     var iframe = $(window.frameElement);
     var winHeight = 670;
     var height = iframe.parents('body').outerHeight(true);
+    console.log(height);
     if (height < winHeight) {
         height = winHeight;
     }
-    $("body").on("dragstart", function(event, ui) {
+
+    var iframe_top = iframe.css('top');
+    var iframe_left = iframe.css('left');
+    var iframe_height = iframe.css('height');
+    var iframe_width = iframe.css('width');
+    console.log(iframe_top);
+    $("body").on("dragstart", function (event, ui) {
         iframe.css('top', '0px');
         iframe.css('left', '0px');
-        iframe.css('height', height-10);
+        iframe.css('height', height - 10);
         iframe.css('width', iframe.parents('body').outerWidth(true));
     });
-    
     $('body').draggable({
         cursor: "move",
-        containment: [0, 0, 1500, 1500]
+        containment: [0, 0, iframe.parents('body').outerWidth(true), iframe.parents('body').outerHeight(true)]
     });
 })();

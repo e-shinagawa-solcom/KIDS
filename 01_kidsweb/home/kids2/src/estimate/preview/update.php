@@ -89,6 +89,7 @@
 	$value = $postData['value']; // 入力値
 	$class = $postData['class']; // 入力値と内容（セル）を紐付けるためのクラスのリスト
 	$estimateDetailNo = $postData['estimateDetailNo']; // 見積原価明細番号と行番号を紐付けるためのリスト
+	$readOnlyDetailRow = $postData['readOnlyDetailRow']; // 見積原価明細番号と行番号を紐付けるためのリスト
 
 	// ヘッダ部の名称リストを取得
 	$headerNameList = workSheetConst::WORK_SHEET_HEADER_DATA_CELL; // ブックのヘッダ
@@ -164,6 +165,7 @@
     $errorFlag = false;
 	// 明細行の処理
 	foreach ($rowParam as $areaCode => $rowParams) {
+
 		foreach ($rowParams as $row => $params) {
 			switch ($areaCode) {
 				case DEF_AREA_PRODUCT_SALES:
@@ -184,7 +186,7 @@
 				default:
 					break;
 			}
-			$objRow->editInitialize($params, $row);
+			$objRow->editInitialize($params, $row, $readOnlyDetailRow);
 
 			// 行のチェック、再計算を行う
 			$objRow->workSheetRegistCheck();

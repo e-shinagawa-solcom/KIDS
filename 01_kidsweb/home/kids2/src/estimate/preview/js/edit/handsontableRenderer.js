@@ -2590,7 +2590,8 @@ $(function () {
       var postData = {
         value: cellValue,
         class: cellClass,
-        estimateDetailNo: detailNoList
+        estimateDetailNo: detailNoList,
+        readOnlyDetailRow:readOnlyDetailRow
       }
       var postJson = JSON.stringify(postData, replacer);
 

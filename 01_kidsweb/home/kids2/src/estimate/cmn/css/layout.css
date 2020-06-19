@@ -278,8 +278,31 @@ div.action-buttons > button
 	background-color: transparent;
 	padding: 0px;
 	margin: 8px;
+	border-radius: 5px;
+}
+.btn-kids
+{
+    /* margin-bottom: 10px; */
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 95px;
+    height: 20px;
+    font-size: x-small;
+    background-color:#e2e3e4;
+    border-color: #e2e3e4;
 }
 
+.btn-kids-sm
+{
+    margin-bottom: 10px;
+    border-radius: 50px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 80px;
+    height: 18px;
+    font-size: x-small;
+}
 .status_applicate
 {
 	display: inline-block;

@@ -95,8 +95,7 @@ class updateInsertData extends estimateInsertData
                     (
                         ($rowDataList[$i]['areaCode'] == DEF_AREA_OTHER_COST_ORDER) &&
                         (
-                            ($rowDataList[$i]['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowDataList[$i]['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE) ||
-                            ($rowDataList[$i]['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_EXPENSE && $rowDataList[$i]['classItem'] == DEF_STOCK_ITEM_CODE_TARIFF)
+                            ($rowDataList[$i]['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowDataList[$i]['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE)
                         )
                     )
                 ) {
@@ -170,8 +169,7 @@ class updateInsertData extends estimateInsertData
 
             $detailRevisionNo = $rowData['detailRevisionNo'];
             if ($rowData['areaCode'] == DEF_AREA_OTHER_COST_ORDER &&
-                (($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE) ||
-                ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_EXPENSE && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_TARIFF))
+                (($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE))
                 && $rowData['orderStatusCode'] == 0) {
                 $detailRevisionNo += 1;
             }
@@ -211,8 +209,7 @@ class updateInsertData extends estimateInsertData
                     (
                         ($rowData['areaCode'] == DEF_AREA_OTHER_COST_ORDER) &&
                         (
-                            ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE) ||
-                            ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_EXPENSE && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_TARIFF)
+                            ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE)
                         )
                     )
                 ) {
@@ -233,8 +230,7 @@ class updateInsertData extends estimateInsertData
                     }
 
                     if ($rowData['areaCode'] == DEF_AREA_OTHER_COST_ORDER && (
-                        ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE) ||
-                        ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_EXPENSE && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_TARIFF)
+                        ($rowData['divisionSubject'] == DEF_STOCK_SUBJECT_CODE_MATERIAL_PARTS_COST && $rowData['classItem'] == DEF_STOCK_ITEM_CODE_CERTIFICATE)
                     ) && $rowData['orderStatusCode'] == 0
                     ) {
 
