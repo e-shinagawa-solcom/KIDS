@@ -89,7 +89,8 @@
 	$value = $postData['value']; // 入力値
 	$class = $postData['class']; // 入力値と内容（セル）を紐付けるためのクラスのリスト
 	$estimateDetailNo = $postData['estimateDetailNo']; // 見積原価明細番号と行番号を紐付けるためのリスト
-	$readOnlyDetailRow = $postData['readOnlyDetailRow']; // 見積原価明細番号と行番号を紐付けるためのリスト
+	$readOnlyDetailRow = $postData['readOnlyDetailRow']; // 読み込みのみの明細行
+	$rateEditInfoArry = $postData['rateEditInfoArry']; // レート編集用リスト
 
 	// ヘッダ部の名称リストを取得
 	$headerNameList = workSheetConst::WORK_SHEET_HEADER_DATA_CELL; // ブックのヘッダ
@@ -372,6 +373,13 @@
 	$reviseCode = $aryData['reviseCode'];
 	$revisionNo = $aryData['revisionNo'];
 	$estimateNo = $aryData['estimateNo'];
+	// 読み込み専用行のレート編集を行う
+	if (is_array($rateEditInfoArry) && count($rateEditInfoArry) > 0)
+	{
+		if (is_array($readOnlyDetailRow) && count($readOnlyDetailRow) > 0) {
+			$objRegist->rateEdit($estimateDetailNo, $readOnlyDetailRow, $estimateNo, $revisionNo, $rateEditInfoArry, $objDB);
+		}
+	}
 
 	// 登録に必要なデータをセットする
 	$objRegist->setUpdateParam($update, $lngUserCode, $productCode, $reviseCode, $revisionNo, $objDB);

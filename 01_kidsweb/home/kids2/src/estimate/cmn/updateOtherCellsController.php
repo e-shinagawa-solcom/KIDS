@@ -134,7 +134,7 @@ class updateOtherCellsController extends estimateOtherCellsController {
         // 標準割合
         $standardRate = $standardRateMaster;
         // 間接製造経費
-        $indirectCost = $salesAmount * $standardRate;
+        $indirectCost = floor_plus($salesAmount * $standardRate, 0);
         // 営業利益
         $operatingProfit = $profit - $indirectCost;
         // 営業利益率

@@ -10,9 +10,12 @@
 	<link rel="stylesheet" href="/cmn/handsontable/css/handsontable.full.min.css"/>
 	<link rel="stylesheet" href="/cmn/css/bootstrap-4.1.1/bootstrap.min.css" />
 	<link rel="stylesheet" href="/estimate/cmn/css/edit.css"/>
+    <!-- msw汎用スタイル -->
+    <link rel="stylesheet" href="/search/cmn/css/msw.css">
 	<script src="/cmn/handsontable/js/handsontable.full.min.js"></script>
 	<script src="/estimate/preview/js/edit/function.js"></script>
 	<script src="/estimate/cmn/moment-with-locales.js"></script>
+    <script src="/estimate/cmn/msw/rate/js/msw.js" defer></script>
 
 	<!-- キーバインド -->
 	<!-- <script src="/cmn/functions.js"></script> -->
@@ -82,6 +85,11 @@ _%EXCEL%_
 	<!--
 	<script type="text/javascript" language="javascript">parent.Preload.style.visibility = 'hidden';</script>
 	-->
-
+<input type="hidden" name="rate">
+<input type="hidden" name="deliveryYm">
+<input type="hidden" name="monetaryUnit">
+<div class="msw-loadpoints">
+    <iframe src="/estimate/cmn/msw/rate/mswrateedit.html" frameborder="0"></iframe>
+</div>
 </body>
 </html>

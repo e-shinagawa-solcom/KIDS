@@ -76,7 +76,7 @@ class registInsertData extends estimateInsertData {
             $productNo = fncGetSequence("m_product.lngproductno", $this->objDB);
 
             // 製品コードを発行
-            $productCode = str_pad($productNo, 5, 0, STR_PAD_LEFT);
+            $productCode = str_pad(getProductCode($this->objDB), 5, 0, STR_PAD_LEFT);
 			
 			// リバイスコードの設定
 			$reviseCode = '00';

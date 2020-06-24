@@ -2572,7 +2572,43 @@ $(function () {
     }
     return true;
   }
+  // レート編集イベント
+  $('input[name="rate"]').on('change', function() {
+    console.log(rateEditInfoArry);
+    var deliveryYm = $('input[name="deliveryYm"]').val();
+    var rate = $('input[name="rate"]').val();
+    var monetaryUnit = $('input[name="monetaryUnit"]').val();
+    $('.htCore tbody tr').each(function (i, tr) {
+      var conversionRate_pre = $(this).find('td.conversionRate').text();
+      var delivery_pre = $(this).find('td.delivery').text();
+      var monetary_pre = $(this).find('td.monetaryDisplay').text();
+      if (delivery_pre.substr(1,7) == deliveryYm && monetary_pre.substr(1,monetary_pre.length) == monetaryUnit)
+      {
+        row = $(this).index();
+        $(this).find('td.conversionRate').focus();
+        $(this).find('td.conversionRate').text(rate);
+        setConversionRate(row, rate);
+        var checkList = cellClass;
+        var calcFlag = {};
+        calcFlag.subtotal = true;
+        var rateCol = getColumnForRowAndClassName(row, 'conversionRate', checkList);
+        // セルのクラス情報取得
+        var cellElement = getElementsForRowAndColumn(row, rateCol, checkList);  
+        // エリアコードの取得
+        var areaCode = cellElement[0].className.match(/area([0-9]+)/);
+        // 小計再計算時の処理
+        if (calcFlag.subtotal === true) {
+          setCalcFlagForChangeSubtotal(Number(areaCode[1]), calcFlag)
+        }
 
+        calculate(calcFlag, row);
+      }
+      
+		});
+      
+    table[0].selectCell(0, 0);
+
+  });
   // 編集保存処理
   $('#update_regist').on('click', function () {    
     var estimateDetailNoCount = 0
@@ -2587,11 +2623,13 @@ $(function () {
     }
 
     if (window.confirm('編集内容を保存してプレビュー画面を再読み込みします。よろしいですか？')) {
+      console.log(readOnlyDetailRow);
       var postData = {
         value: cellValue,
         class: cellClass,
         estimateDetailNo: detailNoList,
-        readOnlyDetailRow:readOnlyDetailRow
+        readOnlyDetailRow: readOnlyDetailRow,
+        rateEditInfoArry: rateEditInfoArry
       }
       var postJson = JSON.stringify(postData, replacer);
 

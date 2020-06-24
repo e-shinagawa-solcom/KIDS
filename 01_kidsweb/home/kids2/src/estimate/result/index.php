@@ -218,7 +218,7 @@ if (!count($strErrorMessage)) {
 			SELECT
 				me.lngestimateno,
 				me.lngrevisionno,
-				SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.cursubtotalprice ELSE 0 END) AS curfixedcostsales,
+				SUM(CASE WHEN mscdl.lngestimateareaclassno = 2 THEN ted.cursubtotalprice * ted.curconversionrate ELSE 0 END) AS curfixedcostsales,
 				count(mscdl.lngestimateareaclassno <> 0 OR (msi.lngestimateareaclassno = 3 OR msi.lngestimateareaclassno = 4 OR (msi.lngstocksubjectcode = 401 and msi.lngstockitemcode = 1)) OR NULL) AS countofreceiveandorderdetail,
 				count(mr.lngreceivestatuscode = 1 OR mo.lngorderstatuscode = 1 OR NULL) AS countofaplicatedetail
 			FROM m_estimate me

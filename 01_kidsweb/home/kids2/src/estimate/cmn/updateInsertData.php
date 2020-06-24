@@ -56,6 +56,29 @@ class updateInsertData extends estimateInsertData
         return true;
     }
 
+    public function rateEdit($estimateDetailNo, $readOnlyDetailRow, $estimateNo, $revisionNo, $rateEditInfoArry, $objDB)
+    {
+        foreach ($rateEditInfoArry as $rateEditInfo) {
+            $rate = $rateEditInfo["rate"];
+            $monetaryUnit = $rateEditInfo["monetaryUnit"];
+            $deliveryYm = $rateEditInfo["deliveryYm"];
+            if ($monetaryUnit == 'JP') {
+                $monetary = 1;
+            } else if ($monetaryUnit == 'US') {
+                $monetary = 2;
+            } else if ($monetaryUnit == 'HK') {
+                $monetary = 3;
+            }
+            foreach($estimateDetailNo as $value) {
+                $rowNo = $value['row'];
+                if (in_array($value['row'], $readOnlyDetailRow)) {
+                    $detailNo = $value['estimateDetailNo'];
+                    $this->updateTableEstimateDetailForRate($estimateNo, $revisionNo, $detailNo, $rate, $monetary, $deliveryYm, $objDB);
+                }
+            }
+        }
+    }
+
     /**
      * DB登録用関数
      *
@@ -504,6 +527,38 @@ class updateInsertData extends estimateInsertData
      *
      *    @return true
      */
+    protected function updateTableEstimateDetailForRate($estimateNo, $revisionNo, $detailNo, $rate, $monetaryUnit, $deliveryYm, $objDB)
+    {
+        // クエリの生成
+        $strQuery = "UPDATE t_estimatedetail SET curconversionrate = " . $rate;
+        $strQuery .= " WHERE lngestimateno = " . $estimateNo;
+        $strQuery .= " AND lngestimatedetailno = " . $detailNo;
+        $strQuery .= " AND lngrevisionno = ";
+        $strQuery .= " (select max(lngrevisionno) from t_estimatedetail ";
+        $strQuery .= "  WHERE lngestimateno = " . $estimateNo;      
+        $strQuery .= "  AND lngestimatedetailno = " . $detailNo; 
+        $strQuery .= " )";
+        $strQuery .= " AND lngmonetaryunitcode = " . $monetaryUnit;
+        $strQuery .= " AND to_char(dtmdelivery, 'YYYY/MM') = '" . $deliveryYm ."'";
+
+        // クエリの実行
+        list($resultID, $resultNumber) = fncQuery($strQuery, $objDB);
+
+        $objDB->freeResult($resultID);
+
+        return true;
+    }
+
+    /**
+     * DB登録用関数
+     *
+     *    見積原価明細テーブルへの編集登録を行う
+     *
+     *   @param array $rowData 行のデータ
+     *   @param integer $estimateDetailNo 見積原価明細番号
+     *
+     *    @return true
+     */
     protected function updateTableEstimateDetail(&$rowData, $estimateDetailNo)
     {
         // テーブル名の設定
@@ -590,10 +645,10 @@ class updateInsertData extends estimateInsertData
         $previousDetailNo = $rowData['previousDetailNo']; // 以前の見積原価明細番号（検索用）
         //        $estimateDetailNo = $rowData['currentDetailNo'];  // 今回の見積原価明細番号（登録用)
         $estimateDetailNo = $rowData['previousDetailNo']; // 今回の見積原価明細番号（登録用)←不変。見積原価明細番号は見積原価履歴マスタの見積原価行番号が担う
-        
-        $curproductprice = $rowData['monetary'] == 1 ? floor_plus($rowData['price'], 2): floor_plus($rowData['price'], 4);
+
+        $curproductprice = $rowData['monetary'] == 1 ? floor_plus($rowData['price'], 2) : floor_plus($rowData['price'], 4);
         $cursubtotalprice = $curproductprice * $rowData['quantity'];
-        $cursubtotalprice = $rowData['monetary'] == 1 ? floor_plus($cursubtotalprice, 0): floor_plus($cursubtotalprice, 2);
+        $cursubtotalprice = $rowData['monetary'] == 1 ? floor_plus($cursubtotalprice, 0) : floor_plus($cursubtotalprice, 2);
         if ($rowData["detailRevisionNo"] >= 0) {
             $data = array(
                 'lngreceiveno' => 'lngreceiveno',
@@ -812,14 +867,14 @@ class updateInsertData extends estimateInsertData
             }
 
         }
-        
-        $curproductprice = $rowData['monetary'] == 1 ? floor_plus($rowData['price'], 2): floor_plus($rowData['price'], 4);
+
+        $curproductprice = $rowData['monetary'] == 1 ? floor_plus($rowData['price'], 2) : floor_plus($rowData['price'], 4);
         $cursubtotalprice = $curproductprice * $rowData['quantity'];
-        $cursubtotalprice = $rowData['monetary'] == 1 ? floor_plus($cursubtotalprice, 0): floor_plus($cursubtotalprice, 2);
+        $cursubtotalprice = $rowData['monetary'] == 1 ? floor_plus($cursubtotalprice, 0) : floor_plus($cursubtotalprice, 2);
         if ($rowData["detailRevisionNo"] >= 0 && $updateFlag) {
 
-            if (($rowData['divisionSubject'] == 433 and $rowData['classItem'] == 1) || 
-            ($rowData['divisionSubject'] == 431 and $rowData['classItem'] == 8)) {
+            if (($rowData['divisionSubject'] == 433 and $rowData['classItem'] == 1) ||
+                ($rowData['divisionSubject'] == 431 and $rowData['classItem'] == 8)) {
 
                 $data = array(
                     'lngorderno' => 'lngorderno',

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <title>msw</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+  <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+  <script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+  <script src="/mold/lib/js/queryMasterData.js" defer></script>
+  <script src="/estimate/cmn/msw/rate/js/msw-commons.js" defer></script>
+  <script src="/estimate/cmn/msw/rate/js/msw-rateedit.js" defer></script>
+  <script src="/cmn/js/setinputmode.js" defer></script>
+  <link rel="stylesheet" href="/mold/cmn/msw/cmn/css/msw-commons.css">
+  <link rel="stylesheet" href="/mold/cmn/button/css/button-behaivior.css">
+  <link rel="stylesheet" href="/cmn/css/form/base.css">
+  <link rel="stylesheet" href="/estimate/cmn/msw/rate/css/form.css">
+</head>
+
+<body>
+  <div class="msw-box">
+    <div class="msw-box__header">
+      <span class="msw-box__header__bar"></span>
+      <img class="msw-box__header__close-btn" src="/img/type01/msw/cmn/msw_close.gif" alt="msw box close btn">
+    </div>
+    <div class="content-header-box">
+      <p class="box-title">編集対象と適用するレートを指定してください。
+      </p>
+      <div class="regist-line">
+        <span class="regist-label">
+          <span class="regist-label__required-mark">◎</span>
+            <span class="regist-label__text">通貨</span>
+            <select name="monetaryUnit" class="Slt13">
+                <OPTION VALUE="1" SELECTED>JP</OPTION>
+                <OPTION VALUE="2">US</OPTION>
+                <OPTION VALUE="3">HK</OPTION>
+          </select>
+        </span>
+    </div>
+    <div class="regist-line">
+        <span class="regist-label">
+          <span class="regist-label__required-mark">◎</span>
+            <span class="regist-label__text">納期年月</span>
+            <input class="TxtStyle05L" name="deliveryYm" type="text" maxlength="50">
+        </span>
+    </div>
+    <div class="regist-line">
+        <span class="regist-label">
+          <span class="regist-label__required-mark">◎</span>
+            <span class="regist-label__text">適用レート</span>
+            <input class="TxtStyle05L" name="rate" type="text" maxlength="50">
+        </span>
+        <input type="hidden" name="strSessionID" value="_%strSessionID%_">
+    </div>
+    </div>
+    <div class="button-group">
+      <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="cancel">キャンセル</button>
+      <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="apply" onclick="">適用</button>
+    </div>
+  </div>
+</body>
+
+</html>

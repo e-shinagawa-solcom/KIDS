@@ -327,7 +327,6 @@ class makeHTML {
 			}
 		}
 		$strHTML .=	"</div>\n";
-		
 		$strHTML .= "<div class = \"action-buttons\">\n";
 
 		$strHTML .= "<button type=\"button\" id=\"cancel_edit\" onclick=\"cancelEdit();\">\n";
@@ -338,6 +337,10 @@ class makeHTML {
 		$strHTML .= "<img class= \"update_regist_button\" src=\"/img/type01/estimate/preview/regist.gif\">\n";
 		$strHTML .=	"</button>\n";
 		
+
+		$strHTML .= "<button type=\"button\" id=\"rate_edit\" style=\"margin-left: 150px;\">\n";
+		$strHTML .= "<img class= \"rate_edit_button\" src=\"/img/type01/estimate/preview/rateedit.gif\">\n";
+		$strHTML .=	"</button>\n";
 		$strHTML .=	"</div>\n";
 		$strHTML .=	"</div>\n";
 		return $strHTML;

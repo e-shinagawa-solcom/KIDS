@@ -260,7 +260,7 @@ table.temporaryTable > tbody > tr > td
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	width: 420px;
+	width: 500px;
 }
 
 .estimate_search_result button
@@ -279,29 +279,6 @@ div.action-buttons > button
 	padding: 0px;
 	margin: 8px;
 	border-radius: 5px;
-}
-.btn-kids
-{
-    /* margin-bottom: 10px; */
-    border-radius: 50px;
-    padding-bottom: 0px;
-    padding-top: 0px;
-    width: 95px;
-    height: 20px;
-    font-size: x-small;
-    background-color:#e2e3e4;
-    border-color: #e2e3e4;
-}
-
-.btn-kids-sm
-{
-    margin-bottom: 10px;
-    border-radius: 50px;
-    padding-bottom: 0px;
-    padding-top: 0px;
-    width: 80px;
-    height: 18px;
-    font-size: x-small;
 }
 .status_applicate
 {
@@ -415,7 +392,7 @@ div.action-buttons > button
 {
 	left: 100px;
 	top: 0;
-	width: 1120px;
+	width: 1200px;
 	height: auto;
 }
 

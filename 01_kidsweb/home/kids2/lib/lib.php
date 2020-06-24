@@ -573,6 +573,28 @@ function fncGetSequence($strSequenceName, $objDB)
     return $lngSequence;
 }
 
+
+    /**
+     * 製品マスタより最大製品コードを取得する
+     * 取得した最大製品コード + 1を戻す。
+     *
+     * @return void
+     */
+    function getProductCode($objDB)
+    {
+        $strQuery = "SELECT TO_NUMBER(max(strproductcode), '9999999') as max FROM m_product";
+        list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+        if (!$lngResultNum) {
+            $strproductcode = 1;
+        } else {
+            $result = pg_fetch_assoc($lngResultID);
+            $strproductcode = $result['max'] + 1;
+        }
+        $objDB->freeResult($lngResultID);
+        return $strproductcode;
+
+    }
+
 // -----------------------------------------------------------------
 /**
  *    日付シーケンス関数
