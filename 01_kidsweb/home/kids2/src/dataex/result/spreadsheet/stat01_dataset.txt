@@ -32,6 +32,6 @@
 		{name : 'curProductPriceF' ,		type:'float'},
 		{name : 'curProductPrice' ,		type:'float'},
 		{name : 'curKidsProfit' ,		type:'float'},
-		{name : 'strDeliveryPriceDiff'},		// writeFormula
+		{name : 'strNote',              type:'text' },
 		{name : 'curRetailPrice' ,		type:'float'}
 ]

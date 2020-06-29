@@ -708,8 +708,8 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , lngslipdetailno";
     $aryQuery[] = "  , lngrevisionno";
     $aryQuery[] = "  , strcustomersalescode";
-    $aryQuery[] = "  , lngsalesclasscode";
-    $aryQuery[] = "  , strsalesclassname";
+    $aryQuery[] = "  , t_slipdetail.lngsalesclasscode";
+    $aryQuery[] = "  , t_slipdetail.strsalesclassname";
     $aryQuery[] = "  , strgoodscode";
     $aryQuery[] = "  , strproductcode";
     $aryQuery[] = "  , strrevisecode";
@@ -726,8 +726,10 @@ function fncGetSlipDetailQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , trunc(cursubtotalprice) AS cursubtotalprice_comm";
     $aryQuery[] = "  , strnote ";
     $aryQuery[] = "  , (CASE lngproductunitcode when 2 then to_char(curproductprice/lngquantity, '9,999,999,990.99') else to_char(curproductprice, '9,999,999,990.99') end) as curoneproductprice ";
+    $aryQuery[] = "  , (case ms.bytprintslipnoteflg when true then '1' else '0' end ) as bytprintslipnoteflg ";
     $aryQuery[] = "from";
     $aryQuery[] = "  t_slipdetail ";
+    $aryQuery[] = "LEFT JOIN m_salesclass ms on ms.lngsalesclasscode = t_slipdetail.lngsalesclasscode ";
     $aryQuery[] = "where";
     $aryQuery[] = "  lngslipno = " . $strReportKeyCode;
     $aryQuery[] = "  AND lngrevisionno = " . $lngRevisionNo;
@@ -813,8 +815,8 @@ function fncGetSlipDetailForDownloadQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , lngslipdetailno";
     $aryQuery[] = "  , lngrevisionno";
     $aryQuery[] = "  , strcustomersalescode";
-    $aryQuery[] = "  , lngsalesclasscode";
-    $aryQuery[] = "  , strsalesclassname";
+    $aryQuery[] = "  , t_slipdetail.lngsalesclasscode";
+    $aryQuery[] = "  , t_slipdetail.strsalesclassname";
     $aryQuery[] = "  , strgoodscode";
     $aryQuery[] = "  , strproductcode";
     $aryQuery[] = "  , strrevisecode";
@@ -828,8 +830,10 @@ function fncGetSlipDetailForDownloadQuery($strReportKeyCode, $lngRevisionNo)
     $aryQuery[] = "  , cursubtotalprice";
     $aryQuery[] = "  , strnote ";
     $aryQuery[] = "  , (CASE lngproductunitcode when 2 then cast(curproductprice/lngquantity as numeric(14,4)) else cast(curproductprice as numeric(14,4)) end) as curoneproductprice ";
+    $aryQuery[] = "  , (case ms.bytprintslipnoteflg when true then '1' else '0' end ) as bytprintslipnoteflg ";
     $aryQuery[] = "from";
     $aryQuery[] = "  t_slipdetail ";
+    $aryQuery[] = "LEFT JOIN m_salesclass ms on ms.lngsalesclasscode = t_slipdetail.lngsalesclasscode ";
     $aryQuery[] = "where";
     $aryQuery[] = "  lngslipno = " . $strReportKeyCode;
     $aryQuery[] = "  AND lngrevisionno = " . $lngRevisionNo;

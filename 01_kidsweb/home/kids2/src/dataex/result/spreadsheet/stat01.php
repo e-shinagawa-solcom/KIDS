@@ -19,8 +19,7 @@ function fncfncSpreadSheetCellHeader01(&$worksheet, &$objFormat, $aryData)
 {
     $worksheet->writeString(0, 0, mb_convert_encoding('社内統計データ‐売上見込', 'shift_jis'), $objFormat);
     $worksheet->writeString(1, 0, mb_convert_encoding('受注納期　' . $aryData["dtmAppropriationDateFrom"] . '-' . $aryData["dtmAppropriationDateTo"], 'shift_jis'), $objFormat);
-    $worksheet->writeNumber(2, 18, (int) 2, $objFormat); // 初期値を社内レート
-    $worksheet->writeString(2, 19, mb_convert_encoding('←S3のセル　1:ＴＴＭレート、2:社内レート（色付きの単価が自動計算対象です）', 'shift_jis'), $objFormat);
+    $worksheet->writeString(2, 19, mb_convert_encoding('レートはデータダウンロード月はTTMレート、その後の2ヶ月は見積原価書のレート（色付きの単価が自動計算対象です）', 'shift_jis'), $objFormat);
     $worksheet->writeString(2, 0, mb_convert_encoding('選択', 'shift_jis'), $objFormat);
     $worksheet->writeString(2, 1, mb_convert_encoding('←A3のセルを選択して　｢Ctr｣｢Shift｣｢*｣同時に押すと　当シートの全データを選択されるようになれます', 'shift_jis'), $objFormat);
 
@@ -109,74 +108,22 @@ function fncSpreadSheetCellData01($aryDataset, $i, $j, $aryResult, $lngHeadLineC
             $strReceiveCode = $aryResult['strreceivecode'];
             $varCellData = $strReceiveCode;
             break;
-//            case 9:    // 顧客受注番号
-        //            case 12:    // カテゴリー名称
-        //            case 14:    // 部門（名称）
-        //            case 16:    // 売上区分（名称）
-        /*
-        case 18:    // 単価
-
-        $curCalc = (float)$aryResult["curproductpricereceive"];
-        //by kou 20090611                $curCalc = round( (float)$curCalc, 2);    // 小数点以下2桁で丸め処理
-
-        // カートンの場合
-        if( $aryResult["lngproductunitcode"] == "2" )
-        {
-        // 単価 / カートン入数
-        $curCalc = $curCalc / (int)$aryResult["lngcartonquantity"];
-        }
-
-        // 日本円以外の場合
-        if( (int)$aryResult["lngmonetaryunitcode"] != 1 )
-        {
-        // レートを求める
-        if( (int)$aryResult["lngmonetaryratecode"] == 1 )
-        {
-        $curRate = (float)$aryResult["curconversionrate1"];
-        }
-        elseif( (int)$aryResult["lngmonetaryratecode"] == 2 )
-        {
-        $curRate = (float)$aryResult["curconversionrate2"];
-        }
-
-        // =IF(S3="",9999, IF(S3=1,1*1, IF(S3=2,2*2)))
-        //$curCalc = '=IF(S3=0, '.(float)$aryResult["curproductpricereceive"].' * '. $curRate .', IF(S3=1, ' . (float)$aryResult["curproductpricereceive"] .' * '. (float)$aryResult["curconversionrate1"] . ', IF(S3=2, '. (float)$aryResult["curproductpricereceive"] .' * '. (float)$aryResult["curconversionrate2"] . ', 0)))';
-        $curCalc = '=IF(S3=1, ' . $curCalc .' * '. (float)$aryResult["curconversionrate1"] . ', IF(S3=2, '. $curCalc .' * '. (float)$aryResult["curconversionrate2"] . ', 0))';
-        }
-        $curCalc = round( (float)$curCalc, 2);    // 小数点以下2桁で丸め処理
-        $varCellData = $curCalc;
-
-        break;
-
-         */
-
         case 18: // 単価
 
             $curCalc = (float) $aryResult["curproductpricereceive"];
-//by kou 20090611                $curCalc = round( (float)$curCalc, 2);    // 小数点以下2桁で丸め処理
 
             // 日本円以外の場合
             if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
                 // レートを求める
-                //                    if( (int)$aryResult["lngmonetaryratecode"] == 1 )
-                //                    {
-                $curRate1 = (float) $aryResult["curconversionrate1"];
-//                    }
-                //                    elseif( (int)$aryResult["lngmonetaryratecode"] == 2 )
-                //                    {
-                $curRate2 = (float) $aryResult["curconversionrate2"];
-//                    }
+                $curRate = (float) $aryResult["curconversionrate"];
                 if ((int) $aryResult["lngproductunitcode"] == "2") {
                     // 単価 / カートン入数
                     $curCalc1 = (float) $curCalc / (int) $aryResult["lngcartonquantity"];
                 }
-
                 $curCalc1 = (float) $curCalc;
 
-                // =IF(S3="",9999, IF(S3=1,1*1, IF(S3=2,2*2)))
-                //$curCalc = '=IF(S3=0, '.(float)$aryResult["curproductpricereceive"].' * '. $curRate .', IF(S3=1, ' . (float)$aryResult["curproductpricereceive"] .' * '. (float)$aryResult["curconversionrate1"] . ', IF(S3=2, '. (float)$aryResult["curproductpricereceive"] .' * '. (float)$aryResult["curconversionrate2"] . ', 0)))';
-                $curCalc = '=IF(S3=1, ' . (float) $curCalc1 . ' * ' . (float) $curRate1 . ', IF(S3=2, ' . (float) $curCalc1 . ' * ' . (float) $curRate2 . ', 0))';
-//                    $curCalc = (float)$curCalc1;
+                $curCalc = '=' . (float) $curCalc1 . ' * ' . (float) $curRate . '';
+
                 $varCellData = $curCalc;
                 break;
             }
@@ -213,19 +160,12 @@ function fncSpreadSheetCellData01($aryDataset, $i, $j, $aryResult, $lngHeadLineC
             }
 
             break;
-
-//            case 22: // 製品名称
-        //                $varCellData = "";
-        //                break;
         case 10:
             // 置き換え用売上区分コード
             $varCellData = (float) $SalesClassCode;
             break;
 
-        case 23: // 売上合計 curproductprice * lngproductquantity
-            /*                $curCalc = (float)$aryResult["curproductpricereceive"] * (int)$aryResult["lngproductquantity"];
-            $curCalc = floor($curCalc);    // 小数点以下切り捨て
-             */
+        case 23: // 売上合計
             $curCalc = (int) $aryResult["cursubtotalprice"];
             // 日本円以外の場合
             if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
@@ -236,177 +176,57 @@ function fncSpreadSheetCellData01($aryDataset, $i, $j, $aryResult, $lngHeadLineC
             break;
 
         case 24: // 製品原価＠
-            //    if( !fncSpreadSheetExcelFormatSetting($workbook, "setHAlignRight", $objFormat) ) $objFormat = null;
-
-            // 部材費合計金額 が無かったら
-            //売上区分本荷の場合は製品原価0であればエラー
-            //部材費用から　総費用に変更
-            //                if( (float)$aryResult["curmembercost"]==0 && (int)$aryResult["lngsalesclasscode"] == 1)
-            if ((float) $aryResult["curmanufacturingcost"] == 0 && (int) $aryResult["lngsalesclasscode"] == 1) {
-                $varCellData = 'ERR';
-                break;
-            }
-            //生産予定数単位コードは2（C/T）の場合は　数量*カートン入数=pcs数
-            if ((int) $aryResult["lngproductionunitcode"] == 2) {
-                $ProductionQuantity = (int) $aryResult["lngproductionquantity"] * (int) $aryResult["lngcartonquantity"];
-            } else {
-                $ProductionQuantity = (int) $aryResult["lngproductionquantity"];
-
-            }
-            // 売上区分コード判定
-            if ((int) $aryResult["lngsalesclasscode"] == 1) {
-                // グループコード判定
-                switch ((int) $aryResult["lnginchargegroupcode"]) {
-                    case 3: //キャンディチーム
-                    case 4: //トーイチーム
-                    case 27: //トイチーム(ガールズトイ)
-                        // 部材費合計金額 / 生産予定数
-                        $curCalc = (float) $aryResult["curmembercost"] / (float) $ProductionQuantity;
-                        break;
-                    default:
-                        // 総製造費用 / 生産予定数
-                        $curCalc = (float) $aryResult["curmanufacturingcost"] / (float) $ProductionQuantity;
-                }
-            } else { // 単価
-                //                    $curCalc = (float)$aryResult["curproductpricesales"];
-                if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-                    $curCalc = '=S' . $strNo . ''; //'*'.(int)$aryResult["lngproductquantity"].'';
-                    $varCellData = $curCalc;
-                    break;
-                }
-                $curCalc = (float) $aryDataset[18]->data;
-            }
-            $varCellData = round((float) $curCalc, 2); // 小数点以下2桁で丸め処理
+            // AA列とUで逆算する（AA列/U列「計算式で埋める」小数点以下2桁で丸め処理)
+            $curCalc = '=ROUND(AA' . $strNo . '/U' . $strNo . ', 2)';
+            $varCellData = $curCalc;
             break;
 
         case 26: // 製品原価合計
-            //    if( !fncSpreadSheetExcelFormatSetting($workbook, "setHAlignRight", $objFormat) ) $objFormat = null;
-            //売上区分本荷の場合は製品原価0であればエラー
-            //部材費用から　総費用に変更
-            //                if( (float)$aryResult["curmembercost"]==0 && (int)$aryResult["lngsalesclasscode"] == 1)
-            if ((float) $aryResult["curmanufacturingcost"] == 0 && (int) $aryResult["lngsalesclasscode"] == 1) {
-                $varCellData = 'ERR';
-//                    $varCellData = mb_convert_encoding('=IF($Y'.$strNo.'="ERR","ERR",$U'.$strNo.'*$Y'.$strNo.')', "shift_jis");
-                break;
-            }
-            //生産予定数単位コードは2（C/T）の場合は　数量*カートン入数=pcs数
-            if ((int) $aryResult["lngproductionunitcode"] == 2) {
-                $ProductionQuantity = (int) $aryResult["lngproductionquantity"] * (int) $aryResult["lngcartonquantity"];
-            } else {
-                $ProductionQuantity = (int) $aryResult["lngproductionquantity"];
-
-            }
-            // 売上区分コード判定
-            if ((int) $aryResult["lngsalesclasscode"] == 1) {
-
-                // グループコード判定
-                switch ((int) $aryResult["lnginchargegroupcode"]) {
-                    case 3: //キャンディチーム
-                    case 4: //トーイチーム
-                    case 27: //トイチーム(ガールズトイ)
-                        // 部材費合計金額 / 生産予定数
-                        $curCalc1 = (float) $aryResult["curmembercost"] / (float) $ProductionQuantity;
-                        break;
-                    default:
-                        // 総製造費用 / 生産予定数
-                        $curCalc1 = (float) $aryResult["curmanufacturingcost"] / (float) $ProductionQuantity;
-                }
-                // c/t
-                if ((int) $aryResult["lngproductunitcode"] == 2) {
-                    // 数量 * 製品原価＠ * カートン入数
-                    //                        $curCalc = (int)$aryResult["lngproductquantity"] * (float)$aryDataset[24]->data * (int)$aryResult["lngcartonquantity"];///////////////////
-                    $curCalc = (int) $aryResult["lngproductquantity"] * (float) $curCalc1 * (int) $aryResult["lngcartonquantity"]; /////
-                } else {
-                    // 数量 * 製品原価＠
-                    //                        $curCalc = (int)$aryResult["lngproductquantity"] * (float)$aryDataset[24]->data;///////////////////
-                    $curCalc = (int) $aryResult["lngproductquantity"] * (float) $curCalc1; ///////////////////
-
-                }
-            } else {
-                if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-                    $curCalc = '=S' . $strNo . '*' . (int) $aryResult["lngproductquantity"] . '';
-                    $varCellData = $curCalc;
-                    break;
-                }
-                // 数量 * 製品原価＠
-                $curCalc = (int) $aryDataset[23]->data; ///////////////////
-            }
-//                $varCellData = floor((float)$curCalc);    // 小数点以下切り捨て
-            $varCellData = round((float) $curCalc, 0); // 小数点以下桁で丸め処理
+            // AC列の利益率で逆算する（X列の売上合計×(1-利益率)「計算式で埋める」）
+            $curCalc = '=ROUND(X' . $strNo . '*(1-AC' . $strNo . '), 0)';
+            $varCellData = $curCalc; // 小数点以下桁で丸め処理
             break;
 
         case 27: // 目標利益
-            // 日本円以外の場合
-            if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-				$curCalc = '=X' . $strNo . '-AA' . $strNo. '';
-				$varCellData = $curCalc;
-            } else {
-                // 売上合計が0では無い
-                if ($aryDataset[23]->data != 0 && $aryDataset[26]->data != "ERR") {
-                    // 売上合計 - 製品原価合計
-                    $curCalc = (float) $aryDataset[23]->data - $aryDataset[26]->data;
-                }
-                $varCellData = round((float) $curCalc, 2); // 小数点以下2桁で丸め処理
-            }
+            // X列の売上合計×AC見込利益率,小数点以下2桁で丸め処理
+            $curCalc = '=ROUND(X' . $strNo . '*AC' . $strNo . ', 2)';
+            $varCellData = $curCalc;
 
             break;
 
         case 28: // 見込利益率
-			// 目標利益が0では無い、売上合計と製品原価合計が同一では無い
-			// 日本円以外の場合
-            if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-				$curCalc = '=if(OR(AB'.$strNo .'=0 , X'.$strNo . '=AA'.$strNo .'), "" , AB'. $strNo. '/X'.$strNo .')';
-				$varCellData = $curCalc;
-			} else {
-				if ($aryDataset[27]->data != 0 && $aryDataset[23]->data != $aryDataset[26]->data) {
-					//目標利益 / 売上合計
-					$curCalc = $aryDataset[27]->data / $aryDataset[23]->data;
-					$varCellData = round((float) $curCalc, 4); // 小数点以下2桁で丸め処理
-					break;
-				}
-			}
-//                $varCellData = "1212";
-            break;
+            // 売上分類が製品売上の場合は見積原価書の製品利益率の値を設定、固定費売上の場合は固定費利益率を設定にする。
+            // 製品利益率 = (製品売上高-製造費用)/製品売上高の設定
+            if ($aryResult["lngsalesdivisioncode"] == 2) {
+                $curSalesProfitRate = $aryResult["cursalesamount"] == 0 ? 0.00 : round((float) (($aryResult["cursalesamount"] - $aryResult["curmanufacturingcost"]) / $aryResult["cursalesamount"]), 4);
+                // var_dump($aryResult["cursalesamount"]);
+                // var_dump("product sales" .$curSalesProfitRate);
+                $varCellData = $curSalesProfitRate; // 小数点以下2桁で丸め処理
+                break;
+            } else if ($aryResult["lngsalesdivisioncode"] == 1) {
+                // 固定費利益率 = (売上総利益 - 製品売上高 +  製造費用)/ 固定費売上高
+                // var_dump($aryResult["curfixedcostsales"]);
+                // var_dump($aryResult["curtotalprice"]);
+                // var_dump($aryResult["cursalesamount"]);
+                // var_dump($aryResult["curmanufacturingcost"]);
+                $curFixedCostSalesProfitRate = $aryResult["curfixedcostsales"] == 0 ? 0 : round((float) (($aryResult["curtotalprice"] - $aryResult["cursalesamount"] + $aryResult["curmanufacturingcost"]) / $aryResult["curfixedcostsales"]), 4);
+
+                // var_dump("fixed sales" .round((float) $curFixedCostSalesProfitRate, 4) .":".$aryResult["curfixedcostsales"]);
+                // var_dump($curFixedCostSalesProfitRate);
+                $varCellData = $curFixedCostSalesProfitRate; // 小数点以下2桁で丸め処理
+                break;
+            }
 
         case 29: // 単価
-			//$varCellData = '=IF(T'.$strNo.'=2,S'.$strNo.'/Z'.$strNo.',S'.$strNo.')';
-			// 日本円以外の場合
+            //$varCellData = '=IF(T'.$strNo.'=2,S'.$strNo.'/Z'.$strNo.',S'.$strNo.')';
+            // 日本円以外の場合
             if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-				$curCalc = '=S'.$strNo .')';
-				$varCellData = $curCalc;
-			} else {
-				$varCellData = $aryDataset[18]->data;
-			}
+                $curCalc = '=S' . $strNo . ')';
+                $varCellData = $curCalc;
+            } else {
+                $varCellData = $aryDataset[18]->data;
+            }
             break;
-
-//            case 30:    // 納価
-        //                $varCellData = (float)$aryResult["curproductprice"];
-        //                $varCellData = 0;
-        //                break;
-
-/*            case 31:    // チーム別KIDS利益率
-// 売上合計が0、目標利益が0、の場合は空
-if( $aryDataset[23]->data == 0 && $aryDataset[27]->data == 0 ) break;
-// 予定売上高が0、の場合は空
-if( (float)$aryResult["cursalesamount"] == 0 ) break;
-// グループコード判定
-switch((int)$aryResult["lnginchargegroupcode"])
-{
-case 3:        //キャンディチーム
-case 4:        //トーイチーム
-case 27:    //トイチーム(ガールズトイ)
-// 部材費合計金額 / ＠製品売上高(納価 * 生産予定数)
-$curCalc = 1- (float)$aryResult["curmembercost"] / ((int)$aryResult["curproductprice"] * (int)$aryResult["lngProductionQuantity"]);
-break;
-default:
-// 総製造費用 / 予定売上高
-$curCalc = 1- (float)$aryResult["curmanufacturingcost"] / (int)$aryResult["cursalesamount"];
-}
-
-$varCellData = (float)$curCalc;
-break;
- */
-
         case 31: // チーム別KIDS利益率
             // 売上区分コード判定
             if ((int) $aryResult["lngsalesclasscode"] == 1) {
@@ -431,7 +251,6 @@ break;
                     case 27: //トイチーム(ガールズトイ)
                         // 部材費合計金額 / ＠製品売上高(納価 * 生産予定数)
                         $curCalc = 1 - (float) $aryResult["curmembercost"] / ((float) $aryResult["curproductprice"] * (int) $aryResult["lngproductionquantity"]);
-//                            $curCalc = (float)$aryResult["curproductprice"];
                         break;
                     default:
                         // 総製造費用 / 予定売上高
@@ -443,29 +262,10 @@ break;
 
             $varCellData = (float) $curCalc;
             break;
-        case 32: // 納価相違
-            /*
-            // 売上区分コード判定
-            // 単価（単位が’c/t’の場合、単価 / カートン入数）と納価が同一であれば ‘合’、異なれば ‘否’
-            if( (int)$aryResult["lngsalesclasscode"] == 1 )
-            {
-            // c/t
-            if( (int)$aryResult["lngproductunitcode"] == 2 )
-            {
-            $curCalc = (float)$aryResult["curproductprice"] / (int)$aryResult["lngcartonquantity"];
-            if(  ) varCellData = '';
-            }
-            else
-            {
-            }
-
-            }
-             */
-            $varCellData = mb_convert_encoding('=IF($V' . $strNo . '="","", IF($P' . $strNo . '=1, IF($AD' . $strNo . '=$AE' . $strNo . ',"○","×"),"") )', "shift_jis");
+        case 32: // 受注備考
+            // 受注明細行備考で埋め
+            $varCellData = (string) $aryResult["strnote"];
             break;
-        //case 33:    // 参考値上代
-        //    $varCellData = "";
-        //    break;
 
         default:
             //
@@ -532,118 +332,40 @@ function fncSpreadSheetCellFormat01(&$workbook, &$aryFormat, &$aryDataset, $j, $
 
         // 小数点以下指定のカラム
         case 24: // 製品原価＠
-            // 売上区分本荷の場合は製品原価0であればエラー
-            //部材費用から　総費用に変更
-            //                if( (float)$aryResult["curmembercost"]==0 && (int)$aryResult["lngsalesclasscode"] == 1)
-            if ((float) $aryResult["curmanufacturingcost"] == 0 && (int) $aryResult["lngsalesclasscode"] == 1) {
-                // ERR の場合
-                if ($aryDataset[$j]->data == 'ERR') {
-                    // データタイプの変更（計算式）
-                    $aryDataset[$j]->type = 'text';
-                    $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'errorNumberDec');
-                    break;
-                }
-
-                // データタイプの変更（計算式）
-                $aryDataset[$j]->type = 'text';
-                $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'float');
-                break;
-            }
-            if ((int) $aryResult["lngmonetaryunitcode"] != 1 && (int) $aryResult["lngsalesclasscode"] != 1) {
+            $aryDataset[$j]->type = '';
+            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalcDec');
+            break;
+        case 25: //カートン入数
+            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalcPoint');
+            break;
+        case 26: // 製品原価合計
+            // データタイプの変更（計算式）
+            $aryDataset[$j]->type = '';
+            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalc');
+            break;
+        case 27: //目標利益
+            // データタイプの変更（計算式）
+            $aryDataset[$j]->type = '';
+            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalc');
+            break;
+        case 28: // 見込利益率
+        // var_dump($aryDataset[28]->data);
+        if ($aryDataset[28]->data == 0) {
+            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, $aryDataset[$j]->type);
+            break;
+        } else {
+            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberPercent');
+            break;
+        }
+        case 29: // 単価（計算式）
+            if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
                 // データタイプの変更（計算式）
                 $aryDataset[$j]->type = '';
                 $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalcDec');
                 break;
             }
             $aryDataset[$j]->type = 'float';
-            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberDecPoint');
-            break;
-            $aryDataset[$j]->type = 'float';
-            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberDecPoint');
-            break;
-        case 25: //カートン入数
-            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalcPoint');
-            break;
-        case 26: // 製品原価合計
-            //売上区分本荷の場合は製品原価0であればエラー
-            //部材費用から　総費用に変更
-            //                if( (float)$aryResult["curmembercost"]==0 && (int)$aryResult["lngsalesclasscode"] == 1)
-            if ((float) $aryResult["curmanufacturingcost"] == 0 && (int) $aryResult["lngsalesclasscode"] == 1) {
-                // ERR の場合
-                if ($aryDataset[$j]->data == 'ERR') {
-                    // データタイプの変更（計算式）
-                    $aryDataset[$j]->type = 'text';
-                    $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'errorNumber');
-                    break;
-                }
-
-                // データタイプの変更（計算式）
-                $aryDataset[$j]->type = 'text';
-                $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'float');
-                break;
-            }
-            if ((int) $aryResult["lngmonetaryunitcode"] != 1 && (int) $aryResult["lngsalesclasscode"] != 1) {
-                // データタイプの変更（計算式）
-                $aryDataset[$j]->type = '';
-                $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalc');
-                break;
-            }
-//                $aryDataset[$j]->type = 'float';
-            //                $objFormat =& fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberDecPoint');
-            //                break;
-            $aryDataset[$j]->type = 'float';
-            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalcPoint');
-            break;
-		case 27: //目標利益
-		
-            // 日本円以外の場合
-            if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-                // データタイプの変更（計算式）
-                $aryDataset[$j]->type = '';
-                $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalc');
-                break;
-			}
-            $aryDataset[$j]->type = 'float';
-            if ($aryDataset[26]->data == 'ERR') {
-                if ((float) $aryResult["curmembercost"] == 0 && (int) $aryResult["lngsalesclasscode"] == 1) {
-                    {
-                        // データタイプの変更（計算式）
-                        //                        $aryDataset[$j]->type = 'text';
-                        $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'errorNumber');
-                        break;
-                    }break;
-                }
-            }
-
-            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalcPoint');
-            break;
-		case 28: // 見込利益率
-		
-            // 日本円以外の場合
-            if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-                // データタイプの変更（計算式）
-                $aryDataset[$j]->type = '';
-                $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalcPercent');
-                break;
-			}
-            $aryDataset[$j]->type = 'float';
-
-            if ($aryDataset[27]->data == 0) {
-                $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, $aryDataset[$j]->type);
-                break;
-            } else {
-                $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberPercent');
-                break;
-            }
-		case 29: // 単価（計算式）
-			if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-				// データタイプの変更（計算式）
-				$aryDataset[$j]->type = '';
-				$objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberCalcDec');
-				break;
-			}
-			$aryDataset[$j]->type = 'float';
-			$objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberDec');
+            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberDec');
             break;
         case 30: //納価　//case 30追加 by kou 20090611
         case 33: //参考値上代
@@ -654,6 +376,9 @@ function fncSpreadSheetCellFormat01(&$workbook, &$aryFormat, &$aryDataset, $j, $
             $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'numberPercent');
             break;
 
+        case 32: //受注備考
+            $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, 'textPoint');
+            break;
         default:
             $objFormat = &fncSpreadSheetCellFormat($workbook, $aryFormat, $aryDataset[$j]->type);
     }

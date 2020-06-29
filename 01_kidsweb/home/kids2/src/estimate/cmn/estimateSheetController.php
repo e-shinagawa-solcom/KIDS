@@ -1599,6 +1599,8 @@ class estimateSheetController {
 
         if ($mode === workSheetConst::MODE_ESTIMATE_DOWNLOAD) {
             $this->inputDropdownList();
+            // 空のエリアの入力規則の設定
+            $this->correctDataValidationForNullAreas();
         }
     }
 
@@ -1652,12 +1654,62 @@ class estimateSheetController {
         $this->monetaryUnitFormula = "$" . $moneraryUnitCellColumn ."$" . ($moneraryUnitCellRow-1) . ":$" .$moneraryUnitCellColumn . "$" .($moneraryUnitCellRow+$rowCount-1);
 //fncDebug("kids2.log", $this->monetaryUnitFormula, __FILE__, __LINE__, "a");
     }
+    
+    protected function correctDataValidationForNullAreas() {
+        $sheet = $this->sheet;
+        $targetAreaRows = $this->targetAreaRows;
+        $colNum = workSheetConst::WORK_SHEET_COPY_COLUMN_NUMBER;
+        foreach ($targetAreaRows as $targetArea) {
+            $targetAreaRows = $this->targetAreaRows;
+            $firstRow = $targetArea['firstRow'];
+            $lastRow = $targetArea['lastRow'];
+
+            $cellAddressList = $this->cellAddressList;
+            // 明細行の先頭（=売上区分の1行目明細）のアドレス
+            $topRowCellAddress = $cellAddressList[workSheetConst::RECEIVE_PRODUCT_SALES_DIVISION_CODE];
+            $rowAndColumn = self::separateRowAndColumn($topRowCellAddress);
+            $replaceFormulaRow = $rowAndColumn['row'] + 1;
+            $formulaArray = array();
+            for ($row = $firstRow; $row <= $lastRow; $row++) {   // 移動済みのコピー元の行まで
+                if (is_null($sheet->getCell('A'.$firstRow)->getValue())) {
+                    for ($col = 1; $col <= $colNum; ++$col) {
+                        // 入力規則の式の複製はコピー元、コピー先にも設定しなおしが必要
+                        $alphaCol = Coordinate::stringFromColumnIndex($col);
+                        $copyAddress = $alphaCol.$firstRow;
+                        $newAddress = $alphaCol.$row;
+                        if(($sheet->getCell($copyAddress)->hasDataValidation() == true) && $sheet->getCell($copyAddress)->getDataValidation()->getType() != ""){
+                            if(($sheet->getCell($copyAddress)->isMergeRangeValueCell() == true) || ($sheet->getCell($copyAddress)->isInMergeRange() == false)){
+                                $orgvalidation = $sheet->getCell($copyAddress)->getDataValidation();
+                                if ($formulaArray[$col] == "") {
+                                    $formulaArray[$col] = $orgvalidation->getFormula1();
+                                }
+                                $cellPattern = '/(\$?[A-Z]+)'. $replaceFormulaRow. '(\D?)/';
+                                $replace = '${1}'.$row. '${2}';
+                                $newFormula = preg_replace($cellPattern, $replace, $formulaArray[$col]);
+                                // 入力規則を初期化
+                                $sheet->getCell($newAddress)->setDataValidation();
+                                // 式を作り直した入力規則を再設定
+                                $validation = new DataValidation();
+                                $validation->setType($orgvalidation->getType());
+                                $validation->setAllowBlank($orgvalidation->getAllowBlank());
+                                $validation->setShowDropDown($orgvalidation->getShowDropDown());
+                                $validation->setFormula1($newFormula);
+                                $sheet->getCell($newAddress)->setDataValidation($validation);
+                
+                                $validation = $sheet->getCell($newAddress)->getDataValidation();
+                            }
+                        }
+                    }                
+                }
+            }
+        }
+
+    }
 
     // 対象エリアに見積原価明細情報をセットする
     protected function inputEstimateDetailToTargetArea($areaCode, $datas) {
         $targetAreaRows = $this->targetAreaRows;
         $columnNumber = $this->getColumnNumberList($areaCode);
-
         $firstRow = $targetAreaRows[$areaCode]['firstRow'];
         $lastRow = $targetAreaRows[$areaCode]['lastRow'];
 
@@ -1712,8 +1764,6 @@ class estimateSheetController {
         $this->inputDevelopDropdownList(); // 開発担当者
         
         $this->inputDropdownItems();  //売上分類 or 仕入科目、売上区分 or 仕入部品、顧客先 or 仕入先
-
-//        $this->inputDetailDropdownList(); // 明細行(売上分類 or 仕入科目、売上区分 or 仕入部品、顧客先 or 仕入先)
 
     }
 
@@ -1905,7 +1955,6 @@ class estimateSheetController {
                 $rowOffset = 1;
                 if(is_array($dropdownCompany[$areaCode][$key1])){
 //echo sprintf("%s-%s:count=%d", $areaCode, $key1, count($dropdownCompany[$areaCode][$key1])) . "<br>";
-//var_dump($dropdownCompany[$areaCode][$key1]);
 //echo "<br>";
                     foreach($dropdownCompany[$areaCode][$key1] as $company){
                         $cellAddress = self::getMoveCell($companyBaseAddress,$rowOffset, $columnOffset);
@@ -1992,7 +2041,6 @@ class estimateSheetController {
     
         // コピー元の行番号は挿入された行の数だけ増える
         $copyRow = $selectedRow + $rowNum;
-    
         for ($row = 0; $row <= $rowNum; $row++) {   // 移動済みのコピー元の行まで
 
             $newRow = $selectedRow + $row; // 挿入された行の番号
@@ -2088,10 +2136,10 @@ class estimateSheetController {
         $topRowCellAddress = $cellAddressList[workSheetConst::RECEIVE_PRODUCT_SALES_DIVISION_CODE];
         $rowAndColumn = self::separateRowAndColumn($topRowCellAddress);
         $replaceFormulaRow = $rowAndColumn['row'] + 1;
+        $formulaArray = array();
 
         for ($row = $from; $row <= $to; $row++) {   // 移動済みのコピー元の行まで
             for ($col = 1; $col <= $colNum; ++$col) {
-
                 // 入力規則の式の複製はコピー元、コピー先にも設定しなおしが必要
 
                 $alphaCol = Coordinate::stringFromColumnIndex($col);
@@ -2101,12 +2149,12 @@ class estimateSheetController {
                 if(($sheet->getCell($copyAddress)->hasDataValidation() == true) && $sheet->getCell($copyAddress)->getDataValidation()->getType() != ""){
                     if(($sheet->getCell($copyAddress)->isMergeRangeValueCell() == true) || ($sheet->getCell($copyAddress)->isInMergeRange() == false)){
                         $orgvalidation = $sheet->getCell($copyAddress)->getDataValidation();
-                        $formula = $orgvalidation->getFormula1();
-//fncDebug("view.log", sprintf("Type:%s=%s", $copyAddress, $orgvalidation->getType()), __FILE__, __LINE__, "a");
-//fncDebug("view.log", sprintf("before:%s=%s", $copyAddress, $formula), __FILE__, __LINE__, "a");
+                        if ($formulaArray[$col] == "") {
+                            $formulaArray[$col] = $orgvalidation->getFormula1();
+                        }
                         $cellPattern = '/(\$?[A-Z]+)'. $replaceFormulaRow. '(\D?)/';
                         $replace = '${1}'.$row. '${2}';
-                        $newFormula = preg_replace($cellPattern, $replace, $formula);
+                        $newFormula = preg_replace($cellPattern, $replace, $formulaArray[$col]);
                         // 入力規則を初期化
                         $sheet->getCell($newAddress)->setDataValidation();
                         // 式を作り直した入力規則を再設定
@@ -2116,10 +2164,6 @@ class estimateSheetController {
                         $validation->setShowDropDown($orgvalidation->getShowDropDown());
                         $validation->setFormula1($newFormula);
                         $sheet->getCell($newAddress)->setDataValidation($validation);
-
-                        $validation = $sheet->getCell($newAddress)->getDataValidation();
-                        $formula = $validation->getFormula1();
-//fncDebug("view.log", sprintf("after:%s=%s", $newAddress, $formula), __FILE__, __LINE__, "a");
                     }
                     else{
                         // 入力規則を初期化
@@ -2127,7 +2171,6 @@ class estimateSheetController {
                     }
                 }
                 else{
-//fncDebug("view.log", sprintf("%s:no validation", $newAddress), __FILE__, __LINE__, "a");
                 }
             }
         }
@@ -2155,8 +2198,8 @@ class estimateSheetController {
             $marginCell = 0; // 挿入する空行数
         }
 
+        $i = 0;
         foreach ($estimateData as $areaCode => $data) {
-    
             $firstRow = $targetAreaRows[$areaCode]['firstRow'];
             $lastRow = $targetAreaRows[$areaCode]['lastRow'];
 //fncDebug("view.log", sprintf("area:%d, first:%d, last:%d", $areaCode, $firstRow, $lastRow ), __FILE__, __LINE__, "a");
@@ -2215,11 +2258,13 @@ class estimateSheetController {
 //fncDebug("view.log", sprintf("area:%d, selected:%d last:%d", $areaCode, $selectedRow, $lastRow), __FILE__, __LINE__, "a");
                 $difTotal -= $difference;
             }
-            
             // 入力規則の式補正
             $this->correctDataValidation($targetAreaRows[$areaCode]['firstRow'], $targetAreaRows[$areaCode]['lastRow']);
             // 条件付き書式設定
             $this->setConditionsForClassItemCell($areaCode, $targetAreaRows[$areaCode]['firstRow'], $targetAreaRows[$areaCode]['lastRow']);
+            
+            $i++;
+            $lastDetailRow = $targetAreaRows[$areaCode]['lastRow'];
         }
         $this->endRow += $difTotal;
 

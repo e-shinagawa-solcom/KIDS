@@ -76,9 +76,9 @@
 		case 6:	// stat01
 		case 7:	// stat02
 			// 部門
-			$aryData["lngGroupCode"]	= fncGetPulldown( "m_Group", "lngGroupCode", "strgroupdisplayname", 0,'where lngcompanycode in (0, 1)', $objDB );
+			$aryData["lngGroupCode"]	= fncGetPulldown( "m_Group", "lngGroupCode", "strgroupdisplayname", 0,'where lngcompanycode in (0, 1) and bytgroupdisplayflag = true', $objDB );
 			// 売上区分
-			$aryData["lngSalesClassCode"] 	= fncGetCheckBoxObject( "m_SalesClass", "lngsalesclasscode", "strsalesclassname", "lngSalesClassCode[]", 'where lngsalesclasscode <> 0', $objDB );
+			$aryData["lngSalesClassCode"] 	= fncGetCheckBoxObject( "m_SalesClass", "lngsalesclasscode", "strsalesclassname", "lngSalesClassCode[]", 'where lngsalesclasscode <> 0 and bytdisplayflag = true', $objDB );
 
 			// クッキーの設定
 			if( $_COOKIE["DataExport_stat01"] )

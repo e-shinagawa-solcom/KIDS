@@ -172,7 +172,7 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
 } else if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_EXCLUSIVE) {
     $strnote = "";
     $strsalesclassname = $aryDetail[0]["strsalesclassname0"];
-    if (strlen($strsalesclassname) > 0) {
+    if (strlen($strsalesclassname) > 0 && $aryDetail[0]["bytprintslipnoteflg0"] == '1') {
         $strnote = $strnote . $strsalesclassname . "分　";
     }
     if ($aryParts["strtaxclassname"] != "非課税") {
@@ -180,6 +180,8 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
     }
 
     $aryParts["strnote"] = $strnote;
+
+
 }
 
 // HTML出力

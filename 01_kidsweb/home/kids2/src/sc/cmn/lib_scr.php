@@ -2110,6 +2110,9 @@ function fncSetSlipDataToWorkSheet(
         } else {
             $v_stroneproductprice = $v_curproductprice;
         }
+        // 納品書備考出力フラグ
+        $v_bytprintslipnoteflg = fncGetMasterValue("m_salesclass", "lngsalesclasscode", "bytprintslipnoteflg", $d["lngsalesclasscode"], '', $objDB);
+        $v_bytprintslipnoteflg = $v_bytprintslipnoteflg == 't' ? 1 : 0;
 
         // セルに値をセット
         $r = $startRowIndex + ($i - $itemMinIndex);
@@ -2132,6 +2135,7 @@ function fncSetSlipDataToWorkSheet(
         setCellDetailValue($xlWorkSheet, "R", $r, $v_cursubtotalprice); //17:小計
         setCellDetailValue($xlWorkSheet, "S", $r, $v_strnote, 'UTF-8', 'UTF8'); //18:明細備考
         setCellDetailValue($xlWorkSheet, "T", $r, $v_stroneproductprice); //19:一個単価
+        setCellDetailValue($xlWorkSheet, "U", $r, $v_bytprintslipnoteflg); //20:納品書備考出力フラグ
 
     }
 

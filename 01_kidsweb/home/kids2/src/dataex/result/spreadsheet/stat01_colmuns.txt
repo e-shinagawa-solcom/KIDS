@@ -32,6 +32,6 @@
 	{id: 'curProductPriceF',	header: "単価" ,		width :100, align :'right'},
 	{id: 'curProductPrice',		header: "納価" ,		width :100, align :'right'},
 	{id: 'curKidsProfit',		header: "チーム別KIDS利益率" ,	width :100, align :'right'},
-	{id: 'strDeliveryPriceDiff',	header: "納価相違" ,		width :100},
+	{id: 'strNote',	            header: "受注備考" ,		width :300},
 	{id: 'curRetailPrice',		header: "参考値上代" ,		width :100, align :'right'}
 ]

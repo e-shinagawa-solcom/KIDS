@@ -154,13 +154,12 @@ $objSheet = null;
 
 // シートが表示無効でない場合はワークシート処理オブジェクトのインスタンス生成
 $objSheet = new estimateSheetController();
-
-// オブジェクトにデータをセットする
+// // オブジェクトにデータをセットする
 $objSheet->dataInitialize($sheetInfo, $objDB);
 
 // ワークシートオブジェクトに必要な値をセット
 $objSheet->setDBEstimateData($productData, $estimateData, $mode);
-
+// return;
 // phpSpreadSheetオブジェクトをxlsxに書き込むオブジェクトにセットする
 $writer = new XlsxWriter($spreadSheet);
 
@@ -174,29 +173,8 @@ $DlFileName = 'estimate_'. $productCode. '_'. $reviseCode. '_'. $time->format('Y
 
 $excelDLFileName = $DlFileName. '.xlsx';
 
-$excelFileName = $fileName. '.xlsx';
-
-$writer->save($excelFileName);
-
-$zipFileName = $time->format('YmdHisu'). '.zip';
-
-$zip = new ZipArchive;
-
-$zip->open($zipFileName, ZipArchive::CREATE|ZipArchive::OVERWRITE);
-$zip->addFile($excelFileName);
-$zip->renameName($excelFileName, mb_convert_encoding($excelDLFileName, 'SJIS', 'UTF-8')); // ZipArchive内でSJISを扱うので文字コードを変換する
-$zip->close();
-
-unlink($excelFileName);
-
-$zipDLFileName = $DlFileName. '.zip';
-
-// zip出力
-header('Content-Type: application/zip');
-header('Content-Disposition: attachment; filename="'.$zipDLFileName.'"');
-header('Content-Length: ' . filesize($zipFileName));
-echo file_get_contents($zipFileName);
-
-unlink($zipFileName);
-
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="' .$excelDLFileName .'"');
+header('Cache-Control: max-age=0');
+$writer->save('php://output');
 ?>

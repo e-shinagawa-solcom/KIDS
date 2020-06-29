@@ -2574,37 +2574,37 @@ $(function () {
   }
   // レート編集イベント
   $('input[name="rate"]').on('change', function() {
-    console.log(rateEditInfoArry);
     var deliveryYm = $('input[name="deliveryYm"]').val();
     var rate = $('input[name="rate"]').val();
-    var monetaryUnit = $('input[name="monetaryUnit"]').val();
-    $('.htCore tbody tr').each(function (i, tr) {
-      var conversionRate_pre = $(this).find('td.conversionRate').text();
-      var delivery_pre = $(this).find('td.delivery').text();
-      var monetary_pre = $(this).find('td.monetaryDisplay').text();
-      if (delivery_pre.substr(1,7) == deliveryYm && monetary_pre.substr(1,monetary_pre.length) == monetaryUnit)
+    var monetaryUnit = $('input[name="monetaryUnit"]').val();    
+    for (var row = 0; row < cellValue.length; row++) {      
+      var rateCol = getColumnForRowAndClassName(row, 'conversionRate', cellClass);
+      var deliveryCol = getColumnForRowAndClassName(row, 'delivery', cellClass);    
+      var monetaryDisplayCol = getColumnForRowAndClassName(row, 'monetaryDisplay', cellClass);
+      var rate_pre = cellValue[row][rateCol];      
+      if (rateCol == undefined || deliveryCol == undefined || deliveryCol == undefined) {
+        continue;
+      }
+      var conversionRate_pre = cellValue[row][rateCol];
+      var delivery_pre = cellValue[row][deliveryCol];
+      var monetary_pre = cellValue[row][monetaryDisplayCol];
+      if (delivery_pre.substr(0,7) == deliveryYm && monetary_pre == monetaryUnit)
       {
-        row = $(this).index();
-        $(this).find('td.conversionRate').focus();
-        $(this).find('td.conversionRate').text(rate);
         setConversionRate(row, rate);
-        var checkList = cellClass;
         var calcFlag = {};
         calcFlag.subtotal = true;
-        var rateCol = getColumnForRowAndClassName(row, 'conversionRate', checkList);
+        var rateCol = getColumnForRowAndClassName(row, 'conversionRate', cellClass);
         // セルのクラス情報取得
-        var cellElement = getElementsForRowAndColumn(row, rateCol, checkList);  
+        var cellElement = getElementsForRowAndColumn(row, rateCol, cellClass);  
         // エリアコードの取得
         var areaCode = cellElement[0].className.match(/area([0-9]+)/);
         // 小計再計算時の処理
         if (calcFlag.subtotal === true) {
           setCalcFlagForChangeSubtotal(Number(areaCode[1]), calcFlag)
         }
-
         calculate(calcFlag, row);
       }
-      
-		});
+    }
       
     table[0].selectCell(0, 0);
 
@@ -2623,7 +2623,6 @@ $(function () {
     }
 
     if (window.confirm('編集内容を保存してプレビュー画面を再読み込みします。よろしいですか？')) {
-      console.log(readOnlyDetailRow);
       var postData = {
         value: cellValue,
         class: cellClass,
