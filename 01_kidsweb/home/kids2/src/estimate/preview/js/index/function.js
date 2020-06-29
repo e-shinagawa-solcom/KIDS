@@ -195,7 +195,7 @@ function sheetPrint() {
 
 	var actionUrl = "/list/result/frameset.php?strSessionID=" + sessionID + "&lngReportClassCode=" + reportCode + "&strReportKeyCode=" + estimateNo + "&revisionNo=" + revisionNo;
 	
-	listW = window.open( actionUrl , 'listWin' , 'width=1000,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no' );
+	listW = window.open( actionUrl , 'listWin' , 'width=1050,height=600,top=10,left=10,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no' );
 	return false;
 }
 

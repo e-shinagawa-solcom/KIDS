@@ -2,7 +2,7 @@
 [
 	{id: 'dtmappropriationdate',	header: "仕入計上日",		width :80 },
 	{id: 'strstockcode',		header: "仕入No",		width :60 },
-	{id: 'strordercode',		header: "発注No" ,		width :60 },
+	{id: 'strordercode',		header: "発注書No" ,		width :80 },
 	{id: 'strcompanydisplaycode',	header: "仕CD",		width :20 },
 	{id: 'strcompanydisplayname',	header: "仕入先名称" ,		width :180 },
 	{id: 'strgroupdisplaycode',	header: "部CD" ,		width :10 },

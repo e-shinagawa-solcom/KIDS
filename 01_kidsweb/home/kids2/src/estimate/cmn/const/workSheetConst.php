@@ -108,7 +108,7 @@ class workSheetConst {
     const RECEIVE_PRODUCT_COMPANY_CHECK = 'receive_p_company_check';
 
 
-    // 固定費売上
+    // 固定費売上zz
     // 売上分類
     const RECEIVE_FIXED_COST_SALES_DIVISION_CODE ='receive_f_salesdivisioncode';
     // 売上区分
@@ -829,6 +829,7 @@ class workSheetConst {
     // その他の定数 -------------------------------------------------------------------------------------------
     // ワークシートの行数（表示部分）
     const WORK_SHEET_COLUMN_NUMBER = 16;
+    const WORK_SHEET_COLUMN_NUMBER_FOR_PRINT = 17;
 
     // 単価の小数点以下の桁数(キーは通貨コード)
     const PRICE_DECIMAL_DIGIT = [

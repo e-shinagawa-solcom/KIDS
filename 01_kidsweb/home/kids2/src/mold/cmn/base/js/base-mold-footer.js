@@ -27,3 +27,11 @@ $('.control-block__button-logout').on({
 		}
 	}
 });
+
+
+// ログアウトボタン
+// $('.control-block__button-help ').on({
+// 	'click' : function() {
+// 		window.open('/help/index.html', 'helpWin', 'top=10,left=10,width=600,height=500');
+// 	}
+// });

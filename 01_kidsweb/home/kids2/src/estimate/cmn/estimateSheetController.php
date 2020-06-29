@@ -1739,6 +1739,26 @@ class estimateSheetController {
                     );
                 }
             }
+
+            if ($this->mode == 'print') {
+                foreach($data as $name => $value) {
+                    // 受注状態マスタの取得
+                    $receiveStatusMaster = $this->objDB->getMasterToArray('m_receivestatus', 'lngreceivestatuscode', 'strreceivestatusname');
+                    // 発注状態マスタの取得
+                    $orderStatusMaster = $this->objDB->getMasterToArray('m_orderstatus', 'lngorderstatuscode', 'strorderstatusname');
+                    $statusCode = $data['statusCode'];
+                    if ($areaCode == DEF_AREA_PRODUCT_SALES || $areaCode == DEF_AREA_FIXED_COST_SALES) {
+                        $value = $receiveStatusMaster[$statusCode]['strreceivestatusname'];
+                    }
+                    
+                    if ($areaCode == DEF_AREA_FIXED_COST_ORDER || $areaCode == DEF_AREA_PARTS_COST_ORDER || $areaCode == DEF_AREA_OTHER_COST_ORDER) {
+                        $value = $orderStatusMaster[$statusCode]['strorderstatusname'];
+                    }
+                    $cell = 'A'. $row;
+                    $this->sheet->getCell($cell)->setValue($value);
+                
+                }
+            }
             ++$row;
         }
 
@@ -2062,10 +2082,18 @@ class estimateSheetController {
                 $insertValue = preg_replace($cellPattern, $replace, $copyValue);
 
                 $sheet->setCellValue($newAddress, $insertValue);
-                $sheet->duplicateStyle($copyStyle, $newAddress);
-                if( $col <= workSheetConst::WORK_SHEET_COLUMN_NUMBER ){
-                    // コピー元のbottomは太いため、細い線をセット
-                    $sheet->getStyle($newAddress)->getBorders()->getBottom()->setBorderStyle("thin");
+                $sheet->duplicateStyle($copyStyle, $newAddress);                
+
+                if ($this->mode == "print") {
+                    if ($col > 1 && $col <= workSheetConst::WORK_SHEET_COLUMN_NUMBER_FOR_PRINT && $row != $rowNum) {
+                        // コピー元のbottomは太いため、細い線をセット
+                        $sheet->getStyle($newAddress)->getBorders()->getBottom()->setBorderStyle("thin");
+                    }
+                } else {
+                    if( $col <= workSheetConst::WORK_SHEET_COLUMN_NUMBER && $row != $rowNum){
+                        // コピー元のbottomは太いため、細い線をセット
+                        $sheet->getStyle($newAddress)->getBorders()->getBottom()->setBorderStyle("thin");
+                    }
                 }
                 
                 

@@ -160,7 +160,7 @@ $sheet = $sheetInfo['sheet'];
 $cellAddressList = $sheetInfo['cellAddress'];
 
 // ワークシートオブジェクトに必要な値をセット
-$objSheet->setDBEstimateData($productData, $estimateData);
+$objSheet->setDBEstimateData($productData, $estimateData, "print");
 
 $objDB->close();
 
@@ -171,7 +171,6 @@ $time = new DateTime();
 $replace = '_%' . md5($time->format('YmdHisu')) . '%_';
 
 $output = $objWriter->generateHTMLHeader();
-$output .= $objWriter->generateStyles();
 
 $customCSS = "<style>";
 $customCSS .= "table {table-layout: fixed; width: 950px; white-space:nowrap;}";
@@ -180,6 +179,7 @@ $customCSS .= "body {-webkit-print-color-adjust: exact;}";
 $customCSS .= "</style>";
 
 $output .= $customCSS;
+$output .= $objWriter->generateStyles();
 
 // 文字化け対策：エクセルの¥マークを置換文字列に置換(UTF-8 → UTF-8の変換時に上手く変換できないため)
 $sheetData = str_replace('¥', $replace, $objWriter->generateSheetData());

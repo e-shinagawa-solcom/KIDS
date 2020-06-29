@@ -13,7 +13,8 @@
 */
 SELECT
 	To_char(s.dtmAppropriationDate,'yyyy/mm/dd') as dtmAppropriationDate
-	,s.strStockCode, o.strOrderCode
+	,s.strStockCode
+	, mpo.strOrderCode || '_' || lpad(to_char(mpo.lngrevisionno, 'FM99'), 2, '0') as strOrderCode
 	,c.strCompanyDisplayCode
 	,c.strCompanyDisplayName
 	,g.strGroupDisplayCode
@@ -83,10 +84,15 @@ FROM
 	inner join t_StockDetail sd 
 		on s.lngStockNo             = sd.lngStockNo
 		AND s.lngRevisionNo             = sd.lngRevisionNo
+		
+	LEFT JOIN t_purchaseorderdetail tpod
+		ON sd.lngOrderNo = tpod.lngOrderNo
+		and sd.lngOrderRevisionNo = tpod.lngorderrevisionno
 
-	LEFT JOIN m_Order o
-		ON sd.lngOrderNo = o.lngOrderNo
-		and sd.lngOrderRevisionNo = o.lngRevisionNo
+	LEFT JOIN m_purchaseorder mpo
+		ON tpod.lngpurchaseorderno = mpo.lngpurchaseorderno
+		and tpod.lngrevisionno = mpo.lngrevisionno
+
 	INNER JOIN m_Product p 
 		on sd.strProductCode        = p.strProductCode
 		AND sd.strReviseCode        = p.strReviseCode
