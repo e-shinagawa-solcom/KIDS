@@ -6,8 +6,7 @@ SELECT
 	mst1.strCustomerReceiveCode,							/* 顧客受注番号 */
 	mst1.lngmonetaryratecode,							/* レートコード */
 	mst1.lngmonetaryunitcode,							/* 通貨コード */
-	mst1.curConversionRate1,							/* レート（TTM）*/
-	mst1.curConversionRate2,							/* レート（社内）*/
+	mst1.curConversionRate1 as curConversionRate,                        /* レート（TTM）*/
 	mp.lngcategorycode,								/* カテゴリーコード */
 	mc.strcategoryname,								/* カテゴリー名称 */
 	mp.lngInchargeGroupCode,							/* 担当部門コード */
@@ -24,17 +23,17 @@ SELECT
 	mp.strproductname,								/* 製品名称 */
 	mp.lngproductionunitcode,							/* 予定数単位コード*/
 	mp.lngProductionQuantity,							/* 生産予定数 */
-	/* 製品原価＠ */
-/*	mst2.curmembercost,								/* 部材費合計金額 
-	mst2.curmanufacturingcost,							/* 総製造費用 
-*/	
 	coalesce(mst2.curmembercost, 0) as curmembercost,				/* 部材費合計金額 */
 	coalesce(mst2.curmanufacturingcost, 0) as curmanufacturingcost,			/* 総製造費用 */
+	coalesce(mst2.cursalesamount, 0) as cursalesamount,				/* 予定売上高 */
+	coalesce(mst2.curfixedcostsales, 0) as curfixedcostsales,
+	coalesce(mst2.curtotalprice, 0) as curtotalprice,
 
 	mp.lngcartonquantity,								/* カートン入数 */
 	mp.curproductprice,								/* 商品価格-納価（商品マスタ） */
-	mst2.cursalesamount,								/* 予定売上高 */
-	mp.curretailprice								/* 小売価格-上代 */
+	mp.curretailprice,								/* 小売価格-上代 */
+	mst1.strnote,
+	mst1.lngsalesdivisioncode
 
 FROM m_product mp
 INNER JOIN (
@@ -59,25 +58,32 @@ LEFT JOIN m_group mg ON mp.lnginchargegroupcode = mg.lnggroupcode
 		mr.strCustomerReceiveCode,			/* 顧客受注番号 */
 		ms.lngmonetaryratecode,				/* レートコード */
 		mstmm.curConversionRate1,			/* レート（TTM） */
-		mstmm.curConversionRate2,			/* レート（社内） */
-		trd.lngSalesDetailno,				/* 売上明細番号 */
-		trd.strproductcode,				/* 製品コード */
-		trd.strrevisecode,				/* 再販コード */
-		trd.lngsalesclasscode,				/* 売上区分 */
+		tsd.lngSalesDetailno,				/* 売上明細番号 */
+		tsd.strproductcode,				/* 製品コード */
+		tsd.strrevisecode,				/* 再販コード */
+		tsd.lngsalesclasscode,				/* 売上区分 */
 		msl.dtmdeliverydate,				/* 納期 */
-		trd.curproductprice as curproductpriceSales,	/* 単価 */
-		trd.lngProductUnitCode, 			/* 単位 */
-		trd.lngproductquantity,				/* 数量 */
-		trd.cursubtotalprice				/*明細行売上合計金額*/
-		
+		tsd.curproductprice as curproductpriceSales,	/* 単価 */
+		tsd.lngProductUnitCode, 			/* 単位 */
+		tsd.lngproductquantity,				/* 数量 */
+		tsd.cursubtotalprice,				/*明細行売上合計金額*/
+		ted.lngsalesdivisioncode,
+		trd.strnote
 	FROM m_Sales ms
 	INNER JOIN m_slip msl on msl.strslipcode = ms.strslipcode
 		and msl.lngsalesno = ms.lngsalesno
 		and msl.lngrevisionno = ms.lngrevisionno
-	LEFT JOIN t_SalesDetail trd ON ms.lngSalesNo = trd.lngSalesNo
-		and ms.lngrevisionno = trd.lngrevisionno
-	LEFT JOIN m_Receive mr on mr.lngreceiveno = trd.lngreceiveno 
-		and mr.lngrevisionno = trd.lngreceiverevisionno	/* 顧客受注番号取得の為 */
+	LEFT JOIN t_SalesDetail tsd ON ms.lngSalesNo = tsd.lngSalesNo
+		and ms.lngrevisionno = tsd.lngrevisionno
+	LEFT JOIN m_Receive mr on mr.lngreceiveno = tsd.lngreceiveno 
+		and mr.lngrevisionno = tsd.lngreceiverevisionno	/* 顧客受注番号取得の為 */
+	LEFT JOIN t_receivedetail trd 
+		on trd.lngreceiveno = mr.lngreceiveno
+		and trd.lngrevisionno = mr.lngrevisionno
+	LEFT JOIN t_estimatedetail ted
+		on trd.lngestimateno = ted.lngestimateno
+		and trd.lngestimatedetailno = ted.lngestimatedetailno
+		and trd.lngestimaterevisionno = ted.lngrevisionno
 	LEFT JOIN m_group mg ON ms.lnggroupcode = mg.lnggroupcode
 	LEFT JOIN(	/* 社内レート、TTMレートを同行で取得する */
 		SELECT DISTINCT
@@ -85,12 +91,7 @@ LEFT JOIN m_group mg ON mp.lnginchargegroupcode = mg.lnggroupcode
 			mm1.lngmonetaryunitcode as lngmonetaryunitcode1,
 			mm1.dtmapplystartdate   as dtmapplystartdate1,
 			mm1.dtmapplyenddate     as dtmapplyenddate1,
-			mm1.curConversionRate   as curConversionRate1,
-			mm2.lngmonetaryratecode as lngmonetaryratecode2,
-			mm2.lngmonetaryunitcode as lngmonetaryunitcode2,
-			mm2.dtmapplystartdate   as dtmapplystartdate2,
-			mm2.dtmapplyenddate     as dtmapplyenddate2,
-			mm2.curConversionRate as curConversionRate2
+			mm1.curConversionRate   as curConversionRate1
 		FROM
 		(	/* TTMレート */
 			SELECT DISTINCT
@@ -103,26 +104,10 @@ LEFT JOIN m_group mg ON mp.lnginchargegroupcode = mg.lnggroupcode
 			JOIN m_monetaryunit mmu on mmr.lngmonetaryunitcode = mmu.lngmonetaryunitcode
 			WHERE mmr.lngmonetaryratecode = 1
 		) mm1
-		,
-		(	/* 社内レート */
-			SELECT distinct
-				mmr.lngmonetaryratecode,
-				mmr.lngmonetaryunitcode,
-				mmr.dtmapplystartdate,
-				mmr.dtmapplyenddate,
-				mmr.curConversionRate
-			FROM m_MonetaryRate mmr
-			JOIN m_monetaryunit mmu on mmr.lngmonetaryunitcode = mmu.lngmonetaryunitcode
-			WHERE mmr.lngmonetaryratecode = 2
-		) mm2
-
 	) mstmm on /* 受注マスタの計上日でリンク */
-		mstmm.dtmapplystartdate1 <= ms.dtmappropriationdate
-		AND mstmm.dtmapplyenddate1 >= ms.dtmappropriationdate
-		AND mstmm.dtmapplystartdate2 <= ms.dtmappropriationdate
-		AND mstmm.dtmapplyenddate2 >= ms.dtmappropriationdate
+		mstmm.dtmapplystartdate1 <= msl.dtmDeliveryDate
+		AND mstmm.dtmapplyenddate1 >= msl.dtmDeliveryDate
 		AND mstmm.lngmonetaryunitcode1 = ms.lngmonetaryunitcode
-		AND mstmm.lngmonetaryunitcode2 = ms.lngmonetaryunitcode
 	,
 	(
 		SELECT r1.lngSalesNo, r1.strSalescode, r1.lngRevisionNo
@@ -142,8 +127,8 @@ LEFT JOIN m_group mg ON mp.lnginchargegroupcode = mg.lnggroupcode
 	AND ms.bytInvalidFlag = FALSE
 	AND ms.lngRevisionNo >= 0
 	/* 売上マスタ・計上日に対する条件設定 */
-	AND to_date( ms.dtmAppropriationDate::text,'YYYY/MM/DD' ) >= to_date( '_%dtmAppropriationDateFrom%_'::text, 'YYYY/MM/DD' ) /* FROM */
-	AND to_date( ms.dtmAppropriationDate::text,'YYYY/MM/DD' ) <= to_date( '_%dtmAppropriationDateTo%_'::text, 'YYYY/MM/DD' ) /* TO */
+	AND to_date( msl.dtmDeliveryDate::text,'YYYY/MM/DD' ) >= to_date( '_%dtmAppropriationDateFrom%_'::text, 'YYYY/MM/DD' ) /* FROM */
+	AND to_date( msl.dtmDeliveryDate::text,'YYYY/MM/DD' ) <= to_date( '_%dtmAppropriationDateTo%_'::text, 'YYYY/MM/DD' ) /* TO */
 ) mst1
 LEFT JOIN m_salesclass ms ON mst1.lngsalesclasscode = ms.lngsalesclasscode
 LEFT JOIN(
@@ -154,7 +139,9 @@ LEFT JOIN(
  		me.curfixedcost,		/* 固定費合計金額 */
 		me.curmembercost,		/* 部材費合計金額 */
 		me.curmanufacturingcost,	/* 総製造費用  */
-		me.cursalesamount		/* 予定売上高 */
+		me.cursalesamount,		/* 予定売上高 */
+		tsum.curfixedcostsales,
+		me.curtotalprice
 	FROM m_estimate me
 	INNER JOIN m_estimatehistory meh
 	    ON meh.lngestimateno = me.lngestimateno
@@ -178,9 +165,38 @@ LEFT JOIN(
 			AND rr1.bytInvalidFlag = false
 		)
 	) metrue
+    , ( 
+        SELECT
+          me.lngestimateno
+          , me.lngrevisionno
+          , SUM( 
+            CASE 
+              WHEN mscdl.lngestimateareaclassno = 2 
+                THEN ted.cursubtotalprice * ted.curconversionrate 
+              ELSE 0 
+              END
+          ) AS curfixedcostsales 
+        FROM
+          m_estimate me 
+          INNER JOIN m_estimatehistory meh 
+            on meh.lngestimateno = me.lngestimateno 
+            and meh.lngrevisionno = me.lngrevisionno 
+          INNER JOIN t_estimatedetail ted 
+            ON ted.lngestimateno = meh.lngestimateno 
+            and ted.lngestimatedetailno = meh.lngestimatedetailno 
+            AND ted.lngrevisionno = meh.lngestimatedetailrevisionno 
+          LEFT OUTER JOIN m_salesclassdivisonlink mscdl 
+            ON mscdl.lngsalesclasscode = ted.lngsalesclasscode 
+            AND mscdl.lngsalesdivisioncode = ted.lngsalesdivisioncode 
+        GROUP BY
+          me.lngestimateno
+          , me.lngrevisionno
+      ) tsum
 	WHERE
 		me.lngestimateno = metrue.lngestimateno
 		AND me.lngrevisionno = metrue.lngrevisionno
+		AND me.lngestimateno = tsum.lngestimateno
+		AND me.lngrevisionno = tsum.lngrevisionno
 		AND me.bytinvalidflag = FALSE
 		AND me.bytdecisionflag = TRUE
 		GROUP BY
@@ -189,7 +205,9 @@ LEFT JOIN(
 			me.curfixedcost,		/* 固定費合計金額 */
 			me.curmembercost,		/* 部材費合計金額 */
 			me.curmanufacturingcost,	/* 総製造費用  */
-			me.cursalesamount		/* 予定売上高 */
+			me.cursalesamount,		/* 予定売上高 */
+			tsum.curfixedcostsales,
+			me.curtotalprice 
 ) mst2
 	ON mst1.strproductcode = mst2.strproductcode
 	AND mst1.strrevisecode = mst2.strrevisecode

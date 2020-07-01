@@ -249,11 +249,13 @@ function fncPayConditionCodeMatch($aryData, $aryHeadColumnNames, $aryPoDitail, $
         $foreignCusttomerArray = fncSetForeignTabel();
         // 仕入先が海外取引先の場合
         if (in_array($strcompanydisplaycode, $foreignCusttomerArray)) {
-            for ($i = 0; $i < count($aryPoDitail); $i++) {
-                if ($aryPoDitail[$i]["lngStockSubjectCode"] == "402") {
-                    if (in_array($aryPoDitail[$i]["lngStockItemCode"], $arystockitemcode)) {
-                        $isSpecifySubject = true;
-                        break;
+            if (is_array($aryPoDitail)) {
+                for ($i = 0; $i < count($aryPoDitail); $i++) {
+                    if ($aryPoDitail[$i]["lngStockSubjectCode"] == "402") {
+                        if (in_array($aryPoDitail[$i]["lngStockItemCode"], $arystockitemcode)) {
+                            $isSpecifySubject = true;
+                            break;
+                        }
                     }
                 }
             }

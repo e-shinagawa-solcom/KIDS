@@ -599,7 +599,12 @@ function fncGetOtherOrderDetail($lngorderNo, $lngrevisionno, $objDB)
     $aryQuery[] = "      , mo.lngmonetaryunitcode";
     $aryQuery[] = "      , msi.lngestimateareaclassno ";
     $aryQuery[] = "    from";
-    $aryQuery[] = "      m_order mo ";
+    $aryQuery[] = "      m_order mo ";    
+    if ($lngrevisionno == null) {
+        $aryQuery[] = "  inner join (select lngorderno, MAX(lngrevisionno) as lngrevisionno from m_order group by lngorderno) max_mo ";
+        $aryQuery[] = "    ON mo.lngorderno = max_mo.lngorderno ";
+        $aryQuery[] = "    AND mo.lngrevisionno = max_mo.lngrevisionno ";
+    }
     $aryQuery[] = "      LEFT JOIN t_orderdetail od ";
     $aryQuery[] = "        ON mo.lngorderno = od.lngorderno ";
     $aryQuery[] = "        AND mo.lngrevisionno = od.lngrevisionno ";
@@ -610,7 +615,10 @@ function fncGetOtherOrderDetail($lngorderNo, $lngrevisionno, $objDB)
     $aryQuery[] = "        AND od.lngstocksubjectcode = msi.lngstocksubjectcode ";
     $aryQuery[] = "    WHERE";
     // $aryQuery[] = "      mo.lngorderno = " . $lngorderNo ." AND mo.lngrevisionno = ". $lngrevisionno."";
-    $aryQuery[] = "      mo.lngorderno in (" . $lngorderNo .")";
+    $aryQuery[] = "      mo.lngorderno in (" . $lngorderNo .") ";
+    if ($lngrevisionno != null) {        
+        $aryQuery[] = "  AND mo.lngrevisionno = ". $lngrevisionno."";
+    }
     $aryQuery[] = "  ) m_key ";
     $aryQuery[] = "    ON od.strproductcode = m_key.strproductcode ";
     $aryQuery[] = "    AND od.strrevisecode = m_key.strrevisecode ";
@@ -1359,6 +1367,54 @@ function fncCreatePurchaseOrderHtml($aryPurchaseOrder, $strSessionID)
 }
 
 /**
+ * 明細有の最新リビジョン発注書マスタ
+ *
+ * @param   Integer     $lngputchaseorderno 発注書番号
+ * @param   Integer     $lngrevisionno      リビジョン番号
+ * @param   Object      $objDb               DBオブジェクト
+ * @access  public
+ *
+ */
+function fncGetPurchaseOrderHasDetail($lngpurchaseorderno, $objDB)
+{
+    $aryResult = array();
+    $aryQuery[] = "SELECT distinct";
+    $aryQuery[] = "  tpd.lngorderno";
+    $aryQuery[] = "  , tpd.lngorderrevisionno ";
+    $aryQuery[] = "FROM";
+    $aryQuery[] = "  m_purchaseorder mp ";
+    $aryQuery[] = "  inner JOIN ( ";
+    $aryQuery[] = "    SELECT";
+    $aryQuery[] = "      max(lngrevisionno) as lngrevisionno";
+    $aryQuery[] = "      , lngpurchaseorderno ";
+    $aryQuery[] = "    from";
+    $aryQuery[] = "      t_purchaseorderdetail ";
+    $aryQuery[] = "    group by";
+    $aryQuery[] = "      lngpurchaseorderno";
+    $aryQuery[] = "  ) max_tpd ";
+    $aryQuery[] = "    ON mp.lngpurchaseorderno = max_tpd.lngpurchaseorderno ";
+    $aryQuery[] = "    AND mp.lngrevisionno = max_tpd.lngrevisionno ";
+    $aryQuery[] = "  LEFT JOIN t_purchaseorderdetail tpd ";
+    $aryQuery[] = "    ON mp.lngpurchaseorderno = tpd.lngpurchaseorderno ";
+    $aryQuery[] = "    AND mp.lngrevisionno = tpd.lngrevisionno ";
+    $aryQuery[] = "WHERE mp.lngpurchaseorderno = " . $lngpurchaseorderno;
+
+    $strQuery = "";
+    $strQuery = implode("\n", $aryQuery);
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+    if (!$lngResultNum) {
+        return false;
+    }
+
+    for ($i = 0; $i < $lngResultNum; $i++) {
+        $aryResult[] = $objDB->fetchArray($lngResultID, $i);
+    }
+
+    $objDB->freeResult($lngResultID);
+
+    return $aryResult;
+}
+/**
  * 発注書マスタ更新
  *
  * @param   Integer     $lngputchaseorderno 発注書番号
@@ -1806,21 +1862,24 @@ function GetAdditionalOrderDetail($param, $objAuth, $objDB)
 
 // 削除対象発注書明細の取得
 function GetRemovalOrderDetail($param, $objAuth, $objDB){
-    if (!is_array($param["aryDetail"])) {
-        return array();
+    if (is_array($param["aryDetail"])) {
+        foreach($param["aryDetail"] as $detail)
+        {
+            $lngorderno[] = $detail["lngOrderNo"];
+        }
+        $in = implode( ',', $lngorderno);
+    } else {
+        $in = "";
     }
-    foreach($param["aryDetail"] as $detail)
-    {
-        $lngorderno[] = $detail["lngOrderNo"];
-    }
-    $in = implode( ',', $lngorderno);
      
     $aryQuery[] = "select ";
     $aryQuery[] = "    lngorderno, lngorderrevisionno as lngrevisionno";
     $aryQuery[] = "    from t_purchaseorderdetail";
     $aryQuery[] = "    where lngpurchaseorderno = " . $param["lngPurchaseOrderNo"];
     $aryQuery[] = "    and lngrevisionno = " . $param["lngRevisionNo"];
-    $aryQuery[] = "    and lngorderno not in (" . $in . ")";
+    if ($in != "") {
+        $aryQuery[] = "    and lngorderno not in (" . $in . ")";
+    }
     $strQuery = "";
     $strQuery = implode("\n", $aryQuery);
 

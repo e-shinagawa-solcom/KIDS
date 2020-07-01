@@ -75,44 +75,46 @@ if ($_POST["strMode"] == "update") {
         return false;
     }
     // 対象の追加明細を取得
-    $arrayAdd = GetAdditionalOrderDetail($_POST, $objAuth, $objDB);
-    foreach ($arrayAdd as $add) {
-//echo sprintf("add:lngorderno=%s,lngrevisionno=%s", $add["lngorderno"], $add["lngrevisionno"]) . "<br>";
-        // 追加対象明細発注マスタ状態チェック（明細取得とロック取得の隙間に更新される可能性を考慮して）
-        $errorMsg = CanOrder($add["lngorderno"], $add["lngrevisionno"], $objDB);
-        if ($errorMsg) {
-            fncOutputError(9051, DEF_ERROR, $errorMsg, true, "", $objDB);
-            return false;
+    if (is_array($_POST["aryDetail"])) {
+        $arrayAdd = GetAdditionalOrderDetail($_POST, $objAuth, $objDB);
+        foreach ($arrayAdd as $add) {
+    //echo sprintf("add:lngorderno=%s,lngrevisionno=%s", $add["lngorderno"], $add["lngrevisionno"]) . "<br>";
+            // 追加対象明細発注マスタ状態チェック（明細取得とロック取得の隙間に更新される可能性を考慮して）
+            $errorMsg = CanOrder($add["lngorderno"], $add["lngrevisionno"], $objDB);
+            if ($errorMsg) {
+                fncOutputError(9051, DEF_ERROR, $errorMsg, true, "", $objDB);
+                return false;
+            }
+            // 発注マスタ更新（追加明細のみ）
+            if (!FixOrder($add["lngorderno"], $add["lngrevisionno"], $objDB)) {
+                fncOutputError(9051, DEF_ERROR, "発注マスタの確定処理に失敗しました。", true, "", $objDB);
+                return false;
+            }
         }
-        // 発注マスタ更新（追加明細のみ）
-        if (!FixOrder($add["lngorderno"], $add["lngrevisionno"], $objDB)) {
-            fncOutputError(9051, DEF_ERROR, "発注マスタの確定処理に失敗しました。", true, "", $objDB);
-            return false;
+        
+        $aryUpdate["strProductCode"] = $_POST["strProductCode"];
+        $aryUpdate["strReviseCode"] = $_POST["strReviseCode"];
+        for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
+            $aryUpdateDetail[$i]["lngorderdetailno"] = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
+            $aryUpdateDetail[$i]["lngsortkey"] = $_POST["aryDetail"][$i]["lngSortKey"];
+            $aryUpdateDetail[$i]["lngdeliverymethodcode"] = $_POST["aryDetail"][$i]["lngDeliveryMethodCode"];
+            $aryUpdateDetail[$i]["strdeliverymethodname"] = $_POST["aryDetail"][$i]["strDeliveryMethodName"];
+            $aryUpdateDetail[$i]["lngproductunitcode"] = $_POST["aryDetail"][$i]["lngProductUnitCode"];
+            $aryUpdateDetail[$i]["lngorderno"] = $_POST["aryDetail"][$i]["lngOrderNo"];
+            $aryUpdateDetail[$i]["lngrevisionno"] = $_POST["aryDetail"][$i]["lngOrderRevisionNo"];
+            $aryUpdateDetail[$i]["lngstocksubjectcode"] = $_POST["aryDetail"][$i]["lngStockSubjectCode"];
+            $aryUpdateDetail[$i]["lngstockitemcode"] = $_POST["aryDetail"][$i]["lngStockItemCode"];
+            $aryUpdateDetail[$i]["curproductprice"] = $_POST["aryDetail"][$i]["curProductPrice"];
+            $aryUpdateDetail[$i]["lngproductquantity"] = $_POST["aryDetail"][$i]["lngProductQuantity"];
+            $aryUpdateDetail[$i]["cursubtotalprice"] = $_POST["aryDetail"][$i]["curSubtotalPrice"];
+            $aryUpdateDetail[$i]["dtmseliverydate"] = $_POST["aryDetail"][$i]["dtmDeliveryDate"];
+            $aryUpdateDetail[$i]["strnote"] = $_POST["aryDetail"][$i]["strDetailNote"];
+            $aryUpdateDetail[$i]["strmoldno"] = $_POST["aryDetail"][$i]["strMoldNo"];
         }
-    }
-    
-    $aryUpdate["strProductCode"] = $_POST["strProductCode"];
-    $aryUpdate["strReviseCode"] = $_POST["strReviseCode"];
-    for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
-        $aryUpdateDetail[$i]["lngorderdetailno"] = $_POST["aryDetail"][$i]["lngOrderDetailNo"];
-        $aryUpdateDetail[$i]["lngsortkey"] = $_POST["aryDetail"][$i]["lngSortKey"];
-        $aryUpdateDetail[$i]["lngdeliverymethodcode"] = $_POST["aryDetail"][$i]["lngDeliveryMethodCode"];
-        $aryUpdateDetail[$i]["strdeliverymethodname"] = $_POST["aryDetail"][$i]["strDeliveryMethodName"];
-        $aryUpdateDetail[$i]["lngproductunitcode"] = $_POST["aryDetail"][$i]["lngProductUnitCode"];
-        $aryUpdateDetail[$i]["lngorderno"] = $_POST["aryDetail"][$i]["lngOrderNo"];
-        $aryUpdateDetail[$i]["lngrevisionno"] = $_POST["aryDetail"][$i]["lngOrderRevisionNo"];
-        $aryUpdateDetail[$i]["lngstocksubjectcode"] = $_POST["aryDetail"][$i]["lngStockSubjectCode"];
-        $aryUpdateDetail[$i]["lngstockitemcode"] = $_POST["aryDetail"][$i]["lngStockItemCode"];
-        $aryUpdateDetail[$i]["curproductprice"] = $_POST["aryDetail"][$i]["curProductPrice"];
-        $aryUpdateDetail[$i]["lngproductquantity"] = $_POST["aryDetail"][$i]["lngProductQuantity"];
-        $aryUpdateDetail[$i]["cursubtotalprice"] = $_POST["aryDetail"][$i]["curSubtotalPrice"];
-        $aryUpdateDetail[$i]["dtmseliverydate"] = $_POST["aryDetail"][$i]["dtmDeliveryDate"];
-        $aryUpdateDetail[$i]["strnote"] = $_POST["aryDetail"][$i]["strDetailNote"];
-        $aryUpdateDetail[$i]["strmoldno"] = $_POST["aryDetail"][$i]["strMoldNo"];
-    }
 
-    // 発注明細更新
-    if (!fncUpdateOrderDetail($aryUpdate, $aryUpdateDetail, $objDB)) {return false;}
+        // 発注明細更新
+        if (!fncUpdateOrderDetail($aryUpdate, $aryUpdateDetail, $objDB)) {return false;}
+    }
 
     // 対象の削除明細を取得
     $arrayDel = GetRemovalOrderDetail($_POST, $objAuth, $objDB);
@@ -136,8 +138,10 @@ if ($_POST["strMode"] == "update") {
 
     // 発注書マスタ更新
     if (!fncUpdatePurchaseOrder($_POST, $objDB, $objAuth)) {return false;}
-    // 発注書明細登録（追加分も含めて）
-    if (!fncUpdatePurchaseOrderDetail($_POST, $objDB)) {return false;}
+    if (is_array($_POST["aryDetail"])) {
+        // 発注書明細登録（追加分も含めて）
+        if (!fncUpdatePurchaseOrderDetail($_POST, $objDB)) {return false;}
+    }
 
     // 排他制御ロック解放
     $result = unlockExclusive($objAuth, $objDB);
@@ -199,6 +203,7 @@ $aryHeadColumnNames = fncSetPurchaseTabelName($aryTableViewHead, $aryTytle);
 $aryDetailColumnNames = fncSetPurchaseTabelName($aryTableViewDetail, $aryTytle);
 
 $allPrice = 0;
+if (is_array($_POST["aryDetail"])) {
 $aryData["lngDetailCount"] = count($_POST["aryDetail"]);
 for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
 
@@ -237,13 +242,14 @@ for ($i = 0; $i < count($_POST["aryDetail"]); $i++) {
 
     // HTML出力
     $aryDetailTable[] = $objTemplate->strTemplate;
+
+    $aryData["strDetailTable"] = implode("\n", $aryDetailTable);
+}
 }
 $aryData["curAllTotalPrice"] = $allPrice;
 // exit();
 
 $aryData["lngOrderNo"] = $_POST["lngOrderNo"];
-
-$aryData["strDetailTable"] = implode("\n", $aryDetailTable);
 
 $aryData["strMode"] = "update";
 

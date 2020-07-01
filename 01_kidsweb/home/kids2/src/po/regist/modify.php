@@ -164,16 +164,11 @@ if ($aryResult[0]["lngorderno"] == null) {
 if ($lngorderno != null) {
     $aryOtherDetail = fncGetOtherOrderDetail($lngorderno, $aryResult[0]["lngorderrevisionno"], $objDB);
 } else {
-    $aryResult_pre = fncGetPurchaseOrderEdit($aryData["lngPurchaseOrderNo"], $aryData["lngRevisionNo"] - 1, $objDB);
+    var_dump("test11");
+    $aryResult_pre = fncGetPurchaseOrderHasDetail($aryData["lngPurchaseOrderNo"], $objDB);
+    var_dump($aryResult_pre);
     $aryOtherDetail = fncGetOtherOrderDetail($aryResult_pre[0]["lngorderno"], $aryResult_pre[0]["lngorderrevisionno"], $objDB);
 }
-
-// $aryOtherDetail = fncGetOtherOrderDetail($lngorderno, $aryResult[0]["lngorderrevisionno"], $objDB);
-
-
-//if (!$aryOtherDetail || count($aryOtherDetail) == 0) {
-//    fncOutputError(503, DEF_ERROR, "発注書番号に対する明細情報が見つかりません。", true, "", $objDB);
-//}
 
 // ロック（候補の発注）
 foreach ($aryOtherDetail as $otherDetail) {

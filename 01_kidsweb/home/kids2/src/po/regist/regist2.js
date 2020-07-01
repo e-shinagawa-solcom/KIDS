@@ -46,11 +46,11 @@ jQuery(function ($) {
     function validationCheck() {
         var result = true;
         //        var selectedRows = getSelectedRows();
-        var selectedRows = $('#tableB tbody tr');
-        if (!selectedRows.length) {
-            alert("発注書修正をおこなう明細行が選択されていません。");
-            return false;
-        }
+        // var selectedRows = $('#tableB tbody tr');
+        // if (!selectedRows.length) {
+        //     alert("発注書修正をおこなう明細行が選択されていません。");
+        //     return false;
+        // }
 
         return result;
     }

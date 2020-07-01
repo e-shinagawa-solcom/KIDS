@@ -25,5 +25,6 @@
 	{name : 'curProductCostTotal' ,		type:'float'},
 	{name : 'curTargetProfit' ,		type:'float'},
 	{name : 'curExpectationProfit' ,	type:'float'},
-	{name : 'strGroupDisplayCode' ,		type:'text'}
+	{name : 'strGroupDisplayCode' ,		type:'text'},
+	{name : 'strNote' ,		type:'text'}
 ]

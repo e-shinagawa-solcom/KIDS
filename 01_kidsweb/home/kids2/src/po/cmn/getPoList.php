@@ -26,7 +26,7 @@ $objAuth = fncIsSession($_REQUEST["strSessionID"], $objAuth, $objDB);
 
 // 明細行のないPOリスト
 $aryQuery[] = "select";
-$aryQuery[] = "  mpo.strordercode as strpocode";
+$aryQuery[] = "  distinct mpo.strordercode as strpocode";
 $aryQuery[] = "  , mc.strcompanydisplayname";
 $aryQuery[] = "  , mpo.lngpurchaseorderno";
 $aryQuery[] = "  , mpo.lngrevisionno";

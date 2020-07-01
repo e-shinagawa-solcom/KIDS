@@ -25,5 +25,6 @@
 	{id: 'curProductCostTotal',	header: "製品原価合計" ,	width :110, align :'right'},
 	{id: 'curTargetProfit',		header: "目標利益" ,		width :110, align :'right'},
 	{id: 'curExpectationProfit',	header: "目標利益率" ,		width :110, align :'right'},
-	{id: 'strGroupDisplayCode',	header: "部門" ,		width :20, align :'right'}
+	{id: 'strGroupDisplayCode',	header: "部門" ,		width :20, align :'right'},
+	{id: 'strNote',	header: "受注備考" ,		width :300, align :'right'}
 ]
