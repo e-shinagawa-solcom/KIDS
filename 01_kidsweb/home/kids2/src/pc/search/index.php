@@ -124,6 +124,8 @@ if (!$aryData["lngStockStatusCode"] or !$aryData["lngPayConditionCode"] or !$ary
     fncOutputError(9055, DEF_WARNING, "システム管理者にお問い合わせ下さい。", true, "", $objDB);
 }
 
+// ヘルプ対応
+$aryData["lngFunctionCode"] = DEF_FUNCTION_PC2;
 // テンプレート読み込み
 echo fncGetReplacedHtmlWithBase("search/base_search.html", "pc/search/pc_search.html", $aryData, $objAuth);
 

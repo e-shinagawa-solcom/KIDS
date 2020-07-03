@@ -277,17 +277,21 @@
             return;
         }
         // 画面操作を無効する
-        // lockScreen("lockId");
+        lockScreen("lockId");
         var strGoodsCode = "";
         if (!$('input[name="strGoodsCode"]').attr('disabled')) {
             strGoodsCode = $('input[name="strGoodsCode"]').val();
         }
 
+        var url = '/so/decide/decide_confirm.php';
+        var mode = $('input[name="mode"]').val();
+        if (mode == "modify") {
+            url = '/so/modify/modify_confirm.php'
+        }
+        console.log(mode);
         // リクエスト送信
         $.ajax({
-            url: '/so/decide/decide_confirm.php',
-            type: 'post',
-            // dataType: 'json',
+            url: url,
             type: 'POST',
             data: {
                 'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
@@ -295,7 +299,8 @@
                 'lngProductNo': $('input[name="lngProductNo"]').val(),
                 'lngProductRevisionNo': $('input[name="lngProductRevisionNo"]').val(),
                 'strReviseCode': $('input[name="strReviseCode"]').val(),
-                'strGoodsCode': strGoodsCode
+                'strGoodsCode': strGoodsCode,
+                'mode': mode
             }
         })
             .done(function (response) {

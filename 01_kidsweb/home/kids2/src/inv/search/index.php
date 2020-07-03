@@ -75,8 +75,8 @@ if (fncCheckAuthority(DEF_FUNCTION_INV3, $objAuth)) {
     $aryData["AdminSet_visibility"] = 'style="visibility: hidden"';
 }
 
-// ヘルプ対応
-$aryData["lngFunctionCode"] = DEF_FUNCTION_INV0;
+// // ヘルプ対応
+// $aryData["lngFunctionCode"] = DEF_FUNCTION_INV2;
 
 // テンプレート読み込み
 echo fncGetReplacedHtmlWithBase("inv/base_inv.html", "inv/search/search.tmpl", $aryData, $objAuth);

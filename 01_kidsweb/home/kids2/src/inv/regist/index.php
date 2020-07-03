@@ -248,7 +248,8 @@
         }
         // 明細検索面
         $aryData["invConditionUrl"] = '/inv/regist/condition.php?strSessionID=' . $aryData["strSessionID"] . '&lngFunctionCode=' . $aryData["lngFunctionCode"] . '&lngApplicantUserCodeVisible=1&lngInputUserCodeVisible=1&dtmStartDateVisible=1&lngInChargeCodeVisible=1&lngWorkflowStatusCodeVisible=1&lngWorkflowStatusCodeConditions=1&lngSelectFunctionCode=500';
-
+        // // ヘルプ対応
+        // $aryData["lngFunctionCode"] = DEF_FUNCTION_INV1;
         // テンプレート読み込み
         echo fncGetReplacedHtmlWithBase("base_sc.html", "inv/regist/index.html", $aryData ,$objAuth );
 

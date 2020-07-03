@@ -42,9 +42,12 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     // 受注コード
     $aryQuery[] = ", r.strReceiveCode as strReceiveCode";
     // 製品コード
+    $aryQuery[] = "  , p.lngproductno";
+    $aryQuery[] = "  , p.lngRevisionNo as lngproductrevisionno";
     $aryQuery[] = "  , p.strproductcode";
     $aryQuery[] = "  , p.strproductname";
     $aryQuery[] = "  , p.strrevisecode";
+    $aryQuery[] = "  , p.strgoodscode";
     // 入力者
     $aryQuery[] = ", r.lngInputUserCode as lngInputUserCode";
     $aryQuery[] = ", input_u.strUserDisplayCode as strInputUserDisplayCode";
@@ -61,6 +64,10 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = ", p.lngInChargeUserCode as lngInChargeUserCode";
     $aryQuery[] = ", inchg_u.strUserDisplayCode as strInChargeUserDisplayCode";
     $aryQuery[] = ", inchg_u.strUserDisplayName as strInChargeUserDisplayName";
+    // 開発担当者
+    $aryQuery[] = ", p.lngdevelopusercode as lngdevelopusercode";
+    $aryQuery[] = ", delp_u.strUserDisplayCode as strdevelopuserdisplaycode";
+    $aryQuery[] = ", delp_u.strUserDisplayName as strdevelopuserdisplayname";
     // 通貨
     $aryQuery[] = ", r.lngMonetaryUnitCode as lngMonetaryUnitCode";
     $aryQuery[] = ", mu.strMonetaryUnitName as strMonetaryUnitName";
@@ -92,10 +99,13 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = "    select";
     $aryQuery[] = "      p1.strproductcode";
     $aryQuery[] = "      , p1.strproductname";
+    $aryQuery[] = "      , p1.lngproductno";
+    $aryQuery[] = "      , p1.lngRevisionNo";
     $aryQuery[] = "      , p1.lnginchargegroupcode";
     $aryQuery[] = "      , p1.lnginchargeusercode";
     $aryQuery[] = "      , p1.lngdevelopusercode";
     $aryQuery[] = "	     , p1.strrevisecode";
+    $aryQuery[] = "	     , p1.strgoodscode";
     $aryQuery[] = "    from";
     $aryQuery[] = "      m_product p1 ";
     $aryQuery[] = "      inner join ( ";
@@ -129,6 +139,7 @@ function fncGetReceiveHeadNoToInfoSQL($lngReceiveNo, $lngRevisionNo)
     $aryQuery[] = "    and rd.strrevisecode = p.strrevisecode ";
     $aryQuery[] = " LEFT JOIN m_User input_u ON r.lngInputUserCode = input_u.lngUserCode";
     $aryQuery[] = " LEFT JOIN m_Company cust_c ON r.lngCustomerCompanyCode = cust_c.lngCompanyCode";
+    $aryQuery[] = " LEFT JOIN m_User delp_u ON p.lngdevelopusercode = delp_u.lngUserCode";
     $aryQuery[] = " LEFT JOIN m_Group inchg_g ON p.lnginchargegroupcode = inchg_g.lngGroupCode";
     $aryQuery[] = " LEFT JOIN m_User inchg_u ON p.lngInChargeUserCode = inchg_u.lngUserCode";
     $aryQuery[] = " LEFT JOIN m_ReceiveStatus rs USING (lngReceiveStatusCode)";

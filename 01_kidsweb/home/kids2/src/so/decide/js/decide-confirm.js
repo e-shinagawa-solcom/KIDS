@@ -29,14 +29,16 @@
             
             len += 1;
         });
-        
 
+        var url = '/so/decide/decide_finish.php';
+        var mode = $('input[name="mode"]').val();
+        if (mode == "modify") {
+            url = '/so/modify/modify_finish.php'
+        }
         // リクエスト送信
         $.ajax({
-            url: '/so/decide/decide_finish.php',
+            url: url,
             type: 'post',
-            // dataType: 'json',
-            type: 'POST',
             data: {
                 'strSessionID': $('input[type="hidden"][name="strSessionID"]').val(),
                 'detailData': params,

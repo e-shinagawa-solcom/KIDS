@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- 互換表示OFFを強制させる -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+    <meta charset="UTF-8">
+
+    <title>K.I.D.S.</title>
+    <!-- jQuery -->
+    <script src="/cmn/jquery/jquery-3.1.0.js"></script>
+    <script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+
+    <link rel="stylesheet" href="/cmn/css/form/base.css">
+    <!-- 完了画面共通  CSS -->
+    <link rel="stylesheet" href="/so/decide/css/forms-finish.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-confirm.css">
+
+    <!-- スタイル初期化 & 各種コントロールスタイル -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+    <!-- ボタン画像の共通の振る舞い CSS -->
+    <link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+
+    <!-- 閉じるボタンの挙動 -->
+    <script src="/so/decide/js/decide-finish.js" defer></script>
+</head>
+
+<body class="finish-background">
+    <div class="centering">
+        <span>
+            下記の受注修正を完了いたしました。
+        </span>
+        <div class="finish-box">
+            <span class="finish-box__message">修正完了
+            </span>
+            <span class="finish-box__button">
+                <button type="button" class="btn btn-light btn-kids btn-kids-sm" id="close">閉じる</button>
+            </span>
+        </div>
+        <div class="finish-summary-box" style="width: 80%;white-space: nowrap; overflow: auto;">
+            <table class="table-description" id="table_decide_detail">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>顧客</th>
+                        <th>◎顧客受注番号</th>
+                        <th>製品名</th>
+                        <th>顧客品番</th>
+                        <th>納期</th>
+                        <th>売上区分</th>
+                        <th>単価</th>
+                        <th>数量</th>
+                        <th>単位</th>
+                        <th>入数</th>
+                        <th>小計</th>
+                        <th>明細備考</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</body>
+
+</html>

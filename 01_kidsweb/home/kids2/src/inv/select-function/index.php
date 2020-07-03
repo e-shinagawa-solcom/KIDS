@@ -62,6 +62,10 @@
 	} else {
 		$aryData["Aggregate_visibility"] = 'style="visibility: hidden"';
 	}
+	
+	// // ヘルプ対応
+	// $aryData["lngFunctionCode"] = DEF_FUNCTION_INV0;
+
 	$objDB->close();
 
 	echo fncGetReplacedHtmlWithBase("base_mold.html", "inv/select-function/parts.tmpl", $aryData ,$objAuth );

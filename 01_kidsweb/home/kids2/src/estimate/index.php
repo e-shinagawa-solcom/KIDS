@@ -63,10 +63,6 @@ $lngUserCode = $objAuth->UserCode;
 
 $objDB->close();
 
-// ヘルプリンク用機能コードをセット
-$aryData["lngFunctionCode"] = DEF_FUNCTION_E0;
-
-$aryData["lngFunctionCode1"] = DEF_FUNCTION_E1;
 
 // HTML出力
 echo fncGetReplacedHtmlWithBase("base_mold.html", "estimate/parts.tmpl", $aryData, $objAuth);

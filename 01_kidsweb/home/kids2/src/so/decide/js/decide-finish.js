@@ -5,9 +5,13 @@
         //ウィンドウを閉じる
         window.close();
         //親ウィンドウを閉じる
-        window.opener.close();
+        if (window.opener != null) {
+            window.opener.close();
+        }
         //親ウィンドウの親ウィンドウをリロードする
-        window.opener.opener.location.reload();
+        if (window.opener.opener != null) {
+            window.opener.opener.location.reload();
+        }
     });
     
 
@@ -16,8 +20,12 @@
         //ウィンドウを閉じる
         window.close();
         //親ウィンドウを閉じる
-        window.opener.close();
+        if (window.opener != null) {
+            window.opener.close();
+        }
         //親ウィンドウの親ウィンドウをリロードする
-        window.opener.opener.location.reload();
+        if (window.opener.opener != null) {
+            window.opener.opener.location.reload();
+        }
     });
 })();

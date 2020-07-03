@@ -100,6 +100,8 @@ if ( !$aryData["lngSalesStatusCode"] or !$aryData["lngSalesClassCode"] )
     fncOutputError ( 9055, DEF_WARNING, "システム管理者にお問い合わせ下さい。", TRUE, "", $objDB );
 }
 
+// ヘルプ対応
+$aryData["lngFunctionCode"] = DEF_FUNCTION_SC2;
 // テンプレート読み込み
 echo fncGetReplacedHtmlWithBase("search/base_search.html", "sc/search/sc_search.html", $aryData, $objAuth);
 

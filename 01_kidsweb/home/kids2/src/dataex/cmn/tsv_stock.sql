@@ -105,6 +105,23 @@ FROM
       ) mpo_max 
         on tpod1.lngpurchaseorderno = mpo_max.lngpurchaseorderno 
         and tpod1.lngrevisionno = mpo_max.lngrevisionno
+				where
+            not exists ( 
+              select
+                tpod2.lngpurchaseorderno 
+              from
+                ( 
+                  SELECT
+                    min(lngRevisionNo) lngRevisionNo
+                    , lngpurchaseorderno 
+                  FROM
+                    m_purchaseorder 
+                  group by
+                    lngpurchaseorderno
+                ) as tpod2 
+              where
+                tpod2.lngpurchaseorderno = tpod1.lngpurchaseorderno 
+                AND tpod2.lngRevisionNo < 0 )
   ) tpod 
     on tpod.lngorderno = sd.lngorderno 
     and tpod.lngorderdetailno = sd.lngorderdetailno 

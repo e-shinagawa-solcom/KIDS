@@ -334,6 +334,7 @@ define ( "DEF_FUNCTION_SO2",	402 );     //  402 受注管理（受注検索　�
 define ( "DEF_FUNCTION_SO3",	403 );     //  403 受注管理（受注詳細表示）
 define ( "DEF_FUNCTION_SO4",	404 );     //  404 受注管理（受注確定）
 define ( "DEF_FUNCTION_SO5",	405 );     //  405 受注管理（受注確定取消）
+define ( "DEF_FUNCTION_SO6",	406 );     //  406 受注管理（受注修正）
 
 define ( "DEF_FUNCTION_PO0",	500 );     //  500 発注管理
 define ( "DEF_FUNCTION_PO1",	501 );     //  501 発注管理（発注登録）
@@ -473,8 +474,8 @@ define ( "DEF_FATAL",		3 );           //  3 システムエラーレベル
 define ( "DEF_ANNOUNCE",	99 );          //  99 システムアナウンス
 
 // デバッグモード
-//define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
-define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
+define ( "DEF_DEBUG_MODE",	0 );         //  本稼動モード　　エラー画面表示
+//define ( "DEF_DEBUG_MODE",	1 );      //  デバッグモード　エラー画面非表示
 
 // 発注登録
 define ("DEF_M_WORKFLOW_FUNCTIONCODE",	1);		// 機能コード

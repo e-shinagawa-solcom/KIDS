@@ -1438,7 +1438,20 @@ function fncSetHeadBtnToTr($doc, $trBody, $bgcolor, $aryTableHeadBtnName, $displ
                     $td = $doc->createElement("td");
                     $td->setAttribute("style", $bgcolor . "text-align: center;");
                     // 修正ボタンの表示
-                    if ($type == 'slip') {
+                    if ($type == 'so') {
+                        if (!$isadmin && $isMaxData && $aryAuthority[$key] && $record["lngrevisionno"] >= 0 &&  $record["lngreceivestatuscode"] == DEF_RECEIVE_ORDER && $bgcolor != "background-color: #B3E0FF;") {                            
+                            $a = $doc->createElement("a"); 
+                            $a->setAttribute("href", "#");// 修正ボタン
+                            $imgFix = $doc->createElement("img");
+                            $imgFix->setAttribute("src", "/img/type01/pc/renew_off_bt.gif");
+                            $imgFix->setAttribute("id", $record["lngreceiveno"]);
+                            $imgFix->setAttribute("revisionno", $record["lngrevisionno"]);
+                            $imgFix->setAttribute("class", "modify button");
+                            $a->appendChild($imgFix);
+                            // td > img
+                            $td->appendChild($a);
+                        }
+                    } else if ($type == 'slip') {
                         if (!$isadmin && $isMaxData && $aryAuthority[$key] && is_null($record["lnginvoiceno"]) && $record["lngrevisionno"] >= 0 &&  $record["lngsalesstatuscode"] != DEF_SALES_CLOSED && $bgcolor != "background-color: #B3E0FF;") {                            
                             $a = $doc->createElement("a"); 
                             $a->setAttribute("href", "#");// 修正ボタン
@@ -2147,6 +2160,8 @@ function fncGetAryAuthority($type, $objAuth)
         $aryAuthority["btndecide"] = fncCheckAuthority(DEF_FUNCTION_SO4, $objAuth);
         // 確定取消カラムを表示
         $aryAuthority["btncancel"] = fncCheckAuthority(DEF_FUNCTION_SO5, $objAuth);
+        // 修正を表示
+        $aryAuthority["btnfix"] = fncCheckAuthority(DEF_FUNCTION_SO6, $objAuth);
     } else if ($type == 'sc') { // 売上
         // 詳細ボタンを表示
         $aryAuthority["btndetail"] = fncCheckAuthority(DEF_FUNCTION_SC11, $objAuth);

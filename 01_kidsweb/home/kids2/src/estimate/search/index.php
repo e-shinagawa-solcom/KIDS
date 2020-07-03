@@ -52,10 +52,6 @@ if ( !fncCheckAuthority( DEF_FUNCTION_E2, $objAuth ) )
 
 $objDB->close();
 
-
-// ヘルプリンク用機能コードをセット
-$aryData["lngFunctionCode"] = DEF_FUNCTION_UC3;
-
 // HTML出力
 //$aryData["Pwin"] = "search.php?strSessionID=" . $aryData["strSessionID"];
 //$aryData["Pwin"] = "../search_ifrm/index.html";

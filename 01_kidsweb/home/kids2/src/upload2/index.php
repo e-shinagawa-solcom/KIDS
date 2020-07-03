@@ -33,7 +33,7 @@
 
 	$aryData["lngLanguageCode"]		= $_COOKIE["lngLanguageCode"];	// 言語コード
 	$aryData["style"]				= 'segment';					// or "old"
-	$aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// 管理コード（見積原価）
+	// $aryData["lngFunctionCode"]		= DEF_FUNCTION_E1;				// 管理コード（見積原価）
 	$aryData["lngRegistConfirm"]	= 0;							// 確認画面表示フラグ
 
     setcookie("strSessionID", $aryData["strSessionID"], 0, "/");

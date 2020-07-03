@@ -96,6 +96,8 @@ if ( !$aryData["lngGoodsPlanProgressCode"] or !$aryData["lngCertificateClassCode
 {
 	fncOutputError ( 9055, DEF_WARNING, "システム管理者にお問い合わせ下さい。", TRUE, "", $objDB );
 }
+
+$aryData["lngFunctionCode"] = DEF_FUNCTION_P2;
 // テンプレート読み込み
 echo fncGetReplacedHtmlWithBase("search/base_search.html", "p/search/p_search.html", $aryData, $objAuth);
 

@@ -55,13 +55,13 @@ fncPutStringCheckError( $aryResult, $objDB );
 // セッション確認
 $objAuth = fncIsSession( $aryData["strSessionID"], $objAuth, $objDB );
 
-// 402 受注管理（受注検索）
-if ( !fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
+// 401 受注管理（受注検索）
+if ( !fncCheckAuthority( DEF_FUNCTION_SO1, $objAuth ) )
 {
 	fncOutputError ( 9060, DEF_WARNING, "アクセス権限がありません。", TRUE, "", $objDB );
 }
-// 403 受注管理（受注検索　管理モード）
-if ( fncCheckAuthority( DEF_FUNCTION_SO3, $objAuth ) )
+// 402 受注管理（受注検索　管理モード）
+if ( fncCheckAuthority( DEF_FUNCTION_SO2, $objAuth ) )
 {
 	$aryData["AdminSet_visibility"] = 'style="visibility: visible"';
 }
@@ -69,8 +69,8 @@ else
 {
 	$aryData["AdminSet_visibility"] = 'style="visibility: hidden"';
 }
-// 404 受注管理（詳細表示）
-if ( fncCheckAuthority( DEF_FUNCTION_SO4, $objAuth ) )
+// 403 受注管理（詳細表示）
+if ( fncCheckAuthority( DEF_FUNCTION_SO3, $objAuth ) )
 {
 	$aryData["btnDetail_visibility"] = 'style="visibility: visible"';
 	$aryData["btnDetailVisible"] = "checked";
@@ -80,7 +80,7 @@ else
 	$aryData["btnDetail_visibility"] = 'style="visibility: hidden"';
 	$aryData["btnDetailVisible"] = "";
 }
-// 405 受注管理（確定）
+// 404 受注管理（確定）
 if ( fncCheckAuthority( DEF_FUNCTION_SO4, $objAuth ) )
 {
 	$aryData["btnDecide_visibility"] = 'style="visibility: visible"';
@@ -91,7 +91,7 @@ else
 	$aryData["btnDecide_visibility"] = 'style="visibility: hidden"';
 	$aryData["btnDecideVisible"] = "";
 }
-// 406 受注管理（確定取消）
+// 405 受注管理（確定取消）
 if ( fncCheckAuthority( DEF_FUNCTION_SO5, $objAuth ) )
 {
 	$aryData["btnCancel_visibility"] = 'style="visibility: visible"';
@@ -102,6 +102,18 @@ else
 	$aryData["btnCancel_visibility"] = 'style="visibility: hidden"';
 	$aryData["btnCancelVisible"] = "";
 }
+// 406 受注管理（修正）
+if ( fncCheckAuthority( DEF_FUNCTION_SO6, $objAuth ) )
+{
+	$aryData["btnFix_visibility"] = 'style="visibility: visible"';
+	$aryData["btnFixVisible"] = "checked";
+}
+else
+{
+	$aryData["btnFix_visibility"] = 'style="visibility: hidden"';
+	$aryData["btnFixVisible"] = "";
+}
+
 
 // 受注ステータス
 // $aryData["lngReceiveStatusCode"] 	= fncGetCheckBoxObject( "m_receivestatus", "lngreceivestatuscode", "strreceivestatusname", "lngReceiveStatusCode[]", 'where lngReceiveStatusCode not in (1)', $objDB );

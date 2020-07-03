@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<!-- 互換表示OFFを強制させる -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!--
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    php domパース用メタ要素 コメントアウトしていてもphpのdomElement->loadHTMLで認識される
+    -->
+	<meta charset="UTF-8">
+
+	<title>K.I.D.S.</title>
+	<link rel="stylesheet" href="/cmn/css/base/base-general.css">
+	<link rel="stylesheet" href="/cmn/css/form/base.css">
+
+	<!-- スタイル初期化 & 各種コントロールスタイル -->
+
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/forms-confirm.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/cmn/styles.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-confirm.css">
+	<script src="/cmn/jquery/jquery-3.1.0.js"></script>
+	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
+	<script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
+	<!-- <script src="/so/decide/js/functions.js" defer></script> -->
+	<script src="/so/decide/js/decide-confirm.js" defer></script>
+	<link rel="stylesheet" href="/so/decide/css/forms-finish.css">
+	<!-- ボタン画像の共通の振る舞い CSS -->
+	<link rel="stylesheet" href="/cmn/css/base/button-behaivior.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/modify/css/forms.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-decide.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/so/decide/css/table-box.css">
+	<script src="/cmn/js/functions.js" defer></script>
+	<script src="/cmn/js/setinputmode.js" defer></script>
+	<script src="/cmn/js/table.js" defer></script>
+	<script src="/so/decide/js/functions.js" defer></script>
+</head>
+
+<body class="background">
+
+	<!-- 入力フォーム -->
+	<div class="form-box">
+		<!-- フォームヘッダ -->
+		<div class="form-box__header">
+			<p class="form-box__header__title">受注修正</p>
+		</div>
+		<!-- フォームコンテンツ -->
+		<div class="form-box__contents">
+			<form name="decideReceive" action="javascript:void(0);" method="post">
+				<input type="submit">
+				<div class="regist-tab-header">
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">製品コード</span>
+							<input class="disTxt05L" name="strProductCode" disabled value="_%strProductCode%_">
+							<input class="disTxt46L" name="strProductName" disabled value="_%strProductName%_">
+							<input type="hidden" name="lngProductNo" value="_%lngProductNo%_">
+							<input type="hidden" name="lngProductRevisionNo" value="_%lngProductRevisionNo%_">
+							<input type="hidden" name="strReviseCode" value="_%strReviseCode%_">
+						</span>
+						<span class="regist-label">
+							<span class="regist-label__text">顧客品番</span>
+							<input class="TxtStyle05L" style="ime-mode:disabled;" name="strGoodsCode" value="_%strGoodsCode%_">
+							<!-- <input type="hidden" name="strGoodsCode" value="_%strGoodsCode%_"> -->
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">営業部署</span>
+							<input class="disTxt05L" name="lngInChargeGroupCode" disabled value="_%lngInChargeGroupCode%_">
+							<input class="disTxt46L" name="strInChargeGroupName" disabled value="_%strInChargeGroupName%_">
+							<input type="hidden" name="lngInChargeGroupCode" value="_%lngInChargeGroupCode%_">
+							<input type="hidden" name="strInChargeGroupName" value="_%strInChargeGroupName%_">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">担当者</span>
+							<input class="disTxt05L" name="lngInChargeUserCode" disabled value="_%lngInChargeUserCode%_">
+							<input class="disTxt46L" name="strInChargeUserName" disabled value="_%strInChargeUserName%_">
+							<input type="hidden" name="lngInChargeUserCode" value="_%lngInChargeUserCode%_">
+							<input type="hidden" name="strInChargeUserName" value="_%strInChargeUserName%_">
+						</span>
+					</div>
+					<div class="regist-line">
+						<span class="regist-label">
+							<span class="regist-label__text">開発担当者</span>
+							<input class="disTxt05L" name="lngDevelopUserCode" disabled value="_%lngDevelopUserCode%_">
+							<input class="disTxt46L" name="strDevelopUserName" disabled value="_%strDevelopUserName%_">
+							<input type="hidden" name="lngDevelopUserCode" value="_%lngDevelopUserCode%_">
+							<input type="hidden" name="strDevelopUserName" value="_%strDevelopUserName%_">
+						</span>
+					</div>
+					<div class="regist-line">
+						<table class="table-box">
+							<tr>
+								<td style="width: 800px;">
+									<div class="regist-label div-decide-table">
+										<table class="table-decide-fix" id="tableB_no_head">
+											<thead>
+												<tr>
+													<th>No.</th>
+												</tr>
+											</thead>
+											<!-- 固定ヘッダ -->
+										</table>
+										<div id="header_decide_h">
+											<table class="table-decide-description" name="DECIDE_T" id="tableB_head">
+												<thead>
+													<tr>
+														<th style="display:none">No.</th>
+														<th>◎顧客受注番号</th>
+														<th>顧客</th>
+														<th>納期</th>
+														<th>売上分類</th>
+														<th>売上区分</th>
+														<th>単価</th>
+														<th>数量</th>
+														<th>単位</th>
+														<th>入数</th>
+														<th>小計</th>
+														<th>明細備考</th>
+														<th style="display:none">受注番号</th>
+														<th style="display:none">明細行番号</th>
+														<th style="display:none">リビジョン番号</th>
+														<th style="display:none">カートン入数</th>
+														<th style="display:none">製品数量</th>
+														<th style="display:none">通貨単位コード</th>
+														<th style="display:none">通貨単位記号</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+										<div id="header_decide_v">
+											<table class="table-decide-description" name="DECIDE_TV" id="tableB_no">
+												<tbody id="table_decide_no">
+												</tbody>
+											</table>
+										</div>
+
+										<div id="decide_data">
+											<table class="table-decide-description" name="DECIDE_T" id="tableB">
+												<tbody id="table_decide_body">
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<input type="hidden" name="strSessionID" value="_%strSessionID%_">
+				<input type="hidden" name="mode" value="_%mode%_">
+			</form>
+		</div>
+	</div>
+	<!-- フォーム ボタン -->
+	<div class="form-buttons">
+		<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="decideRegist">修正</button>
+	</div>
+	<script type="text/javascript">
+		function $E(name) { return document.getElementById(name); }
+
+		function decide_scroll() {
+			$E("header_decide_h").scrollLeft = $E("decide_data").scrollLeft;// データ部のスクロールをヘッダに反映
+			$E("header_decide_v").scrollTop = $E("decide_data").scrollTop;// データ部のスクロールをヘッダに反映
+		}
+		$E("decide_data").onscroll = decide_scroll;
+	</script>
+</body>
+
+</html>

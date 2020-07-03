@@ -1,6 +1,7 @@
 $(function() {
 	$('#MasterAddBt').on('click', function ( e ) {		
 		var strEditURL = $('input[name="strEditURL"]').val();
+		console.log("test");
 		if (typeof(strEditURL) == 'undefined') {
 			var iframe = $('#SegAIFrm').contents();
 			strEditURL = iframe.find('input[name="strEditURL"]').val();
@@ -30,6 +31,7 @@ $(function() {
 	$('a').on('click', function(e){
 		e.preventDefault();
 		if ($(this).parent().attr('id') == "MasterAddBt") {
+			$('#MasterAddBt').click();
 			return;
 		}
 		var href = $(this).attr('href');		

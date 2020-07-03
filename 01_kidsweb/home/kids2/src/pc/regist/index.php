@@ -54,7 +54,8 @@ $aryData["lngPayConditionCode"] = fncGetPulldown( "m_paycondition", "lngpaycondi
 $aryData["dtmStockAppDate"] = date('Y/m/d',time());
 // フォームURL
 $aryData["actionUrl"] = "/pc/regist/regist_confirm.php";
-
+// ヘルプ対応
+$aryData["lngFunctionCode"] = DEF_FUNCTION_PC1;
 $objDB->close();
 
 echo fncGetReplacedHtmlWithBase("base_mold.html", "pc/regist/pc_regist.html", $aryData, $objAuth);

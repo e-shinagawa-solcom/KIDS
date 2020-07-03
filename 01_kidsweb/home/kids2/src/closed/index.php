@@ -59,7 +59,7 @@ if ( !fncCheckAuthority( DEF_FUNCTION_CLD0, $objAuth ) )
 $aryData["lngLanguageCode"] = $_COOKIE["lngLanguageCode"];
 
 // ヘルプ対応
-$aryData["lngFunctionCode"] = DEF_FUNCTION_CLD0;
+// $aryData["lngFunctionCode"] = DEF_FUNCTION_CLD0;
 
 echo fncGetReplacedHtml( "closed/parts.tmpl", $aryData, $objAuth );
 

@@ -10,7 +10,8 @@
 */
 SELECT
 	s.dtmAppropriationDate
-	,s.strStockCode, o.strOrderCode
+	,s.strStockCode
+	, mpo.strOrderCode || '_' || lpad(to_char(mpo.lngrevisionno, 'FM99'), 2, '0') as strOrderCode
 	,c.strCompanyDisplayCode
 	,c.strCompanyDisplayName
 	,g.strGroupDisplayCode
@@ -39,10 +40,51 @@ FROM
 	m_Stock s
 	inner join t_StockDetail sd 
 		on s.lngStockNo             = sd.lngStockNo
-		AND s.lngRevisionNo             = sd.lngRevisionNo
-	LEFT JOIN m_Order o
-		ON sd.lngOrderNo = o.lngOrderNo
-		AND sd.lngOrderRevisionNo = o.lngRevisionNo
+		AND s.lngRevisionNo             = sd.lngRevisionNo		
+	LEFT JOIN ( 
+		select
+		tpod1.lngpurchaseorderno
+		, tpod1.lngrevisionno
+		, tpod1.lngorderno
+		, tpod1.lngorderdetailno
+		, tpod1.lngorderrevisionno 
+		from
+		t_purchaseorderdetail tpod1 
+		inner join ( 
+			select
+			max(lngrevisionno) lngrevisionno
+			, lngpurchaseorderno 
+			from
+			m_purchaseorder 
+			group by
+			lngpurchaseorderno
+		) mpo_max 
+			on tpod1.lngpurchaseorderno = mpo_max.lngpurchaseorderno 
+			and tpod1.lngrevisionno = mpo_max.lngrevisionno
+					where
+				not exists ( 
+				select
+					tpod2.lngpurchaseorderno 
+				from
+					( 
+					SELECT
+						min(lngRevisionNo) lngRevisionNo
+						, lngpurchaseorderno 
+					FROM
+						m_purchaseorder 
+					group by
+						lngpurchaseorderno
+					) as tpod2 
+				where
+					tpod2.lngpurchaseorderno = tpod1.lngpurchaseorderno 
+					AND tpod2.lngRevisionNo < 0 )
+	) tpod 
+		on tpod.lngorderno = sd.lngorderno 
+		and tpod.lngorderdetailno = sd.lngorderdetailno 
+		and tpod.lngorderrevisionno = sd.lngorderrevisionno 
+	LEFT JOIN m_purchaseorder mpo 
+		ON tpod.lngpurchaseorderno = mpo.lngpurchaseorderno 
+		and tpod.lngrevisionno = mpo.lngrevisionno 
 	inner join m_Product p 
 		on sd.strProductCode        = p.strProductCode
 		AND sd.strReviseCode        = p.strReviseCode
