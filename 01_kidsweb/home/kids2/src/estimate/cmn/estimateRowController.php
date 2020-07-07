@@ -61,6 +61,7 @@ abstract class estimateRowController
     public $invalidFlag; // 無効フラグ（エラーとはしないが、登録対象外）
     public $errorFlag; // エラーフラグ（無視できないエラー）
     public $message;
+    public $isReadOnlyRow;
 
     protected $salesOrder;
 
@@ -541,11 +542,14 @@ abstract class estimateRowController
     {
         if (is_array($this->readonlyRowList)) {
             if (!in_array($this->row, $this->readonlyRowList)) {
-                $this->setInvalidFlag();
+                $this->isReadOnlyRow = true;
             }
         } else {
-            $this->setInvalidFlag();
+            $this->isReadOnlyRow = false;
         }
+
+        $this->setInvalidFlag();
+
         if ($this->invalidFlag != true) {
             if (!$this->certificateFlag && !$this->tariffFlag) {
                 // 単価の桁数再設定と小計の再計算
@@ -765,7 +769,7 @@ abstract class estimateRowController
                 $this->divisionSubjectCode = (int) $divisionSubjectCode;
 
                 // マスターチェック
-                if (!isset($masterData[(int) $divisionSubjectCode])) {
+                if (!$this->isReadOnlyRow && !isset($masterData[(int) $divisionSubjectCode])) {
                     // マスターチェックエラー
                     $message = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
@@ -797,7 +801,7 @@ abstract class estimateRowController
                 $divisionSubjectCode = $this->divisionSubjectCode;
                 $this->classItemCode = (int) $classItemCode;
                 // マスターチェック
-                if (!isset($masterData[$divisionSubjectCode][(int) $classItemCode])) {
+                if (!$this->isReadOnlyRow && !isset($masterData[$divisionSubjectCode][(int) $classItemCode])) {
                     $message = DEF_MESSAGE_CODE_MASTER_CHECK_ERROR;
                 }
             } else {
@@ -845,7 +849,7 @@ abstract class estimateRowController
                 $masterData = static::$customerCompanyCodeMaster;
                 $this->customerCompanyCode = (string) $customerCompanyCode;
                 // マスターチェック
-                if (!isset($masterData[$divisionSubject][$customerCompanyCode])) {
+                if (!$this->isReadOnlyRow && !isset($masterData[$divisionSubject][$customerCompanyCode])) {
                     $str = array("明細部", strlen($this->columnDisplayNameList['customerCompany']) > 0 ? $this->columnDisplayNameList['customerCompany'] : "顧客または仕入先");
                     $this->message['customerCompany'] = fncOutputError(DEF_MESSAGE_CODE_MASTER_CHECK_ERROR, DEF_WARNING, $str, false, '', $this->objDB);
 //fncDebug( "view.log", "subject: " . $divisionSubject . " company: " . $customerCompanyCode . " is  error", __FILE__, __LINE__, "a");

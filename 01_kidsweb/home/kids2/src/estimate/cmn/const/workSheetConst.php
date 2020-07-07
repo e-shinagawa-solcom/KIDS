@@ -208,6 +208,12 @@ class workSheetConst {
     const ORDER_ELEMENTS_COST_DELIVERY_DATE = 'order_e_deliverydate';
     // 備考
     const ORDER_ELEMENTS_COST_NOTE = 'order_e_note';
+    // 部材費小計
+    const ORDER_ELEMENTS_COST_CURMEMBER_COST = 'order_e_curmembercost';
+    // 部材費合計数
+    const ORDER_ELEMENTS_COST_TOTAL_QUANTITY = 'order_e_totalquantity';
+    // 経費小計
+    const ORDER_ELEMENTS_COST_EXPENSES = 'order_e_expenses';
     // 明細リスト終了
     const LIST_END = 'list_end';
 

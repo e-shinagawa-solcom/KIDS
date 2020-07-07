@@ -2630,6 +2630,9 @@ $(function () {
         readOnlyDetailRow: readOnlyDetailRow,
         rateEditInfoArry: rateEditInfoArry
       }
+      console.log(detailNoList);
+      console.log(cellClass);
+      console.log(cellValue);
       var postJson = JSON.stringify(postData, replacer);
 
       $("<input>", {
