@@ -20,6 +20,12 @@ jQuery(function ($) {
     var postTarget = window.opener.$('input[name="ajaxPostTarget"]').val();
     var strSessionID = $('input[name="strSessionID"]').val();
 
+    if (postTarget.indexOf('renew') > -1) {
+        console.log("test");
+        $('input[name="lngCustomerCode"]').prop('disabled', true);        
+        $('input[name="strCustomerName"]').next('span').find('img').css('visibility', 'hidden');
+    }
+
     // 顧客-表示会社コード イベント登録
     $('input[name="lngCustomerCode"]').on({
         'change': function () {

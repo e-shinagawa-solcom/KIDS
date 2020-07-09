@@ -27,15 +27,12 @@ function clearAllSelected() {
 // ------------------------------------------------------------------
 // 検索条件入力画面で入力された値の設定
 function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayName) {
-    // console.log($('input[name="monetaryunitCount"]').val());
-    // if ($('input[name="monetaryunitCount"]').val() != 1)
-    // {
-    //     return false;   
-    // }
+    // 顧客
+    var lngCustomerCode = $('input[name="lngCustomerCode"]').val();
     // POST先
     var postTarget = $('input[name="ajaxPostTarget"]').val();
 
-    // 顧客
+    // 顧客再設定
     $('input[name="lngCustomerCode"]').val(strCompanyDisplayCode);
     $('input[name="strCustomerName"]').val(strCompanyDisplayName);
 
@@ -56,8 +53,10 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
             if (data == "81") {
                 console.log("81：「外税」");
                 // 81：「外税」を選択（他の項目も選択可能）
-                $("select[name='lngTaxClassCode']").val("2");
-                $("select[name='lngTaxClassCode']").prop('disabled', false);
+                if (lngCustomerCode != strCompanyDisplayCode) {
+                    $("select[name='lngTaxClassCode']").val("2");
+                    $("select[name='lngTaxClassCode']").prop('disabled', false);
+                }
                 $("input[name='dtmPaymentLimit']").prop('disabled', true);
                 $("input[name='dtmPaymentLimit']").val("");
                 $("input[name='dtmPaymentLimit']").next("button").prop('disabled', true);
@@ -67,10 +66,12 @@ function SetSearchConditionWindowValue(strCompanyDisplayCode, strCompanyDisplayN
                 $('input[name="lngMonetaryRateCode"]').val("0");
 
             } else {
-                console.log("81以外：「非課税」固定");
-                // 81以外：「非課税」固定
-                $("select[name='lngTaxClassCode']").val("1");
-                $("select[name='lngTaxClassCode']").prop('disabled', true);
+                console.log("81以外：「非課税」固定");                
+                if (lngCustomerCode != strCompanyDisplayCode) {
+                    // 81以外：「非課税」固定
+                    $("select[name='lngTaxClassCode']").val("1");
+                    $("select[name='lngTaxClassCode']").prop('disabled', true);
+                }
                 $("select[name='lngPaymentMethodCode']").val("1");
                 $("select[name='lngPaymentMethodCode']").prop('disabled', true);
                 // 支払期限の設定

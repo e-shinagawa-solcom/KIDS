@@ -16,7 +16,7 @@ $(document).ready(function () {
     headers: headersArry,
   });
 
-  window.resetTable = function () {    
+  window.resetTable = function () {
     var widthArry = [];
     var colnum = $("#result thead tr").eq(0).find("th").length;
     // ヘッダー部の各列の幅を配列に保存する
@@ -94,28 +94,28 @@ $(document).ready(function () {
       }
       r.trigger('sorton', [[[(sortkey - 1), sortval]]]);
     }
-    
+
     // $("#result").trigger("update");
     // $(".tablesorter-child").trigger("update");
 
     // コピーボタンのイベント
     if ($(this)[0].cellIndex == 0) {
-        // クリップボードに値を反映
-        if (window.getSelection) {
-            var selection = getSelection();
-            console.log(selection);
-            selection.removeAllRanges();
-            var range = document.createRange();
-            
-            console.log(document.getElementById("result"));
-            range.selectNodeContents(document.getElementById("result"));
-            selection.addRange(range);
-            document.execCommand('copy');
-            selection.removeAllRanges();
-            alert('クリップボードにコピーしました。');
-        } else {
-            alert("クリップボードへのコピーに失敗しました。");
-        }
+      // クリップボードに値を反映
+      if (window.getSelection) {
+        var selection = getSelection();
+        console.log(selection);
+        selection.removeAllRanges();
+        var range = document.createRange();
+
+        console.log(document.getElementById("result"));
+        range.selectNodeContents(document.getElementById("result"));
+        selection.addRange(range);
+        document.execCommand('copy');
+        selection.removeAllRanges();
+        alert('クリップボードにコピーしました。');
+      } else {
+        alert("クリップボードへのコピーに失敗しました。");
+      }
     }
   });
 });

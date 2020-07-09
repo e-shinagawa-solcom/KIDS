@@ -594,6 +594,16 @@ class workSheetConst {
         'list' => self::LIST_END
     ];
 
+    // 部材費フッターセル名称リスト
+    // const ORDER_ELEMENT_COST_RESULT_CELL = [
+    //     'curmember_cost' => self::ORDER_ELEMENTS_COST_CURMEMBER_COST
+    // ];
+
+    // // 部材費フッターセル名称リスト
+    // const ORDER_ELEMENT_EXPENSES_RESULT_CELL = [
+    //     'expenses' => self::ORDER_ELEMENTS_COST_EXPENSES
+    // ];
+
     // ワークシートヘッダー入力項目セル名称
     const WORK_SHEET_HEADER_DATA_CELL = [
         'insertDate' => self::INSERT_DATE,

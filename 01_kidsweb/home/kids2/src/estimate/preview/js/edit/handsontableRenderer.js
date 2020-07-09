@@ -816,8 +816,10 @@ $(function () {
             var newReadOnly = readOnlyDetailRow.map(function (value) {
               if (value == selectedRow) {
                 return minRow;
-              } else if (value > minRow && value <= selectedRow) {
+              } else if (value < selectedRow && value >= minRow) {
                 return value + 1;
+              } else {
+                return value;
               }
             });
 
@@ -826,7 +828,7 @@ $(function () {
             var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
 
             detailNoList = copyDetailNoList.map(function (value) {
-              if (value.row < selectedRow) {
+              if (value.row < selectedRow && value.row >= minRow) {
                 value.row += 1;
               } else if (value.row === selectedRow) {
                 value.row = minRow;
@@ -892,13 +894,14 @@ $(function () {
             }
             var maxRowCellValue = cellValue.splice(selectedRow, 1);
             cellValue.splice(maxRow, 0, maxRowCellValue[0]);
-
             // readOnlyを書き換える
             var newReadOnly = readOnlyDetailRow.map(function (value) {
               if (value == selectedRow) {
                 return maxRow;
-              } else if (value < maxRow && value >= selectedRow) {
+              } else if (value > selectedRow && value <= maxRow) {
                 return value - 1;
+              } else {
+                return value;
               }
             });
 
@@ -907,7 +910,7 @@ $(function () {
             var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
 
             detailNoList = copyDetailNoList.map(function (value) {
-              if (value.row > selectedRow) {
+              if (value.row > selectedRow && value.row <= maxRow) {
                 value.row -= 1;
               } else if (value.row === selectedRow) {
                 value.row = maxRow;
@@ -980,9 +983,15 @@ $(function () {
               // readOnlyを書き換える
               var newReadOnly = readOnlyDetailRow.map(function (value) {
                 if (value == selectedRow) {
-                  return selectedRow - 1;
-                } else if (value == selectedRow + 1) {
+                  if (value == minRow) {
+                    return minRow;
+                  } else {
+                    return value - 1;
+                  }
+                } else if (value == selectedRow -1) {
                   return selectedRow;
+                } else {
+                  return value;
                 }
               });
 
@@ -994,7 +1003,9 @@ $(function () {
                 if (value.row === selectedRow - 1) {
                   value.row = selectedRow;
                 } else if (value.row === selectedRow) {
-                  value.row -= 1;
+                  if (value.row != minRow) {
+                    value.row -= 1;
+                  }
                 }
                 return value;
               });
@@ -1067,13 +1078,20 @@ $(function () {
               // readOnlyを書き換える
               var newReadOnly = readOnlyDetailRow.map(function (value) {
                 if (value == selectedRow) {
-                  return selectedRow + 1;
-                } else if (value == selectedRow - 1) {
+                  if (value == maxRow) {
+                    return maxRow;
+                  } else {
+                    return selectedRow + 1;
+                  }
+                } else if (value == selectedRow + 1) {
                   return selectedRow;
+                } else {
+                  return value;
                 }
               });
 
-              readOnlyDetailRow = newReadOnly
+              readOnlyDetailRow = newReadOnly;
+          
 
               var copyDetailNoList = JSON.parse(JSON.stringify(detailNoList));
 
@@ -1081,7 +1099,9 @@ $(function () {
                 if (value.row === selectedRow + 1) {
                   value.row = selectedRow;
                 } else if (value.row === selectedRow) {
-                  value.row += 1;
+                  if (value.row != maxRow) {
+                    value.row += 1;
+                  }
                 }
                 return value;
               });
@@ -2630,9 +2650,7 @@ $(function () {
         readOnlyDetailRow: readOnlyDetailRow,
         rateEditInfoArry: rateEditInfoArry
       }
-      console.log(detailNoList);
-      console.log(cellClass);
-      console.log(cellValue);
+
       var postJson = JSON.stringify(postData, replacer);
 
       $("<input>", {
