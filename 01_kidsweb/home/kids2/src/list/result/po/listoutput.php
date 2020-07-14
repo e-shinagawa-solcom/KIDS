@@ -146,7 +146,6 @@ $objDB->freeResult($lngResultID);
 // 合計金額処理(最後のページだけに表示)別変数に保存
 $curTotalPrice = convertPrice($aryParts["lngmonetaryunitcode"], $aryParts["strmonetaryunitsign"], $aryParts["curtotalprice"], "price");
 unset($aryParts["curtotalprice"]);
-
 if ($aryParts["txtsignaturefilename"] != "" && $aryParts["txtsignaturefilename"] != null) {
     $aryParts["txtsignaturefilename"] = '/img/signature/' . $aryParts["txtsignaturefilename"];
 }
@@ -158,7 +157,11 @@ if ($customer["lngorganizationcode"] == DEF_ORGANIZATION_FOREIGN) {
     if ($customer["lngorganizationcode"] == 0 || $customer["lngorganizationcode"] == 3) {
         $aryParts["strcustomername"] = $customer["strcompanyname"] . "　御中";
     } else {
-        $aryParts["strcustomername"] = $customer["strorganizationname"] . "　" . $customer["strcompanyname"] . "　御中";
+        if ($customer["bytorganizationfront"] == 't') {
+            $aryParts["strcustomername"] = $customer["strorganizationname"] . "　" . $customer["strcompanyname"] . "　御中";
+        } else {
+            $aryParts["strcustomername"] =  $customer["strcompanyname"] . "　"  . $customer["strorganizationname"]. "　御中";
+        }
     }
 }
 
