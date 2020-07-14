@@ -5,11 +5,12 @@ jQuery(function ($) {
 
     // events
     $('#btnClose').on('click', function () {
-        window.opener.location.reload();
         window.close();
+        //親ウィンドウをリロードする
+        openerReload();
     });
     $('#btnDelete').on('click', function () {
+        $('#deleteForm').attr('action', location);
         $('#deleteForm').submit();
-        //alert("削除ボタンクリック");
     });
 });

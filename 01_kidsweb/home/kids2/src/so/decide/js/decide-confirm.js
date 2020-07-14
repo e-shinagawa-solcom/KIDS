@@ -71,11 +71,10 @@
     });
 
     // ウィンドウを閉じる前のイベント
-    $(window).on("beforeunload", function(e) {
+    $(window).on("beforeunload", function(e) {        
         // 親ウィンドウのロックを解除する
         if (window.opener.$('#lockId').length) {
             window.opener.$('#lockId').remove();
         }
     });
-
 })();

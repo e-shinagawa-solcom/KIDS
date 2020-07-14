@@ -14,8 +14,9 @@
             moldReportID = 'MoldReportId=' + $(this).attr('id');
             revision = 'Revision=' + $(this).attr('revision');
             version = 'Version=' + $(this).attr('version');
+            sortLit = 'sortList=' + getUrlVars(location)["sortList"];
             // 削除リクエスト
-            window.location.href = url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version;
+            window.location.href = url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version + '&' + sortLit;
         }
     });
     

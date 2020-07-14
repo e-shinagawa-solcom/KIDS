@@ -10,6 +10,10 @@
         }
         //親ウィンドウの親ウィンドウをリロードする
         if (window.opener.opener != null) {
+            if (window.opener.opener.location.href.indexOf('result') > -1) {
+                // window.opener.opener.location.href = window.opener.opener.location.href + '&sortList=' + getUrlVars(window.opener.location)["sortList"];
+                window.opener.opener.location.hash = '&sortList=' + getUrlVars(window.opener.location)["sortList"];
+            }
             window.opener.opener.location.reload();
         }
     });

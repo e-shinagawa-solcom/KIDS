@@ -1218,6 +1218,7 @@ function fncGetDetailData($type, $lngPkNo, $lngRevisionNo, $objDB)
         $aryQuery[] = "  tpod.lngpurchaseorderno";
         $aryQuery[] = "  , tpod.lngpurchaseorderdetailno as lngdetailno";
         $aryQuery[] = "  , tpod.lngstocksubjectcode";
+        $aryQuery[] = "  , msub.strstocksubjectname";
         $aryQuery[] = "  , ( ";
         $aryQuery[] = "    case min_po.min_lngrevisionno ";
         $aryQuery[] = "      when - 1 then case max_po.max_lngrevisionno ";

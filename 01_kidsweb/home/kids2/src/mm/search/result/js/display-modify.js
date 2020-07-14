@@ -15,8 +15,9 @@
         moldNo = 'MoldNo=' + $(this).attr('id');
         historyNo = 'HistoryNo=' + $(this).attr('historyno');
         version = 'Version=' + $(this).attr('version');
+        sortList = 'sortList=' + setSortList($('#result thead tr th'));
 
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version, 'display-detail', 'width=972, height=520,resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version + '&' + sortList, 'display-detail', 'width=972, height=520,resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

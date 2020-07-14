@@ -1,5 +1,5 @@
 $(function(){
-    window.onbeforeunload = ReloadParent;
+    // window.onbeforeunload = ReloadParent;
 	$('.btnSwitch').on('click', function(){
 		var sessionID = $('input[name="strSessionID"]').val();
 		var estimateNo = $('input[name="estimateNo"]').val();
@@ -109,7 +109,6 @@ function editModeTransition() {
 	}).appendTo('#formData');
 	
 	var formData = $('#formData');
-	
 	$.ajax({
 		url: "/estimate/preview/editExclusive.php",
 		type: "post",
@@ -118,8 +117,9 @@ function editModeTransition() {
 		data: formData.serialize()
 	
 	}).done(function (response) {
+		var sortLit = '?sortList=' + getUrlVars(location)["sortList"];
 		if (response.result === true) {			
-			formData.attr('action', response.action);
+			formData.attr('action', response.action + sortLit);
 			formData.attr('target', '');
 			formData.submit();
 		} else {
@@ -139,7 +139,7 @@ function editModeTransition() {
 				);
 				// フォーム設定
 				formData.append('<input type="hidden" class="addMessage" name="message" value="' + response.message + '">');
-				formData.attr('action', response.action);
+				formData.attr('action', response.action + sortLit);
 				formData.attr('target', windowName);		
 
 				// サブミット
@@ -213,8 +213,8 @@ function addPostData(name, value, formElement) {
 	return;
 }
 
-function ReloadParent()
-{
-	window.opener.location.reload();
-}
+// function ReloadParent()
+// {
+// 	window.opener.location.reload();
+// }
 

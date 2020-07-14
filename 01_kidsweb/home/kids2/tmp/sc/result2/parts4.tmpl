@@ -10,13 +10,14 @@
 	<script src="/cmn/jquery/jquery-cookie-1.4.1.js"></script>
 	<script type="text/javascript" language="javascript" src="/layout/type01/cmn/images.js"></script>
 	<script type="text/javascript" language="javascript" src="/cmn/functions.js"></script>
-
+	<script src="/cmn/js/functions.js" defer></script>
 	<script src="/cmn/js/openerreload.js" defer></script>
 	<script type="text/javascript" language="javascript" src="/result/cmn/functions.js" charset="utf-8"></script>
 	<link rel="stylesheet" type="text/css" media="screen" href="/result/cmn/layout.css">
 
 	<script type="text/javascript" language="javascript" src="/cmn/processing_module.js"></script>
 	<script type="text/javascript" language="javascript" src="/sc/cmn/result2exstr.js"></script>
+	<script type="text/javascript" language="javascript" src="/sc/result2/js/delete.js"></script>
 
 </head>
 
@@ -110,9 +111,9 @@
 		<div id="MessageTitle" class="box-title"></div>
 		<div class="box-buttons">
 			<!-- 削除ボタン -->
-			<span id="DeleteBt" style="padding-right:20px;" onclick="form1.submit();"></span>
+			<span id="DeleteBt" style="padding-right:20px;"></span>
 			<!-- 閉じるボタン -->
-			<span id="CloseBt" onclick="window.opener.location.reload();window.close();return false;"></span>
+			<span id="CloseBt"></span>
 		</div>
 	</div>
 
@@ -120,7 +121,7 @@
 	<table cellpadding="5" cellspacing="0" border="0" bgcolor="#f1f1f1" align="center">
 		<tr>
 			<td>
-				<form name="form1" action="_%strAction%_" method="GET">
+				<form id="deleteForm" name="form1" action="index3.php" method="POST">
 					<span id="objQuery"></span>
 					<input type="hidden" name="lngSlipNo" value="_%lngSlipNo%_">
 					<input type="hidden" name="lngRevisionNo" value="_%lngRevisionNo%_">
@@ -137,10 +138,6 @@
 
 
 </body>
-
-<script language=javascript>
-	fncShowHidePreload(1);
-</script>
 
 
 </html>

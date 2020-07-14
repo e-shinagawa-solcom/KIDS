@@ -5,15 +5,17 @@
             var lngestimateno = $(this).attr('lngestimateno');
             var lngestimaterevisionno = $(this).attr('revisionno');
             var lngorderno = $(this).attr('id');
-            var strsessionid = $('input[name="strSessionID"]').val();
+            var strsessionid = $('input[name="strSessionID"]').val();            
+            var sortList = setSortList($('#result thead tr th'));
+            console.log(sortList);
             var parentObj = $(this).parents('a');
-            showIFrame(lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, parentObj);
+            showIFrame(lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, sortList, parentObj);
         }
     });
 })();
 
 
-var choice = function (lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, docMsw) {
+var choice = function (lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, sortList, docMsw) {
     var decidetype = docMsw.find('input[name="decidetype"]:checked').val();
     var returnurl = "";
     if (decidetype == 1) {
@@ -25,13 +27,13 @@ var choice = function (lngestimateno, lngestimaterevisionno, lngorderno, strsess
         var lngpurchaseorderno = option.attr('lngpurchaseorderno');
         var lngrevisionno = option.attr('lngrevisionno');
         returnurl = "/po/regist/modify.php?lngPurchaseOrderNo=" + lngpurchaseorderno + "&lngOrderNo=" + lngorderno
-            + "&lngRevisionNo=" + lngrevisionno + "&strSessionID=" + strsessionid;
+            + "&lngRevisionNo=" + lngrevisionno + "&strSessionID=" + strsessionid + "&sortList=" + sortList;
     } else if (decidetype == 2) {
         returnurl = "/po/regist/index.php?lngOrderNo=" + lngorderno + "&estimateNo=" + lngestimateno
-            + "&revisionNo=" + lngestimaterevisionno + "&strSessionID=" + strsessionid;
+            + "&revisionNo=" + lngestimaterevisionno + "&strSessionID=" + strsessionid + "&sortList=" + sortList;
     }
 
-    open(returnurl, 'display-regist', 'width=996, height=689, resizable=yes, scrollbars=yes, menubar=no');
+    open(returnurl, 'display-regist', 'width=996, height=600, resizable=yes, scrollbars=yes, menubar=no');
 
     // mswの非表示
     invokeMswClose(docMsw);
@@ -41,7 +43,7 @@ var invokeMswClose = function (msw) {
     msw.find('.msw-box__header__close-btn').trigger('click');
 };
 
-var showIFrame = function (lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, parentObj) {
+var showIFrame = function (lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, sortList, parentObj) {
     var selectQuery = {
         url: '/po/cmn/getPoList.php?strSessionID=' + $('input[name="strSessionID"]').val(),
         type: 'post',
@@ -62,8 +64,8 @@ var showIFrame = function (lngestimateno, lngestimaterevisionno, lngorderno, str
             console.log(response.length);
             if (response.length == 0) {
                 returnurl = "/po/regist/index.php?lngOrderNo=" + lngorderno + "&estimateNo=" + lngestimateno
-                    + "&revisionNo=" + lngestimaterevisionno + "&strSessionID=" + strsessionid;
-                open(returnurl, 'display-regist', 'width=996, height=689, resizable=yes, scrollbars=yes, menubar=no');
+                    + "&revisionNo=" + lngestimaterevisionno + "&strSessionID=" + strsessionid + "&sortList=" + sortList;
+                open(returnurl, 'display-regist', 'width=996, height=600, resizable=yes, scrollbars=yes, menubar=no');
                 return;
             } else {
                 var ifmMsw = $('iframe');
@@ -104,11 +106,7 @@ var showIFrame = function (lngestimateno, lngestimaterevisionno, lngorderno, str
 
                 // 横は画面左からの距離なので、そのまま画面の横幅と要素の横幅を減算して半分の距離
                 var position_w = (w_width - el_width) / 2;
-console.log(w_width);
-console.log($(window).height());
-console.log(el_height);
-console.log(position_h);
-console.log(position_w);
+
                 ifmMsw.css({
                     'position': 'absolute',
                     'top': position_h + 'px',
@@ -122,11 +120,11 @@ console.log(position_w);
                 docMsw.off('click', '#choice');
                 docMsw.off('keydown', '#choice');
                 docMsw.on('click', '#choice', function () {
-                    choice(lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, docMsw);
+                    choice(lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, sortList, docMsw);
                 });
                 docMsw.on('keydown', '#choice', function (e) {
                     if (e.which == 13) {
-                        choice(lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, docMsw);
+                        choice(lngestimateno, lngestimaterevisionno, lngorderno, strsessionid, sortList, docMsw);
                     }
                 });
                 docMsw.on('change', 'input[name="decidetype"]:radio', function () {

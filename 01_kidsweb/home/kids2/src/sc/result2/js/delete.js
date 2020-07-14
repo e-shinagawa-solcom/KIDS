@@ -1,15 +1,17 @@
 //
-// delete-po.js
+// delete.js
 //
-jQuery(function($){
+jQuery(function ($) {
 
     // events
-    $('#btnClose').on('click', function(){
+    $('#CloseBt').on('click', function () {
         window.close();
         //親ウィンドウをリロードする
         openerReload();
     });
-    $('#btnDelete').on('click', function(){
+    $('#DeleteBt').on('click', function () {
+
+        console.log(location)
         $('#deleteForm').attr('action', location);
         $('#deleteForm').submit();
     });

@@ -1871,10 +1871,10 @@ class lcModel
             . "," . ($data["productrevisecd"] == null ? "NULL" : "'" . $data["productrevisecd"] . "'")
             . "," . ($data["productname"] == null ? "NULL" : "'" . $data["productname"] . "'")
             . "," . ($data["productnamee"] == null ? "NULL" : "'" . $data["productnamee"] . "'")
-            . "," . $data["productnumber"]
+            . "," . ($data["productnumber"] == null ? "NULL" : "'" . $data["productnumber"] . "'")
             . "," . ($data["unitname"] == NULL ? "null" : "'" . $data["unitname"] . "'")
-            . "," . $data["unitprice"]
-            . "," . $data["moneyprice"]
+            . "," . ($data["unitprice"] == null ? "NULL" : "'" . $data["unitprice"] . "'")
+            . "," . ($data["moneyprice"] == null ? "NULL" : "'" . $data["moneyprice"] . "'")
             . "," . ($data["shipstartdate"] == null ? "NULL" : "'" . $data["shipstartdate"] . "'")
             . "," . ($data["shipenddate"] == null ? "NULL" : "'" . $data["shipenddate"] . "'")
             . "," . ($data["sumdate"] == null ? "NULL" : "'" . $data["sumdate"] . "'")
@@ -1908,6 +1908,7 @@ class lcModel
             . ")";
         //バインドの設定
         $bind = array();
+
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 

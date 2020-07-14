@@ -33,8 +33,9 @@ function cancelEdit() {
 			data: formData.serialize()
 		
 		}).done(function (response) {
+			var sortLit = '&sortList=' + getUrlVars(location)["sortList"];
 			if (response.result === true) {
-				previewModeTransition(response.action);
+				previewModeTransition(response.action + sortLit);
 			} else {
 				var baseURI = formData[0].baseURI;
 			
@@ -52,7 +53,7 @@ function cancelEdit() {
 					
 					// フォーム設定
 					formData.append('<input type="hidden" class="addMessage" name="message" value="' + response.message + '">');
-					formData.attr('action', response.action);
+					formData.attr('action', response.action + sortLit);
 					formData.attr('target', windowName);		
 	
 					// サブミット

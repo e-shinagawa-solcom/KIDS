@@ -327,6 +327,7 @@ jQuery(function ($) {
     $('#clear').on('click', function () {
         window.location.reload();
     });
+    console.log('&sortList=' + getUrlVars(location)["sortList"]);
     function unLock() {
         $.ajax({
             url: '/po/regist/index.php',
@@ -342,7 +343,13 @@ jQuery(function ($) {
             .fail(function (response) {
             });
 
-        window.opener.location.reload();
+        //親ウィンドウをリロードする
+        if (window.opener != null) {
+            if (window.opener.location.href.indexOf('result') > -1) {
+                window.opener.location.hash = '&sortList=' + getUrlVars(location)["sortList"];
+            }
+            window.opener.location.reload();
+        }
     }
 
     function resetTableADisplayStyle() {

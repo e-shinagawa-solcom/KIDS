@@ -178,9 +178,10 @@ function fncCheckExclusiveControl($lngFunctionCode, $strProductCode, $lngRevisio
 function fncGetCompany($lngCompanyCode, $objDB)
 {
     $aryQuery[] = "SELECT ";
-    $aryQuery[] = "   lngcompanycode ";
+    $aryQuery[] = "   mc.lngcompanycode ";
     $aryQuery[] = "  ,lngcountrycode ";
-    $aryQuery[] = "  ,lngorganizationcode ";
+    $aryQuery[] = "  ,mc.lngorganizationcode ";
+    $aryQuery[] = "  ,strorganizationname ";
     $aryQuery[] = "  ,bytorganizationfront ";
     $aryQuery[] = "  ,strcompanyname ";
     $aryQuery[] = "  ,bytcompanydisplayflag ";
@@ -198,8 +199,9 @@ function fncGetCompany($lngCompanyCode, $objDB)
     $aryQuery[] = "  ,strfax2 ";
     $aryQuery[] = "  ,strdistinctcode ";
     $aryQuery[] = "  ,lngcloseddaycode ";
-    $aryQuery[] = "FROM m_company ";
-    $aryQuery[] = "WHERE lngcompanycode = " . $lngCompanyCode;
+    $aryQuery[] = "FROM m_company mc";
+    $aryQuery[] = "left join m_organization mo on mo.lngorganizationcode = mc.lngorganizationcode ";
+    $aryQuery[] = "WHERE mc.lngcompanycode = " . $lngCompanyCode;
 
     $strQuery = implode("\n", $aryQuery);
 
@@ -1141,13 +1143,11 @@ function fncInsertPurchaseOrderByDetail($aryOrder, $aryOrderDetail, $objAuth, $o
 //fncDebug("kids2.log", $lngorderno, __FILE__, __LINE__, "a");
                     $customer = fncGetCompany($aryOrderDetailUpdate[$i]["lngcustomercompanycode"], $objDB);
                     if ($customer["lngorganizationcode"] == DEF_ORGANIZATION_FOREIGN ) {
-                        $strcompanyname = "TO: " . $customer["strcompanyname"];
                         $straddress =  $customer["straddress4"] . $customer["straddress3"] . "<br>" . $customer["straddress2"] . $customer["straddress1"];
-                    } else {
-                        $strcompanyname = $customer["strcompanyname"] ." 様";
+                    } else {                        
                         $straddress =  $customer["straddress1"] . $customer["straddress2"] . "<br>" . $customer["straddress3"] . $customer["straddress4"];
                     }
-
+                    $strcompanyname = $customer["strcompanyname"];
                     $delivery = fncGetCompany($aryOrderDetailUpdate[$i]["lngdeliveryplacecode"], $objDB);
                     $payconditioncode = $aryOrder["lngpayconditioncode"];
                     $paycondition = fncGetPayCondition($payconditioncode, $objDB);

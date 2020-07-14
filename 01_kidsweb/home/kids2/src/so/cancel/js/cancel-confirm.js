@@ -27,14 +27,16 @@
     
     // 閉じるボタンのイベント
     $('#close').on('click', function () {
-
-        window.opener.location.reload();
+        //親ウィンドウをリロードする
+        openerReload();
         //ウィンドウを閉じる
         window.close();
     });
 
-    // ウィンドウを閉じる前のイベント
-    $(window).on("beforeunload", function(e) {    
-        window.opener.location.reload();
-    });
+    // // ウィンドウを閉じる前のイベント
+    // $(window).on("beforeunload", function(e) {    
+    //     // window.opener.location.reload();
+    //     //親ウィンドウをリロードする
+    //     openerReload();
+    // });
 })();

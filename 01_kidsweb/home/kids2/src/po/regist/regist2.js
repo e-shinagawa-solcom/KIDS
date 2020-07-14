@@ -21,7 +21,7 @@ jQuery(function ($) {
     resetTableADisplayStyle();
 
     resetTableBDisplayStyle();
-    
+
     resetTableRowid($('#tableB_no'));
 
     // テーブル行クリックイベントの設定
@@ -136,7 +136,7 @@ jQuery(function ($) {
         window.open('about:blank', '_self').close();
     });
     $('#decideRegist').on('click', function () {
-        
+
         // 画面操作を無効する
         lockScreen(lockId);
 
@@ -370,6 +370,7 @@ function tableBSort() {
     });
 }
 
+console.log('&sortList=' + getUrlVars(location)["sortList"]);
 function unLock() {
     $.ajax({
         url: '/po/regist/modify.php',
@@ -385,6 +386,13 @@ function unLock() {
         .fail(function (response) {
         });
 
-    window.opener.location.reload();
+        
+    //親ウィンドウをリロードする
+    if (window.opener != null) {
+        if (window.opener.location.href.indexOf('result') > -1) {
+            window.opener.location.hash = '&sortList=' + getUrlVars(location)["sortList"];
+        }
+        window.opener.location.reload();
+    }
 }
 

@@ -15,4 +15,19 @@
             cssStickyHeaders_zIndex        : 10
         }
     });
+
+    
+	// テーブルソートのリセット
+	var sortList = "";
+	var childSortList = "";
+	console.log(location);
+	$.each(location.href.split('&'), function(index, value) {
+		if (value.split('=')[0] == 'sortList') {
+			sortList = value.split('=')[1].split(',');
+		}
+	});
+	if (sortList != "") {
+		var r = $('#result').tablesorter();
+		r.trigger('sorton', [[[sortList[0], sortList[1]]]]);
+	}
 })();

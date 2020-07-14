@@ -14,9 +14,10 @@
             moldNo = 'MoldNo=' + $(this).attr('MoldNo');
             historyNo = 'HistoryNo=' + $(this).attr('HistoryNo');
             version = 'Version=' + $(this).attr('Version');
+            sortLit = 'sortList=' + getUrlVars(location)["sortList"];
 
             // 削除リクエスト
-            window.location.href = url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version;
+            window.location.href = url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version + '&' + sortLit;
         }
     });
     $('a').on('keydown', function (e) {

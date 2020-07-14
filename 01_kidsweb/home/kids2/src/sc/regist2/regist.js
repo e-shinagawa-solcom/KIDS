@@ -1232,9 +1232,9 @@ jQuery(function ($) {
 
 
     // 閉じた際の処理
-    $(window).on('beforeunload', function () {
-        window.opener.location.reload();
-    });
+    // $(window).on('beforeunload', function () {
+    //     window.opener.location.reload();
+    // });
 
     $("#close").on('click', function () {
         window.close();

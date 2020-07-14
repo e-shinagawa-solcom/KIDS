@@ -7,9 +7,10 @@
         moldReportID = 'MoldReportId=' + $(this).attr('id');
         revision = 'Revision=' + $(this).attr('revision');
         version = 'Version=' + $(this).attr('version');
+        sortList = 'sortList=' + setSortList($('#result thead tr th'));
 
         // 別ウィンドウで表示
-        window.open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version, 'display-report', 'width=1011, height=670,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no');
+        window.open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version + '&' + sortList, 'display-report', 'width=1011, height=670,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no');
     });
     // COPYプレビュー表示
     $('img.copy-preview.button').on('click', function(){
@@ -19,8 +20,9 @@
         revision = 'Revision=' + $(this).attr('revision');
         version = 'Version=' + $(this).attr('version');
         copy= 'isCopy';
+        sortList = 'sortList=' + setSortList($('#result thead tr th'));
 
         // 別ウィンドウで表示
-        window.open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version + '&' + copy, 'display-report', 'width=1011, height=670,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no');
+        window.open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version + '&' + copy + '&' + sortList, 'display-report', 'width=1011, height=670,status=yes,scrollbars=yes,directories=no,menubar=yes,resizable=yes,location=no,toolbar=no');
     });
 })();

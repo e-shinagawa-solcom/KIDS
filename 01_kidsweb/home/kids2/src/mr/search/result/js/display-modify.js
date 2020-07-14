@@ -13,8 +13,9 @@
         moldReportID = 'MoldReportId=' + $(this).attr('id');
         revision = 'Revision=' + $(this).attr('revision');
         version = 'Version=' + $(this).attr('version');
+        sortList = 'sortList=' + setSortList($('#result thead tr th'));
 
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version, 'display-detail', 'width=1000, height=570,resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + sessionID + '&' + moldReportID + '&' + revision + '&' + version + '&' + sortList, 'display-detail', 'width=1000, height=570,resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

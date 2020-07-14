@@ -31,10 +31,21 @@
         e.preventDefault();
         return false;
     });
-
+    
     // 閉じた際の処理
     $(window).on('beforeunload', function(){
-        $(window.opener.opener.document).find('form').submit();
+        //親ウィンドウをリロードする
+        if (window.opener != null) {
+            if (window.opener.location.href.indexOf('result') > -1) {
+                var hashParam = "";
+                var urlVars = getUrlVars(location);
+                if (urlVars["sortList"] != undefined && urlVars["sortList"] != "") {
+                    hashParam = hashParam + '&sortList=' + urlVars["sortList"];
+                }
+                window.opener.location.hash = hashParam;
+            }
+            window.opener.location.reload();
+        }
     });
 
     // クリアボタン

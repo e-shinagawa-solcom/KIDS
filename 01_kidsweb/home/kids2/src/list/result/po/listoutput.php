@@ -25,6 +25,7 @@ include_once 'conf.inc';
 // ライブラリ読み込み
 require LIB_FILE;
 require SRC_ROOT . "list/cmn/lib_lo.php";
+require SRC_ROOT . "po/cmn/lib_por.php";
 require SRC_ROOT . "m/cmn/lib_m.php";
 
 $objDB = new clsDB();
@@ -148,6 +149,17 @@ unset($aryParts["curtotalprice"]);
 
 if ($aryParts["txtsignaturefilename"] != "" && $aryParts["txtsignaturefilename"] != null) {
     $aryParts["txtsignaturefilename"] = '/img/signature/' . $aryParts["txtsignaturefilename"];
+}
+
+$customer = fncGetCompany($aryParts["lngcustomercode"], $objDB);
+if ($customer["lngorganizationcode"] == DEF_ORGANIZATION_FOREIGN) {
+    $aryParts["strcustomername"] = "TO: " . $customer["strcompanyname"];
+} else {
+    if ($customer["lngorganizationcode"] == 0 || $customer["lngorganizationcode"] == 3) {
+        $aryParts["strcustomername"] = $customer["strcompanyname"] . "　御中";
+    } else {
+        $aryParts["strcustomername"] = $customer["strorganizationname"] . "　" . $customer["strcompanyname"] . "　御中";
+    }
 }
 
 // ページ処理

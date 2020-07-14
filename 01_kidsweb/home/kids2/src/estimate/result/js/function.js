@@ -57,6 +57,8 @@ $(function () {
 		var url = $(this).attr('action');
 		var value = $(this).attr('value');
 
+		var sortList = '&sortList=' + setSortList($('#result thead tr th'));
+		url += sortList;
 		var windowName = 'workSheetView';
 
 		var formData = $("<form>", {
@@ -95,6 +97,9 @@ $(function () {
 
 		var windowName = 'workSheetView';
 
+
+		var sortList = '?sortList=' + setSortList($('#result thead tr th'));
+		url += sortList;
 		var formData = $("<form>", {
 			method: 'post',
 			action: url,

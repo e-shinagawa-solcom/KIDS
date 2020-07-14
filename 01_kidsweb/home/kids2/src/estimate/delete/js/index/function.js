@@ -3,7 +3,10 @@ function fncWindowClose() {
 }
 
 function fncDeleteProcess() {      
-    document.formAction.submit();
+	var sortList = getUrlVars(location)["sortList"];
+	var actionUrl = $('form[name="formAction"]').attr('action');
+	$('form[name="formAction"]').attr('action', actionUrl + "?sortList=" + sortList);
+    $('form[name="formAction"]').submit();
 }
 
 function fncAlphaOff( obj )

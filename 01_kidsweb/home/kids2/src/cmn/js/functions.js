@@ -130,3 +130,33 @@ function fncGetStockItem(lngstocksubjectcode, strSessionID) {
 			alert("fail");
 		})
 }
+
+function getUrlVars(url) {
+    var vars = {};
+    var param = url.search.substring(1).split('&');
+    for (var i = 0; i < param.length; i++) {
+        var keySearch = param[i].search(/=/);
+        var key = '';
+        if (keySearch != -1) key = param[i].slice(0, keySearch);
+        var val = param[i].slice(param[i].indexOf('=', 0) + 1);
+        if (key != '') vars[key] = decodeURI(val);
+    }
+    return vars;
+}
+
+function setSortList(thArray) {
+	var sortList = [];
+	thArray.each(function (i, e) {
+		var ariaSort = $(this).attr('aria-sort');
+		var sortValue;
+		if (ariaSort == 'ascending') {
+			sortValue = 0;
+		} else if (ariaSort == 'descending') {
+			sortValue = 1;
+		}
+		if (sortValue == 0 || sortValue == 1) {
+			sortList.push([$(this)[0].cellIndex, sortValue]);
+		}
+	});
+	return sortList;
+}

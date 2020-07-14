@@ -11,8 +11,8 @@
         sessionID = 'strSessionID=' + $.cookie('strSessionID');
         lngProductNo = 'lngProductNo=' + $(this).attr('id');
         lngRevisionNo = 'lngRevisionNo=' + $(this).attr('revisionno');
-
+        sortList = 'sortList=' + setSortList($('#result thead tr th'));
         // 別ウィンドウで表示
-        open(url + '?' + sessionID + '&' + lngProductNo + '&' + lngRevisionNo, 'display-detail', 'width=800, height=728, resizable=yes, scrollbars=yes, menubar=no');
+        open(url + '?' + sessionID + '&' + lngProductNo + '&' + lngRevisionNo + '&' + sortList, 'display-detail', 'width=800, height=728, resizable=yes, scrollbars=yes, menubar=no');
     });
 })();

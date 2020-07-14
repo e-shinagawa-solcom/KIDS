@@ -1,9 +1,9 @@
 
 (function(){
     // 閉じた際の処理
-    $(window).on('beforeunload', function(){
-        $(window.opener.opener.document).find('form').submit();
-    });
+    // $(window).on('beforeunload', function(){
+    //     $(window.opener.opener.document).find('form').submit();
+    // });
 
     // 閉じるボタン押下時の挙動
     $('img.close-action').on({
@@ -19,9 +19,10 @@
             moldNo = 'MoldNo=' + $(this).attr('MoldNo');
             historyNo = 'HistoryNo=' + $(this).attr('HistoryNo');
             version = 'Version=' + $(this).attr('Version');
+            sortLit = 'sortList=' + getUrlVars(location)["sortList"];
 
             // 削除リクエスト
-            window.location.href = url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version;
+            window.location.href = url + '?' + sessionID + '&' + moldNo + '&' + historyNo + '&' + version + '&' + sortLit;
         }
     });
     $('a').on('keydown', function (e) {

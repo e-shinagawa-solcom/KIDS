@@ -90,7 +90,7 @@ $objDB->freeResult( $lngResultID );
 // *****************************************************
 //   削除処理実行（Submit時）
 // *****************************************************
-if( $aryData["strSubmit"] )
+if($_POST)
 {
 	
 	$lngSalesNo = $aryHeadResult["lngsalesno"];

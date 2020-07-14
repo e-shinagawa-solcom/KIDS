@@ -20,7 +20,7 @@
         $('input[name="strGoodsCode"]').removeClass('disTxt05L');
         $('input[name="strGoodsCode"]').addClass('TxtStyle05L');
     }
-
+console.log(window.opener.location.href + '&sortList=' + getUrlVars(window.location)["sortList"]);
     var lockId = "lockId";
     // ウィンドウクローズ処理
     window.onbeforeunload = function () {
@@ -39,7 +39,15 @@
                 .fail(function (response) {
                 });
             
-            window.opener.location.reload();
+            // window.opener.location.reload();
+            //親ウィンドウの親ウィンドウをリロードする
+            if (window.opener != null) {
+                if (window.opener.location.href.indexOf('result') > -1) {
+                    // window.opener.location.href = window.opener.location.href + '&sortList=' + getUrlVars(window.location)["sortList"];
+                    window.opener.location.hash = '&sortList=' + getUrlVars(window.location)["sortList"];
+                }
+                window.opener.location.reload();
+            }
         }
         unLock();
     };

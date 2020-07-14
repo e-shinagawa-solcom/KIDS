@@ -6,12 +6,12 @@
         window.close();
         
         //親ウィンドウをリロードする
-        window.opener.location.reload();
+        openerReload();
     });
     
-    // ウィンドウを閉じる前のイベント
-    $(window).on("beforeunload", function(e) {        
-        window.opener.location.reload();
-    });
+    // // ウィンドウを閉じる前のイベント
+    // $(window).on("beforeunload", function(e) {        
+    //     window.opener.location.reload();
+    // });
 
 })();

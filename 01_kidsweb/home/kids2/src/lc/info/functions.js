@@ -113,6 +113,9 @@ function setLcInfoTable(data, phpData) {
 		if (row.bldetail3money != null) {
 			balance -= row.bldetail3money;
 		}
+		if (balance == null) {
+			balance = 0;
+		}
 		var lc_table_body = '<tr id="' + i + '" before-click-bgcolor="rgb(' + background_color + ')" style="height: 20px;">' +
 			// '<td style="text-align: left;"><input type="radio" name="selectRow" value="' + i + '" class="form-control form-control-sm"></td>' +
 			'<td style="background-color: rgb(' + background_color + ');">' + convertNull(row.payfnameomit) + '</td>' +

@@ -28,7 +28,6 @@ $(document).ready(function () {
     // 明細部の各列の最大幅を取得し配列に保存する
     var childwidthArray = [];
     var tablechildcount = $(".tablesorter-child thead").length;
-    console.log(tablechildcount);
     var detailcolcount = $(".tablesorter-child thead").eq(0).find("tr:first th").length;
     for (var i = 0; i < detailcolcount; i++) {
       var width = 0;
@@ -85,7 +84,6 @@ $(document).ready(function () {
   $("#result thead tr").eq(0).find("th").on('click', function () {
     var r = $('.tablesorter-child').tablesorter();
     var sortkey = $(this).attr("childsortkey");
-    console.log(sortkey);
     if (typeof sortkey !== 'undefined') {
       if (sortval == 1) {
         sortval = 0;
@@ -97,17 +95,15 @@ $(document).ready(function () {
 
     // $("#result").trigger("update");
     // $(".tablesorter-child").trigger("update");
+    
 
     // コピーボタンのイベント
     if ($(this)[0].cellIndex == 0) {
       // クリップボードに値を反映
       if (window.getSelection) {
         var selection = getSelection();
-        console.log(selection);
         selection.removeAllRanges();
         var range = document.createRange();
-
-        console.log(document.getElementById("result"));
         range.selectNodeContents(document.getElementById("result"));
         selection.addRange(range);
         document.execCommand('copy');
@@ -119,3 +115,4 @@ $(document).ready(function () {
     }
   });
 });
+

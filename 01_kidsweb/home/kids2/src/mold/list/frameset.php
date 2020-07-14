@@ -76,15 +76,9 @@ if (array_key_exists("isRegist", $_REQUEST)) {
 <!-- jQuery UI -->
 <script src="/cmn/jquery/ui/jquery-ui-1.12.0.js"></script>
 <script src="/list/result/cmn/frameset.js"></script>
+<script src="/cmn/js/functions.js"></script>
+<script src="/cmn/js/openerreload.js"></script>
 </head>
-<script>
-$(window).on("beforeunload", function(e) {
-    if(window.opener.location.pathname.indexOf("/mr/search/result/") >= 0){
-        window.opener.location.reload();
-    }
-});
-
-</script>
 
 <frameset rows="40,1,*" frameborder="0" border="0" framespacing="0">
 	<frame id="button" src="button.php?strSessionID=<?echo $aryData["strSessionID"]; ?>" name="button" scrolling="no" noresize>
