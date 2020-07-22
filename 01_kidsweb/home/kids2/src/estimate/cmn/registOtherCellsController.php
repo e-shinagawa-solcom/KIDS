@@ -51,7 +51,7 @@ class registOtherCellsController extends estimateOtherCellsController {
                         $receiveProductTotalPrice += $subtotal;
                         // 製品数量合計
                         $receiveProductTotalQuantity += $quantity;
-                        // 償却数
+                        // 生産数
 //                        if ($classItem === $mainProduct) {
 //                            $productionQuantity += $quantity;
 //                        }

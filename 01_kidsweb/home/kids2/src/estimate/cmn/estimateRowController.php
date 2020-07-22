@@ -336,6 +336,15 @@ abstract class estimateRowController
             $ret = true;
         }
 
+        $this->validateQuantityAndPrice();
+
+        if ($this->message['quantityAndPrice']) {
+            // 単価の入力が正確でない場合
+            $this->errorFlag = true;
+            //return true;
+            $ret = true;
+        }
+
         // 証紙、関税フラグを設定する
         $this->setDistinctionFlag();
 
@@ -644,7 +653,7 @@ abstract class estimateRowController
             $this->payoff = null;
             // パーセント値をセットする
             $this->percent = $percent;
-            $price = $conditionalTotal * $percent;
+            $price = $conditionalTotal * $percent / 100;
         } else {
             $price = $this->price;
         }
@@ -653,7 +662,6 @@ abstract class estimateRowController
         // 小数点第4桁以下切り捨て
         $price = floor_plus($price, 4);
         $calculatedSubtotal = $price * $quantity;
-
         // 再計算結果で置換
         //        $this->price = $price;
         //fncDebug("view.log", "calculatedSubtotal:" . $calculatedSubtotal, __FILE__, __LINE__, "a");
@@ -708,7 +716,7 @@ abstract class estimateRowController
         $quantity = $this->quantity;
         // バリデーション条件
         if (isset($quantity) && $quantity !== '') {
-            if (!preg_match("/\A\d+\z/", $quantity) || $quantity <= 0) {
+            if (!preg_match("/\A-?\d+\z/", $quantity) || (($areaCode ==3 || $areaCode == 4 || $areaCode == 5) && $quantity < 0)) {
                 // 自然数でない場合はエラー処理
                 $message = DEF_MESSAGE_CODE_FORMAT_ERROR;
             } else if ((int) $quantity > DEF_DB_INTEGER_MAX_LIMIT) {
@@ -742,6 +750,20 @@ abstract class estimateRowController
         }
 
         return true;
+    }
+
+    protected function validateQuantityAndPrice()
+    {
+        $quantity = $this->quantity;
+        $price = $this->price;
+        $areaCode = $this->areaCode;
+        if (($areaCode ==1 || $areaCode == 2) && $quantity < 0 && $price < 0) {
+            // エラー処理
+            $str = array("明細部", strlen($this->columnDisplayNameList['price']) > 0 ? $this->columnDisplayNameList['price'] : "単価、数量（両方共「-」のは不正）");
+            $this->message['quantityAndPrice'] = fncOutputError(DEF_MESSAGE_CODE_FORMAT_ERROR, DEF_WARNING, $str, false, '', $this->objDB);
+        }
+        return true;
+
     }
 
     // 通貨

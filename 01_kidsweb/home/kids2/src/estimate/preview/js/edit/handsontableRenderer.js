@@ -1309,9 +1309,11 @@ $(function () {
     } else if (areaCode === 4) { // || areaCode === 5) {
       calcFlag.member = true;
       calcFlag.depreciation = true;
+      calcFlag.area4and5TotalCost = true;
     }
     else if (areaCode === 5) {
       calcFlag.member = true;
+      calcFlag.area4and5TotalCost = true;
     }
     calcFlag.importOrTariff = true;
     return;
@@ -1388,6 +1390,11 @@ $(function () {
 
     if (calcFlag.importOrTariff === true) { // 輸入費用及び関税の単価、小計
       calculateImportOrTariffRows();
+    }
+
+    // 部材費用合計
+    if (calcFlag.area4and5TotalCost === true) {
+      calculateArea4and5TotalCost();
     }
 
     if (calcFlag.member === true) { // 部材費
@@ -1925,6 +1932,43 @@ $(function () {
     // 値の代入
     assignValueForClassNameCell(totalCostClassName, totalCost);
     assignValueForClassNameCell(costNotDepClassName, totalCost);
+  }
+
+  /**
+   * 部材費用合計の再計算を行う
+   * 
+   */
+  function calculateArea4and5TotalCost() {
+    var checkList = cellClass;
+    var subtotalClassName = 'detail area4 subtotal';
+    var subtotalCells = getElementsForClassName(subtotalClassName, checkList);
+    var row = null;
+    var col = null;
+    var subtotal = null;
+    var totalCost = 0;
+    for (var i = 0; i < subtotalCells.length; i++) {
+      row = subtotalCells[i].row;
+      col = subtotalCells[i].col;
+      subtotal = Number(cellValue[row][col].replace('\xA5', '').split(',').join(''));
+      totalCost += subtotal;
+      console.log(subtotal);
+    }
+    
+    var subtotalClassName = 'detail area5 subtotal';
+    var subtotalCells = getElementsForClassName(subtotalClassName, checkList);
+    for (var i = 0; i < subtotalCells.length; i++) {
+      row = subtotalCells[i].row;
+      col = subtotalCells[i].col;
+      subtotal = Number(cellValue[row][col].replace('\xA5', '').split(',').join(''));
+      totalCost += subtotal;
+      console.log(subtotal);
+    }
+
+    var totalCostClassName = 'order_e_curmembercost';
+
+    totalCost = totalCost != 0 ? '\xA5' + numberFormat(totalCost, 0) : '';
+
+    assignValueForClassNameCell(totalCostClassName, totalCost);
   }
 
   /**

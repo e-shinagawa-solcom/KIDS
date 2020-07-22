@@ -96,13 +96,13 @@ $aryColumnLang = array(
     "lngInputUserCode" => "入力者",
     "lngCartonQuantity" => "カートン入数",
     "lngProductionQuantity" => "生産数",
-    "curSalesAmount" => "製品売上高",
+    "curSalesAmount" => "製品売上合計",
     "curSalesProfit" => "製品利益",
     "curSalesProfitRate" => "製品利益率",
-    "curFixedCostSales" => "固定費売上高",
+    "curFixedCostSales" => "固定費売上合計",
     "curFixedCostSalesProfit" => "固定費利益",
     "curFixedCostSalesProfitRate" => "固定費利益率",
-    "curTotalSales" => "総売上高",
+    "curTotalSales" => "売上総計",
     "curTotalPrice" => "売上総利益",
     "curTotalPriceRate" => "売上総利益率",
     "curIndirectManufacturingCost" => "間接製造経費",
@@ -566,26 +566,38 @@ for ($i = 0; $i < $resultNum; ++$i) {
             if (strlen($param)) {
                 if (!is_numeric($param)) {
                     $param = htmlspecialchars($param, ENT_QUOTES);
+                    $style = "text-align: left;";
+                } else {
+                    $style = "text-align: right;";
                 }
 
                 if ($commaSeparateList[$column]) {
                     $param = number_format($param, 0);
+
+                    if ($column === 'lngCartonQuantity' || $column === 'lngProductionQuantity' ) {
+                        $style = "text-align: left;";
+                    } else {                        
+                        $style = "text-align: right;";
+                    }
                 }
 
                 if ($hasDecimalPointList[$column]) {
                     $param = number_format($param, 2);
+                    $style = "text-align: right;";
                 }
                 
                 if ($yenAddList[$column]) {
                     $param = '&yen ' . $param;
+                    $style = "text-align: right;";
                 }
 
                 if ($percentList[$column]) {
                     $param = number_format($param, 2) . '%';
+                    $style = "text-align: left;";
                 }
             }
 
-            $body .= "<td nowrap align=\"left\">" . $param . "</td>";
+            $body .= "<td nowrap align=\"left\" style=\"" . $style . "\">" . $param . "</td>";
         }
     }
     $body .= "</tr>";

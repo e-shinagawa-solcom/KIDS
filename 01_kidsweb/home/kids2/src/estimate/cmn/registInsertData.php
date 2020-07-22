@@ -244,7 +244,7 @@ class registInsertData extends estimateInsertData {
         $timeString = "'" . fncGetDateTimeString() . "'";
         // 上代
         $retailPrice = $this->headerData[workSheetConst::RETAIL_PRICE];
-        // 償却数
+        // 生産数
         $productionQuantity = $this->headerData[workSheetConst::PRODUCTION_QUANTITY];
 
         $data = array(

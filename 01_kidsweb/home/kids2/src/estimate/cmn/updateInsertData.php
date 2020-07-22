@@ -416,7 +416,7 @@ class updateInsertData extends estimateInsertData
 
         // 上代
         $retailPrice = $this->headerData[workSheetConst::RETAIL_PRICE];
-        // 償却数
+        // 生産数
         $productionQuantity = $this->headerData[workSheetConst::PRODUCTION_QUANTITY];
 
         // 合計金額の計算

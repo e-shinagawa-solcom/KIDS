@@ -65,9 +65,9 @@ class workSheetConst {
     const CARTON_QUANTITY_HEADER = 'cartonquantity_header';
     // カートン入り数
     const CARTON_QUANTITY = 'cartonquantity';
-    // 償却数 pcsタイトル
+    // 生産数 pcsタイトル
     const PRODUCTION_QUANTITY_HEADER = 'productionquantity_header';
-    // 償却数 pcs
+    // 生産数 pcs
     const PRODUCTION_QUANTITY = 'productionquantity';
     
     // 受注明細
@@ -208,12 +208,12 @@ class workSheetConst {
     const ORDER_ELEMENTS_COST_DELIVERY_DATE = 'order_e_deliverydate';
     // 備考
     const ORDER_ELEMENTS_COST_NOTE = 'order_e_note';
-    // 部材費小計
+    // 部材費用合計タイトル
+    const ORDER_ELEMENTS_COST_CURMEMBER_COST_HEADER = 'order_e_curmembercost_header';
+    // 部材費用合計
     const ORDER_ELEMENTS_COST_CURMEMBER_COST = 'order_e_curmembercost';
     // 部材費合計数
     const ORDER_ELEMENTS_COST_TOTAL_QUANTITY = 'order_e_totalquantity';
-    // 経費小計
-    const ORDER_ELEMENTS_COST_EXPENSES = 'order_e_expenses';
     // 明細リスト終了
     const LIST_END = 'list_end';
 
@@ -590,19 +590,11 @@ class workSheetConst {
     ];
 
     // 部材費フッターセル名称リスト
-    const ORDER_ELEMENT_COST_RESULT_CELL = [
-        'list' => self::LIST_END
+    const ORDER_ELEMENT_COST_RESULT_CELL = [        
+        'total_header' => self::ORDER_ELEMENTS_COST_CURMEMBER_COST_HEADER,
+        'total_quantity' => self::ORDER_ELEMENTS_COST_TOTAL_QUANTITY,
+        'total_price' => self::ORDER_ELEMENTS_COST_CURMEMBER_COST
     ];
-
-    // 部材費フッターセル名称リスト
-    // const ORDER_ELEMENT_COST_RESULT_CELL = [
-    //     'curmember_cost' => self::ORDER_ELEMENTS_COST_CURMEMBER_COST
-    // ];
-
-    // // 部材費フッターセル名称リスト
-    // const ORDER_ELEMENT_EXPENSES_RESULT_CELL = [
-    //     'expenses' => self::ORDER_ELEMENTS_COST_EXPENSES
-    // ];
 
     // ワークシートヘッダー入力項目セル名称
     const WORK_SHEET_HEADER_DATA_CELL = [

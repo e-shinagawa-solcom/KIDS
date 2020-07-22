@@ -178,7 +178,7 @@ class estimateHeaderController {
         $this->validateIncharge(); // 営業部署、担当
         $this->validateDevelopUserCode(); // 開発担当者
         $this->validateCartonQuantity(); // カートン入り数
-        $this->validateProductionQuantity(); // 償却数
+        $this->validateProductionQuantity(); // 生産数
         
         $loginUserCode = $this->loginUserCode;
         $inchargeGroupCodeNumber = $this->inchargeGroupCodeNumber;
@@ -450,7 +450,7 @@ class estimateHeaderController {
         return true;
     }
 
-    // 償却数
+    // 生産数
     protected function validateProductionQuantity() {
         $productionQuantity = $this->productionQuantity;
         if (isset($productionQuantity) && $productionQuantity !=='') {

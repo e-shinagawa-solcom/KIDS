@@ -48,7 +48,7 @@ class otherCostOrderRowController extends estimateRowController {
         }
     }
 
-    // 再計算前の償却数と数量を比較し、再計算前の値と一致した場合は再計算後の償却数を代入する
+    // 再計算前の生産数と数量を比較し、再計算前の値と一致した場合は再計算後の生産数を代入する
     public function substitutePQForPrice($compare, $substitute) {
         // 数量を取得
         $quantity = $this->quantity;

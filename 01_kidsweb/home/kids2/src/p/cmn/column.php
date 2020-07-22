@@ -15,7 +15,7 @@ $aryTableTytle["lngInChargeGroupCode"]		= "営業部署";
 $aryTableTytle["lngInChargeUserCode"]		= "開発担当者";
 $aryTableTytle["curRetailPrice"]			= "上代";
 $aryTableTytle["lngCartonQuantity"]			= "カートン入数";
-$aryTableTytle["lngProductionQuantity"]		= "償却数 pcs";
+$aryTableTytle["lngProductionQuantity"]		= "生産数 pcs";
 
 $aryTableTytle["lngGoodsPlanProgressCode"]	= "企画進行状況";
 $aryTableTytle["lngRevisionNo"]				= "改訂番号";

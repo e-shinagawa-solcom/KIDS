@@ -18,7 +18,7 @@ class estimateOtherCellsController {
     protected $messageCode;
 
     // 出力値
-    public $productionQuantity;                 // 償却数 pcs
+    public $productionQuantity;                 // 生産数 pcs
     public $receiveProductTotalPrice;           // 製品売上合計
     public $receiveProductTotalQuantity;        // 製品数量合計
     public $receiveFixedCostTotalPrice;         // 固定費売上合計

@@ -354,7 +354,7 @@ else if ( $aryData["lngActionCode"] == DEF_CLOSED_RETURN )
 			. " AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) >= '" . $dtmUpdateFrom  
 			. "' AND to_char( date_trunc( 'month', ms.dtmAppropriationDate ), 'YYYY/MM' ) <= '" . $dtmUpdateTo . "'"
 			. "ORDER BY ms.lngSalesNo, ms.lngrevisionno DESC FOR UPDATE";
-			echo $strQuery;
+
 fncDebug("close.log", $strQuery, __FILE__, __LINE__, "a");
 		if ( !list ( $lngResultID, $lngResultNum ) = fncQuery( $strQuery, $objDB ) )
 		{

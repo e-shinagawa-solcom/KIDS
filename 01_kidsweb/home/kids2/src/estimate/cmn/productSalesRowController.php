@@ -12,7 +12,7 @@ class productSalesRowController extends estimateRowController {
     protected static $headerNameList; // 対象エリアのヘッダーのセル名称
     protected static $resultNameList; // 対象エリアの計算結果のセル名称(明細最終行の次の行)
 
-    protected static $productionQuantity = 0; // 償却数計算結果
+    protected static $productionQuantity = 0; // 生産数計算結果
 
     protected static $PQOutputFlag;
 
@@ -43,7 +43,7 @@ class productSalesRowController extends estimateRowController {
         }
     }
 
-    // 償却数に本荷の数量を加算する
+    // 生産数に本荷の数量を加算する
     protected function addProductionQuantity() {
         if ($this->invalidFlag != true) {
             if ($this->divisionSubjectCode === DEF_SALES_DIVISION_CODE_PRODUCT_SALES
@@ -60,7 +60,7 @@ class productSalesRowController extends estimateRowController {
     // 登録時のパラメータチェックを行う
     public function workSheetRegistCheck() {
         if (self::$PQOutputFlag === true) {
-            // 償却数が一度でも出力されていた場合は不正処理
+            // 生産数が一度でも出力されていた場合は不正処理
             return false;
         }
         parent::workSheetRegistCheck();
@@ -68,7 +68,7 @@ class productSalesRowController extends estimateRowController {
         return;
     }
 
-    // 償却数の計算結果を出力する
+    // 生産数の計算結果を出力する
     public static function outputProductionQuantity() {
         static $PQOutputFlag = true;
         return self::$productionQuantity;
