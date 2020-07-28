@@ -62,7 +62,8 @@
 							<input type="hidden" name="strReviseCode" value="_%strReviseCode%_">
 						</span>
 						<span class="regist-label">
-							<span class="regist-label__text">顧客品番</span>
+							<span class="regist-label__required-mark">◎</span>
+							<span class="regist-label__required-text">顧客品番</span>
 							<input class="TxtStyle05L" style="ime-mode:disabled;" name="strGoodsCode" value="_%strGoodsCode%_">
 							<input type="hidden" name="strGoodsCode" value="_%strGoodsCode%_">
 						</span>
@@ -119,7 +120,6 @@
 														<th>◎顧客受注番号</th>
 														<th>顧客</th>
 														<th>納期</th>
-														<th>売上分類</th>
 														<th>売上区分</th>
 														<th>単価</th>
 														<th>数量</th>
@@ -127,9 +127,14 @@
 														<th>入数</th>
 														<th>小計</th>
 														<th>明細備考</th>
+														<th style="display:none">製品コード</th>
+														<th style="display:none">再販コード</th>
+														<th style="display:none">製品名称</th>
 														<th style="display:none">受注番号</th>
 														<th style="display:none">明細行番号</th>
 														<th style="display:none">リビジョン番号</th>
+														<th style="display:none">受注コード</th>
+														<th style="display:none">売上分類</th>
 														<th style="display:none">カートン入数</th>
 														<th style="display:none">製品数量</th>
 														<th style="display:none">通貨単位コード</th>
@@ -185,7 +190,6 @@
 														<th>◎顧客受注番号</th>
 														<th>顧客</th>
 														<th>納期</th>
-														<th>売上分類</th>
 														<th>売上区分</th>
 														<th>単価</th>
 														<th>数量</th>
@@ -193,9 +197,14 @@
 														<th>入数</th>
 														<th>小計</th>
 														<th>明細備考</th>
+														<th style="display:none">製品コード</th>
+														<th style="display:none">再販コード</th>
+														<th style="display:none">製品名称</th>
 														<th style="display:none">受注番号</th>
 														<th style="display:none">明細行番号</th>
 														<th style="display:none">リビジョン番号</th>
+														<th style="display:none">受注コード</th>
+														<th style="display:none">売上分類</th>
 														<th style="display:none">カートン入数</th>
 														<th style="display:none">製品数量</th>
 														<th style="display:none">通貨単位コード</th>
@@ -261,6 +270,7 @@
 	</div>
 	<!-- フォーム ボタン -->
 	<div class="form-buttons">
+		<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="decideCancel">キャンセル</button>
 		<button type="button" class="btn btn-light btn-kids btn-kids-sm" id="decideRegist">確定登録</button>
 	</div>
 	<script type="text/javascript">

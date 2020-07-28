@@ -265,9 +265,6 @@ function SearchReceiveDetail(data) {
         }
     });
 
-
-
-    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
     // テーブル行クリックイベントの設定
     selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
     // 対象チェックボックスチェック状態の設定
@@ -293,6 +290,8 @@ function SearchReceiveDetail(data) {
 
     resetTableBDisplayStyle();
 
+    resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
+
     $('input[name="strMonetaryUnitName"]').val(data.strmonetaryunitname);
     $('input[name="lngMonetaryUnitCode"]').val(data.lngmonetaryunitcode);
     $('input[name="curConversionRate"]').val(data.curconversionrate);
@@ -308,6 +307,12 @@ function resetTableADisplayStyle() {
     $("#tableA tbody tr").each(function (i, e) {
         $(this).find("td:nth-child(1)").css("display", "");
         $(this).find(".detailNote").find('input').prop('disabled', true);
+        var textVal = $(this).find(".detailNote").find('input:text').val();
+        if (textVal.length == 0) {
+            $(this).find(".detailNote").find('input:text').css({"width":4 + "em"});
+        } else {
+            $(this).find(".detailNote").find('input:text').css({"width":getEm(textVal) + "em"});
+        }
     });
 }
 
@@ -315,6 +320,14 @@ function resetTableBDisplayStyle() {
     $("#tableB tbody tr").each(function (i, e) {
         $(this).find("td:nth-child(1)").css("display", "none");
         $(this).find(".detailNote").find('input').prop('disabled', false);
+        var textVal = $(this).find(".detailNote").find('input:text').val();
+        if (textVal.length == 0) {
+            $(this).find(".detailNote").find('input:text').css({"width":4 + "em"});
+        } else {
+            $(this).find(".detailNote").find('input:text').css({"width":getEm(textVal) + "em"});
+        }
+
+
     });
 }
 // ------------------------------------------------------------------
@@ -375,6 +388,11 @@ jQuery(function ($) {
     });
 
     $("#tableA thead").css('display', 'none');
+
+    // 対象チェックボックスクリックイベントの設定
+    setAllCheckClickEvent($("#allChecked"), $("#tableA"), $("#tableA_chkbox"));
+
+    resetTableBDisplayStyle();
 
     if ($('#tableB tbody tr').length > 0) {
         $('#tableB tbody tr td:nth-child(1)').css('display', 'none');
@@ -1030,10 +1048,6 @@ jQuery(function ($) {
             }
         });
 
-        $('#tableB_no tbody tr td').width($('#tableB_no_head thead tr th').width());
-
-        resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
-
         // tableBのリセット
         for (var i = $('#tableA_chkbox tbody tr').length; i > 0; i--) {
             var row = $('#tableA_chkbox tbody tr:nth-child(' + i + ')');
@@ -1070,6 +1084,10 @@ jQuery(function ($) {
         resetTableADisplayStyle();
 
         resetTableBDisplayStyle();
+
+        $('#tableB_no tbody tr td').width($('#tableB_no_head thead tr th').width());
+
+        resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
 
     });
 
@@ -1151,6 +1169,11 @@ jQuery(function ($) {
             $(this).find('td').first().text(rownum);
         });
     }
+
+    // クリアボタン押下
+    $('#clear').on('click', function () {
+        window.location.reload();
+    });
 
     // プレビューボタン押下
     $('#preview').on('click', function () {
@@ -1236,7 +1259,7 @@ jQuery(function ($) {
     //     window.opener.location.reload();
     // });
 
-    $("#close").on('click', function () {
+    $("#cancel").on('click', function () {
         window.close();
     });
 

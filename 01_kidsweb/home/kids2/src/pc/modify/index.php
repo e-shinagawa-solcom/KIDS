@@ -251,6 +251,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     // 単価
     $td = $doc->createElement("td", convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["curproductprice"], 'unitprice'));
     $td->setAttribute("class", "col6");
+    $td->setAttribute("style", "text-align: right;");
     $trBody->appendChild($td);
 
     // 単位
@@ -261,11 +262,13 @@ foreach ($aryOrderDetail as $orderDetail) {
     // 数量
     $td = $doc->createElement("td", number_format($orderDetail["lngproductquantity"]));
     $td->setAttribute("class", "col8");
+    $td->setAttribute("style", "text-align: right;");
     $trBody->appendChild($td);
 
     // 税抜金額
     $td = $doc->createElement("td", convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $orderDetail["cursubtotalprice"], 'price'));
     $td->setAttribute("class", "col9");
+    $td->setAttribute("style", "text-align: right;");
     $trBody->appendChild($td);
 
     // 消費税区分
@@ -273,7 +276,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     $td->setAttribute("class", "col10");
     $select = $doc->createElement("select");
     $select->setAttribute("onchange", "resetTaxPrice(this,1)");
-    $select->setAttribute("style", "width: 90px;");
+    $select->setAttribute("style", "width: 70px;");
     foreach ($aryTaxclass as $taxclass) {
         $option = $doc->createElement("option", toUTF8($taxclass["strtaxclassname"]));
         $option->setAttribute("value", $taxclass["lngtaxclasscode"]);
@@ -294,11 +297,12 @@ foreach ($aryOrderDetail as $orderDetail) {
     // 消費税率 
     $td = $doc->createElement("td");
     $td->setAttribute("class", "col11");
+    $td->setAttribute("style", "text-align: center;");
     // if($orderDetail["lngcountrycode"] == 81 && (!$lngtaxclasscode || $lngtaxclasscode != 1))
     if(!$lngtaxclasscode || $lngtaxclasscode != 1)
     {
         $select = $doc->createElement("select");
-        $select->setAttribute("style", "width: 90px;");
+        $select->setAttribute("style", "width: 50px;");
         $select->setAttribute("onchange", "resetTaxPrice(this,2)");
         foreach ($taxObj as $tax) {
             $option = $doc->createElement("option", $tax->curtax * 100);
@@ -313,7 +317,8 @@ foreach ($aryOrderDetail as $orderDetail) {
     else
     {
         $td = $doc->createElement("td", $curtax);
-        $td->setAttribute("class", "col112");
+        $td->setAttribute("class", "col11");
+        $td->setAttribute("style", "text-align: center;");
     }
 	$trBody->appendChild($td);
 
@@ -346,6 +351,7 @@ foreach ($aryOrderDetail as $orderDetail) {
     // 消費税額
     $td = $doc->createElement("td", convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], $curtaxprice, 'taxprice'));
     $td->setAttribute("class", "col12");
+    $td->setAttribute("style", "text-align: right;");
     $trBody->appendChild($td);
 
     // 納期

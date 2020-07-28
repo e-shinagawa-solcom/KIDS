@@ -12,15 +12,15 @@ jQuery(function ($) {
     // チェックボックスクリックイベントの設定
     setCheckBoxClickEvent($('input[name="edit"]'), $("#tableA"), $("#tableA_chkbox"), $("#allChecked"));
 
+    resetTableADisplayStyle();
+
+    resetTableBDisplayStyle();
+
     // テーブルAの幅をリセットする
     resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
 
     // テーブルBの幅をリセットする
     resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
-
-    resetTableADisplayStyle();
-
-    resetTableBDisplayStyle();
 
     resetTableRowid($('#tableB_no'));
 
@@ -135,6 +135,11 @@ jQuery(function ($) {
     $(document).on('click', '#btnClose', function () {
         window.open('about:blank', '_self').close();
     });
+
+    $('#decideCancel').on('click', function () {
+        window.close();
+    });
+
     $('#decideRegist').on('click', function () {
 
         // 画面操作を無効する
@@ -233,10 +238,10 @@ jQuery(function ($) {
 
         resetTableRowid($('#tableB_no'));
 
+        resetTableBDisplayStyle();
+
         // テーブルBの幅をリセットする
         resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
-
-        resetTableBDisplayStyle();
 
         // テーブル行クリックイベントの設定
         selectRow('', $("#tableB_no"), $("#tableB"), '');
@@ -331,6 +336,12 @@ function resetTableADisplayStyle() {
         $(this).find(".detailProductUnitCode").find('select').prop('disabled', true);
         $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
         $(this).find(".detailDetailNote").find('input:text').prop('disabled', true);
+        var textVal = $(this).find(".detailDetailNote").find('input:text').val();
+        if (textVal.length == 0) {
+            $(this).find(".detailDetailNote").find('input:text').css({"width":4 + "em"});
+        } else {
+            $(this).find(".detailDetailNote").find('input:text').css({"width":getEm(textVal) + "em"});
+        }
     });
 }
 
@@ -347,6 +358,12 @@ function resetTableBDisplayStyle() {
             $(this).find(".detailProductUnitCode").find('select').prop('disabled', false);
             $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
             $(this).find(".detailDetailNote").find('input:text').prop('disabled', false);
+        }
+        var textVal = $(this).find(".detailDetailNote").find('input:text').val();
+        if (textVal.length == 0) {
+            $(this).find(".detailDetailNote").find('input:text').css({"width":4 + "em"});
+        } else {
+            $(this).find(".detailDetailNote").find('input:text').css({"width":getEm(textVal) + "em"});
         }
     });
     if (hasOrderEnd) {
@@ -369,8 +386,6 @@ function tableBSort() {
         r.trigger('sorton', [[[(sortkey), sortval]]]);
     });
 }
-
-console.log('&sortList=' + getUrlVars(location)["sortList"]);
 function unLock() {
     $.ajax({
         url: '/po/regist/modify.php',

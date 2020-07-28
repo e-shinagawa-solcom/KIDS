@@ -740,7 +740,7 @@ function fncSetOrderDetailBodyHtml($orderDetail, $strDelivery, $strProductUnit)
     $strDisplayValue = htmlspecialchars($orderDetail["strstockitemname"]);
     $strHtml .= "<td class=\"detailStockItemName\">[" . $strDisplayCode . "] " . $strDisplayValue . "</td>";
     // 運搬方法
-    $strHtml .= "<td class=\"detailDeliveryMethodCode\"><select name=\"optDelivery\">" . $strDelivery . "</select></td>";
+    $strHtml .= "<td class=\"detailDeliveryMethodCode\"><select name=\"optDelivery\" style=\"width:80px;margin: 0 0 0 1px;\">" . $strDelivery . "</select></td>";
     // 単価        
     if (!$orderDetail["curproductprice"]) {
         $strDisplayValue = convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], 0, "unitprice");
@@ -752,7 +752,7 @@ function fncSetOrderDetailBodyHtml($orderDetail, $strDelivery, $strProductUnit)
     $strDisplayValue = htmlspecialchars($orderDetail["lngproductquantity"]);
     $strHtml .= "<td class=\"detailProductQuantity\" style=\"text-align:right;\">" . number_format($strDisplayValue) . "</td>";
     // 単位
-    $strHtml .= "<td class=\"detailProductUnitCode\"><select name=\"optProductUnit\">" . $strProductUnit . "</select></td>";
+    $strHtml .= "<td class=\"detailProductUnitCode\"><select name=\"optProductUnit\" style=\"width:50px;margin: 0 0 0 1px;\">" . $strProductUnit . "</select></td>";
     // 税抜金額        
     if (!$orderDetail["cursubtotalprice"]) {
         $strDisplayValue = convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], 0, "price");
@@ -869,7 +869,7 @@ function fncSetOtherOrderDetailBodyHtml($orderDetail, $strDelivery, $strProductU
     $strDisplayValue = htmlspecialchars($orderDetail["strstockitemname"]);
     $strHtml .= "<td class=\"detailStockItemCode\">[" . $strDisplayCode . "] " . $strDisplayValue . "</td>";
     // 運搬方法
-    $strHtml .= "<td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . $strDelivery . "</select></td>";
+    $strHtml .= "<td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\" style=\"width:80px;margin: 0 0 0 1px;\">" . $strDelivery . "</select></td>";
 
     // 単価        
     if (!$orderDetail["curproductprice"]) {
@@ -882,7 +882,7 @@ function fncSetOtherOrderDetailBodyHtml($orderDetail, $strDelivery, $strProductU
     $strDisplayValue = htmlspecialchars($orderDetail["lngproductquantity"]);
     $strHtml .= "<td class=\"detailProductQuantity\" style=\"text-align:right;\">" . number_format($strDisplayValue) . "</td>";
     // 単位
-    $strHtml .= "<td class=\"detailProductUnitCode\"><select name=\"lngproductunitcode\">" . $strProductUnit . "</select></td>";
+    $strHtml .= "<td class=\"detailProductUnitCode\"><select name=\"lngproductunitcode\" style=\"width:50px;margin: 0 0 0 1px;\">" . $strProductUnit . "</select></td>";
     // 税抜金額        
     if (!$orderDetail["cursubtotalprice"]) {
         $strDisplayValue = convertPrice($orderDetail["lngmonetaryunitcode"], $orderDetail["strmonetaryunitsign"], 0, "price");
@@ -1546,10 +1546,10 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
             $aryHtml[] = "  <tr>";
             $aryHtml[] = "      <td class=\"detailStockSubjectCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstocksubjectcode"], $aryResult[$i]["strstocksubjectname"]) . "</td>";
             $aryHtml[] = "      <td class=\"detailStockItemCode\">" . sprintf("[%s] %s", $aryResult[$i]["lngstockitemcode"], $aryResult[$i]["strstockitemname"]) . "</td>";
-            $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\">" . fncGetPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) . "</select></td>";    
+            $aryHtml[] = "      <td class=\"detailDeliveryMethodCode\"><select name=\"lngdeliverymethodcode\" style=\"width:80px;margin: 0 0 0 1px;\">" . fncGetPulldownMenu(2, $aryResult[$i]["lngdeliverymethodcode"], "", $objDB) . "</select></td>";    
             $aryHtml[] = "      <td class=\"detailProductPrice\" style=\"text-align:right;\">" . convertPrice($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], $aryResult[$i]["curproductprice"], 'unitprice') . "</td>";
             $aryHtml[] = "      <td class=\"detailProductQuantity\" style=\"text-align:right;\">" . number_format($aryResult[$i]["lngproductquantity"], 0) . "</td>";
-            $aryHtml[] = "      <td class=\"detailProductUnitCode\"><select name=\"lngproductunitcode\">" . fncGetPulldownMenu(3, $aryResult[$i]["lngproductunitcode"], "", $objDB) . "</select></td>";
+            $aryHtml[] = "      <td class=\"detailProductUnitCode\"><select name=\"lngproductunitcode\" style=\"width:50px;margin: 0 0 0 1px;\">" . fncGetPulldownMenu(3, $aryResult[$i]["lngproductunitcode"], "", $objDB) . "</select></td>";
             $aryHtml[] = "      <td class=\"detailSubtotalPrice\" style=\"text-align:right;\">" . convertPrice($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], $aryResult[$i]["cursubtotalprice"], 'price') . "</td>";
             $aryHtml[] = "      <td class=\"detailDeliveryDate\">" . $aryResult[$i]["dtmdeliverydate"] . "</td>";
             $aryHtml[] = "      <td class=\"detailDetailNote\"><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"". $aryResult[$i]["strdetailnote"] ."\"></td>";

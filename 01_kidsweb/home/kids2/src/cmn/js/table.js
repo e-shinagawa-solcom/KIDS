@@ -230,8 +230,8 @@ function resetTableWidth(table_fix_head, table_fix, table_head, table) {
     for (var i = 1; i <= columnNum; i++) {
         var thwidth = table_head.find('thead tr th:nth-child(' + i + ')').width();
         var tdwidth = table.find('tbody tr td:nth-child(' + i + ')').width();
-        thwidthArry.push(thwidth + 20);
-        tdwidthArry.push(tdwidth + 20);
+        thwidthArry.push(thwidth + 2);
+        tdwidthArry.push(tdwidth + 2);
     }
 
     for (var i = 1; i <= columnNum; i++) {
@@ -248,8 +248,8 @@ function resetTableWidth(table_fix_head, table_fix, table_head, table) {
         }
     }
 
-    table_head.width(width + 100);
-    table.width(width + 100);
+    table_head.width(width + 50);
+    table.width(width + 50);
 }
 
 
@@ -374,7 +374,6 @@ function deleteRowsForPo(tableA, tableA_head, tableA_chkbox, tableA_chkbox_head,
 function removeTableBToTableA(tableBRow, tableA, tableA_chkbox, allCheckObj, key) {
     var trhtml = tableBRow.html();
     var detailnoB = tableBRow.find(key).text();
-    console.log(detailnoB);
     var rownum = 0;
     tableA.find("tbody tr").each(function (i, e) {
         var detailnoA = $(this).find(key).text();
@@ -524,3 +523,13 @@ function rowBottom(table, table_fix) {
 
     resetTableRowid(table_fix);
 }
+
+/* 文字列をバイト数で返す関数 */
+function getEm(str) {
+    var array = (str).match(/[a-zA-Z0-9]+/g) !== null ? (str).match(/[a-zA-Z0-9]+/g) : "";
+    var length = 0;
+    $.each(array, function(index, value) {
+        length += value.length;
+    });
+    return str.length - length + Math.ceil(length/2) + 1;
+};

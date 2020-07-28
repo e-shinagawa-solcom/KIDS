@@ -109,7 +109,7 @@ var isClosedFlg = false;
                             alert("消費税情報の取得に失敗しました。");
                             exit;
                         } else {
-                            taxList = '<select style="width:90px;" onchange="resetTaxPrice(this, 2)">';
+                            taxList = '<select style="width:50px;" onchange="resetTaxPrice(this, 2)">';
                             for (var j = 0; j < data.tax.length; j++) {
                                 var taxRow = data.tax[j];
                                 if (j == 0) {
@@ -158,7 +158,7 @@ var isClosedFlg = false;
                         } else {
                             curtaxprice = Math.floor((row.cursubtotalprice / (1 + (curtax / 100))) * (curtax / 100));
                         }
-                        var select = '<select style="width:90px;" onchange="resetTaxPrice(this, 1)">';
+                        var select = '<select style="width:70px;" onchange="resetTaxPrice(this, 1)">';
                         for (var j = 0; j < data.taxclass.length; j++) {
                             var taxclassRow = data.taxclass[j];
                             if (taxclassRow.lngtaxclasscode == lngtaxclasscode) {
@@ -180,16 +180,16 @@ var isClosedFlg = false;
                             // + '<td class="col3">[' + convertNull(row.strproductcode) + '] ' + convertNull(row.strproductname).substring(0, 28) + '</td>'
                             + '<td class="col4">[' + convertNull(row.lngstocksubjectcode) + '] ' + convertNull(row.strstocksubjectname) + '</td>'
                             + '<td class="col5">[' + convertNull(row.lngstockitemcode) + '] ' + convertNull(row.strstockitemname) + '</td>'
-                            + '<td class="col6">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice, 'unitprice') + '</td>'
+                            + '<td class="col6" style="text-align:right;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.curproductprice, 'unitprice') + '</td>'
                             + '<td class="col7">' + row.strproductunitname + '</td>'
-                            + '<td class="col8">' + convertNumber(row.lngproductquantity, 0) + '</td>'
-                            + '<td class="col9">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice, 'price') + '</td>'
+                            + '<td class="col8" style="text-align:right;">' + convertNumber(row.lngproductquantity, 0) + '</td>'
+                            + '<td class="col9" style="text-align:right;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, row.cursubtotalprice, 'price') + '</td>'
                             // 消費税区分
                             + '<td class="col10">' + select + '</td>'
                             // 消費税率
-                            + '<td class="col11">' + curtaxList + '</td>'
+                            + '<td class="col11" style="text-align:center;">' + curtaxList + '</td>'
                             // 消費税額
-                            + '<td class="col12">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice, 'taxprice') + '</td>'
+                            + '<td class="col12" style="text-align:right;">' + money_format(row.lngmonetaryunitcode, row.strmonetaryunitsign, curtaxprice, 'taxprice') + '</td>'
                             + '<td class="dtmdeliverydate">' + row.dtmdeliverydate + '</td>'
                             + '<td>' + convertNull(row.strnote) + '</td>'
                             + '<td class="strmoldno">' + convertNull(row.strmoldno) + '</td>'
@@ -239,10 +239,13 @@ var isClosedFlg = false;
     $('select[name="lngMonetaryRateCode"]').on('change', function () {
         getMonetaryRate();
     });
+    
+    $('#clear').on('click', function () {
+        window.location.reload();
+    });
 
     // 登録ボタン押下時の処理
     btnRegist.on('click', function () {
-
 
         var dtmStockAppDate = $('input[name="dtmStockAppDate"]').val();
 

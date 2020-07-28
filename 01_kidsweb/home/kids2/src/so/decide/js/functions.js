@@ -2,6 +2,7 @@
     setTextInputMode();
 
     resetTableADisplayStyle();
+    resetTableBDisplayStyle();
     // テーブルAの幅をリセットする
     resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
     // テーブルBの幅をリセットする
@@ -20,7 +21,6 @@
         $('input[name="strGoodsCode"]').removeClass('disTxt05L');
         $('input[name="strGoodsCode"]').addClass('TxtStyle05L');
     }
-console.log(window.opener.location.href + '&sortList=' + getUrlVars(window.location)["sortList"]);
     var lockId = "lockId";
     // ウィンドウクローズ処理
     window.onbeforeunload = function () {
@@ -203,6 +203,10 @@ console.log(window.opener.location.href + '&sortList=' + getUrlVars(window.locat
         rowBottom($("#tableB"), $("#tableB_no"));
     });
 
+    // キャンセルイベント
+    $('#decideCancel').on('click', function () {
+        window.close();
+    });
     // 確定登録イベント
     $('#decideRegist').on('click', function () {
         // 顧客品番が空の場合、エラー
@@ -470,7 +474,13 @@ function resetTableADisplayStyle() {
         $(this).find("#strcustomerreceivecode").find('input:text').prop('disabled', true);
         $(this).find("#lngproductunitcode").find('select').prop('disabled', true);
         $(this).find("#lngunitquantity").find('input:text').prop('disabled', true);
-        $(this).find("#strdetailnote").find('input:text').prop('disabled', true);
+        $(this).find("#strdetailnote").find('input:text').prop('disabled', true);        
+        var textVal = $(this).find("#strdetailnote").find('input:text').val();
+        if (textVal.length == 0) {
+            $(this).find("#strdetailnote").find('input:text').css({"width":4 + "em"});
+        } else {
+            $(this).find("#strdetailnote").find('input:text').css({"width":getEm(textVal) + "em"});
+        }
     });
 }
 
@@ -480,6 +490,12 @@ function resetTableBDisplayStyle() {
         $(this).find("#strcustomerreceivecode").find('input:text').prop('disabled', false);
         $(this).find("#lngproductunitcode").find('select').prop('disabled', false);
         $(this).find("#lngunitquantity").find('input:text').prop('disabled', false);
-        $(this).find("#strdetailnote").find('input:text').prop('disabled', false);
+        $(this).find("#strdetailnote").find('input:text').prop('disabled', false);        
+        var textVal = $(this).find("#strdetailnote").find('input:text').val();
+        if (textVal.length == 0) {
+            $(this).find("#strdetailnote").find('input:text').css({"width":4 + "em"});
+        } else {
+            $(this).find("#strdetailnote").find('input:text').css({"width":getEm(textVal) + "em"});
+        }
     });
 }

@@ -66,6 +66,7 @@
 .table-decide-description th,
 .table-decide-description td{
     border: 1px solid #798787;
+    white-space: nowrap;
 }
 .table-decide-fix
 {

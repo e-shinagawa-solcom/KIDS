@@ -263,7 +263,7 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("style", "text-align:center;");
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
-    $text->setAttribute("style", "ime-mode:disabled;");
+    $text->setAttribute("style", "ime-mode:disabled;width:90px;margin: 0 0 0 1px;");
     $text->setAttribute("class", "form-control form-control-sm");
     $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
     $td->appendChild($text);
@@ -286,12 +286,6 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("id", "dtmdeliverydate");
     $trBody->appendChild($td);
 
-    // 売上分類
-    $textContent = "[" . $detailResult["lngsalesdivisioncode"] . "]" . " " . $detailResult["strsalesdivisionname"];
-    $td = $doc->createElement("td", toUTF8($textContent));
-    $td->setAttribute("id", "lngsalesdivisioncode");
-    $trBody->appendChild($td);
-
     // 売上区分
     $textContent = "[" . $detailResult["lngsalesclasscode"] . "]" . " " . $detailResult["strsalesclassname"];
     $td = $doc->createElement("td", toUTF8($textContent));
@@ -302,6 +296,7 @@ foreach ($aryDetailResult as $detailResult) {
     $textContent = convertPrice($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["curproductprice"], "unitprice");
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "curproductprice");
+    $td->setAttribute("style", "text-align:right;");
     $trBody->appendChild($td);
 
     // 入数
@@ -318,12 +313,14 @@ foreach ($aryDetailResult as $detailResult) {
     $textContent = number_format($lngproductquantity);
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngproductquantity_re");
+    $td->setAttribute("style", "text-align:right;");
     $trBody->appendChild($td);
 
     // 単位
     $td = $doc->createElement("td");
     $td->setAttribute("id", "lngproductunitcode");
     $select = $doc->createElement("select");
+    $select->setAttribute("style", "width:50px;margin: 0 0 0 1px;");
     foreach ($aryProductUnit as $productunit) {
         $option = $doc->createElement("option", $productunit["strproductunitname"]);
         $option->setAttribute("value", $productunit["lngproductunitcode"]);
@@ -349,13 +346,14 @@ foreach ($aryDetailResult as $detailResult) {
         $td = $doc->createElement("td", $lngunitquantity);
     }
     $td->setAttribute("id", "lngunitquantity");
-    $td->setAttribute("style", "width:100px;");
+    $td->setAttribute("style", "width:100px;text-align:right;");
     $trBody->appendChild($td);
 
     // 小計
     $textContent = convertPrice($detailResult["lngmonetaryunitcode"], $detailResult["strmonetaryunitsign"], $detailResult["cursubtotalprice"], "price");
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "cursubtotalprice");
+    $td->setAttribute("style", "text-align:right;");
     $trBody->appendChild($td);
 
     // 備考
@@ -364,7 +362,7 @@ foreach ($aryDetailResult as $detailResult) {
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
     $text->setAttribute("class", "form-control form-control-sm");
-    $text->setAttribute("style", "width:240px;");
+    $text->setAttribute("style", "width:240px;margin: 0 0 0 1px;");
     $text->setAttribute("value", toUTF8($detailResult["strdetailnote"]));
     $td->appendChild($text);
     $trBody->appendChild($td);
@@ -407,6 +405,13 @@ foreach ($aryDetailResult as $detailResult) {
     $textContent = $detailResult["lngrevisionno"];
     $td = $doc->createElement("td", toUTF8($textContent));
     $td->setAttribute("id", "lngrevisionno");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 売上分類
+    $textContent = "[" . $detailResult["lngsalesdivisioncode"] . "]" . " " . $detailResult["strsalesdivisionname"];
+    $td = $doc->createElement("td", toUTF8($textContent));
+    $td->setAttribute("id", "lngsalesdivisioncode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 

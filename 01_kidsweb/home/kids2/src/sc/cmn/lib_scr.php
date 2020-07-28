@@ -593,24 +593,27 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         $strDisplayValue = "[" . htmlspecialchars($aryDetail[$i]["lngsalesclasscode"]) . "] "
         . htmlspecialchars($aryDetail[$i]["strsalesclassname"]);
         $detail_body_html .= "<td class='detailSalesClassName'>" . $strDisplayValue . "</td>";
-        //納期
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["dtmdeliverydate"]);
-        $detail_body_html .= "<td class='detailDeliveryDate'>" . $strDisplayValue . "</td>";
-        //入数
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngunitquantity"]);
-        $detail_body_html .= "<td class='detailUnitQuantity'>" . $strDisplayValue . "</td>";
+        //単価
+        $strDisplayValue = convertPrice($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], $aryDetail[$i]["curproductprice"], 'unitprice');
+        $detail_body_html .= "<td class='detailProductPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
         //数量
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngproductquantity"]);
         $detail_body_html .= "<td class='detailProductQuantity' style='text-align:right;'>" . number_format($strDisplayValue) . "</td>";
         //単位
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strproductunitname"]);
         $detail_body_html .= "<td class='detailProductUnitName'>" . $strDisplayValue . "</td>";
-        //単価
-        $strDisplayValue = convertPrice($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], $aryDetail[$i]["curproductprice"], 'unitprice');
-        $detail_body_html .= "<td class='detailProductPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
+        //入数
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngunitquantity"]);
+        $detail_body_html .= "<td class='detailUnitQuantity' style='text-align:right;'>" . $strDisplayValue . "</td>";
         //税抜金額
         $strDisplayValue = convertPrice($aryDetail[$i]["lngmonetaryunitcode"], $aryDetail[$i]["strmonetaryunitsign"], $aryDetail[$i]["cursubtotalprice"], 'price');
         $detail_body_html .= "<td class='detailSubTotalPrice_dis' style='text-align:right;'>" . $strDisplayValue . "</td>";
+        //納期
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["dtmdeliverydate"]);
+        $detail_body_html .= "<td class='detailDeliveryDate'>" . $strDisplayValue . "</td>";
+        // 備考
+        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strnote"]);
+        $detail_body_html .= "<td class='detailNote'><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"" . $strDisplayValue . "\"></td>";
         //顧客品番
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["strgoodscode"]);
         $detail_body_html .= "<td class='detailGoodsCode'>" . $strDisplayValue . "</td>";
@@ -623,11 +626,7 @@ function fncGetReceiveDetailHtml($aryDetail, $isCreateNew)
         } else {
             $strDisplayValue = "";
         }
-        $detail_body_html .= "<td class='detailSalesDeptName'>" . $strDisplayValue . "</td>";
-        // 備考
-        $strDisplayValue = htmlspecialchars($aryDetail[$i]["strnote"]);
-        $detail_body_html .= "<td class='detailNote'><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"" . $strDisplayValue . "\"></td>";
-        //受注番号（明細登録用）
+        $detail_body_html .= "<td class='detailSalesDeptName'>" . $strDisplayValue . "</td>";//受注番号（明細登録用）
         $strDisplayValue = htmlspecialchars($aryDetail[$i]["lngreceiveno"]);
         $detail_body_html .= "<td class='forEdit detailReceiveNo'>" . $strDisplayValue . "</td>";
         //受注明細番号（明細登録用）

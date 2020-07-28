@@ -9,11 +9,14 @@ jQuery(function ($) {
     window.onbeforeunload = unLock;
 
     scanAllCheckbox($("#tableA_chkbox"), $("#allChecked"));
+
+    resetTableADisplayStyle();
+
+    resetTableBDisplayStyle();
+    
     resetTableWidth($("#tableA_chkbox_head"), $("#tableA_chkbox"), $("#tableA_head"), $("#tableA"));
     // テーブルBの幅をリセットする
     resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
-    resetTableADisplayStyle();
-    resetTableBDisplayStyle();
     // テーブル行クリックイベントの設定
     selectRow('hasChkbox', $("#tableA_chkbox"), $("#tableA"), $("#allChecked"));
     // テーブル行クリックイベントの設定
@@ -231,10 +234,9 @@ jQuery(function ($) {
 
         resetTableRowid($('#tableB_no'));
 
+        resetTableBDisplayStyle();
         // テーブルBの幅をリセットする
         resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
-
-        resetTableBDisplayStyle();
 
         // テーブル行クリックイベントの設定
         selectRow('', $("#tableB_no"), $("#tableB"), '');
@@ -324,8 +326,8 @@ jQuery(function ($) {
             unlockScreen("lockId");
         });
     });
-    $('#clear').on('click', function () {
-        window.location.reload();
+    $('#decideCancel').on('click', function () {
+        window.close();
     });
     console.log('&sortList=' + getUrlVars(location)["sortList"]);
     function unLock() {
@@ -357,6 +359,12 @@ jQuery(function ($) {
             $(this).find(".detailProductUnitCode").find('select').prop('disabled', true);
             $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', true);
             $(this).find(".detailNote").find('input:text').prop('disabled', true);
+            var textVal = $(this).find(".detailNote").find('input:text').val();
+            if (textVal.length == 0) {
+                $(this).find(".detailNote").find('input:text').css({"width":4 + "em"});
+            } else {
+                $(this).find(".detailNote").find('input:text').css({"width":getEm(textVal) + "em"});
+            }
         });
     }
 
@@ -365,6 +373,12 @@ jQuery(function ($) {
             $(this).find(".detailProductUnitCode").find('select').prop('disabled', false);
             $(this).find(".detailDeliveryMethodCode").find('select').prop('disabled', false);
             $(this).find(".detailNote").find('input:text').prop('disabled', false);
+            var textVal = $(this).find(".detailNote").find('input:text').val();
+            if (textVal.length == 0) {
+                $(this).find(".detailNote").find('input:text').css({"width":4 + "em"});
+            } else {
+                $(this).find(".detailNote").find('input:text').css({"width":getEm(textVal) + "em"});
+            }
         });
     }
 

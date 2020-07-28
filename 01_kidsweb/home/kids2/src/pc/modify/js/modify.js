@@ -13,5 +13,9 @@
     setAllCheckClickEvent($("#allChecked"), $("#tableB"), $("#tableB_chkbox"));
 
     $("select[name='lngMonetaryRateCode'] option:not(:selected)").prop('disabled', true);
+    
+    $('#cancel').on('click', function () {
+        window.close();
+    });
 
 })();

@@ -406,9 +406,6 @@ function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     
     $startRow -= 1;
     
-    if (strcmp($currencyClass, '円') == 0) {
-        $sheet->setCellValue('H10', "金額（￥）");
-    }
     $sheet->setCellValue('P'. ($startRow + 9), "通貨区分：" . $currencyClass);
     $sheet->setCellValue('B'. ($startRow + 7), sprintf('%d年%d月', substr($data["openYm"], 0, 4), substr($data["openYm"], 5, 2)));
     if ($data["shipYm"] != "") {
@@ -421,9 +418,9 @@ function fncSetReportSix($objDB, $spreadsheet, $sheetname, $currencyClass, $bank
     $sheet->setCellValue('H'. ($startRow + 8), $data["bankformalname"]);
 
     if (strcmp($currencyClass, '円') == 0) {
-        $pricesign = '金額（＄）';
-    } else {
         $pricesign = '金額（￥）';
+    } else {
+        $pricesign = '金額（＄）';
     }
     $sheet->setCellValue('H'. ($startRow + 10), $pricesign);
 
