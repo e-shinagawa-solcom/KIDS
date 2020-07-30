@@ -334,12 +334,13 @@ foreach ($aryDetailResult as $detailResult) {
 
     // 入数
     if ($detailResult["lngproductunitcode"] == 2) {
+        $length = strlen(trim($lngunitquantity));
         $td = $doc->createElement("td");
         $text = $doc->createElement("input");
         $text->setAttribute("type", "text");
         $text->setAttribute("name", "unitQuantity");
         $text->setAttribute("class", "form-control form-control-sm");
-        $text->setAttribute("style", "width:90px;");
+        $text->setAttribute("style", "width:". $length. "em;");
         $text->setAttribute("value", $lngunitquantity);
         $td->appendChild($text);
     } else {

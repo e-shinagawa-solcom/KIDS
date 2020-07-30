@@ -357,7 +357,7 @@ function selectChange() {
                 lngunitquantitynew = lngcartonquantity;
                 // 数量 = 製品数量/カートン入数
                 lngproductquantitynew = lngproductquantity / lngunitquantitynew;
-                var html = '<input type="text" name="unitQuantity" class="form-control form-control-sm" style="width:90px;" value="' + lngunitquantitynew + '">';
+                var html = '<input type="text" name="unitQuantity" class="form-control form-control-sm" style="width:' + getEm(lngunitquantitynew.toString()) + 'em;" value="' + lngunitquantitynew + '">';
                 $(this).parent().parent().find('#lngunitquantity').html(html);
             } else {
                 $(this).parent().parent().find('#lngunitquantity').text(lngunitquantitynew);
@@ -401,6 +401,9 @@ function unitQuantityChange() {
             curproductprice = cursubtotalprice / lngproductquantitynew;
             // 単価
             $(this).parent().parent().find('#curproductprice').text(money_format(lngmonetaryunitcode, strmonetaryunitsign, curproductprice, 'unitprice'));
+            
+            // テーブルBの幅をリセットする
+            resetTableWidth($("#tableB_no_head"), $("#tableB_no"), $("#tableB_head"), $("#tableB"));
         }
     });
 }

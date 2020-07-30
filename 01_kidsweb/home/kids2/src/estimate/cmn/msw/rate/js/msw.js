@@ -30,7 +30,7 @@ var apply = function (docMsw) {
         return false;
     }
     if (rate != "" && !$.isNumeric(rate)) {
-        alert("円価換算額は半角数字で入力してください。");
+        alert("適用レートは半角数字で入力してください。");
         return false;
     }
 

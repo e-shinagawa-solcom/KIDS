@@ -765,7 +765,7 @@ function fncSetOrderDetailBodyHtml($orderDetail, $strDelivery, $strProductUnit)
     $strHtml .= "<td class=\"detailDeliveryDate\">" . $strDisplayValue . "</td>";
     // 備考
     $strDisplayValue = htmlspecialchars($orderDetail["strnote"]);
-    $strHtml .= "<td class=\"detailNote\"><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"". $strDisplayValue ."\"></td>";
+    $strHtml .= "<td class=\"detailNote\"><input type=\"text\" class=\"form-control form-control-sm\" style=\"width:240px;\" value=\"". $strDisplayValue ."\"></td>";
     // 発注番号(明細登録用)
     $strDisplayCode = htmlspecialchars($orderDetail["lngorderno"]);
     $strHtml .= "<td class=\"forEdit detailOrderNo\">" . $strDisplayCode . "</td>";
@@ -895,7 +895,7 @@ function fncSetOtherOrderDetailBodyHtml($orderDetail, $strDelivery, $strProductU
     $strHtml .= "<td class=\"detailDeliveryDate\">" . $strDisplayValue . "</td>";
     // 備考
     $strDisplayValue = htmlspecialchars($orderDetail["strnote"]);
-    $strHtml .= "<td class=\"detailDetailNote\"><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"". $strDisplayValue ."\"></td>";
+    $strHtml .= "<td class=\"detailDetailNote\"><input type=\"text\" class=\"form-control form-control-sm\" style=\"width:240px;\" value=\"". $strDisplayValue ."\"></td>";
     $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderno\" value=\"" . $orderDetail["lngorderno"] . "\"></td>";
     $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderrevisionno\" value=\"" . $orderDetail["lngorderrevisionno"] . "\"></td>";
     $strHtml .= "<td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $orderDetail["lngorderdetailno"] . "\"></td>";
@@ -1552,7 +1552,7 @@ function fncGetPurchaseOrderDetailHtml($aryResult, $objDB)
             $aryHtml[] = "      <td class=\"detailProductUnitCode\"><select name=\"lngproductunitcode\" style=\"width:50px;margin: 0 0 0 1px;\">" . fncGetPulldownMenu(3, $aryResult[$i]["lngproductunitcode"], "", $objDB) . "</select></td>";
             $aryHtml[] = "      <td class=\"detailSubtotalPrice\" style=\"text-align:right;\">" . convertPrice($aryResult[$i]["lngmonetaryunitcode"], $aryResult[$i]["strmonetaryunitsign"], $aryResult[$i]["cursubtotalprice"], 'price') . "</td>";
             $aryHtml[] = "      <td class=\"detailDeliveryDate\">" . $aryResult[$i]["dtmdeliverydate"] . "</td>";
-            $aryHtml[] = "      <td class=\"detailDetailNote\"><input type=\"text\" class=\"form-control form-control-sm txt-kids\" style=\"width:240px;\" value=\"". $aryResult[$i]["strdetailnote"] ."\"></td>";
+            $aryHtml[] = "      <td class=\"detailDetailNote\"><input type=\"text\" class=\"form-control form-control-sm\" style=\"width:240px;\" value=\"". $aryResult[$i]["strdetailnote"] ."\"></td>";
             $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderno\" value=\"" . $aryResult[$i]["lngorderno"] . "\"></td>";
             $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderrevisionno\" value=\"" . $aryResult[$i]["lngorderrevisionno"] . "\"></td>";
             $aryHtml[] = "      <td style=\"display:none;\"><input type=\"hidden\" name=\"lngorderdetailno\" value=\"" . $aryResult[$i]["lngorderdetailno"] . "\"></td>";
