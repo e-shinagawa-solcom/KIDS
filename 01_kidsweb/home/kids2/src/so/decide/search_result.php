@@ -244,7 +244,7 @@ foreach ($aryDetailResult as $detailResult) {
     $td->setAttribute("style", "text-align:center;");
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
-    $text->setAttribute("style", "ime-mode:disabled;");
+    $text->setAttribute("style", "ime-mode:disabled;width:90px;margin: 0 0 0 1px;");
     $text->setAttribute("class", "form-control form-control-sm");
     $text->setAttribute("value", $detailResult["strcustomerreceivecode"]);
     $td->appendChild($text);
@@ -263,12 +263,6 @@ foreach ($aryDetailResult as $detailResult) {
     // 納期
     $td = $doc->createElement("td", $detailResult["dtmdeliverydate"]);
     $td->setAttribute("id", "dtmdeliverydate");
-    $trBody->appendChild($td);
-
-    // 売上分類
-    $textContent = "[" . $detailResult["lngsalesdivisioncode"] . "]" . " " . $detailResult["strsalesdivisionname"];
-    $td = $doc->createElement("td", $textContent);
-    $td->setAttribute("id", "lngsalesdivisioncode");
     $trBody->appendChild($td);
 
     // 売上区分
@@ -302,6 +296,7 @@ foreach ($aryDetailResult as $detailResult) {
     $td = $doc->createElement("td");
     $td->setAttribute("id", "lngproductunitcode");
     $select = $doc->createElement("select");
+    $select->setAttribute("style", "width:50px;margin: 0 0 0 1px;");
     foreach ($aryProductUnit as $productunit) {
         $option = $doc->createElement("option", $productunit["strproductunitname"]);
         $option->setAttribute("value", $productunit["lngproductunitcode"]);
@@ -315,12 +310,13 @@ foreach ($aryDetailResult as $detailResult) {
 
     // 入数
     if ($detailResult["lngproductunitcode"] == 2) {
+        $length = strlen(trim($lngunitquantity));
         $td = $doc->createElement("td");
         $text = $doc->createElement("input");
         $text->setAttribute("type", "text");
         $text->setAttribute("name", "unitQuantity");
         $text->setAttribute("class", "form-control form-control-sm");
-        $text->setAttribute("style", "width:90px;");
+        $text->setAttribute("style", "width:". $length. "em;");
         $text->setAttribute("value", $lngunitquantity);
         $td->appendChild($text);
     } else {
@@ -342,7 +338,7 @@ foreach ($aryDetailResult as $detailResult) {
     $text = $doc->createElement("input");
     $text->setAttribute("type", "text");
     $text->setAttribute("class", "form-control form-control-sm txt-kids");
-    $text->setAttribute("style", "width:240px;");
+    $text->setAttribute("style", "width:240px;margin: 0 0 0 1px;");
     $text->setAttribute("value", toUTF8($detailResult["strdetailnote"]));
     $td->appendChild($text);
     $trBody->appendChild($td);
@@ -385,6 +381,13 @@ foreach ($aryDetailResult as $detailResult) {
     $textContent = $detailResult["lngrevisionno"];
     $td = $doc->createElement("td", $textContent);
     $td->setAttribute("id", "lngrevisionno");
+    $td->setAttribute("style", "display:none");
+    $trBody->appendChild($td);
+
+    // 売上分類
+    $textContent = "[" . $detailResult["lngsalesdivisioncode"] . "]" . " " . $detailResult["strsalesdivisionname"];
+    $td = $doc->createElement("td", $textContent);
+    $td->setAttribute("id", "lngsalesdivisioncode");
     $td->setAttribute("style", "display:none");
     $trBody->appendChild($td);
 
