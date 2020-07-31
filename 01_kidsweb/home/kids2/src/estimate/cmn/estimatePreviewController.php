@@ -134,7 +134,7 @@ class estimatePreviewController {
             workSheetConst::INCHARGE_USER_CODE => $inchargeUserDisplay->struserdisplaycode. ":". $inchargeUserDisplay->struserdisplayname,
             workSheetConst::DEVELOP_USER_CODE => $developUserDisplay ? $developUserDisplay->struserdisplaycode. ":". $developUserDisplay->struserdisplayname : '',
             workSheetConst::CARTON_QUANTITY => $product->lngcartonquantity,
-            workSheetConst::PRODUCTION_QUANTITY => $product->lngproductionquantity,
+            // workSheetConst::PRODUCTION_QUANTITY => $product->lngproductionquantity,
         );
 
         $this->product = $data;

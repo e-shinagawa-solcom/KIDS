@@ -66,7 +66,21 @@ if ($aryResult["lngreceivestatuscode"] != DEF_RECEIVE_ORDER) {
 
 $objDB->transactionBegin();
 // 確定処理
-foreach ($aryData["detailData"] as $data) {    
+foreach ($aryData["detailData"] as $data) {        
+    // 受注更新
+    $aryQuery = array();
+    $aryQuery[] = "UPDATE m_receive ";
+    $aryQuery[] = "set strcustomerreceivecode = '" . $data["strCustomerReceiveCode"] . "' ";
+    $aryQuery[] = "where lngreceiveno = " . $data["lngReceiveNo"] . " ";
+    $aryQuery[] = "and lngrevisionno = " . $data["lngRevisionNo"] . " ";
+    $strQuery = implode("\n", $aryQuery);
+
+    list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
+
+    $objDB->freeResult($lngResultID);
+
+    // 受注明細更新
+    unset($aryQuery);
     // 受注明細更新
     $aryQuery[] = "UPDATE t_receivedetail ";
     $aryQuery[] = "set lngproductquantity = " . str_replace(",", "", $data["lngProductQuantity"]) . " ";
@@ -78,8 +92,6 @@ foreach ($aryData["detailData"] as $data) {
     $aryQuery[] = "and lngreceivedetailno = " . $data["lngReceiveDetailNo"] . " ";
     $aryQuery[] = "and lngrevisionno = " . $data["lngRevisionNo"] . " ";
     $strQuery = implode("\n", $aryQuery);
-    //結果配列
-    $result = array();
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     $objDB->freeResult($lngResultID);
