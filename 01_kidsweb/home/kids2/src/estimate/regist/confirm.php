@@ -210,13 +210,6 @@
 					// 輸入費用、関税については個別処理を行う為、対象の行番号を配列に格納する
 					if ($objRow->invalidFlag != true) {
 						if ($objRow->divisionSubjectCode === DEF_STOCK_SUBJECT_CODE_CHARGE) {
-/*
-							if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_IMPORT_COST) {
-								$importCostRowList[] = $row;
-							} else if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_TARIFF) {
-								$tariffRowList[] = $row;
-							}
-*/
 							if ($objRow->classItemCode === DEF_STOCK_ITEM_CODE_TARIFF) {
 								$tariffRowList[] = $row;
 							}
@@ -298,37 +291,9 @@
 			}
 		}
 
-
-
-		// // 標準割合のチェック
-		// $standardRateCell = $cellAddressList[workSheetConst::STANDARD_RATE];
-		// $standardRate = $objSheet->sheet->getCell($standardRateCell)->getCalculatedValue();
-		// if ($standardRateMaster != $standardRate) {
-		// 	$companyLocalRate = $standardRateMaster ? number_format(($standardRateMaster * 100), 2, '.', ''). "%" : '-';
-		// 	$sheetRate = $standardRate ? number_format(($standardRate * 100), 2, '.', ''). "%" : '-';
-		// 	$difference[] = array(
-		// 		'delivery' => '-',
-		// 		'monetary' => '標準割合',
-		// 		'temporaryRate' => $companyLocalRate,
-		// 		'sheetRate' => $sheetRate
-		// 	);
-		// }
-
 		// 行オブジェクトを基にした処理
 		foreach ($objRowList as $row => $objRow) {
 			$columnList = $objRow->columnNumberList;
-			
-			// // メッセージコードの取得
-			// $messageOfConversionRate = $objRow->message['conversionRate'];
-
-			// ブックの適用レートがDBの通貨レートと異なる場合
-			// if ($messageOfConversionRate === DEF_MESSAGE_CODE_RATE_DIFFER) {
-			// 	// ブックオブジェクトの通貨レートの置換
-			// 	$column = $columnList['conversionRate'];
-			// 	$convarsionRateCell = $column.$row;
-			// 	$acquiredRate = $objRow->acquiredRate;
-			// 	$objSheet->sheet->getCell($convarsionRateCell)->setValue($acquiredRate);
-			// }
 
 			// ブックオブジェクトの小計の置換
 			$column = $columnList['subtotal'];
@@ -355,6 +320,15 @@
 		// バリデーションでエラーが発生した場合はエラーメッセージ出力画面に遷移する
 		if ($errorMessage) {
 			makeHTML::outputErrorWindow($errorMessage);
+		}
+
+		// 生産数チェック
+		if ($calcProductionQuantity != $objHeader->outputRegistData()["productionquantity"]) {
+			$str = array(
+				"ヘッダ部",
+				"生産数",
+			);
+			makeHTML::outputErrorWindow(fncOutputError(DEF_MESSAGE_CODE_FORMAT_ERROR, DEF_WARNING, $str, FALSE, '', $objDB)); 
 		}
 
 		$objCal = new registOtherCellsController();
