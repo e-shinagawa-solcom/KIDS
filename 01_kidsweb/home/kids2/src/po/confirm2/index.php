@@ -294,6 +294,9 @@ if ($aryData["payConditionDisableFlag"] == 'false') {
     $aryData = fncPayConditionCodeMatch($aryData, $aryHeadColumnNames, $_POST["aryDetail"], $objDB);
 }
 
+// 発注書NO.
+$aryData["strOrderCode"] = $aryData["strOrderCode"] . "_" . $aryData["lngRevisionNo"];
+
 $objDB->close();
 
 // テンプレート読み込み
@@ -302,7 +305,6 @@ $objTemplate = new clsTemplate();
 $objTemplate->getTemplate("po/confirm2/parts.tmpl");
 
 // テンプレート生成
-
 $objTemplate->replace($aryHeadColumnNames);
 $objTemplate->replace($aryData);
 $objTemplate->complete();

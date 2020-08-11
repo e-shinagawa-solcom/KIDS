@@ -40,6 +40,7 @@ function lcInit(json_obj) {
 		}
 	})
 		.done(function (data) {
+			console.log(data);
 			var data = JSON.parse(data);
 			if (data != false) {
 				//LC情報
@@ -329,9 +330,9 @@ function updateBtn() {
 	}
 
 	// 状態が７の場合、
-	if (lc_data.lcstate == 7) {
-		alert("アメンドを解除します。");
-	}
+	// if (lc_data.lcstate == 7) {
+	// 	alert("アメンドを解除します。");
+	// }
 	//更新処理
 	$("#masking_loader").css("display", "block");
 	$.ajax({

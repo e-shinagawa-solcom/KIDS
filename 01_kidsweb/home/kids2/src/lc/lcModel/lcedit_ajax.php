@@ -80,6 +80,34 @@ function getLcEdit($objDB, $lcModel, $data)
     $result["portplace_list"] = fncGetPortplace($objDB);
     //銀行リスト取得
     $result["bank_list"] = $lcModel->getBankList();
+    // パラメータの状態 = 7の場合
+    if ($result["lc_data"]->lcstate == 7 && $result["lc_data"]->bankreqdate == "") {
+        if (intval($data["poreviseno"]) > 0) {
+            $poreviseno = intval($data["poreviseno"]);
+            do {
+                $param = $data;
+                $param["poreviseno"] = sprintf("%02d", $poreviseno - 1);
+                // 同一POの直近リバイズデータを取得する
+                $lcinfo = fncGetLcInfoSingle($objDB, $param);
+                // 取得したデータの銀行依頼日が空の場合、
+                if ($lcinfo->bankreqdate != "") {
+                    $result["lc_data"]->bankreqdate = $lcinfo->bankreqdate;
+                    $result["lc_data"]->lcamopen = $lcinfo->lcamopen;
+                    $result["lc_data"]->validmonth = $lcinfo->validmonth;
+                    $result["lc_data"]->usancesettlement = $lcinfo->usancesettlement;
+                    $result["lc_data"]->bldetail1date = $lcinfo->bldetail1date;
+                    $result["lc_data"]->bldetail1money = $lcinfo->bldetail1money;
+                    $result["lc_data"]->bldetail2date = $lcinfo->bldetail2date;
+                    $result["lc_data"]->bldetail2money = $lcinfo->bldetail2money;
+                    $result["lc_data"]->bldetail3date = $lcinfo->bldetail3date;
+                    $result["lc_data"]->bldetail3money = $lcinfo->bldetail3money;
+                    break;
+                }
+                $poreviseno = $poreviseno - 1;
+            } while ($poreviseno != 0);
+        }
+    }
+
     return $result;
 }
 
@@ -92,28 +120,28 @@ function getLcEdit($objDB, $lcModel, $data)
  */
 function updateLcEdit($objDB, $lcModel, $data)
 {
-    $bankreqchk = $data["bankreqchk"];
-    if ($bankreqdate == "") {
-        if (intval($data["poreviseno"]) > 0) {
-            $poreviseno = intval($data["poreviseno"]);
-            do {
-                $param = $data;
-                $param["poreviseno"] = sprintf("%02d", $poreviseno - 1);
-                // 同一POの直近リバイズデータを取得する
-                $lcinfo = fncGetLcInfoSingle($objDB, $param);
-                // 取得したデータの銀行依頼日が空の場合、
-                if ($lcinfo != null) {
-                    if ($lcinfo->bankreqdate != "") {
-                        $data["bankreqdate"] = $lcinfo->bankreqdate;
-                        $data["lcamopen"] = $lcinfo->lcamopen;
-                        $data["validmonth"] = $lcinfo->validmonth;
-                        break;
-                    }
-                }
-                $poreviseno = $poreviseno - 1;
-            } while ($poreviseno != 0);
-        }
-    }
+    // $bankreqchk = $data["bankreqchk"];
+    // if ($bankreqdate == "") {
+    //     if (intval($data["poreviseno"]) > 0) {
+    //         $poreviseno = intval($data["poreviseno"]);
+    //         do {
+    //             $param = $data;
+    //             $param["poreviseno"] = sprintf("%02d", $poreviseno - 1);
+    //             // 同一POの直近リバイズデータを取得する
+    //             $lcinfo = fncGetLcInfoSingle($objDB, $param);
+    //             // 取得したデータの銀行依頼日が空の場合、
+    //             if ($lcinfo != null) {
+    //                 if ($lcinfo->bankreqdate != "") {
+    //                     $data["bankreqdate"] = $lcinfo->bankreqdate;
+    //                     $data["lcamopen"] = $lcinfo->lcamopen == "" ? $data["lcamopen"] :$lcinfo->lcamopen;
+    //                     $data["validmonth"] = $lcinfo->validmonth == "" ? $data["validmonth"] :$lcinfo->validmonth;
+    //                     break;
+    //                 }
+    //             }
+    //             $poreviseno = $poreviseno - 1;
+    //         } while ($poreviseno != 0);
+    //     }
+    // }
     // パラメータの状態 <> 7の場合
     if ($data["lcstate"] != 7) {
         if ($data["lcstate"] == 9) {

@@ -1184,9 +1184,8 @@ function fncUpdateLcinfoToAmandCancel($objDB, $data)
         ($data["portplace"] == "") ? null : $data["portplace"],
         ($data["bankreqdate"] == "") ? null : $data["bankreqdate"],
         ($data["lcamopen"] == "") ? null : $data["lcamopen"],
-        ($data["validmonth"] == "") ? null : $data["validmonth"],
+        ($data["validmonth"] == "")  ? null : str_replace("/", "", $data["validmonth"]),
         $data["pono"], $data["poreviseno"]);
-
     $result = pg_query_params($objDB->ConnectID, $sql, $bind);
 
     if (!$result) {

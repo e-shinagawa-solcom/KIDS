@@ -1369,7 +1369,7 @@ function fncCancelOrderHtml($aryOrder)
         $aryHtml[] = "    <td class=\"Segs\">[" . $row["strgroupdisplaycode"] . "] " . $row["strgroupdisplayname"] . "</td>";
         $aryHtml[] = "  </tr>";
         $aryHtml[] = "  <tr>";
-        $aryHtml[] = "    <td class=\"SegColumn\">開発担当者</td>";
+        $aryHtml[] = "    <td class=\"SegColumn\">担当者</td>";
         $aryHtml[] = "    <td class=\"Segs\">[" . $row["struserdisplaycode"] . "] " . $row["struserdisplayname"] . "</td>";
         $aryHtml[] = "  </tr>";
         $aryHtml[] = "  <tr>";
@@ -1462,7 +1462,7 @@ function fncCancelPurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID, $isDel
     $aryHtml[] = "  <tr>";
     $aryHtml[] = "    <th class=\"SegColumn\">営業部門</th>";
     $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lnggroupcode"], $aryOrder["strgroupname"]) . "</td>";
-    $aryHtml[] = "    <th class=\"SegColumn\">開発担当者</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">担当者</th>";
     $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lngusercode"], $aryOrder["strusername"]) . "</td>";
     $aryHtml[] = "  </tr>";
     $aryHtml[] = "  <tr>";
@@ -1545,7 +1545,7 @@ function fncDeletePurchaseOrderHtml($aryOrder, $aryDetail, $strSessionID)
     $aryHtml[] = "  <tr>";
     $aryHtml[] = "    <th class=\"SegColumn\">営業部門</th>";
     $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["lnggroupcode"], $aryOrder["strgroupname"]) . "</td>";
-    $aryHtml[] = "    <th class=\"SegColumn\">開発担当者</th>";
+    $aryHtml[] = "    <th class=\"SegColumn\">担当者</th>";
     $aryHtml[] = "    <td class=\"Segs\">" . sprintf("[%s] %s", $aryOrder["strusercode"], $aryOrder["strusername"]) . "</td>";
     $aryHtml[] = "  </tr>";
     $aryHtml[] = "  <tr>";

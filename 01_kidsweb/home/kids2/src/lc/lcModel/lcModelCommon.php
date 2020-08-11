@@ -56,13 +56,13 @@ class lcModel
     {
         $db = $this->lcConn;
         $db->transactionBegin();
-    } 
+    }
 
     public function transactionCommit()
     {
         $db = $this->lcConn;
         $db->transactionCommit();
-    } 
+    }
     // ---------------------------------------------------------------
     /**
      *    ログインセッションデータの確認
@@ -912,7 +912,7 @@ class lcModel
             fncGetDateString(),
             fncGetTimeString(),
             fncGetDateString(),
-            fncGetTimeString()
+            fncGetTimeString(),
         );
 
         //クエリ実行
@@ -1040,7 +1040,7 @@ class lcModel
                     $lgusrname,
                     fncGetDateString(),
                     fncGetTimeString(),
-                    $data[$i]["bankcd"]
+                    $data[$i]["bankcd"],
                 );
                 //クエリ実行
                 $result = $db->executeNonQuery($sql, $bind);
@@ -1098,7 +1098,7 @@ class lcModel
                     fncGetTimeString(),
                     $lgusrname,
                     fncGetDateString(),
-                    fncGetTimeString()
+                    fncGetTimeString(),
                 );
 
                 //クエリ実行
@@ -1196,7 +1196,7 @@ class lcModel
                         $lgusrname,
                         fncGetDateString(),
                         fncGetTimeString(),
-                        $data[$i]["payfcd"]
+                        $data[$i]["payfcd"],
                     );
 
                     //クエリ実行
@@ -1278,7 +1278,7 @@ class lcModel
                         fncGetTimeString(),
                         $lgusrname,
                         fncGetDateString(),
-                        fncGetTimeString()
+                        fncGetTimeString(),
                     );
 
                     //クエリ実行
@@ -1872,13 +1872,13 @@ class lcModel
             . "," . ($data["productname"] == null ? "NULL" : "'" . $data["productname"] . "'")
             . "," . ($data["productnamee"] == null ? "NULL" : "'" . $data["productnamee"] . "'")
             . "," . ($data["productnumber"] == null ? "NULL" : "'" . $data["productnumber"] . "'")
-            . "," . ($data["unitname"] == NULL ? "null" : "'" . $data["unitname"] . "'")
+            . "," . ($data["unitname"] == null ? "null" : "'" . $data["unitname"] . "'")
             . "," . ($data["unitprice"] == null ? "NULL" : "'" . $data["unitprice"] . "'")
             . "," . ($data["moneyprice"] == null ? "NULL" : "'" . $data["moneyprice"] . "'")
             . "," . ($data["shipstartdate"] == null ? "NULL" : "'" . $data["shipstartdate"] . "'")
             . "," . ($data["shipenddate"] == null ? "NULL" : "'" . $data["shipenddate"] . "'")
             . "," . ($data["sumdate"] == null ? "NULL" : "'" . $data["sumdate"] . "'")
-            . "," . ($data["poupdatedate"] == null ? "NULL" : "'" .$data["poupdatedate"] . "'")
+            . "," . ($data["poupdatedate"] == null ? "NULL" : "'" . $data["poupdatedate"] . "'")
             . "," . ($data["deliveryplace"] == null ? "NULL" : "'" . $data["deliveryplace"] . "'")
             . "," . ($data["currencyclass"] == null ? "NULL" : "'" . $data["currencyclass"] . "'")
             . "," . ($data["lcnote"] == null ? "NULL" : "'" . $data["lcnote"] . "'")
@@ -1899,10 +1899,10 @@ class lcModel
             . "," . ($data["bldetail3money"] == null ? "NULL" : $data["bldetail3money"])
             . "," . $data["lcstate"]
             . "," . ($data["entryuser"] == null ? "NULL" : "'" . $data["entryuser"] . "'")
-            . "," . ($data["entrydate"] == null ? "NULL" : "'" . preg_replace ( "/\//", "", $data["entrydate"] ) . "'")
+            . "," . ($data["entrydate"] == null ? "NULL" : "'" . preg_replace("/\//", "", $data["entrydate"]) . "'")
             . "," . ($data["entrytime"] == null ? "NULL" : "'" . $data["entrytime"] . "'")
             . "," . ($data["updateuser"] == null ? "NULL" : "'" . $data["updateuser"] . "'")
-            . "," . ($data["updatedate"] == null ? "NULL" : "'" . preg_replace ( "/\//", "", $data["updatedate"] ) . "'")
+            . "," . ($data["updatedate"] == null ? "NULL" : "'" . preg_replace("/\//", "", $data["updatedate"]) . "'")
             . "," . ($data["updatetime"] == null ? "NULL" : "'" . $data["updatetime"] . "'")
             . "," . ($data["shipym"] == null ? "NULL" : "'" . $data["shipym"] . "'")
             . ")";
@@ -2074,26 +2074,44 @@ class lcModel
         $sql = "
                 update
                     t_aclcinfo
-                set opendate = " . ($data["opendate"] == null ? "NULL" : "'" . $data["opendate"] . "'")
-            . ", bankcd = " . ($data["bankcd"] == null ? "NULL" : "'" . $data["bankcd"] . "'")
-            . ", bankname = " . ($data["bankname"] == null ? "NULL" : "'" . $data["bankname"] . "'")
-            . ", bankreqdate = " . ($data["bankreqdate"] == null ? "NULL" : $data["bankreqdate"])
-            . ", lcno = " . ($data["lcno"] == null ? "NULL" : "'" . $data["lcno"] . "'")
-            . ", lcamopen = " . ($data["lcamopen"] == null ? "NULL" : "'" . $data["lcamopen"] . "'")
-            . ", validmonth =" . ($data["validmonth"] == null ? "NULL" : "'" . $data["validmonth"] . "'")
-            . ", usancesettlement = " . ($data["usancesettlement"] == null ? "NULL" : $data["usancesettlement"])
-            . ", bldetail1date = " . ($data["bldetail1date"] == null ? "NULL" : $data["bldetail1date"])
-            . ", bldetail1money = " . ($data["bldetail1money"] == null ? "NULL" : $data["bldetail1money"])
-            . ", bldetail2date = " . ($data["bldetail2date"] == null ? "NULL" : $data["bldetail2date"])
-            . ", bldetail2money = " . ($data["bldetail2money"] == null ? "NULL" : $data["bldetail2money"])
-            . ", bldetail3date = " . ($data["bldetail3date"] == null ? "NULL" : $data["bldetail3date"])
-            . ", bldetail3money = " . ($data["bldetail3money"] == null ? "NULL" : $data["bldetail3money"])
-            . ", lcstate = " . $data["lcstate"]
-            . " where pono = " . "'" . $data["pono"] . "'"
-            . " and polineno = " . "'" . $data["polineno"] . "'"
-            . " and poreviseno = " . "'" . $data["poreviseno"] . "'";
+                set opendate = $1
+                , bankcd = $2
+                , bankname = $3
+                , bankreqdate = $4
+                , lcno = $5
+                , lcamopen = $6
+                , validmonth = $7
+                , usancesettlement = $8
+                , bldetail1date = $9
+                , bldetail1money = $10
+                , bldetail2date = $11
+                , bldetail2money = $12
+                , bldetail3date = $13
+                , bldetail3money = $14
+                , lcstate = $15
+                where pono = $16
+                and polineno = $17
+                and poreviseno = $18";
         //バインドの設定
-        $bind = array();
+        $bind = array($data["opendate"],
+            $data["bankcd"],
+            $data["bankname"],
+            $data["bankreqdate"],
+            $data["lcno"],
+            $data["lcamopen"],
+            $data["validmonth"],
+            $data["usancesettlement"],
+            $data["bldetail1date"] == null ? null : date($data["bldetail1date"]),
+            $data["bldetail1money"],
+            $data["bldetail2date"] == null ? null : date($data["bldetail2date"]),
+            $data["bldetail2money"],
+            $data["bldetail3date"] == null ? null : date($data["bldetail3date"]),
+            $data["bldetail3money"],
+            $data["lcstate"],
+            $data["pono"],
+            $data["polineno"],
+            $data["poreviseno"],
+        );
         //クエリ実行
         $result = $db->executeNonQuery($sql, $bind);
 
@@ -2511,7 +2529,7 @@ class lcModel
         //バインドの設定
         $bind = array(
             fncGetDateString(),
-            fncGetTimeString(), 
+            fncGetTimeString(),
             $param["lgno"]);
 
         //クエリ実行
