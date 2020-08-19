@@ -169,7 +169,7 @@ function fncSpreadSheetCellData01($aryDataset, $i, $j, $aryResult, $lngHeadLineC
             $curCalc = (int) $aryResult["cursubtotalprice"];
             // 日本円以外の場合
             if ((int) $aryResult["lngmonetaryunitcode"] != 1) {
-                $curCalc = '=S' . $strNo . '*' . (int) $aryResult["lngproductquantity"] . '';
+                $curCalc = '=S' . $strNo . '*(' . (int) $aryResult["lngproductquantity"] . ')';
             }
 
             $varCellData = $curCalc;

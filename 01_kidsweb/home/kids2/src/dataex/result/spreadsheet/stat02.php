@@ -154,7 +154,7 @@
 				// 日本円以外の場合
 				if( (int)$aryResult["lngmonetaryunitcode"] != 1 )
 				{
-					$curCalc = '=O'.$strNo.'*'.(int)$aryResult["lngproductquantity"].'';
+					$curCalc = '=O'.$strNo.'*('.(int)$aryResult["lngproductquantity"].')';
 				}
 
 				$varCellData = $curCalc;
