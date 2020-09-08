@@ -470,12 +470,12 @@
             len += 1;
             var strCustomerNo = $(this).find('.customerno').find('input:text').val();
             if (strCustomerNo == "") {
-                alert(len + "行目の顧客NO.が入力されていません。");
+                alert(len + "行目の納品書NO.が入力されていません。");
                 isError = true;
                 return false;
             }
             if (strCustomerNo.length > 10) {
-                alert(len + "行目の顧客NO.が10桁まで入力してください。");
+                alert(len + "行目の納品書NO.が10桁まで入力してください。");
                 isError = true;
                 return false;
             }
