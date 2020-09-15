@@ -159,6 +159,8 @@ if ($slipKidObj["lngslipkindcode"] == DEF_SLIP_KIND_COMM) {
     $aryparts["strcustomerusername"] = $aryParts["strcustomerusername"];
     // 合計金額
     $curTotalPrice = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]) . " " . $aryParts["curtotalprice_us"];
+    
+    $aryParts["strmonetaryunitsign"] = ($aryParts["lngmonetaryunitcode"] == 1 ? "&yen; " : $aryParts["strmonetaryunitsign"]);
 
     // $aryParts["curtotalprice"] = $curTotalPrice;
     $aryParts["nameofbank"] = $aryParts["lngpaymentmethodcode"] == 1 ? "MUFG BANK, LTD." : "";

@@ -312,8 +312,9 @@ function reflection(){
 					settingData.bank_info[i].bankformalname = bankformalname;
 					settingData.bank_info[i].bankdivrate = bankdivrate;
 					settingData.bank_info[i].invalidflag = invalidflag;
-
-					maxbankdivrate += bankdivrate;
+					if(invalidflag == false) {
+						maxbankdivrate += bankdivrate;
+					}
 				}
 				//グリッドに割振率の合計は１ではない場合
 				if(maxbankdivrate > 1){

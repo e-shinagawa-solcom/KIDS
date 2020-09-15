@@ -36,11 +36,11 @@
             }
         }
     });
-    // 事業部(顧客)-表示会社コード イベント登録
+    // 仕入先-表示会社コード イベント登録
     $('input[name="CustomerCode"]').on({
         'change': function () {
             // 表示名を索引
-            selectCustomerName($(this));
+            selectSupplierName($(this));
             // JQuery Validation Pluginで検知させる為イベントキック
             $(this).trigger('blur');
             // フォーカスを事業部名に合わせる
@@ -168,16 +168,16 @@
             });
     };
     // --------------------------------------------------------------------------
-    // 事業部(顧客)-表示会社コードによるデータ索引
+    // 仕入先-表示会社コードによるデータ索引
     // --------------------------------------------------------------------------
-    // 事業部(顧客)-表示会社コードから表示名を索引
-    var selectCustomerName = function (invoker) {
-        console.log("事業部(顧客)-表示会社コード->表示名 change");
+    // 仕入先-表示会社コードから表示名を索引
+    var selectSupplierName = function (invoker) {
+        console.log("仕入先-表示会社コード->表示名 change");
 
         // 検索条件
         var condition = {
             data: {
-                QueryName: 'selectCustomerName',
+                QueryName: 'selectSupplierName',
                 Conditions: {
                     CompanyDisplayName: $(invoker).val()
                 }
@@ -187,12 +187,12 @@
         // リクエスト送信
         $.ajax($.extend({}, searchMaster, condition))
             .done(function (response) {
-                console.log("事業部(顧客)-表示会社コード->表示名 done");
+                console.log("仕入先-表示会社コード->表示名 done");
                 // 事業部(顧客)-表示名に値をセット
-                $('input[name="CustomerName"]').val(response[0].companydisplayname);
+                $('input[name="CustomerName"]').val(response[0].supplierdisplayname);
             })
             .fail(function (response) {
-                console.log("事業部(顧客)-表示会社コード->表示名 fail");
+                console.log("仕入先-表示会社コード->表示名 fail");
                 console.log(response.responseText);
                 // 事業部(顧客)-表示名の値をリセット
                 $(invoker).val('');

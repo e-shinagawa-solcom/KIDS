@@ -216,11 +216,11 @@ $aryTableHeaderName_PURORDER["strproductenglishname"] = "製品名（英語）";
 $aryTableHeaderName_PURORDER["lnginchargegroupcode"] = "営業部署";
 $aryTableHeaderName_PURORDER["lnginchargeusercode"] = "担当者";
 $aryTableHeaderName_PURORDER["lngcustomercode"] = "仕入先";
+$aryTableHeaderName_PURORDER["lngdeliveryplacecode"] = "納品場所";
+$aryTableHeaderName_PURORDER["lngmonetaryunitcode"] = "通貨";
 $aryTableHeaderName_PURORDER["lngpayconditioncode"] = "支払条件";
 $aryTableHeaderName_PURORDER["curtotalprice"] = "合計金額";
-$aryTableHeaderName_PURORDER["lngmonetaryunitcode"] = "通貨";
-$aryTableHeaderName_PURORDER["cursubtotalprice"] = "税抜金額";
-$aryTableHeaderName_PURORDER["lngdeliveryplacecode"] = "納品場所";
+// $aryTableHeaderName_PURORDER["cursubtotalprice"] = "税抜金額";
 $aryTableHeaderName_PURORDER["lngprintcount"] = "印刷回数";
 $aryTableHeaderName_PURORDER["strnote"] = "備考";
 

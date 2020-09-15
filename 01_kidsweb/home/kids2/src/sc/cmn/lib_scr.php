@@ -1901,7 +1901,6 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["strnote"] = $aryHeader["strnote"];
             $lngmonetaryunitcode = $aryDetail[0]["lngmonetaryunitcode"];
             $strmonetaryunitsign = $aryDetail[0]["strmonetaryunitsign"];
-            $aryParts["strmonetaryunitsign"] = $strmonetaryunitsign;
             // 顧客電話番号
             $aryParts["strcustomertel"] = "Tel:" . $aryCustomerCompany["strtel1"] . " " . $aryCustomerCompany["strtel2"];
 
@@ -1922,6 +1921,7 @@ function fncGenerateReportImage($strMode, $aryHeader, $aryDetail,
             $aryParts["accountno"] = $aryHeader["lngpaymentmethodcode"] == 1 ? "1063143" : "";
             $aryParts["dtmpaymentlimit"] = $aryHeader["lngpaymentmethodcode"] == 1 ? ("on " . $aryHeader["dtmpaymentlimit"]) : "";
 
+            $aryParts["strmonetaryunitsign"] = ($lngmonetaryunitcode == 1 ? "&yen; " : $strmonetaryunitsign);
             // HTML出力
             $objTemplateHeader = new clsTemplate();
             $objTemplateHeader->getTemplate($strTemplateHeaderPath);
