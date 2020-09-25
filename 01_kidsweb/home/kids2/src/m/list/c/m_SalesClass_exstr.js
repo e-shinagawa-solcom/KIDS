@@ -216,6 +216,11 @@ function ChgEtoJ( g_lngCode )
 			Column3.innerText	= '明細統一フラグ';
 		}
 
+		if( typeof(Column4) != 'undefined' )
+		{
+			Column4.innerText	= '表示フラグ';
+		}
+
 		// 処理名
 		if( typeof(FixColumn) != 'undefined' )
 		{

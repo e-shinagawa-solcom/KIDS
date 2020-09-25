@@ -62,6 +62,7 @@ FROM
         m_mold mm
     WHERE
         mm.productcode = $1
+    AND mm.deleteflag = false
     AND mm.moldno not in
         (
             SELECT

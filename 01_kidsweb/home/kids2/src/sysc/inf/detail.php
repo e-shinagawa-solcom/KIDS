@@ -75,11 +75,12 @@ if ( $lngResultNum == 1 )
 	$aryParts["dtmInsertDate"]             = $objResult->dtminsertdate;
 	$aryParts["strSystemInformationBody"]  = $objResult->strsysteminformationbody;
 }
-
 $aryParts["strSessionID"] =& $aryData["strSessionID"];
-$aryParts["lngPage"]      =& $aryData["lngPage"];
-
-
+if ($aryData["lngPage"] == '') {
+	$aryParts["lngPage"] = 0;
+} else {
+	$aryParts["lngPage"]      =& $aryData["lngPage"];
+}
 // HTML出力
 $objTemplate = new clsTemplate();
 $objTemplate->getTemplate( "sysc/inf/detail.tmpl" );

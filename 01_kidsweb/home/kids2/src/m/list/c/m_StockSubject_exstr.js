@@ -221,12 +221,12 @@ function ChgEtoJ( g_lngCode )
 
 		if( typeof(Column1) != 'undefined' )
 		{
-			Column1.innerText	= '仕入科目名称';
+			Column1.innerText	= '仕入区分名称';
 		}
 
 		if( typeof(Column2) != 'undefined' )
 		{
-			Column2.innerText	= '仕入科目';
+			Column2.innerText	= '仕入科目名称';
 		}
 
 		if( typeof(Column3) != 'undefined' )

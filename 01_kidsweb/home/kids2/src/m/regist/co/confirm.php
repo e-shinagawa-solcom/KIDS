@@ -83,7 +83,6 @@ $objDB->open( "", "", "", "" );
 
 // GETデータ取得
 $aryData = $_GET;
-
 if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 {
 	// 複数選択セレクトボックスから属性コードを取得する
@@ -159,9 +158,10 @@ if ( $aryData["lngActionCode"] != DEF_ACTION_DELETE )
 
 // 文字列チェック
 $aryCheckResult = fncAllCheck( $aryData, $aryCheck );
+
 //echo getArrayTable( $aryCheckResult, "TABLE" );
 //exit;
-//fncPutStringCheckError( $aryCheckResult, $objDB );
+fncPutStringCheckError( $aryCheckResult, $objDB );
 
 // 本社と顧客双方の属性を指定されていた場合、文字列チェックエラー真
 if ( $bytHeadOfficeFlag && $bytClientFlag )

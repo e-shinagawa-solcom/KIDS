@@ -64,6 +64,7 @@ FROM
     WHERE
         mm.productcode = $1
     AND mm.strrevisecode = $2
+    AND mm.deleteflag = false
     AND mm.moldno not in
         (
             SELECT

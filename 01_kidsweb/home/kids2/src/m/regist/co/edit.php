@@ -331,6 +331,7 @@ function fncGetAttributeHtml( $lngActionCode, $lngcompanycode, $aryAttributeCode
 		$objAttribute->setAryMasterInfo( $lngcompanycode, "" );
 	}
 	
+	
 	// 属性一覧取得
 	list ( $lngResultID, $lngResultNum ) = fncQuery( "SELECT * FROM m_Attribute", $objDB );
 
@@ -349,7 +350,13 @@ function fncGetAttributeHtml( $lngActionCode, $lngcompanycode, $aryAttributeCode
 		{
 			
 			// 表示する属性に所属していた場合、選択状態にする処理
-			if ( !empty($objAttribute->aryData[$j]) && $objResult->lngattributecode == $objAttribute->aryData[$j]["lngattributecode"] )
+			// if ($lngActionCode == DEF_ACTION_INSERT && !empty($objAttribute->aryData[$j]) && $objResult->lngattributecode == $objAttribute->aryData[$j]["lngattributecode"] )
+			if ( !empty($objAttribute->aryData[$j]) && $objResult->lngattributecode == $objAttribute->aryData[$j] )
+			{
+				$strSelected = " selected";
+				break;
+			}
+			if ($lngActionCode == DEF_ACTION_UPDATE && !empty($objAttribute->aryData[$j]) && $objResult->lngattributecode == $objAttribute->aryData[$j]["lngattributecode"] )
 //			if ( !empty($objAttribute->aryData[$j]) && $objResult->lngattributecode == $objAttribute->aryData[$j] )
 			{
 				$strSelected = " selected";

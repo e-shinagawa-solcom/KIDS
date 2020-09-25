@@ -42,6 +42,15 @@ syslog(LOG_INFO, LOG_PREFIX . "金型マスタインポート処理開始");
 // トランザクション開始
 $objDB->transactionBegin();
 
+// 金型マスタデータの無効化
+$invalided = $utilMold->updateMoldToInvalid();
+
+// 有効化クエリ実行
+$valided = $utilMold->updateMoldToValid();
+
+// 無効化件数のログ出力
+syslog(LOG_INFO, LOG_PREFIX.($invalided - $valided)."件無効化");
+
 // インポートクエリ実行
 $affected = $utilMold->importMoldFromStock();
 
@@ -55,6 +64,12 @@ syslog(LOG_INFO, LOG_PREFIX . "金型マスタインポート処理終了");
 
 if ($aryData["printFlag"]) {
     echo "金型マスタインポート処理終了しました。" . "<br>";
+    if ($invalided > $valided) {
+        echo ($invalided - $valided) . "件無効化しました。" . "<br>";
+    }
+    if ($invalided < $valided) {
+        echo ($valided - $invalided) . "件有効化しました。" . "<br>";
+    }
     echo $affected . "件取り込みました。" . "<br>";
 }
 

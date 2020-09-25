@@ -530,6 +530,7 @@ $(function () {
 
   // 行追加
   $('.btnRowAdd').on('click', function () {
+    $('img[class~="btn"]').css('pointer-events', 'none');
     var selectedRange = getSelectedCell();
     if (selectedRange) {
       var selectedRow = selectedRange[0];
@@ -645,11 +646,15 @@ $(function () {
 
       table[0].selectCell(selectedRow, selectedColumn);
     }
+    setTimeout(function(){
+      $('img[class~="btn"]').css('pointer-events', '');
+    },800);
   });
 
 
   // 行削除
   $('.btnRowDelete').on('click', function () {
+    $('img[class~="btn"]').css('pointer-events', 'none');
     var selectedRange = getSelectedCell();
     if (selectedRange) {
       var selectedRow = selectedRange[0];
@@ -778,10 +783,14 @@ $(function () {
 
       table[0].selectCell(selectedRange[0], selectedRange[1]);
     }
+    setTimeout(function(){
+      $('img[class~="btn"]').css('pointer-events', '');
+    },800);
   });
 
   // 行移動(エリア内先頭に)
   $('.btnMoveTop').on('click', function () {
+    $('img[class~="btn"]').css('pointer-events', 'none');
     var selectedRange = getSelectedCell();
     if (selectedRange) {
       var selectedRow = selectedRange[0];
@@ -861,10 +870,14 @@ $(function () {
 
       table[0].selectCell(minRow, selectedRange[1]);
     }
+    setTimeout(function(){
+      $('img[class~="btn"]').css('pointer-events', '');
+    },800);
   });
 
   // 行移動(エリア内最後尾に)
   $('.btnMoveBottom').on('click', function () {
+    $('img[class~="btn"]').css('pointer-events', 'none');
     var selectedRange = getSelectedCell();
     if (selectedRange) {
       var selectedRow = selectedRange[0];
@@ -945,10 +958,14 @@ $(function () {
 
       table[0].selectCell(maxRow, selectedRange[1]);
     }
+    setTimeout(function(){
+      $('img[class~="btn"]').css('pointer-events', '');
+    },800);
   });
 
   // 行移動(一行上に)
   $('.btnMoveUpper').on('click', function () {
+    $('img[class~="btn"]').css('pointer-events', 'none');
     var lock = screenLock();
     var selectedRange = getSelectedCell();
     if (selectedRange) {
@@ -1036,14 +1053,16 @@ $(function () {
       var unlock = screenUnlock();
       table[0].selectCell(insertRow, selectedRange[1]);
     }
+    setTimeout(function(){
+      $('img[class~="btn"]').css('pointer-events', '');
+    },800);
   });
 
 
 
   // 行移動(一行下に)
   $('.btnMoveLower').on('click', function () {
-    $('[class~="btn"]').prop('disabled', true);
-
+    $('img[class~="btn"]').css('pointer-events', 'none');
     var selectedRange = getSelectedCell();
 
     if (selectedRange) {
@@ -1131,6 +1150,9 @@ $(function () {
 
       table[0].selectCell(insertRow, selectedRange[1]);
     }
+    setTimeout(function(){
+      $('img[class~="btn"]').css('pointer-events', '');
+    },800);
 
     return;
   });

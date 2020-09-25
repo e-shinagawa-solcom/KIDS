@@ -234,7 +234,7 @@ foreach ($aryDetailData as $data) {
     $aryQuery[] = " AND t_orderdetail.lngorderdetailno = " . $data["lngOrderDetailNo"];
     $aryQuery[] = " ORDER BY lngSortKey";
     $strQuery = implode("\n", $aryQuery);
-
+    
     list($lngResultID, $lngResultNum) = fncQuery($strQuery, $objDB);
 
     if ($lngResultNum) {
@@ -242,7 +242,7 @@ foreach ($aryDetailData as $data) {
             $detailDataResult = $objDB->fetchArray($lngResultID, 0);
             $objDB->freeResult($lngResultID);
             $strSerialNo = "";
-            if ($detailDataResult["strSerialNo"] == null or $detailDataResult["strSerialNo"] == "null" or $detailDataResult["strSerialNo"] == "") {
+            if ($detailDataResult["strserialno"] == null or $detailDataResult["strserialno"] == "null" or $detailDataResult["strserialno"] == "") {
                 // 仕入科目が４３３（金型海外償却）、仕入部品が１（Injection Mold）の場合
                 // 仕入科目が４３１（金型償却高）、　仕入部品が８（金型）の場合
                 if (($detailDataResult["lngstocksubjectcode"] == DEF_MOLD_STOCK_SUBJECT
@@ -260,7 +260,7 @@ foreach ($aryDetailData as $data) {
                     and $detailDataResult["lngstockitemcode"] == DEF_MOLD_STOCK_ITEM)
                     or ($detailDataResult["lngstocksubjectcode"] == DEF_MOLD_STOCK_SUBJECT_ADD
                         and $detailDataResult["lngstockitemcode"] == DEF_MOLD_STOCK_ITEM_ADD)) {
-                    $strSerialNo = $detailDataResult["strSerialNo"];
+                    $strSerialNo = $detailDataResult["strserialno"];
                 }
             }
             //-----------------------------------------------------------

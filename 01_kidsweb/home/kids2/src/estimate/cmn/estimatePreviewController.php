@@ -201,7 +201,7 @@ class estimatePreviewController {
                     'price' => $record->curproductprice,
                     'conversionRate' => $record->curconversionrate,
                     'delivery' => $record->dtmdelivery,
-                    'note' => $record->strnote,
+                    'note' => preg_replace ( "/\\\\/", "\\\\\\\\", $record->strnote ),
                     'statusCode' => $record->lngreceivestatuscode,
                     'estimateDetailNo' => $record->lngestimatedetailno,
                     'receiveNo' => $record->lngreceiveno
